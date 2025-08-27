@@ -1,0 +1,25 @@
+---
+import "../styles/theme.css";
+import "../styles/layout.css";
+import Header from "../components/Header.astro";
+import Sidebar from "../components/Sidebar.astro";
+import MainIsland from "../components/MainIsland.jsx";
+---
+<link rel="icon" href="/imagenes/icon64x64.webp" type="image/webp" />
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MedGO • Qbank</title>
+  </head>
+  <body>
+    <div class="container">
+      <Header />
+      <Sidebar />
+
+      <main class="main">
+        <MainIsland client:load />
+      </main>
+    </div>
+  </body>
+</html>

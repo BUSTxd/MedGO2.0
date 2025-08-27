@@ -1,0 +1,28 @@
+{
+  "title": "Cuestionario de Farmacología",
+  "category": "Teoría",
+  "items": [
+    {
+      "q": "El agonista parcial se caracteriza por:",
+      "choices": [
+        "Eficacia = 0",
+        "Eficacia intermedia",
+        "Eficacia máxima",
+        "Antagonismo competitivo irreversible"
+      ],
+      "answer": 1,
+      "explain": "Un agonista parcial activa el receptor pero con menor eficacia que un agonista pleno."
+    },
+    {
+      "q": "Eliminación de primer orden significa:",
+      "choices": [
+        "Velocidad constante",
+        "Proporcional a la concentración",
+        "Independiente del fármaco",
+        "Saturable a dosis bajas"
+      ],
+      "answer": 1,
+      "explain": "En cinética de primer orden la fracción eliminada por unidad de tiempo es constante."
+    }
+  ]
+}

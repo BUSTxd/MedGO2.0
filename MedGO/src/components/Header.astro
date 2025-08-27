@@ -1,0 +1,29 @@
+---
+const userName = ""; // conéctalo a tu auth luego
+import "../styles/fonts.css";
+---
+<header class="header">
+  <button class="header__burger" id="btn-burger" aria-label="Abrir/cerrar menú">
+    <span></span>
+  </button>
+
+  <a class="header__logo" href="/" aria-label="MedGO">
+    <img style="filter: drop-shadow(0 0 3px #03005c); height: 42px ; width: auto; color: white" src="/imagenes/icon64x64.webp" alt="MedGO" />
+    <strong style="font-family: abcginto; font-size: 25px; filter: drop-shadow(0 0 3px #000)">MedGO</strong>
+  </a>
+
+  <div class="header__search">
+    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M21 21l-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="#C7C7D2" stroke-width="1.8"/>
+    </svg>
+    <input id="search" type="search" placeholder="Busca enfermedades, fármacos, palabras clave… (Ctrl+K)" />
+  </div>
+
+  <div class="header__user">BETA {userName}</div>
+
+  <script is:raw>
+    document.getElementById('btn-burger').addEventListener('click', ()=>{
+      document.body.classList.toggle('body--collapsed');
+    });
+  </script>
+</header>

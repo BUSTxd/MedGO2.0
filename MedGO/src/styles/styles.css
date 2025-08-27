@@ -1,0 +1,540 @@
+html, body, header {
+  margin: 0;
+  padding: 0;
+  font-family: "abcgintoheader";
+}
+
+.background {
+position: fixed;
+inset: 0;
+z-index: -30;
+background-image: url("imagenes/backgroundxd.png");
+background-size: cover;
+margin: 0;
+padding: 0;
+}
+
+header {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.flex_header {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  text-align: center;
+  align-items: center;
+  font-weight: 600;
+  line-height: .857143;
+  color: white;
+}
+
+.flex_item {
+  padding: 15px 0;
+  margin: 0 25px;
+  width: 5%;
+  border-radius: 18px;
+  transition-duration: 0.3s;
+
+}
+
+.flex_item a{
+  text-decoration: none;
+  color: white;
+}
+
+@media screen and (max-width: 630px) {
+  .flex_item {
+  display: none;
+  }
+}
+
+.flex_item:hover {
+  background-color: hsl(235, 86%, 65%);
+}
+
+.img_logo {
+  background-image: url("imagenes/logo_uno_al_costado_de_otro_1.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100px;
+  min-width: 80px;
+  height: 100px;
+  min-height: 80px;
+  margin-left: 2%;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+@media screen and (max-width: 630px) {
+  .img_logo {
+    width: 50px;
+    height: 50px;
+    margin-left: 2%;
+  }
+  .hero__left {padding-left: 0%;}
+}
+
+@media screen and (min-width: 631px) and (max-width: 1024px) {
+  .img_logo {
+    width: 120px;
+    height: 100px;
+    margin-left: 2%;
+  }  /* Estilos para iPad vertical wa*/
+}
+
+.flex_board {
+  background-color: #ffffff;
+  padding: 13px 0;
+  margin-left: 32%;
+  width: 12%;
+  transition-duration: 0.5s;
+  border-radius: 18px;
+}
+
+.flex_board a {
+  color: #23272a;
+  text-decoration: none;
+}
+
+.flex_board2 a {
+  color: #23272a;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 630px) {
+  .flex_board {
+  margin-left: 8%;
+  width: 35%;
+  font-size: 14px;
+  padding: 10px 0;}
+}
+
+
+@media screen and (min-width: 631px) and (max-width: 1024px) {
+  .flex_board {
+  margin-left: 15%;
+  width: 16%;
+  }  /* Estilos para iPad vertical */
+}
+
+.flex_board:hover {
+  background-color: #d6d5d5;
+}
+
+.flex_board2 {
+  margin-left: 1%;
+  background-color: #ffffff;
+  padding: 13px 0;
+  width: 10%;
+  color: #23272a;
+  transition-duration: 0.4s;
+  border-radius: 18px;
+}
+
+@media screen and (max-width: 630px) {
+  .flex_board2 {
+  margin-left: 3%;
+  width: 28%;
+  font-size: 14px;
+  padding: 10px 0;
+  }
+}
+
+@media screen and (min-width: 631px) and (max-width: 1024px) {
+  .flex_board2 {
+  margin-left: 1%;
+  width: 13%;
+  }  /* Estilos para iPad vertical */
+}
+
+.flex_board2:hover {
+  background-color: #d6d5d5;
+}
+
+.font_h1 {
+  line-height: .857143;
+  color: white
+}
+
+:root{
+  --bg: #0f0a3c;
+  --surface: #1e155b;
+  --card: #241c67;
+  --ok: #0ec879;
+  --warn: #f3b700;
+  --err: #ff4d79;
+  --text: #ffffff;
+  --muted: #c9c6e6;
+  --brand: #6f5bff;
+
+  --r: 18px;            /* radios */
+  --shadow: 0 10px 30px rgba(0,0,0,.25);
+  --space-1: .375rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --wrap: 1200px;       /* ancho máximo */
+}
+
+*{ box-sizing: border-box; }
+html, body{ height:100%; }
+body{
+  margin:0;
+  color: var(--text);
+}
+
+
+/* contenedor central */
+.wrap{
+  margin-inline: auto;
+  padding-inline: clamp(2rem, 3vw, 2rem);
+  padding-top: 20px;                    /* <- sin espacio arriba */
+  padding-bottom: var(--space-12);   /* <- conserva el respiro abajo */
+  display: grid;
+  gap: var(--space-12);
+}
+
+.grid{
+  max-width: 1300px;      /* igual que wrap */
+  margin-inline: auto;
+}
+
+/* Tipografía */
+.display{ font-size: clamp(2.2rem, 3.4vw + 1rem, 4rem); line-height: 1.05; margin: 0 0 var(--space-4); }
+.h2{ font-size: clamp(1.8rem, 1.5vw + 1rem, 2.6rem); margin: 0; font-family: "abcginto"; }
+.h3{ font-size: clamp(1.2rem, .8vw + 1rem, 1.4rem); margin: 0; }
+.lead{ color: var(--muted); max-width: 50ch; margin: 0 0 var(--space-6); }
+.sublead{ color: var(--muted); margin: .5rem 0 0; }
+.kicker{ color: var(--ok); text-transform: uppercase; letter-spacing: .08em; margin:0 0 .5rem; }
+mark{ background: #fff; color:#111; padding:0px 5px; border-radius: .35em; }
+
+/* Botones */
+.btn{
+  appearance: none; border: 1px solid transparent;
+  padding: .9rem 1.2rem; border-radius: 999px;
+  background: #fff2; color: var(--text);
+  border-color: #d6d5d5;
+  font-weight: 600; cursor: pointer;
+  transition: .2s ease;
+}
+.btn:hover{ transform: translateY(-1px); }
+.btn-primary{ background: var(--brand); border-color: transparent; }
+.btn-primary:hover{ filter: brightness(1.05); }
+
+/* Listas */
+.list, .bullets{ margin: 0; padding-left: 1.2rem; display: grid; gap: .4rem; color: var(--muted); }
+.bullets li::marker{ content: "⚕️ "; color: var(--ok); }
+.price ~ ul li::marker {
+  content: "🩹 ";
+  color: var(--ok);
+}
+
+.price ~ ul li:nth-child(4)::marker {
+  content: "🫵 ";
+  color: var(--ok);
+}
+
+
+/* ===== 1) HERO ===== */
+.hero {
+  display: grid;
+  gap: clamp(24px, 6vw, 64px);
+  align-items: center;
+  justify-items: center;      /* centra items dentro de cada celda */
+  margin-inline: auto;        /* por si el padre permite más ancho */
+  justify-items: center;
+  justify-content: center; 
+}
+
+.hero__left{ display:grid; gap: var(--space-4); justify-self: start; }
+.hero__right img{
+  display:block; width: 80%; height:auto; object-fit: cover; padding-left: 0px; justify-self: center; transform: translateX(20px);}
+
+/* bloque CTA (rectángulo dentro de otro) */
+
+.cta-card{
+  background: var(--surface);
+  border: 1px solid #ffffff22;
+  border-radius: var(--r);
+  padding: var(--space-6);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+/* ===== 2) SECCIÓN CON TARJETAS ===== */
+.section{ display:grid; gap: var(--space-8); }
+.section__head{
+  text-align: center;
+  display:grid; gap:.35rem;
+  padding-block: var(--space-6);
+  border-radius: var(--r);
+  background: linear-gradient(180deg, #ffffff08, transparent);
+}
+.cards3{
+  display:grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+}
+
+.card li { line-height: 1.35; }
+
+.card__head {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  align-items: center;
+  gap: .75rem;
+}
+
+
+/* ===== 3) COMPARATIVA ===== */
+.compare{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+.panel{
+  background: var(--surface);
+  border: 1px solid #ffffff22;
+  border-radius: var(--r);
+  padding: var(--space-6);
+  box-shadow: var(--shadow);
+  display:grid; gap: var(--space-4);
+}
+.panel.bad{ border: 1px solid var(--err); }
+.panel.good{ border: 3px solid var(--ok); box-shadow: 0 0 30px 0 green; }
+.foot{ margin: 0; color: var(--muted); font-weight: 700; }
+
+/* ===== 4) PRICING ===== */
+.pricing{
+  display:grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+}
+.price-card{
+  background: var(--card);
+  border: 1px solid #ffffff22;
+  border-radius: var(--r);
+  padding: var(--space-6);
+  box-shadow: 0 0 60px -30px white;
+  display:grid; gap: var(--space-4);
+  align-content: start;
+}
+.price-card1{
+  background: var(--card);
+  border: 1px solid #ffffff22;
+  border-radius: var(--r);
+  padding: var(--space-6);
+  box-shadow: var(--shadow);
+  display:grid; gap: var(--space-4);
+  align-content: start;
+  height:356px;
+  margin-top: 6%;
+}
+
+.badge{
+  justify-self: start;
+  padding: .25rem .6rem; border-radius: 999px;
+  background: #fff2; color: #fff;
+  border: 1px solid #ffffff33;
+  font-size: 15px;
+}
+.price{ font-size: clamp(1.6rem, 2vw + 1rem, 2.2rem); margin:.25rem 0 .5rem; }
+.price span{ color: var(--muted); font-size: .9rem; }
+
+/* ===== 5) FAQ ===== */
+.faq{
+  display:grid; gap:.75rem;
+  max-width: 900px;
+  margin-inline: auto;
+}
+.faq details{
+  background: var(--surface);
+  border: 1px solid #ffffff22;
+  border-radius: 14px;
+  padding: .75rem 1rem;
+}
+.faq summary{
+  cursor: pointer; list-style: none; font-weight: 600;
+}
+.faq summary::-webkit-details-marker{ display:none; }
+
+/* ====== RESPONSIVE BREAKPOINTS ====== */
+@media (min-width: 900px){
+  .hero{ grid-template-columns: 1.8fr 1fr; }
+  .cards3{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .compare{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .pricing{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+/* (Opcional) Subgrid para alinear el contenido interno de las tarjetas si el navegador lo soporta */
+@supports (grid-template-rows: subgrid){
+  .cards3{ grid-auto-rows: 1fr; }
+  .card{ display:grid; grid-template-rows: subgrid; }
+}
+
+h1 {
+  font-family: "abcginto";
+  text-transform: uppercase;
+}
+
+
+  .wrap{
+    width:100%;
+    max-width:1300px;   /* tope ancho en desktop/mac */
+  }
+
+  /* ===== Grid responsive ===== */
+  .cards{
+    display:grid;
+    gap:24px;
+    grid-template-columns: 1fr; /* iPhone / móviles */
+  }
+
+  /* Tablet pequeña / iPhone Plus en horizontal */
+  @media (min-width: 600px){
+    .cards{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Laptop típica */
+  @media (min-width: 1024px){
+    .cards{ grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Mac / pantallas grandes: más aire */
+  @media (min-width: 1280px){
+    .cards{ gap:32px; }
+  }
+
+  /* ===== Card ===== */
+  .card{
+    position:relative;
+    background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)) , var(--card);
+    border-radius: var(--r);
+    box-shadow: var(--shadow);
+    padding: 22px 20px;
+    border: 1px solid rgba(255,255,255,.06);
+    overflow:hidden;
+  }
+
+  /* sutil brillo diagonal como en la imagen */
+  .card::before{
+    content:"";
+    position:absolute; inset:-40% -40% auto auto;
+    width:260px; height:260px; border-radius:50%;
+    background: radial-gradient(closest-side, rgba(255,255,255,.08), transparent 70%);
+    transform: translate(15%, -15%);
+    pointer-events:none;
+  }
+
+  .header{
+    display:flex; align-items:center; gap:12px; margin-bottom:12px;
+  }
+  .icon{
+    width:40px; height:40px; border-radius:12px;
+    display:grid; place-items:center;
+    background: linear-gradient(145deg, #7e6bff, #5647d8);
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.15);
+    flex: 0 0 40px;
+  }
+  .icon svg{ width:22px; height:22px; fill:white }
+
+  .title{
+    font-weight:800; letter-spacing:.2px; font-size:1.15rem;
+  }
+
+  .list{
+    margin:0; padding-left: 1.2rem; color:var(--muted);
+    line-height:1.55;
+  }
+  .list li{ margin:.35rem 0; }
+
+  .list_bad {
+    margin:0; padding-left: 1.2rem; color:var(--muted);
+    line-height:1.55;
+  }
+  .list_bad li{ margin:.35rem 0; }
+
+  .list_bad li::marker{
+    content: "❌ "; /* icono de error */
+  }
+
+    .list_good {
+    margin:0; padding-left: 1.2rem; color:var(--muted);
+    line-height:1.55;
+  }
+  .list_good li{ margin:.35rem 0; }
+
+  .list_good li::marker{
+    content: "💹 "; /* icono de error */
+    box-shadow: 0 0 40px 0 #0ec879;
+  }
+
+  /* === Fix para Opera / estilos globales que pisan el header === */
+.cards .card{
+  display: flex;              /* apila verticalmente */
+  flex-direction: column;
+}
+.cards .card .header{
+  position: relative;         /* asegura flujo normal */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  inset: auto;                /* por si algo lo había absolutizado */
+}
+.cards .card .title{
+  position: static !important;  /* evita absolute heredado */
+  margin: 0;                     /* quita margen por defecto */
+  line-height: 1.2;
+  white-space: normal;           /* evita superposición por nowrap */
+}
+.cards .card .list .list1{
+  margin: 0;                     /* que no empuje raro */
+  padding-left: 1.2rem;
+}
+
+/* Si en tu proyecto hay algo como “.card { display:grid; place-items:center }”
+   anúlalo para estas tarjetas: */
+.cards > .card{
+  place-items: initial !important;
+}
+
+/* (Opcional) eleva el texto por encima del brillo decorativo */
+.cards .card * { z-index: 1; }
+.cards .card::before { z-index: 0; }
+
+/* ===== Scrollbar minimalista negro (tipo YouTube) ===== */
+:root{
+  --scroll-size: 8px;
+  --scroll-thumb: rgba(255, 255, 255, 0.345);
+  --scroll-thumb-hover: rgba(0,0,0,.85);
+  --scroll-track: rgb(0, 0, 0);
+}
+
+/* Chrome, Edge, Safari */
+*::-webkit-scrollbar{
+  width: var(--scroll-size);
+  height: var(--scroll-size);
+  background: var(--scroll-track);
+}
+
+*::-webkit-scrollbar-thumb{
+  background: var(--scroll-thumb);
+  border-radius: 999px;
+  /* “espacio” para que se vea más fino sin reducir demasiado el área de drag */
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color .2s ease;
+}
+
+
+
+

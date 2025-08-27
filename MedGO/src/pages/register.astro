@@ -1,0 +1,158 @@
+---
+import '../styles/fonts.css';
+---
+<html lang="en">
+  <head>
+  <link rel="icon" href="/imagenes/icon64x64.webp" type="image/webp" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MedGO/Loggin</title>
+    <script type="module" src="src/script/register.js" defer></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="flip-card" id="flipCard">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <form id="loginForm">
+                <a href="/">
+                    <img src="public/imagenes/logo_uno_al_costado_de_otro_11.webp"> 
+                </a>
+              <h1 style="color:  #23272a; text-align: center; font-family: abcginto; margin-top: 15px;">Inicia sesión</h1>
+              <input type="email" placeholder="Email" id="email" required />
+              <div style="position: relative;">
+                <input class="contra"type="password" id="loginPassword" placeholder="Contraseña" id="password" required />
+                <div class="password-toggle" id="toggleLoginPassword">
+                  <i class="far fa-eye" id="toggleLoginIcon"></i>
+                </div>
+              </div>
+              <button type="submit">Inicia sesión</button>
+            </form>
+            <span class="toggle-text" id="registerText">Registrate</span>
+          </div>
+
+          <div class="flip-card-back">
+            <form id="registerForm">
+                <a href="/">
+                    <img src="public/imagenes/logo_uno_al_costado_de_otro_11.webp"> 
+                </a>
+              <h1 style="color: black; text-align: center; font-family: abcginto;  margin-top: 15px">Registrate</h1>
+              <input type="email" placeholder="Email" required />
+              <div style="position: relative;">
+                <input class="contra" type="password" id="registerPassword" placeholder="Contraseña" required />
+                <div class="password-toggle" id="toggleRegisterPassword">
+                  <i class="far fa-eye" id="toggleRegisterIcon"></i>
+                </div>
+              </div>
+              <button type="submit">Registrate</button>
+            </form>
+            <span class="toggle-text" id="loginText">Inicia sesion</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JS de cliente (NO en frontmatter) -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const flipCard = document.getElementById('flipCard');
+        const registerText = document.getElementById('registerText');
+        const loginText = document.getElementById('loginText');
+
+        if (registerText && loginText && flipCard) {
+          registerText.addEventListener('click', () => {
+            flipCard.style.transform = 'rotateY(180deg)';
+          });
+          loginText.addEventListener('click', () => {
+            flipCard.style.transform = 'rotateY(0deg)';
+          });
+        }
+
+        // Toggle de password (login)
+        const loginPwd = document.getElementById('loginPassword');
+        const toggleLogin = document.getElementById('toggleLoginPassword');
+        const toggleLoginIcon = document.getElementById('toggleLoginIcon');
+        if (loginPwd && toggleLogin && toggleLoginIcon) {
+          toggleLogin.addEventListener('click', () => {
+            const show = loginPwd.getAttribute('type') === 'password';
+            loginPwd.setAttribute('type', show ? 'text' : 'password');
+            toggleLoginIcon.classList.toggle('fa-eye');
+            toggleLoginIcon.classList.toggle('fa-eye-slash');
+          });
+        }
+
+        // Toggle de password (register)
+        const regPwd = document.getElementById('registerPassword');
+        const toggleReg = document.getElementById('toggleRegisterPassword');
+        const toggleRegIcon = document.getElementById('toggleRegisterIcon');
+        if (regPwd && toggleReg && toggleRegIcon) {
+          toggleReg.addEventListener('click', () => {
+            const show = regPwd.getAttribute('type') === 'password';
+            regPwd.setAttribute('type', show ? 'text' : 'password');
+            toggleRegIcon.classList.toggle('fa-eye');
+            toggleRegIcon.classList.toggle('fa-eye-slash');
+          });
+        }
+      });
+    </script>
+    </body>
+</html>
+
+<style>
+      body {
+        display:flex; justify-content:center; align-items:center;
+        height:100vh; margin:0;
+        background-image:url("imagenes/backgroundxd.png");
+        background-size:cover; background-position:center;
+        font-family: abcgintoheader;
+      }
+      .container { perspective:1000px; }
+      .flip-card {
+        width:300px; height:400px; position:relative;
+        transform-style:preserve-3d; transition:transform .6s;
+        background-color:rgba(255,255,255,.7); border-radius:10px;
+      }
+      .flip-card-inner {
+        width:100%; height:100%; position:absolute; inset:0;
+        transform-style:preserve-3d; transition: transform .6s;
+      }
+      .flip-card-front, .flip-card-back {
+        width:100%; height:100%; position:absolute; inset:0;
+        backface-visibility:hidden; display:flex; flex-direction:column;
+        justify-content:center; align-items:center; font-size:1.2rem;
+        background-color:transparent; box-shadow:0 4px 8px rgba(0,0,0,.2);
+        border-radius:10px; padding:20px; box-sizing:border-box; color:#333;
+      }
+      .flip-card-back { transform:rotateY(180deg); }
+      form { display:flex; flex-direction:column; width:100%; position:relative; }
+      input {
+        margin-bottom:10px; padding:10px; font-size:1rem;
+        border:1px solid #ccc; border-radius:5px;
+      }
+      button {
+        padding:10px; font-size:1rem; background-color:#7e6bff; color:white; transition-duration: 0.3s;
+        border:none; border-radius:5px; cursor:pointer; margin-top:10px;
+      }
+      button:hover { background-color: #5647d8; }
+      .toggle-text { margin-top:10px; color:#23272a; cursor:pointer; width: 258px; height: 35px; text-align: center; align-content: center; font-size:1rem; background-color:#ffffff22; transition-duration: 0.3s; border-radius:5px; border: 1px solid white;}
+      
+      .toggle-text:hover { background-color: #ffffff77; }
+
+      .password-toggle {
+        position:absolute; top:50%; right:10px; transform:translateY(-50%);
+        cursor:pointer;
+      }
+      .password-toggle i { font-size:1rem; }
+img {
+        width: 30%; height: auto; margin-bottom: -50px; margin-top: -40px;
+        display: block; margin-left: auto; margin-right: auto;
+        filter: drop-shadow(0 0 3px #040012ee);
+      }
+
+      .contra {
+        width: 238px;
+        
+      }
+
+    </style>

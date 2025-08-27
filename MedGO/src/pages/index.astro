@@ -1,0 +1,472 @@
+---
+/* Importar CSS desde src → Astro los minifica y cachea con hash */
+import '../styles/styles.css';
+import '../styles/fonts.css';
+
+const pageTitle = 'MedGO | Exámenes inteligentes de medicina';
+---
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{pageTitle}</title>
+
+  <!-- Favicon e imágenes siguen en /public -->
+  <link rel="icon" href="/imagenes/icon64x64.webp" type="image/webp" />
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="MedGO" />
+  <meta name="description" content="¿Te imaginas practicar tanto que el examen ya no te sorprenda?
+DeepRecall es un sistema diseñado para maximizar tus probabilidades de éxito resolviendo una enorme base de 400 preguntas estratégicamente seleccionadas. Gracias a la repetición masiva y al enfoque en patrones reales de examen, lograrás que al menos 5 preguntas del examen oficial sean casi idénticas.
+
+Este método no solo te prepara, te anticipa al examen.
+Perfecto para estudiantes que quieren dejar de improvisar y empezar a ganar con ventaja." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta property="og:title" content="MedGO" />
+  <meta property="og:description" content="¿Te imaginas practicar tanto que el examen ya no te sorprenda?
+DeepRecall es un sistema diseñado para maximizar tus probabilidades de éxito resolviendo una enorme base de 400 preguntas estratégicamente seleccionadas. Gracias a la repetición masiva y al enfoque en patrones reales de examen, lograrás que al menos 5 preguntas del examen oficial sean casi idénticas.
+
+Este método no solo te prepara, te anticipa al examen.
+Perfecto para estudiantes que quieren dejar de improvisar y empezar a ganar con ventaja." />
+  <meta property="og:image" content="/imagenes/logounoalcostadodeotroconfondo.png" />
+
+  <!-- X/Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="" />
+  <meta property="twitter:title" content="MedGO" />
+  <meta property="twitter:description" content="¿Te imaginas practicar tanto que el examen ya no te sorprenda?
+DeepRecall es un sistema diseñado para maximizar tus probabilidades de éxito resolviendo una enorme base de 400 preguntas estratégicamente seleccionadas. Gracias a la repetición masiva y al enfoque en patrones reales de examen, lograrás que al menos 5 preguntas del examen oficial sean casi idénticas.
+
+Este método no solo te prepara, te anticipa al examen.
+Perfecto para estudiantes que quieren dejar de improvisar y empezar a ganar con ventaja." />
+  <meta property="twitter:image" content="/imagenes/logounoalcostadodeotroconfondo.png" />
+</head>
+
+<body>
+  <header class="flex_header">
+    <div class="img_logo"></div>
+    <div class="flex_item">
+      <a  href="#buy-process">Planes</a>
+    </div>
+    <div class="flex_item">
+      <a  href="#mision">Misión</a>
+    </div>
+    <div class="flex_item">
+      <a  href="#temas">Temas</a>
+    </div>
+    <div class="flex_item">
+      <a  href="#FAQ">FAQ</a>
+    </div>
+    <label class="flex_board">
+      <a href="/register">Crear cuenta gratis</a>
+    </label>
+    <div class="flex_board2">
+      <a href="/register">Iniciar sesión</a>
+    </div>
+  </header>
+
+  <div class="grid">
+<!-- CONTENEDOR GENERAL -->
+<main class="wrap">
+
+  <!-- ====== 1) HERO: izquierda (texto/cta) + derecha (imagen) ====== -->
+  <section class="hero">
+    <div class="hero__left">
+      <h1 class="display">
+        Resuelve preguntas <span class="accent">MEDICAS</span> hoy con
+        <mark>Inteligencia</mark>
+      </h1>
+
+      <p class="lead">
+        DeepRecall es un sistema diseñado para maximizar tus probabilidades de éxito resolviendo una enorme base de preguntas estratégicamente seleccionadas.
+      </p>
+
+      <!-- bloque “rectángulo dentro de rectángulo” -->
+      <div class="cta-card">
+        <button class="btn btn-primary">Acceder</button>
+
+        <ul class="bullets">
+          <li>Preparate de la manera más optima</li>
+          <li>Base de datos depurada</li>
+          <li  id="temas" >UPCH, USMP, UCSUR</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hero__right">
+      <img src="/imagenes/puerquitodefinitivo.webp" alt="cerdoestudioso" />
+    </div>
+  </section>
+
+  <!-- ====== 2) BENEFICIOS: título y 3 tarjetas ====== -->
+  <section class="section">
+    <header class="section__head">
+      <p class="kicker">Enfocado a estudiantes de medicina en el Perú</p>
+      <h2 class="h2">Acelera tu preparación, maximiza tus notas</h2>
+      <p class="sublead">¿Te imaginas practicar tanto que el examen ya no te sorprenda?</p>
+    </header>
+
+  <main class="wrap">
+    <section class="cards">
+      <!-- Card 1 -->
+      <article class="card">
+        <div class="header">
+          <div class="icon" aria-hidden="true">
+            <!-- pequeño “documento” -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+  <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor"/>
+  <polyline points="7,12 11,16 17,9" fill="none" stroke="currentColor" stroke-width="2"/>
+</svg>
+
+          </div>
+          <h3 class="title">Preguntas depuradas</h3>
+        </div>
+        <ul class="list">
+          <li>Explicaciones detalladas</li>
+          <li>+2000 preguntas por tema</li>
+          <li>Basado en PPTs de tu universidad</li>
+        </ul>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="card">
+        <div class="header">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+  <rect x="4"  y="12" width="3" height="8"/>
+  <rect x="10" y="9"  width="3" height="11"/>
+  <rect x="16" y="6"  width="3" height="14"/>
+</svg>
+
+          </div>
+          <h3 class="title">Temas detallados</h3>
+        </div>
+        <ul class="list">
+          <li>Fármacologia-Microbiologia</li>
+          <li>Endocrino, Reproductor, Digestivo (beta)</li>
+          <li>Hemato, Inmuno, Locomotor (beta) </li>
+        </ul>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="card">
+        <div class="header">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+  <polygon points="13,2 5,14 11,14 9,22 19,9 13,9"/>
+</svg>
+
+
+          </div>
+          <h3 id="mision" class="title">Máxima eficiencia</h3>
+        </div>
+        <ul class="list">
+          <li>Interactivo</li>
+          <li>Repaso continuo</li>
+          <li>Compatibilidad total</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <!-- ====== 3) COMPARATIVA: 2 columnas ====== -->
+  <section class="compare">
+    <article class="panel bad">
+      <h3 class="h3">Preparación tradicional</h3>
+      <ul class="list_bad">
+        <li>Pierdes tiempo buscando preguntas</li>
+        <li>Bancos de preguntas sin ninguna fija</li>
+        <li>Preguntas mal hechas</li>
+        <li>Sin seguimiento</li>
+      </ul>
+      <p class="foot">🤬 Estrés y resultados inciertos</p>
+    </article>
+
+    <article class="panel good">
+      <h3 class="h3">Nuestra plataforma</h3>
+      <ul class="list_good">
+        <li>Acceso inmediato a preguntas</li>
+        <li>Estudia antes del parcial</li>
+        <li>Contenido basado en tu universidad</li>
+        <li>Progreso detallado</li>
+      </ul>
+      <p id="buy-process" class="foot">✳️ Notas más altas</p>
+    </article>
+  </section>
+
+  <!-- ====== 4) PRICING: título + 2 tarjetas ====== -->
+  <section class="section">
+    <header class="section__head">
+      <h2 class="h2">Elige tu plan y comienza hoy</h2>
+      <p class="sublead">Acceso completo a todas las funciones.</p>
+    </header>
+
+    <div class="pricing">
+        <fieldset class="price-card">
+        <legend class="badge">Recomendado</legend>
+        <h3 class="h3">RESIDENTE (anual)</h3>
+        <p class="price">$2.99 <span>/mes</span></p>
+        <ul class="list">
+          <li>+2000 preguntas por tema</li>
+          <li>Acceso completo</li>
+          <li>Actualización constante</li>
+          <li>Diseñamos primero la prueba que más necesites</li>
+        </ul>
+        <button class="btn btn-primary">Elegir plan</button>
+        </fieldset>
+      
+
+      <article class="price-card1">
+        <h3 class="h3">INTERNO (mensual)</h3>
+        <p class="price">$3.5 <span>/mes</span></p>
+        <ul class="list">
+          <li>+2000 preguntas por tema</li>
+          <li>Acceso completo</li>
+          <li>Actualización constante</li>
+        </ul>
+        <button class="btn">Elegir plan</button>
+      </article>
+    </div>
+  </section>
+
+  <!-- ====== 5) FAQ: título + acordeones ====== -->
+  <section class="section">
+    <header class="section__head">
+      <h2  id="FAQ" class="h2">Preguntas frecuentes</h2>
+      <p class="sublead">Resolvemos las dudas más comunes.</p>
+    </header>
+
+    <div class="faq">
+      <details>
+        <summary>¿En cuales facultades se basan?</summary>
+        <p>Nos basamos por ahora en la facultad de medicina de la UPCH, USMP y UCSUR</p>
+      </details>
+      <details>
+        <summary>¿Esta basado en PPTs de mi U?</summary>
+        <p>Sí. Se elabora una base de preguntas enorme con las slides de tus clases, para aumentar la probabilidad que se repitan en tu parcial.</p>
+      </details>
+      <details>
+        <summary>¿Puedo acceder si soy de otra U?</summary>
+        <p>Por supuesto, cubrimos todos los temas. Adaptamos el banco según las prioridades de cada universidad, para maximizar el aprendizaje.</p>
+      </details>
+      <details>
+        <summary>¿Funciona en celular y tablet?</summary>
+        <p>Totalmente responsive y usable en pantallas táctiles.</p>
+      </details>
+    </div>
+  </section>
+
+</main>
+
+  </div>
+  <div class="background"></div>
+</body>
+<script type="module">
+  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence, getIdTokenResult } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+  // === Firebase (solo Core + Auth acá) ===
+  const firebaseConfig = {
+    apiKey: "AIzaSyANLa7TRx91oot43wlbtbsVVc0ch7OY0Sg",
+    authDomain: "medgoxd.firebaseapp.com",
+    projectId: "medgoxd",
+    storageBucket: "medgoxd.firebasestorage.app",
+    messagingSenderId: "708738884850",
+    appId: "1:708738884850:web:3664cf28c7761804341c6b",
+  };
+
+  const app  = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  setPersistence(auth, browserLocalPersistence).catch(()=>{});
+
+  // ===== Helpers DOM =====
+  const $  = (s, r=document)=>r.querySelector(s);
+  const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+
+  const elCrear   = $(".flex_board");
+  const elLogin   = $(".flex_board2");
+  const ctaBtn    = $(".cta-card .btn-primary");
+  const planBtns  = $$(".pricing .btn"); // ambos "Elegir plan"
+
+  // ===== UI helpers =====
+  function toCheckout(){ location.href = "/checkout"; }
+  function toDashboard(){ location.href = "/dashboard"; }
+  function toRegister(next="/"){ location.href = `/register?next=${encodeURIComponent(next)}`; }
+
+  function setPlansForActive(active){
+    // CTA principal
+    if (ctaBtn){
+      if (active){ ctaBtn.textContent = "Entrar al producto"; ctaBtn.onclick = toDashboard; }
+      else       { ctaBtn.textContent = "Comprar";           ctaBtn.onclick = toCheckout; }
+    }
+    // Botones "Elegir plan"
+    planBtns.forEach(b=>{
+      if (active){
+        b.textContent = "Entrar al producto";
+        b.classList.add("btn-primary");
+        b.onclick = toDashboard;
+      } else {
+        b.textContent = "Elegir plan";
+        // el primero ya es primary; si quieres, no lo toques
+        b.onclick = toCheckout;
+      }
+    });
+  }
+
+  // ===== Cache local por usuario =====
+  const ENT_KEY = "ent:v2";
+  function entRead(uid){
+    try{
+      const j = JSON.parse(localStorage.getItem(ENT_KEY) || "null");
+      if (!j || j.uid !== uid) return null;
+      if (Date.now() > j.exp) return null;
+      return !!j.active;
+    }catch{ return null; }
+  }
+  function entWrite(uid, active, ttlMs = 6*60*60*1000){
+    try{
+      localStorage.setItem(ENT_KEY, JSON.stringify({ uid, active: !!active, exp: Date.now()+ttlMs }));
+    }catch{}
+  }
+
+  // ===== Firestore lazy (solo si hace falta) =====
+  let dbModPromise = null;
+  async function ensureDb(){
+    if (!dbModPromise){
+      dbModPromise = import("https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js").then(({ initializeFirestore, persistentLocalCache, persistentMultipleTabManager, doc, getDoc })=>{
+        const db = initializeFirestore(app, {
+          // Más rápido si WS funciona; si no, cae solo a long-polling:
+          experimentalAutoDetectLongPolling: true,
+          useFetchStreams: false,
+          localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
+        });
+        return { db, doc, getDoc };
+      });
+    }
+    return dbModPromise;
+  }
+
+  // getDoc: cache-first + carrera con timeout en red
+  async function getDocFast(path, timeoutMs=2500){
+    const { db, doc, getDoc } = await ensureDb();
+    const ref = doc(db, ...path);
+
+    // 1) cache primero
+    try{
+      const snapCache = await getDoc(ref, { source: "cache" });
+      if (snapCache.exists()) return snapCache;
+    }catch{}
+
+    // 2) red con timeout
+    const ctl = new AbortController();
+    const killer = setTimeout(()=>ctl.abort(), timeoutMs);
+    try{
+      const snapNet = await getDoc(ref, { signal: ctl.signal });
+      clearTimeout(killer);
+      return snapNet;
+    }catch(e){
+      clearTimeout(killer);
+      throw e;
+    }
+  }
+
+  // Lógica de verificación de acceso
+  async function hasActiveAccess(uid){
+    // A) 1º intento: Custom Claims (instantáneo si las usas)
+    try{
+      const tok = await getIdTokenResult(auth.currentUser, /*forceRefresh=*/false);
+      const cs  = tok?.claims || {};
+      // soporta subStatus o "ent" booleano
+      if (typeof cs.ent === "boolean") return cs.ent;
+      if (typeof cs.subStatus === "string") return ["active","trialing"].includes(cs.subStatus);
+    }catch{}
+
+    // B) 2º intento: cache local
+    const cached = entRead(uid);
+    if (typeof cached === "boolean") return cached;
+
+    // C) 3º intento: Firestore con timeout corto (no bloquea UI)
+    try{
+      const snap = await getDocFast(["users", uid], 2500);
+      if (!snap.exists()) return false;
+      const d = snap.data();
+      return ["active","trialing"].includes(d?.subStatus);
+    }catch{
+      return false;
+    }
+  }
+
+  // ===== Menú de usuario =====
+  function ensureUserMenu(name) {
+    let menu = document.querySelector("#navUserInjected");
+    if (!menu) {
+      const header = document.querySelector("header.flex_header");
+      if (!header) return;
+      menu = document.createElement("div");
+      menu.id = "navUserInjected";
+      menu.style.position = "relative";
+      menu.style.marginLeft = "auto";
+      menu.style.paddingRight = "20px";
+      menu.innerHTML = `
+        <button id="navUserBtn" class="btn" style="padding:10px 14px;border-radius:18px;background:#fff;color:#23272a;margin-left:10px;">
+          <span id="navUserName"></span> ▾
+        </button>
+        <div id="navUserDropdown" hidden style="position:absolute;right:10px;top:48px;background:#fff;color:#23272a;border-radius:12px;padding:8px 12px;box-shadow:0 10px 30px rgba(0,0,0,.15);min-width:180px;">
+          <a href="/dashboard" style="display:block;padding:8px 0;text-decoration:none;color:#23272a; font-family: abcginto">Mi producto</a>
+          <button id="navLogout" style="display:block;width:100%;text-align:left;background:none;border:none;padding:8px 0;color:#23272a;cursor:pointer; font-family: abcgintoheader">Cerrar sesión</button>
+        </div>
+      `;
+      header.appendChild(menu);
+      const btn = document.querySelector("#navUserBtn");
+      const dd  = document.querySelector("#navUserDropdown");
+      btn?.addEventListener("click", () => dd.hidden = !dd.hidden);
+      document.addEventListener("click", (e) => { if (dd && !dd.hidden && !menu.contains(e.target)) dd.hidden = true; });
+      document.querySelector("#navLogout")?.addEventListener("click", async () => { await signOut(auth); location.href = "/"; });
+    }
+    const nameEl = document.querySelector("#navUserName");
+    if (nameEl) nameEl.textContent = name || "Usuario";
+  }
+
+  // ===== Estado de Auth =====
+  onAuthStateChanged(auth, async (user) => {
+    document.documentElement.dataset.auth = user ? "in" : "out";
+
+    if (!user) {
+      elCrear?.removeAttribute("hidden");
+      elLogin?.removeAttribute("hidden");
+      $("#navUserInjected")?.remove();
+      // Botones en modo "no logueado"
+      if (ctaBtn){ ctaBtn.textContent = "Acceder"; ctaBtn.onclick = () => toRegister("/"); }
+      planBtns.forEach(b => b.onclick = () => toRegister("/checkout"));
+      return;
+    }
+
+    // Logueado
+    elCrear?.setAttribute("hidden","true");
+    elLogin?.setAttribute("hidden","true");
+    const visibleName = (user.displayName?.trim()) || (user.email ? user.email.split("@")[0] : "Usuario");
+    ensureUserMenu(visibleName);
+
+    if (!user.emailVerified) {
+      if (ctaBtn){ ctaBtn.textContent = "Verifica tu correo"; ctaBtn.onclick = () => alert("Revisa tu bandeja y confirma tu correo."); }
+      planBtns.forEach(b => b.onclick = () => alert("Verifica tu correo antes de comprar."));
+      return;
+    }
+
+    // 1) UI inmediata (optimista) con claims/cache/local (no espera red)
+    const cached = entRead(user.uid);
+    setPlansForActive(cached ?? false);
+
+    // 2) Verificación real liviana en background (timeout corto)
+    (window.requestIdleCallback || setTimeout)(async () => {
+      const activo = await hasActiveAccess(user.uid);   // usa claims > cache > FS (2.5s)
+      entWrite(user.uid, activo);
+      setPlansForActive(activo);
+      // (opcional) precalentar un doc liviano:
+      // try{ await getDocFast(["meta","app"], 2000); }catch{}
+    }, 1);
+  });
+</script>

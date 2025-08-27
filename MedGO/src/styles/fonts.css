@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "abcginto";
+    src: url("fonts/ABCGINTONORDCONDENSED-BOLD-TRIAL-BF651B7B7729958.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "abcgintoheader";
+    src: url("fonts/ABCGINTONORMAL-REGULAR-TRIAL-BF651B7B7846685.woff2") format("woff2");
+}

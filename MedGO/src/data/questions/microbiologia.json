@@ -1,0 +1,40 @@
+{
+  "title": "Cuestionario de Microbiología",
+  "category": "Teoría",
+  "items": [
+    {
+      "q": "La tinción de Gram diferencia a las bacterias principalmente por:",
+      "choices": [
+        "Presencia de LPS",
+        "Espesor de peptidoglicano",
+        "Porinas",
+        "Membrana externa",
+        "Ácido teicoico"
+      ],
+      "answer": 1,
+      "explain": "Gram+ retienen cristal violeta por su peptidoglicano grueso; Gram− no."
+    },
+    {
+      "q": "¿Qué estructura confiere rigidez a la pared bacteriana?",
+      "choices": [
+        "Peptidoglicano",
+        "Cápsula",
+        "Lipoproteínas",
+        "Ribosomas 70S"
+      ],
+      "answer": 0,
+      "explain": "El peptidoglicano (mureína) es el polímero responsable de la rigidez."
+    },
+    {
+      "q": "Un ejemplo clásico de bacteria Gram negativa es:",
+      "choices": [
+        "Staphylococcus aureus",
+        "Escherichia coli",
+        "Streptococcus pyogenes",
+        "Enterococcus faecalis"
+      ],
+      "answer": 1,
+      "explain": "E. coli es bacilo Gram negativo entérico."
+    }
+  ]
+}
