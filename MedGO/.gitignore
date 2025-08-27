@@ -1,19 +1,30 @@
-{
-  "name": "medgo",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/react": "^4.3.0",
-    "@types/react": "^19.1.11",
-    "@types/react-dom": "^19.1.7",
-    "astro": "^5.12.9",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
-  }
-}
+# Dependencias
+node_modules/
+
+# Build de Astro (salida)
+dist/
+
+# Archivos temporales de desarrollo
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Archivos de entorno (claves privadas)
+.env
+.env.*
+!.env.example
+
+# Directorios del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de editor
+.vscode/
+.idea/
+
+# Archivos de cache de Astro y frameworks
+.astro/
+.cache/
+
