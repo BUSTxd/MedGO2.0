@@ -55,7 +55,7 @@ header {
 }
 
 .img_logo {
-  background-image: url("imagenes/logo_uno_al_costado_de_otro_1.webp");
+  background-image: url("/imagenes/logo_uno_al_costado_de_otro_1.webp");
   background-size: contain;
   background-repeat: no-repeat;
   width: 100px;
