@@ -1,5 +1,6 @@
 ---
 import '../styles/fonts.css';
+import registerUrl from "../script/register.js";
 ---
 <html lang="en">
   <head>
@@ -7,7 +8,7 @@ import '../styles/fonts.css';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MedGO/Loggin</title>
-    <script type="module" src={Astro.resolve("../script/register.js")} defer></script>
+    <script type="module" src={registerUrl} defer></script>
   </head>
 
   <body>
