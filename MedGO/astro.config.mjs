@@ -5,5 +5,25 @@ import react from '@astrojs/react';
 
 export default defineConfig({
   integrations: [react()],
-  devToolbar: { enabled: false }
+  devToolbar: { enabled: false },
+  build: {
+    inlineStylesheets: 'auto'
+  },
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'firebase': ['@firebase/app', '@firebase/auth', '@firebase/firestore']
+          }
+        }
+      }
+    }
+  },
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/sharp'
+    }
+  },
+  compressHTML: true
 });
