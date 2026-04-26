@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from '@/styles/hero.module.css';
 
 export default function Hero() {
@@ -15,8 +16,12 @@ export default function Hero() {
           Farmacología y más, con rutas de aprendizaje que siguen tu currícula universitaria.
         </p>
         <div className={styles.heroCtas}>
-          <button className="btn-primary">Iniciar Sesión</button>
-          <button className="btn-ghost">Explorar cursos →</button>
+          <Link href="/auth/login">
+            <button className="btn-primary">Iniciar Sesión</button>
+          </Link>
+          <a href="#cursos">
+            <button className="btn-ghost">Explorar cursos →</button>
+          </a>
         </div>
       </div>
     </section>

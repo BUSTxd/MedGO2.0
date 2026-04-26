@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Logo from './Logo';
 import styles from '@/styles/navbar.module.css';
 
@@ -32,7 +33,9 @@ export default function Navbar() {
         <a href="#nosotros">Sobre Nosotros</a>
         <a href="#contacto">FAQ</a>
       </div>
-      <button className={styles.btnNav}>Iniciar Sesión</button>
+      <Link href="/auth/login">
+        <button className={styles.btnNav}>Iniciar Sesión</button>
+      </Link>
     </nav>
   );
 }
