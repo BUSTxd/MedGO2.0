@@ -24,7 +24,7 @@ export default function Navbar() {
       }}
     >
       <a className={styles.logo} href="#">
-        <Logo size={38} />
+        <Logo size={64} />
       </a>
       <div className={styles.links}>
         <a href="#cursos">Cursos</a>

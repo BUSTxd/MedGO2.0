@@ -85,7 +85,7 @@ export default function AuthPage() {
       <div className={styles.page}>
         <div className={styles.card}>
           <Link href="/" className={styles.logo}>
-            <Logo size={32} />
+            <Logo size={56} />
           </Link>
 
           <div className={styles.tabs}>
