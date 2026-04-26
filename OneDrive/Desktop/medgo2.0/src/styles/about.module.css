@@ -1,0 +1,91 @@
+.mission {
+  background: linear-gradient(135deg, rgba(59, 158, 221, 0.08), rgba(100, 60, 200, 0.08));
+  border: 1px solid rgba(59, 158, 221, 0.2);
+  border-radius: 20px;
+  padding: 36px 40px;
+  margin-bottom: 52px;
+  max-width: 760px;
+}
+
+.mission p {
+  font-size: 18px;
+  line-height: 1.75;
+  color: rgba(240, 238, 255, 0.85);
+  font-style: italic;
+}
+
+.mission span {
+  color: var(--blue);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 760px;
+}
+
+.teamCard {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  transition: transform 0.3s, border-color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.teamCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(59, 158, 221, 0.3);
+}
+
+.teamCard::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--purple-light));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.teamCard:hover::after {
+  opacity: 1;
+}
+
+.avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.role {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.bio {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.65;
+}

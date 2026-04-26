@@ -1,0 +1,141 @@
+.section {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 36px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.card.featured {
+  background: linear-gradient(145deg, rgba(59, 158, 221, 0.15), rgba(100, 60, 200, 0.15));
+  border-color: rgba(59, 158, 221, 0.4);
+  transform: scale(1.03);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card.featured:hover {
+  transform: scale(1.03) translateY(-4px);
+}
+
+.badge {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+
+.planName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.price {
+  font-size: 52px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.price span {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.period {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+
+.features {
+  list-style: none;
+  margin-bottom: 32px;
+}
+
+.features li {
+  font-size: 15px;
+  color: rgba(240, 238, 255, 0.8);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.features li::before {
+  content: '✓';
+  color: var(--blue);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.features li.disabled {
+  color: var(--muted);
+  opacity: 0.5;
+}
+
+.features li.disabled::before {
+  content: '—';
+  color: var(--muted);
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  cursor: pointer;
+  transition: all 0.25s;
+  border: none;
+}
+
+.btnPrimary {
+  background: linear-gradient(135deg, var(--blue), oklch(0.52 0.2 270));
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(59, 158, 221, 0.35);
+}
+
+.btnPrimary:hover {
+  box-shadow: 0 12px 32px rgba(59, 158, 221, 0.5);
+  transform: translateY(-1px);
+}
+
+.btnGhost {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btnGhost:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
