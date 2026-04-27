@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MedGO — Tu plataforma de estudio médico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #08061a;
+    --bg2: #0d0b28;
+    --purple: oklch(0.42 0.18 275);
+    --purple-light: oklch(0.62 0.18 275);
+    --blue: #3b9edd;
+    --orange: #f5a623;
+    --white: #f0eeff;
+    --muted: rgba(240,238,255,0.5);
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.08);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── DYNAMIC LIGHTING BG ─── */
+  .bg-stage {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0;
+    animation: orbFloat linear infinite;
+  }
+  .orb1 {
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, oklch(0.45 0.22 280) 0%, transparent 70%);
+    top: -200px; left: -150px;
+    animation-duration: 18s; animation-delay: 0s;
+    opacity: 0.35;
+  }
+  .orb2 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, oklch(0.50 0.20 260) 0%, transparent 70%);
+    top: 30%; right: -100px;
+    animation-duration: 22s; animation-delay: -6s;
+    opacity: 0.25;
+  }
+  .orb3 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, #1a4fa0 0%, transparent 70%);
+    bottom: -200px; left: 30%;
+    animation-duration: 26s; animation-delay: -12s;
+    opacity: 0.3;
+  }
+  .orb4 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, oklch(0.55 0.14 295) 0%, transparent 70%);
+    top: 10%; left: 50%;
+    animation-duration: 20s; animation-delay: -4s;
+    opacity: 0.2;
+  }
+  .orb5 {
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, #f5a62333 0%, transparent 70%);
+    top: 60%; right: 20%;
+    animation-duration: 24s; animation-delay: -9s;
+    opacity: 0.4;
+  }
+  @keyframes orbFloat {
+    0%   { transform: translate(0px, 0px) scale(1); }
+    25%  { transform: translate(60px, -80px) scale(1.1); }
+    50%  { transform: translate(-40px, 60px) scale(0.9); }
+    75%  { transform: translate(80px, 40px) scale(1.05); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .scan-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(59,158,221,0.4), transparent);
+    animation: scanDown 8s ease-in-out infinite;
+  }
+  @keyframes scanDown {
+    0%   { top: -2px; opacity: 0; }
+    5%   { opacity: 1; }
+    95%  { opacity: 0.5; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  /* ─── LAYOUT ─── */
+  .page { position: relative; z-index: 1; }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    height: 70px;
+    background: rgba(8,6,26,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: background 0.3s;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .nav-logo img { height: 36px; width: auto; }
+  .nav-logo-text { font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: -0.5px; }
+  .nav-logo-text span { color: var(--orange); }
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a {
+    color: var(--muted); font-size: 15px; font-weight: 400;
+    text-decoration: none; transition: color 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .btn-nav {
+    background: var(--blue); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 10px 22px; font-size: 14px; font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer; transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-nav:hover { background: oklch(0.65 0.18 225); transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 0 48px;
+    padding-top: 70px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-img {
+    position: absolute;
+    inset: 0; z-index: 0;
+    background: url('assets/hero-bg.png') center 30% / cover no-repeat;
+  }
+  /* Directional overlay: dark left for text, opens up on right */
+  .hero-bg-img::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(105deg,
+        rgba(8,6,26,0.96) 0%,
+        rgba(8,6,26,0.88) 35%,
+        rgba(8,6,26,0.55) 55%,
+        rgba(8,6,26,0.25) 75%,
+        rgba(8,6,26,0.40) 100%
+      );
+    filter: none;
+  }
+  /* Bottom fade into next section */
+  .hero-bg-img::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 280px;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+    filter: none;
+  }
+  .hero-inner {
+    max-width: 1200px; margin: 0 auto; width: 100%;
+    display: flex; flex-direction: column;
+    align-items: flex-start; text-align: left;
+    position: relative; z-index: 1;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(59,158,221,0.12); border: 1px solid rgba(59,158,221,0.3);
+    border-radius: 100px; padding: 6px 16px;
+    font-size: 13px; font-weight: 500; color: var(--blue);
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge::before {
+    content: ''; width: 7px; height: 7px;
+    background: var(--blue); border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+  .hero h1 {
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 800; line-height: 1.08;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--blue), var(--purple-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 18px; color: var(--muted); line-height: 1.7;
+    max-width: 560px; margin-bottom: 36px;
+    font-weight: 400;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .hero-ctas {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blue), oklch(0.52 0.2 270));
+    color: #fff; border: none; border-radius: 10px;
+    padding: 14px 32px; font-size: 16px; font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer; transition: all 0.25s;
+    box-shadow: 0 8px 30px rgba(59,158,221,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,158,221,0.5); }
+  .btn-ghost {
+    background: transparent; color: var(--white);
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 10px;
+    padding: 14px 32px; font-size: 16px; font-weight: 500;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer; transition: all 0.25s;
+  }
+  .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 48px;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  .stat-item { display: flex; flex-direction: column; }
+  .stat-num { font-size: 28px; font-weight: 800; color: var(--white); }
+  .stat-num span { color: var(--orange); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  /* Hero mascot side */
+  .hero-visual {
+    display: flex; justify-content: center; align-items: flex-end;
+    position: relative;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .mascot-container {
+    position: relative;
+    width: 420px; height: 460px;
+  }
+  .mascot-glow {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 300px; height: 80px;
+    background: radial-gradient(ellipse, rgba(59,158,221,0.4), transparent 70%);
+    filter: blur(20px);
+    animation: glowPulse 3s ease-in-out infinite;
+  }
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.6; transform: translateX(-50%) scaleX(1); }
+    50% { opacity: 1; transform: translateX(-50%) scaleX(1.2); }
+  }
+  .mascot-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(145deg, rgba(59,158,221,0.08), rgba(100,60,200,0.08));
+    border: 1px dashed rgba(59,158,221,0.25);
+    border-radius: 24px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 12px;
+    position: relative; overflow: hidden;
+  }
+  .mascot-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(59,158,221,0.03) 10px,
+      rgba(59,158,221,0.03) 20px
+    );
+  }
+  .mascot-icon {
+    font-size: 80px; filter: drop-shadow(0 0 20px rgba(59,158,221,0.5));
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+  .mascot-label {
+    font-size: 13px; color: var(--muted); font-family: monospace;
+    text-align: center; line-height: 1.6; padding: 0 20px;
+  }
+
+  /* Floating cards on hero */
+  .float-card {
+    position: absolute;
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 10px;
+    animation: floatCard 6s ease-in-out infinite;
+    white-space: nowrap;
+  }
+  .float-card.card1 { top: 30px; right: -20px; animation-delay: 0s; }
+  .float-card.card2 { bottom: 80px; left: -30px; animation-delay: 2s; }
+  .float-card.card3 { top: 160px; right: -40px; animation-delay: 4s; }
+  @keyframes floatCard {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  .float-icon { font-size: 24px; }
+  .float-info p { font-size: 13px; font-weight: 600; color: var(--white); }
+  .float-info span { font-size: 11px; color: var(--muted); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTIONS COMMON ─── */
+  section { padding: 100px 48px; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue); margin-bottom: 14px;
+  }
+  .section-title {
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 800; letter-spacing: -1px;
+    line-height: 1.1; margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 17px; color: var(--muted); line-height: 1.7;
+    max-width: 560px; margin-bottom: 56px;
+  }
+
+  /* ─── CÓMO FUNCIONA ─── */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .step-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .step-card:hover { transform: translateY(-4px); border-color: rgba(59,158,221,0.3); }
+  .step-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--purple-light));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .step-card:hover::before { opacity: 1; }
+  .step-num {
+    font-size: 72px; font-weight: 900; line-height: 1;
+    color: rgba(255,255,255,0.04);
+    position: absolute; top: 16px; right: 20px;
+    letter-spacing: -4px;
+  }
+  .step-icon-wrap {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 20px;
+  }
+  .step-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .step-card p { font-size: 15px; color: var(--muted); line-height: 1.65; }
+
+  /* ─── CURSOS ─── */
+  .courses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .course-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  .course-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    border-color: rgba(255,255,255,0.15);
+  }
+  .course-banner {
+    height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: rgba(255,255,255,0.35);
+    font-family: monospace; position: relative; overflow: hidden;
+  }
+  .course-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent, transparent 8px,
+      rgba(255,255,255,0.02) 8px, rgba(255,255,255,0.02) 16px
+    );
+  }
+  .course-body { padding: 22px 22px 26px; }
+  .course-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; border-radius: 6px;
+    padding: 4px 10px; margin-bottom: 12px;
+  }
+  .course-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+  .course-card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 18px; }
+  .course-meta { display: flex; gap: 16px; }
+  .meta-item { display: flex; align-items: center; gap: 5px; font-size: 13px; color: var(--muted); }
+  .meta-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+  .course-progress { margin-top: 16px; }
+  .progress-bar {
+    height: 4px; background: rgba(255,255,255,0.08);
+    border-radius: 2px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--purple-light));
+    transition: width 0.6s ease;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: var(--muted); margin-top: 6px;
+  }
+
+  /* ─── PRECIOS ─── */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .plan-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px; padding: 36px 28px;
+    position: relative; overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .plan-card.featured {
+    background: linear-gradient(145deg, rgba(59,158,221,0.15), rgba(100,60,200,0.15));
+    border-color: rgba(59,158,221,0.4);
+    transform: scale(1.03);
+  }
+  .plan-card:hover { transform: translateY(-4px); }
+  .plan-card.featured:hover { transform: scale(1.03) translateY(-4px); }
+  .plan-badge {
+    position: absolute; top: 20px; right: 20px;
+    background: var(--orange); color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; border-radius: 6px; padding: 4px 10px;
+  }
+  .plan-name { font-size: 14px; font-weight: 600; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px; }
+  .plan-price { font-size: 52px; font-weight: 900; letter-spacing: -2px; line-height: 1; margin-bottom: 4px; }
+  .plan-price span { font-size: 20px; font-weight: 500; color: var(--muted); }
+  .plan-period { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+  .plan-features { list-style: none; margin-bottom: 32px; }
+  .plan-features li {
+    font-size: 15px; color: rgba(240,238,255,0.8);
+    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .plan-features li::before {
+    content: '✓'; color: var(--blue);
+    font-weight: 700; flex-shrink: 0;
+  }
+  .plan-features li.disabled { color: var(--muted); opacity: 0.5; }
+  .plan-features li.disabled::before { content: '—'; color: var(--muted); }
+  .btn-plan {
+    width: 100%; padding: 14px; border-radius: 12px;
+    font-size: 15px; font-weight: 600; font-family: 'Outfit', sans-serif;
+    cursor: pointer; transition: all 0.25s; border: none;
+  }
+  .btn-plan-primary {
+    background: linear-gradient(135deg, var(--blue), oklch(0.52 0.2 270));
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(59,158,221,0.35);
+  }
+  .btn-plan-primary:hover { box-shadow: 0 12px 32px rgba(59,158,221,0.5); transform: translateY(-1px); }
+  .btn-plan-ghost {
+    background: transparent; color: var(--white);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .btn-plan-ghost:hover { border-color: var(--blue); color: var(--blue); }
+
+  /* ─── SOBRE NOSOTROS ─── */
+  .team-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 32px; max-width: 760px;
+  }
+  .team-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px; padding: 36px 32px;
+    display: flex; flex-direction: column; align-items: flex-start;
+    gap: 14px;
+    transition: transform 0.3s, border-color 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .team-card:hover { transform: translateY(-4px); border-color: rgba(59,158,221,0.3); }
+  .team-card::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--purple-light));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .team-card:hover::after { opacity: 1; }
+  .team-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .team-name { font-size: 20px; font-weight: 700; }
+  .team-role { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  .team-bio { font-size: 15px; color: var(--muted); line-height: 1.65; }
+  .about-mission {
+    background: linear-gradient(135deg, rgba(59,158,221,0.08), rgba(100,60,200,0.08));
+    border: 1px solid rgba(59,158,221,0.2);
+    border-radius: 20px; padding: 36px 40px;
+    margin-bottom: 52px;
+    max-width: 760px;
+  }
+  .about-mission p {
+    font-size: 18px; line-height: 1.75; color: rgba(240,238,255,0.85);
+    font-style: italic;
+  }
+  .about-mission span { color: var(--blue); font-style: normal; font-weight: 600; }
+
+  /* ─── FAQ ─── */
+  .faq-list { max-width: 760px; }
+  .faq-item {
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    overflow: hidden;
+  }
+  .faq-q {
+    width: 100%; background: none; border: none;
+    color: var(--white); font-family: 'Outfit', sans-serif;
+    font-size: 17px; font-weight: 600;
+    text-align: left; padding: 22px 0;
+    cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: color 0.2s;
+  }
+  .faq-q:hover { color: var(--blue); }
+  .faq-chevron {
+    width: 22px; height: 22px; flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.3s, border-color 0.3s;
+    font-size: 12px;
+  }
+  .faq-item.open .faq-chevron { transform: rotate(180deg); border-color: var(--blue); color: var(--blue); }
+  .faq-a {
+    font-size: 15px; color: var(--muted); line-height: 1.75;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    padding: 0;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding-bottom: 22px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .footer-logo {
+    font-size: 20px; font-weight: 700;
+    color: var(--white); letter-spacing: -0.5px;
+  }
+  .footer-logo span { color: var(--orange); }
+  .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+  .footer-links a {
+    font-size: 14px; color: var(--muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy { font-size: 13px; color: rgba(240,238,255,0.3); }
+
+  /* ─── SCROLL FADE IN ─── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- Dynamic Background -->
+<div class="bg-stage">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="orb orb4"></div>
+  <div class="orb orb5"></div>
+  <div class="grid-overlay"></div>
+  <div class="scan-line"></div>
+</div>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+
+
+
+const { useState, useEffect, useRef } = React;
+
+// ─── LOGO SVG (recreated from brand) ───
+function Logo({ size = 36 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
+      {/* Stethoscope shape */}
+      <path d="M32 22 C32 14 40 10 48 10 C56 10 64 14 64 22" stroke="#3b9edd" strokeWidth="10" strokeLinecap="round" fill="none" />
+      <circle cx="50" cy="24" r="9" fill="#f5a623" />
+      <path d="M32 22 L32 54 C32 66 42 72 50 72 C58 72 68 66 68 54 L68 48" stroke="#3b9edd" strokeWidth="8" strokeLinecap="round" fill="none" />
+      <circle cx="70" cy="44" r="8" fill="#3b9edd" />
+    </svg>);
+
+}
+
+// ─── NAVBAR ───
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 30);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+
+  return (
+    <nav style={{ background: scrolled ? 'linear-gradient(180deg, rgba(8,6,26,0.88) 0%, rgba(8,6,26,0.7) 100%)' : 'linear-gradient(180deg, rgba(8,6,26,0.45) 0%, rgba(8,6,26,0.05) 100%)', lineHeight: "1.4" }}>
+      <a className="nav-logo" href="#">
+        <Logo size={38} />
+        <span className="nav-logo-text">Med<span>GO</span></span>
+      </a>
+      <div className="nav-links">
+        <a href="#cursos">Cursos</a>
+        <a href="#precios">Precios</a>
+        <a href="#nosotros">Sobre Nosotros</a>
+        <a href="#contacto">FAQ</a>
+      </div>
+      <button className="btn-nav">Iniciar Sesión</button>
+    </nav>);
+
+}
+
+// ─── HERO ───
+function Hero() {
+  return (
+    <section className="hero">
+      {/* Full-bleed background image */}
+      <div className="hero-bg-img"></div>
+
+      <div className="hero-inner">
+        {/* Left — text content */}
+        <div>
+          <h1>Tu estudio médico,<br /><em>estructurado</em> y<br />personalizado.</h1>
+          <p className="hero-sub" style={{ fontSize: "15px", width: "460px" }}>Aprende cada materia exactamente como dice tu sílabo. Microbiología, Cardiología, Fármacologia y más, con rutas de aprendizaje que siguen tu currícula universitaria.
+
+          </p>
+          <div className="hero-ctas">
+            <button className="btn-primary">Iniciar Sesión</button>
+            <button className="btn-ghost">Explorar cursos →</button>
+          </div>
+        </div>
+      </div>
+    </section>);
+
+}
+
+// ─── CÓMO FUNCIONA ───
+const StepIcon1 = () =>
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+    <rect x="4" y="2" width="13" height="17" rx="2" stroke="#3b9edd" strokeWidth="1.8" />
+    <path d="M7 7h7M7 10.5h7M7 14h4.5" stroke="#3b9edd" strokeWidth="1.6" strokeLinecap="round" />
+    <circle cx="19" cy="19" r="4" stroke="#3b9edd" strokeWidth="1.6" />
+    <path d="M17 19h4M19 17v4" stroke="#3b9edd" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>;
+
+const StepIcon2 = () =>
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+    <circle cx="13" cy="13" r="9" stroke="#a78bfa" strokeWidth="1.8" />
+    <path d="M13 8v5l3.5 3.5" stroke="#a78bfa" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx="13" cy="13" r="1.2" fill="#a78bfa" />
+  </svg>;
+
+const StepIcon3 = () =>
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+    <circle cx="13" cy="13" r="9" stroke="#f5a623" strokeWidth="1.8" />
+    <path d="M8.5 13.5L11.5 16.5L18 9.5" stroke="#f5a623" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>;
+
+
+const stepIcons = [<StepIcon1 />, <StepIcon2 />, <StepIcon3 />];
+
+const steps = [
+{
+  color: '#3b9edd', bg: 'rgba(59,158,221,0.12)',
+  title: 'Avanza a la par', num: '01',
+  desc: 'Trabajamos con el sílabo oficial de tu universidad. MedGO te ayuda a seguir las clases y repasarlas optimizando tu dia.'
+},
+{
+  color: '#a78bfa', bg: 'rgba(167,139,250,0.12)',
+  title: 'Ruta personalizada', num: '02',
+  desc: 'Organiza tus días semana a semana exactamente con los temas y evaluciones de tu currícula médica.'
+},
+{
+  color: '#f5a623', bg: 'rgba(245,166,35,0.12)',
+  title: 'Aprende y evalúate', num: '03',
+  desc: 'Estudia con lecciones, videos (beta) y quizzes. Monitorea tu progreso por unidad temática y prepárate para tus exámenes.'
+}];
+
+
+
+function HowItWorks() {
+  return (
+    <section id="como-funciona" style={{ background: 'rgba(255,255,255,0.015)' }}>
+      <div className="section-inner reveal">
+        <span className="section-tag">Cómo funciona</span>
+        <h2 className="section-title">Aprende según <em style={{ fontStyle: 'normal', color: 'var(--blue)' }}>tu sílabo</em>,<br />no según otros.</h2>
+        <p className="section-sub">Tres pasos para transformar tu forma de estudiar medicina.</p>
+        <div className="steps">
+          {steps.map((s, i) =>
+          <div className="step-card" key={i} style={{ animationDelay: `${i * 0.15}s` }}>
+              <div className="step-num">{s.num}</div>
+              <div className="step-icon-wrap" style={{ background: s.bg }}>
+                {stepIcons[i]}
+              </div>
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>);
+
+}
+
+// ─── CURSOS ───
+const courses = [
+{
+  emoji: '🧫', color: '#3b9edd', bgFrom: '#0a1e35', bgTo: '#0d2a4a',
+  tag: 'Ciencias básicas', tagBg: 'rgba(59,158,221,0.15)', tagColor: '#3b9edd',
+  name: 'Microbiología Médica',
+  desc: 'Bacterias, virus, hongos y parásitos. Cobertura completa del sílabo UNMSM y afines.',
+  weeks: '14 semanas', units: '8 unidades', progress: 87
+},
+{
+  emoji: '🫀', color: '#f5a623', bgFrom: '#2a1800', bgTo: '#3d2200',
+  tag: 'Clínica', tagBg: 'rgba(245,166,35,0.15)', tagColor: '#f5a623',
+  name: 'Cardiología Clínica',
+  desc: 'Fisiopatología, semiología cardíaca, ECG y manejo de las principales cardiopatías.',
+  weeks: '12 semanas', units: '6 unidades', progress: 43
+},
+{
+  emoji: '💊', color: '#a78bfa', bgFrom: '#140d2e', bgTo: '#1e1040',
+  tag: 'Farmacología', tagBg: 'rgba(167,139,250,0.15)', tagColor: '#a78bfa',
+  name: 'Farmacología General',
+  desc: 'Farmacocinética, farmacodinamia y grupos farmacológicos principales con enfoque clínico.',
+  weeks: '16 semanas', units: '10 unidades', progress: 20
+}];
+
+
+function Courses() {
+  return (
+    <section id="cursos">
+      <div className="section-inner reveal">
+        <span className="section-tag">Cursos disponibles</span>
+        <h2 className="section-title">Materias que dominan<br />los mejores estudiantes.</h2>
+        <p className="section-sub">Cada curso sigue la estructura de tu sílabo universitario. Aprende en el orden correcto.</p>
+        <div className="courses-grid">
+          {courses.map((c, i) =>
+          <div className="course-card" key={i}>
+              <div className="course-banner" style={{ background: `linear-gradient(135deg, ${c.bgFrom}, ${c.bgTo})` }}>
+                <span style={{ fontSize: 64, position: 'relative', zIndex: 1, filter: `drop-shadow(0 0 24px ${c.color}88)` }}>{c.emoji}</span>
+              </div>
+              <div className="course-body">
+                <span className="course-tag" style={{ background: c.tagBg, color: c.tagColor }}>{c.tag}</span>
+                <h3>{c.name}</h3>
+                <p>{c.desc}</p>
+                <div className="course-meta">
+                  <div className="meta-item"><div className="meta-dot"></div>{c.weeks}</div>
+                  <div className="meta-item"><div className="meta-dot"></div>{c.units}</div>
+                </div>
+                <div className="course-progress">
+                  <div className="progress-bar">
+                    <div className="progress-fill" style={{ width: `${c.progress}%`, background: `linear-gradient(90deg, ${c.color}, ${c.color}99)` }}></div>
+                  </div>
+                  <div className="progress-label">
+                    <span>Progreso del sílabo</span>
+                    <span style={{ color: c.color, fontWeight: 600 }}>{c.progress}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>);
+
+}
+
+// ─── PRECIOS ───
+const plans = [
+{
+  name: 'Gratuito', price: 'S/ 0', period: 'Para siempre',
+  features: [
+  '1 curso activo',
+  'Lecciones básicas',
+  'Quizzes de práctica',
+  { text: 'Sílabo personalizado', disabled: true },
+  { text: 'Acceso a todos los cursos', disabled: true }],
+
+  btnClass: 'btn-plan-ghost', btnText: 'Empezar gratis',
+  featured: false
+},
+{
+  name: 'Estudiante', price: 'S/ 39', period: '/ mes',
+  features: [
+  'Todos los cursos',
+  'Sílabo personalizado',
+  'Quizzes ilimitados',
+  'Seguimiento de progreso',
+  'Soporte prioritario'],
+
+  btnClass: 'btn-plan-primary', btnText: 'Empezar ahora',
+  featured: true, badge: 'Popular'
+},
+{
+  name: 'Pro Anual', price: 'S/ 299', period: '/ año · Ahorra 38%',
+  features: [
+  'Todo lo de Estudiante',
+  'Exámenes simulacro',
+  'Flashcards AI',
+  'Descarga offline',
+  'Comunidad exclusiva'],
+
+  btnClass: 'btn-plan-ghost', btnText: 'Elegir Pro',
+  featured: false
+}];
+
+
+function Pricing() {
+  return (
+    <section id="precios" style={{ background: 'rgba(255,255,255,0.015)' }}>
+      <div className="section-inner reveal">
+        <span className="section-tag">Planes y Precios</span>
+        <h2 className="section-title">Invierte en tu<br /><em style={{ fontStyle: 'normal', color: 'var(--orange)' }}>carrera médica.</em></h2>
+        <p className="section-sub">Sin contratos largos. Cancela cuando quieras.</p>
+        <div className="pricing-grid">
+          {plans.map((p, i) =>
+          <div className={`plan-card ${p.featured ? 'featured' : ''}`} key={i}>
+              {p.badge && <span className="plan-badge">{p.badge}</span>}
+              <div className="plan-name">{p.name}</div>
+              <div className="plan-price">{p.price} <span>{p.period}</span></div>
+              <ul className="plan-features">
+                {p.features.map((f, j) =>
+              <li key={j} className={f.disabled ? 'disabled' : ''}>
+                    {typeof f === 'string' ? f : f.text}
+                  </li>
+              )}
+              </ul>
+              <button className={`btn-plan ${p.btnClass}`}>{p.btnText}</button>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>);
+
+}
+
+// ─── SOBRE NOSOTROS ───
+function AboutUs() {
+  const team = [
+  {
+    initials: 'FD',
+    name: 'Fernad Durand',
+    role: 'Co-fundador & CEO',
+    bio: 'Estudiante de medicina con la visión de transformar cómo los futuros médicos aprenden. Creó MedGO para que ningún sílabo quede sin cubrir.',
+    color: '#3b9edd', bg: 'rgba(59,158,221,0.15)'
+  },
+  {
+    initials: 'SC',
+    name: 'Sofia Colchado',
+    role: 'Co-fundadora & Directora Académica',
+    bio: 'Apasionada por la educación médica de calidad. Diseña las rutas de aprendizaje y garantiza que cada contenido esté alineado con los sílabos universitarios.',
+    color: '#a78bfa', bg: 'rgba(167,139,250,0.15)'
+  }];
+
+
+  return (
+    <section id="nosotros">
+      <div className="section-inner reveal">
+        <span className="section-tag">Sobre Nosotros</span>
+        <h2 className="section-title">Creado por estudiantes,<br /><em style={{ fontStyle: 'normal', color: 'var(--blue)' }}>para estudiantes.</em></h2>
+
+        <div className="about-mission">
+          <p>
+            "MedGO nació de la necesidad de estudiar medicina sin una guía clara. Queremos que cada estudiante tenga una 
+            <span>  ruta estructurada, personalizada</span> y
+            alineada con su universidad — porque aprender medicina merece algo mejor que un PDF desordenado."
+          </p>
+        </div>
+
+        <div className="team-grid">
+          {team.map((t, i) =>
+          <div className="team-card" key={i}>
+              <div className="team-avatar" style={{ background: t.bg, color: t.color }}>
+                {t.initials}
+              </div>
+              <div>
+                <div className="team-name">{t.name}</div>
+                <div className="team-role" style={{ color: t.color, marginTop: 4 }}>{t.role}</div>
+              </div>
+              <p className="team-bio">{t.bio}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>);
+
+}
+
+// ─── FAQ ───
+const faqs = [
+{
+  q: '¿El contenido sigue exactamente mi sílabo universitario?',
+  a: 'Sí. Al ingresar tu universidad y carrera, MedGO mapea cada tema del sílabo oficial con nuestras lecciones. Si tu sílabo tiene variaciones, puedes ajustarlo manualmente desde tu perfil.'
+},
+{
+  q: '¿Qué pasa si mi universidad no está en la lista?',
+  a: 'Puedes ingresar tu sílabo manualmente en formato PDF o texto. Nuestro sistema lo procesa y genera tu ruta de estudio en minutos. También puedes usar los sílabos estándar de UNMSM como referencia.'
+},
+{
+  q: '¿Puedo compartir mi cuenta con un compañero?',
+  a: 'Cada cuenta es personal ya que el progreso, los quizzes y la ruta son individuales. Sin embargo, con el plan Pro puedes formar grupos de estudio con tus compañeros.'
+},
+{
+  q: '¿Los cursos incluyen imágenes histológicas y casos clínicos?',
+  a: 'Sí. Los cursos de Microbiología y Cardiología incluyen imágenes de atlas, casos clínicos comentados y videos de procedimientos. El contenido varía según el plan elegido.'
+},
+{
+  q: '¿Cómo cancelo mi suscripción?',
+  a: 'Puedes cancelar en cualquier momento desde tu panel de cuenta. No hay penalidades ni periodos mínimos. Mantendrás acceso hasta el fin del período pagado.'
+}];
+
+
+function FAQ() {
+  const [open, setOpen] = useState(null);
+  return (
+    <section id="contacto">
+      <div className="section-inner reveal">
+        <span className="section-tag">FAQ</span>
+        <h2 className="section-title">Preguntas frecuentes.</h2>
+        <p className="section-sub">Todo lo que necesitas saber antes de empezar.</p>
+        <div className="faq-list">
+          {faqs.map((f, i) =>
+          <div className={`faq-item ${open === i ? 'open' : ''}`} key={i}>
+              <button className="faq-q" onClick={() => setOpen(open === i ? null : i)}>
+                {f.q}
+                <span className="faq-chevron">▾</span>
+              </button>
+              <div className="faq-a">{f.a}</div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>);
+
+}
+
+// ─── FOOTER ───
+function Footer() {
+  return (
+    <footer>
+      <div className="footer-logo">Med<span>GO</span></div>
+      <div className="footer-links">
+        <a href="#">Cursos</a>
+        <a href="#">Precios</a>
+        <a href="#">Sobre Nosotros</a>
+        <a href="#">Contacto</a>
+        <a href="#">Privacidad</a>
+      </div>
+      <div className="footer-copy">© 2026 MedGO. Todos los derechos reservados.</div>
+    </footer>);
+
+}
+
+// ─── APP ───
+function App() {
+  useEffect(() => {
+    // Scroll reveal
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="page">
+      <Navbar />
+      <Hero />
+      <HowItWorks />
+      <Courses />
+      <Pricing />
+      <AboutUs />
+      <FAQ />
+      <Footer />
+    </div>);
+
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
