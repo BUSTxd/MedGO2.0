@@ -18,6 +18,11 @@ export const metadata: Metadata = {
   ),
   title: 'MedGO — Tu plataforma de estudio médico',
   description: 'Tu estudio médico, estructurado y personalizado.',
+  icons: {
+    icon: '/favicon.webp',
+    shortcut: '/favicon.webp',
+    apple: '/favicon.webp',
+  },
   openGraph: {
     title: 'MedGO — Tu plataforma de estudio médico',
     description: 'Tu estudio médico, estructurado y personalizado.',
