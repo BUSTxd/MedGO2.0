@@ -10,8 +10,27 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : 'http://localhost:3000'
+  ),
   title: 'MedGO — Tu plataforma de estudio médico',
-  description: 'Aprende cada materia exactamente como dice tu sílabo.',
+  description: 'Tu estudio médico, estructurado y personalizado.',
+  openGraph: {
+    title: 'MedGO — Tu plataforma de estudio médico',
+    description: 'Tu estudio médico, estructurado y personalizado.',
+    images: [{ url: '/og-image.webp' }],
+    locale: 'es_PE',
+    type: 'website',
+    siteName: 'MedGO',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'MedGO — Tu plataforma de estudio médico',
+    description: 'Tu estudio médico, estructurado y personalizado.',
+    images: ['/og-image.webp'],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
