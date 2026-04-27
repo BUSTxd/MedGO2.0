@@ -6,11 +6,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 48px;
-  height: 70px;
+  height: 91px;
   background: rgba(8, 6, 26, 0.7);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   transition: background 0.3s;
+  flex-wrap: wrap;
 }
 
 .logo {
@@ -18,22 +19,13 @@
   align-items: center;
   gap: 10px;
   text-decoration: none;
-}
-
-.logoText {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--white);
-  letter-spacing: -0.5px;
-}
-
-.logoText span {
-  color: var(--orange);
+  flex-shrink: 0;
 }
 
 .links {
   display: flex;
   gap: 36px;
+  align-items: center;
 }
 
 .links a {
@@ -66,4 +58,97 @@
 .btnNav:hover {
   background: oklch(0.65 0.18 225);
   transform: translateY(-1px);
+}
+
+/* ─── Hamburger ─── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  flex-shrink: 0;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.bar1Open {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.bar2Open {
+  opacity: 0;
+}
+
+.bar3Open {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobileLogin {
+  display: none;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .nav {
+    padding: 0 20px;
+    height: auto;
+    min-height: 64px;
+    align-items: center;
+  }
+
+  .logo {
+    padding: 10px 0;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .desktopLogin {
+    display: none;
+  }
+
+  .links {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0;
+    padding: 12px 0 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .links.open {
+    display: flex;
+  }
+
+  .links a {
+    font-size: 16px;
+    padding: 12px 0;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .mobileLogin {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  .mobileLogin button {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+  }
 }

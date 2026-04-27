@@ -89,3 +89,13 @@
   color: var(--muted);
   line-height: 1.65;
 }
+
+@media (max-width: 640px) {
+  .mission {
+    padding: 24px 20px;
+  }
+
+  .teamGrid {
+    grid-template-columns: 1fr;
+  }
+}

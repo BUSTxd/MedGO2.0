@@ -35,6 +35,18 @@ section {
   padding: 100px 48px;
 }
 
+@media (max-width: 768px) {
+  section {
+    padding: 72px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  section {
+    padding: 56px 16px;
+  }
+}
+
 .section-inner {
   max-width: 1200px;
   margin: 0 auto;

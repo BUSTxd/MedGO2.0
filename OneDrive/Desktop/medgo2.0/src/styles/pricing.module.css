@@ -139,3 +139,23 @@
   border-color: var(--blue);
   color: var(--blue);
 }
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card.featured {
+    transform: none;
+  }
+
+  .card.featured:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
