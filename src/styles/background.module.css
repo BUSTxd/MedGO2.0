@@ -9,9 +9,11 @@
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
+  filter: blur(80px);
   opacity: 0;
   animation: orbFloat linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .orb1 {

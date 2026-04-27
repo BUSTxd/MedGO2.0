@@ -8,6 +8,7 @@ export default function Logo({ size = 36 }: { size?: number }) {
       width={size}
       height={size}
       style={{ objectFit: 'contain' }}
+      priority
     />
   );
 }
