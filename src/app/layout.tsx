@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Outfit } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 const outfit = Outfit({
@@ -39,7 +40,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preload" as="image" href="/assets/hero-bg.webp" fetchPriority="high" />
       </head>
-      <body className={outfit.className}>{children}</body>
+      <body className={outfit.className}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
