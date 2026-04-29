@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
+import Logo from '@/components/Logo';
 import { createClient } from '@/lib/supabase/server';
 import styles from '@/styles/cursos.module.css';
 
@@ -58,7 +58,7 @@ export default async function CursosPage() {
     <div className={styles.page}>
       <header className={styles.topBar}>
         <Link href="/">
-          <Image src="/assets/logo1.webp" alt="MedGO" width={100} height={32} style={{ objectFit: 'contain' }} />
+          <Logo size={91} />
         </Link>
         <div className={styles.userChip}>
           {nombre}
