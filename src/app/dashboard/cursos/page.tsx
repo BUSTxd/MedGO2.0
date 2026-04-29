@@ -60,7 +60,7 @@ export default async function CursosPage() {
       <Background />
       <header className={styles.topBar}>
         <Link href="/">
-          <Logo size={91} />
+          <Logo size={44} />
         </Link>
         <div className={styles.userChip}>
           {nombre}
