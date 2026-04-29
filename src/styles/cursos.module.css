@@ -8,7 +8,7 @@
 .container {
   max-width: 860px;
   margin: 0 auto;
-  padding: 28px 24px 60px;
+  padding: 40px 24px 80px;
 }
 
 .topBar {
@@ -180,7 +180,7 @@
 
 /* ─── COURSE HEADER ─── */
 .courseHeader {
-  margin-bottom: 14px;
+  margin-bottom: 24px;
 }
 
 .courseTitle {
@@ -193,7 +193,7 @@
 .courseSubtitle {
   font-size: 14px;
   color: var(--muted);
-  margin-bottom: 8px;
+  margin-bottom: 14px;
 }
 
 .courseMeta {
@@ -224,11 +224,11 @@
   background: rgba(255, 255, 255, 0.025);
   border: 1px solid var(--card-border);
   border-radius: 12px;
-  padding: 12px 16px;
-  margin-bottom: 16px;
+  padding: 14px 18px;
+  margin-bottom: 36px;
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 20px;
   align-items: center;
 }
 
@@ -272,7 +272,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 28px;
 }
 
 .legendItem {
@@ -292,14 +292,14 @@
 
 /* ─── WEEK SECTION ─── */
 .weekSection {
-  margin-bottom: 18px;
+  margin-bottom: 32px;
 }
 
 .weekHeader {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .weekLabel {
@@ -334,8 +334,8 @@
   color: inherit;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 9px;
-  margin-bottom: 5px;
+  border-radius: 11px;
+  margin-bottom: 7px;
   overflow: hidden;
   transition: all 0.2s;
 }
@@ -353,14 +353,14 @@
 .activityBody {
   flex: 1;
   min-width: 0;
-  padding: 8px 12px;
+  padding: 12px 14px;
 }
 
 .activityTop {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 
 .typeBadge {
