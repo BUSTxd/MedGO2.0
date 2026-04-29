@@ -16,19 +16,15 @@
 .topBar {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 6px 32px;
+  justify-content: space-between;
+  padding: 6px 48px;
   border-bottom: 1px solid var(--card-border);
   position: relative;
   z-index: 1;
 }
 
-.topBarInner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 860px;
+@media (max-width: 768px) {
+  .topBar { padding: 6px 20px; }
 }
 
 .logoText {

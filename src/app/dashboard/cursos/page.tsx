@@ -61,14 +61,12 @@ export default async function CursosPage() {
     <div className={styles.page}>
       <Background />
       <header className={styles.topBar}>
-        <div className={styles.topBarInner}>
-          <Link href="/">
-            <Logo size={78} />
-          </Link>
-          <div className={styles.userChip}>
-            {nombre}
-            <span className={styles.planPill}>{plan}</span>
-          </div>
+        <Link href="/">
+          <Logo size={78} />
+        </Link>
+        <div className={styles.userChip}>
+          {nombre}
+          <span className={styles.planPill}>{plan}</span>
         </div>
       </header>
 
