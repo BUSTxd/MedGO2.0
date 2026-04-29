@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Logo from '@/components/Logo';
+import Background from '@/components/Background';
 import { createClient } from '@/lib/supabase/server';
 import styles from '@/styles/cursos.module.css';
 
@@ -56,6 +57,7 @@ export default async function CursosPage() {
 
   return (
     <div className={styles.page}>
+      <Background />
       <header className={styles.topBar}>
         <Link href="/">
           <Logo size={91} />

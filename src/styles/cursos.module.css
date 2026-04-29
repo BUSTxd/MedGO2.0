@@ -9,6 +9,8 @@
   max-width: 860px;
   margin: 0 auto;
   padding: 40px 24px 80px;
+  position: relative;
+  z-index: 1;
 }
 
 .topBar {
@@ -17,6 +19,8 @@
   justify-content: space-between;
   padding: 18px 32px;
   border-bottom: 1px solid var(--card-border);
+  position: relative;
+  z-index: 1;
 }
 
 .logoText {

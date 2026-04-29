@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Background from '@/components/Background';
 import { findActividad, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/microbiologia';
 import styles from '@/styles/cursos.module.css';
 
@@ -26,6 +27,7 @@ export default async function ActividadPage({
 
   return (
     <div className={styles.page}>
+      <Background />
       <div className={styles.container}>
         <Link href="/dashboard/cursos/microbiologia" className={styles.backLink}>
           ← {semana.titulo} · {semana.fechas}
