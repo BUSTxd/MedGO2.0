@@ -57,7 +57,7 @@ export default function Navbar() {
       }}
     >
       <a className={styles.logo} href="#">
-        <Logo size={60} />
+        <Logo size={78} />
       </a>
 
       <div className={`${styles.links} ${menuOpen ? styles.open : ''}`}>
