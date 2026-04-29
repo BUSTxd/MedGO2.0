@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Logo from '@/components/Logo';
 import Background from '@/components/Background';
+import ContactWidget from '@/components/ContactWidget';
 import { createClient } from '@/lib/supabase/server';
 import styles from '@/styles/cursos.module.css';
 
@@ -53,22 +54,26 @@ export default async function CursosPage() {
     .single();
 
   const nombre = profile?.full_name ?? user.email ?? 'Estudiante';
+  const firstName = nombre.split(' ')[0];
   const plan = profile?.plan ?? 'free';
 
   return (
     <div className={styles.page}>
       <Background />
       <header className={styles.topBar}>
-        <Link href="/">
-          <Logo size={78} />
-        </Link>
-        <div className={styles.userChip}>
-          {nombre}
-          <span className={styles.planPill}>{plan}</span>
+        <div className={styles.topBarInner}>
+          <Link href="/">
+            <Logo size={78} />
+          </Link>
+          <div className={styles.userChip}>
+            {nombre}
+            <span className={styles.planPill}>{plan}</span>
+          </div>
         </div>
       </header>
 
       <div className={styles.container}>
+        <p className={styles.welcomeGreeting}>Bienvenido, {firstName} 👋</p>
         <p className={styles.sectionLabel}>Plataforma de estudio</p>
         <h1 className={styles.pageTitle}>Tus cursos</h1>
 
@@ -111,6 +116,8 @@ export default async function CursosPage() {
           )}
         </div>
       </div>
+
+      <ContactWidget />
     </div>
   );
 }
