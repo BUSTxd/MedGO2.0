@@ -13,7 +13,7 @@ const COURSES = [
     desc: 'Virología, Micología, Parasitología y Bacteriología.',
     color: '#7B72D4',
     bg: 'rgba(123, 114, 212, 0.12)',
-    letra: 'M',
+    letra: '🧫',
     activo: true,
   },
   {
@@ -24,7 +24,7 @@ const COURSES = [
     desc: 'Fisiología y patología cardiovascular.',
     color: '#E07856',
     bg: 'rgba(224, 120, 86, 0.12)',
-    letra: 'C',
+    letra: '🫀',
     activo: false,
   },
   {
@@ -35,7 +35,7 @@ const COURSES = [
     desc: 'Mecanismos de acción y farmacoterapia.',
     color: '#2DC99A',
     bg: 'rgba(45, 201, 154, 0.12)',
-    letra: 'F',
+    letra: '💊',
     activo: false,
   },
 ];
@@ -57,7 +57,7 @@ export default async function CursosPage() {
   return (
     <div className={styles.page}>
       <header className={styles.topBar}>
-        <Link href="/dashboard/cursos">
+        <Link href="/">
           <Image src="/assets/logo1.webp" alt="MedGO" width={100} height={32} style={{ objectFit: 'contain' }} />
         </Link>
         <div className={styles.userChip}>
