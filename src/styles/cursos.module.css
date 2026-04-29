@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 32px;
+  padding: 6px 32px;
   border-bottom: 1px solid var(--card-border);
   position: relative;
   z-index: 1;
