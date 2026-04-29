@@ -1,0 +1,638 @@
+/* ─── SHARED PAGE HEADERS ─── */
+.pageTitle {
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 800;
+  color: #1e1e60;
+  margin: 0 0 6px;
+  letter-spacing: -0.5px;
+}
+
+.pageSub {
+  color: #718096;
+  margin: 0 0 28px;
+  font-size: 15px;
+}
+
+.pagePanelIcon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  opacity: 0.65;
+}
+
+/* ─── HOME DASHBOARD ─── */
+.homeDashboard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .homeDashboard {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+}
+
+/* Welcome Panel */
+.welcomePanel {
+  background: linear-gradient(135deg, rgba(107, 168, 255, 0.12) 0%, rgba(71, 140, 216, 0.15) 50%, rgba(30, 144, 255, 0.10) 100%);
+  border: 1px solid rgba(107, 168, 255, 0.2);
+  border-radius: 20px;
+  padding: 40px 32px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(107, 168, 255, 0.12);
+  grid-column: 1 / -1;
+}
+
+.welcomePanel::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.welcomePanel::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 150px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+
+.welcomeSvgBackground {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.welcomeSvg {
+  position: absolute;
+  opacity: 0.45;
+  pointer-events: none;
+  color: #478CDC;
+}
+
+/* SVG positions */
+.svgPos1  { top: 8%;  left: 4%;  width: 44px; height: 44px; }
+.svgPos2  { top: 12%; left: 18%; width: 36px; height: 36px; }
+.svgPos3  { top: 5%;  left: 34%; width: 40px; height: 40px; }
+.svgPos4  { top: 10%; right: 34%;width: 34px; height: 34px; }
+.svgPos5  { top: 5%;  right: 18%;width: 40px; height: 40px; }
+.svgPos6  { top: 8%;  right: 4%; width: 44px; height: 44px; }
+.svgPos7  { bottom: 8%;  left: 4%;  width: 38px; height: 38px; }
+.svgPos8  { bottom: 12%; left: 20%; width: 32px; height: 32px; }
+.svgPos9  { bottom: 5%;  left: 38%; width: 36px; height: 36px; }
+.svgPos10 { bottom: 10%; right: 34%;width: 34px; height: 34px; }
+.svgPos11 { bottom: 5%;  right: 18%;width: 38px; height: 38px; }
+.svgPos12 { bottom: 8%;  right: 4%; width: 44px; height: 44px; }
+
+.welcomeContent {
+  position: relative;
+  z-index: 2;
+}
+
+.welcomeTitle {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  margin: 0 0 12px;
+  color: #1e1e60;
+  letter-spacing: -1px;
+}
+
+.welcomeSubtitle {
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: #2d3a8c;
+}
+
+.deeprecallDesc {
+  font-size: clamp(14px, 1.5vw, 16px);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 680px;
+  font-weight: 600;
+  color: #6c5ce7;
+}
+
+/* Dashboard sub-panels */
+.dashboardPanel {
+  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
+  border: 1px solid rgba(126, 107, 255, 0.12);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.dashboardPanel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(126, 107, 255, 0.14);
+}
+
+.dashboardPanelTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e1e60;
+  margin: 0 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Exam dates */
+.examDateItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(126, 107, 255, 0.1);
+}
+
+.examDateItem:last-child { border-bottom: none; }
+
+.examDateName {
+  font-weight: 600;
+  color: #1e1e60;
+  font-size: 14px;
+}
+
+.examDateDate {
+  font-size: 13px;
+  color: #718096;
+  font-weight: 500;
+}
+
+/* Recent exams */
+.recentExamItem {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(126, 107, 255, 0.1);
+}
+
+.recentExamItem:last-child { border-bottom: none; }
+
+.recentExamName {
+  font-weight: 600;
+  color: #1e1e60;
+  font-size: 14px;
+  margin: 0 0 3px;
+}
+
+.recentExamScore {
+  font-size: 13px;
+  color: #718096;
+}
+
+/* Stats */
+.statsPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.circularChartWrap {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 16px;
+}
+
+.circularChart {
+  transform: rotate(-90deg);
+}
+
+.circleBg {
+  fill: none;
+  stroke: rgba(126, 107, 255, 0.1);
+  stroke-width: 8;
+}
+
+.circleProgress {
+  fill: none;
+  stroke: #5445d8;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.chartCenterText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartPct {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1e1e60;
+  line-height: 1;
+}
+
+.chartLabel {
+  font-size: 11px;
+  color: #718096;
+  margin-top: 2px;
+}
+
+.statsMiniGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+
+.statMini {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(126, 107, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.statMiniVal {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1e1e60;
+  line-height: 1;
+}
+
+.statMiniLabel {
+  font-size: 11px;
+  color: #718096;
+  margin-top: 3px;
+}
+
+/* ─── LABORATORIO PAGE ─── */
+.labSections {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .labSections { grid-template-columns: 1fr; }
+}
+
+.labPanel {
+  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
+  border: 1px solid rgba(126, 107, 255, 0.12);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.08);
+  transition: all 0.2s ease;
+}
+
+.labPanel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(126, 107, 255, 0.14);
+}
+
+.labPanelHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 22px;
+  background: linear-gradient(135deg, rgba(126,107,255,0.08) 0%, rgba(84,69,216,0.05) 100%);
+  border-bottom: 1px solid rgba(126, 107, 255, 0.12);
+}
+
+.labIconBox {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #7E6BFF 0%, #5445d8 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(126, 107, 255, 0.3);
+  color: white;
+}
+
+.labPanelInfo { flex: 1; min-width: 0; }
+
+.labPanelTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1e1e60;
+  margin: 0 0 6px;
+}
+
+.labBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(126, 107, 255, 0.15);
+  color: #5445d8;
+}
+
+.labDiff {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.labDiffBadge {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.labDiffEasy  { border-color: #2DC99A; color: #2DC99A; }
+.labDiffMed   { border-color: #F5A623; color: #F5A623; }
+.labDiffHard  { border-color: #E85B4A; color: #E85B4A; }
+
+.labExperiments {
+  padding: 16px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.labExp {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(126, 107, 255, 0.08);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.labExp:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(126, 107, 255, 0.2);
+}
+
+.labExpDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.labExpInfo { flex: 1; }
+
+.labExpName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1e60;
+  margin: 0 0 2px;
+}
+
+.labExpDesc {
+  font-size: 12px;
+  color: #718096;
+  margin: 0;
+}
+
+/* ─── CONTACT PAGE ─── */
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 900px) {
+  .contactGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .contactGrid { grid-template-columns: 1fr; }
+}
+
+.contactCard {
+  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
+  border: 1px solid rgba(126, 107, 255, 0.1);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.08);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.contactCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(126, 107, 255, 0.15);
+}
+
+.contactCardIcon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  opacity: 0.65;
+  transition: all 0.2s ease;
+}
+
+.contactCard:hover .contactCardIcon {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.contactBadge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(126, 107, 255, 0.15);
+  color: #5445d8;
+  align-self: flex-start;
+}
+
+.contactTitle {
+  font-weight: 700;
+  font-size: 17px;
+  color: #1e1e60;
+  margin: 0;
+}
+
+.contactSummary {
+  color: #718096;
+  font-size: 14px;
+  font-weight: 500;
+  word-break: break-word;
+  margin: 0;
+}
+
+.contactMeta {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.contactPill {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.pillOk   { border-color: #2DC99A; color: #2DC99A; }
+.pillWarn { border-color: #F5A623; color: #F5A623; }
+.pillBad  { border-color: #E85B4A; color: #E85B4A; }
+
+/* Contact info panel */
+.contactInfoPanel {
+  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
+  border: 1px solid rgba(126, 107, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.contactInfoPanel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #7E6BFF 0%, #5445d8 100%);
+}
+
+@media (max-width: 700px) {
+  .contactInfoPanel { grid-template-columns: 1fr; }
+}
+
+.contactInfoBadge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(126, 107, 255, 0.15);
+  color: #5445d8;
+  margin-bottom: 10px;
+}
+
+.contactInfoTitle {
+  font-weight: 700;
+  font-size: 18px;
+  color: #1e1e60;
+  margin: 0 0 14px;
+}
+
+.contactSchedule {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scheduleItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border: 1px solid rgba(126, 107, 255, 0.08);
+}
+
+.scheduleDimmed { opacity: 0.65; }
+
+.scheduleDay {
+  font-weight: 500;
+  color: #1e1e60;
+  font-size: 14px;
+}
+
+.scheduleTime {
+  font-weight: 600;
+  color: #7E6BFF;
+  font-size: 14px;
+}
+
+.scheduleDimmed .scheduleTime { color: #718096; }
+
+.contactInfoText {
+  color: #718096;
+  line-height: 1.6;
+  margin: 0 0 20px;
+  font-size: 14px;
+}
+
+.contactInfoText strong { color: #7E6BFF; font-weight: 600; }
+
+.contactActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.contactActionPrimary {
+  padding: 9px 18px;
+  border-radius: 9px;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(135deg, #7E6BFF 0%, #5445d8 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.3);
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.contactActionPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(126, 107, 255, 0.4);
+}
+
+.contactActionSecondary {
+  padding: 9px 18px;
+  border-radius: 9px;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.8);
+  color: #1e1e60;
+  border: 1px solid rgba(126, 107, 255, 0.2);
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.contactActionSecondary:hover {
+  border-color: #7E6BFF;
+  color: #7E6BFF;
+}

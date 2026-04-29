@@ -1,0 +1,153 @@
+import { redirect } from 'next/navigation';
+import { createClient } from '@/lib/supabase/server';
+import DashboardLayout from '@/components/DashboardLayout';
+import styles from '@/styles/dashboardPages.module.css';
+
+const LAB_TOPICS = [
+  {
+    id: 'microbiologia',
+    title: 'Microbiología | UPCH',
+    badge: 'Microbiología',
+    diff: ['easy'],
+    icon: (
+      /* Bacteria SVG from reference project */
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="4" fill="white" stroke="white" strokeWidth="2"/>
+        <path d="m8 12-3-2M16 12l3-2M12 8l2-3M12 16l-2 3" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+    experiments: [
+      { name: 'Cultivo Bacteriano',   desc: 'Técnicas de siembra, incubación e identificación', color: '#2DC99A' },
+      { name: 'Antibiograma',         desc: 'Pruebas de sensibilidad a antimicrobianos',        color: '#F5A623' },
+      { name: 'Identificación Viral', desc: 'Métodos de diagnóstico y tipificación viral',      color: '#E85B4A' },
+      { name: 'Tinción de Gram',      desc: 'Diferenciación de bacterias gram +/−',             color: '#2DC99A' },
+      { name: 'Cultivo Anaerobios',   desc: 'Técnicas especiales para bacterias anaeróbicas',   color: '#F5A623' },
+      { name: 'Identificación Hongos',desc: 'Técnicas micológicas y cultivo de levaduras',      color: '#E85B4A' },
+    ],
+  },
+  {
+    id: 'farmacologia',
+    title: 'Farmacología | UPCH',
+    badge: 'Farmacología',
+    diff: ['medium'],
+    icon: (
+      /* Pill SVG from reference project */
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <g transform="rotate(135 12 12)">
+          <rect x="4" y="8" width="16" height="8" rx="4" fill="white" stroke="white" strokeWidth="1.5"/>
+          <path d="M12 8v8" stroke="rgba(84,69,216,0.7)" strokeWidth="1.5"/>
+        </g>
+      </svg>
+    ),
+    experiments: [
+      { name: 'Farmacocinética',          desc: 'Absorción, distribución, metabolismo y excreción', color: '#2DC99A' },
+      { name: 'Interacciones',            desc: 'Análisis de interacciones entre fármacos',          color: '#F5A623' },
+      { name: 'Ensayos de Toxicidad',     desc: 'Evaluación de efectos tóxicos y dosis letal',       color: '#E85B4A' },
+      { name: 'Curvas Dosis-Respuesta',   desc: 'Análisis de relaciones dosis-efecto',               color: '#2DC99A' },
+      { name: 'Biodisponibilidad',        desc: 'Estudios de liberación y absorción de fármacos',    color: '#F5A623' },
+      { name: 'Farmacogenómica',          desc: 'Variabilidad genética en respuesta a fármacos',     color: '#E85B4A' },
+    ],
+  },
+  {
+    id: 'hematologia',
+    title: 'Hematología | UPCH',
+    badge: 'Hematología',
+    diff: ['easy'],
+    icon: (
+      /* Blood drop SVG */
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2C12 2 7 7 7 13c0 3 2.5 5.5 5 5.5s5-2.5 5-5.5c0-6-5-11-5-11z" fill="white" stroke="white" strokeWidth="1.5"/>
+        <ellipse cx="10.5" cy="9" rx="1.5" ry="2" fill="rgba(84,69,216,0.25)"/>
+      </svg>
+    ),
+    experiments: [
+      { name: 'Hemograma Completo',        desc: 'Conteo de células sanguíneas y parámetros',         color: '#2DC99A' },
+      { name: 'Morfología Celular',        desc: 'Identificación y análisis de células sanguíneas',   color: '#F5A623' },
+      { name: 'Pruebas de Coagulación',    desc: 'Estudios de hemostasia y factores de coagulación',  color: '#E85B4A' },
+      { name: 'Frotis Sanguíneo',          desc: 'Preparación y análisis microscópico de sangre',     color: '#2DC99A' },
+      { name: 'Conteo de Reticulocitos',   desc: 'Evaluación de la producción de glóbulos rojos',    color: '#F5A623' },
+      { name: 'Electroforesis Hb',         desc: 'Identificación de hemoglobinopatías',               color: '#E85B4A' },
+    ],
+  },
+  {
+    id: 'inmunologia',
+    title: 'Inmunología | UPCH',
+    badge: 'Inmunología',
+    diff: ['medium'],
+    icon: (
+      /* Antibody Y SVG from reference */
+      <svg width="24" height="24" viewBox="0 0 256 256" fill="none">
+        <rect x="114" y="120" width="28" height="110" rx="14" fill="white"/>
+        <rect x="114" y="30" width="28" height="110" rx="14" transform="rotate(-45 128 120)" fill="white"/>
+        <rect x="114" y="30" width="28" height="110" rx="14" transform="rotate(45 128 120)" fill="white"/>
+        <circle cx="128" cy="120" r="8" fill="white"/>
+      </svg>
+    ),
+    experiments: [
+      { name: 'Ensayos ELISA',       desc: 'Detección de anticuerpos y antígenos específicos',    color: '#2DC99A' },
+      { name: 'Inmunofluorescencia', desc: 'Técnicas de marcaje fluorescente para detección',     color: '#F5A623' },
+      { name: 'Citometría de Flujo', desc: 'Análisis de poblaciones celulares y marcadores',      color: '#E85B4A' },
+      { name: 'Aglutinación',        desc: 'Detección de antígenos mediante aglutinación',        color: '#2DC99A' },
+      { name: 'Western Blot',        desc: 'Identificación de proteínas específicas',             color: '#F5A623' },
+      { name: 'PCR en Tiempo Real',  desc: 'Cuantificación de ácidos nucleicos',                  color: '#E85B4A' },
+    ],
+  },
+];
+
+const DIFF_LABEL: Record<string, string> = {
+  easy: 'Interno (fácil)', medium: 'Residente (media)', hard: 'Especialista (difícil)',
+};
+const DIFF_CLASS: Record<string, string> = {
+  easy: styles.labDiffEasy, medium: styles.labDiffMed, hard: styles.labDiffHard,
+};
+
+export default async function LaboratorioPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect('/auth/login');
+
+  return (
+    <DashboardLayout>
+      <div className={styles.pagePanelIcon}>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="#9CA3AF">
+          <path fillRule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clipRule="evenodd"/>
+        </svg>
+      </div>
+
+      <h2 className={styles.pageTitle}>Laboratorio virtual</h2>
+      <p className={styles.pageSub}>Simulaciones de prácticas interactivas por materia.</p>
+
+      <div className={styles.labSections}>
+        {LAB_TOPICS.map((topic) => (
+          <div key={topic.id} className={styles.labPanel}>
+            <div className={styles.labPanelHeader}>
+              <div className={styles.labIconBox}>{topic.icon}</div>
+              <div className={styles.labPanelInfo}>
+                <h3 className={styles.labPanelTitle}>{topic.title}</h3>
+                <span className={styles.labBadge}>{topic.badge}</span>
+                <div className={styles.labDiff}>
+                  {topic.diff.map((d) => (
+                    <span key={d} className={`${styles.labDiffBadge} ${DIFF_CLASS[d]}`}>
+                      {DIFF_LABEL[d]}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className={styles.labExperiments}>
+              {topic.experiments.map((exp) => (
+                <div key={exp.name} className={styles.labExp}>
+                  <div className={styles.labExpDot} style={{ background: exp.color }} />
+                  <div className={styles.labExpInfo}>
+                    <p className={styles.labExpName}>{exp.name}</p>
+                    <p className={styles.labExpDesc}>{exp.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </DashboardLayout>
+  );
+}
