@@ -75,8 +75,9 @@ export default function AuthPage() {
       return;
     }
 
-    setSuccess('¡Cuenta creada! Revisa tu correo para confirmar tu cuenta.');
     setLoading(false);
+    router.push('/dashboard');
+    router.refresh();
   }
 
   return (
