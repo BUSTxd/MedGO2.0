@@ -1,3 +1,181 @@
+/* ─── QBANK LAYOUT (cursos index page) ─── */
+.qbankLayout {
+  display: flex;
+  min-height: 100vh;
+  background: #f0f2f8;
+}
+
+.qbankMain {
+  margin-left: 240px;
+  flex: 1;
+  min-height: 100vh;
+  background: #f0f2f8;
+  padding: 24px 28px;
+  transition: margin-left 0.3s ease;
+}
+
+.qbankPanel {
+  background: #fff;
+  border-radius: 18px;
+  padding: 28px 28px 36px;
+  position: relative;
+  min-height: calc(100vh - 48px);
+}
+
+.qbankPanelIcon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  opacity: 0.7;
+}
+
+.qbankTitle {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+
+.qbankSub {
+  font-size: 14px;
+  color: #718096;
+  margin-bottom: 28px;
+}
+
+/* ─── QBANK CARD GRID ─── */
+.qgrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .qgrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .qbankMain { margin-left: 68px; padding: 16px; }
+  .qgrid { grid-template-columns: 1fr; }
+}
+
+/* ─── QBANK CARD ─── */
+.qCard {
+  background: #eef2ff;
+  border: 1px solid rgba(123, 114, 212, 0.12);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.22s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.qCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(123, 114, 212, 0.18);
+  border-color: rgba(123, 114, 212, 0.3);
+}
+
+.qCardLocked {
+  opacity: 0.55;
+  pointer-events: none;
+  cursor: default;
+}
+
+.qCardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.qBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.qCardIconWrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.qSummary {
+  font-size: 13px;
+  color: #718096;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.qDiff {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.diffEasy {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid #2DC99A;
+  color: #2DC99A;
+}
+
+.diffMed {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid #F5A623;
+  color: #F5A623;
+}
+
+.diffHard {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid #E85B4A;
+  color: #E85B4A;
+}
+
+.qComingSoon {
+  display: inline-block;
+  margin-top: 4px;
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 100px;
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  width: fit-content;
+}
+
 /* ─── SHARED ─── */
 .page {
   min-height: 100vh;
