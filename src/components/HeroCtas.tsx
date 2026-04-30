@@ -18,7 +18,7 @@ export default function HeroCtas() {
 
   return (
     <>
-      <Link href={loggedIn ? '/dashboard/cursos' : '/auth/login'}>
+      <Link href={loggedIn ? '/dashboard/home' : '/auth/login'}>
         <button className="btn-primary">{loggedIn ? 'Entrar' : 'Iniciar Sesión'}</button>
       </Link>
       <a href="#cursos">
