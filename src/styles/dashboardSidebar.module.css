@@ -6,9 +6,9 @@
   height: 100vh;
   /* mismo fondo base de la landing */
   background:
-    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-    #08061a;
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(180deg, #0e1a4a 0%, #111d55 50%, #0e1840 100%);
   background-size: 40px 40px, 40px 40px, auto;
   padding: 24px 0;
   border-radius: 0 20px 20px 0;
@@ -29,9 +29,9 @@
   left: -60px;
   width: 280px;
   height: 280px;
-  background: radial-gradient(circle, oklch(0.45 0.22 280) 0%, transparent 70%);
-  filter: blur(55px);
-  opacity: 0.55;
+  background: radial-gradient(circle, oklch(0.55 0.25 260) 0%, transparent 70%);
+  filter: blur(45px);
+  opacity: 0.85;
   border-radius: 50%;
   pointer-events: none;
   animation: orbFloat 18s linear infinite;
@@ -45,9 +45,9 @@
   right: -40px;
   width: 220px;
   height: 220px;
-  background: radial-gradient(circle, #1a4fa0 0%, transparent 70%);
-  filter: blur(50px);
-  opacity: 0.5;
+  background: radial-gradient(circle, #2563eb 0%, transparent 70%);
+  filter: blur(45px);
+  opacity: 0.75;
   border-radius: 50%;
   pointer-events: none;
   animation: orbFloat 26s linear infinite reverse;
