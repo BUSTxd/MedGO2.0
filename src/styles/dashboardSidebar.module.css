@@ -4,7 +4,12 @@
   left: 0;
   width: 240px;
   height: 100vh;
-  background: linear-gradient(180deg, #08061a 0%, #0f1d6e 38%, oklch(0.38 0.21 278) 72%, #0d0b28 100%);
+  /* mismo fondo base de la landing */
+  background:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+    #08061a;
+  background-size: 40px 40px, 40px 40px, auto;
   padding: 24px 0;
   border-radius: 0 20px 20px 0;
   display: flex;
@@ -13,7 +18,39 @@
   z-index: 100;
   transition: width 0.3s ease;
   overflow: hidden;
-  box-shadow: 4px 0 32px rgba(8, 6, 26, 0.7);
+  box-shadow: 4px 0 40px rgba(8, 6, 26, 0.9), 1px 0 0 rgba(59, 158, 221, 0.12);
+}
+
+/* Orb superior — azul-púrpura (igual que orb1 de la landing) */
+.aside::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, oklch(0.45 0.22 280) 0%, transparent 70%);
+  filter: blur(55px);
+  opacity: 0.55;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat 18s linear infinite;
+}
+
+/* Orb inferior — azul oscuro (igual que orb3 de la landing) */
+.aside::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  right: -40px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, #1a4fa0 0%, transparent 70%);
+  filter: blur(50px);
+  opacity: 0.5;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat 26s linear infinite reverse;
 }
 
 .collapsed {
@@ -26,6 +63,8 @@
   align-items: center;
   justify-content: center;
   padding: 4px 16px 0;
+  position: relative;
+  z-index: 2;
 }
 
 /* Nav */
@@ -35,6 +74,8 @@
   gap: 6px;
   flex: 1;
   padding: 0 12px;
+  position: relative;
+  z-index: 2;
 }
 
 .navItem {
@@ -44,7 +85,8 @@
   padding: 12px 16px;
   border-radius: 12px;
   background: transparent;
-  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid transparent;
+  color: rgba(240, 238, 255, 0.65);
   font-weight: 500;
   font-size: 14px;
   transition: all 0.25s ease;
@@ -53,14 +95,16 @@
 }
 
 .navItem:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: rgba(59, 158, 221, 0.10);
+  border-color: rgba(59, 158, 221, 0.25);
+  color: #f0eeff;
 }
 
 .navItem.active {
-  background: rgba(59, 158, 221, 0.22);
+  background: rgba(59, 158, 221, 0.18);
+  border-color: rgba(59, 158, 221, 0.45);
   color: #fff;
-  border: 1px solid rgba(59, 158, 221, 0.4);
+  box-shadow: 0 0 12px rgba(59, 158, 221, 0.2), inset 0 0 8px rgba(59, 158, 221, 0.08);
 }
 
 .navItem.active .navIcon {
@@ -77,6 +121,8 @@
 /* Toggle */
 .sidebarToggle {
   padding: 0 12px;
+  position: relative;
+  z-index: 2;
 }
 
 .toggleBtn {
@@ -85,10 +131,10 @@
   gap: 12px;
   width: 100%;
   padding: 12px 16px;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(240, 238, 255, 0.6);
   font-size: 14px;
   font-weight: 500;
   font-family: inherit;
@@ -98,8 +144,9 @@
 }
 
 .toggleBtn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background: rgba(59, 158, 221, 0.10);
+  border-color: rgba(59, 158, 221, 0.25);
+  color: #f0eeff;
 }
 
 .toggleIcon {
@@ -114,6 +161,8 @@
 /* Footer */
 .sidebarFooter {
   padding: 0 12px 8px;
+  position: relative;
+  z-index: 2;
 }
 
 .logoutBtn {
@@ -122,10 +171,10 @@
   gap: 12px;
   width: 100%;
   padding: 12px 16px;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 12px;
   background: transparent;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(240, 238, 255, 0.55);
   font-size: 14px;
   font-weight: 500;
   font-family: inherit;
@@ -135,8 +184,9 @@
 }
 
 .logoutBtn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: rgba(245, 99, 99, 0.10);
+  border-color: rgba(245, 99, 99, 0.25);
+  color: #ff8080;
 }
 
 /* Collapsed state: hide labels */
