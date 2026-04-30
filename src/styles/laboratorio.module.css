@@ -55,7 +55,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   padding: 28px 28px 32px;
-  align-items: start;
+  align-items: center;
 }
 
 @media (max-width: 860px) {
