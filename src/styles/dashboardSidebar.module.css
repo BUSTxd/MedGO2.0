@@ -163,14 +163,18 @@
   padding: 0 12px 8px;
   position: relative;
   z-index: 2;
+  display: flex;
+  gap: 6px;
+  align-items: center;
 }
 
 .logoutBtn {
   display: flex;
   align-items: center;
-  gap: 12px;
-  width: 100%;
-  padding: 12px 16px;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
   border: 1px solid transparent;
   border-radius: 12px;
   background: transparent;
@@ -181,12 +185,47 @@
   cursor: pointer;
   transition: all 0.25s ease;
   white-space: nowrap;
+  overflow: hidden;
 }
 
 .logoutBtn:hover {
   background: rgba(245, 99, 99, 0.10);
   border-color: rgba(245, 99, 99, 0.25);
   color: #ff8080;
+}
+
+.darkBtn {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(240, 238, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+.darkBtn:hover {
+  background: rgba(59, 158, 221, 0.15);
+  border-color: rgba(59, 158, 221, 0.35);
+  color: #3b9edd;
+}
+
+.darkBtnActive {
+  background: rgba(245, 166, 35, 0.15);
+  border-color: rgba(245, 166, 35, 0.35);
+  color: #f5a623;
+}
+
+.darkBtnActive:hover {
+  background: rgba(245, 166, 35, 0.22);
+  border-color: rgba(245, 166, 35, 0.5);
+  color: #f5a623;
 }
 
 /* Collapsed state: hide labels */

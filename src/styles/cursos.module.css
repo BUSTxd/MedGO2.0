@@ -12,12 +12,22 @@
   color: #1a1a2e;
   margin-bottom: 6px;
   letter-spacing: -0.5px;
+  transition: color 0.25s ease;
+}
+
+:global(.dark-mode) .qbankTitle {
+  color: #f0eeff;
 }
 
 .qbankSub {
   font-size: 14px;
   color: #718096;
   margin-bottom: 28px;
+  transition: color 0.25s ease;
+}
+
+:global(.dark-mode) .qbankSub {
+  color: rgba(240, 238, 255, 0.5);
 }
 
 /* ─── QBANK CARD GRID ─── */
@@ -51,10 +61,20 @@
   position: relative;
 }
 
+:global(.dark-mode) .qCard {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
 .qCard:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 28px rgba(123, 114, 212, 0.18);
   border-color: rgba(123, 114, 212, 0.3);
+}
+
+:global(.dark-mode) .qCard:hover {
+  box-shadow: 0 8px 28px rgba(59, 158, 221, 0.1);
+  border-color: rgba(59, 158, 221, 0.25);
 }
 
 .qCardLocked {
@@ -91,6 +111,11 @@
   color: #1a1a2e;
   line-height: 1.3;
   margin: 0;
+  transition: color 0.25s ease;
+}
+
+:global(.dark-mode) .qTitle {
+  color: #f0eeff;
 }
 
 .qSummary {
@@ -98,6 +123,11 @@
   color: #718096;
   line-height: 1.55;
   margin: 0;
+  transition: color 0.25s ease;
+}
+
+:global(.dark-mode) .qSummary {
+  color: rgba(240, 238, 255, 0.5);
 }
 
 .qDiff {
@@ -150,6 +180,13 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   width: fit-content;
+  transition: all 0.25s ease;
+}
+
+:global(.dark-mode) .qComingSoon {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: rgba(240, 238, 255, 0.4);
 }
 
 /* ─── SHARED ─── */

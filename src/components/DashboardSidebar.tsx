@@ -46,12 +46,34 @@ const NAV = [
   },
 ];
 
+const MoonIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
+  </svg>
+);
+
+const SunIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="5" />
+    <line x1="12" y1="1" x2="12" y2="3" />
+    <line x1="12" y1="21" x2="12" y2="23" />
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+    <line x1="1" y1="12" x2="3" y2="12" />
+    <line x1="21" y1="12" x2="23" y2="12" />
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+  </svg>
+);
+
 interface Props {
   collapsed: boolean;
   onToggle: () => void;
+  darkMode: boolean;
+  onToggleDark: () => void;
 }
 
-export default function DashboardSidebar({ collapsed, onToggle }: Props) {
+export default function DashboardSidebar({ collapsed, onToggle, darkMode, onToggleDark }: Props) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -104,6 +126,13 @@ export default function DashboardSidebar({ collapsed, onToggle }: Props) {
             <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           <span className={styles.label}>SALIR</span>
+        </button>
+        <button
+          className={`${styles.darkBtn} ${darkMode ? styles.darkBtnActive : ''}`}
+          onClick={onToggleDark}
+          title={darkMode ? 'Modo claro' : 'Modo oscuro'}
+        >
+          {darkMode ? <SunIcon /> : <MoonIcon />}
         </button>
       </div>
     </aside>
