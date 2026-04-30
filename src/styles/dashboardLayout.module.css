@@ -25,6 +25,13 @@
   position: relative;
   min-height: calc(100vh - 48px);
   transition: background 0.3s ease, border-color 0.3s ease;
+  /* Light-mode CSS variable scope: overrides the dark :root values so any
+     descendant using var(--white) / var(--muted) / var(--card-*) gets
+     light-friendly colours without touching the landing page. */
+  --white: #1a1a2e;
+  --muted: #718096;
+  --card-bg: rgba(0, 0, 0, 0.03);
+  --card-border: rgba(0, 0, 0, 0.07);
 }
 
 /* ── Dark mode overrides ── */
@@ -39,6 +46,11 @@
 :global(.dark-mode) .panel {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.07);
+  /* Restore dark values for all var()-based descendants */
+  --white: #f0eeff;
+  --muted: rgba(240, 238, 255, 0.5);
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(255, 255, 255, 0.08);
 }
 
 @media (max-width: 600px) {
