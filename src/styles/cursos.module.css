@@ -196,6 +196,15 @@
   color: var(--white);
 }
 
+/* Microbiología content block inside dashboard panel */
+.microPage {
+  background: #0b0d1f;
+  border-radius: 14px;
+  color: var(--white);
+  min-height: 500px;
+  margin: -4px;
+}
+
 .container {
   max-width: 860px;
   margin: 0 auto;

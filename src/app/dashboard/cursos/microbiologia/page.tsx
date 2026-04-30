@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Background from '@/components/Background';
 import { semanas, curso, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/microbiologia';
 import styles from '@/styles/cursos.module.css';
 
@@ -12,8 +11,7 @@ const UNIDAD_LABEL: Record<string, string> = {
 
 export default function MicrobiologiaPage() {
   return (
-    <div className={styles.page}>
-      <Background />
+    <div className={styles.microPage}>
       <div className={styles.container}>
         <Link href="/dashboard/cursos" className={styles.backLink}>
           ← Mis cursos
@@ -106,3 +104,4 @@ export default function MicrobiologiaPage() {
     </div>
   );
 }
+
