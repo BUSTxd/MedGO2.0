@@ -108,6 +108,19 @@ export default function DashboardSidebar({ collapsed, onToggle, darkMode, onTogg
         ))}
       </nav>
 
+      {/* Dark mode button — above toggle when collapsed */}
+      {collapsed && (
+        <div className={styles.darkBtnWrap}>
+          <button
+            className={`${styles.darkBtn} ${darkMode ? styles.darkBtnActive : ''}`}
+            onClick={onToggleDark}
+            title={darkMode ? 'Modo claro' : 'Modo oscuro'}
+          >
+            {darkMode ? <SunIcon /> : <MoonIcon />}
+          </button>
+        </div>
+      )}
+
       <div className={styles.sidebarToggle}>
         <button className={styles.toggleBtn} onClick={onToggle}>
           <svg
@@ -127,13 +140,15 @@ export default function DashboardSidebar({ collapsed, onToggle, darkMode, onTogg
           </svg>
           <span className={styles.label}>SALIR</span>
         </button>
-        <button
-          className={`${styles.darkBtn} ${darkMode ? styles.darkBtnActive : ''}`}
-          onClick={onToggleDark}
-          title={darkMode ? 'Modo claro' : 'Modo oscuro'}
-        >
-          {darkMode ? <SunIcon /> : <MoonIcon />}
-        </button>
+        {!collapsed && (
+          <button
+            className={`${styles.darkBtn} ${darkMode ? styles.darkBtnActive : ''}`}
+            onClick={onToggleDark}
+            title={darkMode ? 'Modo claro' : 'Modo oscuro'}
+          >
+            {darkMode ? <SunIcon /> : <MoonIcon />}
+          </button>
+        )}
       </div>
     </aside>
   );

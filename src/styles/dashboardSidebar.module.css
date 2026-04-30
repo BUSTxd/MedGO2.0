@@ -194,6 +194,14 @@
   color: #ff8080;
 }
 
+.darkBtnWrap {
+  padding: 0 12px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
 .darkBtn {
   flex-shrink: 0;
   width: 40px;
