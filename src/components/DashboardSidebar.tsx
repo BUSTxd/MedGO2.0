@@ -1,5 +1,4 @@
 'use client';
-import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import Logo from './Logo';
@@ -47,8 +46,12 @@ const NAV = [
   },
 ];
 
-export default function DashboardSidebar() {
-  const [collapsed, setCollapsed] = useState(false);
+interface Props {
+  collapsed: boolean;
+  onToggle: () => void;
+}
+
+export default function DashboardSidebar({ collapsed, onToggle }: Props) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -65,7 +68,8 @@ export default function DashboardSidebar() {
 
   return (
     <aside className={`${styles.aside} ${collapsed ? styles.collapsed : ''}`}>
-      <Link href="/dashboard/home" className={styles.sidebarLogo}>
+      {/* Logo → landing page */}
+      <Link href="/" className={styles.sidebarLogo}>
         <Logo size={52} />
       </Link>
 
@@ -83,7 +87,7 @@ export default function DashboardSidebar() {
       </nav>
 
       <div className={styles.sidebarToggle}>
-        <button className={styles.toggleBtn} onClick={() => setCollapsed(!collapsed)}>
+        <button className={styles.toggleBtn} onClick={onToggle}>
           <svg
             className={`${styles.navIcon} ${styles.toggleIcon} ${collapsed ? styles.toggleRotated : ''}`}
             width="20" height="20" viewBox="0 0 24 24" fill="none"
