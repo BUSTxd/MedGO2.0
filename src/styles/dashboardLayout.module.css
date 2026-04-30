@@ -1,14 +1,14 @@
 .layout {
   display: flex;
   min-height: 100vh;
-  background: #f0f2f8;
+  background: #08061a;
 }
 
 .main {
   margin-left: 240px;
   flex: 1;
   min-height: 100vh;
-  background: #f0f2f8;
+  background: #08061a;
   padding: 24px 28px;
   transition: margin-left 0.3s ease;
 }
@@ -18,7 +18,8 @@
 }
 
 .panel {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 18px;
   padding: 28px 28px 36px;
   position: relative;

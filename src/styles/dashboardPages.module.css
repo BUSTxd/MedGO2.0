@@ -2,13 +2,13 @@
 .pageTitle {
   font-size: clamp(22px, 3vw, 28px);
   font-weight: 800;
-  color: #1e1e60;
+  color: #f0eeff;
   margin: 0 0 6px;
   letter-spacing: -0.5px;
 }
 
 .pageSub {
-  color: #718096;
+  color: rgba(240, 238, 255, 0.5);
   margin: 0 0 28px;
   font-size: 15px;
 }
@@ -125,11 +125,11 @@
 
 /* Dashboard sub-panels */
 .dashboardPanel {
-  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
-  border: 1px solid rgba(126, 107, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
   transition: all 0.2s ease;
@@ -137,13 +137,14 @@
 
 .dashboardPanel:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(126, 107, 255, 0.14);
+  border-color: rgba(59, 158, 221, 0.2);
+  box-shadow: 0 4px 24px rgba(59, 158, 221, 0.08);
 }
 
 .dashboardPanelTitle {
   font-size: 16px;
   font-weight: 700;
-  color: #1e1e60;
+  color: #f0eeff;
   margin: 0 0 16px;
   display: flex;
   align-items: center;
@@ -163,13 +164,13 @@
 
 .examDateName {
   font-weight: 600;
-  color: #1e1e60;
+  color: #f0eeff;
   font-size: 14px;
 }
 
 .examDateDate {
   font-size: 13px;
-  color: #718096;
+  color: rgba(240, 238, 255, 0.5);
   font-weight: 500;
 }
 
@@ -183,14 +184,14 @@
 
 .recentExamName {
   font-weight: 600;
-  color: #1e1e60;
+  color: #f0eeff;
   font-size: 14px;
   margin: 0 0 3px;
 }
 
 .recentExamScore {
   font-size: 13px;
-  color: #718096;
+  color: rgba(240, 238, 255, 0.5);
 }
 
 /* Stats */
@@ -214,7 +215,7 @@
 
 .circleBg {
   fill: none;
-  stroke: rgba(126, 107, 255, 0.1);
+  stroke: rgba(255, 255, 255, 0.08);
   stroke-width: 8;
 }
 
@@ -237,13 +238,13 @@
 .chartPct {
   font-size: 20px;
   font-weight: 800;
-  color: #1e1e60;
+  color: #f0eeff;
   line-height: 1;
 }
 
 .chartLabel {
   font-size: 11px;
-  color: #718096;
+  color: rgba(240, 238, 255, 0.5);
   margin-top: 2px;
 }
 
@@ -255,8 +256,8 @@
 }
 
 .statMini {
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(126, 107, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   padding: 10px 8px;
   text-align: center;
@@ -265,13 +266,13 @@
 .statMiniVal {
   font-size: 18px;
   font-weight: 800;
-  color: #1e1e60;
+  color: #f0eeff;
   line-height: 1;
 }
 
 .statMiniLabel {
   font-size: 11px;
-  color: #718096;
+  color: rgba(240, 238, 255, 0.5);
   margin-top: 3px;
 }
 
@@ -288,17 +289,18 @@
 }
 
 .labPanel {
-  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
-  border: 1px solid rgba(126, 107, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
   transition: all 0.2s ease;
 }
 
 .labPanel:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(126, 107, 255, 0.14);
+  border-color: rgba(59, 158, 221, 0.2);
+  box-shadow: 0 6px 24px rgba(59, 158, 221, 0.08);
 }
 
 .labPanelHeader {
@@ -306,8 +308,8 @@
   align-items: center;
   gap: 16px;
   padding: 20px 22px;
-  background: linear-gradient(135deg, rgba(126,107,255,0.08) 0%, rgba(84,69,216,0.05) 100%);
-  border-bottom: 1px solid rgba(126, 107, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .labIconBox {
@@ -328,7 +330,7 @@
 .labPanelTitle {
   font-size: 17px;
   font-weight: 700;
-  color: #1e1e60;
+  color: #f0eeff;
   margin: 0 0 6px;
 }
 
@@ -338,8 +340,8 @@
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
-  background: rgba(126, 107, 255, 0.15);
-  color: #5445d8;
+  background: rgba(59, 158, 221, 0.15);
+  color: #3b9edd;
 }
 
 .labDiff {
@@ -373,15 +375,15 @@
   align-items: flex-start;
   gap: 12px;
   padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(126, 107, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 10px;
   transition: all 0.2s ease;
 }
 
 .labExp:hover {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(126, 107, 255, 0.2);
+  background: rgba(59, 158, 221, 0.07);
+  border-color: rgba(59, 158, 221, 0.2);
 }
 
 .labExpDot {
@@ -397,13 +399,13 @@
 .labExpName {
   font-size: 14px;
   font-weight: 600;
-  color: #1e1e60;
+  color: #f0eeff;
   margin: 0 0 2px;
 }
 
 .labExpDesc {
   font-size: 12px;
-  color: #718096;
+  color: rgba(240, 238, 255, 0.5);
   margin: 0;
 }
 
@@ -424,14 +426,14 @@
 }
 
 .contactCard {
-  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
-  border: 1px solid rgba(126, 107, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
   transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
@@ -440,7 +442,8 @@
 
 .contactCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(126, 107, 255, 0.15);
+  border-color: rgba(59, 158, 221, 0.2);
+  box-shadow: 0 4px 24px rgba(59, 158, 221, 0.08);
 }
 
 .contactCardIcon {
@@ -462,20 +465,20 @@
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
-  background: rgba(126, 107, 255, 0.15);
-  color: #5445d8;
+  background: rgba(59, 158, 221, 0.15);
+  color: #3b9edd;
   align-self: flex-start;
 }
 
 .contactTitle {
   font-weight: 700;
   font-size: 17px;
-  color: #1e1e60;
+  color: #f0eeff;
   margin: 0;
 }
 
 .contactSummary {
-  color: #718096;
+  color: rgba(240, 238, 255, 0.5);
   font-size: 14px;
   font-weight: 500;
   word-break: break-word;
@@ -502,14 +505,14 @@
 
 /* Contact info panel */
 .contactInfoPanel {
-  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
-  border: 1px solid rgba(126, 107, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 24px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
-  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -532,15 +535,15 @@
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
-  background: rgba(126, 107, 255, 0.15);
-  color: #5445d8;
+  background: rgba(59, 158, 221, 0.15);
+  color: #3b9edd;
   margin-bottom: 10px;
 }
 
 .contactInfoTitle {
   font-weight: 700;
   font-size: 18px;
-  color: #1e1e60;
+  color: #f0eeff;
   margin: 0 0 14px;
 }
 
@@ -555,16 +558,16 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 8px;
-  border: 1px solid rgba(126, 107, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .scheduleDimmed { opacity: 0.65; }
 
 .scheduleDay {
   font-weight: 500;
-  color: #1e1e60;
+  color: #f0eeff;
   font-size: 14px;
 }
 
@@ -577,13 +580,13 @@
 .scheduleDimmed .scheduleTime { color: #718096; }
 
 .contactInfoText {
-  color: #718096;
+  color: rgba(240, 238, 255, 0.5);
   line-height: 1.6;
   margin: 0 0 20px;
   font-size: 14px;
 }
 
-.contactInfoText strong { color: #7E6BFF; font-weight: 600; }
+.contactInfoText strong { color: #3b9edd; font-weight: 600; }
 
 .contactActions {
   display: flex;
@@ -617,15 +620,15 @@
   font-weight: 500;
   font-size: 13px;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.8);
-  color: #1e1e60;
-  border: 1px solid rgba(126, 107, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: #f0eeff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   transition: all 0.2s ease;
   text-decoration: none;
   display: inline-block;
 }
 
 .contactActionSecondary:hover {
-  border-color: #7E6BFF;
-  color: #7E6BFF;
+  border-color: #3b9edd;
+  color: #3b9edd;
 }
