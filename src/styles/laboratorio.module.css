@@ -1,12 +1,17 @@
-/* ─── WRAPPER (dark card, igual que microPage) ─── */
+/* ─── WRAPPER ─── */
 .examPage {
-  background: #0b0d1f;
+  background: #f8faff;
   border-radius: 14px;
-  color: var(--white);
+  color: #1a1a2e;
   min-height: 500px;
   margin: -4px;
   position: relative;
   overflow: hidden;
+}
+
+:global(.dark-mode) .examPage {
+  background: #0b0d1f;
+  color: #f0eeff;
 }
 
 /* Decorative bacteria icon — top right */
@@ -24,29 +29,44 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 28px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+:global(.dark-mode) .topBar {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 
 .backLink {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: rgba(240, 238, 255, 0.5);
+  color: rgba(26, 26, 46, 0.5);
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
   transition: color 0.2s;
 }
-.backLink:hover { color: #f0eeff; }
+.backLink:hover { color: #1a1a2e; }
+
+:global(.dark-mode) .backLink {
+  color: rgba(240, 238, 255, 0.5);
+}
+:global(.dark-mode) .backLink:hover { color: #f0eeff; }
 
 .counter {
   font-size: 13px;
   font-weight: 600;
-  color: rgba(240, 238, 255, 0.45);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(26, 26, 46, 0.5);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 999px;
   padding: 4px 14px;
+}
+
+:global(.dark-mode) .counter {
+  color: rgba(240, 238, 255, 0.45);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 /* ─── MAIN LAYOUT ─── */
@@ -70,6 +90,7 @@
   gap: 14px;
 }
 
+/* Microscope always dark — represents a physical optical lens */
 .microscopeOuter {
   width: 280px;
   height: 280px;
@@ -130,7 +151,7 @@
   transform: translateY(-50%);
 }
 
-/* Specimen placeholder (replaced by real image later) */
+/* Specimen placeholder */
 .specimen {
   position: absolute;
   inset: 0;
@@ -160,9 +181,13 @@
 
 .magnification {
   font-size: 12px;
-  color: rgba(59, 158, 221, 0.7);
+  color: rgba(59, 158, 221, 0.8);
   font-weight: 600;
   letter-spacing: 0.06em;
+}
+
+:global(.dark-mode) .magnification {
+  color: rgba(59, 158, 221, 0.7);
 }
 
 /* ─── QUESTION PANEL ─── */
@@ -183,8 +208,12 @@
 .questionText {
   font-size: 15px;
   line-height: 1.65;
-  color: #f0eeff;
+  color: #1a1a2e;
   font-weight: 500;
+}
+
+:global(.dark-mode) .questionText {
+  color: #f0eeff;
 }
 
 /* ─── OPTIONS A–E ─── */
@@ -200,13 +229,18 @@
   gap: 12px;
   padding: 11px 16px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.02);
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: left;
   width: 100%;
   font-family: inherit;
+}
+
+:global(.dark-mode) .option {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .option:hover {
@@ -215,16 +249,31 @@
 }
 
 .optionSelected {
+  background: rgba(59, 158, 221, 0.12);
+  border-color: rgba(59, 158, 221, 0.45);
+}
+
+:global(.dark-mode) .optionSelected {
   background: rgba(59, 158, 221, 0.15);
   border-color: rgba(59, 158, 221, 0.5);
 }
 
 .optionCorrect {
+  background: rgba(45, 201, 154, 0.12);
+  border-color: rgba(45, 201, 154, 0.45);
+}
+
+:global(.dark-mode) .optionCorrect {
   background: rgba(45, 201, 154, 0.15);
   border-color: rgba(45, 201, 154, 0.5);
 }
 
 .optionWrong {
+  background: rgba(232, 91, 74, 0.09);
+  border-color: rgba(232, 91, 74, 0.35);
+}
+
+:global(.dark-mode) .optionWrong {
   background: rgba(232, 91, 74, 0.12);
   border-color: rgba(232, 91, 74, 0.4);
 }
@@ -233,16 +282,22 @@
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 13px;
   font-weight: 800;
-  color: rgba(240, 238, 255, 0.7);
+  color: rgba(26, 26, 46, 0.65);
   flex-shrink: 0;
   transition: all 0.2s ease;
+}
+
+:global(.dark-mode) .optionKey {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(240, 238, 255, 0.7);
 }
 
 .optionSelected .optionKey {
@@ -266,8 +321,12 @@
 .optionText {
   font-size: 14px;
   font-weight: 500;
-  color: rgba(240, 238, 255, 0.85);
+  color: rgba(26, 26, 46, 0.8);
   flex: 1;
+}
+
+:global(.dark-mode) .optionText {
+  color: rgba(240, 238, 255, 0.85);
 }
 
 /* ─── FOOTER NAV ─── */
@@ -276,8 +335,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 28px 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
   gap: 12px;
+}
+
+:global(.dark-mode) .examFooter {
+  border-top-color: rgba(255, 255, 255, 0.06);
 }
 
 .navBtn {
@@ -286,9 +349,9 @@
   gap: 8px;
   padding: 10px 20px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(240, 238, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.03);
+  color: rgba(26, 26, 46, 0.65);
   font-size: 14px;
   font-weight: 600;
   font-family: inherit;
@@ -296,7 +359,19 @@
   transition: all 0.2s ease;
 }
 
+:global(.dark-mode) .navBtn {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(240, 238, 255, 0.7);
+}
+
 .navBtn:hover:not(:disabled) {
+  background: rgba(59, 158, 221, 0.1);
+  border-color: rgba(59, 158, 221, 0.3);
+  color: #1a3a5c;
+}
+
+:global(.dark-mode) .navBtn:hover:not(:disabled) {
   background: rgba(59, 158, 221, 0.12);
   border-color: rgba(59, 158, 221, 0.35);
   color: #f0eeff;
@@ -308,12 +383,22 @@
 }
 
 .navBtnPrimary {
+  background: rgba(59, 158, 221, 0.14);
+  border-color: rgba(59, 158, 221, 0.4);
+  color: #1a3a5c;
+}
+
+:global(.dark-mode) .navBtnPrimary {
   background: rgba(59, 158, 221, 0.18);
   border-color: rgba(59, 158, 221, 0.45);
   color: #fff;
 }
 
 .navBtnPrimary:hover:not(:disabled) {
+  background: rgba(59, 158, 221, 0.22);
+}
+
+:global(.dark-mode) .navBtnPrimary:hover:not(:disabled) {
   background: rgba(59, 158, 221, 0.28);
 }
 
@@ -327,8 +412,12 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease;
+}
+
+:global(.dark-mode) .dot {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .dotActive {
@@ -338,5 +427,9 @@
 }
 
 .dotDone {
+  background: rgba(45, 201, 154, 0.7);
+}
+
+:global(.dark-mode) .dotDone {
   background: rgba(45, 201, 154, 0.6);
 }
