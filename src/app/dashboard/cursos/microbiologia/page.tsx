@@ -12,6 +12,11 @@ const UNIDAD_LABEL: Record<string, string> = {
 export default function MicrobiologiaPage() {
   return (
     <div className={styles.microPage}>
+      {/* Decorative icon — top right corner */}
+      <svg className={styles.microPageIcon} width="160" height="160" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="4" fill="#5445d8" stroke="#5445d8" strokeWidth="2"/>
+        <path d="m8 12-3-2M16 12l3-2M12 8l2-3M12 16l-2 3" stroke="#5445d8" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
       <div className={styles.container}>
         <Link href="/dashboard/cursos" className={styles.backLink}>
           ← Mis cursos

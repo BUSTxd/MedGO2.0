@@ -203,6 +203,16 @@
   color: var(--white);
   min-height: 500px;
   margin: -4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.microPageIcon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  opacity: 0.18;
+  pointer-events: none;
 }
 
 .container {
@@ -507,8 +517,15 @@
 
 /* ─── WEEK SECTION ─── */
 .weekSection {
-  margin-bottom: 12px;
+  margin-bottom: 28px;
   padding: 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.weekSection:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
 }
 
 .weekHeader {
