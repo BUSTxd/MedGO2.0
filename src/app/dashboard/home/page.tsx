@@ -98,7 +98,10 @@ export default function HomePage() {
 
       <div className={styles.homeDashboard}>
         {/* Welcome Panel */}
-        <div className={styles.welcomePanel}>
+        <div
+          className={styles.welcomePanel}
+          style={{ backgroundImage: "url('/assets/bienvenidamedgo.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+        >
           <div className={styles.welcomeSvgBackground}>
             {SVGS.map((Icon, i) => (
               <div key={i} className={SVG_POSITIONS[i]}>
