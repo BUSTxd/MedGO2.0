@@ -41,7 +41,8 @@
   background: linear-gradient(135deg, rgba(30,80,160,0.8) 0%, rgba(10,30,80,0.8) 100%);
   border: 1px solid rgba(107, 168, 255, 0.2);
   border-radius: 20px;
-  padding: 40px 32px;
+  padding: 72px 32px;
+  min-height: 280px;
   position: relative;
   overflow: hidden;
   display: flex;
