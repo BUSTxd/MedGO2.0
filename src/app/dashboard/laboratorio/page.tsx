@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import styles from '@/styles/dashboardPages.module.css';
 
 const LAB_TOPICS = [
@@ -126,13 +127,18 @@ export default function LaboratorioPage() {
             </div>
             <div className={styles.labExperiments}>
               {topic.experiments.map((exp) => (
-                <div key={exp.name} className={styles.labExp}>
+                <Link
+                  key={exp.name}
+                  href={topic.id === 'microbiologia' ? '/dashboard/laboratorio/microscopio' : '#'}
+                  className={styles.labExp}
+                  style={{ textDecoration: 'none' }}
+                >
                   <div className={styles.labExpDot} style={{ background: exp.color }} />
                   <div className={styles.labExpInfo}>
                     <p className={styles.labExpName}>{exp.name}</p>
                     <p className={styles.labExpDesc}>{exp.desc}</p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

@@ -1,0 +1,342 @@
+/* ─── WRAPPER (dark card, igual que microPage) ─── */
+.examPage {
+  background: #0b0d1f;
+  border-radius: 14px;
+  color: var(--white);
+  min-height: 500px;
+  margin: -4px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative bacteria icon — top right */
+.examPageIcon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* ─── TOP BAR ─── */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(240, 238, 255, 0.5);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.backLink:hover { color: #f0eeff; }
+
+.counter {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(240, 238, 255, 0.45);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 4px 14px;
+}
+
+/* ─── MAIN LAYOUT ─── */
+.examBody {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  padding: 28px 28px 32px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .examBody { grid-template-columns: 1fr; }
+}
+
+/* ─── MICROSCOPE VIEWER ─── */
+.viewerWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.microscopeOuter {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(59,158,221,0.08), transparent 60%),
+              #05060f;
+  border: 3px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.04),
+    0 0 0 10px rgba(255, 255, 255, 0.02),
+    0 8px 40px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Crosshair lines */
+.microscopeOuter::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  border-radius: 50%;
+}
+
+/* Center crosshair */
+.crosshair {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.crosshair::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  bottom: 10%;
+  width: 1px;
+  background: rgba(59, 158, 221, 0.25);
+  transform: translateX(-50%);
+}
+
+.crosshair::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: rgba(59, 158, 221, 0.25);
+  transform: translateY(-50%);
+}
+
+/* Specimen placeholder (replaced by real image later) */
+.specimen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.specimenPlaceholder {
+  text-align: center;
+  color: rgba(240, 238, 255, 0.2);
+}
+
+.specimenIcon {
+  display: block;
+  margin: 0 auto 8px;
+  opacity: 0.5;
+}
+
+.specimenLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.magnification {
+  font-size: 12px;
+  color: rgba(59, 158, 221, 0.7);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+/* ─── QUESTION PANEL ─── */
+.questionPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.questionLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3b9edd;
+}
+
+.questionText {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #f0eeff;
+  font-weight: 500;
+}
+
+/* ─── OPTIONS A–E ─── */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+  font-family: inherit;
+}
+
+.option:hover {
+  background: rgba(59, 158, 221, 0.08);
+  border-color: rgba(59, 158, 221, 0.3);
+}
+
+.optionSelected {
+  background: rgba(59, 158, 221, 0.15);
+  border-color: rgba(59, 158, 221, 0.5);
+}
+
+.optionCorrect {
+  background: rgba(45, 201, 154, 0.15);
+  border-color: rgba(45, 201, 154, 0.5);
+}
+
+.optionWrong {
+  background: rgba(232, 91, 74, 0.12);
+  border-color: rgba(232, 91, 74, 0.4);
+}
+
+.optionKey {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(240, 238, 255, 0.7);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.optionSelected .optionKey {
+  background: #3b9edd;
+  border-color: #3b9edd;
+  color: #fff;
+}
+
+.optionCorrect .optionKey {
+  background: #2DC99A;
+  border-color: #2DC99A;
+  color: #fff;
+}
+
+.optionWrong .optionKey {
+  background: #E85B4A;
+  border-color: #E85B4A;
+  color: #fff;
+}
+
+.optionText {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(240, 238, 255, 0.85);
+  flex: 1;
+}
+
+/* ─── FOOTER NAV ─── */
+.examFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 12px;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(240, 238, 255, 0.7);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navBtn:hover:not(:disabled) {
+  background: rgba(59, 158, 221, 0.12);
+  border-color: rgba(59, 158, 221, 0.35);
+  color: #f0eeff;
+}
+
+.navBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.navBtnPrimary {
+  background: rgba(59, 158, 221, 0.18);
+  border-color: rgba(59, 158, 221, 0.45);
+  color: #fff;
+}
+
+.navBtnPrimary:hover:not(:disabled) {
+  background: rgba(59, 158, 221, 0.28);
+}
+
+.progressDots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.2s ease;
+}
+
+.dotActive {
+  background: #3b9edd;
+  width: 20px;
+  border-radius: 4px;
+}
+
+.dotDone {
+  background: rgba(45, 201, 154, 0.6);
+}
