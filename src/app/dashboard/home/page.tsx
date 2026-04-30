@@ -1,6 +1,6 @@
-import { redirect } from 'next/navigation';
-import { getUser } from '@/lib/supabase/get-user';
-import { createClient } from '@/lib/supabase/server';
+'use client';
+import { useState, useEffect } from 'react';
+import { createClient } from '@/lib/supabase/client';
 import styles from '@/styles/dashboardPages.module.css';
 
 const BacteriaIcon = () => (
@@ -70,19 +70,23 @@ const SVG_POSITIONS = [
 const SVGS = [BacteriaIcon, PillIcon, StethIcon, MicroscopeIcon, DnaIcon, CellIcon,
               BacteriaIcon, PillIcon, StethIcon, MicroscopeIcon, DnaIcon, CellIcon];
 
-export default async function HomePage() {
-  const user = await getUser();
-  if (!user) redirect('/auth/login');
+export default function HomePage() {
+  const [firstName, setFirstName] = useState('');
 
-  const supabase = await createClient();
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('full_name')
-    .eq('id', user.id)
-    .single();
-
-  const nombre = profile?.full_name ?? user.email ?? 'Estudiante';
-  const firstName = nombre.split(' ')[0];
+  useEffect(() => {
+    const supabase = createClient();
+    // getSession reads from the local cookie — no network call
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!session?.user) return;
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', session.user.id)
+        .single();
+      const nombre = profile?.full_name ?? session.user.email ?? 'Estudiante';
+      setFirstName(nombre.split(' ')[0]);
+    });
+  }, []);
 
   return (
     <>
@@ -103,7 +107,9 @@ export default async function HomePage() {
             ))}
           </div>
           <div className={styles.welcomeContent}>
-            <h1 className={styles.welcomeTitle}>BIENVENIDO A MEDGO, {firstName.toUpperCase()}</h1>
+            <h1 className={styles.welcomeTitle}>
+              BIENVENIDO A MEDGO{firstName ? `, ${firstName.toUpperCase()}` : ''}
+            </h1>
             <h2 className={styles.welcomeSubtitle}>Sistema DeepRecall</h2>
             <p className={styles.deeprecallDesc}>
               DeepRecall maximiza tus probabilidades de éxito practicando con preguntas reales de examen. Repite, detecta patrones y llega más seguro a tu prueba.

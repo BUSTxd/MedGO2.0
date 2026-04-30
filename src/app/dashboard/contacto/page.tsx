@@ -1,3 +1,4 @@
+'use client';
 import styles from '@/styles/dashboardPages.module.css';
 
 const CONTACTS = [
