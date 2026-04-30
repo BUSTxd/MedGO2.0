@@ -1,16 +1,17 @@
 .layout {
   display: flex;
   min-height: 100vh;
-  background: #08061a;
+  background: #f0f2f8;
+  transition: background 0.3s ease;
 }
 
 .main {
   margin-left: 240px;
   flex: 1;
   min-height: 100vh;
-  background: #08061a;
+  background: #f0f2f8;
   padding: 24px 28px;
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.3s ease, background 0.3s ease;
 }
 
 .mainCollapsed {
@@ -18,12 +19,26 @@
 }
 
 .panel {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: #fff;
   border-radius: 18px;
   padding: 28px 28px 36px;
   position: relative;
   min-height: calc(100vh - 48px);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+/* ── Dark mode overrides ── */
+:global(.dark-mode) .layout {
+  background: #08061a;
+}
+
+:global(.dark-mode) .main {
+  background: #08061a;
+}
+
+:global(.dark-mode) .panel {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 @media (max-width: 600px) {

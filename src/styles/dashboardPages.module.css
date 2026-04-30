@@ -2,15 +2,17 @@
 .pageTitle {
   font-size: clamp(22px, 3vw, 28px);
   font-weight: 800;
-  color: #f0eeff;
+  color: #1e1e60;
   margin: 0 0 6px;
   letter-spacing: -0.5px;
+  transition: color 0.3s ease;
 }
 
 .pageSub {
-  color: rgba(240, 238, 255, 0.5);
+  color: #718096;
   margin: 0 0 28px;
   font-size: 15px;
+  transition: color 0.3s ease;
 }
 
 .pagePanelIcon {
@@ -34,7 +36,7 @@
   }
 }
 
-/* Welcome Panel */
+/* Welcome Panel — always dark (has photo bg) */
 .welcomePanel {
   background: linear-gradient(135deg, rgba(30,80,160,0.8) 0%, rgba(10,30,80,0.8) 100%);
   border: 1px solid rgba(107, 168, 255, 0.2);
@@ -59,13 +61,9 @@
   border-radius: 20px;
 }
 
-.welcomePanel::after {
-  content: '';
-}
+.welcomePanel::after { content: ''; }
 
-.welcomeSvgBackground {
-  display: none;
-}
+.welcomeSvgBackground { display: none; }
 
 .welcomeSvg {
   position: absolute;
@@ -123,13 +121,13 @@
   animation: fadeUp 0.7s 0.3s ease both;
 }
 
-/* Dashboard sub-panels */
+/* ─── Dashboard sub-panels (light default) ─── */
 .dashboardPanel {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
+  border: 1px solid rgba(126, 107, 255, 0.12);
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.08);
   position: relative;
   overflow: hidden;
   transition: all 0.2s ease;
@@ -137,18 +135,18 @@
 
 .dashboardPanel:hover {
   transform: translateY(-2px);
-  border-color: rgba(59, 158, 221, 0.2);
-  box-shadow: 0 4px 24px rgba(59, 158, 221, 0.08);
+  box-shadow: 0 4px 16px rgba(126, 107, 255, 0.14);
 }
 
 .dashboardPanelTitle {
   font-size: 16px;
   font-weight: 700;
-  color: #f0eeff;
+  color: #1e1e60;
   margin: 0 0 16px;
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: color 0.3s ease;
 }
 
 /* Exam dates */
@@ -164,14 +162,16 @@
 
 .examDateName {
   font-weight: 600;
-  color: #f0eeff;
+  color: #1e1e60;
   font-size: 14px;
+  transition: color 0.3s ease;
 }
 
 .examDateDate {
   font-size: 13px;
-  color: rgba(240, 238, 255, 0.5);
+  color: #718096;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 /* Recent exams */
@@ -184,14 +184,16 @@
 
 .recentExamName {
   font-weight: 600;
-  color: #f0eeff;
+  color: #1e1e60;
   font-size: 14px;
   margin: 0 0 3px;
+  transition: color 0.3s ease;
 }
 
 .recentExamScore {
   font-size: 13px;
-  color: rgba(240, 238, 255, 0.5);
+  color: #718096;
+  transition: color 0.3s ease;
 }
 
 /* Stats */
@@ -209,13 +211,11 @@
   margin: 0 auto 16px;
 }
 
-.circularChart {
-  transform: rotate(-90deg);
-}
+.circularChart { transform: rotate(-90deg); }
 
 .circleBg {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.08);
+  stroke: rgba(126, 107, 255, 0.1);
   stroke-width: 8;
 }
 
@@ -238,14 +238,16 @@
 .chartPct {
   font-size: 20px;
   font-weight: 800;
-  color: #f0eeff;
+  color: #1e1e60;
   line-height: 1;
+  transition: color 0.3s ease;
 }
 
 .chartLabel {
   font-size: 11px;
-  color: rgba(240, 238, 255, 0.5);
+  color: #718096;
   margin-top: 2px;
+  transition: color 0.3s ease;
 }
 
 .statsMiniGrid {
@@ -256,24 +258,27 @@
 }
 
 .statMini {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(126, 107, 255, 0.1);
   border-radius: 10px;
   padding: 10px 8px;
   text-align: center;
+  transition: all 0.3s ease;
 }
 
 .statMiniVal {
   font-size: 18px;
   font-weight: 800;
-  color: #f0eeff;
+  color: #1e1e60;
   line-height: 1;
+  transition: color 0.3s ease;
 }
 
 .statMiniLabel {
   font-size: 11px;
-  color: rgba(240, 238, 255, 0.5);
+  color: #718096;
   margin-top: 3px;
+  transition: color 0.3s ease;
 }
 
 /* ─── LABORATORIO PAGE ─── */
@@ -289,18 +294,17 @@
 }
 
 .labPanel {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
+  border: 1px solid rgba(126, 107, 255, 0.12);
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.08);
   transition: all 0.2s ease;
 }
 
 .labPanel:hover {
   transform: translateY(-2px);
-  border-color: rgba(59, 158, 221, 0.2);
-  box-shadow: 0 6px 24px rgba(59, 158, 221, 0.08);
+  box-shadow: 0 6px 20px rgba(126, 107, 255, 0.14);
 }
 
 .labPanelHeader {
@@ -308,8 +312,8 @@
   align-items: center;
   gap: 16px;
   padding: 20px 22px;
-  background: rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: linear-gradient(135deg, rgba(126,107,255,0.08) 0%, rgba(84,69,216,0.05) 100%);
+  border-bottom: 1px solid rgba(126, 107, 255, 0.12);
 }
 
 .labIconBox {
@@ -330,8 +334,9 @@
 .labPanelTitle {
   font-size: 17px;
   font-weight: 700;
-  color: #f0eeff;
+  color: #1e1e60;
   margin: 0 0 6px;
+  transition: color 0.3s ease;
 }
 
 .labBadge {
@@ -340,8 +345,9 @@
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
-  background: rgba(59, 158, 221, 0.15);
-  color: #3b9edd;
+  background: rgba(126, 107, 255, 0.15);
+  color: #5445d8;
+  transition: all 0.3s ease;
 }
 
 .labDiff {
@@ -375,15 +381,15 @@
   align-items: flex-start;
   gap: 12px;
   padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(126, 107, 255, 0.08);
   border-radius: 10px;
   transition: all 0.2s ease;
 }
 
 .labExp:hover {
-  background: rgba(59, 158, 221, 0.07);
-  border-color: rgba(59, 158, 221, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(126, 107, 255, 0.2);
 }
 
 .labExpDot {
@@ -399,14 +405,16 @@
 .labExpName {
   font-size: 14px;
   font-weight: 600;
-  color: #f0eeff;
+  color: #1e1e60;
   margin: 0 0 2px;
+  transition: color 0.3s ease;
 }
 
 .labExpDesc {
   font-size: 12px;
-  color: rgba(240, 238, 255, 0.5);
+  color: #718096;
   margin: 0;
+  transition: color 0.3s ease;
 }
 
 /* ─── CONTACT PAGE ─── */
@@ -426,14 +434,14 @@
 }
 
 .contactCard {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
+  border: 1px solid rgba(126, 107, 255, 0.1);
   border-radius: 16px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.08);
   transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
@@ -442,8 +450,7 @@
 
 .contactCard:hover {
   transform: translateY(-2px);
-  border-color: rgba(59, 158, 221, 0.2);
-  box-shadow: 0 4px 24px rgba(59, 158, 221, 0.08);
+  box-shadow: 0 4px 16px rgba(126, 107, 255, 0.15);
 }
 
 .contactCardIcon {
@@ -465,24 +472,27 @@
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
-  background: rgba(59, 158, 221, 0.15);
-  color: #3b9edd;
+  background: rgba(126, 107, 255, 0.15);
+  color: #5445d8;
   align-self: flex-start;
+  transition: all 0.3s ease;
 }
 
 .contactTitle {
   font-weight: 700;
   font-size: 17px;
-  color: #f0eeff;
+  color: #1e1e60;
   margin: 0;
+  transition: color 0.3s ease;
 }
 
 .contactSummary {
-  color: rgba(240, 238, 255, 0.5);
+  color: #718096;
   font-size: 14px;
   font-weight: 500;
   word-break: break-word;
   margin: 0;
+  transition: color 0.3s ease;
 }
 
 .contactMeta {
@@ -505,16 +515,17 @@
 
 /* Contact info panel */
 .contactInfoPanel {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
+  border: 1px solid rgba(126, 107, 255, 0.1);
   border-radius: 16px;
   padding: 24px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(126, 107, 255, 0.08);
   position: relative;
   overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .contactInfoPanel::before {
@@ -535,16 +546,18 @@
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
-  background: rgba(59, 158, 221, 0.15);
-  color: #3b9edd;
+  background: rgba(126, 107, 255, 0.15);
+  color: #5445d8;
   margin-bottom: 10px;
+  transition: all 0.3s ease;
 }
 
 .contactInfoTitle {
   font-weight: 700;
   font-size: 18px;
-  color: #f0eeff;
+  color: #1e1e60;
   margin: 0 0 14px;
+  transition: color 0.3s ease;
 }
 
 .contactSchedule {
@@ -558,17 +571,19 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(126, 107, 255, 0.08);
+  transition: all 0.3s ease;
 }
 
 .scheduleDimmed { opacity: 0.65; }
 
 .scheduleDay {
   font-weight: 500;
-  color: #f0eeff;
+  color: #1e1e60;
   font-size: 14px;
+  transition: color 0.3s ease;
 }
 
 .scheduleTime {
@@ -580,13 +595,14 @@
 .scheduleDimmed .scheduleTime { color: #718096; }
 
 .contactInfoText {
-  color: rgba(240, 238, 255, 0.5);
+  color: #718096;
   line-height: 1.6;
   margin: 0 0 20px;
   font-size: 14px;
+  transition: color 0.3s ease;
 }
 
-.contactInfoText strong { color: #3b9edd; font-weight: 600; }
+.contactInfoText strong { color: #7E6BFF; font-weight: 600; }
 
 .contactActions {
   display: flex;
@@ -620,15 +636,119 @@
   font-weight: 500;
   font-size: 13px;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.06);
-  color: #f0eeff;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.8);
+  color: #1e1e60;
+  border: 1px solid rgba(126, 107, 255, 0.2);
   transition: all 0.2s ease;
   text-decoration: none;
   display: inline-block;
 }
 
 .contactActionSecondary:hover {
+  border-color: #7E6BFF;
+  color: #7E6BFF;
+}
+
+/* ════════════════════════════════════════
+   DARK MODE OVERRIDES
+   ════════════════════════════════════════ */
+:global(.dark-mode) .pageTitle { color: #f0eeff; }
+:global(.dark-mode) .pageSub   { color: rgba(240, 238, 255, 0.5); }
+
+:global(.dark-mode) .dashboardPanel {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+}
+:global(.dark-mode) .dashboardPanel:hover {
+  border-color: rgba(59, 158, 221, 0.2);
+  box-shadow: 0 4px 24px rgba(59, 158, 221, 0.08);
+}
+:global(.dark-mode) .dashboardPanelTitle { color: #f0eeff; }
+:global(.dark-mode) .examDateName        { color: #f0eeff; }
+:global(.dark-mode) .examDateDate        { color: rgba(240, 238, 255, 0.5); }
+:global(.dark-mode) .recentExamName      { color: #f0eeff; }
+:global(.dark-mode) .recentExamScore     { color: rgba(240, 238, 255, 0.5); }
+
+:global(.dark-mode) .circleBg    { stroke: rgba(255, 255, 255, 0.08); }
+:global(.dark-mode) .chartPct    { color: #f0eeff; }
+:global(.dark-mode) .chartLabel  { color: rgba(240, 238, 255, 0.5); }
+
+:global(.dark-mode) .statMini {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+:global(.dark-mode) .statMiniVal   { color: #f0eeff; }
+:global(.dark-mode) .statMiniLabel { color: rgba(240, 238, 255, 0.5); }
+
+:global(.dark-mode) .labPanel {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+}
+:global(.dark-mode) .labPanel:hover {
+  border-color: rgba(59, 158, 221, 0.2);
+  box-shadow: 0 6px 24px rgba(59, 158, 221, 0.08);
+}
+:global(.dark-mode) .labPanelHeader {
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+:global(.dark-mode) .labPanelTitle { color: #f0eeff; }
+:global(.dark-mode) .labBadge {
+  background: rgba(59, 158, 221, 0.15);
+  color: #3b9edd;
+}
+:global(.dark-mode) .labExp {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.07);
+}
+:global(.dark-mode) .labExp:hover {
+  background: rgba(59, 158, 221, 0.07);
+  border-color: rgba(59, 158, 221, 0.2);
+}
+:global(.dark-mode) .labExpName { color: #f0eeff; }
+:global(.dark-mode) .labExpDesc { color: rgba(240, 238, 255, 0.5); }
+
+:global(.dark-mode) .contactCard {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+}
+:global(.dark-mode) .contactCard:hover {
+  border-color: rgba(59, 158, 221, 0.2);
+  box-shadow: 0 4px 24px rgba(59, 158, 221, 0.08);
+}
+:global(.dark-mode) .contactBadge {
+  background: rgba(59, 158, 221, 0.15);
+  color: #3b9edd;
+}
+:global(.dark-mode) .contactTitle   { color: #f0eeff; }
+:global(.dark-mode) .contactSummary { color: rgba(240, 238, 255, 0.5); }
+
+:global(.dark-mode) .contactInfoPanel {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+}
+:global(.dark-mode) .contactInfoBadge {
+  background: rgba(59, 158, 221, 0.15);
+  color: #3b9edd;
+}
+:global(.dark-mode) .contactInfoTitle { color: #f0eeff; }
+:global(.dark-mode) .scheduleItem {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.07);
+}
+:global(.dark-mode) .scheduleDay    { color: #f0eeff; }
+:global(.dark-mode) .contactInfoText { color: rgba(240, 238, 255, 0.5); }
+:global(.dark-mode) .contactInfoText strong { color: #3b9edd; }
+:global(.dark-mode) .contactActionSecondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: #f0eeff;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+:global(.dark-mode) .contactActionSecondary:hover {
   border-color: #3b9edd;
   color: #3b9edd;
 }
