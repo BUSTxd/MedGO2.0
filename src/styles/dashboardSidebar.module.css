@@ -4,7 +4,7 @@
   left: 0;
   width: 240px;
   height: 100vh;
-  background: linear-gradient(135deg, #27319c 0%, #1e1e60 100%);
+  background: linear-gradient(180deg, #08061a 0%, #0f1d6e 38%, oklch(0.38 0.21 278) 72%, #0d0b28 100%);
   padding: 24px 0;
   border-radius: 0 20px 20px 0;
   display: flex;
@@ -13,6 +13,7 @@
   z-index: 100;
   transition: width 0.3s ease;
   overflow: hidden;
+  box-shadow: 4px 0 32px rgba(8, 6, 26, 0.7);
 }
 
 .collapsed {
@@ -57,12 +58,13 @@
 }
 
 .navItem.active {
-  background: #fff;
-  color: #2d3748;
+  background: rgba(59, 158, 221, 0.22);
+  color: #fff;
+  border: 1px solid rgba(59, 158, 221, 0.4);
 }
 
 .navItem.active .navIcon {
-  color: #2d3748;
+  color: #3b9edd;
 }
 
 .navIcon {

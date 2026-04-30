@@ -100,6 +100,7 @@
   color: #ffffff;
   letter-spacing: -1px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  animation: fadeUp 0.7s ease both;
 }
 
 .welcomeSubtitle {
@@ -108,6 +109,7 @@
   margin: 0 0 16px;
   color: #cce0ff;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  animation: fadeUp 0.7s 0.15s ease both;
 }
 
 .deeprecallDesc {
@@ -118,6 +120,7 @@
   font-weight: 600;
   color: #e8f0ff;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  animation: fadeUp 0.7s 0.3s ease both;
 }
 
 /* Dashboard sub-panels */
