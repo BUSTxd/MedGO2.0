@@ -1,9 +1,8 @@
 import { redirect } from 'next/navigation';
+import { getUser } from '@/lib/supabase/get-user';
 import { createClient } from '@/lib/supabase/server';
-import DashboardLayout from '@/components/DashboardLayout';
 import styles from '@/styles/dashboardPages.module.css';
 
-/* ── Bacteria SVG (microbiología, from reference) ── */
 const BacteriaIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" className={styles.welcomeSvg}>
     <circle cx="12" cy="12" r="4" fill="currentColor" stroke="currentColor" strokeWidth="2"/>
@@ -72,10 +71,10 @@ const SVGS = [BacteriaIcon, PillIcon, StethIcon, MicroscopeIcon, DnaIcon, CellIc
               BacteriaIcon, PillIcon, StethIcon, MicroscopeIcon, DnaIcon, CellIcon];
 
 export default async function HomePage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
   if (!user) redirect('/auth/login');
 
+  const supabase = await createClient();
   const { data: profile } = await supabase
     .from('profiles')
     .select('full_name')
@@ -86,8 +85,7 @@ export default async function HomePage() {
   const firstName = nombre.split(' ')[0];
 
   return (
-    <DashboardLayout>
-      {/* Panel icon */}
+    <>
       <div className={styles.pagePanelIcon}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="#9CA3AF">
           <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
@@ -150,7 +148,6 @@ export default async function HomePage() {
           <div className={styles.circularChartWrap}>
             <svg className={styles.circularChart} width="110" height="110" viewBox="0 0 110 110">
               <circle className={styles.circleBg} cx="55" cy="55" r="40"/>
-              {/* 85% progress: circumference = 2π×40 ≈ 251.2; 85% = 213.5 */}
               <circle className={styles.circleProgress} cx="55" cy="55" r="40"
                 strokeDasharray="213.5 251.2"/>
             </svg>
@@ -174,6 +171,6 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </>
   );
 }

@@ -1,6 +1,3 @@
-import { redirect } from 'next/navigation';
-import { createClient } from '@/lib/supabase/server';
-import DashboardLayout from '@/components/DashboardLayout';
 import styles from '@/styles/dashboardPages.module.css';
 
 const CONTACTS = [
@@ -83,13 +80,9 @@ const CONTACTS = [
   },
 ];
 
-export default async function ContactoPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect('/auth/login');
-
+export default function ContactoPage() {
   return (
-    <DashboardLayout>
+    <>
       <div className={styles.pagePanelIcon}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="#9CA3AF">
           <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
@@ -100,7 +93,6 @@ export default async function ContactoPage() {
       <h2 className={styles.pageTitle}>Contáctanos</h2>
       <p className={styles.pageSub}>Estamos aquí para ayudarte en tu camino hacia la excelencia médica.</p>
 
-      {/* Contact cards */}
       <div className={styles.contactGrid}>
         {CONTACTS.map((c) => (
           <div key={c.id} className={styles.contactCard}>
@@ -115,7 +107,6 @@ export default async function ContactoPage() {
         ))}
       </div>
 
-      {/* Info panel */}
       <div className={styles.contactInfoPanel}>
         <div>
           <span className={styles.contactInfoBadge}>Horarios</span>
@@ -152,6 +143,6 @@ export default async function ContactoPage() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </>
   );
 }

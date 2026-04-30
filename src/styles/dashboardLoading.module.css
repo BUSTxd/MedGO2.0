@@ -1,0 +1,49 @@
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.skeleton {
+  padding: 4px 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonBar {
+  width: 32px;
+  height: 32px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.skeletonTitle {
+  height: 26px;
+  width: 180px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.skeletonSub {
+  height: 16px;
+  width: 300px;
+  background: #e2e8f0;
+  border-radius: 6px;
+  margin-bottom: 28px;
+}
+
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.skeletonCard {
+  height: 200px;
+  background: #e2e8f0;
+  border-radius: 14px;
+}
+
+@media (max-width: 700px) {
+  .skeletonGrid { grid-template-columns: 1fr; }
+}

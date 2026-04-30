@@ -1,7 +1,4 @@
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase/server';
-import DashboardLayout from '@/components/DashboardLayout';
 import styles from '@/styles/cursos.module.css';
 
 const COURSES = [
@@ -13,7 +10,6 @@ const COURSES = [
     badgeColor: '#5445d8',
     badgeBg: 'rgba(84, 69, 216, 0.12)',
     activo: true,
-    /* Bacteria SVG — tomado del proyecto de referencia (MedGO) */
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
         <circle cx="12" cy="12" r="4" fill="#5445d8" stroke="#5445d8" strokeWidth="2"/>
@@ -29,7 +25,6 @@ const COURSES = [
     badgeColor: '#5445d8',
     badgeBg: 'rgba(84, 69, 216, 0.12)',
     activo: false,
-    /* Pill SVG — tomado del proyecto de referencia (MedGO) */
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
         <g transform="rotate(135 12 12)">
@@ -47,7 +42,6 @@ const COURSES = [
     badgeColor: '#d44a4a',
     badgeBg: 'rgba(212, 74, 74, 0.12)',
     activo: false,
-    /* Heart / blood-drop SVG */
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
         <path d="M12 2C12 2 7 7 7 13c0 3 2.5 5.5 5 5.5s5-2.5 5-5.5c0-6-5-11-5-11z"
@@ -58,14 +52,9 @@ const COURSES = [
   },
 ];
 
-export default async function CursosPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect('/auth/login');
-
+export default function CursosPage() {
   return (
-    <DashboardLayout>
-      {/* Panel header icon */}
+    <>
       <div className={styles.qbankPanelIcon}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="#9CA3AF">
           <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
@@ -114,6 +103,6 @@ export default async function CursosPage() {
           )
         )}
       </div>
-    </DashboardLayout>
+    </>
   );
 }
