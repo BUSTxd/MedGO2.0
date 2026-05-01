@@ -17,3 +17,6 @@ npm-debug.log*
 
 .vercel
 .claude
+
+# Private content (PDFs, etc.) — not in public, not in git
+private/

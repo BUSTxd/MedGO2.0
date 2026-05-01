@@ -11,6 +11,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
+  resumen?: { tipo: 'pdf' };
 }
 
 export interface Semana {
@@ -101,6 +102,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Generalidades', 'Ciclo de Multiplicación', 'Receptores y co-receptores', 'Sistema Interferón'],
         docentes: ['Dr. Abraham Vaisberg'],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'practica-3',

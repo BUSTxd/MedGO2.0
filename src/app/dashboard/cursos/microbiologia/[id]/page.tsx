@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { findActividad, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/microbiologia';
 import styles from '@/styles/cursos.module.css';
+import StudyMaterialSection from '@/components/StudyMaterialSection';
 
 const UNIDAD_LABEL: Record<string, string> = {
   VIROLOGIA_MICOLOGIA: 'Virología / Micología',
@@ -86,15 +87,11 @@ export default async function ActividadPage({
           </div>
         )}
 
-        {/* Material de estudio — en construcción */}
-        <div className={styles.constructionBox}>
-          <div className={styles.constructionIcon}>🔧</div>
-          <p className={styles.constructionTitle}>Material de estudio en construcción</p>
-          <p className={styles.constructionSub}>
-            Pronto encontrarás aquí el resumen, flashcards,<br />
-            preguntas de práctica y recursos bibliográficos.
-          </p>
-        </div>
+        {/* Material de estudio — 3 secciones para todas las clases */}
+        <StudyMaterialSection
+          claseId={act.id}
+          hasResumen={act.resumen?.tipo === 'pdf'}
+        />
       </div>
     </div>
   );
