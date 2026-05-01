@@ -42,8 +42,9 @@ export async function GET(
       // inline → renders in browser, no download dialog
       'Content-Disposition': 'inline',
       'X-Content-Type-Options': 'nosniff',
-      // no client-side cache → can't inspect cached PDF bytes
-      'Cache-Control': 'private, no-store',
+      // private: solo el browser del usuario lo cachea (no proxies/CDN)
+      // max-age=3600: evita re-descargar si el alumno cierra y vuelve a abrir
+      'Cache-Control': 'private, max-age=3600',
     },
   });
 }

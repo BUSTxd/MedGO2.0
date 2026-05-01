@@ -16,7 +16,14 @@ interface Props {
 }
 
 export default function StudyMaterialSection({ claseId, hasResumen }: Props) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen]     = useState(false);
+  // Once true, the viewer stays mounted — toggling only shows/hides via CSS
+  const [everOpened, setEverOpened] = useState(false);
+
+  const toggle = () => {
+    if (!everOpened) setEverOpened(true);
+    setOpen(o => !o);
+  };
 
   return (
     <div className={styles.studySection}>
@@ -46,7 +53,7 @@ export default function StudyMaterialSection({ claseId, hasResumen }: Props) {
               ? open ? styles.studyCardOpen : styles.studyCardActive
               : styles.studyCardLocked
           }`}
-          onClick={hasResumen ? () => setOpen(o => !o) : undefined}
+          onClick={hasResumen ? toggle : undefined}
         >
           <div className={styles.studyCardIcon}>📄</div>
           <p className={styles.studyCardTitle}>Resumen de la Clase</p>
@@ -61,14 +68,19 @@ export default function StudyMaterialSection({ claseId, hasResumen }: Props) {
         </div>
       </div>
 
-      {/* PDF — solo se monta (y descarga) cuando open === true */}
-      {hasResumen && open && (
-        <PdfViewer
-          claseId={claseId}
-          className={styles.pdfViewer}
-          loadingClass={styles.pdfLoading}
-          pageWrapClass={styles.pdfPageWrap}
-        />
+      {/*
+        Una vez abierto por primera vez (everOpened), el viewer queda montado
+        en el DOM. Cerrar solo lo oculta con CSS — no hay re-fetch ni re-render.
+      */}
+      {hasResumen && everOpened && (
+        <div style={{ display: open ? 'block' : 'none' }}>
+          <PdfViewer
+            claseId={claseId}
+            className={styles.pdfViewer}
+            loadingClass={styles.pdfLoading}
+            pageWrapClass={styles.pdfPageWrap}
+          />
+        </div>
       )}
     </div>
   );
