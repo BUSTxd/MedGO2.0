@@ -791,6 +791,24 @@
 
 .studyCardActive {
   border-color: rgba(123, 114, 212, 0.22);
+  cursor: pointer;
+}
+
+.studyCardActive:hover {
+  border-color: rgba(123, 114, 212, 0.5);
+  background: rgba(123, 114, 212, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(123, 114, 212, 0.12);
+}
+
+.studyCardOpen {
+  border-color: rgba(123, 114, 212, 0.5);
+  background: rgba(123, 114, 212, 0.07);
+  cursor: pointer;
+}
+
+.studyCardOpen:hover {
+  background: rgba(123, 114, 212, 0.04);
 }
 
 .studyCardIcon {
