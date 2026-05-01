@@ -72,8 +72,12 @@ export default function StudyMaterialSection({ claseId, hasResumen }: Props) {
         Una vez abierto por primera vez (everOpened), el viewer queda montado
         en el DOM. Cerrar solo lo oculta con CSS — no hay re-fetch ni re-render.
       */}
+      {/* visibility+height en vez de display:none — preserva el contenido de los <canvas> */}
       {hasResumen && everOpened && (
-        <div style={{ display: open ? 'block' : 'none' }}>
+        <div style={open
+          ? { visibility: 'visible', height: 'auto', overflow: 'visible' }
+          : { visibility: 'hidden', height: 0, overflow: 'hidden' }
+        }>
           <PdfViewer
             claseId={claseId}
             className={styles.pdfViewer}
