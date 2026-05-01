@@ -14,12 +14,16 @@ export async function GET(
     return new NextResponse(null, { status: 404 });
   }
 
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !key) {
+    console.error('[resumen] missing env vars — NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not set. Restart the dev server after adding them to .env.local.');
+    return new NextResponse(null, { status: 500 });
+  }
+
   // Service role key bypasses RLS — never exposed to the client
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { persistSession: false } },
-  );
+  const supabase = createClient(url, key, { auth: { persistSession: false } });
 
   const { data, error } = await supabase.storage
     .from('resumenes')
