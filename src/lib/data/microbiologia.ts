@@ -116,6 +116,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Generalidades', 'Ciclos de Multiplicación y Lisogenia', 'Aplicaciones'],
         docentes: ['Dr. Abraham Vaisberg'],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'clase-6',
