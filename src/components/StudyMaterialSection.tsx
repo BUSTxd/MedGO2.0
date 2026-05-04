@@ -9,6 +9,11 @@ const PdfViewer = dynamic(() => import('./PdfViewer'), {
   loading: () => <div className={styles.pdfLoading}>Cargando resumen…</div>,
 });
 
+// Loaded only when the user opens the fullscreen view
+const PdfFullscreenModal = dynamic(() => import('./PdfFullscreenModal'), {
+  ssr: false,
+});
+
 interface ResumenOpcion {
   id: string;
   label: string;
@@ -32,9 +37,19 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
   const [selectedId, setSelectedId]   = useState<string | null>(null);
   const [pdfOpen, setPdfOpen]         = useState(false);
 
+  // Fullscreen state
+  const [fullscreenOpen, setFullscreenOpen] = useState(false);
+
   const selectedLabel = isMulti && selectedId
     ? resumenOpciones.find(o => o.id === selectedId)?.label ?? ''
     : '';
+
+  // Which PDF the action bar / fullscreen should target
+  const activeId = isMulti ? selectedId : claseId;
+  // Show action bar whenever a PDF is currently visible inline
+  const viewerVisible = isMulti
+    ? Boolean(pdfOpen && selectedId)
+    : open && everOpened;
 
   /* ── handlers ── */
   const handleCardClick = () => {
@@ -133,6 +148,19 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
         </div>
       )}
 
+      {/* ── Action bar — aparece cuando el PDF inline está visible ── */}
+      {viewerVisible && activeId && (
+        <div className={styles.viewerActionBar}>
+          <button
+            className={styles.viewerActionBtn}
+            onClick={() => setFullscreenOpen(true)}
+          >
+            <span className={styles.viewerActionBtnIcon}>⛶</span>
+            Ver PDF completo
+          </button>
+        </div>
+      )}
+
       {/* ── PDF viewer — single PDF (stays mounted after first open) ── */}
       {hasResumen && !isMulti && everOpened && (
         <div style={open
@@ -156,6 +184,14 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           className={styles.pdfViewer}
           loadingClass={styles.pdfLoading}
           pageWrapClass={styles.pdfPageWrap}
+        />
+      )}
+
+      {/* ── Fullscreen modal con zoom ── */}
+      {fullscreenOpen && activeId && (
+        <PdfFullscreenModal
+          claseId={activeId}
+          onClose={() => setFullscreenOpen(false)}
         />
       )}
     </div>

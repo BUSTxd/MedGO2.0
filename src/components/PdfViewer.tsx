@@ -18,14 +18,30 @@ const PDF_OPTIONS = {
   wasmUrl: '/pdfjs/wasm/',
 };
 
+// Force min DPR=2 so canvases stay crisp under browser/OS zoom on non-Retina
+// displays (Windows laptops default DPR=1 → blurry on pinch zoom).
+const RENDER_DPR =
+  typeof window !== 'undefined' ? Math.max(window.devicePixelRatio || 1, 2) : 2;
+
 interface Props {
   claseId: string;
   className?: string;
   loadingClass?: string;
   pageWrapClass?: string;
+  /** Override the auto-measured width. When set, the component skips container measuring. */
+  widthOverride?: number;
+  /** Multiplier applied to the page width (for zoom). Default 1. */
+  scale?: number;
 }
 
-export default function PdfViewer({ claseId, className, loadingClass, pageWrapClass }: Props) {
+export default function PdfViewer({
+  claseId,
+  className,
+  loadingClass,
+  pageWrapClass,
+  widthOverride,
+  scale = 1,
+}: Props) {
   const [numPages, setNumPages] = useState(0);
   const [error, setError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -45,6 +61,10 @@ export default function PdfViewer({ claseId, className, loadingClass, pageWrapCl
       </div>
     );
   }
+
+  const baseWidth = widthOverride
+    ?? (containerRef.current ? containerRef.current.clientWidth - 48 : 760);
+  const pageWidth = baseWidth * scale;
 
   return (
     <div
@@ -69,7 +89,8 @@ export default function PdfViewer({ claseId, className, loadingClass, pageWrapCl
               renderTextLayer={false}
               // Disable annotation layer → removes clickable links
               renderAnnotationLayer={false}
-              width={containerRef.current ? containerRef.current.clientWidth - 48 : 760}
+              width={pageWidth}
+              devicePixelRatio={RENDER_DPR}
             />
           </div>
         ))}
