@@ -259,6 +259,7 @@ export const semanas: Semana[] = [
           'Transferencia génica',
         ],
         docentes: ['Edgard Neyra'],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'tbl-1',
