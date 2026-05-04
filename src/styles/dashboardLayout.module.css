@@ -53,9 +53,41 @@
   --card-border: rgba(255, 255, 255, 0.08);
 }
 
+.backdrop {
+  display: none;
+}
+
 @media (max-width: 600px) {
-  .main {
-    margin-left: 68px;
-    padding: 16px;
+  .main,
+  .mainCollapsed {
+    margin-left: 0;
+    padding: 12px;
+    padding-top: 76px;
   }
+
+  .panel {
+    border-radius: 14px;
+    padding: 18px 16px 28px;
+    min-height: calc(100vh - 88px);
+  }
+
+  .backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 6, 26, 0.55);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 90;
+    animation: backdropFade 0.2s ease;
+  }
+}
+
+:global(body.pdf-fullscreen-active) .backdrop {
+  display: none;
+}
+
+@keyframes backdropFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

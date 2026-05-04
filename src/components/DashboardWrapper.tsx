@@ -13,6 +13,9 @@ export default function DashboardWrapper({ children }: { children: React.ReactNo
       setDarkMode(true);
       document.body.classList.add('dark-mode');
     }
+    if (window.innerWidth <= 600) {
+      setCollapsed(true);
+    }
   }, []);
 
   const toggleDark = () => {
@@ -32,6 +35,13 @@ export default function DashboardWrapper({ children }: { children: React.ReactNo
         darkMode={darkMode}
         onToggleDark={toggleDark}
       />
+      {!collapsed && (
+        <div
+          className={styles.backdrop}
+          onClick={() => setCollapsed(true)}
+          aria-hidden="true"
+        />
+      )}
       <main className={`${styles.main} ${collapsed ? styles.mainCollapsed : ''}`}>
         <div className={styles.panel}>{children}</div>
       </main>
