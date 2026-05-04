@@ -180,6 +180,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Herpes virus', 'Papilomavirus', 'Viruela / Mpox', 'Hepatitis B'],
         docentes: ['Dr. Holger Maita'],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'clase-8',
