@@ -127,6 +127,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['SARS-CoV', 'Influenza', 'RSV', 'Rotavirus', 'Dengue', 'HIV', 'HTLV'],
         docentes: ['Dr. Maita', 'Dr. Montes'],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'practica-2',

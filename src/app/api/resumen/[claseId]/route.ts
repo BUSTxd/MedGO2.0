@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
 // Only these IDs have an associated PDF in Supabase Storage
-const ALLOWED = new Set(['clase-4', 'clase-5']);
+const ALLOWED = new Set(['clase-4', 'clase-5', 'clase-6']);
 
 export async function GET(
   _req: Request,
