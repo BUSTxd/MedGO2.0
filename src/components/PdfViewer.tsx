@@ -6,6 +6,18 @@ import { Document, Page, pdfjs } from 'react-pdf';
 // Local copy of the worker — avoids CDN dependency and version mismatch
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
+// pdfjs v5 moved JPEG2000 decoding to WASM (openjpeg.wasm). Without it, images
+// compressed as JPX (typical output of PDF compressors like Smallpdf/ILovePDF)
+// render blank. cMaps + standardFontDataUrl prevent missing-font issues with
+// PDFs exported from Canva/Acrobat. Defined outside the component so the
+// reference is stable and the Document doesn't reload on every render.
+const PDF_OPTIONS = {
+  cMapUrl: '/pdfjs/cmaps/',
+  cMapPacked: true,
+  standardFontDataUrl: '/pdfjs/standard_fonts/',
+  wasmUrl: '/pdfjs/wasm/',
+};
+
 interface Props {
   claseId: string;
   className?: string;
@@ -43,6 +55,7 @@ export default function PdfViewer({ claseId, className, loadingClass, pageWrapCl
     >
       <Document
         file={`/api/resumen/${claseId}`}
+        options={PDF_OPTIONS}
         onLoadSuccess={onLoadSuccess}
         onLoadError={onLoadError}
         loading={<div className={loadingClass}>Cargando resumen…</div>}
