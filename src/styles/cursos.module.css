@@ -907,51 +907,6 @@
   border-radius: 6px;
 }
 
-/* ─── VIEWER ACTION BAR (aparece cuando el PDF inline está abierto) ─── */
-.viewerActionBar {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 12px;
-}
-
-.viewerActionBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(123, 114, 212, 0.1);
-  border: 1px solid rgba(123, 114, 212, 0.28);
-  border-radius: 10px;
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #7B72D4;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.viewerActionBtn:hover {
-  background: rgba(123, 114, 212, 0.18);
-  border-color: rgba(123, 114, 212, 0.5);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(123, 114, 212, 0.14);
-}
-
-:global(.dark-mode) .viewerActionBtn {
-  background: rgba(155, 142, 248, 0.14);
-  border-color: rgba(155, 142, 248, 0.32);
-  color: #B5ACFF;
-}
-
-:global(.dark-mode) .viewerActionBtn:hover {
-  background: rgba(155, 142, 248, 0.22);
-  border-color: rgba(155, 142, 248, 0.5);
-}
-
-.viewerActionBtnIcon {
-  font-size: 15px;
-  line-height: 1;
-}
-
 /* ─── PDF FULLSCREEN MODAL ─── */
 .fullscreenOverlay {
   position: fixed;

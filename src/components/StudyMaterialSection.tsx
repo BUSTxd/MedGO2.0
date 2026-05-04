@@ -4,12 +4,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import styles from '@/styles/cursos.module.css';
 
-const PdfViewer = dynamic(() => import('./PdfViewer'), {
-  ssr: false,
-  loading: () => <div className={styles.pdfLoading}>Cargando resumen…</div>,
-});
-
-// Loaded only when the user opens the fullscreen view
+// Loaded only when the user opens the resumen
 const PdfFullscreenModal = dynamic(() => import('./PdfFullscreenModal'), {
   ssr: false,
 });
@@ -28,61 +23,34 @@ interface Props {
 export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones }: Props) {
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
 
-  // Single-PDF state (everOpened = keep viewer mounted after first open)
-  const [open, setOpen]           = useState(false);
-  const [everOpened, setEverOpened] = useState(false);
-
-  // Multi-PDF state
-  const [pickerOpen, setPickerOpen]   = useState(false);
-  const [selectedId, setSelectedId]   = useState<string | null>(null);
-  const [pdfOpen, setPdfOpen]         = useState(false);
-
-  // Fullscreen state
+  const [pickerOpen, setPickerOpen]       = useState(false);
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
+  const [selectedId, setSelectedId]       = useState<string | null>(null);
 
-  const selectedLabel = isMulti && selectedId
-    ? resumenOpciones.find(o => o.id === selectedId)?.label ?? ''
-    : '';
-
-  // Which PDF the action bar / fullscreen should target
+  // Which PDF the fullscreen modal targets
   const activeId = isMulti ? selectedId : claseId;
-  // Show action bar whenever a PDF is currently visible inline
-  const viewerVisible = isMulti
-    ? Boolean(pdfOpen && selectedId)
-    : open && everOpened;
 
-  /* ── handlers ── */
   const handleCardClick = () => {
     if (!hasResumen) return;
     if (isMulti) {
-      if (pdfOpen) {
-        // Close PDF and reset so next click shows picker again
-        setPdfOpen(false);
-        setSelectedId(null);
-      } else {
-        setPickerOpen(true);
-      }
+      setPickerOpen(true);
     } else {
-      if (!everOpened) setEverOpened(true);
-      setOpen(o => !o);
+      setFullscreenOpen(true);
     }
   };
 
   const handlePick = (id: string) => {
     setSelectedId(id);
     setPickerOpen(false);
-    setPdfOpen(true);
+    setFullscreenOpen(true);
   };
 
-  /* ── card label ── */
-  const cardLabel = () => {
-    if (!hasResumen) return null;
+  const handleCloseFullscreen = () => {
+    setFullscreenOpen(false);
     if (isMulti) {
-      return pdfOpen
-        ? `${selectedLabel} ▲`
-        : 'Ver resumen ▼';
+      // Reset selection so next click reopens the picker
+      setSelectedId(null);
     }
-    return open ? 'Cerrar ▲' : 'Ver resumen ▼';
   };
 
   return (
@@ -106,12 +74,10 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           <span className={styles.studyComingSoon}>Próximamente</span>
         </div>
 
-        {/* Resumen — clickeable si hay PDF */}
+        {/* Resumen — abre directo en pantalla completa */}
         <div
           className={`${styles.studyCard} ${
-            hasResumen
-              ? (open || pdfOpen) ? styles.studyCardOpen : styles.studyCardActive
-              : styles.studyCardLocked
+            hasResumen ? styles.studyCardActive : styles.studyCardLocked
           }`}
           onClick={handleCardClick}
         >
@@ -119,7 +85,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           <p className={styles.studyCardTitle}>Resumen de la Clase</p>
           <p className={styles.studyCardDesc}>Resumen completo del material visto</p>
           {hasResumen ? (
-            <span className={styles.studyAvailable}>{cardLabel()}</span>
+            <span className={styles.studyAvailable}>Ver resumen ⛶</span>
           ) : (
             <span className={styles.studyComingSoon}>Próximamente</span>
           )}
@@ -148,50 +114,11 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
         </div>
       )}
 
-      {/* ── Action bar — aparece cuando el PDF inline está visible ── */}
-      {viewerVisible && activeId && (
-        <div className={styles.viewerActionBar}>
-          <button
-            className={styles.viewerActionBtn}
-            onClick={() => setFullscreenOpen(true)}
-          >
-            <span className={styles.viewerActionBtnIcon}>⛶</span>
-            Ver PDF completo
-          </button>
-        </div>
-      )}
-
-      {/* ── PDF viewer — single PDF (stays mounted after first open) ── */}
-      {hasResumen && !isMulti && everOpened && (
-        <div style={open
-          ? { visibility: 'visible', height: 'auto', overflow: 'visible' }
-          : { visibility: 'hidden', height: 0, overflow: 'hidden' }
-        }>
-          <PdfViewer
-            claseId={claseId}
-            className={styles.pdfViewer}
-            loadingClass={styles.pdfLoading}
-            pageWrapClass={styles.pdfPageWrap}
-          />
-        </div>
-      )}
-
-      {/* ── PDF viewer — multi PDF (remounts on each selection) ── */}
-      {hasResumen && isMulti && selectedId && pdfOpen && (
-        <PdfViewer
-          key={selectedId}
-          claseId={selectedId}
-          className={styles.pdfViewer}
-          loadingClass={styles.pdfLoading}
-          pageWrapClass={styles.pdfPageWrap}
-        />
-      )}
-
-      {/* ── Fullscreen modal con zoom ── */}
+      {/* ── Fullscreen viewer con zoom (única instancia del PdfViewer) ── */}
       {fullscreenOpen && activeId && (
         <PdfFullscreenModal
           claseId={activeId}
-          onClose={() => setFullscreenOpen(false)}
+          onClose={handleCloseFullscreen}
         />
       )}
     </div>
