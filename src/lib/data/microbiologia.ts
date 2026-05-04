@@ -212,6 +212,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Filamentosos y levaduras', 'Respiración'],
         docentes: ['Edgard Neyra'],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'practica-4',
