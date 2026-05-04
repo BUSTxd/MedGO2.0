@@ -4,25 +4,70 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import styles from '@/styles/cursos.module.css';
 
-// PdfViewer (+ its ~2MB worker) only gets imported once the user clicks
 const PdfViewer = dynamic(() => import('./PdfViewer'), {
   ssr: false,
   loading: () => <div className={styles.pdfLoading}>Cargando resumen…</div>,
 });
 
+interface ResumenOpcion {
+  id: string;
+  label: string;
+}
+
 interface Props {
   claseId: string;
   hasResumen: boolean;
+  resumenOpciones?: ResumenOpcion[];
 }
 
-export default function StudyMaterialSection({ claseId, hasResumen }: Props) {
-  const [open, setOpen]     = useState(false);
-  // Once true, the viewer stays mounted — toggling only shows/hides via CSS
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones }: Props) {
+  const isMulti = resumenOpciones && resumenOpciones.length > 1;
+
+  // Single-PDF state (everOpened = keep viewer mounted after first open)
+  const [open, setOpen]           = useState(false);
   const [everOpened, setEverOpened] = useState(false);
 
-  const toggle = () => {
-    if (!everOpened) setEverOpened(true);
-    setOpen(o => !o);
+  // Multi-PDF state
+  const [pickerOpen, setPickerOpen]   = useState(false);
+  const [selectedId, setSelectedId]   = useState<string | null>(null);
+  const [pdfOpen, setPdfOpen]         = useState(false);
+
+  const selectedLabel = isMulti && selectedId
+    ? resumenOpciones.find(o => o.id === selectedId)?.label ?? ''
+    : '';
+
+  /* ── handlers ── */
+  const handleCardClick = () => {
+    if (!hasResumen) return;
+    if (isMulti) {
+      if (pdfOpen) {
+        // Close PDF and reset so next click shows picker again
+        setPdfOpen(false);
+        setSelectedId(null);
+      } else {
+        setPickerOpen(true);
+      }
+    } else {
+      if (!everOpened) setEverOpened(true);
+      setOpen(o => !o);
+    }
+  };
+
+  const handlePick = (id: string) => {
+    setSelectedId(id);
+    setPickerOpen(false);
+    setPdfOpen(true);
+  };
+
+  /* ── card label ── */
+  const cardLabel = () => {
+    if (!hasResumen) return null;
+    if (isMulti) {
+      return pdfOpen
+        ? `${selectedLabel} ▲`
+        : 'Ver resumen ▼';
+    }
+    return open ? 'Cerrar ▲' : 'Ver resumen ▼';
   };
 
   return (
@@ -50,30 +95,46 @@ export default function StudyMaterialSection({ claseId, hasResumen }: Props) {
         <div
           className={`${styles.studyCard} ${
             hasResumen
-              ? open ? styles.studyCardOpen : styles.studyCardActive
+              ? (open || pdfOpen) ? styles.studyCardOpen : styles.studyCardActive
               : styles.studyCardLocked
           }`}
-          onClick={hasResumen ? toggle : undefined}
+          onClick={handleCardClick}
         >
           <div className={styles.studyCardIcon}>📄</div>
           <p className={styles.studyCardTitle}>Resumen de la Clase</p>
           <p className={styles.studyCardDesc}>Resumen completo del material visto</p>
           {hasResumen ? (
-            <span className={styles.studyAvailable}>
-              {open ? 'Cerrar ▲' : 'Ver resumen ▼'}
-            </span>
+            <span className={styles.studyAvailable}>{cardLabel()}</span>
           ) : (
             <span className={styles.studyComingSoon}>Próximamente</span>
           )}
         </div>
       </div>
 
-      {/*
-        Una vez abierto por primera vez (everOpened), el viewer queda montado
-        en el DOM. Cerrar solo lo oculta con CSS — no hay re-fetch ni re-render.
-      */}
-      {/* visibility+height en vez de display:none — preserva el contenido de los <canvas> */}
-      {hasResumen && everOpened && (
+      {/* ── Picker modal (solo clases con opciones múltiples) ── */}
+      {pickerOpen && isMulti && (
+        <div className={styles.pickerOverlay} onClick={() => setPickerOpen(false)}>
+          <div className={styles.pickerCard} onClick={e => e.stopPropagation()}>
+            <button className={styles.pickerClose} onClick={() => setPickerOpen(false)}>✕</button>
+            <p className={styles.pickerTitle}>¿Qué resumen quieres ver?</p>
+            <div className={styles.pickerOptions}>
+              {resumenOpciones.map(opcion => (
+                <button
+                  key={opcion.id}
+                  className={styles.pickerOption}
+                  onClick={() => handlePick(opcion.id)}
+                >
+                  <span className={styles.pickerOptionIcon}>📄</span>
+                  {opcion.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── PDF viewer — single PDF (stays mounted after first open) ── */}
+      {hasResumen && !isMulti && everOpened && (
         <div style={open
           ? { visibility: 'visible', height: 'auto', overflow: 'visible' }
           : { visibility: 'hidden', height: 0, overflow: 'hidden' }
@@ -85,6 +146,17 @@ export default function StudyMaterialSection({ claseId, hasResumen }: Props) {
             pageWrapClass={styles.pdfPageWrap}
           />
         </div>
+      )}
+
+      {/* ── PDF viewer — multi PDF (remounts on each selection) ── */}
+      {hasResumen && isMulti && selectedId && pdfOpen && (
+        <PdfViewer
+          key={selectedId}
+          claseId={selectedId}
+          className={styles.pdfViewer}
+          loadingClass={styles.pdfLoading}
+          pageWrapClass={styles.pdfPageWrap}
+        />
       )}
     </div>
   );

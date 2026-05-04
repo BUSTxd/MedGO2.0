@@ -907,6 +907,116 @@
   border-radius: 6px;
 }
 
+/* ─── PDF PICKER MODAL ─── */
+.pickerOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.pickerCard {
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 28px 28px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+}
+
+:global(.dark-mode) .pickerCard {
+  background: #131629;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pickerTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 18px;
+  text-align: center;
+  line-height: 1.35;
+}
+
+:global(.dark-mode) .pickerTitle {
+  color: #f0eeff;
+}
+
+.pickerOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pickerOption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8faff;
+  border: 1px solid rgba(123, 114, 212, 0.18);
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a2e;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.pickerOption:hover {
+  background: rgba(123, 114, 212, 0.08);
+  border-color: rgba(123, 114, 212, 0.45);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(123, 114, 212, 0.12);
+}
+
+:global(.dark-mode) .pickerOption {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f0eeff;
+}
+
+:global(.dark-mode) .pickerOption:hover {
+  background: rgba(123, 114, 212, 0.12);
+  border-color: rgba(123, 114, 212, 0.38);
+}
+
+.pickerOptionIcon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.pickerClose {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #a0aec0;
+  font-size: 17px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: color 0.2s;
+}
+
+.pickerClose:hover {
+  color: #1a1a2e;
+}
+
+:global(.dark-mode) .pickerClose:hover {
+  color: #f0eeff;
+}
+
 /* ─── CONSTRUCTION BANNER ─── */
 .constructionBox {
   background: rgba(0, 0, 0, 0.02);

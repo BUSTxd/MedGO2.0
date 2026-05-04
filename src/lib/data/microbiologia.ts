@@ -1,6 +1,11 @@
 export type TipoActividad = 'MAGISTRAL' | 'TBL' | 'SGP' | 'LAB' | 'EXAMEN-T' | 'EXAMEN-L' | 'SUSTIT';
 export type Unidad = 'VIROLOGIA_MICOLOGIA' | 'PARASITOLOGIA' | 'BACTERIOLOGIA' | 'EVALUACION';
 
+export interface ResumenOpcion {
+  id: string;
+  label: string;
+}
+
 export interface Actividad {
   id: string;
   tipo: TipoActividad;
@@ -11,7 +16,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf' };
+  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
 }
 
 export interface Semana {
@@ -127,7 +132,13 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['SARS-CoV', 'Influenza', 'RSV', 'Rotavirus', 'Dengue', 'HIV', 'HTLV'],
         docentes: ['Dr. Maita', 'Dr. Montes'],
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'clase-6',   label: 'Virus RNA' },
+            { id: 'clase-6.2', label: 'Retrovirus' },
+          ],
+        },
       },
       {
         id: 'practica-2',

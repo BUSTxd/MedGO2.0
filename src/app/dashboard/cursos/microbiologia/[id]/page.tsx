@@ -91,6 +91,7 @@ export default async function ActividadPage({
         <StudyMaterialSection
           claseId={act.id}
           hasResumen={act.resumen?.tipo === 'pdf'}
+          resumenOpciones={act.resumen?.opciones}
         />
       </div>
     </div>
