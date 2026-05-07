@@ -1,8 +1,15 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
+import SubscribeModal from './SubscribeModal';
+import type { PlanKey } from '@/lib/plans';
 import styles from '@/styles/pricing.module.css';
 
 type Feature = string | { text: string; disabled: boolean };
 
-const plans: {
+type PlanCard = {
   name: string;
   price: string;
   period: string;
@@ -11,7 +18,10 @@ const plans: {
   btnText: string;
   featured?: boolean;
   badge?: string;
-}[] = [
+  action: 'free' | 'interno' | 'soon';
+};
+
+const plans: PlanCard[] = [
   {
     name: 'Gratuito',
     price: 'S/ 0',
@@ -25,6 +35,7 @@ const plans: {
     ],
     btnStyle: 'ghost',
     btnText: 'Empezar gratis',
+    action: 'free',
   },
   {
     name: 'Interno',
@@ -41,6 +52,7 @@ const plans: {
     btnText: 'Empezar ahora',
     featured: true,
     badge: 'Popular',
+    action: 'interno',
   },
   {
     name: 'Residente',
@@ -55,10 +67,46 @@ const plans: {
     ],
     btnStyle: 'ghost',
     btnText: 'Elegir Pro',
+    action: 'soon',
   },
 ];
 
 export default function Pricing() {
+  const router = useRouter();
+  const [authed, setAuthed] = useState<boolean | null>(null);
+  const [open, setOpen] = useState(false);
+  const [activePlan, setActivePlan] = useState<PlanKey>('interno');
+  const [comingSoon, setComingSoon] = useState(false);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => setAuthed(!!data.user));
+    const { data: sub } = supabase.auth.onAuthStateChange((_evt, session) => {
+      setAuthed(!!session?.user);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
+  async function handlePlanClick(action: PlanCard['action']) {
+    if (action === 'soon') {
+      setComingSoon(true);
+      setTimeout(() => setComingSoon(false), 2400);
+      return;
+    }
+    if (action === 'free') {
+      router.push(authed ? '/dashboard/home' : '/auth/login?signup=1');
+      return;
+    }
+    if (action === 'interno') {
+      if (!authed) {
+        router.push('/auth/login?next=' + encodeURIComponent('/#precios'));
+        return;
+      }
+      setActivePlan('interno');
+      setOpen(true);
+    }
+  }
+
   return (
     <section id="precios" className={styles.section}>
       <div className="section-inner reveal">
@@ -83,7 +131,6 @@ export default function Pricing() {
                 {p.features.map((f, j) => {
                   const disabled = typeof f !== 'string' && f.disabled;
                   const text = typeof f === 'string' ? f : f.text;
-
                   return (
                     <li key={j} className={disabled ? styles.disabled : ''}>
                       {text}
@@ -95,13 +142,16 @@ export default function Pricing() {
                 className={`${styles.btn} ${
                   p.btnStyle === 'primary' ? styles.btnPrimary : styles.btnGhost
                 }`}
+                onClick={() => handlePlanClick(p.action)}
               >
-                {p.btnText}
+                {p.action === 'soon' && comingSoon ? 'Próximamente · 2026' : p.btnText}
               </button>
             </div>
           ))}
         </div>
       </div>
+
+      <SubscribeModal open={open} planKey={activePlan} onClose={() => setOpen(false)} />
     </section>
   );
 }

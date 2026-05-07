@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Allow cross-origin dev requests from cloudflared/ngrok tunnels and LAN IPs.
+  // *.trycloudflare.com covers any quick-tunnel hostname rotation.
+  allowedDevOrigins: ['*.trycloudflare.com', '*.ngrok-free.app', '*.ngrok.io', '172.28.10.251'],
   images: {
     remotePatterns: [
       {

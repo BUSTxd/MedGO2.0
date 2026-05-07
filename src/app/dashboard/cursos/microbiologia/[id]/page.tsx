@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { findActividad, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/microbiologia';
 import styles from '@/styles/cursos.module.css';
 import StudyMaterialSection from '@/components/StudyMaterialSection';
+import LockedContent from '@/components/LockedContent';
+import { createClient } from '@/lib/supabase/server';
+import { getUserPlanState } from '@/lib/plans';
 
 const UNIDAD_LABEL: Record<string, string> = {
   VIROLOGIA_MICOLOGIA: 'Virología / Micología',
@@ -25,14 +28,21 @@ export default async function ActividadPage({
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
 
-  return (
+  // Gating: las prácticas de laboratorio (LAB) son libres; las clases magistrales / TBL / SGP / exámenes están detrás del plan Interno.
+  const isLab = act.tipo === 'LAB';
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const planState = isLab
+    ? { plan: 'free' as const, isActive: true }
+    : await getUserPlanState(supabase);
+
+  const detail = (
     <div className={styles.microPage}>
       <div className={styles.container}>
         <Link href="/dashboard/cursos/microbiologia" className={styles.backLink}>
           ← {semana.titulo} · {semana.fechas}
         </Link>
 
-        {/* Badges */}
         <div className={styles.detailBadgeRow}>
           <span
             className={styles.typeBadge}
@@ -42,19 +52,14 @@ export default async function ActividadPage({
           </span>
           <span
             className={styles.unitBadge}
-            style={{
-              background: `${borderColor}1a`,
-              color: borderColor,
-            }}
+            style={{ background: `${borderColor}1a`, color: borderColor }}
           >
             {unidadLabel}
           </span>
         </div>
 
-        {/* Title */}
         <h1 className={styles.detailTitle}>{act.titulo}</h1>
 
-        {/* Meta row */}
         <div className={styles.detailMetaRow}>
           <span className={styles.detailMetaItem}>
             <span style={{ color: borderColor }}>◆</span>
@@ -70,12 +75,8 @@ export default async function ActividadPage({
           )}
         </div>
 
-        {/* Nota de aviso */}
-        {act.nota && (
-          <div className={styles.notaBanner}>⚠ {act.nota}</div>
-        )}
+        {act.nota && <div className={styles.notaBanner}>⚠ {act.nota}</div>}
 
-        {/* Subtemas */}
         {act.subtemas.length > 0 && (
           <div className={styles.subtemasSection}>
             <p className={styles.subtemasLabel}>Temas que cubre</p>
@@ -87,7 +88,6 @@ export default async function ActividadPage({
           </div>
         )}
 
-        {/* Material de estudio — 3 secciones para todas las clases */}
         <StudyMaterialSection
           claseId={act.id}
           hasResumen={act.resumen?.tipo === 'pdf'}
@@ -95,5 +95,13 @@ export default async function ActividadPage({
         />
       </div>
     </div>
+  );
+
+  if (isLab) return detail;
+
+  return (
+    <LockedContent requiredPlan="interno" planState={planState} isAuthed={!!user}>
+      {detail}
+    </LockedContent>
   );
 }
