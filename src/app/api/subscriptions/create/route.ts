@@ -94,5 +94,13 @@ export async function POST(req: Request) {
     ok: true,
     status: preapproval.status,
     redirectTo: '/dashboard/home',
+    receipt: {
+      mpPreapprovalId: preapproval.id,
+      planLabel: plan.label,
+      amount: plan.amount,
+      currency: plan.currency,
+      nextPaymentDate: expiresAt.toISOString(),
+      payerEmail,
+    },
   });
 }
