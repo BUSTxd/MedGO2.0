@@ -55,6 +55,13 @@ export function getPreapproval(id: string): Promise<PreapprovalResponse> {
   return mpFetch<PreapprovalResponse>(`/preapproval/${encodeURIComponent(id)}`);
 }
 
+export function cancelPreapproval(id: string): Promise<PreapprovalResponse> {
+  return mpFetch<PreapprovalResponse>(`/preapproval/${encodeURIComponent(id)}`, {
+    method: 'PUT',
+    body: JSON.stringify({ status: 'cancelled' }),
+  });
+}
+
 /**
  * Validates Mercado Pago `x-signature` header.
  * Format: `ts=<timestamp>,v1=<hex hmac sha256>`
