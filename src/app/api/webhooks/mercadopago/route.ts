@@ -57,11 +57,19 @@ export async function POST(req: Request) {
 
   const { data: existing } = await admin
     .from('subscriptions')
-    .select('id, user_id, plan_key')
+    .select('id, user_id, plan_key, next_payment_date')
     .eq('mp_preapproval_id', preapproval.id)
-    .maybeSingle<{ id: string; user_id: string; plan_key: string }>();
+    .maybeSingle<{ id: string; user_id: string; plan_key: string; next_payment_date: string | null }>();
 
-  const nextPaymentIso = preapproval.next_payment_date ?? null;
+  const nowMs = Date.now();
+  // Same defensive logic that /create uses: solo aceptamos next_payment_date de MP
+  // si está al menos 1 hora en el futuro. Si no, conservamos el valor actual del
+  // row (calculado al crear como now+30d) para no expirar la sub anticipadamente.
+  const mpNpd = preapproval.next_payment_date ? new Date(preapproval.next_payment_date) : null;
+  const mpNpdValid = mpNpd && mpNpd.getTime() > nowMs + 60 * 60 * 1000;
+  const nextPaymentIso = mpNpdValid
+    ? mpNpd.toISOString()
+    : (existing?.next_payment_date ?? null);
 
   if (existing) {
     const subsTable = admin.from('subscriptions') as unknown as {
@@ -69,9 +77,9 @@ export async function POST(req: Request) {
         eq: (col: string, val: string) => Promise<{ error: unknown }>;
       };
     };
-    await subsTable
-      .update({ status: preapproval.status, next_payment_date: nextPaymentIso })
-      .eq('id', existing.id);
+    const updatePayload: Record<string, unknown> = { status: preapproval.status };
+    if (mpNpdValid) updatePayload.next_payment_date = nextPaymentIso;
+    await subsTable.update(updatePayload).eq('id', existing.id);
 
     if (preapproval.status === 'authorized' && nextPaymentIso) {
       const profilesTable = admin.from('profiles') as unknown as {

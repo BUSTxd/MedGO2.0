@@ -55,9 +55,12 @@ export async function POST(req: Request) {
   }
 
   const nowMs = Date.now();
-  const expiresAt = preapproval.next_payment_date
-    ? new Date(preapproval.next_payment_date)
-    : new Date(nowMs + plan.durationDays * 24 * 60 * 60 * 1000);
+  const fallback = new Date(nowMs + plan.durationDays * 24 * 60 * 60 * 1000);
+  // MP a veces devuelve next_payment_date == start_date == now en la creación
+  // (no es cuando "cobra de nuevo" sino cuando "empezó a aplicar"). Solo usamos
+  // ese valor si está claramente en el futuro; si no, calculamos +durationDays.
+  const npd = preapproval.next_payment_date ? new Date(preapproval.next_payment_date) : null;
+  const expiresAt = (npd && npd.getTime() > nowMs + 60 * 60 * 1000) ? npd : fallback;
 
   const subsTable = admin.from('subscriptions') as unknown as {
     insert: (row: Record<string, unknown>) => Promise<{ error: unknown }>;
