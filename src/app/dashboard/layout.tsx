@@ -1,9 +1,21 @@
 import DashboardWrapper from '@/components/DashboardWrapper';
+import { getCachedPlanState } from '@/lib/plans-server';
 
-export default function DashboardRootLayout({
+export default async function DashboardRootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <DashboardWrapper>{children}</DashboardWrapper>;
+  const planState = await getCachedPlanState();
+  return (
+    <DashboardWrapper
+      planState={{
+        plan: planState.plan,
+        isActive: planState.isActive,
+        expiresAt: planState.expiresAt ? planState.expiresAt.toISOString() : null,
+      }}
+    >
+      {children}
+    </DashboardWrapper>
+  );
 }

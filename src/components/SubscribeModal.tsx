@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react';
 import { PLANS, type PlanKey } from '@/lib/plans';
+import { usePlan } from './PlanProvider';
 import styles from '@/styles/subscribeModal.module.css';
 
 let mpInited = false;
@@ -34,6 +35,7 @@ const shortRef = (id: string) => id.slice(-8);
 
 export default function SubscribeModal({ open, planKey, onClose }: Props) {
   const router = useRouter();
+  const { refreshPlan } = usePlan();
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [receipt, setReceipt] = useState<Receipt | null>(null);
@@ -132,11 +134,16 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
                         setError(msg);
                         throw new Error(msg);
                       }
+                      // Sincroniza el plan en el cliente (Provider) y los
+                      // Server Components actuales antes de mostrar el receipt;
+                      // así si el usuario cierra el modal sin clicar "Continuar"
+                      // ya tiene el plan nuevo aplicado en la página actual.
+                      await refreshPlan();
+                      router.refresh();
                       if (json.receipt) {
                         setReceipt(json.receipt as Receipt);
                       } else {
                         router.push(json.redirectTo || '/dashboard/home');
-                        router.refresh();
                       }
                     } catch (e) {
                       if (!error) setError(e instanceof Error ? e.message : 'Error inesperado');

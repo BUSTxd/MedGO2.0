@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { getPreapproval, verifyWebhookSignature } from '@/lib/mercadopago';
 
@@ -90,6 +91,10 @@ export async function POST(req: Request) {
       await profilesTable
         .update({ plan: existing.plan_key, plan_expires_at: nextPaymentIso })
         .eq('id', existing.user_id);
+      // El plan acaba de pasar a 'authorized' (puede ser una autorización tardía
+      // tras un pending). Invalidamos el árbol /dashboard para que el próximo
+      // render del usuario refleje el plan nuevo.
+      revalidatePath('/dashboard', 'layout');
     }
     // paused / cancelled: no profile change. Access lapses via plan_expires_at.
   } else {

@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { semanas, curso, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/microbiologia';
+import { planRank } from '@/lib/plans';
+import { getCachedPlanState } from '@/lib/plans-server';
 import styles from '@/styles/cursos.module.css';
 
 const UNIDAD_LABEL: Record<string, string> = {
@@ -9,7 +11,10 @@ const UNIDAD_LABEL: Record<string, string> = {
   EVALUACION:          'Evaluación',
 };
 
-export default function MicrobiologiaPage() {
+export default async function MicrobiologiaPage() {
+  const plan = await getCachedPlanState();
+  const hasInterno = plan.isActive && planRank(plan.plan) >= planRank('interno');
+
   return (
     <div className={styles.microPage}>
       {/* Decorative icon — top right corner */}
@@ -72,12 +77,15 @@ export default function MicrobiologiaPage() {
               const badge = TIPO_BADGE[act.tipo];
               const borderColor = UNIDAD_COLOR[act.unidad];
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
+              const isLab = act.tipo === 'LAB';
+              const isLocked = !isLab && !hasInterno;
 
               return (
                 <Link
                   key={act.id}
                   href={`/dashboard/cursos/microbiologia/${act.id}`}
-                  className={styles.activityCard}
+                  className={`${styles.activityCard} ${isLocked ? styles.activityCardLocked : ''}`}
+                  aria-label={isLocked ? `${act.titulo} (bloqueado, requiere plan Interno)` : act.titulo}
                 >
                   <span
                     className={styles.activityStripe}
@@ -99,7 +107,16 @@ export default function MicrobiologiaPage() {
                       {docStr && ` · ${docStr}`}
                     </div>
                   </div>
-                  <span className={styles.activityChevron}>›</span>
+                  {isLocked ? (
+                    <span className={styles.activityLock} title="Requiere plan Interno" aria-hidden>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="4" y="11" width="16" height="10" rx="2" />
+                        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                      </svg>
+                    </span>
+                  ) : (
+                    <span className={styles.activityChevron}>›</span>
+                  )}
                 </Link>
               );
             })}
@@ -109,4 +126,3 @@ export default function MicrobiologiaPage() {
     </div>
   );
 }
-

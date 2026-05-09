@@ -4,8 +4,8 @@ import { findActividad, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/microbiologi
 import styles from '@/styles/cursos.module.css';
 import StudyMaterialSection from '@/components/StudyMaterialSection';
 import LockedContent from '@/components/LockedContent';
-import { createClient } from '@/lib/supabase/server';
-import { getUserPlanState } from '@/lib/plans';
+import { getUser } from '@/lib/supabase/get-user';
+import { getCachedPlanState } from '@/lib/plans-server';
 
 const UNIDAD_LABEL: Record<string, string> = {
   VIROLOGIA_MICOLOGIA: 'Virología / Micología',
@@ -30,11 +30,12 @@ export default async function ActividadPage({
 
   // Gating: las prácticas de laboratorio (LAB) son libres; las clases magistrales / TBL / SGP / exámenes están detrás del plan Interno.
   const isLab = act.tipo === 'LAB';
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  const planState = isLab
-    ? { plan: 'free' as const, isActive: true }
-    : await getUserPlanState(supabase);
+  const [user, planState] = await Promise.all([
+    getUser(),
+    isLab
+      ? Promise.resolve({ plan: 'free' as const, isActive: true })
+      : getCachedPlanState(),
+  ]);
 
   const detail = (
     <div className={styles.microPage}>

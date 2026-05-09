@@ -1,9 +1,16 @@
 'use client';
 import { useState, useEffect } from 'react';
 import DashboardSidebar from './DashboardSidebar';
+import { PlanProvider, type ClientPlanState } from './PlanProvider';
 import styles from '@/styles/dashboardLayout.module.css';
 
-export default function DashboardWrapper({ children }: { children: React.ReactNode }) {
+export default function DashboardWrapper({
+  children,
+  planState,
+}: {
+  children: React.ReactNode;
+  planState: ClientPlanState;
+}) {
   const [collapsed, setCollapsed] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
@@ -28,23 +35,25 @@ export default function DashboardWrapper({ children }: { children: React.ReactNo
   };
 
   return (
-    <div className={styles.layout}>
-      <DashboardSidebar
-        collapsed={collapsed}
-        onToggle={() => setCollapsed((c) => !c)}
-        darkMode={darkMode}
-        onToggleDark={toggleDark}
-      />
-      {!collapsed && (
-        <div
-          className={styles.backdrop}
-          onClick={() => setCollapsed(true)}
-          aria-hidden="true"
+    <PlanProvider value={planState}>
+      <div className={styles.layout}>
+        <DashboardSidebar
+          collapsed={collapsed}
+          onToggle={() => setCollapsed((c) => !c)}
+          darkMode={darkMode}
+          onToggleDark={toggleDark}
         />
-      )}
-      <main className={`${styles.main} ${collapsed ? styles.mainCollapsed : ''}`}>
-        <div className={styles.panel}>{children}</div>
-      </main>
-    </div>
+        {!collapsed && (
+          <div
+            className={styles.backdrop}
+            onClick={() => setCollapsed(true)}
+            aria-hidden="true"
+          />
+        )}
+        <main className={`${styles.main} ${collapsed ? styles.mainCollapsed : ''}`}>
+          <div className={styles.panel}>{children}</div>
+        </main>
+      </div>
+    </PlanProvider>
   );
 }

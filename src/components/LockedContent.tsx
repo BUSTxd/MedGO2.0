@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { PLANS, planRank, type ProfilePlan, type PlanKey } from '@/lib/plans';
+import { usePlan } from './PlanProvider';
 import SubscribeModal from './SubscribeModal';
 import styles from '@/styles/lockedContent.module.css';
 
@@ -21,12 +22,23 @@ interface Props {
 
 export default function LockedContent({ requiredPlan, planState, isAuthed, children }: Props) {
   const router = useRouter();
+  const clientPlan = usePlan();
   const [open, setOpen] = useState(false);
 
-  const meetsRequirement =
-    planState.isActive && planRank(planState.plan) >= planRank(requiredPlan);
+  // Server-rendered plan vs. plan vivo del Provider: usamos el más permisivo.
+  // Tras una compra exitosa, refreshPlan() actualiza clientPlan al instante,
+  // sin esperar a que el Server Component se re-renderice.
+  const effectivePlan: ProfilePlan =
+    planRank(clientPlan.plan) > planRank(planState.plan) ? clientPlan.plan : planState.plan;
+  const effectiveActive = planState.isActive || clientPlan.isActive;
 
-  if (meetsRequirement) return <>{children}</>;
+  const meetsRequirement =
+    effectiveActive && planRank(effectivePlan) >= planRank(requiredPlan);
+
+  // No desbloqueamos mientras el SubscribeModal está abierto: si el plan se
+  // acaba de actualizar tras pagar, hay que mantener visible el receipt hasta
+  // que el usuario lo cierre (clic en "Continuar" o en la X).
+  if (meetsRequirement && !open) return <>{children}</>;
 
   const plan = PLANS[requiredPlan];
 

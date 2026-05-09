@@ -666,6 +666,30 @@
   flex-shrink: 0;
 }
 
+/* ─── Locked activity ─── */
+.activityCardLocked {
+  opacity: 0.72;
+}
+.activityCardLocked .activityName {
+  color: var(--muted);
+}
+
+.activityLock {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+  border-radius: 8px;
+  background: rgba(59, 158, 221, 0.12);
+  color: var(--blue);
+  flex-shrink: 0;
+}
+:global(.dark-mode) .activityLock {
+  background: rgba(59, 158, 221, 0.18);
+}
+
 /* ─── DETAIL PAGE ─── */
 .detailBadgeRow {
   display: flex;

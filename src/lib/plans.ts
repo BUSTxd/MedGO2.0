@@ -61,6 +61,7 @@ export async function getUserPlanState(supabase: SupabaseClient): Promise<PlanSt
   return { plan, isActive, expiresAt };
 }
 
+
 export function planRank(plan: ProfilePlan): number {
   if (plan === 'free') return 0;
   if (plan === 'interno') return 1;
