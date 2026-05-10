@@ -1,6 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
+import { useRecentClasses } from '@/components/RecentClassesProvider';
 import styles from '@/styles/dashboardPages.module.css';
 
 const BacteriaIcon = () => (
@@ -70,8 +72,31 @@ const SVG_POSITIONS = [
 const SVGS = [BacteriaIcon, PillIcon, StethIcon, MicroscopeIcon, DnaIcon, CellIcon,
               BacteriaIcon, PillIcon, StethIcon, MicroscopeIcon, DnaIcon, CellIcon];
 
+function formatTimer(totalSeconds: number): string {
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  if (h > 0) return `${h}h ${m}m`;
+  if (m > 0) return `${m}:${String(s).padStart(2, '0')}`;
+  return `${s}s`;
+}
+
+function formatRelative(openedAt: number): string {
+  const diffMs = Date.now() - openedAt;
+  const min = Math.floor(diffMs / 60_000);
+  if (min < 1) return 'recién';
+  if (min < 60) return `hace ${min} min`;
+  const hr = Math.floor(min / 60);
+  if (hr < 24) return `hace ${hr} h`;
+  const d = Math.floor(hr / 24);
+  return `hace ${d} d`;
+}
+
 export default function HomePage() {
   const [firstName, setFirstName] = useState('');
+  const [streak, setStreak] = useState<number | null>(null);
+  const [seconds, setSeconds] = useState(0);
+  const { recent } = useRecentClasses();
 
   useEffect(() => {
     const supabase = createClient();
@@ -86,6 +111,20 @@ export default function HomePage() {
       const nombre = profile?.full_name ?? session.user.email ?? 'Estudiante';
       setFirstName(nombre.split(' ')[0]);
     });
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/streak/ping', { method: 'POST' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data && typeof data.streak === 'number') setStreak(data.streak);
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => setSeconds((s) => s + 1), 1000);
+    return () => clearInterval(id);
   }, []);
 
   return (
@@ -136,19 +175,26 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* Recent Exams */}
+        {/* Continuar viendo */}
         <div className={styles.dashboardPanel}>
-          <h3 className={styles.dashboardPanelTitle}>Historial de Pruebas</h3>
-          {[
-            { name: 'Microbiología – Bacterias', score: '85% · 17/20 correctas' },
-            { name: 'Farmacología – SNC',        score: '92% · 23/25 correctas' },
-            { name: 'Microbiología – Virus',     score: '78% · 14/18 correctas' },
-          ].map((e) => (
-            <div key={e.name} className={styles.recentExamItem}>
-              <p className={styles.recentExamName}>{e.name}</p>
-              <p className={styles.recentExamScore}>{e.score}</p>
-            </div>
-          ))}
+          <h3 className={styles.dashboardPanelTitle}>Continuar viendo</h3>
+          {recent.length === 0 ? (
+            <p className={styles.recentExamScore}>
+              Cuando abras una clase aparecerá acá.
+            </p>
+          ) : (
+            recent.slice(0, 3).map((c) => (
+              <Link
+                key={c.id}
+                href={`/dashboard/cursos/${c.courseSlug}/${c.id}`}
+                className={styles.recentExamItem}
+                style={{ display: 'block', textDecoration: 'none' }}
+              >
+                <p className={styles.recentExamName}>{c.title}</p>
+                <p className={styles.recentExamScore}>{formatRelative(c.openedAt)}</p>
+              </Link>
+            ))
+          )}
         </div>
 
         {/* Stats */}
@@ -161,16 +207,16 @@ export default function HomePage() {
                 strokeDasharray="213.5 251.2"/>
             </svg>
             <div className={styles.chartCenterText}>
-              <span className={styles.chartPct}>85%</span>
-              <span className={styles.chartLabel}>Promedio</span>
+              <span className={styles.chartPct}>—</span>
+              <span className={styles.chartLabel}>Próximamente</span>
             </div>
           </div>
           <div className={styles.statsMiniGrid}>
             {[
-              { val: '24',  label: 'Exámenes' },
-              { val: '12h', label: 'Tiempo' },
-              { val: '7',   label: 'Racha' },
-              { val: '92%', label: 'Mejor' },
+              { val: '—', label: 'Exámenes' },
+              { val: formatTimer(seconds), label: 'Tiempo' },
+              { val: streak === null ? '…' : String(streak), label: 'Racha' },
+              { val: String(recent.length), label: 'Clases vistas' },
             ].map((s) => (
               <div key={s.label} className={styles.statMini}>
                 <div className={styles.statMiniVal}>{s.val}</div>

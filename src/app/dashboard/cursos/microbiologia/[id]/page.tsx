@@ -4,6 +4,7 @@ import { findActividad, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/microbiologi
 import styles from '@/styles/cursos.module.css';
 import StudyMaterialSection from '@/components/StudyMaterialSection';
 import LockedContent from '@/components/LockedContent';
+import TrackRecentClass from '@/components/TrackRecentClass';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
 
@@ -39,6 +40,7 @@ export default async function ActividadPage({
 
   const detail = (
     <div className={styles.microPage}>
+      <TrackRecentClass id={act.id} courseSlug="microbiologia" title={act.titulo} />
       <div className={styles.container}>
         <Link href="/dashboard/cursos/microbiologia" className={styles.backLink}>
           ← {semana.titulo} · {semana.fechas}

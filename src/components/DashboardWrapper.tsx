@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import DashboardSidebar from './DashboardSidebar';
 import { PlanProvider, type ClientPlanState } from './PlanProvider';
+import { RecentClassesProvider } from './RecentClassesProvider';
 import styles from '@/styles/dashboardLayout.module.css';
 
 export default function DashboardWrapper({
@@ -36,24 +37,26 @@ export default function DashboardWrapper({
 
   return (
     <PlanProvider value={planState}>
-      <div className={styles.layout}>
-        <DashboardSidebar
-          collapsed={collapsed}
-          onToggle={() => setCollapsed((c) => !c)}
-          darkMode={darkMode}
-          onToggleDark={toggleDark}
-        />
-        {!collapsed && (
-          <div
-            className={styles.backdrop}
-            onClick={() => setCollapsed(true)}
-            aria-hidden="true"
+      <RecentClassesProvider>
+        <div className={styles.layout}>
+          <DashboardSidebar
+            collapsed={collapsed}
+            onToggle={() => setCollapsed((c) => !c)}
+            darkMode={darkMode}
+            onToggleDark={toggleDark}
           />
-        )}
-        <main className={`${styles.main} ${collapsed ? styles.mainCollapsed : ''}`}>
-          <div className={styles.panel}>{children}</div>
-        </main>
-      </div>
+          {!collapsed && (
+            <div
+              className={styles.backdrop}
+              onClick={() => setCollapsed(true)}
+              aria-hidden="true"
+            />
+          )}
+          <main className={`${styles.main} ${collapsed ? styles.mainCollapsed : ''}`}>
+            <div className={styles.panel}>{children}</div>
+          </main>
+        </div>
+      </RecentClassesProvider>
     </PlanProvider>
   );
 }
