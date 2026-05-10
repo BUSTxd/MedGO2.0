@@ -123,7 +123,18 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const id = setInterval(() => setSeconds((s) => s + 1), 1000);
+    // El timestamp de inicio vive en sessionStorage: sobrevive a la
+    // navegación entre páginas y a F5, pero se borra al cerrar la pestaña.
+    const KEY = 'medgo_session_start';
+    let raw = sessionStorage.getItem(KEY);
+    if (!raw) {
+      raw = String(Date.now());
+      sessionStorage.setItem(KEY, raw);
+    }
+    const startedAt = Number(raw);
+    const tick = () => setSeconds(Math.floor((Date.now() - startedAt) / 1000));
+    tick();
+    const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, []);
 
