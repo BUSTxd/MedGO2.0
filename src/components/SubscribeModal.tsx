@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react';
 import { PLANS, type PlanKey } from '@/lib/plans';
@@ -39,6 +39,10 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [receipt, setReceipt] = useState<Receipt | null>(null);
+  // Tema capturado al abrir el modal. No se actualiza si el usuario togglea
+  // dark/light mientras el Brick está montado: cambiar `customization` haría
+  // que el SDK re-monte el Brick y re-pida los recursos al servidor.
+  const [themeIsDark, setThemeIsDark] = useState(false);
 
   useEffect(() => {
     if (!open) {
@@ -47,6 +51,10 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
       setReceipt(null);
       return;
     }
+    setThemeIsDark(
+      typeof document !== 'undefined' &&
+      document.body.classList.contains('dark-mode'),
+    );
     const pk = process.env.NEXT_PUBLIC_MP_PUBLIC_KEY;
     if (!pk) {
       setError('Falta NEXT_PUBLIC_MP_PUBLIC_KEY en el entorno.');
@@ -74,9 +82,67 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
     };
   }, [open, onClose, receipt]);
 
-  if (!open) return null;
-
   const plan = PLANS[planKey];
+
+  const initialization = useMemo(
+    () => ({ amount: plan.amount }),
+    [plan.amount],
+  );
+
+  const customization = useMemo(
+    () => ({
+      visual: { style: { theme: themeIsDark ? ('dark' as const) : ('default' as const) } },
+      paymentMethods: { maxInstallments: 1 },
+    }),
+    [themeIsDark],
+  );
+
+  const handleSubmit = useCallback(
+    async (param: { token?: string; payer?: { email?: string } }) => {
+      setError(null);
+      try {
+        const res = await fetch('/api/subscriptions/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            cardTokenId: param.token,
+            planKey,
+            payerEmail: param.payer?.email,
+          }),
+        });
+        const json = await res.json();
+        if (!res.ok) {
+          const msg = json?.error === 'already_subscribed'
+            ? 'Ya tienes una suscripción activa.'
+            : json?.error || 'Error al procesar el pago.';
+          setError(msg);
+          throw new Error(msg);
+        }
+        // Sincroniza el plan en el cliente (Provider) y los
+        // Server Components actuales antes de mostrar el receipt;
+        // así si el usuario cierra el modal sin clicar "Continuar"
+        // ya tiene el plan nuevo aplicado en la página actual.
+        await refreshPlan();
+        router.refresh();
+        if (json.receipt) {
+          setReceipt(json.receipt as Receipt);
+        } else {
+          router.push(json.redirectTo || '/dashboard/home');
+        }
+      } catch (e) {
+        setError((prev) => prev ?? (e instanceof Error ? e.message : 'Error inesperado'));
+        throw e;
+      }
+    },
+    [planKey, refreshPlan, router],
+  );
+
+  const handleError = useCallback((err: unknown) => {
+    console.error('[CardPayment] error', err);
+    setError('No se pudo procesar la tarjeta. Verifica los datos.');
+  }, []);
+
+  if (!open) return null;
 
   const handleContinue = () => {
     router.push('/dashboard/home');
@@ -109,51 +175,10 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
               {!ready && <div className={styles.spinner}>Cargando pasarela…</div>}
               {ready && (
                 <CardPayment
-                  initialization={{ amount: plan.amount }}
-                  customization={{
-                    visual: { style: { theme: 'dark' } },
-                    paymentMethods: { maxInstallments: 1 },
-                  }}
-                  onSubmit={async (param) => {
-                    setError(null);
-                    try {
-                      const res = await fetch('/api/subscriptions/create', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          cardTokenId: param.token,
-                          planKey,
-                          payerEmail: param.payer?.email,
-                        }),
-                      });
-                      const json = await res.json();
-                      if (!res.ok) {
-                        const msg = json?.error === 'already_subscribed'
-                          ? 'Ya tienes una suscripción activa.'
-                          : json?.error || 'Error al procesar el pago.';
-                        setError(msg);
-                        throw new Error(msg);
-                      }
-                      // Sincroniza el plan en el cliente (Provider) y los
-                      // Server Components actuales antes de mostrar el receipt;
-                      // así si el usuario cierra el modal sin clicar "Continuar"
-                      // ya tiene el plan nuevo aplicado en la página actual.
-                      await refreshPlan();
-                      router.refresh();
-                      if (json.receipt) {
-                        setReceipt(json.receipt as Receipt);
-                      } else {
-                        router.push(json.redirectTo || '/dashboard/home');
-                      }
-                    } catch (e) {
-                      if (!error) setError(e instanceof Error ? e.message : 'Error inesperado');
-                      throw e;
-                    }
-                  }}
-                  onError={(err) => {
-                    console.error('[CardPayment] error', err);
-                    setError('No se pudo procesar la tarjeta. Verifica los datos.');
-                  }}
+                  initialization={initialization}
+                  customization={customization}
+                  onSubmit={handleSubmit}
+                  onError={handleError}
                 />
               )}
             </div>

@@ -22,6 +22,18 @@
 }
 
 .modal {
+  /* Light defaults — re-bind de las CSS vars solo en el scope del modal.
+     En modo oscuro el bloque :global(body.dark-mode) .modal de abajo
+     vuelve a los valores oscuros. */
+  --white: #1e1e60;
+  --muted: #718096;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --inner-bg: #f8faff;
+  --inner-border: #e2e8f0;
+  --chip-bg: rgba(126, 107, 255, 0.08);
+  --chip-color: #1e1e60;
+
   width: 100%;
   max-width: 480px;
   max-height: 92vh;
@@ -33,6 +45,19 @@
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
   animation: slideUp 0.22s ease;
   position: relative;
+  color: var(--white);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+:global(body.dark-mode) .modal {
+  --white: #f0eeff;
+  --muted: rgba(240, 238, 255, 0.5);
+  --card-bg: #1e293b;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --inner-bg: rgba(255, 255, 255, 0.04);
+  --inner-border: rgba(255, 255, 255, 0.08);
+  --chip-bg: rgba(255, 255, 255, 0.06);
+  --chip-color: var(--white);
 }
 
 .closeBtn {
@@ -50,7 +75,7 @@
 }
 
 .closeBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--chip-bg);
   border-color: var(--blue);
 }
 
@@ -131,11 +156,11 @@
 }
 
 .testHint code {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--chip-bg);
   padding: 1px 6px;
   border-radius: 4px;
   font-family: monospace;
-  color: var(--white);
+  color: var(--chip-color);
 }
 
 /* ─── RECEIPT / CONFIRMATION SCREEN ─── */
@@ -183,8 +208,8 @@
   width: 100%;
   margin: 0 0 20px;
   padding: 16px 18px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--inner-bg);
+  border: 1px solid var(--inner-border);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
