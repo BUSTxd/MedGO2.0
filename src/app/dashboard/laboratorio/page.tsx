@@ -1,8 +1,12 @@
 'use client';
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 import styles from '@/styles/dashboardPages.module.css';
 
-const LAB_TOPICS = [
+type Exp = { name: string; desc: string; color: string; href?: string };
+type Topic = { id: string; title: string; badge: string; diff: string[]; icon: ReactNode; experiments: Exp[] };
+
+const LAB_TOPICS: Topic[] = [
   {
     id: 'microbiologia',
     title: 'Microbiología | UPCH',
@@ -15,7 +19,7 @@ const LAB_TOPICS = [
       </svg>
     ),
     experiments: [
-      { name: 'Cultivo Bacteriano',    desc: 'Técnicas de siembra, incubación e identificación', color: '#2DC99A' },
+      { name: 'Atlas Micología',       desc: 'Identificación microscópica de hongos clínicos',   color: '#2DC99A', href: '/dashboard/laboratorio/atlas-micologia' },
       { name: 'Antibiograma',          desc: 'Pruebas de sensibilidad a antimicrobianos',        color: '#F5A623' },
       { name: 'Identificación Viral',  desc: 'Métodos de diagnóstico y tipificación viral',      color: '#E85B4A' },
       { name: 'Tinción de Gram',       desc: 'Diferenciación de bacterias gram +/−',             color: '#2DC99A' },
@@ -129,7 +133,7 @@ export default function LaboratorioPage() {
               {topic.experiments.map((exp) => (
                 <Link
                   key={exp.name}
-                  href={topic.id === 'microbiologia' ? '/dashboard/laboratorio/microscopio' : '#'}
+                  href={exp.href ?? '#'}
                   className={styles.labExp}
                   style={{ textDecoration: 'none' }}
                 >

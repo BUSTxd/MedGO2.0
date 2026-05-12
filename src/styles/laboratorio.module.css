@@ -161,6 +161,33 @@
   border-radius: 50%;
 }
 
+/* Imagen del atlas: cuadrada, ocupa todo el diametro del microscopio.
+   El border-radius del wrapper + overflow:hidden la recorta a circulo. */
+.specimenImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+  z-index: 1;
+  position: relative;
+}
+
+/* Overlay del lente — encima de la imagen, refuerza la forma circular y
+   añade el ligero vignette/grain del microscopio. */
+.specimenLens {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow:
+    inset 0 0 60px 14px rgba(0, 0, 0, 0.55),
+    inset 0 0 4px 1px rgba(255, 255, 255, 0.06);
+  background:
+    radial-gradient(circle at 35% 35%, rgba(59,158,221,0.05), transparent 60%);
+}
+
 .specimenPlaceholder {
   text-align: center;
   color: rgba(240, 238, 255, 0.2);
@@ -178,6 +205,17 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
+.loadingMsg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: rgba(26, 26, 46, 0.55);
+  font-size: 14px;
+  font-weight: 500;
+}
+:global(.dark-mode) .loadingMsg { color: rgba(240, 238, 255, 0.55); }
 
 .magnification {
   font-size: 12px;
