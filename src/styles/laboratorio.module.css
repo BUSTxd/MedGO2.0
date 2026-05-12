@@ -240,23 +240,52 @@
 }
 
 /* ─── PERILLA DE AUMENTO ─── */
-/* Display tipo LCD que muestra el aumento actual */
+/* Texto del aumento — sin fondo, solo glow azul */
 .magBadge {
   font-family: 'Courier New', monospace;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.12em;
   color: #3b9edd;
-  background: linear-gradient(180deg, #060812 0%, #0c1124 100%);
-  border: 1px solid rgba(59, 158, 221, 0.35);
-  border-radius: 6px;
-  padding: 5px 14px;
-  min-width: 78px;
   text-align: center;
-  text-shadow: 0 0 8px rgba(59, 158, 221, 0.6);
-  box-shadow:
-    inset 0 0 8px rgba(0, 0, 0, 0.7),
-    0 1px 2px rgba(0, 0, 0, 0.2);
+  min-width: 78px;
+  text-shadow: 0 0 10px rgba(59, 158, 221, 0.45);
+}
+
+/* ─── EXPLICACION POST-VERIFICACION ─── */
+.explanation {
+  margin-top: 4px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(59, 158, 221, 0.25);
+  background: rgba(59, 158, 221, 0.06);
+  text-align: left;
+  width: 100%;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.85);
+  animation: fadeUp 0.35s ease;
+}
+
+:global(.dark-mode) .explanation {
+  border-color: rgba(59, 158, 221, 0.3);
+  background: rgba(59, 158, 221, 0.08);
+  color: rgba(240, 238, 255, 0.85);
+}
+
+.explanationTitle {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #3b9edd;
+  margin-bottom: 6px;
+}
+
+.explanationName {
+  font-style: italic;
+  font-weight: 700;
 }
 
 .zoomKnob {
@@ -335,7 +364,12 @@
 .questionPanel {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  gap: 18px;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .questionLabel {

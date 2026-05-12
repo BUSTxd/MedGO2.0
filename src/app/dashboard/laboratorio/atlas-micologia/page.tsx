@@ -15,6 +15,40 @@ const ZOOMS = [
   { scale: 2,   label: '× 1000' },
 ];
 
+// Caracteristicas microscopicas clave para identificacion clinica.
+const EXPLAIN: Record<string, string> = {
+  'Alternaria spp.':
+    'Hongo dematiáceo (pigmentado). Conidios grandes, multicelulares en forma de pera o maza con septos transversales y longitudinales, color marrón oscuro. Colonias gris-verdosas vellosas.',
+  'Aspergillus flavus':
+    'Conidióforo con vesícula globosa cubierta de fialides en toda su superficie (uni- o biseriado). Cabezas conidiales radiales con cadenas de conidios. Colonias amarillo-verdosas. Productor de aflatoxinas.',
+  'Aspergillus fumigatus':
+    'Conidióforo con vesícula en matraz; fialides solo en el tercio superior (uniseriado), formando columnas paralelas al eje. Colonias verde-azuladas. Termotolerante (crece a 50 °C). Causa aspergilosis pulmonar invasiva.',
+  'Aspergillus niger':
+    'Vesícula globosa biseriada (métulas + fialides) con cabezas radiales muy grandes. Conidios negros que dan a la colonia color carbón. Causa otomicosis y aspergiloma.',
+  'Candida albicans':
+    'Levadura ovoide gemante (4–6 µm) que forma pseudohifas y verdaderas hifas. Produce tubo germinativo en suero a 37 °C en 2–3 h (Reynold-Braude +). Clamidoconidios terminales en agar harina de maíz.',
+  'Cryptococcus neoformans':
+    'Levadura redonda rodeada de una cápsula polisacárida gruesa visible con tinta china (halo claro alrededor). No forma pseudohifas. Causa meningitis criptocócica, sobre todo en pacientes VIH+.',
+  'Fusarium spp.':
+    'Macroconidios en forma de canoa o banana, multiseptados, con célula apical alargada. Microconidios ovales en cadenas o falsas cabezas. Colonias algodonosas rosáceas a violetas.',
+  'Histoplasma capsulatum':
+    'Hongo dimórfico. En tejido: levaduras intracelulares (2–4 µm) dentro de macrófagos. En cultivo a 25 °C: hifas con macroconidios tuberculados con proyecciones espinosas características.',
+  'Malassezia furfur':
+    'Levadura lipofílica con imagen clásica de "spaghetti and meatballs": hifas cortas y curvas junto con cúmulos de blastoconidios redondos. Causa pitiriasis versicolor.',
+  'Microsporum canis':
+    'Dermatofito zoofílico. Macroconidios fusiformes grandes (6+ septos) con extremo terminal curvado/asimétrico y pared rugosa-espinosa. Colonias amarillo-doradas en anverso.',
+  'Microsporum gypseum':
+    'Dermatofito geofílico. Macroconidios elipsoidales con extremos redondeados, pared delgada y 4–6 septos. Colonias granulosas color canela.',
+  'Penicillium spp.':
+    'Conidióforo ramificado en forma de pincel (penicillus): métulas → fialides → cadenas de conidios. Colonias azul-verdosas aterciopeladas con borde blanco.',
+  'Trichophyton rubrum':
+    'Dermatofito. Microconidios piriformes ("en lágrima") laterales a la hifa; macroconidios escasos en forma de lápiz. Reverso de la colonia rojo intenso característico.',
+  'Trichophyton mentagrophytes':
+    'Dermatofito. Microconidios redondos agrupados en racimos a lo largo de la hifa. Hifas espiraladas características. Macroconidios cilíndricos delgados con paredes lisas.',
+  'Trichophyton tonsurans':
+    'Dermatofito antropofílico. Microconidios pleomórficos (formas variadas: lágrima, bastón, globo) sobre fialides laterales. Causa principal de tinea capitis endothrix.',
+};
+
 export default function AtlasMicologiaPage() {
   const [items, setItems] = useState<Item[]>([]);
   const [current, setCurrent] = useState(0);
@@ -153,11 +187,21 @@ export default function AtlasMicologiaPage() {
           )}
 
           {isRevealed && (
-            <p style={{ fontSize: 13, color: sel === q.item.hongo ? '#2DC99A' : '#E85B4A', fontWeight: 600 }}>
-              {sel === q.item.hongo
-                ? '✓ Correcto'
-                : <>✗ Incorrecto — la respuesta es <em>{q.item.hongo}</em></>}
-            </p>
+            <>
+              <p style={{ fontSize: 13, color: sel === q.item.hongo ? '#2DC99A' : '#E85B4A', fontWeight: 600 }}>
+                {sel === q.item.hongo
+                  ? '✓ Correcto'
+                  : <>✗ Incorrecto — la respuesta es <em>{q.item.hongo}</em></>}
+              </p>
+              {EXPLAIN[q.item.hongo] && (
+                <div className={styles.explanation}>
+                  <span className={styles.explanationTitle}>
+                    <span className={styles.explanationName}>{q.item.hongo}</span> — características microscópicas
+                  </span>
+                  {EXPLAIN[q.item.hongo]}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
