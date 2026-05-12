@@ -91,6 +91,7 @@ export const semanas: Semana[] = [
         subtemas: ['Reglas de bioseguridad en el laboratorio'],
         docentes: [],
         nota: 'No se evalúa con paso corto ni informe.',
+        resumen: { tipo: 'pdf' },
       },
     ],
   },
@@ -149,6 +150,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Calor húmedo', 'Rayos UV'],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'practica-3',
@@ -159,6 +161,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Desinfección química'],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'sgp-1',

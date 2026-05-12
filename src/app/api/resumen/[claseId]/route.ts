@@ -2,7 +2,16 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
 // Only these IDs have an associated PDF in Supabase Storage
-const ALLOWED = new Set(['clase-4', 'clase-5', 'clase-6', 'clase-6.2', 'clase-7', 'clase-8', 'clase-9', 'clase-10']);
+const ALLOWED = new Set([
+  'clase-4', 'clase-5', 'clase-6', 'clase-6.2', 'clase-7', 'clase-8', 'clase-9', 'clase-10',
+  'practica-1', 'practica-2', 'practica-3',
+]);
+
+// Some IDs share a single PDF file in storage
+const FILE_ALIAS: Record<string, string> = {
+  'practica-2': 'practica-2-3',
+  'practica-3': 'practica-2-3',
+};
 
 export async function GET(
   _req: Request,
@@ -25,9 +34,10 @@ export async function GET(
   // Service role key bypasses RLS — never exposed to the client
   const supabase = createClient(url, key, { auth: { persistSession: false } });
 
+  const fileId = FILE_ALIAS[claseId] ?? claseId;
   const { data, error } = await supabase.storage
     .from('resumenes')
-    .download(`${claseId}.pdf`);
+    .download(`${fileId}.pdf`);
 
   if (error || !data) {
     console.error('[resumen] storage error:', error?.message);
