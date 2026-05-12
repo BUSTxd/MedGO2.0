@@ -103,7 +103,8 @@ export default function AtlasMicologiaPage() {
             </div>
           </div>
 
-          <div className={styles.zoomRow}>
+          <div className={styles.zoomColumn}>
+            <span className={styles.magBadge}>{ZOOMS[zoom].label}</span>
             <button
               type="button"
               className={styles.zoomKnob}
@@ -116,10 +117,9 @@ export default function AtlasMicologiaPage() {
               <span className={styles.zoomKnobGrip} />
               <span className={styles.zoomKnobGrip} />
             </button>
-            <div className={styles.zoomMeta}>
-              <span className={styles.magnification}>{ZOOMS[zoom].label}</span>
+            {zoom === 0 && (
               <span className={styles.zoomHint}>Clic en la perilla para enfocar</span>
-            </div>
+            )}
           </div>
         </div>
 
