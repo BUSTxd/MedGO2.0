@@ -125,7 +125,7 @@ export default function AtlasMicologiaPage() {
 
       <div className={styles.examFooter}>
         <button className={styles.navBtn} onClick={() => setCurrent((c) => c - 1)} disabled={current === 0}>
-          ← Anterior
+          <span>←</span><span className={styles.navBtnLabel}>Anterior</span>
         </button>
 
         <div className={styles.progressDots}>
@@ -142,7 +142,7 @@ export default function AtlasMicologiaPage() {
           onClick={() => setCurrent((c) => c + 1)}
           disabled={current === questions.length - 1}
         >
-          Siguiente →
+          <span className={styles.navBtnLabel}>Siguiente</span><span>→</span>
         </button>
       </div>
     </div>
