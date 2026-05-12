@@ -16,33 +16,36 @@ const ZOOMS = [
 ];
 
 // Caracteristicas microscopicas clave para identificacion clinica.
+// Los colores se indican siempre con su contexto (tincion o cultivo) para no
+// generar conflicto visual con la imagen mostrada — que puede estar teñida con
+// lactofenol azul, KOH, tinta china, etc.
 const EXPLAIN: Record<string, string> = {
   'Alternaria spp.':
-    'Hongo dematiáceo (pigmentado). Conidios grandes, multicelulares en forma de pera o maza con septos transversales y longitudinales, color marrón oscuro. Colonias gris-verdosas vellosas.',
+    'Hongo dematiáceo. Conidios grandes, multicelulares, en forma de pera o maza, con septos transversales y longitudinales. Pared con pigmento melánico marrón natural (visible aun en lactofenol azul). En cultivo (Sabouraud): colonias gris-verdosas vellosas.',
   'Aspergillus flavus':
-    'Conidióforo con vesícula globosa cubierta de fialides en toda su superficie (uni- o biseriado). Cabezas conidiales radiales con cadenas de conidios. Colonias amarillo-verdosas. Productor de aflatoxinas.',
+    'Conidióforo con vesícula globosa cubierta de fialides en toda su superficie (uni- o biseriado). Cabezas conidiales radiales con cadenas de conidios. En cultivo (Sabouraud): colonias amarillo-verdosas. Productor de aflatoxinas.',
   'Aspergillus fumigatus':
-    'Conidióforo con vesícula en matraz; fialides solo en el tercio superior (uniseriado), formando columnas paralelas al eje. Colonias verde-azuladas. Termotolerante (crece a 50 °C). Causa aspergilosis pulmonar invasiva.',
+    'Conidióforo con vesícula en matraz; fialides solo en el tercio superior (uniseriado), formando columnas paralelas al eje. En cultivo (Sabouraud): colonias verde-azuladas. Termotolerante (crece a 50 °C). Causa aspergilosis pulmonar invasiva.',
   'Aspergillus niger':
-    'Vesícula globosa biseriada (métulas + fialides) con cabezas radiales muy grandes. Conidios negros que dan a la colonia color carbón. Causa otomicosis y aspergiloma.',
+    'Vesícula globosa biseriada (métulas + fialides) con cabezas radiales muy grandes. Conidios oscuros por melanina natural (se ven negros aun en lactofenol). En cultivo (Sabouraud): colonias color carbón con reverso amarillento. Causa otomicosis y aspergiloma.',
   'Candida albicans':
-    'Levadura ovoide gemante (4–6 µm) que forma pseudohifas y verdaderas hifas. Produce tubo germinativo en suero a 37 °C en 2–3 h (Reynold-Braude +). Clamidoconidios terminales en agar harina de maíz.',
+    'Levadura ovoide gemante (4–6 µm) que forma pseudohifas y verdaderas hifas. Produce tubo germinativo en suero a 37 °C en 2–3 h (Reynold-Braude +). Clamidoconidios terminales en agar harina de maíz con Tween 80.',
   'Cryptococcus neoformans':
-    'Levadura redonda rodeada de una cápsula polisacárida gruesa visible con tinta china (halo claro alrededor). No forma pseudohifas. Causa meningitis criptocócica, sobre todo en pacientes VIH+.',
+    'Levadura redonda con cápsula polisacárida gruesa. En tinción de tinta china se observa un halo claro (la cápsula desplaza la tinta) alrededor de la levadura. No forma pseudohifas. Causa meningitis criptocócica, sobre todo en VIH+.',
   'Fusarium spp.':
-    'Macroconidios en forma de canoa o banana, multiseptados, con célula apical alargada. Microconidios ovales en cadenas o falsas cabezas. Colonias algodonosas rosáceas a violetas.',
+    'Macroconidios en forma de canoa o banana, multiseptados, con célula apical alargada. Microconidios ovales en cadenas o falsas cabezas. En cultivo (Sabouraud): colonias algodonosas con reverso rosáceo a violeta.',
   'Histoplasma capsulatum':
-    'Hongo dimórfico. En tejido: levaduras intracelulares (2–4 µm) dentro de macrófagos. En cultivo a 25 °C: hifas con macroconidios tuberculados con proyecciones espinosas características.',
+    'Hongo dimórfico. En tejido teñido con Giemsa/PAS: levaduras intracelulares (2–4 µm) dentro de macrófagos. En cultivo a 25 °C: hifas con macroconidios tuberculados con proyecciones espinosas características.',
   'Malassezia furfur':
-    'Levadura lipofílica con imagen clásica de "spaghetti and meatballs": hifas cortas y curvas junto con cúmulos de blastoconidios redondos. Causa pitiriasis versicolor.',
+    'Levadura lipofílica con imagen clásica de "spaghetti and meatballs" en escamas con KOH: hifas cortas y curvas junto a cúmulos de blastoconidios redondos. Causa pitiriasis versicolor.',
   'Microsporum canis':
-    'Dermatofito zoofílico. Macroconidios fusiformes grandes (6+ septos) con extremo terminal curvado/asimétrico y pared rugosa-espinosa. Colonias amarillo-doradas en anverso.',
+    'Dermatofito zoofílico. Macroconidios fusiformes grandes (6+ septos) con extremo terminal curvado/asimétrico y pared rugosa-espinosa. En cultivo (Sabouraud): anverso amarillo-dorado, reverso amarillo-naranja.',
   'Microsporum gypseum':
-    'Dermatofito geofílico. Macroconidios elipsoidales con extremos redondeados, pared delgada y 4–6 septos. Colonias granulosas color canela.',
+    'Dermatofito geofílico. Macroconidios elipsoidales con extremos redondeados, pared delgada y 4–6 septos. En cultivo (Sabouraud): colonias granulosas, anverso color canela.',
   'Penicillium spp.':
-    'Conidióforo ramificado en forma de pincel (penicillus): métulas → fialides → cadenas de conidios. Colonias azul-verdosas aterciopeladas con borde blanco.',
+    'Conidióforo ramificado en forma de pincel (penicillus): métulas → fialides → cadenas de conidios. En cultivo (Sabouraud): colonias aterciopeladas azul-verdosas con borde blanco.',
   'Trichophyton rubrum':
-    'Dermatofito. Microconidios piriformes ("en lágrima") laterales a la hifa; macroconidios escasos en forma de lápiz. Reverso de la colonia rojo intenso característico.',
+    'Dermatofito. Microconidios piriformes ("en lágrima") laterales a la hifa; macroconidios escasos en forma de lápiz. En cultivo (Sabouraud): reverso de la colonia rojo intenso característico.',
   'Trichophyton mentagrophytes':
     'Dermatofito. Microconidios redondos agrupados en racimos a lo largo de la hifa. Hifas espiraladas características. Macroconidios cilíndricos delgados con paredes lisas.',
   'Trichophyton tonsurans':
