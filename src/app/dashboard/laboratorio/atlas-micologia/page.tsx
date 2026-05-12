@@ -9,11 +9,21 @@ type Item = { url: string; hongo: string };
 const shuffle = <T,>(a: T[]): T[] =>
   a.map((v) => [Math.random(), v] as const).sort((a, b) => a[0] - b[0]).map(([, v]) => v);
 
+const ZOOMS = [
+  { scale: 1,   label: '× 400' },
+  { scale: 1.5, label: '× 600' },
+  { scale: 2,   label: '× 1000' },
+];
+
 export default function AtlasMicologiaPage() {
   const [items, setItems] = useState<Item[]>([]);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<Record<number, string>>({});
   const [revealed, setRevealed] = useState<Record<number, boolean>>({});
+  const [zoom, setZoom] = useState(0);
+
+  // Al cambiar de muestra, el zoom vuelve al objetivo base.
+  useEffect(() => { setZoom(0); }, [current]);
 
   // 1 sola peticion al montar; precarga TODAS las imagenes, con prioridad alta para las primeras.
   useEffect(() => {
@@ -81,11 +91,36 @@ export default function AtlasMicologiaPage() {
           <div className={styles.microscopeOuter}>
             <div className={styles.crosshair} />
             <div className={styles.specimen}>
-              <img src={q.item.url} alt="" className={styles.specimenImg} loading="eager" decoding="async" />
+              <img
+                src={q.item.url}
+                alt=""
+                className={styles.specimenImg}
+                loading="eager"
+                decoding="async"
+                style={{ transform: `scale(${ZOOMS[zoom].scale})` }}
+              />
               <div className={styles.specimenLens} />
             </div>
           </div>
-          <span className={styles.magnification}>× 400 — Microscopía óptica</span>
+
+          <div className={styles.zoomRow}>
+            <button
+              type="button"
+              className={styles.zoomKnob}
+              onClick={() => setZoom((z) => (z + 1) % ZOOMS.length)}
+              aria-label="Girar perilla de aumento"
+              style={{ transform: `rotate(${zoom * 120}deg)` }}
+            >
+              <span className={styles.zoomKnobNotch} />
+              <span className={styles.zoomKnobGrip} />
+              <span className={styles.zoomKnobGrip} />
+              <span className={styles.zoomKnobGrip} />
+            </button>
+            <div className={styles.zoomMeta}>
+              <span className={styles.magnification}>{ZOOMS[zoom].label}</span>
+              <span className={styles.zoomHint}>Clic en la perilla para enfocar</span>
+            </div>
+          </div>
         </div>
 
         <div className={styles.questionPanel}>
