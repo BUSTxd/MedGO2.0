@@ -25,7 +25,7 @@ const COURSES = [
     desc: 'Dirigido a Universidad Peruana Cayetano Heredia. 2,000 preguntas totales.',
     badgeColor: '#5445d8',
     badgeBg: 'rgba(84, 69, 216, 0.12)',
-    activo: false,
+    activo: true,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
         <g transform="rotate(135 12 12)">
