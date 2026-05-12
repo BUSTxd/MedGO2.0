@@ -88,6 +88,8 @@ export default function AtlasMicologiaPage() {
 
       <div className={styles.examBody}>
         <div className={styles.viewerWrap}>
+          <span className={styles.magBadge}>{ZOOMS[zoom].label}</span>
+
           <div className={styles.microscopeOuter}>
             <div className={styles.crosshair} />
             <div className={styles.specimen}>
@@ -103,24 +105,26 @@ export default function AtlasMicologiaPage() {
             </div>
           </div>
 
-          <div className={styles.zoomColumn}>
-            <span className={styles.magBadge}>{ZOOMS[zoom].label}</span>
-            <button
-              type="button"
-              className={styles.zoomKnob}
-              onClick={() => setZoom((z) => (z + 1) % ZOOMS.length)}
-              aria-label="Girar perilla de aumento"
-              style={{ transform: `rotate(${zoom * 120}deg)` }}
-            >
-              <span className={styles.zoomKnobNotch} />
-              <span className={styles.zoomKnobGrip} />
-              <span className={styles.zoomKnobGrip} />
-              <span className={styles.zoomKnobGrip} />
-            </button>
-            {zoom === 0 && (
-              <span className={styles.zoomHint}>Clic en la perilla para enfocar</span>
-            )}
-          </div>
+          <button
+            type="button"
+            className={styles.zoomKnob}
+            onClick={() => setZoom((z) => (z + 1) % ZOOMS.length)}
+            aria-label="Girar perilla de aumento"
+            style={{ transform: `rotate(${zoom * 120}deg)` }}
+          >
+            <span className={styles.zoomKnobNotch} />
+            <span className={styles.zoomKnobGrip} />
+            <span className={styles.zoomKnobGrip} />
+            <span className={styles.zoomKnobGrip} />
+          </button>
+
+          <span
+            className={styles.zoomHint}
+            style={{ opacity: zoom === 0 ? 1 : 0 }}
+            aria-hidden={zoom !== 0}
+          >
+            Clic en la perilla para enfocar
+          </span>
         </div>
 
         <div className={styles.questionPanel}>

@@ -75,7 +75,10 @@
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   padding: 28px 28px 32px;
-  align-items: center;
+  /* alineado al top: el lado izq (microscopio + perilla) es mas alto
+     que el panel de preguntas — sin esto el panel queda flotando al medio
+     y se ve descompensado. */
+  align-items: start;
 }
 
 @media (max-width: 860px) {
@@ -91,7 +94,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 /* Microscope always dark — represents a physical optical lens */
@@ -237,14 +240,6 @@
 }
 
 /* ─── PERILLA DE AUMENTO ─── */
-.zoomColumn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-top: 6px;
-}
-
 /* Display tipo LCD que muestra el aumento actual */
 .magBadge {
   font-family: 'Courier New', monospace;
@@ -328,6 +323,11 @@
   color: rgba(26, 26, 46, 0.45);
   font-weight: 500;
   text-align: center;
+  /* opacity controlado por JSX: se desvanece tras el primer click,
+     pero reserva el espacio para evitar saltos verticales. */
+  transition: opacity 0.3s ease;
+  min-height: 14px;
+  pointer-events: none;
 }
 :global(.dark-mode) .zoomHint { color: rgba(240, 238, 255, 0.4); }
 
