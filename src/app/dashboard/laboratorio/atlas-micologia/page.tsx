@@ -184,7 +184,11 @@ export default function AtlasMicologiaPage() {
           </div>
 
           {sel && !isRevealed && (
-            <button className={`${styles.navBtn} ${styles.navBtnPrimary}`} onClick={reveal}>
+            <button
+              className={`${styles.navBtn} ${styles.navBtnPrimary}`}
+              onClick={reveal}
+              style={{ alignSelf: 'center' }}
+            >
               Verificar respuesta
             </button>
           )}

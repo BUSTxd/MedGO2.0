@@ -361,14 +361,14 @@
 :global(.dark-mode) .zoomHint { color: rgba(240, 238, 255, 0.4); }
 
 /* ─── QUESTION PANEL ─── */
+/* Flex column con align-items:stretch (default) — los hijos (titulo, pregunta,
+   bloque de opciones, explicacion) ocupan todo el ancho de la columna.
+   text-align: center centra el texto verticalmente dentro de cada hijo. */
 .questionPanel {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 18px;
-  max-width: 480px;
   width: 100%;
-  margin: 0 auto;
   text-align: center;
 }
 
