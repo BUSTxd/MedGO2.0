@@ -74,12 +74,8 @@ export default function AtlasMicrobiologiaPage() {
   return (
     <div className={styles.examPage}>
       <svg className={styles.examPageIcon} width="180" height="180" viewBox="0 0 24 24" fill="none">
-        <circle cx="7"  cy="12" r="3.5" stroke="#5445d8" strokeWidth="1.5" fill="none"/>
-        <circle cx="17" cy="8"  r="3.5" stroke="#5445d8" strokeWidth="1.5" fill="none"/>
-        <circle cx="15" cy="17" r="2.8" stroke="#5445d8" strokeWidth="1.5" fill="none"/>
-        <circle cx="7"  cy="12" r="1"   fill="#5445d8"/>
-        <circle cx="17" cy="8"  r="1"   fill="#5445d8"/>
-        <circle cx="15" cy="17" r="1"   fill="#5445d8"/>
+        <circle cx="12" cy="12" r="4" fill="#5445d8" stroke="#5445d8" strokeWidth="2"/>
+        <path d="m8 12-3-2M16 12l3-2M12 8l2-3M12 16l-2 3" stroke="#5445d8" strokeWidth="1.5" strokeLinecap="round"/>
       </svg>
 
       <div className={styles.topBar}>
