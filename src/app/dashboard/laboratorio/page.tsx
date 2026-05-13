@@ -19,12 +19,9 @@ const LAB_TOPICS: Topic[] = [
       </svg>
     ),
     experiments: [
-      { name: 'Atlas Micología',       desc: 'Identificación microscópica de hongos clínicos',   color: '#2DC99A', href: '/dashboard/laboratorio/atlas-micologia' },
-      { name: 'Antibiograma',          desc: 'Pruebas de sensibilidad a antimicrobianos',        color: '#F5A623' },
-      { name: 'Identificación Viral',  desc: 'Métodos de diagnóstico y tipificación viral',      color: '#E85B4A' },
-      { name: 'Tinción de Gram',       desc: 'Diferenciación de bacterias gram +/−',             color: '#2DC99A' },
-      { name: 'Cultivo Anaerobios',    desc: 'Técnicas especiales para bacterias anaeróbicas',   color: '#F5A623' },
-      { name: 'Identificación Hongos', desc: 'Técnicas micológicas y cultivo de levaduras',      color: '#E85B4A' },
+      { name: 'Atlas Micología',      desc: 'Identificación microscópica de hongos clínicos',        color: '#2DC99A', href: '/dashboard/laboratorio/atlas-micologia' },
+      { name: 'Atlas Parasitología',  desc: 'Identificación de parásitos clínicamente relevantes',   color: '#F5A623', href: '/dashboard/laboratorio/atlas-parasitologia' },
+      { name: 'Atlas Microbiología',  desc: 'Identificación de bacterias patógenas frecuentes',      color: '#E85B4A', href: '/dashboard/laboratorio/atlas-microbiologia' },
     ],
   },
   {
