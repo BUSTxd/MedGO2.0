@@ -114,18 +114,8 @@ export default function AtlasMicologiaPage() {
   return (
     <div className={styles.examPage}>
       <svg className={styles.examPageIcon} width="180" height="180" viewBox="0 0 24 24" fill="none">
-        <path d="M12 21 L12 13" stroke="#5445d8" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M11.2 17 H12.8" stroke="#5445d8" strokeWidth="0.8" strokeLinecap="round"/>
-        <circle cx="12" cy="11.5" r="2.5" stroke="#5445d8" strokeWidth="1.2" fill="none"/>
-        <path d="M12 9 L10 6.5" stroke="#5445d8" strokeWidth="1" strokeLinecap="round"/>
-        <path d="M12 9 L14 6.5" stroke="#5445d8" strokeWidth="1" strokeLinecap="round"/>
-        <path d="M10 11 L7.5 8.5" stroke="#5445d8" strokeWidth="1" strokeLinecap="round"/>
-        <path d="M14 11 L16.5 8.5" stroke="#5445d8" strokeWidth="1" strokeLinecap="round"/>
-        <circle cx="10"  cy="6"   r="1"   fill="#5445d8"/>
-        <circle cx="14"  cy="6"   r="1"   fill="#5445d8"/>
-        <circle cx="7"   cy="8"   r="0.9" fill="#5445d8"/>
-        <circle cx="17"  cy="8"   r="0.9" fill="#5445d8"/>
-        <path d="M12 19 L9 17 M12 19 L15 17" stroke="#5445d8" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
+        <circle cx="12" cy="12" r="4" fill="#5445d8" stroke="#5445d8" strokeWidth="2" />
+        <path d="m8 12-3-2M16 12l3-2M12 8l2-3M12 16l-2 3" stroke="#5445d8" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
 
       <div className={styles.topBar}>
