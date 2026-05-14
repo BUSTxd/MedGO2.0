@@ -36,18 +36,34 @@ const COURSES = [
     ),
   },
   {
-    id: 'cardiologia',
-    nombre: 'Cardiología | UPCH',
-    badge: 'Cardiología',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. 1,500 preguntas totales.',
+    id: 'cardiovascular',
+    nombre: 'Cardiovascular | UPCH',
+    badge: 'Cardiovascular',
+    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Sistema Cardiovascular M1552.',
     badgeColor: '#d44a4a',
     badgeBg: 'rgba(212, 74, 74, 0.12)',
-    activo: false,
+    activo: true,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <path d="M12 2C12 2 7 7 7 13c0 3 2.5 5.5 5 5.5s5-2.5 5-5.5c0-6-5-11-5-11z"
-          fill="#d44a4a" stroke="#d44a4a" strokeWidth="1.5"/>
-        <ellipse cx="10.5" cy="9" rx="1.5" ry="2" fill="rgba(255,255,255,0.3)"/>
+        <path d="M12 21C11 20 2 14.5 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.79 3.84 11.5 5.04C12.21 3.84 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 14.5 13 20 12 21Z"
+          fill="#d44a4a" stroke="#d44a4a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
+    id: 'excretor',
+    nombre: 'Excretor | UPCH',
+    badge: 'Excretor',
+    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Aparato Excretor M1554.',
+    badgeColor: '#4a9ad4',
+    badgeBg: 'rgba(74, 154, 212, 0.12)',
+    activo: true,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M12 3C8.5 3 6 6.5 6 10.5C6 13.5 7.5 16 10 17.5C9.7 18 9.5 18.6 9.5 19.2C9.5 20.8 10.6 22 12 22C13.4 22 14.5 20.8 14.5 19.2C14.5 18.6 14.3 18 14 17.5C16.5 16 18 13.5 18 10.5C18 6.5 15.5 3 12 3Z"
+          fill="#4a9ad4" stroke="#4a9ad4" strokeWidth="1"/>
+        <path d="M12 8.5C11 8.5 10.5 9.5 10.5 11C10.5 12.5 11.2 13.5 12 13.5"
+          stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
       </svg>
     ),
   },
