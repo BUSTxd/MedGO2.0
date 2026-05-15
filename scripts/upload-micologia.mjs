@@ -53,6 +53,10 @@ for (const [slug, group] of grouped.entries()) {
     const { error } = await supabase.storage.from('micologia').upload(remote, buf, {
       contentType: ext === '.png' ? 'image/png' : ext === '.webp' ? 'image/webp' : 'image/jpeg',
       upsert: true,
+      // 1 año. Las imagenes son inmutables: si cambia el contenido cambia el slug,
+      // asi que podemos pedirle al browser que las cachee agresivamente y nunca
+      // las vuelva a pedir. Reduce a 0 bytes las visitas repetidas al atlas.
+      cacheControl: '31536000',
     });
     if (error) { console.error(`x ${remote}: ${error.message}`); fail++; }
     else      { console.log(`. ${remote}`); ok++; }

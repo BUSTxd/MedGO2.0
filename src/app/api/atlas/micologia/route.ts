@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { getPublicUrl } from '@/lib/supabase/storage';
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 const DISPLAY: Record<string, string> = {
   'alternaria-spp': 'Alternaria spp.',
@@ -36,6 +36,10 @@ export async function GET() {
   }
 
   return NextResponse.json(items, {
-    headers: { 'Cache-Control': 'public, max-age=3600, s-maxage=3600' },
+    headers: {
+      // 1 dia en browser y CDN. Pueden refrescar en background tras 1 hora
+      // (stale-while-revalidate) sin bloquear la primera respuesta.
+      'Cache-Control': 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=3600',
+    },
   });
 }

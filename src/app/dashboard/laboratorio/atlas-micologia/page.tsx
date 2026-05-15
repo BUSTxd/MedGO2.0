@@ -113,6 +113,7 @@ const matchesHongo = (input: string, hongo: string): boolean => {
 
 export default function AtlasMicologiaPage() {
   const [items, setItems] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState<Mode | null>(null);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<Record<number, string>>({});
@@ -123,20 +124,47 @@ export default function AtlasMicologiaPage() {
   // Al cambiar de muestra, el zoom vuelve al objetivo base.
   useEffect(() => { setZoom(0); }, [current]);
 
-  // 1 sola peticion al montar; precarga TODAS las imagenes, con prioridad alta para las primeras.
-  useEffect(() => {
+  // Carga diferida: solo cuando el usuario elige un modo se dispara el fetch +
+  // preload de imagenes. Asi entrar a la pagina y salir sin examinar no consume
+  // banda. Si vuelve al selector (pildora "Cambiar modo") los items se conservan
+  // y no se vuelve a pedir. Ademas, la lista se persiste en sessionStorage para
+  // que pestañas/recargas dentro de la sesion no repitan ni siquiera la peticion
+  // al API (las imagenes a su vez viven en el cache HTTP del browser por 1 año).
+  const startExam = (m: Mode) => {
+    setMode(m);
+    if (items.length || loading) return;
+
+    const preload = (data: Item[]) => {
+      const ordered = shuffleNoConsecutive(data);
+      setItems(ordered);
+      ordered.forEach((d, i) => {
+        const img = new Image();
+        if (i < 3) (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority = 'high';
+        img.src = d.url;
+      });
+    };
+
+    try {
+      const cached = sessionStorage.getItem('atlas-micologia');
+      if (cached) {
+        const data = JSON.parse(cached) as Item[];
+        if (Array.isArray(data) && data.length > 0) {
+          preload(data);
+          return;
+        }
+      }
+    } catch { /* sessionStorage puede estar deshabilitado */ }
+
+    setLoading(true);
     fetch('/api/atlas/micologia')
       .then((r) => r.json())
       .then((data: Item[]) => {
-        const ordered = shuffleNoConsecutive(data);
-        setItems(ordered);
-        ordered.forEach((d, i) => {
-          const img = new Image();
-          if (i < 3) (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority = 'high';
-          img.src = d.url;
-        });
-      });
-  }, []);
+        try { sessionStorage.setItem('atlas-micologia', JSON.stringify(data)); } catch {}
+        preload(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  };
 
   // Preguntas con opciones aleatorias — se memoriza por sesion, no por cambio de pagina.
   const questions = useMemo(() => {
@@ -148,15 +176,9 @@ export default function AtlasMicologiaPage() {
     });
   }, [items]);
 
-  if (!questions.length) {
-    return (
-      <div className={styles.examPage}>
-        <div className={styles.loadingMsg}>Cargando atlas de micología…</div>
-      </div>
-    );
-  }
-
   // ─── PANTALLA DE SELECCION DE MODO ───
+  // Se muestra ANTES de cargar nada — la peticion al API y el preload de
+  // imagenes solo se disparan tras hacer clic en una card.
   if (!mode) {
     return (
       <div className={styles.examPage}>
@@ -171,18 +193,20 @@ export default function AtlasMicologiaPage() {
 
         <div className={styles.topBar}>
           <Link href="/dashboard/laboratorio" className={styles.backLink}>← Laboratorio virtual</Link>
-          <span className={styles.counter}>{questions.length} muestras</span>
+          {items.length > 0 && (
+            <span className={styles.counter}>{items.length} muestras</span>
+          )}
         </div>
 
         <div className={styles.modeWrap}>
           <span className={styles.questionLabel}>Atlas de Micología</span>
           <h2 className={styles.modeTitle}>¿Cómo quieres practicar?</h2>
           <p className={styles.modeSub}>
-            Elige el modo de evaluación. Podrás cambiar volviendo a esta pantalla.
+            Elige el modo de evaluación. Las imágenes se cargarán al iniciar.
           </p>
 
           <div className={styles.modeCards}>
-            <button className={styles.modeCard} onClick={() => setMode('choice')}>
+            <button className={styles.modeCard} onClick={() => startExam('choice')}>
               <span className={styles.modeIcon} aria-hidden="true">
                 <span className={styles.modeIconKey}>A</span>
                 <span className={styles.modeIconKey}>B</span>
@@ -194,7 +218,7 @@ export default function AtlasMicologiaPage() {
               </span>
             </button>
 
-            <button className={styles.modeCard} onClick={() => setMode('write')}>
+            <button className={styles.modeCard} onClick={() => startExam('write')}>
               <span className={styles.modeIcon} aria-hidden="true">
                 <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
                   <path d="M3 21h4l11-11-4-4L3 17v4z" stroke="#3b9edd" strokeWidth="1.7" strokeLinejoin="round"/>
@@ -208,6 +232,18 @@ export default function AtlasMicologiaPage() {
             </button>
           </div>
         </div>
+      </div>
+    );
+  }
+
+  // mode elegido pero las imagenes aun no llegan: pantalla de carga.
+  if (!questions.length) {
+    return (
+      <div className={styles.examPage}>
+        <div className={styles.topBar}>
+          <Link href="/dashboard/laboratorio" className={styles.backLink}>← Laboratorio virtual</Link>
+        </div>
+        <div className={styles.loadingMsg}>Cargando atlas de micología…</div>
       </div>
     );
   }
