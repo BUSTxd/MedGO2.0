@@ -4,10 +4,41 @@ import Link from 'next/link';
 import styles from '@/styles/laboratorio.module.css';
 
 type Item = { url: string; hongo: string };
+type Mode = 'choice' | 'write';
 
 // Shuffle minimo: clave aleatoria + sort + extract.
 const shuffle = <T,>(a: T[]): T[] =>
   a.map((v) => [Math.random(), v] as const).sort((a, b) => a[0] - b[0]).map(([, v]) => v);
+
+// Reordena items de modo que no aparezcan dos imagenes consecutivas del mismo hongo.
+// Greedy: en cada paso elige el grupo con mas imagenes restantes que NO sea el hongo
+// usado en la posicion anterior. Empates desempatados con Math.random para variar.
+// Si max_count > ceil(N/2) es matematicamente imposible y caera al fallback (acepta
+// que la ultima quede pegada). En el atlas actual: ~3 imgs por hongo, no llega.
+const shuffleNoConsecutive = (items: Item[]): Item[] => {
+  if (items.length <= 1) return items.slice();
+  const groups = new Map<string, Item[]>();
+  for (const it of items) {
+    const arr = groups.get(it.hongo);
+    if (arr) arr.push(it); else groups.set(it.hongo, [it]);
+  }
+  // mezcla interna de cada grupo: que rote cual imagen sale primero
+  for (const arr of groups.values()) {
+    arr.sort(() => Math.random() - 0.5);
+  }
+  const out: Item[] = [];
+  let lastHongo: string | null = null;
+  while (groups.size > 0) {
+    const entries = [...groups.entries()]
+      .map(([k, v]) => ({ k, v, r: Math.random() }))
+      .sort((a, b) => b.v.length - a.v.length || a.r - b.r);
+    let pick = entries.find((e) => e.k !== lastHongo) ?? entries[0];
+    out.push(pick.v.shift()!);
+    if (pick.v.length === 0) groups.delete(pick.k);
+    lastHongo = pick.k;
+  }
+  return out;
+};
 
 const ZOOMS = [
   { scale: 1,   label: '× 400' },
@@ -52,10 +83,40 @@ const EXPLAIN: Record<string, string> = {
     'Dermatofito antropofílico. Microconidios pleomórficos (formas variadas: lágrima, bastón, globo) sobre fialides laterales. Causa principal de tinea capitis endothrix.',
 };
 
+// Normalizacion para el modo escritura: minusculas, sin tildes, sin puntuacion,
+// sin "spp"/"sp", colapsa espacios. La validacion es tolerante a pequenas
+// variaciones tipograficas sin volverse permisiva con generos distintos.
+const normalize = (s: string) =>
+  s.toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/\bspp?\.?\b/g, '')
+    .replace(/[.,;:]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+// Acepta: nombre completo ("aspergillus flavus"), o abreviado ("a. flavus" → "a flavus"),
+// pero exige genero + especie cuando el nombre formal los tiene (para no confundir
+// fumigatus/flavus/niger). Para nombres tipo "Alternaria spp." vale solo el genero.
+const matchesHongo = (input: string, hongo: string): boolean => {
+  const inN = normalize(input);
+  if (!inN) return false;
+  const hN = normalize(hongo);
+  if (inN === hN) return true;
+  const hParts = hN.split(' ').filter(Boolean);
+  if (hParts.length >= 2) {
+    const abbrev = `${hParts[0][0]} ${hParts.slice(1).join(' ')}`;
+    if (inN === abbrev) return true;
+  }
+  return false;
+};
+
 export default function AtlasMicologiaPage() {
   const [items, setItems] = useState<Item[]>([]);
+  const [mode, setMode] = useState<Mode | null>(null);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<Record<number, string>>({});
+  const [writeInput, setWriteInput] = useState<Record<number, string>>({});
   const [revealed, setRevealed] = useState<Record<number, boolean>>({});
   const [zoom, setZoom] = useState(0);
 
@@ -67,7 +128,7 @@ export default function AtlasMicologiaPage() {
     fetch('/api/atlas/micologia')
       .then((r) => r.json())
       .then((data: Item[]) => {
-        const ordered = shuffle(data);
+        const ordered = shuffleNoConsecutive(data);
         setItems(ordered);
         ordered.forEach((d, i) => {
           const img = new Image();
@@ -95,21 +156,89 @@ export default function AtlasMicologiaPage() {
     );
   }
 
+  // ─── PANTALLA DE SELECCION DE MODO ───
+  if (!mode) {
+    return (
+      <div className={styles.examPage}>
+        <svg className={styles.examPageIcon} width="180" height="180" viewBox="0 0 24 24" fill="none">
+          <circle cx="7"  cy="14" r="4" stroke="#5445d8" strokeWidth="1.5"/>
+          <circle cx="7"  cy="14" r="1" fill="#5445d8"/>
+          <circle cx="17" cy="10" r="4" stroke="#5445d8" strokeWidth="1.5"/>
+          <circle cx="17" cy="10" r="1" fill="#5445d8"/>
+          <circle cx="13" cy="18" r="4" stroke="#5445d8" strokeWidth="1.5"/>
+          <circle cx="13" cy="18" r="1" fill="#5445d8"/>
+        </svg>
+
+        <div className={styles.topBar}>
+          <Link href="/dashboard/laboratorio" className={styles.backLink}>← Laboratorio virtual</Link>
+          <span className={styles.counter}>{questions.length} muestras</span>
+        </div>
+
+        <div className={styles.modeWrap}>
+          <span className={styles.questionLabel}>Atlas de Micología</span>
+          <h2 className={styles.modeTitle}>¿Cómo quieres practicar?</h2>
+          <p className={styles.modeSub}>
+            Elige el modo de evaluación. Podrás cambiar volviendo a esta pantalla.
+          </p>
+
+          <div className={styles.modeCards}>
+            <button className={styles.modeCard} onClick={() => setMode('choice')}>
+              <span className={styles.modeIcon} aria-hidden="true">
+                <span className={styles.modeIconKey}>A</span>
+                <span className={styles.modeIconKey}>B</span>
+                <span className={styles.modeIconKey}>C</span>
+              </span>
+              <span className={styles.modeCardTitle}>Con alternativas</span>
+              <span className={styles.modeCardDesc}>
+                Cinco opciones por muestra. Ideal para reconocer y descartar.
+              </span>
+            </button>
+
+            <button className={styles.modeCard} onClick={() => setMode('write')}>
+              <span className={styles.modeIcon} aria-hidden="true">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 21h4l11-11-4-4L3 17v4z" stroke="#3b9edd" strokeWidth="1.7" strokeLinejoin="round"/>
+                  <path d="M14 6l4 4" stroke="#3b9edd" strokeWidth="1.7" strokeLinecap="round"/>
+                </svg>
+              </span>
+              <span className={styles.modeCardTitle}>Escribiendo</span>
+              <span className={styles.modeCardDesc}>
+                Escribe el nombre del hongo. Más exigente — refuerza la memoria activa.
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const q = questions[current];
   const sel = selected[current];
+  const input = writeInput[current] ?? '';
   const isRevealed = revealed[current];
+  const writeIsCorrect = mode === 'write' && matchesHongo(input, q.item.hongo);
 
   const onSel = (h: string) => {
     if (isRevealed) return;
     setSelected((p) => ({ ...p, [current]: h }));
   };
-  const reveal = () => sel && setRevealed((p) => ({ ...p, [current]: true }));
+  const reveal = () => {
+    if (mode === 'choice' && !sel) return;
+    if (mode === 'write' && !input.trim()) return;
+    setRevealed((p) => ({ ...p, [current]: true }));
+  };
   const optClass = (h: string) => {
     if (!isRevealed) return sel === h ? styles.optionSelected : '';
     if (h === q.item.hongo) return styles.optionCorrect;
     if (h === sel) return styles.optionWrong;
     return '';
   };
+
+  const canReveal = mode === 'choice' ? !!sel : input.trim().length > 0;
+  const verdict =
+    mode === 'choice'
+      ? sel === q.item.hongo
+      : writeIsCorrect;
 
   return (
     <div className={styles.examPage}>
@@ -124,7 +253,17 @@ export default function AtlasMicologiaPage() {
 
       <div className={styles.topBar}>
         <Link href="/dashboard/laboratorio" className={styles.backLink}>← Laboratorio virtual</Link>
-        <span className={styles.counter}>Muestra {current + 1} / {questions.length}</span>
+        <div className={styles.topBarRight}>
+          <button
+            type="button"
+            className={styles.modePill}
+            onClick={() => setMode(null)}
+            title="Cambiar modo"
+          >
+            {mode === 'choice' ? 'Alternativas' : 'Escribir'}
+          </button>
+          <span className={styles.counter}>Muestra {current + 1} / {questions.length}</span>
+        </div>
       </div>
 
       <div className={styles.examBody}>
@@ -174,24 +313,47 @@ export default function AtlasMicologiaPage() {
             Observe la muestra al microscopio. ¿A qué hongo corresponde esta imagen?
           </p>
 
-          <div className={styles.options}>
-            {q.options.map((h, idx) => (
-              <button
-                key={h}
-                className={`${styles.option} ${optClass(h)}`}
-                onClick={() => onSel(h)}
-              >
-                <span className={styles.optionKey}>{String.fromCharCode(65 + idx)}</span>
-                <span className={styles.optionText} style={{ fontStyle: 'italic' }}>{h}</span>
-              </button>
-            ))}
-          </div>
+          {mode === 'choice' ? (
+            <div className={styles.options}>
+              {q.options.map((h, idx) => (
+                <button
+                  key={h}
+                  className={`${styles.option} ${optClass(h)}`}
+                  onClick={() => onSel(h)}
+                >
+                  <span className={styles.optionKey}>{String.fromCharCode(65 + idx)}</span>
+                  <span className={styles.optionText} style={{ fontStyle: 'italic' }}>{h}</span>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className={styles.writeWrap}>
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setWriteInput((p) => ({ ...p, [current]: e.target.value }))}
+                onKeyDown={(e) => { if (e.key === 'Enter' && canReveal && !isRevealed) reveal(); }}
+                disabled={isRevealed}
+                placeholder="Escribe el género y especie…"
+                className={`${styles.writeInput} ${
+                  isRevealed ? (verdict ? styles.writeInputCorrect : styles.writeInputWrong) : ''
+                }`}
+                autoFocus
+                spellCheck={false}
+                autoComplete="off"
+              />
+              <span className={styles.writeHint}>
+                Acepta nombre completo o abreviado (ej. <em>A. flavus</em>). No distingue tildes.
+              </span>
+            </div>
+          )}
 
-          {sel && !isRevealed && (
+          {!isRevealed && (
             <button
               className={`${styles.navBtn} ${styles.navBtnPrimary}`}
               onClick={reveal}
-              style={{ alignSelf: 'center' }}
+              disabled={!canReveal}
+              style={{ alignSelf: 'center', opacity: canReveal ? 1 : 0.4 }}
             >
               Verificar respuesta
             </button>
@@ -199,8 +361,8 @@ export default function AtlasMicologiaPage() {
 
           {isRevealed && (
             <>
-              <p style={{ fontSize: 13, color: sel === q.item.hongo ? '#2DC99A' : '#E85B4A', fontWeight: 600 }}>
-                {sel === q.item.hongo
+              <p style={{ fontSize: 13, color: verdict ? '#2DC99A' : '#E85B4A', fontWeight: 600 }}>
+                {verdict
                   ? '✓ Correcto'
                   : <>✗ Incorrecto — la respuesta es <em>{q.item.hongo}</em></>}
               </p>
