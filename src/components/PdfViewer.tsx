@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 // Local copy of the worker — avoids CDN dependency and version mismatch
@@ -34,6 +34,32 @@ interface Props {
   scale?: number;
 }
 
+// Margen de seguridad: si la signed URL caduca en menos de 15 min, la
+// consideramos vencida y pedimos una nueva. Evita un edge case donde la URL
+// expira durante la lectura del PDF.
+const EXPIRY_BUFFER_MS = 15 * 60 * 1000;
+
+interface SignedUrlEntry { url: string; expiresAt: number }
+
+const cacheKey = (claseId: string) => `resumen-url-${claseId}`;
+
+const readCache = (claseId: string): SignedUrlEntry | null => {
+  try {
+    const raw = sessionStorage.getItem(cacheKey(claseId));
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as SignedUrlEntry;
+    if (!parsed.url || typeof parsed.expiresAt !== 'number') return null;
+    if (parsed.expiresAt - Date.now() < EXPIRY_BUFFER_MS) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+};
+
+const writeCache = (claseId: string, entry: SignedUrlEntry) => {
+  try { sessionStorage.setItem(cacheKey(claseId), JSON.stringify(entry)); } catch {}
+};
+
 export default function PdfViewer({
   claseId,
   className,
@@ -44,7 +70,33 @@ export default function PdfViewer({
 }: Props) {
   const [numPages, setNumPages] = useState(0);
   const [error, setError] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Resuelve la URL del PDF: primero sessionStorage (si esta vigente), si no
+  // pide una signed URL al backend. La signed URL apunta directo al CDN de
+  // Supabase, asi react-pdf descarga sin pasar por Vercel.
+  useEffect(() => {
+    let cancelled = false;
+    const cached = readCache(claseId);
+    if (cached) {
+      setPdfUrl(cached.url);
+      return;
+    }
+    fetch(`/api/resumen/${claseId}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((data: SignedUrlEntry) => {
+        if (cancelled) return;
+        if (data?.url && typeof data.expiresAt === 'number') {
+          writeCache(claseId, data);
+          setPdfUrl(data.url);
+        } else {
+          setError(true);
+        }
+      })
+      .catch(() => { if (!cancelled) setError(true); });
+    return () => { cancelled = true; };
+  }, [claseId]);
 
   const onLoadSuccess = useCallback(({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -62,6 +114,10 @@ export default function PdfViewer({
     );
   }
 
+  if (!pdfUrl) {
+    return <div className={loadingClass}>Cargando resumen…</div>;
+  }
+
   const baseWidth = widthOverride
     ?? (containerRef.current ? containerRef.current.clientWidth - 48 : 760);
   const pageWidth = baseWidth * scale;
@@ -74,7 +130,7 @@ export default function PdfViewer({
       onContextMenu={e => e.preventDefault()}
     >
       <Document
-        file={`/api/resumen/${claseId}`}
+        file={pdfUrl}
         options={PDF_OPTIONS}
         onLoadSuccess={onLoadSuccess}
         onLoadError={onLoadError}

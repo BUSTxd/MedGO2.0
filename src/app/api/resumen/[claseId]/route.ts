@@ -13,6 +13,12 @@ const FILE_ALIAS: Record<string, string> = {
   'practica-3': 'practica-2-3',
 };
 
+// Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga
+// (incluso varios dias) y el cliente las cachea en sessionStorage. Cuando la
+// URL caduca el cliente vuelve a pedir una nueva — un fetch JSON, sin descargar
+// el PDF entero por Vercel.
+const SIGNED_URL_TTL_SECONDS = 60 * 60 * 24 * 7;
+
 export async function GET(
   _req: Request,
   { params }: { params: Promise<{ claseId: string }> },
@@ -20,41 +26,40 @@ export async function GET(
   const { claseId } = await params;
 
   if (!ALLOWED.has(claseId)) {
-    return new NextResponse(null, { status: 404 });
+    return NextResponse.json({ error: 'not_found' }, { status: 404 });
   }
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!url || !key) {
-    console.error('[resumen] missing env vars — NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not set. Restart the dev server after adding them to .env.local.');
-    return new NextResponse(null, { status: 500 });
+    console.error('[resumen] missing env vars — NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not set.');
+    return NextResponse.json({ error: 'server_misconfigured' }, { status: 500 });
   }
 
-  // Service role key bypasses RLS — never exposed to the client
+  // Service role key bypasses RLS — never exposed to the client.
   const supabase = createClient(url, key, { auth: { persistSession: false } });
 
   const fileId = FILE_ALIAS[claseId] ?? claseId;
   const { data, error } = await supabase.storage
     .from('resumenes')
-    .download(`${fileId}.pdf`);
+    .createSignedUrl(`${fileId}.pdf`, SIGNED_URL_TTL_SECONDS);
 
-  if (error || !data) {
-    console.error('[resumen] storage error:', error?.message);
-    return new NextResponse(null, { status: 404 });
+  if (error || !data?.signedUrl) {
+    console.error('[resumen] signed url error:', error?.message);
+    return NextResponse.json({ error: 'not_available' }, { status: 404 });
   }
 
-  const buffer = await data.arrayBuffer();
+  // expiresAt: timestamp en ms en el que la URL deja de ser valida. El cliente
+  // lo usa para decidir si reutiliza la URL cacheada o pide una nueva.
+  const expiresAt = Date.now() + SIGNED_URL_TTL_SECONDS * 1000;
 
-  return new NextResponse(buffer, {
-    headers: {
-      'Content-Type': 'application/pdf',
-      // inline → renders in browser, no download dialog
-      'Content-Disposition': 'inline',
-      'X-Content-Type-Options': 'nosniff',
-      // private: solo el browser del usuario lo cachea (no proxies/CDN)
-      // max-age=3600: evita re-descargar si el alumno cierra y vuelve a abrir
-      'Cache-Control': 'private, max-age=3600',
+  return NextResponse.json(
+    { url: data.signedUrl, expiresAt },
+    {
+      // Nunca cachear el JSON en CDN: la signed URL es por-usuario y temporal.
+      // El cliente la guarda en sessionStorage para no repedirla en la sesion.
+      headers: { 'Cache-Control': 'private, no-store' },
     },
-  });
+  );
 }

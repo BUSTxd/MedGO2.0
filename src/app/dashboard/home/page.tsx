@@ -114,10 +114,26 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
+    // Guardrail: solo hacemos ping al server una vez por dia. Si ya pingamos
+    // hoy mostramos el valor cacheado y nos ahorramos round-trip + 2 queries
+    // (SELECT profiles + UPDATE profiles) en cada navegacion al home.
+    const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
+    const lastDate = localStorage.getItem('streak_ping_date');
+    const cachedStreak = localStorage.getItem('streak_value');
+
+    if (lastDate === today && cachedStreak) {
+      setStreak(Number(cachedStreak));
+      return;
+    }
+
     fetch('/api/streak/ping', { method: 'POST' })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (data && typeof data.streak === 'number') setStreak(data.streak);
+        if (data && typeof data.streak === 'number') {
+          setStreak(data.streak);
+          localStorage.setItem('streak_ping_date', today);
+          localStorage.setItem('streak_value', String(data.streak));
+        }
       })
       .catch(() => {});
   }, []);

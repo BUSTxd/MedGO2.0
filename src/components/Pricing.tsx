@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
+import { useAuth } from './AuthProvider';
 import SubscribeModal from './SubscribeModal';
 import type { PlanKey } from '@/lib/plans';
 import styles from '@/styles/pricing.module.css';
@@ -73,19 +73,11 @@ const plans: PlanCard[] = [
 
 export default function Pricing() {
   const router = useRouter();
-  const [authed, setAuthed] = useState<boolean | null>(null);
+  const { user } = useAuth();
+  const authed = !!user;
   const [open, setOpen] = useState(false);
   const [activePlan, setActivePlan] = useState<PlanKey>('interno');
   const [comingSoon, setComingSoon] = useState(false);
-
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getUser().then(({ data }) => setAuthed(!!data.user));
-    const { data: sub } = supabase.auth.onAuthStateChange((_evt, session) => {
-      setAuthed(!!session?.user);
-    });
-    return () => sub.subscription.unsubscribe();
-  }, []);
 
   async function handlePlanClick(action: PlanCard['action']) {
     if (action === 'soon') {

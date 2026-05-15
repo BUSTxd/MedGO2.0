@@ -1,20 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase/client';
+import { useAuth } from './AuthProvider';
 
 export default function HeroCtas() {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getUser().then(({ data }) => setLoggedIn(!!data.user));
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
-      setLoggedIn(!!session?.user);
-    });
-    return () => subscription.unsubscribe();
-  }, []);
+  const { user } = useAuth();
+  const loggedIn = !!user;
 
   return (
     <>

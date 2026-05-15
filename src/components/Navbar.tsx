@@ -2,31 +2,22 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import type { User } from '@supabase/supabase-js';
 import Logo from './Logo';
 import { createClient } from '@/lib/supabase/client';
+import { useAuth } from './AuthProvider';
 import styles from '@/styles/navbar.module.css';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropOpen, setDropOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const { user } = useAuth();
   const dropRef = useRef<HTMLDivElement>(null);
-  const supabase = useRef(createClient());
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 30);
     window.addEventListener('scroll', fn);
     return () => window.removeEventListener('scroll', fn);
-  }, []);
-
-  useEffect(() => {
-    supabase.current.auth.getUser().then(({ data }) => setUser(data.user));
-    const { data: { subscription } } = supabase.current.auth.onAuthStateChange((_e, session) => {
-      setUser(session?.user ?? null);
-    });
-    return () => subscription.unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -43,7 +34,8 @@ export default function Navbar() {
   const firstName = user?.user_metadata?.full_name?.split(' ')[0] ?? user?.email?.split('@')[0];
 
   const handleSignOut = async () => {
-    await supabase.current.auth.signOut();
+    const supabase = createClient();
+    await supabase.auth.signOut();
     setDropOpen(false);
   };
 
