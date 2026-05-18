@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: '¿Cómo cancelo mi suscripción?',
-    a: 'Puedes cancelar en cualquier momento desde tu panel de cuenta. No hay penalidades ni periodos mínimos. Mantendrás acceso hasta el fin del período pagado.',
+    a: 'El plan Interno (mensual) tiene un compromiso mínimo de 3 meses: el botón de cancelar se habilita una vez cumplidos. El plan Residente (anual) es cancelable cuando quieras desde Mi cuenta — mantienes el acceso hasta el final del periodo pagado. En ningún caso hay devolución del periodo en curso.',
   },
 ];
 

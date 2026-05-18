@@ -39,6 +39,9 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [receipt, setReceipt] = useState<Receipt | null>(null);
+  // El Brick no se monta hasta que el usuario acepta los T&C. Esto evita
+  // re-montaje del Brick al cambiar customization y deja el gate explícito.
+  const [tos, setTos] = useState(false);
   // Tema capturado al abrir el modal. No se actualiza si el usuario togglea
   // dark/light mientras el Brick está montado: cambiar `customization` haría
   // que el SDK re-monte el Brick y re-pida los recursos al servidor.
@@ -49,6 +52,7 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
       setReady(false);
       setError(null);
       setReceipt(null);
+      setTos(false);
       return;
     }
     setThemeIsDark(
@@ -162,7 +166,11 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
         {!receipt && (
           <>
             <h3 className={styles.title}>Suscribirme al plan {plan.label}</h3>
-            <p className={styles.subtitle}>Pago recurrente. Cancela cuando quieras.</p>
+            <p className={styles.subtitle}>
+              {planKey === 'interno'
+                ? 'Pago mensual. Compromiso mínimo de 3 meses (S/ 42).'
+                : 'Pago anual. Cancela el próximo cobro cuando quieras.'}
+            </p>
 
             <div className={styles.priceRow}>
               <span className={styles.priceMain}>S/ {plan.amount.toFixed(2)}</span>
@@ -171,9 +179,60 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
               </span>
             </div>
 
+            <div className={styles.tosRow}>
+              <label className={styles.tosLabel}>
+                <input
+                  type="checkbox"
+                  className={styles.tosCheckbox}
+                  checked={tos}
+                  onChange={(e) => setTos(e.target.checked)}
+                />
+                <span>
+                  {planKey === 'interno' ? (
+                    <>
+                      Acepto los{' '}
+                      <a
+                        className={styles.tosLink}
+                        href="/terminos"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        términos y condiciones
+                      </a>{' '}
+                      y entiendo que el plan mensual tiene un compromiso mínimo de{' '}
+                      <strong>3 meses (S/ 14 × 3 = S/ 42)</strong>. Después puedo cancelar cuando quiera.
+                    </>
+                  ) : (
+                    <>
+                      Acepto los{' '}
+                      <a
+                        className={styles.tosLink}
+                        href="/terminos"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        términos y condiciones
+                      </a>
+                      . Puedo cancelar el próximo cobro anual cuando quiera; no hay devoluciones del periodo en curso.
+                    </>
+                  )}
+                </span>
+              </label>
+              {planKey === 'interno' && (
+                <div className={styles.tosLockBanner}>
+                  Compromiso mínimo: 3 meses (S/ 42 total)
+                </div>
+              )}
+            </div>
+
             <div className={styles.brickWrap}>
               {!ready && <div className={styles.spinner}>Cargando pasarela…</div>}
-              {ready && (
+              {ready && !tos && (
+                <div className={styles.brickPlaceholder}>
+                  Marca el checkbox de arriba para mostrar el formulario de pago.
+                </div>
+              )}
+              {ready && tos && (
                 <CardPayment
                   initialization={initialization}
                   customization={customization}
@@ -227,8 +286,18 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
             </dl>
 
             <p className={styles.receiptNote}>
-              Puedes cancelar tu suscripción en cualquier momento desde <strong>Mi cuenta</strong>.
-              Si no recibes el correo en unos minutos, revisa la carpeta de Spam o Promociones.
+              {planKey === 'interno' ? (
+                <>
+                  Tu plan mensual incluye <strong>3 cobros mínimos</strong> (S/ 42). Después podrás cancelar desde{' '}
+                  <strong>Mi cuenta</strong> cuando quieras.
+                </>
+              ) : (
+                <>
+                  Puedes cancelar el próximo cobro anual en cualquier momento desde <strong>Mi cuenta</strong>.
+                  No hay devoluciones del periodo en curso.
+                </>
+              )}
+              {' '}Si no recibes el correo en unos minutos, revisa la carpeta de Spam o Promociones.
             </p>
 
             <button className={styles.continueBtn} onClick={handleContinue}>

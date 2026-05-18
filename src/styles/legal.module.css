@@ -1,0 +1,125 @@
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 120px 24px 80px;
+  color: var(--white);
+  line-height: 1.7;
+  font-size: 15.5px;
+}
+
+.pageTitle {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0 0 6px;
+  color: var(--white);
+}
+
+.lastUpdated {
+  color: var(--muted);
+  font-size: 13.5px;
+  margin: 0 0 40px;
+}
+
+.section {
+  margin-bottom: 32px;
+}
+
+.h2 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: var(--white);
+  letter-spacing: -0.2px;
+}
+
+.p {
+  margin: 0 0 12px;
+  color: rgba(240, 238, 255, 0.82);
+}
+
+:global(body:not(.dark-mode)) .p {
+  color: #334155;
+}
+
+.list {
+  margin: 8px 0 12px;
+  padding-left: 22px;
+}
+
+.list li {
+  margin-bottom: 6px;
+  color: rgba(240, 238, 255, 0.82);
+}
+
+:global(body:not(.dark-mode)) .list li {
+  color: #334155;
+}
+
+.callout {
+  margin: 20px 0;
+  padding: 16px 18px;
+  border-left: 3px solid var(--blue);
+  background: rgba(59, 158, 221, 0.08);
+  border-radius: 0 8px 8px 0;
+}
+
+.callout .h2 {
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: var(--blue);
+}
+
+.calloutBody {
+  color: rgba(240, 238, 255, 0.92);
+  font-weight: 500;
+  margin: 0;
+}
+
+:global(body:not(.dark-mode)) .calloutBody {
+  color: #1e293b;
+}
+
+.link {
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.priceTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 16px;
+  font-size: 14.5px;
+}
+
+.priceTable th,
+.priceTable td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.priceTable th {
+  font-weight: 700;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+:global(body:not(.dark-mode)) .priceTable th,
+:global(body:not(.dark-mode)) .priceTable td {
+  border-color: #e2e8f0;
+}
+
+:global(body:not(.dark-mode)) .priceTable th {
+  background: #f8faff;
+  color: #1e293b;
+}
+
+:global(body:not(.dark-mode)) .priceTable td {
+  color: #334155;
+}

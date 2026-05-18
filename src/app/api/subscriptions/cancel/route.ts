@@ -16,14 +16,34 @@ export async function POST() {
 
   const { data: sub } = await admin
     .from('subscriptions')
-    .select('id, mp_preapproval_id, status')
+    .select('id, mp_preapproval_id, status, plan_key, created_at')
     .eq('user_id', user.id)
     .in('status', ['authorized', 'pending'])
     .order('created_at', { ascending: false })
-    .maybeSingle<{ id: string; mp_preapproval_id: string; status: string }>();
+    .maybeSingle<{
+      id: string;
+      mp_preapproval_id: string;
+      status: string;
+      plan_key: 'interno' | 'residente';
+      created_at: string;
+    }>();
 
   if (!sub) {
     return NextResponse.json({ error: 'no_active_subscription' }, { status: 404 });
+  }
+
+  // Compromiso mínimo de 3 meses para el plan Interno (mensual). Usamos meses
+  // calendario (setMonth +3) en vez de 90 días para que coincida con 3 ciclos
+  // de cobro reales. El plan Residente queda fuera del lock.
+  if (sub.plan_key === 'interno') {
+    const unlockAt = new Date(sub.created_at);
+    unlockAt.setMonth(unlockAt.getMonth() + 3);
+    if (Date.now() < unlockAt.getTime()) {
+      return NextResponse.json(
+        { error: 'lock_period_active', unlockAt: unlockAt.toISOString() },
+        { status: 423 },
+      );
+    }
   }
 
   try {

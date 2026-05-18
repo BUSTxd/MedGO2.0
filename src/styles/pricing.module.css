@@ -45,6 +45,17 @@
   padding: 4px 10px;
 }
 
+.badgeAnnual {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.priceSub {
+  font-size: 13px;
+  color: var(--muted);
+  margin: -2px 0 12px;
+  line-height: 1.4;
+}
+
 .planName {
   font-size: 14px;
   font-weight: 600;

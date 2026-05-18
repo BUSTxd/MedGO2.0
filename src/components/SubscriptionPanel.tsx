@@ -14,6 +14,7 @@ interface SubRow {
   currency: string;
   next_payment_date: string | null;
   mp_preapproval_id: string;
+  created_at: string;
 }
 
 interface Props {
@@ -47,8 +48,20 @@ export default function SubscriptionPanel({
   const isFree = plan === 'free';
   const isCancelled = subscription?.status === 'cancelled';
   const isActive = subscription?.status === 'authorized';
+  const isInterno = subscription?.plan_key === 'interno';
+  const isResidente = subscription?.plan_key === 'residente';
   const expiresLabel = formatDate(expiresAt);
   const nextPayment = formatDate(subscription?.next_payment_date ?? null);
+
+  const unlockDate = isInterno && subscription
+    ? (() => {
+        const d = new Date(subscription.created_at);
+        d.setMonth(d.getMonth() + 3);
+        return d;
+      })()
+    : null;
+  const isLocked = unlockDate ? unlockDate.getTime() > Date.now() : false;
+  const unlockLabel = unlockDate ? formatDate(unlockDate.toISOString()) : null;
 
   const handleCancel = async () => {
     setBusy(true);
@@ -57,9 +70,15 @@ export default function SubscriptionPanel({
       const res = await fetch('/api/subscriptions/cancel', { method: 'POST' });
       const json = await res.json();
       if (!res.ok) {
-        setError(json?.error === 'no_active_subscription'
-          ? 'No tienes una suscripción activa.'
-          : 'No se pudo cancelar. Intenta de nuevo o contáctanos.');
+        if (json?.error === 'lock_period_active' && json?.unlockAt) {
+          setError(
+            `Tu plan mensual tiene un compromiso mínimo de 3 meses. Podrás cancelar a partir del ${formatDate(json.unlockAt)}.`,
+          );
+        } else if (json?.error === 'no_active_subscription') {
+          setError('No tienes una suscripción activa.');
+        } else {
+          setError('No se pudo cancelar. Intenta de nuevo o contáctanos.');
+        }
         setBusy(false);
         return;
       }
@@ -84,7 +103,7 @@ export default function SubscriptionPanel({
             <div className={styles.planLabel}>Plan {planLabel}</div>
             {!isFree && subscription && (
               <div className={styles.planMeta}>
-                S/ {Number(subscription.amount).toFixed(2)}/mes
+                S/ {Number(subscription.amount).toFixed(2)}/{isResidente ? 'año' : 'mes'}
               </div>
             )}
           </div>
@@ -117,25 +136,50 @@ export default function SubscriptionPanel({
         )}
 
         {!isFree && isActive && (
-          <div className={styles.actionRow}>
-            <button
-              className={styles.cancelBtn}
-              onClick={() => { setError(null); setConfirmOpen(true); }}
-            >
-              Cancelar suscripción
-            </button>
+          <>
+            <div className={styles.actionRow}>
+              <button
+                className={`${styles.cancelBtn} ${isLocked ? styles.cancelBtnDisabled : ''}`}
+                onClick={() => { setError(null); setConfirmOpen(true); }}
+                disabled={isLocked}
+                aria-disabled={isLocked}
+              >
+                Cancelar suscripción
+              </button>
 
-            <span
-              className={styles.helpIcon}
-              tabIndex={0}
-              aria-label={`Mantienes acceso hasta ${expiresLabel ?? 'el final del periodo pagado'}. Después tu cuenta vuelve al plan gratuito.`}
-            >
-              ?
-              <span className={styles.tooltip} role="tooltip">
-                Al cancelar mantienes acceso hasta {expiresLabel ? <strong>{expiresLabel}</strong> : 'el final del periodo pagado'}. Después tu cuenta vuelve al plan gratuito.
+              <span
+                className={styles.helpIcon}
+                tabIndex={0}
+                aria-label={
+                  isLocked
+                    ? `Tu plan Interno tiene un compromiso mínimo de 3 meses. Podrás cancelar a partir del ${unlockLabel}.`
+                    : `Mantienes acceso hasta ${expiresLabel ?? 'el final del periodo pagado'}. Después tu cuenta vuelve al plan gratuito.`
+                }
+              >
+                ?
+                <span className={styles.tooltip} role="tooltip">
+                  {isLocked ? (
+                    <>
+                      Tu plan Interno tiene un compromiso mínimo de 3 meses. Podrás cancelar a partir del{' '}
+                      <strong>{unlockLabel}</strong>.
+                    </>
+                  ) : (
+                    <>
+                      Al cancelar mantienes acceso hasta{' '}
+                      {expiresLabel ? <strong>{expiresLabel}</strong> : 'el final del periodo pagado'}.
+                      Después tu cuenta vuelve al plan gratuito.
+                    </>
+                  )}
+                </span>
               </span>
-            </span>
-          </div>
+            </div>
+
+            {isLocked && (
+              <p className={styles.lockNotice}>
+                Cancelable desde el <strong>{unlockLabel}</strong>
+              </p>
+            )}
+          </>
         )}
 
         {error && <div className={styles.error}>{error}</div>}

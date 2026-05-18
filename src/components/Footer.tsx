@@ -9,7 +9,8 @@ export default function Footer() {
         <a href="#">Precios</a>
         <a href="#">Sobre Nosotros</a>
         <a href="#">Contacto</a>
-        <a href="#">Privacidad</a>
+        <a href="/terminos">Términos</a>
+        <a href="/privacidad">Privacidad</a>
       </div>
       <div className={styles.copy}>© 2026 MedGO. Todos los derechos reservados.</div>
     </footer>

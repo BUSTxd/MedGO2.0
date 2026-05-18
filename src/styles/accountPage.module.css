@@ -170,6 +170,36 @@
   border-color: #dc2626;
 }
 
+.cancelBtnDisabled,
+.cancelBtnDisabled:hover {
+  cursor: not-allowed;
+  opacity: 0.55;
+  background: transparent;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+
+:global(body.dark-mode) .cancelBtnDisabled,
+:global(body.dark-mode) .cancelBtnDisabled:hover {
+  background: transparent;
+  border-color: #7f1d1d;
+  color: #fca5a5;
+}
+
+.lockNotice {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.lockNotice strong {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+:global(body.dark-mode) .lockNotice { color: #94a3b8; }
+:global(body.dark-mode) .lockNotice strong { color: #e2e8f0; }
+
 /* ─── HELP ICON + TOOLTIP ─── */
 .helpIcon {
   position: relative;
