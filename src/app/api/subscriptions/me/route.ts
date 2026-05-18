@@ -18,5 +18,20 @@ export async function GET() {
     .maybeSingle();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ subscription: data ?? null });
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('plan, plan_expires_at')
+    .eq('id', user.id)
+    .maybeSingle<{ plan: string | null; plan_expires_at: string | null }>();
+
+  const plan = (profile?.plan as 'free' | 'interno' | 'residente' | null) ?? 'free';
+  const expiresAt = profile?.plan_expires_at ?? null;
+  const isActive =
+    plan !== 'free' && !!expiresAt && new Date(expiresAt).getTime() > Date.now();
+
+  return NextResponse.json({
+    subscription: data ?? null,
+    planState: { plan, isActive, expiresAt },
+  });
 }

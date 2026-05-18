@@ -116,9 +116,13 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
         });
         const json = await res.json();
         if (!res.ok) {
-          const msg = json?.error === 'already_subscribed'
-            ? 'Ya tienes una suscripción activa.'
-            : json?.error || 'Error al procesar el pago.';
+          let msg: string;
+          if (json?.error === 'already_subscribed') {
+            const until = json?.expiresAt ? ` hasta el ${formatDate(json.expiresAt)}` : '';
+            msg = `Ya tienes un plan activo${until}. Puedes gestionarlo desde Mi cuenta.`;
+          } else {
+            msg = json?.error || 'Error al procesar el pago.';
+          }
           setError(msg);
           throw new Error(msg);
         }
@@ -168,7 +172,7 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
             <h3 className={styles.title}>Suscribirme al plan {plan.label}</h3>
             <p className={styles.subtitle}>
               {planKey === 'interno'
-                ? 'Pago mensual. Compromiso mínimo de 3 meses (S/ 42).'
+                ? 'Pago mensual. Compromiso mínimo de 3 meses.'
                 : 'Pago anual. Cancela el próximo cobro cuando quieras.'}
             </p>
 
@@ -200,7 +204,7 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
                         términos y condiciones
                       </a>{' '}
                       y entiendo que el plan mensual tiene un compromiso mínimo de{' '}
-                      <strong>3 meses (S/ 14 × 3 = S/ 42)</strong>. Después puedo cancelar cuando quiera.
+                      <strong>3 meses</strong>. Después puedo cancelar cuando quiera.
                     </>
                   ) : (
                     <>
@@ -220,7 +224,7 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
               </label>
               {planKey === 'interno' && (
                 <div className={styles.tosLockBanner}>
-                  Compromiso mínimo: 3 meses (S/ 42 total)
+                  Compromiso mínimo: 3 meses
                 </div>
               )}
             </div>
@@ -288,7 +292,7 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
             <p className={styles.receiptNote}>
               {planKey === 'interno' ? (
                 <>
-                  Tu plan mensual incluye <strong>3 cobros mínimos</strong> (S/ 42). Después podrás cancelar desde{' '}
+                  Tu plan mensual incluye un <strong>compromiso mínimo de 3 meses</strong>. Después podrás cancelar desde{' '}
                   <strong>Mi cuenta</strong> cuando quieras.
                 </>
               ) : (

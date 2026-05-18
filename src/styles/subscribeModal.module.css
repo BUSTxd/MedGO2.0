@@ -116,16 +116,20 @@
 
 .tosRow {
   margin-bottom: 18px;
+  padding: 14px 16px;
+  background: var(--inner-bg);
+  border: 1px solid var(--inner-border);
+  border-radius: 12px;
 }
 
 .tosLabel {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
   cursor: pointer;
   font-size: 13.5px;
   color: var(--white);
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .tosCheckbox {
@@ -134,17 +138,20 @@
   height: 18px;
   margin-top: 2px;
   cursor: pointer;
-  accent-color: var(--blue);
+  accent-color: #6b7280;
 }
 
 .tosLink {
-  color: var(--blue);
+  color: inherit;
   text-decoration: underline;
+  text-decoration-color: rgba(148, 163, 184, 0.6);
+  text-underline-offset: 2px;
   font-weight: 600;
+  transition: text-decoration-color 0.15s ease;
 }
 
 .tosLink:hover {
-  opacity: 0.85;
+  text-decoration-color: currentColor;
 }
 
 .tosLockBanner {

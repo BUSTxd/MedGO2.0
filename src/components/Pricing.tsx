@@ -1,11 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
 import SubscribeModal from './SubscribeModal';
 import type { PlanKey } from '@/lib/plans';
 import styles from '@/styles/pricing.module.css';
+
+interface PlanState {
+  plan: 'free' | 'interno' | 'residente';
+  isActive: boolean;
+  expiresAt: string | null;
+}
 
 type Feature = string | { text: string; disabled: boolean };
 
@@ -59,9 +65,9 @@ const plans: PlanCard[] = [
   },
   {
     name: 'Residente',
-    price: 'S/ 142.80',
-    period: '/ año',
-    priceSub: '≈ S/ 11.90/mes · ahorras S/ 25.20 vs mensual',
+    price: 'S/ 11.90',
+    period: '/ mes',
+    priceSub: 'S/ 142.80 al año (pago único)',
     features: [
       'Todo lo del plan Interno',
       'Bloqueo de precio por 12 meses',
@@ -83,6 +89,25 @@ export default function Pricing() {
   const authed = !!user;
   const [open, setOpen] = useState(false);
   const [activePlan, setActivePlan] = useState<PlanKey>('interno');
+  const [planState, setPlanState] = useState<PlanState | null>(null);
+
+  useEffect(() => {
+    if (!authed) {
+      setPlanState(null);
+      return;
+    }
+    let cancelled = false;
+    fetch('/api/subscriptions/me', { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((json) => {
+        if (cancelled || !json?.planState) return;
+        setPlanState(json.planState as PlanState);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [authed]);
 
   async function handlePlanClick(action: PlanCard['action']) {
     if (action === 'free') {
@@ -94,6 +119,7 @@ export default function Pricing() {
         router.push('/auth/login?next=' + encodeURIComponent('/#precios'));
         return;
       }
+      if (planState?.isActive) return;
       setActivePlan(action);
       setOpen(true);
     }
@@ -114,43 +140,55 @@ export default function Pricing() {
           Empieza por el mes. Cambia al anual cuando estés convencido.
         </p>
         <div className={styles.grid}>
-          {plans.map((p, i) => (
-            <div className={`${styles.card} ${p.featured ? styles.featured : ''}`} key={i}>
-              {p.badge && (
-                <span
-                  className={`${styles.badge} ${
-                    p.badgeStyle === 'annual' ? styles.badgeAnnual : ''
+          {plans.map((p, i) => {
+            const isPremiumPlan = p.action === 'interno' || p.action === 'residente';
+            const lockCtas = !!planState?.isActive && isPremiumPlan;
+            const isCurrentPlan = lockCtas && planState?.plan === p.action;
+            const lockedText = isCurrentPlan ? 'Tu plan actual' : 'Ya tienes plan activo';
+            return (
+              <div className={`${styles.card} ${p.featured ? styles.featured : ''}`} key={i}>
+                {p.badge && (
+                  <span
+                    className={`${styles.badge} ${
+                      p.badgeStyle === 'annual' ? styles.badgeAnnual : ''
+                    }`}
+                  >
+                    {p.badge}
+                  </span>
+                )}
+                <div className={styles.planName}>{p.name}</div>
+                <div className={styles.price}>
+                  {p.price} <span>{p.period}</span>
+                </div>
+                {p.priceSub && <div className={styles.priceSub}>{p.priceSub}</div>}
+                <ul className={styles.features}>
+                  {p.features.map((f, j) => {
+                    const disabled = typeof f !== 'string' && f.disabled;
+                    const text = typeof f === 'string' ? f : f.text;
+                    return (
+                      <li key={j} className={disabled ? styles.disabled : ''}>
+                        {text}
+                      </li>
+                    );
+                  })}
+                </ul>
+                <button
+                  className={`${styles.btn} ${
+                    lockCtas
+                      ? styles.btnDisabled
+                      : p.btnStyle === 'primary'
+                        ? styles.btnPrimary
+                        : styles.btnGhost
                   }`}
+                  onClick={() => handlePlanClick(p.action)}
+                  disabled={lockCtas}
+                  aria-disabled={lockCtas}
                 >
-                  {p.badge}
-                </span>
-              )}
-              <div className={styles.planName}>{p.name}</div>
-              <div className={styles.price}>
-                {p.price} <span>{p.period}</span>
+                  {lockCtas ? lockedText : p.btnText}
+                </button>
               </div>
-              {p.priceSub && <div className={styles.priceSub}>{p.priceSub}</div>}
-              <ul className={styles.features}>
-                {p.features.map((f, j) => {
-                  const disabled = typeof f !== 'string' && f.disabled;
-                  const text = typeof f === 'string' ? f : f.text;
-                  return (
-                    <li key={j} className={disabled ? styles.disabled : ''}>
-                      {text}
-                    </li>
-                  );
-                })}
-              </ul>
-              <button
-                className={`${styles.btn} ${
-                  p.btnStyle === 'primary' ? styles.btnPrimary : styles.btnGhost
-                }`}
-                onClick={() => handlePlanClick(p.action)}
-              >
-                {p.btnText}
-              </button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
