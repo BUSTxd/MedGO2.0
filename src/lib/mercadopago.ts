@@ -62,6 +62,18 @@ export function cancelPreapproval(id: string): Promise<PreapprovalResponse> {
   });
 }
 
+export interface AuthorizedPaymentResponse {
+  id: number;
+  preapproval_id: string;
+  status: string;
+}
+
+export function getAuthorizedPayment(paymentId: string): Promise<AuthorizedPaymentResponse> {
+  return mpFetch<AuthorizedPaymentResponse>(
+    `/authorized_payments/${encodeURIComponent(paymentId)}`,
+  );
+}
+
 /**
  * Validates Mercado Pago `x-signature` header.
  * Format: `ts=<timestamp>,v1=<hex hmac sha256>`

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { getPreapproval, verifyWebhookSignature } from '@/lib/mercadopago';
+import { getPreapproval, getAuthorizedPayment, verifyWebhookSignature } from '@/lib/mercadopago';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -32,12 +32,7 @@ export async function POST(req: Request) {
   }
 
   const type = payload?.type ?? '';
-  // Solo procesamos subscription_preapproval. El evento subscription_authorized_payment
-  // lleva el payment ID (numérico) en data.id, no el preapproval ID; intentar
-  // getPreapproval(paymentId) devuelve 404 → 502 → MP reintenta sin fin.
-  // subscription_preapproval cubre todos los cambios de estado que necesitamos
-  // (authorized, paused, cancelled) incluyendo cobros recurrentes exitosos.
-  if (type !== 'subscription_preapproval') {
+  if (!['subscription_preapproval', 'subscription_authorized_payment'].includes(type)) {
     return NextResponse.json({ ok: true, ignored: type });
   }
 
@@ -45,9 +40,16 @@ export async function POST(req: Request) {
 
   let preapproval;
   try {
-    preapproval = await getPreapproval(dataId);
+    if (type === 'subscription_authorized_payment') {
+      // data.id es el payment ID (numérico), no el preapproval ID.
+      // Primero buscamos el pago para obtener el preapproval_id real.
+      const payment = await getAuthorizedPayment(dataId);
+      preapproval = await getPreapproval(payment.preapproval_id);
+    } else {
+      preapproval = await getPreapproval(dataId);
+    }
   } catch (err) {
-    console.error('[mp webhook] fetch preapproval failed', err);
+    console.error('[mp webhook] fetch failed', err);
     return NextResponse.json({ error: 'mp fetch failed' }, { status: 502 });
   }
 
