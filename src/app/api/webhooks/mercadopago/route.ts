@@ -32,7 +32,12 @@ export async function POST(req: Request) {
   }
 
   const type = payload?.type ?? '';
-  if (!['subscription_preapproval', 'subscription_authorized_payment'].includes(type)) {
+  // Solo procesamos subscription_preapproval. El evento subscription_authorized_payment
+  // lleva el payment ID (numérico) en data.id, no el preapproval ID; intentar
+  // getPreapproval(paymentId) devuelve 404 → 502 → MP reintenta sin fin.
+  // subscription_preapproval cubre todos los cambios de estado que necesitamos
+  // (authorized, paused, cancelled) incluyendo cobros recurrentes exitosos.
+  if (type !== 'subscription_preapproval') {
     return NextResponse.json({ ok: true, ignored: type });
   }
 
@@ -40,15 +45,7 @@ export async function POST(req: Request) {
 
   let preapproval;
   try {
-    if (type === 'subscription_preapproval') {
-      preapproval = await getPreapproval(dataId);
-    } else {
-      // Authorized payment → fetch the payment, then its preapproval_id, then re-fetch the preapproval.
-      // Simplification: we re-fetch by dataId as preapproval anyway because the
-      // payment payload also carries the preapproval_id; but to keep the loop tight
-      // we tolerate failures here and just fall through.
-      preapproval = await getPreapproval(dataId);
-    }
+    preapproval = await getPreapproval(dataId);
   } catch (err) {
     console.error('[mp webhook] fetch preapproval failed', err);
     return NextResponse.json({ error: 'mp fetch failed' }, { status: 502 });
