@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import styles from '@/styles/cursos.module.css';
 
 // Loaded only when the user opens the resumen
@@ -14,14 +16,22 @@ interface ResumenOpcion {
   label: string;
 }
 
+interface ExamenRef {
+  key: string;
+  free?: boolean;
+}
+
 interface Props {
   claseId: string;
   hasResumen: boolean;
   resumenOpciones?: ResumenOpcion[];
+  examen?: ExamenRef;
+  examenTitle?: string;
 }
 
-export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones }: Props) {
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, examen }: Props) {
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
+  const pathname = usePathname();
 
   const [pickerOpen, setPickerOpen]       = useState(false);
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
@@ -66,13 +76,25 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           <span className={styles.studyComingSoon}>Próximamente</span>
         </div>
 
-        {/* QBank — siempre bloqueado */}
-        <div className={`${styles.studyCard} ${styles.studyCardLocked}`}>
-          <div className={styles.studyCardIcon}>◈</div>
-          <p className={styles.studyCardTitle}>QBank del Tema</p>
-          <p className={styles.studyCardDesc}>Preguntas de práctica tipo examen</p>
-          <span className={styles.studyComingSoon}>Próximamente</span>
-        </div>
+        {/* Banco de preguntas / examen interactivo */}
+        {examen ? (
+          <Link
+            href={`${pathname}?examen=1`}
+            className={`${styles.studyCard} ${styles.studyCardActive}`}
+          >
+            <div className={styles.studyCardIcon}>◈</div>
+            <p className={styles.studyCardTitle}>Banco de preguntas</p>
+            <p className={styles.studyCardDesc}>Preguntas tipo examen con explicación</p>
+            <span className={styles.studyAvailable}>Comenzar ▸</span>
+          </Link>
+        ) : (
+          <div className={`${styles.studyCard} ${styles.studyCardLocked}`}>
+            <div className={styles.studyCardIcon}>◈</div>
+            <p className={styles.studyCardTitle}>QBank del Tema</p>
+            <p className={styles.studyCardDesc}>Preguntas de práctica tipo examen</p>
+            <span className={styles.studyComingSoon}>Próximamente</span>
+          </div>
+        )}
 
         {/* Resumen — abre directo en pantalla completa */}
         <div

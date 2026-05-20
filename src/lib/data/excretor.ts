@@ -21,6 +21,11 @@ export interface ResumenOpcion {
   label: string;
 }
 
+export interface ExamenRef {
+  key: string;
+  free?: boolean;
+}
+
 export interface Actividad {
   id: string;
   tipo: TipoActividad;
@@ -32,6 +37,8 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  examen?: ExamenRef;
+  qbank?: ExamenRef;
 }
 
 export interface Semana {
@@ -294,6 +301,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Asa de Henle', 'Mecanismo contracorriente', 'Gradiente medular'],
         docentes: ['Dr. J. García', 'Dr. H. Pérez', 'Dra. J. Bernuy'],
+        examen: { key: 'excretor/tbl-3-asa-henle', free: true },
       },
       {
         id: 'exc-p3-anat',

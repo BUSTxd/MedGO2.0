@@ -5,6 +5,7 @@ import styles from '@/styles/cursos.module.css';
 import StudyMaterialSection from '@/components/StudyMaterialSection';
 import LockedContent from '@/components/LockedContent';
 import TrackRecentClass from '@/components/TrackRecentClass';
+import ExamRunner from '@/components/ExamRunner';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
 
@@ -18,10 +19,13 @@ const UNIDAD_LABEL: Record<string, string> = {
 
 export default async function ExcretorActividadPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ examen?: string }>;
 }) {
   const { id } = await params;
+  const sp = await searchParams;
   const result = findActividad(id);
   if (!result) notFound();
 
@@ -31,12 +35,34 @@ export default async function ExcretorActividadPage({
   const unidadLabel = UNIDAD_LABEL[act.unidad];
 
   const isLab = act.tipo === 'LAB-HISTO' || act.tipo === 'LAB-ANAT';
+  const isFreeExam = act.examen?.free === true;
+  const isFreeAccess = isLab || isFreeExam;
   const [user, planState] = await Promise.all([
     getUser(),
-    isLab
+    isFreeAccess
       ? Promise.resolve({ plan: 'free' as const, isActive: true })
       : getCachedPlanState(),
   ]);
+
+  const examMode = sp?.examen === '1' && !!act.examen;
+
+  if (examMode && act.examen) {
+    const examNode = (
+      <div className={styles.microPage}>
+        <ExamRunner
+          examKey={act.examen.key}
+          fallbackTitle={act.titulo}
+          backHref={`/dashboard/cursos/excretor/${id}`}
+        />
+      </div>
+    );
+    if (isFreeAccess) return examNode;
+    return (
+      <LockedContent requiredPlan="interno" planState={planState} isAuthed={!!user}>
+        {examNode}
+      </LockedContent>
+    );
+  }
 
   const detail = (
     <div className={styles.microPage}>
@@ -95,12 +121,14 @@ export default async function ExcretorActividadPage({
           claseId={act.id}
           hasResumen={act.resumen?.tipo === 'pdf'}
           resumenOpciones={act.resumen?.opciones}
+          examen={act.examen}
+          examenTitle={act.titulo}
         />
       </div>
     </div>
   );
 
-  if (isLab) return detail;
+  if (isFreeAccess) return detail;
 
   return (
     <LockedContent requiredPlan="interno" planState={planState} isAuthed={!!user}>
