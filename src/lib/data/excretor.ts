@@ -301,6 +301,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Asa de Henle', 'Mecanismo contracorriente', 'Gradiente medular'],
         docentes: ['Dr. J. García', 'Dr. H. Pérez', 'Dra. J. Bernuy'],
+        resumen: { tipo: 'pdf' },
         examen: { key: 'excretor/tbl-3-asa-henle', free: true },
       },
       {

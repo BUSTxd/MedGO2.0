@@ -3,14 +3,18 @@ import { createClient } from '@supabase/supabase-js';
 
 // Only these IDs have an associated PDF in Supabase Storage
 const ALLOWED = new Set([
+  // Microbiología
   'clase-4', 'clase-5', 'clase-6', 'clase-6.2', 'clase-7', 'clase-8', 'clase-9', 'clase-10',
   'practica-1', 'practica-2', 'practica-3',
+  // Aparato Excretor
+  'exc-tbl-3',
 ]);
 
-// Some IDs share a single PDF file in storage
+// Some IDs share a single PDF file in storage, or need a path prefix (carpeta/)
 const FILE_ALIAS: Record<string, string> = {
   'practica-2': 'practica-2-3',
   'practica-3': 'practica-2-3',
+  'exc-tbl-3':  'excretor/tbl-3-asa-henle',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga
