@@ -6,6 +6,7 @@ import StudyMaterialSection from '@/components/StudyMaterialSection';
 import LockedContent from '@/components/LockedContent';
 import TrackRecentClass from '@/components/TrackRecentClass';
 import ExamRunner from '@/components/ExamRunner';
+import KidneyIcon from '@/components/KidneyIcon';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
 
@@ -49,6 +50,7 @@ export default async function ExcretorActividadPage({
   if (examMode && act.examen) {
     const examNode = (
       <div className={styles.microPage}>
+        <KidneyIcon className={styles.microPageIcon} />
         <ExamRunner
           examKey={act.examen.key}
           fallbackTitle={act.titulo}
@@ -66,6 +68,7 @@ export default async function ExcretorActividadPage({
 
   const detail = (
     <div className={styles.microPage}>
+      <KidneyIcon className={styles.microPageIcon} />
       <TrackRecentClass id={act.id} courseSlug="excretor" title={act.titulo} />
       <div className={styles.container}>
         <Link href="/dashboard/cursos/excretor" className={styles.backLink}>

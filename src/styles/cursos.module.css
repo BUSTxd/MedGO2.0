@@ -806,6 +806,8 @@
   flex-direction: column;
   gap: 6px;
   transition: all 0.2s;
+  text-decoration: none;
+  color: inherit;
 }
 
 .studyCardLocked {
