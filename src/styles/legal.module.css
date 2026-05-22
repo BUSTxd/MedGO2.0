@@ -38,10 +38,6 @@
   color: rgba(240, 238, 255, 0.95);
 }
 
-:global(body:not(.dark-mode)) .p {
-  color: #1e293b;
-}
-
 .list {
   margin: 8px 0 12px;
   padding-left: 22px;
@@ -50,10 +46,6 @@
 .list li {
   margin-bottom: 6px;
   color: rgba(240, 238, 255, 0.95);
-}
-
-:global(body:not(.dark-mode)) .list li {
-  color: #1e293b;
 }
 
 .callout {
@@ -76,9 +68,6 @@
   margin: 0;
 }
 
-:global(body:not(.dark-mode)) .calloutBody {
-  color: #1e293b;
-}
 
 .link {
   color: var(--blue);
@@ -111,16 +100,3 @@
   background: rgba(255, 255, 255, 0.03);
 }
 
-:global(body:not(.dark-mode)) .priceTable th,
-:global(body:not(.dark-mode)) .priceTable td {
-  border-color: #e2e8f0;
-}
-
-:global(body:not(.dark-mode)) .priceTable th {
-  background: #f8faff;
-  color: #1e293b;
-}
-
-:global(body:not(.dark-mode)) .priceTable td {
-  color: #334155;
-}

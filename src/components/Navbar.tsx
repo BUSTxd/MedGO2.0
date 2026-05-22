@@ -48,7 +48,7 @@ export default function Navbar() {
           : 'linear-gradient(180deg, rgba(8,6,26,0.45) 0%, rgba(8,6,26,0.05) 100%)',
       }}
     >
-      <a className={styles.logo} href="#">
+      <a className={styles.logo} href="/">
         <Logo size={78} />
       </a>
 
