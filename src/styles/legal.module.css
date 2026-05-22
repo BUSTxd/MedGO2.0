@@ -35,11 +35,11 @@
 
 .p {
   margin: 0 0 12px;
-  color: rgba(240, 238, 255, 0.82);
+  color: rgba(240, 238, 255, 0.95);
 }
 
 :global(body:not(.dark-mode)) .p {
-  color: #334155;
+  color: #1e293b;
 }
 
 .list {
@@ -49,11 +49,11 @@
 
 .list li {
   margin-bottom: 6px;
-  color: rgba(240, 238, 255, 0.82);
+  color: rgba(240, 238, 255, 0.95);
 }
 
 :global(body:not(.dark-mode)) .list li {
-  color: #334155;
+  color: #1e293b;
 }
 
 .callout {
@@ -71,7 +71,7 @@
 }
 
 .calloutBody {
-  color: rgba(240, 238, 255, 0.92);
+  color: rgba(240, 238, 255, 0.97);
   font-weight: 500;
   margin: 0;
 }
@@ -102,6 +102,7 @@
   text-align: left;
   padding: 10px 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(240, 238, 255, 0.95);
 }
 
 .priceTable th {
