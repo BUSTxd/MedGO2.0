@@ -13,8 +13,10 @@ export default function PrivacidadPage() {
     <>
       <Navbar />
       <main className={styles.wrap}>
-        <h1 className={styles.pageTitle}>Política de Privacidad</h1>
-        <p className={styles.lastUpdated}>Última actualización: 22 de mayo de 2026</p>
+        <div className={styles.hero}>
+          <h1 className={styles.pageTitle}>Política de Privacidad</h1>
+          <p className={styles.lastUpdated}>Última actualización: 22 de mayo de 2026</p>
+        </div>
 
         <section className={styles.section}>
           <h2 className={styles.h2}>1. Responsable del tratamiento</h2>
