@@ -78,12 +78,16 @@ export default async function MicrobiologiaPage() {
               const borderColor = UNIDAD_COLOR[act.unidad];
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
               const isLab = act.tipo === 'LAB';
-              const isLocked = !isLab && !hasInterno;
+              // Si la card redirige a otra sección (ej. atlas-micologia gratis),
+              // no la bloqueamos: el destino maneja su propio acceso.
+              const isLocked = !isLab && !act.linkOverride && !hasInterno;
+
+              const href = act.linkOverride ?? `/dashboard/cursos/microbiologia/${act.id}`;
 
               return (
                 <Link
                   key={act.id}
-                  href={`/dashboard/cursos/microbiologia/${act.id}`}
+                  href={href}
                   className={`${styles.activityCard} ${isLocked ? styles.activityCardLocked : ''}`}
                   aria-label={isLocked ? `${act.titulo} (bloqueado, requiere plan Interno)` : act.titulo}
                 >

@@ -17,6 +17,10 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  /** ISO date YYYY-MM-DD; usado para "Próximos exámenes" en el home. */
+  fechaISO?: string;
+  /** Sobreescribe el destino del card en el sílabo (p.ej. examen práctico → atlas). */
+  linkOverride?: string;
 }
 
 export interface Semana {
@@ -311,6 +315,7 @@ export const semanas: Semana[] = [
         unidad: 'EVALUACION',
         titulo: 'Examen Teórico I — Virología y Micología',
         fecha: '23 may (sáb)',
+        fechaISO: '2026-05-23',
         hora: '11:30–13:30',
         subtemas: ['Cubre Clases 1–11'],
         docentes: [],
@@ -321,10 +326,12 @@ export const semanas: Semana[] = [
         unidad: 'EVALUACION',
         titulo: 'Examen Práctico I — Micología general',
         fecha: '23 may (sáb)',
+        fechaISO: '2026-05-23',
         hora: '13:30–14:30',
         subtemas: ['Cubre Prácticas 1–7'],
         docentes: [],
         nota: 'Back-to-back con el teórico. Retiro de curso: hasta el 27 de mayo.',
+        linkOverride: '/dashboard/laboratorio/atlas-micologia',
       },
     ],
   },
@@ -534,6 +541,7 @@ export const semanas: Semana[] = [
         unidad: 'EVALUACION',
         titulo: 'Examen Teórico II — Parasitología',
         fecha: '20 jun (sáb)',
+        fechaISO: '2026-06-20',
         hora: '11:30–13:30',
         subtemas: ['Cubre Clases 12–19'],
         docentes: [],
@@ -544,6 +552,7 @@ export const semanas: Semana[] = [
         unidad: 'EVALUACION',
         titulo: 'Examen Práctico II — Parasitología',
         fecha: '20 jun (sáb)',
+        fechaISO: '2026-06-20',
         hora: '14:30–18:00',
         subtemas: ['Cubre Prácticas 8–13'],
         docentes: [],
@@ -763,6 +772,7 @@ export const semanas: Semana[] = [
         unidad: 'EVALUACION',
         titulo: 'Examen Teórico III — Bacteriología',
         fecha: '11 jul (sáb)',
+        fechaISO: '2026-07-11',
         hora: '08:00–10:00',
         subtemas: ['Cubre Clases 20–29'],
         docentes: [],
@@ -773,6 +783,7 @@ export const semanas: Semana[] = [
         unidad: 'EVALUACION',
         titulo: 'Examen Práctico III — Bacteriología',
         fecha: '11 jul (sáb)',
+        fechaISO: '2026-07-11',
         hora: '13:30–14:30',
         subtemas: ['Cubre Prácticas 14–18'],
         docentes: [],
@@ -793,6 +804,7 @@ export const semanas: Semana[] = [
         unidad: 'EVALUACION',
         titulo: 'Exámenes de rezagados y sustitutorios',
         fecha: '14 jul (mar)',
+        fechaISO: '2026-07-14',
         hora: '10:00–12:00',
         subtemas: ['Solo un examen teórico parcial puede sustituirse', 'Nota máxima: 11'],
         docentes: [],
@@ -817,4 +829,24 @@ export function findActividad(id: string): { actividad: Actividad; semana: Seman
     }
   }
   return null;
+}
+
+const EXAM_TIPOS: TipoActividad[] = ['EXAMEN-T', 'EXAMEN-L', 'SUSTIT'];
+
+/**
+ * Devuelve los exámenes futuros (incluido hoy) ordenados por fecha ascendente.
+ * Para el panel "Próximos Exámenes" del home dashboard.
+ */
+export function getUpcomingExams(now: Date = new Date(), limit = 4): Actividad[] {
+  const today = now.toISOString().slice(0, 10); // YYYY-MM-DD UTC, suficiente para comparar.
+  return semanas
+    .flatMap((s) => s.actividades)
+    .filter((a) => EXAM_TIPOS.includes(a.tipo) && a.fechaISO && a.fechaISO >= today)
+    .sort((a, b) => (a.fechaISO ?? '').localeCompare(b.fechaISO ?? ''))
+    .slice(0, limit);
+}
+
+/** Etiqueta compacta para el panel del home (sin sufijos largos). */
+export function shortExamLabel(a: Actividad): string {
+  return a.titulo.split('—')[0].trim();
 }
