@@ -1,6 +1,7 @@
 'use client';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import TrackLabVisit from '@/components/TrackLabVisit';
 import styles from '@/styles/laboratorio.module.css';
 
 type Item = { nombre: string; pista: string };
@@ -73,6 +74,7 @@ export default function AtlasParasitologiaPage() {
 
   return (
     <div className={styles.examPage}>
+      <TrackLabVisit labId="atlas-parasitologia" />
       <svg className={styles.examPageIcon} width="180" height="180" viewBox="0 0 24 24" fill="none">
         <circle cx="12" cy="12" r="8" stroke="#5445d8" strokeWidth="1.5" fill="none"/>
         <path d="M12 4 Q16 8 12 12 Q8 16 12 20" stroke="#5445d8" strokeWidth="1.5" strokeLinecap="round" fill="none"/>

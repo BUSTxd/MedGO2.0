@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import TrackLabVisit from '@/components/TrackLabVisit';
 import styles from '@/styles/laboratorio.module.css';
 
 const PREGUNTAS = [
@@ -94,6 +95,7 @@ export default function MicroscopioPage() {
 
   return (
     <div className={styles.examPage}>
+      <TrackLabVisit labId="microscopio" />
       {/* Corner icon */}
       <svg className={styles.examPageIcon} width="180" height="180" viewBox="0 0 24 24" fill="none">
         <circle cx="12" cy="12" r="4" fill="#5445d8" stroke="#5445d8" strokeWidth="2"/>

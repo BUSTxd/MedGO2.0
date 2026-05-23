@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import TrackLabVisit from '@/components/TrackLabVisit';
 import styles from '@/styles/laboratorio.module.css';
 
 type Item = { url: string; hongo: string };
@@ -182,6 +183,7 @@ export default function AtlasMicologiaPage() {
   if (!mode) {
     return (
       <div className={styles.examPage}>
+        <TrackLabVisit labId="atlas-micologia" />
         <svg className={styles.examPageIcon} width="180" height="180" viewBox="0 0 24 24" fill="none">
           <circle cx="7"  cy="14" r="4" stroke="#5445d8" strokeWidth="1.5"/>
           <circle cx="7"  cy="14" r="1" fill="#5445d8"/>

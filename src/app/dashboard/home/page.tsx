@@ -106,7 +106,17 @@ export default function HomePage() {
   const [firstName, setFirstName] = useState('');
   const [streak, setStreak] = useState<number | null>(null);
   const [seconds, setSeconds] = useState(0);
+  const [examenes, setExamenes] = useState(0);
   const { recent } = useRecentClasses();
+
+  useEffect(() => {
+    // Contador de visitas a laboratorio (gestionado por TrackLabVisit).
+    try {
+      const raw = localStorage.getItem('medgo_lab_visits');
+      const n = Number(raw);
+      if (Number.isFinite(n)) setExamenes(n);
+    } catch {}
+  }, []);
 
   useEffect(() => {
     const supabase = createClient();
@@ -223,35 +233,93 @@ export default function HomePage() {
         </div>
 
         {/* Stats */}
-        <div className={`${styles.dashboardPanel} ${styles.statsPanel}`}>
-          <h3 className={styles.dashboardPanelTitle}>Estadísticas</h3>
-          <div className={styles.circularChartWrap}>
-            <svg className={styles.circularChart} width="110" height="110" viewBox="0 0 110 110">
-              <circle className={styles.circleBg} cx="55" cy="55" r="40"/>
-              <circle className={styles.circleProgress} cx="55" cy="55" r="40"
-                strokeDasharray="213.5 251.2"/>
-            </svg>
-            <div className={styles.chartCenterText}>
-              <span className={styles.chartPct}>—</span>
-              <span className={styles.chartLabel}>Próximamente</span>
-            </div>
-          </div>
-          <div className={styles.statsMiniGrid}>
-            {[
-              { val: '—', label: 'Exámenes' },
-              { val: formatTimer(seconds), label: 'Tiempo' },
-              { val: streak === null ? '…' : String(streak), label: 'Racha' },
-              { val: String(recent.length), label: 'Clases vistas' },
-            ].map((s) => (
-              <div key={s.label} className={styles.statMini}>
-                <div className={styles.statMiniVal}>{s.val}</div>
-                <div className={styles.statMiniLabel}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Estadisticas
+          examenes={examenes}
+          seconds={seconds}
+          streak={streak}
+          clasesVistas={recent.length}
+        />
       </div>
     </>
+  );
+}
+
+// Pesos (suman 1.0) y objetivos para la métrica de Eficiencia.
+// Pesos: la racha pesa más porque consistencia > esfuerzo puntual.
+// Objetivos: el tope por debajo del cual la barra es < 100 %.
+const EFF_WEIGHTS = { racha: 0.35, clases: 0.30, examenes: 0.20, tiempo: 0.15 };
+const EFF_TARGETS = { racha: 7, clases: 5, examenes: 10, tiempoSeg: 1800 };
+
+function computeEficiencia(args: {
+  streak: number | null;
+  clasesVistas: number;
+  examenes: number;
+  seconds: number;
+}): number {
+  const r = Math.min((args.streak ?? 0) / EFF_TARGETS.racha, 1);
+  const c = Math.min(args.clasesVistas / EFF_TARGETS.clases, 1);
+  const e = Math.min(args.examenes / EFF_TARGETS.examenes, 1);
+  const t = Math.min(args.seconds / EFF_TARGETS.tiempoSeg, 1);
+  const score =
+    r * EFF_WEIGHTS.racha +
+    c * EFF_WEIGHTS.clases +
+    e * EFF_WEIGHTS.examenes +
+    t * EFF_WEIGHTS.tiempo;
+  return Math.round(score * 100);
+}
+
+function Estadisticas({
+  examenes,
+  seconds,
+  streak,
+  clasesVistas,
+}: {
+  examenes: number;
+  seconds: number;
+  streak: number | null;
+  clasesVistas: number;
+}) {
+  const eficiencia = useMemo(
+    () => computeEficiencia({ streak, clasesVistas, examenes, seconds }),
+    [streak, clasesVistas, examenes, seconds]
+  );
+  // Perímetro completo del círculo r=40 → 2π·40 ≈ 251.327
+  const FULL = 251.327;
+  const dashArray = `${(eficiencia / 100) * FULL} ${FULL}`;
+
+  return (
+    <div className={`${styles.dashboardPanel} ${styles.statsPanel}`}>
+      <h3 className={styles.dashboardPanelTitle}>Estadísticas</h3>
+      <div className={styles.circularChartWrap}>
+        <svg className={styles.circularChart} width="110" height="110" viewBox="0 0 110 110">
+          <circle className={styles.circleBg} cx="55" cy="55" r="40" />
+          <circle
+            className={styles.circleProgress}
+            cx="55"
+            cy="55"
+            r="40"
+            strokeDasharray={dashArray}
+          />
+        </svg>
+        <div className={styles.chartCenterText}>
+          <span className={styles.chartPct}>{eficiencia}%</span>
+          <span className={styles.chartLabel}>Eficiencia</span>
+        </div>
+      </div>
+      <div className={styles.statsMiniGrid}>
+        {[
+          { val: String(examenes), label: 'Exámenes' },
+          { val: formatTimer(seconds), label: 'Tiempo' },
+          { val: streak === null ? '…' : String(streak), label: 'Racha' },
+          { val: String(clasesVistas), label: 'Clases vistas' },
+        ].map((s) => (
+          <div key={s.label} className={styles.statMini}>
+            <div className={styles.statMiniVal}>{s.val}</div>
+            <div className={styles.statMiniLabel}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
