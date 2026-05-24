@@ -63,7 +63,8 @@
   padding: 36px 32px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   gap: 14px;
   transition: transform 0.3s, border-color 0.3s;
   position: relative;

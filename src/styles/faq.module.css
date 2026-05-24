@@ -1,5 +1,7 @@
 .list {
   max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .item {
