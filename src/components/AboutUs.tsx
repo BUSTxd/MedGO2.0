@@ -29,14 +29,6 @@ export default function AboutUs() {
           Creado por estudiantes,<br />
           <em style={{ fontStyle: 'normal', color: 'var(--blue)' }}>para estudiantes.</em>
         </h2>
-        <div className={styles.trustRow}>
-          {trust.map((t) => (
-            <span key={t} className={styles.trustChip}>
-              <span className={styles.trustDot} aria-hidden>◆</span>
-              {t}
-            </span>
-          ))}
-        </div>
         <div className={styles.mission}>
           <p>
             &quot;MedGO nació de la necesidad de estudiar medicina sin una guía clara. Queremos que cada estudiante tenga una

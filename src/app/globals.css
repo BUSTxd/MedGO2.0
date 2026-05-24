@@ -48,6 +48,7 @@ section {
 .section-inner {
   max-width: 1200px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .section-tag {
@@ -73,6 +74,8 @@ section {
   color: var(--muted);
   line-height: 1.7;
   max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 56px;
 }
 

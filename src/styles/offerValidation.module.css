@@ -14,6 +14,7 @@
   flex-direction: column;
   gap: 16px;
   transition: transform 0.3s, border-color 0.3s;
+  text-align: left;
 }
 
 .card:hover {

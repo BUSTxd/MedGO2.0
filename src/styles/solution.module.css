@@ -15,6 +15,7 @@
   gap: 14px;
   position: relative;
   transition: transform 0.3s, border-color 0.3s;
+  text-align: left;
 }
 
 .card:hover {
