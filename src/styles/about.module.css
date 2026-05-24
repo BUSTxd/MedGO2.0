@@ -1,3 +1,30 @@
+.trustRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 800px;
+  margin: 24px 0 36px;
+}
+
+.trustChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(59, 158, 221, 0.22);
+  border-radius: 20px;
+  font-size: 13.5px;
+  color: rgba(240, 238, 255, 0.88);
+  font-weight: 500;
+}
+
+.trustDot {
+  color: var(--blue);
+  font-size: 10px;
+  line-height: 1;
+}
+
 .mission {
   background: linear-gradient(135deg, rgba(59, 158, 221, 0.08), rgba(100, 60, 200, 0.08));
   border: 1px solid rgba(59, 158, 221, 0.2);

@@ -53,7 +53,7 @@ export default function Navbar() {
       </a>
 
       <div className={`${styles.links} ${menuOpen ? styles.open : ''}`}>
-        <a href="#cursos" onClick={() => setMenuOpen(false)}>Cursos</a>
+        <a href="#solucion" onClick={() => setMenuOpen(false)}>Cómo funciona</a>
         <a href="#precios" onClick={() => setMenuOpen(false)}>Precios</a>
         <a href="#nosotros" onClick={() => setMenuOpen(false)}>Sobre Nosotros</a>
         <a href="#contacto" onClick={() => setMenuOpen(false)}>FAQ</a>
