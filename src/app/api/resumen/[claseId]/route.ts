@@ -3,18 +3,35 @@ import { createClient } from '@supabase/supabase-js';
 
 // Only these IDs have an associated PDF in Supabase Storage
 const ALLOWED = new Set([
-  // Microbiología
+  // Microbiología — Virología/Micología
   'clase-4', 'clase-5', 'clase-6', 'clase-6.2', 'clase-7', 'clase-8', 'clase-9', 'clase-10',
   'practica-1', 'practica-2', 'practica-3',
+  // Microbiología — Parasitología
+  'clase-12', 'clase-12.2',
+  'clase-13', 'clase-13.2',
+  'clase-14', 'clase-15', 'clase-16',
+  'clase-17', 'clase-17.2',
+  'clase-18',
   // Aparato Excretor
   'exc-tbl-3',
 ]);
 
 // Some IDs share a single PDF file in storage, or need a path prefix (carpeta/)
 const FILE_ALIAS: Record<string, string> = {
-  'practica-2': 'practica-2-3',
-  'practica-3': 'practica-2-3',
-  'exc-tbl-3':  'excretor/tbl-3-asa-henle',
+  'practica-2':  'practica-2-3',
+  'practica-3':  'practica-2-3',
+  'exc-tbl-3':   'excretor/tbl-3-asa-henle',
+  // Parasitología — todos en subcarpeta
+  'clase-12':    'parasitologia/clase-12',
+  'clase-12.2':  'parasitologia/clase-12.2',
+  'clase-13':    'parasitologia/clase-13',
+  'clase-13.2':  'parasitologia/clase-13.2',
+  'clase-14':    'parasitologia/clase-14',
+  'clase-15':    'parasitologia/clase-15',
+  'clase-16':    'parasitologia/clase-16',
+  'clase-17':    'parasitologia/clase-17',
+  'clase-17.2':  'parasitologia/clase-17.2',
+  'clase-18':    'parasitologia/clase-18',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga

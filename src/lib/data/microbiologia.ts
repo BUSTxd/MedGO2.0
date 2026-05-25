@@ -358,6 +358,13 @@ export const semanas: Semana[] = [
           'Metamonada: Giardia, Chilomastix',
         ],
         docentes: ['Dra. Manuela Verástegui'],
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'clase-12',   label: 'Generalidades' },
+            { id: 'clase-12.2', label: 'Protozoos I · Metamonada' },
+          ],
+        },
       },
       {
         id: 'clase-13',
@@ -373,6 +380,13 @@ export const semanas: Semana[] = [
           'Percolozoa: Naegleria',
         ],
         docentes: ['Dra. Verástegui', 'Dra. Calderón'],
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'clase-13',   label: 'Protozoos II · Amoebozoa' },
+            { id: 'clase-13.2', label: 'Protozoos II · Ciliophora' },
+          ],
+        },
       },
       {
         id: 'clase-14',
@@ -383,6 +397,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Cryptosporidium', 'Cyclospora cayetanensis', 'Cystoisospora belli', 'Toxoplasma gondii'],
         docentes: ['Dra. Verástegui', 'Dra. Calderón'],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'practica-8',
@@ -422,6 +437,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Leishmania', 'Trypanosoma', 'Plasmodium'],
         docentes: ['Dr. Montes', 'Dra. Verástegui'],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'clase-16',
@@ -432,6 +448,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Ascaris', 'Enterobius', 'Trichuris', 'Strongyloides', 'Uncinaria', 'Anatomía, fisiología, ciclo de vida'],
         docentes: ['Dra. Chile', 'Dra. Verástegui'],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'clase-17',
@@ -442,6 +459,13 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Taenia', 'Echinococcus', 'Diphyllobothrium', 'Hymenolepis', 'Fasciola', 'Paragonimus', 'Modulación de la respuesta inmune'],
         docentes: ['Dra. Verástegui', 'Dra. Chile'],
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'clase-17',   label: 'Céstodos' },
+            { id: 'clase-17.2', label: 'Tremátodos' },
+          ],
+        },
       },
       {
         id: 'practica-10',
@@ -494,6 +518,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Generalidades', 'Clasificación', 'Ectoparásitos y endoparásitos', 'Piojos', 'Pulgas', 'Larvas de mosca', 'Ácaros'],
         docentes: ['MSc. Ventosilla', 'Dra. Chile'],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'tbl-2',
