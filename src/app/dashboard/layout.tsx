@@ -1,9 +1,10 @@
 import { redirect } from 'next/navigation';
+import { headers } from 'next/headers';
 import DashboardWrapper from '@/components/DashboardWrapper';
 import { getCachedPlanState } from '@/lib/plans-server';
 import { createClient } from '@/lib/supabase/server';
 import { isAdminEmail } from '@/lib/admin';
-import { isDeviceAllowed, getDeviceId } from '@/lib/sessions';
+import { checkDevice, getDeviceId, touchSession } from '@/lib/sessions';
 
 export default async function DashboardRootLayout({
   children,
@@ -18,12 +19,30 @@ export default async function DashboardRootLayout({
   const { data: { user } } = await supabase.auth.getUser();
   const isAdmin = isAdminEmail(user?.email);
 
-  // Enforcement de límite de dispositivos. Free no se ve afectado (skip query);
-  // pagados con >= 3 sesiones activas son redirigidos a /auth/device-limit.
-  // Usa cache de 1h por usuario — invalidada en revoke/touch.
+  // Enforcement de límite de dispositivos. Free pasa siempre. Pagados:
+  //  - 'allowed'        → ya está activo, seguir
+  //  - 'allowed_new'    → hay espacio, registrar y seguir
+  //  - 'revoked'        → fue cerrado desde otro dispositivo → sign out + landing
+  //  - 'limit_exceeded' → /auth/device-limit para que elija cuál cerrar
   if (user) {
-    const allowed = await isDeviceAllowed(user.id, deviceId, planState.plan);
-    if (!allowed) redirect('/auth/device-limit');
+    const check = await checkDevice(user.id, deviceId, planState.plan);
+
+    if (check.kind === 'revoked') {
+      await supabase.auth.signOut();
+      redirect('/');
+    }
+    if (check.kind === 'limit_exceeded') {
+      redirect('/auth/device-limit');
+    }
+    if (check.kind === 'allowed_new' && deviceId) {
+      const h = await headers();
+      await touchSession({
+        userId:    user.id,
+        deviceId,
+        userAgent: h.get('user-agent'),
+        ip:        h.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null,
+      });
+    }
   }
 
   return (
