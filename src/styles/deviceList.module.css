@@ -1,0 +1,133 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+:global(body.dark-mode) .card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.cardCurrent {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px #2563eb22;
+}
+
+:global(body.dark-mode) .cardCurrent {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 1px #60a5fa33;
+}
+
+.info { min-width: 0; }
+
+.deviceName {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+:global(body.dark-mode) .deviceName { color: #f1f5f9; }
+
+.meta {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+:global(body.dark-mode) .meta { color: #94a3b8; }
+
+.currentBadge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1e40af;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+:global(body.dark-mode) .currentBadge {
+  background: #1e3a8a;
+  color: #93c5fd;
+}
+
+.revokeBtn {
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.revokeBtn:hover {
+  background: #fef2f2;
+  border-color: #f87171;
+}
+
+.revokeBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+:global(body.dark-mode) .revokeBtn {
+  border-color: #7f1d1d;
+  color: #fca5a5;
+}
+
+:global(body.dark-mode) .revokeBtn:hover {
+  background: rgba(127, 29, 29, 0.25);
+  border-color: #dc2626;
+}
+
+.empty {
+  padding: 24px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+  border: 1px dashed #e2e8f0;
+  border-radius: 12px;
+}
+
+:global(body.dark-mode) .empty {
+  color: #64748b;
+  border-color: #334155;
+}
+
+.error {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #fee2e2;
+  color: #991b1b;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+:global(body.dark-mode) .error {
+  background: rgba(127, 29, 29, 0.3);
+  color: #fca5a5;
+}

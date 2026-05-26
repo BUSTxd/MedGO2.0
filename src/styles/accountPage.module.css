@@ -406,3 +406,28 @@
 
 .confirmCancelBtn:hover { background: #b91c1c; }
 .confirmCancelBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ─── DEVICES SECTION ─── */
+.devicesSection {
+  margin-top: 28px;
+  max-width: 640px;
+}
+
+.devicesTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1e1e60;
+  margin: 0 0 6px;
+  letter-spacing: -0.2px;
+}
+
+:global(body.dark-mode) .devicesTitle { color: #f1f5f9; }
+
+.devicesHint {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0 0 14px;
+  line-height: 1.5;
+}
+
+:global(body.dark-mode) .devicesHint { color: #94a3b8; }

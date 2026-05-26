@@ -162,6 +162,7 @@ export default function AdminPanel({ data }: { data: AdminData }) {
                 <th>Última visita</th>
                 <th>Próximo pago</th>
                 <th>Racha</th>
+                <th>Disp.</th>
               </tr>
             </thead>
             <tbody>
@@ -187,6 +188,11 @@ export default function AdminPanel({ data }: { data: AdminData }) {
                   <td>
                     {r.currentStreak > 0
                       ? <span className={styles.streak}>{r.currentStreak} 🔥</span>
+                      : <span className={styles.muted}>0</span>}
+                  </td>
+                  <td>
+                    {r.deviceCount > 0
+                      ? r.deviceCount
                       : <span className={styles.muted}>0</span>}
                   </td>
                 </tr>

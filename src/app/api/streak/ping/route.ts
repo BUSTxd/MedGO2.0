@@ -1,6 +1,7 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
+import { getDeviceId, touchSession } from '@/lib/sessions';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -27,10 +28,22 @@ interface ProfileRow {
   current_streak: number | null;
 }
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+
+  // Touch de la sesión del dispositivo (UA + IP). Sin await en el caller para no
+  // bloquear la respuesta — pero await aquí porque la tabla es pequeña y rápida.
+  const deviceId = await getDeviceId();
+  if (deviceId) {
+    await touchSession({
+      userId:    user.id,
+      deviceId,
+      userAgent: req.headers.get('user-agent'),
+      ip:        req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null,
+    });
+  }
 
   const admin = createAdminClient();
   const today = todayInLima();

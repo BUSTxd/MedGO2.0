@@ -1,8 +1,28 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
+const DEVICE_COOKIE = 'device_id';
+const DEVICE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 año
+
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
+
+  // Asegura que existe una cookie persistente de device_id antes de cualquier otra lógica.
+  // El device_id identifica al navegador a través de sesiones para limitar dispositivos
+  // concurrentes en cuentas pagas.
+  const existingDeviceId = request.cookies.get(DEVICE_COOKIE)?.value;
+  if (!existingDeviceId) {
+    const newId = crypto.randomUUID();
+    request.cookies.set(DEVICE_COOKIE, newId);
+    supabaseResponse = NextResponse.next({ request });
+    supabaseResponse.cookies.set(DEVICE_COOKIE, newId, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure:   true,
+      maxAge:   DEVICE_COOKIE_MAX_AGE,
+      path:     '/',
+    });
+  }
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -22,14 +42,22 @@ export async function middleware(request: NextRequest) {
   );
 
   const { data: { user } } = await supabase.auth.getUser();
+  const pathname = request.nextUrl.pathname;
+  const isDeviceLimit = pathname.startsWith('/auth/device-limit');
 
   // Rutas protegidas: redirige al login si no hay sesión
-  if (!user && request.nextUrl.pathname.startsWith('/dashboard')) {
+  if (!user && pathname.startsWith('/dashboard')) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
-  // Si ya está logueado y va al login, redirige al dashboard
-  if (user && request.nextUrl.pathname.startsWith('/auth')) {
+  // /auth/device-limit requiere sesión (es la pantalla post-login de bloqueo).
+  if (!user && isDeviceLimit) {
+    return NextResponse.redirect(new URL('/auth/login', request.url));
+  }
+
+  // Si ya está logueado y va a otra ruta de /auth (login, signup), redirige al dashboard.
+  // Excepción: device-limit es válida con sesión activa.
+  if (user && pathname.startsWith('/auth') && !isDeviceLimit) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 

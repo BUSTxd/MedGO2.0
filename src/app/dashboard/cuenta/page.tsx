@@ -1,7 +1,14 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import SubscriptionPanel from '@/components/SubscriptionPanel';
+import DeviceList, { type DeviceListItem } from '@/components/DeviceList';
 import { PLANS, type ProfilePlan } from '@/lib/plans';
+import {
+  getDeviceId,
+  listActiveSessions,
+  parseUserAgent,
+  type ActiveSession,
+} from '@/lib/sessions';
 import styles from '@/styles/accountPage.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -42,6 +49,27 @@ export default async function AccountPage() {
     .limit(1)
     .maybeSingle<SubRow>();
 
+  const [deviceId, sessions] = await Promise.all([
+    getDeviceId(),
+    listActiveSessions(user.id),
+  ]);
+
+  const deviceItems: DeviceListItem[] = sessions.map((s: ActiveSession) => {
+    const diffMs = Date.now() - new Date(s.last_seen).getTime();
+    const mins = Math.floor(diffMs / 60_000);
+    let lastSeen: string;
+    if (mins < 1) lastSeen = 'hace unos segundos';
+    else if (mins < 60) lastSeen = `hace ${mins} min`;
+    else if (mins < 60 * 24) lastSeen = `hace ${Math.floor(mins / 60)} h`;
+    else lastSeen = `hace ${Math.floor(mins / (60 * 24))} días`;
+    return {
+      id: s.id,
+      deviceLabel: parseUserAgent(s.user_agent),
+      meta: `Última actividad ${lastSeen}${s.ip ? ` · ${s.ip}` : ''}`,
+      isCurrent: s.device_id === deviceId,
+    };
+  });
+
   const planKey = profile?.plan ?? 'free';
   const expiresAt = profile?.plan_expires_at ?? null;
   const planLabel =
@@ -66,6 +94,18 @@ export default async function AccountPage() {
         expiresAt={expiresAt}
         subscription={sub ?? null}
       />
+
+      <section className={styles.devicesSection}>
+        <h2 className={styles.devicesTitle}>Dispositivos activos</h2>
+        <p className={styles.devicesHint}>
+          Tu cuenta puede estar conectada en hasta 3 dispositivos al mismo tiempo.
+          Cierra sesión en los que no reconozcas.
+        </p>
+        <DeviceList
+          items={deviceItems}
+          emptyText="Aún no tienes sesiones registradas. Visita el dashboard para empezar."
+        />
+      </section>
     </>
   );
 }

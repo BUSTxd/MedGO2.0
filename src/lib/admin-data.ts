@@ -1,4 +1,5 @@
 import { createAdminClient } from '@/lib/supabase/admin';
+import { countActiveDevicesByUser } from '@/lib/sessions';
 
 export type AdminPlan = 'free' | 'interno' | 'residente';
 export type AdminSubStatus = 'pending' | 'authorized' | 'paused' | 'cancelled';
@@ -14,6 +15,7 @@ export interface AdminRow {
   subStatus: AdminSubStatus | null;
   nextPaymentDate: string | null;
   subAmount: number | null;
+  deviceCount: number;
 }
 
 export interface AdminKpis {
@@ -62,13 +64,14 @@ function daysUntil(dateStr: string | null): number | null {
 export async function loadAdminData(): Promise<AdminData> {
   const admin = createAdminClient();
 
-  const [authRes, profilesRes, subsRes] = await Promise.all([
+  const [authRes, profilesRes, subsRes, deviceCounts] = await Promise.all([
     admin.auth.admin.listUsers({ perPage: 1000 }),
     admin.from('profiles').select('id, full_name, plan, plan_expires_at, last_visit_date, current_streak'),
     admin
       .from('subscriptions')
       .select('user_id, status, next_payment_date, amount, created_at')
       .order('created_at', { ascending: false }),
+    countActiveDevicesByUser(),
   ]);
 
   if (authRes.error) throw new Error(`admin.listUsers: ${authRes.error.message}`);
@@ -103,6 +106,7 @@ export async function loadAdminData(): Promise<AdminData> {
       subStatus: sub?.status ?? null,
       nextPaymentDate: sub?.next_payment_date ?? null,
       subAmount: sub?.amount ?? null,
+      deviceCount: deviceCounts.get(p.id) ?? 0,
     };
   });
 
