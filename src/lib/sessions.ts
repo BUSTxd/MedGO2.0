@@ -1,5 +1,6 @@
 import 'server-only';
 import { cookies } from 'next/headers';
+import { unstable_cache, revalidateTag } from 'next/cache';
 import { createAdminClient } from '@/lib/supabase/admin';
 import type { ProfilePlan } from '@/lib/plans';
 
@@ -12,6 +13,11 @@ const PLAN_DEVICE_LIMIT: Record<ProfilePlan, number> = {
 };
 
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+const VERIFY_TTL_SECONDS = 60 * 60; // 1h — limit check cache
+
+function sessionsTag(userId: string): string {
+  return `user-sessions:${userId}`;
+}
 
 export interface ActiveSession {
   id: string;
@@ -54,18 +60,22 @@ export interface AllowedResult {
   limit: number;
 }
 
+/**
+ * Versión completa con sesiones — uso en /auth/device-limit y otras pantallas
+ * que muestran la lista al usuario. NO cacheada: necesita datos frescos.
+ */
 export async function assertDeviceAllowed(
   userId: string,
   deviceId: string | null,
   plan: ProfilePlan,
 ): Promise<AllowedResult> {
   const limit = PLAN_DEVICE_LIMIT[plan];
+
+  // Free: skip query por completo.
+  if (!Number.isFinite(limit)) return { allowed: true, sessions: [], limit };
+
   const sessions = await listActiveSessions(userId);
 
-  // Free: no hay límite.
-  if (!Number.isFinite(limit)) return { allowed: true, sessions, limit };
-
-  // Sin cookie de device aún: tratar como nuevo dispositivo.
   if (!deviceId) {
     return { allowed: sessions.length < limit, sessions, limit };
   }
@@ -73,6 +83,33 @@ export async function assertDeviceAllowed(
   const known = sessions.some((s) => s.device_id === deviceId);
   if (known) return { allowed: true, sessions, limit };
   return { allowed: sessions.length < limit, sessions, limit };
+}
+
+/**
+ * Fast path para el layout — solo devuelve si el dispositivo está permitido.
+ * Cachea los device_id activos por usuario durante 1h (server-side, no manipulable
+ * desde el cliente). Se invalida automáticamente en revokeSession y touchSession.
+ */
+export async function isDeviceAllowed(
+  userId: string,
+  deviceId: string | null,
+  plan: ProfilePlan,
+): Promise<boolean> {
+  const limit = PLAN_DEVICE_LIMIT[plan];
+  if (!Number.isFinite(limit)) return true; // free: skip query
+  if (!deviceId) return false; // sin cookie: tratar como nuevo device, count=0 → si limit >=1, allowed
+
+  const deviceIds = await unstable_cache(
+    async () => {
+      const sessions = await listActiveSessions(userId);
+      return sessions.map((s) => s.device_id);
+    },
+    ['active-device-ids', userId],
+    { revalidate: VERIFY_TTL_SECONDS, tags: [sessionsTag(userId)] },
+  )();
+
+  if (deviceIds.includes(deviceId)) return true;
+  return deviceIds.length < limit;
 }
 
 export async function touchSession(params: {
@@ -97,7 +134,13 @@ export async function touchSession(params: {
     upsert: (row: Record<string, unknown>, opts: { onConflict: string }) => Promise<{ error: unknown }>;
   }).upsert(sessionRow, { onConflict: 'user_id,device_id' });
 
-  if (error) console.error('[sessions] touch', error);
+  if (error) {
+    console.error('[sessions] touch', error);
+    return;
+  }
+  // Invalida cache de isDeviceAllowed: si fue insert (nuevo device) o update
+  // de revoked_at→null, el set de devices activos cambió.
+  revalidateTag(sessionsTag(params.userId), { expire: 0 });
 }
 
 export async function revokeSession(userId: string, sessionId: string): Promise<boolean> {
@@ -117,6 +160,8 @@ export async function revokeSession(userId: string, sessionId: string): Promise<
     console.error('[sessions] revoke', error);
     return false;
   }
+  // Invalida cache: el siguiente isDeviceAllowed verá el set actualizado.
+  revalidateTag(sessionsTag(userId), { expire: 0 });
   return true;
 }
 
