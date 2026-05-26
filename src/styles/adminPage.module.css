@@ -1,0 +1,231 @@
+/* ─── KPI GRID ─── */
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.kpiCard {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+:global(body.dark-mode) .kpiCard {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.kpiLabel {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #64748b;
+  margin: 0 0 6px;
+}
+
+:global(body.dark-mode) .kpiLabel { color: #94a3b8; }
+
+.kpiValue {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+:global(body.dark-mode) .kpiValue { color: #f1f5f9; }
+
+.kpiHint {
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 4px 0 0;
+}
+
+:global(body.dark-mode) .kpiHint { color: #64748b; }
+
+/* ─── TAB BAR ─── */
+.tabBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 18px;
+}
+
+:global(body.dark-mode) .tabBar { border-color: #334155; }
+
+.tab {
+  background: transparent;
+  border: none;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.tab:hover { color: #1e1e60; }
+:global(body.dark-mode) .tab:hover { color: #e2e8f0; }
+
+.tabActive {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+}
+
+:global(body.dark-mode) .tabActive {
+  color: #60a5fa;
+  border-bottom-color: #60a5fa;
+}
+
+.tabCount {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+:global(body.dark-mode) .tabCount {
+  background: #334155;
+  color: #cbd5e1;
+}
+
+.tabActive .tabCount {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+:global(body.dark-mode) .tabActive .tabCount {
+  background: #1e3a8a;
+  color: #93c5fd;
+}
+
+/* ─── TABLA ─── */
+.tableWrap {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow-x: auto;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+:global(body.dark-mode) .tableWrap {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 760px;
+}
+
+.table th {
+  background: #f8fafc;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #64748b;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+:global(body.dark-mode) .table th {
+  background: #0f172a;
+  color: #94a3b8;
+  border-color: #334155;
+}
+
+.table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  vertical-align: middle;
+}
+
+:global(body.dark-mode) .table td {
+  color: #e2e8f0;
+  border-color: #1e293b;
+}
+
+.table tr:last-child td { border-bottom: none; }
+.table tr:hover td { background: #f8fafc; }
+:global(body.dark-mode) .table tr:hover td { background: #0f172a; }
+
+.email {
+  font-weight: 600;
+  color: #0f172a;
+}
+:global(body.dark-mode) .email { color: #f1f5f9; }
+
+.name {
+  font-size: 12.5px;
+  color: #64748b;
+  margin-top: 2px;
+}
+:global(body.dark-mode) .name { color: #94a3b8; }
+
+.muted {
+  color: #94a3b8;
+}
+:global(body.dark-mode) .muted { color: #64748b; }
+
+.streak {
+  font-weight: 700;
+}
+
+.empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+:global(body.dark-mode) .empty { color: #64748b; }
+
+/* ─── BADGE plan ─── */
+.planBadge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.planFree {
+  background: #e2e8f0;
+  color: #475569;
+}
+:global(body.dark-mode) .planFree { background: #334155; color: #cbd5e1; }
+
+.planInterno {
+  background: #d1fae5;
+  color: #065f46;
+}
+:global(body.dark-mode) .planInterno { background: #064e3b; color: #6ee7b7; }
+
+.planResidente {
+  background: #dbeafe;
+  color: #1e40af;
+}
+:global(body.dark-mode) .planResidente { background: #1e3a8a; color: #93c5fd; }

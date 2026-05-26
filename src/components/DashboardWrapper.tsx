@@ -8,9 +8,11 @@ import styles from '@/styles/dashboardLayout.module.css';
 export default function DashboardWrapper({
   children,
   planState,
+  isAdmin = false,
 }: {
   children: React.ReactNode;
   planState: ClientPlanState;
+  isAdmin?: boolean;
 }) {
   const [collapsed, setCollapsed] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -44,6 +46,7 @@ export default function DashboardWrapper({
             onToggle={() => setCollapsed((c) => !c)}
             darkMode={darkMode}
             onToggleDark={toggleDark}
+            isAdmin={isAdmin}
           />
           {!collapsed && (
             <div

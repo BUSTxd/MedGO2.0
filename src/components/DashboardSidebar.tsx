@@ -80,11 +80,24 @@ interface Props {
   onToggle: () => void;
   darkMode: boolean;
   onToggleDark: () => void;
+  isAdmin?: boolean;
 }
 
-export default function DashboardSidebar({ collapsed, onToggle, darkMode, onToggleDark }: Props) {
+const ADMIN_ITEM = {
+  label: 'Admin',
+  href: '/dashboard/admin',
+  icon: (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+      <path fillRule="evenodd" d="M10 1l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V4l7-3zm0 5a2 2 0 100 4 2 2 0 000-4zm-3.5 8.5c0-1.8 1.6-3 3.5-3s3.5 1.2 3.5 3v.5h-7v-.5z" clipRule="evenodd" />
+    </svg>
+  ),
+};
+
+export default function DashboardSidebar({ collapsed, onToggle, darkMode, onToggleDark, isAdmin = false }: Props) {
   const pathname = usePathname();
   const router = useRouter();
+
+  const navItems = isAdmin ? [...NAV, ADMIN_ITEM] : NAV;
 
   const handleSignOut = async () => {
     const supabase = createClient();
@@ -105,7 +118,7 @@ export default function DashboardSidebar({ collapsed, onToggle, darkMode, onTogg
       </Link>
 
       <nav className={styles.nav}>
-        {NAV.map((item) => (
+        {navItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
