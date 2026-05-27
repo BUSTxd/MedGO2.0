@@ -325,6 +325,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Receptores colinérgicos', 'Agonistas colinérgicos'],
         docentes: ['Dra. Y. Viguria'],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'far-14', label: 'Resumen' }] },
       },
       {
         id: 'practica-5',
@@ -366,6 +367,7 @@ export const semanas: Semana[] = [
         subtemas: ['Receptor nicotínico', 'Farmacología del ganglio', 'Neurobiología de la dependencia a nicotina'],
         docentes: ['Dr. Moncada (A)', 'Dr. Sánchez (B)'],
         nota: 'Aula G101 · turnos separados A y B.',
+        resumen: { tipo: 'pdf', opciones: [{ id: 'far-16', label: 'Resumen' }] },
       },
       {
         id: 'clase-17',
@@ -376,6 +378,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Placa motora', 'Bloqueantes neuromusculares'],
         docentes: ['Dr. E. Moncada'],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'far-17', label: 'Resumen' }] },
       },
       {
         id: 'seminario-2',
@@ -413,6 +416,7 @@ export const semanas: Semana[] = [
         subtemas: ['Histamina · agonistas y antagonistas', 'AINES', 'COXIB'],
         docentes: ['Dra. Viguria', 'Dra. Cuba'],
         nota: 'Taller formativo.',
+        resumen: { tipo: 'pdf', opciones: [{ id: 'far-18', label: 'Receptores de Histamina' }] },
       },
       {
         id: 'clase-19',
@@ -424,6 +428,13 @@ export const semanas: Semana[] = [
         subtemas: ['Medicamentos biológicos', 'Terapia génica'],
         docentes: ['Dra. Viguria (A)', 'Dra. Cuba (B)'],
         nota: 'A: aula G101 · B: aula G102. Taller formativo.',
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'far-19',   label: 'Biológicos y biosimilares' },
+            { id: 'far-19.2', label: 'Terapia génica' },
+          ],
+        },
       },
       {
         id: 'taller-int-2',
@@ -535,6 +546,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Penicilinas', 'Cefalosporinas', 'Carbapenems'],
         docentes: ['Dra. C. García'],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'far-23', label: 'Resumen' }] },
       },
       {
         id: 'clase-24',
@@ -545,6 +557,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Fluoroquinolonas', 'Aminoglucósidos', 'Macrólidos'],
         docentes: ['Dr. F. Álvarez'],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'far-24', label: 'Resumen' }] },
       },
       {
         id: 'clase-25',
@@ -555,6 +568,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Clindamicina', 'Vancomicina', 'TMP-SMX'],
         docentes: ['Dra. C. García'],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'far-25', label: 'Resumen' }] },
       },
       {
         id: 'sgp-1',

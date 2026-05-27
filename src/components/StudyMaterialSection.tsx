@@ -37,8 +37,12 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
   const [selectedId, setSelectedId]       = useState<string | null>(null);
 
-  // Which PDF the fullscreen modal targets
-  const activeId = isMulti ? selectedId : claseId;
+  // Which PDF the fullscreen modal targets.
+  // Si hay una sola opcion, usar su id (permite que el data file sobreescriba el
+  // claseId — util cuando dos cursos comparten ids como `clase-14`).
+  const activeId = isMulti
+    ? selectedId
+    : (resumenOpciones?.[0]?.id ?? claseId);
 
   const handleCardClick = () => {
     if (!hasResumen) return;

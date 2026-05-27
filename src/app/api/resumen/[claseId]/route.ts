@@ -18,6 +18,10 @@ const ALLOWED = new Set([
   'practica-11', 'practica-12', 'practica-13',
   // Aparato Excretor
   'exc-tbl-3',
+  // Farmacología (prefijo `far-` evita colisión con clase-* de Microbiología)
+  'far-14', 'far-16', 'far-17', 'far-18',
+  'far-19', 'far-19.2',
+  'far-23', 'far-24', 'far-25',
 ]);
 
 // IDs that require an active paid plan (Interno/Residente). Free-plan users
@@ -50,6 +54,16 @@ const FILE_ALIAS: Record<string, string> = {
   'practica-11': 'parasitologia/practica-11',
   'practica-12': 'parasitologia/practica-12',
   'practica-13': 'parasitologia/practica-13',
+  // Farmacología — subcarpeta farmacologia/
+  'far-14':   'farmacologia/clase-14',
+  'far-16':   'farmacologia/clase-16',
+  'far-17':   'farmacologia/clase-17',
+  'far-18':   'farmacologia/clase-18',
+  'far-19':   'farmacologia/clase-19',
+  'far-19.2': 'farmacologia/clase-19.2',
+  'far-23':   'farmacologia/clase-23',
+  'far-24':   'farmacologia/clase-24',
+  'far-25':   'farmacologia/clase-25',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga
