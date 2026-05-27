@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
+import { createClient } from '@/lib/supabase/server';
 
 // Only these IDs have an associated PDF in Supabase Storage
 const ALLOWED = new Set([
@@ -12,8 +13,18 @@ const ALLOWED = new Set([
   'clase-14', 'clase-15', 'clase-16',
   'clase-17', 'clase-17.2',
   'clase-18',
+  // Microbiología — Prácticas Parasitología/Artrópodos
+  'practica-8', 'practica-9', 'practica-10',
+  'practica-11', 'practica-12', 'practica-13',
   // Aparato Excretor
   'exc-tbl-3',
+]);
+
+// IDs that require an active paid plan (Interno/Residente). Free-plan users
+// get 403 before any signed URL is generated — zero Supabase egress for them.
+const REQUIRES_PAID_PLAN = new Set([
+  'practica-8', 'practica-9', 'practica-10',
+  'practica-11', 'practica-12', 'practica-13',
 ]);
 
 // Some IDs share a single PDF file in storage, or need a path prefix (carpeta/)
@@ -32,6 +43,13 @@ const FILE_ALIAS: Record<string, string> = {
   'clase-17':    'parasitologia/clase-17',
   'clase-17.2':  'parasitologia/clase-17.2',
   'clase-18':    'parasitologia/clase-18',
+  // Prácticas Parasitología/Artrópodos
+  'practica-8':  'parasitologia/practica-8',
+  'practica-9':  'parasitologia/practica-9',
+  'practica-10': 'parasitologia/practica-10',
+  'practica-11': 'parasitologia/practica-11',
+  'practica-12': 'parasitologia/practica-12',
+  'practica-13': 'parasitologia/practica-13',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga
@@ -50,6 +68,22 @@ export async function GET(
     return NextResponse.json({ error: 'not_found' }, { status: 404 });
   }
 
+  if (REQUIRES_PAID_PLAN.has(claseId)) {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+    }
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('plan')
+      .eq('id', user.id)
+      .maybeSingle<{ plan: string | null }>();
+    if (!profile?.plan || profile.plan === 'free') {
+      return NextResponse.json({ error: 'plan_required' }, { status: 403 });
+    }
+  }
+
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -59,10 +93,10 @@ export async function GET(
   }
 
   // Service role key bypasses RLS — never exposed to the client.
-  const supabase = createClient(url, key, { auth: { persistSession: false } });
+  const admin = createSupabaseAdmin(url, key, { auth: { persistSession: false } });
 
   const fileId = FILE_ALIAS[claseId] ?? claseId;
-  const { data, error } = await supabase.storage
+  const { data, error } = await admin.storage
     .from('resumenes')
     .createSignedUrl(`${fileId}.pdf`, SIGNED_URL_TTL_SECONDS);
 

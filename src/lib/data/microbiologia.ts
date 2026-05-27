@@ -408,6 +408,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Examen directo', 'Concentraciones', 'Reconocimiento de parásitos intestinales'],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'practica-9',
@@ -418,6 +419,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Amebas', 'Giardia', 'Chilomastix', 'Cryptosporidium', 'Cyclospora', 'Cystoisospora', 'Balantidium'],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
     ],
   },
@@ -476,6 +478,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Trichomonas', 'Trypanosoma', 'Leishmania', 'Plasmodium vivax / falciparum / malariae', 'Toxoplasma', 'Acanthamoeba', 'Naegleria'],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'practica-11',
@@ -486,6 +489,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Ascaris lumbricoides', 'Trichuris trichiura', 'Enterobius vermicularis', 'Ancylostoma / Necator', 'Strongyloides', 'Vectores de T. cruzi, Leishmania, Plasmodium'],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'sgp-2',
@@ -539,6 +543,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Hymenolepis nana / diminuta', 'Diphyllobothrium pacificum', 'Taenia solium / saginata', 'Echinococcus granulosus', 'Fasciola', 'Paragonimus', 'Schistosoma'],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'practica-13',
@@ -549,6 +554,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Piojos', 'Pulgas', 'Larvas de mosca', 'Arácnidos (ácaros, garrapatas, arañas, escorpiones)'],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
     ],
   },
