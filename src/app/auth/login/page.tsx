@@ -42,7 +42,12 @@ function AuthPageInner() {
 
   useEffect(() => {
     const urlError = searchParams.get('error');
-    if (urlError) setError(urlError);
+    if (!urlError) return;
+    const mapped =
+      urlError === 'device_revoked'
+        ? 'Tu sesión en este dispositivo fue cerrada desde otro equipo. Inicia sesión nuevamente.'
+        : urlError;
+    setError(mapped);
   }, [searchParams]);
 
   // Form fields

@@ -28,8 +28,10 @@ export default async function DashboardRootLayout({
     const check = await checkDevice(user.id, deviceId, planState.plan);
 
     if (check.kind === 'revoked') {
-      await supabase.auth.signOut();
-      redirect('/');
+      // El route handler hace signOut, borra la cookie device_id e invalida
+      // el cache de user-sessions para que el siguiente login genere un
+      // device nuevo (sin esto, el browser quedaba atrapado en loop).
+      redirect('/auth/clear-device');
     }
     if (check.kind === 'limit_exceeded') {
       redirect('/auth/device-limit');

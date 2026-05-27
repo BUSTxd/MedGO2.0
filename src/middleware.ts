@@ -43,7 +43,10 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
   const pathname = request.nextUrl.pathname;
-  const isDeviceLimit = pathname.startsWith('/auth/device-limit');
+  const isDeviceLimit  = pathname.startsWith('/auth/device-limit');
+  const isClearDevice  = pathname.startsWith('/auth/clear-device');
+  // Rutas /auth que pueden visitarse con sesión activa (no rebotar a /dashboard).
+  const isAuthEscape = isDeviceLimit || isClearDevice;
 
   // Rutas protegidas: redirige al login si no hay sesión
   if (!user && pathname.startsWith('/dashboard')) {
@@ -56,8 +59,8 @@ export async function middleware(request: NextRequest) {
   }
 
   // Si ya está logueado y va a otra ruta de /auth (login, signup), redirige al dashboard.
-  // Excepción: device-limit es válida con sesión activa.
-  if (user && pathname.startsWith('/auth') && !isDeviceLimit) {
+  // Excepción: device-limit y clear-device son válidas con sesión activa.
+  if (user && pathname.startsWith('/auth') && !isAuthEscape) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
