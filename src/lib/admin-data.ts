@@ -61,6 +61,23 @@ function daysUntil(dateStr: string | null): number | null {
   return Math.ceil(ms / (1000 * 60 * 60 * 24));
 }
 
+/**
+ * Racha efectiva al momento de leer. current_streak en DB solo se mueve
+ * cuando el usuario hace ping, así que un usuario con racha 3 que no
+ * entra hace 5 días seguiría apareciendo con 3. Aquí la rompemos al
+ * vuelo: si la última visita fue ayer u hoy, la racha está viva; si fue
+ * antes, está rota (la DB se sincroniza la próxima vez que entre).
+ */
+function effectiveStreak(streak: number | null, lastVisit: string | null, today: string): number {
+  const s = streak ?? 0;
+  if (s <= 0 || !lastVisit) return 0;
+  if (lastVisit === today) return s;
+  const a = new Date(`${lastVisit}T00:00:00Z`).getTime();
+  const b = new Date(`${today}T00:00:00Z`).getTime();
+  const delta = Math.round((b - a) / 86_400_000);
+  return delta <= 1 ? s : 0;
+}
+
 export async function loadAdminData(): Promise<AdminData> {
   const admin = createAdminClient();
 
@@ -102,7 +119,7 @@ export async function loadAdminData(): Promise<AdminData> {
       plan: (p.plan ?? 'free') as AdminPlan,
       planExpiresAt: p.plan_expires_at,
       lastVisitDate: p.last_visit_date,
-      currentStreak: p.current_streak ?? 0,
+      currentStreak: effectiveStreak(p.current_streak, p.last_visit_date, today),
       subStatus: sub?.status ?? null,
       nextPaymentDate: sub?.next_payment_date ?? null,
       subAmount: sub?.amount ?? null,
