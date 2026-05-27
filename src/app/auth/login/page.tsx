@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import Logo from '@/components/Logo';
 import Background from '@/components/Background';
@@ -31,7 +31,6 @@ export default function AuthPage() {
 }
 
 function AuthPageInner() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = createClient();
 
@@ -96,8 +95,11 @@ function AuthPageInner() {
       return;
     }
 
-    router.push('/dashboard');
-    router.refresh();
+    // Hard nav: las cookies recien seteadas por signInWithPassword viajan
+    // con el primer request al middleware y el árbol RSC se reinicia con
+    // la sesión válida. Con router.push había una carrera donde el server
+    // veía user=null y rebotaba al login.
+    window.location.assign('/dashboard');
   }
 
   async function handleRegister(e: React.FormEvent) {
@@ -118,8 +120,7 @@ function AuthPageInner() {
     }
 
     setLoading(false);
-    router.push('/dashboard');
-    router.refresh();
+    window.location.assign('/dashboard');
   }
 
   return (

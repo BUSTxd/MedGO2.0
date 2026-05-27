@@ -1,5 +1,4 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
 export default function SignOutButton({
@@ -9,11 +8,10 @@ export default function SignOutButton({
   className?: string;
   children?: React.ReactNode;
 }) {
-  const router = useRouter();
   const handle = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.push('/auth/login');
+    window.location.assign('/auth/login');
   };
   return (
     <button className={className} onClick={handle} type="button">

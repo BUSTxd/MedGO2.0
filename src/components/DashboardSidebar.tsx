@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import { createClient } from '@/lib/supabase/client';
 import styles from '@/styles/dashboardSidebar.module.css';
@@ -95,14 +95,15 @@ const ADMIN_ITEM = {
 
 export default function DashboardSidebar({ collapsed, onToggle, darkMode, onToggleDark, isAdmin = false }: Props) {
   const pathname = usePathname();
-  const router = useRouter();
 
   const navItems = isAdmin ? [...NAV, ADMIN_ITEM] : NAV;
 
   const handleSignOut = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.push('/auth/login');
+    // Hard nav: garantiza que el siguiente request lleve las cookies
+    // limpias y que el árbol RSC + AuthProvider se reinicien.
+    window.location.assign('/auth/login');
   };
 
   const isActive = (href: string) =>

@@ -37,6 +37,8 @@ export default function Navbar() {
     const supabase = createClient();
     await supabase.auth.signOut();
     setDropOpen(false);
+    // Hard nav a landing limpia cookies en server y resetea AuthProvider.
+    window.location.assign('/');
   };
 
   return (
