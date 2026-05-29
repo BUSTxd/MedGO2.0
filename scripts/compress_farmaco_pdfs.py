@@ -54,14 +54,14 @@ def recompress_pdf(src_path: Path, dst_path: Path) -> tuple[int, int]:
     original_size = src_path.stat().st_size
     doc = fitz.open(src_path)
 
-    # Mapea xref -> (replacement_bytes, mime) para no procesar la misma imagen dos veces
-    replacements: dict[int, tuple[bytes, str]] = {}
+    # xrefs ya procesados — evita reprocesar la misma imagen si aparece en varias páginas
+    processed: set[int] = set()
 
     for page in doc:
         # Lista de imágenes en la página: (xref, smask, w, h, bpc, cs, alt, name, filter)
         for img_info in page.get_images(full=True):
             xref = img_info[0]
-            if xref in replacements:
+            if xref in processed:
                 continue
 
             try:
@@ -115,15 +115,19 @@ def recompress_pdf(src_path: Path, dst_path: Path) -> tuple[int, int]:
                 print(f"      ! No se pudo recomprimir xref {xref}: {e}")
                 continue
 
-            if len(new_bytes) < len(img_bytes):
-                replacements[xref] = (new_bytes, "image/jpeg")
+            if len(new_bytes) >= len(img_bytes):
+                # No vale la pena reemplazar
+                processed.add(xref)
+                continue
 
-    # Aplicar reemplazos
-    for xref, (new_bytes, _mime) in replacements.items():
-        try:
-            doc.update_stream(xref, new_bytes)
-        except Exception as e:
-            print(f"      ! Falló update_stream xref {xref}: {e}")
+            # CRÍTICO: `replace_image` actualiza el stream + /Filter + /ColorSpace +
+            # /Width + /Height del objeto PDF. `update_stream` solo cambia los bytes
+            # y deja /Filter apuntando al codec viejo (JPX → JPEG = imágenes blancas).
+            try:
+                page.replace_image(xref, stream=new_bytes)
+                processed.add(xref)
+            except Exception as e:
+                print(f"      ! replace_image falló xref {xref}: {e}")
 
     # Guardar optimizado
     dst_path.parent.mkdir(parents=True, exist_ok=True)

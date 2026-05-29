@@ -16,16 +16,19 @@ const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
 
 const SOURCE_DIR = 'C:\\Users\\BUST\\Downloads\\farmaco-compressed';
 
+// v2 = fix de imágenes blancas. El compresor antiguo dejaba /Filter en JPXDecode
+// tras reemplazar con JPEG, así que pdfjs renderizaba garbage. Cache es immutable
+// 1 año → usamos paths nuevos para invalidar instantáneamente en todos los clientes.
 const FILES = [
-  { src: 'colinergicos_compressed.pdf',         dest: 'farmacologia/clase-14.pdf'   },
-  { src: 'nicotinicos_ganglio_compressed.pdf',  dest: 'farmacologia/clase-16.pdf'   },
-  { src: 'nicotinico_muscular_compressed.pdf',  dest: 'farmacologia/clase-17.pdf'   },
-  { src: 'histamina_compressed.pdf',            dest: 'farmacologia/clase-18.pdf'   },
-  { src: 'biologicos_compressed.pdf',           dest: 'farmacologia/clase-19.pdf'   },
-  { src: 'terapia_genica_compressed.pdf',       dest: 'farmacologia/clase-19.2.pdf' },
-  { src: 'b_lactamicos_compressed.pdf',         dest: 'farmacologia/clase-23.pdf'   },
-  { src: 'fluroquinolonas_compressed.pdf',      dest: 'farmacologia/clase-24.pdf'   },
-  { src: 'clindamicina_compressed.pdf',         dest: 'farmacologia/clase-25.pdf'   },
+  { src: 'colinergicos_compressed.pdf',         dest: 'farmacologia/clase-14.v2.pdf'   },
+  { src: 'nicotinicos_ganglio_compressed.pdf',  dest: 'farmacologia/clase-16.v2.pdf'   },
+  { src: 'nicotinico_muscular_compressed.pdf',  dest: 'farmacologia/clase-17.v2.pdf'   },
+  { src: 'histamina_compressed.pdf',            dest: 'farmacologia/clase-18.v2.pdf'   },
+  { src: 'biologicos_compressed.pdf',           dest: 'farmacologia/clase-19.v2.pdf'   },
+  { src: 'terapia_genica_compressed.pdf',       dest: 'farmacologia/clase-19.2.v2.pdf' },
+  { src: 'b_lactamicos_compressed.pdf',         dest: 'farmacologia/clase-23.v2.pdf'   },
+  { src: 'fluroquinolonas_compressed.pdf',      dest: 'farmacologia/clase-24.v2.pdf'   },
+  { src: 'clindamicina_compressed.pdf',         dest: 'farmacologia/clase-25.v2.pdf'   },
 ];
 
 async function upload() {

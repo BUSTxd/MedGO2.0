@@ -41,7 +41,10 @@ const EXPIRY_BUFFER_MS = 15 * 60 * 1000;
 
 interface SignedUrlEntry { url: string; expiresAt: number }
 
-const cacheKey = (claseId: string) => `resumen-url-${claseId}`;
+// Bump del prefijo invalida URLs en sessionStorage cuando re-subimos PDFs a un
+// nuevo path (ej. .v2.pdf). Sin esto, usuarios con sesión activa seguirían
+// recibiendo la URL vieja que apunta al archivo roto.
+const cacheKey = (claseId: string) => `resumen-url-v2-${claseId}`;
 
 const readCache = (claseId: string): SignedUrlEntry | null => {
   try {

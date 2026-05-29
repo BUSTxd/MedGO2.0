@@ -54,16 +54,20 @@ const FILE_ALIAS: Record<string, string> = {
   'practica-11': 'parasitologia/practica-11',
   'practica-12': 'parasitologia/practica-12',
   'practica-13': 'parasitologia/practica-13',
-  // Farmacología — subcarpeta farmacologia/
-  'far-14':   'farmacologia/clase-14',
-  'far-16':   'farmacologia/clase-16',
-  'far-17':   'farmacologia/clase-17',
-  'far-18':   'farmacologia/clase-18',
-  'far-19':   'farmacologia/clase-19',
-  'far-19.2': 'farmacologia/clase-19.2',
-  'far-23':   'farmacologia/clase-23',
-  'far-24':   'farmacologia/clase-24',
-  'far-25':   'farmacologia/clase-25',
+  // Farmacología — subcarpeta farmacologia/. .v2 fix de imágenes blancas:
+  // el compresor antiguo dejaba /Filter como JPXDecode tras reemplazar bytes con
+  // JPEG → pdfjs renderizaba garbage. .v2 se generó con page.replace_image() que
+  // actualiza filter/colorspace correctamente. Path nuevo invalida el cache
+  // immutable instantáneamente para todos los usuarios.
+  'far-14':   'farmacologia/clase-14.v2',
+  'far-16':   'farmacologia/clase-16.v2',
+  'far-17':   'farmacologia/clase-17.v2',
+  'far-18':   'farmacologia/clase-18.v2',
+  'far-19':   'farmacologia/clase-19.v2',
+  'far-19.2': 'farmacologia/clase-19.2.v2',
+  'far-23':   'farmacologia/clase-23.v2',
+  'far-24':   'farmacologia/clase-24.v2',
+  'far-25':   'farmacologia/clase-25.v2',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga
