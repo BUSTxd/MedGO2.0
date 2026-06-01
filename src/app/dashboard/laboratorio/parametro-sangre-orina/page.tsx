@@ -199,29 +199,19 @@ export default function SangreVsOrinaPage() {
   }, []);
 
   const renderCarta = (carta: Carta, inSlot: boolean) => {
-    const isSangre = carta.comp === 'sangre';
     return (
       <div
-        className={`${s.carta} ${isSangre ? s.cartaSangre : s.cartaOrina} ${
-          picked === carta.id ? s.cartaPicked : ''
-        }`}
+        className={`${s.carta} ${picked === carta.id ? s.cartaPicked : ''}`}
         style={dragCarta?.id === carta.id ? { opacity: 0.35 } : undefined}
         onPointerDown={(e) => startDrag(e, carta)}
         onClick={() => {
-          if (inSlot) return; // las cartas en slot se gestionan desde el slot
+          if (inSlot) return;
           tapBankCarta(carta);
         }}
         role="button"
         tabIndex={0}
-        aria-label={`${isSangre ? 'Sangre' : 'Orina'}: ${carta.texto}`}
+        aria-label={carta.texto}
       >
-        <span className={s.cartaTag}>
-          <span
-            className={s.cartaDot}
-            style={{ background: isSangre ? '#E85B4A' : '#E6A700' }}
-          />
-          {isSangre ? 'Sangre' : 'Orina'}
-        </span>
         {carta.texto}
       </div>
     );
@@ -374,20 +364,7 @@ export default function SangreVsOrinaPage() {
       {/* Clon flotante durante el arrastre */}
       <div ref={ghostRef} className={s.ghost} aria-hidden>
         {dragCarta && (
-          <div
-            className={`${s.carta} ${
-              dragCarta.comp === 'sangre' ? s.cartaSangre : s.cartaOrina
-            }`}
-          >
-            <span className={s.cartaTag}>
-              <span
-                className={s.cartaDot}
-                style={{ background: dragCarta.comp === 'sangre' ? '#E85B4A' : '#E6A700' }}
-              />
-              {dragCarta.comp === 'sangre' ? 'Sangre' : 'Orina'}
-            </span>
-            {dragCarta.texto}
-          </div>
+          <div className={s.carta}>{dragCarta.texto}</div>
         )}
       </div>
     </div>
