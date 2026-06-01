@@ -90,6 +90,21 @@ const LAB_TOPICS: Topic[] = [
       { name: 'PCR en Tiempo Real',   desc: 'Cuantificación de ácidos nucleicos',                  color: '#E85B4A' },
     ],
   },
+  {
+    id: 'excretor',
+    title: 'Sistema Excretor | UPCH',
+    badge: 'Fisiología',
+    diff: ['easy'],
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 3c-2.5 0-4 1.6-4 4 0 1.4.7 2.4 1.6 3.4C10.7 11.6 12 13 12 15c0-2 1.3-3.4 2.4-4.6C15.3 9.4 16 8.4 16 7c0-2.4-1.5-4-4-4z" fill="white"/>
+        <path d="M12 15c0 3-2 4-2 5a2 2 0 104 0c0-1-2-2-2-5z" fill="rgba(255,255,255,0.55)"/>
+      </svg>
+    ),
+    experiments: [
+      { name: 'Parámetro: Sangre vs Orina', desc: 'Arrastra los valores normales al compartimento correcto', color: '#E85B4A', href: '/dashboard/laboratorio/parametro-sangre-orina' },
+    ],
+  },
 ];
 
 const DIFF_LABEL: Record<string, string> = {

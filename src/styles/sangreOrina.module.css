@@ -1,0 +1,422 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   Minijuego "Parámetro: Sangre vs Orina" (laboratorio Excretor).
+   Módulo propio: estos estilos SOLO se cargan en la ruta del juego.
+   Default = modo claro · override en :global(.dark-mode).
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.wrap {
+  --col-param: 110px;
+  --gap: 12px;
+  --rojo: #E85B4A;
+  --amarillo: #E6A700;
+  --ok: #2DC99A;
+  padding: 18px 24px 30px;
+}
+
+.intro {
+  margin: 4px 0 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(26, 26, 46, 0.62);
+}
+:global(.dark-mode) .intro { color: rgba(240, 238, 255, 0.6); }
+
+.title {
+  font-size: 21px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .title { color: #f0eeff; }
+
+/* ─── BARRA DE PROGRESO ─── */
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 20px;
+}
+.progressTrack {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+:global(.dark-mode) .progressTrack { background: rgba(255, 255, 255, 0.08); }
+.progressFill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--rojo), var(--amarillo));
+  transition: width 0.3s ease;
+}
+.progressLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(26, 26, 46, 0.6);
+  white-space: nowrap;
+}
+:global(.dark-mode) .progressLabel { color: rgba(240, 238, 255, 0.6); }
+
+/* ─── TABLERO ─── */
+.board {
+  position: relative;
+  margin-bottom: 22px;
+}
+
+/* Tubos animados detrás de las columnas Sangre y Orina */
+.tubes {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: var(--col-param) 1fr 1fr;
+  column-gap: var(--gap);
+  pointer-events: none;
+  z-index: 0;
+}
+.arteria,
+.conducto {
+  align-self: stretch;
+  justify-self: center;
+  width: 64%;
+  max-width: 150px;
+  border-radius: 26px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background-size: 100% 220%;
+  animation: svsoFlow 3.2s linear infinite;
+}
+.arteria {
+  grid-column: 2;
+  background-image:
+    linear-gradient(180deg, rgba(232, 91, 74, 0.14), rgba(232, 91, 74, 0.07)),
+    repeating-linear-gradient(180deg,
+      rgba(232, 91, 74, 0) 0px,
+      rgba(232, 91, 74, 0.32) 16px,
+      rgba(232, 91, 74, 0) 38px);
+}
+.conducto {
+  grid-column: 3;
+  background-image:
+    linear-gradient(180deg, rgba(230, 167, 0, 0.16), rgba(230, 167, 0, 0.07)),
+    repeating-linear-gradient(180deg,
+      rgba(230, 167, 0, 0) 0px,
+      rgba(230, 167, 0, 0.34) 16px,
+      rgba(230, 167, 0, 0) 38px);
+}
+:global(.dark-mode) .arteria,
+:global(.dark-mode) .conducto { border-color: rgba(255, 255, 255, 0.06); }
+
+@keyframes svsoFlow {
+  from { background-position: 0 0; }
+  to   { background-position: 0 220%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .arteria, .conducto { animation: none; }
+  .progressFill { transition: none; }
+}
+
+/* Encabezado de columnas (desktop) */
+.head {
+  display: grid;
+  grid-template-columns: var(--col-param) 1fr 1fr;
+  column-gap: var(--gap);
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+.headCell {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 46, 0.45);
+  text-align: center;
+  padding-bottom: 2px;
+}
+.headCell:first-child { text-align: left; }
+.headSangre { color: var(--rojo); }
+.headOrina { color: var(--amarillo); }
+:global(.dark-mode) .headCell { color: rgba(240, 238, 255, 0.4); }
+:global(.dark-mode) .headSangre { color: #ff8472; }
+:global(.dark-mode) .headOrina { color: #ffcb45; }
+
+/* Filas (una por parámetro) */
+.row {
+  display: grid;
+  grid-template-columns: var(--col-param) 1fr 1fr;
+  column-gap: var(--gap);
+  align-items: stretch;
+  margin-bottom: var(--gap);
+  position: relative;
+  z-index: 1;
+}
+.param {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a2e;
+  padding-right: 4px;
+}
+:global(.dark-mode) .param { color: #f0eeff; }
+
+/* ─── SLOT (zona soltable) ─── */
+.slot {
+  min-height: 58px;
+  border-radius: 14px;
+  border: 2px dashed rgba(0, 0, 0, 0.14);
+  background: rgba(255, 255, 255, 0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px 8px;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  backdrop-filter: blur(1px);
+}
+:global(.dark-mode) .slot {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(20, 22, 42, 0.55);
+}
+.slotTag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  opacity: 0.5;
+}
+.slotEmptyHint {
+  font-size: 11px;
+  color: rgba(26, 26, 46, 0.35);
+}
+:global(.dark-mode) .slotEmptyHint { color: rgba(240, 238, 255, 0.32); }
+
+/* slot resaltado como objetivo de colocación (drag over / tap-select activo) */
+.slotTarget {
+  border-color: rgba(59, 158, 221, 0.7);
+  background: rgba(59, 158, 221, 0.1);
+  box-shadow: 0 0 0 3px rgba(59, 158, 221, 0.12);
+}
+
+/* resultado de verificación */
+.slotOk {
+  border-style: solid;
+  border-color: var(--ok);
+  background: rgba(45, 201, 154, 0.12);
+}
+.slotBad {
+  border-style: solid;
+  border-color: var(--rojo);
+  background: rgba(232, 91, 74, 0.1);
+}
+
+/* ─── CARTA ─── */
+.carta {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 8px 10px;
+  font-size: 12.5px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: #1a1a2e;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transition: transform 0.12s, box-shadow 0.12s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+.carta:active { cursor: grabbing; }
+.cartaSangre {
+  background: linear-gradient(135deg, rgba(232, 91, 74, 0.16), rgba(232, 91, 74, 0.08));
+  border-color: rgba(232, 91, 74, 0.4);
+}
+.cartaOrina {
+  background: linear-gradient(135deg, rgba(230, 167, 0, 0.18), rgba(230, 167, 0, 0.09));
+  border-color: rgba(230, 167, 0, 0.45);
+}
+:global(.dark-mode) .carta { color: #f0eeff; }
+.cartaTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 3px;
+  opacity: 0.85;
+}
+.cartaSangre .cartaTag { color: var(--rojo); }
+.cartaOrina .cartaTag { color: #9c7400; }
+:global(.dark-mode) .cartaSangre .cartaTag { color: #ff8472; }
+:global(.dark-mode) .cartaOrina .cartaTag { color: #ffcb45; }
+.cartaDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* carta seleccionada por tap (modo respaldo) */
+.cartaPicked {
+  outline: 3px solid rgba(59, 158, 221, 0.55);
+  outline-offset: 1px;
+  transform: translateY(-2px);
+}
+
+/* carta dentro de un slot: sin sombra flotante */
+.slot .carta { box-shadow: none; }
+
+/* ─── BANCO ─── */
+.bankTitle {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: rgba(26, 26, 46, 0.45);
+  margin: 4px 0 10px;
+}
+:global(.dark-mode) .bankTitle { color: rgba(240, 238, 255, 0.4); }
+.bank {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  min-height: 70px;
+}
+:global(.dark-mode) .bank {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.07);
+}
+.bankEmpty {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(26, 26, 46, 0.4);
+  padding: 8px;
+}
+:global(.dark-mode) .bankEmpty { color: rgba(240, 238, 255, 0.35); }
+
+/* ─── CLON FLOTANTE (drag ghost) ─── */
+.ghost {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 170px;
+  pointer-events: none;
+  transform: translate(-9999px, -9999px);
+  opacity: 0.95;
+  rotate: -3deg;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* ─── BOTONERA ─── */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 22px 0 6px;
+}
+
+/* ─── PUNTAJE ─── */
+.score {
+  margin: 18px 0;
+  padding: 16px 20px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(45, 201, 154, 0.12), rgba(59, 158, 221, 0.1));
+  border: 1px solid rgba(45, 201, 154, 0.25);
+  font-size: 18px;
+  font-weight: 800;
+  color: #1a1a2e;
+  text-align: center;
+}
+:global(.dark-mode) .score { color: #f0eeff; }
+.scoreNum { color: var(--ok); }
+
+/* ─── EXPLICACIONES ─── */
+.explainList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+.explainItem {
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 14px 16px;
+}
+:global(.dark-mode) .explainItem {
+  border-color: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.03);
+}
+.explainHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.explainParam {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .explainParam { color: #f0eeff; }
+.badgeOk, .badgeBad {
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+.badgeOk { background: rgba(45, 201, 154, 0.16); color: #1a7a5c; }
+.badgeBad { background: rgba(232, 91, 74, 0.16); color: #b03a2c; }
+:global(.dark-mode) .badgeOk { color: #6ee7c0; }
+:global(.dark-mode) .badgeBad { color: #ff9b8c; }
+.explainText {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.72);
+}
+:global(.dark-mode) .explainText { color: rgba(240, 238, 255, 0.7); }
+.hint {
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--rojo);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+:global(.dark-mode) .hint { color: #ff9b8c; }
+
+/* ─── RESPONSIVE: filas → tarjetas por parámetro ─── */
+@media (max-width: 640px) {
+  .wrap { padding: 14px 14px 26px; }
+  .tubes, .head { display: none; }
+  .row {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+    padding: 12px;
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  :global(.dark-mode) .row {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.07);
+  }
+  .param {
+    font-size: 15px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  :global(.dark-mode) .param { border-bottom-color: rgba(255, 255, 255, 0.08); }
+  .bank { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+}
