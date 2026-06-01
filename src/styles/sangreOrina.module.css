@@ -11,7 +11,22 @@
   --amarillo: #E6A700;
   --ok: #2DC99A;
   padding: 18px 24px 30px;
+  position: relative;
+  z-index: 1;
 }
+
+/* Riñón decorativo de fondo (marca de agua) */
+.bgIcon {
+  position: absolute;
+  right: -50px;
+  bottom: -40px;
+  width: 340px;
+  height: 340px;
+  opacity: 0.08;
+  z-index: 0;
+  pointer-events: none;
+}
+:global(.dark-mode) .bgIcon { opacity: 0.12; }
 
 .intro {
   margin: 4px 0 18px;
@@ -164,8 +179,8 @@
 .slot {
   min-height: 58px;
   border-radius: 14px;
-  border: 2px dashed rgba(0, 0, 0, 0.14);
-  background: rgba(255, 255, 255, 0.55);
+  border: 2px dashed rgba(0, 0, 0, 0.16);
+  background: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -174,24 +189,24 @@
   padding: 6px 8px;
   text-align: center;
   transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
-  backdrop-filter: blur(1px);
 }
 :global(.dark-mode) .slot {
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(20, 22, 42, 0.55);
+  border-color: rgba(255, 255, 255, 0.22);
 }
-.slotTag {
+/* Etiqueta de compartimento dentro del slot: solo en móvil (sin encabezados). */
+.slotCompMobile {
+  display: none;
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  opacity: 0.5;
+  opacity: 0.55;
 }
 .slotEmptyHint {
   font-size: 11px;
-  color: rgba(26, 26, 46, 0.35);
+  color: rgba(26, 26, 46, 0.4);
 }
-:global(.dark-mode) .slotEmptyHint { color: rgba(240, 238, 255, 0.32); }
+:global(.dark-mode) .slotEmptyHint { color: rgba(240, 238, 255, 0.38); }
 
 /* slot resaltado como objetivo de colocación (drag over / tap-select activo) */
 .slotTarget {
@@ -419,4 +434,8 @@
   }
   :global(.dark-mode) .param { border-bottom-color: rgba(255, 255, 255, 0.08); }
   .bank { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+  /* En móvil no hay encabezados ni tubos: el slot muestra su compartimento. */
+  .slotCompMobile { display: block; }
+  .slot { border-color: rgba(0, 0, 0, 0.18); }
+  :global(.dark-mode) .slot { border-color: rgba(255, 255, 255, 0.2); }
 }

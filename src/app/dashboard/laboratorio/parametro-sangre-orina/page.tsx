@@ -2,6 +2,7 @@
 import { useMemo, useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import TrackLabVisit from '@/components/TrackLabVisit';
+import KidneyIcon from '@/components/icons/KidneyIcon';
 import { shuffle } from '@/lib/utils/shuffle';
 import {
   PARAMETROS,
@@ -241,11 +242,13 @@ export default function SangreVsOrinaPage() {
         tabIndex={0}
         aria-label={`Soltar valor de ${comp} para ${paramId}`}
       >
-        <span className={s.slotTag}>{comp === 'sangre' ? 'Sangre' : 'Orina'}</span>
         {carta ? (
           renderCarta(carta, true)
         ) : (
-          <span className={s.slotEmptyHint}>Suelta aquí</span>
+          <>
+            <span className={s.slotCompMobile}>{comp === 'sangre' ? 'Sangre' : 'Orina'}</span>
+            <span className={s.slotEmptyHint}>Suelta aquí</span>
+          </>
         )}
       </div>
     );
@@ -254,6 +257,9 @@ export default function SangreVsOrinaPage() {
   return (
     <div className={base.examPage}>
       <TrackLabVisit labId="parametro-sangre-orina" />
+
+      {/* Riñón decorativo de fondo */}
+      <KidneyIcon className={s.bgIcon} />
 
       {/* Top bar */}
       <div className={base.topBar}>

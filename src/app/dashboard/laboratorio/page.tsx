@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import KidneyIcon from '@/components/icons/KidneyIcon';
 import styles from '@/styles/dashboardPages.module.css';
 
 type Exp = { name: string; desc: string; color: string; href?: string };
@@ -22,6 +23,16 @@ const LAB_TOPICS: Topic[] = [
       { name: 'Atlas Micología',      desc: 'Identificación microscópica de hongos clínicos',        color: '#2DC99A', href: '/dashboard/laboratorio/atlas-micologia' },
       { name: 'Atlas Parasitología',  desc: 'Identificación de parásitos clínicamente relevantes',   color: '#F5A623', href: '/dashboard/laboratorio/atlas-parasitologia' },
       { name: 'Atlas Microbiología',  desc: 'Identificación de bacterias patógenas frecuentes',      color: '#E85B4A', href: '/dashboard/laboratorio/atlas-microbiologia' },
+    ],
+  },
+  {
+    id: 'excretor',
+    title: 'Sistema Excretor | UPCH',
+    badge: 'Fisiología',
+    diff: ['easy'],
+    icon: <KidneyIcon size={26} />,
+    experiments: [
+      { name: 'Parámetro: Sangre vs Orina', desc: 'Arrastra los valores normales al compartimento correcto', color: '#E85B4A', href: '/dashboard/laboratorio/parametro-sangre-orina' },
     ],
   },
   {
@@ -88,21 +99,6 @@ const LAB_TOPICS: Topic[] = [
       { name: 'Aglutinación',         desc: 'Detección de antígenos mediante aglutinación',        color: '#2DC99A' },
       { name: 'Western Blot',         desc: 'Identificación de proteínas específicas',             color: '#F5A623' },
       { name: 'PCR en Tiempo Real',   desc: 'Cuantificación de ácidos nucleicos',                  color: '#E85B4A' },
-    ],
-  },
-  {
-    id: 'excretor',
-    title: 'Sistema Excretor | UPCH',
-    badge: 'Fisiología',
-    diff: ['easy'],
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M12 3c-2.5 0-4 1.6-4 4 0 1.4.7 2.4 1.6 3.4C10.7 11.6 12 13 12 15c0-2 1.3-3.4 2.4-4.6C15.3 9.4 16 8.4 16 7c0-2.4-1.5-4-4-4z" fill="white"/>
-        <path d="M12 15c0 3-2 4-2 5a2 2 0 104 0c0-1-2-2-2-5z" fill="rgba(255,255,255,0.55)"/>
-      </svg>
-    ),
-    experiments: [
-      { name: 'Parámetro: Sangre vs Orina', desc: 'Arrastra los valores normales al compartimento correcto', color: '#E85B4A', href: '/dashboard/laboratorio/parametro-sangre-orina' },
     ],
   },
 ];
