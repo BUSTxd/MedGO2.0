@@ -26,7 +26,7 @@ export const PARAMETROS: Parametro[] = [
     id: 'na',
     parametro: 'Na+',
     sangre: '135–145 mEq/L',
-    orina: '<20 mEq/L: retención renal de Na+ · >40 mEq/L: pérdida renal de Na+',
+    orina: '<20 mEq/L · >40 mEq/L',
     explicacion:
       'El sodio sérico normal es 135–145 mEq/L. Si está bajo puede sugerir hiponatremia por exceso de agua, pérdidas digestivas, renales o alteraciones hormonales. Si está alto puede indicar deshidratación o pérdida de agua libre. En orina, Na+ <20 mEq/L sugiere que el riñón retiene sodio, como en hipovolemia o activación del sistema renina-angiotensina-aldosterona. Na+ >40 mEq/L sugiere pérdida renal de sodio, diuréticos o alteración tubular.',
   },
