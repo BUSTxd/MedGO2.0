@@ -79,7 +79,12 @@
   margin-bottom: 22px;
 }
 
-/* Tubos animados detrás de las columnas Sangre y Orina */
+/* ───────────────────────────────────────────────────────────────────────────
+   Columnas anatómicas: Arteria (corte transversal) y Uréter.
+   Estructura: el div pinta las CAPAS de pared con un gradiente horizontal
+   simétrico; el ::before pinta el FLUJO descendente solo sobre el lumen.
+   Colores anatómicos iguales en claro y oscuro (objeto físico).
+   ─────────────────────────────────────────────────────────────────────────── */
 .tubes {
   position: absolute;
   inset: 0;
@@ -91,42 +96,106 @@
 }
 .arteria,
 .conducto {
+  position: relative;
   align-self: stretch;
   justify-self: center;
-  width: 64%;
-  max-width: 150px;
-  border-radius: 26px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  background-size: 100% 220%;
-  animation: svsoFlow 3.2s linear infinite;
+  width: 86%;
+  max-width: 190px;
+  /* El domo arranca debajo de los encabezados de columna */
+  margin-top: 34px;
+  overflow: hidden;
+  /* Domo superior (semicírculo) + base ligeramente redondeada */
+  border-radius: 50% 50% 16px 16px / 44px 44px 16px 16px;
 }
+
+/* ── ARTERIA ── paredes ~22% por lado, lumen central rojo brillante ── */
 .arteria {
   grid-column: 2;
-  background-image:
-    linear-gradient(180deg, rgba(232, 91, 74, 0.14), rgba(232, 91, 74, 0.07)),
-    repeating-linear-gradient(180deg,
-      rgba(232, 91, 74, 0) 0px,
-      rgba(232, 91, 74, 0.32) 16px,
-      rgba(232, 91, 74, 0) 38px);
+  background-image: linear-gradient(
+    90deg,
+    #8B1A1A 0%,
+    #C0392B 12%,
+    #e0503e 20%,
+    #E74C3C 26%,
+    #ff6f60 50%,
+    #E74C3C 74%,
+    #e0503e 80%,
+    #C0392B 88%,
+    #8B1A1A 100%
+  );
+  box-shadow:
+    inset 14px 0 18px -8px rgba(0, 0, 0, 0.55),
+    inset -14px 0 18px -8px rgba(0, 0, 0, 0.55),
+    inset 0 0 26px rgba(0, 0, 0, 0.22),
+    0 2px 10px rgba(139, 26, 26, 0.35);
 }
+.arteria::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 22%;
+  right: 22%;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(255, 180, 170, 0) 0px,
+    rgba(255, 190, 180, 0.45) 14px,
+    rgba(180, 30, 30, 0.25) 30px,
+    rgba(255, 180, 170, 0) 48px
+  );
+  background-size: 100% 200%;
+  animation: svsoFlowArteria 8s linear infinite;
+}
+
+/* ── URÉTER ── paredes ~17% por lado, lumen ámbar claro ── */
 .conducto {
   grid-column: 3;
-  background-image:
-    linear-gradient(180deg, rgba(230, 167, 0, 0.16), rgba(230, 167, 0, 0.07)),
-    repeating-linear-gradient(180deg,
-      rgba(230, 167, 0, 0) 0px,
-      rgba(230, 167, 0, 0.34) 16px,
-      rgba(230, 167, 0, 0) 38px);
+  background-image: linear-gradient(
+    90deg,
+    #8a6508 0%,
+    #B8860B 10%,
+    #DAA520 16%,
+    #ecc35a 20%,
+    #F5DEB3 50%,
+    #ecc35a 80%,
+    #DAA520 84%,
+    #B8860B 90%,
+    #8a6508 100%
+  );
+  box-shadow:
+    inset 11px 0 15px -8px rgba(80, 55, 0, 0.5),
+    inset -11px 0 15px -8px rgba(80, 55, 0, 0.5),
+    inset 0 0 24px rgba(120, 85, 0, 0.18),
+    0 2px 10px rgba(184, 134, 11, 0.3);
 }
-:global(.dark-mode) .arteria,
-:global(.dark-mode) .conducto { border-color: rgba(255, 255, 255, 0.06); }
+.conducto::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 17%;
+  right: 17%;
+  background-image: repeating-linear-gradient(
+    150deg,
+    rgba(255, 215, 0, 0) 0px,
+    rgba(255, 215, 0, 0.4) 10px,
+    rgba(245, 222, 179, 0.15) 22px,
+    rgba(255, 215, 0, 0) 36px
+  );
+  background-size: 100% 200%;
+  animation: svsoFlowUreter 10s linear infinite;
+}
 
-@keyframes svsoFlow {
+@keyframes svsoFlowArteria {
   from { background-position: 0 0; }
-  to   { background-position: 0 220%; }
+  to   { background-position: 0 200%; }
+}
+@keyframes svsoFlowUreter {
+  from { background-position: 0 0; }
+  to   { background-position: 0 200%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .arteria, .conducto { animation: none; }
+  .arteria::before, .conducto::before { animation: none; }
   .progressFill { transition: none; }
 }
 
@@ -201,45 +270,62 @@
 }
 .slotEmptyHint {
   font-size: 11px;
-  color: rgba(26, 26, 46, 0.4);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  /* "Suelta aquí" va sin fondo sobre el lumen intenso: halo para despegarlo */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55), 0 0 2px rgba(0, 0, 0, 0.4);
 }
-:global(.dark-mode) .slotEmptyHint { color: rgba(240, 238, 255, 0.38); }
+/* En móvil el slot no tiene lumen detrás → texto neutro sin halo */
+@media (max-width: 640px) {
+  .slotEmptyHint {
+    color: rgba(26, 26, 46, 0.4);
+    text-shadow: none;
+  }
+  :global(.dark-mode) .slotEmptyHint { color: rgba(240, 238, 255, 0.38); }
+}
 
 /* slot resaltado como objetivo de colocación (drag over / tap-select activo) */
 .slotTarget {
   background: rgba(59, 158, 221, 0.08);
 }
 
-/* resultado de verificación */
+/* resultado de verificación (borde visible para destacar sobre el lumen) */
 .slotOk {
-  border-style: solid;
-  border-color: var(--ok);
-  background: rgba(45, 201, 154, 0.12);
+  border: 2px solid var(--ok);
+  background: rgba(45, 201, 154, 0.18);
 }
 .slotBad {
-  border-style: solid;
-  border-color: var(--rojo);
-  background: rgba(232, 91, 74, 0.1);
+  border: 2px solid var(--rojo);
+  background: rgba(232, 91, 74, 0.16);
 }
 
 /* ─── CARTA ─── */
+/* Glass NEUTRO (ni rojo ni amarillo → no revela el compartimento) que da
+   legibilidad cuando la tarjeta queda sobre el lumen de color. */
 .carta {
   width: 100%;
   border-radius: 12px;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
   padding: 8px 10px;
   font-size: 12.5px;
   line-height: 1.3;
   font-weight: 600;
   color: #1a1a2e;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
   cursor: grab;
   touch-action: none;
   user-select: none;
   transition: transform 0.12s;
 }
 .carta:active { cursor: grabbing; }
-:global(.dark-mode) .carta { color: #f0eeff; }
+:global(.dark-mode) .carta {
+  color: #f0eeff;
+  background: rgba(12, 14, 32, 0.5);
+  border-color: rgba(255, 255, 255, 0.14);
+}
 
 /* carta seleccionada por tap (modo respaldo) */
 .cartaPicked {
