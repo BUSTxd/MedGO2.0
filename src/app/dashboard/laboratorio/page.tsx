@@ -30,7 +30,7 @@ const LAB_TOPICS: Topic[] = [
     title: 'Sistema Excretor | UPCH',
     badge: 'Fisiología',
     diff: ['easy'],
-    icon: <KidneyIcon size={26} />,
+    icon: <KidneyIcon size={26} white />,
     experiments: [
       { name: 'Parámetro: Sangre vs Orina', desc: 'Arrastra los valores normales al compartimento correcto', color: '#E85B4A', href: '/dashboard/laboratorio/parametro-sangre-orina' },
     ],
