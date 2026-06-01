@@ -104,8 +104,8 @@
   /* El domo arranca debajo de los encabezados de columna */
   margin-top: 34px;
   overflow: hidden;
-  /* Domo superior (semicírculo) + base ligeramente redondeada */
-  border-radius: 50% 50% 16px 16px / 44px 44px 16px 16px;
+  /* Recto arriba, redondeado solo en la base */
+  border-radius: 0 0 16px 16px;
 }
 
 /* ── ARTERIA ── paredes ~22% por lado, lumen central rojo brillante ── */
@@ -144,7 +144,7 @@
     rgba(255, 180, 170, 0) 48px
   );
   background-size: 100% 200%;
-  animation: svsoFlowArteria 8s linear infinite;
+  animation: svsoFlowArteria 13.2s linear infinite;
 }
 
 /* ── URÉTER ── paredes ~17% por lado, lumen ámbar claro ── */
@@ -183,7 +183,7 @@
     rgba(255, 215, 0, 0) 36px
   );
   background-size: 100% 200%;
-  animation: svsoFlowUreter 10s linear infinite;
+  animation: svsoFlowUreter 16.5s linear infinite;
 }
 
 @keyframes svsoFlowArteria {
@@ -325,6 +325,13 @@
   color: #f0eeff;
   background: rgba(12, 14, 32, 0.5);
   border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* Carta colocada en un slot: limita su ancho al del tubo para que el fondo
+   glass NO se salga de la columna (el slot ocupa toda la celda, el tubo no). */
+.slot .carta {
+  width: 78%;
+  max-width: 162px;
 }
 
 /* carta seleccionada por tap (modo respaldo) */
@@ -485,4 +492,6 @@
   .bank { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
   /* En móvil no hay encabezados ni tubos: el slot muestra su compartimento. */
   .slotCompMobile { display: block; }
+  /* Sin tubo detrás → la carta usa el ancho completo de la tarjeta. */
+  .slot .carta { width: 100%; max-width: none; }
 }
