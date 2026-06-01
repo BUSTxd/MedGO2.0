@@ -104,8 +104,8 @@
   /* El domo arranca debajo de los encabezados de columna */
   margin-top: 34px;
   overflow: hidden;
-  /* Recto arriba, redondeado solo en la base */
-  border-radius: 0 0 16px 16px;
+  /* Ligeramente redondeado en las cuatro esquinas */
+  border-radius: 16px;
 }
 
 /* ── ARTERIA ── paredes ~22% por lado, lumen central rojo brillante ── */
@@ -144,7 +144,7 @@
     rgba(255, 180, 170, 0) 48px
   );
   background-size: 100% 200%;
-  animation: svsoFlowArteria 13.2s linear infinite;
+  animation: svsoFlowArteria 21.1s linear infinite;
 }
 
 /* ── URÉTER ── paredes ~17% por lado, lumen ámbar claro ── */
@@ -183,7 +183,7 @@
     rgba(255, 215, 0, 0) 36px
   );
   background-size: 100% 200%;
-  animation: svsoFlowUreter 16.5s linear infinite;
+  animation: svsoFlowUreter 26.4s linear infinite;
 }
 
 @keyframes svsoFlowArteria {
