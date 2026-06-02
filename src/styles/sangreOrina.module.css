@@ -80,10 +80,13 @@
 }
 
 /* ───────────────────────────────────────────────────────────────────────────
-   Columnas anatómicas: Arteria (corte transversal) y Uréter.
-   Estructura: el div pinta las CAPAS de pared con un gradiente horizontal
-   simétrico; el ::before pinta el FLUJO descendente solo sobre el lumen.
-   Colores anatómicos iguales en claro y oscuro (objeto físico).
+   Columnas anatómicas: Arteria (sangre) y Uréter (orina).
+   Cada columna usa una IMAGEN de vaso (pixel-art) con el lumen transparente.
+   Estructura de capas dentro de .arteria / .conducto (overflow: hidden):
+     ::before = FLUIDO (sprite de 4 fotogramas, animado por fases) — capa de abajo
+     ::after  = VASO (imagen) — capa de arriba; su lumen transparente revela el
+                fluido y sus paredes recortan el sobrante.
+   Imágenes = objeto físico → iguales en claro y oscuro.
    ─────────────────────────────────────────────────────────────────────────── */
 .tubes {
   position: absolute;
@@ -101,98 +104,59 @@
   justify-self: center;
   width: 86%;
   max-width: 190px;
-  /* El domo arranca debajo de los encabezados de columna */
+  /* El vaso arranca debajo de los encabezados de columna */
   margin-top: 34px;
   overflow: hidden;
-  /* Ligeramente redondeado en las cuatro esquinas */
-  border-radius: 16px;
 }
 
-/* ── ARTERIA ── paredes ~22% por lado, lumen central rojo brillante ── */
-.arteria {
-  grid-column: 2;
-  background-image: linear-gradient(
-    90deg,
-    #8B1A1A 0%,
-    #C0392B 12%,
-    #e0503e 20%,
-    #E74C3C 26%,
-    #ff6f60 50%,
-    #E74C3C 74%,
-    #e0503e 80%,
-    #C0392B 88%,
-    #8B1A1A 100%
-  );
-  box-shadow:
-    inset 14px 0 18px -8px rgba(0, 0, 0, 0.55),
-    inset -14px 0 18px -8px rgba(0, 0, 0, 0.55),
-    inset 0 0 26px rgba(0, 0, 0, 0.22),
-    0 2px 10px rgba(139, 26, 26, 0.35);
-}
-.arteria::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 22%;
-  right: 22%;
-  background-image: repeating-linear-gradient(
-    180deg,
-    rgba(255, 180, 170, 0) 0px,
-    rgba(255, 190, 180, 0.45) 14px,
-    rgba(180, 30, 30, 0.25) 30px,
-    rgba(255, 180, 170, 0) 48px
-  );
-  background-size: 100% 200%;
-  animation: svsoFlowArteria 21.1s linear infinite;
-}
-
-/* ── URÉTER ── paredes ~17% por lado, lumen ámbar claro ── */
-.conducto {
-  grid-column: 3;
-  background-image: linear-gradient(
-    90deg,
-    #8a6508 0%,
-    #B8860B 10%,
-    #DAA520 16%,
-    #ecc35a 20%,
-    #F5DEB3 50%,
-    #ecc35a 80%,
-    #DAA520 84%,
-    #B8860B 90%,
-    #8a6508 100%
-  );
-  box-shadow:
-    inset 11px 0 15px -8px rgba(80, 55, 0, 0.5),
-    inset -11px 0 15px -8px rgba(80, 55, 0, 0.5),
-    inset 0 0 24px rgba(120, 85, 0, 0.18),
-    0 2px 10px rgba(184, 134, 11, 0.3);
-}
+/* ── FLUIDO (::before) ── recortado a la banda recta del lumen, centrado.
+   Sprite de 4 celdas en fila → background-size 400%; steps(4) cicla fase 1→4. ── */
+.arteria::before,
 .conducto::before {
   content: '';
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 17%;
-  right: 17%;
-  background-image: repeating-linear-gradient(
-    150deg,
-    rgba(255, 215, 0, 0) 0px,
-    rgba(255, 215, 0, 0.4) 10px,
-    rgba(245, 222, 179, 0.15) 22px,
-    rgba(255, 215, 0, 0) 36px
-  );
-  background-size: 100% 200%;
-  animation: svsoFlowUreter 26.4s linear infinite;
+  top: 15%;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-repeat: no-repeat;
+  background-size: 400% 100%;
+  animation: svsoFluido 1s steps(4, jump-none) infinite;
 }
 
-@keyframes svsoFlowArteria {
-  from { background-position: 0 0; }
-  to   { background-position: 0 200%; }
+/* ── VASO (::after) ── imagen estirada a toda la altura de la columna ── */
+.arteria::after,
+.conducto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
-@keyframes svsoFlowUreter {
-  from { background-position: 0 0; }
-  to   { background-position: 0 200%; }
+
+/* ── ARTERIA (sangre) ── lumen ~16% de ancho, centrado ── */
+.arteria { grid-column: 2; }
+.arteria::before {
+  width: 20%;
+  background-image: url('/laboratorio/excretor/fluido-sangre.webp');
+}
+.arteria::after {
+  background-image: url('/laboratorio/excretor/arteria.webp');
+}
+
+/* ── URÉTER (orina) ── lumen más fino ~10%, centrado ── */
+.conducto { grid-column: 3; }
+.conducto::before {
+  width: 14%;
+  background-image: url('/laboratorio/excretor/fluido-orina.webp');
+}
+.conducto::after {
+  background-image: url('/laboratorio/excretor/ureter.webp');
+}
+
+@keyframes svsoFluido {
+  from { background-position-x: 0%; }
+  to   { background-position-x: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .arteria::before, .conducto::before { animation: none; }
