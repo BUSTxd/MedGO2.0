@@ -109,13 +109,13 @@
   mask-image: linear-gradient(to bottom, transparent 0%, black 7%, black 93%, transparent 100%);
 }
 
-/* ── FLUIDO (::before) ── centrado en el lumen, parcialmente cubierto por el vaso ── */
+/* ── FLUIDO (::before) ── centrado en el lumen, parcialmente cubierto por el vaso.
+   top/bottom negativos (por columna) estiran el fluido más allá del conducto para
+   que el cuerpo recto llene los extremos; el mask-image suaviza el rebose. ── */
 .arteria::before,
 .conducto::before {
   content: '';
   position: absolute;
-  top: 0;
-  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   background-repeat: no-repeat;
@@ -135,6 +135,8 @@
 .arteria { grid-column: 1; }
 .arteria::before {
   width: 34%;
+  top: -12%;
+  bottom: -12%;
   background-image: url('/laboratorio/excretor/fluido-sangre.webp');
   background-size: 1700% 100%;
   animation: svsoFluidoSangre 2.7s linear infinite;
@@ -147,6 +149,8 @@
 .conducto { grid-column: 3; }
 .conducto::before {
   width: 30%;
+  top: -17%;
+  bottom: -14%;
   background-image: url('/laboratorio/excretor/fluido-orina.webp');
   background-size: 1600% 100%;
   animation: svsoFluidoOrina 2.6s linear infinite;
