@@ -89,7 +89,7 @@
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-columns: var(--col-param) 1fr 1fr;
+  grid-template-columns: 1fr var(--col-param) 1fr;
   column-gap: var(--gap);
   pointer-events: none;
   z-index: 0;
@@ -104,9 +104,9 @@
   /* Arranca debajo del encabezado de columna para no taparlo */
   margin-top: 34px;
   overflow: hidden;
-  /* Degradado suave en bordes: oculta las bocas elípticas del vaso */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  /* Degradado suave arriba/abajo: corte limpio del tramo recto del conducto */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 7%, black 93%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 7%, black 93%, transparent 100%);
 }
 
 /* ── FLUIDO (::before) ── centrado en el lumen, parcialmente cubierto por el vaso ── */
@@ -131,8 +131,8 @@
   background-size: 100% 100%;
 }
 
-/* ── ARTERIA (sangre) ── 17 frames; pausa de ~1s tras cada ciclo ── */
-.arteria { grid-column: 2; }
+/* ── ARTERIA (sangre) ── columna IZQUIERDA; 17 frames; pausa tras cada ciclo ── */
+.arteria { grid-column: 1; }
 .arteria::before {
   width: 34%;
   background-image: url('/laboratorio/excretor/fluido-sangre.webp');
@@ -143,10 +143,10 @@
   background-image: url('/laboratorio/excretor/arteria.webp');
 }
 
-/* ── URÉTER (orina) ── 16 frames; lumen más estrecho; pausa de ~1s ── */
+/* ── URÉTER (orina) ── columna DERECHA; 16 frames; pausa tras cada ciclo ── */
 .conducto { grid-column: 3; }
 .conducto::before {
-  width: 20%;
+  width: 30%;
   background-image: url('/laboratorio/excretor/fluido-orina.webp');
   background-size: 1600% 100%;
   animation: svsoFluidoOrina 2.6s linear infinite;
@@ -155,22 +155,25 @@
   background-image: url('/laboratorio/excretor/ureter.webp');
 }
 
-/* Pausa entre ciclos: steps activos hasta el 65%, luego hold en último frame */
+/* Pausa entre ciclos. El ÚLTIMO frame es la transición de vuelta al primero,
+   así que la fase activa termina en el PENÚLTIMO y se sostiene ahí:
+   - sangre 17 frames → muestra frames 0..15 (16 stops) hasta pos 15/16 = 93.75%
+   - orina 16 frames → muestra frames 0..14 (15 stops) hasta pos 14/15 = 93.333% */
 @keyframes svsoFluidoSangre {
-  0% {
-    background-position-x: 0%;
-    animation-timing-function: steps(17, jump-none);
-  }
-  65% { background-position-x: 100%; }
-  100% { background-position-x: 100%; }
-}
-@keyframes svsoFluidoOrina {
   0% {
     background-position-x: 0%;
     animation-timing-function: steps(16, jump-none);
   }
-  62% { background-position-x: 100%; }
-  100% { background-position-x: 100%; }
+  65% { background-position-x: 93.75%; }
+  100% { background-position-x: 93.75%; }
+}
+@keyframes svsoFluidoOrina {
+  0% {
+    background-position-x: 0%;
+    animation-timing-function: steps(15, jump-none);
+  }
+  62% { background-position-x: 93.333%; }
+  100% { background-position-x: 93.333%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .arteria::before, .conducto::before { animation: none; }
@@ -180,7 +183,7 @@
 /* Encabezado de columnas (desktop) */
 .head {
   display: grid;
-  grid-template-columns: var(--col-param) 1fr 1fr;
+  grid-template-columns: 1fr var(--col-param) 1fr;
   column-gap: var(--gap);
   margin-bottom: 10px;
   position: relative;
@@ -195,7 +198,6 @@
   text-align: center;
   padding-bottom: 2px;
 }
-.headCell:first-child { text-align: left; }
 .headSangre { color: var(--rojo); }
 .headOrina { color: var(--amarillo); }
 :global(.dark-mode) .headCell { color: rgba(240, 238, 255, 0.4); }
@@ -205,7 +207,7 @@
 /* Filas (una por parámetro) */
 .row {
   display: grid;
-  grid-template-columns: var(--col-param) 1fr 1fr;
+  grid-template-columns: 1fr var(--col-param) 1fr;
   column-gap: var(--gap);
   align-items: stretch;
   margin-bottom: var(--gap);
@@ -215,10 +217,11 @@
 .param {
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   font-size: 14px;
   font-weight: 700;
   color: #1a1a2e;
-  padding-right: 4px;
 }
 :global(.dark-mode) .param { color: #f0eeff; }
 
@@ -462,6 +465,11 @@
     border-color: rgba(255, 255, 255, 0.07);
   }
   .param {
+    /* En la tarjeta apilada el parámetro vuelve a ser el título (arriba),
+       alineado a la izquierda — el orden del DOM ahora es sangre/param/orina. */
+    order: -1;
+    justify-content: flex-start;
+    text-align: left;
     font-size: 15px;
     padding-bottom: 2px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);

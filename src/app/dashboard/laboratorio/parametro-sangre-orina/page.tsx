@@ -289,15 +289,15 @@ export default function SangreVsOrinaPage() {
           </div>
 
           <div className={s.head}>
-            <span className={s.headCell}>Parámetro</span>
             <span className={`${s.headCell} ${s.headSangre}`}>Sangre / plasma</span>
+            <span className={s.headCell}>Parámetro</span>
             <span className={`${s.headCell} ${s.headOrina}`}>Orina</span>
           </div>
 
           {PARAMETROS.map((p) => (
             <div key={p.id} className={s.row}>
-              <div className={s.param}>{p.parametro}</div>
               {renderSlot(p.id, 'sangre')}
+              <div className={s.param}>{p.parametro}</div>
               {renderSlot(p.id, 'orina')}
             </div>
           ))}
