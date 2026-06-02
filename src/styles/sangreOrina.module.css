@@ -77,6 +77,10 @@
 .board {
   position: relative;
   margin-bottom: 22px;
+  /* Recorta el tubo (que se extiende más allá del tablero) a esta caja, para
+     que el tramo recto del conducto cubra todas las filas sin que las bocas
+     invadan la barra de progreso (arriba) ni el banco (abajo). */
+  overflow: hidden;
 }
 
 /* ───────────────────────────────────────────────────────────────────────────
@@ -90,7 +94,10 @@
    ─────────────────────────────────────────────────────────────────────────── */
 .tubes {
   position: absolute;
-  inset: 0;
+  /* Se extiende por encima y por debajo del tablero para que las BOCAS
+     elípticas del vaso queden fuera del área de filas y el tramo recto del
+     lumen cubra todas las filas (incluida la última, PCO2). */
+  inset: -120px 0 -110px 0;
   display: grid;
   grid-template-columns: var(--col-param) 1fr 1fr;
   column-gap: var(--gap);
@@ -102,10 +109,8 @@
   position: relative;
   align-self: stretch;
   justify-self: center;
-  width: 86%;
-  max-width: 190px;
-  /* El vaso arranca debajo de los encabezados de columna */
-  margin-top: 34px;
+  width: 94%;
+  max-width: 280px;
   overflow: hidden;
 }
 
@@ -115,8 +120,8 @@
 .conducto::before {
   content: '';
   position: absolute;
-  top: 15%;
-  bottom: 10%;
+  top: 8%;
+  bottom: 6%;
   left: 50%;
   transform: translateX(-50%);
   background-repeat: no-repeat;
@@ -134,20 +139,21 @@
   background-size: 100% 100%;
 }
 
-/* ── ARTERIA (sangre) ── lumen ~16% de ancho, centrado ── */
+/* ── ARTERIA (sangre) ── el fluido se hace MÁS ancho que el lumen: las paredes
+   opacas del vaso (::after, encima) recortan el sobrante y el canal queda lleno. ── */
 .arteria { grid-column: 2; }
 .arteria::before {
-  width: 20%;
+  width: 34%;
   background-image: url('/laboratorio/excretor/fluido-sangre.webp');
 }
 .arteria::after {
   background-image: url('/laboratorio/excretor/arteria.webp');
 }
 
-/* ── URÉTER (orina) ── lumen más fino ~10%, centrado ── */
+/* ── URÉTER (orina) ── lumen más fino, mismo principio (fluido > lumen) ── */
 .conducto { grid-column: 3; }
 .conducto::before {
-  width: 14%;
+  width: 26%;
   background-image: url('/laboratorio/excretor/fluido-orina.webp');
 }
 .conducto::after {
