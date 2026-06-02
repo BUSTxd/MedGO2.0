@@ -115,7 +115,7 @@
 }
 
 /* ── FLUIDO (::before) ── recortado a la banda recta del lumen, centrado.
-   Sprite de 4 celdas en fila → background-size 400%; steps(4) cicla fase 1→4. ── */
+   Sprite de 8 celdas en fila → background-size 800%; steps(8) cicla fase 1→8. ── */
 .arteria::before,
 .conducto::before {
   content: '';
@@ -125,8 +125,8 @@
   left: 50%;
   transform: translateX(-50%);
   background-repeat: no-repeat;
-  background-size: 400% 100%;
-  animation: svsoFluido 1s steps(4, jump-none) infinite;
+  background-size: 800% 100%;
+  animation: svsoFluido 1.4s steps(8, jump-none) infinite;
 }
 
 /* ── VASO (::after) ── imagen estirada a toda la altura de la columna ── */
@@ -153,7 +153,7 @@
 /* ── URÉTER (orina) ── lumen más fino, mismo principio (fluido > lumen) ── */
 .conducto { grid-column: 3; }
 .conducto::before {
-  width: 26%;
+  width: 36%;
   background-image: url('/laboratorio/excretor/fluido-orina.webp');
 }
 .conducto::after {
