@@ -114,8 +114,7 @@
   overflow: hidden;
 }
 
-/* ── FLUIDO (::before) ── recortado a la banda recta del lumen, centrado.
-   Sprite de 8 celdas en fila → background-size 800%; steps(8) cicla fase 1→8. ── */
+/* ── FLUIDO (::before) ── propiedades comunes: posición centrada en el lumen ── */
 .arteria::before,
 .conducto::before {
   content: '';
@@ -125,8 +124,7 @@
   left: 50%;
   transform: translateX(-50%);
   background-repeat: no-repeat;
-  background-size: 800% 100%;
-  animation: svsoFluido 1.4s steps(8, jump-none) infinite;
+  background-size: 100% 100%;
 }
 
 /* ── VASO (::after) ── imagen estirada a toda la altura de la columna ── */
@@ -139,22 +137,25 @@
   background-size: 100% 100%;
 }
 
-/* ── ARTERIA (sangre) ── el fluido se hace MÁS ancho que el lumen: las paredes
-   opacas del vaso (::after, encima) recortan el sobrante y el canal queda lleno. ── */
+/* ── ARTERIA (sangre) ── 17 frames, paredes del vaso recortan el sobrante ── */
 .arteria { grid-column: 2; }
 .arteria::before {
   width: 34%;
   background-image: url('/laboratorio/excretor/fluido-sangre.webp');
+  background-size: 1700% 100%;
+  animation: svsoFluido 1.7s steps(17, jump-none) infinite;
 }
 .arteria::after {
   background-image: url('/laboratorio/excretor/arteria.webp');
 }
 
-/* ── URÉTER (orina) ── lumen más fino, mismo principio (fluido > lumen) ── */
+/* ── URÉTER (orina) ── 16 frames, mismo principio ── */
 .conducto { grid-column: 3; }
 .conducto::before {
   width: 36%;
   background-image: url('/laboratorio/excretor/fluido-orina.webp');
+  background-size: 1600% 100%;
+  animation: svsoFluido 1.6s steps(16, jump-none) infinite;
 }
 .conducto::after {
   background-image: url('/laboratorio/excretor/ureter.webp');
