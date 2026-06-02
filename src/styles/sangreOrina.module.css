@@ -77,27 +77,17 @@
 .board {
   position: relative;
   margin-bottom: 22px;
-  /* Recorta el tubo (que se extiende más allá del tablero) a esta caja, para
-     que el tramo recto del conducto cubra todas las filas sin que las bocas
-     invadan la barra de progreso (arriba) ni el banco (abajo). */
-  overflow: hidden;
 }
 
 /* ───────────────────────────────────────────────────────────────────────────
    Columnas anatómicas: Arteria (sangre) y Uréter (orina).
-   Cada columna usa una IMAGEN de vaso (pixel-art) con el lumen transparente.
-   Estructura de capas dentro de .arteria / .conducto (overflow: hidden):
-     ::before = FLUIDO (sprite de 4 fotogramas, animado por fases) — capa de abajo
-     ::after  = VASO (imagen) — capa de arriba; su lumen transparente revela el
-                fluido y sus paredes recortan el sobrante.
-   Imágenes = objeto físico → iguales en claro y oscuro.
+   ::before = FLUIDO (sprite animado por fases) — capa de abajo
+   ::after  = VASO (imagen) — capa de arriba; lumen transparente revela fluido.
+   mask-image fade suave arriba/abajo: oculta bocas elípticas y da corte limpio.
    ─────────────────────────────────────────────────────────────────────────── */
 .tubes {
   position: absolute;
-  /* Se extiende por encima y por debajo del tablero para que las BOCAS
-     elípticas del vaso queden fuera del área de filas y el tramo recto del
-     lumen cubra todas las filas (incluida la última, PCO2). */
-  inset: -120px 0 -110px 0;
+  inset: 0;
   display: grid;
   grid-template-columns: var(--col-param) 1fr 1fr;
   column-gap: var(--gap);
@@ -111,23 +101,27 @@
   justify-self: center;
   width: 94%;
   max-width: 280px;
+  /* Arranca debajo del encabezado de columna para no taparlo */
+  margin-top: 34px;
   overflow: hidden;
+  /* Degradado suave en bordes: oculta las bocas elípticas del vaso */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
-/* ── FLUIDO (::before) ── propiedades comunes: posición centrada en el lumen ── */
+/* ── FLUIDO (::before) ── centrado en el lumen, parcialmente cubierto por el vaso ── */
 .arteria::before,
 .conducto::before {
   content: '';
   position: absolute;
-  top: 8%;
-  bottom: 6%;
+  top: 0;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   background-repeat: no-repeat;
-  background-size: 100% 100%;
 }
 
-/* ── VASO (::after) ── imagen estirada a toda la altura de la columna ── */
+/* ── VASO (::after) ── imagen estirada a toda la altura ── */
 .arteria::after,
 .conducto::after {
   content: '';
@@ -137,33 +131,46 @@
   background-size: 100% 100%;
 }
 
-/* ── ARTERIA (sangre) ── 17 frames, paredes del vaso recortan el sobrante ── */
+/* ── ARTERIA (sangre) ── 17 frames; pausa de ~1s tras cada ciclo ── */
 .arteria { grid-column: 2; }
 .arteria::before {
   width: 34%;
   background-image: url('/laboratorio/excretor/fluido-sangre.webp');
   background-size: 1700% 100%;
-  animation: svsoFluido 1.7s steps(17, jump-none) infinite;
+  animation: svsoFluidoSangre 2.7s linear infinite;
 }
 .arteria::after {
   background-image: url('/laboratorio/excretor/arteria.webp');
 }
 
-/* ── URÉTER (orina) ── 16 frames, mismo principio ── */
+/* ── URÉTER (orina) ── 16 frames; lumen más estrecho; pausa de ~1s ── */
 .conducto { grid-column: 3; }
 .conducto::before {
-  width: 36%;
+  width: 20%;
   background-image: url('/laboratorio/excretor/fluido-orina.webp');
   background-size: 1600% 100%;
-  animation: svsoFluido 1.6s steps(16, jump-none) infinite;
+  animation: svsoFluidoOrina 2.6s linear infinite;
 }
 .conducto::after {
   background-image: url('/laboratorio/excretor/ureter.webp');
 }
 
-@keyframes svsoFluido {
-  from { background-position-x: 0%; }
-  to   { background-position-x: 100%; }
+/* Pausa entre ciclos: steps activos hasta el 65%, luego hold en último frame */
+@keyframes svsoFluidoSangre {
+  0% {
+    background-position-x: 0%;
+    animation-timing-function: steps(17, jump-none);
+  }
+  65% { background-position-x: 100%; }
+  100% { background-position-x: 100%; }
+}
+@keyframes svsoFluidoOrina {
+  0% {
+    background-position-x: 0%;
+    animation-timing-function: steps(16, jump-none);
+  }
+  62% { background-position-x: 100%; }
+  100% { background-position-x: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .arteria::before, .conducto::before { animation: none; }
