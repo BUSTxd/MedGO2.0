@@ -36,6 +36,7 @@ export default function SangreVsOrinaPage() {
   const [slots, setSlots] = useState<Slots>(emptySlots);
   const [picked, setPicked] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
+  const [animPaused, setAnimPaused] = useState(false);
 
   // Estado de arrastre (solo cambia en down/up; el movimiento es DOM directo).
   const [dragCarta, setDragCarta] = useState<Carta | null>(null);
@@ -283,7 +284,7 @@ export default function SangreVsOrinaPage() {
 
         {/* Tablero */}
         <div className={s.board}>
-          <div className={s.tubes} aria-hidden>
+          <div className={`${s.tubes} ${animPaused ? s.animPaused : ''}`} aria-hidden>
             <div className={s.arteria} />
             <div className={s.conducto} />
           </div>
@@ -360,6 +361,16 @@ export default function SangreVsOrinaPage() {
           </>
         )}
       </div>
+
+      {/* Botón pausar/reanudar animación (esquina inferior derecha) */}
+      <button
+        className={s.btnAnim}
+        onClick={() => setAnimPaused((p) => !p)}
+        aria-label={animPaused ? 'Reanudar animación' : 'Pausar animación'}
+      >
+        {animPaused ? '▶' : '⏸'}
+        <span>{animPaused ? 'Reanudar' : 'Pausar'}</span>
+      </button>
 
       {/* Clon flotante durante el arrastre */}
       <div ref={ghostRef} className={s.ghost} aria-hidden>
