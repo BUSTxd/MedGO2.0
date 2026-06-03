@@ -139,7 +139,7 @@
   bottom: -12%;
   background-image: url('/laboratorio/excretor/fluido-sangre.webp');
   background-size: 1700% 100%;
-  animation: svsoFluidoSangre 2.7s linear infinite;
+  animation: svsoFluidoSangre 3.4s linear infinite;
 }
 .arteria::after {
   background-image: url('/laboratorio/excretor/arteria.webp');
@@ -153,31 +153,39 @@
   bottom: -14%;
   background-image: url('/laboratorio/excretor/fluido-orina.webp');
   background-size: 1600% 100%;
-  animation: svsoFluidoOrina 2.6s linear infinite;
+  animation: svsoFluidoOrina 1.7s linear infinite;
 }
 .conducto::after {
   background-image: url('/laboratorio/excretor/ureter.webp');
 }
 
-/* Pausa entre ciclos. El ÚLTIMO frame es la transición de vuelta al primero,
-   así que la fase activa termina en el PENÚLTIMO y se sostiene ahí:
-   - sangre 17 frames → muestra frames 0..15 (16 stops) hasta pos 15/16 = 93.75%
-   - orina 16 frames → muestra frames 0..14 (15 stops) hasta pos 14/15 = 93.333% */
+/* SANGRE (17 frames). Fase activa 0→52%: recorre frames 0..15 (steps(16,jump-none)
+   sobre 0→93.75%). Durante la "espera" (52→100%) NO se congela: oscila entre las
+   imágenes 13,14,15,16 (índices 12..15 → 75% / 81.25% / 87.5% / 93.75%) en dos ciclos,
+   con steps(1) por tramo para que el cambio sea discreto (sin emborronar). Luego loop. */
 @keyframes svsoFluidoSangre {
   0% {
     background-position-x: 0%;
     animation-timing-function: steps(16, jump-none);
   }
-  65% { background-position-x: 93.75%; }
-  100% { background-position-x: 93.75%; }
+  52%  { background-position-x: 93.75%;  animation-timing-function: steps(1); } /* img16 */
+  58%  { background-position-x: 75%;     animation-timing-function: steps(1); } /* img13 */
+  64%  { background-position-x: 81.25%;  animation-timing-function: steps(1); } /* img14 */
+  70%  { background-position-x: 87.5%;   animation-timing-function: steps(1); } /* img15 */
+  76%  { background-position-x: 93.75%;  animation-timing-function: steps(1); } /* img16 */
+  82%  { background-position-x: 75%;     animation-timing-function: steps(1); } /* img13 */
+  88%  { background-position-x: 81.25%;  animation-timing-function: steps(1); } /* img14 */
+  94%  { background-position-x: 87.5%;   animation-timing-function: steps(1); } /* img15 */
+  100% { background-position-x: 93.75%; }                                       /* img16 */
 }
+/* ORINA (16 frames). Sin pausa: recorre los 16 frames (incl. el de transición de vuelta
+   al primero) en steps(16,jump-none) sobre 0→100% y reinicia → loop continuo. */
 @keyframes svsoFluidoOrina {
   0% {
     background-position-x: 0%;
-    animation-timing-function: steps(15, jump-none);
+    animation-timing-function: steps(16, jump-none);
   }
-  62% { background-position-x: 93.333%; }
-  100% { background-position-x: 93.333%; }
+  100% { background-position-x: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .arteria::before, .conducto::before { animation: none; }
