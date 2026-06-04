@@ -1,0 +1,577 @@
+/* ═══════════════ Simulador EKG ═══════════════ */
+
+/* ── Intro ── */
+.intro {
+  padding: 22px 28px 6px;
+  text-align: center;
+}
+.kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #d44a4a;
+}
+.h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 6px 0 8px;
+  letter-spacing: -0.01em;
+}
+:global(.dark-mode) .h2 {
+  color: #f0eeff;
+}
+.sub {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.6);
+  max-width: 560px;
+  margin: 0 auto;
+}
+:global(.dark-mode) .sub {
+  color: rgba(240, 238, 255, 0.6);
+}
+
+/* ── Layout principal ── */
+.simWrap {
+  display: grid;
+  grid-template-columns: 1fr 296px;
+  gap: 20px;
+  padding: 18px 28px 8px;
+  align-items: start;
+
+  /* variables de color del esquema cardíaco (heredadas por el SVG) */
+  --ekg-chamber: rgba(59, 158, 221, 0.05);
+  --ekg-chamber-stroke: rgba(0, 0, 0, 0.12);
+}
+:global(.dark-mode) .simWrap {
+  --ekg-chamber: rgba(255, 255, 255, 0.03);
+  --ekg-chamber-stroke: rgba(255, 255, 255, 0.1);
+}
+
+.mainCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* ── Esquema cardíaco ── */
+.heartArea {
+  display: flex;
+  justify-content: center;
+}
+.heartSvg {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  display: block;
+}
+.chamberLabel {
+  fill: rgba(26, 26, 46, 0.42);
+  font-size: 15px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+:global(.dark-mode) .chamberLabel {
+  fill: rgba(240, 238, 255, 0.4);
+}
+.nodeLabel {
+  fill: #fff;
+  font-size: 8.5px;
+  font-weight: 800;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+/* ── Trazado EKG ── */
+.traceArea {
+  height: 232px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+:global(.dark-mode) .traceArea {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.traceWrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.traceCanvas {
+  display: block;
+}
+.scrubHint {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(20, 22, 40, 0.88);
+  border: 1px solid rgba(230, 167, 0, 0.55);
+  padding: 4px 10px;
+  border-radius: 999px;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.scrubHint::before {
+  content: '↔';
+  color: #ffcb45;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* ── Tarjeta de explicación ── */
+.explainCard {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 74, 74, 0.22);
+  background: rgba(212, 74, 74, 0.05);
+}
+:global(.dark-mode) .explainCard {
+  border-color: rgba(212, 74, 74, 0.28);
+  background: rgba(212, 74, 74, 0.08);
+}
+.explainKey {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 6px;
+  line-height: 1.45;
+}
+:global(.dark-mode) .explainKey {
+  color: #f0eeff;
+}
+.explainPhase {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.72);
+  margin: 0;
+}
+:global(.dark-mode) .explainPhase {
+  color: rgba(240, 238, 255, 0.72);
+}
+.explainTag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #d44a4a;
+  background: rgba(212, 74, 74, 0.1);
+  border-radius: 5px;
+  padding: 1px 7px;
+  margin-right: 7px;
+}
+
+/* ── Disclaimer ── */
+.disclaimer {
+  text-align: center;
+  font-size: 11px;
+  color: rgba(26, 26, 46, 0.42);
+  padding: 6px 28px 22px;
+  margin: 0;
+}
+:global(.dark-mode) .disclaimer {
+  color: rgba(240, 238, 255, 0.38);
+}
+
+/* ═══════════════ Viñeta de controles ═══════════════ */
+.controls {
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.7);
+  overflow: hidden;
+  position: sticky;
+  top: 12px;
+}
+:global(.dark-mode) .controls {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.controlsHead {
+  display: none; /* solo visible en móvil (acordeón) */
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+.controlsHeadTitle {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.controlsHeadChevron {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.controlsBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+}
+
+.ctrlGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ctrlLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 46, 0.45);
+}
+:global(.dark-mode) .ctrlLabel {
+  color: rgba(240, 238, 255, 0.45);
+}
+
+/* ── Selector de modo ── */
+.modeSelect {
+  position: relative;
+}
+.modeSelectBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 74, 74, 0.3);
+  background: rgba(212, 74, 74, 0.06);
+  color: #1a1a2e;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+:global(.dark-mode) .modeSelectBtn {
+  color: #f0eeff;
+  background: rgba(212, 74, 74, 0.1);
+}
+.modeMenu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  max-height: 320px;
+  overflow-y: auto;
+}
+:global(.dark-mode) .modeMenu {
+  background: #14162e;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.modeMenuItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: rgba(26, 26, 46, 0.85);
+  cursor: pointer;
+  text-align: left;
+}
+:global(.dark-mode) .modeMenuItem {
+  color: rgba(240, 238, 255, 0.85);
+}
+.modeMenuItem:hover:not(:disabled) {
+  background: rgba(212, 74, 74, 0.08);
+}
+.modeMenuItem:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+.modeMenuItemActive {
+  background: rgba(212, 74, 74, 0.12);
+  font-weight: 700;
+}
+.modeMenuText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.modeDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.soon {
+  font-size: 9.5px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 46, 0.4);
+}
+:global(.dark-mode) .soon {
+  color: rgba(240, 238, 255, 0.4);
+}
+
+/* ── Transporte ── */
+.transport {
+  display: flex;
+  gap: 8px;
+}
+.btnPrimary {
+  flex: 1;
+  padding: 11px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 74, 74, 0.4);
+  background: rgba(212, 74, 74, 0.14);
+  color: #b83838;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.16s;
+}
+.btnPrimary:hover {
+  background: rgba(212, 74, 74, 0.22);
+}
+:global(.dark-mode) .btnPrimary {
+  color: #ff9a9a;
+  background: rgba(212, 74, 74, 0.18);
+}
+.btnGhost {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.02);
+  color: rgba(26, 26, 46, 0.7);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+:global(.dark-mode) .btnGhost {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(240, 238, 255, 0.7);
+}
+.btnGhost:hover {
+  border-color: rgba(212, 74, 74, 0.4);
+}
+.stepNav {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.stepNav .btnGhost {
+  flex: 1;
+}
+
+/* ── Velocidad ── */
+.speedRow {
+  display: flex;
+  gap: 6px;
+}
+.speedBtn {
+  flex: 1;
+  padding: 7px 0;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.02);
+  color: rgba(26, 26, 46, 0.6);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+:global(.dark-mode) .speedBtn {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(240, 238, 255, 0.6);
+}
+.speedBtnActive {
+  background: rgba(212, 74, 74, 0.14);
+  border-color: rgba(212, 74, 74, 0.4);
+  color: #b83838;
+}
+:global(.dark-mode) .speedBtnActive {
+  color: #ff9a9a;
+  background: rgba(212, 74, 74, 0.2);
+}
+
+/* ── Toggles ── */
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 6px 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+.toggleLabel {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: rgba(26, 26, 46, 0.8);
+}
+:global(.dark-mode) .toggleLabel {
+  color: rgba(240, 238, 255, 0.8);
+}
+.toggleTrack {
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.15);
+  position: relative;
+  flex-shrink: 0;
+  transition: background 0.18s;
+}
+:global(.dark-mode) .toggleTrack {
+  background: rgba(255, 255, 255, 0.16);
+}
+.toggleOn {
+  background: #2DC99A;
+}
+:global(.dark-mode) .toggleOn {
+  background: #2DC99A;
+}
+.toggleThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.18s;
+}
+.toggleOn .toggleThumb {
+  transform: translateX(16px);
+}
+
+/* ── Leyenda ── */
+.legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  line-height: 1.3;
+  color: rgba(26, 26, 46, 0.7);
+}
+:global(.dark-mode) .legendItem {
+  color: rgba(240, 238, 255, 0.7);
+}
+.legendDot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Mini-derivaciones (modos de bloqueo de rama) ── */
+.miniLeads {
+  display: flex;
+  gap: 12px;
+}
+.miniLead {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.miniLeadName {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgba(26, 26, 46, 0.5);
+}
+:global(.dark-mode) .miniLeadName {
+  color: rgba(240, 238, 255, 0.5);
+}
+.miniLeadCanvas {
+  position: relative;
+  height: 90px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+:global(.dark-mode) .miniLeadCanvas {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.miniLeadCanvas canvas {
+  display: block;
+}
+
+/* ═══════════════ Responsive ═══════════════ */
+@media (max-width: 920px) {
+  .simWrap {
+    grid-template-columns: 1fr;
+    padding: 16px 16px 8px;
+  }
+  .controls {
+    position: static;
+  }
+  .controlsHead {
+    display: flex;
+  }
+  .controlsBody {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease, padding 0.25s ease;
+  }
+  .controlsOpen .controlsBody {
+    max-height: 900px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .intro {
+    padding: 16px 16px 4px;
+  }
+  .h2 {
+    font-size: 19px;
+  }
+  .traceArea {
+    height: 200px;
+  }
+}

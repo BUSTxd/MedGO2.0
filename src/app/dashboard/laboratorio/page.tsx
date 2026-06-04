@@ -74,7 +74,7 @@ const LAB_TOPICS: Topic[] = [
     ),
     experiments: [
       { name: 'Ciclo Cardíaco',          desc: 'Fases de sístole y diástole y eventos valvulares',  color: '#2DC99A' },
-      { name: 'Electrocardiograma',      desc: 'Interpretación de ondas, intervalos y ritmos',     color: '#F5A623' },
+      { name: 'Electrocardiograma',      desc: 'Del impulso eléctrico a la onda: conducción sincronizada con DII', color: '#F5A623', href: '/dashboard/laboratorio/electrocardiograma' },
       { name: 'Presión Arterial',        desc: 'Regulación y medición de la presión sanguínea',   color: '#E85B4A' },
       { name: 'Gasto Cardíaco',          desc: 'Determinantes del volumen sistólico y frecuencia', color: '#2DC99A' },
       { name: 'Auscultación Cardíaca',   desc: 'Identificación de ruidos y soplos cardíacos',     color: '#F5A623' },
