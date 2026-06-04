@@ -271,6 +271,7 @@
 }
 .param {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -279,6 +280,16 @@
   color: #1a1a2e;
 }
 :global(.dark-mode) .param { color: #f0eeff; }
+
+/* Abreviatura entre paréntesis junto al nombre del parámetro (pista trasladada
+   desde las cartas: "FEHCO3−", "BUN"). Tenue para no competir con el nombre. */
+.alias {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.55;
+  margin-left: 4px;
+  white-space: nowrap;
+}
 
 /* ─── SLOT (zona soltable) ─── */
 .slot {
@@ -431,6 +442,15 @@
   gap: 12px;
   margin: 22px 0 6px;
 }
+/* Botón "Modo aprendizaje": acento didáctico (azul) para distinguirlo. */
+.btnAprender {
+  border-color: rgba(59, 158, 221, 0.45);
+  color: #2f86c4;
+}
+:global(.dark-mode) .btnAprender {
+  border-color: rgba(124, 192, 238, 0.4);
+  color: #7cc0ee;
+}
 
 /* ─── PUNTAJE ─── */
 .score {
@@ -467,29 +487,99 @@
 .explainHead {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 .explainParam {
   font-size: 14px;
   font-weight: 800;
   color: #1a1a2e;
+  margin-right: auto; /* empuja los badges a la derecha */
 }
 :global(.dark-mode) .explainParam { color: #f0eeff; }
-.badgeOk, .badgeBad {
+
+/* Badge por compartimento: etiqueta "Sangre"/"Orina" + pastilla ✓/✗ */
+.cellBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: 11px;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: rgba(26, 26, 46, 0.5);
+}
+:global(.dark-mode) .cellBadge { color: rgba(240, 238, 255, 0.5); }
+.badgeOk, .badgeBad {
+  font-size: 11px;
+  font-weight: 800;
   border-radius: 999px;
-  padding: 2px 9px;
+  padding: 1px 8px;
+  min-width: 20px;
+  text-align: center;
 }
 .badgeOk { background: rgba(45, 201, 154, 0.16); color: #1a7a5c; }
 .badgeBad { background: rgba(232, 91, 74, 0.16); color: #b03a2c; }
 :global(.dark-mode) .badgeOk { color: #6ee7c0; }
 :global(.dark-mode) .badgeBad { color: #ff9b8c; }
+
+/* Bloques de explicación: Sangre (rojo) y Orina (amarillo) lado a lado. */
+.explainGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.explainBlood,
+.explainUrine,
+.explainMech {
+  border-radius: 12px;
+  padding: 11px 13px;
+}
+.explainBlood {
+  border: 1px solid rgba(232, 91, 74, 0.35);
+  border-left: 3px solid var(--rojo);
+  background: rgba(232, 91, 74, 0.06);
+}
+.explainUrine {
+  border: 1px solid rgba(230, 167, 0, 0.35);
+  border-left: 3px solid var(--amarillo);
+  background: rgba(230, 167, 0, 0.07);
+}
+.explainMech {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-left: 3px solid rgba(59, 158, 221, 0.6);
+  background: rgba(59, 158, 221, 0.05);
+}
+:global(.dark-mode) .explainBlood { background: rgba(232, 91, 74, 0.1); }
+:global(.dark-mode) .explainUrine { background: rgba(230, 167, 0, 0.1); }
+:global(.dark-mode) .explainMech {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(59, 158, 221, 0.08);
+}
+
+/* Título de cada bloque ("En sangre", "En orina", "Mecanismo") */
+.explainBlockTitle {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+}
+.explainBlood .explainBlockTitle { color: var(--rojo); }
+.explainUrine .explainBlockTitle { color: var(--amarillo); }
+.explainMech .explainBlockTitle { color: #2f86c4; }
+:global(.dark-mode) .explainBlood .explainBlockTitle { color: #ff8472; }
+:global(.dark-mode) .explainUrine .explainBlockTitle { color: #ffcb45; }
+:global(.dark-mode) .explainMech .explainBlockTitle { color: #7cc0ee; }
+
 .explainText {
   font-size: 13px;
   line-height: 1.55;
   color: rgba(26, 26, 46, 0.72);
+  margin: 0;
 }
 :global(.dark-mode) .explainText { color: rgba(240, 238, 255, 0.7); }
 .hint {
@@ -523,6 +613,9 @@
     /* En la tarjeta apilada el parámetro vuelve a ser el título (arriba),
        alineado a la izquierda — el orden del DOM ahora es sangre/param/orina. */
     order: -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
     justify-content: flex-start;
     text-align: left;
     font-size: 15px;
@@ -535,4 +628,20 @@
   .slotCompMobile { display: block; }
   /* Sin tubo detrás → la carta usa el ancho completo de la tarjeta. */
   .slot .carta { width: 100%; max-width: none; }
+
+  /* ── Botonera cómoda para el pulgar: cada botón a ancho completo ── */
+  .actions { flex-direction: column; gap: 10px; }
+  .actions > button { width: 100%; }
+
+  /* ── Explicaciones más ligeras en celular ── */
+  .explainItem { padding: 12px; }
+  /* Sangre y orina apiladas, con menos separación y padding. */
+  .explainGrid { grid-template-columns: 1fr; gap: 8px; margin-bottom: 8px; }
+  .explainBlood,
+  .explainUrine,
+  .explainMech { padding: 9px 11px; }
+  .explainText { font-size: 12.5px; line-height: 1.5; }
+  /* Badges debajo del nombre en su propia línea, sin apretar. */
+  .explainHead { gap: 6px 10px; }
+  .explainParam { flex-basis: 100%; margin-right: 0; }
 }

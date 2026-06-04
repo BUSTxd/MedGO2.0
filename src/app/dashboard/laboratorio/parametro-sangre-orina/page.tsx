@@ -190,6 +190,18 @@ export default function SangreVsOrinaPage() {
     setChecked(false);
   };
 
+  // ─── Modo aprendizaje: autocompleta todo correcto y abre las explicaciones ───
+  const aprender = () => {
+    const next: Slots = {};
+    for (const p of PARAMETROS) {
+      next[slotKey(p.id, 'sangre')] = cartaById.get(`${p.id}-sangre`) ?? null;
+      next[slotKey(p.id, 'orina')] = cartaById.get(`${p.id}-orina`) ?? null;
+    }
+    setSlots(next);
+    setPicked(null);
+    setChecked(true);
+  };
+
   // Limpieza por si se desmonta a mitad de un arrastre.
   useEffect(() => {
     return () => {
@@ -298,7 +310,10 @@ export default function SangreVsOrinaPage() {
           {PARAMETROS.map((p) => (
             <div key={p.id} className={s.row}>
               {renderSlot(p.id, 'sangre')}
-              <div className={s.param}>{p.parametro}</div>
+              <div className={s.param}>
+                {p.parametro}
+                {p.alias && <span className={s.alias}>({p.alias})</span>}
+              </div>
               {renderSlot(p.id, 'orina')}
             </div>
           ))}
@@ -326,6 +341,9 @@ export default function SangreVsOrinaPage() {
           <button className={base.navBtn} onClick={reiniciar}>
             Reiniciar
           </button>
+          <button className={`${base.navBtn} ${s.btnAprender}`} onClick={aprender}>
+            🎓 Modo aprendizaje
+          </button>
         </div>
 
         {/* Resultado */}
@@ -339,19 +357,40 @@ export default function SangreVsOrinaPage() {
               {PARAMETROS.map((p) => {
                 const okS = slots[slotKey(p.id, 'sangre')]?.id === slotKey(p.id, 'sangre');
                 const okO = slots[slotKey(p.id, 'orina')]?.id === slotKey(p.id, 'orina');
-                const full = okS && okO;
                 return (
                   <div key={p.id} className={s.explainItem}>
                     <div className={s.explainHead}>
-                      <span className={s.explainParam}>{p.parametro}</span>
-                      <span className={full ? s.badgeOk : s.badgeBad}>
-                        {full ? '✓ Correcto' : '✗ Revisar'}
+                      <span className={s.explainParam}>
+                        {p.parametro}
+                        {p.alias && <span className={s.alias}>({p.alias})</span>}
+                      </span>
+                      <span className={s.cellBadge}>
+                        Sangre <span className={okS ? s.badgeOk : s.badgeBad}>{okS ? '✓' : '✗'}</span>
+                      </span>
+                      <span className={s.cellBadge}>
+                        Orina <span className={okO ? s.badgeOk : s.badgeBad}>{okO ? '✓' : '✗'}</span>
                       </span>
                     </div>
-                    <p className={s.explainText}>{p.explicacion}</p>
-                    {!full && (
+
+                    <div className={s.explainGrid}>
+                      <div className={s.explainBlood}>
+                        <span className={s.explainBlockTitle}>En sangre</span>
+                        <p className={s.explainText}>{p.explSangre}</p>
+                      </div>
+                      <div className={s.explainUrine}>
+                        <span className={s.explainBlockTitle}>En orina</span>
+                        <p className={s.explainText}>{p.explOrina}</p>
+                      </div>
+                    </div>
+
+                    <div className={s.explainMech}>
+                      <span className={s.explainBlockTitle}>Mecanismo</span>
+                      <p className={s.explainText}>{p.mecanismo}</p>
+                    </div>
+
+                    {(!okS || !okO) && (
                       <p className={s.hint}>
-                        ⚠ Revisa si este valor corresponde a sangre o a orina.
+                        ⚠ Revisa si el valor corresponde a sangre o a orina.
                       </p>
                     )}
                   </div>
