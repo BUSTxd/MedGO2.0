@@ -52,7 +52,7 @@ export default function HeartSchema({ phase, showEctopic = false }: Props) {
     };
   }
 
-  const imp = phase?.impulse ?? null;
+  const imps = phase?.impulse ?? [];
   const impColor = COLORS[phase?.color ?? 'yellow'];
 
   return (
@@ -124,9 +124,9 @@ export default function HeartSchema({ phase, showEctopic = false }: Props) {
         strokeLinecap="round"
         {...pathStroke('lbb')}
       />
-      {/* Red de Purkinje: ramitas en la base de ambos ventrículos */}
-      <PurkinjeBranch tip={NODES.rbbTip} dir={-1} {...pathStroke('purkinje')} />
-      <PurkinjeBranch tip={NODES.lbbTip} dir={1} {...pathStroke('purkinje')} />
+      {/* Red de Purkinje: ramitas en la base de ambos ventrículos (por lado) */}
+      <PurkinjeBranch tip={NODES.rbbTip} dir={-1} {...pathStroke('purkinjeR')} />
+      <PurkinjeBranch tip={NODES.lbbTip} dir={1} {...pathStroke('purkinjeL')} />
 
       {/* ── Nodos ── */}
       <ConductionNode pos={NODES.sa} style={glowOf('sa')} r={11} label="NS" />
@@ -161,9 +161,9 @@ export default function HeartSchema({ phase, showEctopic = false }: Props) {
         />
       )}
 
-      {/* ── Impulso eléctrico ── */}
-      {imp && (
-        <g style={{ transition: 'transform 0.05s linear' }}>
+      {/* ── Impulso(s) eléctrico(s) — pueden ser dos al dividirse en las ramas ── */}
+      {imps.map((imp, i) => (
+        <g key={i}>
           <circle cx={imp.x} cy={imp.y} r={18} fill={hexToRgba(impColor, 0.18)} />
           <circle cx={imp.x} cy={imp.y} r={11} fill={hexToRgba(impColor, 0.35)} />
           <circle
@@ -174,7 +174,7 @@ export default function HeartSchema({ phase, showEctopic = false }: Props) {
             style={{ filter: `drop-shadow(0 0 8px ${impColor})` }}
           />
         </g>
-      )}
+      ))}
     </svg>
   );
 }

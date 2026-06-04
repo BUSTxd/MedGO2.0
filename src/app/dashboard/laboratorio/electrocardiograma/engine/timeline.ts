@@ -21,11 +21,30 @@ function norm(t: number, a: number, b: number): number {
 }
 
 const ATRIA_PATH = [NODES.sa, { x: 178, y: 140 }, NODES.av];
-const VENTRICLE_PATH = [NODES.av, NODES.his, NODES.fork, { x: 200, y: 284 }];
+const HIS_PATH = [NODES.av, NODES.his, NODES.fork];
 const ECTOPIC_PATH = [ECTOPIC, { x: 175, y: 280 }, { x: 240, y: 280 }];
 
 const PSTART = 55;
 const PEND = 150;
+
+// Fracción del QRS en la que el impulso baja por el His hasta la bifurcación;
+// a partir de ahí se DIVIDE en las dos ramas.
+const SPLIT = 0.4;
+
+/**
+ * Posiciones del impulso durante el QRS. Antes de la bifurcación es un único
+ * punto bajando por el His; después se divide en las ramas que conducen.
+ * @param branches qué ramas conducen ('both' normal, 'rbb'/'lbb' = solo esa)
+ */
+function qrsImpulses(f: number, branches: 'both' | 'rbb' | 'lbb'): { x: number; y: number }[] {
+  if (f < SPLIT) return [lerpPath(HIS_PATH, f / SPLIT)];
+  const g = (f - SPLIT) / (1 - SPLIT);
+  const right = lerpPath([NODES.fork, NODES.rbbTip], g);
+  const left = lerpPath([NODES.fork, NODES.lbbTip], g);
+  if (branches === 'rbb') return [right];
+  if (branches === 'lbb') return [left];
+  return [right, left];
+}
 
 function atriaPhase(tBeat: number): PhaseState {
   const f = norm(tBeat, PSTART, PEND);
@@ -39,7 +58,7 @@ function atriaPhase(tBeat: number): PhaseState {
       ra: { color: 'blue', glow: 0.85 },
       la: { color: 'blue', glow: 0.55 + f * 0.3 },
     },
-    impulse: lerpPath(ATRIA_PATH, f),
+    impulse: [lerpPath(ATRIA_PATH, f)],
   };
 }
 
@@ -74,7 +93,7 @@ export function conduction(tBeat: number, opts: ConductionOpts = {}): PhaseState
       explanation: opts.avMessage ?? 'Retraso nodal AV: permite el llenado ventricular antes de la contracción.',
       color: col,
       active: { av: { color: col, glow: 1 } },
-      impulse: NODES.av,
+      impulse: [NODES.av],
     };
   }
 
@@ -83,6 +102,8 @@ export function conduction(tBeat: number, opts: ConductionOpts = {}): PhaseState
     const f = norm(tBeat, prEnd, qrsEnd);
     if (opts.block) {
       const good = opts.block === 'rbb' ? 'lbb' : 'rbb';
+      const goodPk = opts.block === 'rbb' ? 'purkinjeL' : 'purkinjeR';
+      const blockedPk = opts.block === 'rbb' ? 'purkinjeR' : 'purkinjeL';
       const lateV = opts.block === 'rbb' ? 'rv' : 'lv';
       const earlyV = opts.block === 'rbb' ? 'lv' : 'rv';
       const side = opts.block === 'rbb' ? 'derecha' : 'izquierda';
@@ -90,33 +111,36 @@ export function conduction(tBeat: number, opts: ConductionOpts = {}): PhaseState
       return {
         segment: 'QRS',
         ekgLabel: 'QRS ancho',
-        explanation: `Bloqueo de rama ${side}: el ventrículo ${lateName} se activa tarde, célula a célula. El QRS se ensancha.`,
+        explanation: `Bloqueo de rama ${side}: el ventrículo ${lateName} no recibe el impulso por su rama (en rojo) y se activa tarde. El QRS se ensancha.`,
         color: 'yellow',
         active: {
           his: { color: 'yellow', glow: 1 },
           [good]: { color: 'yellow', glow: Math.min(1, f * 1.6) },
-          [opts.block]: { color: 'red', glow: 1 },
+          [goodPk]: { color: 'yellow', glow: Math.max(0, f * 1.4 - 0.4) },
           [earlyV]: { color: 'yellow', glow: Math.max(0, f - 0.2) },
-          [lateV]: { color: 'yellow', glow: Math.max(0, f - 0.55) },
-          purkinje: { color: 'yellow', glow: Math.max(0, f * 1.2 - 0.3) },
+          // Lado bloqueado: rama, Purkinje y cámara en rojo.
+          [opts.block]: { color: 'red', glow: 1 },
+          [blockedPk]: { color: 'red', glow: 1 },
+          [lateV]: { color: 'red', glow: 1 },
         },
-        impulse: lerpPath(VENTRICLE_PATH, f),
+        impulse: qrsImpulses(f, good as 'rbb' | 'lbb'),
       };
     }
     return {
       segment: 'QRS',
       ekgLabel: 'Complejo QRS',
-      explanation: 'Despolarización ventricular: conducción rápida por His, ramas y Purkinje. QRS estrecho.',
+      explanation: 'Despolarización ventricular: el impulso se divide por ambas ramas y la red de Purkinje. QRS estrecho.',
       color: 'yellow',
       active: {
         his: { color: 'yellow', glow: 1 },
         rbb: { color: 'yellow', glow: Math.min(1, f * 1.6) },
         lbb: { color: 'yellow', glow: Math.min(1, f * 1.6) },
-        purkinje: { color: 'yellow', glow: Math.max(0, f * 1.4 - 0.4) },
+        purkinjeR: { color: 'yellow', glow: Math.max(0, f * 1.4 - 0.4) },
+        purkinjeL: { color: 'yellow', glow: Math.max(0, f * 1.4 - 0.4) },
         rv: { color: 'yellow', glow: Math.max(0, f - 0.3) },
         lv: { color: 'yellow', glow: Math.max(0, f - 0.3) },
       },
-      impulse: lerpPath(VENTRICLE_PATH, f),
+      impulse: qrsImpulses(f, 'both'),
     };
   }
 
@@ -127,7 +151,7 @@ export function conduction(tBeat: number, opts: ConductionOpts = {}): PhaseState
       explanation: 'Ventrículos completamente despolarizados: fase inicial de la repolarización.',
       color: 'yellow',
       active: { rv: { color: 'yellow', glow: 0.4 }, lv: { color: 'yellow', glow: 0.4 } },
-      impulse: null,
+      impulse: [],
     };
   }
 
@@ -139,7 +163,7 @@ export function conduction(tBeat: number, opts: ConductionOpts = {}): PhaseState
       explanation: 'Repolarización ventricular: los ventrículos recuperan su estado de reposo.',
       color: 'yellow',
       active: { rv: { color: 'yellow', glow: fade * 0.6 }, lv: { color: 'yellow', glow: fade * 0.6 } },
-      impulse: null,
+      impulse: [],
     };
   }
 
@@ -159,18 +183,16 @@ export function sinusPhase(tBeat: number): PhaseState {
 export function blockedBeat(tBeat: number, site: 'av' | 'his', message: string): PhaseState {
   if (tBeat >= PSTART && tBeat < PEND) return atriaPhase(tBeat);
   if (tBeat >= PEND && tBeat < 210) {
-    const node = site === 'av' ? 'av' : 'his';
     return {
       segment: 'PRseg',
       ekgLabel: 'P bloqueada',
       explanation: message,
       color: 'red',
-      active: {
-        av: { color: site === 'av' ? 'red' : 'green', glow: 1 },
-        ...(site === 'his' ? { his: { color: 'red' as const, glow: 1 } } : {}),
-        [node]: { color: 'red', glow: 1 },
-      },
-      impulse: site === 'av' ? NODES.av : NODES.his,
+      active:
+        site === 'av'
+          ? { av: { color: 'red', glow: 1 } }
+          : { av: { color: 'green', glow: 0.7 }, his: { color: 'red', glow: 1 } },
+      impulse: [site === 'av' ? NODES.av : NODES.his],
     };
   }
   return {
@@ -179,7 +201,7 @@ export function blockedBeat(tBeat: number, site: 'av' | 'his', message: string):
     explanation: message,
     color: 'red',
     active: {},
-    impulse: null,
+    impulse: [],
   };
 }
 
@@ -207,9 +229,10 @@ export function ventricularPhase(
         ectopic: opts.ectopic ? { color: 'orange', glow: 1 - f * 0.3 } : undefined,
         rv: { color: focusColor, glow: Math.min(1, 0.4 + f) },
         lv: { color: focusColor, glow: Math.max(0, f - 0.25) },
-        purkinje: { color: focusColor, glow: f * 0.6 },
+        purkinjeR: { color: focusColor, glow: f * 0.6 },
+        purkinjeL: { color: focusColor, glow: Math.max(0, f * 0.6 - 0.2) },
       },
-      impulse: lerpPath(ECTOPIC_PATH, f),
+      impulse: [lerpPath(ECTOPIC_PATH, f)],
     };
   }
   if (tBeat < stEnd) {
@@ -219,7 +242,7 @@ export function ventricularPhase(
       explanation: opts.message,
       color: focusColor,
       active: { rv: { color: focusColor, glow: 0.35 }, lv: { color: focusColor, glow: 0.35 } },
-      impulse: null,
+      impulse: [],
     };
   }
   if (tBeat < tEnd) {
@@ -230,7 +253,7 @@ export function ventricularPhase(
       explanation: 'Repolarización anómala: la onda T es opuesta al QRS (discordante).',
       color: focusColor,
       active: { rv: { color: focusColor, glow: fade * 0.5 }, lv: { color: focusColor, glow: fade * 0.5 } },
-      impulse: null,
+      impulse: [],
     };
   }
   return restPhase(tBeat);
@@ -244,7 +267,7 @@ export function restPhase(tBeat: number): PhaseState {
     explanation: 'Reposo eléctrico entre latidos. El intervalo RR define la frecuencia cardíaca.',
     color: 'gray',
     active: {},
-    impulse: null,
+    impulse: [],
   };
 }
 

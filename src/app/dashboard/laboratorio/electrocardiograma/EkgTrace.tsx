@@ -4,7 +4,7 @@
 // En pausa, arrastrar el cursor mueve la variable de tiempo compartida (scrub),
 // igual que mover la línea de tiempo de un video: NO deforma la onda, la recorre.
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { PhaseState } from './engine/types';
 import styles from '@/styles/electrocardiograma.module.css';
 
@@ -37,6 +37,8 @@ export default function EkgTrace({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const draggingRef = useRef(false);
+  // El hint se oculta en cuanto el usuario arrastra el cursor por primera vez.
+  const [hasScrubbed, setHasScrubbed] = useState(false);
 
   // Redibuja todo el trazado para el instante actual.
   const draw = useCallback(() => {
@@ -124,12 +126,18 @@ export default function EkgTrace({
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    // Etiqueta del segmento actual junto al cursor
+    // ── Derivación (esquina superior izquierda) ──
+    ctx.font = '800 13px system-ui, sans-serif';
+    ctx.fillStyle = '#E6A700';
+    ctx.textAlign = 'left';
+    ctx.fillText('DII', 10, 21);
+
+    // Etiqueta del segmento actual junto al cursor (sin tapar la "DII")
     if (showLabels && phase) {
       const label = phase.ekgLabel;
       ctx.font = '700 11px system-ui, sans-serif';
       const tw = ctx.measureText(label).width;
-      const lx = Math.min(Math.max(xPlay, tw / 2 + 8), w - tw / 2 - 8);
+      const lx = Math.min(Math.max(xPlay, tw / 2 + 52), w - tw / 2 - 8);
       ctx.fillStyle = dark ? 'rgba(10,15,26,0.85)' : 'rgba(255,255,255,0.9)';
       ctx.fillRect(lx - tw / 2 - 6, 6, tw + 12, 18);
       ctx.fillStyle = '#E6A700';
@@ -137,11 +145,11 @@ export default function EkgTrace({
       ctx.fillText(label, lx, 19);
     }
 
-    // ── Parámetros clínicos (esquina) ──
+    // ── Parámetros clínicos (esquina inferior derecha) ──
     ctx.font = '600 10px system-ui, sans-serif';
     ctx.fillStyle = col.text;
     ctx.textAlign = 'right';
-    ctx.fillText('25 mm/s · 10 mm/mV · DII', w - 8, h - 8);
+    ctx.fillText('25 mm/s · 10 mm/mV', w - 8, h - 8);
   }, [sampleAt, t, windowMs, phase, showGrid, showLabels, paused, dark]);
 
   // Ajuste de tamaño con devicePixelRatio.
@@ -191,6 +199,7 @@ export default function EkgTrace({
   const onPointerDown = (e: React.PointerEvent) => {
     if (!paused) return;
     draggingRef.current = true;
+    if (!hasScrubbed) setHasScrubbed(true);
     e.currentTarget.setPointerCapture(e.pointerId);
     onScrub(timeFromX(e.clientX));
   };
@@ -218,7 +227,9 @@ export default function EkgTrace({
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       />
-      {paused && <span className={styles.scrubHint}>Arrastra el cursor para recorrer el latido</span>}
+      {paused && !hasScrubbed && (
+        <span className={styles.scrubHint}>Arrastra el cursor para recorrer el latido</span>
+      )}
     </div>
   );
 }

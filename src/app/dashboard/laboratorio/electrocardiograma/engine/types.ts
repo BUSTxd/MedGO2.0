@@ -33,7 +33,8 @@ export type StructureId =
   | 'his' // haz de His
   | 'rbb' // rama derecha
   | 'lbb' // rama izquierda
-  | 'purkinje'
+  | 'purkinjeR' // red de Purkinje derecha
+  | 'purkinjeL' // red de Purkinje izquierda
   | 'rv' // ventrículo derecho
   | 'lv' // ventrículo izquierdo
   | 'ectopic'; // foco ectópico
@@ -58,8 +59,8 @@ export interface PhaseState {
   color: ImpulseColor;
   /** Estructuras que deben iluminarse, con su color e intensidad (0-1). */
   active: Partial<Record<StructureId, { color: ImpulseColor; glow: number }>>;
-  /** Posición del impulso a lo largo de la vía de conducción (x,y en coords SVG), o null si no hay impulso móvil. */
-  impulse: { x: number; y: number } | null;
+  /** Posiciones del impulso (x,y en coords SVG). Puede haber 0, 1 o 2 (al dividirse en las ramas). */
+  impulse: { x: number; y: number }[];
 }
 
 /** Una mini-derivación adicional (V1/V6) para los bloqueos de rama. */
