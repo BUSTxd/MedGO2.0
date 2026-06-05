@@ -42,8 +42,8 @@
   align-items: start;
 
   /* variables de color del esquema cardíaco (heredadas por el SVG) */
-  --ekg-chamber: rgba(59, 158, 221, 0.05);
-  --ekg-chamber-stroke: rgba(0, 0, 0, 0.12);
+  --ekg-chamber: rgba(255, 255, 255, 0.22);
+  --ekg-chamber-stroke: rgba(20, 20, 50, 0.50);
 }
 :global(.dark-mode) .simWrap {
   --ekg-chamber: rgba(255, 255, 255, 0.03);

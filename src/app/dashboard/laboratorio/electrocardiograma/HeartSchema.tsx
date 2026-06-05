@@ -65,10 +65,10 @@ export default function HeartSchema({ phase, showEctopic = false }: Props) {
       {/* ── Imagen anatómica de fondo (guía para el estudiante) ── */}
       <image
         href="/laboratorio/electrocardiograma/corazon-anatomico.webp"
-        x={-6}
-        y={-8}
-        width={HEART_VIEWBOX.w + 12}
-        height={HEART_VIEWBOX.h + 16}
+        x={0}
+        y={0}
+        width={HEART_VIEWBOX.w}
+        height={HEART_VIEWBOX.h}
         preserveAspectRatio="xMidYMid meet"
         className={styles.heartAnatomy}
         aria-hidden="true"
