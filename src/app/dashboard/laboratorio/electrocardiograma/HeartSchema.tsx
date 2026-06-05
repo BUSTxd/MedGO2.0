@@ -62,6 +62,18 @@ export default function HeartSchema({ phase, showEctopic = false }: Props) {
       role="img"
       aria-label="Esquema del sistema de conducción cardíaca"
     >
+      {/* ── Imagen anatómica de fondo (guía para el estudiante) ── */}
+      <image
+        href="/laboratorio/electrocardiograma/corazon-anatomico.webp"
+        x={-6}
+        y={-8}
+        width={HEART_VIEWBOX.w + 12}
+        height={HEART_VIEWBOX.h + 16}
+        preserveAspectRatio="xMidYMid meet"
+        className={styles.heartAnatomy}
+        aria-hidden="true"
+      />
+
       {/* ── Cámaras ── */}
       {(['ra', 'la', 'rv', 'lv'] as const).map((id) => {
         const c = CHAMBERS[id];

@@ -68,6 +68,14 @@
   height: auto;
   display: block;
 }
+/* Imagen anatómica de fondo: guía atenuada bajo los recuadros y fibras */
+.heartAnatomy {
+  opacity: 0.3;
+  pointer-events: none;
+}
+:global(.dark-mode) .heartAnatomy {
+  opacity: 0.22;
+}
 .chamberLabel {
   fill: rgba(26, 26, 46, 0.42);
   font-size: 15px;
