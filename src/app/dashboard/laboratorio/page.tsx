@@ -33,6 +33,7 @@ const LAB_TOPICS: Topic[] = [
     icon: <KidneyIcon size={26} white />,
     experiments: [
       { name: 'Parámetro: Sangre vs Orina', desc: 'Arrastra los valores normales al compartimento correcto', color: '#E85B4A', href: '/dashboard/laboratorio/parametro-sangre-orina' },
+      { name: 'Nefrón INTERACTIVO', desc: 'Explora el trayecto del filtrado, los transportadores y su bloqueo en tiempo real', color: '#3b9edd', href: '/dashboard/laboratorio/nefron-interactivo' },
     ],
   },
   {

@@ -1,0 +1,944 @@
+/* Simulador "Nefrón INTERACTIVO". CSS module propio (prefijo nf). Light por
+   defecto + override :global(.dark-mode). Las animaciones respetan
+   prefers-reduced-motion. Reutiliza el wrapper examPage de laboratorio.module.css. */
+
+/* ─────────────── INTRO / CABECERA ─────────────── */
+.bgIcon {
+  position: absolute;
+  right: -40px;
+  bottom: -40px;
+  width: 280px;
+  height: 280px;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.intro {
+  position: relative;
+  z-index: 1;
+  padding: 22px 28px 6px;
+}
+.kicker {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #3b9edd;
+  background: rgba(59, 158, 221, 0.1);
+  border: 1px solid rgba(59, 158, 221, 0.25);
+  border-radius: 999px;
+  padding: 3px 12px;
+  margin-bottom: 10px;
+}
+.h2 {
+  font-size: 23px;
+  font-weight: 800;
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+.sub {
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.62);
+  max-width: 720px;
+  margin: 0;
+}
+:global(.dark-mode) .sub {
+  color: rgba(240, 238, 255, 0.55);
+}
+.disclaimer {
+  display: inline;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* ─────────────── SIMULADOR ─────────────── */
+.sim {
+  position: relative;
+  z-index: 1;
+  padding: 8px 28px 28px;
+}
+
+/* Breadcrumb / navegación */
+.navBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 0 16px;
+  font-size: 13px;
+}
+.crumbBtn {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3b9edd;
+  background: rgba(59, 158, 221, 0.1);
+  border: 1px solid rgba(59, 158, 221, 0.28);
+  border-radius: 999px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: background 0.16s ease;
+}
+.crumbBtn:hover {
+  background: rgba(59, 158, 221, 0.2);
+}
+.crumbSep {
+  color: rgba(26, 26, 46, 0.3);
+}
+:global(.dark-mode) .crumbSep {
+  color: rgba(240, 238, 255, 0.3);
+}
+.crumbCurrent {
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.simBody {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+/* ─────────────── ESCENARIO ─────────────── */
+.stage {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 16px;
+  padding: 16px;
+  min-height: 420px;
+}
+:global(.dark-mode) .stage {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.map {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Zonas del riñón */
+.zoneCortex {
+  fill: #eef4ff;
+}
+.zoneMedulla {
+  fill: #fdf0f1;
+}
+:global(.dark-mode) .zoneCortex {
+  fill: rgba(120, 160, 255, 0.06);
+}
+:global(.dark-mode) .zoneMedulla {
+  fill: rgba(255, 120, 140, 0.06);
+}
+.corticoLine {
+  stroke: rgba(0, 0, 0, 0.18);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 6;
+}
+:global(.dark-mode) .corticoLine {
+  stroke: rgba(255, 255, 255, 0.18);
+}
+.zoneLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  fill: rgba(26, 26, 46, 0.4);
+}
+:global(.dark-mode) .zoneLabel {
+  fill: rgba(240, 238, 255, 0.4);
+}
+.bowman {
+  fill: rgba(120, 120, 160, 0.12);
+  stroke: rgba(120, 120, 160, 0.3);
+  stroke-width: 1.5;
+}
+.badgeText {
+  font-size: 14px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+/* Flujo del filtrado (dash animado) */
+.flow {
+  stroke-dasharray: 5 16;
+  animation: nfFlow 1.1s linear infinite;
+}
+@keyframes nfFlow {
+  to {
+    stroke-dashoffset: -21;
+  }
+}
+
+/* ─────────────── LADO (controles + paneles) ─────────────── */
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ─────────────── CONTROLES ─────────────── */
+.controls {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 16px;
+  overflow: hidden;
+}
+:global(.dark-mode) .controls {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.controlsHead {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: inherit;
+  padding: 14px 16px;
+  cursor: pointer;
+}
+.controlsHeadChevron {
+  display: none;
+}
+.controlsBody {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 0 16px 16px;
+}
+.ctrlGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ctrlLabel {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 46, 0.45);
+}
+:global(.dark-mode) .ctrlLabel {
+  color: rgba(240, 238, 255, 0.4);
+}
+.ctrlHint {
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(26, 26, 46, 0.55);
+  margin: 0;
+}
+:global(.dark-mode) .ctrlHint {
+  color: rgba(240, 238, 255, 0.5);
+}
+
+/* Control segmentado Simple/Avanzado */
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  padding: 4px;
+}
+:global(.dark-mode) .segmented {
+  background: rgba(255, 255, 255, 0.06);
+}
+.segBtn {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(26, 26, 46, 0.6);
+  background: none;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 0;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+:global(.dark-mode) .segBtn {
+  color: rgba(240, 238, 255, 0.55);
+}
+.segBtnActive {
+  background: #3b9edd;
+  color: #fff;
+}
+:global(.dark-mode) .segBtnActive {
+  background: #3b9edd;
+  color: #fff;
+}
+
+/* Toggle */
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  color: inherit;
+  padding: 4px 0;
+  cursor: pointer;
+}
+.toggleLabel {
+  font-weight: 500;
+}
+.toggleTrack {
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.15);
+  position: relative;
+  transition: background 0.18s ease;
+  flex-shrink: 0;
+}
+:global(.dark-mode) .toggleTrack {
+  background: rgba(255, 255, 255, 0.18);
+}
+.toggleOn {
+  background: #2dc99a;
+}
+:global(.dark-mode) .toggleOn {
+  background: #2dc99a;
+}
+.toggleThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.18s ease;
+}
+.toggleOn .toggleThumb {
+  transform: translateX(16px);
+}
+
+.resetBtn {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #E85B4A;
+  background: rgba(232, 91, 74, 0.1);
+  border: 1px solid rgba(232, 91, 74, 0.28);
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.16s ease;
+}
+.resetBtn:hover {
+  background: rgba(232, 91, 74, 0.18);
+}
+
+/* Leyenda */
+.legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+}
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: rgba(26, 26, 46, 0.7);
+}
+:global(.dark-mode) .legendItem {
+  color: rgba(240, 238, 255, 0.65);
+}
+.legendDot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ─────────────── MODO SIMPLE: tarjeta de resumen ─────────────── */
+.simpleInfo {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 16px;
+  padding: 16px;
+}
+:global(.dark-mode) .simpleInfo {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.simpleSummary {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 4px 0 12px;
+}
+
+/* ─────────────── VISTA DE SEGMENTO ─────────────── */
+.segView {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.segHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.segDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.segName {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+}
+.segSubs {
+  font-size: 12px;
+  color: rgba(26, 26, 46, 0.5);
+}
+:global(.dark-mode) .segSubs {
+  color: rgba(240, 238, 255, 0.45);
+}
+.aguaPill {
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 4px 12px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #0c7bb3;
+}
+.aguaPill[data-agua='no'] {
+  background: rgba(148, 163, 184, 0.15);
+  border-color: rgba(148, 163, 184, 0.4);
+  color: rgba(26, 26, 46, 0.6);
+}
+:global(.dark-mode) .aguaPill {
+  color: #7dd3fc;
+}
+:global(.dark-mode) .aguaPill[data-agua='no'] {
+  color: rgba(240, 238, 255, 0.6);
+}
+.segDesc {
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+}
+.segSub {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 46, 0.45);
+  margin: 6px 0 0;
+}
+:global(.dark-mode) .segSub {
+  color: rgba(240, 238, 255, 0.4);
+}
+
+/* Lista de reabsorción */
+.reabsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.reabsItem {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+}
+.reabsDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transform: translateY(1px);
+}
+.reabsSust {
+  font-weight: 700;
+  min-width: 64px;
+}
+.reabsDet {
+  color: rgba(26, 26, 46, 0.62);
+}
+:global(.dark-mode) .reabsDet {
+  color: rgba(240, 238, 255, 0.55);
+}
+
+/* Tarjetas de célula */
+.cellCards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cellCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.025);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+:global(.dark-mode) .cellCard {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.cellCardInfo strong {
+  font-size: 14px;
+}
+.cellCardInfo p {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(26, 26, 46, 0.6);
+  margin: 3px 0 0;
+}
+:global(.dark-mode) .cellCardInfo p {
+  color: rgba(240, 238, 255, 0.55);
+}
+.cellCardBtn {
+  flex-shrink: 0;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: #3b9edd;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 13px;
+  cursor: pointer;
+  transition: filter 0.16s ease;
+}
+.cellCardBtn:hover {
+  filter: brightness(1.08);
+}
+.cellCardNote {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: rgba(26, 26, 46, 0.45);
+}
+:global(.dark-mode) .cellCardNote {
+  color: rgba(240, 238, 255, 0.4);
+}
+
+/* ─────────────── VISTA CELULAR ─────────────── */
+.cellView {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cellBands {
+  display: grid;
+  grid-template-columns: 1fr 8px 1.1fr 8px 1fr;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 54px;
+}
+.cellBand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  padding: 0 4px;
+}
+.bandLumen {
+  background: rgba(56, 189, 248, 0.16);
+  color: #0c7bb3;
+}
+.bandCyto {
+  background: rgba(168, 85, 247, 0.12);
+  color: #7c3aed;
+}
+.bandBlood {
+  background: rgba(232, 91, 74, 0.14);
+  color: #c23b2b;
+}
+:global(.dark-mode) .bandLumen { color: #7dd3fc; }
+:global(.dark-mode) .bandCyto { color: #c4b5fd; }
+:global(.dark-mode) .bandBlood { color: #fca5a5; }
+.membraneBar {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(120, 120, 160, 0.55) 0,
+    rgba(120, 120, 160, 0.55) 5px,
+    transparent 5px,
+    transparent 9px
+  );
+}
+.cellDesc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(26, 26, 46, 0.65);
+  margin: 0;
+}
+:global(.dark-mode) .cellDesc {
+  color: rgba(240, 238, 255, 0.6);
+}
+
+.transList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.transRow {
+  position: relative;
+}
+.transBtn {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-areas:
+    'mem badge ions'
+    'fn  fn    fn';
+  align-items: center;
+  gap: 6px 10px;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.025);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  transition: border-color 0.16s ease, background 0.16s ease;
+}
+.transBtn:hover {
+  border-color: rgba(59, 158, 221, 0.5);
+}
+:global(.dark-mode) .transBtn {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.transMemTag {
+  grid-area: mem;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 46, 0.45);
+}
+:global(.dark-mode) .transMemTag {
+  color: rgba(240, 238, 255, 0.4);
+}
+.transBadge {
+  grid-area: badge;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #3b9edd;
+  border-radius: 8px;
+  padding: 4px 9px;
+  white-space: nowrap;
+}
+:global(.dark-mode) .transBadge {
+  background: rgba(8, 10, 25, 0.6);
+}
+.atp {
+  font-size: 11px;
+}
+.transIons {
+  grid-area: ions;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+.ionChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 999px;
+  padding: 2px 8px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+.ionArrow {
+  font-size: 12px;
+}
+.receptorChip {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(26, 26, 46, 0.5);
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+:global(.dark-mode) .receptorChip {
+  color: rgba(240, 238, 255, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+}
+.transFn {
+  grid-area: fn;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: rgba(26, 26, 46, 0.62);
+}
+:global(.dark-mode) .transFn {
+  color: rgba(240, 238, 255, 0.55);
+}
+.offTag {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #E85B4A;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.transOff .transBtn {
+  border-color: rgba(232, 91, 74, 0.6);
+  background: rgba(232, 91, 74, 0.07);
+}
+.transOff .transBadge {
+  border-color: #E85B4A;
+  opacity: 0.6;
+}
+.transOff .ionChip {
+  opacity: 0.35;
+  filter: grayscale(0.6);
+}
+
+/* Direcciones de partícula-ion */
+.flowRight {
+  animation: nfDriftR 1.1s ease-in-out infinite;
+}
+.flowLeft {
+  animation: nfDriftL 1.1s ease-in-out infinite;
+}
+@keyframes nfDriftR {
+  0% { transform: translateX(-3px); opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { transform: translateX(3px); opacity: 0.6; }
+}
+@keyframes nfDriftL {
+  0% { transform: translateX(3px); opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { transform: translateX(-3px); opacity: 0.6; }
+}
+
+/* Tooltip de transportador */
+.transTooltip {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: calc(100% + 8px);
+  z-index: 20;
+  background: #0f172a;
+  color: #f0eeff;
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+.transTooltip strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+.tipMeta {
+  display: block;
+  font-size: 11px;
+  color: rgba(240, 238, 255, 0.55);
+  margin-bottom: 6px;
+}
+.transTooltip p {
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 0 0 5px;
+}
+.tipClin {
+  color: #7dd3fc;
+}
+.tipAssoc {
+  font-weight: 700;
+  color: #fbbf24 !important;
+}
+.transRow:hover .transTooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─────────────── PANEL DE CONSECUENCIAS ─────────────── */
+.consPanel {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 16px;
+  padding: 16px;
+}
+:global(.dark-mode) .consPanel {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.consTitle {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 10px;
+}
+.consEmpty {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(26, 26, 46, 0.55);
+  margin: 0;
+}
+:global(.dark-mode) .consEmpty {
+  color: rgba(240, 238, 255, 0.5);
+}
+.consResumen {
+  font-size: 13.5px;
+  line-height: 1.5;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+.consGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.consBlock {
+  border-radius: 12px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+}
+.consBlock p {
+  font-size: 12.5px;
+  line-height: 1.45;
+  margin: 4px 0 0;
+}
+.consLabel {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.consBlood {
+  background: rgba(232, 91, 74, 0.08);
+  border-color: rgba(232, 91, 74, 0.22);
+}
+.consUrine {
+  background: rgba(245, 166, 35, 0.1);
+  border-color: rgba(245, 166, 35, 0.25);
+}
+.consAcid {
+  margin-bottom: 10px;
+}
+.abAcid {
+  background: rgba(232, 91, 74, 0.1);
+  border-color: rgba(232, 91, 74, 0.3);
+}
+.abAlk {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+.abNone {
+  background: rgba(148, 163, 184, 0.12);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+.consExtra {
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.22);
+  margin-bottom: 10px;
+}
+.consClinic {
+  background: rgba(45, 201, 154, 0.1);
+  border-color: rgba(45, 201, 154, 0.28);
+}
+
+/* ─────────────── RESPONSIVE ─────────────── */
+@media (max-width: 900px) {
+  .simBody {
+    grid-template-columns: 1fr;
+  }
+  .controls {
+    order: -1;
+  }
+  .controlsHeadChevron {
+    display: inline;
+  }
+  .controlsBody {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease, padding 0.25s ease;
+  }
+  .controlsOpen .controlsBody {
+    max-height: 1200px;
+    padding-bottom: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .intro,
+  .sim {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .h2 {
+    font-size: 19px;
+  }
+  .transBtn {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'mem mem'
+      'badge ions'
+      'fn fn';
+  }
+  .transTooltip {
+    position: static;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    margin-top: 8px;
+  }
+}
+
+/* ─────────────── REDUCED MOTION ─────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .flow,
+  .flowRight,
+  .flowLeft {
+    animation: none;
+  }
+}
