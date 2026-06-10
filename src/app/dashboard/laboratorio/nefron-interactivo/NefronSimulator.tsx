@@ -1,39 +1,38 @@
 'use client';
 // Orquestador del simulador del nefrón. Mantiene la navegación (nefrón → segmento
-// → célula), el modo simple/avanzado, el tema y el conjunto de transportadores
-// desactivados, y compone el mapa, las vistas de zoom, los controles y el panel
-// de consecuencias.
+// → célula), el modo simple/avanzado y la perturbación activa (bloquear un
+// transportador, aplicar un fármaco o activar una enfermedad), y compone el mapa,
+// las vistas de zoom, los controles y el panel de consecuencias. El tema (claro/
+// oscuro) lo controla la web de forma global; aquí solo se respeta, no se cambia.
 
 import { useEffect, useMemo, useState } from 'react';
-import type { SegmentId } from './engine/types';
+import type { Perturbation, SegmentId } from './engine/types';
 import { SEGMENT_BY_ID } from '@/lib/data/nefron/segments';
-import { TRANSPORTERS } from '@/lib/data/nefron/transporters';
 import { substanceColor, substanceLabel } from '@/lib/data/nefron/substances';
-import { computeConsequence } from './engine/simulate';
+import { resolvePerturbation } from './engine/simulate';
 import NefronMap from './NefronMap';
-import SegmentView from './SegmentView';
-import CellView from './CellView';
+import NefronCanvas from './NefronCanvas';
 import ControlsPanel from './ControlsPanel';
 import ConsequencePanel from './ConsequencePanel';
 import styles from '@/styles/nefronInteractivo.module.css';
 
 const PREFS_KEY = 'medgo:nefron:prefs';
-const DARK_KEY = 'medgo-dark';
 
 type View = 'nephron' | 'segment' | 'cell';
 
+const EMPTY: Set<string> = new Set();
+
 export default function NefronSimulator() {
   const [simple, setSimple] = useState(true);
-  const [dark, setDark] = useState(false);
   const [view, setView] = useState<View>('nephron');
   const [segId, setSegId] = useState<SegmentId | null>(null);
   const [cellId, setCellId] = useState<string | null>(null);
   const [hoverId, setHoverId] = useState<SegmentId | null>(null);
-  const [disabled, setDisabled] = useState<Set<string>>(new Set());
+  const [pert, setPert] = useState<Perturbation | null>(null);
+  const [panelOpen, setPanelOpen] = useState(true);
 
-  // Restaura preferencias + tema.
+  // Restaura preferencias de vista (el tema lo gestiona la web globalmente).
   useEffect(() => {
-    setDark(document.body.classList.contains('dark-mode'));
     try {
       const raw = localStorage.getItem(PREFS_KEY);
       if (raw) {
@@ -49,27 +48,22 @@ export default function NefronSimulator() {
     } catch {}
   };
 
-  const toggleDark = () => {
-    const next = !dark;
-    setDark(next);
-    document.body.classList.toggle('dark-mode', next);
-    try {
-      localStorage.setItem(DARK_KEY, String(next));
-    } catch {}
-  };
-
   const setSimpleMode = (v: boolean) => {
     setSimple(v);
     persist({ simple: v });
-    // Al volver a simple se regresa al nefrón completo.
+    // Al volver a simple se regresa al nefrón completo y se limpian fármacos/enfermedades.
     if (v) {
       setView('nephron');
       setCellId(null);
+      setPert(null);
     }
   };
 
   const segment = segId ? SEGMENT_BY_ID[segId] : null;
   const cell = segment && cellId ? segment.celulas.find((c) => c.id === cellId) ?? null : null;
+
+  const resolved = useMemo(() => resolvePerturbation(pert), [pert]);
+  const affected = resolved?.affected ?? EMPTY;
 
   const handleSelectSegment = (id: SegmentId) => {
     setSegId(id);
@@ -87,21 +81,44 @@ export default function NefronSimulator() {
   };
 
   const toggleTransporter = (id: string) => {
-    setDisabled((prev) => {
-      // Exclusividad en el MVP: una sola perturbación a la vez.
-      if (prev.has(id)) return new Set();
-      return new Set([id]);
-    });
+    // Exclusividad: si ya estaba bloqueado ese transportador, se libera.
+    setPert((prev) =>
+      prev && prev.kind === 'transportador' && prev.id === id ? null : { kind: 'transportador', id }
+    );
   };
-
-  const result = useMemo(() => computeConsequence({ disabled }), [disabled]);
-  const consTitle = result
-    ? `Bloqueo: ${TRANSPORTERS[result.transporterId]?.sigla ?? ''}`
-    : 'Estado basal';
 
   const backToNephron = () => {
     setView('nephron');
     setCellId(null);
+    setSegId(null);
+    setHoverId(null);
+  };
+
+  // Aplica un fármaco o enfermedad y navega a su segmento diana (modo avanzado).
+  const applyPerturbation = (p: Perturbation, segmentoDiana?: SegmentId) => {
+    const same = pert && pert.kind === p.kind && pert.id === p.id;
+    if (same) {
+      // Deseleccionar: limpia la perturbación y vuelve al nefrón completo (no se
+      // queda atrapado en la célula/segmento).
+      setPert(null);
+      backToNephron();
+      return;
+    }
+    setPert(p);
+    if (segmentoDiana) {
+      setSegId(segmentoDiana);
+      if (!simple) {
+        setView('segment');
+        setCellId(null);
+      }
+    }
+  };
+
+  // Volver al estado basal: además de limpiar la perturbación, regresa al nefrón
+  // completo para poder seguir navegando o elegir otra cosa.
+  const clearPerturbation = () => {
+    setPert(null);
+    backToNephron();
   };
   const backToSegment = () => {
     setView('segment');
@@ -131,78 +148,101 @@ export default function NefronSimulator() {
         )}
       </div>
 
-      <div className={styles.simBody}>
-        {/* ── ESCENARIO ── */}
+      {/* ── ESCENARIO (a todo el ancho) con barra lateral deslizante ── */}
+      <div className={styles.stageWrap}>
         <div className={styles.stage}>
-          {view === 'nephron' && (
+          {simple ? (
             <NefronMap
               selectedId={segId}
               hoverId={hoverId}
               onSelect={handleSelectSegment}
               onHover={setHoverId}
             />
-          )}
-          {view === 'segment' && segment && (
-            <SegmentView segment={segment} onSelectCell={handleSelectCell} />
-          )}
-          {view === 'cell' && segment && cell && (
-            <CellView segment={segment} cell={cell} disabled={disabled} onToggle={toggleTransporter} />
-          )}
-        </div>
-
-        {/* ── LADO ── */}
-        <div className={styles.side}>
-          <ControlsPanel
-            simple={simple}
-            onSimpleToggle={setSimpleMode}
-            dark={dark}
-            onDarkToggle={toggleDark}
-            hasDisabled={disabled.size > 0}
-            onReset={() => setDisabled(new Set())}
-          />
-
-          {/* Modo simple: resumen del segmento seleccionado */}
-          {simple && (
-            <div className={styles.simpleInfo}>
-              {segment ? (
-                <>
-                  <div className={styles.segHead}>
-                    <span className={styles.segDot} style={{ background: segment.color }} />
-                    <h3 className={styles.segName}>{segment.nombre}</h3>
-                  </div>
-                  <p className={styles.simpleSummary}>{segment.resumenSimple}</p>
-                  <ul className={styles.reabsList}>
-                    {segment.reabsorcion.map((r) => (
-                      <li key={r.sustancia} className={styles.reabsItem}>
-                        <span className={styles.reabsDot} style={{ background: substanceColor(r.sustancia) }} />
-                        <span className={styles.reabsSust}>{substanceLabel(r.sustancia)}</span>
-                        <span className={styles.reabsDet}>{r.detalle}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              ) : (
-                <p className={styles.consEmpty}>
-                  Toca un segmento del nefrón (1–7) para ver, en lenguaje sencillo, qué reabsorbe o
-                  secreta. Cambia a <strong>Avanzado</strong> para hacer zoom y bloquear transportadores.
-                </p>
-              )}
-            </div>
-          )}
-
-          {/* Modo avanzado: panel de consecuencias */}
-          {!simple && (
-            <ConsequencePanel
-              titulo={consTitle}
-              consequence={result?.consequence ?? null}
-              emptyHint={
-                view === 'cell'
-                  ? 'Bloquea un transportador (toca su insignia) para ver el efecto en sangre, orina y equilibrio ácido-base.'
-                  : 'Entra a una célula y bloquea un transportador para simular su efecto en tiempo real.'
-              }
+          ) : (
+            <NefronCanvas
+              level={view}
+              selectedSeg={segId}
+              selectedCellId={cellId}
+              hoverId={hoverId}
+              affected={affected}
+              affectedTag={resolved?.tag ?? 'Bloqueado'}
+              onSelectSegment={handleSelectSegment}
+              onHover={setHoverId}
+              onSelectCell={handleSelectCell}
+              onToggleTransporter={toggleTransporter}
+              onExit={backToNephron}
             />
           )}
+
+          {!simple && (
+            <span className={styles.zoomHint}>Rueda para acercar · arrastra para mover · toca un segmento</span>
+          )}
         </div>
+
+        {/* Barra lateral: empuja el lienzo al abrir; al cerrar se oculta y deja solo la viñeta */}
+        <aside className={`${styles.drawer} ${panelOpen ? styles.drawerOpen : styles.drawerCollapsed}`}>
+          <button
+            className={styles.drawerTab}
+            onClick={() => setPanelOpen((o) => !o)}
+            aria-label={panelOpen ? 'Ocultar panel' : 'Mostrar panel'}
+            aria-expanded={panelOpen}
+          >
+            {panelOpen ? '›' : '‹'}
+          </button>
+
+          <div className={styles.drawerBody}>
+            <ControlsPanel
+              simple={simple}
+              onSimpleToggle={setSimpleMode}
+              hasPerturbation={pert !== null}
+              onReset={clearPerturbation}
+              activeDrugId={pert?.kind === 'farmaco' ? pert.id : null}
+              activeDiseaseId={pert?.kind === 'enfermedad' ? pert.id : null}
+              onSelectDrug={(id, seg) => applyPerturbation({ kind: 'farmaco', id }, seg)}
+              onSelectDisease={(id, seg) => applyPerturbation({ kind: 'enfermedad', id }, seg)}
+            />
+
+            {/* Información contextual */}
+            {simple ? (
+              <div className={styles.simpleInfo}>
+                {segment ? (
+                  <>
+                    <div className={styles.segHead}>
+                      <span className={styles.segDot} style={{ background: segment.color }} />
+                      <h3 className={styles.segName}>{segment.nombre}</h3>
+                    </div>
+                    <p className={styles.simpleSummary}>{segment.resumenSimple}</p>
+                    <ul className={styles.reabsList}>
+                      {segment.reabsorcion.map((r) => (
+                        <li key={r.sustancia} className={styles.reabsItem}>
+                          <span className={styles.reabsDot} style={{ background: substanceColor(r.sustancia) }} />
+                          <span className={styles.reabsSust}>{substanceLabel(r.sustancia)}</span>
+                          <span className={styles.reabsDet}>{r.detalle}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <p className={styles.consEmpty}>
+                    Toca un segmento del nefrón (1–7) para ver, en lenguaje sencillo, qué reabsorbe o
+                    secreta. Cambia a <strong>Avanzado</strong> para hacer zoom, bloquear transportadores
+                    y simular fármacos y enfermedades.
+                  </p>
+                )}
+              </div>
+            ) : (
+              <ConsequencePanel
+                titulo={resolved?.titulo ?? 'Estado basal'}
+                consequence={resolved?.consequence ?? null}
+                emptyHint={
+                  view === 'cell'
+                    ? 'Bloquea un transportador (toca su insignia), o elige un fármaco o una enfermedad, para ver el efecto en sangre, orina y equilibrio ácido-base.'
+                    : 'Entra a una célula (haz zoom) y bloquea un transportador, o elige un fármaco o enfermedad, para simular su efecto en tiempo real.'
+                }
+              />
+            )}
+          </div>
+        </aside>
       </div>
     </div>
   );

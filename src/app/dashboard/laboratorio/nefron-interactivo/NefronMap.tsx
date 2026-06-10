@@ -144,7 +144,7 @@ export default function NefronMap({ selectedId, hoverId, onSelect, onHover }: Pr
               style={{ filter: isSel ? `drop-shadow(0 0 6px ${seg.color})` : undefined }}
             />
             <text x={geom.badge.x} y={geom.badge.y + 4.5} className={styles.badgeText} fill={seg.color}>
-              {geom.index}
+              {geom.index ?? geom.marker}
             </text>
           </g>
         );

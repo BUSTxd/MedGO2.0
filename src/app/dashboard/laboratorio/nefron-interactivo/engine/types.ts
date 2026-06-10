@@ -13,7 +13,9 @@ export type SubstanceId =
   | 'urea'
   | 'glucosa'
   | 'fosfato'
-  | 'aa';
+  | 'aa'
+  | 'aniorg'
+  | 'catorg';
 
 export type Membrane = 'apical' | 'basolateral' | 'paracelular';
 
@@ -44,10 +46,13 @@ export type SegmentId =
   | 'glomerulo'
   | 'tcp'
   | 'asa-desc'
+  | 'asa-asc-delgada'
   | 'tal'
   | 'tcd'
   | 'conector-cortical'
-  | 'medular-interno';
+  | 'medular-interno'
+  | 'yuxtaglomerular'
+  | 'vasa-recta';
 
 export interface TransporterDef {
   id: string;
@@ -67,12 +72,67 @@ export interface TransporterDef {
   consecuenciaDesactivar: Consequence;
 }
 
+/** Reacción/etiqueta intracelular mostrada dentro del citoplasma de la célula. */
+export interface CellReaction {
+  /** Texto de la reacción, p. ej. "CO₂ + H₂O → H⁺ + HCO₃⁻". */
+  texto: string;
+  /** Enzima que la cataliza, p. ej. "anhidrasa carbónica II". */
+  enzima?: string;
+}
+
 export interface CellDef {
   id: string;
   nombre: string;
   descripcion: string;
   /** ids de transportadores presentes en esta célula. */
   transportadores: string[];
+  /** Reacciones/enzimas a dibujar dentro del citoplasma (opcional). */
+  intracelular?: CellReaction[];
+  /** Reacciones a dibujar en la LUZ tubular (p. ej. anhidrasa carbónica luminal). */
+  luminal?: CellReaction[];
+}
+
+// ─────────────── PERTURBACIONES (Fase 2): fármacos y enfermedades ───────────────
+
+/** Tipo de perturbación activa. En el MVP solo una a la vez (exclusiva). */
+export type PerturbationKind = 'transportador' | 'farmaco' | 'enfermedad';
+
+export interface Perturbation {
+  kind: PerturbationKind;
+  id: string;
+}
+
+/** Cómo nace el efecto sobre los transportadores diana (define el tag visual). */
+export type AffectKind = 'bloqueo' | 'inhibicion' | 'perdida' | 'ganancia' | 'osmotico';
+
+export interface DrugDef {
+  id: string;
+  nombre: string;
+  /** Clase farmacológica corta, p. ej. "Diurético de asa". */
+  clase: string;
+  segmentoId: SegmentId;
+  /** ids de transportadores diana (se resaltan en la vista celular). */
+  objetivos: string[];
+  efecto: AffectKind;
+  mecanismo: string;
+  consecuencia: Consequence;
+  indicaciones?: string;
+  /** Reacciones adversas / efectos no deseados. */
+  ram?: string;
+}
+
+export interface DiseaseDef {
+  id: string;
+  nombre: string;
+  /** Grupo nosológico corto, p. ej. "Tubulopatía pierde-sal". */
+  grupo: string;
+  segmentoId: SegmentId;
+  objetivos: string[];
+  efecto: AffectKind;
+  /** Gen / proteína implicada. */
+  proteina: string;
+  herencia?: string;
+  consecuencia: Consequence;
 }
 
 export interface SegmentDef {

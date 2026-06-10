@@ -1,89 +1,144 @@
 'use client';
-// Viñeta de controles (lateral en desktop, acordeón en móvil): modo simple /
-// avanzado, tema, reinicio de transportadores y leyenda de sustancias.
+// Contenido de la barra lateral: selector de modo simple/avanzado y secciones
+// colapsables de fármacos y enfermedades. Va dentro del drawer lateral (el
+// contenedor y el scroll los provee NefronSimulator).
 
 import { useState } from 'react';
-import { LEGEND_SUBSTANCES, SUBSTANCES } from '@/lib/data/nefron/substances';
+import type { SegmentId } from './engine/types';
+import { DRUG_LIST } from '@/lib/data/nefron/drugs';
+import { DISEASE_LIST } from '@/lib/data/nefron/diseases';
 import styles from '@/styles/nefronInteractivo.module.css';
 
 export interface ControlsProps {
   simple: boolean;
   onSimpleToggle: (v: boolean) => void;
-  dark: boolean;
-  onDarkToggle: () => void;
-  hasDisabled: boolean;
+  hasPerturbation: boolean;
   onReset: () => void;
+  activeDrugId: string | null;
+  activeDiseaseId: string | null;
+  onSelectDrug: (id: string, segmentoId: SegmentId) => void;
+  onSelectDisease: (id: string, segmentoId: SegmentId) => void;
 }
 
+type SectionKey = 'farmacos' | 'enfermedades';
+
 export default function ControlsPanel(p: ControlsProps) {
-  const [open, setOpen] = useState(false);
+  const [sections, setSections] = useState<Record<SectionKey, boolean>>({
+    farmacos: false,
+    enfermedades: false,
+  });
+
+  const toggleSection = (k: SectionKey) =>
+    setSections((s) => ({ ...s, [k]: !s[k] }));
 
   return (
-    <aside className={`${styles.controls} ${open ? styles.controlsOpen : ''}`}>
-      <button className={styles.controlsHead} onClick={() => setOpen((o) => !o)}>
-        <span className={styles.controlsHeadTitle}>Controles</span>
-        <span className={styles.controlsHeadChevron} aria-hidden>{open ? '▾' : '▸'}</span>
-      </button>
-
-      <div className={styles.controlsBody}>
-        {/* Modo de vista */}
-        <div className={styles.ctrlGroup}>
-          <span className={styles.ctrlLabel}>Modo</span>
-          <div className={styles.segmented}>
-            <button
-              className={`${styles.segBtn} ${p.simple ? styles.segBtnActive : ''}`}
-              onClick={() => p.onSimpleToggle(true)}
-            >
-              Simple
-            </button>
-            <button
-              className={`${styles.segBtn} ${!p.simple ? styles.segBtnActive : ''}`}
-              onClick={() => p.onSimpleToggle(false)}
-            >
-              Avanzado
-            </button>
-          </div>
-          <p className={styles.ctrlHint}>
-            {p.simple
-              ? 'Resumen por segmento. Toca un segmento para ver qué reabsorbe.'
-              : 'Toca un segmento para hacer zoom, ver sus células y bloquear transportadores.'}
-          </p>
+    <div className={styles.ctrlStack}>
+      {/* Modo de vista */}
+      <div className={styles.ctrlGroup}>
+        <span className={styles.ctrlLabel}>Modo</span>
+        <div className={styles.segmented}>
+          <button
+            className={`${styles.segBtn} ${p.simple ? styles.segBtnActive : ''}`}
+            onClick={() => p.onSimpleToggle(true)}
+          >
+            Simple
+          </button>
+          <button
+            className={`${styles.segBtn} ${!p.simple ? styles.segBtnActive : ''}`}
+            onClick={() => p.onSimpleToggle(false)}
+          >
+            Avanzado
+          </button>
         </div>
-
-        {/* Acciones */}
-        <div className={styles.ctrlGroup}>
-          <Toggle label="Modo oscuro" on={p.dark} onClick={p.onDarkToggle} />
-          {p.hasDisabled && (
-            <button className={styles.resetBtn} onClick={p.onReset}>
-              ↺ Reactivar todos los transportadores
-            </button>
-          )}
-        </div>
-
-        {/* Leyenda de sustancias */}
-        <div className={styles.ctrlGroup}>
-          <span className={styles.ctrlLabel}>Leyenda</span>
-          <ul className={styles.legend}>
-            {LEGEND_SUBSTANCES.map((id) => (
-              <li key={id} className={styles.legendItem}>
-                <span className={styles.legendDot} style={{ background: SUBSTANCES[id].color }} />
-                <span>{SUBSTANCES[id].label}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <p className={styles.ctrlHint}>
+          {p.simple
+            ? 'Resumen por segmento. Toca un segmento para ver qué reabsorbe.'
+            : 'Toca un segmento para hacer zoom, ver sus células y bloquear transportadores; o aplica un fármaco o enfermedad.'}
+        </p>
       </div>
-    </aside>
+
+      {/* Reinicio de la perturbación activa */}
+      {p.hasPerturbation && (
+        <button className={styles.resetBtn} onClick={p.onReset}>
+          ↺ Volver al estado basal
+        </button>
+      )}
+
+      {/* Fármacos y enfermedades colapsables (solo en modo avanzado) */}
+      {!p.simple && (
+        <>
+          <Collapsible
+            title="Fármacos"
+            count={DRUG_LIST.length}
+            open={sections.farmacos}
+            onToggle={() => toggleSection('farmacos')}
+          >
+            <ul className={styles.pickList}>
+              {DRUG_LIST.map((d) => (
+                <li key={d.id}>
+                  <button
+                    className={`${styles.pickBtn} ${p.activeDrugId === d.id ? styles.pickBtnActive : ''}`}
+                    onClick={() => p.onSelectDrug(d.id, d.segmentoId)}
+                    aria-pressed={p.activeDrugId === d.id}
+                  >
+                    <span className={styles.pickName}>{d.nombre}</span>
+                    <span className={styles.pickMeta}>{d.clase}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </Collapsible>
+
+          <Collapsible
+            title="Enfermedades"
+            count={DISEASE_LIST.length}
+            open={sections.enfermedades}
+            onToggle={() => toggleSection('enfermedades')}
+          >
+            <ul className={styles.pickList}>
+              {DISEASE_LIST.map((e) => (
+                <li key={e.id}>
+                  <button
+                    className={`${styles.pickBtn} ${p.activeDiseaseId === e.id ? styles.pickBtnActive : ''}`}
+                    onClick={() => p.onSelectDisease(e.id, e.segmentoId)}
+                    aria-pressed={p.activeDiseaseId === e.id}
+                  >
+                    <span className={styles.pickName}>{e.nombre}</span>
+                    <span className={styles.pickMeta}>{e.grupo}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </Collapsible>
+        </>
+      )}
+    </div>
   );
 }
 
-function Toggle({ label, on, onClick }: { label: string; on: boolean; onClick: () => void }) {
+function Collapsible({
+  title,
+  count,
+  open,
+  onToggle,
+  children,
+}: {
+  title: string;
+  count?: number;
+  open: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}) {
   return (
-    <button className={styles.toggle} onClick={onClick} role="switch" aria-checked={on}>
-      <span className={styles.toggleLabel}>{label}</span>
-      <span className={`${styles.toggleTrack} ${on ? styles.toggleOn : ''}`}>
-        <span className={styles.toggleThumb} />
-      </span>
-    </button>
+    <div className={`${styles.collap} ${open ? styles.collapOpen : ''}`}>
+      <button className={styles.collapHead} onClick={onToggle} aria-expanded={open}>
+        <span className={styles.collapTitle}>
+          {title}
+          {typeof count === 'number' && <span className={styles.collapCount}>{count}</span>}
+        </span>
+        <span className={styles.collapChevron} aria-hidden>{open ? '▾' : '▸'}</span>
+      </button>
+      {open && <div className={styles.collapBody}>{children}</div>}
+    </div>
   );
 }

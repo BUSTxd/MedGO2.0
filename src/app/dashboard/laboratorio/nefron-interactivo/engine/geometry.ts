@@ -17,8 +17,10 @@ export interface SegmentGeom {
   circle?: { cx: number; cy: number; r: number };
   /** punto de la insignia numerada / centro clicable. */
   badge: { x: number; y: number };
-  /** índice mostrado en la insignia (orden del filtrado). */
-  index: number;
+  /** índice mostrado en la insignia (orden del filtrado). Ausente en accesorios. */
+  index?: number;
+  /** marcador corto para estructuras accesorias sin número (p. ej. "JG", "VR"). */
+  marker?: string;
 }
 
 export const SEGMENT_GEOMS: Record<SegmentId, SegmentGeom> = {
@@ -37,35 +39,56 @@ export const SEGMENT_GEOMS: Record<SegmentId, SegmentGeom> = {
     badge: { x: 236, y: 320 },
     index: 3,
   },
-  tal: {
-    path: 'M196,382 L196,150',
-    badge: { x: 196, y: 262 },
+  'asa-asc-delgada': {
+    path: 'M196,382 L196,300',
+    badge: { x: 196, y: 344 },
     index: 4,
+  },
+  tal: {
+    path: 'M196,300 L196,150',
+    badge: { x: 196, y: 224 },
+    index: 5,
   },
   tcd: {
     path: 'M196,150 C214,132 244,140 258,152 C272,164 288,150 302,150',
     badge: { x: 258, y: 138 },
-    index: 5,
+    index: 6,
   },
   'conector-cortical': {
     path: 'M302,150 C316,150 324,164 324,190 L324,214',
     badge: { x: 326, y: 184 },
-    index: 6,
+    index: 7,
   },
   'medular-interno': {
     path: 'M324,214 L324,432',
     badge: { x: 324, y: 372 },
-    index: 7,
+    index: 8,
+  },
+  // ── Estructuras accesorias (no están en el trayecto del filtrado) ──
+  yuxtaglomerular: {
+    // Arco corto junto al glomérulo (mácula densa + yuxtaglomerulares + mesangiales).
+    path: 'M70,120 C86,134 110,134 126,122',
+    badge: { x: 98, y: 132 },
+    marker: 'JG',
+  },
+  'vasa-recta': {
+    // Vaso en horquilla en la médula, a la izquierda del asa.
+    path: 'M166,230 L166,414 C166,432 148,432 148,414 L148,230',
+    badge: { x: 157, y: 384 },
+    marker: 'VR',
   },
 };
 
-/** Orden de dibujo / de la leyenda (trayecto del filtrado). */
+/** Orden de dibujo / de la leyenda (trayecto del filtrado + accesorios al final). */
 export const SEGMENT_ORDER: SegmentId[] = [
   'glomerulo',
   'tcp',
   'asa-desc',
+  'asa-asc-delgada',
   'tal',
   'tcd',
   'conector-cortical',
   'medular-interno',
+  'yuxtaglomerular',
+  'vasa-recta',
 ];

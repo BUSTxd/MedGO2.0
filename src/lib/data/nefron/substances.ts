@@ -24,6 +24,8 @@ export const SUBSTANCES: Record<SubstanceId, Substance> = {
   glucosa: { id: 'glucosa', label: 'Glucosa', color: '#eab308' },
   fosfato: { id: 'fosfato', label: 'Fosfato', color: '#8b5cf6' },
   aa: { id: 'aa', label: 'Aminoácidos', color: '#f97316' },
+  aniorg: { id: 'aniorg', label: 'Anión org.', color: '#0891b2' },
+  catorg: { id: 'catorg', label: 'Catión org.', color: '#be123c' },
 };
 
 /** Sustancias mostradas en la leyenda del modo simple. */
