@@ -64,15 +64,10 @@ const COURSES = [
     activo: true,
     icon: (
       <svg width="22" height="22" viewBox="0 0 511.989 511.989" fill="none">
-        <defs>
-          <radialGradient id="bGrdC" cx="50%" cy="46%" r="52%">
-            <stop offset="0%"   stopColor="#ffcece" />
-            <stop offset="55%"  stopColor="#e06060" />
-            <stop offset="100%" stopColor="#b82020" />
-          </radialGradient>
-        </defs>
         <path
-          fill="url(#bGrdC)"
+          fill="#fca5a5"
+          stroke="#c03030"
+          strokeWidth="16"
           d="M489.333,255.088l-21.344-17.625l8-34.671l4-18.812l-30.656-42.141l6.656-22.53l-8-38.483
           l-30.655-30.077h-39.999c0,0-22.655,12.312-16,0c6.672-12.328-33.326-36.577-33.326-36.577h-17.328l-40.663,15.483l-9.602,7.828
           l-31.062-23.702h-30.672l-23.999,0.391l-20.929,23.312L150.41,50.75h-22.383l-23.998,10.654L66.694,73.295l-6.664,29.358
