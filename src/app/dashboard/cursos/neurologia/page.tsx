@@ -99,44 +99,27 @@ export default async function NeurologiaPage() {
           </div>
         </div>
 
-        {/* Leyenda de unidades */}
-        {semanas.length > 0 && (
-          <div className={styles.legend}>
-            {Object.entries(UNIDAD_LABEL).map(([key, label]) => (
-              <span key={key} className={styles.legendItem}>
-                <span
-                  className={styles.legendDot}
-                  style={{ background: UNIDAD_COLOR[key as keyof typeof UNIDAD_COLOR] }}
-                />
-                {label}
-              </span>
-            ))}
-          </div>
-        )}
-
         {/* Fórmula de evaluación */}
         <div className={styles.formulaCard}>
-          <p className={styles.formulaTitle}>Fórmula de evaluación</p>
-          <div className={styles.formulaGrid}>
-            <div className={styles.formulaBlock}>
-              <span className={styles.formulaBlockTitle}>Conocimientos · 50 %</span>
-              <ul className={styles.formulaList}>
-                <li>Examen Parcial · <strong>30 %</strong></li>
-                <li>Examen Final · <strong>60 %</strong></li>
-                <li>TBL (promedio) · <strong>10 %</strong></li>
-              </ul>
-            </div>
-            <div className={styles.formulaBlock}>
-              <span className={styles.formulaBlockTitle}>Desempeño · 50 %</span>
-              <ul className={styles.formulaList}>
-                <li>Anatomía (PA + E) · <strong>40 %</strong></li>
-                <li>Histología (PH + portafolio) · <strong>20 %</strong></li>
-                <li>Fisiología (PF) · <strong>10 %</strong></li>
-                <li>ABP · <strong>30 %</strong></li>
-              </ul>
-            </div>
+          <span className={styles.formulaLabel}>Evaluación</span>
+          <div className={styles.formulaItems}>
+            <span className={styles.formulaChip}><strong>Conocimientos 50%</strong> — Examen Parcial 30% + Examen Final 60% + TBL 10%</span>
+            <span className={styles.formulaChip}><strong>Desempeño 50%</strong> — Anatomía 40% + Histología 20% + Fisiología 10% + ABP 30%</span>
+            <span className={styles.formulaChip}>Mínimo aprobación: <strong>11.00</strong> en cada componente</span>
           </div>
-          <p className={styles.formulaNote}>Nota mínima de aprobación: 11.00 en cada componente</p>
+        </div>
+
+        {/* Leyenda de unidades */}
+        <div className={styles.legend}>
+          {Object.entries(UNIDAD_LABEL).map(([key, label]) => (
+            <span key={key} className={styles.legendItem}>
+              <span
+                className={styles.legendDot}
+                style={{ background: UNIDAD_COLOR[key as keyof typeof UNIDAD_COLOR] }}
+              />
+              {label}
+            </span>
+          ))}
         </div>
 
         {/* Timeline de semanas */}
