@@ -5,10 +5,11 @@ import { getCachedPlanState } from '@/lib/plans-server';
 import styles from '@/styles/cursos.module.css';
 
 const UNIDAD_LABEL: Record<string, string> = {
-  UNIDAD_1:   'Anatomía del sistema nervioso',
-  UNIDAD_2:   'Neurofisiología',
-  UNIDAD_3:   'Patología neurológica',
-  UNIDAD_4:   'Neurología clínica',
+  UNIDAD_1:   'Anatomía de la Cabeza y SN',
+  UNIDAD_2:   'Estructura y Función Neuronal',
+  UNIDAD_3:   'Sistema Motor y Sensorial',
+  UNIDAD_4:   'Regulación Interna y Cerebro',
+  UNIDAD_5:   'LCR y Circulación Cerebral',
   EVALUACION: 'Evaluación',
 };
 
@@ -113,15 +114,33 @@ export default async function NeurologiaPage() {
           </div>
         )}
 
-        {/* Timeline de semanas */}
-        {semanas.length === 0 ? (
-          <div className={styles.formulaCard} style={{ textAlign: 'center', padding: '2.5rem 1rem' }}>
-            <p style={{ color: 'var(--text-secondary, #6b7280)', fontSize: '0.95rem' }}>
-              El sílabo de Neurología estará disponible próximamente.
-            </p>
+        {/* Fórmula de evaluación */}
+        <div className={styles.formulaCard}>
+          <p className={styles.formulaTitle}>Fórmula de evaluación</p>
+          <div className={styles.formulaGrid}>
+            <div className={styles.formulaBlock}>
+              <span className={styles.formulaBlockTitle}>Conocimientos · 50 %</span>
+              <ul className={styles.formulaList}>
+                <li>Examen Parcial · <strong>30 %</strong></li>
+                <li>Examen Final · <strong>60 %</strong></li>
+                <li>TBL (promedio) · <strong>10 %</strong></li>
+              </ul>
+            </div>
+            <div className={styles.formulaBlock}>
+              <span className={styles.formulaBlockTitle}>Desempeño · 50 %</span>
+              <ul className={styles.formulaList}>
+                <li>Anatomía (PA + E) · <strong>40 %</strong></li>
+                <li>Histología (PH + portafolio) · <strong>20 %</strong></li>
+                <li>Fisiología (PF) · <strong>10 %</strong></li>
+                <li>ABP · <strong>30 %</strong></li>
+              </ul>
+            </div>
           </div>
-        ) : (
-          semanas.map((semana) => (
+          <p className={styles.formulaNote}>Nota mínima de aprobación: 11.00 en cada componente</p>
+        </div>
+
+        {/* Timeline de semanas */}
+        {semanas.map((semana) => (
             <section key={semana.id} className={styles.weekSection}>
               <div className={styles.weekHeader}>
                 <span className={`${styles.weekLabel} ${semana.esEvaluacion ? styles.evalLabel : ''}`}>
@@ -134,7 +153,7 @@ export default async function NeurologiaPage() {
                 const badge = TIPO_BADGE[act.tipo];
                 const borderColor = UNIDAD_COLOR[act.unidad];
                 const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
-                const isLab = act.tipo === 'LAB-NEURO' || act.tipo === 'LAB-ANAT';
+                const isLab = ['LAB-ANAT','LAB-HISTO','TALLER-FIS','AULA-VIRTUAL','ICONOGRAFIA','REV-VIRTUAL'].includes(act.tipo);
                 const isLocked = !isLab && !hasInterno;
 
                 return (
@@ -179,7 +198,7 @@ export default async function NeurologiaPage() {
               })}
             </section>
           ))
-        )}
+        }
       </div>
     </div>
   );

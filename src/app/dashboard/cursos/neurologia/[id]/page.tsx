@@ -9,10 +9,11 @@ import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
 
 const UNIDAD_LABEL: Record<string, string> = {
-  UNIDAD_1:   'Anatomía del sistema nervioso',
-  UNIDAD_2:   'Neurofisiología',
-  UNIDAD_3:   'Patología neurológica',
-  UNIDAD_4:   'Neurología clínica',
+  UNIDAD_1:   'Anatomía de la Cabeza y SN',
+  UNIDAD_2:   'Estructura y Función Neuronal',
+  UNIDAD_3:   'Sistema Motor y Sensorial',
+  UNIDAD_4:   'Regulación Interna y Cerebro',
+  UNIDAD_5:   'LCR y Circulación Cerebral',
   EVALUACION: 'Evaluación',
 };
 
@@ -30,7 +31,7 @@ export default async function NeurologiaActividadPage({
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
 
-  const isLab = act.tipo === 'LAB-NEURO' || act.tipo === 'LAB-ANAT';
+  const isLab = ['LAB-ANAT','LAB-HISTO','TALLER-FIS','AULA-VIRTUAL','ICONOGRAFIA','REV-VIRTUAL'].includes(act.tipo);
   const [user, planState] = await Promise.all([
     getUser(),
     isLab
