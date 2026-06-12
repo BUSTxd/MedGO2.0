@@ -7,6 +7,8 @@ export const dynamic = 'force-dynamic';
 
 const EXAMENES: Record<string, { free?: boolean }> = {
   'excretor/tbl-3-asa-henle': { free: true },
+  'neurologia/snp-histologia': { free: true },
+  'neurologia/snp-histologia-b': { free: true },
 };
 
 const SIGNED_URL_TTL_SECONDS = 60 * 60 * 24 * 7;

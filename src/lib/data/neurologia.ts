@@ -27,6 +27,13 @@ export interface ResumenOpcion {
   label: string;
 }
 
+export interface ExamenRef {
+  key: string;
+  free?: boolean;
+  /** Segundo bloque de preguntas, descargado solo al terminar el primero. */
+  groupBKey?: string;
+}
+
 export interface Actividad {
   id: string;
   tipo: TipoActividad;
@@ -38,6 +45,7 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  examen?: ExamenRef;
 }
 
 export interface Semana {
@@ -366,6 +374,7 @@ export const semanas: Semana[] = [
         hora: 'A1-A2: mar 09 · A3-A4: mié 10 · B1-B2: jue 11 · B3-B4: vie 12 (09:00-11:00)',
         docentes: ['Dras. Y. Coico, M. Revilla', 'Drs. Velarde, Condori, Portugal, Calvo, Alva, Romero, Calizaya'],
         nota: 'Incluye paso corto SNP (20% del rubro Histología)',
+        examen: { key: 'neurologia/snp-histologia', free: true, groupBKey: 'neurologia/snp-histologia-b' },
         subtemas: [
           'Nervio periférico: epineuro, perineuro, endoneuro',
           'Fibra mielínica: vaina de mielina, nódulos de Ranvier, células de Schwann',

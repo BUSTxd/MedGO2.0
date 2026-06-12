@@ -9,6 +9,43 @@
   z-index: 1;
 }
 
+/* Badge de grupo en la esquina (Grupo A / Grupo B) */
+.groupBadge {
+  position: absolute;
+  top: 28px;
+  right: 24px;
+  z-index: 3;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7B72D4;
+  background: rgba(123, 114, 212, 0.12);
+  border: 1px solid rgba(123, 114, 212, 0.35);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+/* Pantalla intermedia entre Grupo A y Grupo B */
+.interstitial {
+  text-align: center;
+  padding: 48px 0 0;
+}
+
+.interstitialCheck {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: #2EA057;
+  background: radial-gradient(circle at 30% 30%, rgba(46, 160, 87, 0.18), rgba(46, 160, 87, 0.04));
+  border: 3px solid rgba(46, 160, 87, 0.45);
+}
+
 .backLink {
   display: inline-flex;
   align-items: center;
@@ -69,6 +106,20 @@
   opacity: 0.5;
 }
 
+.partHint {
+  margin: 0 0 24px 0;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  background: rgba(123, 114, 212, 0.06);
+  border: 1px solid rgba(123, 114, 212, 0.18);
+  border-left: 3px solid #7B72D4;
+  border-radius: 10px;
+}
+
+.partHint strong { color: var(--white); font-weight: 600; }
+
 /* ── Progreso ────────────────────────────────────────────── */
 .progressWrap {
   margin-bottom: 32px;
@@ -122,6 +173,26 @@
   color: var(--white);
   margin: 0 0 28px 0;
   font-weight: 500;
+}
+
+/* ── Figura / micrografía de la pregunta ─────────────────── */
+.figure {
+  margin: 0 0 26px 0;
+  background: #ffffff;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 8px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.figureImg {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  border-radius: 6px;
 }
 
 .options {
