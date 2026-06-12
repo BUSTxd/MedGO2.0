@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import TrackLabVisit from '@/components/TrackLabVisit';
 import styles from '@/styles/laboratorio.module.css';
 
@@ -135,14 +136,11 @@ export default function AtlasMicologiaPage() {
     setMode(m);
     if (items.length || loading) return;
 
+    // Antes se precargaban los originales con `new Image()`; ahora cada muestra
+    // se sirve optimizada por `next/image` bajo demanda, así no bajamos imágenes
+    // grandes de golpe (clave en celular).
     const preload = (data: Item[]) => {
-      const ordered = shuffleNoConsecutive(data);
-      setItems(ordered);
-      ordered.forEach((d, i) => {
-        const img = new Image();
-        if (i < 3) (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority = 'high';
-        img.src = d.url;
-      });
+      setItems(shuffleNoConsecutive(data));
     };
 
     try {
@@ -311,12 +309,15 @@ export default function AtlasMicologiaPage() {
           <div className={styles.microscopeOuter}>
             <div className={styles.crosshair} />
             <div className={styles.specimen}>
-              <img
+              <Image
                 src={q.item.url}
                 alt=""
+                fill
+                // El visor mide min(420px, 78vw) y la imagen se amplía hasta ×2
+                // con la perilla; pedimos ~2× el ancho para que el zoom no pixele.
+                sizes="(max-width: 540px) 156vw, 840px"
+                priority
                 className={styles.specimenImg}
-                loading="eager"
-                decoding="async"
                 style={{ transform: `scale(${ZOOMS[zoom].scale})` }}
               />
               <div className={styles.specimenLens} />

@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { useAuth } from './AuthProvider';
-import SubscribeModal from './SubscribeModal';
 import type { PlanKey } from '@/lib/plans';
 import styles from '@/styles/pricing.module.css';
+
+// El SDK de Mercado Pago solo se carga al abrir el modal de suscripción.
+const SubscribeModal = dynamic(() => import('./SubscribeModal'), { ssr: false });
 
 interface PlanState {
   plan: 'free' | 'interno' | 'residente';

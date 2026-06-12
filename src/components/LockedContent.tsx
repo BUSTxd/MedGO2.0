@@ -2,11 +2,15 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { createClient } from '@/lib/supabase/client';
 import { PLANS, planRank, type ProfilePlan, type PlanKey } from '@/lib/plans';
 import { usePlan } from './PlanProvider';
-import SubscribeModal from './SubscribeModal';
 import styles from '@/styles/lockedContent.module.css';
+
+// El SDK de Mercado Pago es pesado: solo se descarga cuando se abre el modal,
+// no al renderizar contenido bloqueado.
+const SubscribeModal = dynamic(() => import('./SubscribeModal'), { ssr: false });
 
 interface PlanState {
   plan: ProfilePlan;

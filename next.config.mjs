@@ -11,6 +11,13 @@ const nextConfig = {
         pathname: '/storage/v1/object/public/**',
       },
     ],
+    // AVIF/WebP: el optimizador sirve el formato más liviano que soporte el
+    // navegador, redimensionado al ancho real del dispositivo (srcset vía `sizes`).
+    formats: ['image/avif', 'image/webp'],
+    // Las fotos del bucket son inmutables (la ruta cambia si cambia el contenido),
+    // así que sus variantes optimizadas pueden cachearse un año.
+    minimumCacheTTL: 31536000,
+    qualities: [50, 75],
   },
   // Needed so pdfjs-dist doesn't try to load the native `canvas` bindings
   turbopack: {

@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Logo from './Logo';
+import MicroscopeIcon from './icons/MicroscopeIcon';
 import { createClient } from '@/lib/supabase/client';
 import styles from '@/styles/dashboardSidebar.module.css';
 
@@ -24,6 +25,11 @@ const NAV = [
         <path fillRule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 102 0V3h2a1 1 0 100-2H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2H4zm2 4a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
       </svg>
     ),
+  },
+  {
+    label: 'Histología',
+    href: '/dashboard/histologia',
+    icon: <MicroscopeIcon size={20} />,
   },
   {
     label: 'Laboratorio virtual',
