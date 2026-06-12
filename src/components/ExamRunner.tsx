@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import styles from '@/styles/examRunner.module.css';
 
@@ -17,6 +18,9 @@ interface ExamQuestion {
   /** URL pública de la micrografía/imagen de referencia (opcional). */
   image?: string;
   imageAlt?: string;
+  /** Dimensiones intrínsecas de la imagen (para evitar layout shift). */
+  imageW?: number;
+  imageH?: number;
   options: ExamOption[];
   explanation?: string;
   tags?: string[];
@@ -299,6 +303,28 @@ export default function ExamRunner({
 
       {!error && payload && phase === 'running' && current && (
         <>
+          {/* Precarga: monta TODAS las micrografías de la etapa al entrar
+              (eager, oculto, mismo `src`/`sizes` que la figura visible) para que
+              pasar de pregunta a pregunta sea instantáneo en vez de cargar 1×1.
+              El navegador descarga la misma variante optimizada → cache hit. */}
+          {deck && (
+            <div aria-hidden className={styles.preloadLayer}>
+              {deck.map(q =>
+                q.image ? (
+                  <Image
+                    key={q.id}
+                    src={q.image}
+                    alt=""
+                    width={q.imageW ?? 1000}
+                    height={q.imageH ?? 750}
+                    sizes="(max-width: 600px) 100vw, 560px"
+                    loading="eager"
+                  />
+                ) : null,
+              )}
+            </div>
+          )}
+
           <div className={styles.progressWrap}>
             <div className={styles.progressLabels}>
               <span className={styles.progressLabelMain}>
@@ -316,12 +342,16 @@ export default function ExamRunner({
 
             {current.image && (
               <div className={styles.figure}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                {/* next/image: srcset + AVIF/WebP redimensionado al ancho real del
+                    dispositivo (vía `sizes`), para que el móvil no descargue la
+                    micrografía a tamaño completo. */}
+                <Image
                   src={current.image}
                   alt={current.imageAlt ?? 'Imagen de la pregunta'}
+                  width={current.imageW ?? 1000}
+                  height={current.imageH ?? 750}
+                  sizes="(max-width: 600px) 100vw, 560px"
                   className={styles.figureImg}
-                  loading="lazy"
                 />
               </div>
             )}

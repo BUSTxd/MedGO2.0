@@ -175,6 +175,20 @@
   font-weight: 500;
 }
 
+/* ── Capa de precarga (oculta) ────────────────────────────
+   Monta las micrografías de la etapa fuera de pantalla para que el navegador
+   las descargue de inmediato. No usar display:none (algunos navegadores no
+   cargan imágenes ocultas así); se clipa a 1px con overflow. */
+.preloadLayer {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
 /* ── Figura / micrografía de la pregunta ─────────────────── */
 .figure {
   margin: 0 0 26px 0;

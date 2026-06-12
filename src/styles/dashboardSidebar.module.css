@@ -91,7 +91,7 @@
   border-radius: 12px;
   background: transparent;
   border: 1px solid transparent;
-  color: rgba(240, 238, 255, 0.65);
+  color: #f0eeff;
   font-weight: 500;
   font-size: 14px;
   transition: all 0.25s ease;
@@ -99,10 +99,20 @@
   white-space: nowrap;
 }
 
+.navItem .navIcon,
+.navItem .label {
+  opacity: 0.65;
+  transition: opacity 0.25s ease;
+}
+
 .navItem:hover {
   background: rgba(59, 158, 221, 0.10);
   border-color: rgba(59, 158, 221, 0.25);
-  color: #f0eeff;
+}
+
+.navItem:hover .navIcon,
+.navItem:hover .label {
+  opacity: 1;
 }
 
 .navItem.active {
@@ -110,6 +120,11 @@
   border-color: rgba(59, 158, 221, 0.45);
   color: #fff;
   box-shadow: 0 0 12px rgba(59, 158, 221, 0.2), inset 0 0 8px rgba(59, 158, 221, 0.08);
+}
+
+.navItem.active .navIcon,
+.navItem.active .label {
+  opacity: 1;
 }
 
 .navItem.active .navIcon {

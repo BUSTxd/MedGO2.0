@@ -223,6 +223,7 @@ export const semanas: Semana[] = [
         hora: 'A1-A2: mar 02 · A3-A4: mié 03 · B1-B2: jue 04 · B3-B4: vie 05 (09:00-11:00)',
         docentes: ['Dras. Y. Coico, M. Revilla', 'Drs. Velarde, Condori, Portugal, Alva, Salas, Calizaya, Romero'],
         nota: 'Incluye paso corto SNC (20% del rubro Histología)',
+        examen: { key: 'neurologia/snc-histologia', free: true },
         subtemas: [
           'Neuronas: soma, axón, dendritas; cuerpos de Nissl',
           'Tipos de neuroglia: astrocitos, oligodendrocitos, microglia, células ependimarias',
