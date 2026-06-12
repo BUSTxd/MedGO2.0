@@ -74,5 +74,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/auth/:path*'],
+  // `/dashboard` se declara explícito además de `/dashboard/:path*`: el matcher
+  // con `:path*` no captura de forma fiable la ruta base exacta, y necesitamos
+  // que el middleware corra en `/dashboard` para protegerla y redirigir a /home.
+  matcher: ['/dashboard', '/dashboard/:path*', '/auth/:path*'],
 };
