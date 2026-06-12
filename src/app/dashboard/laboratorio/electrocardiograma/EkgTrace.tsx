@@ -19,6 +19,10 @@ interface Props {
   showLabels: boolean;
   paused: boolean;
   dark: boolean;
+  /** Ampliación vertical: multiplica los px por mV (ondas más altas). */
+  ampScale: number;
+  /** Ampliación horizontal: ensancha el trazado (canvas más ancho + scroll). */
+  timeScale: number;
   /** Llamado al arrastrar el cursor (solo en pausa). */
   onScrub: (t: number) => void;
 }
@@ -32,6 +36,8 @@ export default function EkgTrace({
   showLabels,
   paused,
   dark,
+  ampScale,
+  timeScale,
   onScrub,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -50,9 +56,13 @@ export default function EkgTrace({
     if (w === 0) return;
 
     const baseline = h * 0.62; // línea isoeléctrica
+    // El ancho del canvas (w) ya viene multiplicado por timeScale (ver resize), así que
+    // la misma ventana de tiempo se reparte sobre más píxeles → latido más ancho.
     const pxPerSec = w / (windowMs / 1000);
     const bigBox = pxPerSec * 0.2; // 0.2 s por cuadro grande
-    const pxPerMv = bigBox * 0.4; // 0.5 mV por cuadro grande → cuadros cuadrados (25mm/s, 10mm/mV)
+    // 0.5 mV por cuadro grande (cuadros cuadrados, 25mm/s · 10mm/mV); ampScale añade
+    // ganancia vertical extra para ver mejor las ondas pequeñas.
+    const pxPerMv = bigBox * 0.4 * ampScale;
 
     const col = dark
       ? { bg: '#0a0f1a', gridMinor: 'rgba(95,224,168,0.07)', gridMajor: 'rgba(95,224,168,0.16)', wave: '#5fe0a8', text: 'rgba(220,240,232,0.7)' }
@@ -150,7 +160,15 @@ export default function EkgTrace({
     ctx.fillStyle = col.text;
     ctx.textAlign = 'right';
     ctx.fillText('25 mm/s · 10 mm/mV', w - 8, h - 8);
-  }, [sampleAt, t, windowMs, phase, showGrid, showLabels, paused, dark]);
+
+    // ── Auto-seguimiento del cursor cuando hay ampliación horizontal ──
+    // Si el canvas es más ancho que su contenedor (timeScale > 1) y está reproduciendo,
+    // desplaza el scroll para mantener el playhead centrado y visible.
+    const wrap = canvas.parentElement;
+    if (wrap && !paused && wrap.scrollWidth > wrap.clientWidth + 1) {
+      wrap.scrollLeft = Math.max(0, Math.min(wrap.scrollWidth - wrap.clientWidth, xPlay - wrap.clientWidth / 2));
+    }
+  }, [sampleAt, t, windowMs, phase, showGrid, showLabels, paused, dark, ampScale, timeScale]);
 
   // Ajuste de tamaño con devicePixelRatio.
   useEffect(() => {
@@ -161,7 +179,9 @@ export default function EkgTrace({
 
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
-      const w = parent.clientWidth;
+      // Ancho visible del contenedor; el canvas se dibuja más ancho (× timeScale) y el
+      // contenedor lo desplaza con scroll horizontal.
+      const w = Math.round(parent.clientWidth * timeScale);
       const hgt = parent.clientHeight;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(hgt * dpr);
@@ -177,7 +197,7 @@ export default function EkgTrace({
     const ro = new ResizeObserver(resize);
     ro.observe(parent);
     return () => ro.disconnect();
-  }, [draw]);
+  }, [draw, timeScale]);
 
   // Redibuja cuando cambia el instante o las opciones.
   useEffect(() => {

@@ -9,6 +9,7 @@ import type { ModeMeta } from './engine/types';
 import styles from '@/styles/electrocardiograma.module.css';
 
 const SPEEDS = [0.25, 0.5, 1, 1.5];
+const ZOOMS = [1, 1.5, 2];
 
 const LEGEND: { color: string; label: string }[] = [
   { color: '#3b9edd', label: 'Nodo sinusal / activación auricular' },
@@ -28,6 +29,10 @@ export interface ControlsProps {
   onReset: () => void;
   speed: number;
   onSpeed: (s: number) => void;
+  vZoom: number;
+  onVZoom: (v: number) => void;
+  hZoom: number;
+  onHZoom: (v: number) => void;
   stepMode: boolean;
   onStepToggle: () => void;
   onStep: (dir: 1 | -1) => void;
@@ -126,6 +131,35 @@ export default function ControlsPanel(p: ControlsProps) {
                 onClick={() => p.onSpeed(s)}
               >
                 {s}×
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Ampliar trazado (zoom vertical y horizontal del latido) ── */}
+        <div className={styles.ctrlGroup}>
+          <span className={styles.ctrlLabel}>Ampliar trazado</span>
+          <div className={styles.zoomRow}>
+            <span className={styles.zoomAxis}>Alto</span>
+            {ZOOMS.map((z) => (
+              <button
+                key={`v-${z}`}
+                className={`${styles.speedBtn} ${p.vZoom === z ? styles.speedBtnActive : ''}`}
+                onClick={() => p.onVZoom(z)}
+              >
+                {z}×
+              </button>
+            ))}
+          </div>
+          <div className={styles.zoomRow}>
+            <span className={styles.zoomAxis}>Ancho</span>
+            {ZOOMS.map((z) => (
+              <button
+                key={`h-${z}`}
+                className={`${styles.speedBtn} ${p.hZoom === z ? styles.speedBtnActive : ''}`}
+                onClick={() => p.onHZoom(z)}
+              >
+                {z}×
               </button>
             ))}
           </div>

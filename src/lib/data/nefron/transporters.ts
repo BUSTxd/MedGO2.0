@@ -628,6 +628,7 @@ export const TRANSPORTERS: Record<string, TransporterDef> = {
     segmentoId: 'medular-interno',
     celulaId: 'medular-cell',
     membrana: 'apical',
+    mecanismo: 'facilitado',
     mueve: [{ sustancia: 'urea', dir: 'entra' }],
     funcionBreve: 'Reabsorbe urea hacia la médula; mantiene el gradiente para concentrar.',
     funcionAvanzada:
@@ -675,6 +676,7 @@ export const TRANSPORTERS: Record<string, TransporterDef> = {
     segmentoId: 'tcp',
     celulaId: 'tcp-s1',
     membrana: 'basolateral',
+    mecanismo: 'facilitado',
     mueve: [{ sustancia: 'glucosa', dir: 'sale' }],
     funcionBreve: 'Devuelve a la sangre la glucosa reabsorbida.',
     funcionAvanzada:
@@ -764,6 +766,7 @@ export const TRANSPORTERS: Record<string, TransporterDef> = {
     segmentoId: 'medular-interno',
     celulaId: 'medular-cell',
     membrana: 'basolateral',
+    mecanismo: 'facilitado',
     mueve: [{ sustancia: 'urea', dir: 'sale' }],
     funcionBreve: 'Saca urea al intersticio medular; refuerza el gradiente.',
     funcionAvanzada:
@@ -809,6 +812,7 @@ export const TRANSPORTERS: Record<string, TransporterDef> = {
     segmentoId: 'tcp',
     celulaId: 'tcp-s2',
     membrana: 'basolateral',
+    mecanismo: 'facilitado',
     mueve: [{ sustancia: 'aniorg', dir: 'entra' }],
     funcionBreve: 'Capta aniones orgánicos desde la sangre hacia la célula.',
     funcionAvanzada:
@@ -830,6 +834,7 @@ export const TRANSPORTERS: Record<string, TransporterDef> = {
     segmentoId: 'tcp',
     celulaId: 'tcp-s2',
     membrana: 'apical',
+    mecanismo: 'facilitado',
     mueve: [{ sustancia: 'aniorg', dir: 'sale' }],
     funcionBreve: 'Vierte al lumen los aniones orgánicos captados.',
     funcionAvanzada:
@@ -851,6 +856,7 @@ export const TRANSPORTERS: Record<string, TransporterDef> = {
     segmentoId: 'tcp',
     celulaId: 'tcp-s2',
     membrana: 'basolateral',
+    mecanismo: 'facilitado',
     mueve: [{ sustancia: 'catorg', dir: 'entra' }],
     funcionBreve: 'Capta cationes orgánicos desde la sangre.',
     funcionAvanzada:
@@ -872,6 +878,7 @@ export const TRANSPORTERS: Record<string, TransporterDef> = {
     segmentoId: 'tcp',
     celulaId: 'tcp-s2',
     membrana: 'apical',
+    mecanismo: 'antiporte',
     mueve: [{ sustancia: 'catorg', dir: 'sale' }],
     funcionBreve: 'Expulsa al lumen los cationes orgánicos (acoplado a H⁺).',
     funcionAvanzada:

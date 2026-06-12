@@ -3,10 +3,11 @@
 // transportador, aplicar un fármaco o activar una enfermedad). En el MVP hay una
 // sola perturbación a la vez (exclusiva).
 
-import type { AffectKind, Consequence, IonMove, Membrane, Perturbation, SegmentId } from './types';
+import type { AffectKind, Consequence, IonMove, Mechanism, Membrane, Perturbation, SegmentId, TransporterDef } from './types';
 import { TRANSPORTERS } from '@/lib/data/nefron/transporters';
 import { DRUGS } from '@/lib/data/nefron/drugs';
 import { DISEASES } from '@/lib/data/nefron/diseases';
+import { resolvePh, PH_BASELINE, type PhPair } from './phModel';
 
 /** Resultado resuelto de una perturbación, listo para pintar paneles y resaltados. */
 export interface Resolved {
@@ -19,6 +20,8 @@ export interface Resolved {
   tag: string;
   /** Segmento donde actúa (para navegar/resaltar en el mapa). */
   segmentoId?: SegmentId;
+  /** Sentido del pH en luz y sangre tras la perturbación. */
+  ph: PhPair;
 }
 
 const TAG_BY_EFFECT: Record<AffectKind, string> = {
@@ -44,6 +47,7 @@ export function resolvePerturbation(pert: Perturbation | null): Resolved | null 
       affected: new Set([t.id]),
       tag: TAG_BY_EFFECT.bloqueo,
       segmentoId: t.segmentoId,
+      ph: resolvePh(t.id, t.consecuenciaDesactivar.acidoBase),
     };
   }
 
@@ -56,6 +60,7 @@ export function resolvePerturbation(pert: Perturbation | null): Resolved | null 
       affected: new Set(d.objetivos),
       tag: TAG_BY_EFFECT[d.efecto],
       segmentoId: d.segmentoId,
+      ph: resolvePh(d.id, d.consecuencia.acidoBase),
     };
   }
 
@@ -68,8 +73,12 @@ export function resolvePerturbation(pert: Perturbation | null): Resolved | null 
     affected: new Set(e.objetivos),
     tag: TAG_BY_EFFECT[e.efecto],
     segmentoId: e.segmentoId,
+    ph: resolvePh(e.id, e.consecuencia.acidoBase),
   };
 }
+
+export { PH_BASELINE };
+export type { PhPair };
 
 export type FlowDir = 'right' | 'left';
 
@@ -87,6 +96,55 @@ export function flowDirection(membrana: Membrane, move: IonMove): FlowDir {
   if (membrana === 'basolateral') return move.dir === 'entra' ? 'left' : 'right';
   return 'right'; // paracelular: siempre lumen → sangre
 }
+
+/** Eje vertical de la vista de célula: la LUZ está arriba y la SANGRE abajo. */
+export type VFlow = 'up' | 'down';
+
+/**
+ * Dirección VERTICAL de un ion en la vista de pared (luz arriba, sangre abajo,
+ * membrana apical arriba, basolateral abajo):
+ * - apical + entra (lumen → célula)        → down
+ * - apical + sale (célula → lumen)          → up
+ * - basolateral + entra (sangre → célula)   → up
+ * - basolateral + sale (célula → sangre)    → down
+ * - paracelular + entra (lumen → sangre)    → down
+ */
+export function flowDirectionV(membrana: Membrane, move: IonMove): VFlow {
+  if (membrana === 'apical') return move.dir === 'entra' ? 'down' : 'up';
+  if (membrana === 'basolateral') return move.dir === 'entra' ? 'up' : 'down';
+  return 'down'; // paracelular: siempre lumen → sangre
+}
+
+/**
+ * Mecanismo de transporte para elegir la FORMA del glifo. Usa el campo explícito
+ * `mecanismo` si existe; si no, lo deriva: receptor → receptor; ATPasa → bomba;
+ * ≥2 iones en el mismo sentido → simporte; ≥2 en sentidos opuestos → antiporte;
+ * 1 ion → canal.
+ */
+export function transporterMechanism(t: TransporterDef): Mechanism {
+  if (t.mecanismo) return t.mecanismo;
+  if (t.receptor) return 'receptor';
+  if (t.usaAtp) return 'bomba';
+  const ions = t.mueve;
+  if (ions.length >= 2) {
+    const allSame = ions.every((m) => m.dir === ions[0].dir);
+    return allSame ? 'simporte' : 'antiporte';
+  }
+  return 'canal';
+}
+
+export const MECHANISM_LABEL: Record<Mechanism, string> = {
+  bomba: 'Bomba (ATP)',
+  canal: 'Canal / poro',
+  simporte: 'Simporte (cotransporte)',
+  antiporte: 'Antiporte (intercambio)',
+  facilitado: 'Difusión facilitada',
+  receptor: 'Receptor',
+};
+
+export const MECHANISM_ORDER: Mechanism[] = [
+  'bomba', 'canal', 'simporte', 'antiporte', 'facilitado', 'receptor',
+];
 
 export const ACID_BASE_LABEL: Record<string, string> = {
   'acidosis-metabolica': 'Acidosis metabólica',

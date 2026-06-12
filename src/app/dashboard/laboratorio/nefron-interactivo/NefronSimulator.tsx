@@ -8,10 +8,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Perturbation, SegmentId } from './engine/types';
 import { SEGMENT_BY_ID } from '@/lib/data/nefron/segments';
+import { DRUGS } from '@/lib/data/nefron/drugs';
+import { DISEASES } from '@/lib/data/nefron/diseases';
 import { substanceColor, substanceLabel } from '@/lib/data/nefron/substances';
-import { resolvePerturbation } from './engine/simulate';
+import { resolvePerturbation, PH_BASELINE } from './engine/simulate';
 import NefronMap from './NefronMap';
-import NefronCanvas from './NefronCanvas';
+import NefronCanvas, { type CellLayout } from './NefronCanvas';
 import ControlsPanel from './ControlsPanel';
 import ConsequencePanel from './ConsequencePanel';
 import styles from '@/styles/nefronInteractivo.module.css';
@@ -22,6 +24,17 @@ type View = 'nephron' | 'segment' | 'cell';
 
 const EMPTY: Set<string> = new Set();
 
+/** Célula del segmento que contiene el primer transportador diana (para abrirla). */
+function findTargetCell(segmentoId: SegmentId, objetivos: string[]): string | null {
+  const seg = SEGMENT_BY_ID[segmentoId];
+  if (!seg) return null;
+  for (const obj of objetivos) {
+    const hit = seg.celulas.find((c) => c.transportadores.includes(obj));
+    if (hit) return hit.id;
+  }
+  return null;
+}
+
 export default function NefronSimulator() {
   const [simple, setSimple] = useState(true);
   const [view, setView] = useState<View>('nephron');
@@ -30,6 +43,10 @@ export default function NefronSimulator() {
   const [hoverId, setHoverId] = useState<SegmentId | null>(null);
   const [pert, setPert] = useState<Perturbation | null>(null);
   const [panelOpen, setPanelOpen] = useState(true);
+  // Disposición de la bioquímica celular. Por defecto 'horizontal' (luz arriba/sangre
+  // abajo): es la única escena que entra al bundle al cargar; 'vertical' se descarga
+  // recién cuando el usuario pulsa el switch.
+  const [cellLayout, setCellLayout] = useState<CellLayout>('horizontal');
 
   // Restaura preferencias de vista (el tema lo gestiona la web globalmente).
   useEffect(() => {
@@ -38,14 +55,22 @@ export default function NefronSimulator() {
       if (raw) {
         const p = JSON.parse(raw);
         if (typeof p.simple === 'boolean') setSimple(p.simple);
+        if (p.cellLayout === 'horizontal' || p.cellLayout === 'vertical') setCellLayout(p.cellLayout);
       }
     } catch {}
   }, []);
 
-  const persist = (next: { simple: boolean }) => {
+  const persist = (next: Partial<{ simple: boolean; cellLayout: CellLayout }>) => {
     try {
-      localStorage.setItem(PREFS_KEY, JSON.stringify(next));
+      const raw = localStorage.getItem(PREFS_KEY);
+      const prev = raw ? JSON.parse(raw) : {};
+      localStorage.setItem(PREFS_KEY, JSON.stringify({ ...prev, ...next }));
     } catch {}
+  };
+
+  const setLayout = (v: CellLayout) => {
+    setCellLayout(v);
+    persist({ cellLayout: v });
   };
 
   const setSimpleMode = (v: boolean) => {
@@ -108,8 +133,17 @@ export default function NefronSimulator() {
     if (segmentoDiana) {
       setSegId(segmentoDiana);
       if (!simple) {
-        setView('segment');
-        setCellId(null);
+        // Si la perturbación tiene una célula diana clara, se abre directamente
+        // esa célula (con los glifos diana resaltados); si no, la pared del segmento.
+        const objetivos = p.kind === 'farmaco' ? DRUGS[p.id]?.objetivos : DISEASES[p.id]?.objetivos;
+        const targetCell = objetivos ? findTargetCell(segmentoDiana, objetivos) : null;
+        if (targetCell) {
+          setCellId(targetCell);
+          setView('cell');
+        } else {
+          setView('segment');
+          setCellId(null);
+        }
       }
     }
   };
@@ -166,6 +200,8 @@ export default function NefronSimulator() {
               hoverId={hoverId}
               affected={affected}
               affectedTag={resolved?.tag ?? 'Bloqueado'}
+              ph={resolved?.ph ?? PH_BASELINE}
+              cellLayout={cellLayout}
               onSelectSegment={handleSelectSegment}
               onHover={setHoverId}
               onSelectCell={handleSelectCell}
@@ -174,8 +210,53 @@ export default function NefronSimulator() {
             />
           )}
 
-          {!simple && (
-            <span className={styles.zoomHint}>Rueda para acercar · arrastra para mover · toca un segmento</span>
+          {/* Selector de células: al estar en un segmento, entra a una célula sin
+              tener que "cazar" una cuenta pequeña en el lienzo. */}
+          {!simple && view === 'segment' && segment && segment.celulas.length > 0 && (
+            <div className={styles.cellPicker}>
+              <span className={styles.cellPickerLabel}>Células de {segment.corto}:</span>
+              <div className={styles.cellPickerRow}>
+                {segment.celulas.map((c) => (
+                  <button
+                    key={c.id}
+                    className={styles.cellChip}
+                    style={{ borderColor: segment.color }}
+                    onClick={() => handleSelectCell(c.id)}
+                  >
+                    {c.nombre}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!simple && view !== 'cell' && (
+            <span className={styles.zoomHint}>Rueda para acercar · arrastra para mover · toca un segmento o una célula</span>
+          )}
+
+          {/* Switch de disposición de la bioquímica celular (solo dentro de una célula).
+              Cambia entre horizontal (luz arriba/sangre abajo) y vertical (luz izq/sangre
+              der). La escena no activa se descarga recién al pulsar su botón. */}
+          {!simple && view === 'cell' && (
+            <div className={styles.layoutSwitch}>
+              <span className={styles.layoutSwitchLabel}>Vista</span>
+              <div className={styles.layoutSwitchBtns} role="group" aria-label="Disposición de la célula">
+                <button
+                  className={`${styles.layoutSwitchBtn} ${cellLayout === 'horizontal' ? styles.layoutSwitchBtnActive : ''}`}
+                  onClick={() => setLayout('horizontal')}
+                  aria-pressed={cellLayout === 'horizontal'}
+                >
+                  Horizontal
+                </button>
+                <button
+                  className={`${styles.layoutSwitchBtn} ${cellLayout === 'vertical' ? styles.layoutSwitchBtnActive : ''}`}
+                  onClick={() => setLayout('vertical')}
+                  aria-pressed={cellLayout === 'vertical'}
+                >
+                  Vertical
+                </button>
+              </div>
+            </div>
           )}
         </div>
 
@@ -234,10 +315,13 @@ export default function NefronSimulator() {
               <ConsequencePanel
                 titulo={resolved?.titulo ?? 'Estado basal'}
                 consequence={resolved?.consequence ?? null}
+                ph={resolved?.ph}
+                affected={resolved?.affected}
+                segmentoNombre={resolved?.segmentoId ? SEGMENT_BY_ID[resolved.segmentoId]?.nombre : undefined}
                 emptyHint={
                   view === 'cell'
-                    ? 'Bloquea un transportador (toca su insignia), o elige un fármaco o una enfermedad, para ver el efecto en sangre, orina y equilibrio ácido-base.'
-                    : 'Entra a una célula (haz zoom) y bloquea un transportador, o elige un fármaco o enfermedad, para simular su efecto en tiempo real.'
+                    ? 'Bloquea un transportador (toca su glifo), o elige un fármaco o una enfermedad, para ver el efecto en sangre, orina y equilibrio ácido-base.'
+                    : 'Entra a una célula (toca un chip o una cuenta) y bloquea un transportador, o elige un fármaco o enfermedad, para simular su efecto.'
                 }
               />
             )}

@@ -440,7 +440,7 @@
   stroke-width: 1.4;
 }
 .transSiglaSvg {
-  font-size: 6px;
+  font-size: 8px;
   font-weight: 800;
   text-anchor: middle;
   fill: rgba(26, 26, 46, 0.92);
@@ -1471,6 +1471,380 @@
   .sideOverlay {
     width: 230px;
   }
+}
+
+/* ═══════════════ MODO AVANZADO 2.0 — VISTA DE PARED CELULAR ═══════════════ */
+
+/* Selector de células sobre el lienzo (navegación cómoda a la célula) */
+/* Switch de disposición de la bioquímica celular (horizontal / vertical) */
+.layoutSwitch {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px 4px 11px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+}
+.layoutSwitchLabel {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(26, 26, 46, 0.6);
+}
+.layoutSwitchBtns {
+  display: inline-flex;
+  padding: 2px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 999px;
+}
+.layoutSwitchBtn {
+  border: none;
+  background: transparent;
+  padding: 3px 11px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(26, 26, 46, 0.6);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.layoutSwitchBtnActive {
+  background: #ffffff;
+  color: #1a1a2e;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+}
+:global(.dark-mode) .layoutSwitch {
+  background: rgba(26, 27, 46, 0.92);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+:global(.dark-mode) .layoutSwitchLabel {
+  color: rgba(240, 238, 255, 0.6);
+}
+:global(.dark-mode) .layoutSwitchBtns {
+  background: rgba(255, 255, 255, 0.07);
+}
+:global(.dark-mode) .layoutSwitchBtn {
+  color: rgba(240, 238, 255, 0.6);
+}
+:global(.dark-mode) .layoutSwitchBtnActive {
+  background: #2a2c4a;
+  color: #f0eeff;
+}
+
+.cellPicker {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  max-width: 92%;
+}
+.cellPickerLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(26, 26, 46, 0.62);
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  padding: 2px 10px;
+  backdrop-filter: blur(4px);
+}
+:global(.dark-mode) .cellPickerLabel {
+  color: rgba(240, 238, 255, 0.65);
+  background: rgba(12, 14, 30, 0.7);
+}
+.cellPickerRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+.cellChip {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1a2e;
+  background: #ffffff;
+  border: 1.5px solid #3b9edd;
+  border-radius: 999px;
+  padding: 4px 11px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.cellChip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+}
+:global(.dark-mode) .cellChip {
+  color: #f0eeff;
+  background: #1a1b2e;
+}
+
+/* SVG: bandas de luz / sangre y su tinte de pH */
+.wallLumenBand {
+  fill: rgba(245, 196, 50, 0.22);
+  stroke: rgba(245, 196, 50, 0.5);
+  stroke-width: 1;
+}
+.wallBloodBand {
+  fill: rgba(239, 68, 68, 0.16);
+  stroke: rgba(239, 68, 68, 0.45);
+  stroke-width: 1;
+}
+:global(.dark-mode) .wallLumenBand {
+  fill: rgba(245, 196, 50, 0.2);
+}
+:global(.dark-mode) .wallBloodBand {
+  fill: rgba(239, 68, 68, 0.14);
+}
+.wallPhTint {
+  stroke: none;
+  pointer-events: none;
+  transition: fill 0.3s ease;
+}
+.wallPhAcido {
+  fill: rgba(239, 68, 68, 0.18);
+}
+.wallPhBasico {
+  fill: rgba(59, 130, 246, 0.18);
+}
+.wallPhNeutro {
+  fill: transparent;
+}
+.wallBandTag {
+  fill: rgba(26, 26, 46, 0.5);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+:global(.dark-mode) .wallBandTag {
+  fill: rgba(240, 238, 255, 0.55);
+}
+
+/* SVG: cuerpos celulares (foco + vecinas) */
+.wallCellFocus {
+  fill: rgba(255, 255, 255, 0.92);
+  stroke: rgba(120, 120, 160, 0.5);
+  stroke-width: 1.2;
+}
+:global(.dark-mode) .wallCellFocus {
+  fill: rgba(255, 255, 255, 0.07);
+  stroke: rgba(255, 255, 255, 0.2);
+}
+.wallCellNeighbor {
+  fill: rgba(160, 160, 190, 0.13);
+  stroke: rgba(120, 120, 160, 0.28);
+  stroke-width: 1;
+}
+:global(.dark-mode) .wallCellNeighbor {
+  fill: rgba(255, 255, 255, 0.03);
+  stroke: rgba(255, 255, 255, 0.1);
+}
+.wallNucleus {
+  fill: rgba(120, 120, 170, 0.18);
+  stroke: rgba(120, 120, 170, 0.4);
+  stroke-width: 0.8;
+}
+:global(.dark-mode) .wallNucleus {
+  fill: rgba(180, 180, 230, 0.12);
+}
+.wallNeighborLabel {
+  fill: rgba(26, 26, 46, 0.5);
+  font-size: 8px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+:global(.dark-mode) .wallNeighborLabel {
+  fill: rgba(240, 238, 255, 0.5);
+}
+
+/* SVG: membranas, borde en cepillo, claudinas */
+.wallMembrane {
+  stroke: rgba(80, 80, 120, 0.55);
+  stroke-width: 2;
+}
+:global(.dark-mode) .wallMembrane {
+  stroke: rgba(200, 200, 240, 0.4);
+}
+.wallMembLabel {
+  fill: rgba(26, 26, 46, 0.42);
+  font-size: 7px;
+  font-weight: 600;
+}
+:global(.dark-mode) .wallMembLabel {
+  fill: rgba(240, 238, 255, 0.42);
+}
+.wallBrush {
+  stroke: rgba(245, 158, 11, 0.7);
+  stroke-width: 1.2;
+}
+.wallSeam {
+  stroke: rgba(217, 119, 6, 0.7);
+  stroke-width: 1.6;
+}
+.wallClaudinKnot {
+  fill: #d97706;
+}
+.wallClaudinLabel {
+  fill: #b45309;
+  font-size: 7.5px;
+  font-weight: 700;
+}
+:global(.dark-mode) .wallClaudinLabel {
+  fill: #f59e0b;
+}
+
+/* SVG: glifos por mecanismo */
+.glyphBody {
+  fill: #ffffff;
+}
+:global(.dark-mode) .glyphBody {
+  fill: #15182b;
+}
+.glyphBodyOff {
+  fill: rgba(232, 91, 74, 0.18);
+  stroke: #e85b4a;
+  stroke-width: 1.8;
+}
+.glyphSigla {
+  fill: rgba(26, 26, 46, 0.92);
+  font-size: 8.5px;
+  font-weight: 800;
+}
+:global(.dark-mode) .glyphSigla {
+  fill: rgba(240, 238, 255, 0.9);
+}
+.glyphAtp {
+  font-size: 8px;
+}
+.glyphOffTag {
+  fill: #e85b4a;
+  font-size: 7.5px;
+  font-weight: 800;
+}
+
+/* SVG: pastillas de pH (gauge en luz y sangre) */
+.phPill {
+  stroke-width: 1;
+}
+.phPillText {
+  fill: #1a1a2e;
+  font-size: 8.5px;
+  font-weight: 700;
+}
+:global(.dark-mode) .phPillText {
+  fill: #f0eeff;
+}
+
+/* pH en el panel — IMPORTANTE: .phChip (border shorthand) va ANTES de los estados */
+.phRow {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0;
+}
+.phChip {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 6px 9px;
+}
+.phChipLabel {
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.72;
+}
+
+/* Estados de pH: sirven para el chip HTML (background/border/color) y para el
+   rect/pill SVG (fill/stroke). Por eso se definen ambos grupos de propiedades. */
+.phNeutro {
+  background: rgba(120, 120, 150, 0.12);
+  border-color: rgba(120, 120, 150, 0.3);
+  color: rgba(26, 26, 46, 0.72);
+  fill: rgba(120, 120, 150, 0.14);
+  stroke: rgba(120, 120, 150, 0.4);
+}
+.phAcido {
+  background: rgba(239, 68, 68, 0.14);
+  border-color: rgba(239, 68, 68, 0.45);
+  color: #b91c1c;
+  fill: rgba(239, 68, 68, 0.16);
+  stroke: rgba(239, 68, 68, 0.5);
+}
+.phBasico {
+  background: rgba(59, 130, 246, 0.14);
+  border-color: rgba(59, 130, 246, 0.45);
+  color: #1d4ed8;
+  fill: rgba(59, 130, 246, 0.16);
+  stroke: rgba(59, 130, 246, 0.5);
+}
+:global(.dark-mode) .phNeutro {
+  color: rgba(240, 238, 255, 0.72);
+}
+:global(.dark-mode) .phAcido {
+  color: #fca5a5;
+}
+:global(.dark-mode) .phBasico {
+  color: #93c5fd;
+}
+
+/* Sitio de acción en el panel de consecuencias */
+.siteRow {
+  margin: 8px 0;
+  font-size: 13px;
+}
+.siteRow p {
+  margin: 2px 0 0;
+  font-weight: 600;
+}
+.siteTargets {
+  color: #3b9edd;
+  font-weight: 700;
+}
+
+/* Sitio en los botones de fármaco / enfermedad */
+.pickSite {
+  display: block;
+  font-size: 10.5px;
+  color: rgba(26, 26, 46, 0.55);
+  margin-top: 2px;
+}
+:global(.dark-mode) .pickSite {
+  color: rgba(240, 238, 255, 0.55);
+}
+
+/* Leyenda de formas (mecanismo) */
+.shapeLegend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 10px;
+}
+.shapeItem {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  color: rgba(26, 26, 46, 0.7);
+}
+:global(.dark-mode) .shapeItem {
+  color: rgba(240, 238, 255, 0.65);
 }
 
 @media (max-width: 600px) {

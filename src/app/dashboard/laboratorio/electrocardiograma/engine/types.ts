@@ -112,4 +112,8 @@ export interface EkgPrefs {
   grid: boolean;
   labels: boolean;
   explanation: boolean;
+  /** Ampliación vertical del trazado (1 = normal). Aumenta alto del panel y mV/px. */
+  ampScale: number; // 1 .. 2
+  /** Ampliación horizontal del trazado (1 = normal). Ensancha el latido (scroll). */
+  timeScale: number; // 1 .. 2
 }

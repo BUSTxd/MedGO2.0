@@ -22,6 +22,12 @@ export type Membrane = 'apical' | 'basolateral' | 'paracelular';
 /** entra = hacia la célula / reabsorción · sale = hacia el lumen / secreción */
 export type Direction = 'entra' | 'sale';
 
+/** Mecanismo de transporte (define la FORMA del glifo en la vista de célula). */
+export type Mechanism = 'bomba' | 'canal' | 'simporte' | 'antiporte' | 'facilitado' | 'receptor';
+
+/** Dirección de pH en un compartimento (luz o sangre). */
+export type PhDir = 'acido' | 'neutro' | 'basico';
+
 export interface IonMove {
   sustancia: SubstanceId;
   dir: Direction;
@@ -64,6 +70,8 @@ export interface TransporterDef {
   usaAtp?: boolean;
   /** Receptor/canal sin transporte iónico directo (no anima iones). */
   receptor?: boolean;
+  /** Mecanismo explícito (forma del glifo). Si falta, se DERIVA en sceneLayout. */
+  mecanismo?: Mechanism;
   mueve: IonMove[];
   funcionBreve: string;
   funcionAvanzada: string;
@@ -84,6 +92,10 @@ export interface CellDef {
   id: string;
   nombre: string;
   descripcion: string;
+  /** Morfología del epitelio (para dibujar la pared de la vista de célula). */
+  morfologia?: 'cuboidal' | 'cilindrica' | 'plana';
+  /** Borde en cepillo apical (microvellosidades), p. ej. TCP. */
+  bordeCepillo?: boolean;
   /** ids de transportadores presentes en esta célula. */
   transportadores: string[];
   /** Reacciones/enzimas a dibujar dentro del citoplasma (opcional). */

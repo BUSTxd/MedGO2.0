@@ -4,7 +4,7 @@
 // reproducir avanza con rAF, al pausar se congela, y al arrastrar el cursor del
 // EKG se fija manualmente. Así ambos paneles muestran siempre el mismo instante.
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import type { ModeDefinition, ModeMeta, EkgPrefs } from './engine/types';
 import HeartSchema from './HeartSchema';
 import EkgTrace from './EkgTrace';
@@ -15,7 +15,7 @@ import styles from '@/styles/electrocardiograma.module.css';
 const PREFS_KEY = 'medgo:ekg:prefs';
 
 function loadPrefs(): EkgPrefs {
-  const fallback: EkgPrefs = { speed: 1, grid: true, labels: true, explanation: true };
+  const fallback: EkgPrefs = { speed: 1, grid: true, labels: true, explanation: true, ampScale: 1, timeScale: 1 };
   try {
     const raw = localStorage.getItem(PREFS_KEY);
     if (!raw) return fallback;
@@ -42,7 +42,7 @@ export default function EkgSimulator({ mode, modes, onSelectMode }: Props) {
   const [stepMode, setStepMode] = useState(false);
   const [pauseAtAv, setPauseAtAv] = useState(false);
 
-  const [prefs, setPrefs] = useState<EkgPrefs>({ speed: 1, grid: true, labels: true, explanation: true });
+  const [prefs, setPrefs] = useState<EkgPrefs>({ speed: 1, grid: true, labels: true, explanation: true, ampScale: 1, timeScale: 1 });
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
@@ -153,7 +153,10 @@ export default function EkgSimulator({ mode, modes, onSelectMode }: Props) {
             <HeartSchema phase={phase} showEctopic={mode.showEctopic} />
           </div>
 
-          <div className={styles.traceArea}>
+          <div
+            className={styles.traceArea}
+            style={{ '--ampScale': prefs.ampScale } as CSSProperties}
+          >
             <EkgTrace
               sampleAt={mode.sampleAt}
               t={tState}
@@ -163,6 +166,8 @@ export default function EkgSimulator({ mode, modes, onSelectMode }: Props) {
               showLabels={prefs.labels}
               paused={!playing}
               dark={dark}
+              ampScale={prefs.ampScale}
+              timeScale={prefs.timeScale}
               onScrub={onScrub}
             />
           </div>
@@ -189,6 +194,10 @@ export default function EkgSimulator({ mode, modes, onSelectMode }: Props) {
           onReset={onReset}
           speed={prefs.speed}
           onSpeed={(s) => patch({ speed: s })}
+          vZoom={prefs.ampScale}
+          onVZoom={(v) => patch({ ampScale: v })}
+          hZoom={prefs.timeScale}
+          onHZoom={(v) => patch({ timeScale: v })}
           stepMode={stepMode}
           onStepToggle={() => {
             setStepMode((s) => !s);
