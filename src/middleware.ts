@@ -48,7 +48,7 @@ export async function middleware(request: NextRequest) {
   // Rutas /auth que pueden visitarse con sesión activa (no rebotar a /dashboard).
   const isAuthEscape = isDeviceLimit || isClearDevice;
 
-  // Rutas protegidas: redirige al login si no hay sesión
+  // Rutas protegidas: redirige al login si no hay sesión.
   if (!user && pathname.startsWith('/dashboard')) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
@@ -58,10 +58,16 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
-  // Si ya está logueado y va a otra ruta de /auth (login, signup), redirige al dashboard.
+  // /dashboard exacto → /dashboard/home en el middleware (antes del render del layout),
+  // evita el salto extra que causaba un flash de error al recién loguearse.
+  if (user && pathname === '/dashboard') {
+    return NextResponse.redirect(new URL('/dashboard/home', request.url));
+  }
+
+  // Si ya está logueado y va a otra ruta de /auth (login, signup), redirige al dashboard/home.
   // Excepción: device-limit y clear-device son válidas con sesión activa.
   if (user && pathname.startsWith('/auth') && !isAuthEscape) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    return NextResponse.redirect(new URL('/dashboard/home', request.url));
   }
 
   return supabaseResponse;

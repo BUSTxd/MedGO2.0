@@ -104,7 +104,7 @@ function AuthPageInner() {
     // con el primer request al middleware y el árbol RSC se reinicia con
     // la sesión válida. Con router.push había una carrera donde el server
     // veía user=null y rebotaba al login.
-    window.location.assign('/dashboard');
+    window.location.assign('/dashboard/home');
   }
 
   async function handleRegister(e: React.FormEvent) {
@@ -125,7 +125,7 @@ function AuthPageInner() {
     }
 
     setLoading(false);
-    window.location.assign('/dashboard');
+    window.location.assign('/dashboard/home');
   }
 
   return (
