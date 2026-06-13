@@ -51,13 +51,11 @@ interface Props {
   /** Texto del botón "Volver" — por defecto "Volver a la clase". */
   backLabel?: string;
   /**
-   * Segundo bloque de preguntas. Si se pasa, el examen se vuelve de dos grupos:
-   * el alumno resuelve `examKey` (Grupo A) y solo al terminarlo se DESCARGA y
-   * abre `groupBKey` (Grupo B). Mientras tanto el Grupo B nunca se pide a la red.
+   * Grupos ADICIONALES de preguntas (B, C, …) además de `examKey` (Grupo A).
+   * Cada grupo es independiente: su JSON e imágenes NO tocan la red hasta que el
+   * alumno pulsa su cuadro en el selector. Se rotulan por índice (A, B, C, …).
    */
-  groupBKey?: string;
-  groupALabel?: string;
-  groupBLabel?: string;
+  groupKeys?: string[];
 }
 
 const EXPIRY_BUFFER_MS = 15 * 60 * 1000;
@@ -135,27 +133,19 @@ async function fetchExam(key: string): Promise<ExamPayload> {
   return (await jsonRes.json()) as ExamPayload;
 }
 
-type Phase = 'running' | 'interstitial' | 'finished';
+type Phase = 'running' | 'finished';
 
 export default function ExamRunner({
   examKey,
   fallbackTitle,
   backHref,
   backLabel = 'Volver a la clase',
-  groupBKey,
-  groupALabel = 'Grupo A',
-  groupBLabel = 'Grupo B',
+  groupKeys,
 }: Props) {
-  // Definición de etapas. Sin groupBKey → examen simple de una sola etapa.
+  // Etapas: Grupo A (examKey) + grupos adicionales. Sin extras → examen simple.
   const stages = useMemo(
-    () =>
-      groupBKey
-        ? [
-            { key: examKey, label: groupALabel },
-            { key: groupBKey, label: groupBLabel },
-          ]
-        : [{ key: examKey, label: '' }],
-    [examKey, groupBKey, groupALabel, groupBLabel],
+    () => [examKey, ...(groupKeys ?? [])].map(key => ({ key })),
+    [examKey, groupKeys],
   );
   const isGrouped = stages.length > 1;
 
@@ -221,34 +211,34 @@ export default function ExamRunner({
     setPicked(null);
 
     if (currentIdx + 1 >= total) {
-      // Etapa terminada
-      if (stage + 1 < stages.length) {
-        setPhase('interstitial');
-      } else {
-        const score = nextAll.filter(a => a.ok).length;
-        saveAttempt(examKey, {
-          id: `att-${Date.now()}`,
-          score,
-          total: nextAll.length,
-          finishedAt: new Date().toISOString(),
-        });
-        setPhase('finished');
-      }
+      // Grupo terminado: cada grupo se califica de forma independiente.
+      const score = nextAll.filter(a => a.ok).length;
+      saveAttempt(stageKey, {
+        id: `att-${Date.now()}`,
+        score,
+        total: nextAll.length,
+        finishedAt: new Date().toISOString(),
+      });
+      setPhase('finished');
     } else {
       setCurrentIdx(i => i + 1);
     }
   };
 
-  const handleContinueNextGroup = () => {
-    setStage(s => s + 1);
+  // Salto directo a un grupo desde el selector (o desde la pantalla de
+  // resultados). Reinicia el estado: cada grupo es un intento independiente.
+  const handleSwitchStage = (i: number) => {
+    if (i === stage && phase === 'running') return;
+    setStage(i);
     setCurrentIdx(0);
     setPicked(null);
+    setAnswersAll([]);
     setPhase('running');
   };
 
   const handleRetry = () => {
+    // Reintenta el grupo actual (no vuelve al Grupo A).
     setRunId(r => r + 1);
-    setStage(0);
     setCurrentIdx(0);
     setPicked(null);
     setAnswersAll([]);
@@ -260,9 +250,23 @@ export default function ExamRunner({
   return (
     <div className={styles.shell}>
       {isGrouped && phase !== 'finished' && (
-        <span className={styles.groupBadge}>
-          {stages[stage].label} · Parte {stage + 1}/{stages.length}
-        </span>
+        <div className={styles.groupSelector}>
+          <span className={styles.groupSelectorLabel}>Examen:</span>
+          <div className={styles.groupSquares}>
+            {stages.map((s, i) => (
+              <button
+                key={s.key}
+                type="button"
+                className={`${styles.groupSquare} ${i === stage ? styles.groupSquareActive : ''}`}
+                onClick={() => handleSwitchStage(i)}
+                aria-pressed={i === stage}
+                aria-label={`Ir al Grupo ${String.fromCharCode(65 + i)}`}
+              >
+                {String.fromCharCode(65 + i)}
+              </button>
+            ))}
+          </div>
+        </div>
       )}
 
       {backHref ? (
@@ -276,16 +280,18 @@ export default function ExamRunner({
         <h1 className={styles.title}>{title}</h1>
         {payload && phase === 'running' && (
           <div className={styles.metaLine}>
+            {isGrouped && <span>Grupo {String.fromCharCode(65 + stage)}</span>}
             <span>{total} preguntas</span>
-            {isGrouped && <span>Parte {stage + 1} de {stages.length}</span>}
             <span>{payload.duration_min ? `${payload.duration_min} min` : 'Sin tiempo límite'}</span>
             <span>Respuestas y opciones aleatorizadas</span>
           </div>
         )}
-        {payload && phase === 'running' && isGrouped && stage + 1 < stages.length && (
+        {payload && phase === 'running' && isGrouped && (
           <p className={styles.partHint}>
-            Esta es la <strong>Parte {stage + 1} ({stages[stage].label})</strong>. Al terminar estas{' '}
-            {total} preguntas se desbloqueará la <strong>Parte {stage + 2} ({stages[stage + 1].label})</strong>.
+            Este examen tiene <strong>{stages.length} grupos independientes</strong>. Estás en el{' '}
+            <strong>Grupo {String.fromCharCode(65 + stage)}</strong>; usa los cuadros{' '}
+            <strong>{stages.map((_, i) => String.fromCharCode(65 + i)).join(' / ')}</strong> de arriba a la
+            derecha para cambiar de grupo cuando quieras.
           </p>
         )}
       </header>
@@ -297,7 +303,7 @@ export default function ExamRunner({
       {!error && !payload && (
         <div className={styles.loading}>
           <div className={styles.spinner} />
-          {stage > 0 ? `Cargando ${stages[stage].label}…` : 'Cargando examen…'}
+          {stage > 0 ? `Cargando Grupo ${String.fromCharCode(65 + stage)}…` : 'Cargando examen…'}
         </div>
       )}
 
@@ -328,7 +334,7 @@ export default function ExamRunner({
           <div className={styles.progressWrap}>
             <div className={styles.progressLabels}>
               <span className={styles.progressLabelMain}>
-                {isGrouped ? `${stages[stage].label} · ` : ''}Pregunta {currentIdx + 1} de {total}
+                {isGrouped ? `Grupo ${String.fromCharCode(65 + stage)} · ` : ''}Pregunta {currentIdx + 1} de {total}
               </span>
               <span>{progressPct}% completado</span>
             </div>
@@ -404,40 +410,17 @@ export default function ExamRunner({
               onClick={handleNext}
               disabled={!picked}
             >
-              {currentIdx + 1 >= total
-                ? (stage + 1 < stages.length ? `Terminar ${stages[stage].label} →` : 'Terminar examen')
-                : 'Siguiente →'}
+              {currentIdx + 1 >= total ? 'Terminar examen' : 'Siguiente →'}
             </button>
           </div>
         </>
       )}
 
-      {phase === 'interstitial' && (() => {
-        const groupScore = answersAll.filter(a => a.ok).length;
-        const groupTotal = answersAll.length;
-        const nextLabel = stages[stage + 1]?.label ?? 'el siguiente grupo';
-        return (
-          <div className={styles.interstitial}>
-            <div className={styles.interstitialCheck}>✓</div>
-            <h2 className={styles.resultTitle}>Terminaste el {stages[stage].label}</h2>
-            <p className={styles.resultSub}>
-              Acertaste <strong>{groupScore} de {groupTotal}</strong>. Ahora continúa con el{' '}
-              <strong>{nextLabel}</strong>.
-            </p>
-            <div className={styles.resultActions}>
-              <button className={styles.primaryBtn} onClick={handleContinueNextGroup}>
-                Comenzar {nextLabel} →
-              </button>
-            </div>
-          </div>
-        );
-      })()}
-
       {phase === 'finished' && (() => {
         const score = answersAll.filter(a => a.ok).length;
         const grandTotal = answersAll.length;
         const pct = grandTotal > 0 ? Math.round((score / grandTotal) * 100) : 0;
-        const history = loadAttempts(examKey);
+        const history = loadAttempts(stageKey);
         return (
           <div className={styles.resultShell}>
             <div className={styles.scoreCircle}>
@@ -448,6 +431,7 @@ export default function ExamRunner({
               {pct >= 80 ? '¡Excelente!' : pct >= 60 ? '¡Buen trabajo!' : pct >= 40 ? 'Vas por buen camino' : 'A repasar este tema'}
             </h2>
             <p className={styles.resultSub}>
+              {isGrouped && <>Grupo {String.fromCharCode(65 + stage)} · </>}
               Tu intento se guardó en este navegador.
             </p>
 
@@ -478,6 +462,17 @@ export default function ExamRunner({
               <button className={styles.primaryBtn} onClick={handleRetry}>
                 Reintentar examen
               </button>
+              {isGrouped && stages.map((s, i) =>
+                i !== stage ? (
+                  <button
+                    key={s.key}
+                    className={styles.ghostBtn}
+                    onClick={() => handleSwitchStage(i)}
+                  >
+                    Ir al Grupo {String.fromCharCode(65 + i)} →
+                  </button>
+                ) : null,
+              )}
             </div>
           </div>
         );

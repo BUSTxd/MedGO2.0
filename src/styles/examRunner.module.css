@@ -9,41 +9,60 @@
   z-index: 1;
 }
 
-/* Badge de grupo en la esquina (Grupo A / Grupo B) */
-.groupBadge {
+/* Selector de grupo en la esquina superior derecha (Examen: [A] [B]) */
+.groupSelector {
   position: absolute;
-  top: 28px;
+  top: 22px;
   right: 24px;
   z-index: 3;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #7B72D4;
-  background: rgba(123, 114, 212, 0.12);
-  border: 1px solid rgba(123, 114, 212, 0.35);
-  padding: 6px 12px;
-  border-radius: 999px;
-}
-
-/* Pantalla intermedia entre Grupo A y Grupo B */
-.interstitial {
-  text-align: center;
-  padding: 48px 0 0;
-}
-
-.interstitialCheck {
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  margin: 0 auto 24px;
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.groupSelectorLabel {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.groupSquares {
+  display: flex;
+  gap: 8px;
+}
+
+.groupSquare {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  border: 1.5px solid rgba(123, 114, 212, 0.35);
+  background: rgba(123, 114, 212, 0.10);
+  color: #9B8EF8;
+  font-weight: 800;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
-  color: #2EA057;
-  background: radial-gradient(circle at 30% 30%, rgba(46, 160, 87, 0.18), rgba(46, 160, 87, 0.04));
-  border: 3px solid rgba(46, 160, 87, 0.45);
+  transition: all 0.15s ease;
+}
+
+.groupSquare:hover {
+  border-color: rgba(123, 114, 212, 0.6);
+  background: rgba(123, 114, 212, 0.18);
+  transform: translateY(-1px);
+}
+
+.groupSquareActive,
+.groupSquareActive:hover {
+  background: linear-gradient(135deg, #7B72D4 0%, #9B8EF8 100%);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(123, 114, 212, 0.35);
 }
 
 .backLink {
@@ -532,4 +551,9 @@
   .option { padding: 12px 14px; gap: 12px; }
   .scoreCircle { width: 130px; height: 130px; }
   .scoreNum { font-size: 38px; }
+  /* El selector va arriba a la derecha; deja aire al título para que no choque */
+  .groupSelector { top: 18px; right: 16px; }
+  .groupSquare { width: 30px; height: 30px; font-size: 13px; }
+  .header { padding-top: 4px; }
+  .title { padding-right: 84px; }
 }

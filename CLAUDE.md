@@ -88,7 +88,7 @@ src/app/
 | `src/components/DashboardWrapper.tsx` | Shell del dashboard: sidebar + dark mode + providers |
 | `src/components/DashboardSidebar.tsx` | Sidebar de navegación. Array `NAV` con label/href/icon. Ícono de Cursos: book-bookmark SVG con `stroke="currentColor"` |
 | `src/components/StudyMaterialSection.tsx` | 3 tarjetas de material por clase: Video, Banqueo, Resumen |
-| `src/components/ExamRunner.tsx` | Examen inline (`?examen=1`). Lee del bucket privado `examenes` |
+| `src/components/ExamRunner.tsx` | Examen inline (`?examen=1`). Lee del bucket privado `examenes`. Soporta N grupos independientes vía `groupKeys?: string[]` — selector cuadros A/B/C… en esquina superior derecha, carga diferida por grupo, puntuación independiente |
 | `src/components/PdfFullscreenModal.tsx` | Viewer PDF fullscreen con zoom. Usa signed URLs + sessionStorage cache |
 | `src/components/PlanProvider.tsx` | Context con `plan`, `isActive`, `expiresAt`. Consumido con `usePlan()` |
 | `src/components/AuthProvider.tsx` | Singleton del cliente Supabase, compartido para evitar múltiples instancias |
@@ -109,7 +109,15 @@ El plan del usuario vive en `profiles.plan` + `profiles.plan_expires_at` en Supa
 
 ## Patrones de datos
 
-**Sílabos de cursos**: archivos en `src/lib/data/[curso].ts`. Cada clase tiene `id`, `titulo`, `hasResumen`, `examen?` (con `key` para el bucket y `free?` para bypass paywall).
+**Sílabos de cursos**: archivos en `src/lib/data/[curso].ts`. Cada clase tiene `id`, `titulo`, `hasResumen`, `examen?` (con `key` para el bucket, `free?` para bypass paywall, y `groups?: string[]` para grupos adicionales B/C/… del selector N-grupos).
+
+**ExamenRef con N grupos**:
+```ts
+examen: { key: 'neurologia/snc-histologia', free: true, groups: ['neurologia/snc-histologia-a3', 'neurologia/snc-histologia-c'] }
+```
+La prop `groupKeys={act.examen.groups}` pasa a `<ExamRunner>`. Cada clave en `groups` referencia un JSON independiente en el bucket `examenes` y debe estar registrada en el whitelist `EXAMENES` de `src/app/api/examen/[...examKey]/route.ts`.
+
+**Imágenes de exámenes**: bucket **público** `examenes-img` (no firmadas). Path `<curso>/<grupo>/<archivo>.webp`. Se embeben con URL completa en el JSON, renderizadas con `next/image` + `sizes="(max-width: 600px) 100vw, 560px"`. Conversión con `sharp` (máx 1200px, q82) antes de subir.
 
 **Imágenes**: `next/image` con formato AVIF, prop `sizes` responsivo. Bucket público `histologia`, `micologia`. Bucket privado `examenes`.
 

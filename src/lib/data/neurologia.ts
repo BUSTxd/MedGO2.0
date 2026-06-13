@@ -30,8 +30,8 @@ export interface ResumenOpcion {
 export interface ExamenRef {
   key: string;
   free?: boolean;
-  /** Segundo bloque de preguntas, descargado solo al terminar el primero. */
-  groupBKey?: string;
+  /** Grupos adicionales (B, C, …); cada uno se descarga solo al pulsar su cuadro. */
+  groups?: string[];
 }
 
 export interface Actividad {
@@ -223,7 +223,7 @@ export const semanas: Semana[] = [
         hora: 'A1-A2: mar 02 · A3-A4: mié 03 · B1-B2: jue 04 · B3-B4: vie 05 (09:00-11:00)',
         docentes: ['Dras. Y. Coico, M. Revilla', 'Drs. Velarde, Condori, Portugal, Alva, Salas, Calizaya, Romero'],
         nota: 'Incluye paso corto SNC (20% del rubro Histología)',
-        examen: { key: 'neurologia/snc-histologia', free: true },
+        examen: { key: 'neurologia/snc-histologia', free: true, groups: ['neurologia/snc-histologia-a3', 'neurologia/snc-histologia-c'] },
         subtemas: [
           'Neuronas: soma, axón, dendritas; cuerpos de Nissl',
           'Tipos de neuroglia: astrocitos, oligodendrocitos, microglia, células ependimarias',
@@ -375,7 +375,7 @@ export const semanas: Semana[] = [
         hora: 'A1-A2: mar 09 · A3-A4: mié 10 · B1-B2: jue 11 · B3-B4: vie 12 (09:00-11:00)',
         docentes: ['Dras. Y. Coico, M. Revilla', 'Drs. Velarde, Condori, Portugal, Calvo, Alva, Romero, Calizaya'],
         nota: 'Incluye paso corto SNP (20% del rubro Histología)',
-        examen: { key: 'neurologia/snp-histologia', free: true, groupBKey: 'neurologia/snp-histologia-b' },
+        examen: { key: 'neurologia/snp-histologia', free: true, groups: ['neurologia/snp-histologia-b'] },
         subtemas: [
           'Nervio periférico: epineuro, perineuro, endoneuro',
           'Fibra mielínica: vaina de mielina, nódulos de Ranvier, células de Schwann',

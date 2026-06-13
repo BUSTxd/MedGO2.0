@@ -52,7 +52,7 @@ export default async function NeurologiaActividadPage({
       <div className={styles.microPage}>
         <ExamRunner
           examKey={act.examen.key}
-          groupBKey={act.examen.groupBKey}
+          groupKeys={act.examen.groups}
           fallbackTitle={act.titulo}
           backHref={`/dashboard/cursos/neurologia/${id}`}
         />

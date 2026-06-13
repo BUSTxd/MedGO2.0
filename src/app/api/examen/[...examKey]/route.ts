@@ -10,6 +10,8 @@ const EXAMENES: Record<string, { free?: boolean }> = {
   'neurologia/snp-histologia': { free: true },
   'neurologia/snp-histologia-b': { free: true },
   'neurologia/snc-histologia': { free: true },
+  'neurologia/snc-histologia-a3': { free: true },
+  'neurologia/snc-histologia-c': { free: true },
 };
 
 const SIGNED_URL_TTL_SECONDS = 60 * 60 * 24 * 7;
