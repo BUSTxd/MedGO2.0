@@ -22,10 +22,9 @@ export default function CookieConsent() {
         <div className={styles.text}>
           <p className={styles.title}>🍪 Usamos cookies</p>
           <p className={styles.desc}>
-            Las cookies <strong>necesarias</strong> (tu sesión, dispositivo y preferencias) siempre
-            están activas porque la plataforma no funciona sin ellas. Con tu permiso, también usamos
-            cookies <strong>analíticas</strong> (mapa de calor y estadísticas de uso) para mejorar tu
-            experiencia. Puedes rechazarlas sin perder ninguna función.
+            Las cookies <strong>necesarias</strong> siempre están activas porque la plataforma no
+            funciona sin ellas. También usamos cookies de <strong>personalización</strong> para que la
+            experiencia se adapte a ti y sea más cómoda. Puedes rechazarlas sin perder ninguna función.
           </p>
         </div>
         <div className={styles.actions}>
