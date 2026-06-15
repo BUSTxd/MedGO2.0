@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { trackEvent } from '@/lib/analytics';
 import styles from '@/styles/cursos.module.css';
 
 // Loaded only when the user opens the resumen
@@ -37,6 +38,11 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
   const [selectedId, setSelectedId]       = useState<string | null>(null);
 
+  // Evento curado: el alumno entró a la clase (una vez por montaje).
+  useEffect(() => {
+    trackEvent('clase_abierta', { claseId });
+  }, [claseId]);
+
   // Which PDF the fullscreen modal targets.
   // Si hay una sola opcion, usar su id (permite que el data file sobreescriba el
   // claseId — util cuando dos cursos comparten ids como `clase-14`).
@@ -49,11 +55,13 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
     if (isMulti) {
       setPickerOpen(true);
     } else {
+      trackEvent('resumen_abierto', { claseId: activeId });
       setFullscreenOpen(true);
     }
   };
 
   const handlePick = (id: string) => {
+    trackEvent('resumen_abierto', { claseId: id });
     setSelectedId(id);
     setPickerOpen(false);
     setFullscreenOpen(true);
@@ -91,6 +99,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           <Link
             href={`${pathname}?examen=1`}
             className={`${styles.studyCard} ${styles.studyCardActive}`}
+            onClick={() => trackEvent('banco_iniciado', { claseId, examKey: examen.key })}
           >
             <div className={styles.studyCardIcon}>
               <svg width="22" height="22" viewBox="0 0 48 48" fill="none">

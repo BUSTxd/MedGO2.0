@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import DashboardSidebar from './DashboardSidebar';
 import { PlanProvider, type ClientPlanState } from './PlanProvider';
 import { RecentClassesProvider } from './RecentClassesProvider';
+import ClarityPlanTag from './ClarityPlanTag';
 import styles from '@/styles/dashboardLayout.module.css';
 
 export default function DashboardWrapper({
@@ -39,6 +40,7 @@ export default function DashboardWrapper({
 
   return (
     <PlanProvider value={planState}>
+      <ClarityPlanTag />
       <RecentClassesProvider>
         <div className={styles.layout}>
           <DashboardSidebar

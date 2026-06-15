@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
+import { trackEvent } from '@/lib/analytics';
 import styles from '@/styles/examRunner.module.css';
 
 interface ExamOption {
@@ -219,6 +220,7 @@ export default function ExamRunner({
         total: nextAll.length,
         finishedAt: new Date().toISOString(),
       });
+      trackEvent('examen_completado', { examKey: stageKey, score, total: nextAll.length });
       setPhase('finished');
     } else {
       setCurrentIdx(i => i + 1);

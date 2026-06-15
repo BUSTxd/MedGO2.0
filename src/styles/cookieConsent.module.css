@@ -1,0 +1,118 @@
+.banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  animation: slideUp 0.35s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(110%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.inner {
+  width: 100%;
+  max-width: 920px;
+  background: var(--bg2);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.title {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.desc {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.desc strong {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.actions {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 10px;
+}
+
+.reject,
+.accept {
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: filter 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+.reject {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  color: var(--white);
+  opacity: 0.8;
+}
+
+.reject:hover {
+  opacity: 1;
+  background: var(--card-bg);
+}
+
+.accept {
+  background: var(--purple-light);
+  border: 1px solid transparent;
+  color: #fff;
+}
+
+.accept:hover {
+  filter: brightness(1.12);
+}
+
+/* ── Responsivo ── */
+@media (max-width: 640px) {
+  .inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 16px 18px;
+  }
+  .actions {
+    justify-content: stretch;
+  }
+  .reject,
+  .accept {
+    flex: 1 1 0;
+    text-align: center;
+  }
+}
+
+/* ── Dark mode: el banner es global (puede salir en la landing o en el
+   dashboard). En dark-mode reforzamos contraste del contenedor. ── */
+:global(.dark-mode) .inner {
+  background: #0d0b28;
+  border-color: rgba(255, 255, 255, 0.1);
+}
