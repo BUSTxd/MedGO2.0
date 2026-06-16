@@ -211,10 +211,7 @@
 /* ── Figura / micrografía de la pregunta ─────────────────── */
 .figure {
   margin: 0 0 26px 0;
-  background: #ffffff;
-  border: 1px solid var(--card-border);
   border-radius: 12px;
-  padding: 8px;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -225,7 +222,7 @@
   width: 100%;
   max-width: 560px;
   height: auto;
-  border-radius: 6px;
+  border-radius: 12px;
 }
 
 .options {
