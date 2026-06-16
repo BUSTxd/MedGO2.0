@@ -62,23 +62,32 @@ export function quatFromSynergy(group: SynergyGroup): THREE.Quaternion {
 }
 
 // ── Grupos: posiciones cardinales (patrón en H / campos de acción) ───────────
-// El ojo va a la mirada diagnóstica y se resalta el músculo responsable.
+// El ojo va a la mirada diagnóstica. En las posiciones OBLICUAS se contrae más de
+// un músculo: el `muscle` diagnóstico (recto/oblicuo vertical que se evalúa ahí,
+// porque queda alineado como elevador/depresor puro) MÁS el recto horizontal
+// `coactive` que abduce/aduce el ojo para llevarlo a esa mirada. En las dos
+// posiciones puramente horizontales solo actúa el recto horizontal.
 
 export interface CardinalPosition {
   id: string;
   label: string;
+  /** Músculo que se EVALÚA (aislado) en este campo de acción. */
   muscle: MuscleId;
+  /** Recto horizontal co-agonista que posiciona el ojo (solo posiciones oblicuas). */
+  coactive?: MuscleId;
+  /** Frase didáctica del rol del co-agonista. */
+  coactiveRol?: string;
   yaw: number; // + = abducción (sobre +Y)
   pitch: number; // + = elevación (sobre -X)
 }
 
 export const CARDINALS: CardinalPosition[] = [
-  { id: 'up-out', label: 'Arriba y afuera', muscle: 'SR', yaw: 0.5, pitch: 0.5 },
-  { id: 'up-in', label: 'Arriba y adentro', muscle: 'IO', yaw: -0.5, pitch: 0.5 },
+  { id: 'up-out', label: 'Arriba y afuera', muscle: 'SR', coactive: 'LR', coactiveRol: 'abduce el ojo para alinear el SR', yaw: 0.5, pitch: 0.5 },
+  { id: 'up-in', label: 'Arriba y adentro', muscle: 'IO', coactive: 'MR', coactiveRol: 'aduce el ojo, mirada en la que el IO eleva', yaw: -0.5, pitch: 0.5 },
   { id: 'out', label: 'Afuera', muscle: 'LR', yaw: 0.62, pitch: 0 },
   { id: 'in', label: 'Adentro', muscle: 'MR', yaw: -0.62, pitch: 0 },
-  { id: 'down-out', label: 'Abajo y afuera', muscle: 'IR', yaw: 0.5, pitch: -0.5 },
-  { id: 'down-in', label: 'Abajo y adentro', muscle: 'SO', yaw: -0.5, pitch: -0.5 },
+  { id: 'down-out', label: 'Abajo y afuera', muscle: 'IR', coactive: 'LR', coactiveRol: 'abduce el ojo para alinear el IR', yaw: 0.5, pitch: -0.5 },
+  { id: 'down-in', label: 'Abajo y adentro', muscle: 'SO', coactive: 'MR', coactiveRol: 'aduce el ojo, mirada en la que el SO deprime', yaw: -0.5, pitch: -0.5 },
 ];
 
 const Y_AXIS = new THREE.Vector3(0, 1, 0);

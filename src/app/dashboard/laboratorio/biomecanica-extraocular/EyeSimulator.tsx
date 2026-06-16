@@ -98,6 +98,7 @@ export default function EyeSimulator() {
     if (grupoSub === 'cardinal' && cardinalId) {
       const c = CARDINALS.find((p) => p.id === cardinalId)!;
       const set = new Set<MuscleId>([c.muscle]);
+      if (c.coactive) set.add(c.coactive);
       return { targetQuat: quatFromCardinal(c), activeMuscles: set, focusMuscles: set };
     }
     return { targetQuat: IDENTITY.clone(), activeMuscles: empty, focusMuscles: null };

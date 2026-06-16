@@ -183,7 +183,8 @@ export default function ControlsPanel({
           {grupoSub === 'cardinal' && (
             <>
               <p className={styles.hint}>
-                Las 6 posiciones diagnósticas (patrón en H). Cada una aísla el músculo de su campo de acción.
+                Las 6 posiciones diagnósticas (patrón en H). Cada una <strong>aísla</strong> el músculo que se
+                evalúa; en las oblicuas además se contrae el recto horizontal que lleva el ojo a esa mirada.
               </p>
               <div className={styles.groupGrid}>
                 {CARDINALS.map((c) => (
@@ -194,7 +195,10 @@ export default function ControlsPanel({
                     aria-pressed={cardinalId === c.id}
                   >
                     <span className={styles.groupLabel}>{c.label}</span>
-                    <span className={styles.groupMembers}>{MUSCLES[c.muscle].abrev}</span>
+                    <span className={styles.groupMembers}>
+                      {MUSCLES[c.muscle].abrev}
+                      {c.coactive ? ` + ${MUSCLES[c.coactive].abrev}` : ''}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -202,9 +206,20 @@ export default function ControlsPanel({
                 <div className={styles.info}>
                   <h4 className={styles.infoTitle}>{selCardinal.label}</h4>
                   <p className={styles.infoDesc}>
-                    Músculo evaluado: <strong>{MUSCLES[selCardinal.muscle].nombre}</strong> ·{' '}
-                    {MUSCLES[selCardinal.muscle].nervio}
+                    Se evalúa: <strong style={{ color: MUSCLES[selCardinal.muscle].color }}>
+                      {MUSCLES[selCardinal.muscle].nombre}
+                    </strong>{' '}({MUSCLES[selCardinal.muscle].abrev}) · {MUSCLES[selCardinal.muscle].nervio}
                   </p>
+                  {selCardinal.coactive ? (
+                    <p className={styles.infoDesc}>
+                      Co-agonista: <strong style={{ color: MUSCLES[selCardinal.coactive].color }}>
+                        {MUSCLES[selCardinal.coactive].nombre}
+                      </strong>{' '}({MUSCLES[selCardinal.coactive].abrev})
+                      {selCardinal.coactiveRol ? ` — ${selCardinal.coactiveRol}.` : '.'}
+                    </p>
+                  ) : (
+                    <p className={styles.infoDesc}>Mirada horizontal pura: actúa un solo músculo.</p>
+                  )}
                 </div>
               )}
             </>
