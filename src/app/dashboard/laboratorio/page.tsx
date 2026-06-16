@@ -103,6 +103,21 @@ const LAB_TOPICS: Topic[] = [
     ],
   },
   {
+    id: 'neurologia',
+    title: 'Neurología | UPCH',
+    badge: 'Neurología',
+    diff: ['medium'],
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M9.5 3.5a2.5 2.5 0 00-2.45 2A2.5 2.5 0 004.5 8c0 .5.15 1 .4 1.4A2.5 2.5 0 004 11.5c0 .9.47 1.68 1.18 2.12A2.5 2.5 0 007 17.5a2.5 2.5 0 002.5 2.5c.55 0 1-.2 1.5-.5V4c-.5-.3-.95-.5-1.5-.5z" fill="white"/>
+        <path d="M14.5 3.5a2.5 2.5 0 012.45 2A2.5 2.5 0 0119.5 8c0 .5-.15 1-.4 1.4A2.5 2.5 0 0120 11.5c0 .9-.47 1.68-1.18 2.12A2.5 2.5 0 0117 17.5a2.5 2.5 0 01-2.5 2.5c-.55 0-1-.2-1.5-.5V4c.5-.3.95-.5 1.5-.5z" fill="rgba(255,255,255,0.55)"/>
+      </svg>
+    ),
+    experiments: [
+      { name: 'Biomecánica extraocular', desc: 'Activa los músculos extraoculares y observa el movimiento del globo, individual y por grupo vectorial', color: '#3b9edd', href: '/dashboard/laboratorio/biomecanica-extraocular' },
+    ],
+  },
+  {
     id: 'inmunologia',
     title: 'Inmunología | UPCH',
     badge: 'Inmunología',

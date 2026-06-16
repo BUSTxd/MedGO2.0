@@ -1,0 +1,399 @@
+/* Simulador de biomecánica extraocular. Tema claro por defecto; el dark-mode lo
+   define este propio módulo (regla del proyecto: nada de dark-mode en globals). */
+
+/* ─── INTRO ─── */
+.intro {
+  padding: 22px 28px 6px;
+}
+.kicker {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3b9edd;
+  margin-bottom: 6px;
+}
+.h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+:global(.dark-mode) .h2 { color: #f0eeff; }
+.sub {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(26, 26, 46, 0.65);
+  max-width: 720px;
+  margin: 0;
+}
+:global(.dark-mode) .sub { color: rgba(240, 238, 255, 0.6); }
+.disclaimer {
+  display: block;
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: rgba(26, 26, 46, 0.45);
+}
+:global(.dark-mode) .disclaimer { color: rgba(240, 238, 255, 0.4); }
+
+/* ─── LAYOUT ─── */
+.sim { padding: 14px 28px 28px; }
+
+.stageWrap {
+  display: grid;
+  grid-template-columns: 1fr 330px;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .stageWrap { grid-template-columns: 1fr; gap: 16px; }
+  .sim { padding: 12px 16px 24px; }
+  .intro { padding: 18px 16px 4px; }
+}
+
+/* ─── STAGE 3D ─── */
+.stage {
+  position: relative;
+  height: 480px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 40%, #eef4ff 0%, #dde6f5 100%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+:global(.dark-mode) .stage {
+  background: radial-gradient(circle at 50% 40%, #11142b 0%, #070914 100%);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+@media (max-width: 860px) {
+  .stage { height: 360px; }
+}
+
+/* Etiqueta del/los músculo(s) activo(s) — esquina superior izquierda del recuadro */
+.muscleTag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  max-width: 70%;
+}
+:global(.dark-mode) .muscleTag {
+  background: rgba(8, 10, 24, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.muscleTagRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.muscleTagDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.muscleTagName {
+  font-size: 12.5px;
+  color: #1a1a2e;
+  white-space: nowrap;
+}
+.muscleTagName strong { font-weight: 800; letter-spacing: 0.02em; }
+:global(.dark-mode) .muscleTagName { color: #f0eeff; }
+
+.zoomHint {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(26, 26, 46, 0.5);
+  background: rgba(255, 255, 255, 0.55);
+  padding: 3px 12px;
+  border-radius: 999px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+:global(.dark-mode) .zoomHint {
+  color: rgba(240, 238, 255, 0.55);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* ─── PANEL ─── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Selector de modo (segmented) */
+.segmented, .segmentedSm {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+}
+:global(.dark-mode) .segmented,
+:global(.dark-mode) .segmentedSm {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.segBtn, .segBtnSm {
+  flex: 1;
+  padding: 9px 10px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: rgba(26, 26, 46, 0.6);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.segBtnSm { font-size: 12px; padding: 7px 8px; }
+:global(.dark-mode) .segBtn,
+:global(.dark-mode) .segBtnSm { color: rgba(240, 238, 255, 0.6); }
+
+.segActive {
+  background: #3b9edd;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(59, 158, 221, 0.3);
+}
+:global(.dark-mode) .segActive { color: #fff; }
+
+.hint {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(26, 26, 46, 0.6);
+  margin: 0;
+}
+:global(.dark-mode) .hint { color: rgba(240, 238, 255, 0.6); }
+
+/* Botones de músculo (modo individual) */
+.muscleGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.muscleBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+}
+:global(.dark-mode) .muscleBtn {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+.muscleBtn:hover { border-color: var(--m); }
+.muscleActive {
+  border-color: var(--m);
+  background: color-mix(in srgb, var(--m) 14%, transparent);
+  transform: scale(0.97);
+}
+.muscleDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-bottom: 2px;
+}
+.muscleAbrev {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1a1a2e;
+  letter-spacing: 0.02em;
+}
+:global(.dark-mode) .muscleAbrev { color: #f0eeff; }
+.muscleName {
+  font-size: 11px;
+  color: rgba(26, 26, 46, 0.6);
+}
+:global(.dark-mode) .muscleName { color: rgba(240, 238, 255, 0.55); }
+
+/* Botones de grupo / cardinal */
+.groupGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.groupBtn {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+:global(.dark-mode) .groupBtn {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+.groupBtn:hover {
+  border-color: rgba(59, 158, 221, 0.4);
+  background: rgba(59, 158, 221, 0.06);
+}
+.groupActive {
+  border-color: rgba(59, 158, 221, 0.55);
+  background: rgba(59, 158, 221, 0.12);
+}
+.groupLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .groupLabel { color: #f0eeff; }
+.groupMembers {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #3b9edd;
+}
+
+/* Bloque de información */
+.info {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(59, 158, 221, 0.25);
+  background: rgba(59, 158, 221, 0.06);
+  animation: fadeUp 0.25s ease;
+}
+:global(.dark-mode) .info {
+  border-color: rgba(59, 158, 221, 0.3);
+  background: rgba(59, 158, 221, 0.08);
+}
+.infoTitle {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .infoTitle { color: #f0eeff; }
+.infoNerve {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3b9edd;
+}
+.infoDesc {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.75);
+}
+:global(.dark-mode) .infoDesc { color: rgba(240, 238, 255, 0.78); }
+.infoEmpty {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.5);
+  margin: 0;
+}
+:global(.dark-mode) .infoEmpty { color: rgba(240, 238, 255, 0.5); }
+
+.actionList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.actionItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.actionRank {
+  flex-shrink: 0;
+  width: 78px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 46, 0.45);
+}
+:global(.dark-mode) .actionRank { color: rgba(240, 238, 255, 0.45); }
+.actionName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .actionName { color: #f0eeff; }
+
+/* Ecuación vectorial de la sinergia */
+.equation {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 8px 0 10px;
+  font-size: 12.5px;
+}
+.eqRow {
+  display: flex;
+  gap: 9px;
+  align-items: baseline;
+}
+.eqMuscle {
+  flex-shrink: 0;
+  min-width: 26px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.eqTerms {
+  color: rgba(26, 26, 46, 0.8);
+  line-height: 1.5;
+}
+:global(.dark-mode) .eqTerms { color: rgba(240, 238, 255, 0.8); }
+.eqKeep { font-weight: 700; }
+.eqCancel {
+  text-decoration: line-through;
+  opacity: 0.45;
+}
+.eqPlus { opacity: 0.5; }
+.eqResult {
+  margin-top: 3px;
+  padding-top: 7px;
+  border-top: 1px dashed rgba(59, 158, 221, 0.4);
+  font-size: 13.5px;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .eqResult { color: #f0eeff; }
+.eqSum {
+  font-weight: 800;
+  color: #3b9edd;
+  margin-right: 2px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
