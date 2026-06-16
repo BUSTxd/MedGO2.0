@@ -47,7 +47,7 @@ function RefAxes() {
   );
 }
 
-// Etiqueta de orientación anclada en 3D. Para el OD: nasal/medial = -X, temporal/
+// Etiqueta de orientación anclada en 3D. Para el OI: nasal/medial = -X, temporal/
 // lateral = +X. Al estar ancladas en la escena (no en pantalla), siguen siendo
 // correctas aunque el usuario rote la vista.
 const orientStyle: CSSProperties = {

@@ -23,7 +23,7 @@ export default function BiomecanicaExtraocularPage() {
 
       <div className={styles.intro}>
         <span className={styles.kicker}>Biomecánica extraocular</span>
-        <h2 className={styles.h2}>Los 6 músculos del ojo derecho y su acción</h2>
+        <h2 className={styles.h2}>Los 6 músculos del ojo izquierdo y su acción</h2>
         <p className={styles.sub}>
           Mantén presionado un músculo para verlo contraerse y mover el globo en su dirección real, o
           explora las sinergias y las posiciones cardinales del patrón en H.

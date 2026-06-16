@@ -1,7 +1,7 @@
-// Datos biomecánicos de los 6 músculos extraoculares del OJO DERECHO (OD).
+// Datos biomecánicos de los 6 músculos extraoculares del OJO IZQUIERDO (OI).
 //
 // Sistema de ejes cabeza-fijos (Three.js, mano derecha):
-//   +X = temporal (derecha del paciente)   -X = nasal
+//   +X = temporal (izquierda del paciente) -X = nasal
 //   +Y = superior                          -Y = inferior
 //   +Z = anterior (eje visual en posición primaria; la córnea mira a +Z)
 //

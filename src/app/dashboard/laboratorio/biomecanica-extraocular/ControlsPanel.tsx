@@ -161,7 +161,7 @@ export default function ControlsPanel({
                               {m.acciones.map((a, i) => (
                                 <span key={a}>
                                   {i > 0 && <span className={styles.eqPlus}> + </span>}
-                                  <span className={dual && i > 0 ? styles.eqCancel : styles.eqKeep}>{a}</span>
+                                  <span className={dual && a !== selGroup.label ? styles.eqCancel : styles.eqKeep}>{a}</span>
                                 </span>
                               ))}
                             </span>
