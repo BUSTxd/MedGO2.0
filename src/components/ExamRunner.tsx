@@ -24,6 +24,10 @@ interface ExamQuestion {
   imageH?: number;
   options: ExamOption[];
   explanation?: string;
+  explanationImage?: string;
+  explanationImageAlt?: string;
+  explanationImageCaption?: string;
+  reviewNote?: string;
   tags?: string[];
 }
 
@@ -346,6 +350,12 @@ export default function ExamRunner({
           </div>
 
           <div className={styles.questionCard}>
+            {current.reviewNote && (
+              <div className={styles.reviewBadge}>
+                ⚠ Pendiente a revisión
+                <span className={styles.reviewTooltip}>{current.reviewNote}</span>
+              </div>
+            )}
             <p className={styles.stem}>{current.stem}</p>
 
             {current.image && (
@@ -361,6 +371,32 @@ export default function ExamRunner({
                   sizes="(max-width: 600px) 100vw, 560px"
                   className={styles.figureImg}
                 />
+              </div>
+            )}
+
+            {picked && current.explanation && (
+              <div className={styles.explanation}>
+                <div className={styles.explanationLabel}>
+                  <span>◆</span> Explicación
+                </div>
+                <ReactMarkdown>{current.explanation}</ReactMarkdown>
+                {current.explanationImage && (
+                  <div className={styles.explanationFigureWrap}>
+                    {current.explanationImageCaption && (
+                      <p className={styles.explanationFigureCaption}>{current.explanationImageCaption}</p>
+                    )}
+                    <div className={styles.explanationFigure}>
+                      <Image
+                        src={current.explanationImage}
+                        alt={current.explanationImageAlt ?? 'Imagen de referencia'}
+                        width={800}
+                        height={600}
+                        sizes="(max-width: 600px) 100vw, 560px"
+                        className={styles.explanationFigureImg}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
@@ -390,15 +426,6 @@ export default function ExamRunner({
                 );
               })}
             </div>
-
-            {picked && current.explanation && (
-              <div className={styles.explanation}>
-                <div className={styles.explanationLabel}>
-                  <span>◆</span> Explicación
-                </div>
-                <ReactMarkdown>{current.explanation}</ReactMarkdown>
-              </div>
-            )}
           </div>
 
           <div className={styles.footer}>

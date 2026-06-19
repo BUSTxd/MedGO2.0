@@ -184,6 +184,54 @@
   border-radius: 16px;
   padding: 28px 32px;
   margin-bottom: 20px;
+  position: relative;
+}
+
+/* ── Badge "Pendiente a revisión" ────────────────────────── */
+.reviewBadge {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(245, 166, 35, 0.10);
+  border: 1px solid rgba(245, 166, 35, 0.28);
+  border-radius: 999px;
+  padding: 4px 11px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #f5a623;
+  cursor: default;
+  user-select: none;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.reviewTooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 270px;
+  background: #12102a;
+  border: 1px solid rgba(245, 166, 35, 0.22);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(240, 238, 255, 0.82);
+  line-height: 1.55;
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.18s, transform 0.18s;
+  z-index: 10;
+}
+
+.reviewBadge:hover .reviewTooltip {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .stem {
@@ -318,11 +366,48 @@
   border: 1px solid rgba(123, 114, 212, 0.18);
   border-left: 3px solid #7B72D4;
   border-radius: 12px;
-  padding: 20px 24px;
-  margin-top: 22px;
+  padding: 0 24px;
   font-size: 14.5px;
   line-height: 1.7;
   color: var(--white);
+  overflow: hidden;
+  transform-origin: top;
+  /* Retardo de 0.9s: el alumno primero ve el ✓/✕ en su alternativa. Luego el
+     bloque se despliega: el alto/padding/margen crecen JUNTO con el contenido
+     (no se reserva el espacio de golpe). `both` lo mantiene colapsado durante
+     el retardo y conserva el estado final al terminar. */
+  animation: explanationReveal 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) 0.9s both;
+}
+
+@keyframes explanationReveal {
+  from {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    max-height: 1400px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 4px;
+    margin-bottom: 22px;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .explanation {
+    animation: none;
+    max-height: none;
+    padding: 20px 24px;
+    margin: 4px 0 22px 0;
+    opacity: 1;
+  }
 }
 
 .explanationLabel {
@@ -340,6 +425,35 @@
 .explanation p { margin: 0 0 12px 0; }
 .explanation p:last-child { margin-bottom: 0; }
 .explanation strong { color: var(--white); font-weight: 700; }
+
+.explanationFigureWrap {
+  margin-top: 16px;
+}
+
+.explanationFigureCaption {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(8, 6, 26, 0.55);
+  text-align: left;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.01em;
+}
+
+:global(.dark-mode) .explanationFigureCaption {
+  color: rgba(240, 238, 255, 0.6);
+}
+
+.explanationFigure {
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+}
+.explanationFigureImg {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+}
 
 /* ── Footer con tags + botón ─────────────────────────────── */
 .footer {

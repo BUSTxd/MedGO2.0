@@ -578,7 +578,7 @@ export const semanas: Semana[] = [
         hora: 'A1-A2: mar 16 · A3-A4: mié 17 · B1-B2: jue 18 · B3-B4: vie 19 (09:00-11:00)',
         docentes: ['Drs. Coico, Revilla', 'Velarde, Condori, Portugal, Alva, Salas, Calizaya, Romero'],
         nota: 'Incluye paso corto Piel (20% del rubro Histología)',
-        examen: { key: 'neurologia/piel-histologia', free: true },
+        examen: { key: 'neurologia/piel-histologia', free: true, groups: ['neurologia/piel-histologia-a3', 'neurologia/piel-histologia-c', 'neurologia/piel-histologia-b'] },
         subtemas: [
           'Epidermis: estratos (córneo, lúcido, granuloso, espinoso, basal)',
           'Dermis: papilar y reticular',
