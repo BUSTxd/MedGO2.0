@@ -1,0 +1,439 @@
+/* ─── EVA 2 · Examen interactivo de anatomía ─── */
+/* Estilos propios del examen. El wrapper, topBar, writeInput, navBtn y dots
+   se reutilizan de laboratorio.module.css. Aquí solo: intro, layout A/B,
+   recuadro de imagen, animación de despliegue de B, chips de conceptos. */
+
+/* ─── INTRO ─── */
+.intro {
+  padding: 22px 28px 6px;
+}
+
+.kicker {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #f5a623;
+  margin-bottom: 8px;
+}
+
+.h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+:global(.dark-mode) .h2 { color: #f0eeff; }
+
+.sub {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(26, 26, 46, 0.65);
+  margin: 0;
+  max-width: 640px;
+}
+:global(.dark-mode) .sub { color: rgba(240, 238, 255, 0.6); }
+.sub strong { color: #3b9edd; font-weight: 700; }
+
+/* ─── LAYOUT PRINCIPAL ─── */
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: 28px;
+  padding: 20px 28px 28px;
+  /* Estado base: la columna de preguntas se centra verticalmente respecto a
+     la imagen. Al revelar la explicación pasamos a `bodyTop` (alineado arriba)
+     para que A y B suban y dejen espacio para el resto del contenido. */
+  align-items: center;
+}
+
+.bodyTop {
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .body {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 16px 16px 22px;
+    align-items: start;
+  }
+}
+
+/* ─── COLUMNA IMAGEN ─── */
+.imageCol { align-self: start; }
+
+.imageBox {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  border: 1.5px dashed rgba(0, 0, 0, 0.16);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(59, 158, 221, 0.05), transparent 70%),
+    rgba(0, 0, 0, 0.02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+:global(.dark-mode) .imageBox {
+  border-color: rgba(255, 255, 255, 0.14);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(59, 158, 221, 0.08), transparent 70%),
+    rgba(255, 255, 255, 0.025);
+}
+
+.imagePlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(26, 26, 46, 0.3);
+  text-align: center;
+  padding: 16px;
+}
+:global(.dark-mode) .imagePlaceholder { color: rgba(240, 238, 255, 0.28); }
+
+.placeholderLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.placeholderSub {
+  font-size: 11.5px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.imageBadge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: rgba(26, 26, 46, 0.6);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  padding: 3px 10px;
+  backdrop-filter: blur(4px);
+}
+
+:global(.dark-mode) .imageBadge {
+  color: rgba(240, 238, 255, 0.7);
+  background: rgba(10, 12, 28, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ─── PIE DE IMAGEN ─── */
+.imageCaption {
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.65);
+  margin: 8px 0 0;
+  padding: 0 2px;
+}
+:global(.dark-mode) .imageCaption { color: rgba(240, 238, 255, 0.55); }
+
+.imageCitation {
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: rgba(26, 26, 46, 0.4);
+  margin: 4px 0 0;
+  padding: 0 2px;
+}
+:global(.dark-mode) .imageCitation { color: rgba(240, 238, 255, 0.35); }
+
+/* ─── COLUMNA PREGUNTAS ─── */
+.qaCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.qBlock {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+}
+
+:global(.dark-mode) .qBlock {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.qBlockDone {
+  border-color: rgba(45, 201, 154, 0.4);
+  background: rgba(45, 201, 154, 0.05);
+}
+:global(.dark-mode) .qBlockDone {
+  border-color: rgba(45, 201, 154, 0.35);
+  background: rgba(45, 201, 154, 0.06);
+}
+
+/* La Pregunta B aparece con animación de despliegue. */
+.qBlockB {
+  border-color: rgba(59, 158, 221, 0.35);
+  background: rgba(59, 158, 221, 0.05);
+  animation: revealB 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: top center;
+}
+:global(.dark-mode) .qBlockB {
+  border-color: rgba(59, 158, 221, 0.35);
+  background: rgba(59, 158, 221, 0.07);
+}
+
+@keyframes revealB {
+  0%   { opacity: 0; transform: translateY(-10px) scaleY(0.96); }
+  100% { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+.qHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.qTag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #6b7280;
+  border-radius: 6px;
+  padding: 4px 9px;
+  flex-shrink: 0;
+}
+
+.qBlockDone .qTag { background: #2dc99a; }
+.qTagB { background: #3b9edd; }
+.qTagSolved { background: #b8791a; }
+
+/* A incorrecta: marco de aviso. */
+.qBlockWrong {
+  border-color: rgba(232, 91, 74, 0.4);
+  background: rgba(232, 91, 74, 0.05);
+}
+:global(.dark-mode) .qBlockWrong {
+  border-color: rgba(232, 91, 74, 0.4);
+  background: rgba(232, 91, 74, 0.07);
+}
+
+/* B resuelta (mostrada porque A falló) — aparece con animación. */
+.qBlockSolved {
+  border-color: rgba(184, 121, 26, 0.4);
+  background: rgba(245, 166, 35, 0.06);
+  animation: revealB 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: top center;
+}
+:global(.dark-mode) .qBlockSolved {
+  border-color: rgba(245, 166, 35, 0.32);
+  background: rgba(245, 166, 35, 0.08);
+}
+
+.qPrompt {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin: 0;
+  line-height: 1.4;
+}
+:global(.dark-mode) .qPrompt { color: #f0eeff; }
+
+/* ─── INPUTS Y BOTONES ─── */
+.textarea {
+  resize: vertical;
+  min-height: 64px;
+  line-height: 1.5;
+  font-style: normal !important;
+}
+
+/* Fila que centra el botón de acción debajo del input. */
+.btnRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.verifyBtn {
+  padding: 9px 26px;
+  border-radius: 10px;
+  border: 1px solid rgba(59, 158, 221, 0.4);
+  background: rgba(59, 158, 221, 0.14);
+  color: #1a3a5c;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.18s ease, opacity 0.18s ease;
+}
+
+.verifyBtn:hover:not(:disabled) { background: rgba(59, 158, 221, 0.24); }
+.verifyBtn:disabled { opacity: 0.4; cursor: default; }
+
+:global(.dark-mode) .verifyBtn {
+  background: rgba(59, 158, 221, 0.2);
+  border-color: rgba(59, 158, 221, 0.45);
+  color: #fff;
+}
+
+/* Botón secundario para reintentar la Pregunta A. */
+.retryBtn {
+  padding: 8px 22px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  background: rgba(0, 0, 0, 0.03);
+  color: rgba(26, 26, 46, 0.7);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+
+.retryBtn:hover { background: rgba(0, 0, 0, 0.06); }
+
+:global(.dark-mode) .retryBtn {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(240, 238, 255, 0.75);
+}
+:global(.dark-mode) .retryBtn:hover { background: rgba(255, 255, 255, 0.09); }
+
+/* ─── FEEDBACK ─── */
+.feedbackWrong {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #c2412f;
+  margin: 10px 0 0;
+}
+:global(.dark-mode) .feedbackWrong { color: #ef8377; }
+
+.feedbackOk {
+  font-size: 13px;
+  color: #1a8c6a;
+  margin: 10px 0 0;
+}
+.feedbackOk strong { color: #16744f; }
+:global(.dark-mode) .feedbackOk { color: #4fd6ab; }
+:global(.dark-mode) .feedbackOk strong { color: #6ee0bb; }
+
+.feedbackPartial {
+  font-size: 13px;
+  font-weight: 600;
+  color: #b8791a;
+  margin: 0 0 4px;
+}
+:global(.dark-mode) .feedbackPartial { color: #f0b659; }
+
+.needHint {
+  font-size: 11.5px;
+  color: rgba(26, 26, 46, 0.5);
+  margin: 8px 0 0;
+}
+:global(.dark-mode) .needHint { color: rgba(240, 238, 255, 0.5); }
+
+/* ─── RESULTADO B ─── */
+.bResult {
+  margin-top: 14px;
+  animation: revealB 0.3s ease;
+}
+
+.conceptList {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.conceptList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 7px 11px;
+  border-radius: 8px;
+}
+
+.conceptMark {
+  font-weight: 800;
+  flex-shrink: 0;
+  line-height: 1.45;
+}
+
+.conceptOk {
+  background: rgba(45, 201, 154, 0.1);
+  color: #16744f;
+}
+.conceptOk .conceptMark { color: #2dc99a; }
+:global(.dark-mode) .conceptOk { background: rgba(45, 201, 154, 0.12); color: #6ee0bb; }
+
+.conceptMiss {
+  background: rgba(0, 0, 0, 0.03);
+  color: rgba(26, 26, 46, 0.55);
+}
+.conceptMiss .conceptMark { color: rgba(26, 26, 46, 0.35); }
+:global(.dark-mode) .conceptMiss { background: rgba(255, 255, 255, 0.04); color: rgba(240, 238, 255, 0.5); }
+:global(.dark-mode) .conceptMiss .conceptMark { color: rgba(240, 238, 255, 0.35); }
+
+.modelAnswer {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(59, 158, 221, 0.25);
+  background: rgba(59, 158, 221, 0.06);
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.85);
+}
+:global(.dark-mode) .modelAnswer {
+  border-color: rgba(59, 158, 221, 0.3);
+  background: rgba(59, 158, 221, 0.08);
+  color: rgba(240, 238, 255, 0.85);
+}
+
+.modelLabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #3b9edd;
+  margin-bottom: 5px;
+}
+
+/* ─── FOOTER ─── */
+.progressInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.completeCount {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(26, 26, 46, 0.55);
+}
+:global(.dark-mode) .completeCount { color: rgba(240, 238, 255, 0.55); }
+
+@media (max-width: 600px) {
+  .intro { padding: 16px 16px 4px; }
+  .h2 { font-size: 17px; }
+  .completeCount { font-size: 11px; }
+}
