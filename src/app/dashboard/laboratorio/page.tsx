@@ -115,6 +115,7 @@ const LAB_TOPICS: Topic[] = [
     ),
     experiments: [
       { name: 'Biomecánica extraocular', desc: 'Activa los músculos extraoculares y observa el movimiento del globo, individual y por grupo vectorial', color: '#3b9edd', href: '/dashboard/laboratorio/biomecanica-extraocular' },
+      { name: 'Médula Espinal 3D', desc: 'Corte transversal interactivo: láminas de Rexed, tractos, meninges y síndromes clínicos', color: '#2DC99A', href: '/dashboard/laboratorio/medula-espinal' },
     ],
   },
   {

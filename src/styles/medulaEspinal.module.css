@@ -1,0 +1,399 @@
+/* Simulador de médula espinal. Tema claro por defecto; el dark-mode lo
+   define este propio módulo (regla del proyecto: nada de dark-mode en globals). */
+
+/* ─── INTRO ─── */
+.intro {
+  padding: 22px 28px 6px;
+}
+.kicker {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3b9edd;
+  margin-bottom: 6px;
+}
+.h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+:global(.dark-mode) .h2 { color: #f0eeff; }
+.sub {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(26, 26, 46, 0.65);
+  max-width: 720px;
+  margin: 0;
+}
+:global(.dark-mode) .sub { color: rgba(240, 238, 255, 0.6); }
+.disclaimer {
+  display: block;
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: rgba(26, 26, 46, 0.45);
+}
+:global(.dark-mode) .disclaimer { color: rgba(240, 238, 255, 0.4); }
+
+/* ─── LAYOUT ─── */
+.sim { padding: 14px 28px 28px; }
+
+.stageWrap {
+  display: grid;
+  grid-template-columns: 1fr 330px;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .stageWrap { grid-template-columns: 1fr; gap: 16px; }
+  .sim { padding: 12px 16px 24px; }
+  .intro { padding: 18px 16px 4px; }
+}
+
+/* ─── STAGE 3D ─── */
+.stage {
+  position: relative;
+  height: 480px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 40%, #eef4ff 0%, #dde6f5 100%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+:global(.dark-mode) .stage {
+  background: radial-gradient(circle at 50% 40%, #11142b 0%, #070914 100%);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+@media (max-width: 860px) {
+  .stage { height: 360px; }
+}
+
+/* Etiqueta de la estructura activa — esquina superior izquierda del recuadro */
+.structureTag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  max-width: 70%;
+}
+:global(.dark-mode) .structureTag {
+  background: rgba(8, 10, 24, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.structureTagRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.structureTagDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.structureTagName {
+  font-size: 12.5px;
+  color: #1a1a2e;
+  white-space: nowrap;
+}
+.structureTagName strong { font-weight: 800; letter-spacing: 0.02em; }
+:global(.dark-mode) .structureTagName { color: #f0eeff; }
+
+.zoomHint {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(26, 26, 46, 0.5);
+  background: rgba(255, 255, 255, 0.55);
+  padding: 3px 12px;
+  border-radius: 999px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+:global(.dark-mode) .zoomHint {
+  color: rgba(240, 238, 255, 0.55);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* ─── PANEL ─── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Selector de modo (segmented) */
+.segmented, .segmentedSm {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+}
+:global(.dark-mode) .segmented,
+:global(.dark-mode) .segmentedSm {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.segBtn, .segBtnSm {
+  flex: 1;
+  padding: 9px 10px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: rgba(26, 26, 46, 0.6);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.segBtnSm { font-size: 11.5px; padding: 7px 5px; white-space: nowrap; }
+:global(.dark-mode) .segBtn,
+:global(.dark-mode) .segBtnSm { color: rgba(240, 238, 255, 0.6); }
+
+.segActive {
+  background: #3b9edd;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(59, 158, 221, 0.3);
+}
+:global(.dark-mode) .segActive { color: #fff; }
+
+.hint {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(26, 26, 46, 0.6);
+  margin: 0;
+}
+:global(.dark-mode) .hint { color: rgba(240, 238, 255, 0.6); }
+
+/* ─── LEVEL GRID (selección de nivel medular) ─── */
+.levelGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.levelBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  text-align: center;
+  font-family: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+:global(.dark-mode) .levelBtn {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+.levelBtn:hover {
+  border-color: rgba(59, 158, 221, 0.3);
+  background: rgba(59, 158, 221, 0.04);
+}
+.levelActive {
+  border-color: rgba(59, 158, 221, 0.55);
+  background: rgba(59, 158, 221, 0.12);
+}
+.levelName {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .levelName { color: #f0eeff; }
+.levelSeg {
+  font-size: 11px;
+  color: rgba(26, 26, 46, 0.5);
+  font-weight: 600;
+}
+:global(.dark-mode) .levelSeg { color: rgba(240, 238, 255, 0.45); }
+
+/* ─── STRUCTURE LIST (láminas, tractos, meninges) ─── */
+.listSection {
+  margin-top: 4px;
+}
+.listTitle {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 46, 0.45);
+  margin: 0 0 6px;
+  padding: 0;
+}
+:global(.dark-mode) .listTitle { color: rgba(240, 238, 255, 0.4); }
+
+.structureList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.structureBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+:global(.dark-mode) .structureBtn {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+.structureBtn:hover {
+  border-color: rgba(59, 158, 221, 0.3);
+  background: rgba(59, 158, 221, 0.04);
+}
+:global(.dark-mode) .structureBtn:hover {
+  border-color: rgba(59, 158, 221, 0.35);
+  background: rgba(59, 158, 221, 0.06);
+}
+.structureActive {
+  border-color: rgba(59, 158, 221, 0.5);
+  background: rgba(59, 158, 221, 0.1);
+}
+:global(.dark-mode) .structureActive {
+  border-color: rgba(59, 158, 221, 0.55);
+  background: rgba(59, 158, 221, 0.12);
+}
+.structureDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.structureName {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .structureName { color: #f0eeff; }
+.structureDir {
+  font-size: 10px;
+  color: rgba(26, 26, 46, 0.5);
+  font-weight: 500;
+}
+:global(.dark-mode) .structureDir { color: rgba(240, 238, 255, 0.45); }
+
+/* ─── TOGGLE ROW (checkboxes de meninges, etc.) ─── */
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+:global(.dark-mode) .toggleRow {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+.toggleLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toggleSwitch {
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.12);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s ease;
+  padding: 0;
+}
+:global(.dark-mode) .toggleSwitch {
+  background: rgba(255, 255, 255, 0.12);
+}
+.toggleSwitch::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.toggleOn {
+  background: #3b9edd;
+}
+:global(.dark-mode) .toggleOn {
+  background: #3b9edd;
+}
+.toggleOn::after {
+  transform: translateX(16px);
+}
+
+/* ─── SYNDROME GRID ─── */
+.syndromeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+/* ─── INFO BLOCK ─── */
+.info {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(59, 158, 221, 0.25);
+  background: rgba(59, 158, 221, 0.06);
+  animation: fadeUp 0.25s ease;
+}
+:global(.dark-mode) .info {
+  border-color: rgba(59, 158, 221, 0.3);
+  background: rgba(59, 158, 221, 0.08);
+}
+.infoTitle {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .infoTitle { color: #f0eeff; }
+.infoDesc {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.75);
+}
+:global(.dark-mode) .infoDesc { color: rgba(240, 238, 255, 0.78); }
+.infoEmpty {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.5);
+  margin: 0;
+}
+:global(.dark-mode) .infoEmpty { color: rgba(240, 238, 255, 0.5); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
