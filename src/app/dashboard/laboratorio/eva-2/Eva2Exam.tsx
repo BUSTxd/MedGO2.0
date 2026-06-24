@@ -99,6 +99,16 @@ export default function Eva2Exam() {
 
   return (
     <div className={base.examPage}>
+      {/* Precarga todas las imágenes del examen al montar — next/image emite
+          <link rel="preload"> con las URLs optimizadas, sin pedir los originales. */}
+      <div aria-hidden style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}>
+        {QUESTIONS.filter((qq) => qq.image).map((qq) => (
+          <div key={qq.id} style={{ position: 'relative', width: 1, height: 1 }}>
+            <Image src={qq.image!} alt="" fill priority sizes="(max-width: 860px) 100vw, 460px" />
+          </div>
+        ))}
+      </div>
+
       <div className={base.topBar}>
         <Link href="/dashboard/laboratorio" className={base.backLink}>← Laboratorio virtual</Link>
         <span className={base.counter}>Pregunta {idx + 1} / {QUESTIONS.length}</span>
