@@ -118,6 +118,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 'oblicuo-inferior',
     region: 'Órbita · M. extraoculares',
+    image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/oblicuo-inferior.avif',
     promptA: 'Nombre de lo señalado',
     answerA: { label: 'Músculo oblicuo inferior', accept: ['oblicuo inferior', 'oblicuo menor'] },
     promptB: 'Indique su inervación y su función',
