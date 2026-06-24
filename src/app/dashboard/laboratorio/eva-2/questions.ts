@@ -54,6 +54,7 @@ export const QUESTIONS: Question[] = [
     id: 'vertebra-cervical',
     region: 'Columna vertebral',
     image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/vertebra-cervical-2.avif?v=3',
+    imageCitation: 'Departamento de Anatomía, Escuela de Medicina, Pontificia Universidad Católica de Chile. (2015). Laminario anatómico: Dorso. https://laminarioanatomico.medicina.uc.cl/dorso.html',
     promptA: 'Nombre de lo señalado',
     answerA: { label: 'Vértebra cervical típica', accept: ['cervical'] },
     promptB: 'Indique 04 características propias',
@@ -215,7 +216,6 @@ export const QUESTIONS: Question[] = [
   {
     id: 'membrana-timpanica-2',
     region: 'Oído',
-    imageCitation: 'Departamento de Anatomía, Escuela de Medicina, Pontificia Universidad Católica de Chile. (2015). Laminario anatómico: Dorso. https://laminarioanatomico.medicina.uc.cl/dorso.html',
     promptA: 'Nombre de la estructura señalada',
     answerA: { label: 'Membrana timpánica', accept: ['membrana timpanica', 'timpano', 'timpanica'] },
     promptB: 'Indique la inervación de su cara lateral',
