@@ -152,8 +152,10 @@ export const QUESTIONS: Question[] = [
   {
     id: 'trompa-eustaquio',
     region: 'Oído',
+    image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/trompa-eustaquio.avif',
+    imageCitation: 'Cohen-Gadol, A. A. (s.f.). Tympanic cavity and mastoid antrum. The Neurosurgical Atlas. https://www.neurosurgicalatlas.com/neuroanatomy/tympanic-cavity-and-mastoid-antrum',
     promptA: 'Nombre la estructura señalada',
-    answerA: { label: 'Trompa faringotimpánica (de Eustaquio)', accept: ['faringotimpanica', 'eustaquio', 'trompa auditiva', 'tuba auditiva'] },
+    answerA: { label: 'Trompa faringotimpánica (de Eustaquio)', accept: ['faringotimpanica', 'trompa faringotimpanica', 'eustaquio', 'trompa auditiva', 'tuba auditiva'] },
     promptB: 'Indique las regiones que comunica',
     conceptsB: [
       { label: 'Nasofaringe', accept: ['nasofaringe', 'rinofaringe', 'faringe'] },
