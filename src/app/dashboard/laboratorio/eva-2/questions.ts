@@ -215,6 +215,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 'membrana-timpanica-2',
     region: 'Oído',
+    imageCitation: 'Departamento de Anatomía, Escuela de Medicina, Pontificia Universidad Católica de Chile. (2015). Laminario anatómico: Dorso. https://laminarioanatomico.medicina.uc.cl/dorso.html',
     promptA: 'Nombre de la estructura señalada',
     answerA: { label: 'Membrana timpánica', accept: ['membrana timpanica', 'timpano', 'timpanica'] },
     promptB: 'Indique la inervación de su cara lateral',
