@@ -149,11 +149,11 @@ export default function Eva2Exam() {
             <span className={styles.imageBadge}>{q.region}</span>
           </div>
 
-          {/* La descripción/cita revelan las respuestas → solo tras responder A. */}
+          {/* El caption revela detalles → solo tras responder A. La cita siempre visible. */}
           {solved && q.imageCaption && (
             <p className={styles.imageCaption}>{q.imageCaption}</p>
           )}
-          {solved && q.imageCitation && (
+          {q.imageCitation && (
             <p className={styles.imageCitation}>
               <em>{q.imageCitation}</em>
             </p>
