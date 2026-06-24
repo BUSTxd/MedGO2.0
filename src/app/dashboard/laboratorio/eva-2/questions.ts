@@ -43,7 +43,7 @@ export const QUESTIONS: Question[] = [
     answerA: { label: 'Músculo oblicuo superior (mayor)', accept: ['oblicuo superior', 'oblicuo mayor'] },
     promptB: 'Indique su inervación y su función',
     conceptsB: [
-      { label: 'Inervación: N. troclear (IV par / patético)', accept: ['troclear', 'patetico', 'iv par', 'nervio iv', 'par iv', 'cuarto par', '4 par'] },
+      { label: 'Inervación: N. troclear (IV par / patético)', accept: ['troclear', 'patetico', 'iv par', 'nervio iv', 'par iv', 'cuarto par', '4 par', 'par 4'] },
       { label: 'Depresión', accept: ['depresion', 'deprime', 'abate', 'desciende'] },
       { label: 'Abducción', accept: ['abduccion', 'abduce'] },
       { label: 'Rotación medial (intorsión)', accept: ['rotacion medial', 'intorsion', 'rotacion interna'] },
@@ -53,6 +53,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 'vertebra-cervical',
     region: 'Columna vertebral',
+    image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/vertebra-cervical-2.avif?v=3',
     promptA: 'Nombre de lo señalado',
     answerA: { label: 'Vértebra cervical típica', accept: ['cervical'] },
     promptB: 'Indique 04 características propias',
@@ -70,19 +71,23 @@ export const QUESTIONS: Question[] = [
   {
     id: 'membrana-timpanica-1',
     region: 'Oído',
+    image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/membrana-timpanica-1.jpg?v=2',
     promptA: 'Nombre la estructura señalada',
     answerA: { label: 'Membrana timpánica', accept: ['membrana timpanica', 'timpano', 'timpanica'] },
     promptB: 'Indique la inervación sensitiva de su cara medial y lateral',
     conceptsB: [
-      { label: 'Cara medial: N. timpánico de Jacobson (IX)', accept: ['jacobson', 'timpanico', 'glosofaringeo', 'ix', '9 par'] },
+      { label: 'Cara medial: N. timpánico de Jacobson (IX)', accept: ['jacobson', 'timpanico', 'glosofaringeo', 'ix', '9 par', 'nervio 9'] },
       { label: 'Cara lateral: N. auriculotemporal (V3)', accept: ['auriculotemporal', 'v3', 'trigemino'] },
-      { label: 'Cara lateral: N. vago (X)', accept: ['vago', 'x par', 'neumogastrico', 'arnold'] },
+      { label: 'Cara lateral: N. vago (X)', accept: ['vago', 'x par', 'neumogastrico', 'arnold', 'nervio 10'] },
     ],
     modelB: 'Cara medial: nervio timpánico de Jacobson (rama del IX). Cara lateral: nervio auriculotemporal (V3) y rama auricular del nervio vago (X).',
   },
   {
     id: 'filum-terminal',
     region: 'Médula espinal',
+    image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/filum-terminal.webp',
+    imageCaption: 'Relaciones anatómicas detalladas y anatomía segmentaria del filum terminale. (a) Unión del cono medular y el filum terminale interno: Transición anatómica entre la médula espinal y su filum interno terminal. (b) Saco dural: Continuación de la duramadre que envuelve la médula espinal y se extiende hasta el filum terminale interno. (c) Segmento distal del filum terminale externo: Porción extrameníngea del filum terminale, que pasa más allá del saco dural para insertarse en el cóccix.',
+    imageCitation: 'Frontiers in Neuroanatomy. (2025, 24 de marzo). Análisis morfológico del filum terminale y descripción detallada del filum terminale externum distal: un estudio cadavérico. Front. Neuroanat., 19. https://doi.org/10.3389/fnana.2025.1547165',
     promptA: 'Nombre de la estructura señalada',
     answerA: { label: 'Filum terminal', accept: ['filum terminal', 'filum', 'filamento terminal'] },
     promptB: 'Indique de qué está constituido',
