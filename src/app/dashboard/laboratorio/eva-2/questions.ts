@@ -109,7 +109,7 @@ export const QUESTIONS: Question[] = [
     answerA: { label: 'Papila óptica (disco óptico)', accept: ['papila optica', 'papila', 'disco optico', 'punto ciego'] },
     promptB: 'Indique 2 características',
     conceptsB: [
-      { label: 'Zona carente de receptores (solo axones que originan el n. óptico)', accept: ['carente de receptores', 'sin receptores', 'no hay fotorreceptores', 'solo axones', 'axones', 'nervio optico'] },
+      { label: 'Zona carente de receptores (solo axones que originan el n. óptico)', accept: ['carente de receptores', 'sin receptores', 'no hay fotorreceptores', 'solo axones', 'axones', 'nervio optico', 'solo contiene axones que originan al nervio optico'] },
       { label: 'Por su centro pasan los vasos centrales de la retina', accept: ['vasos centrales', 'arteria central', 'vena central', 'vasos de la retina'] },
     ],
     needB: 2,
