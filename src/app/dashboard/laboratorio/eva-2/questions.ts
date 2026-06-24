@@ -87,7 +87,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 'filum-terminal',
     region: 'Médula espinal',
-    image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/filum-terminal.avif',
+    image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/filum-terminal.avif?v=2',
     imageCaption: 'Relaciones anatómicas detalladas y anatomía segmentaria del filum terminale. (a) Unión del cono medular y el filum terminale interno: Transición anatómica entre la médula espinal y su filum interno terminal. (b) Saco dural: Continuación de la duramadre que envuelve la médula espinal y se extiende hasta el filum terminale interno. (c) Segmento distal del filum terminale externo: Porción extrameníngea del filum terminale, que pasa más allá del saco dural para insertarse en el cóccix.',
     imageCitation: 'Frontiers in Neuroanatomy. (2025, 24 de marzo). Análisis morfológico del filum terminale y descripción detallada del filum terminale externum distal: un estudio cadavérico. Front. Neuroanat., 19. https://doi.org/10.3389/fnana.2025.1547165',
     promptA: 'Nombre de la estructura señalada',
