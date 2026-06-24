@@ -19,6 +19,7 @@ export type Question = {
   id: string;
   region: string;            // etiqueta de zona (se muestra en el recuadro de imagen)
   image?: string;            // URL de la imagen anatómica (placeholder si falta)
+  imageOverlay?: string;     // imagen anotada que se revela (fade-in) al responder A
   imageCaption?: string;     // descripción anatómica de la imagen
   imageCitation?: string;    // cita APA de la fuente
   promptA: string;
@@ -101,6 +102,8 @@ export const QUESTIONS: Question[] = [
   {
     id: 'papila-optica',
     region: 'Ojo · Retina',
+    image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/papila-optica.avif',
+    imageOverlay: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/papila-optica-overlay.webp',
     imageCitation: 'SimpleOSCE. (2020). Fundoscopy (ophthalmoscopy) examination. https://www.simpleosce.com/examinations/other/fundoscopy.php',
     promptA: 'Nombre de la estructura señalada',
     answerA: { label: 'Papila óptica (disco óptico)', accept: ['papila optica', 'papila', 'disco optico', 'punto ciego'] },

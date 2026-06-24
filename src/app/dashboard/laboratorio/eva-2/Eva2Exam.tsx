@@ -99,12 +99,12 @@ export default function Eva2Exam() {
 
   return (
     <div className={base.examPage}>
-      {/* Precarga todas las imágenes del examen al montar — next/image emite
+      {/* Precarga todas las imágenes (base + overlay) al montar — next/image emite
           <link rel="preload"> con las URLs optimizadas, sin pedir los originales. */}
       <div aria-hidden style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}>
-        {QUESTIONS.filter((qq) => qq.image).map((qq) => (
-          <div key={qq.id} style={{ position: 'relative', width: 1, height: 1 }}>
-            <Image src={qq.image!} alt="" fill priority sizes="(max-width: 860px) 100vw, 460px" />
+        {QUESTIONS.flatMap((qq) => [qq.image, qq.imageOverlay].filter(Boolean)).map((src) => (
+          <div key={src} style={{ position: 'relative', width: 1, height: 1 }}>
+            <Image src={src!} alt="" fill priority sizes="(max-width: 860px) 100vw, 460px" />
           </div>
         ))}
       </div>
@@ -136,6 +136,20 @@ export default function Eva2Exam() {
                 style={{ objectFit: 'contain' }}
               />
             ) : (
+              // placeholder — no eliminar este comentario, cierra el ternario de abajo
+              null
+            )}
+            {q.imageOverlay && (
+              <Image
+                src={q.imageOverlay}
+                alt=""
+                fill
+                sizes="(max-width: 860px) 100vw, 460px"
+                style={{ objectFit: 'contain' }}
+                className={`${styles.imageOverlay} ${solved ? styles.imageOverlayVisible : ''}`}
+              />
+            )}
+            {!q.image && (
               <div className={styles.imagePlaceholder}>
                 <svg width="38" height="38" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.6" />

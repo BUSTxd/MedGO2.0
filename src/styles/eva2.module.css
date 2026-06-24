@@ -133,6 +133,17 @@
   border-color: rgba(255, 255, 255, 0.1);
 }
 
+/* ─── OVERLAY ANOTADO ─── */
+/* Cargado desde el inicio (priority) pero invisible; al responder A hace fade-in. */
+.imageOverlay {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+.imageOverlayVisible {
+  opacity: 1;
+}
+
 /* ─── PIE DE IMAGEN ─── */
 .imageCaption {
   font-size: 11.5px;
