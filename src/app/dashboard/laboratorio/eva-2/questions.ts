@@ -119,6 +119,7 @@ export const QUESTIONS: Question[] = [
     id: 'oblicuo-inferior',
     region: 'Órbita · M. extraoculares',
     image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/oblicuo-inferior.avif',
+    imageCitation: 'Haładaj, R., Tubbs, R. S., & Varga, I. (2024). Anatomical study of the inferior oblique muscle and its innervation: Morphometric characteristics, anatomical variations, and histological evaluation of the nerve to the inferior oblique muscle. Brain Sciences, 14(9), 925. https://doi.org/10.3390/brainsci14090925',
     promptA: 'Nombre de lo señalado',
     answerA: { label: 'Músculo oblicuo inferior', accept: ['oblicuo inferior', 'oblicuo menor'] },
     promptB: 'Indique su inervación y su función',
