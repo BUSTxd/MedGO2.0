@@ -134,6 +134,8 @@ export const QUESTIONS: Question[] = [
   {
     id: 'vertebra-toracica',
     region: 'Columna vertebral',
+    image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/vertebra-toracica.avif',
+    imageCitation: 'Departamento de Anatomía, Escuela de Medicina, Pontificia Universidad Católica de Chile. (2015). Laminario anatómico: Dorso. https://laminarioanatomico.medicina.uc.cl/dorso.html',
     promptA: 'Nombre de lo señalado',
     answerA: { label: 'Vértebra torácica típica', accept: ['toracica', 'dorsal'] },
     promptB: 'Indique 04 características propias',
