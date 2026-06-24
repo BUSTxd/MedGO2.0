@@ -167,6 +167,8 @@ export const QUESTIONS: Question[] = [
   {
     id: 'cono-medular',
     region: 'Médula espinal',
+    image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/cono-medular.avif',
+    imageCitation: 'leona672. (s.f.). Spinal cord live specimen [Conjunto de estudio]. Quizlet. https://quizlet.com/au/388489145/spinal-cord-live-specimen-diagram/',
     promptA: 'Nombre de la estructura señalada',
     answerA: { label: 'Cono medular', accept: ['cono medular', 'conus medullaris', 'cono terminal'] },
     promptB: 'Indique el nivel de la columna vertebral en el que se encuentra',
