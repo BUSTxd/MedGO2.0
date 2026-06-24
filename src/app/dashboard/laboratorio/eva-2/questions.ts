@@ -101,6 +101,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 'papila-optica',
     region: 'Ojo · Retina',
+    imageCitation: 'SimpleOSCE. (2020). Fundoscopy (ophthalmoscopy) examination. https://www.simpleosce.com/examinations/other/fundoscopy.php',
     promptA: 'Nombre de la estructura señalada',
     answerA: { label: 'Papila óptica (disco óptico)', accept: ['papila optica', 'papila', 'disco optico', 'punto ciego'] },
     promptB: 'Indique 2 características',
