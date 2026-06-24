@@ -72,6 +72,7 @@ export const QUESTIONS: Question[] = [
     id: 'membrana-timpanica-1',
     region: 'Oído',
     image: 'https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/neurologia/eva2/membrana-timpanica-1.jpg?v=2',
+    imageCitation: 'Cohen-Gadol, A. A. (s.f.). Tympanic cavity and mastoid antrum. The Neurosurgical Atlas. https://www.neurosurgicalatlas.com/neuroanatomy/tympanic-cavity-and-mastoid-antrum',
     promptA: 'Nombre la estructura señalada',
     answerA: { label: 'Membrana timpánica', accept: ['membrana timpanica', 'timpano', 'timpanica'] },
     promptB: 'Indique la inervación sensitiva de su cara medial y lateral',
