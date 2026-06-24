@@ -216,6 +216,7 @@ export const QUESTIONS: Question[] = [
   {
     id: 'membrana-timpanica-2',
     region: 'Oído',
+    imageCitation: 'Cohen-Gadol, A. A. (s.f.). Tympanic cavity and mastoid antrum. The Neurosurgical Atlas. https://www.neurosurgicalatlas.com/neuroanatomy/tympanic-cavity-and-mastoid-antrum',
     promptA: 'Nombre de la estructura señalada',
     answerA: { label: 'Membrana timpánica', accept: ['membrana timpanica', 'timpano', 'timpanica'] },
     promptB: 'Indique la inervación de su cara lateral',
