@@ -124,7 +124,7 @@ export const QUESTIONS: Question[] = [
     answerA: { label: 'Músculo oblicuo inferior', accept: ['oblicuo inferior', 'oblicuo menor'] },
     promptB: 'Indique su inervación y su función',
     conceptsB: [
-      { label: 'Inervación: rama inferior del III par (oculomotor)', accept: ['rama inferior', 'iii', 'oculomotor', 'motor ocular comun', 'tercer par', '3 par'] },
+      { label: 'Inervación: rama inferior del III par (oculomotor)', accept: ['rama inferior', 'iii', 'oculomotor', 'motor ocular comun', 'tercer par', '3 par', 'par 3'] },
       { label: 'Elevación', accept: ['elevacion', 'eleva'] },
       { label: 'Abducción', accept: ['abduccion', 'abduce'] },
       { label: 'Rotación lateral (extorsión)', accept: ['rotacion lateral', 'extorsion', 'rotacion externa'] },
