@@ -144,6 +144,40 @@
   opacity: 1;
 }
 
+/* ─── SWAP CON CROSSFADE (imageAlt) ─── */
+/* Ambas imágenes se apilan; la transición de opacity crea el crossfade. */
+.imageLayer {
+  transition: opacity 1.4s ease;
+  pointer-events: none;
+}
+.imageLayerVisible { opacity: 1; }
+.imageLayerHidden  { opacity: 0; }
+
+/* ─── TOGGLE IMAGEN ALTERNATIVA ─── */
+.toggleImgBtn {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(59, 158, 221, 0.3);
+  background: rgba(59, 158, 221, 0.08);
+  color: #1a5276;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s ease;
+}
+.toggleImgBtn:hover { background: rgba(59, 158, 221, 0.16); }
+:global(.dark-mode) .toggleImgBtn {
+  border-color: rgba(59, 158, 221, 0.35);
+  background: rgba(59, 158, 221, 0.1);
+  color: #64b8e8;
+}
+:global(.dark-mode) .toggleImgBtn:hover { background: rgba(59, 158, 221, 0.18); }
+
 /* ─── PIE DE IMAGEN ─── */
 .imageCaption {
   font-size: 11.5px;
@@ -153,6 +187,21 @@
   padding: 0 2px;
 }
 :global(.dark-mode) .imageCaption { color: rgba(240, 238, 255, 0.55); }
+
+.imageCaptionList {
+  margin: 8px 0 0;
+  padding: 0 2px 0 18px;
+  font-size: 11px;
+  line-height: 1.7;
+  color: rgba(26, 26, 46, 0.65);
+  columns: 2;
+  column-gap: 16px;
+}
+:global(.dark-mode) .imageCaptionList { color: rgba(240, 238, 255, 0.55); }
+
+@media (max-width: 860px) {
+  .imageCaptionList { columns: 1; }
+}
 
 .imageCitation {
   font-size: 10.5px;

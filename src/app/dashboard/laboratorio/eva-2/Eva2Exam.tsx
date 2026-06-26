@@ -50,12 +50,30 @@ const emptyProgress = (): QProgress => ({
   bChecked: false,
 });
 
+/** Orden pseudoaleatorio sin dos preguntas del mismo region consecutivas. */
+function shuffleNoRepeat(questions: Question[]): Question[] {
+  const pool = [...questions];
+  const result: Question[] = [];
+  while (pool.length > 0) {
+    const lastRegion = result.at(-1)?.region ?? null;
+    const candidates = pool.filter((q) => q.region !== lastRegion);
+    const pick = (candidates.length > 0 ? candidates : pool)[
+      Math.floor(Math.random() * (candidates.length > 0 ? candidates.length : pool.length))
+    ];
+    result.push(pick);
+    pool.splice(pool.indexOf(pick), 1);
+  }
+  return result;
+}
+
 export default function Eva2Exam() {
   const [idx, setIdx] = useState(0);
+  const [shuffled] = useState<Question[]>(() => shuffleNoRepeat(QUESTIONS));
   const [progress, setProgress] = useState<Record<string, QProgress>>({});
+  const [altView, setAltView] = useState<Record<string, boolean>>({});
   const bRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const q = QUESTIONS[idx];
+  const q = shuffled[idx];
   const p = progress[q.id] ?? emptyProgress();
 
   const update = (patch: Partial<QProgress>) =>
@@ -64,6 +82,9 @@ export default function Eva2Exam() {
   const aCorrect = p.aStatus === 'correct';
   const aWrong = p.aStatus === 'wrong';
   const solved = p.aStatus !== 'idle';
+  // Si la pregunta tiene imageAlt y ya fue respondida, muestra la guía por defecto.
+  // El toggle permite volver a la imagen original.
+  const showingAlt = !!q.imageAlt && solved && (altView[q.id] ?? true);
   // Al revelar la explicación, el contenido crece: dejamos de centrar para subir.
   const showExplanation = aWrong || (aCorrect && p.bChecked);
 
@@ -78,7 +99,7 @@ export default function Eva2Exam() {
   const foundCount = foundB.filter(Boolean).length;
   const bComplete = foundCount >= needB;
 
-  const completedCount = QUESTIONS.filter((qq) => dotDone(progress, qq)).length;
+  const completedCount = shuffled.filter((qq) => dotDone(progress, qq)).length;
 
   function verifyA() {
     const correct = matches(p.aValue, q.answerA.accept);
@@ -94,15 +115,22 @@ export default function Eva2Exam() {
   }
 
   function go(delta: number) {
-    setIdx((i) => Math.min(QUESTIONS.length - 1, Math.max(0, i + delta)));
+    setIdx((i) => Math.min(shuffled.length - 1, Math.max(0, i + delta)));
   }
 
   return (
     <div className={base.examPage}>
-      {/* Precarga todas las imágenes (base + overlay) al montar — next/image emite
-          <link rel="preload"> con las URLs optimizadas, sin pedir los originales. */}
+      {/* Precarga en dos tandas para no bloquear el render inicial.
+          next/image con priority emite <link rel="preload"> al montar el elemento. */}
       <div aria-hidden style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}>
-        {QUESTIONS.flatMap((qq) => [qq.image, qq.imageOverlay].filter(Boolean)).map((src) => (
+        {/* Tanda 1: primeras 6 preguntas — se carga al montar. */}
+        {shuffled.slice(0, 6).flatMap((qq) => [qq.image, qq.imageOverlay, qq.imageAlt].filter(Boolean)).map((src) => (
+          <div key={src} style={{ position: 'relative', width: 1, height: 1 }}>
+            <Image src={src!} alt="" fill priority sizes="(max-width: 860px) 100vw, 460px" />
+          </div>
+        ))}
+        {/* Tanda 2: preguntas 7–13 — se activa cuando el usuario llega a la pregunta 5. */}
+        {idx >= 4 && shuffled.slice(6).flatMap((qq) => [qq.image, qq.imageOverlay, qq.imageAlt].filter(Boolean)).map((src) => (
           <div key={src} style={{ position: 'relative', width: 1, height: 1 }}>
             <Image src={src!} alt="" fill priority sizes="(max-width: 860px) 100vw, 460px" />
           </div>
@@ -127,19 +155,29 @@ export default function Eva2Exam() {
         {/* ─── Columna izquierda: imagen anatómica ─── */}
         <div className={styles.imageCol}>
           <div className={styles.imageBox}>
-            {q.image ? (
+            {q.image && (
               <Image
+                key={`base-${q.id}`}
                 src={q.image}
                 alt={`Estructura — pregunta ${idx + 1}`}
                 fill
                 sizes="(max-width: 860px) 100vw, 460px"
                 style={{ objectFit: 'contain' }}
+                className={q.imageAlt ? `${styles.imageLayer} ${showingAlt ? styles.imageLayerHidden : styles.imageLayerVisible}` : undefined}
               />
-            ) : (
-              // placeholder — no eliminar este comentario, cierra el ternario de abajo
-              null
             )}
-            {q.imageOverlay && (
+            {q.imageAlt && (
+              <Image
+                key={`alt-${q.id}`}
+                src={q.imageAlt}
+                alt=""
+                fill
+                sizes="(max-width: 860px) 100vw, 460px"
+                style={{ objectFit: 'contain' }}
+                className={`${styles.imageLayer} ${showingAlt ? styles.imageLayerVisible : styles.imageLayerHidden}`}
+              />
+            )}
+            {q.imageOverlay && !showingAlt && (
               <Image
                 src={q.imageOverlay}
                 alt=""
@@ -149,7 +187,7 @@ export default function Eva2Exam() {
                 className={`${styles.imageOverlay} ${solved ? styles.imageOverlayVisible : ''}`}
               />
             )}
-            {!q.image && (
+            {!q.image && !q.imageAlt && (
               <div className={styles.imagePlaceholder}>
                 <svg width="38" height="38" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.6" />
@@ -163,9 +201,27 @@ export default function Eva2Exam() {
             <span className={styles.imageBadge}>{q.region}</span>
           </div>
 
-          {/* El caption revela detalles → solo tras responder A. La cita siempre visible. */}
-          {solved && q.imageCaption && (
+          {solved && q.imageAlt && (
+            <button
+              className={styles.toggleImgBtn}
+              onClick={() => setAltView((prev) => ({ ...prev, [q.id]: !(prev[q.id] ?? true) }))}
+            >
+              {showingAlt ? '← Ver imagen original' : 'Presiona para cambiar de imagen →'}
+            </button>
+          )}
+
+          {/* Caption: en preguntas con imageAlt se muestra cuando la guía es visible. */}
+          {(q.imageAlt ? showingAlt : solved) && q.imageCaption && (
             <p className={styles.imageCaption}>{q.imageCaption}</p>
+          )}
+          {(q.imageAlt ? showingAlt : solved) && q.imageCaptionList && (
+            <ol className={styles.imageCaptionList}>
+              {q.imageCaptionList.map((item, i) => (
+                <li key={i}>
+                  {typeof item === 'string' ? item : <strong>{item.text}</strong>}
+                </li>
+              ))}
+            </ol>
           )}
           {q.imageCitation && (
             <p className={styles.imageCitation}>
@@ -306,9 +362,9 @@ export default function Eva2Exam() {
         </button>
 
         <div className={styles.progressInfo}>
-          <span className={styles.completeCount}>{completedCount} / {QUESTIONS.length} completas</span>
+          <span className={styles.completeCount}>{completedCount} / {shuffled.length} completas</span>
           <div className={base.progressDots}>
-            {QUESTIONS.map((qq, i) => (
+            {shuffled.map((qq, i) => (
               <span
                 key={qq.id}
                 className={`${base.dot} ${i === idx ? base.dotActive : ''} ${dotDone(progress, qq) ? base.dotDone : ''}`}
@@ -317,7 +373,7 @@ export default function Eva2Exam() {
           </div>
         </div>
 
-        <button className={`${base.navBtn} ${base.navBtnPrimary}`} onClick={() => go(1)} disabled={idx === QUESTIONS.length - 1}>
+        <button className={`${base.navBtn} ${base.navBtnPrimary}`} onClick={() => go(1)} disabled={idx === shuffled.length - 1}>
           <span className={base.navBtnLabel}>Siguiente →</span>
         </button>
       </div>
