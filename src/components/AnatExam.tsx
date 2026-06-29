@@ -313,7 +313,7 @@ export default function AnatExam({ questions, kicker, title }: AnatExamProps) {
               ))}
             </ol>
           )}
-          {q.imageCitation && (
+          {solved && q.imageCitation && (
             <p className={styles.imageCitation}>
               <em>{q.imageCitation}</em>
             </p>
