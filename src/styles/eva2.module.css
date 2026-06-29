@@ -78,6 +78,8 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 :global(.dark-mode) .imageBox {
@@ -85,6 +87,13 @@
   background:
     radial-gradient(circle at 50% 40%, rgba(59, 158, 221, 0.08), transparent 70%),
     rgba(255, 255, 255, 0.025);
+}
+
+/* Fondo oscuro satinado: garantiza legibilidad cuando el overlay usa trazos blancos */
+.imageBoxDarkSolved {
+  background: rgba(26, 37, 87, 0.45) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  transition: background 0.5s ease !important;
 }
 
 .imagePlaceholder {
@@ -116,6 +125,7 @@
   position: absolute;
   bottom: 10px;
   left: 10px;
+  z-index: 3;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.03em;
@@ -134,11 +144,20 @@
 }
 
 /* ─── OVERLAY ANOTADO ─── */
-/* Cargado desde el inicio (priority) pero invisible; al responder A hace fade-in. */
+/* Cargado desde el inicio (priority) pero invisible; al responder A hace fade-in.
+   La imagen base se desvanece simultáneamente vía .imageBaseHidden. */
+.imageBaseTransition {
+  transition: opacity 1.4s ease;
+}
+.imageBaseHidden {
+  opacity: 0;
+}
+
 .imageOverlay {
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 1.4s ease;
   pointer-events: none;
+  z-index: 2;
 }
 .imageOverlayVisible {
   opacity: 1;

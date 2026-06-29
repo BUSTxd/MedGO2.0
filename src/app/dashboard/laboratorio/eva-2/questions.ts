@@ -12,28 +12,9 @@
 // (bucket `examenes-img`, p. ej. 'neurologia/eva2/oblicuo-superior.webp' servido
 // como URL completa) — el componente la renderiza con next/image automáticamente.
 
-/** Concepto evaluable: se acierta si la respuesta incluye alguno de `accept`. */
-export type Concept = { label: string; accept: string[] };
-
-export type Question = {
-  id: string;
-  region: string;            // etiqueta de zona (se muestra en el recuadro de imagen)
-  image?: string;            // URL de la imagen anatómica (placeholder si falta)
-  imageOverlay?: string;     // imagen anotada que se revela (fade-in) al responder A
-  imageAlt?: string;         // imagen alternativa accesible mediante toggle tras responder A
-  imageCaption?: string;     // descripción anatómica de la imagen
-  imageCaptionList?: Array<string | { text: string; bold: true }>; // leyenda numerada (se muestra junto con imageAlt al responder A)
-  imageCitation?: string;    // cita APA de la fuente
-  promptA: string;
-  /** Sinónimos aceptados para la Pregunta A (nombre de la estructura). */
-  answerA: { label: string; accept: string[] };
-  promptB: string;
-  conceptsB: Concept[];
-  /** Nº de conceptos necesarios para dar B por completa. Por defecto: todos. */
-  needB?: number;
-  /** Respuesta modelo de B (texto que se muestra tras verificar). */
-  modelB: string;
-};
+// Los tipos Concept/Question viven en el motor compartido AnatExam.
+import type { Question } from '@/components/AnatExam';
+export type { Concept, Question } from '@/components/AnatExam';
 
 export const QUESTIONS: Question[] = [
   {
