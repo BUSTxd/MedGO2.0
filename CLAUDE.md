@@ -66,10 +66,12 @@ src/app/
     │   ├── page.tsx                  # Atlas filtrable (chips clase/tinción/aumento)
     │   └── [curso]/page.tsx
     ├── laboratorio/
-    │   ├── page.tsx                  # Grid de labs
+    │   ├── page.tsx                  # Grid de labs (tarjetas en LAB_TOPICS)
     │   ├── electrocardiograma/       # Simulador EKG
     │   ├── nefron-interactivo/       # SVG del nefrón con zoom
     │   ├── parametro-sangre-orina/   # Minijuego drag-and-drop
+    │   ├── eva-2/                    # Examen anatomía A→B (motor AnatExam)
+    │   ├── eva-3/                    # Examen anatomía A→B (motor AnatExam)
     │   ├── atlas-microbiologia/
     │   ├── atlas-parasitologia/
     │   ├── atlas-micologia/          # Selector modo alternativas/escribir
@@ -89,6 +91,7 @@ src/app/
 | `src/components/DashboardSidebar.tsx` | Sidebar de navegación. Array `NAV` con label/href/icon. Ícono de Cursos: book-bookmark SVG con `stroke="currentColor"` |
 | `src/components/StudyMaterialSection.tsx` | 3 tarjetas de material por clase: Video, Banqueo, Resumen |
 | `src/components/ExamRunner.tsx` | Examen inline (`?examen=1`). Lee del bucket privado `examenes`. Soporta N grupos independientes vía `groupKeys?: string[]` — selector cuadros A/B/C… en esquina superior derecha, carga diferida por grupo, puntuación independiente |
+| `src/components/AnatExam.tsx` | Motor compartido de los EVAs de anatomía (EVA 2/3, futuro EVA 1). Examen interactivo A→B; ver sección **Sistema de EVAs** |
 | `src/components/PdfFullscreenModal.tsx` | Viewer PDF fullscreen con zoom. Usa signed URLs + sessionStorage cache |
 | `src/components/PlanProvider.tsx` | Context con `plan`, `isActive`, `expiresAt`. Consumido con `usePlan()` |
 | `src/components/AuthProvider.tsx` | Singleton del cliente Supabase, compartido para evitar múltiples instancias |
@@ -153,6 +156,22 @@ Tres tarjetas en orden:
 3. **Resumen** (activo si `hasResumen`, abre PDF fullscreen) — ícono flecha/send SVG
 
 Todos los íconos usan `fill="currentColor"` para adaptarse a light/dark.
+
+---
+
+## Sistema de EVAs (exámenes interactivos de anatomía)
+
+Motor compartido en **`src/components/AnatExam.tsx`** (Client Component). Cada EVA es un wrapper delgado; toda la lógica (flujo, shuffle, precarga, overlays, persistencia, matching) es común. Estilos compartidos en `src/styles/eva2.module.css`.
+
+**Flujo por pregunta**: A = nombrar la estructura señalada → al acertar desbloquea B (detalle clínico/funcional evaluado por conceptos clave). Si A falla, se muestra B ya resuelta.
+
+**Props de `<AnatExam>`**: `{ questions, kicker, title, examId }`. `examId` (p. ej. `"eva-3"`) da persistencia automática del progreso en `localStorage` (clave única `medgo-eva-progress-<examId>`, se sobrescribe sin acumular).
+
+**Tipo `Question`** (en AnatExam, re-exportado por cada `questions.ts`): `id`, `region` (badge, **no debe revelar la respuesta**), `image?`, `imageOverlay?` + `overlayTrigger?: 'solved'|'bChecked'` + `overlayHideBase?`, `imageAlt?` (toggle crossfade), `imageDarkBg?`, `imageCaption?`, `imageCaptionList?`, `imageCitation?` (visible solo tras responder A), `promptA`, `answerA`, `promptB`, `conceptsB` (con `accept`/`acceptAll`), `needB?`, `modelB`.
+
+**Imágenes**: bucket público `examenes-img`, path `neurologia/eva<N>/`. Precarga de las próximas 4 preguntas (mismo `sizes` que el render real para compartir caché `/_next/image`). Shuffle pseudoaleatorio que nunca repite `region` consecutiva.
+
+**Para crear un EVA nuevo (p. ej. EVA 1)**: copiar carpeta `eva-3/` (page + ExamN wrapper + questions.ts), setear `examId`, y añadir tarjeta en `LAB_TOPICS` (tema Neurología) de `laboratorio/page.tsx`. No se toca el motor.
 
 ---
 
