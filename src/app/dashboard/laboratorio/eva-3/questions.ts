@@ -119,7 +119,7 @@ export const QUESTIONS: Question[] = [
     answerA: {
       label: 'Sustancia negra (locus niger)',
       accept: [
-        'sustancia negra', 'locus niger', 'locus nigger', 'substantia nigra',
+        'sustancia negra', 'locus niger', 'substantia nigra',
         'locus negro', 'sustancia nigra',
       ],
     },

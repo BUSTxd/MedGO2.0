@@ -12,7 +12,7 @@
 //      mencionado cuenta como acertado; los no mencionados quedan marcados como mal.
 // El progreso de cada pregunta se conserva al navegar entre ellas.
 
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import base from '@/styles/laboratorio.module.css';
@@ -53,6 +53,8 @@ type AnatExamProps = {
   kicker: string;
   /** Título h2 del examen. */
   title: string;
+  /** Identificador del examen para persistir el progreso (p. ej. "eva-3"). */
+  examId: string;
 };
 
 /** Nº de preguntas por delante que se mantienen precargadas en la ventana. */
@@ -69,11 +71,23 @@ function norm(s: string): string {
     .trim();
 }
 
-/** ¿La respuesta del alumno contiene alguno de los sinónimos/variantes aceptados? */
+/** ¿La respuesta del alumno contiene alguno de los sinónimos/variantes aceptados?
+ *  Los tokens muy cortos (≤2 caracteres) o numéricos se exigen como PALABRA
+ *  completa, no como subcadena: así 'x' no acierta dentro de "examen" ni '4'
+ *  dentro de "14". Los términos largos siguen comparándose por inclusión. */
 function matches(input: string, accept: string[]): boolean {
   const n = norm(input);
   if (!n) return false;
-  return accept.some((a) => n.includes(norm(a)));
+  const tokens = new Set(n.split(' '));
+  return accept.some((a) => {
+    const na = norm(a);
+    if (!na) return false;
+    const words = na.split(' ');
+    const allShort = words.every((w) => w.length <= 2 || /^\d+$/.test(w));
+    // Tokens cortos/numéricos: cada palabra debe aparecer como token completo.
+    if (allShort) return words.every((w) => tokens.has(w));
+    return n.includes(na);
+  });
 }
 
 /** Evalúa un concepto: OR sobre `accept`, o AND sobre `acceptAll` si está definido. */
@@ -118,13 +132,40 @@ function shuffleNoRepeat(questions: Question[]): Question[] {
   return result;
 }
 
-export default function AnatExam({ questions, kicker, title }: AnatExamProps) {
+/** Clave de localStorage para el progreso de un examen. Una sola por examen:
+ *  se sobrescribe en cada cambio, nunca se acumulan registros. */
+const storageKey = (examId: string) => `medgo-eva-progress-${examId}`;
+
+export default function AnatExam({ questions, kicker, title, examId }: AnatExamProps) {
   const [idx, setIdx] = useState(0);
   const [shuffled] = useState<Question[]>(() => shuffleNoRepeat(questions));
   const [progress, setProgress] = useState<Record<string, QProgress>>({});
+  const [hydrated, setHydrated] = useState(false);
   const [altView, setAltView] = useState<Record<string, boolean>>({});
   const [overlayView, setOverlayView] = useState<Record<string, boolean>>({});
   const bRef = useRef<HTMLTextAreaElement | null>(null);
+
+  // Hidratación tras el mount (evita desajuste SSR/cliente): leemos el progreso
+  // guardado y recién entonces habilitamos la persistencia.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(storageKey(examId));
+      if (raw) {
+        const saved = JSON.parse(raw) as Record<string, QProgress>;
+        if (saved && typeof saved === 'object') setProgress(saved);
+      }
+    } catch {}
+    setHydrated(true);
+  }, [examId]);
+
+  // Persistencia: una única clave que se sobrescribe (sin acumulación). El guard
+  // `hydrated` evita pisar lo guardado con el estado vacío del primer render.
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      localStorage.setItem(storageKey(examId), JSON.stringify(progress));
+    } catch {}
+  }, [progress, hydrated, examId]);
 
   const q = shuffled[idx];
   const p = progress[q.id] ?? emptyProgress();
@@ -206,7 +247,7 @@ export default function AnatExam({ questions, kicker, title }: AnatExamProps) {
 
       <div className={base.topBar}>
         <Link href="/dashboard/laboratorio" className={base.backLink}>← Laboratorio virtual</Link>
-        <span className={base.counter}>Pregunta {idx + 1} / {questions.length}</span>
+        <span className={base.counter}>Pregunta {idx + 1} / {shuffled.length}</span>
       </div>
 
       <div className={styles.intro}>
@@ -335,6 +376,7 @@ export default function AnatExam({ questions, kicker, title }: AnatExamProps) {
               placeholder="Escribe el nombre de la estructura…"
               value={p.aValue}
               disabled={solved}
+              maxLength={120}
               onChange={(e) => update({ aValue: e.target.value })}
               onKeyDown={(e) => { if (e.key === 'Enter' && !solved) verifyA(); }}
             />
@@ -377,6 +419,7 @@ export default function AnatExam({ questions, kicker, title }: AnatExamProps) {
                 className={`${base.writeInput} ${styles.textarea} ${p.bChecked ? (bComplete ? base.writeInputCorrect : base.writeInputWrong) : ''}`}
                 placeholder="Escribe tu respuesta…"
                 rows={3}
+                maxLength={600}
                 value={p.bValue}
                 onChange={(e) => update({ bValue: e.target.value, bChecked: false })}
               />

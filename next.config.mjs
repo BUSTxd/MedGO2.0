@@ -10,10 +10,6 @@ const nextConfig = {
         hostname: 'dabrwqwzvvnosdnmvlrp.supabase.co',
         pathname: '/storage/v1/object/public/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'upload.wikimedia.org',
-      },
     ],
     // AVIF/WebP: el optimizador sirve el formato más liviano que soporte el
     // navegador, redimensionado al ancho real del dispositivo (srcset vía `sizes`).

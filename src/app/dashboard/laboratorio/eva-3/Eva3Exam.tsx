@@ -9,6 +9,7 @@ export default function Eva3Exam() {
   return (
     <AnatExam
       questions={QUESTIONS}
+      examId="eva-3"
       kicker="EVA 3 · Anatomía"
       title="Identificación de estructuras — preguntas de examen pasadas"
     />
