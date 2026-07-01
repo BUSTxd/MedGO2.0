@@ -173,29 +173,43 @@ export default function NivelRunner({
           <BloqueView bloque={contenido.bloque1} onDone={() => onBloque('bloque1', 'minijuegoA')} />
         )}
 
-        {step === 'minijuegoA' && (
-          <div className={styles.retoPanel}>
+        {step === 'minijuegoA' &&
+          (contenido.minijuegoA.tipo === 'orden' ? (
             <Minijuego
               config={contenido.minijuegoA}
               onComplete={(r) => onMinijuego('minijuegoA', contenido.minijuegoA, r)}
+              onNext={() => setStep('bloque2')}
             />
-            <ContinuarReto onNext={() => setStep('bloque2')} listo={mjHecho(state, meta.id, 'minijuegoA')} />
-          </div>
-        )}
+          ) : (
+            <div className={styles.retoPanel}>
+              <Minijuego
+                config={contenido.minijuegoA}
+                onComplete={(r) => onMinijuego('minijuegoA', contenido.minijuegoA, r)}
+              />
+              <ContinuarReto onNext={() => setStep('bloque2')} listo={mjHecho(state, meta.id, 'minijuegoA')} />
+            </div>
+          ))}
 
         {step === 'bloque2' && (
           <BloqueView bloque={contenido.bloque2} onDone={() => onBloque('bloque2', 'minijuegoB')} />
         )}
 
-        {step === 'minijuegoB' && (
-          <div className={styles.retoPanel}>
+        {step === 'minijuegoB' &&
+          (contenido.minijuegoB.tipo === 'orden' ? (
             <Minijuego
               config={contenido.minijuegoB}
               onComplete={(r) => onMinijuego('minijuegoB', contenido.minijuegoB, r)}
+              onNext={() => setStep('bloqueFinal')}
             />
-            <ContinuarReto onNext={() => setStep('bloqueFinal')} listo={mjHecho(state, meta.id, 'minijuegoB')} />
-          </div>
-        )}
+          ) : (
+            <div className={styles.retoPanel}>
+              <Minijuego
+                config={contenido.minijuegoB}
+                onComplete={(r) => onMinijuego('minijuegoB', contenido.minijuegoB, r)}
+              />
+              <ContinuarReto onNext={() => setStep('bloqueFinal')} listo={mjHecho(state, meta.id, 'minijuegoB')} />
+            </div>
+          ))}
 
         {step === 'bloqueFinal' && (
           <BloqueView bloque={contenido.bloqueFinal} onDone={() => onBloque('bloqueFinal', 'boss')} />

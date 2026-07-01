@@ -79,16 +79,20 @@ export default function BloqueView({
         </div>
 
         <button
-          className={`${styles.bloqueContinuar} ${todasHechas ? styles.bloqueContinuarListo : ''}`}
+          className={`${styles.bloqueContinuar} ${todasHechas ? styles.bloqueContinuarListo : styles.bloqueContinuarLargo}`}
           onClick={onDone}
           disabled={!todasHechas}
         >
-          <span className={styles.bloqueContinuarIcon}>
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
-              <path d="M21.2,11l-5.3-1l0.9-1.4C17,8.2,17,7.7,16.7,7.3S15.8,7,15.4,7.2L14,8.1l-1-5.3C12.9,2.3,12.5,2,12,2s-0.9,0.3-1,0.8l-1,5.3L8.6,7.2C8.2,7,7.7,7,7.3,7.3C7,7.7,7,8.2,7.2,8.6L8.1,10l-5.3,1C2.3,11.1,2,11.5,2,12s0.3,0.9,0.8,1l5.3,1l-0.9,1.4C7,15.8,7,16.3,7.3,16.7C7.5,16.9,7.8,17,8.1,17c0.2,0,0.4-0.1,0.6-0.2l1.4-0.9l1,5.3c0.1,0.5,0.5,0.8,1,0.8s0.9-0.3,1-0.8l1-5.3l1.4,0.9c0.2,0.1,0.4,0.2,0.6,0.2c0.3,0,0.5-0.1,0.7-0.3c0.3-0.3,0.4-0.9,0.1-1.3L15.9,14l5.3-1c0.5-0.1,0.8-0.5,0.8-1S21.7,11.1,21.2,11z M13.3,12.5c-0.4,0.1-0.7,0.4-0.8,0.8L12,15.8l-0.5-2.5c-0.1-0.4-0.4-0.7-0.8-0.8L8.2,12l2.5-0.5c0.4-0.1,0.7-0.4,0.8-0.8L12,8.2l0.5,2.5c0.1,0.4,0.4,0.7,0.8,0.8l2.5,0.5L13.3,12.5z" />
-            </svg>
+          <span className={styles.bloqueContinuarInner}>
+            <span className={styles.bloqueContinuarIcon}>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                <path d="M21.2,11l-5.3-1l0.9-1.4C17,8.2,17,7.7,16.7,7.3S15.8,7,15.4,7.2L14,8.1l-1-5.3C12.9,2.3,12.5,2,12,2s-0.9,0.3-1,0.8l-1,5.3L8.6,7.2C8.2,7,7.7,7,7.3,7.3C7,7.7,7,8.2,7.2,8.6L8.1,10l-5.3,1C2.3,11.1,2,11.5,2,12s0.3,0.9,0.8,1l5.3,1l-0.9,1.4C7,15.8,7,16.3,7.3,16.7C7.5,16.9,7.8,17,8.1,17c0.2,0,0.4-0.1,0.6-0.2l1.4-0.9l1,5.3c0.1,0.5,0.5,0.8,1,0.8s0.9-0.3,1-0.8l1-5.3l1.4,0.9c0.2,0.1,0.4,0.2,0.6,0.2c0.3,0,0.5-0.1,0.7-0.3c0.3-0.3,0.4-0.9,0.1-1.3L15.9,14l5.3-1c0.5-0.1,0.8-0.5,0.8-1S21.7,11.1,21.2,11z M13.3,12.5c-0.4,0.1-0.7,0.4-0.8,0.8L12,15.8l-0.5-2.5c-0.1-0.4-0.4-0.7-0.8-0.8L8.2,12l2.5-0.5c0.4-0.1,0.7-0.4,0.8-0.8L12,8.2l0.5,2.5c0.1,0.4,0.4,0.7,0.8,0.8l2.5,0.5L13.3,12.5z" />
+              </svg>
+            </span>
+            <span key={todasHechas ? 'cont' : 'faltan'} className={styles.bloqueContinuarTexto}>
+              {todasHechas ? 'Continuar' : `Marca las ${total} fichas para continuar`}
+            </span>
           </span>
-          {todasHechas ? 'Continuar' : `Marca las ${total} fichas para continuar`}
         </button>
 
         <div className={`${styles.bloqueChip} ${styles.bloqueChipMotiva}`}>

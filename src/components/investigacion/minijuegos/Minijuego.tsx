@@ -16,17 +16,19 @@ export interface MinijuegoResult {
 export interface MinijuegoProps<C = MinijuegoConfig> {
   config: C;
   onComplete: (result: MinijuegoResult) => void;
+  /** Avanzar al siguiente paso (usado por minijuegos autocontenidos, p. ej. orden). */
+  onNext?: () => void;
 }
 
 /** Despacha al minijuego correcto según `config.tipo`. */
-export default function Minijuego({ config, onComplete }: MinijuegoProps) {
+export default function Minijuego({ config, onComplete, onNext }: MinijuegoProps) {
   switch (config.tipo) {
     case 'drag':
       return <DragConnect config={config} onComplete={onComplete} />;
     case 'vf':
       return <VerdaderoFalsoTrampa config={config} onComplete={onComplete} />;
     case 'orden':
-      return <OrdenarSecuencia config={config} onComplete={onComplete} />;
+      return <OrdenarSecuencia config={config} onComplete={onComplete} onNext={onNext} />;
     case 'caso':
       return <CasoClinico config={config} onComplete={onComplete} />;
     case 'mapa':
