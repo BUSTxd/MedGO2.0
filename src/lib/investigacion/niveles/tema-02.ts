@@ -163,10 +163,10 @@ export const TEMA_02: NivelContenido = {
     titulo: 'Del concepto al dato',
     instruccion: 'Arrastra cada término hacia el ejemplo que lo representa.',
     pares: [
-      { id: 'p1', termino: 'Criterio de inclusión', match: 'Adultos mayores de 18 años con diagnóstico de hipertensión' },
-      { id: 'p2', termino: 'Criterio de exclusión', match: 'Retirar a las gestantes ya incluidas para protegerlas' },
-      { id: 'p3', termino: 'Definición conceptual', match: 'Desnutrición entendida como estado de déficit nutricional' },
-      { id: 'p4', termino: 'Definición operativa', match: 'Medir IMC con balanza calibrada y puntos de corte fijos' },
+      { id: 'p1', termino: 'Criterio de inclusión', match: 'Adultos mayores de 18 años con diagnóstico de hipertensión', icono: 'personas', color: '#10b981' },
+      { id: 'p2', termino: 'Criterio de exclusión', match: 'Retirar a las gestantes ya incluidas para protegerlas', icono: 'escudo', color: '#f59e0b' },
+      { id: 'p3', termino: 'Definición conceptual', match: 'Desnutrición entendida como estado de déficit nutricional', icono: 'cerebro', color: '#8b5cf6' },
+      { id: 'p4', termino: 'Definición operativa', match: 'Medir IMC con balanza calibrada y puntos de corte fijos', icono: 'balanza', color: '#2f6ef0' },
     ],
   },
 

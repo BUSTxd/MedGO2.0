@@ -57,7 +57,15 @@ export interface MJDrag {
   tipo: 'drag';
   titulo: string;
   instruccion: string;
-  pares: { id: string; termino: string; match: string }[];
+  pares: {
+    id: string;
+    termino: string;
+    match: string;
+    /** Clave de <Icono/> para la tarjeta del ejemplo (default: cíclico por posición). */
+    icono?: string;
+    /** Color de acento de la fila (número, conector, caja de ícono). */
+    color?: string;
+  }[];
 }
 
 export interface MJVerdaderoFalso {

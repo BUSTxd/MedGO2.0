@@ -24,7 +24,7 @@ export interface MinijuegoProps<C = MinijuegoConfig> {
 export default function Minijuego({ config, onComplete, onNext }: MinijuegoProps) {
   switch (config.tipo) {
     case 'drag':
-      return <DragConnect config={config} onComplete={onComplete} />;
+      return <DragConnect config={config} onComplete={onComplete} onNext={onNext} />;
     case 'vf':
       return <VerdaderoFalsoTrampa config={config} onComplete={onComplete} />;
     case 'orden':

@@ -28,6 +28,9 @@ const SECCION_LABEL: Record<FlowStep, string> = {
 
 const LIMITE_VELOCISTA_MS = 10 * 60 * 1000;
 
+/** Minijuegos que traen su propio panel claro y botón "Continuar" (no van en el retoPanel oscuro). */
+const esAutocontenido = (c: MinijuegoConfig): boolean => c.tipo === 'orden' || c.tipo === 'drag';
+
 function bumpPerfectDrags(): number {
   if (typeof window === 'undefined') return 0;
   try {
@@ -174,7 +177,7 @@ export default function NivelRunner({
         )}
 
         {step === 'minijuegoA' &&
-          (contenido.minijuegoA.tipo === 'orden' ? (
+          (esAutocontenido(contenido.minijuegoA) ? (
             <Minijuego
               config={contenido.minijuegoA}
               onComplete={(r) => onMinijuego('minijuegoA', contenido.minijuegoA, r)}
@@ -195,7 +198,7 @@ export default function NivelRunner({
         )}
 
         {step === 'minijuegoB' &&
-          (contenido.minijuegoB.tipo === 'orden' ? (
+          (esAutocontenido(contenido.minijuegoB) ? (
             <Minijuego
               config={contenido.minijuegoB}
               onComplete={(r) => onMinijuego('minijuegoB', contenido.minijuegoB, r)}
