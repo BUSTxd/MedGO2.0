@@ -44,6 +44,24 @@ const NAV = [
     ),
   },
   {
+    label: 'Investigación',
+    href: '/dashboard/investigacion',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M17,12v5m-4,0V15M3,15l2.83-2.83M8,7a3,3,0,1,0,3,3A3,3,0,0,0,8,7Z"
+          stroke="currentColor" strokeOpacity="0.6"
+          strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+        />
+        <path
+          d="M8,3H20a1,1,0,0,1,1,1V20a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V17"
+          stroke="currentColor"
+          strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+        />
+      </svg>
+    ),
+  },
+  {
     label: 'Contáctanos',
     href: '/dashboard/contacto',
     icon: (

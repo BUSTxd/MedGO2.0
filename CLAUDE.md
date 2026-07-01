@@ -36,6 +36,29 @@ Plataforma de estudio médico para estudiantes de la Universidad Peruana Cayetan
 --card-border: rgba(255, 255, 255, 0.08)
 ```
 
+### Paleta Investigación (`src/styles/investigacion.module.css`)
+
+Acento **teal** derivado del SVG `research-svgrepo-com.svg` (path secundario original: `rgb(44, 169, 188)`):
+
+```
+--inv-teal:        #2CA9BC   /* acento principal: dot, badge, icon box */
+--inv-teal-dark:   #1a8a9c   /* badge text light mode, gradiente oscuro */
+--inv-emerald:     #48C9B0   /* dot color secundario */
+--inv-blue:        #5E9CD3   /* dot color terciario */
+
+Icon box:    linear-gradient(135deg, #2CA9BC 0%, #1a8a9c 100%)
+             box-shadow: rgba(44, 169, 188, 0.35)
+Panel borde: rgba(44, 169, 188, 0.12)
+Panel header bg: rgba(44, 169, 188, 0.08)
+Badge bg:    rgba(44, 169, 188, 0.15)
+Hover glow:  rgba(44, 169, 188, 0.14) light / 0.10 dark
+Dark hover border: rgba(44, 169, 188, 0.2)
+```
+
+Clases CSS: `.invPanel`, `.invPanelHeader`, `.invIconBox`, `.invBadge` (todas con dark mode incluido).
+
+---
+
 **Modo oscuro**: clase `dark-mode` en `<body>`. Toggleado en `DashboardWrapper.tsx` y guardado en `localStorage('medgo-dark')`. Las páginas del dashboard definen sus propias variables dentro de `:global(.dark-mode) .wrapper { ... }`.
 
 **Regla crítica de CSS**: Nunca poner estilos de dark-mode en `globals.css`. Cada página/componente los define en su propio `.module.css`.
@@ -76,6 +99,9 @@ src/app/
     │   ├── atlas-parasitologia/
     │   ├── atlas-micologia/          # Selector modo alternativas/escribir
     │   └── microscopio/
+    ├── investigacion/
+    │   ├── page.tsx                  # Mapa serpenteante de 14 niveles (NivelMap)
+    │   └── [nivel]/page.tsx          # Runner gamificado por nivel (ver Sistema de Investigación)
     ├── contacto/page.tsx
     ├── cuenta/page.tsx
     └── admin/page.tsx
@@ -181,3 +207,26 @@ Motor compartido en **`src/components/AnatExam.tsx`** (Client Component). Cada E
 2. `dashboard/layout.tsx` (RSC) verifica sesión, plan y dispositivo
 3. Redirecciones: `/auth/clear-device` (sesión revocada) o `/auth/device-limit` (límite de dispositivos)
 4. El plan se inyecta via `PlanProvider` a todo el árbol del dashboard
+
+---
+
+## Sistema de Investigación (juego gamificado de 14 niveles)
+
+Sección `dashboard/investigacion`: mapa serpenteante (estilo Duolingo) donde cada nodo es la plataforma "punto de guardado" (`SavePointNode`). 14 niveles = 14 temas del curso; se desbloquean en orden (un nivel abre al completar el anterior al 100%).
+
+**Motor** en `src/lib/investigacion/`:
+- `types.ts` — tipos: `NivelMeta`, `NivelContenido`, `Bloque`, `TarjetaContenido`, `MinijuegoConfig` (unión discriminada por `tipo`), `BossConfig`, `ProgressState`, `FLOW_ORDER`.
+- `progress.ts` — persistencia localStorage clave `medgo-investigacion-progress` (patrón AnatExam: `defaultState`, `loadProgress`, `saveProgress`, `completeLevel`, `addXP`, `markStep`, `awardBadge`). `reconcile()` rellena niveles nuevos en estados guardados antiguos.
+- `xp.ts` — XP (BLOQUE=10, MJ_1ER=50, MJ_2DO=25, BOSS=100, NIVEL=200) y `COLOR_BANDA` (fundamentos `#3B82F6`, desarrollo `#10B981`, análisis `#8B5CF6`, síntesis `#F59E0B`).
+- `badges.ts` — 6 insignias.
+- `niveles/index.ts` — `NIVELES` (14 metas) + `CONTENIDO`; `niveles/tema-NN.ts` = contenido por tema.
+
+**Hooks**: `useInvestigacionProgress` (estado + hidratación), `useDragDrop` (Pointer Events + tap, extraído de `parametro-sangre-orina`).
+
+**UI** en `src/components/investigacion/`: `NivelMap` + `SavePointNode` (mapa); `NivelRunner` (orquesta el flujo `intro → bloque1 → MJ-A → bloque2 → MJ-B → bloqueFinal → boss → completado`), `NivelHUD`, `BloqueView`, `TarjetaContenido`, `Celebracion`, `XPFloat`, `BadgeUnlock`; `minijuegos/` (dispatcher `Minijuego` + 7 tipos data-driven + `BossChallenge`).
+
+**Estilos**: mapa/nodos en `investigacion.module.css`; juego/minijuegos/animaciones en `investigacionGame.module.css`. Animaciones solo CSS; efectos complejos (confetti) como `div.animation-placeholder[data-animation]`.
+
+**Íconos**: sin emojis. Registro de SVG line-art en `src/components/investigacion/Icono.tsx` (`<Icono name="..."/>`, `currentColor`, viewBox 24). El campo `icono` de cada `TarjetaContenido` y el `icono` de cada `Insignia` (`badges.ts`) son **claves** de ese registro (p. ej. `'microscopio'`, `'balanza'`, `'diana'`). Para un ícono nuevo, añadir una entrada al objeto `ICONOS` y usar su clave. Las flechas `→`/`↔` dentro de textos son tipográficas, no íconos.
+
+**Para crear un nivel nuevo (tema-NN)**: crear `src/lib/investigacion/niveles/tema-NN.ts` (mismo shape que `tema-01.ts`), registrarlo en `CONTENIDO` y poner `disponible: true` en `NIVELES`. No se toca el motor. Reglas de contenido: por concepto, 3 ejemplos (académico / cotidiano inesperado / absurdo memorable) + un "dato que sorprende".

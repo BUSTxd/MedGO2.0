@@ -1,0 +1,226 @@
+/* Visor «Tronco encefálico». Tema claro por defecto; el dark-mode lo define este
+   propio módulo (regla del proyecto: nada de dark-mode en globals). */
+
+/* ─── INTRO (mismo look que medulaEspinal) ─── */
+.intro {
+  padding: 22px 28px 6px;
+}
+.kicker {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3b9edd;
+  margin-bottom: 6px;
+}
+.h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+:global(.dark-mode) .h2 { color: #f0eeff; }
+.sub {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(26, 26, 46, 0.65);
+  max-width: 760px;
+  margin: 0;
+}
+:global(.dark-mode) .sub { color: rgba(240, 238, 255, 0.6); }
+
+/* ─── SPLIT SCREEN ─── */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 0;
+  align-items: stretch;
+  padding: 14px 28px 28px;
+  transition: grid-template-columns 0.32s ease;
+}
+/* Al colapsar un lado, el otro toma todo el ancho. */
+.splitLeftCollapsed  { grid-template-columns: auto 1px 1fr; }
+.splitRightCollapsed { grid-template-columns: 1fr 1px auto; }
+
+.divider {
+  width: 1px;
+  background: rgba(0, 0, 0, 0.08);
+  margin: 0 18px;
+}
+:global(.dark-mode) .divider { background: rgba(255, 255, 255, 0.1); }
+
+@media (max-width: 860px) {
+  .split,
+  .splitLeftCollapsed,
+  .splitRightCollapsed { grid-template-columns: 1fr; }
+  .split { padding: 12px 16px 24px; gap: 16px; }
+  .divider { display: none; }
+}
+
+/* ─── PANEL ─── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.panelCollapsed { /* cabecera visible, contenido oculto; ancho mínimo */ }
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  min-height: 34px;
+}
+.panelTitleBox {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.panelCollapsed .panelTitleBox {
+  /* en colapsado el título se gira para ocupar poco ancho en desktop */
+}
+.panelTitle {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #3b9edd;
+}
+.viewName {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a2e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+:global(.dark-mode) .viewName { color: #f0eeff; }
+
+.collapseBtn {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(26, 26, 46, 0.6);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  padding: 6px 11px;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.collapseBtn:hover { background: rgba(59, 158, 221, 0.12); color: #3b9edd; }
+:global(.dark-mode) .collapseBtn {
+  color: rgba(240, 238, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+:global(.dark-mode) .collapseBtn:hover { background: rgba(59, 158, 221, 0.18); color: #7cc3ef; }
+
+/* Panel colapsado: solo una columna estrecha con la cabecera. */
+.panelCollapsed {
+  width: 52px;
+}
+.panelCollapsed .panelHead {
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  min-height: 340px;
+  justify-content: flex-start;
+}
+.panelCollapsed .panelTitleBox { writing-mode: vertical-rl; transform: rotate(180deg); }
+.panelCollapsed .collapseBtn { writing-mode: horizontal-tb; }
+
+@media (max-width: 860px) {
+  .panelCollapsed { width: 100%; }
+  .panelCollapsed .panelHead { flex-direction: row; min-height: 34px; }
+  .panelCollapsed .panelTitleBox { writing-mode: horizontal-tb; transform: none; }
+}
+
+/* ─── STAGE (imagen + flechas) ─── */
+.stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.canvas {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 620px;
+  background: transparent;
+}
+@media (max-width: 860px) {
+  .canvas { height: 420px; }
+}
+
+/* Capas apiladas: todas las vistas cargadas, solo la activa visible (sin reflujo
+   ni peticiones nuevas al cambiar de perspectiva). */
+.layer {
+  transition: opacity 0.22s ease;
+}
+.layerActive { opacity: 1; z-index: 1; }
+.layerHidden { opacity: 0; z-index: 0; pointer-events: none; }
+
+/* Flechas de navegación / rotación */
+.arrow {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  line-height: 1;
+  color: #1a1a2e;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.12s ease;
+}
+.arrow:hover { background: #3b9edd; color: #fff; }
+.arrow:active { transform: scale(0.92); }
+:global(.dark-mode) .arrow {
+  color: #f0eeff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+:global(.dark-mode) .arrow:hover { background: #3b9edd; color: #fff; }
+
+/* ─── PUNTITOS DE NAVEGACIÓN ─── */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 12px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.18);
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.dotActive { background: #3b9edd; transform: scale(1.25); }
+:global(.dark-mode) .dot { background: rgba(255, 255, 255, 0.2); }
+:global(.dark-mode) .dotActive { background: #3b9edd; }
+
+/* ─── MARCADOR (futuro examen) ─── */
+.marker {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #f5a623;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px rgba(245, 166, 35, 0.4), 0 1px 4px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}

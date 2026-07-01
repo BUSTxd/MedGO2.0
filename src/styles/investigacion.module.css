@@ -1,0 +1,303 @@
+/* ─── INVESTIGACIÓN PAGE — Teal accent overrides ─── */
+
+.invPanel {
+  background: linear-gradient(135deg, #f5fffe 0%, #edfbfc 100%);
+  border: 1px solid rgba(44, 169, 188, 0.12);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(44, 169, 188, 0.08);
+  transition: all 0.2s ease;
+}
+
+.invPanel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(44, 169, 188, 0.14);
+}
+
+.invPanelHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 22px;
+  background: linear-gradient(135deg, rgba(44, 169, 188, 0.08) 0%, rgba(26, 138, 156, 0.05) 100%);
+  border-bottom: 1px solid rgba(44, 169, 188, 0.12);
+}
+
+.invIconBox {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #2CA9BC 0%, #1a8a9c 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(44, 169, 188, 0.35);
+  color: white;
+}
+
+.invBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(44, 169, 188, 0.15);
+  color: #1a8a9c;
+  transition: all 0.3s ease;
+}
+
+/* ─── DARK MODE ─── */
+:global(.dark-mode) .invPanel {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+}
+
+:global(.dark-mode) .invPanel:hover {
+  border-color: rgba(44, 169, 188, 0.2);
+  box-shadow: 0 6px 24px rgba(44, 169, 188, 0.1);
+}
+
+:global(.dark-mode) .invPanelHeader {
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+:global(.dark-mode) .invBadge {
+  background: rgba(44, 169, 188, 0.15);
+  color: #2CA9BC;
+}
+
+/* ════════════════════════════════════════
+   MAPA DE NIVELES (camino serpenteante)
+   ════════════════════════════════════════ */
+.mapaScreen {
+  --inv-teal: #2CA9BC;
+  margin-top: 8px;
+}
+
+.mapaResumen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(44, 169, 188, 0.08) 0%, rgba(26, 138, 156, 0.05) 100%);
+  border: 1px solid rgba(44, 169, 188, 0.14);
+  margin-bottom: 20px;
+  position: sticky;
+  top: 8px;
+  z-index: 5;
+  backdrop-filter: blur(6px);
+}
+
+.mapaXP {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.mapaXPValor {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1a8a9c;
+}
+.mapaXPLabel {
+  font-size: 12px;
+  color: #718096;
+  font-weight: 600;
+}
+
+.mapaInsignias {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.mapaInsignia {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 15px;
+  background: rgba(120, 130, 150, 0.12);
+  color: #8a94a8;
+  opacity: 0.4;
+  transition: all 0.25s ease;
+}
+.mapaInsignia svg { width: 17px; height: 17px; }
+.mapaInsigniaOn {
+  opacity: 1;
+  color: #2CA9BC;
+  background: rgba(44, 169, 188, 0.16);
+  box-shadow: 0 0 0 2px rgba(44, 169, 188, 0.25);
+}
+
+.mapaCamino {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.mapaPath {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.mapaNodoPos {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 132px;
+}
+
+.mapaNodoLink,
+.mapaNodoLocked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+.mapaNodoLink {
+  cursor: pointer;
+}
+.mapaNodoLocked {
+  cursor: not-allowed;
+}
+
+.mapaProx {
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+/* ─── Nodo save-point ─── */
+.nodo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+.mapaNodoLink:hover .nodo {
+  transform: translateY(-4px) scale(1.04);
+}
+
+.nodoArte {
+  position: relative;
+  width: 118px;
+  height: 90px;
+}
+.nodoSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.nodoNum {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+.nodoNombre {
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+  color: #1e1e60;
+  max-width: 130px;
+}
+
+/* Estado: desbloqueado (brilla) */
+.nodo_desbloqueado .nodoRing {
+  animation: nodoPulse 2.2s ease-in-out infinite;
+}
+.nodo_desbloqueado .nodoArte::after {
+  content: '';
+  position: absolute;
+  inset: -8px -8px 12px -8px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 55%, rgba(44, 232, 255, 0.35), transparent 70%);
+  z-index: -1;
+  animation: nodoGlow 2.4s ease-in-out infinite;
+}
+
+/* Estado: completado (check dorado) */
+.nodoCheck {
+  position: absolute;
+  top: -6px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffe082 0%, #e3a83e 100%);
+  color: #4a2c00;
+  font-weight: 900;
+  font-size: 15px;
+  box-shadow: 0 3px 10px rgba(227, 168, 62, 0.5);
+  border: 2px solid #fff6dd;
+}
+.nodo_completado .nodoNombre {
+  color: #b8791a;
+}
+
+/* Estado: bloqueado (desaturado + candado) */
+.nodo_bloqueado .nodoSvg {
+  filter: grayscale(0.9) brightness(0.7);
+  opacity: 0.75;
+}
+.nodo_bloqueado .nodoNum {
+  opacity: 0.55;
+}
+.nodoLock {
+  position: absolute;
+  top: 34%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255, 255, 255, 0.85);
+  z-index: 2;
+}
+.nodo_bloqueado .nodoNum {
+  display: none;
+}
+.nodo_bloqueado .nodoNombre {
+  color: #94a3b8;
+}
+
+@keyframes nodoPulse {
+  0%, 100% { opacity: 0.55; stroke-width: 2; }
+  50% { opacity: 1; stroke-width: 3; }
+}
+@keyframes nodoGlow {
+  0%, 100% { opacity: 0.5; transform: scale(0.96); }
+  50% { opacity: 0.95; transform: scale(1.05); }
+}
+
+/* ─── DARK MODE mapa ─── */
+:global(.dark-mode) .mapaResumen {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+:global(.dark-mode) .mapaXPValor { color: #2CA9BC; }
+:global(.dark-mode) .mapaXPLabel { color: rgba(240, 238, 255, 0.5); }
+:global(.dark-mode) .nodoNombre { color: #f0eeff; }
+:global(.dark-mode) .nodo_bloqueado .nodoNombre { color: rgba(240, 238, 255, 0.4); }
+:global(.dark-mode) .mapaProx { color: rgba(240, 238, 255, 0.4); }
