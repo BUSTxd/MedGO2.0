@@ -146,6 +146,8 @@ export default function NivelRunner({
 
   return (
     <div className={styles.runner} style={{ ['--acento' as string]: acento } as React.CSSProperties}>
+      <Destellos />
+
       {step !== 'intro' && step !== 'completado' && (
         <NivelHUD
           n={meta.n}
@@ -230,6 +232,41 @@ export default function NivelRunner({
         />
       )}
     </div>
+  );
+}
+
+/** Fondo decorativo: olas suaves + campo de destellos (estrellas de 4 puntas). */
+function Destellos() {
+  const stars = [
+    { x: 500, y: 60, s: 1.1 }, { x: 940, y: 40, s: 0.8 }, { x: 300, y: 150, s: 0.7 },
+    { x: 1060, y: 190, s: 0.9 }, { x: 120, y: 260, s: 0.8 }, { x: 660, y: 120, s: 0.6 },
+    { x: 40, y: 430, s: 0.7 }, { x: 1080, y: 470, s: 1 }, { x: 250, y: 560, s: 0.7 },
+    { x: 900, y: 600, s: 0.8 }, { x: 560, y: 640, s: 0.6 }, { x: 1000, y: 90, s: 0.6 },
+  ];
+  return (
+    <svg className={styles.runnerDeco} viewBox="0 0 1120 700" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+      {/* olas suaves */}
+      <g className={styles.runnerOlas} fill="none" strokeLinecap="round">
+        <path d="M-40 250 C 180 190, 360 300, 600 245 S 980 170, 1160 255" strokeWidth="2.5" opacity="0.5" />
+        <path d="M-40 300 C 220 240, 430 350, 660 290 S 1010 220, 1160 300" strokeWidth="1.8" opacity="0.32" />
+        <path d="M-40 560 C 200 500, 420 610, 660 550 S 1010 480, 1160 560" strokeWidth="2.2" opacity="0.4" />
+      </g>
+      {/* blobs difusos */}
+      <g fill="currentColor" opacity="0.06">
+        <ellipse cx="120" cy="120" rx="140" ry="90" />
+        <ellipse cx="1010" cy="540" rx="150" ry="100" />
+      </g>
+      {/* estrellas */}
+      {stars.map((st, i) => (
+        <path
+          key={i}
+          d="M10 0C11 6 14 9 20 10C14 11 11 14 10 20C9 14 6 11 0 10C6 9 9 6 10 0Z"
+          fill="currentColor"
+          transform={`translate(${st.x - 10 * st.s} ${st.y - 10 * st.s}) scale(${st.s})`}
+          opacity={0.35 + (i % 3) * 0.12}
+        />
+      ))}
+    </svg>
   );
 }
 

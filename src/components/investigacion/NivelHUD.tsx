@@ -29,6 +29,11 @@ export default function NivelHUD({
           <span className={styles.hudXPValor}>{totalXP}</span>
           <span className={styles.hudXPLabel}>XP</span>
         </div>
+        <span className={styles.hudEstrella} aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.9 6.2 21l1.1-6.5L2.6 9.8l6.5-.9z" />
+          </svg>
+        </span>
       </div>
 
       <div className={styles.hudBarra}>

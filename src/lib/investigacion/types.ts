@@ -33,6 +33,13 @@ export interface TarjetaContenido {
   ejemploAbsurdo?: string;
   /** "dato que sorprende" o "error común" */
   datoSorpresa: string;
+  /** clave de ilustración decorativa del header (registro <Ilustracion/>). Fallback: icono en caja. */
+  ilustracion?: string;
+  /** íconos por ejemplo (claves de <Icono/>); si faltan, se usan defaults por sección. */
+  iconoCotidiano?: string;
+  iconoAcademico?: string;
+  iconoAbsurdo?: string;
+  iconoDato?: string;
 }
 
 /** Bloque de teoría: título + varias tarjetas. */
@@ -137,6 +144,10 @@ export interface NivelContenido {
     titulo: string;
     gancho: string;
     objetivos: string[];
+    /** Tarjetas flotantes sobre el visual decorativo (máx. 3). */
+    stats?: { label: string; valor: string; sub?: string; viz?: 'line' | 'dots' | 'curve' }[];
+    /** Franja inferior de puntos destacados (ideal 4). `icono` = clave del registro <Icono/>. */
+    destacados?: { icono: string; texto: string }[];
   };
   bloque1: Bloque;
   minijuegoA: MinijuegoConfig;

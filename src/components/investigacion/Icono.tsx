@@ -429,6 +429,53 @@ const ICONOS: Record<string, ReactNode> = {
 
   rayo: <path d="M13 2L4 14h6l-1 8 9-12h-6z" fill="currentColor" stroke="currentColor" />,
 
+  chat: (
+    <>
+      <path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" />
+      <path d="M7.5 9.5h9M7.5 12.5h6" />
+    </>
+  ),
+  birrete: (
+    <>
+      <path d="M2 8.5l10-4 10 4-10 4-10-4z" />
+      <path d="M6 10.5V15c0 1.3 2.7 2.5 6 2.5s6-1.2 6-2.5v-4.5" />
+      <path d="M22 8.5v5" />
+    </>
+  ),
+  chincheta: (
+    <>
+      <path d="M9 3h6l-1 2v4l3 3H7l3-3V5L9 3z" />
+      <path d="M12 15v6" />
+    </>
+  ),
+  guitarra: (
+    <>
+      <path d="M20 3l-2 2M18.5 4.5l1.8 1.8" />
+      <path d="M17.2 6.3l-5 5" />
+      <path d="M11.8 10.5a4.2 4.2 0 1 0-2.6 7.6 3.3 3.3 0 0 0 3.3-3.3c1.6-.2 2.6-1.5 2.4-3-.2-1.3-1.4-2.1-3.1-1.3z" />
+      <circle cx="9.6" cy="14.4" r="1.1" fill="currentColor" stroke="none" />
+    </>
+  ),
+  fruta: (
+    <>
+      <circle cx="12" cy="14" r="7" />
+      <path d="M12 7c-.5-2 .5-3.5 2.5-4M12 7c.3-1.4-.3-2.4-1.5-3" />
+      <path d="M12 7V4" />
+    </>
+  ),
+  libro: (
+    <>
+      <path d="M12 6c-1.8-1.2-4-1.5-6-1v12c2-.5 4.2-.2 6 1 1.8-1.2 4-1.5 6-1V5c-2-.5-4.2-.2-6 1z" />
+      <path d="M12 6v12" />
+    </>
+  ),
+  destello: (
+    <>
+      <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18" />
+      <circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none" />
+    </>
+  ),
+
   __fallback: <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" />,
 };
 

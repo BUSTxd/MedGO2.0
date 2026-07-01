@@ -15,6 +15,17 @@ export const TEMA_02: NivelContenido = {
       'Entender la variabilidad muestral y por qué existe la inferencia.',
       'Pasar de la definición conceptual a la operativa de una variable.',
     ],
+    stats: [
+      { label: 'Población objetivo', valor: '24,650', viz: 'line' },
+      { label: 'Muestra', valor: '1,256', sub: '5.1%', viz: 'dots' },
+      { label: 'Variabilidad muestral', valor: 'σ x̄', viz: 'curve' },
+    ],
+    destacados: [
+      { icono: 'diana', texto: 'Decisiones basadas en evidencia' },
+      { icono: 'flechas', texto: 'De la población a la muestra' },
+      { icono: 'subida', texto: 'Variabilidad e inferencia' },
+      { icono: 'escudo', texto: 'Datos de calidad, resultados confiables' },
+    ],
   },
 
   bloque1: {
@@ -26,6 +37,11 @@ export const TEMA_02: NivelContenido = {
       {
         id: 'embudo',
         icono: 'reloj',
+        ilustracion: 'embudo',
+        iconoCotidiano: 'chat',
+        iconoAcademico: 'birrete',
+        iconoAbsurdo: 'chincheta',
+        iconoDato: 'destello',
         titulo: 'El embudo poblacional',
         definicion:
           'La reducción de la población objetivo (teórica) hacia la muestra real del estudio, paso a paso.',
@@ -41,6 +57,11 @@ export const TEMA_02: NivelContenido = {
       {
         id: 'inclusion-exclusion',
         icono: 'puerta',
+        ilustracion: 'embudoFiltro',
+        iconoCotidiano: 'personas',
+        iconoAcademico: 'libro',
+        iconoAbsurdo: 'guitarra',
+        iconoDato: 'escudo',
         titulo: 'Inclusión vs. Exclusión',
         definicion:
           'Inclusión define quién entra; exclusión retira, de los ya incluidos, a quienes traen riesgo o sesgo.',
@@ -56,6 +77,11 @@ export const TEMA_02: NivelContenido = {
       {
         id: 'variabilidad',
         icono: 'azar',
+        ilustracion: 'dados',
+        iconoCotidiano: 'fruta',
+        iconoAcademico: 'subida',
+        iconoAbsurdo: 'azar',
+        iconoDato: 'diana',
         titulo: 'Variabilidad muestral',
         definicion:
           'Si extraes muestra 1, 2 o 10 de la misma población, sus resultados variarán solo por azar.',
