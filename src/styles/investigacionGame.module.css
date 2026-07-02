@@ -456,10 +456,40 @@
   background-size: 9px 2px;
   z-index: 0;
 }
+
+/* ── 2 fichas: centradas, línea solo entre las dos ── */
+.fichaGrid2 {
+  grid-template-columns: repeat(2, minmax(0, 300px));
+  justify-content: center;
+  gap: 22px;
+  max-width: 622px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* con el grid centrado, los centros de columna quedan al 25% y 75% del grid */
+.fichaGrid2 .fichaGridLinea { left: 25%; right: 25%; }
+/* abanico simétrico de dos: la segunda ficha (púrpura) inclina al lado opuesto */
+.fichaGrid2 .fichaPurpura { transform: rotate(2.4deg); }
+
+/* ── 4 fichas: caben las cuatro, más juntas; al hover las demás ceden ── */
+.fichaGrid4 {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.fichaGrid4 .fichaGridLinea { left: 12.5%; right: 12.5%; }
+.fichaGrid4 .ficha { padding: 22px 15px 18px; }
+/* la ficha enfocada crece y se eleva por encima; las hermanas se atenúan y encogen */
+.fichaGrid4:hover .ficha:not(:hover) { opacity: 0.62; transform: scale(0.95); }
+.fichaGrid4 .ficha:hover { transform: translateY(-6px) scale(1.09); z-index: 6; }
+
 @media (max-width: 900px) {
-  .fichaGrid { grid-template-columns: 1fr; gap: 26px; margin-top: 22px; }
+  .fichaGrid,
+  .fichaGrid2,
+  .fichaGrid4 { grid-template-columns: 1fr; gap: 26px; margin-top: 22px; max-width: none; }
   .fichaGridLinea { display: none; }
-  .fichaAzul, .fichaPurpura, .fichaVerde { transform: none; }
+  .fichaAzul, .fichaPurpura, .fichaVerde,
+  .fichaGrid2 .fichaPurpura { transform: none; }
+  .fichaGrid4:hover .ficha:not(:hover) { opacity: 1; transform: none; }
 }
 
 .ficha {

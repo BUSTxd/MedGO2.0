@@ -35,6 +35,16 @@ export function useDragDrop<T extends { id: string }>({ onDrop, disabled }: Opti
   const didDragRef = useRef(false);
   /** Elemento que capturó el puntero (para liberar la captura al soltar). */
   const captureRef = useRef<{ el: HTMLElement; pointerId: number } | null>(null);
+  /**
+   * `onDrop` suele recrearse en cada render del consumidor. Lo guardamos en un
+   * ref para que `onPointerMove`/`onPointerUp`/`startDrag` sean estables: si
+   * cambiaran de identidad, el efecto de limpieza correría en cada render y
+   * removería los listeners a mitad del arrastre (matando el drag apenas empieza).
+   */
+  const onDropRef = useRef(onDrop);
+  onDropRef.current = onDrop;
+  const disabledRef = useRef(disabled);
+  disabledRef.current = disabled;
 
   const moveGhost = (x: number, y: number) => setGhost({ x, y });
 
@@ -84,7 +94,7 @@ export function useDragDrop<T extends { id: string }>({ onDrop, disabled }: Opti
           const slotEl = el?.closest('[data-slot]') as HTMLElement | null;
           key = slotEl?.dataset.slot ?? null;
         }
-        onDrop(item, key);
+        onDropRef.current(item, key);
       }
       draggingRef.current = false;
       itemRef.current = null;
@@ -92,12 +102,12 @@ export function useDragDrop<T extends { id: string }>({ onDrop, disabled }: Opti
       setDragItem(null);
       setTarget(null);
     },
-    [onDrop, onPointerMove],
+    [onPointerMove],
   );
 
   const startDrag = useCallback(
     (e: React.PointerEvent, item: T) => {
-      if (disabled) return;
+      if (disabledRef.current) return;
       e.preventDefault();
       // Captura el puntero para que el arrastre no lo secuestre un gesto de
       // scroll del navegador (trackpad/pantalla táctil) -> evita pointercancel.
@@ -117,31 +127,28 @@ export function useDragDrop<T extends { id: string }>({ onDrop, disabled }: Opti
       window.addEventListener('pointerup', onPointerUp);
       window.addEventListener('pointercancel', onPointerUp);
     },
-    [disabled, onPointerMove, onPointerUp],
+    [onPointerMove, onPointerUp],
   );
 
   // Fallback tap: seleccionar un item y luego tocar un slot.
-  const tapItem = useCallback(
-    (item: T) => {
-      if (disabled || didDragRef.current) return;
-      setPicked((p) => (p?.id === item.id ? null : item));
-    },
-    [disabled],
-  );
+  const tapItem = useCallback((item: T) => {
+    if (disabledRef.current || didDragRef.current) return;
+    setPicked((p) => (p?.id === item.id ? null : item));
+  }, []);
 
   const tapSlot = useCallback(
     (slotKey: string, occupant?: T | null) => {
-      if (disabled || didDragRef.current) return;
+      if (disabledRef.current || didDragRef.current) return;
       if (picked) {
         // hay un chip seleccionado -> colocarlo aquí
-        onDrop(picked, slotKey);
+        onDropRef.current(picked, slotKey);
         setPicked(null);
       } else if (occupant) {
         // slot ocupado y nada seleccionado -> devolver el chip al banco
-        onDrop(occupant, null);
+        onDropRef.current(occupant, null);
       }
     },
-    [disabled, onDrop, picked],
+    [picked],
   );
 
   useEffect(() => {

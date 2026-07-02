@@ -52,7 +52,11 @@ export default function BloqueView({
         </div>
       </header>
 
-      <div className={styles.fichaGrid}>
+      <div
+        className={`${styles.fichaGrid} ${
+          total === 2 ? styles.fichaGrid2 : total >= 4 ? styles.fichaGrid4 : ''
+        }`}
+      >
         <span className={styles.fichaGridLinea} aria-hidden="true" />
         {bloque.tarjetas.map((t, i) => (
           <TarjetaContenido

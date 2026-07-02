@@ -1,5 +1,6 @@
 'use client';
 import { useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { MJDrag } from '@/lib/investigacion/types';
 import { shuffle } from '@/lib/utils/shuffle';
 import { useDragDrop } from '@/hooks/useDragDrop';
@@ -89,6 +90,7 @@ export default function DragConnect({
   };
 
   return (
+    <>
     <section className={styles.mjDrag}>
       <span className={`${styles.mjDragStar} ${styles.mjDragStar1}`} aria-hidden="true" />
       <span className={`${styles.mjDragStar} ${styles.mjDragStar2}`} aria-hidden="true" />
@@ -258,12 +260,18 @@ export default function DragConnect({
         </div>
       </div>
 
-      {/* Fantasma que sigue el puntero */}
-      {dragItem && (
+    </section>
+
+    {/* Fantasma que sigue el puntero. Portal a <body> para que el `transform`
+        residual del panel (animación slideIn con fill `both`) no lo convierta
+        en containing block y desfase el `position: fixed`. */}
+    {dragItem && typeof document !== 'undefined' &&
+      createPortal(
         <div className={styles.mjDragGhost} style={{ left: ghost.x, top: ghost.y }}>
           {dragItem.termino}
-        </div>
+        </div>,
+        document.body,
       )}
-    </section>
+    </>
   );
 }
