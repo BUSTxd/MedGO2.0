@@ -1,7 +1,9 @@
 'use client';
 import { useMemo, useState } from 'react';
+import Image from 'next/image';
 import type { BossConfig } from '@/lib/investigacion/types';
 import { shuffle } from '@/lib/utils/shuffle';
+import BossMarco from '../BossMarco';
 import styles from '@/styles/investigacionGame.module.css';
 
 export interface BossResult {
@@ -9,6 +11,8 @@ export interface BossResult {
   total: number;
   sinErrores: boolean;
 }
+
+const LETRAS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
 export default function BossChallenge({
   config,
@@ -56,52 +60,92 @@ export default function BossChallenge({
   if (terminado) return null;
 
   return (
-    <div className={styles.bossWrap}>
-      <div className={styles.bossHeader}>
-        <span className={styles.bossBadge}>BOSS</span>
-        <h4 className={styles.bossTitle}>{config.titulo}</h4>
-      </div>
-      <div className={styles.bossEscenario}>{config.escenario}</div>
+    <section className={styles.bossPanel}>
+      <BossMarco className={styles.bossMarco} />
 
-      <div className={styles.bossProgreso}>
-        Decisión {paso + 1} de {decisiones.length}
+      {/* Columnas de LEDs rojos en los laterales internos */}
+      <span className={`${styles.bossLeds} ${styles.bossLedsL}`} aria-hidden="true" />
+      <span className={`${styles.bossLeds} ${styles.bossLedsR}`} aria-hidden="true" />
+
+      {/* Decoración superior central sobre la plataforma */}
+      <div className={styles.bossTopDeco} aria-hidden="true">
+        <span className={styles.bossTopDots} />
+        <Image src="/investigacion/calavera.webp" alt="" width={30} height={30} className={styles.bossTopSkull} />
+        <span className={styles.bossTopDots} />
       </div>
 
-      <p className={styles.mjPregunta}>{actual.pregunta}</p>
-      <div className={styles.mjOptions}>
-        {opciones.map((o) => {
-          const esElegida = elegida === o.id;
-          const cls = [styles.mjOption];
-          if (resueltoPaso && o.correcta) cls.push(styles.mjOptionCorrect);
-          else if (esElegida && !o.correcta) cls.push(styles.mjOptionWrong);
-          return (
-            <button
-              key={o.id}
-              className={cls.join(' ')}
-              onClick={() => responder(o.id)}
-              disabled={resueltoPaso}
+      <div className={styles.bossInner}>
+        {/* Cabecera: badge BOSS + título */}
+        <header className={styles.bossHeader}>
+          <span className={styles.bossBadge}>
+            <Image src="/investigacion/calavera.webp" alt="" width={18} height={18} className={styles.bossBadgeSkull} />
+            BOSS
+          </span>
+          <h4 className={styles.bossTitle}>{config.titulo}</h4>
+        </header>
+
+        {/* Escenario del caso — el minijefe apoya las manos en su borde superior */}
+        <div className={styles.bossEscenario}>
+          <div className={styles.bossChar} aria-hidden="true">
+            <Image src="/investigacion/minijefe.avif" alt="" width={190} height={190} className={styles.bossCharImg} />
+          </div>
+          <p className={styles.bossEscenarioTxt}>{config.escenario}</p>
+        </div>
+
+        {/* Panel de decisiones */}
+        <div className={styles.bossDecisiones}>
+          <div className={styles.bossProgreso}>
+            Decisión {paso + 1} de {decisiones.length}
+          </div>
+
+          <p className={styles.bossPregunta}>{actual.pregunta}</p>
+
+          <div className={styles.bossOptions}>
+            {opciones.map((o, i) => {
+              const esElegida = elegida === o.id;
+              const cls = [styles.bossOption];
+              if (resueltoPaso && o.correcta) cls.push(styles.bossOptionCorrect);
+              else if (esElegida && !o.correcta) cls.push(styles.bossOptionWrong);
+              return (
+                <button key={o.id} className={cls.join(' ')} onClick={() => responder(o.id)} disabled={resueltoPaso}>
+                  <span className={styles.bossOptionLetra}>
+                    <span className={styles.bossOptionLetraTxt}>{LETRAS[i]}</span>
+                  </span>
+                  <span className={styles.bossOptionTexto}>{o.texto}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {seleccion && (
+            <p
+              className={`${styles.bossFeedback} ${
+                seleccion.correcta ? styles.bossFeedbackOk : styles.bossFeedbackBad
+              }`}
             >
-              {o.texto}
+              {seleccion.feedback}
+            </p>
+          )}
+
+          {resueltoPaso && (
+            <button className={styles.bossNext} onClick={avanzar}>
+              {paso + 1 < decisiones.length ? 'Siguiente decisión →' : 'Cerrar el caso'}
             </button>
-          );
-        })}
+          )}
+        </div>
+
+        {/* Puntos de progreso inferiores, sobre el segmento rojo */}
+        <div className={styles.bossDots} aria-hidden="true">
+          {decisiones.map((_, i) => (
+            <span
+              key={i}
+              className={`${styles.bossDot} ${i === paso ? styles.bossDotActive : ''} ${
+                i < paso ? styles.bossDotDone : ''
+              }`}
+            />
+          ))}
+        </div>
       </div>
-
-      {seleccion && (
-        <p
-          className={`${styles.mjFeedback} ${
-            seleccion.correcta ? styles.mjFeedbackOk : styles.mjFeedbackBad
-          }`}
-        >
-          {seleccion.feedback}
-        </p>
-      )}
-
-      {resueltoPaso && (
-        <button className={styles.mjCheckBtn} onClick={avanzar}>
-          {paso + 1 < decisiones.length ? 'Siguiente decisión →' : 'Cerrar el caso'}
-        </button>
-      )}
-    </div>
+    </section>
   );
 }

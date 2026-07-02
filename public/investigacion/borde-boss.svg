@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="791" height="462" viewBox="0 0 791 462" fill="none">
+  <path
+    d="M14 40
+       L39 16
+       L116 16
+       L126 26
+       L286 26
+       L297 16
+       L461 16
+       L472 26
+       L632 26
+       L642 16
+       L719 16
+       L744 40
+       L744 80
+       L737 90
+       L737 172
+       L744 182
+       L744 371
+       L737 380
+       L737 436
+       L722 451
+       L578 451
+       L568 443
+       L477 443
+       L466 452
+       L292 452
+       L281 443
+       L190 443
+       L180 451
+       L36 451
+       L21 436
+       L21 380
+       L14 371
+       L14 182
+       L21 172
+       L21 90
+       L14 80
+       Z"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linejoin="miter"
+    stroke-linecap="square"
+  />
+</svg>

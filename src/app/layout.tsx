@@ -9,7 +9,7 @@ import './globals.css';
 
 const outfit = Outfit({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700', '800', '900'],
   display: 'swap',
   variable: '--font-outfit',
 });

@@ -1,0 +1,225 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1672" height="941" viewBox="0 0 1672 941" role="img" aria-labelledby="title desc">
+  <title id="title">Fondo SVG volcánico para nivel boss</title>
+  <desc id="desc">Ilustración vectorial con volcán, lava, rocas oscuras y detalles demoníacos en rojo para usar como fondo de interfaz.</desc>
+
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#060b24"/>
+      <stop offset="0.48" stop-color="#0b102d"/>
+      <stop offset="1" stop-color="#17091f"/>
+    </linearGradient>
+
+    <radialGradient id="volcanoGlow" cx="76%" cy="58%" r="42%">
+      <stop offset="0" stop-color="#ff4a18" stop-opacity="0.78"/>
+      <stop offset="0.22" stop-color="#e51632" stop-opacity="0.32"/>
+      <stop offset="0.6" stop-color="#86113a" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#05091f" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="leftGlow" cx="13%" cy="74%" r="38%">
+      <stop offset="0" stop-color="#ff3818" stop-opacity="0.5"/>
+      <stop offset="0.38" stop-color="#bf123a" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#060b24" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="lava" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff320c"/>
+      <stop offset="0.45" stop-color="#ff6b10"/>
+      <stop offset="1" stop-color="#ffd05a"/>
+    </linearGradient>
+
+    <linearGradient id="lavaSoft" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff1e1e" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#ffb129" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <linearGradient id="rock" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#121735"/>
+      <stop offset="0.62" stop-color="#090d23"/>
+      <stop offset="1" stop-color="#030514"/>
+    </linearGradient>
+
+    <linearGradient id="rock2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#23103a"/>
+      <stop offset="1" stop-color="#070818"/>
+    </linearGradient>
+
+    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="lavaGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0.8  0 0.35 0 0 0.08  0 0 0.05 0 0.02  0 0 0 0.95 0" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+
+    <style>
+      .arc { fill: none; stroke: #ff2d55; stroke-opacity: .58; stroke-width: 2.2; }
+      .arc-thin { fill: none; stroke: #ff2d55; stroke-opacity: .28; stroke-width: 1.3; }
+      .arc-dash { fill: none; stroke: #ff2d55; stroke-opacity: .45; stroke-width: 1.6; stroke-dasharray: 10 13; }
+      .ember { fill: #ff4a18; filter: url(#lavaGlow); }
+      .ember2 { fill: #ff2d55; opacity: .9; }
+      .rune { stroke: #ff3a22; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; fill: none; filter: url(#lavaGlow); }
+      .rune-thin { stroke: #ff2d55; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; opacity: .75; }
+      .smoke { fill: #421432; opacity: .78; }
+      .smoke2 { fill: #681739; opacity: .52; }
+      .mountain-far { fill: #2b1230; opacity: .86; }
+      .mountain-mid { fill: #160d28; opacity: .95; }
+      .mountain-near { fill: url(#rock); }
+      .line-red { stroke: #ff2d55; stroke-opacity: .44; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1672" height="941" fill="url(#sky)"/>
+  <rect width="1672" height="941" fill="url(#volcanoGlow)"/>
+  <rect width="1672" height="941" fill="url(#leftGlow)"/>
+
+  <!-- Decorative upper SVG-like flow lines -->
+  <g opacity="0.95">
+    <path class="arc" d="M-35 245 C155 122 280 211 421 90 C543 -15 655 -8 784 -38"/>
+    <path class="arc-thin" d="M-35 300 C166 156 309 245 465 118 C603 5 712 42 846 -12"/>
+    <path class="arc-dash" d="M28 208 C230 74 335 149 516 28 C625 -44 735 -49 888 -68"/>
+    <path class="arc" d="M1225 -29 C1360 76 1510 45 1715 122"/>
+    <path class="arc-thin" d="M1189 38 C1322 137 1484 113 1718 214"/>
+    <path class="arc-dash" d="M1285 66 C1400 153 1510 120 1665 201"/>
+    <path class="arc-thin" d="M1170 154 C1284 238 1444 204 1628 290"/>
+  </g>
+
+  <!-- Compass/star on left -->
+  <g transform="translate(126 135)" opacity="0.9">
+    <circle r="77" fill="none" stroke="#ff2d55" stroke-width="2" stroke-opacity="0.36" stroke-dasharray="10 10"/>
+    <circle r="38" fill="none" stroke="#ff2d55" stroke-width="1" stroke-opacity="0.18"/>
+    <path d="M0 -98 L13 -16 L98 0 L13 16 L0 98 L-13 16 L-98 0 L-13 -16 Z" fill="#ff2d55" opacity="0.82"/>
+    <path d="M0 -48 L7 -7 L48 0 L7 7 L0 48 L-7 7 L-48 0 L-7 -7 Z" fill="#090d23" opacity="0.74"/>
+    <circle r="8" fill="#ff3a22" filter="url(#lavaGlow)"/>
+    <circle cx="70" cy="0" r="5" fill="#ff2d55"/>
+    <circle cx="-50" cy="-55" r="5" fill="#ff2d55"/>
+    <circle cx="45" cy="54" r="5" fill="#ff2d55"/>
+  </g>
+
+  <!-- Right target/orbit motifs -->
+  <g opacity="0.82">
+    <circle cx="1485" cy="82" r="23" fill="none" stroke="#ff2d55" stroke-width="2"/>
+    <circle cx="1485" cy="82" r="7" fill="#ff2d55"/>
+    <circle cx="1574" cy="142" r="21" fill="none" stroke="#ff2d55" stroke-width="2"/>
+    <circle cx="1574" cy="142" r="7" fill="#ff2d55"/>
+    <path class="arc-dash" d="M1509 91 C1536 104 1551 117 1562 132"/>
+    <circle cx="1626" cy="298" r="10" fill="#ff4a18" opacity="0.9" filter="url(#lavaGlow)"/>
+  </g>
+
+  <!-- Stars and embers -->
+  <g>
+    <path d="M536 118 l9 22 22 9 -22 9 -9 22 -9 -22 -22 -9 22 -9z" fill="#ff2d55" opacity="0.86"/>
+    <path d="M1398 48 l6 14 14 6 -14 6 -6 14 -6 -14 -14 -6 14 -6z" fill="#ff2d55" opacity="0.85"/>
+    <path d="M366 91 l12 28 28 12 -28 12 -12 28 -12 -28 -28 -12 28 -12z" fill="#ff563f" opacity="0.96"/>
+    <circle class="ember" cx="591" cy="56" r="5"/>
+    <circle class="ember2" cx="301" cy="154" r="3"/>
+    <circle class="ember2" cx="989" cy="385" r="4"/>
+    <circle class="ember" cx="1122" cy="516" r="3"/>
+    <circle class="ember" cx="1147" cy="493" r="4"/>
+    <circle class="ember2" cx="873" cy="88" r="4"/>
+    <circle class="ember" cx="1024" cy="556" r="3"/>
+    <circle class="ember2" cx="213" cy="246" r="3"/>
+    <path d="M422 403 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5z" fill="#ff2d55"/>
+    <path d="M1172 329 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5z" fill="#ff2d55"/>
+  </g>
+
+  <!-- Distant smoke/cloud layers -->
+  <g>
+    <path class="smoke2" d="M0 697 C82 610 177 642 247 560 C336 456 484 539 524 640 C567 748 380 810 234 789 C119 773 45 756 0 796Z"/>
+    <path class="smoke" d="M52 705 C122 640 208 664 278 594 C360 512 447 574 482 657 C527 763 354 807 218 790 C126 779 68 766 0 810Z"/>
+    <path class="smoke2" d="M1045 680 C1108 599 1167 626 1229 547 C1300 459 1432 486 1490 587 C1562 712 1465 805 1294 807 C1162 809 1056 761 1045 680Z"/>
+    <path class="smoke" d="M1122 640 C1182 558 1247 585 1299 501 C1373 380 1491 462 1528 566 C1585 724 1419 799 1294 782 C1191 768 1115 716 1122 640Z"/>
+  </g>
+
+  <!-- Smoke plume from volcano -->
+  <g opacity="0.95">
+    <path class="smoke" d="M1267 412 C1204 350 1240 289 1303 276 C1263 232 1279 181 1328 157 C1401 123 1446 190 1414 251 C1464 251 1512 290 1492 356 C1477 405 1418 417 1374 404 C1352 452 1301 449 1267 412Z"/>
+    <path class="smoke2" d="M1320 484 C1261 450 1261 392 1304 365 C1277 331 1296 288 1338 279 C1392 267 1424 309 1408 355 C1456 350 1484 380 1470 423 C1452 477 1377 486 1348 452 C1340 480 1334 486 1320 484Z"/>
+    <path class="smoke" d="M1230 560 C1188 522 1195 462 1241 448 C1220 402 1255 356 1298 368 C1338 379 1337 427 1318 457 C1376 441 1427 478 1407 532 C1388 584 1318 591 1277 552 C1257 572 1243 572 1230 560Z"/>
+  </g>
+
+  <!-- Distant mountains -->
+  <path class="mountain-far" d="M0 791 L76 737 L142 774 L225 676 L311 759 L371 690 L436 765 L512 704 L575 768 L647 724 L721 772 L801 696 L871 770 L956 689 L1028 770 L1107 707 L1186 771 L1263 688 L1351 764 L1418 700 L1498 777 L1570 721 L1672 778 L1672 941 L0 941Z"/>
+  <path class="mountain-mid" d="M0 822 L65 736 L124 843 L196 615 L257 821 L315 674 L375 826 L455 701 L516 820 L603 754 L670 827 L752 712 L816 830 L895 722 L957 826 L1038 657 L1085 822 L1145 693 L1226 822 L1308 609 L1359 826 L1451 626 L1507 820 L1584 654 L1672 818 L1672 941 L0 941Z"/>
+
+  <!-- Volcano right -->
+  <g filter="url(#shadow)">
+    <path d="M1128 830 L1201 612 L1262 420 L1331 619 L1402 831 Z" fill="url(#rock2)"/>
+    <path d="M1262 420 L1302 598 L1357 827 L1402 831 L1331 619 Z" fill="#0a0c21" opacity="0.9"/>
+    <path d="M1201 612 L1262 420 L1262 622 L1227 743 Z" fill="#1b1030" opacity="0.9"/>
+    <path d="M1238 445 C1247 426 1282 424 1293 446 C1283 465 1249 465 1238 445Z" fill="#ff6b10" filter="url(#lavaGlow)"/>
+    <path d="M1260 454 C1244 520 1248 596 1209 665 C1182 713 1198 756 1162 825" stroke="url(#lava)" stroke-width="10" fill="none" stroke-linecap="round" filter="url(#lavaGlow)"/>
+    <path d="M1282 466 C1281 548 1308 621 1290 692 C1278 742 1298 777 1274 839" stroke="url(#lava)" stroke-width="7" fill="none" stroke-linecap="round" filter="url(#lavaGlow)"/>
+    <path d="M1295 482 C1321 541 1341 619 1368 697" stroke="#ff2d1a" stroke-width="4" fill="none" stroke-linecap="round" filter="url(#lavaGlow)"/>
+    <path d="M1218 692 C1253 683 1278 674 1306 675" stroke="#ff2d55" stroke-width="2" fill="none" opacity="0.75"/>
+  </g>
+
+  <!-- Lava river foreground -->
+  <g filter="url(#lavaGlow)">
+    <path d="M1341 810 C1392 782 1435 781 1466 800 C1415 815 1395 840 1428 858 C1468 880 1445 903 1399 929 L1325 941 L1307 941 C1368 908 1383 884 1339 862 C1297 840 1305 827 1341 810Z" fill="#ff260e"/>
+    <path d="M1378 804 C1418 795 1447 799 1458 807 C1416 820 1399 837 1435 858 C1460 873 1439 891 1403 913" fill="none" stroke="#ffb22d" stroke-width="10" stroke-linecap="round"/>
+    <path d="M1335 822 C1362 818 1380 826 1393 840" fill="none" stroke="#ff7a11" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <!-- Near jagged ground -->
+  <path class="mountain-near" d="M0 865 L37 748 L81 846 L118 690 L168 841 L222 730 L274 856 L341 758 L394 875 L467 823 L546 880 L620 837 L693 890 L782 818 L855 888 L928 837 L1004 882 L1086 776 L1140 885 L1216 746 L1278 889 L1357 770 L1418 888 L1502 745 L1572 890 L1672 759 L1672 941 L0 941Z"/>
+  <path d="M0 903 C173 861 344 915 495 882 C672 843 775 893 939 871 C1132 845 1230 887 1373 869 C1508 852 1598 888 1672 851 L1672 941 L0 941Z" fill="#040616"/>
+
+  <!-- Left monolith and chain -->
+  <g filter="url(#shadow)">
+    <path d="M104 780 L132 402 L167 322 L200 402 L230 780 Z" fill="#070819"/>
+    <path d="M132 402 L101 337 L142 360 L168 302 L194 360 L235 337 L200 402 Z" fill="#080817"/>
+    <path d="M167 373 L167 727" class="rune"/>
+    <path d="M167 476 L135 520 L167 565 L199 520 Z" class="rune"/>
+    <path d="M167 565 L145 602 M167 565 L189 602 M167 620 L148 651 M167 620 L186 651" class="rune-thin"/>
+    <path d="M1 498 C44 474 87 464 126 461" class="arc-thin"/>
+    <path d="M0 450 C31 461 62 478 93 514" class="arc-thin"/>
+    <g transform="translate(-17 420) rotate(-25)" opacity="0.75">
+      <path d="M0 0 C50 8 107 14 166 15" fill="none" stroke="#02030b" stroke-width="14" stroke-linecap="round"/>
+      <path d="M4 0 C54 8 107 14 162 15" fill="none" stroke="#0e0e1c" stroke-width="8" stroke-dasharray="18 15" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- Right monolith and chain -->
+  <g filter="url(#shadow)">
+    <path d="M1480 790 L1502 452 L1535 386 L1568 452 L1591 790 Z" fill="#080817"/>
+    <path d="M1502 452 L1465 391 L1511 414 L1535 342 L1559 414 L1605 391 L1568 452 Z" fill="#070819"/>
+    <path d="M1535 433 L1535 752" class="rune"/>
+    <path d="M1535 516 L1515 552 L1535 588 L1555 552 Z" class="rune"/>
+    <path d="M1535 590 L1514 627 M1535 590 L1556 627" class="rune-thin"/>
+    <g transform="translate(1552 475) rotate(20)" opacity="0.72">
+      <path d="M0 0 C45 15 88 18 128 5" fill="none" stroke="#02030b" stroke-width="13" stroke-linecap="round"/>
+      <path d="M0 0 C45 15 88 18 128 5" fill="none" stroke="#101023" stroke-width="7" stroke-dasharray="16 13" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- Lava cracks -->
+  <g filter="url(#lavaGlow)" opacity="0.92">
+    <path d="M14 890 C52 843 92 848 120 812" stroke="url(#lavaSoft)" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <path d="M81 905 C120 868 170 882 211 848" stroke="#ff2d1a" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M300 894 C392 872 476 899 568 876" stroke="#ff2d1a" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.8"/>
+    <path d="M884 909 C953 876 1027 899 1096 872" stroke="#ff351a" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M1122 894 C1186 868 1224 892 1286 852" stroke="#ff7a11" stroke-width="5" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Lower contour lines -->
+  <g opacity="0.85">
+    <path class="line-red" d="M-31 905 C200 812 328 895 522 835 C737 768 932 857 1105 762 C1262 675 1420 754 1696 618"/>
+    <path class="line-red" d="M-53 823 C130 742 256 796 394 742 C557 680 716 725 849 678 C1003 624 1138 694 1303 602"/>
+    <path class="arc-thin" d="M1025 587 C1114 497 1223 496 1282 539"/>
+  </g>
+</svg>

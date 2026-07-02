@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from '@/styles/investigacionGame.module.css';
 
 export default function NivelHUD({
@@ -8,15 +9,17 @@ export default function NivelHUD({
   totalXP,
   progresoPct,
   seccion,
+  boss = false,
 }: {
   n: number;
   nombre: string;
   totalXP: number;
   progresoPct: number;
   seccion: string;
+  boss?: boolean;
 }) {
   return (
-    <div className={styles.hud}>
+    <div className={`${styles.hud} ${boss ? styles.hudBoss : ''}`}>
       <div className={styles.hudTop}>
         <Link href="/dashboard/investigacion" className={styles.hudBack}>
           ← Mapa
@@ -29,7 +32,16 @@ export default function NivelHUD({
           <span className={styles.hudXPValor}>{totalXP}</span>
           <span className={styles.hudXPLabel}>XP</span>
         </div>
-        <span className={styles.hudEstrella} aria-hidden="true">
+        <span className={`${styles.hudEstrella} ${boss ? styles.hudEstrellaBoss : ''}`} aria-hidden="true">
+          {boss ? (
+            <Image
+              src="/investigacion/calavera-roja.webp"
+              alt=""
+              width={30}
+              height={30}
+              className={styles.hudCalavera}
+            />
+          ) : (
           <svg viewBox="0 0 512 512" width="30" height="30" fill="none">
             <defs>
               <linearGradient id="hi_starFill" x1="120" y1="90" x2="392" y2="402" gradientUnits="userSpaceOnUse">
@@ -57,6 +69,7 @@ export default function NivelHUD({
               />
             </g>
           </svg>
+          )}
         </span>
       </div>
 

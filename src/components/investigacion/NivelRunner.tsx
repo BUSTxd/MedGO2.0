@@ -150,6 +150,11 @@ export default function NivelRunner({
   return (
     <div className={styles.runner} style={{ ['--acento' as string]: acento } as React.CSSProperties}>
       <Destellos />
+      {/* Fondo volcánico demoníaco: crossfade orgánico al entrar al boss */}
+      <div
+        className={`${styles.runnerBossBg} ${step === 'boss' ? styles.runnerBossBgOn : ''}`}
+        aria-hidden="true"
+      />
 
       {step !== 'intro' && step !== 'completado' && (
         <NivelHUD
@@ -158,6 +163,7 @@ export default function NivelRunner({
           totalXP={state.totalXP}
           progresoPct={progresoPct}
           seccion={SECCION_LABEL[step]}
+          boss={step === 'boss'}
         />
       )}
 
@@ -219,9 +225,7 @@ export default function NivelRunner({
         )}
 
         {step === 'boss' && (
-          <div className={styles.retoPanel}>
-            <BossChallenge config={contenido.boss} onComplete={onBoss} />
-          </div>
+          <BossChallenge config={contenido.boss} onComplete={onBoss} />
         )}
 
         {step === 'completado' && (

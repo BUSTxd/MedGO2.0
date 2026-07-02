@@ -33,6 +33,26 @@
   pointer-events: none;
 }
 .runnerOlas { stroke: currentColor; }
+
+/* Fondo volcánico demoníaco (solo en el paso boss), crossfade orgánico */
+.runnerBossBg {
+  position: absolute;
+  inset: -30px -60px -30px;
+  z-index: -1;
+  border-radius: 48px;
+  background-image: url('/investigacion/fondo-volcan.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.9s ease, transform 1.2s ease;
+  pointer-events: none;
+}
+.runnerBossBgOn {
+  opacity: 1;
+  transform: scale(1);
+}
 /* Paneles que se mantienen angostos aunque el runner sea ancho */
 .retoPanel { max-width: 860px; margin-left: auto; margin-right: auto; }
 .celebra { max-width: 720px; margin-left: auto; margin-right: auto; }
@@ -1553,34 +1573,303 @@
 }
 
 /* ─── BOSS ─── */
-.bossWrap { display: flex; flex-direction: column; gap: 14px; }
-.bossHeader { display: flex; align-items: center; gap: 12px; }
-.bossBadge {
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  color: #fff;
-  padding: 5px 12px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #E85B4A, #b93724);
-  box-shadow: 0 3px 12px rgba(232, 91, 74, 0.45);
+/* ─── BOSS CHALLENGE (panel HUD sci-fi rojo) ─── */
+/* El marco (silueta compleja + relleno + glow) lo dibuja <BossMarco/> en SVG. */
+.bossPanel {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 42px 40px 36px;
+  color: #e8eeff;
+  filter: drop-shadow(0 16px 46px rgba(108, 74, 226, 0.38));
+  animation: slideIn 0.45s ease both;
 }
-.bossTitle { font-size: 18px; font-weight: 800; color: #fff; margin: 0; }
+.bossMarco {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: visible; /* evita que el glow del borde se recorte en las esquinas */
+}
+
+/* Columnas de LEDs rojos en los laterales internos */
+.bossLeds {
+  position: absolute;
+  top: 78px;
+  bottom: 78px;
+  width: 5px;
+  z-index: 1;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #ff4356 42%, transparent 44%);
+  background-size: 5px 15px;
+  background-repeat: repeat-y;
+  opacity: 0.5;
+}
+.bossLedsL { left: 28px; }
+.bossLedsR { right: 28px; }
+
+/* Decoración superior central sobre la plataforma */
+.bossTopDeco {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 4;
+}
+.bossTopSkull {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 7px rgba(255, 60, 78, 0.7));
+  animation: bossSkullFloat 2.8s ease-in-out infinite;
+}
+@keyframes bossSkullFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.bossTopDots {
+  width: 46px;
+  height: 6px;
+  background-image: radial-gradient(circle, #ff4356 32%, transparent 34%);
+  background-size: 10px 6px;
+  opacity: 0.6;
+}
+
+.bossInner { position: relative; z-index: 2; }
+
+/* Cabecera (alta: deja sitio para el minijefe a la derecha) */
+.bossHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-right: 216px;
+  min-height: 78px;
+}
+.bossBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff4356, #c11d34);
+  box-shadow: 0 5px 16px rgba(255, 60, 82, 0.5);
+}
+.bossBadgeSkull {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+.bossTitle {
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+/* Escenario del caso (posición relativa: ancla al minijefe) */
 .bossEscenario {
-  background: rgba(255, 255, 255, 0.06);
-  border-left: 3px solid #E85B4A;
-  border-radius: 8px;
-  padding: 12px 14px;
+  position: relative;
+  margin-top: 14px;
+  padding: 16px 210px 16px 18px;
+  border-radius: 12px;
+  background: linear-gradient(160deg, rgba(30, 38, 74, 0.5), rgba(18, 24, 52, 0.5));
+  border: 1px solid rgba(150, 170, 220, 0.16);
+  min-height: 56px;
+}
+.bossEscenarioTxt {
+  margin: 0;
   font-size: 14px;
   line-height: 1.55;
-  color: #d7e0f5;
+  color: #d7ddf2;
+}
+
+/* Minijefe: sus manos se apoyan sobre el borde superior de la caja de escenario.
+   Anclado a la caja: la base cae ~14px dentro del borde superior y el cuerpo
+   sube hasta ~el borde superior del panel (no lo rebasa hacia la barra de XP). */
+.bossChar {
+  position: absolute;
+  right: 24px;
+  bottom: -44px;
+  width: 178px;
+  height: 178px;
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+}
+.bossCharImg { width: 100%; height: auto; object-fit: contain; display: block; }
+
+/* Panel de decisiones */
+.bossDecisiones {
+  margin-top: 18px;
+  padding: 20px 22px 22px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, rgba(22, 28, 62, 0.65), rgba(12, 16, 42, 0.65));
+  border: 1px solid rgba(255, 72, 92, 0.16);
 }
 .bossProgreso {
   font-size: 12px;
-  font-weight: 700;
-  color: var(--acento);
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #ff5567;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.bossPregunta {
+  font-size: clamp(16px, 1.8vw, 19px);
+  font-weight: 700;
+  color: #f2f5ff;
+  margin: 0 0 16px;
+  line-height: 1.4;
+}
+
+/* Opciones A/B/C/D: bisel en sup-izq e inf-der, borde fino continuo (capa ::before) */
+.bossOptions { display: flex; flex-direction: column; gap: 11px; }
+.bossOption {
+  --opt-clip: polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  text-align: left;
+  padding: 13px 18px;
+  border: none;
+  clip-path: var(--opt-clip);
+  background: rgba(150, 170, 220, 0.34);
+  color: #e7ecff;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.16s ease, transform 0.16s ease;
+}
+.bossOption::before {
+  content: '';
+  position: absolute;
+  inset: 1.3px;
+  clip-path: var(--opt-clip);
+  background: linear-gradient(160deg, #1a2247, #131a3c);
+  z-index: 0;
+}
+.bossOption:hover:not(:disabled) {
+  background: rgba(255, 88, 108, 0.75);
+  transform: scale(1.02);
+}
+.bossOption:disabled { cursor: default; }
+
+/* Letra: octógono simétrico hueco con contorno rojo y letra roja */
+.bossOptionLetra {
+  --oct: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  clip-path: var(--oct);
+  background: #ff4356;
+}
+.bossOptionLetra::before {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  clip-path: var(--oct);
+  background: #141b3c;
+  z-index: 0;
+}
+.bossOptionLetraTxt {
+  position: relative;
+  z-index: 1;
+  color: #ff6474;
+  font-weight: 900;
+  font-size: 15px;
+}
+.bossOptionTexto { position: relative; z-index: 1; line-height: 1.4; }
+
+.bossOptionCorrect { background: #2DC99A; }
+.bossOptionCorrect::before { background: linear-gradient(160deg, rgba(45, 201, 154, 0.24), rgba(20, 120, 92, 0.3)); }
+.bossOptionCorrect .bossOptionLetra { background: #2DC99A; }
+.bossOptionCorrect .bossOptionLetraTxt { color: #7df0cd; }
+.bossOptionWrong { background: #ff4356; animation: shake 0.35s ease; }
+.bossOptionWrong::before { background: linear-gradient(160deg, rgba(255, 67, 86, 0.24), rgba(150, 24, 40, 0.32)); }
+
+/* Feedback + botón siguiente */
+.bossFeedback {
+  margin: 14px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  padding: 12px 14px;
+  border-radius: 10px;
+  animation: slideIn 0.3s ease both;
+}
+.bossFeedbackOk { background: rgba(45, 201, 154, 0.16); color: #7df0cd; }
+.bossFeedbackBad { background: rgba(255, 67, 86, 0.16); color: #ffb3a8; }
+.bossNext {
+  margin-top: 16px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 11px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff4356, #c11d34);
+  box-shadow: 0 6px 18px -6px rgba(255, 60, 82, 0.7);
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.bossNext:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(255, 60, 82, 0.8); }
+
+/* Puntos de progreso inferiores */
+.bossDots { display: flex; gap: 8px; justify-content: center; margin-top: 20px; }
+.bossDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 92, 112, 0.3);
+  transition: all 0.2s ease;
+}
+.bossDotDone { background: rgba(255, 92, 112, 0.62); }
+.bossDotActive { background: #ff4356; box-shadow: 0 0 9px rgba(255, 67, 86, 0.85); }
+
+/* HUD en modo boss: fondo rojizo + barra roja + calavera en vez de estrella */
+.hudBoss {
+  background: linear-gradient(135deg, rgba(255, 236, 238, 0.72) 0%, rgba(255, 66, 86, 0.28) 100%);
+  border-color: rgba(255, 90, 110, 0.4);
+}
+.hudBoss .hudBarraFill { background: linear-gradient(90deg, #c11d34, #ff4356); }
+.hudBoss .hudBarra { background: rgba(193, 29, 52, 0.14); }
+.hudBoss .hudNivel,
+.hudBoss .hudBack { color: #d61f37; }
+.hudBoss .hudXPValor { color: #ff4356; }
+.hudEstrellaBoss {
+  background: #180f2c;
+  box-shadow: 0 0 0 1px rgba(255, 67, 86, 0.4), 0 4px 12px -2px rgba(255, 50, 70, 0.45);
+}
+.hudCalavera { width: 26px; height: 26px; object-fit: contain; }
+
+@media (max-width: 760px) {
+  .bossPanel { padding: 40px 16px 26px; }
+  .bossChar { width: 134px; height: 134px; bottom: -38px; }
+  .bossHeader { padding-right: 84px; }
+  .bossEscenario { padding-right: 128px; }
+  .bossDecisiones { padding: 16px 14px 18px; }
+  .bossLeds { display: none; }
 }
 
 /* ─── CELEBRACIÓN ─── */
@@ -1792,6 +2081,12 @@
   border-color: rgba(255, 255, 255, 0.08);
   box-shadow: 0 14px 34px -22px rgba(0, 0, 0, 0.7);
 }
+:global(.dark-mode) .hudBoss {
+  background: linear-gradient(135deg, rgba(120, 20, 34, 0.5) 0%, rgba(255, 66, 86, 0.28) 100%);
+  border-color: rgba(255, 90, 110, 0.4);
+}
+:global(.dark-mode) .hudBoss .hudNivel,
+:global(.dark-mode) .hudBoss .hudBack { color: #ff6474; }
 
 /* Bloque — dark mode */
 :global(.dark-mode) .bloqueContador {
