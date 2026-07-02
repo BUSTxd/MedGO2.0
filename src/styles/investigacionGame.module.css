@@ -34,12 +34,12 @@
 }
 .runnerOlas { stroke: currentColor; }
 
-/* Fondo volcánico demoníaco (solo en el paso boss), crossfade orgánico */
+/* Fondo volcánico demoníaco (solo en el paso boss), crossfade orgánico.
+   position: fixed para cubrir todo el fondo del viewport, no solo el runner. */
 .runnerBossBg {
-  position: absolute;
-  inset: -30px -60px -30px;
+  position: fixed;
+  inset: 0;
   z-index: -1;
-  border-radius: 48px;
   background-image: url('/investigacion/fondo-volcan.svg');
   background-size: cover;
   background-position: center;
@@ -1711,13 +1711,14 @@
 }
 .bossCharImg { width: 100%; height: auto; object-fit: contain; display: block; }
 
-/* Panel de decisiones */
+/* Panel de decisiones — translúcido con blur para dejar ver el fondo volcánico */
 .bossDecisiones {
   margin-top: 18px;
   padding: 20px 22px 22px;
   border-radius: 14px;
-  background: linear-gradient(160deg, rgba(22, 28, 62, 0.65), rgba(12, 16, 42, 0.65));
+  background: linear-gradient(160deg, rgba(22, 28, 62, 0.34), rgba(12, 16, 42, 0.4));
   border: 1px solid rgba(255, 72, 92, 0.16);
+  backdrop-filter: blur(6px);
 }
 .bossProgreso {
   font-size: 12px;

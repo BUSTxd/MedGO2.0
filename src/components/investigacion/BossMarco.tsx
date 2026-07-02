@@ -34,9 +34,9 @@ export default function BossMarco({ className }: { className?: string }) {
     >
       <defs>
         <linearGradient id="bm-fill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#2a1a4a" />
-          <stop offset="42%" stopColor="#161436" />
-          <stop offset="100%" stopColor="#0a0c26" />
+          <stop offset="0%" stopColor="#2a1a4a" stopOpacity="0.7" />
+          <stop offset="42%" stopColor="#161436" stopOpacity="0.72" />
+          <stop offset="100%" stopColor="#0a0c26" stopOpacity="0.78" />
         </linearGradient>
         <linearGradient id="bm-stroke" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#8f7de6" />
