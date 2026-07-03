@@ -15,6 +15,17 @@ export const TEMA_07: NivelContenido = {
       'Distinguir transversal, cohorte y casos y controles por su temporalidad.',
       'Situar cada diseño en la jerarquía de evidencia.',
     ],
+    stats: [
+      { label: '¿El investigador asigna?', valor: 'No', sub: 'solo observa', viz: 'dots' },
+      { label: 'Diseños analíticos', valor: '3', sub: 'transversal · cohorte · C-C', viz: 'line' },
+      { label: 'Mayor evidencia', valor: 'Cohorte', sub: 'entre observacionales', viz: 'curve' },
+    ],
+    destacados: [
+      { icono: 'ojos', texto: 'El experimento de la naturaleza' },
+      { icono: 'vias', texto: 'La dirección del tiempo define el diseño' },
+      { icono: 'flechas', texto: 'Con comparador = analítico' },
+      { icono: 'columnas', texto: 'Cada diseño en su piso de la jerarquía' },
+    ],
   },
 
   bloque1: {

@@ -15,6 +15,17 @@ export const TEMA_03: NivelContenido = {
       'Reconocer el factor de confusión y su doble asociación.',
       'Saber por qué nunca conocemos todos los confusores.',
     ],
+    stats: [
+      { label: 'Precisión', valor: 'Agrupado', sub: 'poco azar', viz: 'dots' },
+      { label: 'Validez', valor: 'Al centro', sub: 'sin sesgo', viz: 'curve' },
+      { label: 'Confusores conocidos', valor: '¿Todos?', sub: 'nunca', viz: 'line' },
+    ],
+    destacados: [
+      { icono: 'diana', texto: 'Validez: dar en el centro de la diana' },
+      { icono: 'advertencia', texto: 'El sesgo no se corrige con más muestra' },
+      { icono: 'oculto', texto: 'El confusor: la tercera variable oculta' },
+      { icono: 'escudo', texto: 'Validez interna antes que precisión' },
+    ],
   },
 
   bloque1: {

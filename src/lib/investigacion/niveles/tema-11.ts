@@ -15,6 +15,17 @@ export const TEMA_11: NivelContenido = {
       'No confundir correlación con causalidad.',
       'Usar el bivariado como filtro previo al multivariado.',
     ],
+    stats: [
+      { label: 'Variables cruzadas', valor: '2', sub: 'exactamente', viz: 'dots' },
+      { label: 'Prueba estadística', valor: 'χ² · t', sub: 'la dicta la escala', viz: 'line' },
+      { label: 'Asociación', valor: 'Cruda', sub: 'sin ajustar', viz: 'curve' },
+    ],
+    destacados: [
+      { icono: 'cadena', texto: 'La escala de ambas dicta la prueba' },
+      { icono: 'advertencia', texto: 'Asociación cruda: los confusores acechan' },
+      { icono: 'pregunta', texto: 'Correlación no es causalidad' },
+      { icono: 'puerta', texto: 'El filtro previo al multivariado' },
+    ],
   },
 
   bloque1: {

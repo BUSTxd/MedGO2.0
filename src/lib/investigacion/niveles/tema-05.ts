@@ -15,6 +15,17 @@ export const TEMA_05: NivelContenido = {
       'Leer un Intervalo de Confianza 95% correctamente.',
       'Relacionar amplitud del IC con precisión y tamaño de muestra.',
     ],
+    stats: [
+      { label: 'Riesgo Relativo', valor: 'RR 2.3', viz: 'line' },
+      { label: 'IC 95%', valor: '1.4 – 3.8', sub: 'no cruza 1', viz: 'curve' },
+      { label: 'Valor p', valor: '0.03', sub: '< 0.05', viz: 'dots' },
+    ],
+    destacados: [
+      { icono: 'balanza', texto: 'Significativo no siempre es relevante' },
+      { icono: 'regla', texto: 'Medir cuán grande es el efecto' },
+      { icono: 'diana', texto: 'IC estrecho = estimado más preciso' },
+      { icono: 'subida', texto: 'Más muestra, más precisión' },
+    ],
   },
 
   bloque1: {

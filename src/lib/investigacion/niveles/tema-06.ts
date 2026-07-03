@@ -15,6 +15,17 @@ export const TEMA_06: NivelContenido = {
       'Distinguir Riesgo Relativo (RR) de Odds Ratio (OR).',
       'Leer una tabla de contingencia 2×2.',
     ],
+    stats: [
+      { label: 'Prevalencia', valor: '12%', sub: 'la foto', viz: 'dots' },
+      { label: 'Incidencia', valor: '4.2/100', sub: 'el video', viz: 'line' },
+      { label: 'Tabla 2×2', valor: 'RR · OR', viz: 'curve' },
+    ],
+    destacados: [
+      { icono: 'camara', texto: 'Prevalencia: la foto del momento' },
+      { icono: 'claqueta', texto: 'Incidencia: el video de casos nuevos' },
+      { icono: 'cuadricula', texto: 'La tabla 2×2 lo resume todo' },
+      { icono: 'flechas', texto: 'RR en cohortes, OR en casos y controles' },
+    ],
   },
 
   bloque1: {

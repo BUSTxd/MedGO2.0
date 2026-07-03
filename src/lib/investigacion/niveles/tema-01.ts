@@ -18,6 +18,17 @@ export const TEMA_01: NivelContenido = {
       'Dominar los cuatro principios rectores de la investigación.',
       'Identificar población, exposición y evento desde el título de un artículo.',
     ],
+    stats: [
+      { label: 'Fases traslacionales', valor: 'T0 → T4', viz: 'line' },
+      { label: 'Principios rectores', valor: '4', sub: 'pilares', viz: 'dots' },
+      { label: 'Dato → Decisión', valor: '120/80', sub: 'mmHg', viz: 'curve' },
+    ],
+    destacados: [
+      { icono: 'brujula', texto: 'De la opinión al conocimiento real' },
+      { icono: 'vias', texto: 'El viaje traslacional T0 → T4' },
+      { icono: 'escudo', texto: 'Cuatro principios rectores' },
+      { icono: 'lupa', texto: 'Población, exposición y evento en el título' },
+    ],
   },
 
   // ── BLOQUE 1 ──

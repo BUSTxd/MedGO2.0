@@ -26,17 +26,17 @@ export default function Minijuego({ config, onComplete, onNext }: MinijuegoProps
     case 'drag':
       return <DragConnect config={config} onComplete={onComplete} onNext={onNext} />;
     case 'vf':
-      return <VerdaderoFalsoTrampa config={config} onComplete={onComplete} />;
+      return <VerdaderoFalsoTrampa config={config} onComplete={onComplete} onNext={onNext} />;
     case 'orden':
       return <OrdenarSecuencia config={config} onComplete={onComplete} onNext={onNext} />;
     case 'caso':
-      return <CasoClinico config={config} onComplete={onComplete} />;
+      return <CasoClinico config={config} onComplete={onComplete} onNext={onNext} />;
     case 'mapa':
-      return <MapaConceptual config={config} onComplete={onComplete} />;
+      return <MapaConceptual config={config} onComplete={onComplete} onNext={onNext} />;
     case 'error':
       return <ErrorInvestigador config={config} onComplete={onComplete} />;
     case 'quiz':
-      return <QuizMultiple config={config} onComplete={onComplete} />;
+      return <QuizMultiple config={config} onComplete={onComplete} onNext={onNext} />;
     default:
       return null;
   }

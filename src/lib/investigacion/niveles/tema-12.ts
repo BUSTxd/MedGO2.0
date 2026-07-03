@@ -15,6 +15,17 @@ export const TEMA_12: NivelContenido = {
       'Entender el muestreo propositivo y la saturación.',
       'Reconocer triangulación, reflexividad y métodos mixtos.',
     ],
+    stats: [
+      { label: 'La pregunta', valor: '¿Cómo?', sub: 'y ¿por qué?', viz: 'curve' },
+      { label: 'Los datos', valor: 'Palabras', sub: 'no números', viz: 'dots' },
+      { label: 'Se detiene en', valor: 'Saturación', sub: 'nada nuevo que oír', viz: 'line' },
+    ],
+    destacados: [
+      { icono: 'chat', texto: 'Escuchar en vez de contar' },
+      { icono: 'personas', texto: 'Muestreo propositivo, no aleatorio' },
+      { icono: 'mezcla', texto: 'Triangulación y métodos mixtos' },
+      { icono: 'espejo', texto: 'Reflexividad del investigador' },
+    ],
   },
 
   bloque1: {

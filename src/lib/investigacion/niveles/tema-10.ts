@@ -15,6 +15,17 @@ export const TEMA_10: NivelContenido = {
       'Distinguir escala de razón (cero real) de intervalo (cero relativo).',
       'Elegir el resumen correcto según la escala.',
     ],
+    stats: [
+      { label: 'Base de datos', valor: 'Filas × Col.', sub: 'sujetos · variables', viz: 'dots' },
+      { label: 'Escalas de medición', valor: '4', sub: 'nominal → razón', viz: 'line' },
+      { label: 'Resumen correcto', valor: 'x̄ · Me', sub: 'según la escala', viz: 'curve' },
+    ],
+    destacados: [
+      { icono: 'cuadricula', texto: 'Filas = pacientes, columnas = variables' },
+      { icono: 'etiqueta', texto: 'Cualitativas vs cuantitativas' },
+      { icono: 'regla', texto: 'El cero real distingue la escala de razón' },
+      { icono: 'barras', texto: 'La escala dicta el resumen' },
+    ],
   },
 
   bloque1: {

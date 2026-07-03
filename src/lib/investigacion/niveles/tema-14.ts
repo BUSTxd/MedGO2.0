@@ -15,6 +15,17 @@ export const TEMA_14: NivelContenido = {
       'Reconocer intervenciones complejas y diseños híbridos.',
       'Valorar la co-creación y los marcos teóricos (CFIR, TDF).',
     ],
+    stats: [
+      { label: 'Evidencia → rutina', valor: '17 años', sub: 'de brecha', viz: 'line' },
+      { label: 'Fase traslacional', valor: 'T4', sub: 'la última milla', viz: 'dots' },
+      { label: 'Diseños', valor: 'Híbridos', sub: 'efectividad + implementación', viz: 'curve' },
+    ],
+    destacados: [
+      { icono: 'puente', texto: 'Cerrar la brecha de implementación' },
+      { icono: 'pieza', texto: 'Intervención (el qué) vs estrategia (el cómo)' },
+      { icono: 'acuerdo', texto: 'Co-creación con los actores reales' },
+      { icono: 'mapa', texto: 'Marcos teóricos: CFIR y TDF' },
+    ],
   },
 
   bloque1: {

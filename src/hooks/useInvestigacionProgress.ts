@@ -9,6 +9,7 @@ import {
   addXP as _addXP,
   markStep as _markStep,
   awardBadge as _awardBadge,
+  unlockAllLevels as _unlockAllLevels,
 } from '@/lib/investigacion/progress';
 
 /**
@@ -43,10 +44,11 @@ export function useInvestigacionProgress() {
   const addXP = useCallback((id: string, amount: number) => setState((s) => _addXP(s, id, amount)), []);
   const markStep = useCallback((id: string, step: string) => setState((s) => _markStep(s, id, step)), []);
   const awardBadge = useCallback((badgeId: string) => setState((s) => _awardBadge(s, badgeId)), []);
+  const unlockAll = useCallback(() => setState((s) => _unlockAllLevels(s)), []);
 
   const isUnlocked = useCallback((id: string) => !!state.niveles[id]?.desbloqueado, [state]);
 
-  return { state, hydrated, completeLevel, addXP, markStep, awardBadge, isUnlocked };
+  return { state, hydrated, completeLevel, addXP, markStep, awardBadge, unlockAll, isUnlocked };
 }
 
 /**

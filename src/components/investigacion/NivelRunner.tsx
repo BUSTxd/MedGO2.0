@@ -29,7 +29,15 @@ const SECCION_LABEL: Record<FlowStep, string> = {
 const LIMITE_VELOCISTA_MS = 10 * 60 * 1000;
 
 /** Minijuegos que traen su propio panel claro y botón "Continuar" (no van en el retoPanel oscuro). */
-const esAutocontenido = (c: MinijuegoConfig): boolean => c.tipo === 'orden' || c.tipo === 'drag';
+const AUTOCONTENIDOS: ReadonlySet<MinijuegoConfig['tipo']> = new Set([
+  'orden',
+  'drag',
+  'vf',
+  'quiz',
+  'caso',
+  'mapa',
+]);
+const esAutocontenido = (c: MinijuegoConfig): boolean => AUTOCONTENIDOS.has(c.tipo);
 
 function bumpPerfectDrags(): number {
   if (typeof window === 'undefined') return 0;

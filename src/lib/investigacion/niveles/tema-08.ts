@@ -15,6 +15,17 @@ export const TEMA_08: NivelContenido = {
       'Distinguir niveles de cegamiento (abierto → triple ciego).',
       'Diferenciar diseños paralelo, crossover y factorial (washout, carryover).',
     ],
+    stats: [
+      { label: 'Asignación', valor: 'Al azar', sub: '1:1', viz: 'dots' },
+      { label: 'Pilares del ECA', valor: '3', sub: 'aleatorizar · cegar · comparar', viz: 'line' },
+      { label: 'Cegamiento máximo', valor: 'Triple', sub: 'ciego', viz: 'curve' },
+    ],
+    destacados: [
+      { icono: 'trofeo', texto: 'El Gold Standard de la evidencia' },
+      { icono: 'azar', texto: 'El azar equilibra hasta lo desconocido' },
+      { icono: 'oculto', texto: 'Cegamiento contra la sugestión' },
+      { icono: 'ciclo', texto: 'Crossover: cada quien es su propio control' },
+    ],
   },
 
   bloque1: {

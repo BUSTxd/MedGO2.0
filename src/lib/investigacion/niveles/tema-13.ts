@@ -15,6 +15,17 @@ export const TEMA_13: NivelContenido = {
       'Elegir la regresión según la variable dependiente.',
       'Reconocer que el multivariado no cura sesgos ni ajusta lo no medido.',
     ],
+    stats: [
+      { label: 'Confusores controlados', valor: '10+', sub: 'a la vez', viz: 'dots' },
+      { label: 'Efecto aislado', valor: 'Independiente', viz: 'line' },
+      { label: 'Regresión', valor: 'Log · Lineal', sub: 'según la dependiente', viz: 'curve' },
+    ],
+    destacados: [
+      { icono: 'mezcla', texto: 'Las enfermedades son multicausales' },
+      { icono: 'balanza', texto: 'Iguala el terreno de juego' },
+      { icono: 'calculo', texto: 'La variable dependiente elige la regresión' },
+      { icono: 'advertencia', texto: 'No ajusta lo que no mediste' },
+    ],
   },
 
   bloque1: {

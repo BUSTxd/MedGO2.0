@@ -1,9 +1,12 @@
 'use client';
+import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { getMeta, getContenido } from '@/lib/investigacion/niveles';
+import { hasFullAccess } from '@/lib/investigacion/progress';
 import { useInvestigacionProgress } from '@/hooks/useInvestigacionProgress';
+import { useAuth } from '@/components/AuthProvider';
 import styles from '@/styles/investigacionGame.module.css';
 
 const NivelRunner = dynamic(() => import('@/components/investigacion/NivelRunner'), {
@@ -29,7 +32,14 @@ export default function NivelPage() {
   const nivelId = String(params?.nivel ?? '');
   const meta = getMeta(nivelId);
   const contenido = getContenido(nivelId);
-  const { hydrated, isUnlocked } = useInvestigacionProgress();
+  const { hydrated, isUnlocked, unlockAll } = useInvestigacionProgress();
+  const { user } = useAuth();
+  const fullAccess = hasFullAccess(user?.email);
+
+  // Acceso total: persiste el desbloqueo de todos los niveles.
+  useEffect(() => {
+    if (hydrated && fullAccess) unlockAll();
+  }, [hydrated, fullAccess, unlockAll]);
 
   if (!meta || !meta.disponible || !contenido) {
     return (
@@ -40,7 +50,7 @@ export default function NivelPage() {
     );
   }
 
-  if (hydrated && !isUnlocked(nivelId)) {
+  if (hydrated && !fullAccess && !isUnlocked(nivelId)) {
     return (
       <Gate
         titulo="Nivel bloqueado"

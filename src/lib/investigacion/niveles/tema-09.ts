@@ -15,6 +15,17 @@ export const TEMA_09: NivelContenido = {
       'Reconocer dónde atacan sesgos y confusores.',
       'Confirmar que la validez interna es requisito antes que la precisión.',
     ],
+    stats: [
+      { label: 'Niveles integrados', valor: '1 – 8', sub: 'punto de control', viz: 'line' },
+      { label: 'Mapa de Hulley', valor: '3 planos', sub: 'universo → plan → real', viz: 'dots' },
+      { label: 'Validez interna', valor: '1º', sub: 'antes que precisión', viz: 'curve' },
+    ],
+    destacados: [
+      { icono: 'mapa', texto: 'El mapa completo de Hulley' },
+      { icono: 'puente', texto: 'De la pregunta al dato real' },
+      { icono: 'advertencia', texto: 'Dónde atacan sesgos y confusores' },
+      { icono: 'escudo', texto: 'La validez interna es el requisito' },
+    ],
   },
 
   bloque1: {

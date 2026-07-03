@@ -3,15 +3,19 @@ import { useMemo, useState } from 'react';
 import type { MJVerdaderoFalso } from '@/lib/investigacion/types';
 import { shuffle } from '@/lib/utils/shuffle';
 import Icono from '../Icono';
+import { MJLiteStars, MJLiteHeader, MJLiteFooter } from './MJLiteChrome';
 import styles from '@/styles/investigacionGame.module.css';
 import type { MinijuegoResult } from './Minijuego';
 
+/** Panel claro autocontenido (mismo lenguaje visual que orden/drag del nivel 2). */
 export default function VerdaderoFalsoTrampa({
   config,
   onComplete,
+  onNext,
 }: {
   config: MJVerdaderoFalso;
   onComplete: (r: MinijuegoResult) => void;
+  onNext?: () => void;
 }) {
   const afirmaciones = useMemo(() => shuffle(config.afirmaciones), [config]);
   const [respuestas, setRespuestas] = useState<Record<string, boolean>>({});
@@ -40,69 +44,77 @@ export default function VerdaderoFalsoTrampa({
   };
 
   return (
-    <div className={styles.mjWrap}>
-      <h4 className={styles.mjTitle}>{config.titulo}</h4>
-      <p className={styles.mjInstruction}>{config.instruccion}</p>
+    <section className={styles.mjLite}>
+      <MJLiteStars />
 
-      <div className={styles.vfList}>
-        {afirmaciones.map((a) => {
+      <MJLiteHeader
+        icono="balanza"
+        titulo={config.titulo}
+        sub={config.instruccion}
+        badgeStrong={`${verificado ? aciertos : Object.keys(respuestas).length} / ${afirmaciones.length}`}
+        badgeLabel={verificado ? 'Correctas' : 'Respondidas'}
+      />
+
+      <div className={styles.vfLiteList}>
+        {afirmaciones.map((a, i) => {
           const r = respuestas[a.id];
           const correcta = r === a.esVerdadera;
           const mostrarEstado = verificado && r !== undefined;
           return (
             <div
               key={a.id}
-              className={`${styles.vfItem} ${
-                mostrarEstado ? (correcta ? styles.vfOk : styles.vfBad) : ''
+              className={`${styles.vfLiteItem} ${
+                mostrarEstado ? (correcta ? styles.vfLiteOk : styles.vfLiteBad) : ''
               }`}
             >
-              <p className={styles.vfTexto}>{a.texto}</p>
-              <div className={styles.vfBotones}>
-                <button
-                  className={`${styles.vfBtn} ${r === true ? styles.vfBtnSel : ''}`}
-                  onClick={() => responder(a.id, true)}
-                  disabled={resuelto}
-                >
-                  Verdadero
-                </button>
-                <button
-                  className={`${styles.vfBtn} ${r === false ? styles.vfBtnSel : ''}`}
-                  onClick={() => responder(a.id, false)}
-                  disabled={resuelto}
-                >
-                  Falso
-                </button>
+              <div className={styles.vfLiteRow}>
+                <span className={styles.vfLiteNum}>{i + 1}</span>
+                <p className={styles.vfLiteTexto}>{a.texto}</p>
+                <div className={styles.vfLiteBtns}>
+                  <button
+                    className={`${styles.vfLiteBtn} ${r === true ? styles.vfLiteBtnSel : ''}`}
+                    onClick={() => responder(a.id, true)}
+                    disabled={resuelto}
+                  >
+                    Verdadero
+                  </button>
+                  <button
+                    className={`${styles.vfLiteBtn} ${r === false ? styles.vfLiteBtnSel : ''}`}
+                    onClick={() => responder(a.id, false)}
+                    disabled={resuelto}
+                  >
+                    Falso
+                  </button>
+                </div>
               </div>
               {mostrarEstado && !correcta && (
-                <p className={styles.vfExpl}>
-                  <Icono name="idea" className={styles.vfExplIcon} />
+                <p className={styles.vfLiteExpl}>
+                  <Icono name="idea" className={styles.vfLiteExplIcon} />
                   {a.explicacion}
                 </p>
               )}
               {mostrarEstado && correcta && !a.esVerdadera && (
-                <p className={styles.vfExpl}>✓ {a.explicacion}</p>
+                <p className={`${styles.vfLiteExpl} ${styles.vfLiteExplOk}`}>✓ {a.explicacion}</p>
               )}
             </div>
           );
         })}
       </div>
 
-      {!resuelto && (
-        <button className={styles.mjCheckBtn} onClick={verificar} disabled={!todasRespondidas}>
-          Verificar
-        </button>
+      {verificado && (
+        <p className={`${styles.mjLiteAviso} ${resuelto ? styles.mjLiteAvisoOk : ''}`}>
+          {resuelto
+            ? `¡Todas correctas! ${intentos === 1 ? '+50 XP' : '+25 XP'}`
+            : `${aciertos}/${afirmaciones.length} correctas. Revisa las marcadas en rojo e inténtalo de nuevo.`}
+        </p>
       )}
 
-      {verificado && !todoBien && !resuelto && (
-        <p className={`${styles.mjFeedback} ${styles.mjFeedbackBad}`}>
-          {aciertos}/{afirmaciones.length} correctas. Revisa las marcadas en rojo e inténtalo de nuevo.
-        </p>
-      )}
-      {resuelto && (
-        <p className={`${styles.mjFeedback} ${styles.mjFeedbackOk}`}>
-          ¡Todas correctas! {intentos === 1 ? '+50 XP' : '+25 XP'}
-        </p>
-      )}
-    </div>
+      <MJLiteFooter
+        resuelto={resuelto}
+        deshabilitado={!todasRespondidas}
+        onVerificar={verificar}
+        onNext={onNext}
+      />
+    </section>
   );
 }

@@ -1,16 +1,20 @@
 'use client';
-import { useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import type { MJMapa } from '@/lib/investigacion/types';
 import { shuffle } from '@/lib/utils/shuffle';
+import { MJLiteStars, MJLiteHeader, MJLiteFooter } from './MJLiteChrome';
 import styles from '@/styles/investigacionGame.module.css';
 import type { MinijuegoResult } from './Minijuego';
 
+/** Panel claro autocontenido (mismo lenguaje visual que orden/drag del nivel 2). */
 export default function MapaConceptual({
   config,
   onComplete,
+  onNext,
 }: {
   config: MJMapa;
   onComplete: (r: MinijuegoResult) => void;
+  onNext?: () => void;
 }) {
   const banco = useMemo(() => shuffle(config.banco), [config]);
   const huecos = config.nodos.filter((n) => n.hueco);
@@ -25,8 +29,10 @@ export default function MapaConceptual({
     setVerificado(false);
   };
 
-  const todosLlenos = huecos.every((h) => asign[h.id]);
-  const correcto = huecos.every((h) => asign[h.id] === config.solucion[h.id]);
+  const llenos = huecos.filter((h) => asign[h.id]).length;
+  const todosLlenos = llenos === huecos.length;
+  const aciertos = huecos.filter((h) => asign[h.id] === config.solucion[h.id]).length;
+  const correcto = aciertos === huecos.length;
 
   const verificar = () => {
     const n = intentos + 1;
@@ -39,57 +45,73 @@ export default function MapaConceptual({
   };
 
   return (
-    <div className={styles.mjWrap}>
-      <h4 className={styles.mjTitle}>{config.titulo}</h4>
-      <p className={styles.mjInstruction}>{config.instruccion}</p>
+    <section className={styles.mjLite}>
+      <MJLiteStars />
 
-      <div className={styles.mapaNodos}>
-        {config.nodos.map((n) => {
+      <MJLiteHeader
+        icono="mapa"
+        titulo={config.titulo}
+        sub={config.instruccion}
+        badgeStrong={`${verificado ? aciertos : llenos} / ${huecos.length}`}
+        badgeLabel={verificado ? 'Casillas correctas' : 'Casillas llenas'}
+      />
+
+      <div className={styles.mapaLiteFlow}>
+        {config.nodos.map((n, i) => {
+          const conector = i > 0 && <span className={styles.mapaLiteConn} aria-hidden="true" />;
           if (!n.hueco) {
             return (
-              <div key={n.id} className={styles.mapaNodoFijo}>
-                {n.etiqueta}
-              </div>
+              <Fragment key={n.id}>
+                {conector}
+                <div className={styles.mapaLiteNodoFijo}>{n.etiqueta}</div>
+              </Fragment>
             );
           }
           const bien = verificado && asign[n.id] === config.solucion[n.id];
           const mal = verificado && asign[n.id] && asign[n.id] !== config.solucion[n.id];
           return (
-            <select
-              key={n.id}
-              className={`${styles.mapaHueco} ${bien ? styles.mapaOk : ''} ${mal ? styles.mapaBad : ''}`}
-              value={asign[n.id] ?? ''}
-              onChange={(e) => set(n.id, e.target.value)}
-              disabled={resuelto}
-            >
-              <option value="" disabled>
-                Elige…
-              </option>
-              {banco.map((b) => (
-                <option key={b} value={b}>
-                  {b}
-                </option>
-              ))}
-            </select>
+            <Fragment key={n.id}>
+              {conector}
+              <div
+                className={`${styles.mapaLiteHueco} ${bien ? styles.mapaLiteHuecoOk : ''} ${
+                  mal ? styles.mapaLiteHuecoBad : ''
+                }`}
+              >
+                <select
+                  className={styles.mapaLiteSelect}
+                  value={asign[n.id] ?? ''}
+                  onChange={(e) => set(n.id, e.target.value)}
+                  disabled={resuelto}
+                >
+                  <option value="" disabled>
+                    Elige el concepto…
+                  </option>
+                  {banco.map((b) => (
+                    <option key={b} value={b}>
+                      {b}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </Fragment>
           );
         })}
       </div>
 
-      {!resuelto && (
-        <button className={styles.mjCheckBtn} onClick={verificar} disabled={!todosLlenos}>
-          Verificar mapa
-        </button>
-      )}
-      {verificado && !correcto && !resuelto && (
-        <p className={`${styles.mjFeedback} ${styles.mjFeedbackBad}`}>
-          Algunas casillas no encajan (en rojo). Ajusta e inténtalo de nuevo.
+      {verificado && (
+        <p className={`${styles.mjLiteAviso} ${resuelto ? styles.mjLiteAvisoOk : ''}`}>
+          {resuelto
+            ? `¡Mapa completo! ${intentos === 1 ? '+50 XP' : '+25 XP'}`
+            : 'Algunas casillas no encajan (en rojo). Ajusta e inténtalo de nuevo.'}
         </p>
       )}
-      {resuelto && (
-        <p className={`${styles.mjFeedback} ${styles.mjFeedbackOk}`}>
-          ¡Mapa completo! {intentos === 1 ? '+50 XP' : '+25 XP'}
-        </p>
-      )}
-    </div>
+
+      <MJLiteFooter
+        resuelto={resuelto}
+        deshabilitado={!todosLlenos}
+        onVerificar={verificar}
+        onNext={onNext}
+      />
+    </section>
   );
 }

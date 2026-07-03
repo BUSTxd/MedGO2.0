@@ -5,6 +5,16 @@ import { XP } from './xp';
 const STORAGE_KEY = 'medgo-investigacion-progress';
 const VERSION = 1;
 
+/**
+ * Emails con acceso total a Investigación (todos los niveles desbloqueados de
+ * entrada, sin tener que completar los anteriores). Comparación case-insensitive.
+ */
+const FULL_ACCESS_EMAILS = new Set(['fernandnoob062.0@gmail.com']);
+
+export function hasFullAccess(email?: string | null): boolean {
+  return !!email && FULL_ACCESS_EMAILS.has(email.trim().toLowerCase());
+}
+
 /** Estado inicial: el primer nivel desbloqueado, el resto bloqueado. */
 export function defaultState(): ProgressState {
   const niveles: Record<string, NivelProgreso> = {};
@@ -114,6 +124,21 @@ export function awardBadge(state: ProgressState, badgeId: string): ProgressState
 
 export function isUnlocked(state: ProgressState, id: string): boolean {
   return !!state.niveles[id]?.desbloqueado;
+}
+
+/**
+ * Desbloquea todos los niveles del registro (sin marcarlos como completados ni
+ * tocar XP/insignias). Devuelve el mismo estado si ya estaban todos abiertos,
+ * para no disparar renders/escrituras innecesarias.
+ */
+export function unlockAllLevels(state: ProgressState): ProgressState {
+  if (NIVELES.every((m) => state.niveles[m.id]?.desbloqueado)) return state;
+  const niveles = { ...state.niveles };
+  for (const m of NIVELES) {
+    const actual = niveles[m.id];
+    if (actual && !actual.desbloqueado) niveles[m.id] = { ...actual, desbloqueado: true };
+  }
+  return { ...state, niveles };
 }
 
 export function resetProgress(): ProgressState {

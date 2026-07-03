@@ -16,6 +16,17 @@ export const TEMA_04: NivelContenido = {
       'Dominar el Error Tipo I (falso positivo) y Tipo II (falso negativo).',
       'Comprender el poder del estudio (1 − β).',
     ],
+    stats: [
+      { label: 'Error Tipo I (α)', valor: '5%', sub: 'falso positivo', viz: 'line' },
+      { label: 'Error Tipo II (β)', valor: '20%', sub: 'falso negativo', viz: 'dots' },
+      { label: 'Poder del estudio', valor: '1 − β', sub: '80%', viz: 'curve' },
+    ],
+    destacados: [
+      { icono: 'puente', texto: 'El salto de la muestra a la población' },
+      { icono: 'balanza', texto: 'La H₀ solo se rechaza o no se rechaza' },
+      { icono: 'alarma', texto: 'Tipo I: gritar "¡fuego!" sin incendio' },
+      { icono: 'fuerza', texto: 'Poder: detectar lo que sí existe' },
+    ],
   },
 
   bloque1: {
