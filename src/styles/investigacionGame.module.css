@@ -61,6 +61,45 @@
   margin-top: 8px;
 }
 
+/* ─── Flechas de navegación libre (nivel ya superado) ─── */
+.navFlecha {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--acento);
+  cursor: pointer;
+  opacity: 0.5;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.25));
+  /* left/right no llevan transition propia: NivelRunner las mide cuadro a
+     cuadro mientras la sidebar anima, para ir exactamente en sincronía. */
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.navFlecha:hover:not(:disabled) {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.15);
+}
+.navFlecha:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.95);
+}
+.navFlecha:disabled {
+  opacity: 0.12;
+  cursor: default;
+}
+.navFlechaPrev {
+  left: max(6px, calc(50% - 650px));
+}
+.navFlechaNext {
+  right: max(6px, calc(50% - 650px));
+}
+
 .cargando {
   padding: 60px 0;
   text-align: center;

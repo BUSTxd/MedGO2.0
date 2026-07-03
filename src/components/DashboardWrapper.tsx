@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import DashboardSidebar from './DashboardSidebar';
 import { PlanProvider, type ClientPlanState } from './PlanProvider';
 import { RecentClassesProvider } from './RecentClassesProvider';
+import { SidebarStateProvider } from './SidebarStateContext';
 import ClarityPlanTag from './ClarityPlanTag';
 import styles from '@/styles/dashboardLayout.module.css';
 
@@ -58,7 +59,9 @@ export default function DashboardWrapper({
             />
           )}
           <main className={`${styles.main} ${collapsed ? styles.mainCollapsed : ''}`}>
-            <div className={styles.panel}>{children}</div>
+            <div className={styles.panel}>
+              <SidebarStateProvider collapsed={collapsed}>{children}</SidebarStateProvider>
+            </div>
           </main>
         </div>
       </RecentClassesProvider>

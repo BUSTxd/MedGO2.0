@@ -5,6 +5,7 @@ import { FLOW_ORDER } from '@/lib/investigacion/types';
 import { COLOR_BANDA, XP, xpPorMinijuego } from '@/lib/investigacion/xp';
 import { NIVELES } from '@/lib/investigacion/niveles';
 import { useInvestigacionProgress } from '@/hooks/useInvestigacionProgress';
+import { useSidebarCollapsed } from '@/components/SidebarStateContext';
 import NivelHUD from './NivelHUD';
 import IntroNivel from './IntroNivel';
 import BloqueView from './BloqueView';
@@ -68,6 +69,44 @@ export default function NivelRunner({
   const errorFreeRef = useRef(true);
   const toastId = useRef(0);
   const acento = COLOR_BANDA[meta.banda] ?? '#3B82F6';
+
+  const runnerRef = useRef<HTMLDivElement>(null);
+  const [navX, setNavX] = useState<{ left: number; right: number } | null>(null);
+  const sidebarCollapsed = useSidebarCollapsed();
+
+  // Las flechas de navegación se anclan al borde real del contenedor (no al
+  // centro del viewport), así se corren solas al expandir/retraer la sidebar.
+  useEffect(() => {
+    const medir = () => {
+      const el = runnerRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      setNavX({ left: rect.left, right: window.innerWidth - rect.right });
+    };
+    medir();
+    window.addEventListener('resize', medir);
+    return () => window.removeEventListener('resize', medir);
+  }, []);
+
+  // La sidebar anima su `margin-left` en 0.3s: en vez de esperar a que
+  // termine (lo que se ve como un salto brusco tardío), medimos el
+  // contenedor en cada frame mientras dura esa animación, así la flecha se
+  // desliza exactamente en sincronía con el sidebar.
+  useEffect(() => {
+    const DURACION_MS = 320;
+    const inicio = performance.now();
+    let frame: number;
+    const medirFrame = (ahora: number) => {
+      const el = runnerRef.current;
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        setNavX({ left: rect.left, right: window.innerWidth - rect.right });
+      }
+      if (ahora - inicio < DURACION_MS) frame = requestAnimationFrame(medirFrame);
+    };
+    frame = requestAnimationFrame(medirFrame);
+    return () => cancelAnimationFrame(frame);
+  }, [sidebarCollapsed]);
 
   const idx = FLOW_ORDER.indexOf(step);
   const progresoPct = Math.round((idx / (FLOW_ORDER.length - 1)) * 100);
@@ -154,9 +193,16 @@ export default function NivelRunner({
   if (!hydrated) return <div className={styles.cargando}>Cargando nivel…</div>;
 
   const nivelXP = state.niveles[meta.id]?.xp ?? 0;
+  // Una vez superado el nivel, se permite navegar libremente por sus secciones
+  // sin tener que volver a completar minijuegos ni bloques.
+  const nivelCompletado = !!state.niveles[meta.id]?.completado;
 
   return (
-    <div className={styles.runner} style={{ ['--acento' as string]: acento } as React.CSSProperties}>
+    <div
+      ref={runnerRef}
+      className={styles.runner}
+      style={{ ['--acento' as string]: acento } as React.CSSProperties}
+    >
       <Destellos />
       {/* Fondo volcánico demoníaco: crossfade orgánico al entrar al boss */}
       <div
@@ -246,6 +292,16 @@ export default function NivelRunner({
         )}
       </div>
 
+      {/* Navegación libre por secciones (solo tras superar el nivel) */}
+      {nivelCompletado && (
+        <FlechasNav
+          idx={idx}
+          navX={navX}
+          onPrev={() => setStep(FLOW_ORDER[Math.max(0, idx - 1)])}
+          onNext={() => setStep(FLOW_ORDER[Math.min(FLOW_ORDER.length - 1, idx + 1)])}
+        />
+      )}
+
       {/* Toasts de XP */}
       <div className={styles.xpLayer}>
         {xpToasts.map((t) => (
@@ -305,6 +361,57 @@ function mjHecho(
   stepKey: string,
 ): boolean {
   return !!state.niveles[nivelId]?.pasosHechos.includes(stepKey);
+}
+
+/** Flechas laterales sin fondo para navegar libremente por las secciones de un nivel ya superado. */
+function FlechasNav({
+  idx,
+  navX,
+  onPrev,
+  onNext,
+}: {
+  idx: number;
+  navX: { left: number; right: number } | null;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  const hayPrev = idx > 0;
+  const hayNext = idx < FLOW_ORDER.length - 1;
+  // Se apoyan justo fuera del borde del contenedor de contenido; ese borde ya
+  // se corre solo cuando la sidebar se expande/retrae.
+  const separacion = 46;
+  const estiloPrev = navX
+    ? { left: `max(6px, ${navX.left - separacion}px)` }
+    : undefined;
+  const estiloNext = navX
+    ? { right: `max(6px, ${navX.right - separacion}px)` }
+    : undefined;
+  return (
+    <>
+      <button
+        className={`${styles.navFlecha} ${styles.navFlechaPrev}`}
+        style={estiloPrev}
+        onClick={onPrev}
+        disabled={!hayPrev}
+        aria-label="Sección anterior"
+      >
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M15 5l-7 7 7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      <button
+        className={`${styles.navFlecha} ${styles.navFlechaNext}`}
+        style={estiloNext}
+        onClick={onNext}
+        disabled={!hayNext}
+        aria-label="Sección siguiente"
+      >
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+    </>
+  );
 }
 
 /** Botón "Continuar" que aparece cuando el minijuego ya fue resuelto. */
