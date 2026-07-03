@@ -72,19 +72,19 @@ export const TEMA_14: NivelContenido = {
     opciones: [
       {
         id: 'o1',
-        texto: 'Barreras culturales y de distribución en las familias reales, no falta de eficacia molecular.',
+        texto: 'Barreras culturales y de distribución, no de eficacia.',
         correcta: true,
         feedback: '¡Correcto! El problema es la implementación (el "cómo"), no la biología (el "qué").',
       },
       {
         id: 'o2',
-        texto: 'La sal no funciona: el ensayo original estaba equivocado.',
+        texto: 'La sal yodada en realidad no funciona: el ensayo original estaba equivocado.',
         correcta: false,
         feedback: 'No. La eficacia estaba probada; el fallo está en la adopción en el mundo real.',
       },
       {
         id: 'o3',
-        texto: 'Hace falta un fármaco más potente.',
+        texto: 'Hace falta un fármaco bastante más potente.',
         correcta: false,
         feedback: 'No. El obstáculo no es la potencia, sino las barreras contextuales de implementación.',
       },
@@ -191,19 +191,19 @@ export const TEMA_14: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Analizar el contexto y las barreras de adopción, no solo la eficacia del test.',
+            texto: 'Analizar el contexto y las barreras de adopción.',
             correcta: true,
             feedback: 'Correcto: el problema es de implementación (el cómo), no de eficacia (el qué).',
           },
           {
             id: 'd1b',
-            texto: 'Fabricar un test aún más preciso.',
+            texto: 'Fabricar un test todavía mucho más preciso que el anterior.',
             correcta: false,
             feedback: 'No. La precisión ya está probada; el obstáculo es la adopción real.',
           },
           {
             id: 'd1c',
-            texto: 'Descartar la comunidad por "difícil".',
+            texto: 'Descartar la comunidad por ser "difícil".',
             correcta: false,
             feedback: 'No. Justamente el objetivo es adaptar la estrategia al contexto.',
           },
@@ -215,13 +215,13 @@ export const TEMA_14: NivelContenido = {
         opciones: [
           {
             id: 'd2a',
-            texto: 'Co-crear: reunir a pobladores, personal y directivos para decidir juntos dónde y cómo usarlo.',
+            texto: 'Co-crear: decidir junto a pobladores y personal.',
             correcta: true,
             feedback: 'Exacto: la co-creación con los actores clave genera adopción sostenible.',
           },
           {
             id: 'd2b',
-            texto: 'Imponer el equipo por decreto, sin consultar a nadie.',
+            texto: 'Imponer el equipo por decreto, sin consultar absolutamente a nadie del lugar.',
             correcta: false,
             feedback: 'No. Imponer a puerta cerrada suele terminar en rechazo y abandono.',
           },
@@ -239,13 +239,13 @@ export const TEMA_14: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'Un diseño híbrido, apoyado en marcos como CFIR/TDF y métodos mixtos.',
+            texto: 'Un diseño híbrido con marcos como CFIR/TDF.',
             correcta: true,
             feedback: 'Correcto: los híbridos miden eficacia clínica y adopción real simultáneamente.',
           },
           {
             id: 'd3b',
-            texto: 'Solo un análisis de laboratorio de la precisión del test.',
+            texto: 'Solo un análisis de laboratorio sobre la precisión del test.',
             correcta: false,
             feedback: 'Insuficiente: no evalúa la adopción en el sistema de salud.',
           },

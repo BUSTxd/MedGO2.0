@@ -127,14 +127,14 @@ export const TEMA_09: NivelContenido = {
     opciones: [
       {
         id: 'o1',
-        texto: 'Primero evaluar validez (sesgos y confusores) y luego interpretar la precisión (p, IC).',
+        texto: 'Primero la validez y luego interpretar la precisión.',
         correcta: true,
         explicacion:
           'Correcto: la validez interna es el requisito. Un p brillante sobre datos sesgados no vale.',
       },
       {
         id: 'o2',
-        texto: 'Creer el p<0.001 de inmediato: si es tan pequeño, el estudio es válido.',
+        texto: 'Creer el p<0.001 de inmediato: si es tan pequeño, el estudio tiene que ser válido.',
         correcta: false,
         explicacion:
           'Incorrecto: un p diminuto no protege del sesgo; podrías estar "precisamente equivocado".',
@@ -199,13 +199,13 @@ export const TEMA_09: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Revisar la validez interna: buscar sesgos y confusores en el diseño.',
+            texto: 'Revisar la validez interna: buscar sesgos y confusores.',
             correcta: true,
             feedback: 'Correcto: la validez es el prerrequisito antes de creer cualquier número.',
           },
           {
             id: 'd1b',
-            texto: 'Ir directo al valor p de la Tabla 2.',
+            texto: 'Ir directo al valor p que aparece en la Tabla 2 del artículo.',
             correcta: false,
             feedback: 'No. La precisión (p, IC) se interpreta DESPUÉS de asegurar la validez.',
           },
@@ -247,13 +247,13 @@ export const TEMA_09: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'Validez primero, precisión después: sin validez, la estadística es humo.',
+            texto: 'Validez primero: sin ella, la estadística es humo.',
             correcta: true,
             feedback: 'Correcto: ese es el modelo mental que consolida todo el curso hasta aquí.',
           },
           {
             id: 'd3b',
-            texto: 'Un p pequeño garantiza que la conclusión es verdadera.',
+            texto: 'Un valor p pequeño ya garantiza que la conclusión es del todo verdadera.',
             correcta: false,
             feedback: 'No. Un p pequeño sobre un estudio sesgado sigue siendo engañoso.',
           },

@@ -220,7 +220,7 @@ export const TEMA_02: NivelContenido = {
           },
           {
             id: 'd1b',
-            texto: 'Muestra del estudio → población accesible → población objetivo',
+            texto: 'Muestra del estudio → muestra objetivo → población accesible → población objetivo',
             correcta: false,
             feedback: 'Al revés. El embudo va de lo amplio a lo concreto, no de lo concreto hacia arriba.',
           },
@@ -262,13 +262,13 @@ export const TEMA_02: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'Una definición operativa: tensiómetro calibrado, brazo y postura estandarizados.',
+            texto: 'Una definición operativa con tensiómetro calibrado y postura fija.',
             correcta: true,
             feedback: 'Correcto: instrumento y procedimiento exactos hacen replicable el estudio.',
           },
           {
             id: 'd3b',
-            texto: 'Medir "como salga" con cualquier aparato disponible.',
+            texto: 'Medir "como salga" con cualquier aparato que esté disponible ese día.',
             correcta: false,
             feedback: 'No. Sin estandarizar el instrumento, otro equipo no podrá repetir tu medición.',
           },

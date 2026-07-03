@@ -209,13 +209,13 @@ export const TEMA_08: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Para equilibrar confusores conocidos y desconocidos entre los grupos.',
+            texto: 'Para equilibrar confusores conocidos y desconocidos.',
             correcta: true,
             feedback: 'Correcto: la aleatorización distribuye hasta lo que no medimos.',
           },
           {
             id: 'd1b',
-            texto: 'Para que el médico elija a los pacientes con mejor pronóstico.',
+            texto: 'Para que el médico pueda elegir a los pacientes con el mejor pronóstico posible.',
             correcta: false,
             feedback: 'Eso sería sesgo de selección; lo contrario de aleatorizar.',
           },
@@ -233,13 +233,13 @@ export const TEMA_08: NivelContenido = {
         opciones: [
           {
             id: 'd2a',
-            texto: 'Crossover con washout: cada paciente es su propio control.',
+            texto: 'Crossover con washout: cada uno es su propio control.',
             correcta: true,
             feedback: 'Correcto: eficiente en muestra, siempre que el washout evite el carryover.',
           },
           {
             id: 'd2b',
-            texto: 'Factorial, aunque las drogas interactúen.',
+            texto: 'Factorial, aun cuando las dos drogas interactúen entre sí biológicamente.',
             correcta: false,
             feedback: 'No: si interactúan, el factorial colapsa. Además aquí pruebas un solo fármaco.',
           },
@@ -257,13 +257,13 @@ export const TEMA_08: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'Cegamiento doble: paciente y evaluador ignoran la asignación.',
+            texto: 'Cegamiento doble: paciente y evaluador no saben.',
             correcta: true,
             feedback: 'Correcto: el doble ciego neutraliza sesgos de expectativa y desempeño.',
           },
           {
             id: 'd3b',
-            texto: 'Decirle a cada paciente exactamente qué recibe.',
+            texto: 'Decirle a cada paciente exactamente qué tratamiento está recibiendo.',
             correcta: false,
             feedback: 'Eso invita al sesgo de expectativa: justo lo que quieres evitar.',
           },

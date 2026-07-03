@@ -207,13 +207,13 @@ export const TEMA_12: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Muestreo propositivo, hasta alcanzar la saturación de significados.',
+            texto: 'Muestreo propositivo, hasta la saturación.',
             correcta: true,
             feedback: 'Correcto: eliges informantes clave y paras cuando no surge nada nuevo.',
           },
           {
             id: 'd1b',
-            texto: 'Muestreo aleatorio de 1000 personas con encuesta cerrada.',
+            texto: 'Un muestreo aleatorio de 1000 personas con una encuesta cerrada.',
             correcta: false,
             feedback: 'Eso es cuantitativo; no captura el "por qué" en profundidad.',
           },
@@ -231,13 +231,13 @@ export const TEMA_12: NivelContenido = {
         opciones: [
           {
             id: 'd2a',
-            texto: 'Triangulación: combinar entrevistas, observación y documentos.',
+            texto: 'Triangulación: entrevistas, observación y documentos.',
             correcta: true,
             feedback: 'Exacto: cruzar técnicas equilibra e invalida suposiciones.',
           },
           {
             id: 'd2b',
-            texto: 'Usar solo tu impresión personal como dato único.',
+            texto: 'Usar solo tu propia impresión personal como único dato del estudio.',
             correcta: false,
             feedback: 'No. Eso es lo contrario del rigor cualitativo.',
           },
@@ -255,13 +255,13 @@ export const TEMA_12: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'Métodos mixtos: una encuesta (cuanti) que guíe entrevistas a profundidad (cuali).',
+            texto: 'Métodos mixtos: una encuesta que guíe las entrevistas.',
             correcta: true,
             feedback: 'Correcto: mixtos responden "cuántos" y "por qué" a la vez.',
           },
           {
             id: 'd3b',
-            texto: 'Descartar lo cuantitativo por completo.',
+            texto: 'Descartar por completo la parte cuantitativa del estudio.',
             correcta: false,
             feedback: 'No. Si quieres magnitud, lo cuantitativo aporta ese "cuántos".',
           },

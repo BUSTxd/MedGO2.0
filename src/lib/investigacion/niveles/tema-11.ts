@@ -201,19 +201,19 @@ export const TEMA_11: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Chi-cuadrado (o Fisher si el n es pequeño): dos variables categóricas.',
+            texto: 'Chi-cuadrado, o Fisher si el n es pequeño.',
             correcta: true,
             feedback: 'Correcto: comparas proporciones en una tabla de contingencia.',
           },
           {
             id: 'd1b',
-            texto: 'T de Student.',
+            texto: 'La T de Student de un solo grupo.',
             correcta: false,
             feedback: 'No. La T compara medias numéricas, no proporciones categóricas.',
           },
           {
             id: 'd1c',
-            texto: 'Correlación de Pearson.',
+            texto: 'La correlación de Pearson aplicada a las dos variables.',
             correcta: false,
             feedback: 'No. Pearson es para dos variables numéricas.',
           },
@@ -225,19 +225,19 @@ export const TEMA_11: NivelContenido = {
         opciones: [
           {
             id: 'd2a',
-            texto: 'T de Student: diferencia de medias entre dos grupos, variable numérica normal.',
+            texto: 'T de Student: compara dos medias.',
             correcta: true,
             feedback: 'Exacto. Si no fuera normal, usarías Mann-Whitney.',
           },
           {
             id: 'd2b',
-            texto: 'Chi-cuadrado.',
+            texto: 'La prueba de Chi-cuadrado.',
             correcta: false,
             feedback: 'No. El colesterol es numérico; Chi-cuadrado es para categóricas.',
           },
           {
             id: 'd2c',
-            texto: 'Correlación de Spearman.',
+            texto: 'La correlación de Spearman entre los dos grupos numéricos del estudio.',
             correcta: false,
             feedback: 'No. Aquí comparas grupos, no dos numéricas continuas entre sí.',
           },
@@ -249,13 +249,13 @@ export const TEMA_11: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'Asociación cruda fuerte; candidata a ajustarse por confusores en el multivariado.',
+            texto: 'Asociación cruda fuerte; a ajustar en el multivariado.',
             correcta: true,
             feedback: 'Correcto: el bivariado es un filtro; falta ajustar antes de hablar de efecto independiente.',
           },
           {
             id: 'd3b',
-            texto: 'Queda demostrada la causalidad directa.',
+            texto: 'Queda demostrada de forma directa la causalidad entre ambas variables.',
             correcta: false,
             feedback: 'No. Es una asociación cruda; podría deberse a confusión.',
           },

@@ -176,13 +176,13 @@ export const TEMA_07: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Casos y controles: parte de los pocos enfermos y mira su exposición pasada.',
+            texto: 'Casos y controles: parte de los enfermos y mira su pasado.',
             correcta: true,
             feedback: 'Correcto: ideal para enfermedades raras, sin esperar años a que aparezcan.',
           },
           {
             id: 'd1b',
-            texto: 'Cohorte: seguir a miles de sanos por décadas.',
+            texto: 'Cohorte: habría que seguir a miles de personas sanas durante varias décadas.',
             correcta: false,
             feedback: 'Ineficiente: necesitarías una muestra enorme y mucho tiempo para ver casos raros.',
           },
@@ -200,13 +200,13 @@ export const TEMA_07: NivelContenido = {
         opciones: [
           {
             id: 'd2a',
-            texto: 'Cohorte: parte de sanos expuestos y observa aparecer el evento en el futuro.',
+            texto: 'Cohorte: parte de sanos expuestos y espera el evento.',
             correcta: true,
             feedback: 'Exacto: la cohorte establece temporalidad y reporta incidencia y RR.',
           },
           {
             id: 'd2b',
-            texto: 'Transversal: mide todo a la vez.',
+            texto: 'Transversal: mide la exposición y el evento todo a la vez, en un mismo momento.',
             correcta: false,
             feedback: 'No. El transversal no distingue qué vino primero: temporalidad incierta.',
           },
@@ -224,13 +224,13 @@ export const TEMA_07: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'Reporte / serie de casos: describe los primeros casos y genera la hipótesis.',
+            texto: 'Serie de casos: describe los primeros y genera hipótesis.',
             correcta: true,
             feedback: 'Correcto: como talidomida, la serie de casos es la vanguardia del descubrimiento.',
           },
           {
             id: 'd3b',
-            texto: 'Un ECA de inmediato.',
+            texto: 'Un ensayo clínico aleatorizado puesto en marcha de inmediato en el hospital.',
             correcta: false,
             feedback: 'No sería ético ni factible exponer deliberadamente; primero se alerta con casos.',
           },

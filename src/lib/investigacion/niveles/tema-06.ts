@@ -129,13 +129,13 @@ export const TEMA_06: NivelContenido = {
     opciones: [
       {
         id: 'o1',
-        texto: 'Riesgo Relativo (RR): hay seguimiento prospectivo e incidencia real.',
+        texto: 'Riesgo Relativo: hay seguimiento prospectivo e incidencia.',
         correcta: true,
         feedback: '¡Correcto! Partir de la exposición y seguir en el tiempo permite calcular incidencia y RR.',
       },
       {
         id: 'o2',
-        texto: 'Odds Ratio (OR), porque siempre se usa OR en epidemiología.',
+        texto: 'Odds Ratio, porque en epidemiología siempre se usa el OR sin excepción.',
         correcta: false,
         feedback: 'No. El OR se reserva para casos y controles o regresión logística, sin incidencia real.',
       },
@@ -191,13 +191,13 @@ export const TEMA_06: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Hay menos casos nuevos, pero los pacientes viven más, así que el total acumulado sigue alto.',
+            texto: 'Hay menos casos nuevos, pero viven más, así que el total sigue alto.',
             correcta: true,
             feedback: 'Correcto: menos incidencia + mayor supervivencia = prevalencia sostenida.',
           },
           {
             id: 'd1b',
-            texto: 'Es imposible: si baja la incidencia debe bajar la prevalencia de inmediato.',
+            texto: 'Es imposible: si baja la incidencia, la prevalencia debe bajar de inmediato con ella.',
             correcta: false,
             feedback: 'No. La prevalencia acumula casos antiguos; puede seguir alta pese a menos casos nuevos.',
           },
@@ -215,13 +215,13 @@ export const TEMA_06: NivelContenido = {
         opciones: [
           {
             id: 'd2a',
-            texto: 'Odds Ratio (OR): parte del enfermo y mira al pasado, sin incidencia real.',
+            texto: 'Odds Ratio: parte del enfermo y mira al pasado.',
             correcta: true,
             feedback: 'Exacto: casos y controles → OR.',
           },
           {
             id: 'd2b',
-            texto: 'Riesgo Relativo (RR), porque es más fácil de interpretar.',
+            texto: 'Riesgo Relativo, porque siempre resulta mucho más fácil de interpretar.',
             correcta: false,
             feedback: 'No. Sin incidencia (no hay seguimiento prospectivo) no se calcula RR.',
           },
@@ -239,13 +239,13 @@ export const TEMA_06: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'Pedir el IC 95%: sin él no conozco la precisión ni la significancia del efecto.',
+            texto: 'Pedir el IC 95%: sin él no sé la precisión.',
             correcta: true,
             feedback: 'Correcto: toda medida de efecto necesita su IC para interpretarse.',
           },
           {
             id: 'd3b',
-            texto: 'Aceptarlo tal cual: el número basta.',
+            texto: 'Aceptarlo tal cual, porque con el número puntual ya es más que suficiente.',
             correcta: false,
             feedback: 'No. Un RR sin IC no dice cuán precisa o incierta es la estimación.',
           },

@@ -226,19 +226,19 @@ export const TEMA_04: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Error Tipo I (falso positivo): se rechazó H₀ siendo verdadera.',
+            texto: 'Error Tipo I: se rechazó H₀ siendo verdadera.',
             correcta: true,
             feedback: 'Correcto: es la alarma que miente, un falso positivo.',
           },
           {
             id: 'd1b',
-            texto: 'Error Tipo II (falso negativo).',
+            texto: 'Error Tipo II, un falso negativo.',
             correcta: false,
             feedback: 'No. El Tipo II es NO ver un efecto real; aquí se "vio" un efecto inexistente.',
           },
           {
             id: 'd1c',
-            texto: 'Ningún error: si el estudio lo dice, es cierto.',
+            texto: 'Ningún error: si el propio estudio lo afirma, entonces debe ser cierto.',
             correcta: false,
             feedback: 'No. Declarar un efecto inexistente es precisamente un Error Tipo I.',
           },
@@ -250,13 +250,13 @@ export const TEMA_04: NivelContenido = {
         opciones: [
           {
             id: 'd2a',
-            texto: 'Falta de poder → posible Error Tipo II: no detectó un efecto que quizá sí existe.',
+            texto: 'Falta de poder: posible Error Tipo II, no vio un efecto real.',
             correcta: true,
             feedback: 'Exacto: muestra minúscula = bajo poder = falso negativo probable.',
           },
           {
             id: 'd2b',
-            texto: 'Está demostrado que los tratamientos son idénticos.',
+            texto: 'Queda demostrado que ambos tratamientos son exactamente idénticos entre sí.',
             correcta: false,
             feedback: 'No. "No rechazar H₀" no prueba igualdad; puede ser falta de poder.',
           },
@@ -274,13 +274,13 @@ export const TEMA_04: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'Aumentar el tamaño de muestra para ganar poder estadístico.',
+            texto: 'Aumentar la muestra para ganar poder.',
             correcta: true,
             feedback: 'Correcto: más muestra sube el poder (1 − β) sin relajar α.',
           },
           {
             id: 'd3b',
-            texto: 'Subir el umbral α a 0.20 para "encontrar algo".',
+            texto: 'Subir el umbral α hasta 0.20 para lograr "encontrar algo" significativo.',
             correcta: false,
             feedback: 'No. Eso dispara los falsos positivos (Error Tipo I).',
           },

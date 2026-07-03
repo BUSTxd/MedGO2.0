@@ -179,13 +179,13 @@ export const TEMA_10: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Describir cada variable por separado (análisis univariado) según su escala.',
+            texto: 'Describir cada variable por separado según su escala.',
             correcta: true,
             feedback: 'Correcto: el primer análisis siempre es descriptivo.',
           },
           {
             id: 'd1b',
-            texto: 'Correr de inmediato una regresión multivariada.',
+            texto: 'Correr de inmediato una regresión multivariada con todas las variables.',
             correcta: false,
             feedback: 'No. Sin describir primero, no detectas errores ni entiendes tus variables.',
           },
@@ -203,13 +203,13 @@ export const TEMA_10: NivelContenido = {
         opciones: [
           {
             id: 'd2a',
-            texto: 'Frecuencias absolutas y relativas (tabla o barras).',
+            texto: 'Frecuencias absolutas y relativas en tabla.',
             correcta: true,
             feedback: 'Exacto: las cualitativas se resumen en proporciones.',
           },
           {
             id: 'd2b',
-            texto: 'La media y la desviación estándar del diagnóstico.',
+            texto: 'La media y la desviación estándar del diagnóstico registrado.',
             correcta: false,
             feedback: 'No tiene sentido promediar categorías nominales.',
           },
@@ -227,13 +227,13 @@ export const TEMA_10: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'No: °C es escala de intervalo (cero relativo); no se interpretan razones como "el doble".',
+            texto: 'No: °C es de intervalo, su cero es relativo; no existe "el doble".',
             correcta: true,
             feedback: 'Correcto: solo en escala de razón (cero real) tiene sentido decir "el doble".',
           },
           {
             id: 'd3b',
-            texto: 'Sí, 40 es el doble de 20 en cualquier escala.',
+            texto: 'Sí, 40 grados es exactamente el doble de 20 en cualquier escala de medición.',
             correcta: false,
             feedback: 'No. En intervalo el cero es relativo; "el doble" no aplica.',
           },

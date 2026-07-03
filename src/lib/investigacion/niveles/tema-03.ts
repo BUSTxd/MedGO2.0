@@ -175,14 +175,14 @@ export const TEMA_03: NivelContenido = {
     opciones: [
       {
         id: 'o1',
-        texto: 'El tabaquismo es un confusor: los fumadores toman más café y fuman más.',
+        texto: 'El tabaquismo confunde: los fumadores toman más café.',
         correcta: true,
         feedback:
           '¡Correcto! El cigarrillo se asocia tanto al café como al cáncer: distorsiona la asociación aparente.',
       },
       {
         id: 'o2',
-        texto: 'El café causa cáncer directamente; el estudio lo demuestra.',
+        texto: 'El café causa cáncer de forma directa y este estudio lo deja demostrado.',
         correcta: false,
         feedback:
           'No. Un estudio observacional con posibles confusores no demuestra causalidad directa.',
@@ -240,13 +240,13 @@ export const TEMA_03: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Sesgo de medición: un proxy estricto distorsiona sistemáticamente la variable.',
+            texto: 'Sesgo de medición: un proxy estricto deforma la variable.',
             correcta: true,
             feedback: 'Correcto: es un error sistemático de medición, no azar.',
           },
           {
             id: 'd1b',
-            texto: 'Nada: el distrito mide la pobreza perfectamente.',
+            texto: 'Nada en absoluto: el distrito mide la pobreza de forma perfecta y sin error.',
             correcta: false,
             feedback: 'No. El distrito es un proxy grueso; introduce sesgo de medición.',
           },
@@ -264,13 +264,13 @@ export const TEMA_03: NivelContenido = {
         opciones: [
           {
             id: 'd2a',
-            texto: 'Factores de confusión: se asocian a la exposición y al desenlace.',
+            texto: 'Factores de confusión: se asocian a exposición y desenlace.',
             correcta: true,
             feedback: 'Exacto: dieta y tabaco confunden la relación ejercicio–corazón.',
           },
           {
             id: 'd2b',
-            texto: 'Son parte de la exposición "ejercicio", así que se ignoran.',
+            texto: 'Son parte de la propia exposición "ejercicio", de modo que se pueden ignorar.',
             correcta: false,
             feedback: 'No. Son variables externas asociadas a ambos lados: confusores, no la exposición.',
           },
@@ -288,13 +288,13 @@ export const TEMA_03: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'Con un ensayo aleatorizado (ECA): la aleatorización equilibra hasta lo desconocido.',
+            texto: 'Con un ECA: la aleatorización equilibra hasta lo desconocido.',
             correcta: true,
             feedback: 'Correcto: solo la aleatorización distribuye los confusores desconocidos.',
           },
           {
             id: 'd3b',
-            texto: 'Ajustando estadísticamente todas las variables, incluidas las no medidas.',
+            texto: 'Ajustando en el análisis todas las variables, incluso aquellas que no se midieron.',
             correcta: false,
             feedback: 'No se puede: el ajuste solo funciona con confusores medidos.',
           },

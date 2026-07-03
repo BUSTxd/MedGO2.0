@@ -145,21 +145,21 @@ export const TEMA_05: NivelContenido = {
     opciones: [
       {
         id: 'o1',
-        texto: 'A es preciso pero de magnitud trivial; B tiene gran magnitud pero poca precisión.',
+        texto: 'A es preciso pero trivial; B es grande pero impreciso.',
         correcta: true,
         feedback:
           '¡Correcto! A: significativo e irrelevante. B: efecto grande pero impreciso (quizá muestra pequeña).',
       },
       {
         id: 'o2',
-        texto: 'A es mejor porque su p es más pequeño.',
+        texto: 'A es la mejor opción porque su valor p resulta bastante más pequeño.',
         correcta: false,
         feedback:
           'No. Un p menor no implica mejor efecto clínico: A apenas baja 1 mmHg.',
       },
       {
         id: 'o3',
-        texto: 'B no sirve porque p>0.05.',
+        texto: 'B no sirve para nada porque su p es mayor que 0.05.',
         correcta: false,
         feedback:
           'Cuidado: B podría tener un efecto real grande; le falta precisión, no necesariamente efecto.',
@@ -210,13 +210,13 @@ export const TEMA_05: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Asociación fuerte y precisa: el IC es estrecho y no incluye el 1.',
+            texto: 'Asociación fuerte y precisa: IC estrecho que no toca el 1.',
             correcta: true,
             feedback: 'Correcto: efecto grande, buena precisión y estadísticamente significativo.',
           },
           {
             id: 'd1b',
-            texto: 'No se puede interpretar sin el valor p exacto.',
+            texto: 'No se puede interpretar de ningún modo si no tenemos el valor p exacto.',
             correcta: false,
             feedback: 'El IC ya te dice precisión y significancia; el p refuerza, no reemplaza.',
           },
@@ -234,13 +234,13 @@ export const TEMA_05: NivelContenido = {
         opciones: [
           {
             id: 'd2a',
-            texto: 'Es significativo pero de magnitud mínima: relevancia clínica dudosa.',
+            texto: 'Significativo pero mínimo: relevancia clínica dudosa.',
             correcta: true,
             feedback: 'Exacto: significancia estadística sin magnitud clínica apreciable.',
           },
           {
             id: 'd2b',
-            texto: 'Es un efecto enorme porque p<0.05.',
+            texto: 'Se trata de un efecto enorme, y lo confirma un valor p menor que 0.05.',
             correcta: false,
             feedback: 'No. Un OR de 1.05 es un efecto pequeñísimo, aunque sea significativo.',
           },
@@ -258,13 +258,13 @@ export const TEMA_05: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'Efecto posiblemente real pero impreciso; el IC ancho incluye el 1.',
+            texto: 'Quizá real pero impreciso: el IC ancho incluye el 1.',
             correcta: true,
             feedback: 'Correcto: falta precisión (IC ancho) y "sin efecto" es compatible con los datos.',
           },
           {
             id: 'd3b',
-            texto: 'Está demostrado que no existe ninguna asociación.',
+            texto: 'Queda demostrado que no existe ninguna asociación entre las variables.',
             correcta: false,
             feedback: 'No se demuestra ausencia: solo hay imprecisión, quizá por muestra pequeña.',
           },

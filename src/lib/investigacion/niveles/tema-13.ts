@@ -72,13 +72,13 @@ export const TEMA_13: NivelContenido = {
     opciones: [
       {
         id: 'o1',
-        texto: 'Causa necesaria pero no suficiente: hace falta, pero requiere covariables como desnutrición o inmunidad baja.',
+        texto: 'Causa necesaria pero no suficiente: hace falta, pero requiere covariables.',
         correcta: true,
         feedback: '¡Correcto! Sin el bacilo no hay TBC (necesaria), pero él solo no basta (no suficiente).',
       },
       {
         id: 'o2',
-        texto: 'Causa suficiente: su sola presencia siempre produce la enfermedad.',
+        texto: 'Es una causa suficiente: por sí sola y sin nada más, siempre produce la enfermedad.',
         correcta: false,
         feedback: 'No. Muchos portan el bacilo sin enfermar; no es suficiente por sí solo.',
       },
@@ -195,19 +195,19 @@ export const TEMA_13: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Regresión de Cox: variable dependiente = tiempo hasta el evento (reporta HR ajustado).',
+            texto: 'Regresión de Cox: la dependiente es el tiempo hasta el evento.',
             correcta: true,
             feedback: 'Correcto: tiempo hasta el evento → Cox, que además maneja censuras.',
           },
           {
             id: 'd1b',
-            texto: 'Regresión logística.',
+            texto: 'Una regresión logística sobre la variable dependiente del estudio.',
             correcta: false,
             feedback: 'No. La logística es para desenlaces dicotómicos, no para tiempo de supervivencia.',
           },
           {
             id: 'd1c',
-            texto: 'Regresión lineal.',
+            texto: 'Una regresión lineal simple.',
             correcta: false,
             feedback: 'No. La lineal es para desenlaces continuos como presión o peso, no "tiempo hasta evento" con censura.',
           },
@@ -219,13 +219,13 @@ export const TEMA_13: NivelContenido = {
         opciones: [
           {
             id: 'd2a',
-            texto: 'Para ajustar por confusores medidos y aislar el efecto independiente del fármaco.',
+            texto: 'Para ajustar confusores y aislar el efecto del fármaco.',
             correcta: true,
             feedback: 'Exacto: el ajuste neutraliza el ruido de las covariables medidas.',
           },
           {
             id: 'd2b',
-            texto: 'Para inflar artificialmente la significancia.',
+            texto: 'Para inflar de forma artificial la significancia estadística del resultado.',
             correcta: false,
             feedback: 'No. El objetivo es aislar el efecto real, no manipular el p.',
           },
@@ -243,19 +243,19 @@ export const TEMA_13: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'No: solo ajusta confusores medidos; no cura sesgos ni ajusta lo que no se midió.',
+            texto: 'No: solo ajusta lo medido; no cura sesgos.',
             correcta: true,
             feedback: 'Correcto: basura en los datos = basura en el modelo, por muy sofisticado que sea.',
           },
           {
             id: 'd3b',
-            texto: 'Sí: con suficientes variables, la regresión lo arregla todo.',
+            texto: 'Sí: con suficientes variables en el modelo, la regresión lo arregla todo.',
             correcta: false,
             feedback: 'Falso. Ningún modelo repara un sesgo de selección o medición.',
           },
           {
             id: 'd3c',
-            texto: 'Sí, si la muestra es muy grande.',
+            texto: 'Sí, siempre que la muestra sea muy grande.',
             correcta: false,
             feedback: 'No. Más muestra no corrige sesgos ni confusores no medidos.',
           },

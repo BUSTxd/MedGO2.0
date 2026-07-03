@@ -253,14 +253,14 @@ export const TEMA_01: NivelContenido = {
         opciones: [
           {
             id: 'd1a',
-            texto: 'Población: niños hospitalizados · Exposición: tono de piel · Evento: error del pulsioxímetro',
+            texto: 'Población: niños hospitalizados · Exposición: tono de piel · Evento: error del oxímetro',
             correcta: true,
             feedback:
               '¡Correcto! La exposición es una característica (tono de piel) y el evento es el error de medición, no la enfermedad.',
           },
           {
             id: 'd1b',
-            texto: 'Población: pulsioxímetros · Exposición: hospital · Evento: saturación',
+            texto: 'Población: los oxímetros del servicio · Exposición: el turno del hospital · Evento: la saturación baja mostrada',
             correcta: false,
             feedback:
               'No. La población son personas, no aparatos; el hospital es el escenario, no la exposición.',
@@ -307,14 +307,14 @@ export const TEMA_01: NivelContenido = {
         opciones: [
           {
             id: 'd3a',
-            texto: 'Un protocolo estandarizado: instrumento, escala (ITA) y procedimiento exactos.',
+            texto: 'Un protocolo con instrumento, escala ITA y pasos fijos.',
             correcta: true,
             feedback:
               'Correcto. La aproximación sistemática hace tu estudio reproducible y creíble.',
           },
           {
             id: 'd3b',
-            texto: 'Medir "a ojo" el tono de piel para ir más rápido.',
+            texto: 'Medir el tono de piel "a ojo" para avanzar más rápido en la consulta.',
             correcta: false,
             feedback:
               'No. Medir sin una escala objetiva introduce sesgo y hace irreproducible el estudio.',
