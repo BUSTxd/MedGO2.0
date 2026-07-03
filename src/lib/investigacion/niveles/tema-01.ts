@@ -217,7 +217,7 @@ export const TEMA_01: NivelContenido = {
       {
         id: 'exposicion',
         icono: 'sol',
-        titulo: 'Exposición',
+        titulo: 'Exposición (V. Independiente)',
         definicion: 'La característica o factor cuyo efecto se quiere evaluar.',
         ejemploAcademico:
           'En oximetría, la exposición es el tono de piel (medido por el ángulo ITA), no la enfermedad.',
@@ -229,7 +229,7 @@ export const TEMA_01: NivelContenido = {
       {
         id: 'evento',
         icono: 'diana',
-        titulo: 'Evento (desenlace)',
+        titulo: 'Evento (V. Dependiente)',
         definicion: 'El resultado o desenlace que se mide para ver si la exposición influye.',
         ejemploAcademico:
           'El evento es el error del pulsioxímetro: cuánto se aleja de la saturación real medida en sangre.',
