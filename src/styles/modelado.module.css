@@ -1,0 +1,411 @@
+/* ── Editor de Modelado 3D ──────────────────────────────────────────── */
+
+.wrapper {
+  --mod-texto: #1e2447;
+  --mod-muted: rgba(30, 36, 71, 0.55);
+  --mod-borde: rgba(30, 36, 71, 0.12);
+  --mod-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(228, 238, 252, 0.65));
+  --mod-glass-borde: rgba(255, 255, 255, 0.7);
+  --mod-lienzo: linear-gradient(160deg, #eef3fb 0%, #e3ecf9 45%, #dfe7f7 100%);
+  --mod-acento: #3b9edd;
+  --mod-panel-bg: rgba(255, 255, 255, 0.82);
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: calc(100vh - 96px);
+  min-height: 560px;
+  color: var(--mod-texto);
+}
+
+:global(.dark-mode) .wrapper {
+  --mod-texto: #f0eeff;
+  --mod-muted: rgba(240, 238, 255, 0.5);
+  --mod-borde: rgba(255, 255, 255, 0.1);
+  --mod-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(59, 158, 221, 0.08));
+  --mod-glass-borde: rgba(255, 255, 255, 0.12);
+  --mod-lienzo: linear-gradient(160deg, #0d0b28 0%, #131040 55%, #0f0d33 100%);
+  --mod-panel-bg: rgba(19, 16, 64, 0.85);
+}
+
+/* ── Cabecera ── */
+
+.cabecera {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.titular {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mod-acento);
+}
+
+.titulo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.modos {
+  display: flex;
+  border: 1px solid var(--mod-borde);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.btnModo {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 7px 12px;
+  border: none;
+  background: transparent;
+  color: var(--mod-muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btnModo:hover { color: var(--mod-texto); }
+
+.btnModo:disabled,
+.btnModo:disabled:hover {
+  color: var(--mod-muted);
+  opacity: 0.4;
+  cursor: default;
+}
+
+.btnModoActivo,
+.btnModoActivo:hover {
+  background: var(--mod-acento);
+  color: #fff;
+}
+
+.btnAccion {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 7px 12px;
+  border: 1px solid var(--mod-borde);
+  border-radius: 10px;
+  background: var(--mod-glass);
+  color: var(--mod-texto);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.btnAccion:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(59, 158, 221, 0.18);
+}
+
+.btnAccion:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.btnPeligro:hover:not(:disabled) {
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #ef4444;
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.15);
+}
+
+/* ── Toolbar de figuras ── */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--mod-glass-borde);
+  border-radius: 16px;
+  background: var(--mod-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  flex-wrap: wrap;
+}
+
+.figuraBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 68px;
+  padding: 8px 4px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  color: var(--mod-texto);
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.figuraBtn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(59, 158, 221, 0.4);
+  box-shadow: 0 8px 18px rgba(59, 158, 221, 0.16);
+}
+
+.figuraBtn:active { cursor: grabbing; }
+
+.figuraIcono {
+  width: 30px;
+  height: 30px;
+  color: var(--mod-acento);
+}
+
+.figuraIcono svg {
+  width: 100%;
+  height: 100%;
+}
+
+.figuraLabel {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--mod-muted);
+}
+
+.figuraBtn:hover .figuraLabel { color: var(--mod-texto); }
+
+.ayuda {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: var(--mod-muted);
+  max-width: 260px;
+  line-height: 1.35;
+}
+
+/* ── Lienzo ── */
+
+.lienzo {
+  position: relative;
+  flex: 1;
+  min-height: 320px;
+  border-radius: 20px;
+  border: 1px solid var(--mod-glass-borde);
+  background: var(--mod-lienzo);
+  overflow: hidden;
+}
+
+/* ── Panel de propiedades ── */
+
+.panel {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 232px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--mod-glass-borde);
+  background: var(--mod-panel-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 32px rgba(20, 30, 70, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.panelTitulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.panelBadge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 99px;
+  background: rgba(59, 158, 221, 0.15);
+  color: var(--mod-acento);
+}
+
+.panelSeccion {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.panelLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mod-muted);
+}
+
+.btnMini {
+  font-family: inherit;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+  padding: 2px 8px;
+  border: 1px solid var(--mod-borde);
+  border-radius: 99px;
+  background: transparent;
+  color: var(--mod-acento);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btnMini:hover {
+  background: rgba(59, 158, 221, 0.12);
+}
+
+.panelValor {
+  font-style: normal;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mod-acento);
+  min-width: 34px;
+  text-align: right;
+}
+
+.valorWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--mod-acento);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.valorInput {
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  width: 42px;
+  padding: 2px 4px;
+  border: 1px solid var(--mod-borde);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--mod-acento);
+  text-align: right;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.valorInput::-webkit-inner-spin-button,
+.valorInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.valorInput:focus {
+  outline: none;
+  border-color: var(--mod-acento);
+}
+
+.paleta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.12s ease;
+}
+
+.swatch:hover { transform: scale(1.15); }
+
+.colorInput {
+  width: 30px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--mod-borde);
+  border-radius: 7px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slider {
+  width: 100%;
+  accent-color: var(--mod-acento);
+  cursor: pointer;
+}
+
+.ejeFila {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ejeLabel {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--mod-muted);
+  width: 52px;
+  flex-shrink: 0;
+}
+
+/* ── Loader del dynamic import ── */
+
+.cargando {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: calc(100vh - 96px);
+  min-height: 320px;
+  font-size: 0.9rem;
+  color: var(--muted, rgba(30, 36, 71, 0.55));
+}
+
+.cargandoDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3b9edd;
+  animation: cargandoPulso 1s ease-in-out infinite;
+}
+
+@keyframes cargandoPulso {
+  0%, 100% { transform: scale(0.7); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 700px) {
+  .wrapper { height: auto; }
+  .lienzo { min-height: 420px; height: 60vh; }
+  .ayuda { display: none; }
+  .panel { width: 200px; }
+}

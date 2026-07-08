@@ -110,6 +110,18 @@ interface Props {
   isAdmin?: boolean;
 }
 
+const MODELADO_ITEM = {
+  label: 'Modelado',
+  href: '/dashboard/modelado',
+  icon: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path stroke="currentColor" strokeWidth="2" strokeLinejoin="round" d="M12 2.5L20.5 7.25V16.75L12 21.5L3.5 16.75V7.25L12 2.5Z" />
+      <path stroke="currentColor" strokeWidth="2" strokeLinejoin="round" d="M3.5 7.25L12 12L20.5 7.25" />
+      <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M12 12V21.5" />
+    </svg>
+  ),
+};
+
 const ADMIN_ITEM = {
   label: 'Admin',
   href: '/dashboard/admin',
@@ -123,7 +135,7 @@ const ADMIN_ITEM = {
 export default function DashboardSidebar({ collapsed, onToggle, darkMode, onToggleDark, isAdmin = false }: Props) {
   const pathname = usePathname();
 
-  const navItems = isAdmin ? [...NAV, ADMIN_ITEM] : NAV;
+  const navItems = isAdmin ? [...NAV, MODELADO_ITEM, ADMIN_ITEM] : NAV;
 
   const handleSignOut = async () => {
     const supabase = createClient();
