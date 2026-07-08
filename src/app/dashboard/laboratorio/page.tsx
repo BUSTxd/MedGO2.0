@@ -114,6 +114,7 @@ const LAB_TOPICS: Topic[] = [
       </svg>
     ),
     experiments: [
+      { name: 'Polígono de Willis 3D', desc: 'Vascularización de la base del encéfalo: el anillo, sus ramas y el sistema vertebrobasilar en un modelo rotatorio', color: '#c22222', href: '/dashboard/laboratorio/poligono-willis' },
       { name: 'Tronco encefálico', desc: 'Compara las vistas del cadáver con la maqueta 3D rotatoria; colapsa cada panel a tu gusto', color: '#3b9edd', href: '/dashboard/laboratorio/tronco-encefalico' },
       { name: 'Biomecánica extraocular', desc: 'Activa los músculos extraoculares y observa el movimiento del globo, individual y por grupo vectorial', color: '#3b9edd', href: '/dashboard/laboratorio/biomecanica-extraocular' },
       { name: 'Médula Espinal 3D', desc: 'Corte transversal interactivo: láminas de Rexed, tractos, meninges y síndromes clínicos', color: '#2DC99A', href: '/dashboard/laboratorio/medula-espinal' },
