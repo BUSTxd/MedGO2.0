@@ -1,58 +1,54 @@
+import Image from 'next/image';
 import styles from '@/styles/consequences.module.css';
 
-const filas = [
-  {
-    sin: 'Buscas PDFs en 5 chats antes de empezar a estudiar.',
-    con: 'Abres la clase del día y todo está ahí: subtemas, material, prácticas.',
-  },
-  {
-    sin: 'El sílabo te dice "Micología", tú adivinas qué hongos entran.',
-    con: 'Cada clase con sus subtemas, fechas, docentes y prácticas detalladas.',
-  },
-  {
-    sin: 'Llegas al práctico sin saber distinguir Candida de Cryptococcus.',
-    con: 'Practicas en el atlas con imágenes reales antes del laboratorio.',
-  },
-  {
-    sin: 'El día antes del examen recién reconstruyes lo visto en 12 semanas.',
-    con: 'Sabes qué viste, qué te falta y qué viene la próxima semana.',
-  },
-  {
-    sin: 'Estudias más horas con peor rendimiento.',
-    con: 'Estudias dirigido al sílabo real. Menos esfuerzo, más cobertura.',
-  },
+const CheckIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12l5 5L20 7" />
+  </svg>
+);
+
+const ventajas = [
+  'Miles de fotografías microscópicas y clínicas reales para entrenar el ojo.',
+  'Atlas y laboratorios interactivos: aprendes haciendo, no solo leyendo.',
+  'Modelos 3D que exploras a tu ritmo, desde cualquier dispositivo.',
 ];
 
 export default function Consequences() {
   return (
     <section id="comparacion">
       <div className="section-inner reveal">
-        <span className="section-tag" style={{ color: '#a78bfa' }}>El antes y el después</span>
-        <h2 className="section-title">
-          Dos formas de cursar el ciclo.<br />
-          <em style={{ fontStyle: 'normal', color: '#a78bfa' }}>Tú eliges cuál.</em>
-        </h2>
-
-        <div className={styles.table}>
-          <div className={`${styles.header} ${styles.headerSin}`}>
-            <span className={styles.headerLabel}>Sin MedGO</span>
-          </div>
-          <div className={`${styles.header} ${styles.headerCon}`}>
-            <span className={styles.headerLabel}>Con MedGO</span>
+        <div className={styles.split}>
+          <div className={styles.visual}>
+            <Image
+              src="/assets/tecnologia-interactiva.avif"
+              alt="Tecnología interactiva de MedGO con miles de imágenes médicas reales"
+              width={1292}
+              height={855}
+              sizes="(max-width: 900px) 90vw, 520px"
+              className={styles.shot}
+            />
           </div>
 
-          {filas.map((f, i) => (
-            <div key={i} className={styles.row}>
-              <div className={`${styles.cell} ${styles.cellSin}`}>
-                <span className={styles.dot} aria-hidden>×</span>
-                <span>{f.sin}</span>
-              </div>
-              <div className={`${styles.cell} ${styles.cellCon}`}>
-                <span className={styles.dot} aria-hidden>✓</span>
-                <span>{f.con}</span>
-              </div>
-            </div>
-          ))}
+          <div className={styles.copy}>
+            <span className="section-tag" style={{ color: '#a78bfa' }}>Ventaja tecnológica</span>
+            <h2 className={styles.heading}>
+              Tecnología interactiva y<br />
+              <em style={{ fontStyle: 'normal', color: '#a78bfa' }}>miles de imágenes reales.</em>
+            </h2>
+            <p className={styles.sub}>
+              El médico que se apoya en la tecnología aprende más rápido, retiene mejor y llega
+              más preparado. Con atlas interactivos, modelos 3D y miles de fotografías reales,
+              tendrás una ventaja que quienes solo estudian del PDF no tienen.
+            </p>
+            <ul className={styles.list}>
+              {ventajas.map((v) => (
+                <li key={v} className={styles.item}>
+                  <span className={styles.check}><CheckIcon /></span>
+                  <span>{v}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

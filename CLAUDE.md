@@ -104,6 +104,7 @@ src/app/
     │   └── [nivel]/page.tsx          # Runner gamificado por nivel (ver Sistema de Investigación)
     ├── contacto/page.tsx
     ├── cuenta/page.tsx
+    ├── modelado/                     # Editor 3D — SOLO admin (ver sección propia)
     └── admin/page.tsx
 ```
 
@@ -236,3 +237,23 @@ Sección `dashboard/investigacion`: mapa serpenteante (estilo Duolingo) donde ca
 **Fuente en elementos interactivos**: los `<button>` no heredan `font-family` del `<body>` por defecto (usan la del navegador) — todo botón custom necesita `font-family: inherit` explícito o el texto sale en una tipografía distinta al resto del sitio. Revisar esto primero si un texto "no parece tener la fuente de la web". Relacionado: Outfit se carga con pesos `['400','500','600','700','800','900']` en `layout.tsx` — si se usa `font-weight: 900` en CSS sin ese peso cargado, el navegador simula negrita (faux-bold) y se ve visualmente distinto al resto.
 
 **Para crear un nivel nuevo (tema-NN)**: crear `src/lib/investigacion/niveles/tema-NN.ts` (mismo shape que `tema-01.ts`), registrarlo en `CONTENIDO` y poner `disponible: true` en `NIVELES`. No se toca el motor. Reglas de contenido: por concepto, 3 ejemplos (académico / cotidiano inesperado / absurdo memorable) + un "dato que sorprende".
+
+---
+
+## Editor de Modelado 3D (`dashboard/modelado`, solo admin)
+
+Editor visual 3D sin código, construido con Three.js + React Three Fiber + drei. Visible y accesible **únicamente** para `isAdminEmail` (`src/lib/admin.ts`) — mismo guard que `dashboard/admin`: `page.tsx` (RSC) hace `redirect` a login si no hay sesión y `notFound()` si el email no es admin. En la sidebar, `MODELADO_ITEM` (ícono cubo 3D) se inserta solo con `isAdmin`, justo antes de `ADMIN_ITEM`.
+
+`ModeladoClient.tsx` carga `Editor3D.tsx` con `next/dynamic` y `ssr: false` — el `Canvas` de R3F no soporta SSR. Toda la lógica vive en `Editor3D.tsx` (un solo archivo grande, sin dividir en componentes adicionales) + `src/styles/modelado.module.css` (liquid-glass, light+dark).
+
+**Figuras**: catálogo de 6 primitivas (cubo/esfera/cilindro/cono/toro/cápsula) en una toolbar superior — arrastrables (drag HTML5, raycast a plano `y=0`) o clic para añadir. Cada `Figura` tiene `redondez` (curvatura/suavidad, sube segmentos radiales) y tres deformadores `doblar`/`torcer`/`estrechar` (-1..1) aplicados en `aplicarDeformacion()` sobre los vértices del eje Y local (orden taper → twist → bend; `doblar=1` = anillo completo, ~50% = herradura). Al deformar, la geometría sube su segmentación vertical para curvar suave. Todos los valores tienen slider **y** `input type="number"` editable, y los deformadores también se pueden arrastrar directo sobre la figura en el modo **"Deformar"** de la barra (horizontal dobla, vertical estrecha, Shift+horizontal tuerce).
+
+**Unir/Separar**: selección múltiple (Ctrl/Shift+clic) → "Unir" reparenta las figuras a un grupo nuevo (transform mundial vía `Matrix4.compose/decompose`); "Separar" invierte la operación. `TransformControls` (mover/rotar/escalar) se adjunta al nodo de la unidad activa vía un mapa `id → Object3D` en ref.
+
+**Importar/Exportar**: botón "Importar" carga un `.glb`/`.gltf` propio (`GLTFLoader`, sin soporte Draco), fusiona sus mallas en una geometría editable (registro module-level `GEOS_IMPORTADAS`, fuera del estado React) y la trata como una figura más. "Exportar GLB" limpia la malla (quita UVs sin usar, suelda vértices con `mergeVertices`) antes de generar el archivo — export optimizado por defecto.
+
+**Deshacer/Rehacer**: toda mutación de la escena pasa por `mutar(fn, coalesce?)`, que apila snapshots en un historial (ref, tope 60); ráfagas de la misma interacción (arrastre de un slider) comparten `coalesce` y cuentan como un solo paso. Ctrl+Z / Ctrl+Shift+Z / Ctrl+Y + botones en la barra.
+
+**Persistencia**: localStorage `medgo-modelado-escena`, incluye las geometrías importadas serializadas a base64.
+
+No se toca el motor para casos de uso nuevos de "editar formas" — es autocontenido; solo se extendería si se pide un tipo de deformación o primitiva adicional.

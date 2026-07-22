@@ -3,6 +3,10 @@ import { createElement } from 'react';
 import HeartIcon from '@/components/icons/HeartIcon';
 import BrainIcon from '@/components/icons/BrainIcon';
 import KidneyIcon from '@/components/icons/KidneyIcon';
+import MuscleIcon from '@/components/icons/MuscleIcon';
+import ImmuneIcon from '@/components/icons/ImmuneIcon';
+import StomachIcon from '@/components/icons/StomachIcon';
+import ReproductiveIcon from '@/components/icons/ReproductiveIcon';
 
 /**
  * Fuente única de los cursos y clases del apartado Histología.
@@ -76,6 +80,62 @@ export const HISTO_CURSOS: HistoCurso[] = [
       { slug: 'corteza-renal', titulo: 'Corteza renal y glomérulo' },
       { slug: 'tubulos-renales', titulo: 'Túbulos renales y médula' },
       { slug: 'via-urinaria', titulo: 'Uréter y vejiga' },
+    ],
+  },
+  {
+    id: 'aparato-locomotor',
+    nombre: 'Aparato Locomotor | UPCH',
+    badge: 'Locomotor',
+    badgeColor: '#c9a227',
+    badgeBg: 'rgba(201, 162, 39, 0.12)',
+    icon: createElement(MuscleIcon, { size: 26, white: true }),
+    iconColor: createElement(MuscleIcon, { size: 24 }),
+    clases: [
+      { slug: 'hueso', titulo: 'Tejido óseo' },
+      { slug: 'cartilago', titulo: 'Cartílago' },
+      { slug: 'musculo-esqueletico', titulo: 'Músculo esquelético' },
+    ],
+  },
+  {
+    id: 'inmunologia',
+    nombre: 'Inmunología | UPCH',
+    badge: 'Inmunología',
+    badgeColor: '#c9a227',
+    badgeBg: 'rgba(201, 162, 39, 0.12)',
+    icon: createElement(ImmuneIcon, { size: 26, white: true }),
+    iconColor: createElement(ImmuneIcon, { size: 24 }),
+    clases: [
+      { slug: 'timo', titulo: 'Timo' },
+      { slug: 'ganglio-linfatico', titulo: 'Ganglio linfático' },
+      { slug: 'bazo', titulo: 'Bazo' },
+    ],
+  },
+  {
+    id: 'digestivo',
+    nombre: 'Sistema Digestivo | UPCH',
+    badge: 'Digestivo',
+    badgeColor: '#c9a227',
+    badgeBg: 'rgba(201, 162, 39, 0.12)',
+    icon: createElement(StomachIcon, { size: 26, white: true }),
+    iconColor: createElement(StomachIcon, { size: 24 }),
+    clases: [
+      { slug: 'esofago-estomago', titulo: 'Esófago y estómago' },
+      { slug: 'intestino', titulo: 'Intestino delgado y grueso' },
+      { slug: 'higado-pancreas', titulo: 'Hígado y páncreas' },
+    ],
+  },
+  {
+    id: 'endocrino-reproductor',
+    nombre: 'Sistema Endocrino y Reproductor | UPCH',
+    badge: 'Endocrino y Reproductor',
+    badgeColor: '#c9a227',
+    badgeBg: 'rgba(201, 162, 39, 0.12)',
+    icon: createElement(ReproductiveIcon, { size: 26, white: true }),
+    iconColor: createElement(ReproductiveIcon, { size: 24 }),
+    clases: [
+      { slug: 'tiroides-suprarrenal', titulo: 'Tiroides y suprarrenal' },
+      { slug: 'ovario-testiculo', titulo: 'Ovario y testículo' },
+      { slug: 'utero-prostata', titulo: 'Útero y próstata' },
     ],
   },
 ];

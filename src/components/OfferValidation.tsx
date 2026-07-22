@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styles from '@/styles/offerValidation.module.css';
 
 const CheckIcon = () => (
@@ -6,61 +7,48 @@ const CheckIcon = () => (
   </svg>
 );
 
-const bloques = [
-  {
-    title: 'Lo que incluye, sin letra chica',
-    items: [
-      'Acceso desde el primer día — sin esperar setup.',
-      'Plan Residente cancelable en cualquier momento.',
-      'Pago seguro vía Mercado Pago. No almacenamos datos de tarjeta.',
-    ],
-  },
-  {
-    title: 'Contenido real ya disponible',
-    items: [
-      '29 clases de Microbiología con sílabo UPCH M2058.',
-      'Atlas de Micología con identificación microscópica.',
-      'Sílabos de Cardiovascular, Excretor y Farmacología.',
-      'Laboratorio virtual de microscopía + TBLs activos.',
-    ],
-  },
-  {
-    title: 'Garantía de honestidad',
-    items: [
-      'Si exploras el plan gratuito y no ves valor, no te pedimos que pagues.',
-      'Sin trucos de retención: cancelar significa cancelar.',
-      'Términos y compromisos publicados de forma clara y visible.',
-    ],
-  },
+const features = [
+  'Responsive en cualquier celular, tablet o computadora — sin instalar nada.',
+  'Modelos 3D interactivos: gira, acerca y explora cada estructura con el dedo.',
+  'Rendimiento fluido dentro del navegador, incluso en gama media.',
 ];
 
 export default function OfferValidation() {
   return (
-    <section id="garantias">
+    <section id="garantias" className={styles.section}>
       <div className="section-inner reveal">
-        <span className="section-tag" style={{ color: '#2DC99A' }}>Por qué confiar</span>
-        <h2 className="section-title">
-          Antes de decidir,<br />
-          <em style={{ fontStyle: 'normal', color: '#2DC99A' }}>esto es lo que tienes que saber.</em>
-        </h2>
-        <p className="section-sub">
-          No hay promesas vagas ni asteriscos. Estos son los tres frentes en los que MedGO se compromete contigo.
-        </p>
+        <div className={styles.split}>
+          <div className={styles.copy}>
+            <span className="section-tag" style={{ color: '#2DC99A' }}>Estudia donde sea</span>
+            <h2 className={styles.heading}>
+              Anatomía en 3D,<br />
+              <em style={{ fontStyle: 'normal', color: '#2DC99A' }}>en la palma de tu mano.</em>
+            </h2>
+            <p className={styles.sub}>
+              MedGO se adapta a la pantalla de cualquier dispositivo y carga modelos 3D
+              interactivos directo en la web. Rota, acerca y despieza cada estructura para
+              estudiar de la mejor manera, donde estés.
+            </p>
+            <ul className={styles.list}>
+              {features.map((f) => (
+                <li key={f} className={styles.item}>
+                  <span className={styles.check}><CheckIcon /></span>
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <div className={styles.grid}>
-          {bloques.map((b) => (
-            <div key={b.title} className={styles.card}>
-              <h3 className={styles.title}>{b.title}</h3>
-              <ul className={styles.list}>
-                {b.items.map((it) => (
-                  <li key={it} className={styles.item}>
-                    <span className={styles.check}><CheckIcon /></span>
-                    <span>{it}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className={styles.visual}>
+            <Image
+              src="/assets/lab-3d-phone.webp"
+              alt="MedGO en un celular mostrando un modelo 3D interactivo del ojo"
+              width={838}
+              height={875}
+              sizes="(max-width: 900px) 80vw, 440px"
+              className={styles.phone}
+            />
+          </div>
         </div>
       </div>
     </section>

@@ -1,113 +1,125 @@
-.table {
-  margin: 16px auto 0;
+/* ─── Layout dividido: imagen (izq) + texto (der) ─── */
+.split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--card-border);
-  border-radius: 18px;
-  overflow: hidden;
-  max-width: 1080px;
-}
-
-.header {
-  padding: 16px 24px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.headerSin {
-  background: rgba(232, 91, 74, 0.1);
-  color: #E85B4A;
-  border-bottom: 1px solid rgba(232, 91, 74, 0.25);
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.headerCon {
-  background: rgba(45, 201, 154, 0.1);
-  color: #2DC99A;
-  border-bottom: 1px solid rgba(45, 201, 154, 0.25);
-}
-
-.headerLabel {
-  display: inline-flex;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   align-items: center;
-  gap: 8px;
-}
-
-.row {
-  display: contents;
-}
-
-.cell {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 18px 24px;
-  font-size: 15px;
-  line-height: 1.6;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  gap: 56px;
+  margin-top: 20px;
   text-align: left;
 }
 
-.row:first-of-type .cell {
-  border-top: none;
+/* ─── Imagen ─── */
+.visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
-.cellSin {
-  color: rgba(240, 238, 255, 0.65);
-  background: rgba(232, 91, 74, 0.025);
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+.shot {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  box-shadow: 0 26px 60px rgba(6, 12, 34, 0.55);
 }
 
-.cellCon {
-  color: rgba(240, 238, 255, 0.92);
-  background: rgba(45, 201, 154, 0.03);
-}
-
-.dot {
-  flex-shrink: 0;
-  width: 22px;
-  height: 22px;
+/* halo violeta detrás de la imagen */
+.visual::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -18% -24%;
   border-radius: 50%;
-  display: inline-flex;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(167, 139, 250, 0.26) 0%,
+    rgba(167, 139, 250, 0.1) 42%,
+    transparent 74%
+  );
+  filter: blur(55px);
+}
+
+/* ─── Texto ─── */
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.heading {
+  font-size: clamp(28px, 3.4vw, 40px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.8px;
+  color: var(--white);
+  margin: 14px 0 18px;
+}
+
+.sub {
+  font-size: 16.5px;
+  line-height: 1.65;
+  color: rgba(240, 238, 255, 0.72);
+  margin: 0 0 26px;
+  max-width: 48ch;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.item {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: rgba(240, 238, 255, 0.9);
+}
+
+.check {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: rgba(167, 139, 250, 0.16);
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  color: #a78bfa;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  font-weight: 700;
   margin-top: 1px;
 }
 
-.cellSin .dot {
-  background: rgba(232, 91, 74, 0.15);
-  color: #E85B4A;
+.check svg {
+  width: 14px;
+  height: 14px;
 }
 
-.cellCon .dot {
-  background: rgba(45, 201, 154, 0.18);
-  color: #2DC99A;
-}
-
-@media (max-width: 720px) {
-  .table {
+@media (max-width: 900px) {
+  .split {
     grid-template-columns: 1fr;
+    gap: 34px;
+    justify-items: center;
+    text-align: center;
   }
-
-  .headerSin {
-    border-right: none;
+  .copy {
+    align-items: center;
   }
-  .cellSin {
-    border-right: none;
-    border-bottom: 2px dashed rgba(255, 255, 255, 0.08);
+  .heading {
+    text-align: center;
   }
-
-  .cell {
-    padding: 14px 18px;
-    font-size: 14.5px;
+  .item {
+    text-align: left;
   }
-  .header {
-    padding: 12px 18px;
+  .shot {
+    max-width: 460px;
   }
 }

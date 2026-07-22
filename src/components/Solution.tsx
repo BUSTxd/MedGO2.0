@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styles from '@/styles/solution.module.css';
 
 const steps = [
@@ -53,26 +54,29 @@ export default function Solution() {
           Tres piezas que trabajan juntas.
         </p>
 
-        <div className={styles.grid}>
-          {steps.map((s, i) => (
-            <div key={s.title} className={styles.card}>
-              <div className={styles.numberBadge} style={{ color: s.color, borderColor: `${s.color}55` }}>
-                0{i + 1}
-              </div>
-              <div className={styles.iconWrap} style={{ background: `${s.color}1a`, borderColor: `${s.color}40`, color: s.color }}>
-                {s.icon}
-              </div>
-              <h3 className={styles.title}>{s.title}</h3>
-              <p className={styles.body}>{s.body}</p>
-            </div>
-          ))}
-        </div>
+        <div className={styles.split}>
+          <div className={styles.visual}>
+            <Image
+              src="/assets/solucion-drcapi.webp"
+              alt="Dr. Capi, la mascota de MedGO"
+              width={788}
+              height={1206}
+              sizes="(max-width: 900px) 60vw, 320px"
+              className={styles.visualImg}
+            />
+          </div>
 
-        <div className={styles.ctaRow}>
-          <a href="#precios">
-            <button className="btn-primary">Ver planes →</button>
-          </a>
-          <span className={styles.ctaHint}>Plan gratuito disponible. Sin tarjeta para empezar.</span>
+          <ul className={styles.steps}>
+            {steps.map((s, i) => (
+              <li key={s.title} className={styles.step}>
+                <span className={styles.stepNum} style={{ color: s.color }}>0{i + 1}</span>
+                <div className={styles.stepText}>
+                  <h3 className={styles.title}>{s.title}</h3>
+                  <p className={styles.body}>{s.body}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

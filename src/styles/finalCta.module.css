@@ -1,29 +1,67 @@
+/* borde a borde: anula el padding global del section */
 .section {
-  padding: 120px 48px 140px;
+  padding: 0;
+}
+
+/* ─── Banda geométrica de borde a borde ─── */
+.band {
+  position: relative;
+  width: 100%;
+  padding: 72px 24px 76px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(1000px 380px at 50% -10%, rgba(59, 158, 221, 0.2), transparent 60%),
+    linear-gradient(135deg, #112a55 0%, #0b1636 55%, #150f3c 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* facetas diagonales que dan el aspecto geométrico */
+.facet1 {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(59, 158, 221, 0.08);
+  clip-path: polygon(0 0, 46% 0, 24% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.facet2 {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.16);
+  clip-path: polygon(62% 0, 100% 0, 100% 100%, 40% 100%);
+  pointer-events: none;
+}
+
+.facet3 {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(167, 139, 250, 0.07);
+  clip-path: polygon(46% 0, 66% 0, 42% 100%, 22% 100%);
+  pointer-events: none;
+}
+
+.glow {
+  position: absolute;
+  z-index: -1;
+  top: -30%;
+  right: 6%;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.16), transparent 66%);
+  filter: blur(30px);
+  pointer-events: none;
 }
 
 .inner {
-  max-width: 760px;
+  position: relative;
+  max-width: 780px;
   margin: 0 auto;
   text-align: center;
-  position: relative;
-  padding: 64px 48px;
-  border-radius: 28px;
-  background: linear-gradient(135deg, rgba(59, 158, 221, 0.12) 0%, rgba(84, 69, 216, 0.18) 100%);
-  border: 1px solid rgba(59, 158, 221, 0.28);
-  overflow: hidden;
-}
-
-.orb {
-  position: absolute;
-  right: -80px;
-  top: -80px;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(59, 158, 221, 0.35) 0%, transparent 70%);
-  pointer-events: none;
-  filter: blur(20px);
 }
 
 .title {
@@ -31,20 +69,32 @@
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -1px;
-  margin: 14px 0 16px;
-  position: relative;
+  color: #fff;
+  margin: 0 0 16px;
+}
+
+.title em {
+  font-style: normal;
+  color: #7ec2f0;
 }
 
 .sub {
-  font-size: 17px;
-  color: rgba(240, 238, 255, 0.78);
-  margin: 0 auto 36px;
-  max-width: 520px;
-  position: relative;
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(240, 245, 255, 0.85);
+  margin: 0 auto 12px;
+  max-width: 560px;
+}
+
+.trust {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(240, 245, 255, 0.6);
+  margin: 0 auto 26px;
+  max-width: 560px;
 }
 
 .ctaWrap {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,37 +102,33 @@
 }
 
 .bigCta {
-  background: linear-gradient(135deg, var(--blue), oklch(0.52 0.2 270));
+  background: linear-gradient(135deg, var(--blue), #2b7fc2);
   color: #fff;
   border: none;
   border-radius: 12px;
-  padding: 18px 44px;
-  font-family: 'Outfit', sans-serif;
+  padding: 18px 46px;
+  font-family: inherit;
   font-size: 17px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.25s;
-  box-shadow: 0 12px 32px rgba(59, 158, 221, 0.45);
+  transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 14px 34px rgba(59, 158, 221, 0.45);
 }
 
 .bigCta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 40px rgba(59, 158, 221, 0.6);
+  box-shadow: 0 20px 44px rgba(59, 158, 221, 0.6);
 }
 
 .hint {
   font-size: 13.5px;
-  color: var(--muted);
+  color: rgba(240, 245, 255, 0.55);
   margin: 0;
 }
 
 @media (max-width: 640px) {
-  .section {
-    padding: 80px 16px 100px;
-  }
-  .inner {
-    padding: 44px 24px;
-    border-radius: 22px;
+  .band {
+    padding: 56px 20px 60px;
   }
   .bigCta {
     width: 100%;

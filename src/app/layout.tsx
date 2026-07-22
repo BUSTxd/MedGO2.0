@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es" className={outfit.variable}>
       <head>
-        <link rel="preload" as="image" href="/assets/hero-bg.webp" fetchPriority="high" />
+        <link rel="preload" as="image" href="/assets/hero-bg.avif" fetchPriority="high" />
       </head>
       <body className={outfit.className}>
         <ConsentProvider>

@@ -1,66 +1,318 @@
-.grid {
+/* ─── Layout: título (izq) + gráfico del ciclo (der) ─── */
+.layout {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin: 12px auto 0;
-  max-width: 980px;
-}
-
-.card {
-  background: linear-gradient(180deg, rgba(245, 166, 35, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
-  border: 1px solid rgba(245, 166, 35, 0.18);
-  border-radius: 18px;
-  padding: 28px 26px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: transform 0.3s, border-color 0.3s;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  align-items: center;
+  gap: 48px;
   text-align: left;
 }
 
-.card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(245, 166, 35, 0.35);
+.copy {
+  text-align: left;
 }
 
-.iconWrap {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  background: rgba(245, 166, 35, 0.12);
-  border: 1px solid rgba(245, 166, 35, 0.22);
+.copy :global(.section-title),
+.copy :global(.section-sub) {
+  text-align: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* ─── Diagrama cíclico circular (desktop) ─── */
+.cycle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 224px minmax(0, 1fr);
+  grid-template-rows: auto 224px auto;
+  grid-template-areas:
+    '.   p0   .'
+    'p3  ring p1'
+    '.   p2   .';
+  align-items: center;
+  justify-items: center;
+  gap: 20px 22px;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* ─── Anillo central ─── */
+.ring {
+  grid-area: ring;
+  position: relative;
+  width: 224px;
+  height: 224px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.ringSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ringLine {
+  stroke: rgba(245, 166, 35, 0.45);
+  stroke-width: 2.4;
+  stroke-dasharray: 6 11;
+  stroke-linecap: round;
+  animation: ringFlow 1.1s linear infinite;
+}
+
+.ringHead path {
+  stroke: #f5a623;
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes ringFlow {
+  to { stroke-dashoffset: -34; }
+}
+
+.ringInner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 0 26px;
+}
+
+.ringKicker {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: #f5a623;
 }
 
-.iconWrap svg {
-  width: 22px;
-  height: 22px;
+.ringLabel {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--white);
+}
+
+/* ─── Cada punto del ciclo ─── */
+.step {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  max-width: 230px;
+  animation: levitar 4.2s ease-in-out infinite;
+}
+
+@keyframes levitar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+.pos0 { grid-area: p0; animation-delay: 0s; }
+.pos1 { grid-area: p1; animation-delay: -1.05s; }
+.pos2 { grid-area: p2; animation-delay: -2.1s; }
+.pos3 { grid-area: p3; animation-delay: -3.15s; }
+
+/* Orientaciones: cada bloque "apunta" hacia el anillo central */
+.pos0 { flex-direction: column-reverse; text-align: center; }
+.pos2 { flex-direction: column; text-align: center; }
+.pos3 { flex-direction: row-reverse; text-align: right; }
+.pos1 { flex-direction: row; text-align: left; }
+
+/* Nodo numerado */
+.node {
+  flex-shrink: 0;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 32% 28%, rgba(120, 72, 20, 0.95), rgba(22, 13, 4, 0.98));
+  border: 1px solid rgba(245, 166, 35, 0.5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 5px rgba(8, 6, 26, 1);
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.step:hover .node {
+  transform: scale(1.06);
+  border-color: rgba(245, 166, 35, 0.85);
+  box-shadow: 0 8px 28px rgba(245, 166, 35, 0.22), 0 0 0 5px rgba(8, 6, 26, 1);
+}
+
+.nodeNum {
+  font-size: 20px;
+  font-weight: 800;
+  color: #f5a623;
+}
+
+/* Texto (sin recuadro) */
+.content {
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+/* Bloque izquierdo: icono a la izquierda y frase centrada */
+.pos3 .head { flex-direction: row; }
+.pos3 .title { text-align: center; }
+/* En bloques verticales el icono va centrado sobre el título */
+.pos0 .head,
+.pos2 .head { justify-content: center; }
+
+.icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(245, 166, 35, 0.16), rgba(120, 66, 18, 0.28));
+  border: 1px solid rgba(245, 166, 35, 0.28);
+  color: #f5a623;
+}
+
+.icon svg {
+  width: 18px;
+  height: 18px;
 }
 
 .title {
-  font-size: 18px;
+  font-size: 16.5px;
   font-weight: 700;
   color: var(--white);
-  letter-spacing: -0.2px;
+  letter-spacing: -0.3px;
+  line-height: 1.3;
   margin: 0;
 }
 
-.body {
-  font-size: 15px;
-  line-height: 1.65;
-  color: rgba(240, 238, 255, 0.78);
-  margin: 0;
-}
-
-@media (max-width: 720px) {
-  .grid {
+/* apila título y gráfico en pantallas medianas */
+@media (max-width: 900px) {
+  .layout {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 8px;
+    text-align: center;
   }
-  .card {
-    padding: 22px 20px;
+  .copy {
+    text-align: center;
+  }
+  .copy :global(.section-title),
+  .copy :global(.section-sub) {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cycle {
+    margin-top: 20px;
+  }
+}
+
+/* ─── Móvil: timeline vertical de "espina" ─── */
+@media (max-width: 860px) {
+  .cycle {
+    display: block;
+    position: relative;
+    max-width: 640px;
+    padding-left: 8px;
+    margin-top: 44px;
+  }
+
+  /* El anillo se vuelve una espina vertical animada */
+  .ring {
+    position: absolute;
+    left: 27px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    height: auto;
+    display: block;
+    z-index: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(245, 166, 35, 0.85) 0 7px,
+      transparent 7px 14px
+    );
+    background-size: 100% 200%;
+    animation: spineFlow 1.1s linear infinite;
+  }
+  .ringSvg,
+  .ringInner {
+    display: none;
+  }
+
+  .step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    align-items: start;
+    column-gap: 20px;
+    max-width: none;
+    padding: 16px 0;
+    text-align: left !important;
+    flex-direction: unset;
+    animation: none;
+  }
+
+  .node {
+    width: 56px;
+    height: 56px;
+    z-index: 1;
+  }
+
+  .content {
+    padding-top: 3px;
+  }
+
+  .head,
+  .pos3 .head,
+  .pos0 .head,
+  .pos2 .head {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .title {
+    font-size: 16.5px;
+  }
+}
+
+@keyframes spineFlow {
+  to { background-position: 0 28px; }
+}
+
+@media (max-width: 640px) {
+  .step {
+    grid-template-columns: 48px 1fr;
+    column-gap: 16px;
+  }
+  .cycle {
+    padding-left: 4px;
+  }
+  .ring {
+    left: 23px;
+  }
+  .node {
+    width: 48px;
+    height: 48px;
+  }
+  .nodeNum {
+    font-size: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ringLine,
+  .ring,
+  .step {
+    animation: none;
   }
 }

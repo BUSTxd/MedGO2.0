@@ -9,7 +9,6 @@ const dolores = [
       </svg>
     ),
     title: 'PDFs sueltos en mil carpetas',
-    body: 'Diapositivas, libros, links de WhatsApp, apuntes propios. Encontrar el tema correcto te toma más que estudiarlo.',
   },
   {
     icon: (
@@ -20,7 +19,6 @@ const dolores = [
       </svg>
     ),
     title: 'El sílabo es vago',
-    body: 'Sabes que viene "micología" pero no qué subtemas, ni cómo distinguir un Aspergillus fumigatus de un flavus en la práctica.',
   },
   {
     icon: (
@@ -31,7 +29,6 @@ const dolores = [
       </svg>
     ),
     title: 'Llegas al examen sin saber qué viste',
-    body: 'El día antes intentas reconstruir 12 semanas en una noche. No sabes qué te falta ni por dónde empezar.',
   },
   {
     icon: (
@@ -40,32 +37,63 @@ const dolores = [
         <path d="M12 7v5l3 2" />
       </svg>
     ),
-    title: 'Estudiar más horas ≠ estudiar mejor',
-    body: 'Sin estructura, repites lo que ya sabes y dejas lagunas en lo importante. Más esfuerzo, menos resultado.',
+    title: (
+      <>Estudiar más horas<br />≠<br />estudiar mejor</>
+    ),
   },
 ];
+
+const posClass = [styles.pos0, styles.pos1, styles.pos2, styles.pos3];
 
 export default function Problem() {
   return (
     <section id="problema">
       <div className="section-inner reveal">
-        <span className="section-tag" style={{ color: '#f5a623' }}>El problema</span>
-        <h2 className="section-title">
-          Estudias medicina,<br />
-          <em style={{ fontStyle: 'normal', color: '#f5a623' }}>no tienes tiempo de organizarte.</em>
-        </h2>
-        <p className="section-sub">
-          Cada ciclo arranca igual: clases en horario apretado, sílabos abiertos a interpretación,
-          y tú haciendo de tu propio gestor de carpetas. Estos son los puntos donde se cae el sistema.
-        </p>
-        <div className={styles.grid}>
-          {dolores.map((d) => (
-            <div key={d.title} className={styles.card}>
-              <div className={styles.iconWrap}>{d.icon}</div>
-              <h3 className={styles.title}>{d.title}</h3>
-              <p className={styles.body}>{d.body}</p>
+        <div className={styles.layout}>
+          <div className={styles.copy}>
+            <span className="section-tag" style={{ color: '#f5a623' }}>El problema</span>
+            <h2 className="section-title">
+              Estudias medicina,<br />
+              <em style={{ fontStyle: 'normal', color: '#f5a623' }}>no tienes tiempo de organizarte.</em>
+            </h2>
+            <p className="section-sub">
+              Cada ciclo arranca igual: clases en horario apretado, sílabos abiertos a interpretación,
+              y tú haciendo de tu propio gestor de carpetas. Estos son los puntos donde se cae el sistema.
+            </p>
+          </div>
+
+          <div className={styles.cycle}>
+          {/* Anillo central con flujo horario */}
+          <div className={styles.ring} aria-hidden>
+            <svg className={styles.ringSvg} viewBox="0 0 200 200" fill="none">
+              <circle className={styles.ringLine} cx="100" cy="100" r="80" />
+              <g className={styles.ringHead}>
+                <path d="M100 12 L110 20 L100 28" transform="rotate(0 100 100)" />
+                <path d="M100 12 L110 20 L100 28" transform="rotate(90 100 100)" />
+                <path d="M100 12 L110 20 L100 28" transform="rotate(180 100 100)" />
+                <path d="M100 12 L110 20 L100 28" transform="rotate(270 100 100)" />
+              </g>
+            </svg>
+            <div className={styles.ringInner}>
+              <span className={styles.ringKicker}>El ciclo</span>
+              <span className={styles.ringLabel}>del estudio<br />desordenado</span>
+            </div>
+          </div>
+
+          {dolores.map((d, i) => (
+            <div key={d.title} className={`${styles.step} ${posClass[i]}`}>
+              <div className={styles.node} aria-hidden>
+                <span className={styles.nodeNum}>{i + 1}</span>
+              </div>
+              <div className={styles.content}>
+                <div className={styles.head}>
+                  <span className={styles.icon}>{d.icon}</span>
+                  <h3 className={styles.title}>{d.title}</h3>
+                </div>
+              </div>
             </div>
           ))}
+          </div>
         </div>
       </div>
     </section>

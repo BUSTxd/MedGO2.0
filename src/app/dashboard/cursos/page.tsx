@@ -2,6 +2,13 @@
 import Link from 'next/link';
 import styles from '@/styles/cursos.module.css';
 
+const DIFF_LABEL: Record<string, string> = {
+  easy: 'Interno (fácil)', medium: 'Residente (media)', hard: 'Especialista (difícil)',
+};
+const DIFF_CLASS: Record<string, string> = {
+  easy: 'diffEasy', medium: 'diffMed', hard: 'diffHard',
+};
+
 const COURSES = [
   {
     id: 'microbiologia',
@@ -11,6 +18,7 @@ const COURSES = [
     badgeColor: '#5445d8',
     badgeBg: 'rgba(84, 69, 216, 0.12)',
     activo: true,
+    diff: ['easy'],
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
         <circle cx="12" cy="12" r="4" fill="#5445d8" stroke="#5445d8" strokeWidth="2"/>
@@ -26,6 +34,7 @@ const COURSES = [
     badgeColor: '#5445d8',
     badgeBg: 'rgba(84, 69, 216, 0.12)',
     activo: true,
+    diff: ['easy'],
     icon: (
       <svg width="22" height="22" viewBox="0 0 1024 1024" fill="none">
         <path d="M33.956002 93.849026l326.194325 0 0 800.892063-326.194325 0 0-800.892063Z" fill="#9B90F4"/>
@@ -45,6 +54,7 @@ const COURSES = [
     badgeColor: '#d44a4a',
     badgeBg: 'rgba(212, 74, 74, 0.12)',
     activo: true,
+    diff: ['easy'],
     icon: (
       <svg width="22" height="22" viewBox="0 -137.5 1299 1299" fill="none">
         <path d="M164.854878 495.321455h188.089332l95.704278-132.953342a48.313142 48.313142 0 0 1 82.796187 7.376053l131.846934 275.495551 160.98234-411.952518a49.050747 49.050747 0 0 1 46.65353-30.795018 48.313142 48.313142 0 0 1 44.440715 33.745439l83.349391 264.431473h65.646865a594.694213 594.694213 0 0 0 38.539873-52.554372c73.760522-119.676448-9.220065-376.178665-234.005258-376.178665s-252.260987 176.656451-252.260987 176.656451-27.475795-176.656451-252.260987-176.656451S56.242509 328.438273 130.371834 448.114721a554.310327 554.310327 0 0 0 34.483044 47.206734z" fill="#d44a4a"/>
@@ -62,6 +72,7 @@ const COURSES = [
     badgeColor: '#d44a4a',
     badgeBg: 'rgba(212, 74, 74, 0.12)',
     activo: true,
+    diff: ['hard'],
     icon: (
       <svg width="22" height="22" viewBox="0 0 511.989 511.989" fill="none">
         <defs>
@@ -134,6 +145,7 @@ const COURSES = [
     badgeColor: '#d44a4a',
     badgeBg: 'rgba(212, 74, 74, 0.12)',
     activo: true,
+    diff: ['hard'],
     icon: (
       <svg width="22" height="22" viewBox="0 0 511.985 511.985" fill="none">
         <path fill="#b83838" d="M260.934,163.337l11,80.373c108.325-17.297,81.482,268.275,81.482,268.275h58.437C432.915,82.057,260.934,163.337,260.934,163.337z"/>
@@ -141,6 +153,116 @@ const COURSES = [
         <g style={{opacity: 0.2}}>
           <path fill="#FFFFFF" d="M256.607,405.284c-124.575-22.625-136.591-155.34-136.935-201.683c0.344-46.358,12.36-179.058,136.935-201.682c3.203-0.578,6.328-1.016,9.359-1.328c-9.25-1.062-19.468-0.718-30.702,1.328C110.688,24.543,98.689,157.243,98.345,203.601c0.344,46.343,12.343,179.058,136.918,201.683c11.234,2.047,21.453,2.391,30.702,1.328C262.934,406.3,259.809,405.862,256.607,405.284z"/>
         </g>
+      </svg>
+    ),
+  },
+  {
+    id: 'hematologia',
+    nombre: 'Hematología | UPCH',
+    badge: 'Hematología',
+    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Contenido en preparación.',
+    badgeColor: '#c9a227',
+    badgeBg: 'rgba(201, 162, 39, 0.12)',
+    activo: true,
+    diff: ['easy'],
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2C12 2 7 7 7 13c0 3 2.5 5.5 5 5.5s5-2.5 5-5.5c0-6-5-11-5-11z" fill="#c9a227" stroke="#c9a227" strokeWidth="1.5"/>
+        <ellipse cx="10.5" cy="9" rx="1.5" ry="2" fill="rgba(255,255,255,0.35)"/>
+      </svg>
+    ),
+  },
+  {
+    id: 'aparato-locomotor',
+    nombre: 'Aparato Locomotor | UPCH',
+    badge: 'Locomotor',
+    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Contenido en preparación.',
+    badgeColor: '#c9a227',
+    badgeBg: 'rgba(201, 162, 39, 0.12)',
+    activo: true,
+    diff: ['medium'],
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 48 48" fill="none">
+        <path d="M21.37 36C22.82 30.75 27.89 27 33.73 27.62C39.29 28.21 43.71 32.9 43.99 38.48C44.06 39.95 43.86 41.36 43.43 42.67C43.17 43.47 42.39 44 41.54 44H11.7584C6.71004 44 2.92371 39.3814 3.91377 34.4311L9.99994 4H21.9999L25.9999 11L17.43 17.13L14.9999 14" fill="#c9a227" stroke="#c9a227" strokeWidth="4" strokeMiterlimit="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M17.4399 17.13L22 34" stroke="#a8841c" strokeWidth="4" strokeMiterlimit="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
+    id: 'inmunologia',
+    nombre: 'Inmunología | UPCH',
+    badge: 'Inmunología',
+    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Contenido en preparación.',
+    badgeColor: '#c9a227',
+    badgeBg: 'rgba(201, 162, 39, 0.12)',
+    activo: true,
+    diff: ['medium'],
+    icon: (
+      <svg width="30" height="30" viewBox="0 0 256 256" fill="none">
+        <rect x="114" y="120" width="28" height="110" rx="14" fill="#c9a227"/>
+        <rect x="114" y="30" width="28" height="110" rx="14" transform="rotate(-45 128 120)" fill="#c9a227"/>
+        <rect x="114" y="30" width="28" height="110" rx="14" transform="rotate(45 128 120)" fill="#c9a227"/>
+        <circle cx="128" cy="120" r="8" fill="#c9a227"/>
+      </svg>
+    ),
+  },
+  {
+    id: 'digestivo',
+    nombre: 'Sistema Digestivo | UPCH',
+    badge: 'Digestivo',
+    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Contenido en preparación.',
+    badgeColor: '#c9a227',
+    badgeBg: 'rgba(201, 162, 39, 0.12)',
+    activo: true,
+    diff: ['easy'],
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 512 512" fill="none">
+        <path fill="#c9a227" d="M389.503,117.203c-15.406-3.203-30.266-4.406-44-3.672c-7.547-0.313-14.266-0.906-20.172-1.734
+          c-7.594-1.063-13.859-2.516-18.922-4.125c-4.453-1.422-7.984-2.953-10.813-4.484c-2.469-1.344-4.391-2.656-5.969-3.969
+          c-1.391-1.156-2.516-2.266-3.516-3.438c-1.719-2.031-3.078-4.219-4.313-7c-0.922-2.094-1.734-4.469-2.422-7.25
+          c-1.031-4.156-1.766-9.141-2.188-14.813c-0.438-5.656-0.563-11.938-0.563-18.656c0-5.5,0.094-11.266,0.094-17.25V0h-68.297v30.813
+          c0,5.344-0.078,11.125-0.078,17.25c0,6.484,0.094,13.344,0.516,20.484c0.375,6.266,1.016,12.734,2.156,19.422
+          c1,5.844,2.375,11.844,4.328,17.906c1.703,5.313,3.859,10.656,6.594,15.938c2.375,4.641,5.188,9.219,8.484,13.594
+          c5.734,7.688,13.031,14.625,21.297,20.781c11.891,8.813,17.063,22.063,17.063,36.094c0,62.281-30.922,101.594-107.469,101.594
+          c-47.609,0-80.516,37.063-85,41.813c-7.859,8.281-14.547,17.766-20.031,28.172c-4.125,7.828-7.609,16.156-10.5,25.016
+          c-4.344,13.281-7.406,27.719-9.422,43.5s-2.969,32.906-2.969,51.656V512h66.25v-27.969c-0.016-14.438,0.641-27.375,1.875-38.813
+          c1.063-10.031,2.484-18.938,4.469-26.688c4.766-18.719,30.422-5.125,45.016,3.406c60.359,35.344,216.344,70.469,301.704-64.938
+          C508.738,268.156,467.535,133.391,389.503,117.203z"/>
+      </svg>
+    ),
+  },
+  {
+    id: 'endocrino-reproductor',
+    nombre: 'Sistema Endocrino y Reproductor | UPCH',
+    badge: 'Endocrino y Reproductor',
+    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Contenido en preparación.',
+    badgeColor: '#c9a227',
+    badgeBg: 'rgba(201, 162, 39, 0.12)',
+    activo: true,
+    diff: ['easy', 'medium', 'hard'],
+    icon: (
+      <svg width="30" height="30" viewBox="0 0 1024 1024" fill="none">
+        <path d="M397 202 C326 247 293 316 293 385 C293 447 321 500 374 544" fill="none" stroke="#c9a227" strokeWidth="18" strokeLinecap="butt"/>
+        <path d="M627 202 C698 247 731 316 731 385 C731 447 703 500 650 544" fill="none" stroke="#c9a227" strokeWidth="18" strokeLinecap="butt"/>
+        <path d="M432 111 C400 110 391 155 397 194 C404 239 426 273 452 276 C474 278 480 244 512 244 C544 244 550 278 572 276 C598 273 620 239 627 194 C633 155 624 110 592 111 C562 112 556 184 512 184 C468 184 462 112 432 111 Z" fill="rgba(201,162,39,0.35)"/>
+        <g fill="#c9a227">
+          <circle cx="512" cy="405" r="24"/>
+          <rect x="506" y="426" width="12" height="42" rx="6"/>
+          <circle cx="512" cy="488" r="24"/>
+          <path d="M492 500 L451 523 L443 509 L484 486 Z"/>
+          <path d="M532 500 L573 523 L581 509 L540 486 Z"/>
+          <circle cx="437" cy="529" r="28"/>
+          <circle cx="587" cy="529" r="28"/>
+        </g>
+        <path d="M445 614 C397 613 364 598 331 575 C298 551 266 553 233 576 C196 602 182 642 196 677 C207 704 232 722 260 722" fill="none" stroke="#c9a227" strokeWidth="28" strokeLinecap="round"/>
+        <path d="M579 614 C627 613 660 598 693 575 C726 551 758 553 791 576 C828 602 842 642 828 677 C817 704 792 722 764 722" fill="none" stroke="#c9a227" strokeWidth="28" strokeLinecap="round"/>
+        <path d="M445 641 C408 658 388 696 351 718" fill="none" stroke="#c9a227" strokeWidth="18" strokeLinecap="round"/>
+        <path d="M579 641 C616 658 636 696 673 718" fill="none" stroke="#c9a227" strokeWidth="18" strokeLinecap="round"/>
+        <ellipse cx="302" cy="714" rx="62" ry="47" fill="rgba(201,162,39,0.35)"/>
+        <ellipse cx="722" cy="714" rx="62" ry="47" fill="rgba(201,162,39,0.35)"/>
+        <path d="M403 600 C436 579 473 571 512 571 C551 571 588 579 621 600 C604 622 596 647 592 676 C587 719 577 749 558 781 C541 810 535 837 537 873 C538 889 532 900 521 900 L503 900 C492 900 486 889 487 873 C489 837 483 810 466 781 C447 749 437 719 432 676 C428 647 420 622 403 600 Z" fill="#c9a227"/>
+        <path d="M390 615 C423 631 464 642 512 643 C560 642 601 631 634 615 C607 650 589 686 578 730 C568 771 553 799 535 826 C523 844 518 866 519 894 L505 894 C506 866 501 844 489 826 C471 799 456 771 446 730 C435 686 417 650 390 615 Z" fill="rgba(201,162,39,0.35)"/>
+        <path d="M487 860 C493 873 496 886 496 902 L496 935 C496 949 501 960 512 960 C523 960 528 949 528 935 L528 902 C528 886 531 873 537 860 C528 872 520 878 512 878 C504 878 496 872 487 860 Z" fill="#c9a227"/>
       </svg>
     ),
   },
@@ -175,9 +297,9 @@ export default function CursosPage() {
               <h3 className={styles.qTitle}>{c.nombre}</h3>
               <p className={styles.qSummary}>{c.desc}</p>
               <div className={styles.qDiff}>
-                <span className={styles.diffEasy}>Interno (fácil)</span>
-                <span className={styles.diffMed}>Residente (media)</span>
-                <span className={styles.diffHard}>Especialista (difícil)</span>
+                {c.diff.map((d) => (
+                  <span key={d} className={styles[DIFF_CLASS[d]]}>{DIFF_LABEL[d]}</span>
+                ))}
               </div>
             </Link>
           ) : (
@@ -191,9 +313,9 @@ export default function CursosPage() {
               <h3 className={styles.qTitle}>{c.nombre}</h3>
               <p className={styles.qSummary}>{c.desc}</p>
               <div className={styles.qDiff}>
-                <span className={styles.diffEasy}>Interno (fácil)</span>
-                <span className={styles.diffMed}>Residente (media)</span>
-                <span className={styles.diffHard}>Especialista (difícil)</span>
+                {c.diff.map((d) => (
+                  <span key={d} className={styles[DIFF_CLASS[d]]}>{DIFF_LABEL[d]}</span>
+                ))}
               </div>
               <span className={styles.qComingSoon}>Próximamente</span>
             </div>

@@ -5,20 +5,24 @@ import styles from '@/styles/faq.module.css';
 
 const faqs = [
   {
-    q: '¿El contenido sigue exactamente mi sílabo universitario?',
-    a: 'Sí. Al ingresar tu universidad y carrera, MedGO mapea cada tema del sílabo oficial con nuestras lecciones. Si tu sílabo tiene variaciones, puedes ajustarlo manualmente desde tu perfil.',
+    q: '¿Para qué universidad y años está disponible MedGO?',
+    a: 'Por ahora MedGO está enfocado 100% en la Universidad Peruana Cayetano Heredia (UPCH), cubriendo los primeros 3 años de la carrera de Medicina. Estamos trabajando para sumar más universidades y años más adelante.',
   },
   {
-    q: '¿Qué pasa si mi universidad no está en la lista?',
-    a: 'Puedes ingresar tu sílabo manualmente en formato PDF o texto. Nuestro sistema lo procesa y genera tu ruta de estudio en minutos. También puedes usar los sílabos estándar de UNMSM como referencia.',
+    q: '¿Tienen todos los cursos?',
+    a: 'Sí. Contamos con todos los cursos de los primeros 3 años de Medicina de la UPCH, con su sílabo oficial: subtemas, fechas, docentes y prácticas de cada clase.',
   },
   {
-    q: '¿Puedo compartir mi cuenta con un compañero?',
-    a: 'Cada cuenta es personal ya que el progreso, los quizzes y la ruta son individuales. Sin embargo, con el plan Pro puedes formar grupos de estudio con tus compañeros.',
+    q: '¿El contenido sigue exactamente el sílabo de Cayetano?',
+    a: 'Sí. Cada tema está mapeado con el sílabo oficial de la UPCH para los primeros 3 años de Medicina, así sabes exactamente qué viene cada semana y qué entra en cada evaluación.',
   },
   {
     q: '¿Los cursos incluyen imágenes histológicas y casos clínicos?',
-    a: 'Sí. Los cursos de Microbiología y Cardiología incluyen imágenes de atlas, casos clínicos comentados y videos de procedimientos. El contenido varía según el plan elegido.',
+    a: 'Sí. Encontrarás atlas con imágenes microscópicas reales, laboratorios virtuales interactivos y modelos 3D para estudiar cada estructura. El contenido disponible varía según el plan elegido.',
+  },
+  {
+    q: '¿Puedo compartir mi cuenta con un compañero?',
+    a: 'Cada cuenta es personal: el progreso, los exámenes y tu ruta de estudio son individuales. Además, cada cuenta tiene un límite de dispositivos por seguridad.',
   },
   {
     q: '¿Cómo cancelo mi suscripción?',

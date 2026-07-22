@@ -1,58 +1,85 @@
-.grid {
+.split {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 12px;
-}
-
-.card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 18px;
-  padding: 32px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  position: relative;
-  transition: transform 0.3s, border-color 0.3s;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: center;
+  margin-top: 44px;
   text-align: left;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(59, 158, 221, 0.3);
+/* ─── Columna izquierda: imagen ─── */
+.visual {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
 }
 
-.numberBadge {
+.visualImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Sombra interior oscura azulada + satinado, recortados a la silueta del mascota */
+.visual::after {
+  content: '';
   position: absolute;
-  top: 22px;
-  right: 24px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 4px 10px;
-  border: 1px solid;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.02);
+  inset: 0;
+  pointer-events: none;
+  -webkit-mask: url('/assets/solucion-drcapi.webp') center / 100% 100% no-repeat;
+  mask: url('/assets/solucion-drcapi.webp') center / 100% 100% no-repeat;
+  background:
+    /* brillo satinado diagonal */
+    linear-gradient(
+      125deg,
+      rgba(180, 205, 255, 0.22) 0%,
+      rgba(180, 205, 255, 0.06) 26%,
+      transparent 48%,
+      transparent 62%,
+      rgba(8, 15, 40, 0.4) 100%
+    ),
+    /* oscurecimiento interior hacia los bordes */
+    radial-gradient(
+      ellipse 78% 74% at 50% 42%,
+      transparent 34%,
+      rgba(10, 20, 48, 0.6) 74%,
+      rgba(6, 12, 34, 0.92) 100%
+    );
 }
 
-.iconWrap {
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
+/* ─── Columna derecha: lista de pasos ─── */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid;
+  flex-direction: column;
+  gap: 34px;
 }
 
-.iconWrap svg {
-  width: 26px;
-  height: 26px;
+.step {
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+}
+
+.stepNum {
+  flex-shrink: 0;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.stepText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .title {
-  font-size: 19px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--white);
   letter-spacing: -0.3px;
@@ -60,14 +87,14 @@
 }
 
 .body {
-  font-size: 15px;
+  font-size: 16.5px;
   line-height: 1.65;
-  color: rgba(240, 238, 255, 0.78);
+  color: rgba(240, 238, 255, 0.72);
   margin: 0;
 }
 
 .ctaRow {
-  margin-top: 40px;
+  margin-top: 8px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -75,19 +102,20 @@
 }
 
 .ctaHint {
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--muted);
 }
 
 @media (max-width: 900px) {
-  .grid {
+  .split {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 36px;
+    margin-top: 32px;
   }
-  .card {
-    padding: 26px 22px;
+  .steps {
+    gap: 22px;
   }
   .ctaRow {
-    margin-top: 28px;
+    margin-top: 4px;
   }
 }

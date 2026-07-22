@@ -20,12 +20,12 @@ export default function Home() {
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Navbar />
         <Hero />
-        <AboutUs />
         <Problem />
         <Solution />
         <Pricing />
         <OfferValidation />
         <Consequences />
+        <AboutUs />
         <FAQ />
         <FinalCTA />
         <Footer />
