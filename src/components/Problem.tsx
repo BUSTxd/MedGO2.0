@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styles from '@/styles/problem.module.css';
 
 const dolores = [
@@ -63,17 +64,19 @@ export default function Problem() {
           </div>
 
           <div className={styles.cycle}>
-          {/* Anillo central con flujo horario */}
-          <div className={styles.ring} aria-hidden>
-            <svg className={styles.ringSvg} viewBox="0 0 200 200" fill="none">
-              <circle className={styles.ringLine} cx="100" cy="100" r="80" />
-              <g className={styles.ringHead}>
-                <path d="M100 12 L110 20 L100 28" transform="rotate(0 100 100)" />
-                <path d="M100 12 L110 20 L100 28" transform="rotate(90 100 100)" />
-                <path d="M100 12 L110 20 L100 28" transform="rotate(180 100 100)" />
-                <path d="M100 12 L110 20 L100 28" transform="rotate(270 100 100)" />
-              </g>
-            </svg>
+          {/* Anillo central: imagen de flechas doradas girando */}
+          <div className={styles.ring}>
+            <div className={styles.ringImgWrap} aria-hidden>
+              <Image
+                className={styles.ringImg}
+                src="/assets/ciclo-estudio.webp"
+                alt=""
+                width={440}
+                height={440}
+                sizes="264px"
+              />
+              <span className={styles.ringShine} />
+            </div>
             <div className={styles.ringInner}>
               <span className={styles.ringKicker}>El ciclo</span>
               <span className={styles.ringLabel}>del estudio<br />desordenado</span>
