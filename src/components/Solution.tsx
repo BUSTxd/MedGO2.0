@@ -42,41 +42,52 @@ const steps = [
 
 export default function Solution() {
   return (
-    <section id="solucion">
-      <div className="section-inner reveal">
-        <span className="section-tag">La solución</span>
-        <h2 className="section-title">
-          Una plataforma que <em style={{ fontStyle: 'normal', color: 'var(--blue)' }}>piensa por tu sílabo,</em><br />
-          para que tú estudies.
-        </h2>
-        <p className="section-sub">
-          MedGO ordena el caos: tu currícula, tus prácticas y tu banco de preguntas en un mismo lugar.
-          Tres piezas que trabajan juntas.
-        </p>
+    <section id="solucion" className={styles.section}>
+      <div className={styles.band}>
+        {/* diseño de fondo */}
+        <span className={styles.bgDots} aria-hidden />
+        <span className={styles.bgGlowA} aria-hidden />
+        <span className={styles.bgGlowB} aria-hidden />
 
-        <div className={styles.split}>
-          <div className={styles.visual}>
-            <Image
-              src="/assets/solucion-drcapi.webp"
-              alt="Dr. Capi, la mascota de MedGO"
-              width={788}
-              height={1206}
-              sizes="(max-width: 900px) 60vw, 320px"
-              className={styles.visualImg}
-            />
+        <div className="section-inner reveal">
+          <span className="section-tag">La solución</span>
+          <h2 className="section-title">
+            Una plataforma que <em style={{ fontStyle: 'normal', color: 'var(--blue)' }}>piensa por tu sílabo,</em><br />
+            para que tú estudies.
+          </h2>
+          <p className="section-sub">
+            MedGO ordena el caos: tu currícula, tus prácticas y tu banco de preguntas en un mismo lugar.
+            Tres piezas que trabajan juntas.
+          </p>
+
+          <div className={styles.split}>
+            <div className={styles.visual}>
+              <Image
+                src="/assets/solucion-drcapi.webp"
+                alt="Dr. Capi, la mascota de MedGO"
+                width={788}
+                height={1206}
+                sizes="(max-width: 900px) 60vw, 320px"
+                className={styles.visualImg}
+              />
+            </div>
+
+            <ul className={styles.steps}>
+              {steps.map((s, i) => (
+                <li
+                  key={s.title}
+                  className={styles.step}
+                  style={{ ['--c' as string]: s.color } as React.CSSProperties}
+                >
+                  <span className={styles.stepNum}>0{i + 1}</span>
+                  <div className={styles.stepText}>
+                    <h3 className={styles.title}>{s.title}</h3>
+                    <p className={styles.body}>{s.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
-
-          <ul className={styles.steps}>
-            {steps.map((s, i) => (
-              <li key={s.title} className={styles.step}>
-                <span className={styles.stepNum} style={{ color: s.color }}>0{i + 1}</span>
-                <div className={styles.stepText}>
-                  <h3 className={styles.title}>{s.title}</h3>
-                  <p className={styles.body}>{s.body}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>

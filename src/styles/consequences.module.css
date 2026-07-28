@@ -26,20 +26,21 @@
   box-shadow: 0 26px 60px rgba(6, 12, 34, 0.55);
 }
 
-/* halo violeta detrás de la imagen */
+/* halo violeta detrás de la imagen, amplio y difuso — misma estructura que el brillo verde del teléfono */
 .visual::before {
   content: '';
   position: absolute;
   z-index: -1;
-  inset: -18% -24%;
+  inset: -22% -30%;
   border-radius: 50%;
   background: radial-gradient(
-    ellipse at 50% 50%,
-    rgba(167, 139, 250, 0.26) 0%,
-    rgba(167, 139, 250, 0.1) 42%,
-    transparent 74%
+    ellipse at 50% 46%,
+    rgba(196, 174, 255, 0.5) 0%,
+    rgba(178, 150, 252, 0.24) 40%,
+    rgba(167, 139, 250, 0.08) 62%,
+    transparent 78%
   );
-  filter: blur(55px);
+  filter: blur(52px);
 }
 
 /* ─── Texto ─── */

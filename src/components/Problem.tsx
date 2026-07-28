@@ -81,7 +81,7 @@ export default function Problem() {
           </div>
 
           {dolores.map((d, i) => (
-            <div key={d.title} className={`${styles.step} ${posClass[i]}`}>
+            <div key={i} className={`${styles.step} ${posClass[i]}`}>
               <div className={styles.node} aria-hidden>
                 <span className={styles.nodeNum}>{i + 1}</span>
               </div>
