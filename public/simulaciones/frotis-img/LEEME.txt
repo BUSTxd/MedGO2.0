@@ -1,0 +1,38 @@
+Microfotografías del Paso 4 de la simulación del frotis sanguíneo
+=================================================================
+
+Copia aquí los archivos con EXACTAMENTE estos nombres (sin acentos).
+La extensión puede ser .jpg, .jpeg, .png, .webp o .avif — la simulación
+las prueba en ese orden y usa la primera que exista.
+
+Mientras un archivo no esté, su hueco muestra el recuadro
+"Imagen pendiente: [descripción]" y la simulación funciona igual.
+No hay que tocar código: basta dejar el archivo y recargar.
+
+  a1-microcitosis    Linfocito de núcleo morado en el centro rodeado de
+                     eritrocitos, con flechas negras señalando eritrocitos
+                     pequeños (microcitosis, VCM < 80 fL).
+
+  a2-normocitosis    Eritrocitos rosados alrededor de un linfocito pequeño de
+                     núcleo morado, mostrando tamaño similar
+                     (normocitosis, VCM 80–100 fL).
+
+  a3-macrocitosis    Linfocito central y eritrocitos más grandes que su núcleo
+                     señalados con flechas (macrocitosis, VCM > 100 fL).
+
+  b1-hipocromia      Eritrocitos muy pálidos, zona clara central mayor a un
+                     tercio del diámetro celular, con una célula nucleada
+                     morada en el centro (hipocromía).
+
+  b2-normocromia     Eritrocitos rosados con palidez central de aproximadamente
+                     un tercio del diámetro (normocromía).
+
+  b3-hipercromia     Eritrocitos intensamente teñidos, con palidez central
+                     reducida o ausente (hipercromía).
+
+  c1-drepanocitos    Eritrocitos alargados y curvos en forma de hoz o media
+                     luna, entre eritrocitos redondeados normales
+                     (drepanocitos).
+
+Recomendación: exportar a .webp con ancho máximo 1200 px y calidad ~82
+para que el paso cargue rápido.

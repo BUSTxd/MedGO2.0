@@ -17,6 +17,11 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  /**
+   * Módulo interactivo de la práctica. En las actividades LAB la tarjeta
+   * «Video» se sustituye por «Simulación»; sin `href` queda como próximamente.
+   */
+  simulacion?: { href?: string; desc?: string };
   /** ISO date YYYY-MM-DD; usado para "Próximos exámenes" en el home. */
   fechaISO?: string;
   /** Sobreescribe el destino del card en el sílabo (p.ej. examen práctico → atlas). */
@@ -113,6 +118,10 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Frotis de sangre periférica', 'Morfología eritrocitaria normal y patológica'],
         docentes: [],
+        simulacion: {
+          href: '/dashboard/laboratorio/frotis-sanguineo',
+          desc: 'Realiza y tiñe el frotis paso a paso en 3D, reconoce las zonas y cuenta plaquetas',
+        },
       },
       {
         id: 'sgp-1',
@@ -238,6 +247,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Médula ósea', 'Serie blanca', 'Fórmula leucocitaria diferencial'],
         docentes: [],
+        simulacion: { desc: 'Práctica interactiva de serie blanca y fórmula diferencial' },
       },
       {
         id: 'clase-10',

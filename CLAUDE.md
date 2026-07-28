@@ -240,6 +240,32 @@ Sección `dashboard/investigacion`: mapa serpenteante (estilo Duolingo) donde ca
 
 ---
 
+## Simulación del frotis sanguíneo (Hematología · Práctica 1)
+
+Único módulo del proyecto que **no es React**: HTML autocontenido con Three.js (importmap CDN) en `public/simulaciones/frotis-sanguineo.html`. Se embebe en un iframe desde `src/app/dashboard/laboratorio/frotis-sanguineo/page.tsx` (estilos `src/styles/frotisSim.module.css`), con enlace «Abrir a pantalla completa». El wrapper usa **márgenes negativos que cancelan el padding de `.panel`** del dashboard (`margin: -28px -28px -36px` + `height: calc(100dvh - 48px)`; variante móvil aparte) — si cambia el padding de `.panel`/`.main` en `dashboardLayout.module.css`, hay que recalcular esos dos valores o el iframe pierde alto útil.
+
+7 pasos con barra de progreso y navegación Anterior/Siguiente: portada (vaso sanguíneo) → extendido (slider de ángulo 0–90°) → zonas cabeza/cuerpo/cola (raycast al hover) → tinción de Wright (5 etapas cronometradas + cuestionario) → morfología eritrocitaria (microfotografías reales, **sin escena 3D**) → plaquetas (10 campos + recuento ×2, ocular circular) → cierre con mini-quiz.
+
+**Un solo `WebGLRenderer` compartido**: el canvas se reubica en el `<div class="stage">` del paso activo (objeto `SCENES`, `mountScene`); sólo se actualiza y dibuja la escena visible. Pasos sin `.stage` (paso 4) sueltan el canvas y detienen el bucle en vez de dejar una escena corriendo invisible.
+
+**Eritrocito — `makeEritrocito(radius, profileSegments, radialSegments)`**: disco bicóncavo real por `LatheGeometry` (perfil revolucionado), no un toroide; el polinomio de `semiEspesor()` da diámetro:espesor ≈ 3,05:1 y hundimiento central ≈ 32 %, proporciones reales. Cuatro niveles de detalle elegidos por tamaño en pantalla y ángulo de vista — **no subir su resolución** sin recalcular el coste (`verts=(radial+1)*2*(perfil+1)`, `tris=radial*(2*(perfil+1)-1)*2`; a resolución de referencia clínica el paso 2 pediría 48 millones de triángulos/frame):
+- `GEO.rbc` 12×28 — vaso (las células voltean, se ven de canto).
+- `GEO.rbcField` 4×24 — paso 5 (sólo en planta; presupuesto en segmentos radiales, no en perfil).
+- `GEO.rbcLow` 5×10 — zonas del frotis (puntos de pocos píxeles).
+- Cierre 12×64 — único en pantalla, con `MeshPhysicalMaterial` (clearcoat+sheen).
+
+**Presupuesto de rendimiento (medido):** pico 253 k triángulos/frame (escena `vaso`), **197 KB de VRAM** en toda la simulación, archivo estático 121 KB (34 KB gzip) — el servidor no interviene, todo el 3D se genera en el navegador al cargar (~3 ms de CPU). Reglas que sostienen esto: las células **se reciclan, nunca se crean/destruyen** (`InstancedMesh` de tamaño fijo); en `vaso`, `Z_OUT` recicla justo detrás de la cámara, no al final del tubo invisible; el endotelio es **una** `InstancedMesh`, no N mallas sueltas.
+
+**Paso 4 — layout de pantalla completa sin scroll, sin 3D.** El panel es flex column con una sola fila elástica; la teoría va en un `<details>` plegado y las tres categorías (tamaño/color/forma) son **pestañas** (sólo una rejilla visible a la vez). El ejercicio de clasificación **sustituye** a las fichas en vez de apilarse debajo. Orden de cada ficha: encabezado → microfotografía → texto. Imágenes reales en `public/simulaciones/frotis-img/` con nombres fijos (`a1-microcitosis`, `a2-normocitosis`, `a3-macrocitosis`, `b1-hipocromia`, `b2-normocromia`, `b3-hipercromia`, `c1-drepanocitos`); `resolveMicro()` sonda jpg/jpeg/png/webp/avif una vez por id y si no existe ninguna pinta «Imagen pendiente» — añadir una imagen no requiere tocar código (ver `LEEME.txt` de esa carpeta).
+
+**Paso 5 — ocular circular.** El lienzo se reduce al cuadrado inscrito (`circular:true` en la escena, clase `.sq`) en vez de cubrir todo el panel. La viñeta sólo oscurece del 88 % al 100 % del radio, y las células se siembran **dentro** de ese radio menos su propio tamaño — necesario para que ninguna plaqueta quede oculta y falsee el conteo. La escena no acepta orbitar.
+
+**Modo claro/oscuro propio:** al ser un HTML aparte, no hereda `.dark-mode` del dashboard — lee el mismo `localStorage('medgo-dark')` vía tokens CSS (`:root` claro por defecto, `:root.dark` override) con un script inline síncrono en el `<head>` y un listener de `storage` para resincronizar en vivo. Los colores 3D no cambian por tema (igual que el resto de visores de microscopio del sitio).
+
+**Tarjeta «Simulación»**: `StudyMaterialSection` acepta `simulacion?: { href?: string; desc?: string }`, que sustituye la tarjeta **Video** por una con el ícono beaker. Sólo se activa en las prácticas LAB de Hematología — `hematologia/[id]/page.tsx` pasa `simulacion={isLab ? (act.simulacion ?? {}) : undefined}` y el campo `simulacion` vive en cada actividad de `src/lib/data/hematologia.ts`. Sin `href` la tarjeta queda como «Próximamente». Evento de analítica `simulacion_abierta` (whitelist duplicada en `src/lib/analytics.ts` y `src/app/api/track/route.ts`).
+
+---
+
 ## Editor de Modelado 3D (`dashboard/modelado`, solo admin)
 
 Editor visual 3D sin código, construido con Three.js + React Three Fiber + drei. Visible y accesible **únicamente** para `isAdminEmail` (`src/lib/admin.ts`) — mismo guard que `dashboard/admin`: `page.tsx` (RSC) hace `redirect` a login si no hay sesión y `notFound()` si el email no es admin. En la sidebar, `MODELADO_ITEM` (ícono cubo 3D) se inserta solo con `isAdmin`, justo antes de `ADMIN_ITEM`.

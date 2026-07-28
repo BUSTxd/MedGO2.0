@@ -95,6 +95,8 @@ export default async function ActividadPage({
           claseId={act.id}
           hasResumen={act.resumen?.tipo === 'pdf'}
           resumenOpciones={act.resumen?.opciones}
+          /* En las prácticas de laboratorio la primera tarjeta es «Simulación». */
+          simulacion={isLab ? (act.simulacion ?? {}) : undefined}
         />
       </div>
     </div>

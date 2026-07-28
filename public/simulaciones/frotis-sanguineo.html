@@ -1,0 +1,2462 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Frotis sanguíneo · Simulación · Hematología UPCH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────  BASE  ───────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* ── Tema claro (por defecto) ── */
+  --bg:#f8faff; --bg2:#eef2fb;
+  --purple:#5445d8; --purple-light:#6a5cd9;
+  --blue:#2f8fc7; --orange:#b8720a; --green:#2dc99a; --red:#e85b4a;
+  --white:#1a1a2e; --muted:rgba(26,26,46,.55); --text-soft:rgba(26,26,46,.72);
+  --card-bg:rgba(84,69,216,.05); --card-border:rgba(20,20,50,.09);
+  --surface:rgba(20,20,50,.045); --surface-2:rgba(20,20,50,.07);
+  --surface-3:rgba(20,20,50,.09); --surface-4:rgba(20,20,50,.12);
+  --surface-strong:rgba(20,20,50,.2); --ring:rgba(20,20,50,.22);
+  --scrollbar:rgba(20,20,50,.18); --bar-bg:rgba(255,255,255,.78);
+  --stage-a:#eef1ff; --stage-b:#dfe6fb;
+  --chip-bg:rgba(255,255,255,.75); --chip-border:rgba(20,20,50,.1);
+  --hero1:rgba(84,69,216,.10); --hero2:rgba(59,158,221,.08); --hero3:rgba(232,91,74,.06);
+  --ok-text:#0f7a5c; --ok-bg:rgba(31,158,124,.12); --ok-border:rgba(31,158,124,.35);
+  --ok-bg-strong:rgba(31,158,124,.16); --ok-border-strong:rgba(31,158,124,.5);
+  --bad-text:#b23a2a; --bad-bg:rgba(200,64,47,.1); --bad-border:rgba(200,64,47,.32);
+  --bad-bg-strong:rgba(200,64,47,.14); --bad-border-strong:rgba(200,64,47,.5);
+  --info-text:#1c6fa8; --info-bg:rgba(47,141,201,.14); --info-border:rgba(47,141,201,.3);
+  --thumb-shadow:rgba(30,30,60,.32);
+  --hdr:64px; --ftr:70px;
+}
+:root.dark{
+  /* ── Tema oscuro (mismo toggle que el resto del dashboard) ── */
+  --bg:#08061a; --bg2:#0d0b28;
+  --purple-light:#9b8ef8; --blue:#3b9edd; --orange:#f5a623;
+  --white:#f0eeff; --muted:rgba(240,238,255,.55); --text-soft:rgba(240,238,255,.82);
+  --card-bg:rgba(255,255,255,.04); --card-border:rgba(255,255,255,.09);
+  --surface:rgba(255,255,255,.045); --surface-2:rgba(255,255,255,.07);
+  --surface-3:rgba(255,255,255,.09); --surface-4:rgba(255,255,255,.12);
+  --surface-strong:rgba(255,255,255,.2); --ring:rgba(255,255,255,.24);
+  --scrollbar:rgba(255,255,255,.14); --bar-bg:rgba(8,6,26,.72);
+  --stage-a:#16123c; --stage-b:#0a0820;
+  --chip-bg:rgba(8,6,26,.6); --chip-border:rgba(255,255,255,.09);
+  --hero1:rgba(84,69,216,.28); --hero2:rgba(59,158,221,.16); --hero3:rgba(232,91,74,.12);
+  --ok-text:#a5f0d8; --ok-bg:rgba(45,201,154,.1); --ok-border:rgba(45,201,154,.28);
+  --ok-bg-strong:rgba(45,201,154,.16); --ok-border-strong:rgba(45,201,154,.5);
+  --bad-text:#ffc0b6; --bad-bg:rgba(232,91,74,.1); --bad-border:rgba(232,91,74,.28);
+  --bad-bg-strong:rgba(232,91,74,.15); --bad-border-strong:rgba(232,91,74,.5);
+  --info-text:#8ecdf5; --info-bg:rgba(59,158,221,.16); --info-border:rgba(59,158,221,.28);
+  --thumb-shadow:rgba(0,0,0,.5);
+}
+html,body{height:100%}
+body{
+  background:var(--bg); color:var(--white);
+  font-family:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
+  overflow:hidden; -webkit-font-smoothing:antialiased;
+  transition:background .25s ease,color .25s ease;
+}
+body::before{
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(900px 520px at 15% -10%, var(--hero1), transparent 60%),
+    radial-gradient(760px 460px at 92% 8%, var(--hero2), transparent 62%),
+    radial-gradient(700px 500px at 50% 115%, var(--hero3), transparent 60%);
+}
+button{font-family:inherit}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:var(--scrollbar);border-radius:9px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ─────────────────────────  SHELL  ───────────────────────── */
+#app{position:relative;z-index:1;height:100dvh;display:flex;flex-direction:column}
+
+header{
+  height:var(--hdr); flex:0 0 auto; display:flex; align-items:center; gap:16px;
+  padding:0 20px; border-bottom:1px solid var(--card-border);
+  background:var(--bar-bg); backdrop-filter:blur(14px);
+}
+.brand{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.brand svg{width:22px;height:22px;color:var(--blue)}
+.brand b{font-size:.94rem;font-weight:700;letter-spacing:-.01em}
+.brand span{display:block;font-size:.68rem;color:var(--muted);font-weight:500;line-height:1.1}
+.progWrap{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.progTop{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.progTop b{font-size:.82rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progTop i{font-style:normal;font-size:.7rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.progBar{height:5px;border-radius:99px;background:var(--surface-3);overflow:hidden}
+.progFill{height:100%;width:0;border-radius:99px;transition:width .45s cubic-bezier(.4,0,.2,1);
+  background:linear-gradient(90deg,var(--purple-light),var(--blue))}
+.dots{display:flex;gap:6px;flex:0 0 auto}
+.dots button{
+  width:11px;height:11px;border-radius:50%;border:1.5px solid var(--ring);
+  background:transparent;cursor:pointer;padding:0;transition:.2s
+}
+.dots button:hover{border-color:var(--blue)}
+.dots button.done{background:rgba(155,142,248,.55);border-color:transparent}
+.dots button.on{background:var(--blue);border-color:transparent;transform:scale(1.28)}
+
+main{flex:1;min-height:0;position:relative}
+.step{
+  position:absolute;inset:0;display:none;
+  grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);
+  gap:18px;padding:18px 20px;
+}
+.step.on{display:grid;animation:fade .4s ease}
+/* Pasos sin escena 3D: una sola columna a todo el ancho útil. */
+.step.solo{grid-template-columns:minmax(0,1fr)}
+.step.solo .panel{max-width:1600px;width:100%;margin:0 auto;padding-right:0}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.oculto{display:none!important}
+
+/* Puerta «leer primero, responder después» */
+.gate{
+  display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;
+  padding:20px 18px;border-radius:14px;
+  border:1px dashed var(--card-border);background:var(--card-bg)
+}
+.gate p{font-size:.82rem;color:var(--muted);max-width:46ch}
+
+.stage{
+  position:relative;border-radius:18px;overflow:hidden;min-height:0;
+  border:1px solid var(--card-border);
+  background:radial-gradient(120% 100% at 50% 0%, var(--stage-a) 0%, var(--stage-b) 70%);
+}
+.stage canvas{display:block;width:100%;height:100%}
+/* Escenas circulares: el lienzo se reduce al cuadrado inscrito y se recorta en
+   círculo, así no se rasteriza nada fuera del ocular. */
+.stage canvas.sq{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  border-radius:50%
+}
+.stageTag{
+  position:absolute;top:12px;left:12px;z-index:3;
+  font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);background:var(--chip-bg);border:1px solid var(--chip-border);
+  padding:5px 10px;border-radius:99px;backdrop-filter:blur(8px)
+}
+.stageHint{
+  position:absolute;bottom:12px;left:12px;right:12px;z-index:3;
+  font-size:.72rem;color:var(--muted);text-align:center;pointer-events:none
+}
+
+.panel{
+  min-height:0;overflow-y:auto;padding-right:6px;
+  display:flex;flex-direction:column;gap:14px
+}
+.kicker{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+h1{font-size:1.62rem;line-height:1.15;font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.34rem;line-height:1.2;font-weight:700;letter-spacing:-.02em}
+h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+p{font-size:.9rem;line-height:1.6;color:var(--text-soft)}
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:14px 16px}
+.card.accent{border-color:rgba(59,158,221,.28);background:rgba(59,158,221,.07)}
+.card.warn{border-color:rgba(245,166,35,.3);background:rgba(245,166,35,.08)}
+.card.good{border-color:rgba(45,201,154,.3);background:rgba(45,201,154,.08)}
+ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+ul li{position:relative;padding-left:18px;font-size:.87rem;line-height:1.5;color:var(--text-soft)}
+ul li::before{content:'';position:absolute;left:2px;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--purple-light)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{
+  font-size:.75rem;font-weight:500;padding:5px 11px;border-radius:99px;
+  background:var(--surface-2);border:1px solid var(--card-border);color:var(--text-soft)
+}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:.85rem}
+.dl dt{color:var(--muted);white-space:nowrap}
+.dl dd{color:var(--white);font-weight:500}
+.note{font-size:.78rem;color:var(--muted);line-height:1.5}
+.mono{font-variant-numeric:tabular-nums;font-feature-settings:'tnum'}
+
+/* ─────────────────────────  FOOTER  ───────────────────────── */
+footer{
+  height:var(--ftr);flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:0 20px;border-top:1px solid var(--card-border);
+  background:var(--bar-bg);backdrop-filter:blur(14px)
+}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;
+  font-size:.88rem;font-weight:600;padding:11px 20px;border-radius:11px;transition:.18s;
+  background:var(--surface-2);color:var(--white);border:1px solid var(--card-border)
+}
+.btn:hover:not(:disabled){background:var(--surface-4)}
+.btn:disabled{opacity:.32;cursor:not-allowed}
+.btn.primary{background:linear-gradient(135deg,var(--purple) 0%,var(--blue) 130%);border-color:transparent;color:#fff}
+.btn.primary:hover:not(:disabled){filter:brightness(1.14)}
+.btn.ghost{background:transparent}
+.btn.sm{padding:8px 14px;font-size:.8rem;border-radius:9px}
+.footHint{font-size:.75rem;color:var(--muted);text-align:center;flex:1;min-width:0}
+
+/* ─────────────────────  CONTROLES 3D  ───────────────────── */
+.ctrlRow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;flex:1;min-width:130px;height:5px;border-radius:99px;
+  background:linear-gradient(90deg,var(--blue),var(--purple-light));outline:none
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:19px;height:19px;border-radius:50%;background:#fff;cursor:grab;
+  box-shadow:0 2px 10px var(--thumb-shadow)
+}
+input[type=range]::-moz-range-thumb{width:19px;height:19px;border:none;border-radius:50%;background:#fff;cursor:grab}
+.valBox{
+  min-width:62px;text-align:center;font-weight:700;font-size:.95rem;
+  padding:6px 10px;border-radius:9px;background:var(--surface-2);border:1px solid var(--card-border)
+}
+input[type=number],input[type=text]{
+  font-family:inherit;font-size:.9rem;font-weight:600;color:var(--white);
+  background:var(--surface-2);border:1px solid var(--card-border);
+  border-radius:9px;padding:9px 12px;outline:none;width:100%
+}
+input[type=number]:focus,input[type=text]:focus{border-color:var(--blue)}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+
+/* ─────────────────────────  QUIZ  ───────────────────────── */
+.q{border:1px solid var(--card-border);border-radius:14px;padding:14px 16px;background:var(--card-bg)}
+.q + .q{margin-top:12px}
+.qHead{display:flex;gap:10px;align-items:flex-start;margin-bottom:11px}
+.qNum{
+  flex:0 0 auto;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;
+  font-size:.72rem;font-weight:700;background:rgba(155,142,248,.2);color:var(--purple-light)
+}
+.qText{font-size:.89rem;line-height:1.45;font-weight:600}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{
+  text-align:left;width:100%;cursor:pointer;font-size:.85rem;line-height:1.4;
+  padding:10px 13px;border-radius:10px;transition:.16s;
+  background:var(--surface);border:1px solid var(--card-border);color:var(--text-soft)
+}
+.opt:hover:not(:disabled){background:var(--surface-3);border-color:var(--surface-strong)}
+.opt:disabled{cursor:default}
+.opt.ok{background:var(--ok-bg-strong);border-color:var(--ok-border-strong);color:var(--ok-text)}
+.opt.bad{background:var(--bad-bg-strong);border-color:var(--bad-border-strong);color:var(--bad-text)}
+.fb{margin-top:10px;font-size:.81rem;line-height:1.5;padding:10px 12px;border-radius:10px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border:1px solid var(--ok-border);color:var(--ok-text)}
+.fb.bad{background:var(--bad-bg);border:1px solid var(--bad-border);color:var(--bad-text)}
+.score{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;
+  background:linear-gradient(135deg,rgba(84,69,216,.22),rgba(59,158,221,.16));
+  border:1px solid rgba(155,142,248,.28)
+}
+.scoreNum{font-size:1.75rem;font-weight:800;letter-spacing:-.03em}
+
+/* ───────────────────  ETAPAS DE TINCIÓN  ─────────────────── */
+.stages{display:flex;flex-direction:column;gap:8px}
+.stg{
+  display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:11px;
+  border:1px solid transparent;background:var(--surface);transition:.3s
+}
+.stg.on{border-color:rgba(59,158,221,.45);background:rgba(59,158,221,.1)}
+.stg.done{opacity:.55}
+.stgDot{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:var(--surface-4);transition:.3s}
+.stg.on .stgDot{background:var(--blue);box-shadow:0 0 0 4px rgba(59,158,221,.2)}
+.stg.done .stgDot{background:var(--green)}
+.stgBody{flex:1;min-width:0}
+.stgName{font-size:.84rem;font-weight:600}
+.stgTime{font-size:.72rem;color:var(--muted)}
+.stgBar{height:3px;border-radius:99px;background:var(--surface-3);margin-top:6px;overflow:hidden}
+.stgBarFill{height:100%;width:0;background:var(--blue);border-radius:99px}
+.clock{
+  font-size:1.5rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;
+  display:flex;align-items:baseline;gap:8px
+}
+.clock small{font-size:.72rem;font-weight:500;color:var(--muted);letter-spacing:0}
+
+/* ─────────────────  ZONAS (paso 2) hover UI  ───────────────── */
+.zoneCards{display:flex;flex-direction:column;gap:9px}
+.zc{
+  padding:11px 13px;border-radius:12px;border:1px solid var(--card-border);
+  background:var(--card-bg);transition:.22s;cursor:pointer
+}
+.zc:hover,.zc.on{border-color:var(--zcol,var(--blue));background:color-mix(in srgb,var(--zcol,var(--blue)) 11%,transparent)}
+.zcTop{display:flex;align-items:center;gap:9px;margin-bottom:4px}
+.zcDot{width:9px;height:9px;border-radius:50%;background:var(--zcol,var(--blue))}
+.zcName{font-size:.86rem;font-weight:700}
+.zcSub{font-size:.72rem;color:var(--muted);margin-left:auto}
+.zcDesc{font-size:.79rem;line-height:1.45;color:var(--text-soft)}
+
+/* ───────────────  CONTEO DE PLAQUETAS (paso 5)  ─────────────── */
+.fieldGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.fCell{
+  aspect-ratio:1;border-radius:9px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:1px;
+  border:1px solid var(--card-border);background:var(--surface);
+  font-size:.62rem;color:var(--muted);transition:.2s
+}
+.fCell.on{border-color:var(--blue);background:rgba(59,158,221,.14)}
+.fCell.filled{border-color:rgba(155,142,248,.4);background:rgba(155,142,248,.12)}
+.fCell b{font-size:.95rem;color:var(--white);font-weight:700;line-height:1}
+/* Ocular: mismo cuadrado que el lienzo (--sq lo fija resizeActive). El
+   box-shadow gigante rellena de golpe todo lo que queda fuera del círculo, y la
+   viñeta sólo oscurece el último 12 % del radio — por dentro de ese margen todas
+   las plaquetas quedan enteramente visibles y contables. */
+.microMask,.microRet{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:var(--sq,100%);height:var(--sq,100%);
+  border-radius:50%;z-index:2;pointer-events:none
+}
+.microMask{
+  background:radial-gradient(circle closest-side, transparent 0, transparent 88%,
+    rgba(4,3,12,.30) 96%, rgba(4,3,12,.72) 100%);
+  box-shadow:0 0 0 9999px #05040f
+}
+.microRet{
+  border:1px solid rgba(155,142,248,.28);
+  box-shadow:inset 0 0 70px rgba(155,142,248,.12)
+}
+
+/* ─────────────  PASO 4 · microfotografías  ───────────── */
+.imgSlot{
+  border:1.5px dashed rgba(155,142,248,.35);border-radius:14px;
+  background:rgba(155,142,248,.05);padding:22px 18px;text-align:center
+}
+.imgSlot b{display:block;font-size:.8rem;color:var(--purple-light);margin-bottom:6px;letter-spacing:.04em;text-transform:uppercase}
+.imgSlot span{font-size:.8rem;color:var(--muted);line-height:1.5}
+
+.secTitle{
+  display:flex;align-items:center;gap:10px;margin:8px 0 2px
+}
+.secTitle span{
+  flex:0 0 auto;width:26px;height:26px;border-radius:9px;display:grid;place-items:center;
+  font-size:.8rem;font-weight:800;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff
+}
+.secTitle h3{font-size:1.02rem;margin:0}
+.secTitle i{font-style:normal;font-size:.72rem;color:var(--muted);margin-left:auto}
+
+/* ── PASO 4 · layout de pantalla completa ──
+   El panel se reparte en filas fijas (cabecera, teoría plegable, pestañas,
+   pie) y una única fila elástica que scrollea: la rejilla de variaciones.
+   Así las fichas son el primer plano y no hay que bajar para encontrarlas. */
+.p4{height:100%;min-height:0;overflow:hidden;gap:11px}
+.p4Top{
+  flex:0 0 auto;display:flex;align-items:flex-end;justify-content:space-between;
+  gap:20px;flex-wrap:wrap
+}
+.p4Lead{flex:1 1 380px;max-width:640px;font-size:.85rem;color:var(--muted)}
+.p4Body{flex:1;min-height:0;overflow-y:auto;padding-right:4px}
+
+.teoria{flex:0 0 auto;border:1px solid var(--card-border);border-radius:12px;background:var(--card-bg)}
+.teoria summary{
+  cursor:pointer;padding:10px 14px;font-size:.82rem;font-weight:600;
+  display:flex;align-items:center;gap:9px;list-style:none;color:var(--text-soft)
+}
+.teoria summary::-webkit-details-marker{display:none}
+.teoria summary::before{content:'▸';color:var(--blue);display:inline-block;transition:transform .2s}
+.teoria[open] summary::before{transform:rotate(90deg)}
+.teoriaBody{
+  padding:0 14px 14px;display:grid;gap:10px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  max-height:40vh;overflow-y:auto
+}
+
+.tabs{flex:0 0 auto;display:flex;gap:8px;flex-wrap:wrap}
+.tab{
+  flex:1 1 200px;display:flex;align-items:center;gap:10px;text-align:left;cursor:pointer;
+  padding:10px 13px;border-radius:12px;transition:.18s;font-family:inherit;
+  background:var(--card-bg);border:1px solid var(--card-border);color:var(--white)
+}
+.tab:hover{background:var(--surface-3)}
+.tab.on{border-color:var(--blue);background:rgba(59,158,221,.12)}
+.tab b{
+  flex:0 0 auto;width:26px;height:26px;border-radius:9px;display:grid;place-items:center;
+  font-size:.8rem;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,var(--purple),var(--blue))
+}
+.tab span{font-size:.87rem;font-weight:700}
+.tab i{font-style:normal;font-size:.71rem;color:var(--muted);margin-left:auto}
+
+.p4Gate{
+  flex:0 0 auto;flex-direction:row;justify-content:space-between;align-items:center;
+  gap:14px;padding:11px 16px;text-align:left;flex-wrap:wrap
+}
+.p4Gate p{max-width:none}
+
+/* Rejilla de variaciones: comparación lado a lado, la foto como protagonista. */
+.morfoGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;align-items:start}
+.morfoGrid1{grid-template-columns:minmax(0,620px);justify-content:center}
+.morfo{border:1px solid var(--card-border);border-radius:14px;background:var(--card-bg);padding:14px 16px}
+.morfoGrid .morfo{display:flex;flex-direction:column;gap:7px}
+.morfoGrid .morfo p{font-size:.84rem;line-height:1.5}
+.morfoGrid figure.micro{margin:2px 0 0}
+.morfoGrid figure.micro img{max-height:min(36vh,320px);object-fit:contain}
+.morfoGrid figure.micro figcaption{font-size:.71rem;margin-top:7px}
+.morfoGrid .microPh{min-height:150px}
+.morfoHead{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:7px}
+.morfoName{font-size:.95rem;font-weight:700}
+.morfoVal{
+  font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:99px;
+  background:var(--info-bg);color:var(--info-text);border:1px solid var(--info-border)
+}
+.morfoAsoc{font-size:.79rem;line-height:1.5;color:var(--text-soft);margin-top:7px}
+.morfoAsoc b{color:var(--orange)}
+
+figure.micro{margin-top:11px}
+figure.micro img{
+  display:block;width:100%;height:auto;border-radius:12px;
+  border:1px solid var(--card-border);background:#000
+}
+figure.micro figcaption{
+  font-size:.75rem;line-height:1.5;color:var(--muted);margin-top:8px;padding-left:11px;
+  border-left:2px solid rgba(155,142,248,.4)
+}
+.microPh{
+  border:1.5px dashed rgba(155,142,248,.35);border-radius:12px;
+  background:rgba(155,142,248,.05);padding:18px 16px;
+  display:flex;flex-direction:column;gap:6px;min-height:120px;justify-content:center
+}
+.microPh b{font-size:.72rem;color:var(--purple-light);letter-spacing:.05em;text-transform:uppercase}
+.microPh span{font-size:.79rem;color:var(--muted);line-height:1.5}
+
+/* ─────  PASO 5 · nota metodológica desplegable  ───── */
+.step.p5{grid-template-rows:minmax(0,1fr) auto}
+.p5Nota{grid-column:1/-1;min-height:0}
+
+.faq{
+  border:1px solid var(--card-border);border-radius:14px;overflow:hidden;
+  background:linear-gradient(135deg,rgba(84,69,216,.08),rgba(59,158,221,.05));
+  transition:border-color .22s
+}
+.faq[open]{border-color:rgba(59,158,221,.38)}
+.faq summary{
+  display:flex;align-items:center;gap:11px;cursor:pointer;list-style:none;
+  padding:13px 16px;font-size:.9rem;font-weight:600;transition:background .18s
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{background:var(--surface)}
+.faqQ{
+  flex:0 0 auto;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+  font-size:.78rem;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,var(--purple),var(--blue))
+}
+.faqTitle{flex:1;min-width:0}
+.faqChev{flex:0 0 auto;color:var(--blue);font-size:.8rem;transition:transform .25s}
+.faq[open] .faqChev{transform:rotate(180deg)}
+.faqBody{
+  padding:14px 16px 16px;border-top:1px solid var(--card-border);
+  display:flex;flex-direction:column;gap:13px;
+  max-height:min(46vh,420px);overflow-y:auto
+}
+.faqBody h3{margin:4px 0 0}
+
+/* Ecuaciones */
+.eq{
+  font-variant-numeric:tabular-nums;font-size:.87rem;font-weight:600;line-height:1.5;
+  padding:9px 13px;border-radius:9px;
+  background:var(--surface-2);border:1px solid var(--card-border);border-left:3px solid var(--blue)
+}
+.eqFinal{border-left-color:#2dc99a;background:var(--ok-bg);color:var(--ok-text)}
+.eq sup{font-size:.72em;vertical-align:super}
+
+/* Derivación paso a paso */
+.deriv{display:flex;flex-direction:column;gap:11px}
+.derivStep{display:flex;gap:11px;align-items:flex-start}
+.derivStep>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.derivN{
+  flex:0 0 auto;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;
+  margin-top:3px;font-size:.7rem;font-weight:700;
+  background:rgba(155,142,248,.22);color:var(--purple-light)
+}
+.derivStep p{font-size:.84rem}
+
+/* Ejemplo resuelto */
+.ejemplo{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;align-items:start}
+.ejemploCalc{display:flex;flex-direction:column;gap:9px}
+.ejemploGrid .fCell{cursor:default}
+
+.qFig{margin-bottom:11px}
+.qFig img{display:block;width:100%;max-width:340px;height:auto;border-radius:11px;border:1px solid var(--card-border)}
+.qFig .microPh{max-width:340px;min-height:90px}
+
+/* ─────────────────────────  RESPONSIVE  ───────────────────── */
+@media (max-width:900px){
+  :root{--hdr:58px;--ftr:64px}
+  .step,.step.solo{grid-template-columns:1fr;grid-template-rows:minmax(200px,42%) minmax(0,1fr);padding:12px}
+  .step.p5{grid-template-rows:minmax(170px,32%) minmax(0,1fr) auto}
+  .brand span{display:none}
+  h1{font-size:1.3rem} h2{font-size:1.15rem}
+  .footHint{display:none}
+}
+@media (max-width:520px){
+  .brand b{display:none}
+  .dots{display:none}
+  .fieldGrid{grid-template-columns:repeat(5,1fr)}
+}
+</style>
+<script>
+/* Mismo interruptor que el resto del dashboard: localStorage('medgo-dark').
+   Se aplica antes del primer paint para evitar el destello del tema erróneo,
+   y se resincroniza en vivo si el usuario cambia el modo en la pestaña del
+   dashboard mientras esta simulación está abierta (iframe o pestaña aparte). */
+(function () {
+  try {
+    var dark = localStorage.getItem('medgo-dark') === 'true';
+    document.documentElement.classList.toggle('dark', dark);
+  } catch (e) {}
+})();
+window.addEventListener('storage', function (e) {
+  if (e.key === 'medgo-dark') {
+    document.documentElement.classList.toggle('dark', e.newValue === 'true');
+  }
+});
+</script>
+</head>
+<body>
+<div id="app">
+
+  <!-- ══════════════ HEADER ══════════════ -->
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 8 8" fill="currentColor" aria-hidden="true">
+        <path d="M1.34 0a.5.5 0 0 0 .16 1h.5v1.41c-.09.17-1.2 2.31-1.66 3.09-.16.26-.34.61-.34 1.06 0 .39.15.77.41 1.03s.64.41 1.03.41h5.13c.38 0 .74-.16 1-.41h.03c.26-.26.41-.64.41-1.03 0-.45-.19-.8-.34-1.06-.46-.78-1.57-2.92-1.66-3.09v-1.41h.5a.5.5 0 1 0 0-1h-5a.5.5 0 0 0-.09 0 .5.5 0 0 0-.06 0zm1.66 1h2v1.63l.06.09s.63 1.23 1.19 2.28h-4.5c.56-1.05 1.19-2.28 1.19-2.28l.06-.09v-1.63z"/>
+      </svg>
+      <div><b>Frotis sanguíneo</b><span>Hematología · UPCH</span></div>
+    </div>
+    <div class="progWrap">
+      <div class="progTop"><b id="pTitle">Portada</b><i id="pCount">1 / 7</i></div>
+      <div class="progBar"><div class="progFill" id="pFill"></div></div>
+    </div>
+    <div class="dots" id="dots"></div>
+  </header>
+
+  <!-- ══════════════ MAIN ══════════════ -->
+  <main id="main">
+
+    <!-- ──────── 0 · PORTADA ──────── -->
+    <section class="step" data-title="Portada · El torrente sanguíneo">
+      <div class="stage" data-scene="vaso">
+        <span class="stageTag">Interior de un vaso sanguíneo</span>
+        <span class="stageHint">Arrastra para mirar alrededor · la cámara orbita sola</span>
+      </div>
+      <div class="panel">
+        <span class="kicker">Práctica 1 · Hematología 2025</span>
+        <h1>Realización y tinción del frotis sanguíneo</h1>
+        <p>El frotis sanguíneo —también llamado <b>extendido</b>— es una de las técnicas más rentables de la hematología: el diagnóstico de muchas enfermedades puede establecerse <b>sólo observando la morfología</b> de las células sanguíneas.</p>
+        <div class="card accent">
+          <h3>Qué vas a hacer aquí</h3>
+          <ul>
+            <li>Extender una gota de sangre variando el ángulo del portaobjeto extensor.</li>
+            <li>Reconocer las tres zonas del frotis y qué células predominan en cada una.</li>
+            <li>Teñir con colorante de Wright respetando los tiempos de cada etapa.</li>
+            <li>Clasificar eritrocitos por tamaño, color y forma en microfotografías reales.</li>
+            <li>Realizar un recuento plaquetario manual sobre 10 campos.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Lo que ves en la escena</h3>
+          <p class="note">Discos bicóncavos rojos: <b>eritrocitos</b>, el elemento más abundante. Entre ellos, esferas claras de mayor tamaño (<b>leucocitos</b>) y fragmentos pequeños y violáceos (<b>plaquetas</b>). Esta es la mezcla que quedará atrapada en la lámina cuando hagas el extendido.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ──────── 1 · REALIZACIÓN DEL FROTIS ──────── -->
+    <section class="step" data-title="Paso 1 · Realización del frotis">
+      <div class="stage" data-scene="frotis">
+        <span class="stageTag">Extensión con el canto biselado</span>
+        <span class="stageHint">Arrastra para rotar la vista</span>
+      </div>
+      <div class="panel">
+        <span class="kicker">Paso 1 de 5</span>
+        <h2>Realización del frotis sanguíneo</h2>
+
+        <div class="card">
+          <h3>Materiales</h3>
+          <div class="chips">
+            <span class="chip">Alcohol al 70 %</span>
+            <span class="chip">Algodón</span>
+            <span class="chip">Lanceta descartable</span>
+            <span class="chip">Portaobjetos 25 × 75 mm</span>
+          </div>
+        </div>
+
+        <div class="card accent">
+          <h3>Fundamento</h3>
+          <p>Extensión de una gota de sangre sobre un portaobjeto de 25 × 75 mm empleando el <b>canto biselado de otro portaobjeto</b> de igual dimensión.</p>
+        </div>
+
+        <div class="card">
+          <h3>Procedimiento</h3>
+          <ul>
+            <li>Colocar una gota pequeña (± 3 mm de diámetro) a <b>2 cm</b> de uno de los extremos.</li>
+            <li>Apoyar el canto del segundo portaobjeto sobre el primero formando <b>45°</b>, delante de la gota.</li>
+            <li>Retroceder hasta tocar la gota y esperar a que se distribuya por capilaridad a lo largo del canto.</li>
+            <li>Deslizar suave y a velocidad moderada en sentido <b>longitudinal</b>. Secar a temperatura ambiente y en posición horizontal.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Ajusta el ángulo del extensor</h3>
+          <div class="ctrlRow" style="margin:10px 0 12px">
+            <input type="range" id="angSlider" min="0" max="90" step="1" value="45">
+            <span class="valBox mono" id="angVal">45°</span>
+          </div>
+          <div class="dl" style="margin-bottom:12px">
+            <dt>Largo de la extensión</dt><dd class="mono" id="angLargo">—</dd>
+            <dt>Grosor relativo</dt><dd class="mono" id="angGrosor">—</dd>
+          </div>
+          <div id="angVeredicto" class="card" style="padding:11px 13px"></div>
+          <div class="ctrlRow" style="margin-top:12px">
+            <button class="btn primary sm" id="btnExtender">▶ Deslizar el portaobjeto</button>
+            <button class="btn ghost sm" id="btnReset1">Reiniciar</button>
+          </div>
+        </div>
+
+        <p class="note">Regla clave: <b>ángulo &gt; 45° → extensión gruesa y corta</b>; <b>ángulo &lt; 45° → extensión larga y fina</b>. El ángulo se aumenta también cuando el hematocrito es bajo, y se reduce cuando la sangre es muy viscosa.</p>
+      </div>
+    </section>
+
+    <!-- ──────── 2 · ZONAS DEL FROTIS ──────── -->
+    <section class="step" data-title="Paso 2 · Zonas del frotis">
+      <div class="stage" data-scene="zonas">
+        <span class="stageTag">Cabeza · cuerpo · cola</span>
+        <span class="stageHint">Pasa el cursor (o toca) sobre cada zona de la lámina</span>
+      </div>
+      <div class="panel">
+        <span class="kicker">Paso 2 de 5</span>
+        <h2>Zonas del frotis sanguíneo</h2>
+        <p>Un extendido no es homogéneo: el grosor decrece desde el punto de partida hasta el final, y con él cambia la <b>distribución de las células</b>. Elegir mal la zona de lectura falsea la fórmula diferencial.</p>
+
+        <div class="zoneCards" id="zoneCards">
+          <div class="zc" data-zone="cabeza" style="--zcol:#e85b4a">
+            <div class="zcTop"><span class="zcDot"></span><span class="zcName">Cabeza</span><span class="zcSub">excesivamente gruesa</span></div>
+            <p class="zcDesc">Región inmediata al punto de partida de la extensión. Las células se apilan y se superponen. <b>Aumento de linfocitos.</b></p>
+          </div>
+          <div class="zc" data-zone="cuerpo" style="--zcol:#2dc99a">
+            <div class="zcTop"><span class="zcDot"></span><span class="zcName">Cuerpo</span><span class="zcSub">zona ideal</span></div>
+            <p class="zcDesc">Región intermedia con <b>reparto equilibrado de células</b>. Los eritrocitos se tocan pero no se superponen y no hay lagunas. <b>Es la zona de lectura.</b></p>
+          </div>
+          <div class="zc" data-zone="cola" style="--zcol:#f5a623">
+            <div class="zcTop"><span class="zcDot"></span><span class="zcName">Cola</span><span class="zcSub">excesivamente fina</span></div>
+            <p class="zcDesc">Final de la extensión, donde las células adoptan una posición acartonada o «en barbas». <b>Exceso de granulocitos y monocitos.</b></p>
+          </div>
+        </div>
+
+        <div class="card warn">
+          <h3>Por qué importa</h3>
+          <p>Los leucocitos se distribuyen por tamaño y densidad durante el arrastre: los grandes (granulocitos, monocitos) son empujados hacia los bordes y la cola; los linfocitos, más pequeños, quedan retenidos en la cabeza. Contar la diferencial en la cabeza <b>sobrestima linfocitos</b>; contarla en la cola <b>sobrestima neutrófilos</b>.</p>
+        </div>
+
+        <p class="note">Con objetivo 10× se busca primero la zona ideal: ni superposición de eritrocitos ni lagunas carentes de glóbulos. Recién ahí se pasa a 40× y a 100× de inmersión.</p>
+      </div>
+    </section>
+
+    <!-- ──────── 3 · TINCIÓN DE WRIGHT ──────── -->
+    <section class="step" data-title="Paso 3 · Tinción con colorante de Wright">
+      <div class="stage" data-scene="tincion">
+        <span class="stageTag">Coloración de Wright</span>
+        <span class="stageHint" id="tincionHint">Pulsa «Iniciar tinción» en el panel</span>
+      </div>
+      <div class="panel">
+        <span class="kicker">Paso 3 de 5</span>
+        <h2>Tinción con colorante de Wright</h2>
+        <p>El colorante de Wright permite estudiar variaciones y anormalidades de <b>estructura, forma y tamaño</b> de los eritrocitos, su contenido de hemoglobina y sus propiedades de coloración. La información que obtienes depende en gran parte de la calidad del extendido y de la coloración.</p>
+
+        <div class="card">
+          <h3>Materiales</h3>
+          <div class="chips">
+            <span class="chip">Colorante de Wright</span>
+            <span class="chip">Frasco gotero</span>
+            <span class="chip">Solución amortiguada tamponada</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="clock"><span class="mono" id="tClock">00:00</span><small id="tClockLabel">tiempo simulado</small></div>
+          <div class="stages" id="tStages" style="margin-top:12px"></div>
+          <div class="ctrlRow" style="margin-top:12px">
+            <button class="btn primary sm" id="btnTincion">▶ Iniciar tinción</button>
+            <button class="btn ghost sm" id="btnTincionReset">Reiniciar</button>
+          </div>
+        </div>
+
+        <div class="card good">
+          <h3>Criterio de una buena tinción</h3>
+          <ul>
+            <li>Buena diferenciación de las estructuras subcelulares en los leucocitos.</li>
+            <li>Coloración <b>rosada</b> de los hematíes.</li>
+            <li><b>Ausencia de precipitados.</b></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 style="margin-bottom:10px">Defectos de tinción</h3>
+          <div id="quizTincion"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ──────── 4 · MORFOLOGÍA ERITROCITARIA ──────── -->
+    <section class="step solo" data-title="Paso 4 · Morfología de eritrocitos">
+      <!-- Layout de pantalla completa: la teoría se pliega y las variaciones
+           (tamaño / color / forma) ocupan el primer plano en pestañas, de modo
+           que cada categoría se ve entera sin recurrir al scroll. -->
+      <div class="panel p4">
+        <div class="p4Top">
+          <div>
+            <span class="kicker">Paso 4 de 5</span>
+            <h2>Morfología de los eritrocitos en sangre periférica</h2>
+          </div>
+          <p class="p4Lead">El eritrocito es el <b>elemento más maduro de la eritropoyesis</b>. Su morfología sólo puede valorarse en frotis bien extendidos, fijados y coloreados.</p>
+        </div>
+
+        <details class="teoria" id="teoriaP4">
+          <summary>Fundamento, alteraciones posibles y consideraciones analíticas</summary>
+          <div class="teoriaBody">
+            <div class="card accent">
+              <h3>Dónde rinde más el frotis</h3>
+              <p>Anemias hemolíticas inmunes · hemoglobinopatías · talasemias · anemias megaloblásticas. En estos cuadros la revisión del extendido puede <b>definir el diagnóstico</b> o acotar el diferencial.</p>
+            </div>
+            <div class="card">
+              <h3>Las alteraciones del eritrocito pueden ser</h3>
+              <ul>
+                <li>Alteraciones del <b>tamaño</b> — anisocitosis.</li>
+                <li>Alteraciones de la <b>forma</b> — poiquilocitosis.</li>
+                <li>Alteraciones de la <b>coloración</b> — anisocromía.</li>
+                <li>Alteraciones en la <b>distribución</b>, p. ej. aglutinación de eritrocitos.</li>
+                <li>Presencia de <b>inclusiones</b> eritrocitarias.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Consideraciones analíticas</h3>
+              <ul>
+                <li>Verificar los datos del paciente y contrastarlos con los resultados obtenidos.</li>
+                <li>Enfocar primero con <b>10×</b>: buscar la zona ideal, evaluar la calidad de la coloración y detectar alteraciones macroscópicas (parásitos, distribución anormal).</li>
+                <li><b>40×</b> como aumento medio para el estudio inicial; <b>100×</b> de inmersión para los detalles finos.</li>
+              </ul>
+            </div>
+            <div class="card warn">
+              <p><b>Anisocitosis</b> y <b>poiquilocitosis</b> son hallazgos inespecíficos de cualquier trastorno sanguíneo: implican mayor variación de tamaño o de forma que la normal. La anisocitosis puede deberse a macrocitosis, a microcitosis o a ambas —con frecuencia coexisten—. El <b>VCM</b> junto con el <b>ADE (RDW)</b> son los parámetros eritroides más útiles para la clasificación morfológica de las anemias.</p>
+            </div>
+          </div>
+        </details>
+
+        <!-- Pestañas A (tamaño) · B (color) · C (forma), generadas desde SUBSECCIONES -->
+        <div class="tabs" id="p4Tabs"></div>
+
+        <div class="p4Body">
+          <!-- Cada microfotografía cae en su ranura; mientras el archivo no
+               exista se muestra el recuadro «Imagen pendiente». -->
+          <div id="paso4Subsecciones"></div>
+
+          <div id="wrapMorfo" class="oculto">
+            <div class="secTitle">
+              <span>?</span><h3>Clasifica lo que ves</h3><i>7 casos</i>
+            </div>
+            <p class="note" style="margin-bottom:12px">Para cada campo, decide a qué categoría morfológica corresponde el hallazgo señalado.</p>
+            <div id="ejercicioMorfo"></div>
+          </div>
+        </div>
+
+        <div class="gate p4Gate" id="gateMorfo">
+          <p>Cuando hayas comparado las tres categorías, pon a prueba lo que reconoces.</p>
+          <button class="btn primary" id="btnGateMorfo">Realizar ejercicio de clasificación →</button>
+        </div>
+
+        <div class="gate p4Gate oculto" id="gateVolver">
+          <p>Ejercicio de clasificación · 7 casos</p>
+          <button class="btn" id="btnVolverMorfo">← Volver a las variaciones</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ──────── 5 · PLAQUETAS ──────── -->
+    <section class="step p5" data-title="Paso 5 · Plaquetas y recuento manual">
+      <div class="stage" data-scene="plaquetas">
+        <span class="stageTag" id="campoTag">Campo 1 de 10 · 1000×</span>
+        <div class="microRet"></div>
+        <div class="microMask"></div>
+      </div>
+      <div class="panel">
+        <span class="kicker">Paso 5 de 5</span>
+        <h2>Las plaquetas en el extendido de sangre periférica</h2>
+
+        <div class="card">
+          <div class="dl">
+            <dt>Diámetro normal</dt><dd>1 – 3 μm</dd>
+            <dt>Volumen medio plaquetario</dt><dd>8,3 – 11,6 fL</dd>
+            <dt>Peso</dt><dd>≈ 10 pg</dd>
+            <dt>Silueta</dt><dd>irregular, con finos gránulos rojos dispersos o centralizados</dd>
+          </div>
+        </div>
+
+        <div class="card accent">
+          <p><b>Dato clave:</b> las plaquetas <b>no son células</b>. Son fragmentos citoplasmáticos <b>anucleados</b> producidos por la ruptura y liberación del citoplasma de los megacariocitos de la médula ósea.</p>
+        </div>
+
+        <div class="card">
+          <h3>Cuándo es indispensable revisar el extendido</h3>
+          <p class="note">Cuando el autoanalizador informa trombocitopenia, trombocitosis, desviaciones de cualquier parámetro plaquetario u otras alarmas (macrotrombocitos, agregados plaquetarios). En extensiones normales pueden verse algunas plaquetas mayores, de hasta <b>5 μm</b>: aparecen cuando aumenta la producción plaquetaria y en el hipoesplenismo.</p>
+        </div>
+
+        <div class="card">
+          <h3>Recuento manual de plaquetas</h3>
+          <p class="note" style="margin-bottom:12px">Con coloración de Wright a <b>1000×</b> se cuentan las plaquetas —de color rosado-violáceo característico— presentes en <b>10 campos</b> y se <b>multiplica por 2</b>.</p>
+
+          <div class="fieldGrid" id="fieldGrid"></div>
+
+          <div id="conteoInput" style="margin-top:12px">
+            <label class="note" style="display:block;margin-bottom:6px">Plaquetas que cuentas en el <b id="campoActual">campo 1</b>:</label>
+            <div class="ctrlRow">
+              <input type="number" id="campoCount" min="0" max="99" placeholder="0" style="flex:1">
+              <button class="btn primary sm" id="btnCampo">Registrar y avanzar</button>
+            </div>
+          </div>
+
+          <div id="conteoFinal" style="display:none;margin-top:12px">
+            <div class="dl" style="margin-bottom:12px">
+              <dt>Suma de tus 10 campos</dt><dd class="mono" id="sumaUser">—</dd>
+              <dt>Operación</dt><dd class="mono">suma × 2</dd>
+            </div>
+            <label class="note" style="display:block;margin-bottom:6px">Tu recuento plaquetario final:</label>
+            <div class="ctrlRow">
+              <input type="number" id="finalCount" min="0" placeholder="0" style="flex:1">
+              <button class="btn primary sm" id="btnFinal">Validar</button>
+            </div>
+            <div class="fb" id="conteoFb"></div>
+          </div>
+
+          <div class="ctrlRow" style="margin-top:12px">
+            <button class="btn ghost sm" id="btnConteoReset">Generar nuevos campos</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fila a lo ancho, bajo la escena y el panel: de dónde sale el ×2 -->
+      <div class="p5Nota">
+        <details class="faq">
+          <summary>
+            <span class="faqQ">?</span>
+            <span class="faqTitle">¿De dónde sale el <b>×2</b> del recuento plaquetario?</span>
+            <span class="faqChev" aria-hidden="true">▼</span>
+          </summary>
+
+          <div class="faqBody">
+            <p>La regla de «contar en 10 campos y multiplicar por 2» es una forma abreviada de estimar la concentración de plaquetas <b>en miles por microlitro</b> a partir del frotis.</p>
+
+            <div class="deriv">
+              <div class="derivStep">
+                <span class="derivN">1</span>
+                <div>
+                  <p>El método tradicional establece:</p>
+                  <div class="eq">Plaquetas/µL = promedio de plaquetas por campo × 20 000</div>
+                </div>
+              </div>
+              <div class="derivStep">
+                <span class="derivN">2</span>
+                <div>
+                  <p>Se cuentan las plaquetas presentes en 10 campos de inmersión y se obtiene un total <b>N</b>. Por tanto:</p>
+                  <div class="eq">promedio por campo = N ÷ 10</div>
+                </div>
+              </div>
+              <div class="derivStep">
+                <span class="derivN">3</span>
+                <div>
+                  <p>Al reemplazarlo en la primera fórmula:</p>
+                  <div class="eq">Plaquetas/µL = (N ÷ 10) × 20 000 = <b>N × 2 000</b></div>
+                </div>
+              </div>
+              <div class="derivStep">
+                <span class="derivN">4</span>
+                <div>
+                  <p>Como el laboratorio expresa el resultado en <b>miles</b> de plaquetas por microlitro, se divide entre 1 000:</p>
+                  <div class="eq eqFinal">Plaquetas × 10<sup>3</sup>/µL = <b>N × 2</b></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card warn">
+              <p>Cuidado con la unidad: el resultado <b>no</b> representa plaquetas individuales por microlitro, sino <b>× 10<sup>3</sup>/µL</b>.</p>
+            </div>
+
+            <h3>Ejemplo resuelto</h3>
+            <div class="ejemplo">
+              <div>
+                <div class="fieldGrid ejemploGrid">
+                  <div class="fCell filled"><b>8</b><span>campo 1</span></div>
+                  <div class="fCell filled"><b>10</b><span>campo 2</span></div>
+                  <div class="fCell filled"><b>9</b><span>campo 3</span></div>
+                  <div class="fCell filled"><b>11</b><span>campo 4</span></div>
+                  <div class="fCell filled"><b>8</b><span>campo 5</span></div>
+                  <div class="fCell filled"><b>10</b><span>campo 6</span></div>
+                  <div class="fCell filled"><b>9</b><span>campo 7</span></div>
+                  <div class="fCell filled"><b>7</b><span>campo 8</span></div>
+                  <div class="fCell filled"><b>10</b><span>campo 9</span></div>
+                  <div class="fCell filled"><b>8</b><span>campo 10</span></div>
+                </div>
+                <div class="eq" style="margin-top:10px">Total N = 90 plaquetas</div>
+              </div>
+
+              <div class="ejemploCalc">
+                <div class="eq">90 × 2 = <b>180</b></div>
+                <p>El resultado debe informarse como <b>180 × 10<sup>3</sup>/µL</b>, que equivale a <b>180 000 plaquetas/µL</b>.</p>
+                <div class="eq">90 ÷ 10 = 9 plaquetas/campo<br>9 × 20 000 = 180 000/µL</div>
+                <p class="note">Ambas operaciones producen exactamente el mismo resultado: la regla del ×2 es solo el atajo de la fórmula del promedio.</p>
+              </div>
+            </div>
+
+            <h3>¿Por qué 20 000?</h3>
+            <p>Es un <b>factor de conversión empírico</b>: relaciona aproximadamente la cantidad de plaquetas observadas en un campo microscópico con la concentración existente en un microlitro de sangre. No significa que el microscopio observe literalmente 1/20 000 de microlitro de manera exacta — es una aproximación validada comparando frotis con recuentos automatizados. El método muestra una correlación razonable con el recuento automatizado, pero <b>sigue siendo una estimación</b>.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ──────── 6 · CIERRE ──────── -->
+    <section class="step" data-title="Cierre · Evaluación final">
+      <div class="stage" data-scene="cierre">
+        <span class="stageTag">Resumen de la práctica</span>
+      </div>
+      <div class="panel">
+        <span class="kicker">Cierre</span>
+        <h2>Puntos clave de la práctica</h2>
+
+        <div class="card">
+          <ul>
+            <li><b>Ángulo del extensor:</b> &gt; 45° → gruesa y corta; &lt; 45° → larga y fina. Secado horizontal, a temperatura ambiente.</li>
+            <li><b>Zonas:</b> cabeza (gruesa, ↑ linfocitos) · cuerpo (ideal, reparto equilibrado) · cola (fina, ↑ granulocitos y monocitos).</li>
+            <li><b>Wright:</b> secado 15–20 min → colorante 5 min → solución amortiguada hasta brillo metálico 6 min → lavado con agua corriente → secado.</li>
+            <li><b>Buena tinción:</b> estructuras subcelulares diferenciadas, hematíes rosados y sin precipitados.</li>
+            <li><b>Defectos:</b> muy azul (frotis grueso, lavado insuficiente, tinción prolongada, colorante alcalino) · muy rosada (pH ácido del colorante, tampón o agua) · precipitados (acción excesiva del colorante → filtrarlo).</li>
+            <li><b>Eritrocitos:</b> micro &lt; 7 μm (VCM &lt; 80 fL) · normo 7–8,5 μm (VCM 80–100 fL) · macro &gt; 8,5 μm (VCM &gt; 100 fL).</li>
+            <li><b>Plaquetas:</b> 1–3 μm, VPM 8,3–11,6 fL, fragmentos anucleados del megacariocito; recuento = plaquetas de 10 campos × 2 a 1000×.</li>
+          </ul>
+        </div>
+
+        <div class="gate" id="gateQuiz">
+          <p>Repasa los puntos clave de arriba. Cuando los tengas claros, cierra la práctica con el cuestionario final.</p>
+          <button class="btn primary" id="btnGateQuiz">Realizar quiz final →</button>
+        </div>
+
+        <div id="wrapQuiz" class="oculto">
+          <h3 style="margin-bottom:10px">Mini-quiz final</h3>
+          <div id="quizFinal"></div>
+        </div>
+        <div id="scoreFinal"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer>
+    <button class="btn ghost" id="btnPrev">← Anterior</button>
+    <span class="footHint" id="footHint"></span>
+    <button class="btn primary" id="btnNext">Siguiente →</button>
+  </footer>
+</div>
+
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+/* ════════════════════════════════════════════════════════════════
+   0 · UTILIDADES
+   ════════════════════════════════════════════════════════════════ */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const lerp  = (a, b, t) => a + (b - a) * t;
+const map   = (v, a, b, c, d) => c + (d - c) * clamp((v - a) / (b - a), 0, 1);
+const rnd   = (a, b) => a + Math.random() * (b - a);
+const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+/* ════════════════════════════════════════════════════════════════
+   1 · RENDERER ÚNICO COMPARTIDO
+   Un solo contexto WebGL: el canvas se reubica en el <div class="stage">
+   del paso activo. Sólo se actualiza y dibuja la escena visible.
+   ════════════════════════════════════════════════════════════════ */
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+const canvas = renderer.domElement;
+canvas.style.touchAction = 'none';
+
+const SCENES = {};     // id -> objeto de escena
+let active = null;     // escena activa
+
+function resizeActive() {
+  if (!active || !canvas.parentElement) return;
+  const el = canvas.parentElement;
+  const cw = el.clientWidth, ch = el.clientHeight;
+  if (!cw || !ch) return;
+
+  /* Escenas circulares (campo microscópico): el ocular es un círculo, así que
+     el lienzo se reduce al cuadrado inscrito en vez de cubrir todo el panel.
+     En un panel 3:2 eso es ~33 % de píxeles que dejan de rasterizarse, y de
+     paso el recorte pasa a ser exacto: nada queda medio tapado por la viñeta. */
+  let w = cw, h = ch;
+  if (active.circular) {
+    w = h = Math.min(cw, ch);
+    canvas.classList.add('sq');
+    canvas.style.width = canvas.style.height = w + 'px';
+    el.style.setProperty('--sq', w + 'px');
+  } else {
+    canvas.classList.remove('sq');
+    canvas.style.width = canvas.style.height = '';
+  }
+
+  renderer.setSize(w, h, false);
+  active.camera.aspect = w / h;
+  active.camera.updateProjectionMatrix();
+  active.resize?.(w, h);
+}
+window.addEventListener('resize', resizeActive);
+
+function mountScene(id, stageEl) {
+  if (active && active !== SCENES[id]) active.leave?.();
+  active = SCENES[id] || null;
+  if (!active) { canvas.remove(); return; }
+  stageEl.appendChild(canvas);
+  resizeActive();
+  active.enter?.();
+}
+
+let last = performance.now();
+function loop(now) {
+  requestAnimationFrame(loop);
+  const dt = Math.min((now - last) / 1000, 0.05);
+  last = now;
+  if (!active) return;
+  active.update?.(dt, now / 1000);
+  renderer.render(active.scene, active.camera);
+}
+requestAnimationFrame(loop);
+
+/* Arrastre para orbitar — compartido por las escenas que lo declaren */
+const drag = { on: false, x: 0, y: 0, dx: 0, dy: 0 };
+canvas.addEventListener('pointerdown', e => {
+  if (!active?.orbit) return;
+  drag.on = true; drag.x = e.clientX; drag.y = e.clientY;
+  canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener('pointermove', e => {
+  if (active?.hover) {
+    const r = canvas.getBoundingClientRect();
+    active.hover(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  }
+  if (!drag.on || !active?.orbit) return;
+  drag.dx += (e.clientX - drag.x) * 0.005;
+  drag.dy += (e.clientY - drag.y) * 0.005;
+  drag.x = e.clientX; drag.y = e.clientY;
+  active.orbit(drag.dx, drag.dy);
+});
+const endDrag = () => { drag.on = false; };
+canvas.addEventListener('pointerup', endDrag);
+canvas.addEventListener('pointercancel', endDrag);
+canvas.addEventListener('pointerleave', () => { drag.on = false; active?.hover?.(null, null); });
+
+/* ════════════════════════════════════════════════════════════════
+   ERITROCITO · disco bicóncavo paramétrico
+   ────────────────────────────────────────────────────────────────
+   Perfil transversal girado alrededor del eje (LatheGeometry): el
+   centro tiene menor semiespesor y la región periférica es más
+   gruesa, de modo que la silueta es un disco bicóncavo real y no un
+   toroide achatado. Con el polinomio de abajo la relación
+   diámetro : espesor máximo queda en ~3,1 : 1 y el hundimiento
+   central en ~33 % del espesor del borde — las proporciones del
+   eritrocito humano normal.
+
+   La malla se genera en dos resoluciones (ver GEO.rbc y la escena
+   `eritro`): la versión instanciada se dibuja hasta 262 veces por
+   escena, así que a resolución de estudio costaría decenas de
+   millones de triángulos por frame.
+   ════════════════════════════════════════════════════════════════ */
+function semiEspesor(rPos, radius) {
+  const n = THREE.MathUtils.clamp(rPos / radius, 0, 1);
+  const r2 = n * n;
+  const cierre = Math.sqrt(Math.max(0, 1 - r2));      // cierre suave del borde
+  return 0.5 * radius * cierre * (0.207 + 2.003 * r2 - 1.123 * r2 * r2);
+}
+
+function makeEritrocito(radius, profileSegments, radialSegments) {
+  const pts = [];
+  const eps = radius * 2.6e-4;                        // evita el polo degenerado
+  for (let i = 0; i <= profileSegments; i++) {        // cara superior: centro → borde
+    const r = THREE.MathUtils.lerp(eps, radius, i / profileSegments);
+    pts.push(new THREE.Vector2(r, semiEspesor(r, radius)));
+  }
+  for (let i = profileSegments; i >= 0; i--) {        // cara inferior: borde → centro
+    const r = THREE.MathUtils.lerp(eps, radius, i / profileSegments);
+    pts.push(new THREE.Vector2(r, -semiEspesor(r, radius)));
+  }
+  const g = new THREE.LatheGeometry(pts, radialSegments, 0, Math.PI * 2);
+  g.computeVertexNormals();
+  // LatheGeometry gira sobre Y; las escenas orientan los discos sobre Z,
+  // así que se hornea la rotación en la geometría y no hay que tocarlas.
+  g.rotateX(Math.PI / 2);
+  return g;
+}
+
+/* ── Geometrías reutilizadas por todas las escenas ──
+   Dos niveles de detalle del eritrocito. El coste de vértices se paga por
+   instancia y por frame, así que el nivel se elige por el tamaño real que
+   la célula ocupa en pantalla, no por «calidad». */
+const GEO = {
+  // 1 400 tris · vaso: las células voltean sobre sí mismas y se ven de canto,
+  // así que el perfil bicóncavo tiene que estar bien resuelto.
+  rbc:    makeEritrocito(0.85, 12, 28),
+  // 432 tris · campo microscópico: se miran siempre en planta, de modo que el
+  // presupuesto se gasta en segmentos radiales (silueta redonda) y casi nada en
+  // el perfil, que desde arriba sólo aporta el degradado de la palidez central.
+  // Ahí las protagonistas son las plaquetas, no los eritrocitos de fondo.
+  rbcField: makeEritrocito(0.85, 4, 24),
+  // 220 tris · zonas del frotis: son puntos de pocos píxeles, puramente
+  // representativos, y ahí la silueta bicóncava ya no se distingue.
+  rbcLow: makeEritrocito(0.85, 5, 10),
+  ball: new THREE.SphereGeometry(1, 12, 10),
+  plq:  (() => { const g = new THREE.IcosahedronGeometry(1, 0); g.scale(1, 1, 0.55); return g; })(),
+};
+
+function baseLights(scene, intensity = 1) {
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55 * intensity));
+  const key = new THREE.DirectionalLight(0xffffff, 1.5 * intensity);
+  key.position.set(4, 7, 6); scene.add(key);
+  const rim = new THREE.DirectionalLight(0x8fb6ff, 0.75 * intensity);
+  rim.position.set(-6, -3, -4); scene.add(rim);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   2 · ESCENA · PORTADA (interior del vaso sanguíneo)
+   ════════════════════════════════════════════════════════════════ */
+SCENES.vaso = (() => {
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x1a0812, 12, 46);
+  const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 120);
+
+  scene.add(new THREE.AmbientLight(0xffd7d0, 0.75));
+  const l1 = new THREE.PointLight(0xff8a7a, 90, 60); l1.position.set(0, 0, 6); scene.add(l1);
+  const l2 = new THREE.PointLight(0x8fa8ff, 45, 70); l2.position.set(3, 4, -14); scene.add(l2);
+
+  // Pared del vaso (cilindro visto por dentro)
+  const R = 4.2, L = 60;
+  /* La cámara vive en z ≈ 16 mirando hacia -z, así que todo lo que pase de
+     Z_OUT queda a su espalda: actualizarlo y dibujarlo no aporta nada.
+     Las células se reciclan ahí (no se destruyen ni se recrean: es el mismo
+     InstancedMesh de tamaño fijo, solo se reubica la que sale de cuadro),
+     lo que recorta ~20 % de trabajo manteniendo idéntica la densidad visible. */
+  const Z_IN = -L / 2, Z_OUT = 18;
+  const wall = new THREE.Mesh(
+    new THREE.CylinderGeometry(R, R, L, 40, 1, true),
+    new THREE.MeshStandardMaterial({
+      color: 0x8c2230, roughness: 0.85, metalness: 0.05,
+      side: THREE.BackSide, emissive: 0x2b0710, emissiveIntensity: 0.7,
+    })
+  );
+  wall.rotation.x = Math.PI / 2;
+  scene.add(wall);
+
+  // Endotelio: anillos tenues que dan sensación de avance.
+  // Una sola InstancedMesh en vez de 22 Mesh sueltas → 1 draw call, no 22.
+  const N_RING = 18;
+  const rings = new THREE.InstancedMesh(
+    new THREE.TorusGeometry(R * 0.985, 0.05, 4, 34),
+    new THREE.MeshBasicMaterial({ color: 0xff9d92, transparent: true, opacity: 0.1 }),
+    N_RING
+  );
+  {
+    const d = new THREE.Object3D();
+    for (let i = 0; i < N_RING; i++) {
+      d.position.set(0, 0, Z_IN + i * ((Z_OUT - Z_IN) / N_RING));
+      d.updateMatrix();
+      rings.setMatrixAt(i, d.matrix);
+    }
+  }
+  scene.add(rings);
+
+  // Poblaciones celulares (recortadas al volumen realmente visible)
+  const N_RBC = 176, N_WBC = 8, N_PLQ = 18;
+  const rbc = new THREE.InstancedMesh(GEO.rbc, new THREE.MeshStandardMaterial({ roughness: 0.42, metalness: 0.05 }), N_RBC);
+  const wbc = new THREE.InstancedMesh(GEO.ball, new THREE.MeshStandardMaterial({ color: 0xf3f0ff, roughness: 0.28, metalness: 0.1, emissive: 0x4a4470, emissiveIntensity: 0.35 }), N_WBC);
+  const plq = new THREE.InstancedMesh(GEO.plq, new THREE.MeshStandardMaterial({ color: 0xb59bea, roughness: 0.5 }), N_PLQ);
+  scene.add(rbc, wbc, plq);
+
+  const cells = [];
+  const push = (mesh, i, kind, sMin, sMax) => cells.push({
+    mesh, i, kind,
+    a: rnd(0, Math.PI * 2), r: rnd(0, R * 0.82), z: rnd(Z_IN, Z_OUT),
+    s: rnd(sMin, sMax), v: rnd(5.5, 9.5),
+    rx: rnd(0, 6.28), ry: rnd(0, 6.28), wx: rnd(-0.7, 0.7), wy: rnd(-0.7, 0.7),
+  });
+  for (let i = 0; i < N_RBC; i++) { push(rbc, i, 'rbc', 0.78, 1.06); rbc.setColorAt(i, new THREE.Color().setHSL(rnd(0.98, 1.01) % 1, rnd(0.62, 0.78), rnd(0.36, 0.5))); }
+  for (let i = 0; i < N_WBC; i++) push(wbc, i, 'wbc', 0.9, 1.25);
+  for (let i = 0; i < N_PLQ; i++) push(plq, i, 'plq', 0.24, 0.4);
+  rbc.instanceColor.needsUpdate = true;
+
+  const dummy = new THREE.Object3D();
+  let camA = 0, camDrag = 0;
+
+  return {
+    scene, camera,
+    orbit: dx => { camDrag = dx * 1.6; },
+    update(dt, t) {
+      for (const c of cells) {
+        c.z += c.v * dt;
+        // Sale de cuadro por detrás de la cámara → vuelve al fondo del tubo.
+        // Reposicionar, nunca reinstanciar.
+        if (c.z > Z_OUT) { c.z = Z_IN; c.a = rnd(0, 6.28); c.r = rnd(0, R * 0.82); }
+        c.rx += c.wx * dt; c.ry += c.wy * dt;
+        dummy.position.set(Math.cos(c.a) * c.r, Math.sin(c.a) * c.r, c.z);
+        dummy.rotation.set(c.rx, c.ry, 0);
+        dummy.scale.setScalar(c.s);
+        dummy.updateMatrix();
+        c.mesh.setMatrixAt(c.i, dummy.matrix);
+      }
+      rbc.instanceMatrix.needsUpdate = wbc.instanceMatrix.needsUpdate = plq.instanceMatrix.needsUpdate = true;
+
+      camA += dt * 0.16;
+      const a = camA + camDrag;
+      camera.position.set(Math.cos(a) * 1.5, Math.sin(a * 0.8) * 1.1, 16);
+      camera.lookAt(Math.cos(a) * 0.4, Math.sin(a) * 0.3, -10);
+    },
+  };
+})();
+
+/* ════════════════════════════════════════════════════════════════
+   3 · ESCENA · PASO 1 · REALIZACIÓN DEL FROTIS
+   ════════════════════════════════════════════════════════════════ */
+SCENES.frotis = (() => {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+  baseLights(scene);
+
+  const SLIDE_L = 7.5, SLIDE_W = 2.5, SLIDE_H = 0.13;   // 75 × 25 mm a escala
+  const glass = () => new THREE.MeshPhysicalMaterial({
+    color: 0xd8ecff, roughness: 0.08, metalness: 0, transmission: 0.72,
+    thickness: 0.4, transparent: true, opacity: 0.5, ior: 1.5,
+  });
+
+  // Portaobjeto base
+  const base = new THREE.Mesh(new THREE.BoxGeometry(SLIDE_L, SLIDE_H, SLIDE_W), glass());
+  scene.add(base);
+
+  // Marca de los 2 cm desde el extremo
+  const marca = new THREE.Mesh(
+    new THREE.BoxGeometry(0.04, 0.02, SLIDE_W),
+    new THREE.MeshBasicMaterial({ color: 0x3b9edd, transparent: true, opacity: 0.55 })
+  );
+  marca.position.set(-SLIDE_L / 2 + 2, SLIDE_H / 2 + 0.01, 0);
+  scene.add(marca);
+
+  // Extensor: pivota sobre su canto inferior
+  const pivot = new THREE.Group();
+  pivot.position.set(0, SLIDE_H / 2, 0);
+  const ext = new THREE.Mesh(new THREE.BoxGeometry(SLIDE_L, SLIDE_H, SLIDE_W), glass());
+  ext.position.set(SLIDE_L / 2, SLIDE_H / 2, 0);   // el canto queda en el origen del pivot
+  pivot.add(ext);
+  // Banda esmerilada del extensor
+  const esm = new THREE.Mesh(
+    new THREE.BoxGeometry(1.3, SLIDE_H * 1.05, SLIDE_W * 1.005),
+    new THREE.MeshStandardMaterial({ color: 0xf2f4ff, roughness: 0.95, transparent: true, opacity: 0.75 })
+  );
+  esm.position.set(SLIDE_L - 0.65, SLIDE_H / 2, 0);
+  pivot.add(esm);
+  scene.add(pivot);
+
+  // Gota de sangre
+  const gota = new THREE.Mesh(GEO.ball, new THREE.MeshStandardMaterial({ color: 0xb3172a, roughness: 0.28, metalness: 0.08 }));
+  gota.scale.set(0.42, 0.2, 0.42);
+  scene.add(gota);
+
+  // Extensión resultante (se escala en X y en Y según ángulo/avance)
+  const smear = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, SLIDE_W * 0.78),
+    new THREE.MeshStandardMaterial({ color: 0xa8202e, roughness: 0.55, transparent: true, opacity: 0.95 })
+  );
+  scene.add(smear);
+
+  // Estado
+  let angle = 45, prog = 0, playing = false, camA = 0.55, camDrag = 0, camY = 0;
+  const GOTA_X = -SLIDE_L / 2 + 2;
+
+  function geometry() {
+    // > 45° ⇒ corta y gruesa · < 45° ⇒ larga y fina
+    const largo   = map(angle, 5, 90, 6.4, 1.5);     // en unidades de escena
+    const grosorR = map(angle, 5, 90, 0.16, 1.0);    // grosor relativo 0-1
+    return { largo, grosorR };
+  }
+
+  function refresh() {
+    const { largo, grosorR } = geometry();
+    pivot.position.x = GOTA_X + prog * largo;
+    pivot.rotation.z = THREE.MathUtils.degToRad(180 - angle);
+
+    const len = Math.max(prog * largo, 0.001);
+    smear.visible = prog > 0.01;
+    smear.scale.set(len, 0.02 + grosorR * 0.22, 1);
+    smear.position.set(GOTA_X + len / 2, SLIDE_H / 2 + (0.02 + grosorR * 0.22) / 2, 0);
+    smear.material.color.setHSL(0.99, 0.72, lerp(0.44, 0.26, grosorR));
+    smear.material.opacity = lerp(0.55, 0.98, grosorR);
+
+    const shrink = 1 - prog;
+    gota.visible = shrink > 0.04;
+    gota.scale.set(0.42 * shrink, 0.2 * shrink, 0.42 * shrink);
+    gota.position.set(GOTA_X, SLIDE_H / 2 + 0.2 * shrink * 0.5, 0);
+  }
+
+  const api = {
+    scene, camera,
+    orbit: (dx, dy) => { camDrag = dx * 1.5; camY = clamp(dy * 1.2, -0.5, 0.9); },
+    setAngle(v) { angle = v; refresh(); return geometry(); },
+    play() { prog = 0; playing = true; },
+    reset() { prog = 0; playing = false; refresh(); },
+    get progress() { return prog; },
+    update(dt) {
+      if (playing) {
+        prog = Math.min(prog + dt * 0.55, 1);
+        if (prog >= 1) playing = false;
+        refresh();
+      }
+      const a = camA + camDrag;
+      const d = 11;
+      camera.position.set(Math.sin(a) * d * 0.42, 5.2 + camY * 3, Math.cos(a) * d);
+      camera.lookAt(0, 0, 0);
+    },
+    enter() { refresh(); },
+  };
+  refresh();
+  return api;
+})();
+
+/* ════════════════════════════════════════════════════════════════
+   4 · ESCENA · PASO 2 · ZONAS DEL FROTIS
+   ════════════════════════════════════════════════════════════════ */
+SCENES.zonas = (() => {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+  baseLights(scene);
+
+  const SLIDE_L = 7.5, SLIDE_W = 2.5, SLIDE_H = 0.13;
+  const base = new THREE.Mesh(
+    new THREE.BoxGeometry(SLIDE_L, SLIDE_H, SLIDE_W),
+    new THREE.MeshPhysicalMaterial({ color: 0xd8ecff, roughness: 0.08, transmission: 0.72, thickness: 0.4, transparent: true, opacity: 0.5, ior: 1.5 })
+  );
+  scene.add(base);
+
+  const ZONAS = [
+    { id: 'cabeza', x0: -2.9, x1: -1.0, col: 0xe85b4a, alto: 0.30, dens: 130 },
+    { id: 'cuerpo', x0: -1.0, x1:  1.3, col: 0x2dc99a, alto: 0.15, dens: 90  },
+    { id: 'cola',   x0:  1.3, x1:  3.2, col: 0xf5a623, alto: 0.05, dens: 42  },
+  ];
+
+  const slabs = {}, clouds = {}, dummy = new THREE.Object3D();
+
+  ZONAS.forEach(z => {
+    const w = z.x1 - z.x0;
+    const slab = new THREE.Mesh(
+      new THREE.BoxGeometry(w, z.alto, SLIDE_W * 0.8),
+      new THREE.MeshStandardMaterial({ color: 0x8e1c2a, roughness: 0.6, transparent: true, opacity: 0.55, emissive: z.col, emissiveIntensity: 0 })
+    );
+    slab.position.set((z.x0 + z.x1) / 2, SLIDE_H / 2 + z.alto / 2, 0);
+    slab.userData.zone = z.id;
+    scene.add(slab);
+    slabs[z.id] = slab;
+
+    // Nube de células: densidad decreciente de cabeza a cola.
+    // Geometría de bajo detalle — aquí cada célula ocupa unos pocos píxeles.
+    const im = new THREE.InstancedMesh(
+      GEO.rbcLow,
+      new THREE.MeshStandardMaterial({ roughness: 0.45 }),
+      z.dens
+    );
+    im.userData.zone = z.id;
+    for (let i = 0; i < z.dens; i++) {
+      dummy.position.set(rnd(z.x0 + 0.05, z.x1 - 0.05), SLIDE_H / 2 + rnd(0.03, z.alto), rnd(-SLIDE_W * 0.38, SLIDE_W * 0.38));
+      dummy.rotation.set(rnd(-0.35, 0.35) + Math.PI / 2, rnd(0, 6.28), rnd(-0.3, 0.3));
+      dummy.scale.setScalar(rnd(0.1, 0.145));
+      dummy.updateMatrix();
+      im.setMatrixAt(i, dummy.matrix);
+      // Unas pocas células claras = leucocitos, con el sesgo que describe la guía
+      const esLeuco = Math.random() < (z.id === 'cabeza' ? 0.13 : z.id === 'cola' ? 0.16 : 0.08);
+      im.setColorAt(i, esLeuco
+        ? new THREE.Color(z.id === 'cabeza' ? 0x9b8ef8 : z.id === 'cola' ? 0xf2e7a8 : 0xd8d2ff)
+        : new THREE.Color().setHSL(0.995, rnd(0.6, 0.75), rnd(0.36, 0.5)));
+    }
+    im.instanceColor.needsUpdate = true;
+    scene.add(im);
+    clouds[z.id] = im;
+  });
+
+  const ray = new THREE.Raycaster();
+  const ndc = new THREE.Vector2();
+  const targets = Object.values(slabs);
+  let hovered = null, camA = 0.35, camDrag = 0, onHover = null;
+
+  function setHover(id) {
+    if (hovered === id) return;
+    hovered = id;
+    ZONAS.forEach(z => {
+      const on = z.id === id;
+      slabs[z.id].material.emissiveIntensity = on ? 0.55 : 0;
+      slabs[z.id].material.opacity = on ? 0.8 : 0.55;
+      clouds[z.id].material.emissive = new THREE.Color(on ? 0x442233 : 0x000000);
+    });
+    onHover?.(id);
+  }
+
+  return {
+    scene, camera,
+    orbit: dx => { camDrag = dx * 1.4; },
+    hover(x, y) {
+      if (x === null) { setHover(null); return; }
+      ndc.set(x, y);
+      ray.setFromCamera(ndc, camera);
+      const hit = ray.intersectObjects(targets, false)[0];
+      setHover(hit ? hit.object.userData.zone : null);
+    },
+    setHover,
+    set onHover(fn) { onHover = fn; },
+    update(dt) {
+      const a = camA + camDrag;
+      camera.position.set(Math.sin(a) * 4, 4.6, Math.cos(a) * 9.5);
+      camera.lookAt(0.1, 0, 0);
+    },
+  };
+})();
+
+/* ════════════════════════════════════════════════════════════════
+   5 · ESCENA · PASO 3 · TINCIÓN DE WRIGHT
+   ════════════════════════════════════════════════════════════════ */
+SCENES.tincion = (() => {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+  baseLights(scene, 0.95);
+
+  const SLIDE_L = 7.5, SLIDE_W = 2.5, SLIDE_H = 0.13;
+
+  // Soporte de tinción
+  const soporte = new THREE.Mesh(
+    new THREE.BoxGeometry(SLIDE_L + 1.6, 0.16, SLIDE_W + 1.2),
+    new THREE.MeshStandardMaterial({ color: 0x2a2550, roughness: 0.85 })
+  );
+  soporte.position.y = -0.55;
+  scene.add(soporte);
+  [-1, 1].forEach(s => {
+    const b = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.5, SLIDE_W + 1.2), new THREE.MeshStandardMaterial({ color: 0x3a3470, roughness: 0.8 }));
+    b.position.set(s * (SLIDE_L / 2 + 0.5), -0.28, 0);
+    scene.add(b);
+  });
+
+  const slide = new THREE.Mesh(
+    new THREE.BoxGeometry(SLIDE_L, SLIDE_H, SLIDE_W),
+    new THREE.MeshPhysicalMaterial({ color: 0xd8ecff, roughness: 0.08, transmission: 0.7, thickness: 0.4, transparent: true, opacity: 0.5, ior: 1.5 })
+  );
+  scene.add(slide);
+
+  // Película del extendido: su color es lo que cambia en cada etapa
+  const film = new THREE.Mesh(
+    new THREE.BoxGeometry(SLIDE_L * 0.72, 0.045, SLIDE_W * 0.78),
+    new THREE.MeshStandardMaterial({ color: 0x8e1c2a, roughness: 0.55, metalness: 0.05, transparent: true, opacity: 0.92 })
+  );
+  film.position.set(-0.5, SLIDE_H / 2 + 0.022, 0);
+  scene.add(film);
+
+  // Charco de reactivo sobre la lámina
+  const pool = new THREE.Mesh(
+    new THREE.BoxGeometry(SLIDE_L * 0.94, 1, SLIDE_W * 0.94),
+    new THREE.MeshPhysicalMaterial({ color: 0x4a3a8f, roughness: 0.15, transmission: 0.35, transparent: true, opacity: 0, thickness: 0.6, ior: 1.36 })
+  );
+  scene.add(pool);
+
+  // Gotas / chorro
+  const N_D = 40;
+  const drops = new THREE.InstancedMesh(GEO.ball, new THREE.MeshStandardMaterial({ color: 0x6b5ac9, roughness: 0.2, transparent: true, opacity: 0.9 }), N_D);
+  drops.visible = false;
+  scene.add(drops);
+  const dropState = Array.from({ length: N_D }, () => ({ x: rnd(-3, 3), y: rnd(2, 7), z: rnd(-1, 1), v: rnd(4, 8), s: rnd(0.05, 0.11) }));
+  const dummy = new THREE.Object3D();
+
+  // Vapor del secado
+  const N_V = 26;
+  const vapor = new THREE.InstancedMesh(GEO.ball, new THREE.MeshBasicMaterial({ color: 0xbfd6ff, transparent: true, opacity: 0.16 }), N_V);
+  vapor.visible = false;
+  scene.add(vapor);
+  const vaporState = Array.from({ length: N_V }, () => ({ x: rnd(-3, 3), y: rnd(0, 3), z: rnd(-1, 1), v: rnd(0.4, 1.1), s: rnd(0.1, 0.3) }));
+
+  // Etapas: color destino de la película + comportamiento visual
+  const ETAPAS = [
+    { id: 'secado1',   name: 'Secado del extendido',       sim: '15–20 min', simSec: 1050, real: 4.5, col: 0x8e1c2a, mode: 'vapor' },
+    { id: 'wright',    name: 'Colorante de Wright',        sim: '5 min',     simSec: 300,  real: 5.5, col: 0x4a2d78, mode: 'pour',  poolCol: 0x5b3fae },
+    { id: 'buffer',    name: 'Solución amortiguada',       sim: '6 min',     simSec: 360,  real: 6.0, col: 0x6b4a8e, mode: 'sheen', poolCol: 0x8f7ad6 },
+    { id: 'lavado',    name: 'Lavado con agua corriente',  sim: '≈ 30 s',    simSec: 30,   real: 4.0, col: 0xc4718f, mode: 'rinse', poolCol: 0x9fd6ff },
+    { id: 'secado2',   name: 'Secado final',               sim: '≈ 5 min',   simSec: 300,  real: 3.5, col: 0xc86a86, mode: 'vapor' },
+  ];
+
+  let idx = -1, tEtapa = 0, running = false, done = false;
+  let camA = 0.3, camDrag = 0, sheen = 0;
+  let onTick = null, onStage = null, onDone = null;
+  const colFrom = new THREE.Color(0x8e1c2a), colTo = new THREE.Color(0x8e1c2a);
+
+  function startStage(i) {
+    idx = i; tEtapa = 0;
+    const e = ETAPAS[i];
+    colFrom.copy(film.material.color);
+    colTo.set(e.col);
+    pool.material.color.set(e.poolCol ?? 0x5b3fae);
+    drops.material.color.set(e.mode === 'rinse' ? 0x9fd6ff : 0x6b5ac9);
+    onStage?.(i, e);
+  }
+
+  function reset() {
+    idx = -1; tEtapa = 0; running = false; done = false; sheen = 0;
+    film.material.color.set(0x8e1c2a);
+    film.material.emissive = new THREE.Color(0x000000);
+    film.material.emissiveIntensity = 0;
+    pool.material.opacity = 0;
+    pool.scale.y = 0.001;
+    drops.visible = false; vapor.visible = false;
+    onStage?.(-1, null);
+  }
+
+  return {
+    scene, camera,
+    etapas: ETAPAS,
+    orbit: dx => { camDrag = dx * 1.4; },
+    set onTick(f) { onTick = f; },
+    set onStage(f) { onStage = f; },
+    set onDone(f) { onDone = f; },
+    start() { if (done) reset(); running = true; if (idx < 0) startStage(0); },
+    reset,
+    update(dt, t) {
+      // Cámara
+      const a = camA + camDrag;
+      camera.position.set(Math.sin(a) * 4.2, 4.8, Math.cos(a) * 9.6);
+      camera.lookAt(0, -0.1, 0);
+
+      if (running && idx >= 0 && idx < ETAPAS.length) {
+        const e = ETAPAS[idx];
+        tEtapa += dt;
+        const p = clamp(tEtapa / e.real, 0, 1);
+
+        film.material.color.copy(colFrom).lerp(colTo, easeOut(p));
+
+        // Charco: llena en pour/sheen, drena en rinse, ausente en vapor
+        if (e.mode === 'pour' || e.mode === 'sheen') {
+          const h = lerp(0.05, 0.42, clamp(p * 1.8, 0, 1));
+          pool.scale.y = h / 1;
+          pool.position.y = SLIDE_H / 2 + h / 2 * 1;
+          pool.material.opacity = lerp(0, 0.55, clamp(p * 2.2, 0, 1));
+          drops.visible = p < 0.45;
+        } else if (e.mode === 'rinse') {
+          pool.material.opacity = lerp(0.55, 0, p);
+          pool.scale.y = lerp(0.42, 0.02, p);
+          pool.position.y = SLIDE_H / 2 + pool.scale.y / 2;
+          drops.visible = p < 0.75;
+        } else {
+          pool.material.opacity = Math.max(0, pool.material.opacity - dt);
+          drops.visible = false;
+        }
+
+        // Brillo metálico de la etapa 3
+        if (e.mode === 'sheen') {
+          sheen = clamp(p * 1.3, 0, 1);
+          film.material.emissive = new THREE.Color(0x9fb6ff);
+          film.material.emissiveIntensity = sheen * (0.22 + 0.14 * Math.sin(t * 3));
+          film.material.metalness = lerp(0.05, 0.55, sheen);
+        }
+
+        vapor.visible = e.mode === 'vapor';
+        onTick?.(idx, p, Math.round(e.simSec * p), e);
+
+        if (p >= 1) {
+          if (idx < ETAPAS.length - 1) startStage(idx + 1);
+          else { running = false; done = true; film.material.metalness = 0.12; onTick?.(idx, 1, e.simSec, e); onDone?.(); }
+        }
+      }
+
+      // Partículas
+      if (drops.visible) {
+        for (let i = 0; i < N_D; i++) {
+          const d = dropState[i];
+          d.y -= d.v * dt;
+          if (d.y < 0.3) { d.y = rnd(3, 7); d.x = rnd(-3, 3); d.z = rnd(-1, 1); }
+          dummy.position.set(d.x, d.y, d.z);
+          dummy.scale.set(d.s, d.s * 1.7, d.s);
+          dummy.rotation.set(0, 0, 0);
+          dummy.updateMatrix();
+          drops.setMatrixAt(i, dummy.matrix);
+        }
+        drops.instanceMatrix.needsUpdate = true;
+      }
+      if (vapor.visible) {
+        for (let i = 0; i < N_V; i++) {
+          const v = vaporState[i];
+          v.y += v.v * dt;
+          if (v.y > 3.4) { v.y = 0.2; v.x = rnd(-3, 3); v.z = rnd(-1, 1); }
+          dummy.position.set(v.x, v.y, v.z);
+          dummy.scale.setScalar(v.s * (1 + v.y * 0.25));
+          dummy.updateMatrix();
+          vapor.setMatrixAt(i, dummy.matrix);
+        }
+        vapor.instanceMatrix.needsUpdate = true;
+      }
+    },
+  };
+})();
+
+/* El paso 4 no tiene escena 3D: el protagonismo es de las microfotografías
+   y de las variaciones de tamaño, color y forma. Se ahorraban 85 808
+   triángulos por frame y 1,05 MB de VRAM solo en el disco de alta
+   resolución, que ahí no aportaba información diagnóstica. */
+
+/* ════════════════════════════════════════════════════════════════
+   7 · ESCENA · PASO 5 · CAMPO MICROSCÓPICO CON PLAQUETAS
+   ════════════════════════════════════════════════════════════════ */
+SCENES.plaquetas = (() => {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+  scene.add(new THREE.AmbientLight(0xffffff, 1.15));
+  const d1 = new THREE.DirectionalLight(0xffffff, 1.1); d1.position.set(2, 6, 3); scene.add(d1);
+  const d2 = new THREE.DirectionalLight(0xffd9e6, 0.6); d2.position.set(-3, 4, -2); scene.add(d2);
+
+  // Fondo del campo (vidrio iluminado por transiluminación)
+  const fondo = new THREE.Mesh(
+    new THREE.CircleGeometry(9, 48),
+    new THREE.MeshBasicMaterial({ color: 0xf6e6ec })
+  );
+  fondo.rotation.x = -Math.PI / 2;
+  fondo.position.y = -0.4;
+  scene.add(fondo);
+
+  /* Radio útil del ocular. Con lienzo cuadrado, fov 38° y cámara a 20,5, el
+     semiancho visible en el plano y=0 es 20,5·tan(19°) ≈ 7,06. La viñeta sólo
+     oscurece a partir del 88 % de ese radio, así que confinamos las células
+     dentro de R_CAMPO menos su propio radio: ninguna plaqueta puede quedar
+     medio tapada por el borde, que era lo que falseaba el conteo. */
+  const R_VISIBLE = 20.5 * Math.tan(THREE.MathUtils.degToRad(19));
+  const R_CAMPO = R_VISIBLE * 0.88;
+  const R_RBC = R_CAMPO - 0.65;   // margen = radio del eritrocito ya escalado
+  const R_PLQ = R_CAMPO - 0.30;   // margen = radio de la plaqueta
+
+  // Densidad conservada respecto al campo anterior (área ∝ r²), por eso baja
+  // el número de eritrocitos al reducirse el radio de siembra.
+  const MAX_RBC = 56, MAX_PLQ = 20;
+  const rbc = new THREE.InstancedMesh(GEO.rbcField, new THREE.MeshStandardMaterial({ roughness: 0.5 }), MAX_RBC);
+  const plq = new THREE.InstancedMesh(GEO.plq, new THREE.MeshStandardMaterial({ color: 0x7b4bb5, roughness: 0.42 }), MAX_PLQ);
+  scene.add(rbc, plq);
+
+  const dummy = new THREE.Object3D();
+
+  /** Genera un campo con `nPlq` plaquetas, todas dentro del área contable. */
+  function build(nPlq, seedRot = 0) {
+    const nRbc = 40 + Math.floor(Math.random() * 15);
+    for (let i = 0; i < nRbc; i++) {
+      // Distribución uniforme en disco, sin superposición grave (zona ideal).
+      const a = Math.random() * 6.28, r = Math.sqrt(Math.random()) * R_RBC;
+      dummy.position.set(Math.cos(a) * r, rnd(-0.02, 0.06), Math.sin(a) * r);
+      dummy.rotation.set(-Math.PI / 2 + rnd(-0.12, 0.12), rnd(0, 6.28), 0);
+      dummy.scale.setScalar(rnd(0.62, 0.74));
+      dummy.updateMatrix();
+      rbc.setMatrixAt(i, dummy.matrix);
+      rbc.setColorAt(i, new THREE.Color().setHSL(0.965, rnd(0.42, 0.6), rnd(0.62, 0.74)));
+    }
+    for (let i = 0; i < nPlq; i++) {
+      const a = Math.random() * 6.28, r = Math.sqrt(Math.random()) * R_PLQ;
+      dummy.position.set(Math.cos(a) * r, 0.16, Math.sin(a) * r);
+      dummy.rotation.set(-Math.PI / 2, rnd(0, 6.28), 0);
+      dummy.scale.setScalar(rnd(0.17, 0.27));   // 1–3 μm frente a 7–8,5 μm del eritrocito
+      dummy.updateMatrix();
+      plq.setMatrixAt(i, dummy.matrix);
+      plq.setColorAt(i, new THREE.Color().setHSL(rnd(0.75, 0.8), rnd(0.42, 0.6), rnd(0.42, 0.56)));
+    }
+    // Sólo se dibujan las instancias en uso: las sobrantes ni pasan por el
+    // vertex shader (antes se ocultaban con escala 0, que sí las procesaba).
+    rbc.count = nRbc;
+    plq.count = nPlq;
+    rbc.instanceMatrix.needsUpdate = plq.instanceMatrix.needsUpdate = true;
+    rbc.instanceColor.needsUpdate = plq.instanceColor.needsUpdate = true;
+    scene.rotation.y = seedRot;
+  }
+  build(8);
+
+  // Campo fijo y perpendicular: orbitar desplazaría el encuadre y volvería a
+  // sacar células del área contable, así que esta escena no acepta arrastre.
+  camera.position.set(0, 20.5, 0.001);
+  camera.lookAt(0, 0, 0);
+
+  return { scene, camera, build, circular: true };
+})();
+
+/* ════════════════════════════════════════════════════════════════
+   8 · ESCENA · CIERRE (fondo ambiental)
+   ════════════════════════════════════════════════════════════════ */
+SCENES.cierre = (() => {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+  baseLights(scene, 0.9);
+
+  /* Un único eritrocito de muestra. Antes había 60 instancias flotando que
+     no aportaban nada al resumen y costaban 84 000 triángulos por frame;
+     con uno solo se puede permitir malla fina y material físico. */
+  /* Perfil 12 (igual que las células del vaso, suficiente para la curva
+     bicóncava) pero 64 segmentos radiales, que es lo que se nota: aquí el
+     modelo ocupa ~60 % del alto del panel y el borde tiene que verse redondo.
+     A perfil 32 la malla pesaba 183 KB — el 59 % de toda la simulación — sin
+     diferencia visible. */
+  const cel = new THREE.Mesh(
+    makeEritrocito(1.5, 12, 64),
+    new THREE.MeshPhysicalMaterial({
+      color: 0xd71920, roughness: 0.31, metalness: 0,
+      clearcoat: 0.62, clearcoatRoughness: 0.24,
+      sheen: 0.42, sheenColor: new THREE.Color(0xff7a70), sheenRoughness: 0.52,
+      side: THREE.DoubleSide,
+    })
+  );
+  cel.rotation.x = -0.5;
+  scene.add(cel);
+
+  let camDrag = 0;
+  return {
+    scene, camera,
+    orbit: dx => { camDrag = dx * 1.5; },
+    update(dt, t) {
+      cel.rotation.y += dt * 0.4;
+      cel.position.y = Math.sin(t * 0.75) * 0.12;
+      const a = 0.4 + camDrag;
+      camera.position.set(Math.sin(a) * 6.2, 2.1, Math.cos(a) * 6.2);
+      camera.lookAt(0, 0, 0);
+    },
+  };
+})();
+
+/* ════════════════════════════════════════════════════════════════
+   9 · NAVEGACIÓN ENTRE PASOS
+   ════════════════════════════════════════════════════════════════ */
+const steps = $$('.step');
+const dotsEl = $('#dots');
+let cur = 0;
+
+steps.forEach((_, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.title = steps[i].dataset.title;
+  b.addEventListener('click', () => go(i));
+  dotsEl.appendChild(b);
+});
+
+const HINTS = [
+  'Explora la escena y pulsa «Siguiente» cuando quieras empezar.',
+  'Prueba ángulos por debajo y por encima de 45° antes de continuar.',
+  'Pasa el cursor por las tres zonas de la lámina.',
+  'Completa las cinco etapas y responde el cuestionario de defectos.',
+  'Compara las variaciones de tamaño, color y forma antes de abrir el ejercicio.',
+  'Cuenta las plaquetas de los 10 campos y valida tu recuento.',
+  'Repasa los puntos clave y abre el quiz final cuando los tengas claros.',
+];
+
+function go(i) {
+  cur = clamp(i, 0, steps.length - 1);
+  steps.forEach((s, k) => s.classList.toggle('on', k === cur));
+  $$('#dots button').forEach((b, k) => {
+    b.classList.toggle('on', k === cur);
+    b.classList.toggle('done', k < cur);
+  });
+  $('#pTitle').textContent = steps[cur].dataset.title;
+  $('#pCount').textContent = `${cur + 1} / ${steps.length}`;
+  $('#pFill').style.width = `${((cur + 1) / steps.length) * 100}%`;
+  $('#btnPrev').disabled = cur === 0;
+  $('#btnNext').textContent = cur === steps.length - 1 ? 'Reiniciar ↺' : 'Siguiente →';
+  $('#footHint').textContent = HINTS[cur] ?? '';
+
+  // Hay pasos sin escena 3D (paso 4): se suelta el canvas y se detiene el
+  // bucle de actualización en vez de dejar una escena corriendo invisible.
+  const stageEl = $('.stage', steps[cur]);
+  if (stageEl) {
+    mountScene(stageEl.dataset.scene, stageEl);
+  } else {
+    active?.leave?.();
+    active = null;
+    canvas.remove();
+  }
+  steps[cur].querySelector('.panel')?.scrollTo({ top: 0 });
+  requestAnimationFrame(resizeActive);
+}
+
+$('#btnPrev').addEventListener('click', () => go(cur - 1));
+$('#btnNext').addEventListener('click', () => go(cur === steps.length - 1 ? 0 : cur + 1));
+window.addEventListener('keydown', e => {
+  if (e.target.matches('input,textarea')) return;
+  if (e.key === 'ArrowRight') go(cur + 1);
+  if (e.key === 'ArrowLeft')  go(cur - 1);
+});
+
+/* ════════════════════════════════════════════════════════════════
+   10 · PASO 1 · CONTROLES DEL ÁNGULO
+   ════════════════════════════════════════════════════════════════ */
+{
+  const slider = $('#angSlider'), val = $('#angVal');
+  const elLargo = $('#angLargo'), elGrosor = $('#angGrosor'), elVer = $('#angVeredicto');
+
+  function apply() {
+    const a = +slider.value;
+    val.textContent = `${a}°`;
+    const { largo, grosorR } = SCENES.frotis.setAngle(a);
+    // Escala de la simulación: 1 unidad ≈ 10 mm de portaobjeto
+    elLargo.textContent = `${(largo * 10).toFixed(0)} mm aprox.`;
+    elGrosor.textContent = `${(grosorR * 100).toFixed(0)} %`;
+
+    if (a > 52) {
+      elVer.className = 'card warn';
+      elVer.innerHTML = '<b>Extensión gruesa y corta.</b> Con ángulo &gt; 45° los eritrocitos se apilan y se superponen: la zona de lectura se reduce y la fórmula diferencial se falsea. Útil sólo si el hematocrito es muy bajo.';
+    } else if (a < 38) {
+      elVer.className = 'card warn';
+      elVer.innerHTML = '<b>Extensión larga y fina.</b> Con ángulo &lt; 45° la sangre se reparte en más superficie: aparece una cola muy extensa con células acartonadas «en barbas». Útil si la sangre es muy viscosa o el hematocrito es alto.';
+    } else {
+      elVer.className = 'card good';
+      elVer.innerHTML = '<b>Ángulo correcto (≈ 45°).</b> Es el ángulo del procedimiento estándar: produce un extendido con cabeza, cuerpo y cola bien definidos y una zona ideal de lectura amplia.';
+    }
+  }
+  slider.addEventListener('input', apply);
+  $('#btnExtender').addEventListener('click', () => SCENES.frotis.play());
+  $('#btnReset1').addEventListener('click', () => { slider.value = 45; apply(); SCENES.frotis.reset(); });
+  apply();
+}
+
+/* ════════════════════════════════════════════════════════════════
+   11 · PASO 2 · SINCRONIZAR HOVER 3D ↔ TARJETAS
+   ════════════════════════════════════════════════════════════════ */
+{
+  const cards = $$('#zoneCards .zc');
+  SCENES.zonas.onHover = id => cards.forEach(c => c.classList.toggle('on', c.dataset.zone === id));
+  cards.forEach(c => {
+    c.addEventListener('pointerenter', () => SCENES.zonas.setHover(c.dataset.zone));
+    c.addEventListener('pointerleave', () => SCENES.zonas.setHover(null));
+    c.addEventListener('click',        () => SCENES.zonas.setHover(c.dataset.zone));
+  });
+}
+
+/* ════════════════════════════════════════════════════════════════
+   12 · MOTOR DE CUESTIONARIOS
+   ════════════════════════════════════════════════════════════════ */
+function renderQuiz(container, preguntas, onFinish) {
+  container.innerHTML = '';
+  let respondidas = 0, aciertos = 0;
+
+  preguntas.forEach((q, qi) => {
+    const box = document.createElement('div');
+    box.className = 'q';
+    box.innerHTML = `
+      <div class="qHead"><span class="qNum">${qi + 1}</span><span class="qText">${q.p}</span></div>
+      <div class="opts"></div>
+      <div class="fb"></div>`;
+    const opts = $('.opts', box), fb = $('.fb', box);
+
+    // Pregunta de identificación sobre una microfotografía del paso 4
+    if (q.img) {
+      const fig = document.createElement('div');
+      fig.className = 'qFig';
+      fig.appendChild(microVisual(q.img, true));
+      box.insertBefore(fig, opts);
+    }
+
+    q.o.forEach((texto, oi) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'opt';
+      b.innerHTML = texto;
+      b.addEventListener('click', () => {
+        $$('.opt', opts).forEach(x => { x.disabled = true; });
+        const ok = oi === q.r;
+        b.classList.add(ok ? 'ok' : 'bad');
+        if (!ok) $$('.opt', opts)[q.r].classList.add('ok');
+        fb.className = `fb show ${ok ? 'ok' : 'bad'}`;
+        fb.innerHTML = `<b>${ok ? '✓ Correcto. ' : '✕ Incorrecto. '}</b>${q.e}`;
+        respondidas++; if (ok) aciertos++;
+        if (respondidas === preguntas.length) onFinish?.(aciertos, preguntas.length);
+      });
+      opts.appendChild(b);
+    });
+    container.appendChild(box);
+  });
+}
+
+/* ── Cuestionario de defectos de tinción (paso 3) ── */
+renderQuiz($('#quizTincion'), [
+  {
+    p: 'Un frotis teñido con Wright se ve <b>excesivamente azul</b>. ¿Cuál de estas NO es una causa descrita?',
+    o: [
+      'Frotis excesivamente grueso',
+      'Lavado insuficiente',
+      'Agua de lavado con pH demasiado ácido',
+      'Tinción muy prolongada',
+    ],
+    r: 2,
+    e: 'Un pH demasiado ácido del colorante, el tampón o el agua de lavado produce la <b>tonalidad rosada</b>, no la azul. La coloración excesivamente azul se debe a frotis grueso, lavado insuficiente, tinción prolongada o colorante excesivamente alcalino.',
+  },
+  {
+    p: 'El extendido muestra una <b>tonalidad rosada</b> generalizada. La causa es:',
+    o: [
+      'pH demasiado ácido del colorante, el tampón o el agua de lavado',
+      'Colorante excesivamente alcalino',
+      'Haber filtrado el colorante antes de usarlo',
+      'Secado del frotis en posición vertical',
+    ],
+    r: 0,
+    e: 'La tonalidad rosada indica <b>pH ácido</b> en cualquiera de los tres puntos: colorante, solución tampón o agua de lavado.',
+  },
+  {
+    p: 'Aparecen <b>precipitados</b> sobre el extendido. ¿Cómo se previene?',
+    o: [
+      'Alargando el tiempo de la solución amortiguada',
+      'Filtrando el colorante antes de emplearlo',
+      'Aumentando el ángulo del portaobjeto extensor',
+      'Lavando con agua destilada muy alcalina',
+    ],
+    r: 1,
+    e: 'Los precipitados se deben a la <b>acción excesiva del colorante</b> y se evitan mediante la <b>filtración del colorante</b>.',
+  },
+  {
+    p: 'Una extensión de sangre <b>bien teñida</b> se caracteriza por:',
+    o: [
+      'Hematíes azulados y leucocitos sin detalle nuclear',
+      'Hematíes rosados, estructuras subcelulares diferenciadas en leucocitos y ausencia de precipitados',
+      'Fondo violáceo intenso que cubre toda la lámina',
+      'Superposición marcada de eritrocitos en toda la extensión',
+    ],
+    r: 1,
+    e: 'Los tres criterios de calidad son: buena diferenciación de las estructuras subcelulares de los leucocitos, <b>coloración rosada</b> de los hematíes y <b>ausencia de precipitados</b>.',
+  },
+]);
+
+/* ════════════════════════════════════════════════════════════════
+   12 bis · PASO 4 · MICROFOTOGRAFÍAS DE MORFOLOGÍA ERITROCITARIA
+   ────────────────────────────────────────────────────────────────
+   Las 7 imágenes son microfotografías clínicas reales: no se recrean
+   en 3D. Cada una se busca en ./frotis-img/<id>.<ext> probando las
+   extensiones habituales; si ninguna existe se pinta el recuadro
+   «Imagen pendiente: [descripción]» y la simulación continúa igual.
+   Para activarlas basta copiar los archivos con estos nombres en
+   public/simulaciones/frotis-img/ — no hay que tocar el código.
+   ════════════════════════════════════════════════════════════════ */
+const IMG_DIR  = './frotis-img/';
+const IMG_EXTS = ['jpg', 'jpeg', 'png', 'webp', 'avif'];
+
+const MICROS = {
+  'a1-microcitosis': {
+    desc: 'Microfotografía con un linfocito de núcleo morado en el centro rodeado de eritrocitos, con flechas negras señalando eritrocitos pequeños (microcitosis, VCM < 80 fL)',
+    cap: 'Sangre periférica: linfocito de núcleo morado en el centro, rodeado de eritrocitos. Las flechas negras señalan eritrocitos de tamaño reducido, ejemplo de <b>microcitosis (VCM &lt; 80 fL)</b>.',
+  },
+  'a2-normocitosis': {
+    desc: 'Microfotografía de eritrocitos rosados alrededor de un linfocito pequeño de núcleo morado, mostrando tamaño similar (normocitosis, VCM 80-100 fL)',
+    cap: 'Eritrocitos rosados alrededor de un linfocito pequeño de núcleo morado. El diámetro eritrocitario es aproximadamente el del núcleo del linfocito: <b>normocitosis (VCM 80–100 fL)</b>.',
+  },
+  'a3-macrocitosis': {
+    desc: 'Microfotografía con un linfocito central y eritrocitos más grandes que su núcleo señalados con flechas (macrocitosis, VCM > 100 fL)',
+    cap: 'Linfocito central y eritrocitos de mayor tamaño que su núcleo, señalados con flechas: <b>macrocitosis (VCM &gt; 100 fL)</b>.',
+  },
+  'b1-hipocromia': {
+    desc: 'Microfotografía con eritrocitos muy pálidos, zona clara central mayor a un tercio del diámetro celular, con una célula nucleada morada en el centro (hipocromía)',
+    cap: 'Eritrocitos muy pálidos cuya zona clara central ocupa <b>más de un tercio</b> del diámetro celular; en el centro, una célula nucleada morada. Ejemplo de <b>hipocromía</b>.',
+  },
+  'b2-normocromia': {
+    desc: 'Microfotografía de eritrocitos rosados con palidez central de aproximadamente un tercio del diámetro (normocromía)',
+    cap: 'Eritrocitos rosados con palidez central proporcionada, de aproximadamente <b>un tercio</b> del diámetro: eritrocitos <b>normocrómicos</b>.',
+  },
+  'b3-hipercromia': {
+    desc: 'Microfotografía con eritrocitos intensamente teñidos, con palidez central reducida o ausente (hipercromía)',
+    cap: 'Campo con numerosos eritrocitos intensamente teñidos y palidez central reducida o ausente: eritrocitos <b>hipercrómicos</b>.',
+  },
+  'c1-drepanocitos': {
+    desc: 'Microfotografía con eritrocitos alargados y curvos en forma de hoz o media luna, entre eritrocitos redondeados normales (drepanocitos)',
+    cap: 'Eritrocitos alargados y curvos en forma de hoz o media luna entre eritrocitos redondeados: <b>drepanocitos</b>.',
+  },
+};
+
+/**
+ * Resuelve una sola vez por imagen cuál de las extensiones existe.
+ * Devuelve la URL encontrada o `null` si el archivo aún no está.
+ */
+const microCache = new Map();
+function resolveMicro(id) {
+  if (microCache.has(id)) return microCache.get(id);
+  const p = new Promise(res => {
+    let k = 0;
+    const probe = new Image();
+    probe.onload  = () => res(probe.src);
+    probe.onerror = () => (++k < IMG_EXTS.length)
+      ? (probe.src = `${IMG_DIR}${id}.${IMG_EXTS[k]}`)
+      : res(null);
+    probe.src = `${IMG_DIR}${id}.${IMG_EXTS[0]}`;
+  });
+  microCache.set(id, p);
+  return p;
+}
+
+/**
+ * Nodo visual de una microfotografía. Nace como recuadro «Imagen pendiente»
+ * y se sustituye por la foto real en cuanto la sonda encuentra el archivo.
+ */
+function microVisual(id, compacto = false) {
+  const meta = MICROS[id];
+  const holder = document.createElement('div');
+  holder.innerHTML = `<div class="microPh"><b>Imagen pendiente</b><span>${meta.desc}</span></div>`;
+
+  resolveMicro(id).then(url => {
+    if (!url) return;
+    const img = document.createElement('img');
+    img.alt = meta.desc;
+    img.decoding = 'async';
+    img.src = url;
+    holder.innerHTML = '';
+    holder.appendChild(img);
+  });
+
+  if (compacto) return holder;
+
+  const fig = document.createElement('figure');
+  fig.className = 'micro';
+  fig.appendChild(holder);
+  const cap = document.createElement('figcaption');
+  cap.innerHTML = meta.cap;
+  fig.appendChild(cap);
+  return fig;
+}
+
+/* ── Contenido de las tres sub-secciones ── */
+const SUBSECCIONES = [
+  {
+    letra: 'A', titulo: 'Variaciones de tamaño', extra: 'anisocitosis',
+    items: [
+      {
+        img: 'a1-microcitosis', name: 'Microcíticos', val: '< 7 μm · VCM < 80 fL',
+        txt: 'Eritrocito menor de 7 μm de diámetro.',
+        asoc: 'Anemia ferropénica · talasemia · intoxicación por plomo · anemia sideroblástica · en ocasiones, anemia por enfermedad crónica.',
+      },
+      {
+        img: 'a2-normocitosis', name: 'Normocíticos', val: '7 – 8,5 μm · VCM 80 – 100 fL',
+        txt: 'Los eritrocitos normales son casi de igual tamaño que el <b>núcleo de un linfocito pequeño</b>: por eso el linfocito sirve de regla interna al leer el frotis.',
+        asoc: null,
+      },
+      {
+        img: 'a3-macrocitosis', name: 'Macrocíticos', val: '> 8,5 μm · VCM > 100 fL',
+        txt: 'Eritrocito mayor de 8,5 μm de diámetro.',
+        asoc: 'Enfermedad hepática · deficiencia de vitamina B12 · deficiencia de folatos · reticulocitosis.',
+      },
+    ],
+  },
+  {
+    letra: 'B', titulo: 'Variaciones de color', extra: 'anisocromía',
+    items: [
+      {
+        img: 'b1-hipocromia', name: 'Hipocromía', val: 'palidez central > ⅓ del diámetro',
+        txt: 'La zona pálida central del eritrocito es <b>mayor que un tercio</b> del diámetro de la célula.',
+        asoc: 'Anemia ferropénica · talasemias · anemia sideroblástica · intoxicación con plomo · inflamación crónica.',
+      },
+      {
+        img: 'b2-normocromia', name: 'Normocrómicos', val: 'palidez central ≈ ⅓ del diámetro',
+        txt: 'Eritrocitos de coloración normal, con una concentración intracelular de hemoglobina normal.',
+        asoc: null,
+      },
+      {
+        img: 'b3-hipercromia', name: 'Hipercrómicos', val: 'sin halo central',
+        txt: 'Eritrocitos con <b>aumento</b> de la concentración intracelular de hemoglobina: coloración intensa, sin halo central.',
+        asoc: 'Esferocitos · células contraídas irregularmente · drepanocitos.',
+      },
+    ],
+  },
+  {
+    letra: 'C', titulo: 'Alteraciones de la forma', extra: 'poiquilocitosis',
+    items: [
+      {
+        img: 'c1-drepanocitos', name: 'Drepanocitos', val: 'célula en hoz',
+        txt: 'Célula alargada con <b>una punta en cada extremo</b>; puede ser curvada o tener forma de «S».',
+        asoc: 'Sinónimos: falciforme · célula en hoz · <i>sickle cell</i> · célula en media luna · meniscocito.',
+        asocPlano: true,
+      },
+    ],
+  },
+];
+
+/* Cada categoría es una pestaña: sólo una rejilla visible a la vez, así las
+   fichas ocupan el alto disponible en vez de apilarse fuera de pantalla. */
+{
+  const cont = $('#paso4Subsecciones');
+  const tabsEl = $('#p4Tabs');
+  const paneles = [];
+
+  SUBSECCIONES.forEach((sec, i) => {
+    const tab = document.createElement('button');
+    tab.type = 'button';
+    tab.className = 'tab';
+    tab.innerHTML = `<b>${sec.letra}</b><span>${sec.titulo}</span><i>${sec.extra}</i>`;
+    tab.addEventListener('click', () => activar(i));
+    tabsEl.appendChild(tab);
+
+    const grid = document.createElement('div');
+    grid.className = 'morfoGrid oculto' + (sec.items.length === 1 ? ' morfoGrid1' : '');
+
+    sec.items.forEach(it => {
+      const card = document.createElement('div');
+      card.className = 'morfo';
+      // Encabezado → microfotografía → texto: la imagen manda visualmente.
+      card.innerHTML = `
+        <div class="morfoHead">
+          <span class="morfoName">${it.name}</span>
+          <span class="morfoVal">${it.val}</span>
+        </div>`;
+      card.appendChild(microVisual(it.img));
+      const txt = document.createElement('div');
+      txt.innerHTML = `
+        <p>${it.txt}</p>
+        ${it.asoc ? `<p class="morfoAsoc">${it.asocPlano ? '' : '<b>Asociado con:</b> '}${it.asoc}</p>` : ''}`;
+      card.appendChild(txt);
+      grid.appendChild(card);
+    });
+
+    cont.appendChild(grid);
+    paneles.push(grid);
+  });
+
+  const tabsBtns = $$('.tab', tabsEl);
+  function activar(i) {
+    tabsBtns.forEach((t, k) => t.classList.toggle('on', k === i));
+    paneles.forEach((p, k) => p.classList.toggle('oculto', k !== i));
+    cont.parentElement.scrollTop = 0;
+  }
+  activar(0);
+}
+
+/* ── Ejercicio de clasificación sobre las 7 microfotografías ── */
+renderQuiz($('#ejercicioMorfo'), [
+  {
+    img: 'a1-microcitosis',
+    p: 'Los eritrocitos señalados por las flechas, comparados con el núcleo del linfocito central, corresponden a:',
+    o: ['Microcitosis (VCM &lt; 80 fL)', 'Normocitosis (VCM 80–100 fL)', 'Macrocitosis (VCM &gt; 100 fL)', 'Hipercromía'],
+    r: 0,
+    e: 'Son eritrocitos <b>menores de 7 μm</b>, claramente más pequeños que el núcleo del linfocito. Microcitosis: ferropenia, talasemia, intoxicación por plomo, anemia sideroblástica.',
+  },
+  {
+    img: 'a2-normocitosis',
+    p: 'El diámetro de estos eritrocitos frente al núcleo del linfocito pequeño indica:',
+    o: ['Microcitosis', 'Normocitosis (VCM 80–100 fL)', 'Macrocitosis', 'Anisocitosis marcada'],
+    r: 1,
+    e: 'El eritrocito normal mide <b>7 – 8,5 μm</b> y es casi del mismo tamaño que el núcleo de un linfocito pequeño. Ese es justamente el criterio de comparación al microscopio.',
+  },
+  {
+    img: 'a3-macrocitosis',
+    p: 'Las células señaladas con flechas, mayores que el núcleo del linfocito, son:',
+    o: ['Normocitos', 'Microcitos', 'Macrocitos (VCM &gt; 100 fL)', 'Drepanocitos'],
+    r: 2,
+    e: 'Macrocitos: eritrocitos <b>mayores de 8,5 μm</b>. Se asocian a enfermedad hepática, deficiencia de vitamina B12, deficiencia de folatos y reticulocitosis.',
+  },
+  {
+    img: 'b1-hipocromia',
+    p: 'La zona clara central de estos eritrocitos ocupa más de un tercio del diámetro celular. Se clasifica como:',
+    o: ['Normocromía', 'Hipocromía', 'Hipercromía', 'Macrocitosis'],
+    r: 1,
+    e: '<b>Hipocromía</b>: palidez central <b>mayor que un tercio</b> del diámetro. Asociada a anemia ferropénica, talasemias, anemia sideroblástica, intoxicación con plomo e inflamación crónica.',
+  },
+  {
+    img: 'b2-normocromia',
+    p: 'Estos eritrocitos rosados con palidez central de aproximadamente un tercio del diámetro son:',
+    o: ['Hipocrómicos', 'Normocrómicos', 'Hipercrómicos', 'Esferocitos'],
+    r: 1,
+    e: 'Coloración normal y concentración intracelular de hemoglobina normal: <b>normocrómicos</b>. La palidez central ocupa cerca de un tercio del diámetro.',
+  },
+  {
+    img: 'b3-hipercromia',
+    p: 'Eritrocitos intensamente teñidos, con palidez central reducida o ausente. Corresponden a:',
+    o: ['Hipocromía', 'Normocromía', 'Hipercromía', 'Poiquilocitosis'],
+    r: 2,
+    e: '<b>Hipercromía</b>: aumento de la concentración intracelular de hemoglobina, coloración intensa y <b>sin halo central</b>. Se asocia a esferocitos, células contraídas irregularmente y drepanocitos.',
+  },
+  {
+    img: 'c1-drepanocitos',
+    p: 'Las células alargadas y curvas, con una punta en cada extremo, entre eritrocitos redondeados, son:',
+    o: ['Eliptocitos', 'Macroovalocitos', 'Drepanocitos', 'Esferocitos'],
+    r: 2,
+    e: '<b>Drepanocitos</b> —falciforme, célula en hoz, <i>sickle cell</i>, célula en media luna, meniscocito—: célula alargada con una punta en cada extremo, curvada o en forma de «S». Es una alteración de la forma (poiquilocitosis).',
+  },
+]);
+
+/* ════════════════════════════════════════════════════════════════
+   13 · PASO 3 · SECUENCIA DE TINCIÓN
+   ════════════════════════════════════════════════════════════════ */
+{
+  const sc = SCENES.tincion;
+  const wrap = $('#tStages'), clock = $('#tClock'), clockLbl = $('#tClockLabel');
+  const btn = $('#btnTincion'), hint = $('#tincionHint');
+
+  sc.etapas.forEach(e => {
+    const d = document.createElement('div');
+    d.className = 'stg';
+    d.dataset.id = e.id;
+    d.innerHTML = `
+      <span class="stgDot"></span>
+      <div class="stgBody">
+        <div class="stgName">${e.name}</div>
+        <div class="stgTime">${e.sim}</div>
+        <div class="stgBar"><div class="stgBarFill"></div></div>
+      </div>`;
+    wrap.appendChild(d);
+  });
+  const rows = $$('.stg', wrap);
+
+  const mmss = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+  sc.onStage = (i) => {
+    rows.forEach((r, k) => {
+      r.classList.toggle('on', k === i);
+      r.classList.toggle('done', k < i);
+      if (k > i) $('.stgBarFill', r).style.width = '0%';
+      if (k < i) $('.stgBarFill', r).style.width = '100%';
+    });
+    if (i < 0) { clock.textContent = '00:00'; clockLbl.textContent = 'tiempo simulado'; }
+  };
+  sc.onTick = (i, p, simSec, e) => {
+    $('.stgBarFill', rows[i]).style.width = `${p * 100}%`;
+    clock.textContent = mmss(simSec);
+    clockLbl.textContent = `${e.name.toLowerCase()} · ${e.sim}`;
+  };
+  sc.onDone = () => {
+    btn.textContent = '↺ Repetir tinción';
+    btn.disabled = false;
+    clockLbl.textContent = 'extendido teñido y seco · listo para leer';
+    hint.textContent = 'Extendido teñido: hematíes rosados, sin precipitados';
+  };
+
+  btn.addEventListener('click', () => {
+    sc.start();
+    btn.textContent = 'Tiñendo…';
+    btn.disabled = true;
+    hint.textContent = 'Secuencia en curso — el color de la película cambia con cada etapa';
+  });
+  $('#btnTincionReset').addEventListener('click', () => {
+    sc.reset();
+    btn.textContent = '▶ Iniciar tinción';
+    btn.disabled = false;
+    hint.textContent = 'Pulsa «Iniciar tinción» en el panel';
+  });
+}
+
+/* ════════════════════════════════════════════════════════════════
+   14 · PASO 5 · RECUENTO PLAQUETARIO SOBRE 10 CAMPOS
+   ════════════════════════════════════════════════════════════════ */
+{
+  const N_CAMPOS = 10;
+  const grid = $('#fieldGrid'), tag = $('#campoTag'), actual = $('#campoActual');
+  const inputWrap = $('#conteoInput'), finalWrap = $('#conteoFinal');
+  const inCampo = $('#campoCount'), inFinal = $('#finalCount'), fb = $('#conteoFb');
+
+  let reales = [], userVals = [], i = 0;
+
+  function generar() {
+    reales = Array.from({ length: N_CAMPOS }, () => 4 + Math.floor(Math.random() * 11)); // 4–14
+    userVals = Array(N_CAMPOS).fill(null);
+    i = 0;
+    grid.innerHTML = '';
+    for (let k = 0; k < N_CAMPOS; k++) {
+      const c = document.createElement('div');
+      c.className = 'fCell';
+      c.innerHTML = `<b>—</b><span>campo ${k + 1}</span>`;
+      grid.appendChild(c);
+    }
+    inputWrap.style.display = '';
+    finalWrap.style.display = 'none';
+    fb.className = 'fb';
+    inCampo.value = ''; inFinal.value = '';
+    mostrar();
+  }
+
+  function mostrar() {
+    SCENES.plaquetas.build(reales[i], (i * 0.7) % 6.28);
+    tag.textContent = `Campo ${i + 1} de ${N_CAMPOS} · 1000×`;
+    actual.textContent = `campo ${i + 1}`;
+    $$('.fCell', grid).forEach((c, k) => c.classList.toggle('on', k === i));
+    inCampo.value = userVals[i] ?? '';
+    inCampo.focus();
+  }
+
+  function registrar() {
+    const v = parseInt(inCampo.value, 10);
+    if (Number.isNaN(v) || v < 0) { inCampo.focus(); return; }
+    userVals[i] = v;
+    const cell = $$('.fCell', grid)[i];
+    cell.classList.add('filled');
+    $('b', cell).textContent = v;
+
+    if (i < N_CAMPOS - 1) { i++; mostrar(); return; }
+
+    // Todos los campos registrados
+    inputWrap.style.display = 'none';
+    finalWrap.style.display = '';
+    $('#sumaUser').textContent = `${userVals.reduce((a, b) => a + b, 0)} plaquetas`;
+    inFinal.focus();
+  }
+
+  function validar() {
+    const v = parseInt(inFinal.value, 10);
+    if (Number.isNaN(v)) return;
+    const sumaReal = reales.reduce((a, b) => a + b, 0);
+    const sumaUser = userVals.reduce((a, b) => a + b, 0);
+    const esperadoUser = sumaUser * 2;
+    const esperadoReal = sumaReal * 2;
+
+    const detalle = `
+      <div style="margin-top:8px;font-size:.78rem;line-height:1.6">
+        Conteo real por campo: <b class="mono">${reales.join(' · ')}</b><br>
+        Suma real: <b class="mono">${sumaReal}</b> → recuento correcto: <b class="mono">${esperadoReal}</b><br>
+        Tu suma: <b class="mono">${sumaUser}</b> (desviación de conteo: <b class="mono">${sumaUser - sumaReal >= 0 ? '+' : ''}${sumaUser - sumaReal}</b>)
+      </div>`;
+
+    if (v === esperadoReal) {
+      fb.className = 'fb show ok';
+      fb.innerHTML = `<b>✓ Recuento exacto.</b> Contaste bien los 10 campos y aplicaste correctamente el factor ×2.${detalle}`;
+    } else if (v === esperadoUser) {
+      fb.className = 'fb show bad';
+      fb.innerHTML = `<b>≈ La operación está bien, el conteo no.</b> Multiplicaste correctamente tu suma por 2, pero se te escaparon plaquetas al contar los campos.${detalle}`;
+    } else {
+      fb.className = 'fb show bad';
+      fb.innerHTML = `<b>✕ Revisa la operación.</b> El recuento es la <b>suma de las plaquetas de los 10 campos multiplicada por 2</b>. Con tu suma el resultado sería <b class="mono">${esperadoUser}</b>.${detalle}`;
+    }
+    $$('.fCell', grid).forEach((c, k) => { $('b', c).textContent = reales[k]; });
+  }
+
+  $('#btnCampo').addEventListener('click', registrar);
+  inCampo.addEventListener('keydown', e => { if (e.key === 'Enter') registrar(); });
+  $('#btnFinal').addEventListener('click', validar);
+  inFinal.addEventListener('keydown', e => { if (e.key === 'Enter') validar(); });
+  $('#btnConteoReset').addEventListener('click', generar);
+
+  generar();
+}
+
+/* ════════════════════════════════════════════════════════════════
+   15 · CIERRE · MINI-QUIZ FINAL
+   ════════════════════════════════════════════════════════════════ */
+renderQuiz($('#quizFinal'), [
+  {
+    p: 'Realizas el extendido con el portaobjeto extensor a <b>70°</b>. ¿Qué obtienes?',
+    o: [
+      'Una extensión larga y fina, con cola muy extensa',
+      'Una extensión gruesa y corta',
+      'Una extensión idéntica a la de 45°',
+      'Un extendido sin cabeza ni cola',
+    ],
+    r: 1,
+    e: 'Con un ángulo <b>superior a 45°</b> la extensión resulta <b>gruesa y corta</b>; por debajo de 45° resulta larga y fina.',
+  },
+  {
+    img: 'c1-drepanocitos',
+    p: 'Identifica la alteración predominante en este campo:',
+    o: [
+      'Alteración del tamaño (anisocitosis)',
+      'Alteración de la coloración (anisocromía)',
+      'Alteración de la forma (poiquilocitosis): drepanocitos',
+      'Aglutinación de eritrocitos',
+    ],
+    r: 2,
+    e: 'Células alargadas con una punta en cada extremo, curvadas o en «S»: <b>drepanocitos</b>. Son una alteración de la <b>forma</b> —poiquilocitosis—, no del tamaño ni del color.',
+  },
+  {
+    p: 'Estás haciendo la fórmula diferencial y lees en la <b>cabeza</b> del frotis. ¿Qué sesgo introduces?',
+    o: [
+      'Sobrestimas granulocitos y monocitos',
+      'Sobrestimas linfocitos',
+      'No hay sesgo: la cabeza es la zona ideal',
+      'Sobrestimas plaquetas gigantes',
+    ],
+    r: 1,
+    e: 'La cabeza es la zona <b>excesivamente gruesa</b> y en ella se aprecia un <b>aumento de linfocitos</b>. El exceso de granulocitos y monocitos está en la cola.',
+  },
+  {
+    p: 'La <b>zona ideal</b> de lectura del frotis se reconoce porque:',
+    o: [
+      'Los eritrocitos se superponen formando rouleaux',
+      'Las células adoptan una posición acartonada o «en barbas»',
+      'No hay superposición de eritrocitos ni lagunas carentes de glóbulos',
+      'Es la región inmediata al punto de partida de la extensión',
+    ],
+    r: 2,
+    e: 'El cuerpo es la región intermedia con <b>reparto equilibrado</b>: sin superposición de eritrocitos y sin zonas vacías. La búsqueda se hace con objetivo 10×.',
+  },
+  {
+    p: 'Ordena correctamente los tiempos de la <b>tinción de Wright</b>:',
+    o: [
+      'Colorante 6 min → solución amortiguada 5 min → lavado',
+      'Secado 15–20 min → colorante 5 min → solución amortiguada 6 min → lavado → secado',
+      'Lavado → colorante 5 min → secado 15–20 min',
+      'Colorante 15–20 min → solución amortiguada 5 min → lavado',
+    ],
+    r: 1,
+    e: 'Secado del extendido <b>15–20 min</b> → colorante de Wright <b>5 min</b> → solución amortiguada en partes iguales hasta <b>brillo metálico</b>, <b>6 min</b> → lavado con agua corriente → secado.',
+  },
+  {
+    img: 'a3-macrocitosis',
+    p: 'Un eritrocito con <b>VCM de 105 fL</b>, como los señalados en el campo, se clasifica como:',
+    o: ['Microcítico', 'Normocítico', 'Macrocítico', 'Hipocrómico'],
+    r: 2,
+    e: 'Macrocítico: eritrocito mayor de <b>8,5 μm</b>, con <b>VCM &gt; 100 fL</b>. Se asocia a enfermedad hepática, deficiencia de vitamina B12, deficiencia de folatos y reticulocitosis.',
+  },
+  {
+    p: 'Sobre las <b>plaquetas</b>, señala lo correcto:',
+    o: [
+      'Son células anucleadas de 7–8,5 μm',
+      'Son fragmentos citoplasmáticos anucleados del megacariocito, de 1–3 μm',
+      'Son células con núcleo lobulado producidas en el bazo',
+      'Su volumen medio plaquetario normal es de 80–100 fL',
+    ],
+    r: 1,
+    e: 'No son células: son <b>fragmentos citoplasmáticos anucleados</b> liberados por los megacariocitos de la médula ósea. Miden <b>1–3 μm</b> y su VPM es de <b>8,3–11,6 fL</b>.',
+  },
+  {
+    p: 'En 10 campos a 1000× cuentas 96 plaquetas en total. Tu recuento informado es:',
+    o: ['96', '192', '960', '9 600'],
+    r: 1,
+    e: 'El procedimiento de la guía indica contar las plaquetas presentes en <b>10 campos</b> y <b>multiplicar por 2</b>: 96 × 2 = <b>192</b>.',
+  },
+], (ok, total) => {
+  const pct = Math.round((ok / total) * 100);
+  $('#scoreFinal').innerHTML = `
+    <div class="score">
+      <span class="scoreNum">${ok}/${total}</span>
+      <div>
+        <div style="font-weight:600;font-size:.9rem">${pct >= 80 ? 'Excelente dominio de la práctica' : pct >= 50 ? 'Vas bien, repasa los pasos flojos' : 'Conviene repetir la simulación'}</div>
+        <div class="note">${pct} % de aciertos · puedes volver a cualquier paso con los puntos de la barra superior.</div>
+      </div>
+    </div>`;
+});
+
+/* ════════════════════════════════════════════════════════════════
+   16 · PUERTAS «LEER PRIMERO, RESPONDER DESPUÉS»
+   El contenido manda; las preguntas aparecen cuando el alumno decide
+   que ya lo revisó, y el foco salta directo a la primera pregunta.
+   ════════════════════════════════════════════════════════════════ */
+function abrirPuerta(btnId, gateId, wrapId) {
+  $(btnId).addEventListener('click', () => {
+    $(gateId).classList.add('oculto');
+    const wrap = $(wrapId);
+    wrap.classList.remove('oculto');
+    wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+abrirPuerta('#btnGateQuiz', '#gateQuiz', '#wrapQuiz');
+
+/* Paso 4: el ejercicio ocupa el mismo espacio que las variaciones — se
+   intercambian en vez de apilarse, para no volver a introducir scroll largo. */
+{
+  const teoria = $('#teoriaP4'), tabs = $('#p4Tabs'), fichas = $('#paso4Subsecciones');
+  const ejercicio = $('#wrapMorfo'), gate = $('#gateMorfo'), volver = $('#gateVolver');
+  const cuerpo = fichas.parentElement;
+
+  const mostrarEjercicio = (on) => {
+    [teoria, tabs, fichas].forEach(el => el.classList.toggle('oculto', on));
+    ejercicio.classList.toggle('oculto', !on);
+    gate.classList.toggle('oculto', on);
+    volver.classList.toggle('oculto', !on);
+    cuerpo.scrollTop = 0;
+  };
+  $('#btnGateMorfo').addEventListener('click', () => mostrarEjercicio(true));
+  $('#btnVolverMorfo').addEventListener('click', () => mostrarEjercicio(false));
+}
+
+/* ════════════════════════════════════════════════════════════════
+   17 · ARRANQUE
+   ════════════════════════════════════════════════════════════════ */
+go(0);
+</script>
+</body>
+</html>

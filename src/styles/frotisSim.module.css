@@ -1,0 +1,121 @@
+/* Contenedor de la simulación del frotis sanguíneo.
+   El módulo educativo vive en `public/simulaciones/frotis-sanguineo.html`
+   (HTML autocontenido con Three.js) y se embebe en un iframe a pantalla
+   completa: trae su propio header, barra de progreso y navegación.
+   Este wrapper (topBar "← Laboratorio virtual" / "Abrir a pantalla
+   completa") sí vive en el árbol de React, así que sigue el mismo
+   claro/oscuro que el resto del dashboard vía :global(.dark-mode). */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  /* La simulación ocupa la tarjeta entera: los márgenes negativos cancelan el
+     padding de `.panel` del dashboard (28px arriba/lados, 36px abajo), que si no
+     recorta ~64px de alto útil. Lo único que queda por descontar es el padding
+     vertical de `.main` (24px + 24px). */
+  margin: -28px -28px -36px;
+  height: calc(100dvh - 48px);
+  min-height: 560px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #f8faff;
+}
+
+:global(.dark-mode) .wrapper {
+  background: #08061a;
+}
+
+.topBar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+:global(.dark-mode) .topBar {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  background: rgba(13, 11, 40, 0.9);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(26, 26, 46, 0.5);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.backLink:hover { color: #1a1a2e; }
+
+:global(.dark-mode) .backLink { color: rgba(240, 238, 255, 0.55); }
+:global(.dark-mode) .backLink:hover { color: #f0eeff; }
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.counter {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(26, 26, 46, 0.5);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 5px 12px;
+  border-radius: 99px;
+}
+
+:global(.dark-mode) .counter {
+  color: rgba(240, 238, 255, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.expand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #1a6fa8;
+  background: rgba(59, 158, 221, 0.12);
+  border: 1px solid rgba(59, 158, 221, 0.3);
+  padding: 5px 12px;
+  border-radius: 99px;
+  transition: background 0.2s;
+}
+.expand:hover { background: rgba(59, 158, 221, 0.2); }
+
+:global(.dark-mode) .expand {
+  color: #f0eeff;
+  background: rgba(59, 158, 221, 0.16);
+  border-color: rgba(59, 158, 221, 0.32);
+}
+:global(.dark-mode) .expand:hover { background: rgba(59, 158, 221, 0.28); }
+
+.frame {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  border: 0;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  /* En móvil `.panel` usa padding 18px/16px/28px y `.main` 76px arriba + 12px abajo. */
+  .wrapper {
+    margin: -18px -16px -28px;
+    height: calc(100dvh - 88px);
+    min-height: 480px;
+  }
+  .counter { display: none; }
+}

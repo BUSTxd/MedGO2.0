@@ -9,7 +9,8 @@ export type AnalyticsEvent =
   | 'clase_abierta'
   | 'banco_iniciado'
   | 'examen_completado'
-  | 'resumen_abierto';
+  | 'resumen_abierto'
+  | 'simulacion_abierta';
 
 /**
  * Registra un evento de comportamiento. NO hace nada si el usuario no dio

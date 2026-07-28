@@ -15,6 +15,7 @@ const ALLOWED_EVENTS = new Set([
   'banco_iniciado',
   'examen_completado',
   'resumen_abierto',
+  'simulacion_abierta',
 ]);
 
 interface TrackBody {
