@@ -331,12 +331,213 @@ input[type=number]{-moz-appearance:textfield}
    pie) y una única fila elástica que scrollea: la rejilla de variaciones.
    Así las fichas son el primer plano y no hay que bajar para encontrarlas. */
 .p4{height:100%;min-height:0;overflow:hidden;gap:11px}
+/* Cabecera del paso 4: dentro del panel, con el lead al costado del título. */
 .p4Top{
   flex:0 0 auto;display:flex;align-items:flex-end;justify-content:space-between;
   gap:20px;flex-wrap:wrap
 }
 .p4Lead{flex:1 1 380px;max-width:640px;font-size:.85rem;color:var(--muted)}
+
+/* Cabecera a ancho completo sobre las dos columnas (pasos 3 y 5): el título y,
+   debajo, la presentación o los datos de referencia. Así el panel de la
+   derecha arranca a la misma altura que el modelo 3D. */
+.stepHead{grid-column:1/-1;display:flex;flex-direction:column;gap:12px}
+.stepLead{max-width:820px;font-size:.85rem;color:var(--muted)}
+/* Bloque que cruza las dos columnas del paso (cuestionario del paso 3). */
+.pasoAncho{grid-column:1/-1}
+
+/* Fila de referencia bajo el título (paso 5): las constantes de la plaqueta a
+   la izquierda y, a su derecha, el contexto clínico. Las dos columnas se
+   estiran a la misma altura —con `start` la ficha izquierda dejaba un hueco
+   muerto bajo ella. */
+.headCols{
+  display:grid;gap:12px;align-items:stretch;
+  grid-template-columns:minmax(250px,.82fr) minmax(0,1.45fr)
+}
+.headStack{display:flex;flex-direction:column;gap:12px}
+.headStack > .card{flex:1}
+@media (max-width:900px){
+  .headCols{grid-template-columns:minmax(0,1fr)}
+}
+
+/* Ficha de constantes: cada dato es una fila etiqueta → valor separada por un
+   filete, con la cifra en tabular para que todas alineen. El pie recoge lo que
+   no es numérico y, al empujarse con `auto`, cierra la ficha a ras del vecino. */
+.fichaDatos{display:flex;flex-direction:column;gap:9px}
+.fichaDatos h3{margin-bottom:0}
+.datos{display:flex;flex-direction:column}
+.datos > div{
+  display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  padding:9px 0;border-bottom:1px solid var(--card-border)
+}
+.datos > div:last-child{border-bottom:none}
+.datos dt{font-size:.8rem;color:var(--muted)}
+.datos dd{
+  font-size:1rem;font-weight:700;white-space:nowrap;
+  font-variant-numeric:tabular-nums;font-feature-settings:'tnum'
+}
+.datos dd span{font-size:.75rem;font-weight:500;color:var(--muted);margin-left:3px}
+.datoPie{
+  margin-top:auto;padding-top:10px;border-top:1px solid var(--card-border);
+  font-size:.79rem;line-height:1.5;color:var(--text-soft)
+}
+.datoPie b{color:var(--white);font-weight:600}
+
+/* ═══════════  BLOQUES DE CONTENIDO  ═══════════
+   Alternativas a la tarjeta genérica: si todo es un rectángulo con el mismo
+   fondo, nada destaca y el paso se lee como una pila indiferenciada. Cada
+   bloque tiene la forma de lo que contiene —una nota clave, una secuencia,
+   unos criterios, una leyenda— y toma su color de `--acc`, que cada paso
+   define para sí. */
+
+/* Nota destacada: barra de acento en vez de otra caja, para que el dato que
+   más importa no compita a igualdad visual con las tarjetas vecinas. */
+.destacado{
+  --dc:var(--blue);
+  padding:13px 17px;border-radius:0 12px 12px 0;
+  border-left:3px solid var(--dc);
+  background:linear-gradient(90deg,color-mix(in srgb,var(--dc) 14%,transparent),transparent 88%)
+}
+.destacado.warn{--dc:var(--orange)}
+.destacado.ok{--dc:var(--green)}
+.destacado.acento{--dc:var(--acc,var(--purple-light))}
+.destacado p{font-size:.87rem;line-height:1.55}
+.destacado p + p{margin-top:7px}
+.destacado b{color:var(--white);font-weight:700}
+.destacadoTit{
+  display:block;font-size:.68rem;font-weight:700;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--dc);margin-bottom:5px
+}
+
+/* Secuencia numerada: para procedimientos, donde el orden es la información.
+   Las viñetas planas no transmiten que hay un antes y un después. */
+.listaNum{list-style:none;counter-reset:ln;display:flex;flex-direction:column}
+.listaNum li{
+  position:relative;padding:10px 0 10px 33px;
+  font-size:.85rem;line-height:1.5;color:var(--text-soft);
+  border-bottom:1px solid var(--card-border)
+}
+.listaNum li:last-child{border-bottom:none}
+.listaNum li::before{
+  counter-increment:ln;content:counter(ln);
+  position:absolute;left:0;top:9px;width:22px;height:22px;border-radius:50%;
+  display:grid;place-items:center;font-size:.68rem;font-weight:800;
+  color:var(--acc,var(--blue));
+  background:color-mix(in srgb,var(--acc,var(--blue)) 16%,transparent)
+}
+.listaNum li b{color:var(--white)}
+
+/* Criterios que se cumplen o no: la marca de verificación dice «esto es lo
+   correcto» mucho antes de que se lea el texto. */
+.listaCheck{list-style:none;display:flex;flex-direction:column;gap:10px}
+.listaCheck li{
+  position:relative;padding-left:29px;
+  font-size:.85rem;line-height:1.5;color:var(--text-soft)
+}
+.listaCheck li::before{
+  content:'✓';position:absolute;left:0;top:.05em;
+  width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
+  font-size:.7rem;font-weight:800;color:var(--ok-text);background:var(--ok-bg-strong)
+}
+.listaCheck li b{color:var(--white)}
+
+/* Leyenda: identifica por color lo que se está viendo en la escena. */
+.leyenda{display:flex;flex-direction:column;gap:11px}
+.leyendaFila{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:.83rem;line-height:1.5;color:var(--text-soft)
+}
+.leyendaPunto{
+  flex:0 0 auto;width:13px;height:13px;border-radius:50%;margin-top:3px;
+  background:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 24%,transparent)
+}
+.leyendaFila b{color:var(--white);font-weight:700}
+
+/* Métrica de lectura rápida: el valor manda, la etiqueta acompaña. */
+.metricas{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.metrica{
+  padding:11px 13px;border-radius:12px;
+  border:1px solid var(--card-border);background:var(--bar-bg)
+}
+.metricaVal{
+  display:block;font-size:1.16rem;font-weight:800;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;font-feature-settings:'tnum'
+}
+.metricaEt{
+  display:block;font-size:.68rem;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:3px
+}
+
+/* Consola de control: agrupa el mando y las lecturas que dependen de él, con
+   el valor en grande. Es el único bloque interactivo del paso, así que se
+   distingue del material de lectura en vez de ser otra tarjeta igual. */
+.consola{
+  display:flex;flex-direction:column;gap:13px;
+  padding:16px 18px;border-radius:16px;
+  border:1px solid color-mix(in srgb,var(--acc,var(--blue)) 28%,transparent);
+  background:linear-gradient(150deg,color-mix(in srgb,var(--acc,var(--blue)) 9%,transparent),var(--card-bg))
+}
+.consolaTop{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.consolaTop h3{margin:0;font-size:.98rem}
+.consolaVal{
+  font-size:1.5rem;font-weight:800;letter-spacing:-.02em;
+  color:var(--acc,var(--blue));font-variant-numeric:tabular-nums
+}
+
+/* Bloque sin caja: encabezado con filete y contenido debajo. Encerrar cada
+   cosa en un rectángulo con fondo aplana la jerarquía —así el contenido
+   respira y la tarjeta se reserva para lo que de verdad debe destacar. */
+.bloque{display:flex;flex-direction:column}
+.bloque > h3{
+  font-size:.71rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px;
+  padding-bottom:8px;border-bottom:1px solid var(--card-border)
+}
+
+/* El kicker toma el color del paso: da identidad a cada pantalla sin que
+   haga falta repintar todos los bloques. */
+.kicker{color:var(--acc,var(--blue))}
 .p4Body{flex:1;min-height:0;overflow-y:auto;padding-right:4px}
+
+/* ── Modo «flow» ──
+   Encerrar cada paso en una caja de alto fijo con scroll interno obliga a
+   recortar el contenido y produce barras anidadas (.panel dentro de .p4Body
+   dentro del panel del dashboard). En flow se suelta la altura fija: el
+   documento crece con su contenido, el padre (iframe en el dashboard) lee la
+   altura real y redimensiona el <iframe>, y es la página del dashboard la que
+   scrollea —con el sidebar fijo—, como cualquier página normal.
+   Las escenas 3D, que antes llenaban el resto del viewport, pasan a tener
+   una altura propia acotada. */
+body.flowMode{overflow-y:visible}
+body.flowMode #app{height:auto;min-height:100dvh}
+/* Embebido, el iframe mide justo lo que mide el contenido: un `min-height` en
+   dvh se referiría a la altura del propio iframe y dejaría hueco muerto en los
+   pasos cortos. Suelto (pestaña aparte) sí interesa llenar la pantalla. */
+body.embedded.flowMode #app{min-height:0}
+body.flowMode main{flex:none;min-height:0}
+/* Las filas se dimensionan por su contenido. Los repartos en `%`/`fr` que
+   quedan en la hoja (y en las media queries) suponían un alto de pantalla
+   fijo: aquí no hay tal alto del que sacar el porcentaje. */
+body.flowMode .step{position:relative;inset:auto;grid-template-rows:none}
+/* Alto de las escenas 3D. Embebido NO puede usar `vh`: dentro del iframe esa
+   unidad mide el propio iframe, cuya altura sale del contenido — el stage
+   crecería, el contenido con él y el iframe otra vez, en bucle. El dashboard
+   manda su altura de viewport real en `--vpH` y esa es la referencia. */
+body.flowMode .stage{height:clamp(340px,58vh,600px)}
+body.embedded.flowMode .stage{height:clamp(340px,calc(var(--vpH,760px) * .58),600px)}
+body.flowMode .panel{overflow-y:visible}
+body.flowMode .p4{height:auto;overflow:visible}
+body.flowMode .p4Body{flex:none;overflow-y:visible}
+body.flowMode .step.p5{grid-template-rows:none}
+/* Los desplegables ya no compiten por un alto fijo: se abren enteros. */
+body.flowMode .teoriaBody,
+body.flowMode .faqBody{max-height:none;overflow-y:visible}
+
+/* Embebido en el dashboard: la navegación (Anterior/Siguiente) se dibuja en
+   el propio dashboard como barra fija, porque un footer al final de un
+   documento tan alto sólo se vería tras bajarlo entero. En pestaña aparte
+   («Abrir a pantalla completa») el footer propio sigue en uso. */
+body.embedded > #app > footer{display:none}
 
 .teoria{flex:0 0 auto;border:1px solid var(--card-border);border-radius:12px;background:var(--card-bg)}
 .teoria summary{
@@ -351,6 +552,50 @@ input[type=number]{-moz-appearance:textfield}
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   max-height:40vh;overflow-y:auto
 }
+/* Plegable que hace de encabezado de sección (Materiales, Procedimiento,
+   Por qué importa): en reposo se lee como el <h3> de una tarjeta y ocupa una
+   sola línea; el contenido sale al pulsarlo. `--acc` tiñe todo el conjunto,
+   y `.aviso` lo pasa al naranja de advertencia. */
+.teoria.seccion{
+  --acc:var(--blue);
+  border-radius:14px;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--acc) 7%,transparent),transparent);
+  transition:border-color .22s,box-shadow .22s
+}
+.teoria.seccion.aviso{--acc:var(--orange)}
+.teoria.seccion:hover{border-color:color-mix(in srgb,var(--acc) 36%,transparent)}
+.teoria.seccion[open]{
+  border-color:color-mix(in srgb,var(--acc) 32%,transparent);
+  box-shadow:0 8px 24px -16px color-mix(in srgb,var(--acc) 70%,transparent)
+}
+.teoria.seccion summary{
+  font-size:.95rem;font-weight:700;color:var(--white);padding:12px 14px;gap:11px
+}
+.teoria.seccion summary::before{
+  display:grid;place-items:center;flex:0 0 auto;
+  width:23px;height:23px;border-radius:8px;font-size:.68rem;color:var(--acc);
+  background:color-mix(in srgb,var(--acc) 15%,transparent)
+}
+.teoria.seccion summary::after{
+  content:'ver';margin-left:auto;
+  font-size:.66rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted)
+}
+.teoria.seccion[open] summary::after{content:'ocultar'}
+/* Sangría por margen, no por padding, para que el filete quede alineado
+   con el texto del encabezado en vez de pegado a los bordes. */
+.teoria.seccion[open] .teoriaBody{
+  padding:12px 0 0;margin:0 14px 14px;
+  border-top:1px solid color-mix(in srgb,var(--acc) 20%,transparent)
+}
+.teoriaBody.plano{grid-template-columns:minmax(0,1fr)}
+
+/* ── Columna del modelo 3D con su pie de contexto ──
+   Bajo la escena se apila el material de lectura (fundamento, materiales,
+   por qué importa), de modo que la columna derecha quede libre para lo que
+   el alumno realmente manipula y no haya que scrollear para alcanzarlo. */
+.stageCol{display:flex;flex-direction:column;gap:12px;min-height:0}
+.stageCol .stage{flex:0 0 auto}
 
 .tabs{flex:0 0 auto;display:flex;gap:8px;flex-wrap:wrap}
 .tab{
@@ -377,11 +622,19 @@ input[type=number]{-moz-appearance:textfield}
 /* Rejilla de variaciones: comparación lado a lado, la foto como protagonista. */
 .morfoGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;align-items:start}
 .morfoGrid1{grid-template-columns:minmax(0,620px);justify-content:center}
-.morfo{border:1px solid var(--card-border);border-radius:14px;background:var(--card-bg);padding:14px 16px}
+.morfo{
+  border:1px solid var(--card-border);border-radius:14px;
+  background:var(--card-bg);padding:14px 16px;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease
+}
+.morfoGrid .morfo:hover{
+  transform:translateY(-3px);
+  border-color:color-mix(in srgb,var(--acc,var(--blue)) 42%,transparent);
+  box-shadow:0 12px 26px -20px var(--acc,var(--blue))
+}
 .morfoGrid .morfo{display:flex;flex-direction:column;gap:7px}
 .morfoGrid .morfo p{font-size:.84rem;line-height:1.5}
 .morfoGrid figure.micro{margin:2px 0 0}
-.morfoGrid figure.micro img{max-height:min(36vh,320px);object-fit:contain}
 .morfoGrid figure.micro figcaption{font-size:.71rem;margin-top:7px}
 .morfoGrid .microPh{min-height:150px}
 .morfoHead{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:7px}
@@ -394,9 +647,13 @@ input[type=number]{-moz-appearance:textfield}
 .morfoAsoc b{color:var(--orange)}
 
 figure.micro{margin-top:11px}
+/* Sin `max-height` + `object-fit`: recortar la altura de una microfotografía
+   apaisada deja franjas del fondo a los lados. La imagen conserva su propia
+   relación de aspecto y el fondo es neutro, no negro, porque estas fotos
+   vienen con fondo blanco de campo claro. */
 figure.micro img{
   display:block;width:100%;height:auto;border-radius:12px;
-  border:1px solid var(--card-border);background:#000
+  border:1px solid var(--card-border);background:var(--surface)
 }
 figure.micro figcaption{
   font-size:.75rem;line-height:1.5;color:var(--muted);margin-top:8px;padding-left:11px;
@@ -470,6 +727,195 @@ figure.micro figcaption{
 .qFig img{display:block;width:100%;max-width:340px;height:auto;border-radius:11px;border:1px solid var(--card-border)}
 .qFig .microPh{max-width:340px;min-height:90px}
 
+/* ═══════════  CIERRE · REPASO DE PUNTOS CLAVE  ═══════════
+   Carrusel de 6 fichas sin 3D. Todo el movimiento va por `transform` y
+   `opacity` (compuestos por el GPU, sin reflow), y las fichas comparten celda
+   de grid para que cambiar de punto no altere la altura del bloque. */
+.repaso{display:flex;flex-direction:column;gap:12px}
+.repasoTop{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.repasoPos{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.repasoPos b{font-size:1.05rem;font-weight:800;color:var(--white);margin-right:2px}
+
+.repasoDots{display:flex;gap:7px;flex-wrap:wrap}
+.repasoDots button{
+  width:10px;height:10px;padding:0;border-radius:50%;cursor:pointer;
+  border:1.5px solid var(--ring);background:transparent;
+  transition:transform .2s,background .2s,border-color .2s
+}
+.repasoDots button:hover{border-color:var(--purple-light);transform:scale(1.2)}
+.repasoDots button.visto{background:var(--surface-strong);border-color:transparent}
+.repasoDots button.on{
+  background:var(--purple-light);border-color:transparent;transform:scale(1.35)
+}
+.repasoDots button:focus-visible,
+.repasoBtn:focus-visible,
+.ctaQuiz:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+.repasoNav{display:flex;gap:8px;margin-left:auto}
+.repasoBtn{
+  width:38px;height:38px;display:grid;place-items:center;cursor:pointer;
+  border-radius:11px;border:1px solid var(--card-border);
+  background:var(--surface-2);color:var(--white);transition:background .18s,opacity .18s
+}
+.repasoBtn svg{width:19px;height:19px}
+.repasoBtn:hover:not(:disabled){background:var(--surface-4)}
+.repasoBtn:disabled{opacity:.3;cursor:not-allowed}
+
+.repasoBarra{height:4px;border-radius:99px;background:var(--surface-3);overflow:hidden}
+.repasoFill{
+  height:100%;width:16.66%;border-radius:99px;transform-origin:left;
+  background:linear-gradient(90deg,var(--purple-light),var(--blue));
+  transition:width .42s cubic-bezier(.4,0,.2,1)
+}
+
+.repasoViewport{display:grid}
+.pk{
+  grid-area:1/1;                       /* todas apiladas: altura estable */
+  border:1px solid var(--card-border);border-radius:16px;padding:18px 20px 20px;
+  background:linear-gradient(150deg,color-mix(in srgb,var(--acc) 8%,transparent),var(--card-bg));
+  opacity:0;visibility:hidden;transform:translateY(14px);
+  transition:opacity .34s ease,transform .34s cubic-bezier(.22,1,.36,1),visibility .34s
+}
+.pk.on{opacity:1;visibility:visible;transform:none}
+
+.pkHead{display:flex;align-items:center;gap:13px;margin-bottom:15px}
+.pkIcon{
+  flex:0 0 auto;width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+  color:#fff;background:linear-gradient(135deg,var(--acc),color-mix(in srgb,var(--acc) 55%,#000));
+  box-shadow:0 7px 18px -8px var(--acc)
+}
+.pkIcon svg{width:23px;height:23px}
+.pkNum{
+  display:block;font-size:.65rem;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--acc)
+}
+.pkHead h3{font-size:1.12rem;margin:0;letter-spacing:-.01em}
+
+/* Entrada escalonada del contenido de la ficha activa. `backwards` mantiene el
+   estado inicial durante el retardo, así nada parpadea antes de tiempo. */
+.pk.on .pkItem,.pk.on .pkPasos li,.pk.on .pkPie,.pk.on .pkFormula{
+  animation:pkIn .42s cubic-bezier(.22,1,.36,1) backwards;
+  animation-delay:calc(var(--i,1) * 65ms)
+}
+@keyframes pkIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.pkGrid{display:grid;gap:11px;align-items:stretch}
+.pkGrid.pk3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.pkGrid.pk2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.pkItem{
+  display:flex;flex-direction:column;gap:5px;
+  padding:13px 15px;border-radius:13px;
+  border:1px solid var(--card-border);background:var(--bar-bg);
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease
+}
+.pkItem:hover{
+  transform:translateY(-3px);
+  border-color:color-mix(in srgb,var(--acc) 40%,transparent);
+  box-shadow:0 10px 24px -18px var(--acc)
+}
+.pkItem.bien{
+  border-color:color-mix(in srgb,var(--acc) 34%,transparent);
+  background:linear-gradient(150deg,color-mix(in srgb,var(--acc) 11%,var(--bar-bg)),var(--bar-bg))
+}
+.pkItem > b{font-size:.94rem;font-weight:700}
+.pkItem p{font-size:.8rem;line-height:1.5}
+.pkItem p + p{margin-top:5px}
+.pkOk{color:var(--ok-text)}
+.pkBad{color:var(--bad-text)}
+
+.pkPie,.pkFormula{font-size:.8rem;line-height:1.5;color:var(--text-soft);margin-top:12px}
+.pkPie b{color:var(--white)}
+.pkFormula{
+  text-align:center;font-size:.92rem;padding:11px 14px;border-radius:12px;
+  border:1px dashed color-mix(in srgb,var(--acc) 38%,transparent);
+  background:color-mix(in srgb,var(--acc) 8%,transparent)
+}
+.pkFormula b{color:var(--acc);font-weight:800}
+
+/* Ángulos del punto 1: una línea girada, no una imagen. */
+.pkAng{
+  position:relative;width:46px;height:26px;margin-bottom:3px;
+  border-bottom:2px solid var(--surface-strong)
+}
+.pkAng::before{
+  content:'';position:absolute;left:0;bottom:0;width:40px;height:2px;
+  background:var(--acc);transform-origin:left bottom;border-radius:2px
+}
+.pkAng.a30::before{transform:rotate(-27deg)}
+.pkAng.a45::before{transform:rotate(-45deg)}
+.pkAng.a70::before{transform:rotate(-68deg)}
+
+/* Grosor de cada zona del frotis (punto 2). */
+.pkBar{height:9px;border-radius:99px;background:var(--z,var(--acc));margin-bottom:5px}
+.pkBar.b1{width:100%;opacity:.95}
+.pkBar.b2{width:66%}
+.pkBar.b3{width:34%}
+
+/* Tamaño relativo de los eritrocitos (punto 5). */
+.pkCel{
+  border-radius:50%;margin-bottom:5px;
+  background:radial-gradient(circle at 50% 50%,
+    color-mix(in srgb,var(--acc) 22%,transparent) 0 38%,
+    color-mix(in srgb,var(--acc) 72%,transparent) 62%,
+    color-mix(in srgb,var(--acc) 85%,transparent) 100%)
+}
+.pkCel.c1{width:20px;height:20px}
+.pkCel.c2{width:28px;height:28px}
+.pkCel.c3{width:36px;height:36px}
+
+/* Cronología de la tinción (punto 3). */
+.pkPasos{list-style:none;display:flex;flex-direction:column;gap:0;counter-reset:wr}
+.pkPasos li{
+  position:relative;display:flex;align-items:baseline;gap:13px;
+  padding:11px 0 11px 30px;font-size:.85rem;line-height:1.5;color:var(--text-soft);
+  border-bottom:1px solid var(--card-border)
+}
+.pkPasos li:last-child{border-bottom:none}
+.pkPasos li::before{
+  counter-increment:wr;content:counter(wr);
+  position:absolute;left:0;top:10px;
+  width:21px;height:21px;border-radius:50%;display:grid;place-items:center;
+  font-size:.67rem;font-weight:800;color:var(--acc);
+  background:color-mix(in srgb,var(--acc) 16%,transparent)
+}
+.pkPasos b{color:var(--white);font-weight:700}
+.pkT{
+  flex:0 0 auto;min-width:64px;font-size:.72rem;font-weight:700;
+  color:var(--acc);font-variant-numeric:tabular-nums
+}
+
+/* Llamada a la acción: sin tarjeta alrededor, sólo el botón centrado. La zona
+   reserva su alto desde el principio para que la entrada no desplace nada. */
+.ctaZona{
+  display:flex;justify-content:center;align-items:center;
+  min-height:96px;margin-top:4px
+}
+.ctaQuiz{
+  display:inline-flex;align-items:center;gap:11px;cursor:pointer;
+  font-family:inherit;font-size:1.02rem;font-weight:700;letter-spacing:-.01em;
+  padding:16px 34px;border-radius:15px;border:none;color:#fff;
+  background:linear-gradient(135deg,var(--purple) 0%,var(--blue) 130%);
+  box-shadow:0 14px 30px -14px rgba(84,69,216,.75);
+  opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1),
+             box-shadow .22s ease,filter .22s ease
+}
+.ctaQuiz svg{width:20px;height:20px;transition:transform .22s ease}
+.ctaZona.listo .ctaQuiz{opacity:1;transform:none;pointer-events:auto}
+.ctaZona.listo .ctaQuiz:hover{
+  filter:brightness(1.1);box-shadow:0 18px 36px -14px rgba(84,69,216,.85)
+}
+.ctaZona.listo .ctaQuiz:hover svg{transform:translateX(4px)}
+.ctaZona.listo .ctaQuiz:active{transform:translateY(1px)}
+
+/* Respeta a quien pide menos movimiento: se conserva el cambio de estado, se
+   quitan los desplazamientos. */
+@media (prefers-reduced-motion:reduce){
+  .pk,.ctaQuiz{transition-duration:.01ms}
+  .pk.on .pkItem,.pk.on .pkPasos li,.pk.on .pkPie,.pk.on .pkFormula{animation:none}
+  .pkItem:hover{transform:none}
+}
+
 /* ─────────────────────────  RESPONSIVE  ───────────────────── */
 @media (max-width:900px){
   :root{--hdr:58px;--ftr:64px}
@@ -525,7 +971,7 @@ window.addEventListener('storage', function (e) {
   <main id="main">
 
     <!-- ──────── 0 · PORTADA ──────── -->
-    <section class="step" data-title="Portada · El torrente sanguíneo">
+    <section class="step" data-title="Portada · El torrente sanguíneo" style="--acc:#5445d8">
       <div class="stage" data-scene="vaso">
         <span class="stageTag">Interior de un vaso sanguíneo</span>
         <span class="stageHint">Arrastra para mirar alrededor · la cámara orbita sola</span>
@@ -533,86 +979,129 @@ window.addEventListener('storage', function (e) {
       <div class="panel">
         <span class="kicker">Práctica 1 · Hematología 2025</span>
         <h1>Realización y tinción del frotis sanguíneo</h1>
-        <p>El frotis sanguíneo —también llamado <b>extendido</b>— es una de las técnicas más rentables de la hematología: el diagnóstico de muchas enfermedades puede establecerse <b>sólo observando la morfología</b> de las células sanguíneas.</p>
-        <div class="card accent">
-          <h3>Qué vas a hacer aquí</h3>
-          <ul>
-            <li>Extender una gota de sangre variando el ángulo del portaobjeto extensor.</li>
-            <li>Reconocer las tres zonas del frotis y qué células predominan en cada una.</li>
-            <li>Teñir con colorante de Wright respetando los tiempos de cada etapa.</li>
-            <li>Clasificar eritrocitos por tamaño, color y forma en microfotografías reales.</li>
-            <li>Realizar un recuento plaquetario manual sobre 10 campos.</li>
-          </ul>
+
+        <div class="destacado acento">
+          <p>El frotis —también llamado <b>extendido</b>— es una de las técnicas más rentables de la hematología: el diagnóstico de muchas enfermedades puede establecerse <b>sólo observando la morfología</b> de las células sanguíneas.</p>
         </div>
-        <div class="card">
+
+        <!-- Los cinco pasos son una secuencia, no una lista suelta. -->
+        <div class="bloque">
+          <h3>Qué vas a hacer aquí</h3>
+          <ol class="listaNum">
+            <li>Extender una gota variando el <b>ángulo</b> del portaobjeto extensor.</li>
+            <li>Reconocer las <b>tres zonas</b> del frotis y qué células predominan en cada una.</li>
+            <li>Teñir con <b>colorante de Wright</b> respetando los tiempos de cada etapa.</li>
+            <li>Clasificar eritrocitos por <b>tamaño, color y forma</b> en microfotografías reales.</li>
+            <li>Realizar un <b>recuento plaquetario</b> manual sobre 10 campos.</li>
+          </ol>
+        </div>
+
+        <!-- Leyenda de la escena: el color identifica antes que el texto. -->
+        <div class="bloque">
           <h3>Lo que ves en la escena</h3>
-          <p class="note">Discos bicóncavos rojos: <b>eritrocitos</b>, el elemento más abundante. Entre ellos, esferas claras de mayor tamaño (<b>leucocitos</b>) y fragmentos pequeños y violáceos (<b>plaquetas</b>). Esta es la mezcla que quedará atrapada en la lámina cuando hagas el extendido.</p>
+          <div class="leyenda">
+            <div class="leyendaFila"><span class="leyendaPunto" style="--c:#d71920"></span><span><b>Eritrocitos</b> — discos bicóncavos rojos, el elemento más abundante.</span></div>
+            <div class="leyendaFila"><span class="leyendaPunto" style="--c:#e8e4f7"></span><span><b>Leucocitos</b> — esferas claras de mayor tamaño.</span></div>
+            <div class="leyendaFila"><span class="leyendaPunto" style="--c:#8b5cf6"></span><span><b>Plaquetas</b> — fragmentos pequeños y violáceos.</span></div>
+          </div>
+          <p class="note" style="margin-top:11px">Esta es la mezcla que quedará atrapada en la lámina cuando hagas el extendido.</p>
         </div>
       </div>
     </section>
 
     <!-- ──────── 1 · REALIZACIÓN DEL FROTIS ──────── -->
-    <section class="step" data-title="Paso 1 · Realización del frotis">
-      <div class="stage" data-scene="frotis">
-        <span class="stageTag">Extensión con el canto biselado</span>
-        <span class="stageHint">Arrastra para rotar la vista</span>
+    <!-- Lo que el alumno manipula —el ángulo del extensor— queda a la derecha
+         del modelo, sin scroll. El material de lectura (materiales,
+         procedimiento) se pliega: visible como título, desplegable a demanda. -->
+    <section class="step" data-title="Paso 1 · Realización del frotis" style="--acc:#5445d8">
+      <div class="stageCol">
+        <div class="stage" data-scene="frotis">
+          <span class="stageTag">Extensión con el canto biselado</span>
+          <span class="stageHint">Arrastra para rotar la vista</span>
+        </div>
+        <div class="destacado acento">
+          <span class="destacadoTit">Fundamento</span>
+          <p>Extensión de una gota de sangre sobre un portaobjeto de 25 × 75 mm empleando el <b>canto biselado de otro portaobjeto</b> de igual dimensión.</p>
+        </div>
+
+        <details class="teoria seccion">
+          <summary>Materiales</summary>
+          <div class="teoriaBody plano">
+            <div class="chips">
+              <span class="chip">Alcohol al 70 %</span>
+              <span class="chip">Algodón</span>
+              <span class="chip">Lanceta descartable</span>
+              <span class="chip">Portaobjetos 25 × 75 mm</span>
+            </div>
+          </div>
+        </details>
       </div>
+
       <div class="panel">
         <span class="kicker">Paso 1 de 5</span>
         <h2>Realización del frotis sanguíneo</h2>
 
-        <div class="card">
-          <h3>Materiales</h3>
-          <div class="chips">
-            <span class="chip">Alcohol al 70 %</span>
-            <span class="chip">Algodón</span>
-            <span class="chip">Lanceta descartable</span>
-            <span class="chip">Portaobjetos 25 × 75 mm</span>
+        <details class="teoria seccion">
+          <summary>Procedimiento</summary>
+          <div class="teoriaBody plano">
+            <ol class="listaNum">
+              <li>Colocar una gota pequeña (± 3 mm de diámetro) a <b>2 cm</b> de uno de los extremos.</li>
+              <li>Apoyar el canto del segundo portaobjeto sobre el primero formando <b>45°</b>, delante de la gota.</li>
+              <li>Retroceder hasta tocar la gota y esperar a que se distribuya por capilaridad a lo largo del canto.</li>
+              <li>Deslizar suave y a velocidad moderada en sentido <b>longitudinal</b>. Secar a temperatura ambiente y en posición horizontal.</li>
+            </ol>
           </div>
-        </div>
+        </details>
 
-        <div class="card accent">
-          <h3>Fundamento</h3>
-          <p>Extensión de una gota de sangre sobre un portaobjeto de 25 × 75 mm empleando el <b>canto biselado de otro portaobjeto</b> de igual dimensión.</p>
-        </div>
-
-        <div class="card">
-          <h3>Procedimiento</h3>
-          <ul>
-            <li>Colocar una gota pequeña (± 3 mm de diámetro) a <b>2 cm</b> de uno de los extremos.</li>
-            <li>Apoyar el canto del segundo portaobjeto sobre el primero formando <b>45°</b>, delante de la gota.</li>
-            <li>Retroceder hasta tocar la gota y esperar a que se distribuya por capilaridad a lo largo del canto.</li>
-            <li>Deslizar suave y a velocidad moderada en sentido <b>longitudinal</b>. Secar a temperatura ambiente y en posición horizontal.</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>Ajusta el ángulo del extensor</h3>
-          <div class="ctrlRow" style="margin:10px 0 12px">
-            <input type="range" id="angSlider" min="0" max="90" step="1" value="45">
-            <span class="valBox mono" id="angVal">45°</span>
+        <!-- Consola de control: el ángulo manda sobre todo lo demás, así que se
+             presenta grande y las magnitudes que dependen de él, como métricas. -->
+        <div class="consola">
+          <div class="consolaTop">
+            <h3>Ajusta el ángulo del extensor</h3>
+            <span class="consolaVal mono" id="angVal">45°</span>
           </div>
-          <div class="dl" style="margin-bottom:12px">
-            <dt>Largo de la extensión</dt><dd class="mono" id="angLargo">—</dd>
-            <dt>Grosor relativo</dt><dd class="mono" id="angGrosor">—</dd>
+          <input type="range" id="angSlider" min="0" max="90" step="1" value="45">
+          <div class="metricas">
+            <div class="metrica">
+              <span class="metricaEt">Largo de la extensión</span>
+              <span class="metricaVal" id="angLargo">—</span>
+            </div>
+            <div class="metrica">
+              <span class="metricaEt">Grosor relativo</span>
+              <span class="metricaVal" id="angGrosor">—</span>
+            </div>
           </div>
-          <div id="angVeredicto" class="card" style="padding:11px 13px"></div>
-          <div class="ctrlRow" style="margin-top:12px">
+          <div id="angVeredicto"></div>
+          <div class="ctrlRow">
             <button class="btn primary sm" id="btnExtender">▶ Deslizar el portaobjeto</button>
             <button class="btn ghost sm" id="btnReset1">Reiniciar</button>
           </div>
         </div>
 
-        <p class="note">Regla clave: <b>ángulo &gt; 45° → extensión gruesa y corta</b>; <b>ángulo &lt; 45° → extensión larga y fina</b>. El ángulo se aumenta también cuando el hematocrito es bajo, y se reduce cuando la sangre es muy viscosa.</p>
+        <div class="destacado warn">
+          <span class="destacadoTit">Regla clave</span>
+          <p>Ángulo <b>&gt; 45°</b> → extensión gruesa y corta · ángulo <b>&lt; 45°</b> → extensión larga y fina. Se aumenta cuando el hematocrito es bajo y se reduce cuando la sangre es muy viscosa.</p>
+        </div>
       </div>
     </section>
 
     <!-- ──────── 2 · ZONAS DEL FROTIS ──────── -->
-    <section class="step" data-title="Paso 2 · Zonas del frotis">
-      <div class="stage" data-scene="zonas">
-        <span class="stageTag">Cabeza · cuerpo · cola</span>
-        <span class="stageHint">Pasa el cursor (o toca) sobre cada zona de la lámina</span>
+    <section class="step" data-title="Paso 2 · Zonas del frotis" style="--acc:#2f8fc7">
+      <div class="stageCol">
+        <div class="stage" data-scene="zonas">
+          <span class="stageTag">Cabeza · cuerpo · cola</span>
+          <span class="stageHint">Pasa el cursor (o toca) sobre cada zona de la lámina</span>
+        </div>
+        <!-- El porqué del fenómeno acompaña al modelo, plegado: la columna
+             derecha queda para las tres zonas, que es lo que se explora. -->
+        <details class="teoria seccion aviso">
+          <summary>Por qué importa</summary>
+          <div class="teoriaBody plano">
+            <p>Los leucocitos se distribuyen por tamaño y densidad durante el arrastre: los grandes (granulocitos, monocitos) son empujados hacia los bordes y la cola; los linfocitos, más pequeños, quedan retenidos en la cabeza. Contar la diferencial en la cabeza <b>sobrestima linfocitos</b>; contarla en la cola <b>sobrestima neutrófilos</b>.</p>
+          </div>
+        </details>
       </div>
+
       <div class="panel">
         <span class="kicker">Paso 2 de 5</span>
         <h2>Zonas del frotis sanguíneo</h2>
@@ -633,62 +1122,87 @@ window.addEventListener('storage', function (e) {
           </div>
         </div>
 
-        <div class="card warn">
-          <h3>Por qué importa</h3>
-          <p>Los leucocitos se distribuyen por tamaño y densidad durante el arrastre: los grandes (granulocitos, monocitos) son empujados hacia los bordes y la cola; los linfocitos, más pequeños, quedan retenidos en la cabeza. Contar la diferencial en la cabeza <b>sobrestima linfocitos</b>; contarla en la cola <b>sobrestima neutrófilos</b>.</p>
+        <div class="destacado">
+          <span class="destacadoTit">Cómo se busca</span>
+          <p>Con objetivo <b>10×</b> se localiza primero la zona ideal —ni superposición de eritrocitos ni lagunas sin glóbulos—. Recién ahí se pasa a <b>40×</b> y a <b>100×</b> de inmersión.</p>
         </div>
-
-        <p class="note">Con objetivo 10× se busca primero la zona ideal: ni superposición de eritrocitos ni lagunas carentes de glóbulos. Recién ahí se pasa a 40× y a 100× de inmersión.</p>
       </div>
     </section>
 
     <!-- ──────── 3 · TINCIÓN DE WRIGHT ──────── -->
-    <section class="step" data-title="Paso 3 · Tinción con colorante de Wright">
-      <div class="stage" data-scene="tincion">
-        <span class="stageTag">Coloración de Wright</span>
-        <span class="stageHint" id="tincionHint">Pulsa «Iniciar tinción» en el panel</span>
-      </div>
-      <div class="panel">
-        <span class="kicker">Paso 3 de 5</span>
-        <h2>Tinción con colorante de Wright</h2>
-        <p>El colorante de Wright permite estudiar variaciones y anormalidades de <b>estructura, forma y tamaño</b> de los eritrocitos, su contenido de hemoglobina y sus propiedades de coloración. La información que obtienes depende en gran parte de la calidad del extendido y de la coloración.</p>
-
-        <div class="card">
-          <h3>Materiales</h3>
-          <div class="chips">
-            <span class="chip">Colorante de Wright</span>
-            <span class="chip">Frasco gotero</span>
-            <span class="chip">Solución amortiguada tamponada</span>
-          </div>
+    <section class="step" data-title="Paso 3 · Tinción con colorante de Wright" style="--acc:#8b5cf6">
+      <!-- Título y presentación ocupan una fila propia sobre las dos columnas:
+           así el panel del tiempo simulado arranca a la altura del modelo. -->
+      <div class="stepHead">
+        <div>
+          <span class="kicker">Paso 3 de 5</span>
+          <h2>Tinción con colorante de Wright</h2>
         </div>
+        <p class="stepLead">El colorante de Wright permite estudiar variaciones y anormalidades de <b>estructura, forma y tamaño</b> de los eritrocitos, su contenido de hemoglobina y sus propiedades de coloración. La información que obtienes depende en gran parte de la calidad del extendido y de la coloración.</p>
+      </div>
 
-        <div class="card">
+      <div class="stageCol" id="p3Izq">
+        <div class="stage" data-scene="tincion">
+          <span class="stageTag">Coloración de Wright</span>
+          <span class="stageHint" id="tincionHint">Pulsa «Iniciar tinción» en el panel</span>
+        </div>
+        <details class="teoria seccion">
+          <summary>Materiales</summary>
+          <div class="teoriaBody plano">
+            <div class="chips">
+              <span class="chip">Colorante de Wright</span>
+              <span class="chip">Frasco gotero</span>
+              <span class="chip">Solución amortiguada tamponada</span>
+            </div>
+          </div>
+        </details>
+
+        <!-- Mismo patrón «leer primero, responder después» del paso 4: el
+             cuestionario sustituye a la escena en vez de apilarse debajo. -->
+        <div class="gate" id="gateTincion">
+          <p>Cuando hayas seguido las cinco etapas, comprueba si reconoces los defectos de una tinción mal hecha.</p>
+          <button class="btn primary" id="btnGateTincion">Responder los defectos de tinción →</button>
+        </div>
+      </div>
+
+      <div class="panel" id="p3Panel">
+        <!-- El cronómetro y las cinco etapas son el mando de este paso: se
+             presentan como consola, no como una tarjeta de lectura más. -->
+        <div class="consola">
           <div class="clock"><span class="mono" id="tClock">00:00</span><small id="tClockLabel">tiempo simulado</small></div>
-          <div class="stages" id="tStages" style="margin-top:12px"></div>
-          <div class="ctrlRow" style="margin-top:12px">
+          <div class="stages" id="tStages"></div>
+          <div class="ctrlRow">
             <button class="btn primary sm" id="btnTincion">▶ Iniciar tinción</button>
             <button class="btn ghost sm" id="btnTincionReset">Reiniciar</button>
           </div>
         </div>
 
-        <div class="card good">
+        <div class="bloque">
           <h3>Criterio de una buena tinción</h3>
-          <ul>
+          <ul class="listaCheck">
             <li>Buena diferenciación de las estructuras subcelulares en los leucocitos.</li>
             <li>Coloración <b>rosada</b> de los hematíes.</li>
             <li><b>Ausencia de precipitados.</b></li>
           </ul>
         </div>
 
-        <div>
-          <h3 style="margin-bottom:10px">Defectos de tinción</h3>
-          <div id="quizTincion"></div>
+      </div>
+
+      <!-- Ocupa las dos columnas: al abrirse reemplaza a la escena y al panel. -->
+      <div id="wrapTincion" class="oculto pasoAncho">
+        <div class="secTitle">
+          <span>?</span><h3>Defectos de tinción</h3><i>reconoce la causa</i>
+        </div>
+        <div id="quizTincion" style="margin-top:12px"></div>
+
+        <div class="gate" style="margin-top:14px">
+          <button class="btn" id="btnVolverTincion">← Volver a la tinción</button>
         </div>
       </div>
     </section>
 
     <!-- ──────── 4 · MORFOLOGÍA ERITROCITARIA ──────── -->
-    <section class="step solo" data-title="Paso 4 · Morfología de eritrocitos">
+    <section class="step solo" data-title="Paso 4 · Morfología de eritrocitos" style="--acc:#e85b4a">
       <!-- Layout de pantalla completa: la teoría se pliega y las variaciones
            (tamaño / color / forma) ocupan el primer plano en pestañas, de modo
            que cada categoría se ve entera sin recurrir al scroll. -->
@@ -762,41 +1276,56 @@ window.addEventListener('storage', function (e) {
     </section>
 
     <!-- ──────── 5 · PLAQUETAS ──────── -->
-    <section class="step p5" data-title="Paso 5 · Plaquetas y recuento manual">
+    <section class="step p5" data-title="Paso 5 · Plaquetas y recuento manual" style="--acc:#b8720a">
+      <!-- Título y constantes de la plaqueta arriba, a ancho completo: son la
+           referencia que se consulta mientras se cuenta en el ocular. -->
+      <div class="stepHead">
+        <div>
+          <span class="kicker">Paso 5 de 5</span>
+          <h2>Las plaquetas en el extendido de sangre periférica</h2>
+        </div>
+        <div class="headCols">
+          <!-- Las tres constantes son cifras: fila etiqueta→valor con el número
+               alineado a la derecha. La silueta no es numérica y va al pie. -->
+          <div class="card fichaDatos">
+            <h3>Constantes de la plaqueta</h3>
+            <dl class="datos">
+              <div><dt>Diámetro</dt><dd>1 – 3 <span>μm</span></dd></div>
+              <div><dt>Volumen medio (VPM)</dt><dd>8,3 – 11,6 <span>fL</span></dd></div>
+              <div><dt>Peso</dt><dd>≈ 10 <span>pg</span></dd></div>
+            </dl>
+            <p class="datoPie"><b>Silueta:</b> irregular, con finos gránulos rojos dispersos o centralizados.</p>
+          </div>
+
+          <div class="headStack">
+            <div class="destacado">
+              <p><b>Las plaquetas no son células.</b> Son fragmentos citoplasmáticos <b>anucleados</b> producidos por la ruptura y liberación del citoplasma de los megacariocitos de la médula ósea.</p>
+            </div>
+
+            <div class="card">
+              <h3>Cuándo es indispensable revisar el extendido</h3>
+              <p>Cuando el autoanalizador informa trombocitopenia, trombocitosis, desviaciones de cualquier parámetro plaquetario u otras alarmas (macrotrombocitos, agregados plaquetarios). En extensiones normales pueden verse algunas plaquetas mayores, de hasta <b>5 μm</b>: aparecen cuando aumenta la producción plaquetaria y en el hipoesplenismo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="stage" data-scene="plaquetas">
         <span class="stageTag" id="campoTag">Campo 1 de 10 · 1000×</span>
         <div class="microRet"></div>
         <div class="microMask"></div>
       </div>
       <div class="panel">
-        <span class="kicker">Paso 5 de 5</span>
-        <h2>Las plaquetas en el extendido de sangre periférica</h2>
-
-        <div class="card">
-          <div class="dl">
-            <dt>Diámetro normal</dt><dd>1 – 3 μm</dd>
-            <dt>Volumen medio plaquetario</dt><dd>8,3 – 11,6 fL</dd>
-            <dt>Peso</dt><dd>≈ 10 pg</dd>
-            <dt>Silueta</dt><dd>irregular, con finos gránulos rojos dispersos o centralizados</dd>
+        <!-- Contar es la tarea del paso: consola, no tarjeta de lectura. -->
+        <div class="consola">
+          <div class="consolaTop">
+            <h3>Recuento manual de plaquetas</h3>
           </div>
-        </div>
-
-        <div class="card accent">
-          <p><b>Dato clave:</b> las plaquetas <b>no son células</b>. Son fragmentos citoplasmáticos <b>anucleados</b> producidos por la ruptura y liberación del citoplasma de los megacariocitos de la médula ósea.</p>
-        </div>
-
-        <div class="card">
-          <h3>Cuándo es indispensable revisar el extendido</h3>
-          <p class="note">Cuando el autoanalizador informa trombocitopenia, trombocitosis, desviaciones de cualquier parámetro plaquetario u otras alarmas (macrotrombocitos, agregados plaquetarios). En extensiones normales pueden verse algunas plaquetas mayores, de hasta <b>5 μm</b>: aparecen cuando aumenta la producción plaquetaria y en el hipoesplenismo.</p>
-        </div>
-
-        <div class="card">
-          <h3>Recuento manual de plaquetas</h3>
-          <p class="note" style="margin-bottom:12px">Con coloración de Wright a <b>1000×</b> se cuentan las plaquetas —de color rosado-violáceo característico— presentes en <b>10 campos</b> y se <b>multiplica por 2</b>.</p>
+          <p class="note">A <b>1000×</b> se cuentan las plaquetas —de color rosado-violáceo— presentes en <b>10 campos</b> y se <b>multiplica por 2</b>.</p>
 
           <div class="fieldGrid" id="fieldGrid"></div>
 
-          <div id="conteoInput" style="margin-top:12px">
+          <div id="conteoInput">
             <label class="note" style="display:block;margin-bottom:6px">Plaquetas que cuentas en el <b id="campoActual">campo 1</b>:</label>
             <div class="ctrlRow">
               <input type="number" id="campoCount" min="0" max="99" placeholder="0" style="flex:1">
@@ -804,10 +1333,16 @@ window.addEventListener('storage', function (e) {
             </div>
           </div>
 
-          <div id="conteoFinal" style="display:none;margin-top:12px">
-            <div class="dl" style="margin-bottom:12px">
-              <dt>Suma de tus 10 campos</dt><dd class="mono" id="sumaUser">—</dd>
-              <dt>Operación</dt><dd class="mono">suma × 2</dd>
+          <div id="conteoFinal" style="display:none">
+            <div class="metricas" style="margin-bottom:12px">
+              <div class="metrica">
+                <span class="metricaEt">Suma de tus 10 campos</span>
+                <span class="metricaVal" id="sumaUser">—</span>
+              </div>
+              <div class="metrica">
+                <span class="metricaEt">Operación</span>
+                <span class="metricaVal">suma × 2</span>
+              </div>
             </div>
             <label class="note" style="display:block;margin-bottom:6px">Tu recuento plaquetario final:</label>
             <div class="ctrlRow">
@@ -817,7 +1352,7 @@ window.addEventListener('storage', function (e) {
             <div class="fb" id="conteoFb"></div>
           </div>
 
-          <div class="ctrlRow" style="margin-top:12px">
+          <div class="ctrlRow">
             <button class="btn ghost sm" id="btnConteoReset">Generar nuevos campos</button>
           </div>
         </div>
@@ -904,34 +1439,192 @@ window.addEventListener('storage', function (e) {
     </section>
 
     <!-- ──────── 6 · CIERRE ──────── -->
-    <section class="step" data-title="Cierre · Evaluación final">
-      <div class="stage" data-scene="cierre">
-        <span class="stageTag">Resumen de la práctica</span>
-      </div>
+    <!-- Sin escena 3D: el resumen es información, no un objeto que explorar, y
+         el visor sólo gastaba GPU. `step solo` da una columna a todo el ancho. -->
+    <section class="step solo" data-title="Cierre · Evaluación final">
       <div class="panel">
-        <span class="kicker">Cierre</span>
-        <h2>Puntos clave de la práctica</h2>
-
-        <div class="card">
-          <ul>
-            <li><b>Ángulo del extensor:</b> &gt; 45° → gruesa y corta; &lt; 45° → larga y fina. Secado horizontal, a temperatura ambiente.</li>
-            <li><b>Zonas:</b> cabeza (gruesa, ↑ linfocitos) · cuerpo (ideal, reparto equilibrado) · cola (fina, ↑ granulocitos y monocitos).</li>
-            <li><b>Wright:</b> secado 15–20 min → colorante 5 min → solución amortiguada hasta brillo metálico 6 min → lavado con agua corriente → secado.</li>
-            <li><b>Buena tinción:</b> estructuras subcelulares diferenciadas, hematíes rosados y sin precipitados.</li>
-            <li><b>Defectos:</b> muy azul (frotis grueso, lavado insuficiente, tinción prolongada, colorante alcalino) · muy rosada (pH ácido del colorante, tampón o agua) · precipitados (acción excesiva del colorante → filtrarlo).</li>
-            <li><b>Eritrocitos:</b> micro &lt; 7 μm (VCM &lt; 80 fL) · normo 7–8,5 μm (VCM 80–100 fL) · macro &gt; 8,5 μm (VCM &gt; 100 fL).</li>
-            <li><b>Plaquetas:</b> 1–3 μm, VPM 8,3–11,6 fL, fragmentos anucleados del megacariocito; recuento = plaquetas de 10 campos × 2 a 1000×.</li>
-          </ul>
+        <div class="stepHead">
+          <div>
+            <span class="kicker">Cierre</span>
+            <h2>Puntos clave de la práctica</h2>
+          </div>
+          <p class="stepLead">Seis ideas resumen todo lo que hiciste. Recórrelas y se habilitará el cuestionario final.</p>
         </div>
 
-        <div class="gate" id="gateQuiz">
-          <p>Repasa los puntos clave de arriba. Cuando los tengas claros, cierra la práctica con el cuestionario final.</p>
-          <button class="btn primary" id="btnGateQuiz">Realizar quiz final →</button>
+        <div class="repaso" id="repaso">
+          <div class="repasoTop">
+            <span class="repasoPos"><b id="repasoNum">1</b> de 6</span>
+            <div class="repasoDots" id="repasoDots" aria-label="Ir a un punto clave"></div>
+            <div class="repasoNav">
+              <button class="repasoBtn" id="repasoPrev" type="button" aria-label="Punto clave anterior">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="repasoBtn" id="repasoNext" type="button" aria-label="Punto clave siguiente">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="repasoBarra"><div class="repasoFill" id="repasoFill"></div></div>
+
+          <!-- Todas las fichas comparten la misma celda del grid: la altura la
+               fija la más alta, así cambiar de punto no mueve el layout. -->
+          <div class="repasoViewport">
+
+            <!-- 1 · ÁNGULO -->
+            <article class="pk on" style="--acc:#5445d8" aria-labelledby="pk1t">
+              <header class="pkHead">
+                <span class="pkIcon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M4 20L17 6M4 20a9 9 0 0 0 6.2-4.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <div><span class="pkNum">Punto 1</span><h3 id="pk1t">Ángulo del extensor</h3></div>
+              </header>
+              <div class="pkGrid pk3">
+                <div class="pkItem" style="--i:1">
+                  <span class="pkAng a30"></span>
+                  <b>&lt; 45°</b>
+                  <p>Extensión <b>larga y fina</b>. Útil si la sangre es viscosa o el hematocrito alto.</p>
+                </div>
+                <div class="pkItem bien" style="--i:2">
+                  <span class="pkAng a45"></span>
+                  <b>45°</b>
+                  <p>Ángulo <b>estándar</b>: cabeza, cuerpo y cola definidos, zona de lectura amplia.</p>
+                </div>
+                <div class="pkItem" style="--i:3">
+                  <span class="pkAng a70"></span>
+                  <b>&gt; 45°</b>
+                  <p>Extensión <b>gruesa y corta</b>. Las células se apilan y la diferencial se falsea.</p>
+                </div>
+              </div>
+              <p class="pkPie" style="--i:4">Secado <b>horizontal</b> y a temperatura ambiente.</p>
+            </article>
+
+            <!-- 2 · ZONAS -->
+            <article class="pk" style="--acc:#2f8fc7" aria-labelledby="pk2t">
+              <header class="pkHead">
+                <span class="pkIcon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18v10H3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 7v10M15 7v10" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                </span>
+                <div><span class="pkNum">Punto 2</span><h3 id="pk2t">Zonas del frotis</h3></div>
+              </header>
+              <div class="pkGrid pk3">
+                <div class="pkItem" style="--i:1;--z:#e85b4a">
+                  <span class="pkBar b1"></span>
+                  <b>Cabeza</b>
+                  <p>Gruesa, células apiladas. <b>↑ Linfocitos.</b></p>
+                </div>
+                <div class="pkItem bien" style="--i:2;--z:#2dc99a">
+                  <span class="pkBar b2"></span>
+                  <b>Cuerpo</b>
+                  <p>Reparto equilibrado. <b>Zona de lectura.</b></p>
+                </div>
+                <div class="pkItem" style="--i:3;--z:#f5a623">
+                  <span class="pkBar b3"></span>
+                  <b>Cola</b>
+                  <p>Fina, células «en barbas». <b>↑ Granulocitos y monocitos.</b></p>
+                </div>
+              </div>
+              <p class="pkPie" style="--i:4">El grosor decrece de la cabeza a la cola, y con él cambia el reparto celular.</p>
+            </article>
+
+            <!-- 3 · TINCIÓN DE WRIGHT -->
+            <article class="pk" style="--acc:#8b5cf6" aria-labelledby="pk3t">
+              <header class="pkHead">
+                <span class="pkIcon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s5.5 6.3 5.5 10a5.5 5.5 0 0 1-11 0C6.5 9.3 12 3 12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                </span>
+                <div><span class="pkNum">Punto 3</span><h3 id="pk3t">Tinción de Wright</h3></div>
+              </header>
+              <ol class="pkPasos">
+                <li style="--i:1"><span class="pkT">15–20 min</span><b>Secado</b> del extendido al aire.</li>
+                <li style="--i:2"><span class="pkT">5 min</span><b>Colorante</b> de Wright cubriendo la lámina.</li>
+                <li style="--i:3"><span class="pkT">6 min</span><b>Solución amortiguada</b> hasta brillo metálico.</li>
+                <li style="--i:4"><span class="pkT">—</span><b>Lavado</b> con agua corriente.</li>
+                <li style="--i:5"><span class="pkT">—</span><b>Secado</b> final antes de observar.</li>
+              </ol>
+            </article>
+
+            <!-- 4 · BUENA TINCIÓN VS DEFECTOS -->
+            <article class="pk" style="--acc:#2dc99a" aria-labelledby="pk4t">
+              <header class="pkHead">
+                <span class="pkIcon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <div><span class="pkNum">Punto 4</span><h3 id="pk4t">Buena tinción y defectos</h3></div>
+              </header>
+              <div class="pkGrid pk2">
+                <div class="pkItem bien" style="--i:1">
+                  <b class="pkOk">Buena tinción</b>
+                  <p>Estructuras subcelulares diferenciadas · hematíes <b>rosados</b> · <b>sin precipitados</b>.</p>
+                </div>
+                <div class="pkItem" style="--i:2">
+                  <b class="pkBad">Defectos</b>
+                  <p><b>Muy azul:</b> frotis grueso, lavado insuficiente, tinción prolongada o colorante alcalino.</p>
+                  <p><b>Muy rosada:</b> pH ácido del colorante, del tampón o del agua.</p>
+                  <p><b>Precipitados:</b> acción excesiva del colorante → filtrarlo.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 5 · TAMAÑO DE ERITROCITOS -->
+            <article class="pk" style="--acc:#e85b4a" aria-labelledby="pk5t">
+              <header class="pkHead">
+                <span class="pkIcon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="15" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="12" r="5.2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                </span>
+                <div><span class="pkNum">Punto 5</span><h3 id="pk5t">Tamaño de los eritrocitos</h3></div>
+              </header>
+              <div class="pkGrid pk3">
+                <div class="pkItem" style="--i:1">
+                  <span class="pkCel c1"></span>
+                  <b>Microcitos</b>
+                  <p>&lt; 7 μm · <b>VCM &lt; 80 fL</b></p>
+                </div>
+                <div class="pkItem bien" style="--i:2">
+                  <span class="pkCel c2"></span>
+                  <b>Normocitos</b>
+                  <p>7 – 8,5 μm · <b>VCM 80 – 100 fL</b></p>
+                </div>
+                <div class="pkItem" style="--i:3">
+                  <span class="pkCel c3"></span>
+                  <b>Macrocitos</b>
+                  <p>&gt; 8,5 μm · <b>VCM &gt; 100 fL</b></p>
+                </div>
+              </div>
+              <p class="pkPie" style="--i:4"><b>Anisocitosis:</b> más variación de tamaño de la normal. El <b>VCM</b> con el <b>ADE (RDW)</b> clasifican morfológicamente las anemias.</p>
+            </article>
+
+            <!-- 6 · PLAQUETAS -->
+            <article class="pk" style="--acc:#b8720a" aria-labelledby="pk6t">
+              <header class="pkHead">
+                <span class="pkIcon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="8" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="11" cy="16" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                </span>
+                <div><span class="pkNum">Punto 6</span><h3 id="pk6t">Plaquetas y recuento</h3></div>
+              </header>
+              <div class="pkGrid pk3">
+                <div class="pkItem" style="--i:1"><b>1 – 3 μm</b><p>Diámetro normal</p></div>
+                <div class="pkItem" style="--i:2"><b>8,3 – 11,6 fL</b><p>Volumen medio (VPM)</p></div>
+                <div class="pkItem" style="--i:3"><b>Anucleadas</b><p>Fragmentos del megacariocito</p></div>
+              </div>
+              <p class="pkFormula" style="--i:4">Recuento = plaquetas de <b>10 campos</b> × <b>2</b>, a <b>1000×</b></p>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- Espacio reservado desde el inicio: el botón entra sin desplazar
+             nada de lo que hay encima. -->
+        <div class="ctaZona" id="ctaZona">
+          <button class="ctaQuiz" id="btnGateQuiz" type="button">
+            Iniciar cuestionario final
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
 
         <div id="wrapQuiz" class="oculto">
-          <h3 style="margin-bottom:10px">Mini-quiz final</h3>
-          <div id="quizFinal"></div>
+          <div class="secTitle"><span>?</span><h3>Cuestionario final</h3><i>cierra la práctica</i></div>
+          <div id="quizFinal" style="margin-top:12px"></div>
         </div>
         <div id="scoreFinal"></div>
       </div>
@@ -1680,47 +2373,10 @@ SCENES.plaquetas = (() => {
   return { scene, camera, build, circular: true };
 })();
 
-/* ════════════════════════════════════════════════════════════════
-   8 · ESCENA · CIERRE (fondo ambiental)
-   ════════════════════════════════════════════════════════════════ */
-SCENES.cierre = (() => {
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-  baseLights(scene, 0.9);
-
-  /* Un único eritrocito de muestra. Antes había 60 instancias flotando que
-     no aportaban nada al resumen y costaban 84 000 triángulos por frame;
-     con uno solo se puede permitir malla fina y material físico. */
-  /* Perfil 12 (igual que las células del vaso, suficiente para la curva
-     bicóncava) pero 64 segmentos radiales, que es lo que se nota: aquí el
-     modelo ocupa ~60 % del alto del panel y el borde tiene que verse redondo.
-     A perfil 32 la malla pesaba 183 KB — el 59 % de toda la simulación — sin
-     diferencia visible. */
-  const cel = new THREE.Mesh(
-    makeEritrocito(1.5, 12, 64),
-    new THREE.MeshPhysicalMaterial({
-      color: 0xd71920, roughness: 0.31, metalness: 0,
-      clearcoat: 0.62, clearcoatRoughness: 0.24,
-      sheen: 0.42, sheenColor: new THREE.Color(0xff7a70), sheenRoughness: 0.52,
-      side: THREE.DoubleSide,
-    })
-  );
-  cel.rotation.x = -0.5;
-  scene.add(cel);
-
-  let camDrag = 0;
-  return {
-    scene, camera,
-    orbit: dx => { camDrag = dx * 1.5; },
-    update(dt, t) {
-      cel.rotation.y += dt * 0.4;
-      cel.position.y = Math.sin(t * 0.75) * 0.12;
-      const a = 0.4 + camDrag;
-      camera.position.set(Math.sin(a) * 6.2, 2.1, Math.cos(a) * 6.2);
-      camera.lookAt(0, 0, 0);
-    },
-  };
-})();
+/* El paso de cierre no tiene escena: su resumen es información, no un objeto
+   que explorar. El eritrocito de muestra que había aquí era la malla más fina
+   de toda la simulación (12×64 con MeshPhysicalMaterial) y sólo servía de
+   adorno, así que ni su geometría ni su material llegan a construirse. */
 
 /* ════════════════════════════════════════════════════════════════
    9 · NAVEGACIÓN ENTRE PASOS
@@ -1747,6 +2403,77 @@ const HINTS = [
   'Repasa los puntos clave y abre el quiz final cuando los tengas claros.',
 ];
 
+/* ── Puente con el dashboard ──
+   Todos los pasos corren en modo flow: el documento crece con su contenido en
+   vez de encajarse en una pantalla. Embebido, el padre necesita dos cosas —
+   la altura real (para dimensionar el <iframe>) y el estado de navegación
+   (para dibujar Anterior/Siguiente en una barra fija suya, ya que un footer
+   al final de un documento tan alto quedaría fuera de vista). */
+const EMBEBIDO = window.parent !== window;
+document.body.classList.add('flowMode');
+if (EMBEBIDO) document.body.classList.add('embedded');
+
+let ultimaAltura = -1;
+
+function enviarAlPadre(msg) {
+  if (!EMBEBIDO) return;
+  window.parent.postMessage({ source: 'medgo-frotis-sim', ...msg }, window.location.origin);
+}
+
+function reportSize() {
+  const height = Math.ceil($('#app').getBoundingClientRect().height);
+  if (height === ultimaAltura) return;
+  ultimaAltura = height;
+  enviarAlPadre({ type: 'size', height });
+}
+
+function reportNav(scrollTop = false) {
+  enviarAlPadre({
+    type: 'nav',
+    cur,
+    total: steps.length,
+    canPrev: cur > 0,
+    nextLabel: cur === steps.length - 1 ? 'Reiniciar ↺' : 'Siguiente →',
+    hint: HINTS[cur] ?? '',
+    scrollTop,
+  });
+}
+
+// La altura cambia sola al abrir un desplegable, al cargar una microfotografía
+// o al reflowear el grid; el observador cubre todos esos casos sin cablearlos.
+new ResizeObserver(() => { reportSize(); resizeActive(); }).observe($('#app'));
+
+/* Monta la escena del paso actual, o suelta el canvas y detiene el bucle si el
+   paso no tiene ninguna (paso 4) o la tiene oculta —el cuestionario del paso 3
+   reemplaza a la escena—. Dejar una escena corriendo invisible sólo gasta GPU. */
+function sincronizarEscena() {
+  const stageEl = $('.stage', steps[cur]);
+  const visible = stageEl && stageEl.offsetParent !== null;
+  if (visible) {
+    mountScene(stageEl.dataset.scene, stageEl);
+  } else {
+    active?.leave?.();
+    active = null;
+    canvas.remove();
+  }
+}
+
+// El padre pide cambio de paso desde su barra de navegación.
+window.addEventListener('message', e => {
+  if (e.origin !== window.location.origin) return;
+  const d = e.data;
+  if (!d || d.target !== 'medgo-frotis-sim') return;
+  if (d.type === 'prev') go(cur - 1);
+  if (d.type === 'next') go(cur === steps.length - 1 ? 0 : cur + 1);
+  if (d.type === 'viewport') {
+    document.documentElement.style.setProperty('--vpH', `${d.height}px`);
+  }
+  // El padre acaba de montar su escucha: puede haberse perdido el primer
+  // envío de `go(0)`, así que le repetimos el estado en vez de dejar su
+  // barra de navegación sin dibujar.
+  if (d.type === 'sync') { reportNav(); ultimaAltura = -1; reportSize(); }
+});
+
 function go(i) {
   cur = clamp(i, 0, steps.length - 1);
   steps.forEach((s, k) => s.classList.toggle('on', k === cur));
@@ -1761,17 +2488,12 @@ function go(i) {
   $('#btnNext').textContent = cur === steps.length - 1 ? 'Reiniciar ↺' : 'Siguiente →';
   $('#footHint').textContent = HINTS[cur] ?? '';
 
-  // Hay pasos sin escena 3D (paso 4): se suelta el canvas y se detiene el
-  // bucle de actualización en vez de dejar una escena corriendo invisible.
-  const stageEl = $('.stage', steps[cur]);
-  if (stageEl) {
-    mountScene(stageEl.dataset.scene, stageEl);
-  } else {
-    active?.leave?.();
-    active = null;
-    canvas.remove();
-  }
-  steps[cur].querySelector('.panel')?.scrollTo({ top: 0 });
+  sincronizarEscena();
+  // Cada paso empieza por arriba: embebido lo pide el padre (es su página la
+  // que scrollea), suelto basta con llevar el documento al inicio.
+  if (EMBEBIDO) reportNav(true);
+  else window.scrollTo({ top: 0 });
+  reportSize();
   requestAnimationFrame(resizeActive);
 }
 
@@ -1799,14 +2521,14 @@ window.addEventListener('keydown', e => {
     elGrosor.textContent = `${(grosorR * 100).toFixed(0)} %`;
 
     if (a > 52) {
-      elVer.className = 'card warn';
-      elVer.innerHTML = '<b>Extensión gruesa y corta.</b> Con ángulo &gt; 45° los eritrocitos se apilan y se superponen: la zona de lectura se reduce y la fórmula diferencial se falsea. Útil sólo si el hematocrito es muy bajo.';
+      elVer.className = 'destacado warn';
+      elVer.innerHTML = '<p><b>Extensión gruesa y corta.</b> Con ángulo &gt; 45° los eritrocitos se apilan y se superponen: la zona de lectura se reduce y la fórmula diferencial se falsea. Útil sólo si el hematocrito es muy bajo.</p>';
     } else if (a < 38) {
-      elVer.className = 'card warn';
-      elVer.innerHTML = '<b>Extensión larga y fina.</b> Con ángulo &lt; 45° la sangre se reparte en más superficie: aparece una cola muy extensa con células acartonadas «en barbas». Útil si la sangre es muy viscosa o el hematocrito es alto.';
+      elVer.className = 'destacado warn';
+      elVer.innerHTML = '<p><b>Extensión larga y fina.</b> Con ángulo &lt; 45° la sangre se reparte en más superficie: aparece una cola muy extensa con células acartonadas «en barbas». Útil si la sangre es muy viscosa o el hematocrito es alto.</p>';
     } else {
-      elVer.className = 'card good';
-      elVer.innerHTML = '<b>Ángulo correcto (≈ 45°).</b> Es el ángulo del procedimiento estándar: produce un extendido con cabeza, cuerpo y cola bien definidos y una zona ideal de lectura amplia.';
+      elVer.className = 'destacado ok';
+      elVer.innerHTML = '<p><b>Ángulo correcto (≈ 45°).</b> Es el ángulo del procedimiento estándar: produce un extendido con cabeza, cuerpo y cola bien definidos y una zona ideal de lectura amplia.</p>';
     }
   }
   slider.addEventListener('input', apply);
@@ -1878,10 +2600,10 @@ renderQuiz($('#quizTincion'), [
   {
     p: 'Un frotis teñido con Wright se ve <b>excesivamente azul</b>. ¿Cuál de estas NO es una causa descrita?',
     o: [
-      'Frotis excesivamente grueso',
-      'Lavado insuficiente',
-      'Agua de lavado con pH demasiado ácido',
-      'Tinción muy prolongada',
+      'Extensión demasiado gruesa en la zona de lectura',
+      'Lavado insuficiente al terminar la tinción',
+      'Agua de lavado o tampón con pH demasiado ácido',
+      'Tiempo de tinción prolongado con colorante alcalino',
     ],
     r: 2,
     e: 'Un pH demasiado ácido del colorante, el tampón o el agua de lavado produce la <b>tonalidad rosada</b>, no la azul. La coloración excesivamente azul se debe a frotis grueso, lavado insuficiente, tinción prolongada o colorante excesivamente alcalino.',
@@ -1889,10 +2611,10 @@ renderQuiz($('#quizTincion'), [
   {
     p: 'El extendido muestra una <b>tonalidad rosada</b> generalizada. La causa es:',
     o: [
-      'pH demasiado ácido del colorante, el tampón o el agua de lavado',
+      'pH ácido del colorante, el tampón o el agua',
       'Colorante excesivamente alcalino',
-      'Haber filtrado el colorante antes de usarlo',
-      'Secado del frotis en posición vertical',
+      'Haber filtrado el colorante antes de emplearlo',
+      'Secado del frotis en vertical y no en horizontal',
     ],
     r: 0,
     e: 'La tonalidad rosada indica <b>pH ácido</b> en cualquiera de los tres puntos: colorante, solución tampón o agua de lavado.',
@@ -1911,10 +2633,10 @@ renderQuiz($('#quizTincion'), [
   {
     p: 'Una extensión de sangre <b>bien teñida</b> se caracteriza por:',
     o: [
-      'Hematíes azulados y leucocitos sin detalle nuclear',
-      'Hematíes rosados, estructuras subcelulares diferenciadas en leucocitos y ausencia de precipitados',
-      'Fondo violáceo intenso que cubre toda la lámina',
-      'Superposición marcada de eritrocitos en toda la extensión',
+      'Hematíes azulados y leucocitos sin detalle',
+      'Hematíes rosados, leucocitos con detalle y sin precipitados',
+      'Fondo violáceo intenso que cubre la lámina de extremo a extremo',
+      'Superposición marcada de eritrocitos a lo largo de la extensión',
     ],
     r: 1,
     e: 'Los tres criterios de calidad son: buena diferenciación de las estructuras subcelulares de los leucocitos, <b>coloración rosada</b> de los hematíes y <b>ausencia de precipitados</b>.',
@@ -2131,14 +2853,24 @@ renderQuiz($('#ejercicioMorfo'), [
   {
     img: 'a2-normocitosis',
     p: 'El diámetro de estos eritrocitos frente al núcleo del linfocito pequeño indica:',
-    o: ['Microcitosis', 'Normocitosis (VCM 80–100 fL)', 'Macrocitosis', 'Anisocitosis marcada'],
+    o: [
+      'Microcitosis (VCM &lt; 80 fL)',
+      'Normocitosis (VCM 80–100 fL)',
+      'Macrocitosis (VCM &gt; 100 fL)',
+      'Anisocitosis con aumento del ADE (RDW)',
+    ],
     r: 1,
     e: 'El eritrocito normal mide <b>7 – 8,5 μm</b> y es casi del mismo tamaño que el núcleo de un linfocito pequeño. Ese es justamente el criterio de comparación al microscopio.',
   },
   {
     img: 'a3-macrocitosis',
     p: 'Las células señaladas con flechas, mayores que el núcleo del linfocito, son:',
-    o: ['Normocitos', 'Microcitos', 'Macrocitos (VCM &gt; 100 fL)', 'Drepanocitos'],
+    o: [
+      'Normocitos (VCM 80–100 fL)',
+      'Microcitos (VCM &lt; 80 fL)',
+      'Macrocitos (VCM &gt; 100 fL)',
+      'Dianocitos con hipocromía asociada',
+    ],
     r: 2,
     e: 'Macrocitos: eritrocitos <b>mayores de 8,5 μm</b>. Se asocian a enfermedad hepática, deficiencia de vitamina B12, deficiencia de folatos y reticulocitosis.',
   },
@@ -2331,7 +3063,7 @@ renderQuiz($('#quizFinal'), [
   {
     p: 'Realizas el extendido con el portaobjeto extensor a <b>70°</b>. ¿Qué obtienes?',
     o: [
-      'Una extensión larga y fina, con cola muy extensa',
+      'Una extensión larga y fina',
       'Una extensión gruesa y corta',
       'Una extensión idéntica a la de 45°',
       'Un extendido sin cabeza ni cola',
@@ -2343,10 +3075,10 @@ renderQuiz($('#quizFinal'), [
     img: 'c1-drepanocitos',
     p: 'Identifica la alteración predominante en este campo:',
     o: [
-      'Alteración del tamaño (anisocitosis)',
-      'Alteración de la coloración (anisocromía)',
-      'Alteración de la forma (poiquilocitosis): drepanocitos',
-      'Aglutinación de eritrocitos',
+      'Alteración del tamaño: anisocitosis con microcitos',
+      'Alteración de la coloración: anisocromía e hipocromía',
+      'Alteración de la forma: poiquilocitosis (drepanocitos)',
+      'Aglutinación de eritrocitos en rouleaux',
     ],
     r: 2,
     e: 'Células alargadas con una punta en cada extremo, curvadas o en «S»: <b>drepanocitos</b>. Son una alteración de la <b>forma</b> —poiquilocitosis—, no del tamaño ni del color.',
@@ -2355,7 +3087,7 @@ renderQuiz($('#quizFinal'), [
     p: 'Estás haciendo la fórmula diferencial y lees en la <b>cabeza</b> del frotis. ¿Qué sesgo introduces?',
     o: [
       'Sobrestimas granulocitos y monocitos',
-      'Sobrestimas linfocitos',
+      'Sobrestimas el porcentaje de linfocitos',
       'No hay sesgo: la cabeza es la zona ideal',
       'Sobrestimas plaquetas gigantes',
     ],
@@ -2367,7 +3099,7 @@ renderQuiz($('#quizFinal'), [
     o: [
       'Los eritrocitos se superponen formando rouleaux',
       'Las células adoptan una posición acartonada o «en barbas»',
-      'No hay superposición de eritrocitos ni lagunas carentes de glóbulos',
+      'No hay superposición de eritrocitos ni zonas sin glóbulos',
       'Es la región inmediata al punto de partida de la extensión',
     ],
     r: 2,
@@ -2376,10 +3108,10 @@ renderQuiz($('#quizFinal'), [
   {
     p: 'Ordena correctamente los tiempos de la <b>tinción de Wright</b>:',
     o: [
-      'Colorante 6 min → solución amortiguada 5 min → lavado',
-      'Secado 15–20 min → colorante 5 min → solución amortiguada 6 min → lavado → secado',
-      'Lavado → colorante 5 min → secado 15–20 min',
-      'Colorante 15–20 min → solución amortiguada 5 min → lavado',
+      'Colorante 6 min → amortiguada 5 min → lavado',
+      'Secado 15–20 min → colorante 5 min → amortiguada 6 min → lavado',
+      'Lavado previo → colorante 5 min → secado 15–20 min → amortiguada',
+      'Colorante 15–20 min → solución amortiguada 5 min → lavado → secado',
     ],
     r: 1,
     e: 'Secado del extendido <b>15–20 min</b> → colorante de Wright <b>5 min</b> → solución amortiguada en partes iguales hasta <b>brillo metálico</b>, <b>6 min</b> → lavado con agua corriente → secado.',
@@ -2394,9 +3126,9 @@ renderQuiz($('#quizFinal'), [
   {
     p: 'Sobre las <b>plaquetas</b>, señala lo correcto:',
     o: [
-      'Son células anucleadas de 7–8,5 μm',
-      'Son fragmentos citoplasmáticos anucleados del megacariocito, de 1–3 μm',
-      'Son células con núcleo lobulado producidas en el bazo',
+      'Son células anucleadas de 7–8,5 μm formadas en el bazo',
+      'Son fragmentos anucleados del megacariocito, de 1–3 μm',
+      'Son células con núcleo lobulado y granulación azurófila',
       'Su volumen medio plaquetario normal es de 80–100 fL',
     ],
     r: 1,
@@ -2433,7 +3165,74 @@ function abrirPuerta(btnId, gateId, wrapId) {
     wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 }
-abrirPuerta('#btnGateQuiz', '#gateQuiz', '#wrapQuiz');
+/* Cierre: carrusel de los 6 puntos clave. El cuestionario final se habilita
+   cuando se han recorrido todos —no antes—, y al abrirlo reemplaza al repaso
+   igual que en los pasos 3 y 4. */
+{
+  const fichas = $$('.pk'), dots = $('#repasoDots');
+  const fill = $('#repasoFill'), num = $('#repasoNum');
+  const prev = $('#repasoPrev'), next = $('#repasoNext');
+  const zona = $('#ctaZona'), repaso = $('#repaso'), quiz = $('#wrapQuiz');
+  const vistos = new Set([0]);
+  let idx = 0;
+
+  fichas.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', `Punto clave ${i + 1} de ${fichas.length}`);
+    b.addEventListener('click', () => ver(i));
+    dots.appendChild(b);
+  });
+  const puntos = $$('button', dots);
+
+  function ver(i) {
+    idx = clamp(i, 0, fichas.length - 1);
+    vistos.add(idx);
+    fichas.forEach((f, k) => {
+      f.classList.toggle('on', k === idx);
+      f.setAttribute('aria-hidden', k === idx ? 'false' : 'true');
+    });
+    puntos.forEach((b, k) => {
+      b.classList.toggle('on', k === idx);
+      b.classList.toggle('visto', vistos.has(k) && k !== idx);
+      if (k === idx) b.setAttribute('aria-current', 'true');
+      else b.removeAttribute('aria-current');
+    });
+    num.textContent = idx + 1;
+    fill.style.width = `${((idx + 1) / fichas.length) * 100}%`;
+    prev.disabled = idx === 0;
+    next.disabled = idx === fichas.length - 1;
+    // El botón sólo aparece cuando se han recorrido los seis puntos.
+    zona.classList.toggle('listo', vistos.size === fichas.length);
+  }
+
+  prev.addEventListener('click', () => ver(idx - 1));
+  next.addEventListener('click', () => ver(idx + 1));
+  ver(0);
+
+  $('#btnGateQuiz').addEventListener('click', () => {
+    repaso.classList.add('oculto');
+    zona.classList.add('oculto');
+    quiz.classList.remove('oculto');
+    quiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+/* Paso 3: el cuestionario reemplaza a la escena y al panel de etapas, igual
+   que en el paso 4 — al entrar sólo quedan las preguntas. */
+{
+  const izq = $('#p3Izq'), der = $('#p3Panel'), quiz = $('#wrapTincion');
+
+  const mostrarQuiz = (on) => {
+    [izq, der].forEach(el => el.classList.toggle('oculto', on));
+    quiz.classList.toggle('oculto', !on);
+    // La escena queda oculta al entrar: hay que soltarla, no dejarla girando.
+    sincronizarEscena();
+    (on ? quiz : izq).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  $('#btnGateTincion').addEventListener('click', () => mostrarQuiz(true));
+  $('#btnVolverTincion').addEventListener('click', () => mostrarQuiz(false));
+}
 
 /* Paso 4: el ejercicio ocupa el mismo espacio que las variaciones — se
    intercambian en vez de apilarse, para no volver a introducir scroll largo. */

@@ -11,14 +11,15 @@
   flex-direction: column;
   /* La simulación ocupa la tarjeta entera: los márgenes negativos cancelan el
      padding de `.panel` del dashboard (28px arriba/lados, 36px abajo), que si no
-     recorta ~64px de alto útil. Lo único que queda por descontar es el padding
-     vertical de `.main` (24px + 24px). */
+     recorta ~64px de alto útil. */
   margin: -28px -28px -36px;
-  height: calc(100dvh - 48px);
-  min-height: 560px;
-  border-radius: 18px;
-  overflow: hidden;
+  /* Sin altura fija: el iframe adopta el alto real de su contenido (lo informa
+     por postMessage) y es la página del dashboard la que scrollea. `overflow`
+     queda visible a propósito — recortarlo aquí rompería el `position: sticky`
+     de la barra de navegación. */
+  min-height: calc(100dvh - 48px);
   background: #f8faff;
+  border-radius: 18px;
 }
 
 :global(.dark-mode) .wrapper {
@@ -34,6 +35,7 @@
   padding: 12px 18px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.07);
   background: rgba(255, 255, 255, 0.85);
+  border-radius: 18px 18px 0 0;
 }
 
 :global(.dark-mode) .topBar {
@@ -103,19 +105,90 @@
 :global(.dark-mode) .expand:hover { background: rgba(59, 158, 221, 0.28); }
 
 .frame {
-  flex: 1;
-  min-height: 0;
+  flex: none;
   width: 100%;
   border: 0;
   display: block;
 }
 
+/* Barra de navegación de la simulación.
+   Vive aquí y no dentro del iframe: el documento embebido es más alto que el
+   viewport, así que su propio footer quedaría al final y sólo se vería tras
+   bajarlo entero. `sticky` la mantiene al pie de la pantalla mientras la
+   simulación esté a la vista, y respeta el sidebar sin cablear su ancho
+   porque hereda la caja de `.main`. */
+.navBar {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(14px);
+  border-radius: 0 0 18px 18px;
+}
+
+:global(.dark-mode) .navBar {
+  border-top-color: rgba(255, 255, 255, 0.09);
+  background: rgba(8, 6, 26, 0.85);
+}
+
+.navBtn {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 11px;
+  color: #1a1a2e;
+  background: rgba(20, 20, 50, 0.06);
+  border: 1px solid rgba(20, 20, 50, 0.09);
+  transition: background 0.18s, opacity 0.18s;
+}
+.navBtn:hover:not(:disabled) { background: rgba(20, 20, 50, 0.12); }
+.navBtn:disabled { opacity: 0.32; cursor: not-allowed; }
+
+:global(.dark-mode) .navBtn {
+  color: #f0eeff;
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.09);
+}
+:global(.dark-mode) .navBtn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.12); }
+
+.navBtnPrimary {
+  color: #fff;
+  background: linear-gradient(135deg, #5445d8 0%, #2f8fc7 130%);
+  border-color: transparent;
+}
+.navBtnPrimary:hover:not(:disabled) { filter: brightness(1.14); }
+
+:global(.dark-mode) .navBtnPrimary {
+  color: #fff;
+  background: linear-gradient(135deg, #5445d8 0%, #3b9edd 130%);
+  border-color: transparent;
+}
+
+.navHint {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(26, 26, 46, 0.5);
+}
+
+:global(.dark-mode) .navHint { color: rgba(240, 238, 255, 0.5); }
+
 @media (max-width: 700px) {
   /* En móvil `.panel` usa padding 18px/16px/28px y `.main` 76px arriba + 12px abajo. */
   .wrapper {
     margin: -18px -16px -28px;
-    height: calc(100dvh - 88px);
-    min-height: 480px;
+    min-height: calc(100dvh - 88px);
   }
   .counter { display: none; }
+  .navHint { display: none; }
+  .navBar { padding: 10px 14px; }
 }
