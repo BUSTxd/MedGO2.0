@@ -236,6 +236,7 @@ export const semanas: Semana[] = [
           'Farmacología: antiagregantes, anticoagulantes, fibrinolíticos',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-9', label: 'Resumen' }] },
       },
       {
         id: 'sgp-2',
@@ -246,6 +247,7 @@ export const semanas: Semana[] = [
         hora: '08:00–12:00',
         subtemas: ['Trombosis arterial y venosa', 'Factores de riesgo trombótico'],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-sgp-2', label: 'Resumen' }] },
       },
       {
         id: 'lab-2',

@@ -26,6 +26,7 @@ const ALLOWED = new Set([
   'hem-2', 'hem-3', 'hem-4', 'hem-5', 'hem-6',
   'hem-7', 'hem-8', 'hem-10', 'hem-11', 'hem-12',
   'hem-tbl-1', 'hem-sgp-1', 'hem-tbl-2', 'hem-sgp-3',
+  'hem-sgp-2', 'hem-9',
 ]);
 
 // IDs that require an active paid plan (Interno/Residente). Free-plan users
@@ -87,6 +88,8 @@ const FILE_ALIAS: Record<string, string> = {
   'hem-sgp-1': 'hematologia/sgp-1',
   'hem-tbl-2': 'hematologia/tbl-2',
   'hem-sgp-3': 'hematologia/sgp-3',
+  'hem-sgp-2': 'hematologia/sgp-2',
+  'hem-9':     'hematologia/clase-9',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga
