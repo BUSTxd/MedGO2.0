@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Microscopio virtual · Médula ósea y serie blanca · Hematología UPCH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#eef1f4; --panel:#ffffff; --panel-2:#f6f8fa;
+  --ink:#12151a; --muted:rgba(18,21,26,.55); --text-soft:rgba(18,21,26,.75);
+  --line:rgba(18,21,26,.12); --line-strong:rgba(18,21,26,.22);
+  --metal-1:#e4e8ec; --metal-2:#aab1b9; --metal-3:#7d848c;
+  --accent:#2f7fc7; --accent-strong:#1c6fa8;
+  --green:#1f9e7c; --green-bg:rgba(31,158,124,.12); --green-border:rgba(31,158,124,.4);
+  --red:#c8402f; --red-bg:rgba(200,64,47,.1); --red-border:rgba(200,64,47,.35);
+  --amber:#b8720a; --amber-bg:rgba(245,166,35,.14); --amber-border:rgba(245,166,35,.4);
+  --chip-bg:rgba(18,21,26,.05); --scrollbar:rgba(18,21,26,.2);
+}
+:root.dark{
+  --bg:#0a0c0f; --panel:#15181d; --panel-2:#1b1f25;
+  --ink:#eef1f4; --muted:rgba(238,241,244,.55); --text-soft:rgba(238,241,244,.78);
+  --line:rgba(255,255,255,.09); --line-strong:rgba(255,255,255,.16);
+  --metal-1:#4a5058; --metal-2:#2b2f35; --metal-3:#1a1d21;
+  --accent:#5db3f0; --accent-strong:#8ecdf5;
+  --green:#4fd7ab; --green-bg:rgba(45,201,154,.12); --green-border:rgba(45,201,154,.32);
+  --red:#ff8a7a; --red-bg:rgba(232,91,74,.12); --red-border:rgba(232,91,74,.3);
+  --amber:#f5c05f; --amber-bg:rgba(245,166,35,.14); --amber-border:rgba(245,166,35,.32);
+  --chip-bg:rgba(255,255,255,.06); --scrollbar:rgba(255,255,255,.16);
+}
+html,body{height:100%}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  transition:background .25s ease,color .25s ease;
+}
+button{font-family:inherit}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:var(--scrollbar);border-radius:9px}
+::-webkit-scrollbar-track{background:transparent}
+
+#app{position:relative;min-height:100dvh;display:flex;flex-direction:column}
+
+/* ───────────────────────── HEADER ───────────────────────── */
+header{
+  flex:0 0 auto;padding:14px 20px;display:flex;flex-wrap:wrap;align-items:center;
+  gap:14px;border-bottom:1px solid var(--line);background:var(--panel);
+}
+.brand{display:flex;flex-direction:column;gap:1px;flex:0 0 auto}
+.brand b{font-size:.98rem;font-weight:800;letter-spacing:-.01em}
+.brand span{font-size:.7rem;color:var(--muted);font-weight:500}
+
+.laminaTabs{display:flex;gap:6px;background:var(--panel-2);border:1px solid var(--line);
+  border-radius:12px;padding:4px;flex:0 0 auto}
+.laminaTabs button{
+  border:0;background:transparent;color:var(--muted);font-size:.78rem;font-weight:600;
+  padding:8px 14px;border-radius:9px;cursor:pointer;transition:.18s;white-space:nowrap;
+}
+.laminaTabs button.on{background:var(--accent);color:#fff}
+.laminaTabs button:not(.on):hover{color:var(--ink);background:var(--chip-bg)}
+
+.progressChip{
+  margin-left:auto;display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:600;
+  background:var(--chip-bg);border:1px solid var(--line);border-radius:99px;padding:7px 14px;
+  color:var(--text-soft);flex:0 0 auto;
+}
+.progressChip b{color:var(--green);font-variant-numeric:tabular-nums}
+
+/* ───────────────────────── LAYOUT ───────────────────────── */
+main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);gap:0}
+
+.scope{
+  position:relative;padding:22px;display:flex;flex-direction:column;align-items:center;gap:18px;
+  background:
+    radial-gradient(60% 50% at 50% 0%, rgba(255,255,255,.4), transparent 70%),
+    var(--bg);
+}
+:root.dark .scope{background:radial-gradient(60% 50% at 50% 0%, rgba(255,255,255,.03), transparent 70%), var(--bg)}
+
+.hintBanner{
+  width:100%;max-width:640px;display:flex;align-items:flex-start;gap:10px;
+  background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:12px;
+  padding:11px 14px;font-size:.8rem;line-height:1.5;color:var(--text-soft);
+}
+.hintBanner b{color:var(--amber);font-weight:700}
+.hintBanner button{
+  margin-left:auto;flex:0 0 auto;border:0;background:transparent;color:var(--muted);
+  cursor:pointer;font-size:1.1rem;line-height:1;padding:0 2px;
+}
+.hintBanner.oculto{display:none}
+
+/* ───────────────────────── OCULAR ───────────────────────── */
+.ocularWrap{position:relative;width:min(56vh,480px);aspect-ratio:1/1;flex:0 0 auto}
+.ocular{
+  position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;cursor:grab;
+  background:#1a1d21;
+  box-shadow:
+    0 0 0 10px var(--metal-2),
+    0 0 0 14px var(--metal-1),
+    0 0 0 16px var(--metal-3),
+    0 18px 40px rgba(0,0,0,.35);
+  outline:none;
+}
+.ocular:active{cursor:grabbing}
+.ocular.idealZone{
+  box-shadow:
+    0 0 0 10px var(--metal-2),
+    0 0 0 14px var(--metal-1),
+    0 0 0 16px var(--green),
+    0 0 26px 6px rgba(31,158,124,.55),
+    0 18px 40px rgba(0,0,0,.35);
+}
+.lens{
+  position:absolute;inset:0;background-repeat:no-repeat;background-color:#2a2d31;
+  transition:background-position .15s ease-out, background-size .4s ease, filter .5s ease;
+  filter:blur(8px);
+}
+.vignette{
+  position:absolute;inset:0;pointer-events:none;border-radius:50%;
+  box-shadow:inset 0 0 70px 18px rgba(0,0,0,.65), inset 0 0 140px 30px rgba(0,0,0,.35);
+}
+.placeholderMsg{
+  position:absolute;inset:14%;display:flex;align-items:center;justify-content:center;text-align:center;
+  color:rgba(238,241,244,.65);font-size:.78rem;line-height:1.5;font-weight:600;pointer-events:none;
+}
+.placeholderMsg.oculto{display:none}
+
+.idealToast{
+  position:absolute;left:50%;bottom:-6px;transform:translate(-50%,100%);white-space:nowrap;
+  background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);
+  font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:99px;opacity:0;
+  transition:opacity .25s ease;pointer-events:none;
+}
+.ocularWrap.idealZone .idealToast{opacity:1}
+
+.focusToast{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  background:rgba(10,12,15,.88);color:#fff;font-size:.78rem;font-weight:600;
+  padding:9px 16px;border-radius:10px;pointer-events:none;opacity:0;transition:opacity .25s ease;
+  max-width:80%;text-align:center;z-index:4;
+}
+.focusToast.on{opacity:1}
+
+/* ───────────────────────── CONTROLES ───────────────────────── */
+.controls{display:flex;align-items:center;gap:28px;flex-wrap:wrap;justify-content:center}
+
+.revolver{
+  display:flex;align-items:flex-end;gap:10px;padding:14px 16px 10px;border-radius:16px 16px 8px 8px;
+  background:linear-gradient(180deg,var(--metal-1),var(--metal-2));
+  border:1px solid var(--line-strong);box-shadow:0 6px 16px rgba(0,0,0,.18);
+}
+.revolver button{
+  width:52px;height:52px;border-radius:50%;border:2px solid var(--metal-3);cursor:pointer;
+  background:linear-gradient(160deg,#3a3f45,#17191c);color:#dfe3e7;font-weight:800;font-size:.78rem;
+  display:flex;align-items:center;justify-content:center;transition:transform .2s ease, box-shadow .2s ease;
+  box-shadow:0 3px 6px rgba(0,0,0,.3), inset 0 1px 1px rgba(255,255,255,.15);
+}
+.revolver button:hover{transform:translateY(-3px)}
+.revolver button.on{
+  transform:translateY(4px);background:linear-gradient(160deg,var(--accent),var(--accent-strong));
+  color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3), inset 0 1px 1px rgba(255,255,255,.25);
+}
+
+.focusKnobWrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.focusKnobWrap span{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.focusTrack{
+  position:relative;width:34px;height:150px;border-radius:99px;
+  background:linear-gradient(180deg,var(--metal-1),var(--metal-2));
+  border:1px solid var(--line-strong);box-shadow:inset 0 2px 6px rgba(0,0,0,.25);
+}
+#focusSlider{
+  -webkit-appearance:slider-vertical;writing-mode:vertical-lr;direction:rtl;
+  width:34px;height:150px;position:absolute;inset:0;margin:0;background:transparent;cursor:ns-resize;
+}
+#focusSlider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:28px;height:16px;border-radius:6px;
+  background:linear-gradient(160deg,#3a3f45,#17191c);border:1px solid rgba(0,0,0,.4);
+  box-shadow:0 2px 4px rgba(0,0,0,.4);
+}
+#focusSlider::-moz-range-thumb{
+  width:28px;height:16px;border-radius:6px;border:1px solid rgba(0,0,0,.4);
+  background:linear-gradient(160deg,#3a3f45,#17191c);box-shadow:0 2px 4px rgba(0,0,0,.4);
+}
+.focusReading{font-size:.7rem;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.focusReading.ok{color:var(--green)}
+
+.keysHint{font-size:.72rem;color:var(--muted);text-align:center;max-width:200px}
+
+/* ───────────────────────── PANEL LATERAL ───────────────────────── */
+.sidePanel{
+  background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;min-height:0;
+}
+.panelTabs{display:flex;flex:0 0 auto;border-bottom:1px solid var(--line)}
+.panelTabs button{
+  flex:1;border:0;background:transparent;color:var(--muted);font-size:.82rem;font-weight:700;
+  padding:14px 10px;cursor:pointer;position:relative;transition:.18s;
+}
+.panelTabs button.on{color:var(--accent)}
+.panelTabs button.on::after{content:'';position:absolute;left:14%;right:14%;bottom:0;height:2px;background:var(--accent)}
+.panelTabs button:not(.on):hover{color:var(--ink)}
+
+.panelBody{flex:1;min-height:0;overflow-y:auto;padding:20px}
+.panelBody.oculto{display:none}
+
+.emptyState{
+  height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  text-align:center;color:var(--muted);padding:20px;
+}
+.emptyState svg{width:40px;height:40px;color:var(--line-strong)}
+.emptyState p{font-size:.85rem;max-width:26ch;line-height:1.5}
+
+.quizToggle{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:16px;
+}
+.quizToggle span{font-size:.8rem;font-weight:600}
+.switch{position:relative;width:40px;height:22px;flex:0 0 auto}
+.switch input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
+.switch .track{position:absolute;inset:0;border-radius:99px;background:var(--line-strong);transition:.2s}
+.switch .thumb{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.switch input:checked + .track{background:var(--accent)}
+.switch input:checked ~ .thumb{transform:translateX(18px)}
+
+.cellCard{display:flex;flex-direction:column;gap:14px}
+.cellName{font-size:1.2rem;font-weight:800;letter-spacing:-.01em}
+.cellMeta{font-size:.78rem;color:var(--muted);font-weight:600}
+.cellSection{display:flex;flex-direction:column;gap:6px}
+.cellSection h4{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.cellSection ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.cellSection li{position:relative;padding-left:15px;font-size:.85rem;line-height:1.5;color:var(--text-soft)}
+.cellSection li::before{content:'';position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+
+.refBtn,.primaryBtn,.ghostBtn{
+  font-family:inherit;font-size:.82rem;font-weight:700;border-radius:10px;padding:10px 16px;cursor:pointer;
+  transition:.18s;text-align:center;
+}
+.refBtn{background:var(--chip-bg);border:1px solid var(--line);color:var(--ink)}
+.refBtn:hover{background:var(--line)}
+.primaryBtn{background:var(--accent);border:1px solid transparent;color:#fff}
+.primaryBtn:hover{background:var(--accent-strong)}
+.primaryBtn:disabled{opacity:.4;cursor:not-allowed}
+.ghostBtn{background:transparent;border:1px solid var(--line);color:var(--muted)}
+
+.refCrop{
+  width:100%;aspect-ratio:1/1;border-radius:12px;overflow:hidden;border:1px solid var(--line);
+  background-color:#2a2d31;background-repeat:no-repeat;
+}
+.refCrop.oculto{display:none}
+
+.quizGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 14px}
+.quizGrid button{
+  font-family:inherit;font-size:.78rem;font-weight:600;text-align:left;padding:9px 11px;border-radius:9px;
+  background:var(--panel-2);border:1px solid var(--line);color:var(--text-soft);cursor:pointer;transition:.15s;
+}
+.quizGrid button:hover{border-color:var(--accent)}
+.quizGrid button.picked{border-color:var(--accent);background:rgba(59,158,221,.12);color:var(--ink)}
+
+.feedback{
+  display:flex;flex-direction:column;gap:6px;border-radius:12px;padding:12px 14px;font-size:.84rem;line-height:1.5;
+}
+.feedback.ok{background:var(--green-bg);border:1px solid var(--green-border);color:var(--green)}
+.feedback.bad{background:var(--red-bg);border:1px solid var(--red-border);color:var(--red)}
+.feedback.oculto{display:none}
+
+/* ───────────────────────── TEORÍA ───────────────────────── */
+.teoria h3{font-size:1rem;font-weight:800;margin-bottom:14px}
+.teoriaCard{
+  background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;
+}
+.teoriaCard h4{font-size:.78rem;font-weight:700;color:var(--accent);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em}
+.teoriaCard p,.teoriaCard li{font-size:.85rem;line-height:1.6;color:var(--text-soft)}
+.teoriaCard ul{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.teoriaCard li{position:relative;padding-left:15px}
+.teoriaCard li::before{content:'';position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.teoriaCard b{color:var(--ink)}
+
+/* ───────────────────────── FLOW MODE (embebido en el dashboard) ───────────────────────── */
+body.flowMode{overflow-y:visible}
+body.flowMode #app{min-height:0}
+body.flowMode main{display:block}
+body.flowMode .scope{padding-bottom:6px}
+body.flowMode .sidePanel{border-left:0;border-top:1px solid var(--line)}
+body.flowMode .panelBody{overflow-y:visible;max-height:none}
+body.embedded header{border-radius:0}
+
+@media (min-width:901px){
+  body.flowMode main{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr)}
+  body.flowMode .sidePanel{border-top:0;border-left:1px solid var(--line)}
+  body.flowMode .panelBody{max-height:calc(100dvh - 140px);overflow-y:auto}
+}
+
+@media (max-width:900px){
+  main{display:block}
+  .sidePanel{border-left:0;border-top:1px solid var(--line)}
+}
+@media (max-width:520px){
+  .brand span{display:none}
+  .ocularWrap{width:min(70vw,340px)}
+  .focusTrack{height:120px}
+  #focusSlider{height:120px}
+}
+</style>
+<script>
+(function () {
+  try {
+    var dark = localStorage.getItem('medgo-dark') === 'true';
+    document.documentElement.classList.toggle('dark', dark);
+  } catch (e) {}
+})();
+window.addEventListener('storage', function (e) {
+  if (e.key === 'medgo-dark') {
+    document.documentElement.classList.toggle('dark', e.newValue === 'true');
+  }
+});
+</script>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="brand">
+      <b>Microscopio virtual</b>
+      <span>Hematología UPCH · Lab 2 — Médula ósea, serie blanca y fórmula diferencial</span>
+    </div>
+    <div class="laminaTabs" id="laminaTabs">
+      <button data-lamina="sangre" class="on">Frotis de sangre periférica</button>
+      <button data-lamina="medula">Aspirado de médula ósea</button>
+    </div>
+    <div class="progressChip">Identificadas <b id="progressCount">0</b>/<span id="progressTotal">9</span></div>
+  </header>
+
+  <main>
+    <section class="scope">
+      <div class="hintBanner" id="hintBanner">
+        <span><b>Recuerda:</b> inicia siempre con el objetivo de menor aumento (10X) para ubicar la zona ideal, luego usa 40X y termina con 100X (inmersión) para el detalle fino.</span>
+        <button type="button" id="hintClose" aria-label="Cerrar">×</button>
+      </div>
+
+      <div class="ocularWrap" id="ocularWrap">
+        <div class="ocular" id="ocular" tabindex="0">
+          <div class="lens" id="lens"></div>
+          <div class="placeholderMsg oculto" id="placeholderMsg"></div>
+          <div class="vignette"></div>
+          <div class="focusToast" id="focusToast"></div>
+        </div>
+        <div class="idealToast">Zona ideal detectada — sube de objetivo</div>
+      </div>
+
+      <div class="controls">
+        <div class="revolver" id="revolver">
+          <button type="button" data-zoom="10" class="on">10X</button>
+          <button type="button" data-zoom="40">40X</button>
+          <button type="button" data-zoom="100">100X</button>
+        </div>
+        <div class="focusKnobWrap">
+          <span>Enfoque</span>
+          <div class="focusTrack">
+            <input type="range" id="focusSlider" min="0" max="100" value="50">
+          </div>
+          <span class="focusReading" id="focusReading">—</span>
+        </div>
+      </div>
+
+      <p class="keysHint">Arrastra dentro del ocular o usa las flechas del teclado para mover la platina (X/Y).</p>
+    </section>
+
+    <aside class="sidePanel">
+      <div class="panelTabs">
+        <button type="button" data-tab="id" class="on">Identificación</button>
+        <button type="button" data-tab="teoria">Teoría</button>
+      </div>
+
+      <div class="panelBody" id="panelId">
+        <div class="quizToggle">
+          <span>Modo Quiz</span>
+          <label class="switch">
+            <input type="checkbox" id="quizMode">
+            <div class="track"></div>
+            <div class="thumb"></div>
+          </label>
+        </div>
+        <div id="cellCardWrap">
+          <div class="emptyState">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg>
+            <p>Ubica una célula a 100X, enfoca con la perilla y haz clic sobre ella para identificarla.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panelBody oculto teoria" id="panelTeoria">
+        <h3>Médula ósea</h3>
+        <div class="teoriaCard">
+          <h4>Ubicación según edad</h4>
+          <p>En el recién nacido y los niños pequeños, la <b>médula ósea roja</b> (hematopoyéticamente activa) ocupa prácticamente todo el esqueleto. Con la edad ocurre una conversión progresiva a médula amarilla (grasa), y en el adulto la médula roja activa queda restringida sobre todo a los <b>huesos planos</b> (esternón, costillas, vértebras, cráneo, pelvis) y a las <b>epífisis proximales</b> de fémur y húmero.</p>
+        </div>
+        <div class="teoriaCard">
+          <h4>Porcentaje del peso corporal</h4>
+          <p>La médula ósea representa aproximadamente el <b>4–5% del peso corporal total</b>, uno de los órganos hematopoyéticos más extensos del cuerpo.</p>
+        </div>
+        <div class="teoriaCard">
+          <h4>Sitios de punción</h4>
+          <ul>
+            <li><b>Tibia</b> (cara anteromedial proximal) — sitio de elección en <b>menores de 2 años</b>.</li>
+            <li><b>Cresta ilíaca posterosuperior</b> — sitio habitual en niños mayores y adultos.</li>
+            <li><b>Cresta ilíaca anterosuperior</b> — alternativa cuando la posterior no es accesible.</li>
+            <li><b>Esternón</b> (manubrio) — punción en adultos, evitando la tabla ósea interna.</li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+
+/* ── Datos de las laminillas ──────────────────────────────────────────
+   Coordenadas x/y de células y zonas ideales son PLACEHOLDER (relativas
+   0–1 dentro de la imagen panorámica) — se ajustan aquí mismo cuando
+   lleguen las imágenes reales, comparando contra dónde cae cada célula. */
+const EXT = ['jpg', 'jpeg', 'png', 'webp', 'avif'];
+
+const LAMINAS = {
+  sangre: {
+    label: 'Frotis de sangre periférica',
+    archivo: 'lamina-sangre-periferica',
+    aspect: 1.5,
+    zoomBgSize: { 10: 160, 40: 460, 100: 1050 },
+    idealZones10x: [
+      { x: 0.32, y: 0.36, r: 0.13 },
+      { x: 0.63, y: 0.58, r: 0.12 },
+    ],
+    cells: [
+      {
+        id: 'neutrofilo', nombre: 'Neutrófilo', x: 0.22, y: 0.30, tamano: '12–14 μm',
+        descripcion: [
+          'Núcleo segmentado en 3 a 5 lóbulos.',
+          'Citoplasma rosa pálido con granulación azurófila fina.',
+          'Variante: neutrófilo en banda/cayado (núcleo en forma de coma o U), estadio previo al segmentado.',
+        ],
+        clave: 'Núcleo segmentado (3–5 lóbulos) con citoplasma rosado y granulación azurófila fina.',
+      },
+      {
+        id: 'eosinofilo', nombre: 'Eosinófilo', x: 0.70, y: 0.20,
+        descripcion: [
+          'Núcleo bilobulado.',
+          'Gránulos grandes, color asalmonado/anaranjado, muy refringentes.',
+        ],
+        clave: 'Es un eosinófilo: núcleo bilobulado y gránulos anaranjados grandes y refringentes.',
+      },
+      {
+        id: 'basofilo', nombre: 'Basófilo', x: 0.40, y: 0.64,
+        descripcion: [
+          'Núcleo bilobulado, a menudo oculto por la granulación.',
+          'Gránulos abundantes rojo-violeta o granate oscuro que cubren el núcleo.',
+        ],
+        clave: 'Es un basófilo: gránulos gruesos rojo-violeta que cubren y ocultan el núcleo.',
+      },
+      {
+        id: 'monocito', nombre: 'Monocito', x: 0.80, y: 0.68, tamano: '20–40 μm',
+        descripcion: [
+          'La célula más grande de la serie blanca.',
+          'Núcleo en forma de zapatilla o riñón, cromatina más homogénea.',
+          'Citoplasma gris azulado con granulación azurófila fina y escasa.',
+        ],
+        clave: 'Es un monocito: la célula más grande de la serie blanca, núcleo arriñonado/en zapatilla.',
+      },
+      {
+        id: 'linfocito', nombre: 'Linfocito', x: 0.16, y: 0.74, tamano: '8–15 μm',
+        descripcion: [
+          'Núcleo redondeado de cromatina densa.',
+          'Citoplasma escaso, basófilo.',
+          'Variantes: B, T colaborador, T supresor y NK, con diferencias en citoplasma y granulación.',
+        ],
+        clave: 'Es un linfocito: núcleo redondo de cromatina densa y citoplasma escaso.',
+      },
+      {
+        id: 'blasto', nombre: 'Blasto', x: 0.55, y: 0.46,
+        descripcion: [
+          'Célula inmadura, primitiva, indiferenciada.',
+          'Normal hasta 2% en médula ósea.',
+          'En sangre periférica es un hallazgo patológico (posible leucemia).',
+        ],
+        clave: 'Es un blasto: célula inmadura e indiferenciada — en sangre periférica sugiere patología.',
+      },
+    ],
+  },
+  medula: {
+    label: 'Aspirado de médula ósea',
+    archivo: 'lamina-medula-osea',
+    aspect: 1.5,
+    zoomBgSize: { 10: 150, 40: 420, 100: 1000 },
+    idealZones10x: [
+      { x: 0.46, y: 0.50, r: 0.15 },
+    ],
+    cells: [
+      {
+        id: 'megacariocito', nombre: 'Megacariocito', x: 0.36, y: 0.40,
+        descripcion: [
+          'Precursor plaquetario.',
+          'Célula muy grande, la mayor de la médula ósea.',
+          'Núcleo multilobulado.',
+        ],
+        clave: 'Es un megacariocito: la célula más grande de la médula, núcleo multilobulado, origina plaquetas.',
+      },
+      {
+        id: 'precursorMieloide', nombre: 'Precursor mieloide', x: 0.64, y: 0.30,
+        descripcion: [
+          'Estadio madurativo de la serie granulocítica dentro de la médula.',
+          'Se reconoce por su cromatina progresivamente más condensada y la aparición de granulación específica según el estadio.',
+        ],
+        clave: 'Es un precursor mieloide: estadio madurativo de la serie granulocítica.',
+      },
+      {
+        id: 'precursorEritroide', nombre: 'Precursor eritroide', x: 0.50, y: 0.70,
+        descripcion: [
+          'Estadio madurativo de la serie roja (normoblástica) dentro de la médula.',
+          'Se reconoce por su núcleo redondo, denso y relativamente grande respecto al citoplasma, que se reduce a medida que madura.',
+        ],
+        clave: 'Es un precursor eritroide: estadio madurativo de la serie roja (normoblástica).',
+      },
+    ],
+  },
+};
+
+/* Lista fija de 9 opciones para el modo Quiz (incluye las de ambas laminillas
+   a propósito: distinguir cuáles no pertenecen a la laminilla actual también
+   forma parte del reto). */
+const OPCIONES_QUIZ = [
+  { id: 'neutrofilo', label: 'Neutrófilo' },
+  { id: 'eosinofilo', label: 'Eosinófilo' },
+  { id: 'basofilo', label: 'Basófilo' },
+  { id: 'monocito', label: 'Monocito' },
+  { id: 'linfocito', label: 'Linfocito' },
+  { id: 'blasto', label: 'Blasto' },
+  { id: 'megacariocito', label: 'Megacariocito' },
+  { id: 'precursorMieloide', label: 'Precursor mieloide' },
+  { id: 'precursorEritroide', label: 'Precursor eritroide' },
+];
+
+const TOTAL_CELULAS = LAMINAS.sangre.cells.length + LAMINAS.medula.cells.length;
+
+/* ── Estado ── */
+const state = {
+  laminaKey: 'sangre',
+  zoom: 10,
+  panX: 50, panY: 50,
+  sliderValue: 50,
+  idealTarget: {},        // { [laminaKey_zoom]: valor ideal del slider }
+  toleranceDiv: { 40: 2.6, 100: 4.4 },
+  imgResuelta: {},        // { [laminaKey]: url | null(false=no probado) }
+  identificadas: new Set(),
+  quizMode: false,
+  activeCell: null,
+  quizPicked: null,
+};
+
+function lamina() { return LAMINAS[state.laminaKey]; }
+
+/* ── Persistencia ── */
+const PROGRESS_KEY = 'medgo-microscopio-progress';
+function loadProgress() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '[]');
+    if (Array.isArray(raw)) state.identificadas = new Set(raw);
+  } catch (e) {}
+}
+function saveProgress() {
+  try { localStorage.setItem(PROGRESS_KEY, JSON.stringify([...state.identificadas])); } catch (e) {}
+  $('#progressCount').textContent = state.identificadas.size;
+}
+
+/* ── Resolución de imagen (prueba extensiones, cae a placeholder) ── */
+function resolveLaminaImg(key) {
+  return new Promise((resolve) => {
+    const L = LAMINAS[key];
+    let i = 0;
+    function tryNext() {
+      if (i >= EXT.length) { resolve(null); return; }
+      const url = `microscopio-hematologia-img/${L.archivo}.${EXT[i]}`;
+      const img = new Image();
+      img.onload = () => resolve(url);
+      img.onerror = () => { i++; tryNext(); };
+      img.src = url;
+    }
+    tryNext();
+  });
+}
+
+/* ── Geometría de pan/zoom sobre background-position/background-size ──
+   k = fracción del ancho de imagen visible en un frame (0–1).
+   El punto de imagen que queda bajo el centro del ocular es:
+     centro = k/2 - (k-1) * (pan/100)
+   y se invierte para centrar la vista en un punto dado (usado al
+   resetear la lámina y al abrir la "imagen de referencia"). */
+function kFor(zoomBgSize, axis, aspect) {
+  const base = 100 / zoomBgSize;
+  return axis === 'y' ? base * aspect : base;
+}
+function centerToPan(targetX, targetY, zoomBgSize, aspect) {
+  const kx = kFor(zoomBgSize, 'x', aspect);
+  const ky = kFor(zoomBgSize, 'y', aspect);
+  const panX = kx === 1 ? 50 : clamp(100 * (kx / 2 - targetX) / (kx - 1), 0, 100);
+  const panY = ky === 1 ? 50 : clamp(100 * (ky / 2 - targetY) / (ky - 1), 0, 100);
+  return { panX, panY };
+}
+function panToPoint(panX, panY, zoomBgSize, aspect) {
+  const kx = kFor(zoomBgSize, 'x', aspect);
+  const ky = kFor(zoomBgSize, 'y', aspect);
+  return {
+    x: kx / 2 - (kx - 1) * (panX / 100),
+    y: ky / 2 - (ky - 1) * (panY / 100),
+  };
+}
+
+/* ── Enfoque ── */
+function computeBlur() {
+  if (state.zoom === 10) return { blur: 0, focused: true, needsFocus: false };
+  const key = `${state.laminaKey}_${state.zoom}`;
+  const ideal = state.idealTarget[key] ?? 50;
+  const div = state.toleranceDiv[state.zoom];
+  const blur = clamp(Math.abs(state.sliderValue - ideal) / div, 0, 8);
+  return { blur, focused: blur < 0.6, needsFocus: true };
+}
+
+/* ── Render del lente ── */
+function applyLens(opts = {}) {
+  const L = lamina();
+  const url = state.imgResuelta[state.laminaKey];
+  const lens = $('#lens');
+  const { blur } = computeBlur();
+
+  if (url) {
+    lens.style.backgroundImage = `url("${url}")`;
+    lens.style.backgroundSize = `${L.zoomBgSize[state.zoom]}% auto`;
+    lens.style.backgroundPosition = `${state.panX}% ${state.panY}%`;
+    $('#placeholderMsg').classList.add('oculto');
+  } else {
+    lens.style.backgroundImage = 'none';
+    $('#placeholderMsg').classList.remove('oculto');
+    $('#placeholderMsg').textContent = `Coloca aquí: ${L.archivo}.jpg (3000x2000px aprox.)`;
+  }
+
+  if (opts.jumpBlur) {
+    lens.style.transitionProperty = 'background-position, background-size';
+    lens.style.filter = 'blur(8px)';
+    void lens.offsetWidth;
+    requestAnimationFrame(() => {
+      lens.style.transitionProperty = 'background-position, background-size, filter';
+      lens.style.filter = `blur(${blur}px)`;
+    });
+  } else {
+    lens.style.filter = `blur(${blur}px)`;
+  }
+
+  const reading = $('#focusReading');
+  if (state.zoom === 10) {
+    reading.textContent = 'Automático';
+    reading.classList.remove('ok');
+  } else {
+    reading.textContent = blur < 0.6 ? 'Enfocado' : blur < 2.2 ? 'Casi listo…' : 'Desenfocado';
+    reading.classList.toggle('ok', blur < 0.6);
+  }
+
+  checkIdealZone();
+}
+
+/* ── Zona ideal (solo a 10X) ── */
+function checkIdealZone() {
+  const wrap = $('#ocularWrap');
+  const ocular = $('#ocular');
+  if (state.zoom !== 10) {
+    wrap.classList.remove('idealZone'); ocular.classList.remove('idealZone');
+    return;
+  }
+  const L = lamina();
+  const p = panToPoint(state.panX, state.panY, L.zoomBgSize[10], L.aspect);
+  const inside = L.idealZones10x.some(z => Math.hypot(p.x - z.x, p.y - z.y) < z.r);
+  wrap.classList.toggle('idealZone', inside);
+  ocular.classList.toggle('idealZone', inside);
+}
+
+/* ── Cambio de objetivo (revólver) ── */
+function setZoom(z) {
+  state.zoom = z;
+  $$('#revolver button').forEach(b => b.classList.toggle('on', Number(b.dataset.zoom) === z));
+  if (z !== 10) {
+    const key = `${state.laminaKey}_${z}`;
+    if (state.idealTarget[key] === undefined) {
+      state.idealTarget[key] = 30 + Math.random() * 40;
+    }
+  }
+  applyLens({ jumpBlur: true });
+}
+
+/* ── Perilla de enfoque ── */
+$('#focusSlider').addEventListener('input', (e) => {
+  state.sliderValue = Number(e.target.value);
+  applyLens();
+});
+
+/* ── Pan: arrastre + teclado ── */
+const ocularEl = $('#ocular');
+let dragging = false, dragStart = null, dragMoved = 0;
+
+function bgWidthHeightPx(D, zoomBgSize, aspect) {
+  const w = D * zoomBgSize / 100;
+  return { w, h: w / aspect };
+}
+
+function panBy(dxPx, dyPx) {
+  const L = lamina();
+  const D = ocularEl.clientWidth;
+  const { w, h } = bgWidthHeightPx(D, L.zoomBgSize[state.zoom], L.aspect);
+  const Mx = w - D, My = h - D;
+  if (Mx > 0) state.panX = clamp(state.panX - dxPx * 100 / Mx, 0, 100);
+  if (My > 0) state.panY = clamp(state.panY - dyPx * 100 / My, 0, 100);
+  applyLens();
+}
+
+ocularEl.addEventListener('pointerdown', (e) => {
+  dragging = true; dragMoved = 0;
+  dragStart = { x: e.clientX, y: e.clientY };
+  ocularEl.setPointerCapture(e.pointerId);
+});
+ocularEl.addEventListener('pointermove', (e) => {
+  if (!dragging) return;
+  const dx = e.clientX - dragStart.x, dy = e.clientY - dragStart.y;
+  dragMoved += Math.abs(dx) + Math.abs(dy);
+  dragStart = { x: e.clientX, y: e.clientY };
+  panBy(dx, dy);
+});
+ocularEl.addEventListener('pointerup', (e) => {
+  dragging = false;
+  if (dragMoved < 6) onOcularClick(e);
+});
+
+ocularEl.addEventListener('keydown', (e) => {
+  const L = lamina();
+  const step = state.zoom === 10 ? 3 : state.zoom === 40 ? 1.2 : 0.5;
+  if (e.key === 'ArrowLeft') { state.panX = clamp(state.panX - step, 0, 100); applyLens(); e.preventDefault(); }
+  if (e.key === 'ArrowRight') { state.panX = clamp(state.panX + step, 0, 100); applyLens(); e.preventDefault(); }
+  if (e.key === 'ArrowUp') { state.panY = clamp(state.panY - step, 0, 100); applyLens(); e.preventDefault(); }
+  if (e.key === 'ArrowDown') { state.panY = clamp(state.panY + step, 0, 100); applyLens(); e.preventDefault(); }
+});
+
+/* ── Identificación de células ── */
+function showFocusToast(msg) {
+  const t = $('#focusToast');
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(showFocusToast._t);
+  showFocusToast._t = setTimeout(() => t.classList.remove('on'), 1800);
+}
+
+function onOcularClick(e) {
+  const { focused } = computeBlur();
+  if (state.zoom !== 100) { showFocusToast('Cambia a 100X para identificar células.'); return; }
+  if (!focused) { showFocusToast('Afina el foco con la perilla antes de identificar.'); return; }
+
+  const rect = ocularEl.getBoundingClientRect();
+  const D = rect.width;
+  const clickXrel = (e.clientX - rect.left) / D;
+  const clickYrel = (e.clientY - rect.top) / D;
+
+  const L = lamina();
+  const kx = kFor(L.zoomBgSize[100], 'x', L.aspect);
+  const ky = kFor(L.zoomBgSize[100], 'y', L.aspect);
+  const center = panToPoint(state.panX, state.panY, L.zoomBgSize[100], L.aspect);
+  const px = center.x + (clickXrel - 0.5) * kx;
+  const py = center.y + (clickYrel - 0.5) * ky;
+
+  const HIT_R = 0.045;
+  let best = null, bestDist = Infinity;
+  L.cells.forEach(c => {
+    const d = Math.hypot(c.x - px, c.y - py);
+    if (d < HIT_R && d < bestDist) { best = c; bestDist = d; }
+  });
+
+  if (best) openCellPanel(best);
+  else showFocusToast('Ninguna célula ahí — reubica el campo.');
+}
+
+/* ── Panel de identificación ── */
+function openCellPanel(cell) {
+  state.activeCell = cell;
+  state.quizPicked = null;
+  renderCellCard();
+}
+
+function refCropStyle(cell) {
+  const L = lamina();
+  const zoomBgSize = 1300;
+  const { panX, panY } = centerToPan(cell.x, cell.y, zoomBgSize, L.aspect);
+  const url = state.imgResuelta[state.laminaKey];
+  return url
+    ? `background-image:url("${url}");background-size:${zoomBgSize}% auto;background-position:${panX}% ${panY}%`
+    : 'background-image:none';
+}
+
+function renderCellCard() {
+  const cell = state.activeCell;
+  const wrap = $('#cellCardWrap');
+  if (!cell) {
+    wrap.innerHTML = `<div class="emptyState">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3" stroke-linecap="round"/></svg>
+      <p>Ubica una célula a 100X, enfoca con la perilla y haz clic sobre ella para identificarla.</p>
+    </div>`;
+    return;
+  }
+
+  const yaIdentificada = state.identificadas.has(cell.id);
+  const metaLine = cell.tamano ? `<div class="cellMeta">${cell.tamano}</div>` : '';
+  const descList = cell.descripcion.map(d => `<li>${d}</li>`).join('');
+
+  if (!state.quizMode) {
+    wrap.innerHTML = `
+      <div class="cellCard">
+        <div>
+          <div class="cellName">${cell.nombre}</div>
+          ${metaLine}
+        </div>
+        <div class="cellSection">
+          <h4>Características</h4>
+          <ul>${descList}</ul>
+        </div>
+        <button type="button" class="refBtn" id="btnRef">Ver imagen de referencia</button>
+        <div class="refCrop oculto" id="refCrop" style="${refCropStyle(cell)}"></div>
+      </div>`;
+    $('#btnRef').addEventListener('click', () => {
+      $('#refCrop').classList.toggle('oculto');
+    });
+    if (!yaIdentificada) { state.identificadas.add(cell.id); saveProgress(); }
+    return;
+  }
+
+  const opciones = OPCIONES_QUIZ.map(o => `<button type="button" data-id="${o.id}">${o.label}</button>`).join('');
+  wrap.innerHTML = `
+    <div class="cellCard">
+      <div class="cellMeta">¿Qué célula es esta? Elige una opción y verifica.</div>
+      <div class="quizGrid" id="quizGrid">${opciones}</div>
+      <button type="button" class="primaryBtn" id="btnVerificar" disabled>Verificar</button>
+      <div class="feedback oculto" id="quizFeedback"></div>
+    </div>`;
+
+  $$('#quizGrid button').forEach(b => {
+    b.addEventListener('click', () => {
+      $$('#quizGrid button').forEach(x => x.classList.remove('picked'));
+      b.classList.add('picked');
+      state.quizPicked = b.dataset.id;
+      $('#btnVerificar').disabled = false;
+    });
+  });
+  $('#btnVerificar').addEventListener('click', () => verifyQuiz(cell));
+}
+
+function verifyQuiz(cell) {
+  const ok = state.quizPicked === cell.id;
+  const fb = $('#quizFeedback');
+  fb.classList.remove('oculto', 'ok', 'bad');
+  fb.classList.add(ok ? 'ok' : 'bad');
+  fb.innerHTML = ok
+    ? `<b>¡Correcto!</b> ${cell.clave}`
+    : `<b>No exactamente.</b> ${cell.clave}`;
+  $$('#quizGrid button').forEach(b => b.disabled = true);
+  $('#btnVerificar').disabled = true;
+  if (ok && !state.identificadas.has(cell.id)) { state.identificadas.add(cell.id); saveProgress(); }
+}
+
+$('#quizMode').addEventListener('change', (e) => {
+  state.quizMode = e.target.checked;
+  renderCellCard();
+});
+
+/* ── Selector de laminilla ── */
+async function selectLamina(key) {
+  state.laminaKey = key;
+  state.activeCell = null;
+  $$('#laminaTabs button').forEach(b => b.classList.toggle('on', b.dataset.lamina === key));
+  renderCellCard();
+
+  if (state.imgResuelta[key] === undefined) {
+    state.imgResuelta[key] = await resolveLaminaImg(key);
+  }
+  const centered = centerToPan(0.5, 0.5, lamina().zoomBgSize[state.zoom], lamina().aspect);
+  state.panX = centered.panX; state.panY = centered.panY;
+  applyLens({ jumpBlur: true });
+}
+
+$$('#laminaTabs button').forEach(b => b.addEventListener('click', () => selectLamina(b.dataset.lamina)));
+$$('#revolver button').forEach(b => b.addEventListener('click', () => setZoom(Number(b.dataset.zoom))));
+
+/* ── Tabs del panel lateral ── */
+$$('.panelTabs button').forEach(b => b.addEventListener('click', () => {
+  $$('.panelTabs button').forEach(x => x.classList.toggle('on', x === b));
+  $('#panelId').classList.toggle('oculto', b.dataset.tab !== 'id');
+  $('#panelTeoria').classList.toggle('oculto', b.dataset.tab !== 'teoria');
+}));
+
+/* ── Hint inicial ── */
+const HINT_KEY = 'medgo-microscopio-hint-seen';
+if (localStorage.getItem(HINT_KEY) === '1') $('#hintBanner').classList.add('oculto');
+$('#hintClose').addEventListener('click', () => {
+  $('#hintBanner').classList.add('oculto');
+  try { localStorage.setItem(HINT_KEY, '1'); } catch (e) {}
+});
+
+/* ── Puente con el dashboard (modo flow: altura dinámica) ── */
+const EMBEBIDO = window.parent !== window;
+document.body.classList.add('flowMode');
+if (EMBEBIDO) document.body.classList.add('embedded');
+let ultimaAltura = -1;
+function enviarAlPadre(msg) {
+  if (!EMBEBIDO) return;
+  window.parent.postMessage({ source: 'medgo-microscopio-sim', ...msg }, window.location.origin);
+}
+function reportSize() {
+  const height = Math.ceil($('#app').getBoundingClientRect().height);
+  if (height === ultimaAltura) return;
+  ultimaAltura = height;
+  enviarAlPadre({ type: 'size', height });
+}
+new ResizeObserver(reportSize).observe($('#app'));
+window.addEventListener('message', (e) => {
+  if (e.origin !== window.location.origin) return;
+  const d = e.data;
+  if (!d || d.target !== 'medgo-microscopio-sim') return;
+  if (d.type === 'sync') { ultimaAltura = -1; reportSize(); }
+});
+
+/* ── Init ── */
+$('#progressTotal').textContent = TOTAL_CELULAS;
+loadProgress();
+saveProgress();
+(async function init() {
+  state.imgResuelta.sangre = await resolveLaminaImg('sangre');
+  applyLens();
+  reportSize();
+})();
+</script>
+</body>
+</html>

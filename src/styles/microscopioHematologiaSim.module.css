@@ -1,0 +1,89 @@
+/* Contenedor de la simulación del microscopio virtual (médula ósea y serie
+   blanca). El módulo educativo vive en `public/simulaciones/microscopio-hematologia.html`
+   (HTML autocontenido, sin React) y se embebe en un iframe que informa su
+   altura real por postMessage — mismo patrón que frotisSim.module.css, pero
+   sin barra de navegación porque no es un flujo de pasos, es una sola
+   pantalla continua. */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: -28px -28px -36px;
+  min-height: calc(100dvh - 48px);
+  background: #f8faff;
+  border-radius: 18px;
+}
+
+:global(.dark-mode) .wrapper {
+  background: #08061a;
+}
+
+.topBar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 18px 18px 0 0;
+}
+
+:global(.dark-mode) .topBar {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  background: rgba(13, 11, 40, 0.9);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(26, 26, 46, 0.5);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.backLink:hover { color: #1a1a2e; }
+
+:global(.dark-mode) .backLink { color: rgba(240, 238, 255, 0.55); }
+:global(.dark-mode) .backLink:hover { color: #f0eeff; }
+
+.expand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #1a6fa8;
+  background: rgba(59, 158, 221, 0.12);
+  border: 1px solid rgba(59, 158, 221, 0.3);
+  padding: 5px 12px;
+  border-radius: 99px;
+  transition: background 0.2s;
+}
+.expand:hover { background: rgba(59, 158, 221, 0.2); }
+
+:global(.dark-mode) .expand {
+  color: #f0eeff;
+  background: rgba(59, 158, 221, 0.16);
+  border-color: rgba(59, 158, 221, 0.32);
+}
+:global(.dark-mode) .expand:hover { background: rgba(59, 158, 221, 0.28); }
+
+.frame {
+  flex: none;
+  width: 100%;
+  border: 0;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .wrapper {
+    margin: -18px -16px -28px;
+    min-height: calc(100dvh - 88px);
+  }
+}

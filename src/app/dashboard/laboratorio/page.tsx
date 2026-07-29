@@ -96,7 +96,7 @@ const LAB_TOPICS: Topic[] = [
     experiments: [
       { name: 'Frotis Sanguíneo · Simulación', desc: 'Práctica 1 completa en 3D: extendido, zonas, tinción de Wright, morfología eritrocitaria y recuento plaquetario', color: '#E85B4A', href: '/dashboard/laboratorio/frotis-sanguineo' },
       { name: 'Hemograma Completo',     desc: 'Conteo de células sanguíneas y parámetros',         color: '#2DC99A' },
-      { name: 'Morfología Celular',     desc: 'Identificación y análisis de células sanguíneas',   color: '#F5A623' },
+      { name: 'Microscopio: Médula Ósea y Serie Blanca · Simulación', desc: 'Práctica 2: microscopio virtual, identificación de la serie blanca y fórmula diferencial', color: '#F5A623', href: '/dashboard/laboratorio/microscopio-hematologia' },
       { name: 'Pruebas de Coagulación', desc: 'Estudios de hemostasia y factores de coagulación',  color: '#E85B4A' },
       { name: 'Conteo de Reticulocitos',desc: 'Evaluación de la producción de glóbulos rojos',    color: '#F5A623' },
       { name: 'Electroforesis Hb',      desc: 'Identificación de hemoglobinopatías',               color: '#E85B4A' },

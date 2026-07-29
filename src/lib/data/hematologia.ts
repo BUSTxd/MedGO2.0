@@ -258,7 +258,10 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Médula ósea', 'Serie blanca', 'Fórmula leucocitaria diferencial'],
         docentes: [],
-        simulacion: { desc: 'Práctica interactiva de serie blanca y fórmula diferencial' },
+        simulacion: {
+          href: '/dashboard/laboratorio/microscopio-hematologia',
+          desc: 'Microscopio virtual: identifica la serie blanca y practica la fórmula diferencial',
+        },
       },
       {
         id: 'clase-10',

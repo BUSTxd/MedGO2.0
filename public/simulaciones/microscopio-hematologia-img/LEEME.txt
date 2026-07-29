@@ -1,0 +1,36 @@
+Láminas panorámicas del microscopio virtual — Hematología, Lab 2
+=================================================================
+
+Copia aquí los archivos con EXACTAMENTE estos nombres (sin acentos).
+La extensión puede ser .jpg, .jpeg, .png, .webp o .avif — la simulación
+las prueba en ese orden y usa la primera que exista.
+
+Mientras un archivo no esté, el ocular muestra un recuadro gris con el
+texto "Coloca aquí: <nombre-de-archivo>.jpg (3000x2000px aprox.)" y la
+simulación (controles, revólver, perilla de enfoque, teoría) funciona
+igual — solo falta la imagen. No hay que tocar código: basta con dejar
+el archivo y recargar.
+
+  lamina-sangre-periferica    Frotis de sangre periférica: fondo de
+                              eritrocitos repartido de forma pareja,
+                              con neutrófilo, eosinófilo, basófilo,
+                              monocito, linfocito y blasto distribuidos
+                              en distintas zonas del campo (no todas
+                              juntas ni en el centro).
+                              Tamaño recomendado: mínimo 3000x2000 px.
+
+  lamina-medula-osea          Aspirado de médula ósea: espículas, tejido
+                              adiposo y tejido hematopoyético, con
+                              megacariocito, precursores mieloides y
+                              precursores eritroides distribuidos en
+                              distintas zonas del campo.
+                              Tamaño recomendado: mínimo 3000x2000 px.
+
+Recomendación: exportar a .webp o .jpg con calidad ~85. Al ser zoom
+digital (transform sobre la misma imagen, sin cambiar de archivo al
+cambiar de objetivo), a mayor resolución real más nítido se ve 100X.
+
+Las coordenadas relativas (0–1) de cada célula dentro de la imagen y
+las "zonas ideales" de 10X se definen en microscopio-hematologia.html,
+dentro del objeto LAMINAS — ajústalas ahí cuando subas las imágenes
+reales, comparando contra dónde cae cada célula en tu archivo.
