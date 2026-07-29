@@ -83,6 +83,7 @@ export const semanas: Semana[] = [
           'Eritropoyesis',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-2', label: 'Resumen' }] },
       },
       {
         id: 'clase-3',
@@ -93,6 +94,7 @@ export const semanas: Semana[] = [
         hora: '09:00–10:00',
         subtemas: ['Serie roja del hemograma', 'Índices eritrocitarios (VCM, HCM, CHCM, RDW)'],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-3', label: 'Resumen' }] },
       },
       {
         id: 'clase-4',
@@ -108,6 +110,7 @@ export const semanas: Semana[] = [
           'Grupos sanguíneos: ABO, Rh y otros sistemas',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-4', label: 'Resumen' }] },
       },
       {
         id: 'lab-1',
@@ -150,6 +153,7 @@ export const semanas: Semana[] = [
           'Ganglios linfáticos: estructura y función',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-5', label: 'Resumen' }] },
       },
       {
         id: 'clase-6',
@@ -160,6 +164,7 @@ export const semanas: Semana[] = [
         hora: '13:00–15:00',
         subtemas: ['Absorción del hierro', 'Transferrina y transporte', 'Reciclaje del hierro'],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-6', label: 'Resumen' }] },
       },
       {
         id: 'repaso-1',
@@ -199,6 +204,7 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Inmunidad innata y adaptativa', 'Órganos y células del sistema inmune'],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-7', label: 'Resumen' }] },
       },
       {
         id: 'clase-8',
@@ -212,6 +218,7 @@ export const semanas: Semana[] = [
           'Plaquetas: membrana, gránulos, citoesqueleto',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-8', label: 'Resumen' }] },
       },
       {
         id: 'clase-9',
@@ -258,6 +265,7 @@ export const semanas: Semana[] = [
         hora: '13:00–15:00',
         subtemas: ['Transfusión sanguínea', 'Compatibilidad ABO y HLA'],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-10', label: 'Resumen' }] },
       },
       {
         id: 'repaso-2',
@@ -302,6 +310,7 @@ export const semanas: Semana[] = [
           'Quimioterápicos y ciclo celular',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-11', label: 'Resumen' }] },
       },
       {
         id: 'clase-12',
@@ -312,6 +321,7 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Neutrófilos', 'Eosinófilos', 'Basófilos', 'Linfocitos', 'Monocitos'],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-12', label: 'Resumen' }] },
       },
       {
         id: 'repaso-final',
