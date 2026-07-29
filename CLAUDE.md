@@ -279,6 +279,24 @@ Sección `dashboard/investigacion`: mapa serpenteante (estilo Duolingo) donde ca
 
 ---
 
+## Simulación del microscopio virtual (Hematología · Práctica 2) — ⚠️ INCOMPLETA
+
+**Estado: falta terminar.** La estructura e interacción están construidas, pero **faltan las 2 imágenes panorámicas reales y las coordenadas de las células**, que el usuario debe proveer. Hasta entonces el ocular muestra un placeholder gris ("Coloca aquí: `<archivo>`.jpg").
+
+HTML autocontenido (sin React, mismo criterio que el frotis) en `public/simulaciones/microscopio-hematologia.html`, embebido vía `MicroscopioHematologiaFrame.tsx` (modo flow, altura dinámica por `postMessage`, sin barra de navegación por pasos porque es una sola pantalla continua, no un flujo). Enlazado desde `hematologia.ts` (`lab-2`, con `simulacion.href`) y desde `LAB_TOPICS` de `laboratorio/page.tsx`.
+
+**Mecánica de pan/zoom**: en vez de `transform: translate()/scale()` sobre un `<img>`, usa `background-position`/`background-size` en porcentaje sobre un único `<div class="lens">` — el pan (0–100%) y el punto de imagen bajo el centro del ocular se derivan con fórmulas puramente algebraicas (`kFor`/`panToPoint`/`centerToPan` en el `<script>`), sin necesitar las dimensiones reales en píxeles de la imagen (solo un `aspect` configurable, 1.5 por defecto = 3000×2000). Esto es lo que hace posible construir toda la interacción antes de tener las imágenes.
+
+**Enfoque**: cambiar de objetivo dispara un salto de blur 8px→valor-actual (vía transición CSS en `filter`); a 40X/100X ese valor depende de la perilla manual (`#focusSlider`) contra un `idealTarget` aleatorio por objetivo — hay que afinarla para poder identificar (blur < 0.6px). A 10X siempre está enfocado (sin minijuego), y solo ahí se comprueba la "zona ideal" (`idealZones10x`, glow verde en el ocular).
+
+**Identificación**: clic en el ocular solo activo a 100X + enfocado; convierte el clic a coordenada relativa de imagen y busca la célula más cercana dentro de un radio de tolerancia. El panel lateral («Identificación» / «Teoría», pestañas) muestra nombre/tamaño/características o, en Modo Quiz, una rejilla de 9 opciones fijas (las 6 de sangre periférica + las 3 de médula, a propósito, para que distinguir cuáles no pertenecen a la laminilla actual sea parte del reto) con verificación y feedback citando la característica clave. El botón "Ver imagen de referencia" no usa una imagen aparte por célula: recorta la misma panorámica centrada en las coordenadas de esa célula con un `zoomBgSize` fijo alto.
+
+**Pendiente para completar la práctica**:
+- Las 2 imágenes panorámicas reales en `public/simulaciones/microscopio-hematologia-img/` (`lamina-sangre-periferica` y `lamina-medula-osea`, ver su `LEEME.txt`).
+- Recalibrar en `LAMINAS` (dentro del HTML) las coordenadas `x`/`y` (0–1) de cada célula y de `idealZones10x` contra las imágenes reales — las actuales son placeholder repartidas a mano.
+
+---
+
 ## Editor de Modelado 3D (`dashboard/modelado`, solo admin)
 
 Editor visual 3D sin código, construido con Three.js + React Three Fiber + drei. Visible y accesible **únicamente** para `isAdminEmail` (`src/lib/admin.ts`) — mismo guard que `dashboard/admin`: `page.tsx` (RSC) hace `redirect` a login si no hay sesión y `notFound()` si el email no es admin. En la sidebar, `MODELADO_ITEM` (ícono cubo 3D) se inserta solo con `isAdmin`, justo antes de `ADMIN_ITEM`.
