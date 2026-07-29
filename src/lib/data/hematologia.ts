@@ -139,6 +139,7 @@ export const semanas: Semana[] = [
           'Transfusión de hemoderivados',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-sgp-1', label: 'Resumen' }] },
       },
       {
         id: 'clase-5',
@@ -194,6 +195,7 @@ export const semanas: Semana[] = [
         hora: '08:00–11:00',
         subtemas: ['Interpretación del hemograma', 'Anemia hemolítica'],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-tbl-1', label: 'Resumen' }] },
       },
       {
         id: 'clase-7',
@@ -295,6 +297,7 @@ export const semanas: Semana[] = [
         hora: '08:00–11:00',
         subtemas: ['Factor de von Willebrand', 'Diagnóstico y clasificación'],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-tbl-2', label: 'Resumen' }] },
       },
       {
         id: 'clase-11',
@@ -342,6 +345,7 @@ export const semanas: Semana[] = [
         hora: '08:00–12:00',
         subtemas: ['Leucocitosis y leucemia', 'Médula ósea', 'Esplenomegalia'],
         docentes: [],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-sgp-3', label: 'Resumen' }] },
       },
     ],
   },

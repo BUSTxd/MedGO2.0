@@ -25,6 +25,7 @@ const ALLOWED = new Set([
   // Hematología (prefijo `hem-` evita colisión con clase-* de otros cursos)
   'hem-2', 'hem-3', 'hem-4', 'hem-5', 'hem-6',
   'hem-7', 'hem-8', 'hem-10', 'hem-11', 'hem-12',
+  'hem-tbl-1', 'hem-sgp-1', 'hem-tbl-2', 'hem-sgp-3',
 ]);
 
 // IDs that require an active paid plan (Interno/Residente). Free-plan users
@@ -82,6 +83,10 @@ const FILE_ALIAS: Record<string, string> = {
   'hem-10':   'hematologia/clase-10',
   'hem-11':   'hematologia/clase-11',
   'hem-12':   'hematologia/clase-12',
+  'hem-tbl-1': 'hematologia/tbl-1',
+  'hem-sgp-1': 'hematologia/sgp-1',
+  'hem-tbl-2': 'hematologia/tbl-2',
+  'hem-sgp-3': 'hematologia/sgp-3',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga
