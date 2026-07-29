@@ -39,6 +39,10 @@ interface Props {
   examen?: ExamenRef;
   examenTitle?: string;
   simulacion?: SimulacionRef;
+  /** Omite del todo la tarjeta de Banqueo (ni siquiera "Próximamente") — para
+   *  actividades donde ese material nunca va a existir, como los laboratorios
+   *  de Hematología. */
+  hideBanqueo?: boolean;
 }
 
 const BeakerIcon = () => (
@@ -47,7 +51,7 @@ const BeakerIcon = () => (
   </svg>
 );
 
-export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, examen, simulacion }: Props) {
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, examen, simulacion, hideBanqueo }: Props) {
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
   const pathname = usePathname();
 
@@ -96,7 +100,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
     <div className={styles.studySection}>
       <p className={styles.studyLabel}>Material de Estudio</p>
 
-      <div className={styles.studyGrid}>
+      <div className={`${styles.studyGrid} ${hideBanqueo ? styles.studyGridTwo : ''}`}>
         {/* Simulación (labs) o Video resumen (resto de clases) */}
         {simulacion ? (
           simulacion.href ? (
@@ -137,8 +141,9 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           </div>
         )}
 
-        {/* Banco de preguntas / examen interactivo */}
-        {examen ? (
+        {/* Banco de preguntas / examen interactivo — omitido del todo en
+            actividades donde nunca va a existir (hideBanqueo). */}
+        {hideBanqueo ? null : examen ? (
           <Link
             href={`${pathname}?examen=1`}
             className={`${styles.studyCard} ${styles.studyCardActive}`}

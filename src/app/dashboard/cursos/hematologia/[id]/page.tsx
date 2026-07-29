@@ -97,6 +97,9 @@ export default async function ActividadPage({
           resumenOpciones={act.resumen?.opciones}
           /* En las prácticas de laboratorio la primera tarjeta es «Simulación». */
           simulacion={isLab ? (act.simulacion ?? {}) : undefined}
+          /* Los labs de Hematología nunca van a tener banco de preguntas: sólo
+             Simulación y Resumen. */
+          hideBanqueo={isLab}
         />
       </div>
     </div>

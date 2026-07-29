@@ -793,6 +793,13 @@
   margin-bottom: 20px;
 }
 
+/* Cuando se omite la tarjeta de Banqueo (hideBanqueo), quedan sólo 2 — sin
+   esto, el grid de 3 columnas dejaría un hueco vacío a la derecha en vez de
+   repartir el ancho entre las dos que sí hay. */
+.studyGridTwo {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 @media (max-width: 640px) {
   .studyGrid { grid-template-columns: 1fr; }
 }
