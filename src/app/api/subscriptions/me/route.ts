@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { getUserPlanState } from '@/lib/plans';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -19,19 +20,12 @@ export async function GET() {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('plan, plan_expires_at')
-    .eq('id', user.id)
-    .maybeSingle<{ plan: string | null; plan_expires_at: string | null }>();
-
-  const plan = (profile?.plan as 'free' | 'interno' | 'residente' | null) ?? 'free';
-  const expiresAt = profile?.plan_expires_at ?? null;
-  const isActive =
-    plan !== 'free' && !!expiresAt && new Date(expiresAt).getTime() > Date.now();
+  // Misma fuente de verdad que el resto del sitio (getCachedPlanState): así el
+  // bypass de admin también aplica aquí en vez de recalcular el plan aparte.
+  const { plan, isActive, expiresAt } = await getUserPlanState(supabase);
 
   return NextResponse.json({
     subscription: data ?? null,
-    planState: { plan, isActive, expiresAt },
+    planState: { plan, isActive, expiresAt: expiresAt ? expiresAt.toISOString() : null },
   });
 }

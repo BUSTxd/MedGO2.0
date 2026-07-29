@@ -1,4 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { isAdminEmail } from './admin';
 
 export type PlanKey = 'interno' | 'residente';
 export type ProfilePlan = 'free' | 'interno' | 'residente';
@@ -48,6 +49,15 @@ export interface PlanState {
 export async function getUserPlanState(supabase: SupabaseClient): Promise<PlanState> {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { plan: 'free', isActive: false, expiresAt: null };
+
+  // El admin tiene acceso completo a todo el contenido sin depender de una
+  // suscripción activa en `profiles` — mismo criterio que ya usan /admin y
+  // /modelado. Sin esto, cualquier curso nuevo que no tenga sus clases
+  // marcadas `free: true` a mano queda bloqueado en cuanto el plan de prueba
+  // del admin expira.
+  if (isAdminEmail(user.email)) {
+    return { plan: 'residente', isActive: true, expiresAt: null };
+  }
 
   const { data } = await supabase
     .from('profiles')
