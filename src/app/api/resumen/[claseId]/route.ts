@@ -27,6 +27,11 @@ const ALLOWED = new Set([
   'hem-7', 'hem-8', 'hem-10', 'hem-11', 'hem-12',
   'hem-tbl-1', 'hem-sgp-1', 'hem-tbl-2', 'hem-sgp-3',
   'hem-sgp-2', 'hem-9',
+  // Química Orgánica
+  'qor-s-1-tablas', 'qor-s-1-visual',
+  'qor-s-2', 'qor-s-3', 'qor-s-4',
+  'qor-s-6', 'qor-s-7', 'qor-s-8', 'qor-s-9', 'qor-s-10',
+  'qor-s-11', 'qor-s-12', 'qor-s-13', 'qor-s-14',
 ]);
 
 // IDs that require an active paid plan (Interno/Residente). Free-plan users
@@ -90,6 +95,21 @@ const FILE_ALIAS: Record<string, string> = {
   'hem-sgp-3': 'hematologia/sgp-3',
   'hem-sgp-2': 'hematologia/sgp-2',
   'hem-9':     'hematologia/clase-9',
+  // Química Orgánica — subcarpeta quimica-organica/
+  'qor-s-1-tablas': 'quimica-organica/qor-s-1-tablas',
+  'qor-s-1-visual': 'quimica-organica/qor-s-1-visual',
+  'qor-s-2':  'quimica-organica/qor-s-2',
+  'qor-s-3':  'quimica-organica/qor-s-3',
+  'qor-s-4':  'quimica-organica/qor-s-4',
+  'qor-s-6':  'quimica-organica/qor-s-6',
+  'qor-s-7':  'quimica-organica/qor-s-7',
+  'qor-s-8':  'quimica-organica/qor-s-8',
+  'qor-s-9':  'quimica-organica/qor-s-9',
+  'qor-s-10': 'quimica-organica/qor-s-10',
+  'qor-s-11': 'quimica-organica/qor-s-11',
+  'qor-s-12': 'quimica-organica/qor-s-12',
+  'qor-s-13': 'quimica-organica/qor-s-13',
+  'qor-s-14': 'quimica-organica/qor-s-14',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga

@@ -90,6 +90,13 @@ export const semanas: Semana[] = [
           'Fórmulas estructurales y esqueletales',
         ],
         docentes: [],
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'qor-s-1-tablas', label: 'Resumen — tablas' },
+            { id: 'qor-s-1-visual', label: 'Resumen — visual' },
+          ],
+        },
       },
       {
         id: 'qor-pd-1',
@@ -120,6 +127,7 @@ export const semanas: Semana[] = [
           'Deslocalización electrónica',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-pd-2',
@@ -150,6 +158,7 @@ export const semanas: Semana[] = [
           'Enantiómeros, diastereómeros y actividad óptica',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-pd-3',
@@ -204,6 +213,7 @@ export const semanas: Semana[] = [
           'Solubilidad y polaridad',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-pd-4',
@@ -263,6 +273,7 @@ export const semanas: Semana[] = [
           'Diagramas de energía',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-s-7',
@@ -279,6 +290,7 @@ export const semanas: Semana[] = [
           'Reacciones de alquinos',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-pd-6',
@@ -318,6 +330,7 @@ export const semanas: Semana[] = [
           'Grupos salientes',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-pd-7',
@@ -348,6 +361,7 @@ export const semanas: Semana[] = [
           'Enoles y enolatos',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-s-10',
@@ -363,6 +377,7 @@ export const semanas: Semana[] = [
           'Efecto de los sustituyentes y orientación',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-pd-8',
@@ -418,6 +433,7 @@ export const semanas: Semana[] = [
           'Azúcares reductores',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-lab-3',
@@ -449,6 +465,7 @@ export const semanas: Semana[] = [
           'Niveles estructurales de las proteínas',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-lab-4',
@@ -480,6 +497,7 @@ export const semanas: Semana[] = [
           'Esteroides y terpenos',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-s-14',
@@ -496,6 +514,7 @@ export const semanas: Semana[] = [
           'Selectividad',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-taller-1',
