@@ -92,37 +92,15 @@
   padding: 8px 12px;
   position: relative;
   z-index: 2;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+  /* Sin barra visible: ensucia el degradado del sidebar y además descentraba
+     los íconos en estado colapsado. El difuminado de los bordes es la única
+     señal de que hay más ítems, y basta. */
+  scrollbar-width: none;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%);
 }
 
 .nav::-webkit-scrollbar {
-  width: 6px;
-}
-
-.nav::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.nav::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.18);
-  border-radius: 999px;
-}
-
-.nav::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.32);
-}
-
-/* Colapsada (68px) quedan ~44px útiles: un scrollbar de 6px descentraría los
-   íconos. Se oculta la barra pero el scroll sigue activo, y el difuminado de
-   los bordes sigue avisando de que hay más ítems. */
-.collapsed .nav {
-  scrollbar-width: none;
-}
-
-.collapsed .nav::-webkit-scrollbar {
   display: none;
 }
 
