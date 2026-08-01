@@ -78,9 +78,52 @@
   flex-direction: column;
   gap: 6px;
   flex: 1;
-  padding: 0 12px;
+  /* `min-height: 0` es imprescindible: por defecto un flex item vale
+     `min-height: auto`, o sea que no puede encogerse por debajo de su
+     contenido — y entonces `overflow-y` nunca llega a activarse, la lista
+     sigue creciendo y empuja el toggle y el footer fuera del viewport. */
+  min-height: 0;
+  overflow-y: auto;
+  /* Evita que al llegar al final del nav el scroll siga en la página. */
+  overscroll-behavior: contain;
+  /* El padding vertical iguala el difuminado: en reposo la máscara solo tapa
+     padding, así que el primer y último ítem se ven nítidos; el fundido solo
+     aparece cuando hay contenido pasando por debajo. */
+  padding: 8px 12px;
   position: relative;
   z-index: 2;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%);
+}
+
+.nav::-webkit-scrollbar {
+  width: 6px;
+}
+
+.nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+
+.nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+/* Colapsada (68px) quedan ~44px útiles: un scrollbar de 6px descentraría los
+   íconos. Se oculta la barra pero el scroll sigue activo, y el difuminado de
+   los bordes sigue avisando de que hay más ítems. */
+.collapsed .nav {
+  scrollbar-width: none;
+}
+
+.collapsed .nav::-webkit-scrollbar {
+  display: none;
 }
 
 .navItem {
