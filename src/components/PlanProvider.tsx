@@ -1,6 +1,6 @@
 'use client';
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import type { ProfilePlan } from '@/lib/plans';
+import { isPlanKey, type ProfilePlan } from '@/lib/plans';
 
 export interface ClientPlanState {
   plan: ProfilePlan;
@@ -29,9 +29,7 @@ function deriveClientState(sub: ApiSubscription | null): ClientPlanState {
   if (!sub || sub.status !== 'authorized') {
     return { plan: 'free', isActive: false, expiresAt: null };
   }
-  const plan = (sub.plan_key === 'interno' || sub.plan_key === 'residente')
-    ? sub.plan_key as ProfilePlan
-    : 'free';
+  const plan: ProfilePlan = sub.plan_key && isPlanKey(sub.plan_key) ? sub.plan_key : 'free';
   const expiresAt = sub.next_payment_date ?? null;
   const isActive = plan !== 'free'
     && (expiresAt ? new Date(expiresAt).getTime() > Date.now() : false);

@@ -229,3 +229,11 @@
   color: #1e40af;
 }
 :global(body.dark-mode) .planResidente { background: #1e3a8a; color: #93c5fd; }
+
+/* Tramo básico (UFBI): color propio para distinguirlo de un vistazo de los
+   planes de la Facultad de Medicina. */
+.planUfbi {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+:global(body.dark-mode) .planUfbi { background: #4c1d95; color: #d8b4fe; }

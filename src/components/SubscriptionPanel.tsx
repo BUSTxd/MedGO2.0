@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import type { ProfilePlan } from '@/lib/plans';
+import type { PlanKey, ProfilePlan } from '@/lib/plans';
 import styles from '@/styles/accountPage.module.css';
 
 interface SubRow {
   id: string;
-  plan_key: 'interno' | 'residente';
+  plan_key: PlanKey;
   status: 'pending' | 'authorized' | 'paused' | 'cancelled';
   amount: number;
   currency: string;

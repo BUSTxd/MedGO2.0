@@ -2,25 +2,170 @@
   background: rgba(255, 255, 255, 0.015);
 }
 
+/* ── Selector de tramo (1.er año UFBI · 2.º-7.º Medicina) ──────────────────
+   El alumno se identifica antes de ver precios: así nunca compara el plan de
+   UFBI con el de la Facultad de Medicina, que cubren cursos distintos. */
+/* ── Switch de tramo, estilo interruptor día/noche ─────────────────────────
+   Riel en píldora + perilla circular que viaja de extremo a extremo. Las
+   etiquetas van FUERA del riel (a los lados) y también son clicables. */
+.trackToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  margin: 0 auto 40px;
+}
+
+.trackSide {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.35s ease, opacity 0.35s ease;
+  opacity: 0.55;
+}
+
+.trackSideLeft  { align-items: flex-end; text-align: right; }
+.trackSideRight { align-items: flex-start; text-align: left; }
+
+.trackSide:hover { opacity: 0.85; }
+
+.trackSideActive {
+  color: var(--white);
+  opacity: 1;
+}
+
+.trackLabel {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.trackSub {
+  font-size: 12px;
+  opacity: 0.7;
+  letter-spacing: 0.01em;
+}
+
+/* Riel. Proporción ~2:1 y radio completo, como el interruptor de referencia. */
+.switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 92px;
+  height: 46px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.45s ease, box-shadow 0.45s ease;
+}
+
+.switch[data-track='basico'] {
+  background: linear-gradient(135deg, #3b9edd, #2b7fb8);
+  box-shadow: 0 6px 20px rgba(59, 158, 221, 0.35);
+}
+
+.switch[data-track='medicina'] {
+  background: linear-gradient(135deg, #8b5cf6, #6d3fd4);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35);
+}
+
+/* Perilla: círculo blanco sólido, ~74% de la altura del riel, margen uniforme
+   de 6px. Recorrido = 92 − 6 − 6 − 34 = 46px. */
+.switchKnob {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+  transition: transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.switch[data-track='medicina'] .switchKnob {
+  transform: translateX(46px);
+}
+
+/* Los dos íconos ocupan el hueco que deja la perilla: solo se ve el del tramo
+   activo, en el extremo opuesto a ella. */
+.switchIconLeft,
+.switchIconRight {
+  position: absolute;
+  top: 6px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.switchIconLeft  { left: 6px; }
+.switchIconRight { right: 6px; }
+
+.switch[data-track='basico']   .switchIconRight { opacity: 1; }
+.switch[data-track='medicina'] .switchIconLeft  { opacity: 1; }
+
+/* El acento de las tarjetas lo hereda el grid del tramo activo, de modo que
+   fondo, checks, botón y brillo salen del mismo color que el switch.
+   `--acc` va como triplete RGB para poder modular alfa con rgba(). */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  /* Fallback: sin `--acc` definido, cualquier rgba(var(--acc), …) sería
+     inválido y la tarjeta perdería fondo, borde y brillo de golpe. */
+  --acc: 139, 92, 246;
+  --acc-deep: #6d3fd4;
+}
+
+.grid[data-track='basico'] {
+  --acc: 59, 158, 221;
+  --acc-deep: #2b7fb8;
+}
+
+.grid[data-track='medicina'] {
+  --acc: 139, 92, 246;
+  --acc-deep: #6d3fd4;
+}
+
+/* Tramo básico: solo Gratuito + UFBI. Se centran en vez de estirarse a lo
+   ancho de 3 columnas, que dejaría las tarjetas desproporcionadas. */
+.gridTwo {
+  grid-template-columns: repeat(2, minmax(0, 380px));
+  justify-content: center;
 }
 
 .card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  background:
+    linear-gradient(160deg, rgba(var(--acc), 0.09), rgba(var(--acc), 0.02)),
+    var(--card-bg);
+  border: 1px solid rgba(var(--acc), 0.18);
   border-radius: 24px;
   padding: 36px 28px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s;
+  transition: transform 0.3s, border-color 0.3s;
 }
 
+.card:not(.featured):hover {
+  border-color: rgba(var(--acc), 0.34);
+}
+
+/* La destacada del tramo es la que "brilla": mismo acento pero saturado, con
+   un halo exterior que respira (glowPulse). */
 .card.featured {
-  background: linear-gradient(145deg, rgba(59, 158, 221, 0.15), rgba(100, 60, 200, 0.15));
-  border-color: rgba(59, 158, 221, 0.4);
+  background: linear-gradient(145deg, rgba(var(--acc), 0.26), rgba(var(--acc), 0.09));
+  border-color: rgba(var(--acc), 0.55);
   transform: scale(1.03);
 }
 
@@ -30,6 +175,52 @@
 
 .card.featured:hover {
   transform: scale(1.03) translateY(-4px);
+}
+
+/* ── Entrada de las tarjetas al cambiar de tramo ──────────────────────────
+   `backwards` (no `both`) es intencional: al terminar la animación el estilo
+   vuelve a las reglas normales, así el hover y el scale del featured siguen
+   funcionando. Con `both` el frame final quedaría fijado y los anularía. */
+.card {
+  animation: cardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+/* Dos animaciones a la vez, en longhand para controlar cada lista por separado:
+   la entrada (una vez, sobre transform/opacity) y el brillo (infinito, sobre
+   box-shadow). Al tocar propiedades distintas no compiten entre sí. */
+.card.featured {
+  animation-name: cardInFeatured, glowPulse;
+  animation-duration: 0.5s, 3.4s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1), ease-in-out;
+  animation-fill-mode: backwards, none;
+  animation-iteration-count: 1, infinite;
+  animation-delay: calc(var(--i, 0) * 70ms), 0s;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Termina en el scale de reposo del featured para que no dé un salto al
+   soltar el control de la animación. */
+@keyframes cardInFeatured {
+  from { opacity: 0; transform: translateY(16px) scale(0.99); }
+  to   { opacity: 1; transform: translateY(0) scale(1.03); }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(var(--acc), 0.16),
+      0 10px 38px rgba(var(--acc), 0.26);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(var(--acc), 0.30),
+      0 14px 54px rgba(var(--acc), 0.48);
+  }
 }
 
 .badge {
@@ -102,7 +293,7 @@
 
 .features li::before {
   content: '✓';
-  color: var(--blue);
+  color: rgb(var(--acc));
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -130,13 +321,13 @@
 }
 
 .btnPrimary {
-  background: linear-gradient(135deg, var(--blue), oklch(0.52 0.2 270));
+  background: linear-gradient(135deg, rgb(var(--acc)), var(--acc-deep));
   color: #fff;
-  box-shadow: 0 8px 24px rgba(59, 158, 221, 0.35);
+  box-shadow: 0 8px 24px rgba(var(--acc), 0.35);
 }
 
 .btnPrimary:hover {
-  box-shadow: 0 12px 32px rgba(59, 158, 221, 0.5);
+  box-shadow: 0 12px 32px rgba(var(--acc), 0.5);
   transform: translateY(-1px);
 }
 
@@ -147,8 +338,8 @@
 }
 
 .btnGhost:hover {
-  border-color: var(--blue);
-  color: var(--blue);
+  border-color: rgb(var(--acc));
+  color: rgb(var(--acc));
 }
 
 .btnDisabled {
@@ -175,6 +366,10 @@
 
   .card.featured {
     transform: none;
+    /* Aquí el featured no lleva scale de reposo: usa la curva genérica, que
+       termina en scale(1), para no dar un tirón al acabar la animación.
+       Se re-declara la lista completa para no perder el brillo. */
+    animation-name: cardIn, glowPulse;
   }
 
   .card.featured:hover {
@@ -183,7 +378,63 @@
 }
 
 @media (max-width: 560px) {
-  .grid {
+  .grid,
+  .gridTwo {
     grid-template-columns: 1fr;
+  }
+
+  .trackToggle {
+    gap: 12px;
+  }
+
+  .trackLabel {
+    font-size: 13px;
+  }
+
+  .trackSub {
+    font-size: 10px;
+  }
+
+  .switch {
+    width: 74px;
+    height: 38px;
+  }
+
+  .switchKnob,
+  .switchIconLeft,
+  .switchIconRight {
+    width: 28px;
+    height: 28px;
+    top: 5px;
+  }
+
+  .switchKnob { left: 5px; }
+  .switchIconLeft { left: 5px; }
+  .switchIconRight { right: 5px; }
+
+  /* Recorrido = 74 − 5 − 5 − 28 = 36px */
+  .switch[data-track='medicina'] .switchKnob {
+    transform: translateX(36px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card.featured {
+    animation: none;
+  }
+
+  /* Sin el pulso, la destacada conservaría cero brillo: se lo damos fijo. */
+  .card.featured {
+    box-shadow:
+      0 0 0 1px rgba(var(--acc), 0.24),
+      0 12px 44px rgba(var(--acc), 0.36);
+  }
+
+  .switchKnob,
+  .switch,
+  .switchIconLeft,
+  .switchIconRight {
+    transition: none;
   }
 }

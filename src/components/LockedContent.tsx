@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { createClient } from '@/lib/supabase/client';
-import { PLANS, planRank, type ProfilePlan, type PlanKey } from '@/lib/plans';
+import { PLANS, planUnlocks, type ProfilePlan, type PlanKey } from '@/lib/plans';
 import { usePlan } from './PlanProvider';
 import styles from '@/styles/lockedContent.module.css';
 
@@ -15,6 +15,7 @@ const SubscribeModal = dynamic(() => import('./SubscribeModal'), { ssr: false })
 interface PlanState {
   plan: ProfilePlan;
   isActive: boolean;
+  allAccess?: boolean;
 }
 
 interface Props {
@@ -29,15 +30,15 @@ export default function LockedContent({ requiredPlan, planState, isAuthed, child
   const clientPlan = usePlan();
   const [open, setOpen] = useState(false);
 
-  // Server-rendered plan vs. plan vivo del Provider: usamos el más permisivo.
-  // Tras una compra exitosa, refreshPlan() actualiza clientPlan al instante,
-  // sin esperar a que el Server Component se re-renderice.
-  const effectivePlan: ProfilePlan =
-    planRank(clientPlan.plan) > planRank(planState.plan) ? clientPlan.plan : planState.plan;
-  const effectiveActive = planState.isActive || clientPlan.isActive;
-
-  const meetsRequirement =
-    effectiveActive && planRank(effectivePlan) >= planRank(requiredPlan);
+  // Server-rendered plan vs. plan vivo del Provider: basta con que UNO de los
+  // dos habilite el contenido. Tras una compra exitosa, refreshPlan() actualiza
+  // clientPlan al instante, sin esperar a que el Server Component re-renderice.
+  // No se puede elegir "el más permisivo" comparando rangos: interno y ufbi
+  // tienen el mismo rango en tramos distintos, y quedarse con uno de los dos
+  // bloquearía contenido al que el otro sí da acceso.
+  const serverOk = planState.isActive && planUnlocks(planState.plan, requiredPlan);
+  const clientOk = clientPlan.isActive && planUnlocks(clientPlan.plan, requiredPlan);
+  const meetsRequirement = !!planState.allAccess || serverOk || clientOk;
 
   // No desbloqueamos mientras el SubscribeModal está abierto: si el plan se
   // acaba de actualizar tras pagar, hay que mantener visible el receipt hasta
@@ -76,7 +77,10 @@ export default function LockedContent({ requiredPlan, planState, isAuthed, child
 
           <h2 className={styles.title}>Contenido bloqueado</h2>
           <p className={styles.desc}>
-            Suscríbete al plan <strong>{plan.label}</strong> para acceder a esta clase y al resto de Microbiología.
+            Suscríbete al plan <strong>{plan.label}</strong> para acceder a esta clase y al resto de{' '}
+            {plan.track === 'basico'
+              ? 'los cursos del ciclo básico'
+              : 'los cursos de la Facultad de Medicina'}.
           </p>
 
           <span className={styles.priceTag}>

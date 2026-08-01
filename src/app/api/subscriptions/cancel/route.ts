@@ -24,7 +24,7 @@ export async function POST() {
       id: string;
       mp_preapproval_id: string;
       status: string;
-      plan_key: 'interno' | 'residente';
+      plan_key: 'interno' | 'residente' | 'ufbi';
       created_at: string;
     }>();
 

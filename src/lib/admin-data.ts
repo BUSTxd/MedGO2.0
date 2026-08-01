@@ -1,7 +1,7 @@
 import { createAdminClient } from '@/lib/supabase/admin';
 import { countActiveDevicesByUser } from '@/lib/sessions';
 
-export type AdminPlan = 'free' | 'interno' | 'residente';
+export type AdminPlan = 'free' | 'interno' | 'residente' | 'ufbi';
 export type AdminSubStatus = 'pending' | 'authorized' | 'paused' | 'cancelled';
 
 export interface AdminRow {

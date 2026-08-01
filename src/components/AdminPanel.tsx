@@ -39,12 +39,14 @@ function formatNextPayment(date: string | null): string {
 function planBadgeClass(plan: AdminRow['plan']): string {
   if (plan === 'interno')   return `${styles.planBadge} ${styles.planInterno}`;
   if (plan === 'residente') return `${styles.planBadge} ${styles.planResidente}`;
+  if (plan === 'ufbi')      return `${styles.planBadge} ${styles.planUfbi}`;
   return `${styles.planBadge} ${styles.planFree}`;
 }
 
 function planLabel(plan: AdminRow['plan']): string {
   if (plan === 'interno')   return 'Interno';
   if (plan === 'residente') return 'Residente';
+  if (plan === 'ufbi')      return 'UFBI';
   return 'Free';
 }
 

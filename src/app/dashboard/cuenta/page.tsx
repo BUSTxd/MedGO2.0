@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import SubscriptionPanel from '@/components/SubscriptionPanel';
 import DeviceList, { type DeviceListItem } from '@/components/DeviceList';
-import { PLANS, type ProfilePlan } from '@/lib/plans';
+import { PLANS, type PlanKey, type ProfilePlan } from '@/lib/plans';
 import {
   getDeviceId,
   listActiveSessions,
@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic';
 
 interface SubRow {
   id: string;
-  plan_key: 'interno' | 'residente';
+  plan_key: PlanKey;
   status: 'pending' | 'authorized' | 'paused' | 'cancelled';
   amount: number;
   currency: string;

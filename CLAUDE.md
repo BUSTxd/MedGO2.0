@@ -128,12 +128,26 @@ src/app/
 
 ## Sistema de planes y paywall
 
-Definido en `src/lib/plans.ts`:
-- `free` — acceso básico
-- `interno` — S/ 14/mes (Mercado Pago `preapproval`)
-- `residente` — S/ 142.80/año
+Definido en `src/lib/plans.ts`. Los planes se agrupan en **dos tramos** (`Track`), que se cursan en facultades distintas y **no son niveles de un mismo escalafón**:
 
-El plan del usuario vive en `profiles.plan` + `profiles.plan_expires_at` en Supabase. Para verificar plan en servidor usar `getCachedPlanState()` de `src/lib/plans-server.ts`.
+| Plan | Precio | Tramo | Desbloquea |
+|---|---|---|---|
+| `free` | — | — | acceso básico |
+| `ufbi` | S/ 20/mes | `basico` | los 6 cursos del ciclo básico (1.er año, UFBI) |
+| `interno` | S/ 14/mes | `medicina` | los cursos de la Facultad de Medicina (2.º-7.º año) |
+| `residente` | S/ 142.80/año | `medicina` | ídem + extras |
+
+**Regla crítica de acceso**: usar `planUnlocks(plan, required)`, **nunca** comparar `planRank()` a secas. Un plan de un tramo jamás abre cursos del otro; `planRank` solo ordena *dentro* de un mismo tramo (residente ≥ interno). Cada `[id]/page.tsx` de curso declara su tramo vía `requiredPlan` en `<LockedContent>` (`"ufbi"` en los 6 del ciclo básico, `"interno"` en el resto).
+
+El admin lleva `allAccess: true` en `PlanState` (`getUserPlanState`) — sin ese flag su plan `residente` pertenece al tramo `medicina` y le bloquearía los cursos de UFBI.
+
+El plan del usuario vive en `profiles.plan` + `profiles.plan_expires_at` en Supabase (ambas tablas tienen CHECK constraints que hay que ampliar al añadir un plan nuevo). Para verificar plan en servidor usar `getCachedPlanState()` de `src/lib/plans-server.ts`.
+
+**Landing (`Pricing.tsx`)**: switch estilo interruptor día/noche que alterna entre tramos; cada uno muestra solo sus tarjetas, para que el alumno nunca compare S/20 (6 cursos) contra S/14 (11 cursos) lado a lado. El acento (`--acc`, triplete RGB heredado desde `.grid[data-track]`) tiñe tarjetas, checks, botón y el brillo pulsante de la tarjeta destacada: azul `#3b9edd` en UFBI, violeta `#8b5cf6` en Medicina.
+
+**⚠️ Pendiente para que el plan UFBI funcione de verdad**:
+1. Crear el plan de **S/ 20/mes** en el panel de Mercado Pago y poner su ID en `MP_PLAN_UFBI_ID` (`.env.local` + Vercel). Sin esa variable `getPlan('ufbi')` devuelve `null` y el checkout responde `invalid plan`.
+2. Decidir si `ufbi` lleva el **compromiso mínimo de 3 meses** que hoy solo aplica a `interno` (lock en `api/subscriptions/cancel/route.ts` + aviso en `SubscriptionPanel.tsx`). Ahora mismo UFBI se puede cancelar cuando sea.
 
 ---
 

@@ -94,7 +94,7 @@ export default async function ActividadPage({
   );
 
   return (
-    <LockedContent requiredPlan="interno" planState={planState} isAuthed={!!user}>
+    <LockedContent requiredPlan="ufbi" planState={planState} isAuthed={!!user}>
       {detail}
     </LockedContent>
   );
