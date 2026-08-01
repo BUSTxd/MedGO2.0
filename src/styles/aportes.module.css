@@ -1,0 +1,313 @@
+.wrapper {
+  max-width: 1180px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #0f172a;
+  margin: 0 0 6px;
+}
+
+:global(body.dark-mode) .title { color: #f1f5f9; }
+
+.sub {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 26px;
+  max-width: 70ch;
+  line-height: 1.5;
+}
+
+:global(body.dark-mode) .sub { color: #94a3b8; }
+
+/* ─── TARJETA DE TRAMO ─── */
+.trackCard {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+:global(body.dark-mode) .trackCard {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.trackHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 16px;
+}
+
+:global(body.dark-mode) .trackHead { border-color: #334155; }
+
+.trackTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  padding-left: 12px;
+  border-left: 3px solid rgb(var(--acc));
+  line-height: 1.2;
+}
+
+:global(body.dark-mode) .trackTitle { color: #f1f5f9; }
+
+.trackMeta {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* ─── KPIs ─── */
+.kpis {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(var(--acc), 0.08);
+  border: 1px solid rgba(var(--acc), 0.2);
+  min-width: 132px;
+}
+
+.kpiNum {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+  color: rgb(var(--acc));
+  font-variant-numeric: tabular-nums;
+}
+
+.kpiLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+}
+
+:global(body.dark-mode) .kpiLabel { color: #cbd5e1; }
+
+.kpiFrac {
+  font-size: 11px;
+  color: #94a3b8;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── TABLA ─── */
+.tablaWrap {
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 680px;
+}
+
+.tabla th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  padding: 0 10px 8px;
+  white-space: nowrap;
+}
+
+.tabla td {
+  padding: 9px 10px;
+  border-top: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+:global(body.dark-mode) .tabla td {
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+.cursoNombre {
+  font-weight: 600;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+:global(body.dark-mode) .cursoNombre { color: #f1f5f9; }
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Sin material publicado todavía: se atenúa para que el hueco salte a la vista. */
+.vacio td {
+  opacity: 0.55;
+}
+
+.colBarra { width: 180px; }
+
+.barraRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.barra {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+:global(body.dark-mode) .barra { background: #334155; }
+
+.barraFill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.barraPct {
+  font-size: 11px;
+  color: #94a3b8;
+  font-variant-numeric: tabular-nums;
+  min-width: 30px;
+  text-align: right;
+}
+
+.autores {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ─── PERSONAS ─── */
+.personas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+}
+
+.persona {
+  position: relative;
+  padding: 16px 16px 16px 20px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+:global(body.dark-mode) .persona {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+.personaDot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+}
+
+.personaHead {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 12px;
+}
+
+.personaNombre {
+  font-size: 15px;
+  color: #0f172a;
+}
+
+:global(body.dark-mode) .personaNombre { color: #f1f5f9; }
+
+.personaRol {
+  font-size: 11px;
+  color: #94a3b8;
+  line-height: 1.35;
+}
+
+.personaStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0;
+}
+
+.personaStats dt {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: #94a3b8;
+  margin-bottom: 1px;
+}
+
+.personaStats dd {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+:global(body.dark-mode) .personaStats dd { color: #f1f5f9; }
+
+.pesados {
+  font-size: 11px;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.nota {
+  font-size: 12.5px;
+  color: #64748b;
+  line-height: 1.6;
+  max-width: 75ch;
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+:global(body.dark-mode) .nota {
+  background: #0f172a;
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+@media (max-width: 640px) {
+  .personaStats { grid-template-columns: 1fr; }
+}

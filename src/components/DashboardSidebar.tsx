@@ -122,6 +122,19 @@ const MODELADO_ITEM = {
   ),
 };
 
+const APORTES_ITEM = {
+  label: 'Aportes',
+  href: '/dashboard/aportes',
+  icon: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" d="M4 20V10" />
+      <path stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" d="M10 20V4" />
+      <path stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" d="M16 20v-7" />
+      <path stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" d="M22 20H2" />
+    </svg>
+  ),
+};
+
 const ADMIN_ITEM = {
   label: 'Admin',
   href: '/dashboard/admin',
@@ -135,7 +148,7 @@ const ADMIN_ITEM = {
 export default function DashboardSidebar({ collapsed, onToggle, darkMode, onToggleDark, isAdmin = false }: Props) {
   const pathname = usePathname();
 
-  const navItems = isAdmin ? [...NAV, MODELADO_ITEM, ADMIN_ITEM] : NAV;
+  const navItems = isAdmin ? [...NAV, MODELADO_ITEM, APORTES_ITEM, ADMIN_ITEM] : NAV;
 
   const handleSignOut = async () => {
     const supabase = createClient();
