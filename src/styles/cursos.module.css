@@ -1180,8 +1180,9 @@
 }
 
 .pickerOptionIcon {
-  font-size: 20px;
+  display: flex;
   flex-shrink: 0;
+  color: #7B72D4;
 }
 
 .pickerClose {
