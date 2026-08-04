@@ -29,9 +29,17 @@ const ALLOWED = new Set([
   'hem-sgp-2', 'hem-9',
   // Química Orgánica
   'qor-s-1-tablas', 'qor-s-1-visual',
-  'qor-s-2', 'qor-s-3', 'qor-s-4',
+  'qor-s-2', 'qor-s-3', 'qor-s-4', 'qor-s-4-visual', 'qor-s-5',
   'qor-s-6', 'qor-s-7', 'qor-s-8', 'qor-s-9', 'qor-s-10',
   'qor-s-11', 'qor-s-12', 'qor-s-13', 'qor-s-14',
+  'qor-pd-1', 'qor-pd-2', 'qor-pd-3', 'qor-pd-4',
+  'qor-pd-5', 'qor-pd-6', 'qor-pd-7', 'qor-pd-8',
+  // Inmunología (ids bare tal como están en inmunologia.ts — sin colisión
+  // actual con otros cursos; el path en Storage sí lleva prefijo inmunologia/)
+  't-2', 't-3', 't-4', 't-5', 't-6', 't-7', 't-8', 't-9', 't-10',
+  't-11', 't-12', 't-13', 't-14',
+  'sgp-1', 'sgp-2', 'sgp-3', 'sgp-4',
+  'tbl-1', 'tbl-2', 'tbl-3',
 ]);
 
 // IDs that require an active paid plan (Interno/Residente). Free-plan users
@@ -101,6 +109,8 @@ const FILE_ALIAS: Record<string, string> = {
   'qor-s-2':  'quimica-organica/qor-s-2',
   'qor-s-3':  'quimica-organica/qor-s-3',
   'qor-s-4':  'quimica-organica/qor-s-4',
+  'qor-s-4-visual': 'quimica-organica/qor-s-4-visual',
+  'qor-s-5':  'quimica-organica/qor-s-5',
   'qor-s-6':  'quimica-organica/qor-s-6',
   'qor-s-7':  'quimica-organica/qor-s-7',
   'qor-s-8':  'quimica-organica/qor-s-8',
@@ -110,6 +120,35 @@ const FILE_ALIAS: Record<string, string> = {
   'qor-s-12': 'quimica-organica/qor-s-12',
   'qor-s-13': 'quimica-organica/qor-s-13',
   'qor-s-14': 'quimica-organica/qor-s-14',
+  'qor-pd-1': 'quimica-organica/qor-pd-1',
+  'qor-pd-2': 'quimica-organica/qor-pd-2',
+  'qor-pd-3': 'quimica-organica/qor-pd-3',
+  'qor-pd-4': 'quimica-organica/qor-pd-4',
+  'qor-pd-5': 'quimica-organica/qor-pd-5',
+  'qor-pd-6': 'quimica-organica/qor-pd-6',
+  'qor-pd-7': 'quimica-organica/qor-pd-7',
+  'qor-pd-8': 'quimica-organica/qor-pd-8',
+  // Inmunología — subcarpeta inmunologia/
+  't-2':   'inmunologia/t-2',
+  't-3':   'inmunologia/t-3',
+  't-4':   'inmunologia/t-4',
+  't-5':   'inmunologia/t-5',
+  't-6':   'inmunologia/t-6',
+  't-7':   'inmunologia/t-7',
+  't-8':   'inmunologia/t-8',
+  't-9':   'inmunologia/t-9',
+  't-10':  'inmunologia/t-10',
+  't-11':  'inmunologia/t-11',
+  't-12':  'inmunologia/t-12',
+  't-13':  'inmunologia/t-13',
+  't-14':  'inmunologia/t-14',
+  'sgp-1': 'inmunologia/sgp-1',
+  'sgp-2': 'inmunologia/sgp-2',
+  'sgp-3': 'inmunologia/sgp-3',
+  'sgp-4': 'inmunologia/sgp-4',
+  'tbl-1': 'inmunologia/tbl-1',
+  'tbl-2': 'inmunologia/tbl-2',
+  'tbl-3': 'inmunologia/tbl-3',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga

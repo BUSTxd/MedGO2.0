@@ -112,6 +112,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Las prácticas dirigidas valen en conjunto 15% de la nota final y no son recuperables.',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-s-2',
@@ -142,6 +143,7 @@ export const semanas: Semana[] = [
           'Comparación de estabilidad',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-s-3',
@@ -173,6 +175,7 @@ export const semanas: Semana[] = [
           'Identificación de relaciones estereoisoméricas',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-lab-1',
@@ -213,7 +216,13 @@ export const semanas: Semana[] = [
           'Solubilidad y polaridad',
         ],
         docentes: [],
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'qor-s-4', label: 'Resumen — tablas' },
+            { id: 'qor-s-4-visual', label: 'Resumen — visual' },
+          ],
+        },
       },
       {
         id: 'qor-pd-4',
@@ -228,6 +237,7 @@ export const semanas: Semana[] = [
           'Predicción de solubilidad',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-s-5',
@@ -243,6 +253,7 @@ export const semanas: Semana[] = [
           'Efecto de la estructura sobre la acidez',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-pd-5',
@@ -257,6 +268,7 @@ export const semanas: Semana[] = [
           'Predicción del equilibrio ácido-base',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-s-6',
@@ -305,6 +317,7 @@ export const semanas: Semana[] = [
           'Predicción de productos',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
     ],
   },
@@ -345,6 +358,7 @@ export const semanas: Semana[] = [
           'Competencia sustitución / eliminación',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-s-9',
@@ -393,6 +407,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'El sílabo pondera 9 prácticas dirigidas; la tabla de temas lista 8.',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-lab-2',

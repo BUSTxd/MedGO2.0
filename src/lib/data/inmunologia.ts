@@ -118,6 +118,7 @@ export const semanas: Semana[] = [
           'Reconocimiento en lámina periférica',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 't-3',
@@ -133,6 +134,7 @@ export const semanas: Semana[] = [
           'Educación y selección linfocitaria',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'h-1',
@@ -167,6 +169,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 't-5',
@@ -184,6 +187,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Paso corto: evaluado durante la sesión (cuenta para pasos cortos, 10%).',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'sgp-1',
@@ -201,6 +205,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluado por el tutor facilitador al final de la semana. Promedio de SGP = 30% de la nota final.',
+        resumen: { tipo: 'pdf' },
       },
     ],
   },
@@ -226,6 +231,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluación: 60% examen individual + 40% trabajo grupal. Promedio de TBL = 10% de la nota final.',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 't-6',
@@ -242,6 +248,7 @@ export const semanas: Semana[] = [
           'Células NK e inflamasoma',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'l-1',
@@ -276,6 +283,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Paso corto: evaluado durante la sesión (cuenta para pasos cortos, 10%).',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 't-8',
@@ -293,6 +301,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'sgp-2',
@@ -310,6 +319,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluado por el tutor facilitador al final de la semana. Promedio de SGP = 30% de la nota final.',
+        resumen: { tipo: 'pdf' },
       },
     ],
   },
@@ -336,6 +346,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluación: 60% examen individual + 40% trabajo grupal. Promedio de TBL = 10% de la nota final.',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 't-9',
@@ -353,6 +364,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 't-10',
@@ -369,6 +381,7 @@ export const semanas: Semana[] = [
           'Recirculación linfocitaria',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'h-2',
@@ -401,6 +414,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'sgp-3',
@@ -418,6 +432,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluado por el tutor facilitador al final de la semana. Promedio de SGP = 30% de la nota final.',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'repaso-1',
@@ -456,6 +471,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluación: 60% examen individual + 40% trabajo grupal. Promedio de TBL = 10% de la nota final.',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 't-12',
@@ -473,6 +489,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 't-13',
@@ -489,6 +506,7 @@ export const semanas: Semana[] = [
           'Inmunofenotipo y marcadores CD',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'l-2',
@@ -523,6 +541,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Paso corto: evaluado durante la sesión (cuenta para pasos cortos, 10%).',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'sgp-4',
@@ -540,6 +559,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluado por el tutor facilitador al final de la semana. Promedio de SGP = 30% de la nota final.',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'repaso-2',
