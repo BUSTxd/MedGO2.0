@@ -450,6 +450,13 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Evalúa lo visto hasta la sesión anterior'],
         docentes: [],
+        propuestos: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'fis-pc3-v1', label: 'PC3 — versión 1 (2024-II)' },
+            { id: 'fis-pc3-v2', label: 'PC3 — versión 2' },
+          ],
+        },
       },
       {
         id: 'fis-pc-4',
@@ -461,6 +468,14 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Evalúa lo visto hasta la sesión anterior'],
         docentes: [],
+        propuestos: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'fis-pc4-a', label: 'PC4 — grupo A' },
+            { id: 'fis-pc4-b', label: 'PC4 — grupo B' },
+            { id: 'fis-pc4-c', label: 'PC4 — grupo C' },
+          ],
+        },
       },
       {
         id: 'fis-examen-final',
