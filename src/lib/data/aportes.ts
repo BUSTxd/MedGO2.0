@@ -58,6 +58,22 @@ export interface CursoMeta {
 }
 
 /**
+ * Cursos que tienen que estar completos para lanzar la web, en orden. El resto
+ * se sigue midiendo, pero aparte: su avance no bloquea el lanzamiento.
+ */
+export const PRIORIDAD_LANZAMIENTO: readonly string[] = [
+  // UFBI · 1.er año
+  'fisica-medicina',
+  'quimica-organica',
+  'biologia-celular',
+  // Facultad de Medicina
+  'hematologia',
+  'aparato-locomotor',
+  'inmunologia',
+  'digestivo',
+];
+
+/**
  * El banqueo y los laboratorios NO se declaran aquí: siempre son de `bust`, y
  * se cuentan directamente de los sílabos para que el número no se pueda
  * desalinear de lo realmente publicado.

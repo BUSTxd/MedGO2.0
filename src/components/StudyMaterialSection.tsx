@@ -57,6 +57,9 @@ interface Props {
   /** Sobreescribe el título de la tarjeta "Resumen" — p. ej. "Database" en
    *  las Prácticas Dirigidas de Química Orgánica. */
   resumenLabel?: string;
+  /** Sobreescribe el título de la tarjeta "Banqueo" — p. ej. "Propuestos" en
+   *  las clases C1–C4 de Física. */
+  banqueoLabel?: string;
 }
 
 const BeakerIcon = () => (
@@ -74,7 +77,7 @@ const BanqueoIcon = () => (
   </svg>
 );
 
-export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, examen, simulacion, solucionario, hideBanqueo, resumenLabel }: Props) {
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, examen, simulacion, solucionario, hideBanqueo, resumenLabel, banqueoLabel }: Props) {
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
   const pathname = usePathname();
 
@@ -175,7 +178,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <div className={styles.studyCardIcon}>
               <BanqueoIcon />
             </div>
-            <p className={styles.studyCardTitle}>Banqueo</p>
+            <p className={styles.studyCardTitle}>{banqueoLabel ?? 'Banqueo'}</p>
             <p className={styles.studyCardDesc}>Preguntas tipo examen con explicación</p>
             <span className={styles.studyAvailable}>Comenzar ▸</span>
           </Link>
@@ -188,7 +191,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <div className={styles.studyCardIcon}>
               <BanqueoIcon />
             </div>
-            <p className={styles.studyCardTitle}>Banqueo</p>
+            <p className={styles.studyCardTitle}>{banqueoLabel ?? 'Banqueo'}</p>
             <p className={styles.studyCardDesc}>
               {solucionario.desc ?? 'Solucionario paso a paso, con el enunciado al lado'}
             </p>
@@ -199,7 +202,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <div className={styles.studyCardIcon}>
               <BanqueoIcon />
             </div>
-            <p className={styles.studyCardTitle}>Banqueo</p>
+            <p className={styles.studyCardTitle}>{banqueoLabel ?? 'Banqueo'}</p>
             <p className={styles.studyCardDesc}>Preguntas de práctica tipo examen</p>
             <span className={styles.studyComingSoon}>Próximamente</span>
           </div>

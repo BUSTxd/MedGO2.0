@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { findActividad, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/fisica';
+import { banqueoLabelDe } from '@/lib/material-plan';
 import styles from '@/styles/cursos.module.css';
 import StudyMaterialSection from '@/components/StudyMaterialSection';
 import LockedContent from '@/components/LockedContent';
@@ -29,6 +30,10 @@ export default async function ActividadPage({
   const badge = TIPO_BADGE[act.tipo];
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
+
+  // C1–C4: la tarjeta "Banqueo" se llama "Propuestos". La regla vive en
+  // `material-plan.ts` para que el panel de aportes cuente el mismo nombre.
+  const banqueoLabel = banqueoLabelDe('fisica-medicina', act.codigo);
 
   // Gating: los trabajos grupales (laboratorio virtual) son libres; clases,
   // prácticas calificadas y exámenes están detrás del plan Interno.
@@ -97,6 +102,7 @@ export default async function ActividadPage({
           claseId={act.id}
           hasResumen={act.resumen?.tipo === 'pdf'}
           resumenOpciones={act.resumen?.opciones}
+          banqueoLabel={banqueoLabel}
         />
       </div>
     </div>

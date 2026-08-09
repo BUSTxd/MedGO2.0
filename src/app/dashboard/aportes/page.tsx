@@ -1,7 +1,7 @@
 import { notFound, redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { isAdminEmail } from '@/lib/admin';
-import { getTrackStats, getAportes } from '@/lib/aportes-stats';
+import { getTrackStats, getAportes, getLanzamiento } from '@/lib/aportes-stats';
 import AportesPanel from '@/components/AportesPanel';
 
 export const dynamic = 'force-dynamic';
@@ -17,5 +17,11 @@ export default async function AportesPage() {
   // Datos sensibles del acuerdo entre socios: solo admin.
   if (!isAdminEmail(user.email)) notFound();
 
-  return <AportesPanel tracks={getTrackStats()} aportes={getAportes()} />;
+  return (
+    <AportesPanel
+      lanzamiento={getLanzamiento()}
+      tracks={getTrackStats()}
+      aportes={getAportes()}
+    />
+  );
 }

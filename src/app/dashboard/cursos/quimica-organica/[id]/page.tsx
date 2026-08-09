@@ -8,6 +8,7 @@ import LockedContent from '@/components/LockedContent';
 import TrackRecentClass from '@/components/TrackRecentClass';
 import SolucionarioRunner from '@/components/SolucionarioRunner';
 import { findSolucionario } from '@/lib/data/solucionarios';
+import { resumenLabelDe } from '@/lib/material-plan';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
 
@@ -119,7 +120,7 @@ export default async function ActividadPage({
             claseId={act.id}
             hasResumen={act.resumen?.tipo === 'pdf'}
             resumenOpciones={act.resumen?.opciones}
-            resumenLabel={['PD', 'PC', 'EXAMEN-T'].includes(act.tipo) ? 'Database' : undefined}
+            resumenLabel={resumenLabelDe('quimica-organica', act.tipo)}
             solucionario={
               solucionario ? { href: `${backHref}?solucionario=1` } : undefined
             }
