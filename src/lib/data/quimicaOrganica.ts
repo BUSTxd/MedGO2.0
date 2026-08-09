@@ -195,6 +195,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Los laboratorios valen en conjunto 15% de la nota final y no son recuperables (ausencia = 0).',
+        resumen: { tipo: 'pdf' },
       },
     ],
   },
@@ -426,6 +427,7 @@ export const semanas: Semana[] = [
           'Marcha analítica orgánica',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
     ],
   },
@@ -467,6 +469,7 @@ export const semanas: Semana[] = [
           'Identificación de almidón',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-s-12',
@@ -499,6 +502,7 @@ export const semanas: Semana[] = [
           'Precipitación por pH y temperatura',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'qor-s-13',
