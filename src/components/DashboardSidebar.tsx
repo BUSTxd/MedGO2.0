@@ -108,6 +108,8 @@ interface Props {
   darkMode: boolean;
   onToggleDark: () => void;
   isAdmin?: boolean;
+  /** Acceso al panel de Aportes sin el resto de permisos de admin. */
+  verAportes?: boolean;
 }
 
 const MODELADO_ITEM = {
@@ -145,10 +147,15 @@ const ADMIN_ITEM = {
   ),
 };
 
-export default function DashboardSidebar({ collapsed, onToggle, darkMode, onToggleDark, isAdmin = false }: Props) {
+export default function DashboardSidebar({ collapsed, onToggle, darkMode, onToggleDark, isAdmin = false, verAportes = false }: Props) {
   const pathname = usePathname();
 
-  const navItems = isAdmin ? [...NAV, MODELADO_ITEM, APORTES_ITEM, ADMIN_ITEM] : NAV;
+  const navItems = [
+    ...NAV,
+    ...(isAdmin ? [MODELADO_ITEM] : []),
+    ...(verAportes ? [APORTES_ITEM] : []),
+    ...(isAdmin ? [ADMIN_ITEM] : []),
+  ];
 
   const handleSignOut = async () => {
     const supabase = createClient();

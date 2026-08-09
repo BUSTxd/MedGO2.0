@@ -11,10 +11,13 @@ export default function DashboardWrapper({
   children,
   planState,
   isAdmin = false,
+  verAportes = false,
 }: {
   children: React.ReactNode;
   planState: ClientPlanState;
   isAdmin?: boolean;
+  /** Acceso al panel de Aportes sin el resto de permisos de admin. */
+  verAportes?: boolean;
 }) {
   const [collapsed, setCollapsed] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -50,6 +53,7 @@ export default function DashboardWrapper({
             darkMode={darkMode}
             onToggleDark={toggleDark}
             isAdmin={isAdmin}
+            verAportes={verAportes}
           />
           {!collapsed && (
             <div

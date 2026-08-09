@@ -3,7 +3,7 @@ import { headers } from 'next/headers';
 import DashboardWrapper from '@/components/DashboardWrapper';
 import { getCachedPlanState } from '@/lib/plans-server';
 import { createClient } from '@/lib/supabase/server';
-import { isAdminEmail } from '@/lib/admin';
+import { isAdminEmail, canVerAportes } from '@/lib/admin';
 import { checkDevice, getDeviceId, touchSession } from '@/lib/sessions';
 
 export default async function DashboardRootLayout({
@@ -18,6 +18,8 @@ export default async function DashboardRootLayout({
   ]);
   const { data: { user } } = await supabase.auth.getUser();
   const isAdmin = isAdminEmail(user?.email);
+  // Permiso propio: las socias ven Aportes sin ser admin.
+  const verAportes = canVerAportes(user?.email);
 
   // Enforcement de límite de dispositivos. Free pasa siempre. Pagados:
   //  - 'allowed'        → ya está activo, seguir
@@ -55,6 +57,7 @@ export default async function DashboardRootLayout({
         expiresAt: planState.expiresAt ? planState.expiresAt.toISOString() : null,
       }}
       isAdmin={isAdmin}
+      verAportes={verAportes}
     >
       {children}
     </DashboardWrapper>
