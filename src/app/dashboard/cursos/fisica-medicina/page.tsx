@@ -78,11 +78,9 @@ export default async function FisicaMedicinaPage() {
               const badge = TIPO_BADGE[act.tipo];
               const borderColor = UNIDAD_COLOR[act.unidad];
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
-              // Los trabajos grupales (laboratorio virtual) son libres.
-              const isTrabajo = act.tipo === 'TRABAJO';
               // Si la card redirige a otra sección, no la bloqueamos:
               // el destino maneja su propio acceso.
-              const isLocked = !isTrabajo && !act.linkOverride && !hasInterno;
+              const isLocked = !act.linkOverride && !hasInterno;
 
               const href = act.linkOverride ?? `/dashboard/cursos/fisica-medicina/${act.id}`;
 

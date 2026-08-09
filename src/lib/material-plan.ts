@@ -96,7 +96,7 @@ const REGLAS: Record<string, CursoReglas> = {
   'endocrino-reproductor':  { simulacionEn: ['ANATOMIA', 'HISTOLOGIA', 'TALLER'] },
   'quimica-organica':       { resumenLabel: { label: 'Database', tipos: ['PD', 'PC', 'EXAMEN-T'] } },
   // Todas las clases teóricas (C1–C14) usan el PDF de propuestos, no un banco
-  // interactivo — TRABAJO/PC/EXAMEN-T siguen mostrando "Banqueo" por defecto.
+  // interactivo — PC/EXAMEN-T siguen mostrando "Banqueo" por defecto.
   'fisica-medicina':        { banqueoLabel: { label: 'Propuestos', tipos: ['TEORIA'] } },
 };
 

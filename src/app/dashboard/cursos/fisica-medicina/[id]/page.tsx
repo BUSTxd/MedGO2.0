@@ -35,15 +35,9 @@ export default async function ActividadPage({
   // en `material-plan.ts` para que el panel de aportes cuente el mismo nombre.
   const banqueoLabel = banqueoLabelDe('fisica-medicina', act.tipo);
 
-  // Gating: los trabajos grupales (laboratorio virtual) son libres; clases,
-  // prácticas calificadas y exámenes están detrás del plan Interno.
-  const isTrabajo = act.tipo === 'TRABAJO';
-  const [user, planState] = await Promise.all([
-    getUser(),
-    isTrabajo
-      ? Promise.resolve({ plan: 'free' as const, isActive: true })
-      : getCachedPlanState(),
-  ]);
+  // Gating: todo el curso (clases, prácticas calificadas y exámenes) está
+  // detrás del plan UFBI.
+  const [user, planState] = await Promise.all([getUser(), getCachedPlanState()]);
 
   const detail = (
     <div className={styles.microPage}>
@@ -108,8 +102,6 @@ export default async function ActividadPage({
       </div>
     </div>
   );
-
-  if (isTrabajo) return detail;
 
   return (
     <LockedContent requiredPlan="ufbi" planState={planState} isAuthed={!!user}>

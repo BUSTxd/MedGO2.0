@@ -1,6 +1,5 @@
 export type TipoActividad =
   | 'TEORIA'
-  | 'TRABAJO'
   | 'PC'
   | 'EXAMEN-T';
 
@@ -20,7 +19,7 @@ export interface Actividad {
   id: string;
   tipo: TipoActividad;
   unidad: Unidad;
-  /** Código del sílabo: C1–C14 (clases), TG01–TG08, PC1–PC4. */
+  /** Código del sílabo: C1–C14 (clases), PC1–PC4. */
   codigo?: string;
   titulo: string;
   /** Posición dentro de su serie: el sílabo ordena por bloque, no por fecha. */
@@ -61,15 +60,13 @@ export const UNIDAD_COLOR: Record<Unidad, string> = {
 
 export const TIPO_BADGE: Record<TipoActividad, { bg: string; color: string; label: string }> = {
   TEORIA:     { bg: 'rgba(59,158,221,0.15)',  color: '#3b9edd', label: 'Clase'          },
-  TRABAJO:    { bg: 'rgba(52,199,120,0.13)',  color: '#34C778', label: 'Trabajo grupal' },
   PC:         { bg: 'rgba(245,166,35,0.15)',  color: '#F5A623', label: 'Práctica calif.'},
   'EXAMEN-T': { bg: 'rgba(239,68,68,0.15)',   color: '#F87171', label: 'Examen'         },
 };
 
 /**
- * El sílabo lista las clases por unidad (orden aproximado) y los trabajos
- * grupales en una serie aparte; los TG04–TG08 aparecen agrupados en una sola
- * fila ("uno por bloque temático") y aquí se despliegan uno por unidad.
+ * El sílabo lista las clases por unidad. Los trabajos grupales (TG01–TG08) no
+ * se muestran: nunca van a tener material propio en la plataforma.
  *
  * Orden real de las 14 semanas de teoría (confirmado ago-2026, reemplaza el
  * orden asumido original): Semana 08 no existe — es la semana del examen
@@ -98,7 +95,7 @@ export const semanas: Semana[] = [
   {
     id: 'u1',
     titulo: 'Unidad 1 — Mecánica',
-    fechas: '5 clases · 3 trabajos grupales',
+    fechas: '5 clases',
     actividades: [
       {
         id: 'fis-c-1',
@@ -118,21 +115,6 @@ export const semanas: Semana[] = [
         propuestos: { tipo: 'pdf' },
       },
       {
-        id: 'fis-tg-1',
-        tipo: 'TRABAJO',
-        unidad: 'MECANICA',
-        codigo: 'TG01',
-        titulo: 'TG01 — Ejercicios y problemas sobre leyes de Newton',
-        fecha: 'Trabajo grupal 1 de 8',
-        hora: '—',
-        subtemas: [
-          'Resolución colaborativa de problemas',
-          'Laboratorio virtual asincrónico',
-        ],
-        docentes: [],
-        nota: 'Los trabajos grupales valen en conjunto 10% de la nota final.',
-      },
-      {
         id: 'fis-c-2',
         tipo: 'TEORIA',
         unidad: 'MECANICA',
@@ -149,20 +131,6 @@ export const semanas: Semana[] = [
         docentes: [],
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
-      },
-      {
-        id: 'fis-tg-2',
-        tipo: 'TRABAJO',
-        unidad: 'MECANICA',
-        codigo: 'TG02',
-        titulo: 'TG02 — Ejercicios y problemas de trabajo y energía',
-        fecha: 'Trabajo grupal 2 de 8',
-        hora: '—',
-        subtemas: [
-          'Problemas de conservación de energía',
-          'Laboratorio virtual asincrónico',
-        ],
-        docentes: [],
       },
       {
         id: 'fis-c-3',
@@ -211,20 +179,6 @@ export const semanas: Semana[] = [
         docentes: [],
         propuestos: { tipo: 'pdf' },
       },
-      {
-        id: 'fis-tg-3',
-        tipo: 'TRABAJO',
-        unidad: 'MECANICA',
-        codigo: 'TG03',
-        titulo: 'TG03 — Ejercicios sobre rotación y mecánica de fluidos',
-        fecha: 'Trabajo grupal 3 de 8',
-        hora: '—',
-        subtemas: [
-          'Problemas de torque y equilibrio',
-          'Problemas de hidrodinámica',
-        ],
-        docentes: [],
-      },
     ],
   },
 
@@ -232,7 +186,7 @@ export const semanas: Semana[] = [
   {
     id: 'u2',
     titulo: 'Unidad 2 — Oscilaciones, ondas y termodinámica',
-    fechas: '3 clases · 2 trabajos grupales',
+    fechas: '3 clases',
     actividades: [
       {
         id: 'fis-c-6',
@@ -250,21 +204,6 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         propuestos: { tipo: 'pdf' },
-      },
-      {
-        id: 'fis-tg-4',
-        tipo: 'TRABAJO',
-        unidad: 'ONDAS_TERMO',
-        codigo: 'TG04',
-        titulo: 'TG04 — Ejercicios sobre movimiento periódico y ondas',
-        fecha: 'Trabajo grupal 4 de 8',
-        hora: '—',
-        subtemas: [
-          'Problemas de MAS y ondas',
-          'Intensidad sonora y decibeles',
-        ],
-        docentes: [],
-        nota: 'El sílabo agrupa TG04–TG08 como "uno por bloque temático" (6 laboratorios virtuales asincrónicos en total).',
       },
       {
         id: 'fis-c-7',
@@ -298,20 +237,6 @@ export const semanas: Semana[] = [
         docentes: [],
         propuestos: { tipo: 'pdf' },
       },
-      {
-        id: 'fis-tg-5',
-        tipo: 'TRABAJO',
-        unidad: 'ONDAS_TERMO',
-        codigo: 'TG05',
-        titulo: 'TG05 — Ejercicios de termodinámica',
-        fecha: 'Trabajo grupal 5 de 8',
-        hora: '—',
-        subtemas: [
-          'Problemas de calorimetría',
-          'Problemas de procesos termodinámicos',
-        ],
-        docentes: [],
-      },
     ],
   },
 
@@ -319,7 +244,7 @@ export const semanas: Semana[] = [
   {
     id: 'u3',
     titulo: 'Unidad 3 — Electromagnetismo',
-    fechas: '4 clases · 2 trabajos grupales',
+    fechas: '4 clases',
     actividades: [
       {
         id: 'fis-c-9',
@@ -361,20 +286,6 @@ export const semanas: Semana[] = [
         propuestos: { tipo: 'pdf' },
       },
       {
-        id: 'fis-tg-6',
-        tipo: 'TRABAJO',
-        unidad: 'ELECTROMAGNETISMO',
-        codigo: 'TG06',
-        titulo: 'TG06 — Ejercicios de campo y potencial eléctrico',
-        fecha: 'Trabajo grupal 6 de 8',
-        hora: '—',
-        subtemas: [
-          'Problemas de electrostática',
-          'Problemas de capacitancia',
-        ],
-        docentes: [],
-      },
-      {
         id: 'fis-c-11',
         tipo: 'TEORIA',
         unidad: 'ELECTROMAGNETISMO',
@@ -412,20 +323,6 @@ export const semanas: Semana[] = [
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
       },
-      {
-        id: 'fis-tg-7',
-        tipo: 'TRABAJO',
-        unidad: 'ELECTROMAGNETISMO',
-        codigo: 'TG07',
-        titulo: 'TG07 — Ejercicios de circuitos y magnetismo',
-        fecha: 'Trabajo grupal 7 de 8',
-        hora: '—',
-        subtemas: [
-          'Problemas de circuitos',
-          'Problemas de campo magnético e inducción',
-        ],
-        docentes: [],
-      },
     ],
   },
 
@@ -433,7 +330,7 @@ export const semanas: Semana[] = [
   {
     id: 'u4',
     titulo: 'Unidad 4 — Óptica y física moderna',
-    fechas: '2 clases · 1 trabajo grupal',
+    fechas: '2 clases',
     actividades: [
       {
         id: 'fis-c-13',
@@ -464,20 +361,6 @@ export const semanas: Semana[] = [
           'Fotones y dualidad onda-partícula',
           'Estructura atómica',
           'Física nuclear y radiación en medicina',
-        ],
-        docentes: [],
-      },
-      {
-        id: 'fis-tg-8',
-        tipo: 'TRABAJO',
-        unidad: 'OPTICA_MODERNA',
-        codigo: 'TG08',
-        titulo: 'TG08 — Ejercicios de óptica y física moderna',
-        fecha: 'Trabajo grupal 8 de 8',
-        hora: '—',
-        subtemas: [
-          'Problemas de lentes y espejos',
-          'Problemas de fotones y decaimiento radiactivo',
         ],
         docentes: [],
       },
