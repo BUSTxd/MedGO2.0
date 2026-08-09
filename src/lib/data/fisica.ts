@@ -397,6 +397,15 @@ export const semanas: Semana[] = [
         subtemas: ['Evalúa lo visto hasta la sesión anterior'],
         docentes: [],
         nota: 'El promedio de las 4 prácticas calificadas vale 40% de la nota final.',
+        propuestos: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'fis-pc1-banqueo',  label: 'Banqueo variado (2022-II)' },
+            { id: 'fis-pc1-v1',       label: 'PC1 — versión 1' },
+            { id: 'fis-pc1-7-9am',    label: 'PC1 — grupo 7-9 am' },
+            { id: 'fis-pc1-10-12am',  label: 'PC1 — grupo 10-12 am' },
+          ],
+        },
       },
       {
         id: 'fis-examen-parcial',
