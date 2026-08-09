@@ -105,6 +105,7 @@ src/app/
     ├── contacto/page.tsx
     ├── cuenta/page.tsx
     ├── modelado/                     # Editor 3D — SOLO admin (ver sección propia)
+    ├── aportes/page.tsx              # Avance y aportes — admin + canVerAportes (ver sección propia)
     └── admin/page.tsx
 ```
 
@@ -123,6 +124,7 @@ src/app/
 | `src/components/PlanProvider.tsx` | Context con `plan`, `isActive`, `expiresAt`. Consumido con `usePlan()` |
 | `src/components/AuthProvider.tsx` | Singleton del cliente Supabase, compartido para evitar múltiples instancias |
 | `src/components/LockedContent.tsx` | Paywall reutilizable para contenido premium |
+| `src/components/AportesPanel.tsx` | Panel de avance y aportes (`dashboard/aportes`). Lee `src/lib/aportes-stats.ts` y `src/lib/material-plan.ts`; ver sección **Sistema de Avance y Aportes** |
 
 ---
 
@@ -191,10 +193,19 @@ Los íconos del array `NAV` en `DashboardSidebar.tsx` usan SVG inline con:
 
 ## StudyMaterialSection — tarjetas del sílabo
 
-Tres tarjetas en orden:
-1. **Video** (siempre locked/próximamente) — ícono videoresumen SVG
-2. **Banqueo** (activo si la clase tiene `examen`, link a `?examen=1`) — ícono banco de preguntas SVG
-3. **Resumen** (activo si `hasResumen`, abre PDF fullscreen) — ícono flecha/send SVG
+Tres tarjetas en orden, cada una con varias formas posibles de estar "activa":
+
+1. **Video** / **Simulación** (prop `simulacion`, ver sección de labs) — sin ninguna de las dos,
+   locked/próximamente. Ícono videoresumen o beaker según corresponda.
+2. **Banqueo** — activa con `examen` (link a `?examen=1`, banco de preguntas del bucket
+   `examenes`), `solucionario` (paso a paso de Química Orgánica) o `propuestosPdf` (PDF de
+   problemas propuestos, Física — abre el mismo `PdfFullscreenModal` que Resumen pero con un id de
+   bucket independiente, `{claseId}-prop`; no es un banco interactivo). El título de la tarjeta se
+   sobreescribe con `banqueoLabel` («Propuestos» en Física, ver `banqueoLabelDe` en
+   `material-plan.ts`). `hideBanqueo` la omite del todo cuando la actividad nunca va a tenerla
+   (labs de Hematología/Inmunología).
+3. **Resumen** — activa con `hasResumen`, abre `PdfFullscreenModal`. Título sobreescribible con
+   `resumenLabel` («Database» en las PD/PC/exámenes de Química Orgánica, ver `resumenLabelDe`).
 
 Todos los íconos usan `fill="currentColor"` para adaptarse a light/dark.
 
@@ -301,6 +312,60 @@ renderizar `act.sinMaterial ? <SinMaterialSection /> : <StudyMaterialSection ...
 `StudyMaterialSection` a secas. Sólo está cableado en Química Orgánica por ahora; para otro curso
 hay que repetir ese `if` en su propio `[id]/page.tsx` (no hay un punto único compartido entre
 cursos).
+
+---
+
+## Sistema de Avance y Aportes (`dashboard/aportes`, admin + socias)
+
+Panel que mide cuánto material real hay publicado por curso — base de la parte variable del
+reparto entre socios y de la prioridad de lanzamiento — leyendo los sílabos en cada carga, no un
+conteo mantenido a mano.
+
+**Acceso**: `canVerAportes()` en `src/lib/admin.ts`, más amplio que `isAdminEmail` pero mucho más
+estrecho que "todo admin ve todo" — es `isAdminEmail OR` un `Set` de correos de socias que aportan
+material (hoy `maria.guzman.z@upch.pe`, `sofiacolchado12@gmail.com`). Esas socias ven el enlace
+«Aportes» en la sidebar y el panel, pero **no** `dashboard/admin` ni `dashboard/modelado`, y no
+heredan el `allAccess` de plan del admin. `dashboard/layout.tsx` calcula `verAportes` aparte de
+`isAdmin` y pasa ambos flags por separado a `DashboardWrapper`/`DashboardSidebar` — antes un único
+`isAdmin` abría los tres enlaces a la vez, ahora `APORTES_ITEM` se inserta con su propio flag.
+
+**Fuente de verdad — `src/lib/material-plan.ts`**: modela qué tiene y qué le falta a *una*
+actividad, para no reimplementar en el panel las reglas que cada `[id]/page.tsx` de curso ya
+aplica al montar `StudyMaterialSection`. Cada actividad produce un `PlanActividad` con 3 slots
+(`apoyo`/`banqueo`/`resumen`), cada uno con un `estado`: `listo` | `falta` | `no-aplica` (la
+tarjeta no se muestra, o es una evaluación que no exige material) | `futuro` (Video/Simulación —
+nunca cuenta como hueco). El objeto `REGLAS` es el espejo, por `slug` de curso, de qué tipos usan
+Simulación en vez de Video, cuáles esconden Banqueo, y las etiquetas alternativas de
+Banqueo/Resumen (`banqueoLabelDe`/`resumenLabelDe`, también usadas directo por las páginas de
+curso — p. ej. `fisica-medicina/[id]/page.tsx` llama `banqueoLabelDe('fisica-medicina', act.tipo)`
+para no duplicar la regla). El banqueo cuenta como listo con `examen`, `qbank`, `propuestos`
+(PDF de propuestos, Física) o un solucionario (`findSolucionario`, Química Orgánica — vive fuera
+del sílabo). Al añadir una regla nueva en un curso (un `sinBanqueoEn`, un `simulacionEn`) hay que
+reflejarla aquí o el panel muestra un hueco falso.
+
+**Prioridad de lanzamiento** — `PRIORIDAD_LANZAMIENTO` en `src/lib/data/aportes.ts`: los 7 cursos
+que bloquean el lanzamiento, en orden (Física, Química Orgánica, Biología Celular · Hematología,
+Aparato Locomotor, Inmunología, Digestivo). El resto de cursos se sigue midiendo pero aparte, sin
+bloquear la lectura del panel.
+
+**`src/lib/aportes-stats.ts`**: agrega `PlanActividad` por curso (`statsDeCurso`) y expone tres
+funciones — `getTrackStats()` (cobertura por tramo UFBI/Facultad, todos los cursos),
+`getLanzamiento()` (sólo los 7 prioritarios, con `pendientes: Pendiente[]` por actividad) y
+`getAportes()` (crédito por persona, reparte resúmenes en partes iguales entre `materialDe` de un
+curso; `APORTE_OVERRIDE` reasigna actividades sueltas). La cobertura (`SlotStats.cobertura`) se
+calcula sólo sobre `listo + falta` — lo `no-aplica` sale del denominador, así una evaluación sin
+material propio no castiga el porcentaje.
+
+**`AportesPanel.tsx`**: hero «Listo para lanzar» con los 7 cursos prioritarios primero, cada uno
+una tarjeta `<details>` expandible (mini-KPIs + lista de pendientes agrupada en «Sin material
+escrito» rojo/bloqueante vs. «Sólo falta el banqueo» ámbar/deseable — nunca una lista plana de
+huecos idénticos, que en un curso al 0% no informa nada). Debajo, cobertura completa por tramo
+para el resto de cursos. Estilos en `src/styles/aportes.module.css`, light+dark.
+
+**Registro de personas** — `src/lib/data/aportes.ts`: `COLABORADORES` (nombre, rol, color, pools)
+y `CURSOS` (slug, track, `materialDe: Colaborador[]`). El banqueo y los laboratorios nunca se
+declaran a mano ahí — siempre son de `bust` y se cuentan directo de los sílabos/`LABORATORIOS`
+para que el número no se desalinee de lo publicado.
 
 ---
 
