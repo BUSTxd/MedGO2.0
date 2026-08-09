@@ -8,7 +8,8 @@ import type { Track } from '@/lib/plans';
  * cada ciclo a partir de lo que este archivo declara + lo que hay realmente
  * publicado en los sílabos (ver `aportes-stats.ts`).
  *
- * ⚠️ Reemplazar los nombres placeholder de las dos colaboradoras de UFBI.
+ * ⚠️ Falta el nombre real de `ufbi-2`; el panel es visible para las socias, así
+ * que un placeholder ahí se ve desde dentro.
  */
 
 export type Colaborador = 'bust' | 'sofia' | 'ufbi-1' | 'ufbi-2';
@@ -35,7 +36,7 @@ export const COLABORADORES: Record<Colaborador, ColaboradorMeta> = {
     pools: ['medicina'],
   },
   'ufbi-1': {
-    nombre: 'Colaboradora 1',   // ← poner nombre real
+    nombre: 'María Guzmán',
     rol: 'Material de UFBI (1.er año)',
     color: '#2DC99A',
     pools: ['basico'],
