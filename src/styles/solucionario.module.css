@@ -1,0 +1,1211 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   Solucionario paso a paso — pantalla partida: enunciado (PDF) + explicación.
+   Ocupa toda la pantalla (la sidebar se oculta vía body.pdf-fullscreen-active).
+   Tema claro por defecto, oscuro dentro de este mismo módulo.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+
+  --s-acc: #7c6ce8;
+  --s-acc-2: #b06ce8;
+  --s-acc-soft: rgba(124, 108, 232, 0.11);
+  --s-acc-line: rgba(124, 108, 232, 0.26);
+  --s-bg: #eef1fa;
+  --s-panel: #ffffff;
+  --s-panel-2: #e6eaf6;
+  --s-txt: #191b33;
+  --s-txt-soft: #5b6183;
+  --s-line: rgba(20, 22, 50, 0.1);
+  --s-shadow: 0 18px 46px rgba(24, 27, 65, 0.13);
+  /* Segundo tono, solo para el bloque `contraste`: los dos grupos tienen que
+     leerse como opuestos, no como dos tarjetas iguales. */
+  --s-tono-b: #d1852a;
+  --s-tono-b-soft: rgba(209, 133, 42, 0.11);
+
+  background: var(--s-bg);
+  color: var(--s-txt);
+}
+
+:global(.dark-mode) .overlay {
+  --s-acc: #a294ff;
+  --s-acc-2: #d08cf5;
+  --s-acc-soft: rgba(162, 148, 255, 0.14);
+  --s-acc-line: rgba(162, 148, 255, 0.3);
+  --s-bg: #08091a;
+  --s-panel: #12142b;
+  --s-panel-2: #0d0f22;
+  --s-txt: #f0eeff;
+  --s-txt-soft: rgba(240, 238, 255, 0.56);
+  --s-line: rgba(255, 255, 255, 0.09);
+  --s-shadow: 0 18px 46px rgba(0, 0, 0, 0.5);
+  --s-tono-b: #f0ab52;
+  --s-tono-b-soft: rgba(240, 171, 82, 0.14);
+}
+
+/* ── Barra superior ─────────────────────────────────────────────────────── */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 13px 22px;
+  background: var(--s-panel);
+  border-bottom: 1px solid var(--s-line);
+  flex-shrink: 0;
+}
+
+.volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  border: 1px solid var(--s-line);
+  border-radius: 10px;
+  padding: 8px 14px 8px 10px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--s-txt-soft);
+  cursor: pointer;
+  transition: color 0.18s, border-color 0.18s, background 0.18s;
+  flex-shrink: 0;
+}
+
+.volver:hover {
+  color: var(--s-acc);
+  border-color: var(--s-acc-line);
+  background: var(--s-acc-soft);
+}
+
+.tituloBox {
+  flex: 1;
+  min-width: 0;
+}
+
+.titulo {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subtitulo {
+  margin: 1px 0 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--s-txt-soft);
+}
+
+.contador {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.contadorActual {
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--s-acc);
+  line-height: 1;
+}
+
+.contadorTotal {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--s-txt-soft);
+}
+
+.barraProgreso {
+  height: 3px;
+  background: var(--s-panel-2);
+  flex-shrink: 0;
+}
+
+.barraProgresoFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--s-acc), var(--s-acc-2));
+  border-radius: 0 3px 3px 0;
+  transition: width 0.45s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+/* ── Alternador de panel (solo pantallas angostas) ──────────────────────── */
+
+.tabs {
+  display: none;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--s-panel);
+  border-bottom: 1px solid var(--s-line);
+  flex-shrink: 0;
+}
+
+.tab {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--s-line);
+  border-radius: 9px;
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--s-txt-soft);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.tabActivo {
+  background: var(--s-acc-soft);
+  border-color: var(--s-acc-line);
+  color: var(--s-acc);
+}
+
+/* ── Split ──────────────────────────────────────────────────────────────── */
+
+.split {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  min-height: 0;
+}
+
+/* ── Panel del enunciado ────────────────────────────────────────────────── */
+
+.paneEnunciado {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--s-panel-2);
+  border-right: 1px solid var(--s-line);
+}
+
+.pdfToolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--s-line);
+  flex-shrink: 0;
+}
+
+.pdfLabel {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--s-txt-soft);
+}
+
+.pdfSpacer {
+  flex: 1;
+}
+
+.zoomGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--s-panel);
+  border: 1px solid var(--s-line);
+  border-radius: 9px;
+  padding: 3px;
+}
+
+.zoomBtn {
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  width: 27px;
+  height: 27px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--s-txt);
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zoomBtn:hover:not(:disabled) {
+  background: var(--s-acc-soft);
+  color: var(--s-acc);
+}
+
+.zoomBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.zoomValor {
+  min-width: 44px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--s-txt-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.pdfScroll {
+  flex: 1;
+  overflow: auto;
+  padding: 20px 24px 40px;
+  min-height: 0;
+  scrollbar-color: var(--s-line) transparent;
+}
+
+.pdfScroll::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+.pdfScroll::-webkit-scrollbar-thumb {
+  background: rgba(120, 126, 165, 0.4);
+  border-radius: 6px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.pdfViewer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  /* width:max-content mantiene la columna tan ancha como los canvas. Sin esto,
+     al ampliar más allá del panel el contenido se desborda centrado y el borde
+     izquierdo queda fuera del alcance del scroll. */
+  width: max-content;
+  min-width: 100%;
+  margin: 0 auto;
+}
+
+.pdfPageWrap {
+  border-radius: 8px;
+  overflow: hidden;
+  user-select: none;
+  box-shadow: 0 6px 20px rgba(24, 27, 65, 0.14);
+  background: #fff;
+}
+
+/* El canvas usa su tamaño nativo: con max-width:100% el navegador lo reescala
+   al ancho del panel y el zoom por encima del 100% no se nota. */
+.pdfPageWrap :global(canvas) {
+  display: block;
+  max-width: none;
+}
+
+.pdfLoading {
+  padding: 44px 20px;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--s-txt-soft);
+}
+
+/* ── Panel de la solución ───────────────────────────────────────────────── */
+
+.paneSolucion {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+}
+
+/* El halo de fondo da profundidad sin competir con el texto. */
+.paneSolucion::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(58% 42% at 78% 8%, var(--s-acc-soft) 0%, transparent 68%),
+    radial-gradient(46% 38% at 12% 96%, var(--s-acc-soft) 0%, transparent 70%);
+}
+
+.solScroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  padding: 26px 28px;
+  position: relative;
+  scrollbar-color: var(--s-line) transparent;
+}
+
+.solScroll::-webkit-scrollbar {
+  width: 11px;
+}
+
+.solScroll::-webkit-scrollbar-thumb {
+  background: rgba(120, 126, 165, 0.4);
+  border-radius: 6px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+/*
+ * `margin:auto` centra vertical y horizontalmente pero, a diferencia de
+ * justify-content:center, no recorta el borde superior cuando el paso es más
+ * alto que el panel.
+ */
+.paso {
+  margin: auto;
+  width: 100%;
+  max-width: 660px;
+  animation: pasoEntra 0.44s cubic-bezier(0.22, 0.9, 0.3, 1) both;
+}
+
+.paso[data-dir='atras'] {
+  --dx: -30px;
+}
+
+@keyframes pasoEntra {
+  from {
+    opacity: 0;
+    transform: translateX(var(--dx, 30px)) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pasoHead {
+  margin-bottom: 22px;
+}
+
+/* Fila de chips de la cabecera. La parte solo aparece en prácticas divididas
+   en secciones, donde la numeración de preguntas se reinicia en cada una. */
+.pasoMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pasoNumero {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--s-acc-soft);
+  border: 1px solid var(--s-acc-line);
+  color: var(--s-acc);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pasoParte {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--s-line);
+  color: var(--s-txt-soft);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.pasoTitulo {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+}
+
+.pasoEnunciado {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--s-txt-soft);
+}
+
+.pasoBloques {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pasoBloques > * {
+  animation: bloqueEntra 0.44s cubic-bezier(0.22, 0.9, 0.3, 1) both;
+  animation-delay: calc(130ms + var(--i, 0) * 75ms);
+}
+
+@keyframes bloqueEntra {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.bloqueTitulo {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--s-txt-soft);
+}
+
+/* ── Bloque: párrafo ────────────────────────────────────────────────────── */
+
+.parrafo {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.68;
+  color: var(--s-txt);
+}
+
+/* ── Bloque: mapeo (marca del dibujo → comentario) ──────────────────────── */
+
+.mapeo {
+  background: var(--s-panel);
+  border: 1px solid var(--s-line);
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: var(--s-shadow);
+}
+
+.mapeoLista,
+.datosLista,
+.opcionesLista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+/* La primera columna se dimensiona con `auto`, no con un ancho fijo: la marca
+   no siempre es una letra suelta (`A`), a veces es un par de referencias
+   («b) y e)») y en una caja de 34px el texto se desbordaba y quedaba
+   descentrado. Con `auto` todas las marcas del bloque comparten el ancho de
+   la más larga, así que la columna sigue alineada. */
+.mapeoItem {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 13px;
+  align-items: start;
+}
+
+.mapeoMarca {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 9px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 14.5px;
+  line-height: 1;
+  font-weight: 800;
+  white-space: nowrap;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--s-acc), var(--s-acc-2));
+  box-shadow: 0 4px 12px var(--s-acc-soft);
+}
+
+.mapeoCuerpo {
+  min-width: 0;
+}
+
+.mapeoSenala {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--s-txt-soft);
+}
+
+.mapeoConclusion {
+  margin: 6px 0 0;
+  padding-left: 12px;
+  border-left: 2px solid var(--s-acc-line);
+  font-size: 14.5px;
+  line-height: 1.55;
+  font-weight: 600;
+}
+
+/* ── Bloque: datos (respuestas etiquetadas) ─────────────────────────────── */
+
+.datoItem {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 13px;
+  align-items: baseline;
+  padding: 12px 15px;
+  background: var(--s-panel);
+  border: 1px solid var(--s-line);
+  border-radius: 12px;
+}
+
+.datoEtiqueta {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--s-acc);
+  min-width: 34px;
+}
+
+.datoCuerpo {
+  min-width: 0;
+}
+
+.datoValor {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.datoDetalle {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--s-txt-soft);
+}
+
+/* ── Bloque: contraste (dos grupos opuestos) ────────────────────────────── */
+
+.contrasteHead {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 10px;
+}
+
+/* Misma métrica que .datoEtiqueta para que a) b) c) d) queden en una serie. */
+.contrasteEtiqueta {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--s-acc);
+  min-width: 34px;
+}
+
+.contrasteHead .bloqueTitulo {
+  margin: 0;
+}
+
+.contrasteGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+}
+
+.contrasteLado {
+  padding: 14px 16px 15px;
+  background: var(--s-panel);
+  border: 1px solid var(--s-line);
+  border-top: 3px solid var(--tono, var(--s-acc));
+  border-radius: 12px;
+  box-shadow: var(--s-shadow);
+}
+
+.contrasteLado:nth-child(1) {
+  --tono: var(--s-acc);
+  --tono-soft: var(--s-acc-soft);
+}
+
+.contrasteLado:nth-child(2) {
+  --tono: var(--s-tono-b);
+  --tono-soft: var(--s-tono-b-soft);
+}
+
+.contrasteLadoTitulo {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--tono, var(--s-acc));
+}
+
+.contrasteItems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contrasteItems li {
+  position: relative;
+  padding-left: 17px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--s-txt);
+}
+
+/* Rombo en vez de bullet redondo: distingue el bloque de una lista corriente. */
+.contrasteItems li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--tono, var(--s-acc));
+  transform: rotate(45deg);
+}
+
+.contrasteNota {
+  margin: 11px 0 0;
+  padding-top: 10px;
+  border-top: 1px dashed var(--s-line);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--s-txt-soft);
+}
+
+/* ── Bloque: tabla ──────────────────────────────────────────────────────── */
+
+.tablaWrap {
+  background: var(--s-panel);
+  border: 1px solid var(--s-line);
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: var(--s-shadow);
+}
+
+/* La tabla scrollea dentro de su caja; la página nunca scrollea en horizontal. */
+.tablaScroll {
+  overflow-x: auto;
+  margin: 0 -18px;
+  padding: 0 18px;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  min-width: 420px;
+}
+
+.tabla th {
+  text-align: left;
+  padding: 9px 12px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--s-acc);
+  background: var(--s-acc-soft);
+  white-space: nowrap;
+}
+
+.tabla th:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.tabla th:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.tabla td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--s-line);
+  line-height: 1.5;
+  vertical-align: top;
+  color: var(--s-txt-soft);
+}
+
+.tabla tr:last-child td {
+  border-bottom: none;
+}
+
+.tablaPrimera {
+  font-weight: 700;
+  color: var(--s-txt) !important;
+  white-space: nowrap;
+}
+
+/* ── Bloque: opciones ───────────────────────────────────────────────────── */
+
+.opcion {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 15px;
+  background: var(--s-panel);
+  border: 1px solid var(--s-line);
+  border-radius: 12px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.opcionMarcada {
+  border-color: var(--s-acc-line);
+  background: linear-gradient(135deg, var(--s-acc-soft), transparent 70%), var(--s-panel);
+  box-shadow: 0 6px 18px var(--s-acc-soft);
+}
+
+.opcionLetra {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--s-txt-soft);
+}
+
+.opcionMarcada .opcionLetra {
+  color: var(--s-acc);
+}
+
+.opcionTexto {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--s-txt-soft);
+}
+
+.opcionMarcada .opcionTexto {
+  color: var(--s-txt);
+  font-weight: 500;
+}
+
+.opcionVeredicto {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.veredictoCierto {
+  background: rgba(45, 201, 154, 0.14);
+  color: #189d76;
+}
+
+.veredictoFalso {
+  background: rgba(239, 100, 100, 0.14);
+  color: #d64f4f;
+}
+
+/* Ni cierto ni falso: opciones que se descartan por no ser lo que se pregunta. */
+.veredictoNeutro {
+  background: rgba(120, 126, 165, 0.16);
+  color: #6c7395;
+}
+
+:global(.dark-mode) .veredictoCierto {
+  color: #4fd8ae;
+}
+
+:global(.dark-mode) .veredictoFalso {
+  color: #ff8b8b;
+}
+
+:global(.dark-mode) .veredictoNeutro {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(240, 238, 255, 0.6);
+}
+
+/* ── Bloque: esquema (diagrama dibujado inline) ─────────────────────────── */
+
+/* Los colores del diagrama viven aquí y no dentro del SVG: así el mismo dibujo
+   sirve en tema claro y oscuro sin duplicar el marcado. */
+.esquema {
+  margin: 0;
+  background: var(--s-panel);
+  border: 1px solid var(--s-line);
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: var(--s-shadow);
+
+  --e-nu-bg: #e6f1fb;
+  --e-nu-line: #185fa5;
+  --e-nu-txt: #0c447c;
+  --e-c-bg: #f1efe8;
+  --e-c-line: #5f5e5a;
+  --e-c-txt: #444441;
+  --e-lg-bg: #faece7;
+  --e-lg-line: #993c1d;
+  --e-lg-txt: #712b13;
+  --e-cat-bg: #faeeda;
+  --e-cat-line: #854f0b;
+  --e-cat-txt: #633806;
+}
+
+:global(.dark-mode) .esquema {
+  --e-nu-bg: rgba(59, 158, 221, 0.16);
+  --e-nu-line: #6bb6e8;
+  --e-nu-txt: #a9d6f4;
+  --e-c-bg: rgba(255, 255, 255, 0.07);
+  --e-c-line: rgba(240, 238, 255, 0.42);
+  --e-c-txt: #e2e0f2;
+  --e-lg-bg: rgba(224, 106, 68, 0.16);
+  --e-lg-line: #e08a68;
+  --e-lg-txt: #f3b79b;
+  --e-cat-bg: rgba(240, 171, 82, 0.16);
+  --e-cat-line: #f0ab52;
+  --e-cat-txt: #f7cd94;
+}
+
+.esquemaSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Los trazos que usan `currentColor` (flecha y su punta) siguen este color. */
+  color: var(--s-txt-soft);
+}
+
+/* Corchetes del estado de transición y la doble daga que los rotula. */
+.esqCorchete {
+  stroke: var(--s-txt-soft);
+  stroke-width: 1;
+  opacity: 0.45;
+}
+
+.esqDaga {
+  fill: var(--s-txt);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Enlace que se está formando o rompiendo: por eso va punteado. */
+.esqEnlaceParcial {
+  stroke: var(--s-txt-soft);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+}
+
+.esqFlecha {
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.esqCarga,
+.esqRotulo {
+  fill: var(--s-txt-soft);
+  font-size: 12px;
+}
+
+.esquema text {
+  font-family: inherit;
+}
+
+/* Las cuatro especies del diagrama, cada una con su color. */
+.esqNu circle {
+  fill: var(--e-nu-bg);
+  stroke: var(--e-nu-line);
+  stroke-width: 0.5;
+}
+.esqNu text {
+  fill: var(--e-nu-txt);
+}
+
+.esqCarbono circle {
+  fill: var(--e-c-bg);
+  stroke: var(--e-c-line);
+  stroke-width: 0.5;
+}
+.esqCarbono text {
+  fill: var(--e-c-txt);
+}
+
+.esqSaliente circle {
+  fill: var(--e-lg-bg);
+  stroke: var(--e-lg-line);
+  stroke-width: 0.5;
+}
+.esqSaliente text {
+  fill: var(--e-lg-txt);
+}
+
+.esqCation circle {
+  fill: var(--e-cat-bg);
+  stroke: var(--e-cat-line);
+  stroke-width: 0.5;
+}
+.esqCation text {
+  fill: var(--e-cat-txt);
+}
+
+.esqNu text,
+.esqCarbono text,
+.esqSaliente text,
+.esqCation text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.esquemaPie {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--s-txt-soft);
+  text-align: center;
+}
+
+/* ── Bloque: clave (respuesta final) ────────────────────────────────────── */
+
+.clave {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0;
+  padding: 15px 18px;
+  border-radius: 13px;
+  background: linear-gradient(135deg, var(--s-acc), var(--s-acc-2));
+  color: #fff;
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.45;
+  box-shadow: 0 10px 26px var(--s-acc-soft);
+}
+
+.claveCheck {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  flex-shrink: 0;
+}
+
+/* ── Bloque: nota ───────────────────────────────────────────────────────── */
+
+.nota {
+  border-left: 3px solid var(--s-acc);
+  padding: 3px 0 3px 15px;
+}
+
+.notaTitulo {
+  margin: 0 0 5px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--s-acc);
+}
+
+.notaTexto {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: var(--s-txt-soft);
+}
+
+/* ── Navegación ─────────────────────────────────────────────────────────── */
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 28px;
+  border-top: 1px solid var(--s-line);
+  background: var(--s-panel);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.navBtn {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  border: 1px solid var(--s-line);
+  background: transparent;
+  color: var(--s-txt-soft);
+  font-family: inherit;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s cubic-bezier(0.22, 0.9, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.navBtn:hover:not(:disabled) {
+  color: var(--s-acc);
+  border-color: var(--s-acc-line);
+  background: var(--s-acc-soft);
+}
+
+.navBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.navBtnPrimario {
+  background: linear-gradient(135deg, var(--s-acc), var(--s-acc-2));
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 8px 20px var(--s-acc-soft);
+}
+
+.navBtnPrimario:hover:not(:disabled) {
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--s-acc), var(--s-acc-2));
+  transform: translateX(3px);
+  box-shadow: 0 10px 26px var(--s-acc-line);
+}
+
+.navFin {
+  height: 46px;
+  padding: 0 22px;
+  border-radius: 13px;
+  border: none;
+  background: linear-gradient(135deg, var(--s-acc), var(--s-acc-2));
+  color: #fff;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px var(--s-acc-soft);
+  transition: transform 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+
+.navFin:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px var(--s-acc-line);
+}
+
+.puntos {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.punto {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border-radius: 50%;
+  border: none;
+  background: var(--s-panel-2);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.25s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+:global(.dark-mode) .punto {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.punto:hover {
+  background: var(--s-acc-line);
+  transform: scale(1.25);
+}
+
+.puntoVisto {
+  background: var(--s-acc-line);
+}
+
+.puntoActivo {
+  width: 26px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--s-acc), var(--s-acc-2));
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+  .paso {
+    max-width: 100%;
+  }
+
+  .solScroll {
+    padding: 20px 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .tabs {
+    display: flex;
+  }
+
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .paneEnunciado {
+    border-right: none;
+  }
+
+  .overlay[data-vista='solucion'] .paneEnunciado {
+    display: none;
+  }
+
+  .overlay[data-vista='enunciado'] .paneSolucion {
+    display: none;
+  }
+
+  .pasoTitulo {
+    font-size: 21px;
+  }
+
+  .subtitulo {
+    display: none;
+  }
+
+  .nav {
+    padding: 12px 18px;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  .topbar {
+    padding: 11px 14px;
+    gap: 12px;
+  }
+
+  .volver span {
+    display: none;
+  }
+
+  .titulo {
+    font-size: 13.5px;
+  }
+
+  .solScroll {
+    padding: 18px 16px;
+  }
+
+  .puntos {
+    gap: 5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paso,
+  .pasoBloques > * {
+    animation: none;
+  }
+
+  .barraProgresoFill,
+  .navBtn,
+  .navFin,
+  .punto {
+    transition: none;
+  }
+
+  .navBtnPrimario:hover:not(:disabled),
+  .navFin:hover {
+    transform: none;
+  }
+}

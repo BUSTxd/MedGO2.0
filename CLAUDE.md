@@ -216,6 +216,94 @@ Motor compartido en **`src/components/AnatExam.tsx`** (Client Component). Cada E
 
 ---
 
+## Solucionarios paso a paso (tarjeta «Banqueo» de las prácticas dirigidas)
+
+Motor en **`src/components/SolucionarioRunner.tsx`** + `src/styles/solucionario.module.css`.
+Contenido data-driven en `src/lib/data/solucionarios/` (`types.ts`, `tema.ts` por práctica,
+registro en `index.ts`). Hechos: `qor-pd-1` … `qor-pd-8` — las **8** prácticas dirigidas de
+Química Orgánica, completas.
+
+Cada paso lleva `n` (número de pregunta en el PDF) y, opcionalmente, `parte` — un chip extra en la
+cabecera para las prácticas divididas en secciones que reinician la numeración (PD08: tres partes,
+tres «Pregunta 1»). Sin ese campo esos pasos serían indistinguibles entre sí.
+
+**Por qué existe**: las respuestas de una PD referencian dibujos del enunciado («el lóbulo
+blanco que sobresale», «el óvalo central entre los carbonos»). Leídas sueltas no se entienden,
+así que el runner **muestra el PDF del enunciado y la explicación en simultáneo**.
+
+**Layout**: capa fija a pantalla completa (portal a `<body>` + clase `pdf-fullscreen-active`,
+que oculta la sidebar — mismo mecanismo que `PdfFullscreenModal`). Split de dos columnas:
+enunciado en PDF a la izquierda (con su propio zoom, `PdfViewer` reutilizado) y **un solo paso
+a la vez** a la derecha. Bajo 900px el split colapsa y aparecen pestañas Enunciado/Solución.
+
+- El paso se centra con **`margin: auto`** dentro de un flex scrollable, no con
+  `justify-content: center` — este último recorta el borde superior cuando el paso es más alto
+  que el panel.
+- Entrada animada: el `<article>` lleva `key={indice}`, así remonta y su animación se repite en
+  cada avance; la dirección (`data-dir`) decide si entra desde la derecha o la izquierda. Los
+  bloques internos escalonan con `--i` + `animation-delay`. Respeta `prefers-reduced-motion`.
+- Navegación: flecha anterior / puntos clicables / flecha siguiente (el último paso la cambia
+  por «Terminar»), más `←`/`→` y `Esc` por teclado.
+
+**Vocabulario de bloques** — cada uno tiene forma propia según lo que contiene; antes de añadir
+uno nuevo, comprobar si alguno ya calza:
+
+| Bloque | Para qué |
+|---|---|
+| `parrafo` | razonamiento corrido, prosa real; con `titulo` cuando es un apartado (a, b, c…) cuyos hermanos sí son bloques con forma |
+| `mapeo` | «esta marca del dibujo (A, B, C…) ↔ este comentario del enunciado» |
+| `datos` | apartados etiquetados (a, b, c…) con su cifra o veredicto |
+| `contraste` | repartir elementos en dos grupos opuestos (enlazantes vs. no enlazantes, nucleófilos vs. electrófilos, SN1 vs. SN2) — cada lado toma un tono distinto (`--s-acc` / `--s-tono-b`), nunca dos tarjetas iguales |
+| `tabla` | varias especies comparadas sobre los mismos criterios; scrollea dentro de su caja |
+| `opciones` | alternativas a)–e) o (i)–(v); `esRespuesta` destaca la pedida y `veredicto` la rotula. El color sale del texto del veredicto: verde si empieza por Cier/Verdad/Correct/Sí, rojo por Fals/No/Incorrect, **gris** en cualquier otro caso (p. ej. «Descartada» — una opción que no es falsa pero tampoco responde). En preguntas del tipo «señale la FALSA», `esRespuesta` marca la que es químicamente incorrecta: eso lo aclara el veredicto |
+| `esquema` | un diagrama que el enunciado **no** trae (mecanismo, estado de transición) |
+| `clave` | la respuesta final, en degradado y con check |
+| `nota` | el porqué que conviene recordar más allá del ejercicio |
+
+**Bloque `esquema`**: los diagramas se dibujan **inline** en `src/components/SolucionarioEsquema.tsx`
+(registro `ESQUEMAS`, tipado por `EsquemaId` de `types.ts` — añadir una clave obliga a
+implementarla), nunca como archivo `.svg` servido aparte. El motivo es el tema: los colores salen
+de variables CSS del módulo (`--e-nu-*`, `--e-c-*`, `--e-lg-*`, `--e-cat-*` en `.esquema`), así el
+mismo dibujo funciona en claro y oscuro. Al transcribir un SVG de referencia se conservan
+`viewBox`, coordenadas, radios y rótulos tal cual, y solo se sustituyen los `style=` inline con
+colores fijos; los ids internos (markers, gradientes) van prefijados (`sol-esq-*`) para no
+colisionar. Hecho: `'sn1-sn2'` (estados de transición, usado en PD07).
+
+**Regla de redacción (la que faltó la primera vez)**: si un apartado de una pregunta usa `datos`,
+sus apartados hermanos **no pueden caer en `parrafo`** — el que queda en prosa parece un añadido
+y rompe el ritmo visual. Se le da forma propia y su `etiqueta` (`'d)'`) para que la serie
+a) b) c) d) se lea alineada; `contraste` nació exactamente de ese arreglo en la pregunta 2 de PD01.
+
+**Para añadir un solucionario nuevo**: crear `src/lib/data/solucionarios/<id>.ts` con el mismo
+shape, registrarlo en `SOLUCIONARIOS` de `index.ts` y asegurarse de que su `pdfId` esté en
+`ALLOWED`/`FILE_ALIAS`. La página del curso ya resuelve `findSolucionario(act.id)` y pasa
+`solucionario` a `StudyMaterialSection`, que convierte la tarjeta Banqueo en el acceso
+(`?solucionario=1`). No se toca el motor.
+
+---
+
+## Actividades sin material propio (invitación a colaborar)
+
+Componente **`src/components/SinMaterialSection.tsx`** — sustituye las 3 tarjetas de
+`StudyMaterialSection` (Video/Banqueo/Resumen) cuando una actividad no tiene ni va a tener
+material propio en el corto plazo, como los talleres científicos de Química Orgánica
+(`qor-taller-1`, `qor-taller-2`). En vez de tres tarjetas apagadas en «Próximamente», invita a
+quien sí tenga el material a aportarlo: título con el acento en **CONTÁCTANOS**, la mascota
+(`public/assets/contactanos.avif`) en primer plano con una sombra elíptica difusa centrada detrás
+(sin panel ni tarjeta que la encuadre), los logos de Gmail e Instagram —transcritos tal cual del
+SVG oficial, ids del gradiente de Instagram prefijados `medgo-ig-*`— como único CTA (sin correo ni
+usuario escritos, sólo el ícono enlazado a `mailto:` / al perfil), y el texto de invitación al
+final, debajo de los logos.
+
+**Para activarlo en una actividad**: añadir `sinMaterial: true` al `Actividad` en el archivo de
+datos del curso (campo opcional en la interfaz `Actividad`) y, en el `[id]/page.tsx` del curso,
+renderizar `act.sinMaterial ? <SinMaterialSection /> : <StudyMaterialSection ... />` en vez de
+`StudyMaterialSection` a secas. Sólo está cableado en Química Orgánica por ahora; para otro curso
+hay que repetir ese `if` en su propio `[id]/page.tsx` (no hay un punto único compartido entre
+cursos).
+
+---
+
 ## Flujo de autenticación
 
 1. Login en `/auth/login` → Supabase Auth

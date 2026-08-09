@@ -34,6 +34,10 @@ const ALLOWED = new Set([
   'qor-s-11', 'qor-s-12', 'qor-s-13', 'qor-s-14',
   'qor-pd-1', 'qor-pd-2', 'qor-pd-3', 'qor-pd-4',
   'qor-pd-5', 'qor-pd-6', 'qor-pd-7', 'qor-pd-8',
+  'qor-pc-1-2018', 'qor-pc-1-2019',
+  'qor-pc-2-2018', 'qor-pc-2-2019',
+  'qor-pc-3-2018', 'qor-pc-3-2019',
+  'qor-pc-4-2018', 'qor-pc-4-2019',
   // Inmunología (ids bare tal como están en inmunologia.ts — sin colisión
   // actual con otros cursos; el path en Storage sí lleva prefijo inmunologia/)
   't-2', 't-3', 't-4', 't-5', 't-6', 't-7', 't-8', 't-9', 't-10',
@@ -128,6 +132,14 @@ const FILE_ALIAS: Record<string, string> = {
   'qor-pd-6': 'quimica-organica/qor-pd-6',
   'qor-pd-7': 'quimica-organica/qor-pd-7',
   'qor-pd-8': 'quimica-organica/qor-pd-8',
+  'qor-pc-1-2018': 'quimica-organica/qor-pc-1-2018',
+  'qor-pc-1-2019': 'quimica-organica/qor-pc-1-2019',
+  'qor-pc-2-2018': 'quimica-organica/qor-pc-2-2018',
+  'qor-pc-2-2019': 'quimica-organica/qor-pc-2-2019',
+  'qor-pc-3-2018': 'quimica-organica/qor-pc-3-2018',
+  'qor-pc-3-2019': 'quimica-organica/qor-pc-3-2019',
+  'qor-pc-4-2018': 'quimica-organica/qor-pc-4-2018',
+  'qor-pc-4-2019': 'quimica-organica/qor-pc-4-2019',
   // Inmunología — subcarpeta inmunologia/
   't-2':   'inmunologia/t-2',
   't-3':   'inmunologia/t-3',

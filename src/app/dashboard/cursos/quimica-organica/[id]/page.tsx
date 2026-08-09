@@ -3,8 +3,11 @@ import Link from 'next/link';
 import { findActividad, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/quimicaOrganica';
 import styles from '@/styles/cursos.module.css';
 import StudyMaterialSection from '@/components/StudyMaterialSection';
+import SinMaterialSection from '@/components/SinMaterialSection';
 import LockedContent from '@/components/LockedContent';
 import TrackRecentClass from '@/components/TrackRecentClass';
+import SolucionarioRunner from '@/components/SolucionarioRunner';
+import { findSolucionario } from '@/lib/data/solucionarios';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
 
@@ -18,10 +21,13 @@ const UNIDAD_LABEL: Record<string, string> = {
 
 export default async function ActividadPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ solucionario?: string }>;
 }) {
   const { id } = await params;
+  const sp = await searchParams;
   const result = findActividad(id);
   if (!result) notFound();
 
@@ -29,6 +35,7 @@ export default async function ActividadPage({
   const badge = TIPO_BADGE[act.tipo];
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
+  const solucionario = findSolucionario(act.id);
 
   // Gating: los laboratorios son libres; teoría, prácticas dirigidas,
   // talleres y evaluaciones están detrás del plan Interno.
@@ -39,6 +46,18 @@ export default async function ActividadPage({
       ? Promise.resolve({ plan: 'free' as const, isActive: true })
       : getCachedPlanState(),
   ]);
+
+  const backHref = `/dashboard/cursos/quimica-organica/${id}`;
+
+  if (sp?.solucionario === '1' && solucionario) {
+    const runner = <SolucionarioRunner solucionario={solucionario} backHref={backHref} />;
+    if (isLab) return runner;
+    return (
+      <LockedContent requiredPlan="ufbi" planState={planState} isAuthed={!!user}>
+        {runner}
+      </LockedContent>
+    );
+  }
 
   const detail = (
     <div className={styles.microPage}>
@@ -93,11 +112,19 @@ export default async function ActividadPage({
           </div>
         )}
 
-        <StudyMaterialSection
-          claseId={act.id}
-          hasResumen={act.resumen?.tipo === 'pdf'}
-          resumenOpciones={act.resumen?.opciones}
-        />
+        {act.sinMaterial ? (
+          <SinMaterialSection />
+        ) : (
+          <StudyMaterialSection
+            claseId={act.id}
+            hasResumen={act.resumen?.tipo === 'pdf'}
+            resumenOpciones={act.resumen?.opciones}
+            resumenLabel={['PD', 'PC', 'EXAMEN-T'].includes(act.tipo) ? 'Database' : undefined}
+            solucionario={
+              solucionario ? { href: `${backHref}?solucionario=1` } : undefined
+            }
+          />
+        )}
       </div>
     </div>
   );

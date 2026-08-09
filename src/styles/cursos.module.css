@@ -1240,3 +1240,121 @@
   color: var(--muted);
   line-height: 1.6;
 }
+
+/* ─── SIN MATERIAL — invitación a colaborar (sustituye las 3 tarjetas) ─── */
+.sinMat {
+  text-align: center;
+  padding: 6px 0 4px;
+}
+
+.sinMatTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+  margin: 0 0 10px;
+}
+
+.sinMatTitleFuerte {
+  color: #2b83bb;
+  letter-spacing: 0.02em;
+}
+
+:global(.dark-mode) .sinMatTitleFuerte {
+  color: #7cc4f0;
+}
+
+.sinMatText {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 48ch;
+  margin: 16px auto 0;
+}
+
+/* Sombra detrás y centrada: la mascota queda en primer plano sin panel que la
+   encuadre — la elipse difusa es lo único que la ancla al fondo. */
+.sinMatArt {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 14px 0 2px;
+}
+
+.sinMatArt::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: 380px;
+  height: 270px;
+  max-width: 96%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(59, 158, 221, 0.18),
+    rgba(123, 114, 212, 0.09) 46%,
+    transparent 72%
+  );
+}
+
+:global(.dark-mode) .sinMatArt::before {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(59, 158, 221, 0.24),
+    rgba(123, 114, 212, 0.12) 46%,
+    transparent 72%
+  );
+}
+
+.sinMatArt img {
+  position: relative;
+  width: 300px;
+  height: auto;
+  filter: drop-shadow(0 16px 22px rgba(20, 30, 70, 0.22));
+}
+
+:global(.dark-mode) .sinMatArt img {
+  filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.5));
+}
+
+.sinMatLogos {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 14px;
+}
+
+.sinMatLogo {
+  display: inline-flex;
+  line-height: 0;
+  border-radius: 10px;
+  transition: transform 0.18s;
+}
+
+.sinMatLogo:hover {
+  transform: translateY(-3px) scale(1.06);
+}
+
+.sinMatLogo:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 5px;
+}
+
+.sinMatLogo svg {
+  display: block;
+  filter: drop-shadow(0 3px 8px rgba(20, 30, 70, 0.2));
+}
+
+@media (max-width: 720px) {
+  .sinMatTitle { font-size: 19px; }
+  .sinMatText { font-size: 13.5px; }
+  .sinMatArt img { width: 210px; }
+  .sinMatArt::before { width: 280px; height: 200px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sinMatLogo:hover { transform: none; }
+}

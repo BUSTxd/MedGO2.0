@@ -36,6 +36,9 @@ export interface Actividad {
   fechaISO?: string;
   /** Sobreescribe el destino del card en el sílabo. */
   linkOverride?: string;
+  /** No tenemos material propio de esta actividad: en vez de las 3 tarjetas de
+   *  estudio apagadas, la clase muestra el aviso con los datos de contacto. */
+  sinMaterial?: boolean;
 }
 
 export interface Semana {
@@ -538,12 +541,9 @@ export const semanas: Semana[] = [
         titulo: 'Taller científico 1 — Discusión de artículos',
         fecha: 'Sesión 1 de 2',
         hora: '—',
-        subtemas: [
-          'Lectura crítica de un artículo científico',
-          'Discusión grupal',
-        ],
+        subtemas: [],
         docentes: [],
-        nota: 'El taller científico vale 10% de la nota final.',
+        sinMaterial: true,
       },
       {
         id: 'qor-taller-2',
@@ -552,11 +552,9 @@ export const semanas: Semana[] = [
         titulo: 'Taller científico 2 — Discusión de artículos',
         fecha: 'Sesión 2 de 2',
         hora: '—',
-        subtemas: [
-          'Presentación de resultados',
-          'Discusión grupal',
-        ],
+        subtemas: [],
         docentes: [],
+        sinMaterial: true,
       },
     ],
   },
@@ -579,6 +577,13 @@ export const semanas: Semana[] = [
         subtemas: ['Capítulos I y II'],
         docentes: [],
         nota: 'Las 4 prácticas calificadas valen en conjunto 20% de la nota final y no son recuperables.',
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'qor-pc-1-2018', label: 'PC01 — 2018' },
+            { id: 'qor-pc-1-2019', label: 'PC01 — 2019' },
+          ],
+        },
       },
       {
         id: 'qor-pc-2',
@@ -590,6 +595,13 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Capítulos III y IV'],
         docentes: [],
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'qor-pc-2-2018', label: 'PC02 — 2018' },
+            { id: 'qor-pc-2-2019', label: 'PC02 — 2019' },
+          ],
+        },
       },
       {
         id: 'qor-examen-parcial',
@@ -612,6 +624,13 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Capítulo VIII'],
         docentes: [],
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'qor-pc-3-2018', label: 'PC03 — 2018' },
+            { id: 'qor-pc-3-2019', label: 'PC03 — 2019' },
+          ],
+        },
       },
       {
         id: 'qor-pc-4',
@@ -623,6 +642,13 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Capítulos IX y X'],
         docentes: [],
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'qor-pc-4-2018', label: 'PC04 — 2018' },
+            { id: 'qor-pc-4-2019', label: 'PC04 — 2019' },
+          ],
+        },
       },
       {
         id: 'qor-examen-final',
