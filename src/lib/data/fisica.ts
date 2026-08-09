@@ -358,6 +358,7 @@ export const semanas: Semana[] = [
             { id: 'fis-c-10-capacitancia', label: 'Capacitancia' },
           ],
         },
+        propuestos: { tipo: 'pdf' },
       },
       {
         id: 'fis-tg-6',
