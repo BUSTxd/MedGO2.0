@@ -44,6 +44,9 @@ const ALLOWED = new Set([
   't-11', 't-12', 't-13', 't-14',
   'sgp-1', 'sgp-2', 'sgp-3', 'sgp-4',
   'tbl-1', 'tbl-2', 'tbl-3',
+  // Física — 'fis-c-N-prop' es el PDF de propuestos (tarjeta «Propuestos» en C1–C4)
+  'fis-c-1', 'fis-c-1-prop',
+  'fis-c-2', 'fis-c-2-prop',
 ]);
 
 // IDs that require an active paid plan (Interno/Residente). Free-plan users
@@ -161,6 +164,11 @@ const FILE_ALIAS: Record<string, string> = {
   'tbl-1': 'inmunologia/tbl-1',
   'tbl-2': 'inmunologia/tbl-2',
   'tbl-3': 'inmunologia/tbl-3',
+  // Física — subcarpeta fisica-medicina/
+  'fis-c-1':      'fisica-medicina/fis-c-1',
+  'fis-c-1-prop': 'fisica-medicina/fis-c-1-propuestos',
+  'fis-c-2':      'fisica-medicina/fis-c-2',
+  'fis-c-2-prop': 'fisica-medicina/fis-c-2-propuestos',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga

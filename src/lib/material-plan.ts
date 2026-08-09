@@ -41,6 +41,8 @@ export interface ActividadLike {
   resumen?: unknown;
   examen?: unknown;
   qbank?: unknown;
+  /** PDF de problemas propuestos (Física C1–C4), abre en el mismo visor que Resumen. */
+  propuestos?: unknown;
   simulacion?: { href?: string };
   sinMaterial?: boolean;
 }
@@ -116,9 +118,10 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
   const usaSimulacion = reglas.simulacionEn?.includes(act.tipo) ?? false;
   const apoyoListo = usaSimulacion && !!act.simulacion?.href;
 
-  // El banqueo se llena de tres formas: un examen del bucket, un qbank o un
-  // solucionario paso a paso (Química Orgánica), que vive fuera del sílabo.
-  const banqueoListo = !!(act.examen || act.qbank || findSolucionario(act.id));
+  // El banqueo se llena de cuatro formas: un examen del bucket, un qbank, un
+  // solucionario paso a paso (Química Orgánica, vive fuera del sílabo) o un
+  // PDF de propuestos (Física C1–C4).
+  const banqueoListo = !!(act.examen || act.qbank || act.propuestos || findSolucionario(act.id));
   const banqueoNoAplica =
     invitacion || esEvaluacion || (reglas.sinBanqueoEn?.includes(act.tipo) ?? false);
 

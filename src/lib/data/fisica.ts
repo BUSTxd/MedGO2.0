@@ -30,6 +30,13 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  /**
+   * PDF de problemas propuestos. Sólo en C1–C4, donde la tarjeta «Banqueo» se
+   * llama «Propuestos» (ver `banqueoLabelDe` en material-plan.ts). Abre en el
+   * mismo visor a pantalla completa que `resumen`, con un id independiente en
+   * el bucket (`{id}-prop`).
+   */
+  propuestos?: { tipo: 'pdf' };
   /** ISO date YYYY-MM-DD; usado para "Próximos exámenes" en el home. */
   fechaISO?: string;
   /** Sobreescribe el destino del card en el sílabo. */
@@ -85,6 +92,8 @@ export const semanas: Semana[] = [
           'Fuerzas de fricción y aplicaciones biomecánicas',
         ],
         docentes: ['Dr. Erwin Haya Enríquez'],
+        resumen: { tipo: 'pdf' },
+        propuestos: { tipo: 'pdf' },
       },
       {
         id: 'fis-tg-1',
@@ -116,6 +125,8 @@ export const semanas: Semana[] = [
           'Colisiones elásticas e inelásticas',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
+        propuestos: { tipo: 'pdf' },
       },
       {
         id: 'fis-tg-2',

@@ -42,6 +42,19 @@ export interface SolucionarioRef {
   desc?: string;
 }
 
+/**
+ * Convierte la tarjeta «Banqueo» en un PDF de problemas propuestos que se abre
+ * en el mismo visor a pantalla completa que Resumen (reutiliza
+ * `PdfFullscreenModal`/`/api/resumen/{claseId}`, no es un banco interactivo).
+ * Usado en las clases C1–C4 de Física, donde «Banqueo» se llama «Propuestos».
+ * Se ignora si la actividad ya tiene `examen` o `solucionario`.
+ */
+export interface PropuestosPdfRef {
+  /** Id registrado en el bucket `resumenes` (ALLOWED/FILE_ALIAS de la route). */
+  claseId: string;
+  desc?: string;
+}
+
 interface Props {
   claseId: string;
   hasResumen: boolean;
@@ -50,6 +63,7 @@ interface Props {
   examenTitle?: string;
   simulacion?: SimulacionRef;
   solucionario?: SolucionarioRef;
+  propuestosPdf?: PropuestosPdfRef;
   /** Omite del todo la tarjeta de Banqueo (ni siquiera "Próximamente") — para
    *  actividades donde ese material nunca va a existir, como los laboratorios
    *  de Hematología. */
@@ -77,13 +91,14 @@ const BanqueoIcon = () => (
   </svg>
 );
 
-export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, examen, simulacion, solucionario, hideBanqueo, resumenLabel, banqueoLabel }: Props) {
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, examen, simulacion, solucionario, propuestosPdf, hideBanqueo, resumenLabel, banqueoLabel }: Props) {
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
   const pathname = usePathname();
 
   const [pickerOpen, setPickerOpen]       = useState(false);
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
   const [selectedId, setSelectedId]       = useState<string | null>(null);
+  const [propuestosOpen, setPropuestosOpen] = useState(false);
 
   // Evento curado: el alumno entró a la clase (una vez por montaje).
   useEffect(() => {
@@ -182,6 +197,23 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <p className={styles.studyCardDesc}>Preguntas tipo examen con explicación</p>
             <span className={styles.studyAvailable}>Comenzar ▸</span>
           </Link>
+        ) : propuestosPdf ? (
+          <div
+            className={`${styles.studyCard} ${styles.studyCardActive}`}
+            onClick={() => {
+              trackEvent('banco_iniciado', { claseId, examKey: propuestosPdf.claseId });
+              setPropuestosOpen(true);
+            }}
+          >
+            <div className={styles.studyCardIcon}>
+              <BanqueoIcon />
+            </div>
+            <p className={styles.studyCardTitle}>{banqueoLabel ?? 'Banqueo'}</p>
+            <p className={styles.studyCardDesc}>
+              {propuestosPdf.desc ?? 'Problemas propuestos, con su resolución'}
+            </p>
+            <span className={styles.studyAvailable}>Comenzar ▸</span>
+          </div>
         ) : solucionario ? (
           <Link
             href={solucionario.href}
@@ -261,6 +293,14 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
         <PdfFullscreenModal
           claseId={activeId}
           onClose={handleCloseFullscreen}
+        />
+      )}
+
+      {/* ── Propuestos: mismo visor, id independiente del de Resumen ── */}
+      {propuestosOpen && propuestosPdf && (
+        <PdfFullscreenModal
+          claseId={propuestosPdf.claseId}
+          onClose={() => setPropuestosOpen(false)}
         />
       )}
     </div>
