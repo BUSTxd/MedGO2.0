@@ -191,9 +191,11 @@ const FILE_ALIAS: Record<string, string> = {
   'fis-c-10-capacitancia': 'fisica-medicina/fis-c-10-capacitancia',
   'fis-c-10-prop':         'fisica-medicina/fis-c-10-propuestos',
   'fis-c-11':      'fisica-medicina/fis-c-11',
-  'fis-c-11-prop': 'fisica-medicina/fis-c-11-propuestos',
+  // .v2: PDF actualizado (agosto 2026). Path nuevo para invalidar el cache
+  // immutable del CDN — mismo criterio que farmacología (ver comentario arriba).
+  'fis-c-11-prop': 'fisica-medicina/fis-c-11-propuestos.v2',
   'fis-c-12':      'fisica-medicina/fis-c-12',
-  'fis-c-12-prop': 'fisica-medicina/fis-c-12-propuestos',
+  'fis-c-12-prop': 'fisica-medicina/fis-c-12-propuestos.v2',
   'fis-c-13':      'fisica-medicina/fis-c-13',
   'fis-c-13-prop': 'fisica-medicina/fis-c-13-propuestos',
 };
