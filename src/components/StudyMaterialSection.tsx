@@ -48,11 +48,16 @@ export interface SolucionarioRef {
  * `PdfFullscreenModal`/`/api/resumen/{claseId}`, no es un banco interactivo).
  * Usado en las clases C1–C4 de Física, donde «Banqueo» se llama «Propuestos».
  * Se ignora si la actividad ya tiene `examen` o `solucionario`.
+ *
+ * Con `opciones` (2+), el click abre el mismo picker que usa Resumen en vez
+ * de ir directo al PDF — p. ej. el Examen final de Física, que junta varios
+ * documentos (examen resuelto, banqueo variado, exámenes de años anteriores).
  */
 export interface PropuestosPdfRef {
   /** Id registrado en el bucket `resumenes` (ALLOWED/FILE_ALIAS de la route). */
   claseId: string;
   desc?: string;
+  opciones?: ResumenOpcion[];
 }
 
 interface Props {
@@ -93,12 +98,21 @@ const BanqueoIcon = () => (
 
 export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, examen, simulacion, solucionario, propuestosPdf, hideBanqueo, resumenLabel, banqueoLabel }: Props) {
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
+  const isPropuestosMulti = propuestosPdf?.opciones && propuestosPdf.opciones.length > 1;
   const pathname = usePathname();
 
   const [pickerOpen, setPickerOpen]       = useState(false);
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
   const [selectedId, setSelectedId]       = useState<string | null>(null);
   const [propuestosOpen, setPropuestosOpen] = useState(false);
+  const [propuestosPickerOpen, setPropuestosPickerOpen] = useState(false);
+  const [selectedPropuestosId, setSelectedPropuestosId] = useState<string | null>(null);
+
+  // Cuál PDF abre el visor de propuestos. Con una sola opción o sin
+  // `opciones`, usa el claseId plano (mismo criterio que `activeId` arriba).
+  const activePropuestosId = isPropuestosMulti
+    ? selectedPropuestosId
+    : (propuestosPdf?.opciones?.[0]?.id ?? propuestosPdf?.claseId ?? null);
 
   // Evento curado: el alumno entró a la clase (una vez por montaje).
   useEffect(() => {
@@ -201,8 +215,12 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           <div
             className={`${styles.studyCard} ${styles.studyCardActive}`}
             onClick={() => {
-              trackEvent('banco_iniciado', { claseId, examKey: propuestosPdf.claseId });
-              setPropuestosOpen(true);
+              if (isPropuestosMulti) {
+                setPropuestosPickerOpen(true);
+              } else {
+                trackEvent('banco_iniciado', { claseId, examKey: propuestosPdf.claseId });
+                setPropuestosOpen(true);
+              }
             }}
           >
             <div className={styles.studyCardIcon}>
@@ -296,11 +314,43 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
         />
       )}
 
+      {/* ── Picker de propuestos (solo cuando `opciones` tiene 2+) ── */}
+      {propuestosPickerOpen && isPropuestosMulti && propuestosPdf?.opciones && (
+        <div className={styles.pickerOverlay} onClick={() => setPropuestosPickerOpen(false)}>
+          <div className={styles.pickerCard} onClick={e => e.stopPropagation()}>
+            <button className={styles.pickerClose} onClick={() => setPropuestosPickerOpen(false)}>✕</button>
+            <p className={styles.pickerTitle}>¿Qué material quieres ver?</p>
+            <div className={styles.pickerOptions}>
+              {propuestosPdf.opciones.map(opcion => (
+                <button
+                  key={opcion.id}
+                  className={styles.pickerOption}
+                  onClick={() => {
+                    trackEvent('banco_iniciado', { claseId, examKey: opcion.id });
+                    setSelectedPropuestosId(opcion.id);
+                    setPropuestosPickerOpen(false);
+                    setPropuestosOpen(true);
+                  }}
+                >
+                  <span className={styles.pickerOptionIcon}>
+                    <BanqueoIcon />
+                  </span>
+                  {opcion.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── Propuestos: mismo visor, id independiente del de Resumen ── */}
-      {propuestosOpen && propuestosPdf && (
+      {propuestosOpen && activePropuestosId && (
         <PdfFullscreenModal
-          claseId={propuestosPdf.claseId}
-          onClose={() => setPropuestosOpen(false)}
+          claseId={activePropuestosId}
+          onClose={() => {
+            setPropuestosOpen(false);
+            if (isPropuestosMulti) setSelectedPropuestosId(null);
+          }}
         />
       )}
     </div>

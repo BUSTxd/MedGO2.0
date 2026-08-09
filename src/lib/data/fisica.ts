@@ -30,12 +30,13 @@ export interface Actividad {
   nota?: string;
   resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
   /**
-   * PDF de problemas propuestos. Sólo en C1–C4, donde la tarjeta «Banqueo» se
-   * llama «Propuestos» (ver `banqueoLabelDe` en material-plan.ts). Abre en el
-   * mismo visor a pantalla completa que `resumen`, con un id independiente en
-   * el bucket (`{id}-prop`).
+   * PDF de problemas propuestos. En C1–C4 la tarjeta «Banqueo» se llama
+   * «Propuestos» (ver `banqueoLabelDe` en material-plan.ts) y abre un único
+   * PDF (`{id}-prop`) en el mismo visor a pantalla completa que `resumen`.
+   * Con `opciones` (2+, como en `resumen`) el click abre un selector — usado
+   * en el Examen final, que junta varios documentos de banqueo.
    */
-  propuestos?: { tipo: 'pdf' };
+  propuestos?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
   /** ISO date YYYY-MM-DD; usado para "Próximos exámenes" en el home. */
   fechaISO?: string;
   /** Sobreescribe el destino del card en el sílabo. */
@@ -462,6 +463,16 @@ export const semanas: Semana[] = [
         subtemas: ['Unidades 3 y 4'],
         docentes: [],
         nota: 'Vale 15% de la nota final.',
+        propuestos: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'fis-examen-final-parte1',    label: 'Examen final 2025-II (Parte 1)' },
+            { id: 'fis-examen-final-parte2',    label: 'Examen final 2025-II (Parte 2)' },
+            { id: 'fis-examen-final-banqueo',   label: 'Banqueo variado' },
+            { id: 'fis-examen-final-ex03-2015', label: 'Exámenes anteriores (2015)' },
+            { id: 'fis-examen-final-ex03-2019', label: 'Exámenes anteriores (2016–2019)' },
+          ],
+        },
       },
     ],
   },

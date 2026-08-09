@@ -97,7 +97,11 @@ export default async function ActividadPage({
           hasResumen={act.resumen?.tipo === 'pdf'}
           resumenOpciones={act.resumen?.opciones}
           banqueoLabel={banqueoLabel}
-          propuestosPdf={act.propuestos?.tipo === 'pdf' ? { claseId: `${act.id}-prop` } : undefined}
+          propuestosPdf={
+            act.propuestos?.tipo === 'pdf'
+              ? { claseId: `${act.id}-prop`, opciones: act.propuestos.opciones }
+              : undefined
+          }
         />
       </div>
     </div>

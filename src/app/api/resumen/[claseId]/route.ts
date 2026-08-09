@@ -59,6 +59,10 @@ const ALLOWED = new Set([
   'fis-c-11', 'fis-c-11-prop',
   'fis-c-12', 'fis-c-12-prop',
   'fis-c-13', 'fis-c-13-prop',
+  // Física — Examen final (banqueo con selector, ver `propuestos.opciones`)
+  'fis-examen-final-parte1', 'fis-examen-final-parte2',
+  'fis-examen-final-banqueo',
+  'fis-examen-final-ex03-2015', 'fis-examen-final-ex03-2019',
 ]);
 
 // IDs that require an active paid plan (Interno/Residente). Free-plan users
@@ -203,6 +207,11 @@ const FILE_ALIAS: Record<string, string> = {
   'fis-c-12-prop': 'fisica-medicina/fis-c-12-propuestos.v2',
   'fis-c-13':      'fisica-medicina/fis-c-13',
   'fis-c-13-prop': 'fisica-medicina/fis-c-13-propuestos',
+  'fis-examen-final-parte1':    'fisica-medicina/fis-examen-final-parte1',
+  'fis-examen-final-parte2':    'fisica-medicina/fis-examen-final-parte2',
+  'fis-examen-final-banqueo':   'fisica-medicina/fis-examen-final-banqueo',
+  'fis-examen-final-ex03-2015': 'fisica-medicina/fis-examen-final-ex03-2015',
+  'fis-examen-final-ex03-2019': 'fisica-medicina/fis-examen-final-ex03-2019',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga
