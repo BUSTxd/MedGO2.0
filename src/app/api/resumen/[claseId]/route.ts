@@ -44,9 +44,20 @@ const ALLOWED = new Set([
   't-11', 't-12', 't-13', 't-14',
   'sgp-1', 'sgp-2', 'sgp-3', 'sgp-4',
   'tbl-1', 'tbl-2', 'tbl-3',
-  // Física — 'fis-c-N-prop' es el PDF de propuestos (tarjeta «Propuestos» en C1–C4)
+  // Física — 'fis-c-N-prop' es el PDF de propuestos (tarjeta «Propuestos»)
   'fis-c-1', 'fis-c-1-prop',
   'fis-c-2', 'fis-c-2-prop',
+  'fis-c-3-prop',
+  'fis-c-4-prop',
+  'fis-c-5-prop',
+  'fis-c-6-prop',
+  'fis-c-7-prop',
+  'fis-c-8-prop',
+  'fis-c-9-prop',
+  'fis-c-10-potencial', 'fis-c-10-capacitancia',
+  'fis-c-11', 'fis-c-11-prop',
+  'fis-c-12', 'fis-c-12-prop',
+  'fis-c-13', 'fis-c-13-prop',
 ]);
 
 // IDs that require an active paid plan (Interno/Residente). Free-plan users
@@ -169,6 +180,21 @@ const FILE_ALIAS: Record<string, string> = {
   'fis-c-1-prop': 'fisica-medicina/fis-c-1-propuestos',
   'fis-c-2':      'fisica-medicina/fis-c-2',
   'fis-c-2-prop': 'fisica-medicina/fis-c-2-propuestos',
+  'fis-c-3-prop': 'fisica-medicina/fis-c-3-propuestos',
+  'fis-c-4-prop': 'fisica-medicina/fis-c-4-propuestos',
+  'fis-c-5-prop': 'fisica-medicina/fis-c-5-propuestos',
+  'fis-c-6-prop': 'fisica-medicina/fis-c-6-propuestos',
+  'fis-c-7-prop': 'fisica-medicina/fis-c-7-propuestos',
+  'fis-c-8-prop': 'fisica-medicina/fis-c-8-propuestos',
+  'fis-c-9-prop': 'fisica-medicina/fis-c-9-propuestos',
+  'fis-c-10-potencial':    'fisica-medicina/fis-c-10-potencial',
+  'fis-c-10-capacitancia': 'fisica-medicina/fis-c-10-capacitancia',
+  'fis-c-11':      'fisica-medicina/fis-c-11',
+  'fis-c-11-prop': 'fisica-medicina/fis-c-11-propuestos',
+  'fis-c-12':      'fisica-medicina/fis-c-12',
+  'fis-c-12-prop': 'fisica-medicina/fis-c-12-propuestos',
+  'fis-c-13':      'fisica-medicina/fis-c-13',
+  'fis-c-13-prop': 'fisica-medicina/fis-c-13-propuestos',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga

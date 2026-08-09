@@ -83,8 +83,8 @@ interface CursoReglas {
   sinBanqueoEn?: readonly string[];
   /** Título alternativo de la tarjeta de resumen, según el tipo de actividad. */
   resumenLabel?: { label: string; tipos: readonly string[] };
-  /** Título alternativo de la tarjeta de banqueo, según el código del sílabo. */
-  banqueoLabel?: { label: string; codigos: readonly string[] };
+  /** Título alternativo de la tarjeta de banqueo, según el tipo de actividad. */
+  banqueoLabel?: { label: string; tipos: readonly string[] };
 }
 
 /** Espejo de lo que cada `cursos/<slug>/[id]/page.tsx` pasa a las tarjetas. */
@@ -95,7 +95,9 @@ const REGLAS: Record<string, CursoReglas> = {
   digestivo:                { simulacionEn: ['ANATOMIA', 'HISTOLOGIA'] },
   'endocrino-reproductor':  { simulacionEn: ['ANATOMIA', 'HISTOLOGIA', 'TALLER'] },
   'quimica-organica':       { resumenLabel: { label: 'Database', tipos: ['PD', 'PC', 'EXAMEN-T'] } },
-  'fisica-medicina':        { banqueoLabel: { label: 'Propuestos', codigos: ['C1', 'C2', 'C3', 'C4'] } },
+  // Todas las clases teóricas (C1–C14) usan el PDF de propuestos, no un banco
+  // interactivo — TRABAJO/PC/EXAMEN-T siguen mostrando "Banqueo" por defecto.
+  'fisica-medicina':        { banqueoLabel: { label: 'Propuestos', tipos: ['TEORIA'] } },
 };
 
 /** Título de la tarjeta de material escrito. Lo usan el panel y la página del curso. */
@@ -105,9 +107,9 @@ export function resumenLabelDe(slug: string, tipo: string): string {
 }
 
 /** Título de la tarjeta de práctica. Lo usan el panel y la página del curso. */
-export function banqueoLabelDe(slug: string, codigo?: string): string {
+export function banqueoLabelDe(slug: string, tipo: string): string {
   const regla = REGLAS[slug]?.banqueoLabel;
-  return regla && codigo && regla.codigos.includes(codigo) ? regla.label : 'Banqueo';
+  return regla && regla.tipos.includes(tipo) ? regla.label : 'Banqueo';
 }
 
 export function planDeActividad(slug: string, act: ActividadLike): PlanActividad {
@@ -120,7 +122,7 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
 
   // El banqueo se llena de cuatro formas: un examen del bucket, un qbank, un
   // solucionario paso a paso (Química Orgánica, vive fuera del sílabo) o un
-  // PDF de propuestos (Física C1–C4).
+  // PDF de propuestos (Física).
   const banqueoListo = !!(act.examen || act.qbank || act.propuestos || findSolucionario(act.id));
   const banqueoNoAplica =
     invitacion || esEvaluacion || (reglas.sinBanqueoEn?.includes(act.tipo) ?? false);
@@ -138,7 +140,7 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
     },
     banqueo: {
       kind: 'banqueo',
-      label: banqueoLabelDe(slug, act.codigo),
+      label: banqueoLabelDe(slug, act.tipo),
       estado: banqueoListo ? 'listo' : banqueoNoAplica ? 'no-aplica' : 'falta',
     },
     resumen: {

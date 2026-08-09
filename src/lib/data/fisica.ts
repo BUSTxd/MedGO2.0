@@ -70,13 +70,35 @@ export const TIPO_BADGE: Record<TipoActividad, { bg: string; color: string; labe
  * El sílabo lista las clases por unidad (orden aproximado) y los trabajos
  * grupales en una serie aparte; los TG04–TG08 aparecen agrupados en una sola
  * fila ("uno por bloque temático") y aquí se despliegan uno por unidad.
+ *
+ * Orden real de las 14 semanas de teoría (confirmado ago-2026, reemplaza el
+ * orden asumido original): Semana 08 no existe — es la semana del examen
+ * parcial — por eso el conteo salta de semana 07 a semana 09. Lo que antes
+ * era un único C3 ("Rotación... Equilibrio... Palancas") en realidad son dos
+ * clases reales (semana 03 y semana 04); y lo que eran C11+C12 separados
+ * (campo magnético / inducción) es una sola clase real (semana 13). Los C1–C14
+ * de abajo son ese orden real renumerado sin huecos:
+ *   C1  Leyes de movimiento              (semana 01)
+ *   C2  Trabajo, energía y colisiones    (semana 02)
+ *   C3  Dinámica rotacional de cuerpos rígidos (semana 03)
+ *   C4  Equilibrio y elasticidad         (semana 04)
+ *   C5  Mecánica de fluidos              (semana 05)
+ *   C6  Movimiento periódico y ondas mecánicas (semana 06)
+ *   C7  Temperatura y calor              (semana 07)
+ *   C8  Leyes de la termodinámica        (semana 09)
+ *   C9  Carga eléctrica, campo eléctrico y ley de Gauss (semana 10)
+ *   C10 Potencial eléctrico y capacitancia (semana 11)
+ *   C11 Corriente, resistencia y fuerza electromotriz (semana 12)
+ *   C12 Magnetismo e inducción electromagnética (semana 13)
+ *   C13 Óptica geométrica                (semana 14)
+ *   C14 Fotones, electrones y átomos     (semana 15)
  */
 export const semanas: Semana[] = [
   // ─── UNIDAD 1 — MECÁNICA ───────────────────────────────────────────────────
   {
     id: 'u1',
     titulo: 'Unidad 1 — Mecánica',
-    fechas: '4 clases · 3 trabajos grupales',
+    fechas: '5 clases · 3 trabajos grupales',
     actividades: [
       {
         id: 'fis-c-1',
@@ -147,24 +169,38 @@ export const semanas: Semana[] = [
         tipo: 'TEORIA',
         unidad: 'MECANICA',
         codigo: 'C3',
-        titulo: 'C3 — Rotación de cuerpos rígidos. Dinámica de rotación',
+        titulo: 'C3 — Dinámica rotacional de cuerpos rígidos',
         fecha: 'Clase 3 de 14',
         hora: '—',
         subtemas: [
           'Momento de inercia y torque',
           'Momento angular y su conservación',
-          'Equilibrio y elasticidad',
-          'Palancas del cuerpo humano',
         ],
         docentes: [],
+        propuestos: { tipo: 'pdf' },
       },
       {
         id: 'fis-c-4',
         tipo: 'TEORIA',
         unidad: 'MECANICA',
         codigo: 'C4',
-        titulo: 'C4 — Mecánica de fluidos. Hidrostática e hidrodinámica',
+        titulo: 'C4 — Equilibrio y elasticidad',
         fecha: 'Clase 4 de 14',
+        hora: '—',
+        subtemas: [
+          'Equilibrio y elasticidad',
+          'Palancas del cuerpo humano',
+        ],
+        docentes: [],
+        propuestos: { tipo: 'pdf' },
+      },
+      {
+        id: 'fis-c-5',
+        tipo: 'TEORIA',
+        unidad: 'MECANICA',
+        codigo: 'C5',
+        titulo: 'C5 — Mecánica de fluidos. Hidrostática e hidrodinámica',
+        fecha: 'Clase 5 de 14',
         hora: '—',
         subtemas: [
           'Presión, densidad y principio de Pascal',
@@ -173,6 +209,7 @@ export const semanas: Semana[] = [
           'Viscosidad y flujo sanguíneo',
         ],
         docentes: [],
+        propuestos: { tipo: 'pdf' },
       },
       {
         id: 'fis-tg-3',
@@ -198,12 +235,12 @@ export const semanas: Semana[] = [
     fechas: '3 clases · 2 trabajos grupales',
     actividades: [
       {
-        id: 'fis-c-5',
+        id: 'fis-c-6',
         tipo: 'TEORIA',
         unidad: 'ONDAS_TERMO',
-        codigo: 'C5',
-        titulo: 'C5 — Movimiento periódico. Ondas mecánicas',
-        fecha: 'Clase 5 de 14',
+        codigo: 'C6',
+        titulo: 'C6 — Movimiento periódico. Ondas mecánicas',
+        fecha: 'Clase 6 de 14',
         hora: '—',
         subtemas: [
           'Movimiento armónico simple',
@@ -212,6 +249,7 @@ export const semanas: Semana[] = [
           'Sonido y oído',
         ],
         docentes: [],
+        propuestos: { tipo: 'pdf' },
       },
       {
         id: 'fis-tg-4',
@@ -229,12 +267,12 @@ export const semanas: Semana[] = [
         nota: 'El sílabo agrupa TG04–TG08 como "uno por bloque temático" (6 laboratorios virtuales asincrónicos en total).',
       },
       {
-        id: 'fis-c-6',
+        id: 'fis-c-7',
         tipo: 'TEORIA',
         unidad: 'ONDAS_TERMO',
-        codigo: 'C6',
-        titulo: 'C6 — Temperatura y calor. Propiedades térmicas de la materia',
-        fecha: 'Clase 6 de 14',
+        codigo: 'C7',
+        titulo: 'C7 — Temperatura y calor. Propiedades térmicas de la materia',
+        fecha: 'Clase 7 de 14',
         hora: '—',
         subtemas: [
           'Escalas de temperatura y dilatación',
@@ -242,14 +280,15 @@ export const semanas: Semana[] = [
           'Conducción, convección y radiación',
         ],
         docentes: [],
+        propuestos: { tipo: 'pdf' },
       },
       {
-        id: 'fis-c-7',
+        id: 'fis-c-8',
         tipo: 'TEORIA',
         unidad: 'ONDAS_TERMO',
-        codigo: 'C7',
-        titulo: 'C7 — Leyes de la termodinámica',
-        fecha: 'Clase 7 de 14',
+        codigo: 'C8',
+        titulo: 'C8 — Leyes de la termodinámica',
+        fecha: 'Clase 8 de 14',
         hora: '—',
         subtemas: [
           'Primera ley y procesos termodinámicos',
@@ -257,6 +296,7 @@ export const semanas: Semana[] = [
           'Máquinas térmicas y eficiencia',
         ],
         docentes: [],
+        propuestos: { tipo: 'pdf' },
       },
       {
         id: 'fis-tg-5',
@@ -279,15 +319,15 @@ export const semanas: Semana[] = [
   {
     id: 'u3',
     titulo: 'Unidad 3 — Electromagnetismo',
-    fechas: '5 clases · 2 trabajos grupales',
+    fechas: '4 clases · 2 trabajos grupales',
     actividades: [
       {
-        id: 'fis-c-8',
+        id: 'fis-c-9',
         tipo: 'TEORIA',
         unidad: 'ELECTROMAGNETISMO',
-        codigo: 'C8',
-        titulo: 'C8 — Carga eléctrica, campo eléctrico y ley de Gauss',
-        fecha: 'Clase 8 de 14',
+        codigo: 'C9',
+        titulo: 'C9 — Carga eléctrica, campo eléctrico y ley de Gauss',
+        fecha: 'Clase 9 de 14',
         hora: '—',
         subtemas: [
           'Ley de Coulomb',
@@ -295,14 +335,15 @@ export const semanas: Semana[] = [
           'Ley de Gauss y aplicaciones',
         ],
         docentes: [],
+        propuestos: { tipo: 'pdf' },
       },
       {
-        id: 'fis-c-9',
+        id: 'fis-c-10',
         tipo: 'TEORIA',
         unidad: 'ELECTROMAGNETISMO',
-        codigo: 'C9',
-        titulo: 'C9 — Potencial eléctrico y capacitancia',
-        fecha: 'Clase 9 de 14',
+        codigo: 'C10',
+        titulo: 'C10 — Potencial eléctrico y capacitancia',
+        fecha: 'Clase 10 de 14',
         hora: '—',
         subtemas: [
           'Diferencia de potencial y superficies equipotenciales',
@@ -310,6 +351,13 @@ export const semanas: Semana[] = [
           'Energía almacenada. Aplicación al desfibrilador',
         ],
         docentes: [],
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'fis-c-10-potencial',    label: 'Potencial eléctrico' },
+            { id: 'fis-c-10-capacitancia', label: 'Capacitancia' },
+          ],
+        },
       },
       {
         id: 'fis-tg-6',
@@ -326,12 +374,12 @@ export const semanas: Semana[] = [
         docentes: [],
       },
       {
-        id: 'fis-c-10',
+        id: 'fis-c-11',
         tipo: 'TEORIA',
         unidad: 'ELECTROMAGNETISMO',
-        codigo: 'C10',
-        titulo: 'C10 — Corriente, resistencia y fuerza electromotriz',
-        fecha: 'Clase 10 de 14',
+        codigo: 'C11',
+        titulo: 'C11 — Corriente, resistencia y fuerza electromotriz',
+        fecha: 'Clase 11 de 14',
         hora: '—',
         subtemas: [
           'Ley de Ohm y resistividad',
@@ -340,36 +388,28 @@ export const semanas: Semana[] = [
           'Efectos fisiológicos de la corriente',
         ],
         docentes: [],
-      },
-      {
-        id: 'fis-c-11',
-        tipo: 'TEORIA',
-        unidad: 'ELECTROMAGNETISMO',
-        codigo: 'C11',
-        titulo: 'C11 — Campo y fuerzas magnéticas. Fuentes de campo magnético',
-        fecha: 'Clase 11 de 14',
-        hora: '—',
-        subtemas: [
-          'Fuerza de Lorentz',
-          'Campo de una corriente. Ley de Ampère',
-          'Aplicación a la resonancia magnética',
-        ],
-        docentes: [],
+        resumen: { tipo: 'pdf' },
+        propuestos: { tipo: 'pdf' },
       },
       {
         id: 'fis-c-12',
         tipo: 'TEORIA',
         unidad: 'ELECTROMAGNETISMO',
         codigo: 'C12',
-        titulo: 'C12 — Inducción electromagnética',
+        titulo: 'C12 — Magnetismo e inducción electromagnética',
         fecha: 'Clase 12 de 14',
         hora: '—',
         subtemas: [
+          'Fuerza de Lorentz',
+          'Campo de una corriente. Ley de Ampère',
+          'Aplicación a la resonancia magnética',
           'Ley de Faraday y ley de Lenz',
           'Inductancia y transformadores',
           'Corrientes inducidas',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
+        propuestos: { tipo: 'pdf' },
       },
       {
         id: 'fis-tg-7',
@@ -399,7 +439,7 @@ export const semanas: Semana[] = [
         tipo: 'TEORIA',
         unidad: 'OPTICA_MODERNA',
         codigo: 'C13',
-        titulo: 'C13 — Naturaleza de la luz. Óptica geométrica',
+        titulo: 'C13 — Óptica geométrica',
         fecha: 'Clase 13 de 14',
         hora: '—',
         subtemas: [
@@ -408,17 +448,18 @@ export const semanas: Semana[] = [
           'El ojo humano y defectos de refracción',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
+        propuestos: { tipo: 'pdf' },
       },
       {
         id: 'fis-c-14',
         tipo: 'TEORIA',
         unidad: 'OPTICA_MODERNA',
         codigo: 'C14',
-        titulo: 'C14 — Interferencia y difracción. Introducción a la física moderna',
+        titulo: 'C14 — Fotones, electrones y átomos',
         fecha: 'Clase 14 de 14',
         hora: '—',
         subtemas: [
-          'Interferencia y difracción',
           'Fotones y dualidad onda-partícula',
           'Estructura atómica',
           'Física nuclear y radiación en medicina',

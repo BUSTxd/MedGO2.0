@@ -31,9 +31,9 @@ export default async function ActividadPage({
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
 
-  // C1–C4: la tarjeta "Banqueo" se llama "Propuestos". La regla vive en
-  // `material-plan.ts` para que el panel de aportes cuente el mismo nombre.
-  const banqueoLabel = banqueoLabelDe('fisica-medicina', act.codigo);
+  // Clases teóricas: la tarjeta "Banqueo" se llama "Propuestos". La regla vive
+  // en `material-plan.ts` para que el panel de aportes cuente el mismo nombre.
+  const banqueoLabel = banqueoLabelDe('fisica-medicina', act.tipo);
 
   // Gating: los trabajos grupales (laboratorio virtual) son libres; clases,
   // prácticas calificadas y exámenes están detrás del plan Interno.
