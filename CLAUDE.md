@@ -325,8 +325,9 @@ reparto entre socios y de la prioridad de lanzamiento — leyendo los sílabos e
 conteo mantenido a mano.
 
 **Acceso**: `canVerAportes()` en `src/lib/admin.ts`, más amplio que `isAdminEmail` pero mucho más
-estrecho que "todo admin ve todo" — es `isAdminEmail OR` un `Set` de correos de socias que aportan
-material (hoy `maria.guzman.z@upch.pe`, `sofiacolchado12@gmail.com`). Esas socias ven el enlace
+estrecho que "todo admin ve todo" — es `isAdminEmail OR` el `Set` de correos declarados en
+`COLABORADORES` (`EMAILS_COLABORADORES`, derivado del registro: el correo se escribe una sola vez,
+junto al nombre y el color de la persona). Esas socias ven el enlace
 «Aportes» en la sidebar y el panel, pero **no** `dashboard/admin` ni `dashboard/modelado`, y no
 heredan el `allAccess` de plan del admin. `dashboard/layout.tsx` calcula `verAportes` aparte de
 `isAdmin` y pasa ambos flags por separado a `DashboardWrapper`/`DashboardSidebar` — antes un único
@@ -384,10 +385,37 @@ En las filas de examen se muestra la categoría (`examenLabel`) en vez de la sem
 fila de otra mucho mejor que «Semana 14». Debajo, cobertura completa por tramo para el resto de
 cursos. Estilos en `src/styles/aportes.module.css`, light+dark.
 
-**Registro de personas** — `src/lib/data/aportes.ts`: `COLABORADORES` (nombre, rol, color, pools)
-y `CURSOS` (slug, track, `materialDe: Colaborador[]`). El banqueo y los laboratorios nunca se
-declaran a mano ahí — siempre son de `bust` y se cuentan directo de los sílabos/`LABORATORIOS`
-para que el número no se desalinee de lo publicado.
+**Registro de personas** — `src/lib/data/aportes.ts`: `COLABORADORES` (nombre, rol, **color único
+por persona**, `email?`, pools) y `CURSOS` (slug, track, `materialDe: Colaborador[]`). El color es
+la identidad visual de cada uno en todo el panel; el correo es lo que le permite marcar sus
+aportes (`colaboradorDeEmail`), y quien no lo tenga —`ufbi-2` hoy— sólo puede ser marcado por el
+admin. El banqueo y los laboratorios nunca se declaran a mano ahí: son el reparto *por defecto*
+(`bust`, o el `autor` del lab) y se cuentan directo de los sílabos/`LABORATORIOS`.
+
+**Quién subió qué — marcas de autoría** (`src/components/RegistroAportes.tsx`, única parte
+interactiva del panel). El resto se deduce del repo; la autoría no está en ningún archivo, así que
+cada persona la declara pintando el círculo del material que subió:
+
+- **Granularidad**: por actividad × slot. Cursos → un círculo por tarjeta exigible de cada
+  actividad (Resumen / Banqueo / Simulación ya publicada); laboratorios e histología → un círculo
+  por pieza (`slot: 'material'`). El inventario lo arma `src/lib/aportes-registro.ts` desde las
+  mismas fuentes que la cobertura (`SILABOS`, `LABORATORIOS`, `HISTO_CURSOS`) y lo pasa **plano**
+  al cliente — `HISTO_CURSOS` trae íconos JSX que no cruzan la frontera servidor→cliente.
+- **Co-autoría**: varias marcas sobre el mismo slot son válidas; el círculo se parte en sectores
+  (`conic-gradient`) y `getAportes()` divide esa unidad entre los firmantes.
+- **Precedencia**: lo marcado manda sobre el reparto declarado en `aportes.ts`, que queda como
+  estimación para que el panel no salga vacío antes de que el equipo marque. Histología no declara
+  autor en ningún sitio: sólo cuenta lo marcado.
+- **Permisos**: cada uno marca y desmarca lo suyo; el admin corrige cualquier marca y es el único
+  que puede marcar por alguien sin cuenta. Se comprueba en `/api/aportes/marcas`, no en RLS.
+- **Persistencia**: tabla `aportes_marcas` en Supabase (única por
+  `ambito+scope_id+item_id+slot+colaborador`), **RLS activo y sin políticas**: el navegador nunca
+  la toca. Todo pasa por `src/lib/aportes-marcas-server.ts` con la service role key. Tipos
+  compartidos cliente/servidor en `src/lib/aportes-marcas.ts` (`claveMarca`, `indexarMarcas`).
+- **UI**: escritura optimista + `router.refresh()` para recalcular «Aportes por persona»,
+  resincronización al volver el foco a la pestaña, y **cada acción pasa por un popover de
+  confirmación** («Se guarda para todo el equipo») porque una marca ajena no se puede deshacer
+  desde el código.
 
 ---
 

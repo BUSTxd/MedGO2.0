@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type {
   TrackStats,
   AporteColaborador,
@@ -12,6 +13,8 @@ interface Props {
   lanzamiento: Lanzamiento;
   tracks: TrackStats[];
   aportes: AporteColaborador[];
+  /** Registro interactivo de autoría; lo monta la página, que tiene la sesión. */
+  registro: ReactNode;
 }
 
 const ACC: Record<string, string> = {
@@ -288,9 +291,9 @@ function CursoCard({
   );
 }
 
-export default function AportesPanel({ lanzamiento, tracks, aportes }: Props) {
+export default function AportesPanel({ lanzamiento, tracks, aportes, registro }: Props) {
   const activos = aportes.filter(
-    (a) => a.resumenes > 0 || a.banqueos > 0 || a.laboratorios > 0,
+    (a) => a.resumenes > 0 || a.banqueos > 0 || a.laboratorios > 0 || a.histologia > 0,
   );
 
   const totalBanqueo = lanzamiento.banqueo.listo + lanzamiento.banqueo.falta;
@@ -435,12 +438,16 @@ export default function AportesPanel({ lanzamiento, tracks, aportes }: Props) {
         );
       })}
 
+      {/* ── Quién subió qué: lo único que no se deduce del repo ── */}
+      {registro}
+
       {/* ── Registro de aportes por persona ── */}
       <section className={styles.trackCard} style={{ ['--acc' as string]: '45, 201, 154' }}>
         <header className={styles.trackHead}>
           <h3 className={styles.trackTitle}>Aportes por persona</h3>
           <span className={styles.trackMeta}>
-            Los resúmenes de un curso con varios autores se dividen en partes iguales
+            Manda lo marcado arriba; un material firmado por dos cuenta la mitad
+            para cada uno
           </span>
         </header>
 
@@ -469,6 +476,10 @@ export default function AportesPanel({ lanzamiento, tracks, aportes }: Props) {
                       <span className={styles.pesados}> · {a.labsPesados} 3D</span>
                     )}
                   </dd>
+                </div>
+                <div>
+                  <dt>Histología</dt>
+                  <dd>{a.histologia}</dd>
                 </div>
                 <div>
                   <dt>Cursos con material</dt>

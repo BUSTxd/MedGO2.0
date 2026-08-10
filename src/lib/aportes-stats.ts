@@ -8,50 +8,10 @@ import {
   type Colaborador,
   type CursoMeta,
 } from '@/lib/data/aportes';
-import { planDeActividad, type ActividadLike, type PlanActividad } from '@/lib/material-plan';
-
-import { semanas as microbiologia }   from '@/lib/data/microbiologia';
-import { semanas as farmacologia }    from '@/lib/data/farmacologia';
-import { semanas as cardiovascular }  from '@/lib/data/cardiovascular';
-import { semanas as neurologia }      from '@/lib/data/neurologia';
-import { semanas as excretor }        from '@/lib/data/excretor';
-import { semanas as hematologia }     from '@/lib/data/hematologia';
-import { semanas as locomotor }       from '@/lib/data/locomotor';
-import { semanas as inmunologia }     from '@/lib/data/inmunologia';
-import { semanas as digestivo }       from '@/lib/data/digestivo';
-import { semanas as endocrino }       from '@/lib/data/endocrino';
-import { semanas as patologia }       from '@/lib/data/patologia';
-import { semanas as biologiaCelular } from '@/lib/data/biologiaCelular';
-import { semanas as cienciasSociales }from '@/lib/data/cienciasSociales';
-import { semanas as fisica }          from '@/lib/data/fisica';
-import { semanas as quimicaOrganica } from '@/lib/data/quimicaOrganica';
-import { semanas as comunicacion }    from '@/lib/data/comunicacion';
-import { semanas as culturaAmbiental }from '@/lib/data/culturaAmbiental';
-
-interface SemanaLike {
-  titulo: string;
-  actividades: readonly ActividadLike[];
-}
-
-const SILABOS: Record<string, readonly SemanaLike[]> = {
-  'microbiologia':          microbiologia   as unknown as SemanaLike[],
-  'farmacologia':           farmacologia    as unknown as SemanaLike[],
-  'cardiovascular':         cardiovascular  as unknown as SemanaLike[],
-  'neurologia':             neurologia      as unknown as SemanaLike[],
-  'excretor':               excretor        as unknown as SemanaLike[],
-  'hematologia':            hematologia     as unknown as SemanaLike[],
-  'aparato-locomotor':      locomotor       as unknown as SemanaLike[],
-  'inmunologia':            inmunologia     as unknown as SemanaLike[],
-  'digestivo':              digestivo       as unknown as SemanaLike[],
-  'endocrino-reproductor':  endocrino       as unknown as SemanaLike[],
-  'patologia':              patologia       as unknown as SemanaLike[],
-  'biologia-celular':       biologiaCelular as unknown as SemanaLike[],
-  'ciencias-sociales':      cienciasSociales as unknown as SemanaLike[],
-  'fisica-medicina':        fisica          as unknown as SemanaLike[],
-  'quimica-organica':       quimicaOrganica as unknown as SemanaLike[],
-  'comunicacion-redaccion-ii': comunicacion as unknown as SemanaLike[],
-  'cultura-ambiental':      culturaAmbiental as unknown as SemanaLike[],
-};
+import { planDeActividad, type PlanActividad } from '@/lib/material-plan';
+import { SILABOS } from '@/lib/data/silabos';
+import { HISTO_CURSOS } from '@/lib/data/histologia';
+import { claveMarca, indexarMarcas, type Marca } from '@/lib/aportes-marcas';
 
 /** Recuento de un slot (Resumen o Banqueo) sobre las actividades de un curso. */
 export interface SlotStats {
@@ -108,6 +68,8 @@ export interface AporteColaborador {
   banqueos: number;
   laboratorios: number;
   labsPesados: number;
+  /** Clases del atlas de histología. Sólo cuenta lo marcado a mano. */
+  histologia: number;
   cursosConMaterial: number;
 }
 
@@ -272,12 +234,19 @@ export function getLanzamiento(): Lanzamiento {
 /**
  * Atribuye cada unidad publicada a una persona.
  *
- * Los resúmenes se reparten por curso: si un curso tiene varios autores de
- * material, el crédito se divide en partes iguales (no se duplica, o el total
- * atribuido superaría lo realmente publicado). `APORTE_OVERRIDE` permite
- * reasignar actividades sueltas.
+ * Manda lo marcado a mano en el panel: si alguien pintó el círculo de ese
+ * material, el crédito es suyo, y si lo pintaron varios se divide en partes
+ * iguales entre ellos (nunca se duplica, o el total atribuido superaría lo
+ * realmente publicado).
+ *
+ * Sin marcas se cae al reparto declarado en `aportes.ts` —`materialDe` del
+ * curso para el escrito, `bust` para el banqueo, el `autor` del lab— que es una
+ * estimación: sirve para que el panel no salga vacío antes de que el equipo
+ * marque, pero cualquier marca lo corrige.
  */
-export function getAportes(): AporteColaborador[] {
+export function getAportes(marcas: readonly Marca[] = []): AporteColaborador[] {
+  const marcasIdx = indexarMarcas(marcas);
+
   const base = Object.entries(COLABORADORES).map(([key, meta]) => ({
     colaborador: key as Colaborador,
     nombre: meta.nombre,
@@ -287,40 +256,100 @@ export function getAportes(): AporteColaborador[] {
     banqueos: 0,
     laboratorios: 0,
     labsPesados: 0,
+    histologia: 0,
     cursosConMaterial: 0,
   }));
 
   const idx = new Map(base.map((a) => [a.colaborador, a]));
-  const overrides = Object.values(APORTE_OVERRIDE);
+  /** Cursos en los que a cada persona se le atribuyó material escrito. */
+  const cursosPorPersona = new Map<Colaborador, Set<string>>();
 
-  for (const curso of todosLosCursos()) {
-    // El banqueo siempre es de quien lo arma: hoy, BUST.
-    const bust = idx.get('bust');
-    if (bust) bust.banqueos += curso.banqueo.listo;
+  /** Reparte una unidad publicada entre quienes la firman. */
+  function acreditar(
+    personas: readonly Colaborador[],
+    campo: 'resumenes' | 'banqueos' | 'laboratorios' | 'histologia',
+    unidad = 1,
+  ) {
+    if (personas.length === 0) return;
+    const cuota = unidad / personas.length;
+    for (const persona of personas) {
+      const a = idx.get(persona);
+      if (a) a[campo] += cuota;
+    }
+  }
 
-    if (curso.resumen.listo > 0 && curso.materialDe.length > 0) {
-      const cuota = curso.resumen.listo / curso.materialDe.length;
-      for (const persona of curso.materialDe) {
-        const a = idx.get(persona);
-        if (!a) continue;
-        a.resumenes += cuota;
-        a.cursosConMaterial++;
+  /** Quién firma este material: lo marcado, o el reparto por defecto. */
+  const firmantes = (
+    clave: string,
+    porDefecto: readonly Colaborador[],
+  ): readonly Colaborador[] => marcasIdx[clave] ?? porDefecto;
+
+  for (const meta of CURSOS) {
+    for (const semana of SILABOS[meta.slug] ?? []) {
+      for (const act of semana.actividades) {
+        const plan = planDeActividad(meta.slug, act);
+        const base_ = { ambito: 'curso' as const, scopeId: meta.slug, itemId: plan.id };
+
+        if (plan.resumen.estado === 'listo') {
+          // El override reasigna una actividad suelta a otra persona.
+          const porDefecto = APORTE_OVERRIDE[plan.id]
+            ? [APORTE_OVERRIDE[plan.id]]
+            : meta.materialDe;
+          const personas = firmantes(claveMarca({ ...base_, slot: 'resumen' }), porDefecto);
+          acreditar(personas, 'resumenes');
+          for (const p of personas) {
+            (cursosPorPersona.get(p) ?? cursosPorPersona.set(p, new Set()).get(p)!).add(meta.slug);
+          }
+        }
+
+        if (plan.banqueo.estado === 'listo') {
+          // El banqueo lo arma quien monta el banco de preguntas: hoy, BUST.
+          acreditar(firmantes(claveMarca({ ...base_, slot: 'banqueo' }), ['bust']), 'banqueos');
+        }
       }
     }
   }
 
-  // Overrides: mueven una unidad de su autor por defecto al declarado.
-  for (const persona of overrides) {
-    const a = idx.get(persona);
-    if (a) a.resumenes += 1;
-  }
-
   for (const lab of LABORATORIOS) {
-    const a = idx.get(lab.autor);
-    if (!a) continue;
-    a.laboratorios++;
-    if (lab.pesado) a.labsPesados++;
+    const clave = claveMarca({
+      ambito: 'laboratorio',
+      scopeId: 'labs',
+      itemId: lab.slug,
+      slot: 'material',
+    });
+    const personas = firmantes(clave, [lab.autor]);
+    acreditar(personas, 'laboratorios');
+    if (lab.pesado) {
+      const cuota = 1 / personas.length;
+      for (const persona of personas) {
+        const a = idx.get(persona);
+        if (a) a.labsPesados += cuota;
+      }
+    }
   }
 
-  return base.map((a) => ({ ...a, resumenes: Math.round(a.resumenes * 10) / 10 }));
+  // Histología no declara autor en ningún archivo: sólo cuenta lo marcado.
+  for (const curso of HISTO_CURSOS) {
+    for (const clase of curso.clases) {
+      const clave = claveMarca({
+        ambito: 'histologia',
+        scopeId: curso.id,
+        itemId: clase.slug,
+        slot: 'material',
+      });
+      acreditar(marcasIdx[clave] ?? [], 'histologia');
+    }
+  }
+
+  const red = (n: number) => Math.round(n * 10) / 10;
+
+  return base.map((a) => ({
+    ...a,
+    resumenes: red(a.resumenes),
+    banqueos: red(a.banqueos),
+    laboratorios: red(a.laboratorios),
+    labsPesados: red(a.labsPesados),
+    histologia: red(a.histologia),
+    cursosConMaterial: cursosPorPersona.get(a.colaborador)?.size ?? 0,
+  }));
 }

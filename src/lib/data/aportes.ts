@@ -12,12 +12,22 @@ import type { Track } from '@/lib/plans';
  * que un placeholder ahí se ve desde dentro.
  */
 
-export type Colaborador = 'bust' | 'sofia' | 'ufbi-1' | 'ufbi-2';
+export type Colaborador = 'bust' | 'sofia' | 'ufbi-1' | 'ufbi-2' | 'tulio';
 
 export interface ColaboradorMeta {
   nombre: string;
   rol: string;
+  /**
+   * Color propio, único en todo el equipo. Identifica a la persona en el panel:
+   * es el que pinta su punto, sus chips y los círculos del registro de aportes,
+   * así que dos personas no pueden compartirlo ni acercarse en tono.
+   */
   color: string;
+  /**
+   * Correo con el que entra a la web. Es lo que la deja marcar sus propios
+   * aportes: sin correo, sus marcas sólo las puede poner el admin.
+   */
+  email?: string;
   /** Tramos en cuyo reparto participa. */
   pools: Track[];
 }
@@ -26,28 +36,57 @@ export const COLABORADORES: Record<Colaborador, ColaboradorMeta> = {
   bust: {
     nombre: 'BUST',
     rol: 'Plataforma, banqueo, laboratorios 3D, costos y redes',
-    color: '#3b9edd',
+    color: '#3b9edd',      // azul
+    email: 'fernandnoob062.0@gmail.com',
     pools: ['basico', 'medicina'],
   },
   sofia: {
     nombre: 'Sofía',
     rol: 'Material de Facultad (2.º–3.er año)',
-    color: '#8b5cf6',
+    color: '#8b5cf6',      // violeta
+    email: 'sofiacolchado12@gmail.com',
     pools: ['medicina'],
   },
   'ufbi-1': {
     nombre: 'María Guzmán',
     rol: 'Material de UFBI (1.er año)',
-    color: '#2DC99A',
+    color: '#2DC99A',      // verde
+    email: 'maria.guzman.z@upch.pe',
     pools: ['basico'],
   },
   'ufbi-2': {
     nombre: 'Colaboradora 2',   // ← poner nombre real
     rol: 'Material de UFBI (1.er año)',
-    color: '#F5A623',
+    color: '#F5A623',      // naranja
+    // Sin correo todavía: sus marcas las pone BUST hasta que tenga cuenta.
     pools: ['basico'],
   },
+  tulio: {
+    nombre: 'Tulio Montenegro',
+    rol: 'Material de cursos',
+    color: '#E8578F',      // rosa
+    email: 'tulio.montenegro@upch.pe',
+    pools: ['basico', 'medicina'],
+  },
 };
+
+export const COLABORADOR_KEYS = Object.keys(COLABORADORES) as Colaborador[];
+
+/** Índice inverso correo → persona, para saber quién está marcando. */
+const POR_EMAIL: ReadonlyMap<string, Colaborador> = new Map(
+  COLABORADOR_KEYS.flatMap((key) => {
+    const email = COLABORADORES[key].email;
+    return email ? ([[email.toLowerCase(), key]] as [string, Colaborador][]) : [];
+  }),
+);
+
+export function colaboradorDeEmail(email: string | null | undefined): Colaborador | null {
+  if (!email) return null;
+  return POR_EMAIL.get(email.toLowerCase()) ?? null;
+}
+
+/** Correos del equipo. `admin.ts` los usa para abrir el panel de aportes. */
+export const EMAILS_COLABORADORES: readonly string[] = [...POR_EMAIL.keys()];
 
 export interface CursoMeta {
   /** Slug de la ruta en /dashboard/cursos/<slug>. */
