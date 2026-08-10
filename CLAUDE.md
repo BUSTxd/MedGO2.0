@@ -199,13 +199,16 @@ Tres tarjetas en orden, cada una con varias formas posibles de estar "activa":
    locked/próximamente. Ícono videoresumen o beaker según corresponda.
 2. **Banqueo** — activa con `examen` (link a `?examen=1`, banco de preguntas del bucket
    `examenes`), `solucionario` (paso a paso de Química Orgánica) o `propuestosPdf` (PDF de
-   problemas propuestos, Física — abre el mismo `PdfFullscreenModal` que Resumen pero con un id de
-   bucket independiente, `{claseId}-prop`; no es un banco interactivo). El título de la tarjeta se
-   sobreescribe con `banqueoLabel` («Propuestos» en Física, ver `banqueoLabelDe` en
-   `material-plan.ts`). `hideBanqueo` la omite del todo cuando la actividad nunca va a tenerla
-   (labs de Hematología/Inmunología).
-3. **Resumen** — activa con `hasResumen`, abre `PdfFullscreenModal`. Título sobreescribible con
-   `resumenLabel` («Database» en las PD/PC/exámenes de Química Orgánica, ver `resumenLabelDe`).
+   práctica — abre el mismo `PdfFullscreenModal` que Resumen pero con un id de bucket
+   independiente, `{claseId}-prop`; no es un banco interactivo). Ese orden es la precedencia: con
+   `propuestosPdf` **no** se ve el solucionario, así que no se ponen los dos en la misma actividad.
+   `propuestosPdf` se usa hoy para los problemas propuestos de Física y para las PC de años
+   anteriores de Química Orgánica (con `opciones`, el clic abre un picker en vez del PDF directo).
+   El título de la tarjeta se sobreescribe con `banqueoLabel` («Propuestos» en las clases teóricas
+   de Física, ver `banqueoLabelDe` en `material-plan.ts`). `hideBanqueo` la omite del todo cuando
+   la actividad nunca va a tenerla (labs de Hematología/Inmunología).
+3. **Resumen** — activa con `hasResumen`, abre `PdfFullscreenModal`. Siempre se llama «Resumen»:
+   el label «Database» de Química Orgánica se retiró, y su contenido de PC pasó a Banqueo.
 
 Todos los íconos usan `fill="currentColor"` para adaptarse a light/dark.
 
@@ -333,15 +336,27 @@ heredan el `allAccess` de plan del admin. `dashboard/layout.tsx` calcula `verApo
 actividad, para no reimplementar en el panel las reglas que cada `[id]/page.tsx` de curso ya
 aplica al montar `StudyMaterialSection`. Cada actividad produce un `PlanActividad` con 3 slots
 (`apoyo`/`banqueo`/`resumen`), cada uno con un `estado`: `listo` | `falta` | `no-aplica` (la
-tarjeta no se muestra, o es una evaluación que no exige material) | `futuro` (Video/Simulación —
+tarjeta no se muestra, o es material que esa actividad no exige) | `futuro` (Video/Simulación —
 nunca cuenta como hueco). El objeto `REGLAS` es el espejo, por `slug` de curso, de qué tipos usan
-Simulación en vez de Video, cuáles esconden Banqueo, y las etiquetas alternativas de
-Banqueo/Resumen (`banqueoLabelDe`/`resumenLabelDe`, también usadas directo por las páginas de
-curso — p. ej. `fisica-medicina/[id]/page.tsx` llama `banqueoLabelDe('fisica-medicina', act.tipo)`
-para no duplicar la regla). El banqueo cuenta como listo con `examen`, `qbank`, `propuestos`
-(PDF de propuestos, Física) o un solucionario (`findSolucionario`, Química Orgánica — vive fuera
-del sílabo). Al añadir una regla nueva en un curso (un `sinBanqueoEn`, un `simulacionEn`) hay que
-reflejarla aquí o el panel muestra un hueco falso.
+Simulación en vez de Video, cuáles esconden Banqueo, y el título alternativo de la tarjeta de
+Banqueo (`banqueoLabelDe`, también usada directo por la página de curso —
+`fisica-medicina/[id]/page.tsx` llama `banqueoLabelDe('fisica-medicina', act.tipo)` para no
+duplicar la regla). La tarjeta de material escrito siempre se llama «Resumen»: el label
+«Database» de Química Orgánica se eliminó junto con `resumenLabelDe`. El banqueo cuenta como
+listo con `examen`, `qbank`, `propuestos` (PDF de práctica: propuestos en Física, PCs de años
+anteriores en Química Orgánica) o un solucionario (`findSolucionario` — vive fuera del sílabo).
+Al añadir una regla nueva en un curso (un `sinBanqueoEn`, un `simulacionEn`) hay que reflejarla
+aquí o el panel muestra un hueco falso.
+
+**Evaluaciones: sí exigen banqueo.** `TIPOS_EXAMEN` (EXAMEN, EXAMEN-T/L/P, EXAM-PARC, EXAM-FINAL,
+EXAM-ANAT, PC, PASO, PASO-CORTO, SUSTIT) marca lo que el alumno *rinde*: no se le pide material
+escrito —un examen no es contenido; si lo trae igual, cuenta como listo— pero su banqueo **sí** es
+un hueco cuando falta, porque los exámenes resueltos de años anteriores son justo lo que se busca
+antes de un parcial o un final. El
+`PlanActividad` expone `esExamen` + `examenLabel` (`etiquetaExamen`: «Examen final», «Práctica
+calificada»…). `TIPOS_ENTREGA` (ENTREGABLE, PRODUCTO) es lo contrario: se entrega un trabajo, no
+hay nada que banquear ni resumir, ninguna tarjeta aplica. Un tipo de evaluación nuevo en un sílabo
+hay que meterlo en uno de los dos sets o quedará contado como si fuera una clase.
 
 **Prioridad de lanzamiento** — `PRIORIDAD_LANZAMIENTO` en `src/lib/data/aportes.ts`: los 7 cursos
 que bloquean el lanzamiento, en orden (Física, Química Orgánica, Biología Celular · Hematología,
@@ -353,14 +368,21 @@ funciones — `getTrackStats()` (cobertura por tramo UFBI/Facultad, todos los cu
 `getLanzamiento()` (sólo los 7 prioritarios, con `pendientes: Pendiente[]` por actividad) y
 `getAportes()` (crédito por persona, reparte resúmenes en partes iguales entre `materialDe` de un
 curso; `APORTE_OVERRIDE` reasigna actividades sueltas). La cobertura (`SlotStats.cobertura`) se
-calcula sólo sobre `listo + falta` — lo `no-aplica` sale del denominador, así una evaluación sin
-material propio no castiga el porcentaje.
+calcula sólo sobre `listo + falta` — lo `no-aplica` sale del denominador, así una tarjeta que
+nunca debió existir no castiga el porcentaje. Además de `resumen` y `banqueo`, cada curso/tramo
+lleva `examenes: SlotStats`: el mismo recuento de banqueo pero restringido a las evaluaciones, que
+es el que se muestra aparte por ser el material más buscado.
 
-**`AportesPanel.tsx`**: hero «Listo para lanzar» con los 7 cursos prioritarios primero, cada uno
-una tarjeta `<details>` expandible (mini-KPIs + lista de pendientes agrupada en «Sin material
-escrito» rojo/bloqueante vs. «Sólo falta el banqueo» ámbar/deseable — nunca una lista plana de
-huecos idénticos, que en un curso al 0% no informa nada). Debajo, cobertura completa por tramo
-para el resto de cursos. Estilos en `src/styles/aportes.module.css`, light+dark.
+**`AportesPanel.tsx`**: hero «Listo para lanzar» con los 7 cursos prioritarios primero. El
+**banqueo es la métrica protagonista** (barra gruesa verde `45, 201, 154` y % grande; el material
+escrito va debajo con el acento del tramo, y el video ni se mide). KPIs: exámenes sin banqueo
+(rojo si hay), clases sin banqueo, sin material escrito, cursos completos. Cada curso es una
+tarjeta `<details>` expandible con dos barras en la cabecera (Banqueo/Escrito) y los pendientes
+agrupados en tres grados —«Exámenes sin banqueo» rojo, «Sin material escrito» naranja, «Clases sin
+banqueo» ámbar—, nunca una lista plana de huecos idénticos, que en un curso al 0% no informa nada.
+En las filas de examen se muestra la categoría (`examenLabel`) en vez de la semana: distingue una
+fila de otra mucho mejor que «Semana 14». Debajo, cobertura completa por tramo para el resto de
+cursos. Estilos en `src/styles/aportes.module.css`, light+dark.
 
 **Registro de personas** — `src/lib/data/aportes.ts`: `COLABORADORES` (nombre, rol, color, pools)
 y `CURSOS` (slug, track, `materialDe: Colaborador[]`). El banqueo y los laboratorios nunca se

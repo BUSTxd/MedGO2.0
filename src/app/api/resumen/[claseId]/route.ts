@@ -59,15 +59,27 @@ const ALLOWED = new Set([
   'fis-c-11', 'fis-c-11-prop',
   'fis-c-12', 'fis-c-12-prop',
   'fis-c-13', 'fis-c-13-prop',
-  // Física — Examen final (banqueo con selector, ver `propuestos.opciones`)
+  // Física — Examen final (banqueo con selector, ver `propuestos.opciones`).
+  // ex03-2015/ex03-2019 (compilados de varios semestres en un solo PDF) se
+  // reemplazaron por los 7 "Examen 3" sueltos de abajo — mismo contenido,
+  // sin duplicar.
   'fis-examen-final-parte1', 'fis-examen-final-parte2',
   'fis-examen-final-banqueo',
-  'fis-examen-final-ex03-2015', 'fis-examen-final-ex03-2019',
+  'fis-examen3-2015', 'fis-examen3-2016', 'fis-examen3-2017',
+  'fis-examen3-2018v', 'fis-examen3-2018ii', 'fis-examen3-2019', 'fis-examen3-2020',
   // Física — PC1 (banqueo con selector, ver `propuestos.opciones`)
   'fis-pc1-banqueo', 'fis-pc1-v1', 'fis-pc1-7-9am', 'fis-pc1-10-12am',
-  // Física — PC3/PC4 (banqueo con selector, ver `propuestos.opciones`)
+  // Física — PC2/PC3/PC4 (banqueo con selector, ver `propuestos.opciones`)
+  'fis-pc2-v1', 'fis-pc2-v2',
   'fis-pc3-v1', 'fis-pc3-v2',
   'fis-pc4-a', 'fis-pc4-b', 'fis-pc4-c',
+  // Física — Examen I (banqueo con selector, ver `propuestos.opciones`)
+  'fis-examen1-7-9am', 'fis-examen1-17-19', 'fis-examen1-banqueo',
+  // Física — Examen parcial (un solo PDF, sin selector)
+  'fis-examen-parcial-prop',
+  // Física — Examen II (banqueo con selector, ver `propuestos.opciones`)
+  'fis-examen2-v1', 'fis-examen2-2020', 'fis-examen2-2018', 'fis-examen2-v2',
+  'fis-examen2-sol', 'fis-examen2-2017-sol',
 ]);
 
 // IDs that require an active paid plan (Interno/Residente). Free-plan users
@@ -215,17 +227,37 @@ const FILE_ALIAS: Record<string, string> = {
   'fis-examen-final-parte1':    'fisica-medicina/fis-examen-final-parte1',
   'fis-examen-final-parte2':    'fisica-medicina/fis-examen-final-parte2',
   'fis-examen-final-banqueo':   'fisica-medicina/fis-examen-final-banqueo',
-  'fis-examen-final-ex03-2015': 'fisica-medicina/fis-examen-final-ex03-2015',
-  'fis-examen-final-ex03-2019': 'fisica-medicina/fis-examen-final-ex03-2019',
+  // "Examen 3" antiguo (electrostática + circuitos + magnetismo, sin óptica/
+  // física moderna) — sueltos por semestre, reemplazan a los compilados
+  // ex03-2015/ex03-2019 que se borraron del bucket.
+  'fis-examen3-2015':   'fisica-medicina/fis-examen3-2015',
+  'fis-examen3-2016':   'fisica-medicina/fis-examen3-2016',
+  'fis-examen3-2017':   'fisica-medicina/fis-examen3-2017',
+  'fis-examen3-2018v':  'fisica-medicina/fis-examen3-2018v',
+  'fis-examen3-2018ii': 'fisica-medicina/fis-examen3-2018ii',
+  'fis-examen3-2019':   'fisica-medicina/fis-examen3-2019',
+  'fis-examen3-2020':   'fisica-medicina/fis-examen3-2020',
   'fis-pc1-banqueo':  'fisica-medicina/fis-pc1-banqueo',
   'fis-pc1-v1':       'fisica-medicina/fis-pc1-v1',
   'fis-pc1-7-9am':    'fisica-medicina/fis-pc1-7-9am',
   'fis-pc1-10-12am':  'fisica-medicina/fis-pc1-10-12am',
+  'fis-pc2-v1': 'fisica-medicina/fis-pc2-v1',
+  'fis-pc2-v2': 'fisica-medicina/fis-pc2-v2',
   'fis-pc3-v1': 'fisica-medicina/fis-pc3-v1',
   'fis-pc3-v2': 'fisica-medicina/fis-pc3-v2',
   'fis-pc4-a':  'fisica-medicina/fis-pc4-a',
   'fis-pc4-b':  'fisica-medicina/fis-pc4-b',
   'fis-pc4-c':  'fisica-medicina/fis-pc4-c',
+  'fis-examen1-7-9am':   'fisica-medicina/fis-examen1-7-9am',
+  'fis-examen1-17-19':   'fisica-medicina/fis-examen1-17-19',
+  'fis-examen1-banqueo': 'fisica-medicina/fis-examen1-banqueo',
+  'fis-examen-parcial-prop': 'fisica-medicina/fis-examen-parcial-prop',
+  'fis-examen2-v1':        'fisica-medicina/fis-examen2-v1',
+  'fis-examen2-2020':      'fisica-medicina/fis-examen2-2020',
+  'fis-examen2-2018':      'fisica-medicina/fis-examen2-2018',
+  'fis-examen2-v2':        'fisica-medicina/fis-examen2-v2',
+  'fis-examen2-sol':       'fisica-medicina/fis-examen2-sol',
+  'fis-examen2-2017-sol':  'fisica-medicina/fis-examen2-2017-sol',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga

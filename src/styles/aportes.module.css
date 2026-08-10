@@ -93,6 +93,67 @@
   white-space: nowrap;
 }
 
+/* ─── Barras con nombre + fracción ─── */
+.lanzBarras {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.fila,
+.filaFuerte {
+  display: grid;
+  grid-template-columns: 96px 1fr 40px 52px;
+  align-items: center;
+  gap: 10px;
+}
+
+.filaTag {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+/* La métrica que manda se lee antes: etiqueta sólida y barra más gruesa. */
+.filaFuerte .filaTag {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #0f8f6c;
+}
+
+:global(body.dark-mode) .filaFuerte .filaTag { color: #4ee0b3; }
+
+.filaFuerte .barra { height: 10px; }
+
+.filaPct {
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+:global(body.dark-mode) .filaPct { color: #cbd5e1; }
+
+.filaFuerte .filaPct {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+:global(body.dark-mode) .filaFuerte .filaPct { color: #f1f5f9; }
+
+.filaFrac {
+  font-size: 11px;
+  color: #94a3b8;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
 .lanzKpis {
   display: flex;
   flex-wrap: wrap;
@@ -100,7 +161,8 @@
   margin-top: 16px;
 }
 
-.lanzKpi {
+.lanzKpi,
+.lanzKpiAlerta {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -110,6 +172,16 @@
   border: 1px solid rgba(45, 201, 154, 0.18);
   min-width: 128px;
 }
+
+/* Exámenes sin banqueo: el hueco más caro, se separa del resto por color. */
+.lanzKpiAlerta {
+  background: rgba(239, 68, 68, 0.09);
+  border-color: rgba(239, 68, 68, 0.28);
+}
+
+.lanzKpiAlerta .lanzKpiNum { color: #dc2626; }
+
+:global(body.dark-mode) .lanzKpiAlerta .lanzKpiNum { color: #fca5a5; }
 
 .lanzKpiNum {
   font-size: 21px;
@@ -295,25 +367,32 @@
 
 :global(body.dark-mode) .cursoNombre { color: #f1f5f9; }
 
-.cursoBarraCell {
-  width: 150px;
+/* Las dos métricas exigibles del curso, apiladas: banqueo arriba. */
+.cursoBarras {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 236px;
   flex-shrink: 0;
 }
 
-.cursoPct {
-  font-size: 12px;
-  font-weight: 700;
-  color: #475569;
-  font-variant-numeric: tabular-nums;
-  min-width: 34px;
-  text-align: right;
-  flex-shrink: 0;
+.cursoBarras .fila,
+.cursoBarras .filaFuerte {
+  grid-template-columns: 52px 1fr 32px 40px;
+  gap: 7px;
 }
 
-:global(body.dark-mode) .cursoPct { color: #cbd5e1; }
+.cursoBarras .filaTag { font-size: 9.5px; }
+.cursoBarras .filaFuerte .filaTag { font-size: 10px; }
+.cursoBarras .filaPct { font-size: 11px; }
+.cursoBarras .filaFuerte .filaPct { font-size: 12px; }
+.cursoBarras .filaFrac { font-size: 10px; }
+.cursoBarras .barra { height: 5px; }
+.cursoBarras .filaFuerte .barra { height: 7px; }
 
 .estadoOk,
-.estadoFalta {
+.estadoFalta,
+.estadoExamen {
   font-size: 11px;
   font-weight: 700;
   padding: 3px 9px;
@@ -337,6 +416,14 @@
 }
 
 :global(body.dark-mode) .estadoFalta { color: #fdba74; }
+
+/* Evaluaciones sin banqueo: el chip que hay que ver primero al recorrer la lista. */
+.estadoExamen {
+  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.14);
+}
+
+:global(body.dark-mode) .estadoExamen { color: #fca5a5; }
 
 .chevron {
   font-size: 11px;
@@ -362,7 +449,9 @@
   margin: 14px 0 12px;
 }
 
-.miniKpi {
+.miniKpi,
+.miniKpiFuerte,
+.miniKpiAlerta {
   display: flex;
   flex-direction: column;
   gap: 1px;
@@ -372,6 +461,21 @@
   border: 1px solid rgba(var(--acc), 0.16);
   min-width: 96px;
 }
+
+/* Banqueo: mismo verde que su barra, para que se lean como una sola métrica. */
+.miniKpiFuerte {
+  background: rgba(45, 201, 154, 0.1);
+  border-color: rgba(45, 201, 154, 0.26);
+}
+
+.miniKpiAlerta {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.26);
+}
+
+.miniKpiAlerta .miniKpiNum { color: #b91c1c; }
+
+:global(body.dark-mode) .miniKpiAlerta .miniKpiNum { color: #fca5a5; }
 
 .miniKpiLabel {
   font-size: 10px;
@@ -448,6 +552,7 @@
   flex-direction: column;
 }
 
+.grupoExamen,
 .grupoBloq,
 .grupoDes {
   display: flex;
@@ -461,11 +566,15 @@
   margin: 0 0 6px;
 }
 
-.grupoBloq { color: #b91c1c; }
-.grupoDes  { color: #92610a; }
+/* Tres grados: rojo = examen sin banqueo, naranja = clase sin material escrito,
+   ámbar = clase publicada a la que sólo le falta el banqueo. */
+.grupoExamen { color: #b91c1c; }
+.grupoBloq   { color: #c2410c; }
+.grupoDes    { color: #92610a; }
 
-:global(body.dark-mode) .grupoBloq { color: #fca5a5; }
-:global(body.dark-mode) .grupoDes  { color: #fcd34d; }
+:global(body.dark-mode) .grupoExamen { color: #fca5a5; }
+:global(body.dark-mode) .grupoBloq   { color: #fdba74; }
+:global(body.dark-mode) .grupoDes    { color: #fcd34d; }
 
 .grupoCount {
   display: grid;
@@ -480,12 +589,18 @@
   color: #fff;
 }
 
-.grupoBloq .grupoCount { background: #dc2626; }
-.grupoDes  .grupoCount { background: #d97706; }
+.grupoExamen .grupoCount { background: #dc2626; }
+.grupoBloq   .grupoCount { background: #ea580c; }
+.grupoDes    .grupoCount { background: #d97706; }
 
-:global(body.dark-mode) .grupoBloq .grupoCount {
+:global(body.dark-mode) .grupoExamen .grupoCount {
   background: rgba(239, 68, 68, 0.25);
   color: #fca5a5;
+}
+
+:global(body.dark-mode) .grupoBloq .grupoCount {
+  background: rgba(249, 115, 22, 0.25);
+  color: #fdba74;
 }
 
 :global(body.dark-mode) .grupoDes .grupoCount {
@@ -561,12 +676,25 @@
   white-space: nowrap;
 }
 
+/* Categoría de la evaluación («Examen parcial»): no es un dato de contexto que
+   se pueda esconder en móvil, es lo que distingue una fila de otra. */
+.itemCategoria {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #64748b;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+:global(body.dark-mode) .itemCategoria { color: #94a3b8; }
+
 .itemChips {
   display: flex;
   gap: 5px;
   flex-shrink: 0;
 }
 
+.faltaExamen,
 .faltaResumen,
 .faltaBanqueo {
   font-size: 10.5px;
@@ -576,15 +704,23 @@
   white-space: nowrap;
 }
 
-/* Bloqueante: sin material escrito la clase no sirve. */
-.faltaResumen {
+/* Crítico: la evaluación no tiene con qué prepararse. */
+.faltaExamen {
   color: #b91c1c;
   background: rgba(239, 68, 68, 0.13);
 }
 
-:global(body.dark-mode) .faltaResumen { color: #fca5a5; }
+:global(body.dark-mode) .faltaExamen { color: #fca5a5; }
 
-/* Deseable: suma, pero no impide lanzar. */
+/* Bloqueante: sin material escrito la clase no sirve. */
+.faltaResumen {
+  color: #c2410c;
+  background: rgba(249, 115, 22, 0.14);
+}
+
+:global(body.dark-mode) .faltaResumen { color: #fdba74; }
+
+/* Deseable: suma, pero la clase ya se puede estudiar. */
 .faltaBanqueo {
   color: #92610a;
   background: rgba(245, 166, 35, 0.15);
@@ -756,8 +892,16 @@
   .itemBloque { display: none; }
 }
 
-@media (max-width: 760px) {
-  .cursoBarraCell { display: none; }
+@media (max-width: 860px) {
+  .cursoBarras { width: 150px; }
+  .cursoBarras .fila,
+  .cursoBarras .filaFuerte { grid-template-columns: 1fr 32px; }
+  .cursoBarras .filaTag,
+  .cursoBarras .filaFrac { display: none; }
+}
+
+@media (max-width: 640px) {
+  .cursoBarras { display: none; }
   .cursoSummary { gap: 9px; }
 }
 

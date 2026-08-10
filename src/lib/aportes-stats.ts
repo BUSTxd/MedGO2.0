@@ -20,6 +20,7 @@ import { semanas as locomotor }       from '@/lib/data/locomotor';
 import { semanas as inmunologia }     from '@/lib/data/inmunologia';
 import { semanas as digestivo }       from '@/lib/data/digestivo';
 import { semanas as endocrino }       from '@/lib/data/endocrino';
+import { semanas as patologia }       from '@/lib/data/patologia';
 import { semanas as biologiaCelular } from '@/lib/data/biologiaCelular';
 import { semanas as cienciasSociales }from '@/lib/data/cienciasSociales';
 import { semanas as fisica }          from '@/lib/data/fisica';
@@ -43,6 +44,7 @@ const SILABOS: Record<string, readonly SemanaLike[]> = {
   'inmunologia':            inmunologia     as unknown as SemanaLike[],
   'digestivo':              digestivo       as unknown as SemanaLike[],
   'endocrino-reproductor':  endocrino       as unknown as SemanaLike[],
+  'patologia':              patologia       as unknown as SemanaLike[],
   'biologia-celular':       biologiaCelular as unknown as SemanaLike[],
   'ciencias-sociales':      cienciasSociales as unknown as SemanaLike[],
   'fisica-medicina':        fisica          as unknown as SemanaLike[],
@@ -72,12 +74,21 @@ export interface Pendiente {
   faltaResumen: string | null;
   /** Nombre de la tarjeta de práctica que falta, o null si ya está / no aplica. */
   faltaBanqueo: string | null;
+  /** Es una evaluación (examen, parcial, final, PC, paso). */
+  esExamen: boolean;
+  /** Categoría legible de la evaluación («Examen final»), sólo si `esExamen`. */
+  examenLabel?: string;
 }
 
 export interface CursoStats extends CursoMeta {
   actividades: number;
   resumen: SlotStats;
   banqueo: SlotStats;
+  /**
+   * Subconjunto de `banqueo` restringido a las evaluaciones (exámenes,
+   * parciales, finales, PCs, pasos): el banqueo más buscado del curso.
+   */
+  examenes: SlotStats;
   /** Simulaciones/labs interactivos ya enlazados desde el sílabo. */
   simulaciones: number;
   /** Actividades con la invitación a colaborar en vez de tarjetas apagadas. */
@@ -107,6 +118,7 @@ export interface TrackStats {
   actividades: number;
   resumen: SlotStats;
   banqueo: SlotStats;
+  examenes: SlotStats;
   laboratorios: number;
 }
 
@@ -115,10 +127,17 @@ export interface Lanzamiento {
   cursos: CursoStats[];
   resumen: SlotStats;
   banqueo: SlotStats;
+  examenes: SlotStats;
+  /** Evaluaciones de los cursos prioritarios sin banqueo: la deuda más cara. */
+  faltanExamen: number;
+  /** Clases (no evaluaciones) de los cursos prioritarios sin banqueo. */
+  faltanBanqueoClase: number;
   /** Actividades de los cursos prioritarios sin material escrito. */
   faltanResumen: number;
-  /** Cursos prioritarios ya al 100% de material escrito. */
+  /** Cursos prioritarios sin ningún hueco de banqueo ni de material escrito. */
   cursosListos: number;
+  /** Cursos prioritarios con todo el material escrito, aunque les falte banqueo. */
+  cursosConEscrito: number;
 }
 
 const pct = (n: number, total: number) => (total === 0 ? 100 : Math.round((n / total) * 100));
@@ -154,6 +173,7 @@ function statsDeCurso(meta: CursoMeta): CursoStats {
   const semanas = SILABOS[meta.slug] ?? [];
   const resumen = slotVacio();
   const banqueo = slotVacio();
+  const examenes = slotVacio();
   const pendientes: Pendiente[] = [];
   let actividades = 0;
   let simulaciones = 0;
@@ -166,6 +186,7 @@ function statsDeCurso(meta: CursoMeta): CursoStats {
 
       acumular(resumen, plan.resumen.estado);
       acumular(banqueo, plan.banqueo.estado);
+      if (plan.esExamen) acumular(examenes, plan.banqueo.estado);
       if (plan.apoyo.estado === 'listo') simulaciones++;
       if (plan.invitacion) invitaciones++;
 
@@ -177,6 +198,8 @@ function statsDeCurso(meta: CursoMeta): CursoStats {
           bloque: semana.titulo,
           faltaResumen: plan.resumen.estado === 'falta' ? plan.resumen.label : null,
           faltaBanqueo: plan.banqueo.estado === 'falta' ? plan.banqueo.label : null,
+          esExamen: plan.esExamen,
+          examenLabel: plan.examenLabel,
         });
       }
     }
@@ -189,6 +212,7 @@ function statsDeCurso(meta: CursoMeta): CursoStats {
     actividades,
     resumen: cerrar(resumen),
     banqueo: cerrar(banqueo),
+    examenes: cerrar(examenes),
     simulaciones,
     invitaciones,
     pendientes,
@@ -213,6 +237,7 @@ export function getTrackStats(): TrackStats[] {
       actividades: cursos.reduce((s, c) => s + c.actividades, 0),
       resumen: sumar(cursos.map((c) => c.resumen)),
       banqueo: sumar(cursos.map((c) => c.banqueo)),
+      examenes: sumar(cursos.map((c) => c.examenes)),
       laboratorios: LABORATORIOS.filter((l) => l.track === track).length,
     };
   });
@@ -228,12 +253,19 @@ export function getLanzamiento(): Lanzamiento {
     (c): c is CursoStats => !!c,
   );
 
+  const examenes = sumar(cursos.map((c) => c.examenes));
+  const banqueo = sumar(cursos.map((c) => c.banqueo));
+
   return {
     cursos,
     resumen: sumar(cursos.map((c) => c.resumen)),
-    banqueo: sumar(cursos.map((c) => c.banqueo)),
+    banqueo,
+    examenes,
+    faltanExamen: examenes.falta,
+    faltanBanqueoClase: banqueo.falta - examenes.falta,
     faltanResumen: cursos.reduce((s, c) => s + c.resumen.falta, 0),
-    cursosListos: cursos.filter((c) => c.resumen.falta === 0).length,
+    cursosListos: cursos.filter((c) => c.resumen.falta === 0 && c.banqueo.falta === 0).length,
+    cursosConEscrito: cursos.filter((c) => c.resumen.falta === 0).length,
   };
 }
 

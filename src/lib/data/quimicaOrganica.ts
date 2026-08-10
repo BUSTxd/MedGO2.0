@@ -32,6 +32,13 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  /**
+   * Banqueo en PDF: las prácticas calificadas de años anteriores. Va en la
+   * tarjeta «Banqueo», no en «Resumen» — son exámenes para practicar, no
+   * material de lectura. Mismo campo y mismo visor que los propuestos de
+   * Física (ver `PropuestosPdfRef` en `StudyMaterialSection`).
+   */
+  propuestos?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
   /** ISO date YYYY-MM-DD; usado para "Próximos exámenes" en el home. */
   fechaISO?: string;
   /** Sobreescribe el destino del card en el sílabo. */
@@ -581,7 +588,7 @@ export const semanas: Semana[] = [
         subtemas: ['Capítulos I y II'],
         docentes: [],
         nota: 'Las 4 prácticas calificadas valen en conjunto 20% de la nota final y no son recuperables.',
-        resumen: {
+        propuestos: {
           tipo: 'pdf',
           opciones: [
             { id: 'qor-pc-1-2018', label: 'PC01 — 2018' },
@@ -599,7 +606,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Capítulos III y IV'],
         docentes: [],
-        resumen: {
+        propuestos: {
           tipo: 'pdf',
           opciones: [
             { id: 'qor-pc-2-2018', label: 'PC02 — 2018' },
@@ -628,7 +635,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Capítulo VIII'],
         docentes: [],
-        resumen: {
+        propuestos: {
           tipo: 'pdf',
           opciones: [
             { id: 'qor-pc-3-2018', label: 'PC03 — 2018' },
@@ -646,7 +653,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Capítulos IX y X'],
         docentes: [],
-        resumen: {
+        propuestos: {
           tipo: 'pdf',
           opciones: [
             { id: 'qor-pc-4-2018', label: 'PC04 — 2018' },

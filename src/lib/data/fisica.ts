@@ -385,6 +385,14 @@ export const semanas: Semana[] = [
         subtemas: ['Leyes de Newton', 'Trabajo y energía'],
         docentes: [],
         nota: 'Vale 10% de la nota final.',
+        propuestos: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'fis-examen1-7-9am', label: 'Examen I — grupo 7-9 am' },
+            { id: 'fis-examen1-17-19', label: 'Examen I — grupo 17-19h' },
+            { id: 'fis-examen1-banqueo', label: 'Banqueo variado' },
+          ],
+        },
       },
       {
         id: 'fis-pc-1',
@@ -417,6 +425,7 @@ export const semanas: Semana[] = [
         subtemas: ['Unidades 1 y 2'],
         docentes: [],
         nota: 'Vale 15% de la nota final.',
+        propuestos: { tipo: 'pdf' },
       },
       {
         id: 'fis-pc-2',
@@ -428,6 +437,13 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Evalúa lo visto hasta la sesión anterior'],
         docentes: [],
+        propuestos: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'fis-pc2-v1', label: 'PC2 — versión 1' },
+            { id: 'fis-pc2-v2', label: 'PC2 — versión 2' },
+          ],
+        },
       },
       {
         id: 'fis-examen-2',
@@ -439,6 +455,17 @@ export const semanas: Semana[] = [
         subtemas: ['Electromagnetismo'],
         docentes: [],
         nota: 'Vale 10% de la nota final.',
+        propuestos: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'fis-examen2-v1', label: 'Examen II — versión 1' },
+            { id: 'fis-examen2-v2', label: 'Examen II — versión 2' },
+            { id: 'fis-examen2-2020', label: 'Examen II — 2020' },
+            { id: 'fis-examen2-2018', label: 'Examen II — 2018 (V)' },
+            { id: 'fis-examen2-sol', label: 'Examen II — solucionario' },
+            { id: 'fis-examen2-2017-sol', label: 'Examen II 2017-II — soluciones' },
+          ],
+        },
       },
       {
         id: 'fis-pc-3',
@@ -490,11 +517,18 @@ export const semanas: Semana[] = [
         propuestos: {
           tipo: 'pdf',
           opciones: [
-            { id: 'fis-examen-final-parte1',    label: 'Examen final 2025-II (Parte 1)' },
-            { id: 'fis-examen-final-parte2',    label: 'Examen final 2025-II (Parte 2)' },
-            { id: 'fis-examen-final-banqueo',   label: 'Banqueo variado' },
-            { id: 'fis-examen-final-ex03-2015', label: 'Exámenes anteriores (2015)' },
-            { id: 'fis-examen-final-ex03-2019', label: 'Exámenes anteriores (2016–2019)' },
+            { id: 'fis-examen-final-parte1',  label: 'Examen final 2025-II (Parte 1)' },
+            { id: 'fis-examen-final-parte2',  label: 'Examen final 2025-II (Parte 2)' },
+            { id: 'fis-examen-final-banqueo', label: 'Banqueo variado' },
+            // "Examen 3" — nombre antiguo del examen que cubría electrostática,
+            // circuitos y magnetismo (ver nota en fis-examen3-* de route.ts).
+            { id: 'fis-examen3-2020',   label: 'Examen 3 (antiguo) — 2020' },
+            { id: 'fis-examen3-2019',   label: 'Examen 3 (antiguo) — 2019-II' },
+            { id: 'fis-examen3-2018v',  label: 'Examen 3 (antiguo) — 2018 (V)' },
+            { id: 'fis-examen3-2018ii', label: 'Examen 3 (antiguo) — 2018-II' },
+            { id: 'fis-examen3-2017',   label: 'Examen 3 (antiguo) — 2017-II' },
+            { id: 'fis-examen3-2016',   label: 'Examen 3 (antiguo) — 2016-II' },
+            { id: 'fis-examen3-2015',   label: 'Examen 3 (antiguo) — 2015-II' },
           ],
         },
       },

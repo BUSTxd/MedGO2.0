@@ -19,12 +19,17 @@ const ACC: Record<string, string> = {
   medicina: '139, 92, 246',
 };
 
+/** Verde del banqueo: la métrica que manda, con el mismo color en todo el panel. */
+const ACC_BANQUEO = '45, 201, 154';
+
 /** Cuántas actividades pendientes se listan antes de resumir el resto. */
 const MAX_PENDIENTES = 24;
 
+const plural = (n: number, uno: string, varios: string) => (n === 1 ? uno : varios);
+
 /**
  * Avance sobre lo exigible: el relleno es lo publicado y el resto el hueco. Las
- * tarjetas que no aplican (evaluaciones, labs sin banqueo) quedan fuera del
+ * tarjetas que no aplican (entregables, labs sin banqueo) quedan fuera del
  * total, así el porcentaje no castiga lo que nunca debía existir.
  */
 function Barra({ slot, acc }: { slot: SlotStats; acc: string }) {
@@ -40,6 +45,38 @@ function Barra({ slot, acc }: { slot: SlotStats; acc: string }) {
   );
 }
 
+/** Barra con su nombre, su porcentaje y la fracción cruda al lado. */
+function BarraFila({
+  etiqueta,
+  slot,
+  acc,
+  fuerte,
+}: {
+  etiqueta: string;
+  slot: SlotStats;
+  acc: string;
+  fuerte?: boolean;
+}) {
+  return (
+    <div className={fuerte ? styles.filaFuerte : styles.fila}>
+      <span className={styles.filaTag}>{etiqueta}</span>
+      <Barra slot={slot} acc={acc} />
+      <span className={styles.filaPct}>{slot.cobertura}%</span>
+      <span className={styles.filaFrac}>
+        {slot.listo}/{slot.listo + slot.falta}
+      </span>
+    </div>
+  );
+}
+
+type Tono = 'examen' | 'bloqueante' | 'deseable';
+
+const CLASE_GRUPO: Record<Tono, string> = {
+  examen:     styles.grupoExamen,
+  bloqueante: styles.grupoBloq,
+  deseable:   styles.grupoDes,
+};
+
 /**
  * Un bloque de pendientes. Se separan por lo que falta, no por unidad del
  * sílabo: en un curso al 0% todas las filas dirían lo mismo y el listado
@@ -54,7 +91,7 @@ function GrupoPendientes({
   titulo: string;
   descripcion: string;
   items: Pendiente[];
-  tono: 'bloqueante' | 'deseable';
+  tono: Tono;
 }) {
   if (items.length === 0) return null;
   const visibles = items.slice(0, MAX_PENDIENTES);
@@ -62,7 +99,7 @@ function GrupoPendientes({
 
   return (
     <div className={styles.grupo}>
-      <p className={tono === 'bloqueante' ? styles.grupoBloq : styles.grupoDes}>
+      <p className={CLASE_GRUPO[tono]}>
         {titulo}
         <span className={styles.grupoCount}>{items.length}</span>
         <span className={styles.grupoDesc}>{descripcion}</span>
@@ -72,16 +109,26 @@ function GrupoPendientes({
           <li key={p.id} className={styles.item}>
             {p.codigo && <span className={styles.itemCodigo}>{p.codigo}</span>}
             <span className={styles.itemTitulo}>{p.titulo}</span>
-            <span className={styles.itemBloque}>{p.bloque}</span>
+            {/* En un examen importa más de qué evaluación se trata que en qué
+                semana cae: «Examen final» ordena la lista, «Semana 14» no. */}
+            {tono === 'examen' ? (
+              <span className={styles.itemCategoria}>{p.examenLabel}</span>
+            ) : (
+              <span className={styles.itemBloque}>{p.bloque}</span>
+            )}
             <span className={styles.itemChips}>
-              {tono === 'bloqueante' ? (
+              {tono === 'examen' && (
+                <span className={styles.faltaExamen}>{p.faltaBanqueo}</span>
+              )}
+              {tono === 'bloqueante' && (
                 <>
                   <span className={styles.faltaResumen}>{p.faltaResumen}</span>
                   {p.faltaBanqueo && (
                     <span className={styles.faltaBanqueo}>{p.faltaBanqueo}</span>
                   )}
                 </>
-              ) : (
+              )}
+              {tono === 'deseable' && (
                 <span className={styles.faltaBanqueo}>{p.faltaBanqueo}</span>
               )}
             </span>
@@ -108,10 +155,32 @@ function CursoCard({
   acc: string;
   orden?: number;
 }) {
-  const { resumen, banqueo } = curso;
-  const completo = resumen.falta === 0;
+  const { resumen, banqueo, examenes } = curso;
+  const completo = resumen.falta === 0 && banqueo.falta === 0;
+
+  // Un examen nunca pide resumen (no es contenido), así que los tres grupos no
+  // se solapan: examen sin banqueo · clase sin material escrito · clase a la
+  // que sólo le falta el banqueo.
+  const examenesSinBanqueo = curso.pendientes.filter((p) => p.esExamen && p.faltaBanqueo);
   const sinEscrito = curso.pendientes.filter((p) => p.faltaResumen);
-  const soloBanqueo = curso.pendientes.filter((p) => !p.faltaResumen && p.faltaBanqueo);
+  const soloBanqueo = curso.pendientes.filter(
+    (p) => !p.esExamen && !p.faltaResumen && p.faltaBanqueo,
+  );
+
+  // El chip nombra el hueco más caro que le queda al curso, no una sola métrica.
+  const estado = completo
+    ? { texto: 'Completo', clase: styles.estadoOk }
+    : examenes.falta > 0
+      ? {
+          texto: `${examenes.falta} ${plural(examenes.falta, 'examen', 'exámenes')}`,
+          clase: styles.estadoExamen,
+        }
+      : resumen.falta > 0
+        ? { texto: `faltan ${resumen.falta}`, clase: styles.estadoFalta }
+        : {
+            texto: `${banqueo.falta} ${plural(banqueo.falta, 'banqueo', 'banqueos')}`,
+            clase: styles.estadoFalta,
+          };
 
   return (
     <details className={styles.curso} style={{ ['--acc' as string]: acc }}>
@@ -119,14 +188,12 @@ function CursoCard({
         {orden !== undefined && <span className={styles.rank}>{orden}</span>}
         <span className={styles.cursoNombre}>{curso.nombre}</span>
 
-        <span className={styles.cursoBarraCell}>
-          <Barra slot={resumen} acc={acc} />
+        <span className={styles.cursoBarras}>
+          <BarraFila etiqueta="Banqueo" slot={banqueo} acc={ACC_BANQUEO} fuerte />
+          <BarraFila etiqueta="Escrito" slot={resumen} acc={acc} />
         </span>
-        <span className={styles.cursoPct}>{resumen.cobertura}%</span>
 
-        <span className={completo ? styles.estadoOk : styles.estadoFalta}>
-          {completo ? 'Completo' : `faltan ${resumen.falta}`}
-        </span>
+        <span className={estado.clase}>{estado.texto}</span>
 
         <span className={styles.chevron} aria-hidden="true">
           ▾
@@ -135,18 +202,25 @@ function CursoCard({
 
       <div className={styles.cursoBody}>
         <div className={styles.miniKpis}>
+          <div className={styles.miniKpiFuerte}>
+            <span className={styles.miniKpiLabel}>Banqueo</span>
+            <span className={styles.miniKpiNum}>
+              {banqueo.listo}
+              <span className={styles.miniKpiDe}> / {banqueo.listo + banqueo.falta}</span>
+            </span>
+          </div>
+          <div className={examenes.falta > 0 ? styles.miniKpiAlerta : styles.miniKpiFuerte}>
+            <span className={styles.miniKpiLabel}>Exámenes con banqueo</span>
+            <span className={styles.miniKpiNum}>
+              {examenes.listo}
+              <span className={styles.miniKpiDe}> / {examenes.listo + examenes.falta}</span>
+            </span>
+          </div>
           <div className={styles.miniKpi}>
             <span className={styles.miniKpiLabel}>Material escrito</span>
             <span className={styles.miniKpiNum}>
               {resumen.listo}
               <span className={styles.miniKpiDe}> / {resumen.listo + resumen.falta}</span>
-            </span>
-          </div>
-          <div className={styles.miniKpi}>
-            <span className={styles.miniKpiLabel}>Banqueo</span>
-            <span className={styles.miniKpiNum}>
-              {banqueo.listo}
-              <span className={styles.miniKpiDe}> / {banqueo.listo + banqueo.falta}</span>
             </span>
           </div>
           <div className={styles.miniKpi}>
@@ -190,14 +264,20 @@ function CursoCard({
         ) : (
           <div className={styles.pendientes}>
             <GrupoPendientes
+              titulo="Exámenes sin banqueo"
+              descripcion="lo que el alumno busca para prepararlos; no hay resumen que lo sustituya"
+              items={examenesSinBanqueo}
+              tono="examen"
+            />
+            <GrupoPendientes
               titulo="Sin material escrito"
-              descripcion="bloquea el lanzamiento"
+              descripcion="la clase no sirve sin él"
               items={sinEscrito}
               tono="bloqueante"
             />
             <GrupoPendientes
-              titulo="Sólo falta el banqueo"
-              descripcion="el resumen ya está publicado"
+              titulo="Clases sin banqueo"
+              descripcion="el material escrito ya está publicado"
               items={soloBanqueo}
               tono="deseable"
             />
@@ -213,13 +293,13 @@ export default function AportesPanel({ lanzamiento, tracks, aportes }: Props) {
     (a) => a.resumenes > 0 || a.banqueos > 0 || a.laboratorios > 0,
   );
 
-  const totalPrioritarios = lanzamiento.resumen.listo + lanzamiento.resumen.falta;
+  const totalBanqueo = lanzamiento.banqueo.listo + lanzamiento.banqueo.falta;
 
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>Avance y aportes</h2>
       <p className={styles.sub}>
-        Se lee de los sílabos en cada carga: al añadir un resumen, un banqueo o
+        Se lee de los sílabos en cada carga: al añadir un banqueo, un resumen o
         una simulación a un curso, este panel lo refleja solo. Si algo no aparece
         aquí, no está en la web.
       </p>
@@ -230,22 +310,51 @@ export default function AportesPanel({ lanzamiento, tracks, aportes }: Props) {
           <div>
             <h3 className={styles.lanzTitulo}>Listo para lanzar</h3>
             <p className={styles.lanzSub}>
-              Sólo los {lanzamiento.cursos.length} cursos prioritarios. El mínimo
-              indispensable es el material escrito (Resumen o Database); el
-              banqueo suma pero no bloquea, y el video queda para después.
+              Sólo los {lanzamiento.cursos.length} cursos prioritarios. Cuentan
+              dos cosas: el <strong>banqueo</strong> —exámenes, parciales,
+              finales y PCs resueltos, lo que el alumno viene a buscar— y el{' '}
+              <strong>material escrito</strong> (la tarjeta Resumen). El video
+              queda para después y nunca baja el porcentaje.
             </p>
           </div>
           <div className={styles.lanzNumeros}>
-            <span className={styles.lanzPct}>{lanzamiento.resumen.cobertura}%</span>
+            <span className={styles.lanzPct}>{lanzamiento.banqueo.cobertura}%</span>
             <span className={styles.lanzFrac}>
-              {lanzamiento.resumen.listo} / {totalPrioritarios} actividades
+              banqueo · {lanzamiento.banqueo.listo} / {totalBanqueo} actividades
             </span>
           </div>
         </header>
 
-        <Barra slot={lanzamiento.resumen} acc="45, 201, 154" />
+        <div className={styles.lanzBarras}>
+          <BarraFila
+            etiqueta="Banqueo"
+            slot={lanzamiento.banqueo}
+            acc={ACC_BANQUEO}
+            fuerte
+          />
+          <BarraFila
+            etiqueta="Material escrito"
+            slot={lanzamiento.resumen}
+            acc="59, 158, 221"
+          />
+        </div>
 
         <div className={styles.lanzKpis}>
+          <div
+            className={
+              lanzamiento.faltanExamen > 0 ? styles.lanzKpiAlerta : styles.lanzKpi
+            }
+          >
+            <span className={styles.lanzKpiNum}>{lanzamiento.faltanExamen}</span>
+            <span className={styles.lanzKpiLabel}>
+              Exámenes sin banqueo · de{' '}
+              {lanzamiento.examenes.listo + lanzamiento.examenes.falta}
+            </span>
+          </div>
+          <div className={styles.lanzKpi}>
+            <span className={styles.lanzKpiNum}>{lanzamiento.faltanBanqueoClase}</span>
+            <span className={styles.lanzKpiLabel}>Clases sin banqueo</span>
+          </div>
           <div className={styles.lanzKpi}>
             <span className={styles.lanzKpiNum}>{lanzamiento.faltanResumen}</span>
             <span className={styles.lanzKpiLabel}>Sin material escrito</span>
@@ -254,13 +363,8 @@ export default function AportesPanel({ lanzamiento, tracks, aportes }: Props) {
             <span className={styles.lanzKpiNum}>
               {lanzamiento.cursosListos} / {lanzamiento.cursos.length}
             </span>
-            <span className={styles.lanzKpiLabel}>Cursos completos</span>
-          </div>
-          <div className={styles.lanzKpi}>
-            <span className={styles.lanzKpiNum}>{lanzamiento.banqueo.cobertura}%</span>
             <span className={styles.lanzKpiLabel}>
-              Banqueo · {lanzamiento.banqueo.listo} de{' '}
-              {lanzamiento.banqueo.listo + lanzamiento.banqueo.falta}
+              Cursos completos · {lanzamiento.cursosConEscrito} con todo el escrito
             </span>
           </div>
         </div>
@@ -293,17 +397,24 @@ export default function AportesPanel({ lanzamiento, tracks, aportes }: Props) {
 
             <div className={styles.kpis}>
               <div className={styles.kpi}>
-                <span className={styles.kpiNum}>{t.resumen.cobertura}%</span>
-                <span className={styles.kpiLabel}>Material escrito</span>
-                <span className={styles.kpiFrac}>
-                  {t.resumen.listo} / {t.resumen.listo + t.resumen.falta} exigibles
-                </span>
-              </div>
-              <div className={styles.kpi}>
                 <span className={styles.kpiNum}>{t.banqueo.cobertura}%</span>
                 <span className={styles.kpiLabel}>Banqueo</span>
                 <span className={styles.kpiFrac}>
                   {t.banqueo.listo} / {t.banqueo.listo + t.banqueo.falta} exigibles
+                </span>
+              </div>
+              <div className={styles.kpi}>
+                <span className={styles.kpiNum}>{t.examenes.cobertura}%</span>
+                <span className={styles.kpiLabel}>Exámenes con banqueo</span>
+                <span className={styles.kpiFrac}>
+                  {t.examenes.listo} / {t.examenes.listo + t.examenes.falta} evaluaciones
+                </span>
+              </div>
+              <div className={styles.kpi}>
+                <span className={styles.kpiNum}>{t.resumen.cobertura}%</span>
+                <span className={styles.kpiLabel}>Material escrito</span>
+                <span className={styles.kpiFrac}>
+                  {t.resumen.listo} / {t.resumen.listo + t.resumen.falta} exigibles
                 </span>
               </div>
             </div>
@@ -374,13 +485,21 @@ export default function AportesPanel({ lanzamiento, tracks, aportes }: Props) {
         <p className={styles.leyendaTitulo}>Cómo se cuenta</p>
         <ul className={styles.leyendaLista}>
           <li>
-            <strong>Material escrito</strong> — la tarjeta Resumen, o Database en las
-            prácticas dirigidas de Química Orgánica. Es el mínimo para lanzar.
+            <strong>Banqueo</strong> — banco de preguntas, solucionario paso a paso o
+            PDF de práctica: los propuestos de las clases teóricas de Física, las PCs
+            de años anteriores de Química Orgánica. Es la métrica que manda: se exige
+            en todas las clases y en todas las evaluaciones.
           </li>
           <li>
-            <strong>Banqueo</strong> — banco de preguntas o solucionario paso a paso
-            (Propuestos en las clases C1–C4 de Física). Suma, pero no todas las
-            clases lo van a tener.
+            <strong>Exámenes con banqueo</strong> — el banqueo de las evaluaciones que
+            el alumno rinde: exámenes, parciales, finales, prácticas calificadas,
+            sustitutorios y pasos. Se cuenta aparte porque ahí el banqueo es el único
+            material posible —un examen no lleva resumen— y es justo lo que se busca
+            para prepararlo.
+          </li>
+          <li>
+            <strong>Material escrito</strong> — la tarjeta Resumen. Se exige en las
+            clases, no en las evaluaciones.
           </li>
           <li>
             <strong>Video / Simulación</strong> — material a futuro. Las simulaciones
@@ -388,9 +507,10 @@ export default function AportesPanel({ lanzamiento, tracks, aportes }: Props) {
             porcentaje.
           </li>
           <li>
-            <strong>No aplica</strong> — exámenes y prácticas calificadas (no son
-            contenido) y laboratorios sin banqueo. Salen del denominador; si igual
-            reciben material, se suman como listos.
+            <strong>No aplica</strong> — el material escrito de las evaluaciones (no son
+            contenido), el banqueo de los laboratorios que no lo llevan y las entregas
+            de trabajos, que no se banquean. Salen del denominador; si igual reciben
+            material, se suman como listos.
           </li>
           <li>
             <strong>Invitación</strong> — actividades sin material propio y sin

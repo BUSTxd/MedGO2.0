@@ -5,8 +5,8 @@ import { findSolucionario } from '@/lib/data/solucionarios';
  *
  * Cada actividad del sílabo ofrece tres tarjetas de estudio (ver
  * `StudyMaterialSection`): una de apoyo audiovisual (Video, o Simulación en las
- * prácticas), una de práctica (Banqueo, o Propuestos en Física C1–C4) y una de
- * material escrito (Resumen, o Database en las PD de Química Orgánica).
+ * prácticas), una de práctica (Banqueo, o Propuestos en las clases teóricas de
+ * Física) y una de material escrito (Resumen).
  *
  * El panel de aportes lee de aquí para no reimplementar las reglas que cada
  * `[id]/page.tsx` aplica al montar las tarjetas. Al añadir una regla nueva en
@@ -27,7 +27,7 @@ export type SlotEstado =
 
 export interface Slot {
   kind: SlotKind;
-  /** Nombre tal como lo ve el alumno: «Database», «Propuestos», «Simulación»… */
+  /** Nombre tal como lo ve el alumno: «Propuestos», «Simulación»… */
   label: string;
   estado: SlotEstado;
 }
@@ -58,31 +58,73 @@ export interface PlanActividad {
    * No es un hueco pendiente, es una decisión tomada.
    */
   invitacion: boolean;
+  /**
+   * Es una evaluación que el alumno rinde (examen, parcial, final, PC, paso).
+   * Su banqueo pesa más que el de una clase suelta: es lo que se busca para
+   * prepararla, y no hay resumen que lo sustituya.
+   */
+  esExamen: boolean;
+  /** Categoría legible de la evaluación («Examen final»), sólo si `esExamen`. */
+  examenLabel?: string;
   apoyo: Slot;
   banqueo: Slot;
   resumen: Slot;
 }
 
 /**
- * Evaluaciones: no se les exige material propio, porque no son contenido sino
- * el examen del contenido. Si alguna lo tiene igual (las PD y PCs de Química
- * Orgánica llevan Database) cuenta como listo, nunca como hueco.
+ * Evaluaciones que el alumno *rinde*: exámenes, prácticas calificadas, pasos.
+ *
+ * No se les exige material escrito —no son contenido sino el examen del
+ * contenido; si alguna lo tiene igual cuenta como listo, nunca como hueco—,
+ * pero **sí se les exige banqueo**: los exámenes resueltos de años anteriores
+ * son justamente lo que el alumno viene a buscar antes de un parcial o un
+ * final.
  */
-const TIPOS_EVALUACION = new Set([
+const TIPOS_EXAMEN = new Set([
+  'EXAMEN',
   'EXAMEN-T',
   'EXAMEN-L',
   'EXAMEN-P',
+  'EXAM-PARC',
+  'EXAM-FINAL',
+  'EXAM-ANAT',
   'PC',
+  'PASO',
+  'PASO-CORTO',
   'SUSTIT',
 ]);
+
+/**
+ * Evaluaciones que se *entregan* (un trabajo, un producto, un informe). No hay
+ * nada que banquear ni que resumir: ninguna de las tres tarjetas aplica.
+ */
+const TIPOS_ENTREGA = new Set(['ENTREGABLE', 'PRODUCTO']);
+
+/** Nombre legible del tipo de evaluación, para el listado de pendientes. */
+const ETIQUETA_EXAMEN: Record<string, string> = {
+  'EXAMEN':     'Examen',
+  'EXAMEN-T':   'Examen teórico',
+  'EXAMEN-L':   'Examen de laboratorio',
+  'EXAMEN-P':   'Examen práctico',
+  'EXAM-PARC':  'Examen parcial',
+  'EXAM-FINAL': 'Examen final',
+  'EXAM-ANAT':  'Examen de anatomía',
+  'PC':         'Práctica calificada',
+  'PASO':       'Paso',
+  'PASO-CORTO': 'Paso corto',
+  'SUSTIT':     'Sustitutorio',
+};
+
+/** Categoría de la evaluación tal como la nombra el sílabo («Examen final»…). */
+export function etiquetaExamen(tipo: string): string {
+  return ETIQUETA_EXAMEN[tipo] ?? 'Evaluación';
+}
 
 interface CursoReglas {
   /** Tipos donde la tarjeta «Video» se sustituye por «Simulación». */
   simulacionEn?: readonly string[];
   /** Tipos donde la tarjeta de banqueo no se muestra (`hideBanqueo`). */
   sinBanqueoEn?: readonly string[];
-  /** Título alternativo de la tarjeta de resumen, según el tipo de actividad. */
-  resumenLabel?: { label: string; tipos: readonly string[] };
   /** Título alternativo de la tarjeta de banqueo, según el tipo de actividad. */
   banqueoLabel?: { label: string; tipos: readonly string[] };
 }
@@ -94,17 +136,10 @@ const REGLAS: Record<string, CursoReglas> = {
   'aparato-locomotor':      { simulacionEn: ['ANATOMIA', 'HISTOLOGIA'] },
   digestivo:                { simulacionEn: ['ANATOMIA', 'HISTOLOGIA'] },
   'endocrino-reproductor':  { simulacionEn: ['ANATOMIA', 'HISTOLOGIA', 'TALLER'] },
-  'quimica-organica':       { resumenLabel: { label: 'Database', tipos: ['PD', 'PC', 'EXAMEN-T'] } },
   // Todas las clases teóricas (C1–C14) usan el PDF de propuestos, no un banco
   // interactivo — PC/EXAMEN-T siguen mostrando "Banqueo" por defecto.
   'fisica-medicina':        { banqueoLabel: { label: 'Propuestos', tipos: ['TEORIA'] } },
 };
-
-/** Título de la tarjeta de material escrito. Lo usan el panel y la página del curso. */
-export function resumenLabelDe(slug: string, tipo: string): string {
-  const regla = REGLAS[slug]?.resumenLabel;
-  return regla && regla.tipos.includes(tipo) ? regla.label : 'Resumen';
-}
 
 /** Título de la tarjeta de práctica. Lo usan el panel y la página del curso. */
 export function banqueoLabelDe(slug: string, tipo: string): string {
@@ -115,7 +150,9 @@ export function banqueoLabelDe(slug: string, tipo: string): string {
 export function planDeActividad(slug: string, act: ActividadLike): PlanActividad {
   const reglas = REGLAS[slug] ?? {};
   const invitacion = act.sinMaterial === true;
-  const esEvaluacion = TIPOS_EVALUACION.has(act.tipo);
+  const esExamen = TIPOS_EXAMEN.has(act.tipo);
+  const esEntrega = TIPOS_ENTREGA.has(act.tipo);
+  const esEvaluacion = esExamen || esEntrega;
 
   const usaSimulacion = reglas.simulacionEn?.includes(act.tipo) ?? false;
   const apoyoListo = usaSimulacion && !!act.simulacion?.href;
@@ -124,8 +161,9 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
   // solucionario paso a paso (Química Orgánica, vive fuera del sílabo) o un
   // PDF de propuestos (Física).
   const banqueoListo = !!(act.examen || act.qbank || act.propuestos || findSolucionario(act.id));
+  // Los exámenes sí exigen banqueo; los entregables no tienen nada que banquear.
   const banqueoNoAplica =
-    invitacion || esEvaluacion || (reglas.sinBanqueoEn?.includes(act.tipo) ?? false);
+    invitacion || esEntrega || (reglas.sinBanqueoEn?.includes(act.tipo) ?? false);
 
   return {
     id: act.id,
@@ -133,6 +171,8 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
     tipo: act.tipo,
     codigo: act.codigo,
     invitacion,
+    esExamen,
+    examenLabel: esExamen ? etiquetaExamen(act.tipo) : undefined,
     apoyo: {
       kind: 'apoyo',
       label: usaSimulacion ? 'Simulación' : 'Video',
@@ -145,7 +185,7 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
     },
     resumen: {
       kind: 'resumen',
-      label: resumenLabelDe(slug, act.tipo),
+      label: 'Resumen',
       estado: act.resumen ? 'listo' : invitacion || esEvaluacion ? 'no-aplica' : 'falta',
     },
   };
