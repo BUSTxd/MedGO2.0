@@ -1,0 +1,614 @@
+/* Morfología de glóbulos rojos — ejercicio de reconocimiento.
+
+   Sin caja de fondo: el ejercicio se apoya directamente sobre el lienzo de la
+   página (#f8faff en claro), y la microfotografía va suelta y centrada, sin
+   marco que compita con ella. El único color propio es el granate de la
+   tinción, reservado para los acentos.
+
+   Tema claro por defecto; el dark-mode lo define este propio módulo
+   (regla del proyecto: nada de dark-mode en globals.css). */
+
+.cuaderno {
+  --mg-papel-2: #ffffff;
+  --mg-tinta: #1a1a2e;
+  --mg-tinta-2: rgba(26, 26, 46, 0.66);
+  --mg-tinta-3: rgba(26, 26, 46, 0.42);
+  --mg-borde: rgba(26, 26, 46, 0.1);
+  --mg-borde-2: rgba(26, 26, 46, 0.06);
+
+  --mg-acc: #a8324a;
+  --mg-acc-bg: rgba(168, 50, 74, 0.08);
+  --mg-ok: #0f8f6c;
+  --mg-ok-bg: rgba(15, 143, 108, 0.1);
+  --mg-mal: #c2410c;
+  --mg-mal-bg: rgba(194, 65, 12, 0.09);
+  --mg-aviso: #b8790f;
+  --mg-violeta: #7c4ddb;
+
+  /* La guía ya no ocupa columna: vive en un panel desplegable sobre la página.
+     El ejercicio se limita en ancho para que el texto médico no quede en
+     líneas larguísimas, y se centra en el espacio disponible. */
+  max-width: 820px;
+  margin-inline: auto;
+  padding: 0 28px 44px;
+}
+
+:global(.dark-mode) .cuaderno {
+  --mg-papel-2: rgba(255, 255, 255, 0.05);
+  --mg-tinta: #f0eeff;
+  --mg-tinta-2: rgba(240, 238, 255, 0.66);
+  --mg-tinta-3: rgba(240, 238, 255, 0.42);
+  --mg-borde: rgba(255, 255, 255, 0.11);
+  --mg-borde-2: rgba(255, 255, 255, 0.06);
+
+  --mg-acc: #f08fa2;
+  --mg-acc-bg: rgba(240, 143, 162, 0.13);
+  --mg-ok: #34d399;
+  --mg-ok-bg: rgba(52, 211, 153, 0.13);
+  --mg-mal: #fb923c;
+  --mg-mal-bg: rgba(251, 146, 60, 0.13);
+  --mg-aviso: #f5a623;
+  --mg-violeta: #a78bfa;
+}
+
+@media (max-width: 640px) {
+  .cuaderno { padding: 0 16px 32px; }
+}
+
+/* La intro de la página comparte eje con el ejercicio: si una va centrada y
+   la otra pegada a la izquierda, el módulo se ve partido en dos. */
+.encabezado {
+  max-width: 820px;
+  margin-inline: auto;
+  /* El párrafo que iba tras el título se quitó: sin él, el hueco reservado
+     para separarlo del texto queda colgando sobre la lámina. */
+  padding-bottom: 0;
+}
+.encabezado h2 { margin-bottom: 0; }
+
+/* ───────────────────────── COLUMNA DEL EJERCICIO ───────────────────────── */
+
+/* Sin caja: el ejercicio va directo sobre el lienzo de la página. */
+.quizCol { min-width: 0; }
+
+/* ── Marcador ── */
+
+.marcador {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  padding: 10px 0 11px;
+  border-bottom: 1px dashed var(--mg-borde);
+}
+.marcadorLamina {
+  font-size: 13px;
+  color: var(--mg-tinta-2);
+}
+.marcadorLamina strong { color: var(--mg-tinta); font-weight: 700; }
+
+.marcadorCifras {
+  display: flex;
+  gap: 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-right: auto;
+}
+.mAcierto { color: var(--mg-ok); }
+.mFallo { color: var(--mg-tinta-3); }
+
+.marcadorBotones { display: flex; gap: 7px; }
+
+.btnGhost {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--mg-borde);
+  background: transparent;
+  color: var(--mg-tinta-2);
+  cursor: pointer;
+  transition: border-color 0.16s, color 0.16s;
+}
+.btnGhost:hover { border-color: var(--mg-acc); color: var(--mg-acc); }
+
+/* ── Visor de la microfotografía ── */
+
+.visor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 0 6px;
+}
+
+.navBtn {
+  font-family: inherit;
+  font-size: 26px;
+  line-height: 1;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--mg-borde);
+  background: var(--mg-papel-2);
+  color: var(--mg-tinta-2);
+  cursor: pointer;
+  transition: border-color 0.16s, color 0.16s, transform 0.16s;
+}
+.navBtn:hover { border-color: var(--mg-acc); color: var(--mg-acc); }
+.navBtn:active { transform: scale(0.94); }
+
+/* La microfotografía va suelta y centrada: sin marco, sin fondo y sin sombra
+   que la encuadren — el único elemento visual del visor es la célula. */
+.porta {
+  margin: 0;
+  padding: 0;
+  max-width: 360px;
+  width: 100%;
+}
+
+.portaImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+.portaPie {
+  padding: 11px 2px 0;
+  font-size: 11.5px;
+  text-align: center;
+  color: var(--mg-tinta-3);
+  letter-spacing: 0.01em;
+}
+
+/* ── Campo de respuesta ── */
+
+.respuesta { padding-top: 14px; }
+
+.respuestaLabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mg-tinta-3);
+  margin-bottom: 8px;
+}
+
+.respuestaFila { display: flex; gap: 9px; }
+
+.input {
+  font-family: inherit;
+  font-size: 15px;
+  flex: 1;
+  min-width: 0;
+  padding: 11px 14px;
+  border-radius: 9px;
+  border: 1px solid var(--mg-borde);
+  background: var(--mg-papel-2);
+  color: var(--mg-tinta);
+  transition: border-color 0.16s, box-shadow 0.16s;
+}
+.input::placeholder { color: var(--mg-tinta-3); }
+.input:focus {
+  outline: none;
+  border-color: var(--mg-acc);
+  box-shadow: 0 0 0 3px var(--mg-acc-bg);
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 20px;
+  border-radius: 9px;
+  border: 1px solid var(--mg-acc);
+  background: var(--mg-acc);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.16s, opacity 0.16s;
+}
+:global(.dark-mode) .btn { color: #1a1020; }
+.btn:hover { opacity: 0.9; }
+.btn:active { transform: scale(0.98); }
+
+/* Altura reservada: el aviso aparece y desaparece sin empujar el botón. */
+.avisoZona { min-height: 22px; padding-top: 10px; }
+
+.avisoMal, .avisoCasi {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.avisoMal { color: var(--mg-mal); }
+.avisoCasi { color: var(--mg-aviso); }
+
+.btnRendirse {
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-top: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--mg-tinta-3);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.btnRendirse:hover { color: var(--mg-tinta-2); }
+
+/* ── Resuelto ── */
+
+.resuelto { padding-top: 14px; }
+
+.selloOk, .selloRevelado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.selloOk { color: var(--mg-ok); }
+.selloRevelado { color: var(--mg-tinta-3); }
+.selloOk strong, .selloRevelado strong {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--mg-tinta);
+}
+
+/* ───────────────────────────── FICHA ───────────────────────────── */
+
+.ficha {
+  border-top: 1px solid var(--mg-borde);
+  padding-top: 16px;
+  margin-bottom: 18px;
+}
+
+.fichaHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.fichaNombre {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--mg-tinta);
+}
+.fichaClase {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--mg-acc-bg);
+  color: var(--mg-acc);
+}
+
+/* Característica: lo que se ve al microscopio. Barra de acento, sin caja. */
+.destacado {
+  border-left: 3px solid var(--mg-acc);
+  padding: 2px 0 2px 13px;
+  margin-bottom: 16px;
+}
+.destacadoLabel {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mg-acc);
+  margin-bottom: 4px;
+}
+.destacadoTexto {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--mg-tinta);
+}
+
+.bloque { margin-bottom: 15px; }
+.bloqueTitulo {
+  margin: 0 0 5px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--mg-tinta-2);
+}
+.parrafo {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.68;
+  color: var(--mg-tinta-2);
+}
+.parrafo strong { color: var(--mg-tinta); font-weight: 600; }
+
+/* Mecanismo: una sola línea etiquetada, no merece una tarjeta. */
+.mecanismo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 15px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: var(--mg-papel-2);
+  border: 1px solid var(--mg-borde-2);
+  font-size: 13.5px;
+}
+.mecanismoGrupo {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--mg-violeta);
+}
+.mecanismoFrase { color: var(--mg-tinta-2); }
+
+/* Contraste equinocito / acantocito. */
+.contraste {
+  margin-bottom: 15px;
+  padding: 11px 13px;
+  border-radius: 8px;
+  border: 1px dashed var(--mg-borde);
+  background: var(--mg-acc-bg);
+}
+.contrasteLabel {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mg-acc);
+  margin-bottom: 4px;
+}
+.contrasteTexto {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--mg-tinta-2);
+}
+.contrasteTexto strong { color: var(--mg-tinta); font-weight: 600; }
+
+/* Ruta de estudio: cadena horizontal de eslabones. */
+.ruta { margin-bottom: 15px; }
+.rutaLabel {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mg-tinta-3);
+  margin-bottom: 7px;
+}
+.rutaPasos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rutaPaso, .rutaPasoIni {
+  display: flex;
+  align-items: center;
+  font-size: 12.5px;
+  padding: 5px 10px;
+  border-radius: 7px;
+  background: var(--mg-papel-2);
+  border: 1px solid var(--mg-borde-2);
+  color: var(--mg-tinta-2);
+}
+.rutaPasoIni {
+  font-weight: 700;
+  color: var(--mg-acc);
+  border-color: var(--mg-acc);
+  background: var(--mg-acc-bg);
+}
+.rutaPaso::before {
+  content: '→';
+  margin-right: 8px;
+  color: var(--mg-tinta-3);
+}
+
+/* Cascada del G6PD: vertical, un eslabón bajo el anterior. */
+.cascada {
+  margin-bottom: 6px;
+  padding: 12px 14px;
+  border-radius: 9px;
+  background: var(--mg-papel-2);
+  border: 1px solid var(--mg-borde-2);
+}
+.cascadaLabel {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mg-tinta-3);
+  margin-bottom: 8px;
+}
+.cascadaPasos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--mg-tinta-2);
+}
+.cascadaPasos li { padding: 3px 0 3px 18px; position: relative; }
+.cascadaPasos li + li::before {
+  content: '↓';
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  color: var(--mg-acc);
+  font-size: 12px;
+}
+.cascadaPasos li:first-child {
+  font-weight: 700;
+  color: var(--mg-tinta);
+}
+
+/* ── Morfologías que el material no desarrolla ── */
+
+.sinFicha {
+  border-top: 1px solid var(--mg-borde);
+  padding-top: 16px;
+  margin-bottom: 18px;
+}
+.sinFichaTitulo {
+  margin: 0 0 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--mg-aviso);
+}
+.sinFichaTexto {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--mg-tinta-2);
+}
+
+/* ── Extras ── */
+
+.extras {
+  margin-top: 24px;
+  border-top: 1px dashed var(--mg-borde);
+  padding-top: 14px;
+}
+.extrasSummary {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mg-tinta-2);
+  cursor: pointer;
+}
+.extrasSummary:hover { color: var(--mg-acc); }
+.extrasNota {
+  margin: 10px 0 4px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--mg-tinta-3);
+}
+.esquema {
+  margin: 4px 0 0;
+  padding: 10px 13px;
+  border-radius: 8px;
+  background: var(--mg-acc-bg);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--mg-acc);
+}
+
+
+/* ─────────────────── GUÍA DE REFERENCIA (panel lateral) ───────────────────
+   Panel que entra desde la derecha por encima de todo (la sidebar del
+   dashboard está en z-index 100), con el fondo atenuado mientras está
+   abierto. Dentro va solo la lámina: ni título ni texto. */
+
+.cuaderno {
+  --drawer-w: min(700px, 94vw);
+}
+
+/* Viñeta: única forma de abrirlo y de cerrarlo. Va montada sobre el borde
+   derecho y se desplaza junto al panel para quedar siempre a su costado. */
+.pestana {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  z-index: 1200;
+  transform: translateY(-50%);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 16px 9px;
+  border: 0;
+  border-radius: 10px 0 0 10px;
+  background: var(--mg-acc);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: -3px 0 14px rgba(42, 35, 32, 0.22);
+  transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1), filter 0.16s;
+}
+:global(.dark-mode) .pestana { color: #1a1020; }
+.pestana:hover { filter: brightness(1.08); }
+.pestanaAbierta { transform: translate(calc(-1 * var(--drawer-w)), -50%); }
+
+.pestanaTexto {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Velo: oscurece la página detrás. Siempre montado, se anima la opacidad. */
+.velo {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(20, 16, 14, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.32s ease;
+}
+.veloOn { opacity: 1; pointer-events: auto; }
+
+/* Centrado a media altura y del alto de su contenido: la lámina es apaisada,
+   así que una franja de 100dvh dejaría dos bandas blancas enormes. */
+.drawer {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 1150;
+  width: var(--drawer-w);
+  max-height: 92dvh;
+  border-radius: 12px 0 0 12px;
+  overflow: hidden;
+  box-shadow: -14px 0 40px rgba(10, 8, 20, 0.3);
+  /* La coordenada Y del centrado viaja dentro del transform que anima la
+     entrada: si se separaran, la transición perdería el centrado a mitad. */
+  transform: translate(100%, -50%);
+  visibility: hidden;
+  transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1), visibility 0.32s;
+}
+.drawerOn { transform: translate(0, -50%); visibility: visible; }
+
+.drawerScroll {
+  max-height: 92dvh;
+  overflow: auto;
+  /* La lámina viene sobre blanco; el resto del panel no debe aportar color. */
+  background: #fff;
+  line-height: 0;
+}
+
+/* Encajada al ancho del panel; un clic la pasa a tamaño natural para leer los
+   rótulos pequeños, y otro la devuelve. */
+.drawerImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: zoom-in;
+}
+.drawerImgZoom {
+  display: block;
+  width: 1536px;
+  max-width: none;
+  height: auto;
+  cursor: zoom-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pestana, .velo, .drawer { transition: none; }
+}

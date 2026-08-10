@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import KidneyIcon from '@/components/icons/KidneyIcon';
+import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
 import styles from '@/styles/dashboardPages.module.css';
 
 type Exp = { name: string; desc: string; color: string; href?: string };
@@ -95,7 +96,9 @@ const LAB_TOPICS: Topic[] = [
     ),
     experiments: [
       { name: 'Frotis Sanguíneo · Simulación', desc: 'Práctica 1 completa en 3D: extendido, zonas, tinción de Wright, morfología eritrocitaria y recuento plaquetario', color: '#E85B4A', href: '/dashboard/laboratorio/frotis-sanguineo' },
-      { name: 'Hemograma Completo',     desc: 'Conteo de células sanguíneas y parámetros',         color: '#2DC99A' },
+      { name: 'Hemograma Completo',     desc: 'Los 28 parámetros del CBC con rangos reales, 11 escenarios clínicos, comparador y quiz', color: '#2DC99A', href: '/dashboard/laboratorio/hemograma' },
+      // Compartido con Patología — sin página todavía (enlace inerte, como el resto de pendientes).
+      { name: 'Morfología de Glóbulos Rojos', desc: '19 microfotografías reales para reconocer alteraciones e inclusiones, con lámina de referencia', color: '#8b5cf6', href: '/dashboard/laboratorio/morfologia-globulos-rojos' },
       { name: 'Microscopio: Médula Ósea y Serie Blanca · Simulación', desc: 'Práctica 2: microscopio virtual, identificación de la serie blanca y fórmula diferencial', color: '#F5A623', href: '/dashboard/laboratorio/microscopio-hematologia' },
       { name: 'Pruebas de Coagulación', desc: 'Estudios de hemostasia y factores de coagulación',  color: '#E85B4A' },
       { name: 'Conteo de Reticulocitos',desc: 'Evaluación de la producción de glóbulos rojos',    color: '#F5A623' },
@@ -142,6 +145,21 @@ const LAB_TOPICS: Topic[] = [
       { name: 'Aglutinación',         desc: 'Detección de antígenos mediante aglutinación',        color: '#2DC99A' },
       { name: 'Western Blot',         desc: 'Identificación de proteínas específicas',             color: '#F5A623' },
       { name: 'PCR en Tiempo Real',   desc: 'Cuantificación de ácidos nucleicos',                  color: '#E85B4A' },
+    ],
+  },
+  {
+    id: 'patologia',
+    title: 'Patología | UPCH',
+    badge: 'Patología',
+    diff: ['hard'],
+    // Mismo microscopio que Histología usa en la sidebar (monocromo, currentColor:
+    // .labIconBox ya lo pinta de blanco).
+    icon: <MicroscopeIcon size={26} />,
+    experiments: [
+      // Compartidos con Hematología — se ven en los dos cursos.
+      { name: 'Hemograma Completo',   desc: 'Los 28 parámetros del CBC con rangos reales, 11 escenarios clínicos, comparador y quiz', color: '#2DC99A', href: '/dashboard/laboratorio/hemograma' },
+      // Sin página todavía (enlace inerte, como el resto de pendientes).
+      { name: 'Morfología de Glóbulos Rojos', desc: '19 microfotografías reales para reconocer alteraciones e inclusiones, con lámina de referencia', color: '#8b5cf6', href: '/dashboard/laboratorio/morfologia-globulos-rojos' },
     ],
   },
 ];

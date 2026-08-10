@@ -1,0 +1,930 @@
+/* Hemograma completo (CBC) — módulo educativo.
+   Tema claro por defecto; el dark-mode lo define este propio módulo
+   (regla del proyecto: nada de dark-mode en globals.css).
+
+   Accesibilidad: el estado bajo/normal/alto NUNCA se comunica solo por color.
+   Cada valor lleva además un glifo (▼ ● ▲) y la palabra escrita, de modo que
+   un daltónico rojo-verde lo lee igual. Los tonos elegidos (azul/teal/rojo)
+   se distinguen también en deuteranopía. */
+
+.wrap {
+  --hg-tinta: #1a1a2e;
+  --hg-tinta-2: rgba(26, 26, 46, 0.62);
+  --hg-tinta-3: rgba(26, 26, 46, 0.42);
+  --hg-panel: #ffffff;
+  --hg-panel-2: #f5f8fd;
+  --hg-borde: rgba(26, 26, 46, 0.1);
+  --hg-borde-2: rgba(26, 26, 46, 0.06);
+  --hg-track: rgba(26, 26, 46, 0.07);
+
+  --hg-bajo: #2563eb;
+  --hg-bajo-bg: rgba(37, 99, 235, 0.1);
+  --hg-normal: #0f9d76;
+  --hg-normal-bg: rgba(15, 157, 118, 0.1);
+  --hg-alto: #dc2626;
+  --hg-alto-bg: rgba(220, 38, 38, 0.1);
+
+  --hg-aviso: #b8790f;
+  --hg-acc: #8b5cf6;
+  --hg-acc-bg: rgba(139, 92, 246, 0.1);
+  /* Acento del escenario activo. Lo inyecta el componente inline; este valor
+     es solo el fallback si algún día se renderiza sin escenario. */
+  --caso: #8b5cf6;
+
+  padding: 4px 28px 40px;
+}
+
+:global(.dark-mode) .wrap {
+  --hg-tinta: #f0eeff;
+  --hg-tinta-2: rgba(240, 238, 255, 0.62);
+  --hg-tinta-3: rgba(240, 238, 255, 0.4);
+  --hg-panel: rgba(255, 255, 255, 0.04);
+  --hg-panel-2: rgba(255, 255, 255, 0.025);
+  --hg-borde: rgba(255, 255, 255, 0.1);
+  --hg-borde-2: rgba(255, 255, 255, 0.06);
+  --hg-track: rgba(255, 255, 255, 0.09);
+
+  --hg-bajo: #60a5fa;
+  --hg-bajo-bg: rgba(96, 165, 250, 0.14);
+  --hg-normal: #34d399;
+  --hg-normal-bg: rgba(52, 211, 153, 0.14);
+  --hg-alto: #f87171;
+  --hg-alto-bg: rgba(248, 113, 113, 0.14);
+
+  --hg-aviso: #f5a623;
+  --hg-acc: #a78bfa;
+  --hg-acc-bg: rgba(167, 139, 250, 0.14);
+}
+
+/* ─────────────────────────── DISCLAIMER ─────────────────────────── */
+
+.disclaimer {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--hg-acc-bg);
+  border: 1px solid color-mix(in srgb, var(--hg-acc) 28%, transparent);
+  border-radius: 10px;
+  padding: 11px 14px;
+  margin: 0 0 18px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--hg-tinta-2);
+}
+.disclaimer strong { color: var(--hg-tinta); font-weight: 600; }
+.disclaimerIcon { flex-shrink: 0; color: var(--hg-acc); margin-top: 1px; }
+
+/* ─────────────────────────── CONTROLES ─────────────────────────── */
+
+.controles {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.filaControl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.etiquetaControl {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hg-tinta-3);
+  margin-right: 2px;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 7px; }
+
+.chip {
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--hg-borde);
+  background: var(--hg-panel);
+  color: var(--hg-tinta-2);
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s, border-color 0.16s, transform 0.16s;
+}
+.chip:hover {
+  border-color: var(--chip-hov, var(--hg-acc));
+  color: var(--hg-tinta);
+}
+.chip:active { transform: scale(0.97); }
+.chipOn {
+  background: var(--hg-acc);
+  border-color: var(--hg-acc);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+}
+.chipOn:hover { color: #fff; }
+.chipSensible { border-style: dashed; }
+
+/* Segmentado (modo, sexo) */
+.segmento {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 10px;
+  background: var(--hg-track);
+  border: 1px solid var(--hg-borde-2);
+}
+.segBtn {
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: var(--hg-tinta-2);
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s;
+}
+.segBtn:hover { color: var(--hg-tinta); }
+.segOn {
+  background: var(--hg-panel);
+  color: var(--hg-tinta);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+:global(.dark-mode) .segOn { background: rgba(255, 255, 255, 0.12); }
+
+/* ─────────────────────── VISTAZO POR SERIE ───────────────────────
+   Tres tarjetas que responden «¿qué serie está tocada?» antes de leer
+   ninguna fila. El acento del caso (--caso) las enmarca. */
+
+.vistazo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 11px;
+  margin-bottom: 16px;
+}
+.serie {
+  position: relative;
+  background: var(--hg-panel);
+  border: 1px solid var(--hg-borde);
+  border-radius: 12px;
+  padding: 15px 16px 13px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 14px rgba(16, 24, 40, 0.05);
+}
+:global(.dark-mode) .serie { box-shadow: none; }
+/* Filete superior teñido del estado de la serie */
+.serie::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--serie-color, var(--hg-normal));
+}
+.serieTitulo {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hg-tinta-3);
+  margin: 0 0 7px;
+}
+.serieCifra {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+.serieValor {
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--serie-color, var(--hg-tinta));
+  transition: color 0.35s;
+}
+.serieUnidad { font-size: 11px; color: var(--hg-tinta-3); }
+.serieAbrev { font-size: 11.5px; color: var(--hg-tinta-2); font-weight: 600; }
+.serieEstado {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--hg-tinta-2);
+  margin-top: 3px;
+}
+.serieAlterados {
+  font-size: 11px;
+  color: var(--hg-tinta-3);
+  margin-top: 2px;
+}
+
+/* ─────────────────────────── VIÑETA ─────────────────────────── */
+
+.vineta {
+  background: var(--hg-panel);
+  border: 1px solid var(--hg-borde);
+  border-left: 3px solid var(--hg-acc);
+  border-radius: 10px;
+  padding: 13px 16px;
+  margin-bottom: 16px;
+}
+.vinetaTitulo {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--hg-tinta);
+  margin: 0 0 4px;
+}
+.vinetaTexto {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--hg-tinta-2);
+  margin: 0;
+}
+.vinetaClaves {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.vinetaClaves li {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--hg-tinta-2);
+  padding-left: 16px;
+  position: relative;
+}
+.vinetaClaves li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--punto, var(--hg-acc));
+}
+
+.leyendaClave {
+  margin: 11px 0 0;
+  padding-top: 10px;
+  border-top: 1px dashed var(--hg-borde);
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--hg-tinta-3);
+}
+.leyendaClave .chipClave { margin: 0 5px 0 0; }
+.leyendaClave strong { color: var(--hg-tinta-2); font-weight: 700; }
+.simpleBox {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--hg-acc-bg);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--hg-tinta);
+}
+.simpleBox strong { font-weight: 700; }
+
+/* ─────────────────────────── ALERTAS DE PATRÓN ─────────────────────────── */
+
+.patrones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.patron {
+  border-radius: 10px;
+  padding: 11px 13px;
+  border: 1px solid;
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+}
+.patronInfo   { background: var(--hg-bajo-bg);   border-color: color-mix(in srgb, var(--hg-bajo) 30%, transparent); }
+.patronAviso  { background: rgba(245, 166, 35, 0.11); border-color: rgba(245, 166, 35, 0.42); }
+.patronAlerta { background: var(--hg-alto-bg);   border-color: color-mix(in srgb, var(--hg-alto) 34%, transparent); }
+
+.patronGlifo { font-size: 13px; font-weight: 800; line-height: 1.35; flex-shrink: 0; }
+.patronInfo   .patronGlifo { color: var(--hg-bajo); }
+.patronAviso  .patronGlifo { color: #b8790f; }
+:global(.dark-mode) .patronAviso .patronGlifo { color: #f5a623; }
+.patronAlerta .patronGlifo { color: var(--hg-alto); }
+
+.patronTitulo {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--hg-tinta);
+  margin: 0 0 3px;
+}
+.patronDetalle {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--hg-tinta-2);
+  margin: 0;
+}
+
+/* ─────────────────────────── ÍNDICE N/L ─────────────────────────── */
+
+.nl {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: var(--hg-panel);
+  border: 1px solid var(--hg-borde);
+  border-radius: 10px;
+  padding: 11px 15px;
+  margin-bottom: 16px;
+}
+.nlLabel { font-size: 12.5px; font-weight: 600; color: var(--hg-tinta-2); }
+.nlValor { font-size: 21px; font-weight: 800; color: var(--hg-tinta); font-variant-numeric: tabular-nums; }
+.nlTexto { font-size: 12.5px; font-weight: 600; }
+.nlBajo   { color: var(--hg-bajo); }
+.nlNormal { color: var(--hg-normal); }
+.nlAlto   { color: var(--hg-alto); }
+.nlNota { font-size: 11.5px; color: var(--hg-tinta-3); flex-basis: 100%; line-height: 1.45; }
+
+/* ─────────────────────────── SECCIONES ─────────────────────────── */
+
+.secciones { display: flex; flex-direction: column; gap: 14px; }
+
+.seccion {
+  background: var(--hg-panel);
+  border: 1px solid var(--hg-borde);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 14px rgba(16, 24, 40, 0.05);
+}
+:global(.dark-mode) .seccion { box-shadow: none; }
+
+.seccionHead {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 13px 16px;
+  background: var(--hg-panel-2);
+  border-bottom: 1px solid var(--hg-borde-2);
+}
+.seccionTitulo {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--hg-tinta);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* Punto del acento del caso: hilvana la cabecera con las filas clave. */
+.seccionTitulo::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--caso);
+  flex-shrink: 0;
+}
+.seccionDesc { font-size: 12px; color: var(--hg-tinta-3); }
+
+/* Cabecera de columnas — solo en pantallas anchas */
+.colHead {
+  display: grid;
+  grid-template-columns: minmax(190px, 1.5fr) 104px minmax(150px, 2fr) 96px;
+  gap: 12px;
+  padding: 7px 16px;
+  border-bottom: 1px solid var(--hg-borde-2);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hg-tinta-3);
+}
+.colHead span:nth-child(2) { text-align: right; }
+.colHead span:nth-child(4) { text-align: right; }
+
+/* ─────────────────────────── FILA DE PARÁMETRO ─────────────────────────── */
+
+.fila {
+  display: grid;
+  grid-template-columns: minmax(190px, 1.5fr) 104px minmax(150px, 2fr) 96px;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  padding: 9px 16px;
+  border: none;
+  border-bottom: 1px solid var(--hg-borde-2);
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.14s;
+}
+.fila:last-child { border-bottom: none; }
+.fila:hover { background: var(--hg-acc-bg); }
+.filaActiva { background: var(--hg-acc-bg); }
+
+/* ── Parámetro determinante del caso ──────────────────────────────
+   Se tiñe con --caso (el acento del escenario activo), NO con el color de
+   estado: son dos ejes distintos. Un determinante puede estar normal y seguir
+   siendo el dato clave — es exactamente lo que pasa con el VCM en la
+   deshidratación. Por eso el destaque es una barra lateral + chip, y nunca
+   toca el color de la cifra ni el del chip de estado. */
+.filaClave {
+  background: color-mix(in srgb, var(--caso) 7%, transparent);
+  box-shadow: inset 3px 0 0 var(--caso);
+}
+.filaClave:hover { background: color-mix(in srgb, var(--caso) 13%, transparent); }
+:global(.dark-mode) .filaClave { background: color-mix(in srgb, var(--caso) 13%, transparent); }
+:global(.dark-mode) .filaClave:hover { background: color-mix(in srgb, var(--caso) 20%, transparent); }
+
+.chipClave {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--caso);
+  color: #fff;
+  margin-left: 6px;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+
+/* Al cambiar de escenario los determinantes dan un pulso, para que la mirada
+   aterrice donde importa sin tener que buscarlos. */
+@keyframes hgPulso {
+  0%   { box-shadow: inset 3px 0 0 var(--caso), 0 0 0 0 color-mix(in srgb, var(--caso) 45%, transparent); }
+  60%  { box-shadow: inset 3px 0 0 var(--caso), 0 0 0 6px transparent; }
+  100% { box-shadow: inset 3px 0 0 var(--caso), 0 0 0 0 transparent; }
+}
+.filaPulso { animation: hgPulso 0.85s ease-out; }
+
+.filaNombre { min-width: 0; }
+.filaNombreTexto {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--hg-tinta);
+  display: block;
+  line-height: 1.35;
+}
+.filaAbrev {
+  font-size: 11px;
+  color: var(--hg-tinta-3);
+  font-weight: 500;
+}
+.filaFormula {
+  font-size: 10.5px;
+  color: var(--hg-tinta-3);
+  font-style: italic;
+}
+
+.filaValorCol { text-align: right; }
+.filaValor {
+  font-size: 15.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+.filaUnidad { font-size: 10.5px; color: var(--hg-tinta-3); display: block; }
+.vBajo   { color: var(--hg-bajo); }
+.vNormal { color: var(--hg-tinta); }
+.vAlto   { color: var(--hg-alto); }
+
+/* Termómetro */
+.term {
+  position: relative;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+.termTrack {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 5px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--hg-track);
+  overflow: hidden;
+}
+/* Franja de normalidad: siempre en el mismo sitio para un parámetro dado,
+   así comparar escenarios tiene sentido. */
+.termNormal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--hg-normal-bg);
+  border-left: 1px solid color-mix(in srgb, var(--hg-normal) 45%, transparent);
+  border-right: 1px solid color-mix(in srgb, var(--hg-normal) 45%, transparent);
+}
+/* La marca desborda el track a propósito (top/bottom negativos) para que se
+   lea como la aguja de un termómetro y no se pierda dentro de la franja. */
+.termMarca {
+  position: absolute;
+  top: 2px;
+  height: 15px;
+  width: 3px;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: left 0.5s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.35s;
+}
+.mBajo   { background: var(--hg-bajo); }
+.mNormal { background: var(--hg-normal); }
+.mAlto   { background: var(--hg-alto); }
+.termFuera {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--hg-alto);
+}
+.termRango {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  font-size: 9.5px;
+  color: var(--hg-tinta-3);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+/* Chip de estado — glifo + palabra, nunca solo color */
+.estadoCol { display: flex; justify-content: flex-end; }
+.estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.eBajo   { background: var(--hg-bajo-bg);   color: var(--hg-bajo); }
+.eNormal { background: var(--hg-normal-bg); color: var(--hg-normal); }
+.eAlto   { background: var(--hg-alto-bg);   color: var(--hg-alto); }
+
+/* ─────────────────────────── PANEL DE DETALLE ─────────────────────────── */
+
+.panelBack {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 25, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 60;
+  animation: hgFade 0.2s ease;
+}
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(430px, 100vw);
+  background: var(--hg-panel);
+  border-left: 1px solid var(--hg-borde);
+  z-index: 61;
+  overflow-y: auto;
+  padding: 20px 22px 32px;
+  animation: hgSlide 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+}
+:global(.dark-mode) .panel { background: #12142b; }
+
+@keyframes hgFade { from { opacity: 0; } }
+@keyframes hgSlide { from { transform: translateX(24px); opacity: 0; } }
+
+.panelClose {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--hg-borde);
+  background: transparent;
+  color: var(--hg-tinta-2);
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  line-height: 1;
+}
+.panelClose:hover { color: var(--hg-tinta); border-color: var(--hg-acc); }
+
+.panelAbrev {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hg-acc);
+}
+.panelTitulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--hg-tinta);
+  margin: 3px 0 12px;
+  padding-right: 34px;
+  line-height: 1.3;
+}
+.panelCifras {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 11px 13px;
+  border-radius: 9px;
+  background: var(--hg-panel-2);
+  border: 1px solid var(--hg-borde-2);
+  margin-bottom: 15px;
+}
+.panelCifra { display: flex; flex-direction: column; gap: 1px; }
+.panelCifraLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--hg-tinta-3);
+}
+.panelCifraValor {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--hg-tinta);
+  font-variant-numeric: tabular-nums;
+}
+
+.panelBloque { margin-bottom: 15px; }
+.panelBloqueTitulo {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tAlto  { color: var(--hg-alto); }
+.tBajo  { color: var(--hg-bajo); }
+.tNeutro { color: var(--hg-tinta-3); }
+
+.panelTexto {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--hg-tinta-2);
+  margin: 0;
+}
+.panelLista { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.panelLista li {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--hg-tinta-2);
+  padding-left: 15px;
+  position: relative;
+}
+.panelLista li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+}
+.panelDato {
+  background: var(--hg-acc-bg);
+  border-radius: 9px;
+  padding: 11px 13px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--hg-tinta);
+}
+.panelDatoLabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hg-acc);
+  margin-bottom: 4px;
+}
+
+/* ─────────────────────────── COMPARAR ─────────────────────────── */
+
+.cmpHead {
+  display: grid;
+  grid-template-columns: minmax(170px, 1.4fr) 1fr 1fr;
+  gap: 12px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--hg-borde-2);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hg-tinta-3);
+}
+.cmpFila {
+  display: grid;
+  grid-template-columns: minmax(170px, 1.4fr) 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--hg-borde-2);
+}
+.cmpFila:last-child { border-bottom: none; }
+.cmpDifiere { background: var(--hg-acc-bg); }
+.cmpCelda { display: flex; align-items: center; gap: 7px; }
+.cmpValor { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.cmpDelta {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--hg-track);
+  color: var(--hg-tinta-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─────────────────────────── QUIZ ─────────────────────────── */
+
+.quiz {
+  background: var(--hg-panel);
+  border: 1px solid var(--hg-borde);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+.quizPregunta {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--hg-tinta);
+  margin: 0 0 4px;
+}
+.quizSub { font-size: 12.5px; color: var(--hg-tinta-2); margin: 0 0 14px; line-height: 1.5; }
+.quizOpciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.quizOpcion {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 13px;
+  border-radius: 9px;
+  border: 1px solid var(--hg-borde);
+  background: var(--hg-panel-2);
+  color: var(--hg-tinta-2);
+  cursor: pointer;
+  transition: border-color 0.16s, background 0.16s, color 0.16s;
+}
+.quizOpcion:hover:not(:disabled) { border-color: var(--hg-acc); color: var(--hg-tinta); }
+.quizOpcion:disabled { cursor: default; }
+.quizSel { border-color: var(--hg-acc); background: var(--hg-acc-bg); color: var(--hg-tinta); }
+.quizOk {
+  border-color: var(--hg-normal);
+  background: var(--hg-normal-bg);
+  color: var(--hg-normal);
+}
+.quizMal {
+  border-color: var(--hg-alto);
+  background: var(--hg-alto-bg);
+  color: var(--hg-alto);
+}
+.quizFeedback {
+  border-radius: 9px;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+.quizFeedbackOk  { background: var(--hg-normal-bg); color: var(--hg-tinta); }
+.quizFeedbackMal { background: var(--hg-alto-bg);   color: var(--hg-tinta); }
+.quizFeedback strong { font-weight: 700; }
+.quizMarcador {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--hg-tinta-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 9px;
+  border: none;
+  background: var(--hg-acc);
+  color: #fff;
+  cursor: pointer;
+  transition: filter 0.16s, transform 0.16s;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:active { transform: scale(0.98); }
+.btnGhost {
+  background: transparent;
+  border: 1px solid var(--hg-borde);
+  color: var(--hg-tinta-2);
+}
+.btnGhost:hover { border-color: var(--hg-acc); color: var(--hg-tinta); filter: none; }
+
+/* ─────────────────────────── GLOSARIO ─────────────────────────── */
+
+.glosario {
+  margin-top: 16px;
+  background: var(--hg-panel);
+  border: 1px solid var(--hg-borde);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.glosarioSummary {
+  padding: 13px 16px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--hg-tinta);
+  cursor: pointer;
+  background: var(--hg-panel-2);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.glosarioSummary::-webkit-details-marker { display: none; }
+.glosarioSummary::before {
+  content: '▸';
+  color: var(--hg-acc);
+  transition: transform 0.2s;
+  display: inline-block;
+}
+.glosario[open] .glosarioSummary::before { transform: rotate(90deg); }
+.glosarioGrid {
+  padding: 14px 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 11px;
+}
+.glosarioItem { }
+.glosarioTermino {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--hg-acc);
+  margin: 0 0 2px;
+}
+.glosarioDef {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--hg-tinta-2);
+  margin: 0;
+}
+
+/* ─────────────────────────── RESPONSIVE ─────────────────────────── */
+
+@media (max-width: 900px) {
+  .wrap { padding: 4px 16px 32px; }
+  .colHead { display: none; }
+  .fila {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'nombre valor'
+      'term   term'
+      'estado estado';
+    gap: 7px 12px;
+    padding: 12px 14px;
+  }
+  .filaNombre { grid-area: nombre; }
+  .filaValorCol { grid-area: valor; }
+  .term { grid-area: term; }
+  .estadoCol { grid-area: estado; justify-content: flex-start; }
+
+  .cmpHead, .cmpFila { grid-template-columns: 1fr 88px 88px; gap: 8px; padding: 8px 14px; }
+  .panel { width: 100vw; }
+}
+
+@media (max-width: 560px) {
+  .wrap { padding: 4px 12px 28px; }
+  .patrones { grid-template-columns: 1fr; }
+  .quizOpciones { grid-template-columns: 1fr; }
+  .glosarioGrid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .termMarca { transition: none; }
+  .panel, .panelBack { animation: none; }
+}

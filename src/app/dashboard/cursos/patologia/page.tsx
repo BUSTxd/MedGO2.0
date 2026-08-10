@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { semanas, curso, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/patologia';
 import { planUnlocks } from '@/lib/plans';
 import { getCachedPlanState } from '@/lib/plans-server';
-import PatologiaIcon from '@/components/icons/PatologiaIcon';
+import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
 import styles from '@/styles/cursos.module.css';
 
 const UNIDAD_LABEL: Record<string, string> = {
@@ -22,8 +22,8 @@ export default async function PatologiaPage() {
 
   return (
     <div className={styles.microPage}>
-      {/* Ícono decorativo del curso — esquina superior derecha (placeholder) */}
-      <PatologiaIcon size={160} className={styles.microPageIcon} />
+      {/* Ícono decorativo del curso — esquina superior derecha */}
+      <MicroscopeIcon size={160} className={styles.microPageIcon} style={{ color: '#8b5cf6' }} />
 
       <div className={styles.container}>
         <Link href="/dashboard/cursos" className={styles.backLink}>
