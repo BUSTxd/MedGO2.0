@@ -1,0 +1,165 @@
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import {
+  findActividad,
+  UNIDAD_COLOR,
+  TIPO_BADGE,
+  PESO_TIPO,
+  TIPO_DESC,
+} from '@/lib/data/patologia';
+import styles from '@/styles/cursos.module.css';
+import StudyMaterialSection from '@/components/StudyMaterialSection';
+import SinMaterialSection from '@/components/SinMaterialSection';
+import LockedContent from '@/components/LockedContent';
+import TrackRecentClass from '@/components/TrackRecentClass';
+import ExamRunner from '@/components/ExamRunner';
+import { getUser } from '@/lib/supabase/get-user';
+import { getCachedPlanState } from '@/lib/plans-server';
+
+const UNIDAD_LABEL: Record<string, string> = {
+  UNIDAD_1:    'Respuesta celular y tisular al daño',
+  UNIDAD_2:    'Bases genéticas y neoplásicas',
+  UNIDAD_3:    'Inmunopatología',
+  UNIDAD_4:    'Patología infecciosa',
+  INTEGRACION: 'Integración clínico-patológica',
+  EVALUACION:  'Evaluación',
+};
+
+export default async function PatologiaActividadPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ examen?: string }>;
+}) {
+  const { id } = await params;
+  const sp = await searchParams;
+  const result = findActividad(id);
+  if (!result) notFound();
+
+  const { actividad: act, semana } = result;
+  const badge = TIPO_BADGE[act.tipo];
+  const borderColor = UNIDAD_COLOR[act.unidad];
+  const unidadLabel = UNIDAD_LABEL[act.unidad];
+  const peso = PESO_TIPO[act.tipo];
+
+  const isLab = act.tipo === 'LAB';
+  const isFreeExam = act.examen?.free === true;
+  const isFreeAccess = isLab || isFreeExam;
+  const [user, planState] = await Promise.all([
+    getUser(),
+    isFreeAccess
+      ? Promise.resolve({ plan: 'free' as const, isActive: true })
+      : getCachedPlanState(),
+  ]);
+
+  const examMode = sp?.examen === '1' && !!act.examen;
+
+  if (examMode && act.examen) {
+    const examNode = (
+      <div className={styles.microPage}>
+        <ExamRunner
+          examKey={act.examen.key}
+          groupKeys={act.examen.groups}
+          fallbackTitle={act.titulo}
+          backHref={`/dashboard/cursos/patologia/${id}`}
+        />
+      </div>
+    );
+    if (isFreeAccess) return examNode;
+    return (
+      <LockedContent requiredPlan="interno" planState={planState} isAuthed={!!user}>
+        {examNode}
+      </LockedContent>
+    );
+  }
+
+  const detail = (
+    <div className={styles.microPage}>
+      <TrackRecentClass id={act.id} courseSlug="patologia" title={act.titulo} />
+      <div className={styles.container}>
+        <Link href="/dashboard/cursos/patologia" className={styles.backLink}>
+          ← {semana.titulo} · {semana.fechas}
+        </Link>
+
+        <div className={styles.detailBadgeRow}>
+          <span
+            className={styles.typeBadge}
+            style={{ background: badge.bg, color: badge.color }}
+          >
+            {badge.label}
+          </span>
+          <span
+            className={styles.unitBadge}
+            style={{ background: `${borderColor}1a`, color: borderColor }}
+          >
+            {unidadLabel}
+          </span>
+          {peso && (
+            <span
+              className={styles.pesoBadge}
+              style={{ background: `${badge.color}14`, color: badge.color }}
+            >
+              {peso}
+            </span>
+          )}
+        </div>
+
+        <h1 className={styles.detailTitle}>{act.titulo}</h1>
+
+        <div className={styles.detailMetaRow}>
+          <span className={styles.detailMetaItem}>
+            <span style={{ color: borderColor }}>◆</span>
+            {act.fecha}
+          </span>
+          {act.hora !== '—' && (
+            <span className={styles.detailMetaItem}>{act.hora}</span>
+          )}
+          {act.docentes.length > 0 && (
+            <span className={styles.detailMetaItem}>
+              {act.docentes.join(' · ')}
+            </span>
+          )}
+        </div>
+
+        {/* Cómo funciona este tipo de sesión: en Patología cambia mucho de una a
+            otra (una magistral no pide nada previo, un TBL se califica apenas
+            empieza), así que se explica en la ficha en vez de asumirlo. */}
+        <p className={styles.tipoDesc}>{TIPO_DESC[act.tipo]}</p>
+
+        {act.nota && <div className={styles.notaBanner}>⚠ {act.nota}</div>}
+
+        {act.subtemas.length > 0 && (
+          <div className={styles.subtemasSection}>
+            <p className={styles.subtemasLabel}>Temas que cubre</p>
+            <div className={styles.subtemasWrap}>
+              {act.subtemas.map((t) => (
+                <span key={t} className={styles.subtemaPill}>{t}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {act.sinMaterial ? (
+          <SinMaterialSection />
+        ) : (
+          <StudyMaterialSection
+            claseId={act.id}
+            hasResumen={act.resumen?.tipo === 'pdf'}
+            resumenOpciones={act.resumen?.opciones}
+            examen={act.examen}
+            examenTitle={act.titulo}
+          />
+        )}
+      </div>
+    </div>
+  );
+
+  if (isFreeAccess) return detail;
+
+  return (
+    <LockedContent requiredPlan="interno" planState={planState} isAuthed={!!user}>
+      {detail}
+    </LockedContent>
+  );
+}

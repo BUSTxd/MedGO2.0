@@ -9,6 +9,7 @@ import FisicaIcon from '@/components/icons/FisicaIcon';
 import QuimicaOrganicaIcon from '@/components/icons/QuimicaOrganicaIcon';
 import ComunicacionIcon from '@/components/icons/ComunicacionIcon';
 import CulturaAmbientalIcon from '@/components/icons/CulturaAmbientalIcon';
+import PatologiaIcon from '@/components/icons/PatologiaIcon';
 import styles from '@/styles/cursos.module.css';
 
 const DIFF_LABEL: Record<string, string> = {
@@ -164,6 +165,19 @@ const COURSES = [
         </g>
       </svg>
     ),
+  },
+  {
+    id: 'patologia',
+    nombre: 'Patología | UPCH',
+    badge: 'Patología',
+    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Patología y Mecanismos de Enfermedad M1556.',
+    badgeColor: '#d44a4a',
+    badgeBg: 'rgba(212, 74, 74, 0.12)',
+    activo: true,
+    diff: ['hard'],
+    // ⚠️ Ícono provisional: PatologiaIcon dibuja un marco punteado hasta que
+    // se pegue el SVG definitivo dentro del componente.
+    icon: <PatologiaIcon size={30} />,
   },
   {
     id: 'hematologia',

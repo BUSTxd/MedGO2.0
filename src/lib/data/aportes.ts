@@ -91,6 +91,7 @@ export const CURSOS: CursoMeta[] = [
   { slug: 'inmunologia',           nombre: 'Inmunología',                track: 'medicina', materialDe: ['sofia'] },
   { slug: 'digestivo',             nombre: 'Sistema Digestivo',          track: 'medicina', materialDe: ['sofia'] },
   { slug: 'endocrino-reproductor', nombre: 'Endocrino y Reproductor',    track: 'medicina', materialDe: ['sofia'] },
+  { slug: 'patologia',             nombre: 'Patología',                  track: 'medicina', materialDe: ['sofia'] },
 
   // ── UFBI · Ciencias Básicas (1.er año) ──
   { slug: 'biologia-celular',        nombre: 'Biología Celular',      track: 'basico', materialDe: ['ufbi-1', 'ufbi-2'] },

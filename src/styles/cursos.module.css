@@ -708,6 +708,26 @@
   text-transform: uppercase;
 }
 
+/* Peso de la sesión en la nota final (Patología: cada tipo pesa distinto).
+   Toma el color del badge de tipo, así el chip se lee como parte de él. */
+.pesoBadge {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Qué se hace en este tipo de sesión — va bajo la meta, antes de las notas. */
+.tipoDesc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: -8px 0 20px;
+}
+
 .detailTitle {
   font-size: 26px;
   font-weight: 800;
