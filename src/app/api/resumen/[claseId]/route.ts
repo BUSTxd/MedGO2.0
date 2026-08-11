@@ -83,6 +83,8 @@ const ALLOWED = new Set([
   // Biología Celular — Teorías Te1-Te7
   'bcm-te-1', 'bcm-te-2', 'bcm-te-3', 'bcm-te-4',
   'bcm-te-5', 'bcm-te-6', 'bcm-te-7',
+  // Aparato Locomotor (prefijo `loc-` evita colisión con tbl-1/tbl-2 de otros cursos)
+  'loc-tbl-1', 'loc-tbl-2',
 ]);
 
 // IDs that require an active paid plan (Interno/Residente). Free-plan users
@@ -270,6 +272,9 @@ const FILE_ALIAS: Record<string, string> = {
   'bcm-te-5': 'biologia-celular/bcm-te-5',
   'bcm-te-6': 'biologia-celular/bcm-te-6',
   'bcm-te-7': 'biologia-celular/bcm-te-7',
+  // Aparato Locomotor — subcarpeta aparato-locomotor/
+  'loc-tbl-1': 'aparato-locomotor/loc-tbl-1',
+  'loc-tbl-2': 'aparato-locomotor/loc-tbl-2',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga

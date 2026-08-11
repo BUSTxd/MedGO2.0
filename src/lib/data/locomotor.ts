@@ -221,6 +221,7 @@ export const semanas: Semana[] = [
         subtemas: ['Metabolismo óseo', 'Remodelación ósea', 'Aplicación clínica'],
         docentes: ['Dra. Yanett Mendoza', 'Dr. Juan Carrasco', 'Dra. Karla Tafur', 'Dra. Wendy Sotelo'],
         nota: 'Evaluación: 35% individual + 25% grupal + 40% problema de aplicación (rúbrica). Promedio de los 2 TBL = 25% de conocimientos.',
+        resumen: { tipo: 'pdf', opciones: [{ id: 'loc-tbl-1', label: 'Resumen' }] },
       },
       {
         id: 'clase-5',
@@ -478,6 +479,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Contracción muscular', 'Transmisión neuromuscular', 'Aplicación clínica'],
         docentes: ['Dra. Yanett Mendoza', 'Dr. Juan Carrasco', 'Dra. Karla Tafur', 'Dra. Wendy Sotelo'],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'loc-tbl-2', label: 'Resumen' }] },
       },
       {
         id: 'clase-13',
