@@ -92,6 +92,7 @@ export const semanas: Semana[] = [
           'Importancia del carbono',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-te-2',
@@ -108,6 +109,7 @@ export const semanas: Semana[] = [
           'Esteroides y vitaminas',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-ta-1',
@@ -195,6 +197,7 @@ export const semanas: Semana[] = [
           'Rutas catabólicas y anabólicas',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-te-4',
@@ -210,6 +213,7 @@ export const semanas: Semana[] = [
           'Compartimentalización celular',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-ta-3',
@@ -327,6 +331,7 @@ export const semanas: Semana[] = [
           'Endocitosis y exocitosis',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-te-6',
@@ -343,6 +348,7 @@ export const semanas: Semana[] = [
           'Potencial de acción',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-te-7',
@@ -359,6 +365,7 @@ export const semanas: Semana[] = [
           'Señales de direccionamiento de proteínas',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-te-8',

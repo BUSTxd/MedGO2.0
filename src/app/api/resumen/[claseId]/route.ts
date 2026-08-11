@@ -80,6 +80,9 @@ const ALLOWED = new Set([
   // Física — Examen II (banqueo con selector, ver `propuestos.opciones`)
   'fis-examen2-v1', 'fis-examen2-2020', 'fis-examen2-2018', 'fis-examen2-v2',
   'fis-examen2-sol', 'fis-examen2-2017-sol',
+  // Biología Celular — Teorías Te1-Te7
+  'bcm-te-1', 'bcm-te-2', 'bcm-te-3', 'bcm-te-4',
+  'bcm-te-5', 'bcm-te-6', 'bcm-te-7',
 ]);
 
 // IDs that require an active paid plan (Interno/Residente). Free-plan users
@@ -259,6 +262,14 @@ const FILE_ALIAS: Record<string, string> = {
   'fis-examen2-v2':        'fisica-medicina/fis-examen2-v2',
   'fis-examen2-sol':       'fisica-medicina/fis-examen2-sol',
   'fis-examen2-2017-sol':  'fisica-medicina/fis-examen2-2017-sol',
+  // Biología Celular — subcarpeta biologia-celular/
+  'bcm-te-1': 'biologia-celular/bcm-te-1',
+  'bcm-te-2': 'biologia-celular/bcm-te-2',
+  'bcm-te-3': 'biologia-celular/bcm-te-3',
+  'bcm-te-4': 'biologia-celular/bcm-te-4',
+  'bcm-te-5': 'biologia-celular/bcm-te-5',
+  'bcm-te-6': 'biologia-celular/bcm-te-6',
+  'bcm-te-7': 'biologia-celular/bcm-te-7',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga
