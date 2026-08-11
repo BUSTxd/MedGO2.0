@@ -261,6 +261,7 @@ export const semanas: Semana[] = [
           'Ley de Gauss y aplicaciones',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
       },
       {
