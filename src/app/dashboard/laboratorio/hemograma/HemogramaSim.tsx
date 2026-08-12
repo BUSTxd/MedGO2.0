@@ -255,14 +255,9 @@ export default function HemogramaSim() {
 
   const acento = acentoDe(escenario.id);
 
+  // El Esc lo maneja PanelParametro, no este componente: con una causa abierta
+  // la primera pulsación cierra la explicación y sólo la segunda el panel.
   const cerrarPanel = useCallback(() => setParamActivo(null), []);
-
-  useEffect(() => {
-    if (!paramActivo) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') cerrarPanel(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [paramActivo, cerrarPanel]);
 
   // Pulso de los determinantes al entrar a un escenario nuevo: la mirada
   // aterriza sola donde importa en vez de tener que buscarlos.
@@ -523,6 +518,9 @@ export default function HemogramaSim() {
       {/* ── Panel de detalle ── */}
       {paramActivo && PARAM_POR_ID[paramActivo] && INFO[paramActivo] && (
         <PanelParametro
+          // Remonta al saltar de una fila a otra: si no, la causa abierta del
+          // parámetro anterior seguiría seleccionada por índice en el nuevo.
+          key={paramActivo}
           p={PARAM_POR_ID[paramActivo]}
           info={INFO[paramActivo]}
           valor={valores[paramActivo]}

@@ -590,6 +590,10 @@
   z-index: 60;
   animation: hgFade 0.2s ease;
 }
+/* El panel es UNA superficie que se ensancha al abrir una causa, no dos capas
+   apiladas: la lista de causas se queda a la izquierda y la explicación entra
+   a su derecha. Cada columna scrollea por su cuenta, así leer una explicación
+   larga no mueve la lista de sitio. */
 .panel {
   position: fixed;
   top: 0;
@@ -599,11 +603,36 @@
   background: var(--hg-panel);
   border-left: 1px solid var(--hg-borde);
   z-index: 61;
+  display: flex;
+  overflow: hidden;
+  animation: hgSlide 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: width 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.panel[data-modo='detalle'] { width: min(880px, 100vw); }
+:global(.dark-mode) .panel { background: #12142b; }
+
+.panelCols {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.panel[data-modo='detalle'] .panelCols {
+  grid-template-columns: minmax(0, 384px) minmax(0, 1fr);
+}
+.panelMaster {
+  min-width: 0;
   overflow-y: auto;
   padding: 20px 22px 32px;
-  animation: hgSlide 0.26s cubic-bezier(0.22, 1, 0.36, 1);
 }
-:global(.dark-mode) .panel { background: #12142b; }
+.panelDetalleCol {
+  min-width: 0;
+  overflow-y: auto;
+  background: var(--hg-panel-2);
+  border-left: 1px solid var(--hg-borde);
+  padding: 20px 24px 32px;
+}
+:global(.dark-mode) .panelDetalleCol { background: rgba(255, 255, 255, 0.028); }
 
 @keyframes hgFade { from { opacity: 0; } }
 @keyframes hgSlide { from { transform: translateX(24px); opacity: 0; } }
@@ -612,6 +641,8 @@
   position: absolute;
   top: 14px;
   right: 16px;
+  /* Cierra el panel entero, así que va por encima de las dos columnas. */
+  z-index: 2;
   width: 30px;
   height: 30px;
   border-radius: 8px;
@@ -686,25 +717,179 @@
   color: var(--hg-tinta-2);
   margin: 0;
 }
-.panelLista { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
-.panelLista li {
+.panelLista { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 3px; }
+
+/* ── Causas pulsables ──
+   El color del punto y del realce sale de la dirección (alto rojo / bajo
+   azul), la misma codificación que ya usan el valor y el termómetro: pulsar
+   una causa nunca introduce un color nuevo que haya que aprender. */
+.causaAyuda {
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--hg-tinta-3);
+  margin: 0 0 12px;
+}
+.causaBtn {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  position: relative;
+  text-align: left;
+  font-family: inherit;
   font-size: 12.5px;
   line-height: 1.5;
   color: var(--hg-tinta-2);
-  padding-left: 15px;
-  position: relative;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 6px 8px 6px 16px;
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
 }
-.panelLista li::before {
+.causaBtn::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 7px;
+  left: 6px;
+  top: 12px;
   width: 4px;
   height: 4px;
   border-radius: 50%;
   background: currentColor;
   opacity: 0.5;
+  transition: opacity 0.16s ease, transform 0.16s ease;
 }
+.causaTexto { min-width: 0; }
+.causaChevron {
+  flex-shrink: 0;
+  margin-top: 3px;
+  opacity: 0;
+  transform: translateX(-3px);
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+.causaBtn:hover, .causaBtn:focus-visible { color: var(--hg-tinta); }
+.causaBtn:hover .causaChevron, .causaBtn:focus-visible .causaChevron {
+  opacity: 0.55;
+  transform: translateX(0);
+}
+.causaAlto:hover, .causaAlto:focus-visible { background: var(--hg-alto-bg); }
+.causaBajo:hover, .causaBajo:focus-visible { background: var(--hg-bajo-bg); }
+
+.causaActiva { color: var(--hg-tinta); font-weight: 600; }
+.causaActiva::before { opacity: 1; transform: scale(1.6); }
+.causaActiva .causaChevron { opacity: 1; transform: translateX(0); }
+.causaAlto.causaActiva {
+  background: var(--hg-alto-bg);
+  border-color: color-mix(in srgb, var(--hg-alto) 42%, transparent);
+}
+.causaAlto.causaActiva::before, .causaAlto:hover::before { background: var(--hg-alto); }
+.causaBajo.causaActiva {
+  background: var(--hg-bajo-bg);
+  border-color: color-mix(in srgb, var(--hg-bajo) 42%, transparent);
+}
+.causaBajo.causaActiva::before, .causaBajo:hover::before { background: var(--hg-bajo); }
+
+/* ── Explicación de la causa ── */
+.panelDetalle {
+  --d-acc: var(--hg-alto);
+  --d-acc-bg: var(--hg-alto-bg);
+  outline: none;
+  animation: hgDetalle 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.panelDetalle[data-dir='bajo'] {
+  --d-acc: var(--hg-bajo);
+  --d-acc-bg: var(--hg-bajo-bg);
+}
+@keyframes hgDetalle { from { opacity: 0; transform: translateX(14px); } }
+
+.detalleVolver {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--hg-tinta-2);
+  background: transparent;
+  border: 1px solid var(--hg-borde);
+  border-radius: 8px;
+  padding: 7px 11px;
+  margin-bottom: 14px;
+  cursor: pointer;
+}
+.detalleVolver:hover { color: var(--hg-tinta); border-color: var(--d-acc); }
+
+.detalleHead { margin-bottom: 16px; padding-right: 34px; }
+.detalleBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--d-acc);
+  background: var(--d-acc-bg);
+  border-radius: 999px;
+  padding: 3px 9px;
+}
+.detalleTitulo {
+  font-size: 16.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--hg-tinta);
+  margin: 8px 0 0;
+}
+
+.detalleBloque {
+  border-left: 2px solid var(--d-acc);
+  padding: 2px 0 2px 13px;
+  margin-bottom: 16px;
+  animation: hgDetalleBloque 0.34s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 70ms + 60ms);
+}
+/* «Qué más ves» es material de contraste, no la continuación del mecanismo:
+   se le da caja propia en vez de otro filete idéntico. */
+.detallePista {
+  border-left: none;
+  background: var(--hg-panel);
+  border: 1px solid var(--hg-borde-2);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+:global(.dark-mode) .detallePista { background: rgba(255, 255, 255, 0.035); }
+@keyframes hgDetalleBloque { from { opacity: 0; transform: translateY(8px); } }
+
+.detalleLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--hg-tinta-3);
+  margin: 0 0 5px;
+}
+.detallePista .detalleLabel { color: var(--d-acc); }
+.detalleTexto {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--hg-tinta-2);
+  margin: 0;
+}
+
+.detalleCerrar {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--hg-tinta-3);
+  background: transparent;
+  border: 1px solid var(--hg-borde);
+  border-radius: 8px;
+  padding: 7px 12px;
+  cursor: pointer;
+}
+.detalleCerrar:hover { color: var(--hg-tinta); border-color: var(--d-acc); }
+
 .panelDato {
   background: var(--hg-acc-bg);
   border-radius: 9px;
@@ -914,7 +1099,15 @@
   .estadoCol { grid-area: estado; justify-content: flex-start; }
 
   .cmpHead, .cmpFila { grid-template-columns: 1fr 88px 88px; gap: 8px; padding: 8px 14px; }
-  .panel { width: 100vw; }
+
+  /* Sin sitio para dos columnas: el panel pasa a navegación master→detail.
+     La explicación ocupa el ancho completo y se vuelve al listado con el
+     botón (o con Esc, que aquí cierra la causa antes que el panel). */
+  .panel, .panel[data-modo='detalle'] { width: 100vw; }
+  .panel[data-modo='detalle'] .panelCols { grid-template-columns: minmax(0, 1fr); }
+  .panel[data-modo='detalle'] .panelMaster { display: none; }
+  .panelDetalleCol { border-left: none; }
+  .detalleVolver { display: inline-flex; }
 }
 
 @media (max-width: 560px) {
@@ -927,4 +1120,6 @@
 @media (prefers-reduced-motion: reduce) {
   .termMarca { transition: none; }
   .panel, .panelBack { animation: none; }
+  .panel { transition: none; }
+  .panelDetalle, .detalleBloque { animation: none; }
 }
