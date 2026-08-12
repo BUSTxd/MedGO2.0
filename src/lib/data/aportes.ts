@@ -7,9 +7,6 @@ import type { Track } from '@/lib/plans';
  * verificables, no en percepciones. La parte variable del acuerdo se recalcula
  * cada ciclo a partir de lo que este archivo declara + lo que hay realmente
  * publicado en los sílabos (ver `aportes-stats.ts`).
- *
- * ⚠️ Falta el nombre real de `ufbi-2`; el panel es visible para las socias, así
- * que un placeholder ahí se ve desde dentro.
  */
 
 export type Colaborador = 'bust' | 'sofia' | 'ufbi-1' | 'ufbi-2' | 'tulio';
@@ -55,10 +52,10 @@ export const COLABORADORES: Record<Colaborador, ColaboradorMeta> = {
     pools: ['basico'],
   },
   'ufbi-2': {
-    nombre: 'Colaboradora 2',   // ← poner nombre real
+    nombre: 'Fiorella Liñán',
     rol: 'Material de UFBI (1.er año)',
     color: '#F5A623',      // naranja
-    // Sin correo todavía: sus marcas las pone BUST hasta que tenga cuenta.
+    email: 'fiorella.linan@upch.pe',
     pools: ['basico'],
   },
   tulio: {
@@ -146,6 +143,23 @@ export const CURSOS: CursoMeta[] = [
  * Clave = id de la actividad (`hem-7`, `qor-s-1`, …).
  */
 export const APORTE_OVERRIDE: Record<string, Colaborador> = {};
+
+/**
+ * Quién arma el banqueo de un curso, cuando no lo monta BUST.
+ *
+ * Sólo aplica al banqueo **armado** (banco de preguntas, solucionario,
+ * ejercicios propuestos elaborados a mano). Las evaluaciones recolectadas —la
+ * PC o el examen de otro año conseguido en PDF— no entran: ahí el mérito es de
+ * quien consiguió el archivo, que no se deduce de ningún sitio y se declara
+ * marcando su círculo en «Quién subió qué».
+ *
+ * Clave = slug del curso.
+ */
+export const BANQUEO_ARMADO_DE: Record<string, Colaborador> = {
+  // Los propuestos de las 14 clases teóricas son ejercicios que María resolvió
+  // a mano, no un PDF descargado.
+  'fisica-medicina': 'ufbi-1',
+};
 
 export interface LaboratorioMeta {
   slug: string;

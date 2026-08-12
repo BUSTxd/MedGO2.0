@@ -3,15 +3,16 @@ import {
   CURSOS,
   LABORATORIOS,
   APORTE_OVERRIDE,
+  BANQUEO_ARMADO_DE,
   COLABORADORES,
   PRIORIDAD_LANZAMIENTO,
   type Colaborador,
   type CursoMeta,
 } from '@/lib/data/aportes';
-import { planDeActividad, type PlanActividad } from '@/lib/material-plan';
+import { planDeActividad, type PlanActividad, type Slot } from '@/lib/material-plan';
 import { SILABOS } from '@/lib/data/silabos';
 import { HISTO_CURSOS } from '@/lib/data/histologia';
-import { claveMarca, indexarMarcas, type Marca } from '@/lib/aportes-marcas';
+import { claveMarca, firmantesDe, indexarMarcas, type Marca } from '@/lib/aportes-marcas';
 
 /** Recuento de un slot (Resumen o Banqueo) sobre las actividades de un curso. */
 export interface SlotStats {
@@ -66,6 +67,8 @@ export interface AporteColaborador {
   color: string;
   resumenes: number;
   banqueos: number;
+  /** Parte de `banqueos` que es PDF subido tal cual, no banco armado. */
+  banqueosRecolectados: number;
   laboratorios: number;
   labsPesados: number;
   /** Clases del atlas de histología. Sólo cuenta lo marcado a mano. */
@@ -108,9 +111,13 @@ function slotVacio(): SlotStats {
   return { listo: 0, falta: 0, noAplica: 0, cobertura: 0 };
 }
 
-function acumular(acc: SlotStats, estado: string) {
-  if (estado === 'listo') acc.listo++;
-  else if (estado === 'falta') acc.falta++;
+/**
+ * La cobertura sólo mide si el material está o no está. Quién lo subió y si lo
+ * armó o lo consiguió se declara en «Quién subió qué» y se lee en `getAportes`.
+ */
+function acumular(acc: SlotStats, slot: Slot) {
+  if (slot.estado === 'listo') acc.listo++;
+  else if (slot.estado === 'falta') acc.falta++;
   else acc.noAplica++;
 }
 
@@ -146,9 +153,9 @@ function statsDeCurso(meta: CursoMeta): CursoStats {
       actividades++;
       const plan: PlanActividad = planDeActividad(meta.slug, act);
 
-      acumular(resumen, plan.resumen.estado);
-      acumular(banqueo, plan.banqueo.estado);
-      if (plan.esExamen) acumular(examenes, plan.banqueo.estado);
+      acumular(resumen, plan.resumen);
+      acumular(banqueo, plan.banqueo);
+      if (plan.esExamen) acumular(examenes, plan.banqueo);
       if (plan.apoyo.estado === 'listo') simulaciones++;
       if (plan.invitacion) invitaciones++;
 
@@ -254,6 +261,7 @@ export function getAportes(marcas: readonly Marca[] = []): AporteColaborador[] {
     color: meta.color,
     resumenes: 0,
     banqueos: 0,
+    banqueosRecolectados: 0,
     laboratorios: 0,
     labsPesados: 0,
     histologia: 0,
@@ -267,7 +275,7 @@ export function getAportes(marcas: readonly Marca[] = []): AporteColaborador[] {
   /** Reparte una unidad publicada entre quienes la firman. */
   function acreditar(
     personas: readonly Colaborador[],
-    campo: 'resumenes' | 'banqueos' | 'laboratorios' | 'histologia',
+    campo: 'resumenes' | 'banqueos' | 'banqueosRecolectados' | 'laboratorios' | 'histologia',
     unidad = 1,
   ) {
     if (personas.length === 0) return;
@@ -279,10 +287,8 @@ export function getAportes(marcas: readonly Marca[] = []): AporteColaborador[] {
   }
 
   /** Quién firma este material: lo marcado, o el reparto por defecto. */
-  const firmantes = (
-    clave: string,
-    porDefecto: readonly Colaborador[],
-  ): readonly Colaborador[] => marcasIdx[clave] ?? porDefecto;
+  const firmantes = (clave: string, porDefecto: readonly Colaborador[]): readonly Colaborador[] =>
+    marcasIdx[clave]?.map((f) => f.colaborador) ?? porDefecto;
 
   for (const meta of CURSOS) {
     for (const semana of SILABOS[meta.slug] ?? []) {
@@ -303,8 +309,27 @@ export function getAportes(marcas: readonly Marca[] = []): AporteColaborador[] {
         }
 
         if (plan.banqueo.estado === 'listo') {
-          // El banqueo lo arma quien monta el banco de preguntas: hoy, BUST.
-          acreditar(firmantes(claveMarca({ ...base_, slot: 'banqueo' }), ['bust']), 'banqueos');
+          // Por defecto lo arma quien monta los bancos de preguntas —hoy BUST—,
+          // salvo en los cursos donde el banqueo de las clases lo hace otra
+          // persona (los propuestos de Física los elabora María). Las
+          // evaluaciones no heredan ese crédito: la PC de otro año se consigue,
+          // no se arma, y quién la consiguió sólo se sabe si lo marca.
+          const armadoDe = BANQUEO_ARMADO_DE[meta.slug];
+          const porDefecto: Colaborador[] =
+            armadoDe && !plan.esExamen ? [armadoDe] : ['bust'];
+
+          const firmas = marcasIdx[claveMarca({ ...base_, slot: 'banqueo' })];
+          const personas = firmas?.map((f) => f.colaborador) ?? porDefecto;
+          acreditar(personas, 'banqueos');
+
+          // El tipo de aporte sólo existe si alguien lo declaró al marcar: el
+          // sílabo no distingue un PDF conseguido de uno hecho a mano.
+          const cuota = 1 / personas.length;
+          for (const f of firmas ?? []) {
+            if (f.origen !== 'recolectado') continue;
+            const a = idx.get(f.colaborador);
+            if (a) a.banqueosRecolectados += cuota;
+          }
         }
       }
     }
@@ -337,7 +362,7 @@ export function getAportes(marcas: readonly Marca[] = []): AporteColaborador[] {
         itemId: clase.slug,
         slot: 'material',
       });
-      acreditar(marcasIdx[clave] ?? [], 'histologia');
+      acreditar(firmantesDe(marcasIdx, clave), 'histologia');
     }
   }
 
@@ -347,6 +372,7 @@ export function getAportes(marcas: readonly Marca[] = []): AporteColaborador[] {
     ...a,
     resumenes: red(a.resumenes),
     banqueos: red(a.banqueos),
+    banqueosRecolectados: red(a.banqueosRecolectados),
     laboratorios: red(a.laboratorios),
     labsPesados: red(a.labsPesados),
     histologia: red(a.histologia),

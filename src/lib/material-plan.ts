@@ -157,9 +157,13 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
   const usaSimulacion = reglas.simulacionEn?.includes(act.tipo) ?? false;
   const apoyoListo = usaSimulacion && !!act.simulacion?.href;
 
-  // El banqueo se llena de cuatro formas: un examen del bucket, un qbank, un
-  // solucionario paso a paso (Química Orgánica, vive fuera del sílabo) o un
-  // PDF de propuestos (Física).
+  // El banqueo se llena de cuatro formas: examen del bucket, qbank, solucionario
+  // paso a paso (Química Orgánica, vive fuera del sílabo) o PDF de práctica.
+  //
+  // Aquí sólo se decide si está o no está. Si ese material se armó o sólo se
+  // consiguió no se puede deducir del sílabo —el mismo PDF puede ser trabajo
+  // propio o una descarga—, así que lo declara quien lo subió al marcar su
+  // círculo en «Quién subió qué» (`OrigenMarca` en `aportes-marcas.ts`).
   const banqueoListo = !!(act.examen || act.qbank || act.propuestos || findSolucionario(act.id));
   // Los exámenes sí exigen banqueo; los entregables no tienen nada que banquear.
   const banqueoNoAplica =

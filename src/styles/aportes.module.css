@@ -816,6 +816,16 @@
   color: #94a3b8;
 }
 
+/* Cuántos de sus banqueos son PDF conseguido, no banco armado. Sale de lo que
+   cada persona declaró al marcar, nunca de una deducción del sílabo. */
+.recolectados {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9a7422;
+}
+
+:global(body.dark-mode) .recolectados { color: #e0be76; }
+
 /* ─── BARRA ─── */
 .barra {
   height: 6px;
@@ -997,6 +1007,16 @@
   flex-shrink: 0;
 }
 
+/* El aro sin relleno: el material lo consiguió alguien, no lo armó. Se explica
+   aquí porque en el círculo es sólo un borde de color. */
+.leyendaDotAro {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid #c79a3b;
+  flex-shrink: 0;
+}
+
 .leyendaTu {
   font-size: 9.5px;
   font-weight: 700;
@@ -1084,7 +1104,164 @@
   box-shadow: none;
 }
 
-/* ── Selector de curso / atlas ── */
+/* ── Selector de curso: dos columnas, una por facultad ──
+   Los dos tramos se cursan en sitios distintos, no son niveles de lo mismo:
+   una sola fila de chips los mezclaba y obligaba a leerlos todos para
+   encontrar el curso. Dentro de cada columna manda la prioridad de
+   lanzamiento, no el alfabeto. */
+.selectorTracks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.selectorColumna {
+  min-width: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  padding: 10px;
+}
+
+:global(body.dark-mode) .selectorColumna {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+.selectorColTitulo {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin: 0 0 8px;
+  padding-left: 4px;
+}
+
+.selectorLista {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cursoOpcion,
+.cursoOpcionActiva {
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  text-align: left;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+
+.cursoOpcion {
+  background: transparent;
+  color: #475569;
+}
+
+.cursoOpcion:hover {
+  background: rgba(var(--acc), 0.08);
+  color: #0f172a;
+}
+
+:global(body.dark-mode) .cursoOpcion { color: #94a3b8; }
+:global(body.dark-mode) .cursoOpcion:hover { color: #f1f5f9; }
+
+.cursoOpcionActiva {
+  background: #fff;
+  border-color: rgba(var(--acc), 0.55);
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+}
+
+:global(body.dark-mode) .cursoOpcionActiva {
+  background: #1e293b;
+  color: #f1f5f9;
+  box-shadow: none;
+}
+
+/* Viñeta con anillo de avance: cuánto de ese curso ya tiene autor declarado.
+   El relleno lo pinta un conic-gradient sobre `currentColor`, y el hueco
+   central lo abre el ::after — así el dato se lee sin ocupar una barra. */
+.cursoDot,
+.cursoDotOk {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cursoDot   { color: rgb(var(--acc)); }
+.cursoDotOk { color: #2dc99a; }
+
+.cursoDot::after,
+.cursoDotOk::after {
+  content: '';
+  position: absolute;
+  inset: 3.5px;
+  border-radius: 50%;
+  background: #f8fafc;
+}
+
+.cursoOpcionActiva .cursoDot::after,
+.cursoOpcionActiva .cursoDotOk::after { background: #fff; }
+
+:global(body.dark-mode) .cursoDot::after,
+:global(body.dark-mode) .cursoDotOk::after { background: #0f172a; }
+
+:global(body.dark-mode) .cursoOpcionActiva .cursoDot::after,
+:global(body.dark-mode) .cursoOpcionActiva .cursoDotOk::after { background: #1e293b; }
+
+.cursoOpcionNombre {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Número de prioridad: sólo lo llevan los cursos que bloquean el lanzamiento. */
+.cursoOpcionRank {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  background: rgba(var(--acc), 0.16);
+  color: rgb(var(--acc));
+  font-size: 9.5px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.cursoOpcionFrac,
+.cursoOpcionFracOk {
+  font-size: 10.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.cursoOpcionFrac   { color: #94a3b8; }
+.cursoOpcionFracOk { color: #0f8f6c; }
+
+:global(body.dark-mode) .cursoOpcionFracOk { color: #4ee0b3; }
+
+@media (max-width: 720px) {
+  .selectorTracks { grid-template-columns: 1fr; }
+}
+
+/* ── Selector de atlas de histología (pocos, caben en una fila) ── */
 .selector {
   display: flex;
   flex-wrap: wrap;
@@ -1239,20 +1416,13 @@
   width: 72px;
 }
 
-.slotLabel,
-.slotLabelFalta {
+.slotLabel {
   font-size: 9.5px;
   font-weight: 600;
   letter-spacing: 0.2px;
   white-space: nowrap;
+  color: #94a3b8;
 }
-
-.slotLabel { color: #94a3b8; }
-
-/* Material que aún no está publicado: se puede marcar, pero se avisa. */
-.slotLabelFalta { color: #f59e0b; }
-
-:global(body.dark-mode) .slotLabelFalta { color: #fbbf24; }
 
 /* ── El círculo ── */
 .circulo {
@@ -1289,7 +1459,7 @@
   top: calc(100% + 8px);
   right: -6px;
   z-index: 30;
-  width: 232px;
+  width: 250px;
   background: #fff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
@@ -1337,17 +1507,6 @@
 
 :global(body.dark-mode) .popSlot { color: #94a3b8; }
 
-.popEstado {
-  font-size: 9.5px;
-  font-weight: 600;
-  color: #94a3b8;
-  background: #f1f5f9;
-  border-radius: 4px;
-  padding: 1px 5px;
-}
-
-:global(body.dark-mode) .popEstado { background: #1e293b; }
-
 .popLista {
   list-style: none;
   margin: 0 0 9px;
@@ -1357,10 +1516,12 @@
   gap: 5px;
 }
 
+/* Nombre + tipo declarado + «Quitar» no siempre caben en una línea. */
 .popPersona {
   display: flex;
   align-items: center;
-  gap: 7px;
+  flex-wrap: wrap;
+  gap: 5px 7px;
   font-size: 12px;
   font-weight: 600;
   color: #334155;
@@ -1390,6 +1551,109 @@
 .popQuitar:disabled { opacity: 0.5; cursor: default; }
 
 :global(body.dark-mode) .popQuitar { border-color: #334155; color: #fca5a5; }
+
+/* ── Tipo de aporte del banqueo (sólo en ese slot) ── */
+.popTipo {
+  margin: 0 0 9px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+:global(body.dark-mode) .popTipo {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.popTipoLabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-bottom: 6px;
+}
+
+.popTipoOpciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.popTipoBoton,
+.popTipoActivo,
+.popTipoActivoRec {
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  border-radius: 7px;
+  padding: 6px 4px;
+  cursor: pointer;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #64748b;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.popTipoBoton:hover { color: #0f172a; }
+
+:global(body.dark-mode) .popTipoBoton {
+  background: #0f172a;
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+:global(body.dark-mode) .popTipoBoton:hover { color: #f1f5f9; }
+
+/* Cada opción se tiñe de lo que significa: verde produce, ámbar consigue. */
+.popTipoActivo {
+  background: rgba(45, 201, 154, 0.14);
+  border-color: rgba(45, 201, 154, 0.55);
+  color: #0f8f6c;
+}
+
+:global(body.dark-mode) .popTipoActivo { color: #4ee0b3; }
+
+.popTipoActivoRec {
+  background: rgba(199, 154, 59, 0.16);
+  border-color: rgba(199, 154, 59, 0.6);
+  color: #9a7422;
+}
+
+:global(body.dark-mode) .popTipoActivoRec { color: #e0be76; }
+
+.popTipoAyuda {
+  font-size: 10px;
+  color: #94a3b8;
+  line-height: 1.4;
+  margin: 6px 0 0;
+}
+
+/* Qué declaró cada firmante, en la lista de quienes ya marcaron. */
+.popOrigen,
+.popOrigenRec {
+  font-size: 9.5px;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+
+.popOrigen {
+  color: #0f8f6c;
+  background: rgba(45, 201, 154, 0.14);
+}
+
+:global(body.dark-mode) .popOrigen { color: #4ee0b3; }
+
+.popOrigenRec {
+  color: #9a7422;
+  background: rgba(199, 154, 59, 0.16);
+}
+
+:global(body.dark-mode) .popOrigenRec { color: #e0be76; }
 
 .popAviso {
   font-size: 10.5px;

@@ -349,6 +349,12 @@ anteriores en Química Orgánica) o un solucionario (`findSolucionario` — vive
 Al añadir una regla nueva en un curso (un `sinBanqueoEn`, un `simulacionEn`) hay que reflejarla
 aquí o el panel muestra un hueco falso.
 
+**El sílabo sólo dice si el material está o no está.** La cobertura no distingue *quién* lo subió
+ni *cómo* llegó: eso no se puede deducir de ningún archivo —el mismo PDF puede ser trabajo propio o
+una descarga— y deducirlo con heurísticas sale mal (el primer intento marcó como «recolectados» los
+13 propuestos de Física, que María Guzmán elaboró a mano). Lo declara cada persona al marcar su
+círculo; ver **armado vs. recolectado** en el registro de autoría.
+
 **Evaluaciones: sí exigen banqueo.** `TIPOS_EXAMEN` (EXAMEN, EXAMEN-T/L/P, EXAM-PARC, EXAM-FINAL,
 EXAM-ANAT, PC, PASO, PASO-CORTO, SUSTIT) marca lo que el alumno *rinde*: no se le pide material
 escrito —un examen no es contenido; si lo trae igual, cuenta como listo— pero su banqueo **sí** es
@@ -372,12 +378,21 @@ curso; `APORTE_OVERRIDE` reasigna actividades sueltas). La cobertura (`SlotStats
 calcula sólo sobre `listo + falta` — lo `no-aplica` sale del denominador, así una tarjeta que
 nunca debió existir no castiga el porcentaje. Además de `resumen` y `banqueo`, cada curso/tramo
 lleva `examenes: SlotStats`: el mismo recuento de banqueo pero restringido a las evaluaciones, que
-es el que se muestra aparte por ser el material más buscado.
+es el que se muestra aparte por ser el material más buscado. `AporteColaborador.banqueosRecolectados`
+es la parte de sus banqueos que declaró como conseguida, y sale **sólo** de las marcas.
+
+**Quién arma el banqueo** — `BANQUEO_ARMADO_DE` en `aportes.ts`, por `slug` de curso: el default
+es `bust` (monta los bancos del bucket y los solucionarios), y la tabla es la excepción
+(`fisica-medicina: 'ufbi-1'`, los propuestos de las clases). No se aplica a las **evaluaciones**
+(`plan.esExamen`): la PC de otro año se consigue, no se arma, y quién la consiguió sólo se sabe si
+lo marca. Cualquier marca manda sobre este default.
 
 **`AportesPanel.tsx`**: hero «Listo para lanzar» con los 7 cursos prioritarios primero. El
 **banqueo es la métrica protagonista** (barra gruesa verde `45, 201, 154` y % grande; el material
-escrito va debajo con el acento del tramo, y el video ni se mide). KPIs: exámenes sin banqueo
-(rojo si hay), clases sin banqueo, sin material escrito, cursos completos. Cada curso es una
+escrito va debajo con el acento del tramo, y el video ni se mide). Las barras miden **sólo
+completo/incompleto** — ningún color de aquí habla de personas ni de tipos de aporte, que viven en
+el registro de abajo. KPIs: exámenes sin banqueo (rojo si hay), clases sin banqueo, sin material
+escrito, cursos completos. Cada curso es una
 tarjeta `<details>` expandible con dos barras en la cabecera (Banqueo/Escrito) y los pendientes
 agrupados en tres grados —«Exámenes sin banqueo» rojo, «Sin material escrito» naranja, «Clases sin
 banqueo» ámbar—, nunca una lista plana de huecos idénticos, que en un curso al 0% no informa nada.
@@ -388,30 +403,54 @@ cursos. Estilos en `src/styles/aportes.module.css`, light+dark.
 **Registro de personas** — `src/lib/data/aportes.ts`: `COLABORADORES` (nombre, rol, **color único
 por persona**, `email?`, pools) y `CURSOS` (slug, track, `materialDe: Colaborador[]`). El color es
 la identidad visual de cada uno en todo el panel; el correo es lo que le permite marcar sus
-aportes (`colaboradorDeEmail`), y quien no lo tenga —`ufbi-2` hoy— sólo puede ser marcado por el
-admin. El banqueo y los laboratorios nunca se declaran a mano ahí: son el reparto *por defecto*
-(`bust`, o el `autor` del lab) y se cuentan directo de los sílabos/`LABORATORIOS`.
+aportes (`colaboradorDeEmail`) — ya lo tienen las cinco personas, así que nadie depende del admin
+para firmar lo suyo. El banqueo y los laboratorios nunca se declaran a mano ahí: son el reparto
+*por defecto* (`BANQUEO_ARMADO_DE` o `bust`, y el `autor` del lab) y se cuentan directo de los
+sílabos/`LABORATORIOS`.
 
 **Quién subió qué — marcas de autoría** (`src/components/RegistroAportes.tsx`, única parte
 interactiva del panel). El resto se deduce del repo; la autoría no está en ningún archivo, así que
 cada persona la declara pintando el círculo del material que subió:
 
-- **Granularidad**: por actividad × slot. Cursos → un círculo por tarjeta exigible de cada
-  actividad (Resumen / Banqueo / Simulación ya publicada); laboratorios e histología → un círculo
-  por pieza (`slot: 'material'`). El inventario lo arma `src/lib/aportes-registro.ts` desde las
-  mismas fuentes que la cobertura (`SILABOS`, `LABORATORIOS`, `HISTO_CURSOS`) y lo pasa **plano**
-  al cliente — `HISTO_CURSOS` trae íconos JSX que no cruzan la frontera servidor→cliente.
+- **Sólo se marca lo publicado** (`marcable()` = `estado === 'listo'`). Un círculo sobre material
+  que aún no existe no tiene dueño posible: invitaba a reclamar algo que nadie subió y hacía leer
+  la fila como si ese material ya estuviera en la web (C9 de Física ofrecía «Resumen» sin que
+  hubiera PDF). Los huecos se ven en la cobertura de arriba, no aquí — por eso `SlotRegistro` ya
+  no lleva `estado`.
+- **Granularidad**: por actividad × slot. Cursos → un círculo por tarjeta publicada de cada
+  actividad (Resumen / Banqueo / Simulación); laboratorios e histología → un círculo por pieza
+  (`slot: 'material'`). El inventario lo arma `src/lib/aportes-registro.ts` desde las mismas
+  fuentes que la cobertura (`SILABOS`, `LABORATORIOS`, `HISTO_CURSOS`) y lo pasa **plano** al
+  cliente — `HISTO_CURSOS` trae íconos JSX que no cruzan la frontera servidor→cliente.
+- **Selector de curso**: dos columnas, una por facultad (UFBI / Facultad) — los dos tramos se
+  cursan en sitios distintos, mezclarlos en una fila de chips obligaba a leerlos todos. Dentro de
+  cada columna manda `PRIORIDAD_LANZAMIENTO` (Física, Química, Biología… con su número visible),
+  no el alfabeto; el orden lo aplica `getRegistroCursos()` en el servidor y cada curso lleva su
+  `prioridad`. La viñeta de cada fila es un anillo `conic-gradient` con el avance de marcado de
+  ese curso, verde cuando ya está completo.
+- **Armado vs. recolectado** (`OrigenMarca` en `aportes-marcas.ts`, columna `origen` de la tabla):
+  en el slot `banqueo` el popover pregunta «¿cómo llegó?» — *Lo armé* (banco de preguntas,
+  solucionario, ejercicios propios) o *Lo conseguí* (PC o examen de otro año en PDF, subido tal
+  cual). En los demás slots no aplica: un resumen o un lab siempre se produce. El círculo marcado
+  como recolectado lleva **aro ámbar** `#c79a3b` en el borde, nunca en el relleno — el relleno es
+  la identidad de la persona y taparlo perdería el dato de quién lo subió. Se puede cambiar de
+  tipo sin desmarcar: el botón pasa a «Cambiar a esta opción» y el `upsert` del servidor va **sin**
+  `ignoreDuplicates`, o la fila existente se ignoraría y el cambio no surtiría efecto.
 - **Co-autoría**: varias marcas sobre el mismo slot son válidas; el círculo se parte en sectores
-  (`conic-gradient`) y `getAportes()` divide esa unidad entre los firmantes.
+  (`conic-gradient`) y `getAportes()` divide esa unidad entre los firmantes. Cada firmante lleva su
+  propio `origen`, así que dos personas pueden declarar cosas distintas sobre el mismo banqueo.
 - **Precedencia**: lo marcado manda sobre el reparto declarado en `aportes.ts`, que queda como
   estimación para que el panel no salga vacío antes de que el equipo marque. Histología no declara
   autor en ningún sitio: sólo cuenta lo marcado.
 - **Permisos**: cada uno marca y desmarca lo suyo; el admin corrige cualquier marca y es el único
   que puede marcar por alguien sin cuenta. Se comprueba en `/api/aportes/marcas`, no en RLS.
 - **Persistencia**: tabla `aportes_marcas` en Supabase (única por
-  `ambito+scope_id+item_id+slot+colaborador`), **RLS activo y sin políticas**: el navegador nunca
+  `ambito+scope_id+item_id+slot+colaborador`, más la columna `origen` con CHECK
+  `armado|recolectado`, NULL fuera del banqueo), **RLS activo y sin políticas**: el navegador nunca
   la toca. Todo pasa por `src/lib/aportes-marcas-server.ts` con la service role key. Tipos
-  compartidos cliente/servidor en `src/lib/aportes-marcas.ts` (`claveMarca`, `indexarMarcas`).
+  compartidos cliente/servidor en `src/lib/aportes-marcas.ts` (`claveMarca`, `indexarMarcas`,
+  `firmantesDe`); el índice mapea clave → `Firma[]` (colaborador + origen), no una lista de
+  nombres.
 - **UI**: escritura optimista + `router.refresh()` para recalcular «Aportes por persona»,
   resincronización al volver el foco a la pestaña, y **cada acción pasa por un popover de
   confirmación** («Se guarda para todo el equipo») porque una marca ajena no se puede deshacer

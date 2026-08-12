@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { canVerAportes, isAdminEmail } from '@/lib/admin';
 import { COLABORADORES, colaboradorDeEmail, type Colaborador } from '@/lib/data/aportes';
-import type { AmbitoMarca, Marca, SlotMarca } from '@/lib/aportes-marcas';
+import type { AmbitoMarca, Marca, OrigenMarca, SlotMarca } from '@/lib/aportes-marcas';
 import { agregarMarca, leerMarcas, quitarMarca } from '@/lib/aportes-marcas-server';
 
 /**
@@ -17,6 +17,7 @@ export const dynamic = 'force-dynamic';
 
 const AMBITOS: readonly AmbitoMarca[] = ['curso', 'laboratorio', 'histologia'];
 const SLOTS: readonly SlotMarca[] = ['resumen', 'banqueo', 'apoyo', 'material'];
+const ORIGENES: readonly OrigenMarca[] = ['armado', 'recolectado'];
 
 interface Sesion {
   usuarioId: string;
@@ -39,13 +40,17 @@ async function sesion(): Promise<Sesion | null> {
 function parseMarca(body: unknown): Marca | null {
   if (typeof body !== 'object' || body === null) return null;
   const b = body as Record<string, unknown>;
-  const { ambito, scopeId, itemId, slot, colaborador } = b;
+  const { ambito, scopeId, itemId, slot, colaborador, origen } = b;
 
   if (typeof scopeId !== 'string' || !scopeId) return null;
   if (typeof itemId !== 'string' || !itemId) return null;
   if (!AMBITOS.includes(ambito as AmbitoMarca)) return null;
   if (!SLOTS.includes(slot as SlotMarca)) return null;
   if (typeof colaborador !== 'string' || !(colaborador in COLABORADORES)) return null;
+  // El tipo de aporte es opcional y sólo significa algo en el banqueo; si viene
+  // con un valor que no existe, se descarta la petición entera en vez de
+  // guardar una marca a medias.
+  if (origen !== undefined && !ORIGENES.includes(origen as OrigenMarca)) return null;
 
   return {
     ambito: ambito as AmbitoMarca,
@@ -53,6 +58,7 @@ function parseMarca(body: unknown): Marca | null {
     itemId,
     slot: slot as SlotMarca,
     colaborador: colaborador as Colaborador,
+    origen: slot === 'banqueo' ? ((origen as OrigenMarca) ?? 'armado') : undefined,
   };
 }
 

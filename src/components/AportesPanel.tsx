@@ -34,6 +34,9 @@ const plural = (n: number, uno: string, varios: string) => (n === 1 ? uno : vari
  * Avance sobre lo exigible: el relleno es lo publicado y el resto el hueco. Las
  * tarjetas que no aplican (entregables, labs sin banqueo) quedan fuera del
  * total, así el porcentaje no castiga lo que nunca debía existir.
+ *
+ * Mide sólo si el material está: quién lo subió y si lo armó o lo consiguió no
+ * se deduce del sílabo, se declara en «Quién subió qué».
  */
 function Barra({ slot, acc }: { slot: SlotStats; acc: string }) {
   const total = slot.listo + slot.falta;
@@ -466,7 +469,15 @@ export default function AportesPanel({ lanzamiento, tracks, aportes, registro }:
                 </div>
                 <div>
                   <dt>Banqueos</dt>
-                  <dd>{a.banqueos}</dd>
+                  <dd>
+                    {a.banqueos}
+                    {a.banqueosRecolectados > 0 && (
+                      <span className={styles.recolectados}>
+                        {' '}
+                        · {a.banqueosRecolectados} PDF
+                      </span>
+                    )}
+                  </dd>
                 </div>
                 <div>
                   <dt>Laboratorios</dt>
@@ -500,6 +511,17 @@ export default function AportesPanel({ lanzamiento, tracks, aportes, registro }:
             PDF de práctica: los propuestos de las clases teóricas de Física, las PCs
             de años anteriores de Química Orgánica. Es la métrica que manda: se exige
             en todas las clases y en todas las evaluaciones.
+          </li>
+          <li>
+            <strong>Armado vs. recolectado</strong> — el mismo banqueo, dos costos
+            distintos. <em>Armado</em> es lo que alguien hizo: transcribir el banco de
+            preguntas, resolver el solucionario, elaborar los ejercicios propuestos.
+            <em> Recolectado</em> es conseguir la PC o el examen de otro año en PDF y
+            subirlo tal cual. Esto <strong>no</strong> se deduce del sílabo —el mismo
+            PDF puede ser trabajo propio o una descarga—, así que lo elige cada persona
+            al marcar su círculo abajo, y de ahí salen el ámbar y el recuento por
+            persona. Las barras de arriba no lo distinguen: sólo miden si el material
+            está o no está.
           </li>
           <li>
             <strong>Exámenes con banqueo</strong> — el banqueo de las evaluaciones que

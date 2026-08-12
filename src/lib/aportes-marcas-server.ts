@@ -1,6 +1,6 @@
 import { createAdminClient } from '@/lib/supabase/admin';
 import { COLABORADORES, type Colaborador } from '@/lib/data/aportes';
-import type { AmbitoMarca, Marca, SlotMarca } from '@/lib/aportes-marcas';
+import type { AmbitoMarca, Marca, OrigenMarca, SlotMarca } from '@/lib/aportes-marcas';
 
 /**
  * Lectura y escritura de `aportes_marcas`.
@@ -17,6 +17,8 @@ interface FilaMarca {
   item_id: string;
   slot: string;
   colaborador: string;
+  /** NULL en todo lo que no es banqueo, y en las marcas anteriores a la columna. */
+  origen: string | null;
 }
 
 interface ErrorSupabase {
@@ -55,16 +57,23 @@ function aMarca(fila: FilaMarca): Marca | null {
     itemId: fila.item_id,
     slot: fila.slot as SlotMarca,
     colaborador: fila.colaborador as Colaborador,
+    origen: fila.origen === 'recolectado' ? 'recolectado' : undefined,
   };
 }
 
 export async function leerMarcas(): Promise<Marca[]> {
-  const { data, error } = await tabla().select('ambito, scope_id, item_id, slot, colaborador');
+  const { data, error } = await tabla().select(
+    'ambito, scope_id, item_id, slot, colaborador, origen',
+  );
   if (error || !data) return [];
   return data.map(aMarca).filter((m): m is Marca => m !== null);
 }
 
 export async function agregarMarca(marca: Marca, usuarioId: string): Promise<void> {
+  // `ignoreDuplicates` haría que cambiar de tipo no surtiera efecto: una marca
+  // que ya existe se ignoraría en vez de actualizar su `origen`. Por eso se
+  // sobrescribe la fila entera.
+  const origen: OrigenMarca | null = marca.slot === 'banqueo' ? (marca.origen ?? 'armado') : null;
   const { error } = await tabla().upsert(
     {
       ambito: marca.ambito,
@@ -72,9 +81,10 @@ export async function agregarMarca(marca: Marca, usuarioId: string): Promise<voi
       item_id: marca.itemId,
       slot: marca.slot,
       colaborador: marca.colaborador,
+      origen,
       marcado_por: usuarioId,
     },
-    { onConflict: 'ambito,scope_id,item_id,slot,colaborador', ignoreDuplicates: true },
+    { onConflict: 'ambito,scope_id,item_id,slot,colaborador' },
   );
   if (error) throw new Error(error.message);
 }

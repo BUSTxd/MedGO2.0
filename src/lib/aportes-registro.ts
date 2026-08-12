@@ -1,5 +1,5 @@
 import type { Track } from '@/lib/plans';
-import { CURSOS, LABORATORIOS } from '@/lib/data/aportes';
+import { CURSOS, LABORATORIOS, PRIORIDAD_LANZAMIENTO } from '@/lib/data/aportes';
 import { HISTO_CURSOS } from '@/lib/data/histologia';
 import { SILABOS } from '@/lib/data/silabos';
 import { planDeActividad, type SlotEstado } from '@/lib/material-plan';
@@ -18,7 +18,6 @@ export interface SlotRegistro {
   slot: SlotMarca;
   /** Nombre tal como lo ve el alumno: «Resumen», «Propuestos», «Simulación». */
   label: string;
-  estado: SlotEstado;
 }
 
 export interface ItemRegistro {
@@ -35,19 +34,25 @@ export interface GrupoRegistro {
   scopeId: string;
   nombre: string;
   track?: Track;
+  /**
+   * Posición en `PRIORIDAD_LANZAMIENTO`, o `null` si no bloquea el lanzamiento.
+   * El selector la usa para que Física, Química y Biología salgan primero: son
+   * los cursos donde marcar tiene consecuencias ahora, no dentro de un año.
+   */
+  prioridad?: number | null;
   items: ItemRegistro[];
 }
 
 /**
- * Un slot se puede marcar cuando la tarjeta existe para esa actividad. Lo que
- * «no aplica» no se ofrece —no hay nada que subir ahí— y el vídeo tampoco, que
- * es material a futuro; una simulación ya publicada sí, porque es trabajo real
- * hecho por alguien.
+ * Sólo se marca lo que ya está publicado.
+ *
+ * Un círculo sobre material que todavía no existe no tiene dueño posible: la
+ * fila invitaba a reclamar algo que nadie ha subido, y en el panel parecía que
+ * ese material estaba en la web. Un hueco pendiente se ve en la cobertura de
+ * arriba, no aquí.
  */
-function marcable(estado: SlotEstado, kind: SlotMarca): boolean {
-  if (estado === 'no-aplica') return false;
-  if (kind === 'apoyo') return estado === 'listo';
-  return true;
+function marcable(estado: SlotEstado): boolean {
+  return estado === 'listo';
 }
 
 export function getRegistroCursos(): GrupoRegistro[] {
@@ -61,9 +66,7 @@ export function getRegistroCursos(): GrupoRegistro[] {
 
         const slots: SlotRegistro[] = [];
         for (const s of [plan.resumen, plan.banqueo, plan.apoyo]) {
-          if (marcable(s.estado, s.kind)) {
-            slots.push({ slot: s.kind, label: s.label, estado: s.estado });
-          }
+          if (marcable(s.estado)) slots.push({ slot: s.kind, label: s.label });
         }
         if (slots.length === 0) continue;
 
@@ -77,14 +80,25 @@ export function getRegistroCursos(): GrupoRegistro[] {
       }
     }
 
+    const prioridad = PRIORIDAD_LANZAMIENTO.indexOf(meta.slug);
+
     return {
       ambito: 'curso' as const,
       scopeId: meta.slug,
       nombre: meta.nombre,
       track: meta.track,
+      prioridad: prioridad === -1 ? null : prioridad,
       items,
     };
-  }).filter((g) => g.items.length > 0);
+  })
+    .filter((g) => g.items.length > 0)
+    // Los prioritarios primero y en su orden declarado; detrás, el resto por
+    // nombre. El selector los reparte luego en su columna por tramo.
+    .sort((a, b) => {
+      const pa = a.prioridad ?? Number.MAX_SAFE_INTEGER;
+      const pb = b.prioridad ?? Number.MAX_SAFE_INTEGER;
+      return pa !== pb ? pa - pb : a.nombre.localeCompare(b.nombre, 'es');
+    });
 }
 
 /** Los laboratorios son piezas enteras: un solo círculo por lab. */
@@ -97,7 +111,7 @@ export function getRegistroLabs(): GrupoRegistro {
       id: lab.slug,
       titulo: lab.nombre,
       bloque: lab.pesado ? 'Simulación 3D / interactiva' : 'Atlas o minijuego',
-      slots: [{ slot: 'material' as const, label: 'Laboratorio', estado: 'listo' as const }],
+      slots: [{ slot: 'material' as const, label: 'Laboratorio' }],
     })),
   };
 }
@@ -111,7 +125,7 @@ export function getRegistroHistologia(): GrupoRegistro[] {
     items: curso.clases.map((clase) => ({
       id: clase.slug,
       titulo: clase.titulo,
-      slots: [{ slot: 'material' as const, label: 'Láminas', estado: 'listo' as const }],
+      slots: [{ slot: 'material' as const, label: 'Láminas' }],
     })),
   }));
 }

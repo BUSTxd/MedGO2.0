@@ -21,6 +21,20 @@ export type AmbitoMarca = 'curso' | 'laboratorio' | 'histologia';
  */
 export type SlotMarca = 'resumen' | 'banqueo' | 'apoyo' | 'material';
 
+/**
+ * Cómo llegó ese banqueo, según lo declara quien lo subió.
+ *
+ * - `armado` — lo hizo: transcribió el banco de preguntas, resolvió el
+ *   solucionario, elaboró los ejercicios propuestos.
+ * - `recolectado` — lo consiguió: la PC o el examen de otro año en PDF, subido
+ *   tal cual. Cuenta como material publicado, pero no es lo mismo producirlo.
+ *
+ * Sólo aplica al slot `banqueo`: un resumen o un laboratorio siempre se
+ * produce. El código no puede deducirlo de ningún archivo —el mismo PDF puede
+ * ser trabajo propio o una descarga—, por eso lo dice la persona al marcar.
+ */
+export type OrigenMarca = 'armado' | 'recolectado';
+
 export interface Marca {
   ambito: AmbitoMarca;
   /** Slug del curso, del atlas de histología, o `labs` en los laboratorios. */
@@ -29,6 +43,8 @@ export interface Marca {
   itemId: string;
   slot: SlotMarca;
   colaborador: Colaborador;
+  /** Sólo en `banqueo`; sin declarar se trata como `armado`. */
+  origen?: OrigenMarca;
 }
 
 /** Identidad de un material marcable. Es también la clave única en la tabla. */
@@ -38,14 +54,25 @@ export function claveMarca(
   return `${m.ambito}:${m.scopeId}:${m.itemId}:${m.slot}`;
 }
 
-/** Clave del material → personas que lo reclaman, para leerlo en O(1) al pintar. */
-export type MarcasIndex = Record<string, Colaborador[]>;
+/** Una persona reclamando un material, con el tipo de aporte que declaró. */
+export interface Firma {
+  colaborador: Colaborador;
+  origen?: OrigenMarca;
+}
+
+/** Clave del material → quién lo reclama, para leerlo en O(1) al pintar. */
+export type MarcasIndex = Record<string, Firma[]>;
 
 export function indexarMarcas(marcas: readonly Marca[]): MarcasIndex {
   const idx: MarcasIndex = {};
   for (const m of marcas) {
     const clave = claveMarca(m);
-    (idx[clave] ??= []).push(m.colaborador);
+    (idx[clave] ??= []).push({ colaborador: m.colaborador, origen: m.origen });
   }
   return idx;
+}
+
+/** Sólo los nombres, para cuando el tipo de aporte da igual (pintar el círculo). */
+export function firmantesDe(idx: MarcasIndex, clave: string): Colaborador[] {
+  return (idx[clave] ?? []).map((f) => f.colaborador);
 }
