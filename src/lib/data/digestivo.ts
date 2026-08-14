@@ -113,6 +113,11 @@ export const semanas: Semana[] = [
           'Faringe y esófago',
         ],
         docentes: ['Dr. Sabino Portugal'],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-2',

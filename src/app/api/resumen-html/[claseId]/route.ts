@@ -21,6 +21,7 @@ import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 // Ids con un .html en el bucket `resumenes`. Mismo criterio que el ALLOWED de
 // la route de PDF: si no está aquí, es 404 sin tocar Storage.
 const ALLOWED = new Set([
+  'dig-clase-1',
   'dig-clase-2',
   'dig-clase-3',
   'dig-clase-7',
@@ -35,6 +36,7 @@ const ALLOWED = new Set([
 
 // id → ruta dentro del bucket (sin extensión).
 const FILE_ALIAS: Record<string, string> = {
+  'dig-clase-1': 'digestivo/dig-clase-1',
   'dig-clase-2': 'digestivo/dig-clase-2',
   'dig-clase-3': 'digestivo/dig-clase-3',
   'dig-clase-7': 'digestivo/dig-clase-7',
