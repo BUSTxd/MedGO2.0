@@ -7,7 +7,9 @@
  *
  * Hace tres cosas, en este orden:
  *   1. convierte a AVIF cada PNG que el HTML referencia y lo sube al bucket
- *      PÚBLICO `resumenes-img` (ahí está el peso: ~95 % menos que en PNG);
+ *      PÚBLICO `resumenes-img` (ahí está el peso: ~95 % menos que en PNG).
+ *      Si junto al PNG ya existe un .avif con el mismo nombre (convertido a
+ *      mano, p. ej. con imgto.xyz), se sube ESE tal cual — sin recomprimir.
  *   2. reescribe el HTML a un fragmento de cuerpo apuntando a esas URLs;
  *   3. sube el fragmento al bucket PRIVADO `resumenes`, junto a los PDFs.
  *
@@ -99,21 +101,39 @@ const sb = createClient(URL, KEY, { auth: { persistSession: false } });
 const BASE_PUB = `${URL}/storage/v1/object/public/${BUCKET_IMG}/${PREFIX}`;
 
 // ─── 4. convertir y subir las imágenes ───────────────────────────────────
-let origBytes = 0, avifBytes = 0, subidas = 0;
+// El HTML de Notion referencia siempre .png/.jpg/.webp, pero en el disco
+// puede haber tanto ese original como una versión ya convertida a mano
+// (p. ej. con imgto.xyz) guardada con el mismo nombre base y extensión
+// .avif. Se prefiere el .avif si existe: es la compresión que el usuario ya
+// eligió, y volver a pasarla por sharp sería una segunda pérdida de calidad
+// sobre un formato que ya es lossy (igual que resavear un JPEG).
+let origBytes = 0, avifBytes = 0, subidas = 0, yaAvif = 0;
 const fallos = [];
 
 for (const ref of refs) {
-  const src = join(dir, ref);
-  if (!existsSync(src)) { fallos.push(`falta el archivo ${ref}`); continue; }
-
   const base = ref.replace(/\.(png|jpe?g|webp|avif)$/i, '');
   const dest = `${PREFIX}/${nombreEnStorage(base)}.avif`;
 
+  const srcOriginal = join(dir, ref);
+  const srcAvif = join(dir, `${base}.avif`);
+  const yaEsAvif = existsSync(srcAvif);
+  const src = yaEsAvif ? srcAvif : srcOriginal;
+
+  if (!existsSync(src)) { fallos.push(`falta el archivo ${ref}`); continue; }
+
   origBytes += statSync(src).size;
 
-  // Sin resize: el ancho de cada figura ya lo fijó Notion y el visor lo escala
-  // con CSS. Redimensionar aquí desalinearía el documento.
-  const buf = await sharp(src).avif({ quality: AVIF_QUALITY }).toBuffer();
+  let buf;
+  if (yaEsAvif) {
+    // Ya convertida por fuera (imgto.xyz u otra herramienta): se sube tal
+    // cual, sin pasar por sharp.
+    buf = readFileSync(src);
+    yaAvif++;
+  } else {
+    // Sin resize: el ancho de cada figura ya lo fijó Notion y el visor lo
+    // escala con CSS. Redimensionar aquí desalinearía el documento.
+    buf = await sharp(src).avif({ quality: AVIF_QUALITY }).toBuffer();
+  }
   avifBytes += buf.length;
 
   if (dry) { subidas++; continue; }
@@ -131,7 +151,8 @@ for (const ref of refs) {
   process.stdout.write(`\r  imágenes: ${subidas}/${refs.length}`);
 }
 
-console.log(`\r  imágenes: ${subidas}/${refs.length}   ${mb(origBytes)} → ${mb(avifBytes)}  (-${(100 - avifBytes / origBytes * 100).toFixed(1)}%)`);
+const nota = yaAvif ? `  (${yaAvif} ya eran .avif, sin recomprimir)` : '';
+console.log(`\r  imágenes: ${subidas}/${refs.length}   ${mb(origBytes)} → ${mb(avifBytes)}  (-${(100 - avifBytes / origBytes * 100).toFixed(1)}%)${nota}`);
 if (fallos.length) {
   console.error(`\n✗ ${fallos.length} fallos:`);
   fallos.slice(0, 10).forEach(f => console.error('   ' + f));

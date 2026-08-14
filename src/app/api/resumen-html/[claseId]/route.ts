@@ -22,11 +22,13 @@ import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 // la route de PDF: si no está aquí, es 404 sin tocar Storage.
 const ALLOWED = new Set([
   'dig-clase-2',
+  'dig-clase-3',
 ]);
 
 // id → ruta dentro del bucket (sin extensión).
 const FILE_ALIAS: Record<string, string> = {
   'dig-clase-2': 'digestivo/dig-clase-2',
+  'dig-clase-3': 'digestivo/dig-clase-3',
 };
 
 export async function GET(

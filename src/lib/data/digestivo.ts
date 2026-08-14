@@ -144,6 +144,12 @@ export const semanas: Semana[] = [
           'Canal inguinal',
         ],
         docentes: ['Dr. Bruno Fernandini'],
+        // Resumen en HTML: 33 figuras anatómicas.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-3', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'anat-1',
