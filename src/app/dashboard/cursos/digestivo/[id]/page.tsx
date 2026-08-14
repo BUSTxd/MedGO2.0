@@ -98,6 +98,8 @@ export default async function ActividadPage({
           claseId={act.id}
           hasResumen={act.resumen?.tipo === 'pdf'}
           resumenOpciones={act.resumen?.opciones}
+          resumenFormato={act.resumen?.formato}
+          resumenTitulo={act.titulo}
           /* En las prácticas la primera tarjeta es «Simulación». */
           simulacion={isPractica ? (act.simulacion ?? {}) : undefined}
         />

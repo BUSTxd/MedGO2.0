@@ -12,9 +12,23 @@ const PdfFullscreenModal = dynamic(() => import('./PdfFullscreenModal'), {
   ssr: false,
 });
 
+// Visor del resumen en HTML. Va aparte del de PDF a propósito: cargar react-pdf
+// (~2 MB) para un resumen que no lo necesita anularía el ahorro.
+const HtmlFullscreenModal = dynamic(() => import('./HtmlFullscreenModal'), {
+  ssr: false,
+});
+
+/**
+ * `formato` decide qué visor abre la opción. Se declara por opción —y no sólo
+ * a nivel de tarjeta— porque un picker puede mezclar: p. ej. un repaso que
+ * junta un resumen HTML nuevo con PDFs de clases anteriores.
+ */
+type ResumenFormato = 'pdf' | 'html';
+
 interface ResumenOpcion {
   id: string;
   label: string;
+  formato?: ResumenFormato;
 }
 
 interface ExamenRef {
@@ -64,6 +78,11 @@ interface Props {
   claseId: string;
   hasResumen: boolean;
   resumenOpciones?: ResumenOpcion[];
+  /** Formato por defecto del resumen de esta actividad. Cada opción puede
+   *  sobreescribirlo con su propio `formato`. Sin declarar nada, es PDF. */
+  resumenFormato?: ResumenFormato;
+  /** Título que muestra la barra del visor HTML (el de PDF no lleva). */
+  resumenTitulo?: string;
   examen?: ExamenRef;
   examenTitle?: string;
   simulacion?: SimulacionRef;
@@ -93,7 +112,7 @@ const BanqueoIcon = () => (
   </svg>
 );
 
-export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, examen, simulacion, solucionario, propuestosPdf, hideBanqueo, banqueoLabel }: Props) {
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, simulacion, solucionario, propuestosPdf, hideBanqueo, banqueoLabel }: Props) {
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
   const isPropuestosMulti = propuestosPdf?.opciones && propuestosPdf.opciones.length > 1;
   const pathname = usePathname();
@@ -122,6 +141,13 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
   const activeId = isMulti
     ? selectedId
     : (resumenOpciones?.[0]?.id ?? claseId);
+
+  // Qué visor abre: manda el `formato` de la opción elegida; si no lo declara,
+  // el de la tarjeta; y si tampoco, PDF (que es lo que había antes).
+  const activeFormato: ResumenFormato =
+    resumenOpciones?.find(o => o.id === activeId)?.formato
+    ?? resumenFormato
+    ?? 'pdf';
 
   const handleCardClick = () => {
     if (!hasResumen) return;
@@ -305,10 +331,18 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
 
       {/* ── Fullscreen viewer con zoom (única instancia del PdfViewer) ── */}
       {fullscreenOpen && activeId && (
-        <PdfFullscreenModal
-          claseId={activeId}
-          onClose={handleCloseFullscreen}
-        />
+        activeFormato === 'html' ? (
+          <HtmlFullscreenModal
+            claseId={activeId}
+            titulo={resumenTitulo}
+            onClose={handleCloseFullscreen}
+          />
+        ) : (
+          <PdfFullscreenModal
+            claseId={activeId}
+            onClose={handleCloseFullscreen}
+          />
+        )
       )}
 
       {/* ── Picker de propuestos (solo cuando `opciones` tiene 2+) ── */}

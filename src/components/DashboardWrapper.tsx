@@ -4,6 +4,7 @@ import DashboardSidebar from './DashboardSidebar';
 import { PlanProvider, type ClientPlanState } from './PlanProvider';
 import { RecentClassesProvider } from './RecentClassesProvider';
 import { SidebarStateProvider } from './SidebarStateContext';
+import { DarkModeProvider } from './DarkModeContext';
 import ClarityPlanTag from './ClarityPlanTag';
 import styles from '@/styles/dashboardLayout.module.css';
 
@@ -64,7 +65,13 @@ export default function DashboardWrapper({
           )}
           <main className={`${styles.main} ${collapsed ? styles.mainCollapsed : ''}`}>
             <div className={styles.panel}>
-              <SidebarStateProvider collapsed={collapsed}>{children}</SidebarStateProvider>
+              <SidebarStateProvider collapsed={collapsed}>
+                {/* Las vistas a pantalla completa tapan la sidebar: sin esto
+                    su botón de tema queda inalcanzable mientras se lee. */}
+                <DarkModeProvider darkMode={darkMode} toggleDark={toggleDark}>
+                  {children}
+                </DarkModeProvider>
+              </SidebarStateProvider>
             </div>
           </main>
         </div>

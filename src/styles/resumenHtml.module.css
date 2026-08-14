@@ -1,0 +1,696 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Resumen en HTML — visor a pantalla completa
+
+   El contenido viene de un export de Notion y se inyecta con
+   dangerouslySetInnerHTML, así que sus clases (.bulleted-list, .simple-table,
+   .highlight-*, .column-list…) NO pasan por el hash de CSS Modules: todas se
+   escriben con :global(), siempre anidadas bajo .sheet para que no se escapen
+   al resto del dashboard.
+
+   El CSS propio de Notion se descarta en el transformador — es claro-only y
+   con su propia tipografía. Aquí se reescribe en el lenguaje de MedGO, con
+   light + dark (regla del proyecto: el dark-mode vive en el módulo, nunca en
+   globals.css).
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  /* Oscuro SIEMPRE, no sólo en modo oscuro — mismo criterio que el visor de
+     PDF (`.fullscreenOverlay`). En claro la hoja es blanca, y sobre un fondo
+     claro se perdía: el documento tiene que apoyarse sobre algo más oscuro
+     que él para leerse como hoja. Lo único que cambia con el tema es la hoja. */
+  background: rgba(8, 10, 22, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+/* ─── Barra superior ─── */
+/* Va con el fondo: oscura en ambos temas, así que todo lo que vive dentro es
+   claro-sobre-oscuro siempre y no necesita variante de modo oscuro. */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 22px;
+  flex-shrink: 0;
+  background: rgba(20, 22, 40, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f0eeff;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* Sin esto un flex item no baja de su contenido: el título empujaría los
+     botones fuera de la barra en vez de recortarse con puntos suspensivos. */
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* Grupo de tamaño de texto. En un PDF el zoom escala una imagen; aquí el
+   texto es texto, así que lo que se ajusta es el cuerpo de letra y todo
+   reflowea — por eso son A−/A/A+ y no porcentajes. */
+.sizeGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sizeBtn {
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  font-family: inherit;
+  font-weight: 700;
+  color: #f0eeff;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sizeBtn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sizeBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.sizeSm { font-size: 12px; }
+.sizeLg { font-size: 17px; }
+
+.sizeReset {
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 56px;
+}
+
+/* Interruptor de tema. A pantalla completa la sidebar queda tapada, así que el
+   suyo no se alcanza: este es el mismo interruptor (comparten estado vía
+   DarkModeContext), sólo que vestido para esta barra. */
+.themeBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(240, 238, 255, 0.75);
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.themeBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #f0eeff;
+}
+
+/* Encendido: el amarillo del sol delata de un vistazo que el modo oscuro
+   está activo, igual que en la sidebar. */
+.themeBtnActive,
+.themeBtnActive:hover {
+  color: #f5a623;
+  border-color: rgba(245, 166, 35, 0.32);
+  background: rgba(245, 166, 35, 0.12);
+}
+
+.themeBtnActive:hover {
+  background: rgba(245, 166, 35, 0.2);
+}
+
+.close {
+  background: rgba(248, 113, 113, 0.14);
+  border: 1px solid rgba(248, 113, 113, 0.32);
+  border-radius: 9px;
+  width: 38px;
+  height: 38px;
+  font-family: inherit;
+  font-size: 15px;
+  color: #f87171;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close:hover {
+  background: rgba(248, 113, 113, 0.24);
+  border-color: rgba(248, 113, 113, 0.5);
+}
+
+/* ─── Zona scrollable ─── */
+.scroller {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 28px 20px 80px;
+  /* La barra de scroll cae sobre el fondo, que es oscuro en ambos temas. */
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.scroller::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.status {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 14px;
+  color: rgba(240, 238, 255, 0.55);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   LA HOJA — aquí empieza el contenido inyectado
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.sheet {
+  --s: 1;                       /* escala de texto (A−/A/A+) */
+
+  --tx:        #23233f;         /* texto principal */
+  --tx-soft:   rgba(35, 35, 63, 0.66);
+  --line:      rgba(20, 22, 40, 0.1);
+  --line-soft: rgba(20, 22, 40, 0.06);
+  --sheet-bg:  #ffffff;
+  --head-bg:   rgba(20, 22, 40, 0.04);
+  --code-bg:   rgba(20, 22, 40, 0.06);
+
+  /* Paleta Notion — texto */
+  --n-red:     #c0392b;
+  --n-blue:    #1f6fb2;
+  --n-purple:  #7a3fb8;
+  --n-pink:    #c2317f;
+  --n-teal:    #12796d;
+  --n-orange:  #b35c00;
+  --n-yellow:  #8a6d00;
+  --n-brown:   #7a5230;
+  --n-gray:    rgba(35, 35, 63, 0.6);
+
+  /* Paleta Notion — fondos de resaltado */
+  --n-red-bg:    rgba(224, 62, 45, 0.16);
+  --n-blue-bg:   rgba(59, 158, 221, 0.18);
+  --n-purple-bg: rgba(139, 92, 246, 0.17);
+  --n-pink-bg:   rgba(232, 121, 166, 0.2);
+  --n-teal-bg:   rgba(20, 184, 166, 0.18);
+  --n-orange-bg: rgba(245, 166, 35, 0.22);
+  --n-yellow-bg: rgba(250, 204, 21, 0.28);
+  --n-brown-bg:  rgba(122, 82, 48, 0.16);
+  --n-gray-bg:   rgba(20, 22, 40, 0.07);
+
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 40px 44px 56px;
+  border-radius: 16px;
+  background: var(--sheet-bg);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 50px rgba(10, 12, 30, 0.13);
+
+  color: var(--tx);
+  font-family: inherit;
+  font-size: calc(15.5px * var(--s));
+  line-height: 1.68;
+  overflow-wrap: break-word;
+}
+
+:global(body.dark-mode) .sheet {
+  --tx:        #e9e7ff;
+  --tx-soft:   rgba(233, 231, 255, 0.62);
+  --line:      rgba(255, 255, 255, 0.1);
+  --line-soft: rgba(255, 255, 255, 0.06);
+  --sheet-bg:  #0f0d2e;
+  --head-bg:   rgba(255, 255, 255, 0.05);
+  --code-bg:   rgba(255, 255, 255, 0.08);
+
+  --n-red:     #ff8a80;
+  --n-blue:    #7cc4f0;
+  --n-purple:  #c4a6f8;
+  --n-pink:    #f79ac4;
+  --n-teal:    #5fd8c4;
+  --n-orange:  #f7b955;
+  --n-yellow:  #f2d264;
+  --n-brown:   #c9a184;
+  --n-gray:    rgba(233, 231, 255, 0.58);
+
+  --n-red-bg:    rgba(224, 62, 45, 0.26);
+  --n-blue-bg:   rgba(59, 158, 221, 0.24);
+  --n-purple-bg: rgba(139, 92, 246, 0.26);
+  --n-pink-bg:   rgba(232, 121, 166, 0.26);
+  --n-teal-bg:   rgba(20, 184, 166, 0.24);
+  --n-orange-bg: rgba(245, 166, 35, 0.24);
+  --n-yellow-bg: rgba(250, 204, 21, 0.22);
+  --n-brown-bg:  rgba(122, 82, 48, 0.3);
+  --n-gray-bg:   rgba(255, 255, 255, 0.08);
+
+  border-color: var(--line);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Títulos ─── */
+.sheet :global(h1),
+.sheet :global(h2),
+.sheet :global(h3),
+.sheet :global(h4) {
+  color: var(--tx);
+  line-height: 1.25;
+  font-weight: 700;
+  scroll-margin-top: 20px;
+}
+
+.sheet :global(h1) {
+  font-size: calc(1.62em * 1);
+  margin: 2em 0 0.7em;
+  padding-bottom: 0.34em;
+  border-bottom: 2px solid var(--line);
+}
+
+.sheet :global(h2) {
+  font-size: 1.3em;
+  margin: 1.75em 0 0.6em;
+}
+
+.sheet :global(h3) {
+  font-size: 1.12em;
+  margin: 1.5em 0 0.5em;
+}
+
+.sheet :global(h4) {
+  font-size: 1em;
+  margin: 1.3em 0 0.45em;
+  color: var(--tx-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.85em;
+}
+
+.sheet > :global(*:first-child) {
+  margin-top: 0;
+}
+
+/* Un h1/h2 con fondo de color en Notion es un separador de bloque grande:
+   aquí se convierte en una banda con su color, no en un texto resaltado. */
+.sheet :global(h1[class*='block-color-']),
+.sheet :global(h2[class*='block-color-']),
+.sheet :global(h3[class*='block-color-']),
+.sheet :global(h4[class*='block-color-']) {
+  padding: 0.42em 0.7em;
+  border-radius: 10px;
+  border-bottom: none;
+  border-left: 4px solid currentColor;
+}
+
+/* ─── Párrafos y texto ─── */
+.sheet :global(p) {
+  margin: 0.62em 0;
+}
+
+/* Notion emite <p><div>…</div></p>, que el parser del navegador rompe en
+   párrafos vacíos. Sin esto quedan huecos verticales por todo el documento. */
+.sheet :global(p:empty) {
+  display: none;
+}
+
+.sheet :global(strong) {
+  font-weight: 700;
+  color: var(--tx);
+}
+
+.sheet :global(hr) {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 2em 0;
+}
+
+.sheet :global(a) {
+  color: var(--n-blue);
+  text-decoration: none;
+}
+
+.sheet :global(a:hover) {
+  text-decoration: underline;
+}
+
+.sheet :global(code) {
+  background: var(--code-bg);
+  border-radius: 5px;
+  padding: 0.12em 0.38em;
+  font-size: 0.9em;
+}
+
+/* ─── Listas ─── */
+.sheet :global(ul),
+.sheet :global(ol) {
+  margin: 0.3em 0;
+  padding-left: 1.5em;
+}
+
+.sheet :global(li) {
+  margin: 0.28em 0;
+  padding-left: 0.15em;
+}
+
+.sheet :global(li::marker) {
+  color: var(--tx-soft);
+}
+
+/* Notion abre un <ul> por viñeta: sin esto cada ítem cargaría su propio
+   margen y la lista se vería como párrafos sueltos, no como una lista. */
+.sheet :global(ul.bulleted-list),
+.sheet :global(ol.numbered-list) {
+  margin: 0;
+}
+
+.sheet :global(ul.bulleted-list + ul.bulleted-list),
+.sheet :global(ol.numbered-list + ol.numbered-list) {
+  margin-top: 0;
+}
+
+/* ─── Resaltados de texto ─── */
+.sheet :global(mark) {
+  background: transparent;
+  color: inherit;
+  border-radius: 4px;
+  padding: 0.05em 0;
+}
+
+.sheet :global(.highlight-red)    { color: var(--n-red);    }
+.sheet :global(.highlight-blue)   { color: var(--n-blue);   }
+.sheet :global(.highlight-purple) { color: var(--n-purple); }
+.sheet :global(.highlight-pink)   { color: var(--n-pink);   }
+.sheet :global(.highlight-teal)   { color: var(--n-teal);   }
+.sheet :global(.highlight-orange) { color: var(--n-orange); }
+.sheet :global(.highlight-yellow) { color: var(--n-yellow); }
+.sheet :global(.highlight-brown)  { color: var(--n-brown);  }
+.sheet :global(.highlight-gray)   { color: var(--n-gray);   }
+.sheet :global(.highlight-default) { color: inherit; }
+
+/* Fondos: el padding lateral hace que el resaltado respire, como un rotulador */
+.sheet :global([class*='highlight-'][class*='_background']),
+.sheet :global([class*='block-color-'][class*='_background']) {
+  padding: 0.08em 0.3em;
+  border-radius: 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.sheet :global(.highlight-red_background),
+.sheet :global(.block-color-red_background)    { background: var(--n-red-bg);    }
+.sheet :global(.highlight-blue_background),
+.sheet :global(.block-color-blue_background)   { background: var(--n-blue-bg);   }
+.sheet :global(.highlight-purple_background),
+.sheet :global(.block-color-purple_background) { background: var(--n-purple-bg); }
+.sheet :global(.highlight-pink_background),
+.sheet :global(.block-color-pink_background)   { background: var(--n-pink-bg);   }
+.sheet :global(.highlight-teal_background),
+.sheet :global(.block-color-teal_background)   { background: var(--n-teal-bg);   }
+.sheet :global(.highlight-orange_background),
+.sheet :global(.block-color-orange_background) { background: var(--n-orange-bg); }
+.sheet :global(.highlight-yellow_background),
+.sheet :global(.block-color-yellow_background) { background: var(--n-yellow-bg); }
+.sheet :global(.highlight-brown_background),
+.sheet :global(.block-color-brown_background)  { background: var(--n-brown-bg);  }
+.sheet :global(.highlight-gray_background),
+.sheet :global(.block-color-gray_background)   { background: var(--n-gray-bg);   }
+.sheet :global(.highlight-default_background),
+.sheet :global(.block-color-default_background) { background: var(--n-gray-bg); }
+
+/* ─── Imágenes ─── */
+.sheet :global(figure.image) {
+  margin: 1.2em 0;
+}
+
+.sheet :global(figure.image a) {
+  display: inline-block;
+  max-width: 100%;
+  line-height: 0;
+}
+
+/* El ancho que le diste en Notion llega en --w (lo convierte el transformador).
+   Multiplicarlo por --s hace que el control de tamaño escale figura y texto a
+   la vez: con `width` fijo en px el zoom movía sólo la letra, y en un documento
+   de 81 figuras eso se lee como que el zoom no funciona.
+   max-width lo sigue encogiendo en pantallas chicas. */
+.sheet :global(figure.image img) {
+  width: calc(var(--w, 100%) * var(--s));
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--head-bg);
+  cursor: zoom-in;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+
+.sheet :global(figure.image a:hover img) {
+  box-shadow: 0 10px 28px rgba(10, 12, 30, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   LIGHTBOX — la figura ampliada, encima del propio visor
+
+   Se monta sobre el mismo <img> ya descargado: la URL es idéntica y el bucket
+   la sirve como immutable, así que el navegador la saca de caché y no hay una
+   segunda descarga.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;                 /* por encima de .overlay (2000) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: rgba(10, 10, 24, 0.9);
+  backdrop-filter: blur(6px);
+  cursor: zoom-out;
+  animation: lightboxIn 0.16s ease-out;
+}
+
+@keyframes lightboxIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.lightboxImg {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  animation: lightboxZoom 0.18s ease-out;
+}
+
+@keyframes lightboxZoom {
+  from { transform: scale(0.96); }
+  to   { transform: scale(1); }
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.lightboxClose:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.lightboxHint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.62);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightboxImg {
+    animation: none;
+  }
+}
+
+/* ─── Tablas ─── */
+.sheet :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.1em 0;
+  font-size: 0.94em;
+  /* Las tablas anchas scrollean dentro de su caja; el documento nunca
+     desborda en horizontal. */
+  display: block;
+  overflow-x: auto;
+  white-space: normal;
+}
+
+.sheet :global(th),
+.sheet :global(td) {
+  border: 1px solid var(--line);
+  padding: 0.55em 0.7em;
+  text-align: left;
+  vertical-align: top;
+  min-width: 92px;
+}
+
+.sheet :global(th),
+.sheet :global(.simple-table-header) {
+  background: var(--head-bg);
+  font-weight: 700;
+}
+
+.sheet :global(tbody tr:nth-child(even) td) {
+  background: var(--line-soft);
+}
+
+/* ─── Columnas ─── */
+.sheet :global(.column-list) {
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+  margin: 1em 0;
+}
+
+.sheet :global(.column) {
+  min-width: 0;
+  flex: 1 1 0;
+}
+
+/* ─── Bloque indentado ─── */
+.sheet :global(.indented) {
+  margin: 0.5em 0 0.5em 0.2em;
+  padding-left: 1.1em;
+  border-left: 2px solid var(--line);
+}
+
+/* ─── Callout ─── */
+.sheet :global(.callout) {
+  display: flex;
+  gap: 0.7em;
+  align-items: flex-start;
+  margin: 1.1em 0;
+  padding: 0.9em 1.1em;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--head-bg);
+}
+
+.sheet :global(.callout .icon) {
+  flex-shrink: 0;
+  font-size: 1.15em;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 860px) {
+  /* Las columnas de Notion llevan width en línea (43.75%, 50%…); en móvil
+     tienen que apilarse, y el inline style obliga al !important. */
+  .sheet :global(.column-list) {
+    display: block;
+  }
+
+  .sheet :global(.column) {
+    width: auto !important;
+    margin-bottom: 1em;
+  }
+}
+
+@media (max-width: 640px) {
+  .scroller {
+    padding: 14px 10px 60px;
+  }
+
+  .sheet {
+    padding: 24px 20px 36px;
+    border-radius: 12px;
+    font-size: calc(15px * var(--s));
+  }
+
+  .toolbar {
+    padding: 10px 12px;
+    gap: 7px;
+  }
+
+  /* En pantalla estrecha manda el control, no el rótulo: el alumno ya sabe
+     qué resumen abrió. */
+  .title {
+    display: none;
+  }
+
+  .themeBtn,
+  .close {
+    width: 34px;
+    height: 34px;
+  }
+
+  .sizeBtn {
+    min-width: 30px;
+    height: 30px;
+    padding: 0 6px;
+  }
+
+  .sizeReset {
+    min-width: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet :global(figure.image img) {
+    transition: none;
+  }
+  .sheet :global(figure.image a:hover img) {
+    transform: none;
+  }
+}

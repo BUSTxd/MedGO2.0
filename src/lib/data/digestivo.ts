@@ -11,9 +11,18 @@ export type TipoActividad =
 
 export type Unidad = 'DESARROLLO' | 'ESTRUCTURA' | 'FISIOLOGIA' | 'ANATOMIA' | 'EVALUACION';
 
+/**
+ * Formato del resumen. `pdf` sale del bucket `resumenes` y lo pinta react-pdf;
+ * `html` es un fragmento servido por `/api/resumen-html` con las imágenes en
+ * AVIF desde el bucket público — se usa cuando el material es muy visual y el
+ * PDF saldría pesado y con el texto rasterizado.
+ */
+export type ResumenFormato = 'pdf' | 'html';
+
 export interface ResumenOpcion {
   id: string;
   label: string;
+  formato?: ResumenFormato;
 }
 
 export interface Actividad {
@@ -26,7 +35,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   /**
    * Módulo interactivo de la práctica. En las actividades de práctica la tarjeta
    * «Video» se sustituye por «Simulación»; sin `href` queda como próximamente.
@@ -114,6 +123,13 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Cavidad oral', 'Faringe', 'Esófago cervical'],
         docentes: ['Dr. Bruno Fernandini'],
+        // Resumen en HTML: 81 figuras anatómicas. Como PDF pesaría decenas de
+        // MB con el texto rasterizado; así son 108 KB + AVIF desde el CDN.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-2', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-3',

@@ -296,6 +296,49 @@ shape, registrarlo en `SOLUCIONARIOS` de `index.ts` y asegurarse de que su `pdfI
 
 ---
 
+## Resúmenes en HTML (material muy visual) — skill `/addresumenhtml`
+
+Segundo envase para la tarjeta «Resumen», junto al PDF. Para apuntes propios muy visuales (una
+página de Notion con decenas de figuras) el PDF es el peor formato: pesa decenas de MB, el texto
+va incrustado y no reflowea en móvil. El mismo contenido como **fragmento HTML** son ~100 KB,
+conserva el texto real (seleccionable, buscable, nítido a cualquier zoom) y sirve las figuras en
+AVIF desde el CDN público (−92 % frente a PNG).
+
+**Piezas**: `scripts/upload-resumen-html.mjs` (convierte a AVIF, sube y transforma el export de
+Notion) · `src/app/api/resumen-html/[claseId]/route.ts` (sirve el fragmento con **ETag**, con su
+propio `ALLOWED`/`FILE_ALIAS`, separado del de PDF) · `HtmlFullscreenModal.tsx` (visor) ·
+`resumenHtml.module.css` · `DarkModeContext.tsx`.
+
+**Almacenamiento**: el fragmento va al bucket privado `resumenes` (junto a los PDFs, que ahora
+acepta `text/html`); las imágenes al bucket **público** `resumenes-img/<curso>/<slug>/`, con
+`immutable` — ahí está el peso y no tiene sentido firmar 81 URLs.
+
+**Activación**: `resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id, label, formato: 'html' }] }`
+en el sílabo, y la página del curso pasa `resumenFormato` + `resumenTitulo` a
+`StudyMaterialSection`. `formato` vive **por opción** además de por tarjeta, para que un picker
+pueda mezclar un HTML nuevo con PDFs de clases anteriores.
+
+**Reglas que no son obvias** (todas costaron una iteración; el detalle está en la skill):
+- Un export de **pdf2htmlEX no sirve**: es el PDF rasterizado en una sola imagen gigante con
+  texto invisible encima — peor que el PDF. Hace falta el original de Notion. El script aborta solo.
+- El ancho de cada figura pasa de `width:NNNpx` a `--w`, y el CSS hace
+  `width: calc(var(--w) * var(--s))`: si no, el control de tamaño mueve sólo la letra y en un
+  documento de figuras **parece que el zoom está roto**.
+- El HTML se inyecta con `dangerouslySetInnerHTML`, así que las clases de Notion **no** pasan por
+  el hash de CSS Modules: todo selector va `.sheet :global(.x)`, anidado para no escaparse.
+- Notion emite `<p><div>…</div></p>` (inválido): el navegador lo parte y deja párrafos vacíos.
+  Lo tapa `p:empty { display: none }`.
+- **La cáscara del visor es oscura en ambos temas** (igual que el de PDF): en claro la hoja es
+  blanca y sobre fondo claro se perdía. Lo único que reacciona al tema es `.sheet` — no añadir
+  variantes `body.dark-mode` a la barra.
+- El botón de tema del visor usa `useDarkMode()` y comparte el estado de `DashboardWrapper`;
+  duplicar ahí el `classList.toggle` desincronizaría el ícono de la sidebar.
+- Caché por **ETag, nunca `max-age` largo**: el resumen se reedita sin cambiar de path.
+- `cacheControl` sólo se aplica vía `supabase-js`; por REST crudo el header se ignora y el objeto
+  queda en `no-cache`.
+
+---
+
 ## Actividades sin material propio (invitación a colaborar)
 
 Componente **`src/components/SinMaterialSection.tsx`** — sustituye las 3 tarjetas de
