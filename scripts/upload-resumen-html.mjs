@@ -84,11 +84,17 @@ if (/pdf2htmlEX/i.test(html)) {
 
 const imgTags = [...html.matchAll(/<img[^>]*\ssrc="([^"]+)"/g)];
 if (imgTags.length === 0) {
-  console.error('✗ El HTML no referencia ninguna imagen externa. ¿Seguro que es un export de Notion?');
-  process.exit(1);
+  // Sin imágenes es válido si es un apunte sólo de texto (Notion no las
+  // exige); lo que se descarta es que no sea un export de Notion en
+  // absoluto. La firma es la clase `page-title` del <h1> de portada.
+  if (!/class="page-title"/.test(html)) {
+    console.error('✗ El HTML no referencia ninguna imagen externa y no parece un export de Notion (sin "page-title"). Abortado.');
+    process.exit(1);
+  }
+  console.log('figuras: 0 (documento sólo texto)\n');
 }
 const refs = [...new Set(imgTags.map(m => decodeURIComponent(m[1])))];
-console.log(`figuras: ${imgTags.length} (${refs.length} únicas)\n`);
+if (imgTags.length > 0) console.log(`figuras: ${imgTags.length} (${refs.length} únicas)\n`);
 
 // ─── 3. Supabase ─────────────────────────────────────────────────────────
 const URL = config.NEXT_PUBLIC_SUPABASE_URL;
@@ -152,7 +158,9 @@ for (const ref of refs) {
 }
 
 const nota = yaAvif ? `  (${yaAvif} ya eran .avif, sin recomprimir)` : '';
-console.log(`\r  imágenes: ${subidas}/${refs.length}   ${mb(origBytes)} → ${mb(avifBytes)}  (-${(100 - avifBytes / origBytes * 100).toFixed(1)}%)${nota}`);
+if (refs.length) {
+  console.log(`\r  imágenes: ${subidas}/${refs.length}   ${mb(origBytes)} → ${mb(avifBytes)}  (-${(100 - avifBytes / origBytes * 100).toFixed(1)}%)${nota}`);
+}
 if (fallos.length) {
   console.error(`\n✗ ${fallos.length} fallos:`);
   fallos.slice(0, 10).forEach(f => console.error('   ' + f));

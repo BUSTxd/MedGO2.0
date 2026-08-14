@@ -342,6 +342,11 @@ export const semanas: Semana[] = [
           'Agua y electrolitos: sodio, cloro, potasio, calcio y hierro',
         ],
         docentes: ['Dr. Eduardo Monge'],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-9', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'tbl-1',
