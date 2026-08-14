@@ -152,6 +152,7 @@ export const semanas: Semana[] = [
         hora: '21:00–22:00',
         subtemas: ['Repaso guiado de las láminas de la semana'],
         docentes: ['Dra. Mery Revilla', 'Dra. Shirley Alva'],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'dig-histo-1', label: 'Resumen' }] },
       },
       {
         id: 'histo-1',
@@ -163,6 +164,7 @@ export const semanas: Semana[] = [
         subtemas: ['Lengua y dientes', 'Glándulas salivales', 'Faringe', 'Esófago'],
         docentes: ['Dr. Sabino Portugal', 'Dra. Mery Revilla', 'Dra. Shirley Alva'],
         nota: 'Evaluación: 21% pasos cortos + 9% presentaciones grupales del total de histología (30% del desempeño).',
+        resumen: { tipo: 'pdf', opciones: [{ id: 'dig-histo-1', label: 'Resumen' }] },
       },
       {
         id: 'clase-4',
@@ -265,6 +267,7 @@ export const semanas: Semana[] = [
         hora: '21:00–22:00',
         subtemas: ['Repaso guiado de las láminas de la semana'],
         docentes: ['Dra. Mery Revilla', 'Dra. Shirley Alva'],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'dig-histo-2', label: 'Resumen' }] },
       },
       {
         id: 'histo-2',
@@ -279,6 +282,7 @@ export const semanas: Semana[] = [
           'Colon y recto',
         ],
         docentes: ['Dr. Sabino Portugal', 'Dra. Mery Revilla', 'Dra. Shirley Alva'],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'dig-histo-2', label: 'Resumen' }] },
       },
       {
         id: 'clase-8',
@@ -415,6 +419,7 @@ export const semanas: Semana[] = [
         hora: '21:00–22:00',
         subtemas: ['Repaso guiado de las láminas de la semana'],
         docentes: ['Dra. Mery Revilla', 'Dra. Shirley Alva'],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'dig-histo-3', label: 'Resumen' }] },
       },
       {
         id: 'histo-3',
@@ -425,6 +430,7 @@ export const semanas: Semana[] = [
         hora: '08:00–11:00',
         subtemas: ['Lobulillo hepático y espacio porta', 'Páncreas exocrino', 'Vesícula biliar'],
         docentes: ['Dr. Sabino Portugal', 'Dra. Mery Revilla', 'Dra. Shirley Alva'],
+        resumen: { tipo: 'pdf', opciones: [{ id: 'dig-histo-3', label: 'Resumen' }] },
       },
       {
         id: 'clase-13',
@@ -554,6 +560,16 @@ export const semanas: Semana[] = [
         hora: '21:00–22:00',
         subtemas: ['Repaso guiado de todas las láminas del curso'],
         docentes: ['Dra. Mery Revilla', 'Dra. Shirley Alva'],
+        // Repaso: no tiene PDF propio, reutiliza los 3 resúmenes de histo-1/2/3
+        // vía picker (2+ opciones abre selector en vez de cargar directo).
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'dig-histo-1', label: 'Práctica 1 — Boca a esófago' },
+            { id: 'dig-histo-2', label: 'Práctica 2 — Estómago e intestinos' },
+            { id: 'dig-histo-3', label: 'Práctica 3 — Hígado, páncreas y vesícula' },
+          ],
+        },
       },
       {
         id: 'histo-4',
@@ -564,6 +580,14 @@ export const semanas: Semana[] = [
         hora: '08:00–12:00',
         subtemas: ['Repaso integrador de todas las láminas del curso'],
         docentes: ['Dr. Sabino Portugal', 'Dra. Mery Revilla', 'Dra. Shirley Alva'],
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'dig-histo-1', label: 'Práctica 1 — Boca a esófago' },
+            { id: 'dig-histo-2', label: 'Práctica 2 — Estómago e intestinos' },
+            { id: 'dig-histo-3', label: 'Práctica 3 — Hígado, páncreas y vesícula' },
+          ],
+        },
       },
       {
         id: 'clase-17',

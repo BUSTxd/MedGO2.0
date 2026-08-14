@@ -88,6 +88,10 @@ const ALLOWED = new Set([
   'bcm-pl-7', 'bcm-pl-8', 'bcm-pl-9',
   // Aparato Locomotor (prefijo `loc-` evita colisión con tbl-1/tbl-2 de otros cursos)
   'loc-tbl-1', 'loc-tbl-2',
+  // Digestivo — Histología (prefijo `dig-` evita colisión con laminas-N/histo-N
+  // de Endocrino y Locomotor). Sólo 3 archivos: dig-histo-4 reutiliza estos
+  // mismos 3 vía picker, no tiene PDF propio.
+  'dig-histo-1', 'dig-histo-2', 'dig-histo-3',
 ]);
 
 // IDs that require an active paid plan (Interno/Residente). Free-plan users
@@ -286,6 +290,10 @@ const FILE_ALIAS: Record<string, string> = {
   // Aparato Locomotor — subcarpeta aparato-locomotor/
   'loc-tbl-1': 'aparato-locomotor/loc-tbl-1',
   'loc-tbl-2': 'aparato-locomotor/loc-tbl-2',
+  // Digestivo — subcarpeta digestivo/
+  'dig-histo-1': 'digestivo/dig-histo-1',
+  'dig-histo-2': 'digestivo/dig-histo-2',
+  'dig-histo-3': 'digestivo/dig-histo-3',
 };
 
 // Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga
