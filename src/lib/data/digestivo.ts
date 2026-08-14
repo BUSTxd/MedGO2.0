@@ -424,6 +424,11 @@ export const semanas: Semana[] = [
         ],
         docentes: ['Dra. Claudia Alvizuri'],
         nota: 'Clase invertida: se toma un paso corto al inicio. Las 2 clases invertidas valen 10% de conocimientos.',
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-11', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-12',
