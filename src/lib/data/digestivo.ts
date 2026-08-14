@@ -424,6 +424,12 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Hígado: segmentación', 'Vesícula biliar', 'Vías biliares'],
         docentes: ['Dr. Marcos De La Cruz'],
+        // Resumen en HTML: 29 figuras anatómicas.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-12', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'anat-4',

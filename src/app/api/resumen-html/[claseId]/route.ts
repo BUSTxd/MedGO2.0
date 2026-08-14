@@ -24,6 +24,7 @@ const ALLOWED = new Set([
   'dig-clase-2',
   'dig-clase-3',
   'dig-clase-7',
+  'dig-clase-12',
   'dig-clase-18',
 ]);
 
@@ -32,6 +33,7 @@ const FILE_ALIAS: Record<string, string> = {
   'dig-clase-2': 'digestivo/dig-clase-2',
   'dig-clase-3': 'digestivo/dig-clase-3',
   'dig-clase-7': 'digestivo/dig-clase-7',
+  'dig-clase-12': 'digestivo/dig-clase-12',
   'dig-clase-18': 'digestivo/dig-clase-18',
 };
 
