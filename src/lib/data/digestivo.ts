@@ -388,6 +388,11 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Intestino delgado', 'Intestino grueso', 'Irrigación mesentérica'],
         docentes: ['Dr. Bruno Fernandini'],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-10', label: 'Resumen', formato: 'html' }],
+        },
       },
     ],
   },
