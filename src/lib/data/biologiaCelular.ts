@@ -157,6 +157,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'La inasistencia no justificada a una PL se califica con 0 y no es recuperable.',
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-pl-2',
@@ -172,6 +173,7 @@ export const semanas: Semana[] = [
           'Medición de estructuras celulares',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
     ],
   },
@@ -277,6 +279,7 @@ export const semanas: Semana[] = [
           'Efecto de la concentración de sustrato',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-pl-4',
@@ -292,6 +295,7 @@ export const semanas: Semana[] = [
           'Tinciones simples',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-ta-6',
@@ -488,6 +492,7 @@ export const semanas: Semana[] = [
           'Plasmólisis y turgencia',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-pl-6',
@@ -518,6 +523,7 @@ export const semanas: Semana[] = [
           'Actividad metabólica celular',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
     ],
   },
@@ -697,6 +703,7 @@ export const semanas: Semana[] = [
           'Índice mitótico',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-pl-9',
@@ -712,6 +719,7 @@ export const semanas: Semana[] = [
           'Comparación mitosis / meiosis al microscopio',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-pl-10',

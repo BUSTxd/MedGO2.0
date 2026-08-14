@@ -83,6 +83,9 @@ const ALLOWED = new Set([
   // Biología Celular — Teorías Te1-Te7
   'bcm-te-1', 'bcm-te-2', 'bcm-te-3', 'bcm-te-4',
   'bcm-te-5', 'bcm-te-6', 'bcm-te-7',
+  // Biología Celular — Laboratorios PL1-PL5, PL7-PL9 (falta PL6 y PL10)
+  'bcm-pl-1', 'bcm-pl-2', 'bcm-pl-3', 'bcm-pl-4', 'bcm-pl-5',
+  'bcm-pl-7', 'bcm-pl-8', 'bcm-pl-9',
   // Aparato Locomotor (prefijo `loc-` evita colisión con tbl-1/tbl-2 de otros cursos)
   'loc-tbl-1', 'loc-tbl-2',
 ]);
@@ -272,6 +275,14 @@ const FILE_ALIAS: Record<string, string> = {
   'bcm-te-5': 'biologia-celular/bcm-te-5',
   'bcm-te-6': 'biologia-celular/bcm-te-6',
   'bcm-te-7': 'biologia-celular/bcm-te-7',
+  'bcm-pl-1': 'biologia-celular/bcm-pl-1',
+  'bcm-pl-2': 'biologia-celular/bcm-pl-2',
+  'bcm-pl-3': 'biologia-celular/bcm-pl-3',
+  'bcm-pl-4': 'biologia-celular/bcm-pl-4',
+  'bcm-pl-5': 'biologia-celular/bcm-pl-5',
+  'bcm-pl-7': 'biologia-celular/bcm-pl-7',
+  'bcm-pl-8': 'biologia-celular/bcm-pl-8',
+  'bcm-pl-9': 'biologia-celular/bcm-pl-9',
   // Aparato Locomotor — subcarpeta aparato-locomotor/
   'loc-tbl-1': 'aparato-locomotor/loc-tbl-1',
   'loc-tbl-2': 'aparato-locomotor/loc-tbl-2',
