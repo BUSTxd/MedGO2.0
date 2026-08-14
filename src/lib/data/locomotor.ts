@@ -126,6 +126,12 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Compartimentos del brazo', 'Compartimentos del antebrazo', 'Plexo braquial'],
         docentes: ['Dr. Marcos De La Cruz'],
+        // Resumen en HTML: apuntes muy visuales (45 figuras), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-clase-3', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'embrio-1',
