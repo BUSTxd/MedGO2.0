@@ -38,6 +38,7 @@ const ALLOWED = new Set([
   'dig-clase-18',
   'dig-tbl-1',
   'dig-tbl-2',
+  'loc-clase-2',
   'loc-clase-3',
   'loc-clase-5',
 ]);
@@ -61,6 +62,7 @@ const FILE_ALIAS: Record<string, string> = {
   'dig-clase-18': 'digestivo/dig-clase-18',
   'dig-tbl-1': 'digestivo/dig-tbl-1',
   'dig-tbl-2': 'digestivo/dig-tbl-2',
+  'loc-clase-2': 'aparato-locomotor/loc-clase-2',
   'loc-clase-3': 'aparato-locomotor/loc-clase-3',
   'loc-clase-5': 'aparato-locomotor/loc-clase-5',
 };
