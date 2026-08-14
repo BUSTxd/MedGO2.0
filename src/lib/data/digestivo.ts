@@ -341,6 +341,11 @@ export const semanas: Semana[] = [
           'Secreción biliar y función de la vesícula',
         ],
         docentes: ['Dr. Eduardo Monge'],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-8', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-9',
@@ -378,6 +383,11 @@ export const semanas: Semana[] = [
         ],
         docentes: ['Dra. Andrea Carlin', 'Dr. Luis Flores', 'Dr. Diego Huanay'],
         nota: 'Evaluación: 35% individual + 25% examen grupal + 40% trabajo grupal (rúbrica). Promedio de los 2 TBL = 15% de conocimientos.',
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-tbl-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'anat-3',
