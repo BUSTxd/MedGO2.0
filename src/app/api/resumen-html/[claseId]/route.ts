@@ -23,12 +23,14 @@ import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 const ALLOWED = new Set([
   'dig-clase-2',
   'dig-clase-3',
+  'dig-clase-18',
 ]);
 
 // id → ruta dentro del bucket (sin extensión).
 const FILE_ALIAS: Record<string, string> = {
   'dig-clase-2': 'digestivo/dig-clase-2',
   'dig-clase-3': 'digestivo/dig-clase-3',
+  'dig-clase-18': 'digestivo/dig-clase-18',
 };
 
 export async function GET(

@@ -649,6 +649,12 @@ export const semanas: Semana[] = [
         ],
         docentes: ['Dr. Alvaro Bellido Caparó'],
         nota: 'Clase invertida: se toma un paso corto al inicio. Las 2 clases invertidas valen 10% de conocimientos.',
+        // Resumen en HTML: 9 figuras (GALT, hígado, páncreas).
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-18', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'sgp-4',
