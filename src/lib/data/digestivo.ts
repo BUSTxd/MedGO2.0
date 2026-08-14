@@ -518,6 +518,11 @@ export const semanas: Semana[] = [
           'Páncreas anular, divertículo de Meckel, hernia diafragmática y ano imperforado',
         ],
         docentes: ['Dra. Alicia Díaz'],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-14', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'anat-5',
