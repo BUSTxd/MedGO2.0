@@ -104,7 +104,7 @@ if (!URL || !KEY) {
   process.exit(1);
 }
 const sb = createClient(URL, KEY, { auth: { persistSession: false } });
-const BASE_PUB = `${URL}/storage/v1/object/public/${BUCKET_IMG}/${PREFIX}`;
+const BASE_PUB_ROOT = `${URL}/storage/v1/object/public/${BUCKET_IMG}`;
 
 // ─── 4. convertir y subir las imágenes ───────────────────────────────────
 // El HTML de Notion referencia siempre .png/.jpg/.webp, pero en el disco
@@ -113,19 +113,51 @@ const BASE_PUB = `${URL}/storage/v1/object/public/${BUCKET_IMG}/${PREFIX}`;
 // .avif. Se prefiere el .avif si existe: es la compresión que el usuario ya
 // eligió, y volver a pasarla por sharp sería una segunda pérdida de calidad
 // sobre un formato que ya es lossy (igual que resavear un JPEG).
-let origBytes = 0, avifBytes = 0, subidas = 0, yaAvif = 0;
-const fallos = [];
+//
+// Cuando la MISMA imagen aparece varias veces en la página de Notion, el
+// export le da a cada instancia adicional un nombre de archivo distinto
+// (mismo UUID base + sufijo " 1", " 2"…), aunque el contenido sea idéntico.
+// Si BUST convirtió y guardó una sola copia (p. ej. sólo la " 1"), el resto
+// de referencias del grupo no tienen archivo propio en disco. Se colapsan
+// por UUID base: se resuelve UN solo archivo fuente por grupo y se sube UNA
+// sola vez; todas las referencias del grupo apuntan al mismo destino. Sólo
+// aplica a nombres con forma de UUID de Notion — "image 1", "image 2"… son
+// nombres genéricos y SÍ son imágenes distintas, no se tocan.
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const canonicalBase = (base) => {
+  const m = base.match(/^(.+) (\d+)$/);
+  return (m && UUID_RE.test(m[1])) ? m[1] : base;
+};
 
+const grupos = new Map(); // canonBase → refs[]
 for (const ref of refs) {
   const base = ref.replace(/\.(png|jpe?g|webp|avif)$/i, '');
-  const dest = `${PREFIX}/${nombreEnStorage(base)}.avif`;
+  const canon = canonicalBase(base);
+  if (!grupos.has(canon)) grupos.set(canon, []);
+  grupos.get(canon).push(ref);
+}
 
-  const srcOriginal = join(dir, ref);
-  const srcAvif = join(dir, `${base}.avif`);
-  const yaEsAvif = existsSync(srcAvif);
-  const src = yaEsAvif ? srcAvif : srcOriginal;
+let origBytes = 0, avifBytes = 0, subidas = 0, yaAvif = 0, colapsadas = 0;
+const fallos = [];
+const destDe = new Map(); // ref (decodificado) → dest en el bucket
 
-  if (!existsSync(src)) { fallos.push(`falta el archivo ${ref}`); continue; }
+for (const [canon, miembros] of grupos) {
+  const dest = `${PREFIX}/${nombreEnStorage(canon)}.avif`;
+  for (const ref of miembros) destDe.set(ref, dest);
+  if (miembros.length > 1) colapsadas += miembros.length - 1;
+
+  // Busca el primer miembro del grupo cuyo archivo exista en disco (falta
+  // el "canónico" cuando sólo se guardó una de las copias repetidas).
+  let src = null, yaEsAvif = false;
+  for (const ref of miembros) {
+    const base = ref.replace(/\.(png|jpe?g|webp|avif)$/i, '');
+    const srcAvif = join(dir, `${base}.avif`);
+    const srcOriginal = join(dir, ref);
+    if (existsSync(srcAvif)) { src = srcAvif; yaEsAvif = true; break; }
+    if (existsSync(srcOriginal)) { src = srcOriginal; yaEsAvif = false; break; }
+  }
+
+  if (!src) { fallos.push(`falta el archivo ${miembros[0]}`); continue; }
 
   origBytes += statSync(src).size;
 
@@ -154,12 +186,15 @@ for (const ref of refs) {
   });
   if (error) fallos.push(`${dest}: ${error.message}`);
   else subidas++;
-  process.stdout.write(`\r  imágenes: ${subidas}/${refs.length}`);
+  process.stdout.write(`\r  imágenes: ${subidas}/${grupos.size}`);
 }
 
 const nota = yaAvif ? `  (${yaAvif} ya eran .avif, sin recomprimir)` : '';
-if (refs.length) {
-  console.log(`\r  imágenes: ${subidas}/${refs.length}   ${mb(origBytes)} → ${mb(avifBytes)}  (-${(100 - avifBytes / origBytes * 100).toFixed(1)}%)${nota}`);
+const notaColapso = colapsadas
+  ? `  (${colapsadas} repetida${colapsadas > 1 ? 's' : ''} en la página, subida${colapsadas > 1 ? 's' : ''} una sola vez)`
+  : '';
+if (grupos.size) {
+  console.log(`\r  imágenes: ${subidas}/${grupos.size}   ${mb(origBytes)} → ${mb(avifBytes)}  (-${(100 - avifBytes / origBytes * 100).toFixed(1)}%)${nota}${notaColapso}`);
 }
 if (fallos.length) {
   console.error(`\n✗ ${fallos.length} fallos:`);
@@ -169,8 +204,16 @@ if (fallos.length) {
 }
 
 // ─── 5. transformar el HTML ──────────────────────────────────────────────
-const urlDe = (raw) =>
-  `${BASE_PUB}/${nombreEnStorage(decodeURIComponent(raw).replace(/\.(png|jpe?g|webp|avif)$/i, ''))}.avif`;
+// Usa el destino ya resuelto por grupo (destDe): así las referencias
+// repetidas de una misma imagen (sufijo " N" de Notion) apuntan todas a la
+// URL del único archivo subido, en vez de recalcular un destino por cada
+// nombre distinto.
+const urlDe = (raw) => {
+  const decoded = decodeURIComponent(raw);
+  const dest = destDe.get(decoded)
+    ?? `${PREFIX}/${nombreEnStorage(decoded.replace(/\.(png|jpe?g|webp|avif)$/i, ''))}.avif`;
+  return `${BASE_PUB_ROOT}/${dest}`;
+};
 
 // 5a. sólo el cuerpo: fuera <head>, el CSS de Notion (claro-only y con su
 //     tipografía) y el emoji/favicon de la página. El estilo lo pone MedGO.

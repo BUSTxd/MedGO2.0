@@ -701,6 +701,11 @@ export const semanas: Semana[] = [
           'Ictericia prehepática, hepática y posthepática',
         ],
         docentes: ['Dra. Andrea Carlin', 'Dr. Alvaro Bellido', 'Dr. Luis Flores'],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-tbl-2', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-18',

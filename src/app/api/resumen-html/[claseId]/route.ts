@@ -37,6 +37,7 @@ const ALLOWED = new Set([
   'dig-clase-16',
   'dig-clase-18',
   'dig-tbl-1',
+  'dig-tbl-2',
 ]);
 
 // id → ruta dentro del bucket (sin extensión).
@@ -57,6 +58,7 @@ const FILE_ALIAS: Record<string, string> = {
   'dig-clase-16': 'digestivo/dig-clase-16',
   'dig-clase-18': 'digestivo/dig-clase-18',
   'dig-tbl-1': 'digestivo/dig-tbl-1',
+  'dig-tbl-2': 'digestivo/dig-tbl-2',
 };
 
 export async function GET(
