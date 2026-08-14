@@ -11,9 +11,14 @@ export type TipoActividad =
 
 export type Unidad = 'DESARROLLO' | 'TEJIDOS' | 'FISIOLOGIA' | 'ANATOMIA' | 'EVALUACION';
 
+/** Envase del resumen: PDF en el visor de siempre, o fragmento HTML propio. */
+export type ResumenFormato = 'pdf' | 'html';
+
 export interface ResumenOpcion {
   id: string;
   label: string;
+  /** Va por opción además de por tarjeta: un picker puede mezclar HTML y PDF. */
+  formato?: ResumenFormato;
 }
 
 export interface Actividad {
@@ -26,7 +31,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   /**
    * Módulo interactivo de la práctica. En las actividades de práctica la tarjeta
    * «Video» se sustituye por «Simulación»; sin `href` queda como próximamente.
@@ -232,6 +237,12 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Huesos del carpo', 'Compartimentos y túnel carpiano', 'Músculos intrínsecos de la mano'],
         docentes: ['Dr. Bruno Fernandini'],
+        // Resumen en HTML: apuntes muy visuales (46 figuras), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-clase-5', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'sgp-1',
