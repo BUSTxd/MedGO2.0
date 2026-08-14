@@ -543,6 +543,11 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Páncreas', 'Bazo', 'Relaciones retroperitoneales'],
         docentes: ['Dr. Marcos De La Cruz'],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-15', label: 'Resumen', formato: 'html' }],
+        },
       },
     ],
   },
