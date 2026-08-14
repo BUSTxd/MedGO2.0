@@ -591,6 +591,11 @@ export const semanas: Semana[] = [
           'Mecanismo de defensa',
         ],
         docentes: ['Dr. Alvaro Bellido Caparó'],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-16', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'repaso-anat',
