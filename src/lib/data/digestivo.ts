@@ -223,6 +223,11 @@ export const semanas: Semana[] = [
           'Péptidos reguladores',
         ],
         docentes: ['Dr. Jorge Espinoza'],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-5', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'sgp-1',
