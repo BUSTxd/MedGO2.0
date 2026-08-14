@@ -259,6 +259,11 @@ export const semanas: Semana[] = [
           'Motilidad del colon y defecación',
         ],
         docentes: ['Dr. Jorge Espinoza'],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-6', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-7',
