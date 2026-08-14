@@ -264,6 +264,12 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Esófago torácico y abdominal', 'Estómago', 'Tronco celiaco', 'Peritoneo'],
         docentes: ['Dr. Marcos De La Cruz'],
+        // Resumen en HTML: 28 figuras anatómicas.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'dig-clase-7', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'anat-2',
