@@ -336,6 +336,9 @@ pueda mezclar un HTML nuevo con PDFs de clases anteriores.
 - Caché por **ETag, nunca `max-age` largo**: el resumen se reedita sin cambiar de path.
 - `cacheControl` sólo se aplica vía `supabase-js`; por REST crudo el header se ignora y el objeto
   queda en `no-cache`.
+- Si junto a un `.png` referenciado por el HTML ya existe un `.avif` con el mismo nombre base
+  (convertido a mano, p. ej. con imgto.xyz), el script lo sube **tal cual, sin pasar por sharp**:
+  recomprimir un AVIF ya lossy sería una segunda pérdida de calidad.
 
 ---
 
