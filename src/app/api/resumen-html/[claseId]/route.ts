@@ -41,6 +41,7 @@ const ALLOWED = new Set([
   'loc-clase-2',
   'loc-clase-3',
   'loc-clase-5',
+  'loc-clase-7',
   'loc-clase-9',
 ]);
 
@@ -66,6 +67,7 @@ const FILE_ALIAS: Record<string, string> = {
   'loc-clase-2': 'aparato-locomotor/loc-clase-2',
   'loc-clase-3': 'aparato-locomotor/loc-clase-3',
   'loc-clase-5': 'aparato-locomotor/loc-clase-5',
+  'loc-clase-7': 'aparato-locomotor/loc-clase-7',
   'loc-clase-9': 'aparato-locomotor/loc-clase-9',
 };
 

@@ -300,6 +300,12 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Musculatura glútea', 'Nervio ciático', 'Foramen isquiático'],
         docentes: ['Dr. Marcos De La Cruz'],
+        // Resumen en HTML: apuntes muy visuales (16 figuras), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-clase-7', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'anat-3',
