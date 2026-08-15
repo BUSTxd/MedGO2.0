@@ -367,6 +367,12 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Osteología del miembro inferior', 'Compartimentos del muslo', 'Triángulo femoral'],
         docentes: ['Dr. Marcos De La Cruz'],
+        // Resumen en HTML: apuntes muy visuales (23 figuras), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-clase-9', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'radio-1',
