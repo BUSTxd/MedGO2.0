@@ -429,6 +429,12 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Articulación de la rodilla', 'Fosa poplítea', 'Compartimentos de la pierna'],
         docentes: ['Dr. Marcos De La Cruz'],
+        // Resumen en HTML: apuntes muy visuales (34 figuras), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-clase-11', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'anat-5',
