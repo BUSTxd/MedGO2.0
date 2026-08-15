@@ -531,6 +531,12 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Articulación del tobillo', 'Huesos del tarso', 'Arcos plantares'],
         docentes: ['Dr. Bruno Fernandini'],
+        // Resumen en HTML: apuntes muy visuales (31 figuras), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-clase-13', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'radio-2',
