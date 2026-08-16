@@ -480,8 +480,21 @@ retirar el overlay: el HTML seguía en el DOM, pero sin volver a pintarse. Ahora
 `rgba(6,8,20,.7)` sin filtro, y el documento se ve atenuado por detrás. Dos refuerzos más contra
 lo mismo:
 
-- el efecto de escalado lleva `lightbox` en sus dependencias aunque no lo use: al cerrar vuelve a
-  aplicar el transform sobre la página;
+- el efecto de escalado lleva `lightbox` y `darkMode` en sus dependencias aunque no los use: los
+  dos re-renderizan el modal, y si un re-render rehiciera el HTML inyectado, la `.page` nueva
+  nacería sin `transform` y el `.page-shell` sin `height` — como la página es `position:absolute`
+  no aporta altura, así que el shell se quedaría a **altura cero y el documento desaparecería
+  entero**, no descolocado. Con la dependencia, el efecto vuelve a tomar los nodos y reengancha el
+  `ResizeObserver` (que si no seguiría observando el nodo viejo, y `fit()` no correría nunca más);
+- **pero `fit()` no debe reescribir lo que ya está puesto.** Re-aplicar el mismo `transform` y la
+  misma `height` invalida el layout de un documento de miles de nodos absolutos y le hace perder el
+  punto de lectura al contenedor: al ampliar una figura, el documento de detrás saltaba al
+  principio. La guarda compara contra un **ref** con la última escala escrita, **no** contra
+  `page.style.transform` — el navegador re-serializa lo que se le escribe
+  (`scale(0.6404077217929812)` vuelve como `scale(0.640408)`), así que esa comparación sería
+  siempre falsa y la guarda no haría nada. Del DOM sólo se mira si `transform`/`height` **siguen
+  ahí**: vacíos = estilos perdidos = re-aplicar. Cuando la escala sí cambia (A+/A−, girar el
+  móvil), el scroll se traslada **en proporción** a la nueva altura;
 - bloquear el scroll y esconder la sidebar vive en un efecto **sin dependencias**, separado del
   listener de `Esc` (que sí depende de `lightbox`). Juntos, cada clic en una figura quitaba y
   reponía `pdf-fullscreen-active` en el `<body>` — un reflow del dashboard entero por imagen.
@@ -495,15 +508,16 @@ selector, de modo que nunca se abren como si fueran una figura, y una selección
 cancela el clic. El **hover**, en cambio, es CSS puro: en la franja donde el texto tapa la figura
 no se dispara.
 
-**El documento tiene que quedar aislado del CSS del visor.** Trae su tipografía completa inline
-(cada fragmento con su `font-family`, `font-size`, `color` y su posición absoluta), así que no
-necesita —ni debe recibir— nada de las reglas pensadas para Notion. Algunos exports envuelven los
-fragmentos en elementos semánticos (`<h1 class="text-block">`, `<p class="text-block">`) y se
-llevan `margin: 2em`, `border-bottom: 2px solid`, `font-size: 1.62em` y `color: var(--tx)` — que
-en modo oscuro es casi blanco sobre la hoja blanca. El `<style>` del export los neutraliza con
-`position:static;margin:0;padding:0;border:0;font:inherit`, y como ese bloque se descarta al
-publicar, **la neutralización vive en el módulo**, antes de las reglas de las capas. En la misma
-línea, `.page` fija `color: #000`: es papel en los dos temas, igual que el fondo.
+**⛔ No «neutralizar» el CSS del visor con un reset amplio.** El razonamiento es tentador —el
+documento trae su tipografía completa inline, así que no necesita las reglas pensadas para Notion,
+y algunos exports envuelven los fragmentos en elementos semánticos (`<h1 class="text-block">`) que
+sí las heredarían—. Se probó y **rompió el documento entero**: un
+`:is(h1,…,p,div,section,article,ul,ol,li,figure,blockquote){position:static;margin:0;font:inherit;…}`
+bajo `.sheet` deja el texto sin estructura, porque el shorthand `font: inherit` pisa el tamaño y la
+familia que los `<span>` hijos venían heredando bien de sus bloques. Revertido (`73a725d`). Si un
+export concreto llega con contaminación real, se ataca **ese selector concreto** (`.text-block`),
+nunca una lista de etiquetas genéricas — y lo mismo vale para `color: #000` sobre `.page`, que
+entró en el mismo intento y salió con él.
 
 **`overflow: hidden` en la caja de una figura se come la sombra del hover** — la `<img>` la
 proyecta fuera de su caja. No hace falta para contener la imagen: de eso ya se encarga
@@ -514,7 +528,8 @@ el picker «¿Qué resumen quieres ver?» en vez de ir directa al visor, y `form
 decide cuál abre cada una (precedencia: opción → tarjeta → `pdf`). Así conviven un PDF ya
 publicado y un HTML nuevo sin migrar el primero. El id del segundo necesita sufijo (`-html`):
 `bcm-te-4` ya es el PDF, en otro bucket y otra route. Hecho en Te4, donde el PDF es un resumen
-sintetizado y el HTML es la clase anotada a mano — se rotulan «Resumen 1» y «Resumen 2».
+sintetizado y el HTML es la clase anotada a mano. Los rótulos dicen **qué es cada uno**, no en qué
+orden se subieron: «Resumen (tablas)» y «Resumen (visual)» — «Resumen 1 / 2» no ayuda a elegir.
 
 Publicado con esta vía:
 - `bcm-te-8` (Biología Celular, Te8 — Comunicación celular) — «layers».

@@ -64,6 +64,9 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
   const [lightbox, setLightbox] = useState<string | null>(null);
   const { darkMode, toggleDark } = useDarkMode();
   const sheetRef = useRef<HTMLElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  // Última escala realmente escrita en el DOM (ver `fit()`).
+  const aplicado = useRef<number | null>(null);
 
   /**
    * Un resumen puede venir en dos envases (ver CLAUDE.md): el flujo de un
@@ -200,14 +203,58 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
       if (ancho === ultimoAncho) return;
       ultimoAncho = ancho;
       const s = (ancho / W) * SIZES[sizeIndex];
-      page.style.transform = `scale(${s})`;
-      shell.style.height = `${H * s}px`;
+      const escala = `scale(${s})`;
+      const alto = `${H * s}px`;
+
+      /* Si el escalado ya está puesto, NO se vuelve a escribir.
+       *
+       * El efecto se re-ejecuta con cada cambio de `lightbox`, `sizeIndex` o
+       * `darkMode` (ver el bloque de dependencias abajo), pero casi siempre lo
+       * que encuentra es el escalado intacto: entonces reescribir `transform` y
+       * `height` con el MISMO valor sólo sirve para invalidar el layout del
+       * documento entero —miles de nodos absolutos— y arriesgarse a que el
+       * contenedor pierda el punto de lectura. Al alumno eso se le ve como que
+       * al ampliar una figura el documento de detrás salta al principio.
+       *
+       * Se compara contra `aplicado` (un ref, así sobrevive a los re-renders) y
+       * **no** contra `page.style.transform`: el navegador re-serializa lo que
+       * se le escribe —`scale(0.6404077217929812)` vuelve como
+       * `scale(0.640408)`— y esa comparación sería siempre falsa, con lo que la
+       * guarda no serviría de nada.
+       *
+       * Lo que sí se mira del DOM es si el escalado **sigue ahí**: en cuanto
+       * `transform` o `height` vengan vacíos, los estilos se perdieron (un
+       * re-render que rehiciera el HTML inyectado los dejaría así) y hay que
+       * re-aplicarlos aunque la escala no haya cambiado. Para eso están
+       * `darkMode` y `lightbox` en las dependencias. */
+      if (aplicado.current === s && page.style.transform && shell.style.height) return;
+      aplicado.current = s;
+
+      const scroller = scrollerRef.current;
+      const scrollPrevio = scroller?.scrollTop ?? 0;
+      const altoPrevio = scroller?.scrollHeight ?? 0;
+
+      page.style.transform = escala;
+      shell.style.height = alto;
       // La página entera va escalada, así que un px de dentro no es un px en
       // pantalla. Los efectos que sí deben medirse en pantalla —la elevación y
       // la sombra del hover de una figura— se dividen por esto en el CSS; sin
       // ello se verían a la mitad, que es justo lo que las hacía parecer
       // distintas de las figuras de los resúmenes de Notion.
       page.style.setProperty('--fit', String(s));
+
+      /* Cuando el escalado sí cambia (A+/A−, girar el móvil) el documento
+       * crece o encoge y el scroll en píxeles deja de significar lo mismo: se
+       * traslada en proporción para que el alumno siga viendo el mismo punto
+       * del texto, en vez de aparecer en otro sitio del documento. */
+      if (scroller && scrollPrevio > 0 && altoPrevio > 0) {
+        const altoNuevo = scroller.scrollHeight;
+        if (altoNuevo !== altoPrevio) {
+          scroller.scrollTop = (scrollPrevio * altoNuevo) / altoPrevio;
+        } else if (scroller.scrollTop !== scrollPrevio) {
+          scroller.scrollTop = scrollPrevio;
+        }
+      }
     };
 
     const ro = new ResizeObserver(fit);
@@ -286,7 +333,7 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
         </button>
       </div>
 
-      <div className={styles.scroller}>
+      <div className={styles.scroller} ref={scrollerRef}>
         {error ? (
           <p className={styles.status}>No se pudo cargar el resumen. Vuelve a intentarlo.</p>
         ) : html === null ? (
