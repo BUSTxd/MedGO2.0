@@ -116,11 +116,15 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Osteología del miembro superior', 'Articulación del hombro', 'Axila'],
         docentes: ['Dr. Marcos De La Cruz'],
-        // Resumen en HTML: apuntes muy visuales (31 figuras), ver /addresumenhtml.
+        // Resumen en HTML: dos documentos, uno por subtema (hombro/axila y
+        // osteología), ver /addresumenhtml.
         resumen: {
           tipo: 'pdf',
           formato: 'html',
-          opciones: [{ id: 'loc-clase-2', label: 'Resumen', formato: 'html' }],
+          opciones: [
+            { id: 'loc-clase-2', label: 'Región del hombro', formato: 'html' },
+            { id: 'loc-clase-2-osteo', label: 'Osteología del miembro superior', formato: 'html' },
+          ],
         },
       },
       {
