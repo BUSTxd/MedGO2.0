@@ -230,6 +230,7 @@ export const semanas: Semana[] = [
           'Conducción, convección y radiación',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
       },
       {
