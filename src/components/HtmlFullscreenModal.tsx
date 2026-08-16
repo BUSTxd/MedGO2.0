@@ -138,7 +138,22 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
     return () => { ignore = true; };
   }, [claseId]);
 
-  // Esc cierra + bloquea el scroll del fondo + esconde la sidebar.
+  /* Bloquear el scroll del fondo y esconder la sidebar dura lo que dura el
+     visor, así que va en un efecto **sin dependencias**. Estaba junto al
+     listener de Esc, que sí depende de `lightbox`, y eso hacía que abrir o
+     cerrar una figura quitara y volviera a poner la clase global del <body>:
+     un reflow del dashboard entero por cada clic en una imagen, además de
+     otra ocasión para que el navegador se dejara capas sin repintar. */
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.body.classList.add('pdf-fullscreen-active');
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.body.classList.remove('pdf-fullscreen-active');
+    };
+  }, []);
+
   // Con el lightbox abierto, Esc cierra sólo la figura: cerrar el resumen
   // entero perdería el punto de lectura que el alumno acaba de dejar.
   useEffect(() => {
@@ -148,14 +163,7 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
       else onClose();
     };
     document.addEventListener('keydown', onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    document.body.classList.add('pdf-fullscreen-active');
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prevOverflow;
-      document.body.classList.remove('pdf-fullscreen-active');
-    };
+    return () => document.removeEventListener('keydown', onKey);
   }, [onClose, lightbox]);
 
   /**
@@ -206,7 +214,12 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
     ro.observe(shell);
     fit();
     return () => ro.disconnect();
-  }, [esCapas, html, sizeIndex]);
+    // `lightbox` entra a propósito aunque no se use dentro: al cerrar la
+    // figura ampliada esto vuelve a aplicar el transform sobre la página. Es
+    // una red de seguridad contra el compositing —una capa que el navegador
+    // no repinta al retirar el overlay se queda en blanco—, barata porque
+    // `fit()` sólo toca dos propiedades y el observer ya estaba montado.
+  }, [esCapas, html, sizeIndex, lightbox]);
 
   const bigger  = useCallback(() => setSizeIndex(i => Math.min(i + 1, SIZES.length - 1)), []);
   const smaller = useCallback(() => setSizeIndex(i => Math.max(i - 1, 0)), []);

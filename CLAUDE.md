@@ -452,6 +452,21 @@ El bloque `prefers-reduced-motion` de estas figuras va **al final del archivo**:
 está antes de la sección "en capas" y, a igualdad de especificidad, gana la última regla — desde
 allí no apagaría nada.
 
+**El lightbox es un velo, no una pantalla, y `backdrop-filter` está prohibido en él.** Iba a
+`rgba(10,10,24,.9)` + `blur(6px)`, y con eso el documento no sólo dejaba de verse: **al cerrar la
+figura se quedaba en blanco**. El filtro obliga al navegador a rasterizar todo lo de detrás en una
+capa aparte, y un documento "en capas" es el peor candidato posible —lleva `transform: scale()` en
+la página y `mix-blend-mode: multiply` en el resaltador—, así que Chrome no repintaba esa capa al
+retirar el overlay: el HTML seguía en el DOM, pero sin volver a pintarse. Ahora es
+`rgba(6,8,20,.7)` sin filtro, y el documento se ve atenuado por detrás. Dos refuerzos más contra
+lo mismo:
+
+- el efecto de escalado lleva `lightbox` en sus dependencias aunque no lo use: al cerrar vuelve a
+  aplicar el transform sobre la página;
+- bloquear el scroll y esconder la sidebar vive en un efecto **sin dependencias**, separado del
+  listener de `Esc` (que sí depende de `lightbox`). Juntos, cada clic en una figura quitaba y
+  reponía `pdf-fullscreen-active` en el `<body>` — un reflow del dashboard entero por imagen.
+
 Para el **clic** conviven dos vías en `onSheetClick` porque cada envase sirve las figuras distinto:
 en Notion van envueltas en `<a href="…avif">` y basta con interceptar el enlace; en «capas» son
 `<img>` sueltas **con el texto absoluto por encima**, así que mirar `e.target` fallaría en cuanto

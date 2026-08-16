@@ -483,6 +483,10 @@
    Se monta sobre el mismo <img> ya descargado: la URL es idéntica y el bucket
    la sirve como immutable, así que el navegador la saca de caché y no hay una
    segunda descarga.
+
+   Es un **velo**, no una pantalla: el documento se sigue viendo detrás, sólo
+   atenuado. La figura crece sobre su propio contexto en vez de sustituirlo,
+   que es lo que deja claro de dónde salió y a dónde se vuelve al cerrar.
    ═══════════════════════════════════════════════════════════════════════ */
 
 .lightbox {
@@ -493,8 +497,17 @@
   align-items: center;
   justify-content: center;
   padding: 32px;
-  background: rgba(10, 10, 24, 0.9);
-  backdrop-filter: blur(6px);
+  /* Translúcido de verdad. Antes iba a 0.9 y con blur: el documento
+     desaparecía por completo detrás del velo. */
+  background: rgba(6, 8, 20, 0.7);
+  /* SIN backdrop-filter, y no es sólo estético.
+
+     El filtro obliga al navegador a rasterizar todo lo que hay detrás en una
+     capa aparte, y el documento "en capas" es justo el peor candidato: lleva
+     un `transform: scale()` en la página y un `mix-blend-mode: multiply` en
+     el resaltador. Con esa combinación Chrome no repinta la capa al retirar
+     el filtro, y al cerrar la figura el documento se quedaba en blanco —
+     seguía en el DOM, pero sin volver a pintarse. */
   cursor: zoom-out;
   animation: lightboxIn 0.16s ease-out;
 }
