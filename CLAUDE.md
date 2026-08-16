@@ -342,10 +342,10 @@ pueda mezclar un HTML nuevo con PDFs de clases anteriores.
 
 ---
 
-## PDF reconstruido en capas — skill `/addresumencapas` (⚠️ sin vía de publicación)
+## PDF reconstruido en capas — skill `/addresumencapas`
 
-Tercer envase que aparece para la tarjeta «Resumen», y el único que **no está implementado**.
-Son exports que rehacen un PDF como tres capas absolutas sobre una página de tamaño fijo:
+Tercer envase de la tarjeta «Resumen». Son exports que rehacen un PDF como tres capas absolutas
+sobre una página de tamaño fijo:
 `.image-layer` (z1, `<figure>` con las coordenadas del PDF) · `.text-layer` (z2, un `<span>` por
 fragmento) · `.ink-layer` (z3, **una** imagen a página completa con las anotaciones manuscritas),
 más un `<script>` que escala la página al contenedor.
@@ -378,11 +378,28 @@ formato rompe en silencio:
   de tinta antes de darla por perdida. Si la tinta lleva contenido, es material de estudio y no se
   puede recomprimir a la ligera.
 
-**Lo que falta para publicar**: `upload-resumen-html.mjs` aborta con este HTML (busca el
-`<div class="page-body">` de Notion); el `<script>` del escalado no corre con
-`dangerouslySetInnerHTML` y hay que portarlo a React; el `<style>` trae reglas globales
-(`html,body,*`) que hay que namespacear bajo `.sheet :global(…)`; y falta decidir qué hacer en
-móvil. Los buckets sí sirven tal cual.
+**Publicación: `scripts/upload-resumen-capas.mjs`** (`--dir --curso --id --slug [--dry] [--force]`).
+Existe aparte porque `upload-resumen-html.mjs` busca el `<div class="page-body">` de Notion y
+aborta con este formato. Aplica las correcciones del auditor —son idempotentes, así que no depende
+de que alguien lo haya corrido antes—, sube `assets/*` **tal cual** a `resumenes-img` (ya son AVIF:
+recomprimirlos sería una segunda pérdida) y reduce el documento a un fragmento
+`<div class="capas" style="--page-w/--page-h">` con las tres capas, que va a `resumenes`.
+
+Del documento original se descartan dos cosas y **ambas se reemplazan en el proyecto**:
+- el `<style>`, con reglas globales (`html, body, *`) que habrían pisado el visor entero → las
+  reglas de las tres capas viven en `resumenHtml.module.css` bajo `.sheet :global(…)`, con la
+  hoja en **blanco en los dos temas** (las figuras vienen recortadas sobre blanco y `multiply`
+  sobre fondo oscuro desaparecería: es papel, no interfaz);
+- el `<script>` del `fit()`, que **no se ejecuta** al inyectarse con `dangerouslySetInnerHTML` →
+  el escalado lo hace `HtmlFullscreenModal` con un `ResizeObserver`, multiplicando el ajuste al
+  contenedor por `SIZES[sizeIndex]`, de modo que **A−/A+ funcionan como zoom real** (este formato
+  no reflowea, así que cambiar el cuerpo de letra no haría nada) y el desbordamiento lo absorbe el
+  `overflow:auto` de `.page-shell`. El envase se detecta sobre el string (`html.includes('class="capas"')`),
+  no con estado: con estado el primer frame se pintaría con los estilos del otro envase. Ojo con
+  el bucle `fit → resize → fit`: ajustar la altura del shell vuelve a disparar el observer, y lo
+  corta una guarda de «mismo ancho que la última vez».
+
+Publicado con esta vía: `bcm-te-8` (Biología Celular, Te8 — Comunicación celular).
 
 ---
 
