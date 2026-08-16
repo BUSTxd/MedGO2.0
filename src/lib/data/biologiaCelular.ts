@@ -413,6 +413,13 @@ export const semanas: Semana[] = [
           'Glucocálix y asimetría de membrana',
         ],
         docentes: [],
+        // Envase "en capas", variante «pdf-page» (ver /addresumencapas): el
+        // taller resuelto, con las anotaciones manuscritas en SVG.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-ta-4', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'bcm-ta-5',

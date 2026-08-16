@@ -399,7 +399,71 @@ Del documento original se descartan dos cosas y **ambas se reemplazan en el proy
   el bucle `fit → resize → fit`: ajustar la altura del shell vuelve a disparar el observer, y lo
   corta una guarda de «mismo ancho que la última vez».
 
-Publicado con esta vía: `bcm-te-8` (Biología Celular, Te8 — Comunicación celular).
+**Dos variantes del mismo conversor.** Comparten la idea —página de tamaño fijo, capas absolutas,
+texto real— pero no el vocabulario, así que el auditor y el uploader detectan cuál es antes de
+tocar nada (`VARIANTE`) y sólo cambian de dónde leen las medidas y dónde vive el resaltador:
+
+| | A · «layers» | B · «pdf-page» |
+|---|---|---|
+| página | `.page` | `.pdf-page` (el uploader le añade `.page`, que es por donde el visor la escala) |
+| unidades | px | **pt** |
+| figuras | `<figure data-image>` + `<img>` dentro | `<img class="pdf-image">` con la caja inline |
+| texto | spans dentro de `.text-layer` | `.pdf-text` sueltos + `.raster-text-rebuilt` (texto que estaba rasterizado *dentro* de una figura, reconstruido encima de ella) |
+| tinta | raster AVIF | **SVG** — nítida a cualquier zoom |
+| resaltador | quemado dentro de la tinta como píxeles opacos | **SVG aparte** (`marks-bg`) |
+
+B es mejor documento y cambia dos cosas de las reglas de arriba:
+- **Regla del resaltado, válida para las dos variantes**: el conversor lo saca siempre como color
+  **pleno y opaco** —esté quemado dentro de la tinta raster o en su propio SVG (`marks-bg`)— y
+  ningún resaltado de un PDF debería serlo. Ante uno nuevo hay que comprobar que se cumple **uno
+  de los dos** finales aceptables: o **el resaltado se transparenta**, o **el texto queda por
+  delante de él**. Si no se cumple ninguno, el documento sale con bandas de color tapando frases.
+  En B se cumplen los dos —`.vector-bg` es z1 y el texto z3— y **aun así hubo que atenuarlo**: sin
+  tapar nada, un plano de amarillo puro debajo de la frase la aplasta visualmente. Lo hace el
+  visor con `opacity: .45` **y** `mix-blend-mode: multiply` en `.vector-bg`, y hacen falta las
+  dos: `multiply` no atenúa nada sobre papel blanco (amarillo × blanco = el mismo amarillo), y
+  `opacity` sola no garantiza que una letra oscura debajo sobreviva, que es lo que `multiply` sí
+  asegura. El asset **no se toca**: se sube tal cual y la atenuación vive en el CSS module.
+- **La tinta opaca deja de ser un problema**: son trazos de rotulador dibujados *encima* a
+  propósito, no un resaltado, así que ahí no va `multiply`.
+- Las coordenadas van en **pt** pero el wrapper del fragmento declara `--page-w/--page-h` en **px**
+  (×4/3): el visor hace `parseFloat` de esa custom property y la compara con `clientWidth`, que
+  está en px — dejar `1245.612pt` ahí daría una escala 4/3 veces menor sin que nada avise. Los
+  hijos se quedan en pt, que caen en su sitio dentro de la caja sin reescribir cientos de valores.
+- Los SVG son assets como cualquier otro y van al bucket público `resumenes-img`, que hubo que
+  **ampliar a `image/svg+xml`** (antes sólo avif/webp/png/jpeg). No abre ninguna vía de subida:
+  `storage.objects` no tiene ni una política, así que sólo la service role key escribe ahí.
+
+**Las figuras se comportan como las de un resumen de Notion** (referencia: Anatomía de la región
+glútea, Aparato Locomotor): al pasar el cursor se elevan con sombra y vuelven solas al salir, y el
+clic las amplía sobre el documento con el mismo lightbox (`lightboxZoom`, scale .96→1).
+
+Dos cosas no son transportables tal cual desde `figure.image`:
+
+- **Los px del hover hay que dividirlos por la escala de la página.** `translateY(-2px)` y la
+  sombra se miden en pantalla, pero viven dentro de un `.page` con `transform: scale(~0.5)`: sin
+  compensar se ven a la mitad, y ese es exactamente el motivo de que el efecto «no se pareciera»
+  al de Locomotor. `HtmlFullscreenModal` publica la escala en cada `fit()` como `--fit` sobre
+  `.page`, y el CSS hace `calc(-2px / var(--fit, 1))`. El fallback cubre el primer frame.
+- **Ni borde ni `border-radius`**, a diferencia de las de Notion: estas figuras son recortes del
+  propio papel y enmarcarlas las convertiría en tarjetas flotando sobre la página.
+
+El bloque `prefers-reduced-motion` de estas figuras va **al final del archivo**: el que ya existía
+está antes de la sección "en capas" y, a igualdad de especificidad, gana la última regla — desde
+allí no apagaría nada.
+
+Para el **clic** conviven dos vías en `onSheetClick` porque cada envase sirve las figuras distinto:
+en Notion van envueltas en `<a href="…avif">` y basta con interceptar el enlace; en «capas» son
+`<img>` sueltas **con el texto absoluto por encima**, así que mirar `e.target` fallaría en cuanto
+el clic cayera sobre una letra — se recorre la pila entera con `document.elementsFromPoint()` y se
+toma la primera figura que aparezca. Las capas a página completa (tinta y resaltador) no casan el
+selector, de modo que nunca se abren como si fueran una figura, y una selección de texto activa
+cancela el clic. El **hover**, en cambio, es CSS puro: en la franja donde el texto tapa la figura
+no se dispara.
+
+Publicado con esta vía:
+- `bcm-te-8` (Biología Celular, Te8 — Comunicación celular) — variante «layers».
+- `bcm-ta-4` (Biología Celular, Ta4 — Estructura de la membrana) — variante «pdf-page».
 
 ---
 

@@ -71,30 +71,56 @@ if (/pdf2htmlEX/i.test(html)) {
   console.error('\n✗ Es un export de pdf2htmlEX: el documento es una imagen rasterizada con texto invisible encima. No sirve.');
   process.exit(1);
 }
-const esCapas = /class="image-layer"/.test(html) && /class="text-layer"/.test(html);
-if (!esCapas) {
-  console.error('\n✗ No encontré .image-layer + .text-layer. Esto no es un PDF reconstruido en capas.');
+/* El conversor tiene dos variantes con el mismo concepto y distinto
+   vocabulario (ver la cabecera de upload-resumen-capas.mjs):
+
+     A · «layers»   .page + .image-layer/.text-layer/.ink-layer · px ·
+                    figuras en <figure data-image> · tinta raster con el
+                    resaltador quemado dentro como píxeles opacos.
+     B · «pdf-page» .pdf-page + .vector-bg/.pdf-image/.pdf-text/.vector-ink ·
+                    **pt** · figuras en <img> · tinta y resaltador en SVG.
+
+   Los cinco chequeos son los mismos; lo que cambia es de dónde se leen las
+   medidas y dónde vive el resaltador. */
+const VARIANTE = /class="image-layer"/.test(html) && /class="text-layer"/.test(html) ? 'layers'
+               : /class="pdf-page"/.test(html)   && /class="pdf-text"/.test(html)   ? 'pdf-page'
+               : null;
+if (!VARIANTE) {
+  console.error('\n✗ No encontré ni .image-layer/.text-layer ni .pdf-page/.pdf-text. Esto no es un PDF reconstruido en capas.');
   console.error('  Si es un export de Notion, la skill correcta es /addresumenhtml.');
   process.exit(1);
 }
 
-const mPage = html.match(/--page-w:\s*([\d.]+)px;\s*--page-h:\s*([\d.]+)px/);
+// Unidad en la que el documento anota TODAS sus coordenadas. Las cifras se
+// comparan siempre entre sí (caja contra imagen, texto contra hueco), así que
+// basta con leerlas en su propia unidad; sólo el aviso de ancho fijo, que se
+// mide contra una pantalla real, necesita la conversión a px.
+const U = VARIANTE === 'layers' ? 'px' : 'pt';
+const A_PX = U === 'pt' ? 4 / 3 : 1;
+const num = String.raw`[\d.]+`;
+
+const mPage = VARIANTE === 'layers'
+  ? html.match(/--page-w:\s*([\d.]+)px;\s*--page-h:\s*([\d.]+)px/)
+  : html.match(/\.pdf-page\s*\{[^}]*width:\s*([\d.]+)pt;\s*height:\s*([\d.]+)pt/);
 const PAGE_W = mPage ? +mPage[1] : null;
 const PAGE_H = mPage ? +mPage[2] : null;
 
-console.log(`\n═══ ${htmls[0]}  ·  ${kb(Buffer.byteLength(html, 'utf8'))} ═══`);
-if (PAGE_W) console.log(`página: ${PAGE_W.toFixed(0)} × ${PAGE_H.toFixed(0)} px`);
+console.log(`\n═══ ${htmls[0]}  ·  ${kb(Buffer.byteLength(html, 'utf8'))}  ·  variante «${VARIANTE}» ═══`);
+if (PAGE_W) console.log(`página: ${PAGE_W.toFixed(0)} × ${PAGE_H.toFixed(0)} ${U}`
+  + (U === 'pt' ? `  (${(PAGE_W * A_PX).toFixed(0)} × ${(PAGE_H * A_PX).toFixed(0)} px)` : ''));
 
 // ─── 1. extensiones referenciadas vs archivos en disco ───────────────────
-const refs = [...html.matchAll(/src="([^"]+\.(?:png|jpe?g|webp|avif))"/gi)].map(m => m[1]);
+// .svg incluido: en la variante «pdf-page» la tinta y el resaltador son SVG.
+const RE_ASSET = /src="([^"]+\.(?:png|jpe?g|webp|avif|svg))"/gi;
+const refs = [...html.matchAll(RE_ASSET)].map(m => m[1]);
 const renombres = new Map(); // ref original → ref corregida
 let faltantes = 0;
 
 for (const ref of [...new Set(refs)]) {
   if (existsSync(join(dir, ref))) continue;
   // busca el mismo nombre base con otra extensión
-  const base = ref.replace(/\.(png|jpe?g|webp|avif)$/i, '');
-  const alt = ['avif', 'webp', 'png', 'jpg', 'jpeg']
+  const base = ref.replace(/\.(png|jpe?g|webp|avif|svg)$/i, '');
+  const alt = ['avif', 'webp', 'png', 'jpg', 'jpeg', 'svg']
     .map(e => `${base}.${e}`)
     .find(c => existsSync(join(dir, c)));
   if (alt) renombres.set(ref, alt);
@@ -114,35 +140,46 @@ if (renombres.size) {
 // ─── 2. aspecto de cada figura contra su caja CSS ────────────────────────
 // La caja lleva width/height del PDF; la imagen exportada puede traer otro
 // encuadre. Con object-fit:fill eso deforma en silencio.
-const cajas = [...html.matchAll(
-  /data-image="([^"]+)"[^>]*style="left:([\d.]+)px;top:([\d.]+)px;width:([\d.]+)px;height:([\d.]+)px"/g
-)];
-const srcDe = new Map(
-  [...html.matchAll(/data-image="([^"]+)"[\s\S]{0,400}?src="([^"]+)"/g)].map(m => [m[1], m[2]])
-);
+const cajas = [];
+if (VARIANTE === 'layers') {
+  const srcDe = new Map(
+    [...html.matchAll(/data-image="([^"]+)"[\s\S]{0,400}?src="([^"]+)"/g)].map(m => [m[1], m[2]])
+  );
+  for (const c of html.matchAll(
+    /data-image="([^"]+)"[^>]*style="left:[\d.]+px;top:[\d.]+px;width:([\d.]+)px;height:([\d.]+)px"/g
+  )) {
+    const ref = srcDe.get(c[1]);
+    if (ref) cajas.push({ id: c[1], refOrig: ref, w: +c[2], h: +c[3] });
+  }
+} else {
+  // aquí la <img> lleva su propia caja y no hay data-image: el id del log es
+  // el propio archivo.
+  for (const c of html.matchAll(
+    /<img class="pdf-image" src="([^"]+)"[^>]*style="left:[\d.]+pt;top:[\d.]+pt;width:([\d.]+)pt;height:([\d.]+)pt;?"/g
+  )) {
+    cajas.push({ id: c[1].split('/').pop(), refOrig: c[1], w: +c[2], h: +c[3] });
+  }
+}
 
 console.log(`\n② Aspecto de las figuras  (${cajas.length} cajas)`);
 const deformadas = [];
 let pesoImgs = 0;
 
 for (const c of cajas) {
-  const [, id, , , w, h] = c;
-  const refOrig = srcDe.get(id);
-  if (!refOrig) continue;
-  const ref = renombres.get(refOrig) ?? refOrig;
+  const ref = renombres.get(c.refOrig) ?? c.refOrig;
   const p = join(dir, ref);
   if (!existsSync(p)) continue;
   pesoImgs += statSync(p).size;
 
   const meta = await sharp(p).metadata();
-  const aCaja = +w / +h;
+  const aCaja = c.w / c.h;
   const aImg = meta.width / meta.height;
   const desvio = (aImg / aCaja - 1) * 100;
   if (Math.abs(desvio) > DESVIO_MAX) {
     // se corrige por el ancho: cambiar el alto empujaría la figura hacia
     // el texto de abajo, que está en una coordenada fija.
-    const wOk = Math.round(+h * aImg);
-    deformadas.push({ id, ref, w: +w, h: +h, wOk, desvio, img: `${meta.width}×${meta.height}` });
+    const wOk = Math.round(c.h * aImg);
+    deformadas.push({ id: c.id, ref, w: c.w, h: c.h, wOk, desvio, img: `${meta.width}×${meta.height}` });
   }
 }
 
@@ -155,10 +192,62 @@ if (deformadas.length) {
   console.log('   ✓ ninguna se deforma');
 }
 
-// ─── 3. la capa de tinta ─────────────────────────────────────────────────
+/* Franjas verticales que ocupa el texto, como pares [inicio, fin].
+   Las dos variantes escriben el `style` distinto: en «layers» el font-size va
+   pegado al top, en «pdf-page» hay un font-family en medio y además existe el
+   texto reconstruido sobre las figuras (.raster-text-rebuilt), que lleva un
+   `width` intercalado. Un solo regex no cubre los tres casos. */
+function lineasTexto() {
+  const fuentes = VARIANTE === 'layers'
+    ? [/top:([\d.]+)px;font-size:([\d.]+)px/g]
+    : [/top:([\d.]+)pt;font-family:[^;]*;font-size:([\d.]+)pt/g,
+       /top:([\d.]+)pt;width:[\d.]+pt;font-size:([\d.]+)pt/g];
+  const out = [];
+  for (const re of fuentes) {
+    for (const m of html.matchAll(re)) out.push([+m[1], +m[1] + +m[2] * 1.2]);
+  }
+  return out;
+}
+
+// ─── 3. las capas de anotación ───────────────────────────────────────────
 const inkRef0 = html.match(/class="ink"[^>]*src="([^"]+)"/)?.[1]
+             ?? html.match(/class="vector-ink"[^>]*src="([^"]+)"/)?.[1]
              ?? html.match(/ink-layer[\s\S]{0,200}?src="([^"]+)"/)?.[1];
 let inkRow = null, inkH = 0;
+
+/* En la variante «pdf-page» el resaltador NO va quemado dentro de la tinta:
+   viene en su propio SVG (.vector-bg), lo que permite auditarlo leyendo el
+   archivo en vez de contando píxeles. El fallo es el mismo de siempre —el
+   conversor lo saca como amarillo PURO y OPACO— pero aquí no llega a tapar
+   nada, porque su capa queda por debajo del texto. Lo que sí hace un plano de
+   color sólido es aplastar la letra que tiene encima, así que el visor lo
+   atenúa con opacity + multiply en .vector-bg. */
+if (VARIANTE === 'pdf-page') {
+  const bgRef0 = html.match(/class="vector-bg"[^>]*src="([^"]+)"/)?.[1];
+  console.log('\n③a Resaltador (capa aparte)');
+  if (!bgRef0) {
+    console.log('   — el documento no trae capa de resaltado');
+  } else {
+    const bgRef = renombres.get(bgRef0) ?? bgRef0;
+    const p = join(dir, bgRef);
+    if (!existsSync(p)) {
+      problemas.push(`la capa de resaltado (${bgRef0}) no está en disco`);
+      console.log(`   ✗ falta ${bgRef0}`);
+    } else {
+      pesoImgs += statSync(p).size;
+      const svg = readFileSync(p, 'utf8');
+      const marcas = [...svg.matchAll(/<rect\b[^>]*>/g)].map(m => m[0]);
+      const opacas = marcas.filter(r => !/(fill|stop)-opacity=|opacity=/.test(r));
+      console.log(`   ${bgRef}  ·  ${marcas.length} marcas  ·  ${kb(statSync(p).size)}`);
+      if (opacas.length) {
+        avisos.push(`${opacas.length} marcas de resaltado son de color OPACO: sin atenuar no parecen subrayado sino una banda que aplasta la letra (lo corrige .vector-bg en resumenHtml.module.css con opacity + mix-blend-mode:multiply)`);
+        console.log(`   ⚠ ${opacas.length} marcas opacas — las atenúa el visor (.vector-bg: opacity + multiply)`);
+      } else {
+        console.log('   ✓ las marcas ya vienen translúcidas');
+      }
+    }
+  }
+}
 
 console.log('\n③ Capa de tinta');
 if (!inkRef0) {
@@ -205,20 +294,25 @@ if (!inkRef0) {
       for (let x = 0; x < info.width; x++) if (data[(y * info.width + x) * 4 + 3] >= ALPHA_OPACO) c++;
       if (c > 3) { opacoRow[y] = 1; anchoRow[y] = c; }
     }
-    const lineas = [...html.matchAll(/top:([\d.]+)px;font-size:([\d.]+)px/g)]
-      .map(m => [+m[1], +m[1] + +m[2] * 1.2]);
     let tapadas = 0, anchoMax = 0;
-    for (const [a, b] of lineas) {
+    for (const [a, b] of lineasTexto()) {
       for (let y = Math.round(a); y < Math.min(info.height, Math.round(b)); y++) {
         if (opacoRow[y] && anchoRow[y] > 100) { tapadas++; anchoMax = Math.max(anchoMax, anchoRow[y]); break; }
       }
     }
-    const tieneMultiply = /ink-layer\s*\{[^}]*mix-blend-mode\s*:\s*multiply/.test(html);
+    // En «pdf-page» la tinta es SVG de trazos (rotulador rojo y negro) y el
+    // resaltado vive aparte: que sea opaca es lo correcto, es una anotación
+    // dibujada ENCIMA, no un subrayado. El chequeo sólo aplica a la variante
+    // que quema el resaltador dentro de la tinta raster.
+    const tieneMultiply = VARIANTE === 'pdf-page'
+      || /ink-layer\s*\{[^}]*mix-blend-mode\s*:\s*multiply/.test(html);
     if (tapadas && !tieneMultiply) {
       problemas.push(`${tapadas} líneas de texto quedan TAPADAS por tinta opaca (trazo de hasta ${anchoMax}px) — falta mix-blend-mode:multiply en .ink-layer`);
       console.log(`   ✗ ${tapadas} líneas tapadas por resaltado opaco (hasta ${anchoMax}px de ancho)`);
-    } else if (tieneMultiply) {
+    } else if (tieneMultiply && VARIANTE === 'layers') {
       console.log('   ✓ mix-blend-mode:multiply ya aplicado');
+    } else if (VARIANTE === 'pdf-page') {
+      console.log('   ✓ tinta vectorial: transparente por construcción, nítida a cualquier zoom');
     } else {
       console.log('   ✓ ninguna línea queda tapada');
     }
@@ -233,8 +327,13 @@ if (!H) {
 } else {
   const cover = new Uint8Array(H);
   const marca = (t, h) => { for (let y = Math.max(0, Math.round(t)); y < Math.min(H, Math.round(t + h)); y++) cover[y] = 1; };
-  for (const m of html.matchAll(/top:([\d.]+)px;width:([\d.]+)px;height:([\d.]+)px/g)) marca(+m[1], +m[3]);
-  for (const m of html.matchAll(/top:([\d.]+)px;font-size:([\d.]+)px/g)) marca(+m[1], +m[2] * 1.2);
+  const reFig = VARIANTE === 'layers'
+    ? /top:([\d.]+)px;width:[\d.]+px;height:([\d.]+)px/g
+    : /top:([\d.]+)pt;width:[\d.]+pt;height:([\d.]+)pt/g;
+  for (const m of html.matchAll(reFig)) marca(+m[1], +m[2]);
+  for (const [a, b] of lineasTexto()) marca(a, b - a);
+  // La tinta se rasteriza al tamaño de la página, así que sus filas están en
+  // la misma escala que las coordenadas del documento.
   if (inkRow) for (let y = 0; y < Math.min(H, inkRow.length); y++) if (inkRow[y]) cover[y] = 1;
 
   const huecos = [];
@@ -267,10 +366,10 @@ if (/(^|\})\s*(html\s*,\s*body|body|\*)\s*\{/m.test(html)) {
   avisos.push('el <style> tiene reglas globales (html/body/*) — hay que namespacearlas bajo .sheet o pisarían el dashboard');
   console.log('   ⚠ CSS global (html/body/*) — namespacear bajo .sheet');
 }
-const anchoFijo = PAGE_W && PAGE_W > 900;
-if (anchoFijo) {
-  avisos.push(`página de ancho fijo ${PAGE_W.toFixed(0)}px con texto en posición absoluta: NO reflowea; en móvil se escala a ~0.25× y queda ilegible`);
-  console.log(`   ⚠ ancho fijo ${PAGE_W.toFixed(0)}px — no reflowea, ilegible en móvil`);
+const anchoPx = PAGE_W ? PAGE_W * A_PX : null;
+if (anchoPx && anchoPx > 900) {
+  avisos.push(`página de ancho fijo ${anchoPx.toFixed(0)}px con texto en posición absoluta: NO reflowea; en móvil se escala a ~0.25× y queda ilegible`);
+  console.log(`   ⚠ ancho fijo ${anchoPx.toFixed(0)}px — no reflowea, ilegible en móvil`);
 }
 
 // ─── peso ────────────────────────────────────────────────────────────────
@@ -288,9 +387,13 @@ if (fix) {
   if (!/mix-blend-mode/.test(out)) {
     out = out.replace(/(\.ink-layer\s*\{)([^}]*)\}/, '$1$2;mix-blend-mode:multiply}');
   }
+  // el export no es consistente con los decimales (2 en una variante, 3 en la
+  // otra), así que se prueban ambas formas.
   for (const d of deformadas) {
-    out = out.replace(`width:${d.w.toFixed(3)}px;height:${d.h.toFixed(3)}px`,
-                      `width:${d.wOk.toFixed(3)}px;height:${d.h.toFixed(3)}px`);
+    for (const n of [2, 3]) {
+      out = out.replace(`width:${d.w.toFixed(n)}${U};height:${d.h.toFixed(n)}${U}`,
+                        `width:${d.wOk.toFixed(n)}${U};height:${d.h.toFixed(n)}${U}`);
+    }
   }
   const dest = join(dir, 'preview.html');
   writeFileSync(dest, out, 'utf8');

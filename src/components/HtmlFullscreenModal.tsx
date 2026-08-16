@@ -76,20 +76,44 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
   const esCapas = html !== null && html.includes('class="capas"');
 
   /**
-   * Cada figura de Notion viene envuelta en <a href="…avif">, que por sí solo
-   * se llevaría al alumno a otra pestaña y le haría perder el punto de lectura.
-   * Se intercepta el clic y se abre la figura aquí mismo, sobre el documento.
+   * Ampliar una figura sin salir del documento. Los dos envases la sirven
+   * distinto, así que hay dos caminos:
+   *
+   *  - **Notion**: cada figura viene envuelta en <a href="…avif">, que por sí
+   *    solo se llevaría al alumno a otra pestaña y le haría perder el punto de
+   *    lectura. Se intercepta el enlace.
+   *  - **Capas**: las figuras son <img> sueltas, sin enlace, y encima llevan
+   *    el texto en posición absoluta (los <span>, y en la variante «pdf-page»
+   *    también los bloques reconstruidos sobre la propia figura). Buscar por
+   *    `e.target` fallaría en cuanto el clic cayera sobre una letra, así que
+   *    se mira **toda la pila bajo el cursor** y se toma la primera figura que
+   *    aparezca. Las capas a página completa (tinta y resaltador) no casan el
+   *    selector, de modo que nunca se abren como si fueran una figura.
    *
    * Sólo el clic simple: con ctrl/cmd/shift o botón central se respeta el
    * gesto del navegador de abrir en pestaña nueva, que ahí sí es intencional.
    */
   const onSheetClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
     if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-    const link = (e.target as HTMLElement).closest?.('a');
-    const href = link?.getAttribute('href');
-    if (!href || !href.endsWith('.avif')) return;
+
+    const href = (e.target as HTMLElement).closest?.('a')?.getAttribute('href');
+    if (href?.endsWith('.avif')) {
+      e.preventDefault();
+      setLightbox(href);
+      return;
+    }
+
+    // El texto de este envase es real y seleccionable: si el alumno acaba de
+    // seleccionar algo, el clic que cierra la selección no debe abrir nada.
+    if (window.getSelection()?.toString()) return;
+
+    const figura = document
+      .elementsFromPoint(e.clientX, e.clientY)
+      .find((el): el is HTMLImageElement =>
+        el instanceof HTMLImageElement && el.matches('img.pdf-image, .pdf-image img, .image-layer img'));
+    if (!figura?.src) return;
     e.preventDefault();
-    setLightbox(href);
+    setLightbox(figura.src);
   }, []);
 
   useEffect(() => {
@@ -170,6 +194,12 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
       const s = (ancho / W) * SIZES[sizeIndex];
       page.style.transform = `scale(${s})`;
       shell.style.height = `${H * s}px`;
+      // La página entera va escalada, así que un px de dentro no es un px en
+      // pantalla. Los efectos que sí deben medirse en pantalla —la elevación y
+      // la sombra del hover de una figura— se dividen por esto en el CSS; sin
+      // ello se verían a la mitad, que es justo lo que las hacía parecer
+      // distintas de las figuras de los resúmenes de Notion.
+      page.style.setProperty('--fit', String(s));
     };
 
     const ro = new ResizeObserver(fit);

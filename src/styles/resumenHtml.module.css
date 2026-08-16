@@ -772,6 +772,11 @@
   line-height: 1;
   font-family: inherit;
   transform-origin: left top;
+  /* Por encima de las figuras y del resaltador. En la variante «layers» es
+     inocuo (el .text-layer que los agrupa ya tiene su propio contexto de
+     apilamiento); en la «pdf-page» los spans cuelgan sueltos de la página y
+     sin esto quedarían por debajo de las figuras. */
+  z-index: 3;
 }
 
 .sheet :global(.pdf-image) {
@@ -789,6 +794,36 @@
   object-fit: contain;
 }
 
+/* La página se ve a la escala del contenedor (bastante por debajo de 1), así
+   que las figuras quedan pequeñas: el clic las abre a tamaño real sobre el
+   documento.
+
+   Mismo gesto que las figuras de un resumen de Notion (`figure.image`): al
+   pasar por encima se elevan y proyectan sombra, y al salir vuelven solas.
+   Lo que cambia es que aquí **hay que dividir por la escala de la página**
+   (`--fit`, que pone HtmlFullscreenModal en cada `fit()`): estos valores se
+   miden en pantalla, no en el espacio del documento, y sin compensar se
+   verían a la mitad. El fallback `1` cubre el primer frame, antes de que el
+   observer haya corrido.
+
+   No se les pone borde ni `border-radius`, a diferencia de las de Notion:
+   estas figuras son recortes del propio papel, y enmarcarlas las convertiría
+   en tarjetas flotando sobre la página. */
+.sheet :global(.pdf-image img),
+.sheet :global(img.pdf-image),
+.sheet :global(.image-layer img) {
+  cursor: zoom-in;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+
+.sheet :global(.pdf-image img:hover),
+.sheet :global(img.pdf-image:hover),
+.sheet :global(.image-layer img:hover) {
+  transform: translateY(calc(-2px / var(--fit, 1)));
+  box-shadow:
+    0 calc(10px / var(--fit, 1)) calc(28px / var(--fit, 1)) rgba(10, 12, 30, 0.2);
+}
+
 .sheet :global(.ink) {
   position: absolute;
   left: 0;
@@ -802,4 +837,110 @@
    interfieran con el posicionamiento absoluto de los <span>. */
 .sheet :global(.semantic) {
   display: contents;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+   Variante «pdf-page» del mismo conversor
+
+   Mismo concepto, otro vocabulario: la página es .pdf-page (en **pt**, no
+   px) y las capas van sueltas dentro de ella en vez de agrupadas en tres
+   contenedores. Dos diferencias que sí importan:
+
+     · la tinta es SVG, no un raster — se mantiene nítida a cualquier zoom;
+     · el resaltador viene en su PROPIO SVG (.vector-bg) en lugar de estar
+       quemado dentro de la tinta, lo que permite tratarlo aparte.
+
+   El uploader le añade la clase .page a la sección, así que hereda de
+   arriba el tamaño, el fondo y el transform-origin del escalado.
+   ────────────────────────────────────────────────────────────────────── */
+
+.sheet :global(.pdf-page) {
+  overflow: hidden;
+}
+
+/* El resaltador. El conversor lo saca como rectángulos de amarillo PURO y
+   OPACO (#ffff00, sin alpha): aunque queda por debajo del texto, un plano
+   de color sólido no se lee como un subrayado sino como una banda que
+   aplasta la letra que tiene encima.
+
+   Dos cosas lo devuelven a comportarse como rotulador:
+     · opacidad — el papel se transparenta a través del trazo;
+     · multiply — el amarillo se MULTIPLICA con lo que hay debajo, así que
+       sobre blanco da amarillo y sobre una letra oscura respeta la letra.
+   Con multiply solo no bastaría: sobre el papel blanco de la página el
+   amarillo puro se multiplica consigo mismo y sale igual de saturado. */
+.sheet :global(.vector-bg) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* Las dos capas SVG cubren la página entera. Su tamaño estaba en el <style>
+     del export, que se descarta, así que se toma del contenedor: no puede ir
+     en píxeles fijos porque cada documento tiene el suyo. */
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+}
+
+/* Aquí .pdf-image ES la <img> (en la variante «layers» era el <figure> que
+   la envuelve), así que el object-fit va en el propio elemento. */
+.sheet :global(img.pdf-image) {
+  z-index: 2;
+  object-fit: contain;
+}
+
+/* Texto que en el PDF estaba rasterizado dentro de una figura y el conversor
+   reconstruyó encima de ella: por eso va sobre la capa de imágenes. */
+.sheet :global(.raster-text-rebuilt) {
+  position: absolute;
+  z-index: 4;
+  line-height: 1.32;
+  font-family: inherit;
+  font-weight: 400;
+  color: #000;
+  white-space: nowrap;
+}
+
+/* Mismo criterio que .vector-bg: el <mark> del export es amarillo opaco.
+   Aquí el texto va dentro del propio elemento resaltado, así que no hay
+   riesgo de que lo tape — se atenúa por coherencia con el resto de
+   subrayados del documento, para que no convivan dos amarillos distintos. */
+.sheet :global(.raster-text-rebuilt mark) {
+  background: rgba(255, 247, 26, 0.45);
+  color: inherit;
+  padding: 0 0.02em;
+}
+
+/* La tinta manuscrita, encima de todo: rodea figuras, tacha y señala con
+   flechas. Al ser SVG con fondo transparente no necesita el multiply que sí
+   hacía falta con la tinta raster de la otra variante. */
+.sheet :global(.vector-ink) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Al final del archivo a propósito: el bloque de reduced-motion de más arriba
+   está ANTES de la sección "en capas", y a igualdad de especificidad gana la
+   última regla — desde allí no podría apagar nada de aquí. */
+@media (prefers-reduced-motion: reduce) {
+  .sheet :global(.pdf-image img),
+  .sheet :global(img.pdf-image),
+  .sheet :global(.image-layer img) {
+    transition: none;
+  }
+
+  /* Se queda sin desplazamiento, pero conserva la sombra: es la que dice que
+     la figura responde al cursor. */
+  .sheet :global(.pdf-image img:hover),
+  .sheet :global(img.pdf-image:hover),
+  .sheet :global(.image-layer img:hover) {
+    transform: none;
+  }
 }
