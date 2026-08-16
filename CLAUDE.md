@@ -560,6 +560,30 @@ Publicado con esta vía:
 - `bcm-te-4-html` (Biología Celular, Te4 — Procariotas y eucariotas) — «pdf-page», px, `<figure>`,
   tinta y resaltado en un `vectors.svg` único. Segunda opción del picker, junto al PDF.
 
+### Antes de tocar el visor — las tres cosas que se han roto en silencio
+
+Casi todos los fallos de esta sección no se vieron al hacer el cambio, sino semanas después y
+reportados por un alumno. Estos tres son los que se repiten:
+
+1. **Un cambio en el visor toca CUATRO documentos, no el que tienes delante.**
+   `HtmlFullscreenModal.tsx` y `resumenHtml.module.css` los comparten los resúmenes de Notion
+   (`loc-clase-*`, `dig-clase-*`), la variante «layers» y la «pdf-page». Cada arreglo hay que
+   pensarlo contra las tres formas: el hover de las figuras se arregló mirando «pdf-page» y estuvo
+   **roto en «layers» hasta que BUST lo reportó**, porque allí el texto va en un contenedor a
+   página completa que se comía el `:hover`. La pregunta a hacerse siempre es *«¿qué elemento de
+   la otra variante ocupa este mismo sitio?»*.
+2. **La tinta se audita sin navegador, y hacerlo cuesta un minuto.** El fragmento vive en el bucket
+   privado `resumenes` (se baja con la service role key de `.env.local`) y el SVG en el público
+   `resumenes-img`. Parseando las cajas de `.pdf-image` del fragmento y las bbox de los `<path>`
+   del SVG se ve **qué tinta cae encima de una figura, de qué color y con qué opacidad** — que es
+   exactamente el dato que decide si hace falta `multiply`. Mirar el documento a ojo no distingue
+   un resaltado dibujado a mano de un trazo de rotulador; las coordenadas sí.
+3. **Nada de estado nuevo en el modal sin mirar qué le pasa al HTML inyectado.** Es un documento de
+   miles de nodos que React no controla y sobre el que hay estilos inline; un re-render mal
+   planteado lo rehace entero y se lleva por delante el escalado (ver la nota del `useMemo`).
+   Cualquier `useState` que se añada al visor multiplica los re-renders: comprobar que el
+   `dangerouslySetInnerHTML` sigue recibiendo la **misma referencia**.
+
 ---
 
 ## Actividades sin material propio (invitación a colaborar)
