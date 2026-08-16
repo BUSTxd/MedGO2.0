@@ -342,6 +342,50 @@ pueda mezclar un HTML nuevo con PDFs de clases anteriores.
 
 ---
 
+## PDF reconstruido en capas — skill `/addresumencapas` (⚠️ sin vía de publicación)
+
+Tercer envase que aparece para la tarjeta «Resumen», y el único que **no está implementado**.
+Son exports que rehacen un PDF como tres capas absolutas sobre una página de tamaño fijo:
+`.image-layer` (z1, `<figure>` con las coordenadas del PDF) · `.text-layer` (z2, un `<span>` por
+fragmento) · `.ink-layer` (z3, **una** imagen a página completa con las anotaciones manuscritas),
+más un `<script>` que escala la página al contenedor.
+
+**No confundirlo con el HTML de Notion.** Aunque el envase es HTML, esto es un PDF pintado con
+`<div>`: el texto va en posición absoluta, así que **no reflowea**; en móvil la página de ~1500 px
+se escala a ~0.25× y la letra de 16 px se ve a 4 px. Los botones A−/A+ del visor no hacen nada
+(cada span lleva su tamaño inline). Conserva sólo dos ventajas sobre el PDF: texto seleccionable
+y ~600 KB en vez de varios MB. Ante uno de estos, **preguntar antes de adaptarlo**: conseguir el
+original (→ `/addresumenhtml`) o publicarlo como PDF (→ `/addresume`) suele ser mejor.
+
+**Auditor: `scripts/audit-resumen-capas.mjs`** (`--dir <carpeta> [--fix]`). No sube nada y no toca
+el original; con `--fix` deja un `preview.html` corregido al lado. Caza los cuatro fallos que este
+formato rompe en silencio:
+
+- **Extensiones sin reescribir** — convertir `assets/*` a AVIF por fuera no toca el HTML, que
+  sigue pidiendo `.webp`: el documento carga con **cero imágenes**. El `image-map.txt` que
+  acompaña al export arrastra el mismo error y **no se usa** (sus coordenadas ya están inline).
+- **Figuras deformadas** — la caja lleva el `width`/`height` del PDF y la `<img>` va con
+  `object-fit:fill`; si el AVIF trae otro encuadre, estira sin avisar. **Se corrige por el ancho,
+  nunca por el alto**: subir el alto empuja la figura contra el texto de abajo, que está en
+  coordenada fija.
+- **El resaltador tapa el texto** — se ve como una banda amarilla sin letras y parece texto no
+  extraído, pero el texto está ahí: el conversor saca el resaltado como píxeles **opacos**
+  (`rgba(255,255,153,255)`) en una capa por encima del texto. **No es culpa del AVIF**, que
+  conserva el alpha bien. Se arregla con `mix-blend-mode: multiply` en `.ink-layer` — nunca
+  bajándola a `z-index:0`, o las anotaciones sobre las figuras quedarían debajo de ellas.
+- **Franjas vacías** — una franja sin texto no es contenido perdido si hay tinta encima: en este
+  formato hay **esquemas completos que sólo viven en `ink.avif`**. Recortar esa franja de la capa
+  de tinta antes de darla por perdida. Si la tinta lleva contenido, es material de estudio y no se
+  puede recomprimir a la ligera.
+
+**Lo que falta para publicar**: `upload-resumen-html.mjs` aborta con este HTML (busca el
+`<div class="page-body">` de Notion); el `<script>` del escalado no corre con
+`dangerouslySetInnerHTML` y hay que portarlo a React; el `<style>` trae reglas globales
+(`html,body,*`) que hay que namespacear bajo `.sheet :global(…)`; y falta decidir qué hacer en
+móvil. Los buckets sí sirven tal cual.
+
+---
+
 ## Actividades sin material propio (invitación a colaborar)
 
 Componente **`src/components/SinMaterialSection.tsx`** — sustituye las 3 tarjetas de

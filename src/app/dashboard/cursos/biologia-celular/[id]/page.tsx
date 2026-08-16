@@ -97,6 +97,8 @@ export default async function ActividadPage({
           claseId={act.id}
           hasResumen={act.resumen?.tipo === 'pdf'}
           resumenOpciones={act.resumen?.opciones}
+          resumenFormato={act.resumen?.formato}
+          resumenTitulo={act.titulo}
         />
       </div>
     </div>

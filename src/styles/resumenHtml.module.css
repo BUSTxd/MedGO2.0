@@ -694,3 +694,112 @@
     transform: none;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   PDF reconstruido en capas  (skill /addresumencapas)
+
+   Tres capas absolutas sobre una página de tamaño fijo: figuras (z1), texto
+   real (z2) y tinta manuscrita (z3). El HTML original traía estas reglas en
+   un <style> propio con selectores globales (html, body, *) que habrían
+   pisado el visor entero, así que viven aquí, namespaceadas bajo .sheet.
+
+   El escalado de .page lo aplica HtmlFullscreenModal: el <script> del export
+   no se ejecuta al inyectarse con dangerouslySetInnerHTML.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* La hoja deja de ser una columna de lectura: el documento trae su propio
+   ancho y se escala al del contenedor. */
+.sheetCapas {
+  max-width: none;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.sheet :global(.capas) {
+  width: 100%;
+}
+
+.sheet :global(.page-shell) {
+  position: relative;
+  width: 100%;
+  /* auto, no hidden: al ampliar con A+ el documento desborda a lo ancho y
+     hace falta poder desplazarlo. A escala de ajuste no hay barra. */
+  overflow: auto;
+  border-radius: 12px;
+  box-shadow: 0 18px 50px rgba(10, 12, 30, 0.13);
+  /* Blanco en los DOS temas, a propósito: las figuras vienen recortadas
+     sobre blanco y la tinta se compone con multiply, que sobre un fondo
+     oscuro desaparecería. Es papel, no interfaz. */
+  background: #fff;
+}
+
+.sheet :global(.page) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--page-w);
+  height: var(--page-h);
+  transform-origin: 0 0;
+  background: #fff;
+}
+
+.sheet :global(.image-layer),
+.sheet :global(.text-layer),
+.sheet :global(.ink-layer) {
+  position: absolute;
+  inset: 0;
+}
+
+.sheet :global(.image-layer) { z-index: 1; }
+.sheet :global(.text-layer)  { z-index: 2; }
+
+/* La tinta va ENCIMA (rodea figuras, tacha, señala con flechas), pero el
+   conversor extrae el resaltador como píxeles OPACOS: sin multiply taparía
+   el texto y parecería que no se extrajo. Con multiply se comporta como un
+   rotulador — amarillo sobre blanco da amarillo, sobre letra negra da letra.
+   No bajarla a z-index 0: las anotaciones sobre las figuras se perderían. */
+.sheet :global(.ink-layer) {
+  z-index: 3;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.sheet :global(.pdf-text) {
+  position: absolute;
+  white-space: pre;
+  line-height: 1;
+  font-family: inherit;
+  transform-origin: left top;
+}
+
+.sheet :global(.pdf-image) {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+}
+
+/* contain, no fill: si el asset exportado no tiene el aspecto exacto de su
+   caja, fill lo estira en silencio. */
+.sheet :global(.pdf-image img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sheet :global(.ink) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+/* Los <section> sólo agrupan semánticamente; no deben crear cajas que
+   interfieran con el posicionamiento absoluto de los <span>. */
+.sheet :global(.semantic) {
+  display: contents;
+}

@@ -14,9 +14,14 @@ export type Unidad =
   | 'HERENCIA'
   | 'EVALUACION';
 
+/** Envase del resumen: PDF, o fragmento HTML servido por /api/resumen-html. */
+export type ResumenFormato = 'pdf' | 'html';
+
 export interface ResumenOpcion {
   id: string;
   label: string;
+  /** Va por opción además de por tarjeta: un picker puede mezclar envases. */
+  formato?: ResumenFormato;
 }
 
 export interface Actividad {
@@ -32,7 +37,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   /** ISO date YYYY-MM-DD; usado para "Próximos exámenes" en el home. */
   fechaISO?: string;
   /** Sobreescribe el destino del card en el sílabo. */
@@ -386,6 +391,13 @@ export const semanas: Semana[] = [
           'Cascadas de transducción de señales',
         ],
         docentes: [],
+        // Envase "en capas" (ver /addresumencapas): apuntes con anotaciones
+        // manuscritas que son parte del contenido, no decoración.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-te-8', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'bcm-ta-4',

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useDarkMode } from './DarkModeContext';
 import styles from '@/styles/resumenHtml.module.css';
@@ -63,6 +63,17 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
   const [sizeIndex, setSizeIndex] = useState(DEFAULT_SIZE);
   const [lightbox, setLightbox] = useState<string | null>(null);
   const { darkMode, toggleDark } = useDarkMode();
+  const sheetRef = useRef<HTMLElement>(null);
+
+  /**
+   * Un resumen puede venir en dos envases (ver CLAUDE.md): el flujo de un
+   * export de Notion, que reflowea, o un **PDF reconstruido en capas**, que
+   * es una página de tamaño fijo con el texto en posición absoluta.
+   *
+   * Se decide sobre el string, no con estado: si no, el primer frame se
+   * pintaría con los estilos del envase equivocado.
+   */
+  const esCapas = html !== null && html.includes('class="capas"');
 
   /**
    * Cada figura de Notion viene envuelta en <a href="…avif">, que por sí solo
@@ -122,6 +133,50 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
       document.body.classList.remove('pdf-fullscreen-active');
     };
   }, [onClose, lightbox]);
+
+  /**
+   * Escalado del envase "en capas".
+   *
+   * El export trae un <script> que hace esto mismo, pero el HTML se inyecta
+   * con dangerouslySetInnerHTML y **los <script> así insertados no se
+   * ejecutan**: sin esto la página quedaría clavada a su ancho original
+   * (~1500 px) desbordando el visor.
+   *
+   * La escala multiplica el ajuste al contenedor por SIZES[sizeIndex], así
+   * que A−/A+ funcionan como un zoom real —imprescindible en móvil, donde el
+   * ajuste deja la letra muy pequeña— y el desbordamiento lo absorbe el
+   * `overflow:auto` de .page-shell.
+   */
+  useEffect(() => {
+    if (!esCapas) return;
+    const sheet = sheetRef.current;
+    const capas = sheet?.querySelector<HTMLElement>('.capas');
+    const shell = sheet?.querySelector<HTMLElement>('.page-shell');
+    const page  = sheet?.querySelector<HTMLElement>('.page');
+    if (!capas || !shell || !page) return;
+
+    const cs = getComputedStyle(capas);
+    const W = parseFloat(cs.getPropertyValue('--page-w'));
+    const H = parseFloat(cs.getPropertyValue('--page-h'));
+    if (!W || !H) return;
+
+    // Ajustar la altura del shell vuelve a disparar el observer; sin esta
+    // guarda el par (fit → resize → fit) se realimenta en bucle.
+    let ultimoAncho = -1;
+    const fit = () => {
+      const ancho = shell.clientWidth;
+      if (ancho === ultimoAncho) return;
+      ultimoAncho = ancho;
+      const s = (ancho / W) * SIZES[sizeIndex];
+      page.style.transform = `scale(${s})`;
+      shell.style.height = `${H * s}px`;
+    };
+
+    const ro = new ResizeObserver(fit);
+    ro.observe(shell);
+    fit();
+    return () => ro.disconnect();
+  }, [esCapas, html, sizeIndex]);
 
   const bigger  = useCallback(() => setSizeIndex(i => Math.min(i + 1, SIZES.length - 1)), []);
   const smaller = useCallback(() => setSizeIndex(i => Math.max(i - 1, 0)), []);
@@ -183,7 +238,8 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
           <p className={styles.status}>Cargando resumen…</p>
         ) : (
           <article
-            className={styles.sheet}
+            ref={sheetRef}
+            className={`${styles.sheet} ${esCapas ? styles.sheetCapas : ''}`}
             // String, no número: para una custom property React entrega el
             // valor tal cual, y un número suelto aquí es más frágil de leer
             // dentro del calc() que la escala.
