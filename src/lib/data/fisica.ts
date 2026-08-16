@@ -247,6 +247,7 @@ export const semanas: Semana[] = [
           'Máquinas térmicas y eficiencia',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
       },
     ],
