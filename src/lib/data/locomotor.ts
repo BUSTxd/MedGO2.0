@@ -217,6 +217,12 @@ export const semanas: Semana[] = [
         ],
         docentes: ['Dra. Elva Izquierdo'],
         nota: 'Clase invertida: se toma un paso corto al inicio. Las 4 clases invertidas valen 25% de conocimientos.',
+        // Resumen en HTML: apuntes muy visuales (19 figuras), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-clase-4', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'anat-2',
