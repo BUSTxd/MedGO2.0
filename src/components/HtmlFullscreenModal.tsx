@@ -214,12 +214,24 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
     ro.observe(shell);
     fit();
     return () => ro.disconnect();
-    // `lightbox` entra a propósito aunque no se use dentro: al cerrar la
-    // figura ampliada esto vuelve a aplicar el transform sobre la página. Es
-    // una red de seguridad contra el compositing —una capa que el navegador
-    // no repinta al retirar el overlay se queda en blanco—, barata porque
-    // `fit()` sólo toca dos propiedades y el observer ya estaba montado.
-  }, [esCapas, html, sizeIndex, lightbox]);
+
+    /* `darkMode` y `lightbox` entran a propósito aunque no se usen dentro.
+     *
+     * Todo el escalado son **estilos inline sobre nodos del HTML inyectado**,
+     * y esos nodos no los controla React: si un re-render vuelve a escribir el
+     * `dangerouslySetInnerHTML`, la `.page` nueva nace sin `transform` y el
+     * `.page-shell` nuevo sin `height`. Como la página es `position:absolute`
+     * no aporta altura a su contenedor, así que el shell se queda en **altura
+     * cero y el documento desaparece por completo** — no descolocado, en
+     * blanco. Y el ResizeObserver seguía observando el nodo viejo, ya
+     * desconectado, de modo que `fit()` no volvía a correr nunca: el documento
+     * no se recuperaba ni redimensionando la ventana.
+     *
+     * Cambiar el tema desde la barra del visor es exactamente ese caso, porque
+     * `darkMode` viene de un contexto y re-renderiza el modal entero. Con la
+     * dependencia aquí, el efecto vuelve a buscar los nodos (`querySelector`
+     * los toma frescos), reengancha el observer y re-aplica el escalado. */
+  }, [esCapas, html, sizeIndex, lightbox, darkMode]);
 
   const bigger  = useCallback(() => setSizeIndex(i => Math.min(i + 1, SIZES.length - 1)), []);
   const smaller = useCallback(() => setSizeIndex(i => Math.max(i - 1, 0)), []);
