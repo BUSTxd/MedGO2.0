@@ -180,6 +180,7 @@ export const semanas: Semana[] = [
           'Viscosidad y flujo sanguíneo',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
       },
     ],
