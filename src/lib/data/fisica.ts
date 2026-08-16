@@ -161,6 +161,7 @@ export const semanas: Semana[] = [
           'Palancas del cuerpo humano',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
       },
       {
