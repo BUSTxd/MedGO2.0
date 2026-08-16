@@ -51,7 +51,7 @@ const ALLOWED = new Set([
   // Física — 'fis-c-N-prop' es el PDF de propuestos (tarjeta «Propuestos»)
   'fis-c-1', 'fis-c-1-prop',
   'fis-c-2', 'fis-c-2-prop',
-  'fis-c-3-prop',
+  'fis-c-3', 'fis-c-3-prop',
   'fis-c-4', 'fis-c-4-prop',
   'fis-c-5-prop',
   'fis-c-6-prop',
@@ -227,6 +227,7 @@ const FILE_ALIAS: Record<string, string> = {
   'fis-c-1-prop': 'fisica-medicina/fis-c-1-propuestos',
   'fis-c-2':      'fisica-medicina/fis-c-2',
   'fis-c-2-prop': 'fisica-medicina/fis-c-2-propuestos',
+  'fis-c-3':      'fisica-medicina/fis-c-3',
   'fis-c-3-prop': 'fisica-medicina/fis-c-3-propuestos',
   'fis-c-4':      'fisica-medicina/fis-c-4',
   'fis-c-4-prop': 'fisica-medicina/fis-c-4-propuestos',

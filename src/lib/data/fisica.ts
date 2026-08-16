@@ -146,6 +146,7 @@ export const semanas: Semana[] = [
           'Momento angular y su conservación',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
       },
       {
