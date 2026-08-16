@@ -22,6 +22,9 @@ import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 // la route de PDF: si no está aquí, es 404 sin tocar Storage.
 const ALLOWED = new Set([
   'bcm-ta-4',
+  // Segundo resumen de Te4: la clase se ofrece en dos envases y el alumno
+  // elige. El id lleva sufijo porque `bcm-te-4` ya es el PDF, en otro bucket.
+  'bcm-te-4-html',
   'bcm-te-8',
   'dig-clase-1',
   'dig-clase-2',
@@ -56,6 +59,7 @@ const ALLOWED = new Set([
 // id → ruta dentro del bucket (sin extensión).
 const FILE_ALIAS: Record<string, string> = {
   'bcm-ta-4': 'biologia-celular/bcm-ta-4',
+  'bcm-te-4-html': 'biologia-celular/bcm-te-4-html',
   'bcm-te-8': 'biologia-celular/bcm-te-8',
   'dig-clase-1': 'digestivo/dig-clase-1',
   'dig-clase-2': 'digestivo/dig-clase-2',

@@ -406,11 +406,18 @@ tocar nada (`VARIANTE`) y sólo cambian de dónde leen las medidas y dónde vive
 | | A · «layers» | B · «pdf-page» |
 |---|---|---|
 | página | `.page` | `.pdf-page` (el uploader le añade `.page`, que es por donde el visor la escala) |
-| unidades | px | **pt** |
-| figuras | `<figure data-image>` + `<img>` dentro | `<img class="pdf-image">` con la caja inline |
-| texto | spans dentro de `.text-layer` | `.pdf-text` sueltos + `.raster-text-rebuilt` (texto que estaba rasterizado *dentro* de una figura, reconstruido encima de ella) |
+| unidades | px | **pt o px** — varía entre documentos |
+| figuras | `<figure data-image>` + `<img>` dentro | `<img class="pdf-image">` con la caja inline, **o** `<figure class="pdf-image">` |
+| texto | spans dentro de `.text-layer` | `.pdf-text` sueltos + a veces `.raster-text-rebuilt` (texto que estaba rasterizado *dentro* de una figura, reconstruido encima de ella) |
 | tinta | raster AVIF | **SVG** — nítida a cualquier zoom |
-| resaltador | quemado dentro de la tinta como píxeles opacos | **SVG aparte** (`marks-bg`) |
+| resaltador | quemado dentro de la tinta como píxeles opacos | **SVG aparte** (`marks-bg`), **o** mezclado con la tinta en un `vectors.svg` único |
+
+**Dentro de B nada se puede dar por supuesto: hay que leerlo del documento.** La unidad no se
+anuncia en ningún sitio salvo el propio `.pdf-page` (asumir pt escalaría un documento en px por
+4/3 sin que nada avise); las figuras pueden ser `<img>` o `<figure>`, y la segunda forma pone el
+`style` **antes** del `src`, así que no vale un único regex; y el orden de capas cambia con ello
+(`<img class="pdf-image">` → resaltador en z1 y figuras en z2; `<figure class="pdf-image">` →
+`vector-layer` en z2 y figuras en z1). En las dos, el texto queda por encima de todo (z3).
 
 B es mejor documento y cambia dos cosas de las reglas de arriba:
 - **Regla del resaltado, válida para las dos variantes**: el conversor lo saca siempre como color
@@ -433,6 +440,18 @@ B es mejor documento y cambia dos cosas de las reglas de arriba:
 - Los SVG son assets como cualquier otro y van al bucket público `resumenes-img`, que hubo que
   **ampliar a `image/svg+xml`** (antes sólo avif/webp/png/jpeg). No abre ninguna vía de subida:
   `storage.objects` no tiene ni una política, así que sólo la service role key escribe ahí.
+- **Cuando tinta y resaltado viajan en el MISMO SVG**, el CSS no puede separarlos: atenuar la capa
+  apagaría también las flechas y los círculos dibujados a mano. Los separa el uploader por su
+  geometría, que es inequívoca — un resaltado es un **rectángulo** (sólo M/H/V/L/Z y ≤6 comandos),
+  un trazo de rotulador son decenas de puntos (en Te4: 6 rectángulos frente a 122 trazos)— y sólo
+  a los rectángulos les pone `fill-opacity="0.45"`. **Aquí sí se reescribe el asset**, a diferencia
+  de las figuras: la regla de subirlos tal cual existe para no recomprimir un AVIF (segunda pérdida
+  sobre un formato lossy), y un SVG es texto — añadir un atributo no degrada nada y es idempotente.
+- **Un asset que falta no se descarta solo.** El uploader lo reporta con el tamaño de su caja y su
+  `alt`, y exige `--omitir-faltantes` para quitarlo del documento: una figura de 600 px que falta
+  es contenido perdido y hay que ir a buscarla, mientras que un icono decorativo de 16 px no vale
+  detener la publicación —pero dejarlo referenciado pinta el icono de imagen rota—. La decisión
+  queda escrita en el comando, no en una heurística que un día borre una figura de verdad.
 
 **Las figuras se comportan como las de un resumen de Notion** (referencia: Anatomía de la región
 glútea, Aparato Locomotor): al pasar el cursor se elevan con sombra y vuelven solas al salir, y el
@@ -476,9 +495,18 @@ selector, de modo que nunca se abren como si fueran una figura, y una selección
 cancela el clic. El **hover**, en cambio, es CSS puro: en la franja donde el texto tapa la figura
 no se dispara.
 
+**Dos resúmenes en la misma clase.** `resumen.opciones` con 2+ entradas hace que la tarjeta abra
+el picker «¿Qué resumen quieres ver?» en vez de ir directa al visor, y `formato` **por opción**
+decide cuál abre cada una (precedencia: opción → tarjeta → `pdf`). Así conviven un PDF ya
+publicado y un HTML nuevo sin migrar el primero. El id del segundo necesita sufijo (`-html`):
+`bcm-te-4` ya es el PDF, en otro bucket y otra route. Hecho en Te4, donde el PDF es un resumen
+sintetizado y el HTML es la clase anotada a mano — se rotulan «Resumen 1» y «Resumen 2».
+
 Publicado con esta vía:
-- `bcm-te-8` (Biología Celular, Te8 — Comunicación celular) — variante «layers».
-- `bcm-ta-4` (Biología Celular, Ta4 — Estructura de la membrana) — variante «pdf-page».
+- `bcm-te-8` (Biología Celular, Te8 — Comunicación celular) — «layers».
+- `bcm-ta-4` (Biología Celular, Ta4 — Estructura de la membrana) — «pdf-page», pt, `<img>`.
+- `bcm-te-4-html` (Biología Celular, Te4 — Procariotas y eucariotas) — «pdf-page», px, `<figure>`,
+  tinta y resaltado en un `vectors.svg` único. Segunda opción del picker, junto al PDF.
 
 ---
 

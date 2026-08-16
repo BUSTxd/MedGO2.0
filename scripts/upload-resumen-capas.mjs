@@ -85,25 +85,31 @@ if (!VARIANTE) {
   process.exit(1);
 }
 
-/* La página se declara en px en la variante A y en pt en la B. El wrapper del
-   fragmento SIEMPRE va en px porque el visor hace `parseFloat` sobre la custom
-   property y la compara con `clientWidth`, que está en px: dejar "1245.612pt"
-   ahí daría una escala 4/3 veces menor sin que nada avise.
-   Los hijos se quedan en pt — 1245.612pt son exactamente 1660.816px, así que
-   caen en su sitio dentro de la caja sin reescribir cientos de coordenadas. */
+/* Dentro de «pdf-page» el conversor no es consistente: hay documentos en pt y
+   documentos en px, y la unidad no se anuncia en ninguna parte salvo en el
+   propio `.pdf-page`. Se lee de ahí en vez de asumirla — dar por hecho que
+   siempre es pt escalaría un documento en px por 4/3 sin que nada avise.
+
+   El wrapper del fragmento SIEMPRE sale en px porque el visor hace
+   `parseFloat` sobre la custom property y la compara con `clientWidth`, que
+   está en px. Los hijos se quedan en su unidad original: 1245.612pt son
+   exactamente 1660.816px, así que caen en su sitio dentro de la caja sin
+   reescribir cientos de coordenadas. */
 const PT_A_PX = 4 / 3;
-let PAGE_W, PAGE_H;
+let PAGE_W, PAGE_H, U = 'px';
 if (VARIANTE === 'layers') {
   const m = html.match(/--page-w:\s*([\d.]+)px;\s*--page-h:\s*([\d.]+)px/);
   if (!m) { console.error('✗ No encontré --page-w / --page-h.'); process.exit(1); }
   [, PAGE_W, PAGE_H] = m;
 } else {
-  const m = html.match(/\.pdf-page\s*\{[^}]*width:\s*([\d.]+)pt;\s*height:\s*([\d.]+)pt/);
+  const m = html.match(/\.pdf-page\s*\{[^}]*width:\s*([\d.]+)(pt|px);\s*height:\s*([\d.]+)(pt|px)/);
   if (!m) { console.error('✗ No encontré el width/height de .pdf-page.'); process.exit(1); }
-  PAGE_W = (+m[1] * PT_A_PX).toFixed(3);
-  PAGE_H = (+m[2] * PT_A_PX).toFixed(3);
+  U = m[2];
+  const k = U === 'pt' ? PT_A_PX : 1;
+  PAGE_W = (+m[1] * k).toFixed(3);
+  PAGE_H = (+m[3] * k).toFixed(3);
 }
-console.log(`variante: ${VARIANTE}`);
+console.log(`variante: ${VARIANTE}${VARIANTE === 'pdf-page' ? ` (coordenadas en ${U})` : ''}`);
 console.log(`página : ${(+PAGE_W).toFixed(0)} × ${(+PAGE_H).toFixed(0)} px`);
 
 // ─── 2. correcciones del auditor ─────────────────────────────────────────
@@ -114,15 +120,46 @@ console.log(`página : ${(+PAGE_W).toFixed(0)} × ${(+PAGE_H).toFixed(0)} px`);
 const RE_ASSET = /src="([^"]+\.(?:png|jpe?g|webp|avif|svg))"/gi;
 const refsRaw = [...new Set([...html.matchAll(RE_ASSET)].map(m => m[1]))];
 const renombres = new Map();
+const ausentes = [];
 for (const ref of refsRaw) {
   if (existsSync(join(dir, ref))) continue;
   const base = ref.replace(/\.(png|jpe?g|webp|avif|svg)$/i, '');
   const alt = ['avif', 'webp', 'png', 'jpg', 'jpeg', 'svg'].map(e => `${base}.${e}`).find(c => existsSync(join(dir, c)));
-  if (!alt) { console.error(`✗ falta el archivo ${ref} y no hay variante en disco.`); process.exit(1); }
-  renombres.set(ref, alt);
+  if (alt) renombres.set(ref, alt);
+  else ausentes.push(ref);
 }
 for (const [de, a] of renombres) html = html.split(`src="${de}"`).join(`src="${a}"`);
 if (renombres.size) console.log(`✓ ${renombres.size} referencias reapuntadas a la extensión real`);
+
+/* Un asset que no está en disco por ninguna extensión. NO se decide solo: una
+   figura de 600px que falta es contenido perdido y hay que ir a buscarla,
+   mientras que un icono decorativo de 16px no vale detener la publicación —
+   pero dejarlo referenciado pinta el icono de imagen rota del navegador.
+   Así que se informa con el tamaño de su caja y se exige `--omitir-faltantes`
+   para descartarlas: la decisión queda escrita en el comando, no en una
+   heurística que un día borre una figura de verdad. */
+if (ausentes.length) {
+  console.log(`\n⚠ ${ausentes.length} figura(s) referenciada(s) que no están en disco:`);
+  for (const ref of ausentes) {
+    const caja = html.match(new RegExp(`style="[^"]*width:([\\d.]+)(?:pt|px);height:([\\d.]+)(?:pt|px)[^"]*"[^>]*>\\s*<img src="${ref.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"`))
+              ?? html.match(new RegExp(`<img[^>]*src="${ref.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"[^>]*width:([\\d.]+)(?:pt|px);height:([\\d.]+)(?:pt|px)`));
+    const dim = caja ? `${(+caja[1]).toFixed(0)}×${(+caja[2]).toFixed(0)}` : 'tamaño desconocido';
+    const alt = html.match(new RegExp(`src="${ref.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"[^>]*alt="([^"]*)"`))?.[1] ?? '';
+    console.log(`   · ${ref}  (${dim})  ${alt && `«${alt}»`}`);
+  }
+  if (!args['omitir-faltantes']) {
+    console.error('\n✗ Consigue esos archivos, o repite con --omitir-faltantes si son decorativos.');
+    console.error('  Mira el tamaño y el alt de arriba antes de decidir: si es una figura grande, es contenido.');
+    process.exit(1);
+  }
+  // se quita la <figure> entera cuando la envuelve; si no, sólo la <img>
+  for (const ref of ausentes) {
+    const esc = ref.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    html = html.replace(new RegExp(`<figure class="pdf-image"[^>]*>\\s*<img src="${esc}"[^>]*>\\s*</figure>`, 'g'), '');
+    html = html.replace(new RegExp(`<img[^>]*src="${esc}"[^>]*>`, 'g'), '');
+  }
+  console.log(`✓ ${ausentes.length} figura(s) ausente(s) retirada(s) del documento`);
+}
 
 // aspecto: se corrige por el ancho — cambiar el alto empujaría la figura
 // contra el texto de abajo, que está en coordenada fija.
@@ -138,10 +175,19 @@ if (VARIANTE === 'layers') {
     if (ref) cajas.push({ id: c[1], ref, w: +c[4], h: +c[5], u: 'px' });
   }
 } else {
-  // en pt y con la <img> llevando su propia caja: no hay data-image al que
-  // referirse, así que el id para el log es el propio archivo.
-  for (const c of html.matchAll(/<img class="pdf-image" src="([^"]+)"[^>]*style="left:[\d.]+pt;top:[\d.]+pt;width:([\d.]+)pt;height:([\d.]+)pt;?"/g)) {
-    cajas.push({ id: c[1].split('/').pop(), ref: c[1], w: +c[2], h: +c[3], u: 'pt' });
+  /* No hay data-image al que referirse, así que el id del log es el archivo.
+     Dos formas conviven dentro de esta variante y hay que cubrir las dos:
+       · la <img> lleva su propia caja      → <img class="pdf-image" style="…">
+       · la envuelve un <figure> con la caja → <figure class="pdf-image" style="…"><img …>
+     La segunda pone el `style` ANTES del `src`, así que no vale un solo regex. */
+  const N = String.raw`[\d.]+`, UU = '(?:pt|px)';
+  for (const c of html.matchAll(
+    new RegExp(`<img class="pdf-image" src="([^"]+)"[^>]*style="left:${N}${UU};top:${N}${UU};width:(${N})${UU};height:(${N})${UU};?"`, 'g'))) {
+    cajas.push({ id: c[1].split('/').pop(), ref: c[1], w: +c[2], h: +c[3], u: U });
+  }
+  for (const c of html.matchAll(
+    new RegExp(`<figure class="pdf-image" style="left:${N}${UU};top:${N}${UU};width:(${N})${UU};height:(${N})${UU};?"[^>]*>\\s*<img src="([^"]+)"`, 'g'))) {
+    cajas.push({ id: c[3].split('/').pop(), ref: c[3], w: +c[1], h: +c[2], u: U });
   }
 }
 
@@ -183,10 +229,47 @@ const assets = [...new Set([...html.matchAll(RE_ASSET)].map(m => m[1]))];
 let bytes = 0, subidas = 0;
 const fallos = [];
 
+/* Atenuar los resaltados que viajan DENTRO de un SVG de capa.
+ *
+ * Cuando la tinta y el resaltador vienen en archivos separados (`marks-bg` +
+ * `ink`) basta con bajarle la opacidad a la capa entera desde el CSS. Pero hay
+ * exports que los mezclan en un único `vectors.svg`, y ahí el CSS no puede
+ * distinguirlos: atenuar la capa apagaría también las flechas y los círculos
+ * dibujados a mano, que deben quedar nítidos.
+ *
+ * Se separan por su geometría, que es inequívoca: un resaltado es un
+ * **rectángulo** (sólo M/H/V/L/Z y pocos comandos), mientras que un trazo de
+ * rotulador son decenas o cientos de puntos. En Te4: 6 rectángulos frente a
+ * 122 trazos.
+ *
+ * Aquí sí se reescribe el asset, a diferencia de las figuras: la regla de
+ * subirlos tal cual existe para no recomprimir un AVIF —que sería una segunda
+ * pérdida sobre un formato lossy—, y un SVG es texto. Añadir un atributo no
+ * degrada nada y es idempotente. */
+const svgAtenuado = new Map();
+for (const ref of assets.filter(r => /\.svg$/i.test(r))) {
+  const original = readFileSync(join(dir, ref), 'utf8');
+  let tocados = 0;
+  const out = original.replace(/<path\b[^>]*\/>/g, (tag) => {
+    const d = tag.match(/\bd="([^"]+)"/)?.[1];
+    if (!d) return tag;
+    const esRectangulo = !/[CcSsQqTtAa]/.test(d) && (d.match(/[A-Za-z]/g) ?? []).length <= 6;
+    if (!esRectangulo) return tag;                       // trazo de tinta: intacto
+    if (/fill="none"/.test(tag)) return tag;             // no pinta nada
+    if (!/fill-opacity="1(\.0+)?"/.test(tag)) return tag; // ya venía translúcido
+    tocados++;
+    return tag.replace(/fill-opacity="1(\.0+)?"/, 'fill-opacity="0.45"');
+  });
+  if (tocados) {
+    svgAtenuado.set(ref, Buffer.from(out, 'utf8'));
+    console.log(`✓ ${ref}: ${tocados} resaltado(s) rectangular(es) atenuado(s) — la tinta queda intacta`);
+  }
+}
+
 console.log(`\nassets : ${assets.length}`);
 for (const ref of assets) {
   const p = join(dir, ref);
-  const buf = readFileSync(p);
+  const buf = svgAtenuado.get(ref) ?? readFileSync(p);
   bytes += buf.length;
   const dest = `${PREFIX}/${ref.split('/').pop()}`;
   if (dry) { subidas++; continue; }
@@ -237,7 +320,7 @@ let body = page.replace(RE_ASSET, (_, p) => `src="${BASE_PUB}/${PREFIX}/${p.spli
 //  - las que ya traen `loading`: el export suele ponerlo, y añadirlo otra vez
 //    deja el atributo duplicado (el navegador se queda con el primero, pero
 //    es markup sucio que además engaña al contar figuras diferidas).
-body = body.replace(/<img (?!class="(?:ink|vector-ink|vector-bg)")(?![^>]*\bloading=)/g,
+body = body.replace(/<img (?!class="(?:ink|vector-ink|vector-bg|vector-layer)")(?![^>]*\bloading=)/g,
                     '<img loading="lazy" decoding="async" ');
 
 // el wrapper lleva las medidas de ESTE documento; el resto del estilo es

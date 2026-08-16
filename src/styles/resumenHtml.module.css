@@ -897,11 +897,38 @@
   mix-blend-mode: multiply;
 }
 
-/* Aquí .pdf-image ES la <img> (en la variante «layers» era el <figure> que
-   la envuelve), así que el object-fit va en el propio elemento. */
+/* .pdf-image puede ser la propia <img> o el <figure> que la envuelve, según
+   el export — y el orden de las capas cambia con ello, así que cada forma
+   lleva su z-index:
+
+     <img class="pdf-image">     resaltador en .vector-bg (z1) → figuras en z2
+     <figure class="pdf-image">  tinta+resaltado en .vector-layer (z2), y las
+                                 figuras van debajo, en z1
+
+   En ambas el texto queda por encima de todo lo demás (z3). */
 .sheet :global(img.pdf-image) {
   z-index: 2;
   object-fit: contain;
+}
+
+.sheet :global(figure.pdf-image) {
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Capa única que trae la tinta y el resaltado juntos. No se atenúa aquí: no
+   hay forma de distinguir desde CSS un rectángulo de resaltado de un trazo de
+   rotulador dentro del mismo SVG, y bajarle la opacidad apagaría también las
+   flechas dibujadas a mano. Lo resuelve el uploader, que atenúa sólo los
+   rectángulos del archivo. Va debajo del texto, como en el export original. */
+.sheet :global(.vector-layer) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
 }
 
 /* Texto que en el PDF estaba rasterizado dentro de una figura y el conversor
