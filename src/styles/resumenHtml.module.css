@@ -939,11 +939,26 @@
   z-index: 1;
 }
 
-/* Capa única que trae la tinta y el resaltado juntos. No se atenúa aquí: no
-   hay forma de distinguir desde CSS un rectángulo de resaltado de un trazo de
-   rotulador dentro del mismo SVG, y bajarle la opacidad apagaría también las
-   flechas dibujadas a mano. Lo resuelve el uploader, que atenúa sólo los
-   rectángulos del archivo. Va debajo del texto, como en el export original. */
+/* Capa única que trae la tinta y el resaltado juntos, debajo del texto.
+
+   `multiply` y NO `opacity`, y la diferencia importa:
+
+   El uploader atenúa los resaltados que son rectángulos limpios, pero en un
+   documento anotado a mano los hay **dibujados con el resaltador sobre una
+   figura** — cientos de puntos y curvas, indistinguibles por geometría de un
+   trazo de rotulador. Salen opacos, y sobre papel blanco eso no se nota
+   (amarillo sobre blanco es amarillo); encima de una imagen, en cambio,
+   la borran: se ve una banda de color donde debería verse el dibujo marcado.
+
+   `multiply` es justo lo que hace un resaltador real: sobre blanco no cambia
+   nada, y sobre la figura la tiñe conservando el detalle. Al ir en la capa
+   entera alcanza también a las letras y flechas manuscritas, y ahí es inocuo
+   porque toda la tinta de este envase es de color pleno (amarillo, cian,
+   magenta, rojo, azul) — el único trazo que `multiply` se comería es uno
+   blanco, que no existe: sería invisible sobre el papel.
+
+   `opacity` en la capa sí sería un error, y por eso no está: apagaría por
+   igual las anotaciones manuscritas, que son material de estudio. */
 .sheet :global(.vector-layer) {
   position: absolute;
   left: 0;
@@ -952,6 +967,7 @@
   height: 100%;
   z-index: 2;
   pointer-events: none;
+  mix-blend-mode: multiply;
 }
 
 /* Texto que en el PDF estaba rasterizado dentro de una figura y el conversor

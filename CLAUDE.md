@@ -431,8 +431,17 @@ B es mejor documento y cambia dos cosas de las reglas de arriba:
   dos: `multiply` no atenúa nada sobre papel blanco (amarillo × blanco = el mismo amarillo), y
   `opacity` sola no garantiza que una letra oscura debajo sobreviva, que es lo que `multiply` sí
   asegura. El asset **no se toca**: se sube tal cual y la atenuación vive en el CSS module.
-- **La tinta opaca deja de ser un problema**: son trazos de rotulador dibujados *encima* a
-  propósito, no un resaltado, así que ahí no va `multiply`.
+- **La tinta opaca sí es un problema, pero sólo encima de una figura.** Al principio parecía que
+  no —son trazos dibujados *encima* a propósito, no un resaltado— y por eso la capa iba sin
+  `multiply`. Lo desmintió Te4: en un documento anotado a mano hay **resaltados trazados con el
+  resaltador sobre las propias figuras**, cientos de puntos y curvas, indistinguibles por
+  geometría de un trazo de rotulador, así que el uploader (que sólo atenúa rectángulos limpios)
+  no los toca y salen opacos. Sobre papel blanco no se nota; sobre una imagen la **borran**. Lo
+  arregla `mix-blend-mode: multiply` en `.vector-layer`: sobre blanco no cambia nada y sobre la
+  figura tiñe conservando el detalle. Alcanza también a letras y flechas y ahí es inocuo, porque
+  toda la tinta es de color pleno — lo único que `multiply` se comería es un trazo blanco, que no
+  existe (sería invisible sobre el papel). **`opacity` en esa capa sigue prohibida**: apagaría por
+  igual las anotaciones manuscritas, que son material de estudio.
 - Las coordenadas van en **pt** pero el wrapper del fragmento declara `--page-w/--page-h` en **px**
   (×4/3): el visor hace `parseFloat` de esa custom property y la compara con `clientWidth`, que
   está en px — dejar `1245.612pt` ahí daría una escala 4/3 veces menor sin que nada avise. Los
