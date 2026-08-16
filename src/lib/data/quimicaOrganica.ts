@@ -624,6 +624,13 @@ export const semanas: Semana[] = [
         subtemas: ['Capítulos I–VII'],
         docentes: [],
         nota: 'Examen cancelatorio: vale 20% y se promedia con el final.',
+        propuestos: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'qor-examen-parcial-1', label: 'Parcial 1' },
+            { id: 'qor-examen-parcial-2', label: 'Parcial 2' },
+          ],
+        },
       },
       {
         id: 'qor-pc-3',
