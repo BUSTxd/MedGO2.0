@@ -39,6 +39,8 @@ const ALLOWED = new Set([
   'qor-pc-3-2018', 'qor-pc-3-2019',
   'qor-pc-4-2018', 'qor-pc-4-2019',
   'qor-examen-parcial-1', 'qor-examen-parcial-2',
+  'qor-examen-final-3-2018', 'qor-examen-final-4-2018',
+  'qor-examen-final-3-2019', 'qor-examen-final-4-2019',
   'qor-lab-1', 'qor-lab-2', 'qor-lab-3', 'qor-lab-4',
   // Inmunología (ids bare tal como están en inmunologia.ts — sin colisión
   // actual con otros cursos; el path en Storage sí lleva prefijo inmunologia/)
@@ -191,6 +193,10 @@ const FILE_ALIAS: Record<string, string> = {
   'qor-pc-4-2019': 'quimica-organica/qor-pc-4-2019',
   'qor-examen-parcial-1': 'quimica-organica/qor-examen-parcial-1',
   'qor-examen-parcial-2': 'quimica-organica/qor-examen-parcial-2',
+  'qor-examen-final-3-2018': 'quimica-organica/qor-examen-final-3-2018',
+  'qor-examen-final-4-2018': 'quimica-organica/qor-examen-final-4-2018',
+  'qor-examen-final-3-2019': 'quimica-organica/qor-examen-final-3-2019',
+  'qor-examen-final-4-2019': 'quimica-organica/qor-examen-final-4-2019',
   'qor-lab-1': 'quimica-organica/qor-lab-1',
   'qor-lab-2': 'quimica-organica/qor-lab-2',
   'qor-lab-3': 'quimica-organica/qor-lab-3',

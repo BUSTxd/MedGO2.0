@@ -678,6 +678,15 @@ export const semanas: Semana[] = [
         subtemas: ['Capítulos VIII–XIV'],
         docentes: [],
         nota: 'Examen cancelatorio: evalúa sólo lo visto desde el parcial. Vale 20%.',
+        propuestos: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'qor-examen-final-3-2018', label: 'Examen 3 — 2018' },
+            { id: 'qor-examen-final-4-2018', label: 'Examen 4 — 2018' },
+            { id: 'qor-examen-final-3-2019', label: 'Examen 3 — 2019' },
+            { id: 'qor-examen-final-4-2019', label: 'Examen 4 — 2019' },
+          ],
+        },
       },
     ],
   },
