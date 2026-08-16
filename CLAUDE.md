@@ -480,21 +480,27 @@ retirar el overlay: el HTML seguía en el DOM, pero sin volver a pintarse. Ahora
 `rgba(6,8,20,.7)` sin filtro, y el documento se ve atenuado por detrás. Dos refuerzos más contra
 lo mismo:
 
-- el efecto de escalado lleva `lightbox` y `darkMode` en sus dependencias aunque no los use: los
-  dos re-renderizan el modal, y si un re-render rehiciera el HTML inyectado, la `.page` nueva
-  nacería sin `transform` y el `.page-shell` sin `height` — como la página es `position:absolute`
-  no aporta altura, así que el shell se quedaría a **altura cero y el documento desaparecería
-  entero**, no descolocado. Con la dependencia, el efecto vuelve a tomar los nodos y reengancha el
-  `ResizeObserver` (que si no seguiría observando el nodo viejo, y `fit()` no correría nunca más);
-- **pero `fit()` no debe reescribir lo que ya está puesto.** Re-aplicar el mismo `transform` y la
-  misma `height` invalida el layout de un documento de miles de nodos absolutos y le hace perder el
-  punto de lectura al contenedor: al ampliar una figura, el documento de detrás saltaba al
-  principio. La guarda compara contra un **ref** con la última escala escrita, **no** contra
-  `page.style.transform` — el navegador re-serializa lo que se le escribe
-  (`scale(0.6404077217929812)` vuelve como `scale(0.640408)`), así que esa comparación sería
-  siempre falsa y la guarda no haría nada. Del DOM sólo se mira si `transform`/`height` **siguen
-  ahí**: vacíos = estilos perdidos = re-aplicar. Cuando la escala sí cambia (A+/A−, girar el
-  móvil), el scroll se traslada **en proporción** a la nueva altura;
+- **el objeto de `dangerouslySetInnerHTML` va memoizado, y esto es la raíz de casi todo lo demás.**
+  React no compara el string: en `updateProperties` decide con `nextProp === lastProp`, **por
+  referencia**. Un `{{ __html: html }}` escrito en el JSX es un objeto nuevo en cada render, así
+  que la comparación siempre falla y React vuelve a ejecutar `domElement.innerHTML = html` aunque
+  el string sea idéntico — **reconstruyendo el documento entero en cada re-render del visor**
+  (abrir una figura, cambiar de tema, tocar A+/A−). Como el escalado son estilos inline sobre esos
+  nodos, la `.page` nueva nace sin `transform` y el `.page-shell` sin `height`; la página es
+  `position:absolute` y no aporta altura, así que el shell cae a altura cero, el navegador
+  **clampa el scroll a 0** y el alumno vuelve al principio del resumen cada vez que amplía una
+  imagen. Con `useMemo` sobre `html`, React ni entra a `setProp`. De ahí que el efecto de escalado
+  dependa **sólo** de `[esCapas, html, sizeIndex]`: `lightbox` y `darkMode` estuvieron ahí como
+  parche a este mismo fallo (reparar el escalado después de que se perdiera) y volver a meterlos
+  sólo reengancharía el `ResizeObserver` por cada clic en una figura;
+- **aun así `fit()` no reescribe lo que ya está puesto.** Re-aplicar el mismo `transform` y la
+  misma `height` invalida el layout de un documento de miles de nodos absolutos. La guarda compara
+  contra un **ref** con la última escala escrita, **no** contra `page.style.transform` — el
+  navegador re-serializa lo que se le escribe (`scale(0.6404077217929812)` vuelve como
+  `scale(0.640408)`), así que esa comparación sería siempre falsa. Del DOM sólo se mira si
+  `transform`/`height` **siguen ahí**: vacíos = estilos perdidos = re-aplicar (red de seguridad,
+  porque el modo de fallo es que el documento desaparezca). Cuando la escala sí cambia (A+/A−,
+  girar el móvil), el scroll se traslada **en proporción** a la nueva altura;
 - bloquear el scroll y esconder la sidebar vive en un efecto **sin dependencias**, separado del
   listener de `Esc` (que sí depende de `lightbox`). Juntos, cada clic en una figura quitaba y
   reponía `pdf-fullscreen-active` en el `<body>` — un reflow del dashboard entero por imagen.
@@ -507,6 +513,14 @@ toma la primera figura que aparezca. Las capas a página completa (tinta y resal
 selector, de modo que nunca se abren como si fueran una figura, y una selección de texto activa
 cancela el clic. El **hover**, en cambio, es CSS puro: en la franja donde el texto tapa la figura
 no se dispara.
+
+**El hover necesita `pointer-events: none` en `.text-layer`, y sólo en la variante «layers».** Ahí
+el texto va agrupado en un contenedor `inset: 0` por encima de las figuras, de modo que la capa
+entera se comía el hover y **ninguna figura del documento se elevaba** (Te8). En «pdf-page» no
+pasa porque no hay contenedor: cada `.pdf-text` es una caja del tamaño de su frase. El puntero se
+le devuelve a los fragmentos (`.text-layer > *`), no al contenedor — el texto seleccionable es una
+de las dos ventajas del formato—, y así las dos variantes se comportan igual: la figura responde
+salvo justo debajo de una letra.
 
 **⛔ No «neutralizar» el CSS del visor con un reset amplio.** El razonamiento es tentador —el
 documento trae su tipografía completa inline, así que no necesita las reglas pensadas para Notion,

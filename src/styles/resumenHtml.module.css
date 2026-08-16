@@ -769,7 +769,25 @@
 }
 
 .sheet :global(.image-layer) { z-index: 1; }
-.sheet :global(.text-layer)  { z-index: 2; }
+
+/* La capa de texto cubre la PÁGINA ENTERA (inset: 0) y va por encima de las
+   figuras, así que sin esto se come el hover de todas ellas: en la variante
+   «layers» las figuras nunca se elevaban ni proyectaban sombra, mientras que
+   en la «pdf-page» sí, porque allí no hay contenedor — cada fragmento de
+   texto es una caja suelta del tamaño de su frase.
+
+   El puntero se le devuelve a los fragmentos, no al contenedor: el texto de
+   este envase es real y seleccionable, y esa es una de las dos únicas
+   ventajas que tiene sobre el PDF. Así el comportamiento queda igual en las
+   dos variantes — la figura responde salvo justo debajo de una letra. */
+.sheet :global(.text-layer) {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sheet :global(.text-layer) > * {
+  pointer-events: auto;
+}
 
 /* La tinta va ENCIMA (rodea figuras, tacha, señala con flechas), pero el
    conversor extrae el resaltador como píxeles OPACOS: sin multiply taparía

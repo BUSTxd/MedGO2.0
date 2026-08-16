@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useDarkMode } from './DarkModeContext';
 import styles from '@/styles/resumenHtml.module.css';
@@ -77,6 +77,28 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
    * pintaría con los estilos del envase equivocado.
    */
   const esCapas = html !== null && html.includes('class="capas"');
+
+  /**
+   * ⚠️ El objeto de `dangerouslySetInnerHTML` TIENE que ser estable.
+   *
+   * React no compara el string: en `updateProperties` recorre las props y
+   * decide con `nextProp === lastProp`, una comparación **por referencia**.
+   * Un `{{ __html: html }}` escrito en el JSX es un objeto nuevo en cada
+   * render, así que la comparación siempre falla y React ejecuta
+   * `domElement.innerHTML = html` otra vez — aunque el string sea idéntico.
+   *
+   * Eso **destruye y reconstruye el documento entero** en cada re-render del
+   * visor (abrir una figura, cambiar de tema, tocar A+/A−). Y como el
+   * escalado del envase "en capas" son estilos inline sobre esos nodos, la
+   * `.page` nueva nace sin `transform` y el `.page-shell` sin `height`: la
+   * página es `position:absolute` y no aporta altura, así que el contenedor
+   * se queda en altura cero, el navegador **clampa el scroll a 0** y el
+   * alumno vuelve al principio del resumen cada vez que amplía una imagen.
+   *
+   * Con el objeto memoizado React ni siquiera entra a `setProp`: el HTML se
+   * escribe una sola vez, cuando `html` cambia de verdad.
+   */
+  const contenido = useMemo(() => ({ __html: html ?? '' }), [html]);
 
   /**
    * Ampliar una figura sin salir del documento. Los dos envases la sirven
@@ -208,13 +230,11 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
 
       /* Si el escalado ya está puesto, NO se vuelve a escribir.
        *
-       * El efecto se re-ejecuta con cada cambio de `lightbox`, `sizeIndex` o
-       * `darkMode` (ver el bloque de dependencias abajo), pero casi siempre lo
-       * que encuentra es el escalado intacto: entonces reescribir `transform` y
-       * `height` con el MISMO valor sólo sirve para invalidar el layout del
-       * documento entero —miles de nodos absolutos— y arriesgarse a que el
-       * contenedor pierda el punto de lectura. Al alumno eso se le ve como que
-       * al ampliar una figura el documento de detrás salta al principio.
+       * El observer dispara `fit()` ante cualquier cambio de tamaño del shell,
+       * y muchas veces lo que encuentra es el escalado intacto: entonces
+       * reescribir `transform` y `height` con el MISMO valor sólo sirve para
+       * invalidar el layout del documento entero —miles de nodos absolutos— y
+       * arriesgarse a que el contenedor pierda el punto de lectura.
        *
        * Se compara contra `aplicado` (un ref, así sobrevive a los re-renders) y
        * **no** contra `page.style.transform`: el navegador re-serializa lo que
@@ -223,10 +243,10 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
        * guarda no serviría de nada.
        *
        * Lo que sí se mira del DOM es si el escalado **sigue ahí**: en cuanto
-       * `transform` o `height` vengan vacíos, los estilos se perdieron (un
-       * re-render que rehiciera el HTML inyectado los dejaría así) y hay que
-       * re-aplicarlos aunque la escala no haya cambiado. Para eso están
-       * `darkMode` y `lightbox` en las dependencias. */
+       * `transform` o `height` vengan vacíos, los estilos se perdieron y hay
+       * que re-aplicarlos aunque la escala no haya cambiado. Con el HTML
+       * memoizado eso ya no debería pasar nunca; se deja como red de
+       * seguridad, porque el modo de fallo es que el documento desaparezca. */
       if (aplicado.current === s && page.style.transform && shell.style.height) return;
       aplicado.current = s;
 
@@ -262,23 +282,20 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
     fit();
     return () => ro.disconnect();
 
-    /* `darkMode` y `lightbox` entran a propósito aunque no se usen dentro.
+    /* Aquí NO van `lightbox` ni `darkMode`.
      *
-     * Todo el escalado son **estilos inline sobre nodos del HTML inyectado**,
-     * y esos nodos no los controla React: si un re-render vuelve a escribir el
-     * `dangerouslySetInnerHTML`, la `.page` nueva nace sin `transform` y el
-     * `.page-shell` nuevo sin `height`. Como la página es `position:absolute`
-     * no aporta altura a su contenedor, así que el shell se queda en **altura
-     * cero y el documento desaparece por completo** — no descolocado, en
-     * blanco. Y el ResizeObserver seguía observando el nodo viejo, ya
-     * desconectado, de modo que `fit()` no volvía a correr nunca: el documento
-     * no se recuperaba ni redimensionando la ventana.
+     * Estuvieron, y era un parche a otro problema: como el objeto de
+     * `dangerouslySetInnerHTML` se recreaba en cada render, cualquier
+     * re-render rehacía el documento inyectado y se llevaba por delante estos
+     * estilos inline —dejando el shell a altura cero y el documento en
+     * blanco—, así que el efecto tenía que volver a correr para repararlo.
      *
-     * Cambiar el tema desde la barra del visor es exactamente ese caso, porque
-     * `darkMode` viene de un contexto y re-renderiza el modal entero. Con la
-     * dependencia aquí, el efecto vuelve a buscar los nodos (`querySelector`
-     * los toma frescos), reengancha el observer y re-aplica el escalado. */
-  }, [esCapas, html, sizeIndex, lightbox, darkMode]);
+     * Con el HTML memoizado los nodos ya no se rehacen, de modo que el
+     * escalado sólo depende de lo que de verdad lo cambia: el envase, el
+     * documento y el zoom. Volver a meterlas haría correr el efecto —y
+     * reenganchar el ResizeObserver— cada vez que se abre una figura, sin
+     * nada que ganar. */
+  }, [esCapas, html, sizeIndex]);
 
   const bigger  = useCallback(() => setSizeIndex(i => Math.min(i + 1, SIZES.length - 1)), []);
   const smaller = useCallback(() => setSizeIndex(i => Math.max(i - 1, 0)), []);
@@ -347,7 +364,7 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
             // dentro del calc() que la escala.
             style={{ ['--s' as string]: String(SIZES[sizeIndex]) }}
             onClick={onSheetClick}
-            dangerouslySetInnerHTML={{ __html: html }}
+            dangerouslySetInnerHTML={contenido}
           />
         )}
       </div>
