@@ -24,7 +24,13 @@
      claro se perdía: el documento tiene que apoyarse sobre algo más oscuro
      que él para leerse como hoja. Lo único que cambia con el tema es la hoja. */
   background: rgba(8, 10, 22, 0.95);
-  backdrop-filter: blur(8px);
+  /* SIN backdrop-filter, por la misma razón que en .lightbox: obliga a
+     rasterizar todo lo de detrás en una capa aparte, y con un documento "en
+     capas" —`transform: scale()` en la página, `mix-blend-mode` en la tinta—
+     Chrome deja de repintarla en cuanto algo la invalida. Cambiar de tema es
+     justo eso: togglea una clase en el <body>, y el documento desaparecía.
+     A 0.95 de opacidad el desenfoque no aportaba nada visible, y costaba una
+     capa compositada a pantalla completa. */
 }
 
 /* ─── Barra superior ─── */
@@ -756,6 +762,40 @@
   height: var(--page-h);
   transform-origin: 0 0;
   background: #fff;
+  /* Papel: negro sobre blanco en los DOS temas. Los fragmentos de texto traen
+     su color inline, pero sus contenedores no, y sin esto heredarían el --tx
+     del visor — que en modo oscuro es casi blanco sobre la hoja blanca. */
+  color: #000;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Aislamiento del documento respecto al CSS del visor
+
+   Un documento "en capas" trae su tipografía COMPLETA inline: cada fragmento
+   lleva su `font-family`, `font-size`, `color` y su posición absoluta. No
+   necesita —ni debe recibir— nada del CSS pensado para un export de Notion.
+
+   Algunos exports envuelven los fragmentos en elementos semánticos
+   (`<h1 class="text-block heading-block">`, `<p class="text-block">`), y sin
+   esto se llevan las reglas de Notion de este mismo archivo: `margin: 2em`,
+   `border-bottom: 2px solid`, `font-size: 1.62em` y `color: var(--tx)`. El
+   `<style>` del export los neutralizaba con `position:static;margin:0;
+   padding:0;border:0;font:inherit`, y ese bloque se descarta al publicar, así
+   que la neutralización tiene que vivir aquí.
+
+   Va ANTES que las reglas de las capas: a igual especificidad manda la última,
+   y `.pdf-text` necesita conservar su `position: absolute`.
+   ───────────────────────────────────────────────────────────────────── */
+.sheet :global(.pdf-page) :is(h1, h2, h3, h4, h5, h6, p, div, section, article, ul, ol, li, figure, blockquote) {
+  position: static;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  line-height: inherit;
+  list-style: none;
 }
 
 .sheet :global(.image-layer),
@@ -911,16 +951,25 @@
   object-fit: contain;
 }
 
+/* Sin `overflow: hidden`: la caja recortaba la sombra que la figura proyecta
+   al pasar el cursor, y el efecto no llegaba a verse. No hace falta para
+   contener la imagen — de eso ya se encarga el `object-fit: contain`. */
 .sheet :global(figure.pdf-image) {
   z-index: 1;
-  overflow: hidden;
 }
 
-/* Capa única que trae la tinta y el resaltado juntos. No se atenúa aquí: no
-   hay forma de distinguir desde CSS un rectángulo de resaltado de un trazo de
-   rotulador dentro del mismo SVG, y bajarle la opacidad apagaría también las
-   flechas dibujadas a mano. Lo resuelve el uploader, que atenúa sólo los
-   rectángulos del archivo. Va debajo del texto, como en el export original. */
+/* Capa única que trae la tinta y el resaltado juntos. Va DEBAJO del texto
+   (z2 < z3), como en el export original.
+
+   La opacidad no se toca aquí: desde CSS no hay forma de distinguir un
+   rectángulo de resaltado de un trazo de rotulador dentro del mismo SVG, y
+   atenuar la capa entera apagaría las flechas dibujadas a mano. De eso se
+   encarga el uploader, que atenúa sólo los rectángulos del archivo.
+
+   Lo que sí va aquí es `multiply`, como garantía: aunque un trazo acabe sobre
+   una palabra, se compone en vez de taparla —color × letra oscura = la letra—,
+   así que el texto se lee pase lo que pase. Es además cómo se comporta un
+   rotulador de verdad sobre el papel. */
 .sheet :global(.vector-layer) {
   position: absolute;
   left: 0;
@@ -929,6 +978,7 @@
   height: 100%;
   z-index: 2;
   pointer-events: none;
+  mix-blend-mode: multiply;
 }
 
 /* Texto que en el PDF estaba rasterizado dentro de una figura y el conversor

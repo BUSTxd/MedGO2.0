@@ -220,16 +220,17 @@ export const semanas: Semana[] = [
           'Compartimentalización celular',
         ],
         docentes: [],
-        /* Dos resúmenes del mismo tema, y el alumno elige: el PDF sintetizado
-           que ya estaba (secciones numeradas, tabla comparativa) y la clase
-           anotada a mano, en envase "en capas". Con `opciones` la tarjeta abre
-           el picker en vez de ir directa al visor. `formato` va por opción
+        /* Dos resúmenes del mismo tema, y el alumno elige. Los rótulos dicen
+           en qué se diferencian, que es lo que decide la elección: el PDF son
+           secciones numeradas y tablas comparativas; el HTML es la clase con
+           sus figuras y las anotaciones a mano. Con `opciones` la tarjeta abre
+           el picker en vez de ir directa al visor, y `formato` va por opción
            porque cada una abre un visor distinto. */
         resumen: {
           tipo: 'pdf',
           opciones: [
-            { id: 'bcm-te-4', label: 'Resumen 1' },
-            { id: 'bcm-te-4-html', label: 'Resumen 2', formato: 'html' },
+            { id: 'bcm-te-4', label: 'Resumen (tablas)' },
+            { id: 'bcm-te-4-html', label: 'Resumen (visual)', formato: 'html' },
           ],
         },
       },
