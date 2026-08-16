@@ -495,6 +495,20 @@ selector, de modo que nunca se abren como si fueran una figura, y una selección
 cancela el clic. El **hover**, en cambio, es CSS puro: en la franja donde el texto tapa la figura
 no se dispara.
 
+**El documento tiene que quedar aislado del CSS del visor.** Trae su tipografía completa inline
+(cada fragmento con su `font-family`, `font-size`, `color` y su posición absoluta), así que no
+necesita —ni debe recibir— nada de las reglas pensadas para Notion. Algunos exports envuelven los
+fragmentos en elementos semánticos (`<h1 class="text-block">`, `<p class="text-block">`) y se
+llevan `margin: 2em`, `border-bottom: 2px solid`, `font-size: 1.62em` y `color: var(--tx)` — que
+en modo oscuro es casi blanco sobre la hoja blanca. El `<style>` del export los neutraliza con
+`position:static;margin:0;padding:0;border:0;font:inherit`, y como ese bloque se descarta al
+publicar, **la neutralización vive en el módulo**, antes de las reglas de las capas. En la misma
+línea, `.page` fija `color: #000`: es papel en los dos temas, igual que el fondo.
+
+**`overflow: hidden` en la caja de una figura se come la sombra del hover** — la `<img>` la
+proyecta fuera de su caja. No hace falta para contener la imagen: de eso ya se encarga
+`object-fit: contain`.
+
 **Dos resúmenes en la misma clase.** `resumen.opciones` con 2+ entradas hace que la tarjeta abra
 el picker «¿Qué resumen quieres ver?» en vez de ir directa al visor, y `formato` **por opción**
 decide cuál abre cada una (precedencia: opción → tarjeta → `pdf`). Así conviven un PDF ya
