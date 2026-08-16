@@ -207,6 +207,13 @@ export const semanas: Semana[] = [
           'Sonido y oído',
         ],
         docentes: [],
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'fis-c-6-mov', label: 'Movimiento periódico' },
+            { id: 'fis-c-6-ondas', label: 'Ondas mecánicas' },
+          ],
+        },
         propuestos: { tipo: 'pdf' },
       },
       {
