@@ -21,6 +21,7 @@ import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 // Ids con un .html en el bucket `resumenes`. Mismo criterio que el ALLOWED de
 // la route de PDF: si no está aquí, es 404 sin tocar Storage.
 const ALLOWED = new Set([
+  'bcm-afa-1',
   'bcm-ta-1',
   'bcm-ta-2',
   'bcm-ta-3',
@@ -28,6 +29,7 @@ const ALLOWED = new Set([
   'bcm-ta-5',
   'bcm-te-11',
   'bcm-te-2-html',
+  'bcm-te-6-html',
   // Segundo resumen de Te4: la clase se ofrece en dos envases y el alumno
   // elige. El id lleva sufijo porque `bcm-te-4` ya es el PDF, en otro bucket.
   'bcm-te-4-html',
@@ -64,6 +66,7 @@ const ALLOWED = new Set([
 
 // id → ruta dentro del bucket (sin extensión).
 const FILE_ALIAS: Record<string, string> = {
+  'bcm-afa-1': 'biologia-celular/bcm-afa-1',
   'bcm-ta-1': 'biologia-celular/bcm-ta-1',
   'bcm-ta-2': 'biologia-celular/bcm-ta-2',
   'bcm-ta-3': 'biologia-celular/bcm-ta-3',
@@ -71,6 +74,7 @@ const FILE_ALIAS: Record<string, string> = {
   'bcm-ta-5': 'biologia-celular/bcm-ta-5',
   'bcm-te-11': 'biologia-celular/bcm-te-11',
   'bcm-te-2-html': 'biologia-celular/bcm-te-2-html',
+  'bcm-te-6-html': 'biologia-celular/bcm-te-6-html',
   'bcm-te-4-html': 'biologia-celular/bcm-te-4-html',
   'bcm-te-8': 'biologia-celular/bcm-te-8',
   'dig-clase-1': 'digestivo/dig-clase-1',

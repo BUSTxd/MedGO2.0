@@ -404,7 +404,17 @@ export const semanas: Semana[] = [
           'Potencial de acción',
         ],
         docentes: [],
-        resumen: { tipo: 'pdf' },
+        /* Dos envases, así que la tarjeta abre el picker. El HTML es la primera
+           mitad de un export que traía la teórica y el autoaprendizaje en una
+           sola página; la otra mitad está en `bcm-afa-1`. Id con sufijo porque
+           `bcm-te-6` ya es el PDF, en otro bucket y otra route. */
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'bcm-te-6', label: 'Resumen (PDF)' },
+            { id: 'bcm-te-6-html', label: 'Resumen (visual)', formato: 'html' },
+          ],
+        },
       },
       {
         id: 'bcm-te-7',
@@ -536,6 +546,14 @@ export const semanas: Semana[] = [
           'Aplicación en células excitables',
         ],
         docentes: [],
+        // Envase "en capas" (ver /addresumencapas): segunda mitad del mismo
+        // export que la teórica Te6, cortada donde empieza el bloque «AFA:».
+        // Son las capturas de las preguntas del autoaprendizaje, resueltas.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-afa-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'bcm-afpd-2',

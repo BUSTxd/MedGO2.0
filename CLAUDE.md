@@ -639,6 +639,21 @@ Publicado con esta vía:
   completa sino 3 recortes posicionados.
 - `bcm-te-11` (Te11 — Meiosis) — capas «pdf-page» en px. Su `vectors.svg` **no es tinta**: son 14
   `<line>` que dibujan el borde de una tabla, así que no hay nada que atenuar.
+- `bcm-te-6-html` (Te6 — Potencial de membrana) y `bcm-afa-1` (AFA1 — Potencial de membrana) —
+  «estilo-propio», las dos mitades del mismo export (`--recorte` en 7180). Te6 va en picker junto
+  a su PDF como «Resumen (visual)»; AFA1 es casi todo capturas del cuestionario resuelto.
+
+**Tres cosas que enseñó Te6.** (1) **Una variante catalogada lo es por completo, página incluida**:
+su texto era `.pdf-text` pero su página `.pdf-stage`, y el module —escrito para `.pdf-page`— no le
+habría dado ni el `overflow:hidden`, así que va por `estilo-propio`. Los nombres de página vistos:
+`page`, `pdf-page`, `pdf-stage`; las medidas, en `--page-w/--page-h` o `--pdf-width/--pdf-height`.
+(2) **`\b` no sirve para buscar una clase CSS**: el guion es un no-word char, así que `\bpage\b`
+casaba dentro de `class="page-wrapper"` y el contenedor exterior pasaba por ser la página — el
+fragmento salía sin la clase `.page` y el visor no lo habría escalado; la frontera correcta es
+`(?<![\w-])clase(?![\w-])`. (3) **Un rectángulo de 1 px no es un resaltado**: tres subrayados de
+enlace se iban al 15 % y desaparecían, así que ahora hay altura mínima. Ojo además con los SVG
+**optimizados**: fusionan los subpaths del mismo color y la heurística de geometría deja de
+reconocer los resaltados (aceptable sólo si el texto va por delante).
 
 **El auditor puede mentir en dos direcciones a la vez si sus regex no casan.** Daba `pt` por hecho
 en todas las variantes que no son «layers», y con un documento en px (Te11) informó «0 cajas ·

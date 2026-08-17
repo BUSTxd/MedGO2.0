@@ -94,18 +94,37 @@ console.log(`\nHTML   : ${htmls[0]}  (${kb(Buffer.byteLength(html, 'utf8'))})`);
    pregunta por él. Un documento con .pdf-page pero sin .pdf-text no es «otro
    formato»: es una variante nueva, y hay que añadirla aquí en vez de dejar que
    el script diga que no lo reconoce. */
-const tieneTexto = (...clases) =>
-  clases.some(c => new RegExp(`class="[^"]*\\b${c}\\b`).test(html));
+/* ⚠️ `\b` NO sirve para buscar una clase CSS: el guion es un no-word char, así
+   que `\bpage\b` casa dentro de `class="page-wrapper"`. Eso hacía que el
+   contenedor exterior del documento pasara por ser la página, y el fragmento
+   salía empezando en `.page-wrapper` y sin la clase `.page` que el visor
+   necesita para escalar. La frontera tiene que excluir también `-` y `_`. */
+const claseSuelta = (c) => new RegExp(`class="[^"]*(?<![\\w-])${c}(?![\\w-])`);
+const tieneClase = (c) => claseSuelta(c).test(html);
+const tieneTexto = (...clases) => clases.some(tieneClase);
 
-const VARIANTE = /class="image-layer"/.test(html) && tieneTexto('text-layer') ? 'layers'
-               : /class="pdf-page"/.test(html) && tieneTexto('pdf-text')      ? 'pdf-page'
-               : /class="pdf-page"/.test(html) && tieneTexto('native-line', 'ocr-text') ? 'native-line'
-               : /class="pdf-page"/.test(html) && tieneTexto('text-block')    ? 'text-block'
+/* La clase de la página tampoco es estable: `page`, `pdf-page`, `pdf-stage`…
+   Se busca cuál de las conocidas está presente, y el nombre encontrado manda
+   en todo lo que sigue (extracción, medidas, saneado). */
+const CLASES_PAGINA = ['pdf-page', 'pdf-stage', 'page'];
+const CLASE_PAGINA = CLASES_PAGINA.find(tieneClase);
+
+/* Una variante catalogada lo es POR COMPLETO, página incluida: el CSS del
+   module está escrito para `.pdf-page`, así que un documento cuyo texto sea
+   `.pdf-text` pero cuya página se llame `.pdf-stage` no es la variante B — el
+   module no le daría ni el `overflow:hidden`. En cuanto la página no casa, va
+   por `estilo-propio` y se lleva su propia hoja de estilo. */
+const catalogada = CLASE_PAGINA === 'pdf-page';
+
+const VARIANTE = CLASE_PAGINA === 'page' && /class="image-layer"/.test(html) && tieneTexto('text-layer') ? 'layers'
+               : catalogada && tieneTexto('pdf-text')                  ? 'pdf-page'
+               : catalogada && tieneTexto('native-line', 'ocr-text')   ? 'native-line'
+               : catalogada && tieneTexto('text-block')                ? 'text-block'
                // Página fija pero vocabulario desconocido: NO es otro formato,
                // es una variante más. Se acepta y se publica llevándose su
                // propio <style> saneado (ver más abajo), que es lo que hace
                // que no haga falta enseñarle su vocabulario al proyecto.
-               : /class="pdf-page"|class="page"/.test(html)                    ? 'estilo-propio'
+               : CLASE_PAGINA                                          ? 'estilo-propio'
                : null;
 if (!VARIANTE) {
   console.error('✗ No es un PDF reconstruido en capas: no encuentro ni .image-layer ni .pdf-page.');
@@ -137,13 +156,16 @@ if (VARIANTE === 'layers') {
      sólo en uno hacía abortar con «no encontré el width/height de .pdf-page»,
      que suena a documento inválido cuando lo único que pasa es que las
      declara en el otro. */
-  const lit = html.match(/\.pdf-page\s*\{[^}]*width:\s*([\d.]+)(pt|px);\s*height:\s*([\d.]+)(pt|px)/);
-  // El cierre puede ser `;` o directamente `}`: `:root{--page-w:1275.6px;--page-h:6686.24px}`
-  // no lleva punto y coma final, y exigirlo hacía fallar la lectura entera.
-  const raiz = html.match(/--page-w:\s*([\d.]+)(pt|px)?\s*;\s*--page-h:\s*([\d.]+)(pt|px)?\s*[;}]/);
+  const lit = html.match(new RegExp(`\\.${CLASE_PAGINA}\\s*\\{[^}]*width:\\s*([\\d.]+)(pt|px);\\s*height:\\s*([\\d.]+)(pt|px)`));
+  /* Y el nombre de la custom property tampoco es fijo: `--page-w/--page-h` o
+     `--pdf-width/--pdf-height`. El cierre puede ser `;` o directamente `}`
+     (`:root{--page-w:1275.6px;--page-h:6686.24px}` no lleva punto y coma
+     final), y exigirlo hacía fallar la lectura entera. */
+  const raiz = html.match(/--page-w:\s*([\d.]+)(pt|px)?\s*;\s*--page-h:\s*([\d.]+)(pt|px)?\s*[;}]/)
+            ?? html.match(/--pdf-width:\s*([\d.]+)(pt|px)?\s*;\s*--pdf-height:\s*([\d.]+)(pt|px)?\s*[;}]/);
   const m = lit ?? raiz;
   if (!m) {
-    console.error('✗ No encontré las medidas de la página (ni en .pdf-page ni en --page-w/--page-h).');
+    console.error(`✗ No encontré las medidas de la página (ni en .${CLASE_PAGINA} ni en --page-w/--pdf-width).`);
     process.exit(1);
   }
   // La unidad no se anuncia: se lee de donde esté, y si falta se asume px —
@@ -310,10 +332,10 @@ const tieneMultiply = /mix-blend-mode/.test(html);
 /* La etiqueta que lleva la página se LEE del documento en vez de asumirse: la
    variante «pdf-page» la trae en un <section> y la «native-line» en un
    <article> con id, y hardcodear una hacía abortar a la otra. */
-const CLASE_PAGINA = VARIANTE === 'layers' ? 'page' : 'pdf-page';
 // article, section, div y main: cada export elige la suya y ya han salido las
-// cuatro. Se lee del documento en vez de asumirla.
-const mAbre = html.match(new RegExp(`<(article|section|div|main)\\b[^>]*class="[^"]*\\b${CLASE_PAGINA}\\b[^"]*"[^>]*>`));
+// cuatro. Se lee del documento en vez de asumirla (CLASE_PAGINA se detectó al
+// principio, junto con la variante).
+const mAbre = html.match(new RegExp(`<(article|section|div|main)\\b[^>]*class="[^"]*(?<![\\w-])${CLASE_PAGINA}(?![\\w-])[^"]*"[^>]*>`));
 if (!mAbre) { console.error(`✗ No encontré el elemento con class="${CLASE_PAGINA}".`); process.exit(1); }
 const TAG = mAbre[1];
 const ini = mAbre.index;
@@ -324,7 +346,9 @@ let page = html.slice(ini, fin + `</${TAG}>`.length);
 // El visor localiza la página por la clase `.page` para escalarla; la variante
 // «pdf-page» no la trae, así que se le añade sin quitarle la suya (de la que
 // cuelgan los estilos propios de esa variante en el CSS module).
-if (VARIANTE !== 'layers') page = page.replace(/class="([^"]*\bpdf-page\b[^"]*)"/, 'class="page $1"');
+if (CLASE_PAGINA !== 'page') {
+  page = page.replace(new RegExp(`class="([^"]*(?<![\\w-])${CLASE_PAGINA}(?![\\w-])[^"]*)"`), 'class="page $1"');
+}
 
 /* ── Recorte por franja: --recorte y0:y1 ─────────────────────────────────
  *
@@ -432,6 +456,7 @@ const fallos = [];
  * opacidad mucho menor: quedan como un sombreado que dice «esta línea estaba
  * resaltada» sin tapar nada y sin inventar un color que no consta. */
 const LUMA_OSCURO = 0.4;
+const ALTO_MIN_RESALTADO = 6;   // px: por debajo es un subrayado, no una banda
 const luma = (hex) => {
   const m = /^#([0-9a-f]{6})$/i.exec(hex ?? '');
   if (!m) return 1;
@@ -443,15 +468,28 @@ const svgAtenuado = new Map();
 for (const ref of assets.filter(r => /\.svg$/i.test(r))) {
   // parte del ya reescrito si le quitamos texturas ausentes, no del de disco
   const original = svgReescrito.get(ref) ?? readFileSync(join(dir, ref), 'utf8');
-  let tocados = 0, oscuros = 0;
-  const atenuar = (tag) => {
+  let tocados = 0, oscuros = 0, finos = 0;
+  const atenuar = (tag, alto) => {
     if (/fill="none"/.test(tag)) return tag;              // no pinta nada
     if (!/fill-opacity="1(\.0+)?"/.test(tag)) return tag; // ya venía translúcido
+
+    /* Un resaltado cubre una LÍNEA de texto; lo que mide 1-2 px de alto es un
+       subrayado o un filete, y atenuarlo lo borra. En Te6 había tres reglas
+       azules de 1 px —los subrayados de los enlaces del encabezado— que por
+       ser rectángulos y de color oscuro se iban al 15 % y desaparecían. */
+    if (alto != null && alto < ALTO_MIN_RESALTADO) { finos++; return tag; }
+
     const fill = tag.match(/fill="(#[0-9a-fA-F]{6})"/)?.[1];
     const oscuro = luma(fill) < LUMA_OSCURO;
     if (oscuro) oscuros++;
     tocados++;
     return tag.replace(/fill-opacity="1(\.0+)?"/, `fill-opacity="${oscuro ? '0.15' : '0.45'}"`);
+  };
+
+  const altoDePath = (d) => {
+    const n = (d.match(/-?\d+(?:\.\d+)?/g) ?? []).map(Number);
+    const ys = n.filter((_, i) => i % 2 === 1);
+    return ys.length ? Math.max(...ys) - Math.min(...ys) : null;
   };
 
   /* Si el archivo es SÓLO de resaltado no hay nada que discriminar: todo lo
@@ -468,15 +506,19 @@ for (const ref of assets.filter(r => /\.svg$/i.test(r))) {
     // Un resaltado es un rectángulo (sólo M/H/V/L/Z y pocos comandos); un
     // trazo de rotulador son decenas o cientos de puntos y se deja intacto.
     const esRectangulo = !/[CcSsQqTtAa]/.test(d) && (d.match(/[A-Za-z]/g) ?? []).length <= 6;
-    return soloResaltado || esRectangulo ? atenuar(tag) : tag;
+    if (!soloResaltado && !esRectangulo) return tag;
+    // en un archivo sólo-de-resaltado los trazos a mano se atenúan enteros, sin
+    // mirar el alto; en uno mixto, la altura es lo que separa banda de filete.
+    return atenuar(tag, soloResaltado && !esRectangulo ? null : altoDePath(d));
   });
-  out = out.replace(/<rect\b[^>]*\/>/g, (tag) => atenuar(tag));
+  out = out.replace(/<rect\b[^>]*\/>/g, (tag) =>
+    atenuar(tag, parseFloat(tag.match(/height="([\d.]+)"/)?.[1] ?? 'NaN') || null));
 
   if (tocados || svgReescrito.has(ref)) {
     svgAtenuado.set(ref, Buffer.from(out, 'utf8'));
   }
-  if (tocados) {
-    console.log(`✓ ${ref}: ${tocados} resaltado(s) atenuado(s)${oscuros ? ` — ${oscuros} venían en un color OSCURO (color perdido por el conversor): van al 15 % para no tapar la letra` : ''}; la tinta queda intacta`);
+  if (tocados || finos) {
+    console.log(`✓ ${ref}: ${tocados} resaltado(s) atenuado(s)${oscuros ? ` — ${oscuros} en un color OSCURO (color perdido por el conversor): van al 15 % para no tapar la letra` : ''}${finos ? `; ${finos} figura(s) de menos de ${ALTO_MIN_RESALTADO}px intactas (subrayados/filetes, no resaltados)` : ''}; la tinta queda intacta`);
   }
 }
 
@@ -535,7 +577,7 @@ body = body.replace(/<img (?!class="(?:ink|vector-ink|vector-bg|vector-layer)")(
  * responsabilidad del visor. Sin ese segundo recorte, un `.pdf-page` del
  * documento (position:relative, alto fijo) empataría en especificidad con la
  * regla del module y ganaría por ir después, dejando el documento sin escalar. */
-const RECORTAR = /(^|\s)(\.pdf-page|\.page|\.page-shell|\.stage-holder|\.viewport|\.viewer|\.capas)(\s|$|[.:])/;
+const RECORTAR = /(^|\s)(\.pdf-page|\.pdf-stage|\.page|\.page-shell|\.stage-holder|\.viewport|\.viewer|\.page-wrapper|\.capas)(\s|$|[.:])/;
 let estilo = '';
 if (VARIANTE === 'estilo-propio') {
   const crudo = estilosDe(html);
