@@ -50,6 +50,13 @@ const SunIcon = () => (
 const SIZES = [0.9, 1, 1.15, 1.32];
 const DEFAULT_SIZE = 1; // índice de 1.0x
 
+/* Qué cuenta como "figura de contenido" que el clic puede ampliar, por envase.
+   Lista blanca a propósito: en el envase en capas la tinta y el resaltador
+   también son <img> a página completa, y abrir una de ellas en el lightbox no
+   tendría ningún sentido. El CSS del hover en `resumenHtml.module.css` sigue
+   esta misma lista — si se añade un envase, hay que tocar los dos sitios. */
+const FIGURAS = 'img.pdf-image, .pdf-image img, .image-layer img, .doc-flujo figure img';
+
 interface Props {
   claseId: string;
   titulo?: string;
@@ -101,19 +108,26 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
   const contenido = useMemo(() => ({ __html: html ?? '' }), [html]);
 
   /**
-   * Ampliar una figura sin salir del documento. Los dos envases la sirven
+   * Ampliar una figura sin salir del documento. Cada envase las sirve
    * distinto, así que hay dos caminos:
    *
    *  - **Notion**: cada figura viene envuelta en <a href="…avif">, que por sí
    *    solo se llevaría al alumno a otra pestaña y le haría perder el punto de
    *    lectura. Se intercepta el enlace.
-   *  - **Capas**: las figuras son <img> sueltas, sin enlace, y encima llevan
-   *    el texto en posición absoluta (los <span>, y en la variante «pdf-page»
-   *    también los bloques reconstruidos sobre la propia figura). Buscar por
-   *    `e.target` fallaría en cuanto el clic cayera sobre una letra, así que
-   *    se mira **toda la pila bajo el cursor** y se toma la primera figura que
-   *    aparezca. Las capas a página completa (tinta y resaltador) no casan el
-   *    selector, de modo que nunca se abren como si fueran una figura.
+   *  - **Capas y «documento de flujo»**: las figuras son <img> sueltas, sin
+   *    enlace. En capas llevan además el texto en posición absoluta por encima
+   *    (los <span>, y en la variante «pdf-page» también los bloques
+   *    reconstruidos sobre la propia figura), así que buscar por `e.target`
+   *    fallaría en cuanto el clic cayera sobre una letra: se mira **toda la
+   *    pila bajo el cursor** y se toma la primera figura que aparezca. En
+   *    «documento de flujo» no hay nada encima y `e.target` bastaría, pero
+   *    pasa por la misma vía para no tener dos comportamientos que mantener.
+   *
+   * El selector es una **lista blanca de figuras de contenido**, no `img` a
+   * secas: las capas a página completa (tinta, resaltador) son <img> y jamás
+   * deben abrirse como si fueran una figura. Al añadir un envase nuevo hay que
+   * añadir aquí su forma de figura, o el clic no hará nada — que es justo lo
+   * que le pasó al Taller 1 recién publicado.
    *
    * Sólo el clic simple: con ctrl/cmd/shift o botón central se respeta el
    * gesto del navegador de abrir en pestaña nueva, que ahí sí es intencional.
@@ -135,7 +149,7 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
     const figura = document
       .elementsFromPoint(e.clientX, e.clientY)
       .find((el): el is HTMLImageElement =>
-        el instanceof HTMLImageElement && el.matches('img.pdf-image, .pdf-image img, .image-layer img'));
+        el instanceof HTMLImageElement && el.matches(FIGURAS));
     if (!figura?.src) return;
     e.preventDefault();
     setLightbox(figura.src);

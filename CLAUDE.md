@@ -562,6 +562,16 @@ escalado. Lo publica `scripts/upload-resumen-doc.mjs` (los otros dos abortan, y 
 capas también: ese rechazo *es* la señal de que estás en este caso). De los cuatro fallos
 silenciosos sólo aplica el de las extensiones, que el script resuelve contra el disco.
 
+**El hover y el clic para ampliar no son automáticos en un envase nuevo.** Van por dos listas
+blancas de selectores que hay que ampliar a la vez: la constante `FIGURAS` de
+`HtmlFullscreenModal` (la usa `elementsFromPoint` en `onSheetClick`) y, en el CSS module, el
+`cursor`/`transition`, la regla `:hover` y el bloque `prefers-reduced-motion` del final. Son
+listas blancas a propósito: en capas la tinta y el resaltador también son `<img>` a página
+completa y no deben abrirse nunca. Dos diferencias respecto a capas: aquí los px del hover van
+**tal cual** (no se divide por `--fit`, porque este documento no se escala), y el `<main>` del
+documento trae `overflow: hidden`, que **recorta la sombra** — se libera con un selector concreto,
+nunca con un reset amplio.
+
 Aquí el `<style>` del documento **no se descarta**, al revés que en los otros dos: la maquetación
 *es* el documento y tirarla apila las figuras en una columna. Se sanea —fuera `html`, `body`, `*`;
 `:root` pasa a ser el contenedor; todo lo demás prefijado con `.doc-flujo`— y viaja dentro del

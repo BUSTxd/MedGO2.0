@@ -1045,10 +1045,31 @@
 /* Los diagramas son recortes sobre blanco. En modo oscuro quedan como
    parches luminosos dentro de la tarjeta: el radio y el fondo blanco
    explícito los convierten en figuras deliberadas en vez de en un error de
-   recorte. Mismo criterio que `figure.image` en los resúmenes de Notion. */
+   recorte. Mismo criterio que `figure.image` en los resúmenes de Notion.
+
+   El hover y el clic para ampliar son los mismos que en los otros dos
+   envases, pero aquí los px van **tal cual**: este documento no se escala
+   (no hay `.page` con `transform`), así que no hay que dividir por `--fit`
+   como en "capas". La lista de figuras ampliables está duplicada en
+   `HtmlFullscreenModal` (constante `FIGURAS`) — tocar los dos sitios. */
 .sheet :global(.doc-flujo figure img) {
   border-radius: 8px;
   background: #fff;
+  cursor: zoom-in;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+
+.sheet :global(.doc-flujo figure img:hover) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(10, 12, 30, 0.2);
+}
+
+/* El documento envuelve todo en un `main` con `overflow: hidden`, que recorta
+   la sombra del hover de cualquier figura próxima a un borde — el mismo fallo
+   que ya costó una iteración en el envase en capas. Se libera aquí, en el
+   selector concreto: las rejillas no desbordan, así que no contenía nada. */
+.sheet :global(.doc-flujo main.document) {
+  overflow: visible;
 }
 
 /* Al final del archivo a propósito: el bloque de reduced-motion de más arriba
@@ -1057,7 +1078,8 @@
 @media (prefers-reduced-motion: reduce) {
   .sheet :global(.pdf-image img),
   .sheet :global(img.pdf-image),
-  .sheet :global(.image-layer img) {
+  .sheet :global(.image-layer img),
+  .sheet :global(.doc-flujo figure img) {
     transition: none;
   }
 
@@ -1065,7 +1087,8 @@
      la figura responde al cursor. */
   .sheet :global(.pdf-image img:hover),
   .sheet :global(img.pdf-image:hover),
-  .sheet :global(.image-layer img:hover) {
+  .sheet :global(.image-layer img:hover),
+  .sheet :global(.doc-flujo figure img:hover) {
     transform: none;
   }
 }
