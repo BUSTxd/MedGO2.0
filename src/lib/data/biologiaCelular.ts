@@ -774,14 +774,10 @@ export const semanas: Semana[] = [
           'Características del cáncer',
         ],
         docentes: [],
-        // Envase "en capas" (ver /addresumencapas): 3 hojas anotadas dentro de
-        // una página `.pdf-doc`, con las gráficas de p53 y de incidencia por
-        // edad, y una capa de tinta por hoja.
-        resumen: {
-          tipo: 'pdf',
-          formato: 'html',
-          opciones: [{ id: 'bcm-ta-12', label: 'Resumen', formato: 'html' }],
-        },
+        // El PDF original de las 3 hojas anotadas (una sola página de
+        // 845 × 3670 pt). Estuvo publicado como "en capas" y BUST lo cambió
+        // por el PDF; el fragmento y sus 7 figuras se borraron de Storage.
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-ta-13',
