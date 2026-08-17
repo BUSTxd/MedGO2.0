@@ -83,9 +83,9 @@ const ALLOWED = new Set([
   // Física — Examen II (banqueo con selector, ver `propuestos.opciones`)
   'fis-examen2-v1', 'fis-examen2-2020', 'fis-examen2-2018', 'fis-examen2-v2',
   'fis-examen2-sol', 'fis-examen2-2017-sol',
-  // Biología Celular — Teorías Te1-Te7
+  // Biología Celular — Teorías Te1-Te7, Te10
   'bcm-te-1', 'bcm-te-2', 'bcm-te-3', 'bcm-te-4',
-  'bcm-te-5', 'bcm-te-6', 'bcm-te-7',
+  'bcm-te-5', 'bcm-te-6', 'bcm-te-7', 'bcm-te-10',
   // Biología Celular — Talleres
   'bcm-ta-12',
   // Biología Celular — Laboratorios PL1-PL5, PL7-PL9 (falta PL6 y PL10)
@@ -297,6 +297,7 @@ const FILE_ALIAS: Record<string, string> = {
   'bcm-te-5': 'biologia-celular/bcm-te-5',
   'bcm-te-6': 'biologia-celular/bcm-te-6',
   'bcm-te-7': 'biologia-celular/bcm-te-7',
+  'bcm-te-10': 'biologia-celular/bcm-te-10',
   'bcm-ta-12': 'biologia-celular/bcm-ta-12',
   'bcm-pl-1': 'biologia-celular/bcm-pl-1',
   'bcm-pl-2': 'biologia-celular/bcm-pl-2',

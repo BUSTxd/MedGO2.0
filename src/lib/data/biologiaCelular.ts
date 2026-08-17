@@ -666,6 +666,7 @@ export const semanas: Semana[] = [
           'Iniciación, elongación y terminación',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-te-11',
