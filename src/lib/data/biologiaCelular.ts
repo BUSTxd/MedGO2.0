@@ -482,6 +482,15 @@ export const semanas: Semana[] = [
           'Hemólisis y crenación',
         ],
         docentes: [],
+        // Envase "en capas" (ver /addresumencapas): las 4 hojas del taller con
+        // las respuestas al margen. Variante sin catalogar, así que se publicó
+        // llevándose su propio <style> saneado en vez de enseñarle su
+        // vocabulario al CSS module.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-ta-5', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'bcm-ta-7',

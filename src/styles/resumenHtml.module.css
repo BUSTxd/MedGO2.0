@@ -846,7 +846,8 @@
 .sheet :global(.pdf-image img),
 .sheet :global(img.pdf-image),
 .sheet :global(.image-layer img),
-.sheet :global(.figure img) {
+.sheet :global(.figure img),
+.sheet :global(.capas img.asset) {
   cursor: zoom-in;
   transition: box-shadow 0.18s, transform 0.18s;
 }
@@ -854,7 +855,8 @@
 .sheet :global(.pdf-image img:hover),
 .sheet :global(img.pdf-image:hover),
 .sheet :global(.image-layer img:hover),
-.sheet :global(.figure img:hover) {
+.sheet :global(.figure img:hover),
+.sheet :global(.capas img.asset:hover) {
   transform: translateY(calc(-2px / var(--fit, 1)));
   box-shadow:
     0 calc(10px / var(--fit, 1)) calc(28px / var(--fit, 1)) rgba(10, 12, 30, 0.2);
@@ -1216,6 +1218,7 @@
   .sheet :global(img.pdf-image),
   .sheet :global(.image-layer img),
   .sheet :global(.figure img),
+  .sheet :global(.capas img.asset),
   .sheet :global(.doc-flujo figure img) {
     transition: none;
   }
@@ -1226,6 +1229,7 @@
   .sheet :global(img.pdf-image:hover),
   .sheet :global(.image-layer img:hover),
   .sheet :global(.figure img:hover),
+  .sheet :global(.capas img.asset:hover),
   .sheet :global(.doc-flujo figure img:hover) {
     transform: none;
   }

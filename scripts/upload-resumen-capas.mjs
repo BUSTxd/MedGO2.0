@@ -28,6 +28,7 @@ import { join } from 'path';
 import sharp from 'sharp';
 import { createClient } from '@supabase/supabase-js';
 import { config } from './load-env.mjs';
+import { sanearCss, estilosDe } from './sanear-css.mjs';
 
 const BUCKET_IMG  = 'resumenes-img';   // público
 const BUCKET_HTML = 'resumenes';       // privado
@@ -100,9 +101,14 @@ const VARIANTE = /class="image-layer"/.test(html) && tieneTexto('text-layer') ? 
                : /class="pdf-page"/.test(html) && tieneTexto('pdf-text')      ? 'pdf-page'
                : /class="pdf-page"/.test(html) && tieneTexto('native-line', 'ocr-text') ? 'native-line'
                : /class="pdf-page"/.test(html) && tieneTexto('text-block')    ? 'text-block'
+               // Página fija pero vocabulario desconocido: NO es otro formato,
+               // es una variante más. Se acepta y se publica llevándose su
+               // propio <style> saneado (ver más abajo), que es lo que hace
+               // que no haga falta enseñarle su vocabulario al proyecto.
+               : /class="pdf-page"|class="page"/.test(html)                    ? 'estilo-propio'
                : null;
 if (!VARIANTE) {
-  console.error('✗ No es un PDF reconstruido en capas (ni .image-layer ni .pdf-page con texto reconocible).');
+  console.error('✗ No es un PDF reconstruido en capas: no encuentro ni .image-layer ni .pdf-page.');
   console.error('  Si es un export de Notion, usa upload-resumen-html.mjs.');
   console.error('  Si no tiene página de tamaño fijo, es un documento de flujo: upload-resumen-doc.mjs.');
   process.exit(1);
@@ -303,7 +309,9 @@ const tieneMultiply = /mix-blend-mode/.test(html);
    variante «pdf-page» la trae en un <section> y la «native-line» en un
    <article> con id, y hardcodear una hacía abortar a la otra. */
 const CLASE_PAGINA = VARIANTE === 'layers' ? 'page' : 'pdf-page';
-const mAbre = html.match(new RegExp(`<(article|section|div)\\b[^>]*class="[^"]*\\b${CLASE_PAGINA}\\b[^"]*"[^>]*>`));
+// article, section, div y main: cada export elige la suya y ya han salido las
+// cuatro. Se lee del documento en vez de asumirla.
+const mAbre = html.match(new RegExp(`<(article|section|div|main)\\b[^>]*class="[^"]*\\b${CLASE_PAGINA}\\b[^"]*"[^>]*>`));
 if (!mAbre) { console.error(`✗ No encontré el elemento con class="${CLASE_PAGINA}".`); process.exit(1); }
 const TAG = mAbre[1];
 const ini = mAbre.index;
@@ -510,9 +518,37 @@ let body = page.replace(RE_ASSET, (_, p) => `src="${BASE_PUB}/${PREFIX}/${p.spli
 body = body.replace(/<img (?!class="(?:ink|vector-ink|vector-bg|vector-layer)")(?![^>]*\bloading=)/g,
                     '<img loading="lazy" decoding="async" ');
 
+/* El <style> del documento, sólo en las variantes que el proyecto no conoce.
+ *
+ * Las cuatro variantes catalogadas tienen su vocabulario en
+ * `resumenHtml.module.css` por historia, y ahí se queda: reinyectarles su
+ * estilo cambiaría documentos ya publicados sin necesidad (y devolvería, por
+ * ejemplo, el `overflow:hidden` que se come la sombra del hover).
+ *
+ * Pero enseñarle al proyecto el vocabulario de cada export nuevo no escala —el
+ * Taller 5 traía `.txt`, `.external`, `.sheet`, `.s1`–`.s4`, `.sheet-table`…, y
+ * las posiciones de sus cuatro hojas son suyas, no de un envase—. Así que una
+ * variante desconocida viaja con su propia hoja de estilo, saneada: fuera lo
+ * global, y fuera también **lo que gobierna la página y el escalado**, que es
+ * responsabilidad del visor. Sin ese segundo recorte, un `.pdf-page` del
+ * documento (position:relative, alto fijo) empataría en especificidad con la
+ * regla del module y ganaría por ir después, dejando el documento sin escalar. */
+const RECORTAR = /(^|\s)(\.pdf-page|\.page|\.page-shell|\.stage-holder|\.viewport|\.viewer|\.capas)(\s|$|[.:])/;
+let estilo = '';
+if (VARIANTE === 'estilo-propio') {
+  const crudo = estilosDe(html);
+  estilo = sanearCss(crudo, { prefijo: '.capas', descartar: RECORTAR });
+  if (!estilo) {
+    console.error('✗ Variante desconocida y su <style> quedó vacío al sanearlo: no hay con qué maquetarlo.');
+    process.exit(1);
+  }
+  console.log(`estilo : ${kb(Buffer.byteLength(crudo, 'utf8'))} → ${kb(Buffer.byteLength(estilo, 'utf8'))} saneado y prefijado con .capas`);
+}
+
 // el wrapper lleva las medidas de ESTE documento; el resto del estilo es
-// común y vive en el CSS module.
+// común y vive en el CSS module (o viaja aquí, si la variante es nueva).
 const frag = `<div class="capas" style="--page-w:${PAGE_W}px;--page-h:${PAGE_H}px">`
+           + (estilo ? `<style>${estilo}</style>` : '')
            + `<div class="page-shell">${body}</div></div>`;
 
 const quedan = (frag.match(/src="(?!https:\/\/)/g) || []).length;

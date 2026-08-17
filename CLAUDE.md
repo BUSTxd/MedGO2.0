@@ -408,6 +408,18 @@ enteras con un `top` negativo y las recorta el `overflow:hidden` de la página, 
 mitades cargan el mismo SVG de tinta. Los assets sí se calculan sobre la página ya recortada, para
 que cada mitad suba sólo sus figuras.
 
+**⭐ Una variante desconocida ya no necesita que el proyecto aprenda su vocabulario.** Catalogar
+cada una en el CSS module no escala (van cinco, y el Taller 5 traía `.txt`, `.external`, `.sheet`,
+`.s1`–`.s4`, `.sheet-table`… con las posiciones de sus cuatro hojas, que son del documento y no de
+un envase). El uploader acepta **cualquier documento con página de tamaño fijo** y lo publica
+llevándose su propio `<style>` saneado dentro del fragmento (`VARIANTE = 'estilo-propio'`);
+`scripts/sanear-css.mjs` —compartido con `upload-resumen-doc.mjs`— quita lo global y **también lo
+que gobierna la página y el escalado**, que es el recorte no obvio: sin él, el `.pdf-page` del
+documento empata en especificidad con la regla del module y gana por ir después, dejando el
+documento sin escalar. A las cuatro variantes catalogadas **no** se les inyecta el estilo: el suyo
+ya está en el module y reinyectarlo devolvería, por ejemplo, el `overflow:hidden` que se come la
+sombra del hover.
+
 **Cuatro variantes del mismo conversor.** Comparten la idea —página de tamaño fijo, capas absolutas,
 texto real— pero no el vocabulario, así que el auditor y el uploader detectan cuál es antes de
 tocar nada (`VARIANTE`) y sólo cambian de dónde leen las medidas y dónde vive el resaltador.
@@ -622,6 +634,9 @@ Publicado con esta vía:
 - `bcm-te-2-html` (Te2 — Carbohidratos y lípidos) y `bcm-ta-2` (Ta2 — Proteínas y ácidos
   nucleicos) — capas «text-block», las dos mitades del mismo export. Te2 va en picker junto a su
   PDF; Ta2 es su primer material.
+- `bcm-ta-5` (Ta5 — Ósmosis) — capas «estilo-propio», el primero que viaja con su `<style>`
+  saneado. 4 hojas escaneadas más las respuestas al margen; la tinta no es una capa a página
+  completa sino 3 recortes posicionados.
 - `bcm-te-8` (Biología Celular, Te8 — Comunicación celular) — «layers».
 - `bcm-ta-4` (Biología Celular, Ta4 — Estructura de la membrana) — «pdf-page», pt, `<img>`.
 - `bcm-te-4-html` (Biología Celular, Te4 — Procariotas y eucariotas) — «pdf-page», px, `<figure>`,

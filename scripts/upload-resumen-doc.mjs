@@ -40,6 +40,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync } from 'fs';
 import { join, dirname, basename, extname } from 'path';
 import { createClient } from '@supabase/supabase-js';
 import { config } from './load-env.mjs';
+import { sanearCss, estilosDe } from './sanear-css.mjs';
 
 const BUCKET_IMG  = 'resumenes-img';   // público
 const BUCKET_HTML = 'resumenes';       // privado
@@ -114,56 +115,10 @@ const reescritas = [...real.entries()].filter(([a, b]) => a !== b).length;
 console.log(`assets : ${refs.length}  (${reescritas} con la extensión corregida)`);
 
 // ─── 3. sanear el <style> del documento ──────────────────────────────────
-/* Se conserva la maquetación y se tira lo global. Un parser de bloques basta:
-   este CSS es plano (selector { … } y @media { selector { … } }), sin anidar. */
-const ES_GLOBAL = /^(\*|html|body)$/i;
-
-function prefijarSelector(sel) {
-  return sel.split(',').map(s => s.trim()).filter(Boolean).map(s => {
-    if (ES_GLOBAL.test(s)) return null;              // pisaría el dashboard
-    if (/^html\b|^body\b/i.test(s)) return null;
-    // `:root` es el propio documento: sus custom properties se conservan como
-    // valores por defecto, y el CSS module las pisa con los tokens del tema.
-    if (s === ':root') return '.doc-flujo';
-    return `.doc-flujo ${s}`;
-  }).filter(Boolean).join(', ');
-}
-
-function sanearCss(css) {
-  let out = '';
-  let i = 0;
-  while (i < css.length) {
-    const llave = css.indexOf('{', i);
-    if (llave === -1) break;
-    const cabecera = css.slice(i, llave).trim();
-
-    if (cabecera.startsWith('@')) {
-      // bloque anidado (@media, @supports): recortar por balance de llaves
-      let nivel = 0, j = llave;
-      for (; j < css.length; j++) {
-        if (css[j] === '{') nivel++;
-        else if (css[j] === '}' && --nivel === 0) break;
-      }
-      const dentro = sanearCss(css.slice(llave + 1, j));
-      if (dentro.trim()) out += `${cabecera}{${dentro}}`;
-      i = j + 1;
-      continue;
-    }
-
-    const cierre = css.indexOf('}', llave);
-    const decls = css.slice(llave + 1, cierre).trim();
-    const sel = prefijarSelector(cabecera);
-    if (sel && decls) out += `${sel}{${decls}}`;
-    i = cierre + 1;
-  }
-  return out;
-}
-
-const estilos = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map(m => m[1]).join('\n');
-const cssSaneado = sanearCss(estilos)
-  .replace(/\/\*[\s\S]*?\*\//g, '')
-  .replace(/\s+/g, ' ')
-  .trim();
+/* Se conserva la maquetación y se tira lo global; el detalle, en sanear-css.mjs
+   (compartido con el uploader de capas, que hace lo mismo con otro prefijo). */
+const estilos = estilosDe(html);
+const cssSaneado = sanearCss(estilos, { prefijo: '.doc-flujo' });
 if (!cssSaneado) { console.error('✗ El <style> quedó vacío tras sanearlo. Revisa el documento.'); process.exit(1); }
 console.log(`estilo : ${kb(Buffer.byteLength(estilos, 'utf8'))} → ${kb(Buffer.byteLength(cssSaneado, 'utf8'))} saneado y prefijado`);
 
