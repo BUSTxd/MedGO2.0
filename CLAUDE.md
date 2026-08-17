@@ -638,6 +638,16 @@ Tres cosas suyas que no son evidentes:
   `HtmlFullscreenModal`, midiendo en **un solo pase** (limpiar todos los `transform` → leer todos
   los anchos → escribir todos) en vez de forzar un reflujo por palabra, que sobre ~1900 nodos se
   nota; y esperando a `document.fonts.ready`, porque con la fuente de reserva salen otros factores.
+  **Dos trampas al medir un `.patch`** (los bloques reescritos, que en vez de `--target-w` llevan
+  un `max-width` en %), las dos vistas en producción y las dos con la misma pinta —texto aplastado
+  e ilegible, que se lee como «el conversor lo exportó mal»:
+  · `getComputedStyle(...).maxWidth` **no resuelve el porcentaje** (para `max-width` el valor
+    resuelto es el computado), así que devuelve `"84.38%"` y un `parseFloat` lo convierte en 84
+    píxeles: una frase de 670 px metida en 84. Hay que leerlo del estilo inline y resolverlo contra
+    el ancho de la hoja;
+  · y su ancho natural **no se puede leer de la caja**, porque su propio `max-width` la recorta y,
+    al ir en `nowrap`, el texto se sale sin ensancharla — mide 690 cuando necesita 741 y parece que
+    ya cabe. `scrollWidth` sí lo da. Este segundo fallo está también en el `<script>` original.
 - **El prefijo del `<style>` saneado va DOBLE** (`.doc-paginas.doc-paginas`). El vocabulario de
   Notion no se puede acotar —sus fragmentos no llevan envoltorio— y tiene reglas como
   `tbody tr:nth-child(even) td` (0-2-3) que le ganarían a un `.doc-paginas .bluecell` (0-2-0) y le
@@ -647,6 +657,13 @@ Tres cosas suyas que no son evidentes:
 - **A−/A+ no hacen nada en este envase.** La hoja ya ocupa el ancho disponible, que es su tamaño
   natural de lectura; no se ha inventado un zoom porque el tope de página (794 px en Ta13) es del
   documento, no del envase.
+- **La fuente del documento se cambia por la del sitio desde el module**, con `!important`: el
+  conversor deja Times/Arial en sus reglas y, en los `.patch`, también en el estilo inline, y el
+  documento va prefijado doble, así que por especificidad no se gana. Es seguro **gracias** al
+  ajuste tipográfico —cada palabra acaba en el ancho que tenía en el PDF, venga en la fuente que
+  venga—, y por eso ese ajuste espera a `document.fonts.ready`. Lo que sí cambia es cuánto se
+  condensa: medido en Ta13, Outfit necesita `scaleX` 0,89 de mediana contra 0,99 con Times, o sea
+  ~11 % más estrecha. Con eso, 4 de 1 733 pares de palabras contiguas quedan sin hueco (0,2 %).
 
 Aquí el `<style>` del documento **no se descarta**, al revés que en los otros dos: la maquetación
 *es* el documento y tirarla apila las figuras en una columna. Se sanea —fuera `html` y `body`;

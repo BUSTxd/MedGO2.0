@@ -50,6 +50,20 @@ const SunIcon = () => (
 const SIZES = [0.9, 1, 1.15, 1.32];
 const DEFAULT_SIZE = 1; // índice de 1.0x
 
+/**
+ * `max-width` de un bloque del envase «páginas» → px reales.
+ *
+ * ⚠️ Viene en % de la hoja, y **`getComputedStyle` no lo resuelve**: para
+ * `max-width` el valor resuelto sigue siendo el valor computado, o sea el
+ * porcentaje. Leerlo de ahí devolvía `"84.38287%"`, que `parseFloat` convierte
+ * en 84.38 — y tomarlo por píxeles aplastaba una frase entera de 670 px dentro
+ * de 84 px: ilegible. Se lee del estilo inline y se resuelve a mano.
+ */
+const maxEnPx = (valor: string, pagina: number) => {
+  if (!valor) return NaN;
+  return valor.endsWith('%') ? (parseFloat(valor) / 100) * pagina : parseFloat(valor);
+};
+
 /* Qué cuenta como "figura de contenido" que el clic puede ampliar, por envase.
    Lista blanca a propósito: en el envase en capas la tinta y el resaltador
    también son <img> a página completa, y abrir una de ellas en el lightbox no
@@ -379,14 +393,20 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
       const medidas = nodos.map((el) => {
         const hoja = el.closest('.pdf-page');
         if (hoja && !anchoDe.has(hoja)) anchoDe.set(hoja, hoja.getBoundingClientRect().width);
+        const pagina = hoja ? anchoDe.get(hoja)! : 0;
+        /* El ancho natural de un `.patch` NO se puede leer de su caja: su
+           propio `max-width` la recorta, y como va en `nowrap` el texto se
+           sale sin ensancharla. Medido así, un bloque que necesita 741 px
+           dentro de 690 devuelve 690 —«ya cabe»— y se publica desbordado.
+           `scrollWidth` sí da el ancho del contenido. (El export original
+           tiene este fallo; las palabras no lo sufren porque no llevan tope.) */
+        const caja = el.getBoundingClientRect().width;
         return {
-          natural: el.getBoundingClientRect().width,
-          pagina: hoja ? anchoDe.get(hoja)! : 0,
+          natural: Math.max(caja, el.scrollWidth),
+          pagina,
           // El objetivo de un `.patch` (un bloque reescrito, no una palabra)
           // es su `max-width`, y sólo se encoge: nunca se estira.
-          maxima: el.classList.contains('patch')
-            ? parseFloat(getComputedStyle(el).maxWidth)
-            : NaN,
+          maxima: el.classList.contains('patch') ? maxEnPx(el.style.maxWidth, pagina) : NaN,
         };
       });
 

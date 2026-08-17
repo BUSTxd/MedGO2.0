@@ -1283,6 +1283,28 @@
   max-width: 100%;
 }
 
+/* La fuente del sitio (Outfit), que hereda de la hoja.
+
+   El conversor deja las del PDF —Times New Roman y Arial— en las reglas del
+   documento y, en los `.patch`, también en el estilo inline; de ahí el
+   `!important`, el mismo caso que las columnas de Notion más arriba. Es una
+   pelea que no se puede ganar por especificidad: el documento va prefijado
+   doble y su `.pdf-page.page-times .word` empata con cualquier cosa razonable.
+
+   Cambiar de fuente aquí es seguro **precisamente por el ajuste tipográfico**:
+   cada palabra se estira o encoge hasta el ancho que tenía en el PDF, así que
+   ninguna se sale de su sitio por que Outfit sea más ancha que Times. Por eso
+   ese ajuste corre tras `document.fonts.ready` y no antes.
+
+   Las tablas entran también: sus celdas van `nowrap` + `overflow:hidden`, que
+   recortaría lo que no quepa, pero la más larga son 22 caracteres en una
+   columna del 33 % — sobra sitio. */
+.sheet :global(.doc-paginas .word),
+.sheet :global(.doc-paginas .patch),
+.sheet :global(.doc-paginas .fixed-table) {
+  font-family: inherit !important;
+}
+
 /* Sus tablas van en `position:absolute` con anchos en % — son parte del
    dibujo de la página, no tablas de lectura. Las reglas de tabla del visor
    (pensadas para Notion) las volverían bloques a ancho completo con margen,
