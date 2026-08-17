@@ -721,6 +721,19 @@
 
    El escalado de .page lo aplica HtmlFullscreenModal: el <script> del export
    no se ejecuta al inyectarse con dangerouslySetInnerHTML.
+
+   ⛔ TODO lo de esta sección va acotado a `:where(.capas)`, el envoltorio que
+   pone el uploader. No es cosmético: este vocabulario está lleno de nombres
+   genéricos —`.figure`, `.page`, `.pdf-page`— que otro envase puede usar con
+   otra intención. Suelto bajo `.sheet` alcanzaba a los tres envases a la vez,
+   y en Ta10 (documento de flujo) `.figure` volvía `position:absolute` sus 10
+   figuras: salían del flujo y **el documento se veía sin una sola imagen**.
+
+   Va en `:where()` a propósito, que no suma especificidad: estas reglas
+   valían 0-2-0 y siguen valiendo 0-2-0. Con un `.capas` normal pasarían a
+   0-3-0 y ganarían al `<style>` que los documentos «estilo-propio» traen
+   dentro del fragmento (0-2-0, pero más abajo en el DOM), invirtiendo en
+   silencio quién manda en cinco resúmenes ya publicados.
    ══════════════════════════════════════════════════════════════════════ */
 
 /* La hoja deja de ser una columna de lectura: el documento trae su propio
@@ -737,7 +750,7 @@
   width: 100%;
 }
 
-.sheet :global(.page-shell) {
+.sheet :global(:where(.capas) .page-shell) {
   position: relative;
   width: 100%;
   /* auto, no hidden: al ampliar con A+ el documento desborda a lo ancho y
@@ -751,7 +764,7 @@
   background: #fff;
 }
 
-.sheet :global(.page) {
+.sheet :global(:where(.capas) .page) {
   position: absolute;
   left: 0;
   top: 0;
@@ -761,14 +774,14 @@
   background: #fff;
 }
 
-.sheet :global(.image-layer),
-.sheet :global(.text-layer),
-.sheet :global(.ink-layer) {
+.sheet :global(:where(.capas) .image-layer),
+.sheet :global(:where(.capas) .text-layer),
+.sheet :global(:where(.capas) .ink-layer) {
   position: absolute;
   inset: 0;
 }
 
-.sheet :global(.image-layer) { z-index: 1; }
+.sheet :global(:where(.capas) .image-layer) { z-index: 1; }
 
 /* La capa de texto cubre la PÁGINA ENTERA (inset: 0) y va por encima de las
    figuras, así que sin esto se come el hover de todas ellas: en la variante
@@ -780,12 +793,12 @@
    este envase es real y seleccionable, y esa es una de las dos únicas
    ventajas que tiene sobre el PDF. Así el comportamiento queda igual en las
    dos variantes — la figura responde salvo justo debajo de una letra. */
-.sheet :global(.text-layer) {
+.sheet :global(:where(.capas) .text-layer) {
   z-index: 2;
   pointer-events: none;
 }
 
-.sheet :global(.text-layer) > * {
+.sheet :global(:where(.capas) .text-layer) > * {
   pointer-events: auto;
 }
 
@@ -794,13 +807,13 @@
    el texto y parecería que no se extrajo. Con multiply se comporta como un
    rotulador — amarillo sobre blanco da amarillo, sobre letra negra da letra.
    No bajarla a z-index 0: las anotaciones sobre las figuras se perderían. */
-.sheet :global(.ink-layer) {
+.sheet :global(:where(.capas) .ink-layer) {
   z-index: 3;
   pointer-events: none;
   mix-blend-mode: multiply;
 }
 
-.sheet :global(.pdf-text) {
+.sheet :global(:where(.capas) .pdf-text) {
   position: absolute;
   white-space: pre;
   line-height: 1;
@@ -813,7 +826,7 @@
   z-index: 3;
 }
 
-.sheet :global(.pdf-image) {
+.sheet :global(:where(.capas) .pdf-image) {
   position: absolute;
   margin: 0;
   padding: 0;
@@ -821,7 +834,7 @@
 
 /* contain, no fill: si el asset exportado no tiene el aspecto exacto de su
    caja, fill lo estira en silencio. */
-.sheet :global(.pdf-image img) {
+.sheet :global(:where(.capas) .pdf-image img) {
   display: block;
   width: 100%;
   height: 100%;
@@ -843,26 +856,26 @@
    No se les pone borde ni `border-radius`, a diferencia de las de Notion:
    estas figuras son recortes del propio papel, y enmarcarlas las convertiría
    en tarjetas flotando sobre la página. */
-.sheet :global(.pdf-image img),
-.sheet :global(img.pdf-image),
-.sheet :global(.image-layer img),
-.sheet :global(.figure img),
+.sheet :global(:where(.capas) .pdf-image img),
+.sheet :global(:where(.capas) img.pdf-image),
+.sheet :global(:where(.capas) .image-layer img),
+.sheet :global(:where(.capas) .figure img),
 .sheet :global(.capas img.asset) {
   cursor: zoom-in;
   transition: box-shadow 0.18s, transform 0.18s;
 }
 
-.sheet :global(.pdf-image img:hover),
-.sheet :global(img.pdf-image:hover),
-.sheet :global(.image-layer img:hover),
-.sheet :global(.figure img:hover),
+.sheet :global(:where(.capas) .pdf-image img:hover),
+.sheet :global(:where(.capas) img.pdf-image:hover),
+.sheet :global(:where(.capas) .image-layer img:hover),
+.sheet :global(:where(.capas) .figure img:hover),
 .sheet :global(.capas img.asset:hover) {
   transform: translateY(calc(-2px / var(--fit, 1)));
   box-shadow:
     0 calc(10px / var(--fit, 1)) calc(28px / var(--fit, 1)) rgba(10, 12, 30, 0.2);
 }
 
-.sheet :global(.ink) {
+.sheet :global(:where(.capas) .ink) {
   position: absolute;
   left: 0;
   top: 0;
@@ -873,7 +886,7 @@
 
 /* Los <section> sólo agrupan semánticamente; no deben crear cajas que
    interfieran con el posicionamiento absoluto de los <span>. */
-.sheet :global(.semantic) {
+.sheet :global(:where(.capas) .semantic) {
   display: contents;
 }
 
@@ -892,7 +905,7 @@
    arriba el tamaño, el fondo y el transform-origin del escalado.
    ────────────────────────────────────────────────────────────────────── */
 
-.sheet :global(.pdf-page) {
+.sheet :global(:where(.capas) .pdf-page) {
   overflow: hidden;
 }
 
@@ -907,7 +920,7 @@
        sobre blanco da amarillo y sobre una letra oscura respeta la letra.
    Con multiply solo no bastaría: sobre el papel blanco de la página el
    amarillo puro se multiplica consigo mismo y sale igual de saturado. */
-.sheet :global(.vector-bg) {
+.sheet :global(:where(.capas) .vector-bg) {
   position: absolute;
   left: 0;
   top: 0;
@@ -931,7 +944,7 @@
                                  figuras van debajo, en z1
 
    En ambas el texto queda por encima de todo lo demás (z3). */
-.sheet :global(img.pdf-image) {
+.sheet :global(:where(.capas) img.pdf-image) {
   z-index: 2;
   object-fit: contain;
 }
@@ -939,7 +952,7 @@
 /* Sin `overflow: hidden`: la caja recortaba la sombra que la figura proyecta
    al pasar el cursor, y el efecto no llegaba a verse. No hace falta para
    contener la imagen — de eso ya se encarga el `object-fit: contain`. */
-.sheet :global(figure.pdf-image) {
+.sheet :global(:where(.capas) figure.pdf-image) {
   z-index: 1;
 }
 
@@ -963,7 +976,7 @@
 
    `opacity` en la capa sí sería un error, y por eso no está: apagaría por
    igual las anotaciones manuscritas, que son material de estudio. */
-.sheet :global(.vector-layer) {
+.sheet :global(:where(.capas) .vector-layer) {
   position: absolute;
   left: 0;
   top: 0;
@@ -976,7 +989,7 @@
 
 /* Texto que en el PDF estaba rasterizado dentro de una figura y el conversor
    reconstruyó encima de ella: por eso va sobre la capa de imágenes. */
-.sheet :global(.raster-text-rebuilt) {
+.sheet :global(:where(.capas) .raster-text-rebuilt) {
   position: absolute;
   z-index: 4;
   line-height: 1.32;
@@ -990,7 +1003,7 @@
    Aquí el texto va dentro del propio elemento resaltado, así que no hay
    riesgo de que lo tape — se atenúa por coherencia con el resto de
    subrayados del documento, para que no convivan dos amarillos distintos. */
-.sheet :global(.raster-text-rebuilt mark) {
+.sheet :global(:where(.capas) .raster-text-rebuilt mark) {
   background: rgba(255, 247, 26, 0.45);
   color: inherit;
   padding: 0 0.02em;
@@ -999,7 +1012,7 @@
 /* La tinta manuscrita, encima de todo: rodea figuras, tacha y señala con
    flechas. Al ser SVG con fondo transparente no necesita el multiply que sí
    hacía falta con la tinta raster de la otra variante. */
-.sheet :global(.vector-ink) {
+.sheet :global(:where(.capas) .vector-ink) {
   position: absolute;
   left: 0;
   top: 0;
@@ -1027,7 +1040,7 @@
    lo que hacía el propio export): los `.text-span` hijos traen familia,
    cuerpo, peso y color inline, y no queda ni un carácter suelto fuera de
    ellos. */
-.sheet :global(.text-block) {
+.sheet :global(:where(.capas) .text-block) {
   position: absolute;
   /* Por encima de la tinta (`.ink-layer`, z3): en este export el SVG de
      anotaciones va ANTES que el texto en el DOM, así que con el z-index
@@ -1042,7 +1055,7 @@
   white-space: normal;
 }
 
-.sheet :global(.text-span) {
+.sheet :global(:where(.capas) .text-span) {
   position: absolute;
   display: block;
   white-space: pre;
@@ -1072,31 +1085,31 @@
 /* Sólo posicionan: el color, el cuerpo y la familia los traen los <span>
    hijos inline, así que no se les toca la tipografía (poner `font` aquí
    pisaría la suya — el error que ya se cometió una vez con un reset). */
-.sheet :global(.native-line) {
+.sheet :global(:where(.capas) .native-line) {
   position: absolute;
   white-space: nowrap;
   line-height: 1;
   z-index: 4;
 }
 
-.sheet :global(.ocr-text) {
+.sheet :global(:where(.capas) .ocr-text) {
   position: absolute;
   margin: 0;
   z-index: 4;
 }
 
-.sheet :global(.ocr-text.question) { text-align: left; }
-.sheet :global(.ocr-text .qnum)    { display: inline-block; min-width: 35px; }
+.sheet :global(:where(.capas) .ocr-text.question) { text-align: left; }
+.sheet :global(:where(.capas) .ocr-text .qnum)    { display: inline-block; min-width: 35px; }
 
 /* Sin `overflow: hidden`, que traía el export: recorta la sombra del hover.
    Contener la imagen ya es cosa del `object-fit`. */
-.sheet :global(.figure) {
+.sheet :global(:where(.capas) .figure) {
   position: absolute;
   margin: 0;
   z-index: 2;
 }
 
-.sheet :global(.figure img) {
+.sheet :global(:where(.capas) .figure img) {
   display: block;
   width: 100%;
   height: 100%;
@@ -1105,7 +1118,7 @@
 
 /* El marco gris de cada hoja escaneada. Decorativo: nunca debe capturar el
    cursor, o se comería el hover de lo que tiene encima. */
-.sheet :global(.sheet-border) {
+.sheet :global(:where(.capas) .sheet-border) {
   position: absolute;
   border: 1px solid #c8c8c8;
   z-index: 1;
@@ -1122,7 +1135,7 @@
    oscuro por haber perdido el original (15 %); una `opacity` de capa se
    multiplicaría con aquella y lo dejaría invisible. `multiply` sí, para que
    el color se componga como un rotulador sobre el papel. */
-.sheet :global(.marks-bg) {
+.sheet :global(:where(.capas) .marks-bg) {
   position: absolute;
   left: 0;
   top: 0;
@@ -1133,7 +1146,7 @@
   mix-blend-mode: multiply;
 }
 
-.sheet :global(.annotation-layer) {
+.sheet :global(:where(.capas) .annotation-layer) {
   position: absolute;
   left: 0;
   top: 0;
@@ -1223,6 +1236,18 @@
   max-width: 100%;
 }
 
+/* El otro vocabulario con nombres genéricos es el de Notion, y ése no se puede
+   acotar como el de capas: sus fragmentos no llevan envoltorio. Aquí sólo
+   choca `.callout`, que en Notion es un aviso con icono al lado —y por eso es
+   `display: flex`— mientras que Ta10 llama así a una nota con filete lateral y
+   dos párrafos, que el flex ponía uno al costado del otro.
+
+   Se le devuelve el flujo y nada más: el resto de lo que hereda de Notion
+   (borde, radio, fondo templado) le sienta bien y lo integra con el visor. */
+.sheet :global(.doc-flujo .callout) {
+  display: block;
+}
+
 /* Y lo que de verdad no quepa —una tabla ancha— scrollea dentro de su caja en
    vez de desbordar el documento entero. */
 .sheet :global(.doc-flujo table) {
@@ -1235,10 +1260,10 @@
    está ANTES de la sección "en capas", y a igualdad de especificidad gana la
    última regla — desde allí no podría apagar nada de aquí. */
 @media (prefers-reduced-motion: reduce) {
-  .sheet :global(.pdf-image img),
-  .sheet :global(img.pdf-image),
-  .sheet :global(.image-layer img),
-  .sheet :global(.figure img),
+  .sheet :global(:where(.capas) .pdf-image img),
+  .sheet :global(:where(.capas) img.pdf-image),
+  .sheet :global(:where(.capas) .image-layer img),
+  .sheet :global(:where(.capas) .figure img),
   .sheet :global(.capas img.asset),
   .sheet :global(.doc-flujo img) {
     transition: none;
@@ -1246,10 +1271,10 @@
 
   /* Se queda sin desplazamiento, pero conserva la sombra: es la que dice que
      la figura responde al cursor. */
-  .sheet :global(.pdf-image img:hover),
-  .sheet :global(img.pdf-image:hover),
-  .sheet :global(.image-layer img:hover),
-  .sheet :global(.figure img:hover),
+  .sheet :global(:where(.capas) .pdf-image img:hover),
+  .sheet :global(:where(.capas) img.pdf-image:hover),
+  .sheet :global(:where(.capas) .image-layer img:hover),
+  .sheet :global(:where(.capas) .figure img:hover),
   .sheet :global(.capas img.asset:hover),
   .sheet :global(.doc-flujo img:hover) {
     transform: none;

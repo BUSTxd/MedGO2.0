@@ -699,10 +699,10 @@ regex, no diagnóstico del documento** — contrastar a mano antes de creerlo.
 - `bcm-te-4-html` (Biología Celular, Te4 — Procariotas y eucariotas) — «pdf-page», px, `<figure>`,
   tinta y resaltado en un `vectors.svg` único. Segunda opción del picker, junto al PDF.
 
-### Antes de tocar el visor — las tres cosas que se han roto en silencio
+### Antes de tocar el visor — las cuatro cosas que se han roto en silencio
 
 Casi todos los fallos de esta sección no se vieron al hacer el cambio, sino semanas después y
-reportados por un alumno. Estos tres son los que se repiten:
+reportados por un alumno. Estos cuatro son los que se repiten:
 
 1. **Un cambio en el visor toca CUATRO documentos, no el que tienes delante.**
    `HtmlFullscreenModal.tsx` y `resumenHtml.module.css` los comparten los resúmenes de Notion
@@ -722,6 +722,21 @@ reportados por un alumno. Estos tres son los que se repiten:
    planteado lo rehace entero y se lleva por delante el escalado (ver la nota del `useMemo`).
    Cualquier `useState` que se añada al visor multiplica los re-renders: comprobar que el
    `dangerouslySetInnerHTML` sigue recibiendo la **misma referencia**.
+4. **Los tres envases comparten un único espacio de nombres de clases, y está lleno de nombres
+   genéricos.** Una regla escrita para una variante concreta —`.figure`, `.page`, `.pdf-page`,
+   `.callout`— colgada de `.sheet` a secas alcanza a **todos** los documentos publicados, no al
+   que se tenía delante. En Ta10 (documento de flujo) el `.figure` de la variante «native-line»
+   volvía `position:absolute` sus 10 figuras y el resumen se veía **sin una sola imagen**; el mismo
+   `.callout` de Notion, que es un flex con icono, ponía en fila los dos párrafos de una nota. Por
+   eso todo el vocabulario en capas va ahora acotado a `:where(.capas)` —el envoltorio que pone el
+   uploader, presente en los 12 fragmentos— y el de flujo a `.doc-flujo`. **`:where()`, no `.capas`
+   a secas**: no suma especificidad, así que las reglas siguen valiendo 0-2-0 y no pasan a ganarle
+   al `<style>` que los documentos «estilo-propio» traen dentro del fragmento.
+   El vocabulario de Notion es el único que no se puede acotar (sus fragmentos no llevan
+   envoltorio): sus choques se atacan uno a uno desde la sección del otro envase.
+   Cómo medirlo antes de publicar, sin navegador: sacar las clases del markup del fragmento y
+   cruzarlas con las que el module estiliza vía `:global(...)`. Lo que aparezca en las dos listas
+   es un choque.
 
 ---
 

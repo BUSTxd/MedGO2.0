@@ -59,7 +59,17 @@ const DEFAULT_SIZE = 1; // índice de 1.0x
    página completa que obligan a la lista blanca en el envase en capas, y
    exigir `figure` dejaba mudas las imágenes que el export no envuelve (en Ta7,
    una de dos; en Ta10, dos de once). */
-const FIGURAS = 'img.pdf-image, .pdf-image img, .image-layer img, .figure img, .capas img.asset, .doc-flujo img';
+/* Las del envase en capas van acotadas a `.capas`, igual que en el CSS: sus
+   nombres son genéricos y `.figure` es también el de las figuras de un
+   documento de flujo. */
+const FIGURAS = [
+  '.capas img.pdf-image',
+  '.capas .pdf-image img',
+  '.capas .image-layer img',
+  '.capas .figure img',
+  '.capas img.asset',
+  '.doc-flujo img',
+].join(', ');
 
 interface Props {
   claseId: string;
