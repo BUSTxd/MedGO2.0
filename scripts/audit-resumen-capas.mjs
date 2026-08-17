@@ -81,14 +81,35 @@ if (/pdf2htmlEX/i.test(html)) {
                     **pt** · figuras en <img> · tinta y resaltador en SVG.
 
    Los cinco chequeos son los mismos; lo que cambia es de dónde se leen las
-   medidas y dónde vive el resaltador. */
-const VARIANTE = /class="image-layer"/.test(html) && /class="text-layer"/.test(html) ? 'layers'
-               : /class="pdf-page"/.test(html)   && /class="pdf-text"/.test(html)   ? 'pdf-page'
+   medidas y dónde vive el resaltador.
+
+   ⚠️ La familia se reconoce por la PÁGINA, igual que en el uploader — y el
+   nombre de la página tampoco es fijo (`page`, `pdf-page`, `pdf-stage`). Este
+   detector pedía además un vocabulario de texto concreto y rechazaba con «esto
+   no es un PDF reconstruido en capas» documentos que el uploader sí publica,
+   que es el mensaje que empuja a la skill equivocada. Si la página está pero
+   el vocabulario no es ninguno de los catalogados, se audita igual: lo que no
+   se pueda medir se dice, no se calla ni se inventa.
+
+   `\b` NO sirve para buscar clases: el guion es un no-word char y `\bpage\b`
+   casaría dentro de `class="page-wrapper"`. */
+const claseSuelta = (c) => new RegExp(`class="[^"]*(?<![\\w-])${c}(?![\\w-])`);
+const tieneClase = (c) => claseSuelta(c).test(html);
+
+const CLASE_PAGINA = ['pdf-page', 'pdf-stage', 'page'].find(tieneClase);
+const VARIANTE = CLASE_PAGINA === 'page' && tieneClase('image-layer') && tieneClase('text-layer') ? 'layers'
+               : CLASE_PAGINA === 'pdf-page' && tieneClase('pdf-text') ? 'pdf-page'
+               : CLASE_PAGINA ? 'estilo-propio'
                : null;
 if (!VARIANTE) {
-  console.error('\n✗ No encontré ni .image-layer/.text-layer ni .pdf-page/.pdf-text. Esto no es un PDF reconstruido en capas.');
+  console.error('\n✗ No encontré página de tamaño fijo (.page / .pdf-page / .pdf-stage): esto no es un PDF reconstruido en capas.');
   console.error('  Si es un export de Notion, la skill correcta es /addresumenhtml.');
+  console.error('  Si no tiene página fija, es un documento de flujo: /addresumencapas lo explica.');
   process.exit(1);
+}
+if (VARIANTE === 'estilo-propio') {
+  console.log(`\nⓘ Página «.${CLASE_PAGINA}» con vocabulario no catalogado: se audita lo que es común`);
+  console.log('  (referencias, portabilidad y peso). El uploader lo publicará con su propio <style>.');
 }
 
 // Unidad en la que el documento anota TODAS sus coordenadas. Las cifras se
@@ -198,11 +219,27 @@ for (const c of cajas) {
   }
 }
 
+/* El peso de las imágenes se cuenta aparte de las cajas: en una variante no
+   catalogada no hay cajas que medir, pero las figuras existen y su peso es el
+   dato que decide si el documento es publicable. Antes salía «imágenes 0 KB»
+   junto a 62 figuras que sí resolvían. */
+for (const ref of new Set(refs.map(r => renombres.get(r) ?? r))) {
+  const p = join(dir, ref);
+  if (existsSync(p) && !cajas.some(c => (renombres.get(c.refOrig) ?? c.refOrig) === ref)) {
+    pesoImgs += statSync(p).size;
+  }
+}
+
 if (deformadas.length) {
   for (const d of deformadas) {
     problemas.push(`figura ${d.id} (${d.ref}) se deforma ${d.desvio.toFixed(1)}%: caja ${d.w}×${d.h}, imagen ${d.img} → ancho correcto ${d.wOk}`);
     console.log(`   ✗ ${d.id}  caja ${d.w}×${d.h}  ·  imagen ${d.img}  ·  ${d.desvio > 0 ? '+' : ''}${d.desvio.toFixed(1)}%  → ancho ${d.wOk}`);
   }
+} else if (!cajas.length) {
+  /* NUNCA un ✓ sin haber medido. Con 0 cajas el visto bueno se lee como «las
+     figuras están bien» cuando en realidad no se comprobó ninguna — la trampa
+     que ya se cobró una revisión en Te11. */
+  console.log(`   — no se pudo medir ninguna caja${VARIANTE === 'estilo-propio' ? ' (vocabulario no catalogado)' : ''}: comprueba el aspecto a mano si alguna figura se ve estirada`);
 } else {
   console.log('   ✓ ninguna se deforma');
 }

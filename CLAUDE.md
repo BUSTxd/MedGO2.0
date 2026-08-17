@@ -642,6 +642,19 @@ Publicado con esta vía:
 - `bcm-te-6-html` (Te6 — Potencial de membrana) y `bcm-afa-1` (AFA1 — Potencial de membrana) —
   «estilo-propio», las dos mitades del mismo export (`--recorte` en 7180). Te6 va en picker junto
   a su PDF como «Resumen (visual)»; AFA1 es casi todo capturas del cuestionario resuelto.
+- `bcm-ta-13` (Ta13 — Caso de integración) — «estilo-propio». Las hojas del taller y su
+  transcripción en 12 `.subpage`, con el texto **palabra a palabra** (2 836 `<span>`) encima del
+  escaneo, así que es buscable. Sus figuras van `aria-hidden` + `pointer-events:none` a propósito
+  —son el fondo, el contenido es el texto—, de modo que no tienen hover ni lightbox.
+
+**⚠️ Las coordenadas pueden no ser todas absolutas.** Ta13 mete 12 contenedores `.subpage`
+posicionados, y las palabras y figuras de dentro llevan coordenadas **relativas a su subpágina**.
+Cualquier análisis por `top` absoluto ahí es basura —da «86 % de la página vacía» en un documento
+completo— y `--recorte` no sirve tal cual. Señal: el texto se concentra en una franja que no cuadra
+con el alto de la página. **Las medidas de la página, además, se le preguntan al documento**: se
+lee la regla CSS de su página y, si el `width` es un `var(…)`, se resuelve esa property por su
+nombre — han salido `--page-w/-h`, `--pdf-width/-height` y `--W/--H`, y buscarlas por lista no
+escala.
 
 **Tres cosas que enseñó Te6.** (1) **Una variante catalogada lo es por completo, página incluida**:
 su texto era `.pdf-text` pero su página `.pdf-stage`, y el module —escrito para `.pdf-page`— no le

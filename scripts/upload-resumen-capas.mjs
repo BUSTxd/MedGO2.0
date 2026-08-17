@@ -156,18 +156,29 @@ if (VARIANTE === 'layers') {
      sólo en uno hacía abortar con «no encontré el width/height de .pdf-page»,
      que suena a documento inválido cuando lo único que pasa es que las
      declara en el otro. */
-  const lit = html.match(new RegExp(`\\.${CLASE_PAGINA}\\s*\\{[^}]*width:\\s*([\\d.]+)(pt|px);\\s*height:\\s*([\\d.]+)(pt|px)`));
-  /* Y el nombre de la custom property tampoco es fijo: `--page-w/--page-h` o
-     `--pdf-width/--pdf-height`. El cierre puede ser `;` o directamente `}`
-     (`:root{--page-w:1275.6px;--page-h:6686.24px}` no lleva punto y coma
-     final), y exigirlo hacía fallar la lectura entera. */
-  const raiz = html.match(/--page-w:\s*([\d.]+)(pt|px)?\s*;\s*--page-h:\s*([\d.]+)(pt|px)?\s*[;}]/)
-            ?? html.match(/--pdf-width:\s*([\d.]+)(pt|px)?\s*;\s*--pdf-height:\s*([\d.]+)(pt|px)?\s*[;}]/);
-  const m = lit ?? raiz;
-  if (!m) {
-    console.error(`✗ No encontré las medidas de la página (ni en .${CLASE_PAGINA} ni en --page-w/--pdf-width).`);
+  /* Las medidas se leen SIEMPRE de la regla de la página, y si están en una
+     custom property se resuelve esa property por su nombre.
+
+     Ir con una lista de nombres conocidos no escala: han salido `--page-w/-h`,
+     `--pdf-width/-height` y `--W/--H`, y cada export nuevo puede inventar otro.
+     Preguntarle al documento cuál usa es estable. */
+  const reglaPagina = html.match(new RegExp(`\\.${CLASE_PAGINA}\\s*\\{([^}]*)\\}`))?.[1] ?? '';
+  const medida = (prop) => {
+    const lit = reglaPagina.match(new RegExp(`(?:^|;)\\s*${prop}:\\s*([\\d.]+)(pt|px)`));
+    if (lit) return [+lit[1], lit[2]];
+    const nombre = reglaPagina.match(new RegExp(`(?:^|;)\\s*${prop}:\\s*var\\(\\s*(--[\\w-]+)`))?.[1];
+    if (!nombre) return null;
+    const v = html.match(new RegExp(`${nombre}:\\s*([\\d.]+)(pt|px)?\\s*[;}]`));
+    return v ? [+v[1], v[2] ?? 'px'] : null;
+  };
+  // Último recurso: el par clásico, por si la página no declara sus medidas.
+  const w = medida('width') ?? (html.match(/--page-w:\s*([\d.]+)(pt|px)?/) ? [+RegExp.$1, RegExp.$2 || 'px'] : null);
+  const hh = medida('height') ?? (html.match(/--page-h:\s*([\d.]+)(pt|px)?/) ? [+RegExp.$1, RegExp.$2 || 'px'] : null);
+  if (!w || !hh) {
+    console.error(`✗ No encontré las medidas de la página en la regla de .${CLASE_PAGINA}.`);
     process.exit(1);
   }
+  const m = [null, String(w[0]), w[1], String(hh[0]), hh[1]];
   // La unidad no se anuncia: se lee de donde esté, y si falta se asume px —
   // asumir pt escalaría un documento en px por 4/3 sin que nada avisara.
   U = m[2] ?? m[4] ?? 'px';

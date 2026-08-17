@@ -23,6 +23,7 @@ import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 const ALLOWED = new Set([
   'bcm-afa-1',
   'bcm-ta-1',
+  'bcm-ta-13',
   'bcm-ta-2',
   'bcm-ta-3',
   'bcm-ta-4',
@@ -68,6 +69,7 @@ const ALLOWED = new Set([
 const FILE_ALIAS: Record<string, string> = {
   'bcm-afa-1': 'biologia-celular/bcm-afa-1',
   'bcm-ta-1': 'biologia-celular/bcm-ta-1',
+  'bcm-ta-13': 'biologia-celular/bcm-ta-13',
   'bcm-ta-2': 'biologia-celular/bcm-ta-2',
   'bcm-ta-3': 'biologia-celular/bcm-ta-3',
   'bcm-ta-4': 'biologia-celular/bcm-ta-4',

@@ -773,6 +773,14 @@ export const semanas: Semana[] = [
           'Integración de membrana, endomembranas y herencia',
         ],
         docentes: [],
+        // Envase "en capas" (ver /addresumencapas): las hojas del taller a la
+        // izquierda y su transcripción a la derecha, en 12 subpáginas. El texto
+        // va palabra a palabra sobre el escaneo, así que es buscable.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-ta-13', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'bcm-afpd-3',
