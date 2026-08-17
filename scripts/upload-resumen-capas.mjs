@@ -138,7 +138,9 @@ if (VARIANTE === 'layers') {
      que suena a documento inválido cuando lo único que pasa es que las
      declara en el otro. */
   const lit = html.match(/\.pdf-page\s*\{[^}]*width:\s*([\d.]+)(pt|px);\s*height:\s*([\d.]+)(pt|px)/);
-  const raiz = html.match(/--page-w:\s*([\d.]+)(pt|px)?\s*;\s*--page-h:\s*([\d.]+)(pt|px)?\s*;/);
+  // El cierre puede ser `;` o directamente `}`: `:root{--page-w:1275.6px;--page-h:6686.24px}`
+  // no lleva punto y coma final, y exigirlo hacía fallar la lectura entera.
+  const raiz = html.match(/--page-w:\s*([\d.]+)(pt|px)?\s*;\s*--page-h:\s*([\d.]+)(pt|px)?\s*[;}]/);
   const m = lit ?? raiz;
   if (!m) {
     console.error('✗ No encontré las medidas de la página (ni en .pdf-page ni en --page-w/--page-h).');

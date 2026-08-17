@@ -26,6 +26,7 @@ const ALLOWED = new Set([
   'bcm-ta-3',
   'bcm-ta-4',
   'bcm-ta-5',
+  'bcm-te-11',
   'bcm-te-2-html',
   // Segundo resumen de Te4: la clase se ofrece en dos envases y el alumno
   // elige. El id lleva sufijo porque `bcm-te-4` ya es el PDF, en otro bucket.
@@ -68,6 +69,7 @@ const FILE_ALIAS: Record<string, string> = {
   'bcm-ta-3': 'biologia-celular/bcm-ta-3',
   'bcm-ta-4': 'biologia-celular/bcm-ta-4',
   'bcm-ta-5': 'biologia-celular/bcm-ta-5',
+  'bcm-te-11': 'biologia-celular/bcm-te-11',
   'bcm-te-2-html': 'biologia-celular/bcm-te-2-html',
   'bcm-te-4-html': 'biologia-celular/bcm-te-4-html',
   'bcm-te-8': 'biologia-celular/bcm-te-8',

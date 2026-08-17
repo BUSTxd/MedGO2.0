@@ -95,15 +95,21 @@ if (!VARIANTE) {
 // comparan siempre entre sí (caja contra imagen, texto contra hueco), así que
 // basta con leerlas en su propia unidad; sólo el aviso de ancho fijo, que se
 // mide contra una pantalla real, necesita la conversión a px.
-const U = VARIANTE === 'layers' ? 'px' : 'pt';
-const A_PX = U === 'pt' ? 4 / 3 : 1;
+/* Las medidas viven en uno de dos sitios y en una de dos unidades, y NADA lo
+   anuncia: unos exports las ponen literales en `.pdf-page` y otros dejan ahí
+   `var(--page-w)` con el número en `:root` (que además puede cerrar con `}` en
+   vez de `;`). Asumir un solo sitio dejaba el auditor diciendo «sin altura de
+   página, no se puede comprobar» y saltándose la búsqueda de contenido
+   perdido — un silencio que parece un documento raro y es un regex corto. */
 const num = String.raw`[\d.]+`;
 
-const mPage = VARIANTE === 'layers'
-  ? html.match(/--page-w:\s*([\d.]+)px;\s*--page-h:\s*([\d.]+)px/)
-  : html.match(/\.pdf-page\s*\{[^}]*width:\s*([\d.]+)pt;\s*height:\s*([\d.]+)pt/);
+const mLit  = html.match(/\.pdf-page\s*\{[^}]*width:\s*([\d.]+)(pt|px);\s*height:\s*([\d.]+)(pt|px)/);
+const mRaiz = html.match(/--page-w:\s*([\d.]+)(pt|px)?\s*;\s*--page-h:\s*([\d.]+)(pt|px)?\s*[;}]/);
+const mPage = VARIANTE === 'layers' ? (mRaiz ?? mLit) : (mLit ?? mRaiz);
+const U = mPage ? (mPage[2] ?? mPage[4] ?? 'px') : 'px';
+const A_PX = U === 'pt' ? 4 / 3 : 1;
 const PAGE_W = mPage ? +mPage[1] : null;
-const PAGE_H = mPage ? +mPage[2] : null;
+const PAGE_H = mPage ? +mPage[3] : null;
 
 console.log(`\n═══ ${htmls[0]}  ·  ${kb(Buffer.byteLength(html, 'utf8'))}  ·  variante «${VARIANTE}» ═══`);
 if (PAGE_W) console.log(`página: ${PAGE_W.toFixed(0)} × ${PAGE_H.toFixed(0)} ${U}`
@@ -152,10 +158,19 @@ if (VARIANTE === 'layers') {
     if (ref) cajas.push({ id: c[1], refOrig: ref, w: +c[2], h: +c[3] });
   }
 } else {
-  // aquí la <img> lleva su propia caja y no hay data-image: el id del log es
-  // el propio archivo.
+  /* Dos formas y DOS unidades. La caja puede ir en la propia <img> o en el
+     <figure> que la envuelve (y entonces el style va antes del src), y las
+     coordenadas tanto en pt como en px — la unidad no se anuncia. Fijar `pt`
+     hacía que no casara nada en un documento en px y el auditor informaba
+     «0 cajas · ninguna se deforma», que se lee como un visto bueno cuando en
+     realidad no midió nada. */
   for (const c of html.matchAll(
-    /<img class="pdf-image" src="([^"]+)"[^>]*style="left:[\d.]+pt;top:[\d.]+pt;width:([\d.]+)pt;height:([\d.]+)pt;?"/g
+    /<figure class="pdf-image" style="left:[\d.]+(?:pt|px);top:[\d.]+(?:pt|px);width:([\d.]+)(?:pt|px);height:([\d.]+)(?:pt|px);?"[^>]*>\s*<img src="([^"]+)"/g
+  )) {
+    cajas.push({ id: c[3], refOrig: c[3], w: +c[1], h: +c[2] });
+  }
+  for (const c of html.matchAll(
+    /<img class="pdf-image" src="([^"]+)"[^>]*style="left:[\d.]+(?:pt|px);top:[\d.]+(?:pt|px);width:([\d.]+)(?:pt|px);height:([\d.]+)(?:pt|px);?"/g
   )) {
     cajas.push({ id: c[1].split('/').pop(), refOrig: c[1], w: +c[2], h: +c[3] });
   }
@@ -198,10 +213,13 @@ if (deformadas.length) {
    texto reconstruido sobre las figuras (.raster-text-rebuilt), que lleva un
    `width` intercalado. Un solo regex no cubre los tres casos. */
 function lineasTexto() {
+  // Igual que con las figuras: la unidad puede ser pt o px, y fijarla dejaba
+  // el documento entero contado como «sin texto» → una franja vacía del 100 %.
   const fuentes = VARIANTE === 'layers'
     ? [/top:([\d.]+)px;font-size:([\d.]+)px/g]
-    : [/top:([\d.]+)pt;font-family:[^;]*;font-size:([\d.]+)pt/g,
-       /top:([\d.]+)pt;width:[\d.]+pt;font-size:([\d.]+)pt/g];
+    : [/top:([\d.]+)(?:pt|px);font-family:[^;]*;font-size:([\d.]+)(?:pt|px)/g,
+       /top:([\d.]+)(?:pt|px);width:[\d.]+(?:pt|px);font-size:([\d.]+)(?:pt|px)/g,
+       /top:([\d.]+)(?:pt|px);[^"]*?font-size:([\d.]+)(?:pt|px)/g];
   const out = [];
   for (const re of fuentes) {
     for (const m of html.matchAll(re)) out.push([+m[1], +m[1] + +m[2] * 1.2]);
@@ -329,7 +347,7 @@ if (!H) {
   const marca = (t, h) => { for (let y = Math.max(0, Math.round(t)); y < Math.min(H, Math.round(t + h)); y++) cover[y] = 1; };
   const reFig = VARIANTE === 'layers'
     ? /top:([\d.]+)px;width:[\d.]+px;height:([\d.]+)px/g
-    : /top:([\d.]+)pt;width:[\d.]+pt;height:([\d.]+)pt/g;
+    : /top:([\d.]+)(?:pt|px);width:[\d.]+(?:pt|px);height:([\d.]+)(?:pt|px)/g;
   for (const m of html.matchAll(reFig)) marca(+m[1], +m[2]);
   for (const [a, b] of lineasTexto()) marca(a, b - a);
   // La tinta se rasteriza al tamaño de la página, así que sus filas están en

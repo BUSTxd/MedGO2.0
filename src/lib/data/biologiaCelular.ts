@@ -656,6 +656,13 @@ export const semanas: Semana[] = [
           'No disyunción y aneuploidías',
         ],
         docentes: [],
+        // Envase "en capas", variante «pdf-page» en px (ver /addresumencapas).
+        // Su `vectors.svg` no es tinta: son las 14 líneas del borde de una tabla.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-te-11', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'bcm-te-12',

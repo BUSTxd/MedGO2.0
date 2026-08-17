@@ -637,6 +637,15 @@ Publicado con esta vía:
 - `bcm-ta-5` (Ta5 — Ósmosis) — capas «estilo-propio», el primero que viaja con su `<style>`
   saneado. 4 hojas escaneadas más las respuestas al margen; la tinta no es una capa a página
   completa sino 3 recortes posicionados.
+- `bcm-te-11` (Te11 — Meiosis) — capas «pdf-page» en px. Su `vectors.svg` **no es tinta**: son 14
+  `<line>` que dibujan el borde de una tabla, así que no hay nada que atenuar.
+
+**El auditor puede mentir en dos direcciones a la vez si sus regex no casan.** Daba `pt` por hecho
+en todas las variantes que no son «layers», y con un documento en px (Te11) informó «0 cajas ·
+ninguna se deforma» —un visto bueno sin haber medido— junto a «una franja vacía, 100 % del alto»
+en un documento con 245 bloques de texto. Ya acepta las dos unidades, las dos formas de figura y
+las medidas en `:root` cerradas con `}`. **Regla: un contador en 0 o en 100 % es sospecha de
+regex, no diagnóstico del documento** — contrastar a mano antes de creerlo.
 - `bcm-te-8` (Biología Celular, Te8 — Comunicación celular) — «layers».
 - `bcm-ta-4` (Biología Celular, Ta4 — Estructura de la membrana) — «pdf-page», pt, `<img>`.
 - `bcm-te-4-html` (Biología Celular, Te4 — Procariotas y eucariotas) — «pdf-page», px, `<figure>`,
