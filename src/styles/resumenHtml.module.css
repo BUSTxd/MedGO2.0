@@ -845,14 +845,16 @@
    en tarjetas flotando sobre la página. */
 .sheet :global(.pdf-image img),
 .sheet :global(img.pdf-image),
-.sheet :global(.image-layer img) {
+.sheet :global(.image-layer img),
+.sheet :global(.figure img) {
   cursor: zoom-in;
   transition: box-shadow 0.18s, transform 0.18s;
 }
 
 .sheet :global(.pdf-image img:hover),
 .sheet :global(img.pdf-image:hover),
-.sheet :global(.image-layer img:hover) {
+.sheet :global(.image-layer img:hover),
+.sheet :global(.figure img:hover) {
   transform: translateY(calc(-2px / var(--fit, 1)));
   box-shadow:
     0 calc(10px / var(--fit, 1)) calc(28px / var(--fit, 1)) rgba(10, 12, 30, 0.2);
@@ -1005,6 +1007,99 @@
   pointer-events: none;
 }
 
+/* ──────────────────────────────────────────────────────────────────────
+   Variante «native-line» del envase en capas (Taller 3 · Enzimas)
+
+   Tercera forma del mismo conversor. La página vuelve a ser `.pdf-page`,
+   pero el vocabulario cambia entero y —a diferencia de las otras dos— el
+   documento **no trae regla propia para sus capas de anotación**: el
+   `<img class="marks-bg">` y el `<img class="annotation-layer">` salen del
+   export sin `position` ni tamaño. Como el `<style>` del export se descarta
+   (sus `html, body, *` pisarían el dashboard), aquí hay que reponer el
+   vocabulario COMPLETO o el documento se desarma.
+
+   Orden de capas, que es lo que decide si el resaltado tapa o no:
+     z1 .sheet-border  — el marco de cada hoja escaneada
+     z2 .figure        — las figuras
+     z3 .marks-bg      — el resaltado, ENCIMA de las figuras y DEBAJO del texto
+     z4 .native-line / .ocr-text — el texto
+     z5 .annotation-layer — la tinta manuscrita, encima de todo
+   ────────────────────────────────────────────────────────────────────── */
+
+/* Sólo posicionan: el color, el cuerpo y la familia los traen los <span>
+   hijos inline, así que no se les toca la tipografía (poner `font` aquí
+   pisaría la suya — el error que ya se cometió una vez con un reset). */
+.sheet :global(.native-line) {
+  position: absolute;
+  white-space: nowrap;
+  line-height: 1;
+  z-index: 4;
+}
+
+.sheet :global(.ocr-text) {
+  position: absolute;
+  margin: 0;
+  z-index: 4;
+}
+
+.sheet :global(.ocr-text.question) { text-align: left; }
+.sheet :global(.ocr-text .qnum)    { display: inline-block; min-width: 35px; }
+
+/* Sin `overflow: hidden`, que traía el export: recorta la sombra del hover.
+   Contener la imagen ya es cosa del `object-fit`. */
+.sheet :global(.figure) {
+  position: absolute;
+  margin: 0;
+  z-index: 2;
+}
+
+.sheet :global(.figure img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* El marco gris de cada hoja escaneada. Decorativo: nunca debe capturar el
+   cursor, o se comería el hover de lo que tiene encima. */
+.sheet :global(.sheet-border) {
+  position: absolute;
+  border: 1px solid #c8c8c8;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Las dos capas a página completa. El export las deja sin estilo, así que
+   sin esto caerían en el flujo, arriba a la izquierda y a tamaño natural.
+
+   `.marks-bg` va en z3 —entre figuras y texto—, que es el final aceptable
+   nº2 de la regla del resaltado: el texto queda por delante. La atenuación
+   NO se hace aquí con `opacity`, sino en el propio SVG por el uploader, que
+   distingue el resaltado normal (45 %) del que el conversor sacó en un color
+   oscuro por haber perdido el original (15 %); una `opacity` de capa se
+   multiplicaría con aquella y lo dejaría invisible. `multiply` sí, para que
+   el color se componga como un rotulador sobre el papel. */
+.sheet :global(.marks-bg) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.sheet :global(.annotation-layer) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
 /* ══════════════════════════════════════════════════════════════════════
    ENVASE «documento de flujo» (.doc-flujo) — /addresumencapas, tercer caso
 
@@ -1079,6 +1174,7 @@
   .sheet :global(.pdf-image img),
   .sheet :global(img.pdf-image),
   .sheet :global(.image-layer img),
+  .sheet :global(.figure img),
   .sheet :global(.doc-flujo figure img) {
     transition: none;
   }
@@ -1088,6 +1184,7 @@
   .sheet :global(.pdf-image img:hover),
   .sheet :global(img.pdf-image:hover),
   .sheet :global(.image-layer img:hover),
+  .sheet :global(.figure img:hover),
   .sheet :global(.doc-flujo figure img:hover) {
     transform: none;
   }

@@ -72,16 +72,33 @@ console.log(`\nHTML   : ${htmls[0]}  (${kb(Buffer.byteLength(html, 'utf8'))})`);
      B · «pdf-page» .pdf-page + .vector-bg/.pdf-image/.pdf-text/.vector-ink,
                     todo en **pt**, figuras en <img> directo, tinta en **SVG**
                     y el resaltador en un SVG aparte (marks-bg).
+     C · «native-line» .pdf-page también, pero el texto va en .native-line /
+                    .ocr-text, las figuras en <figure class="figure">, la tinta
+                    en <img class="annotation-layer"> y el resaltador en
+                    <img class="marks-bg"> — y ninguno de los dos trae regla
+                    CSS propia, así que el visor tiene que ponérsela entera.
+                    Añade .sheet-border (el marco de cada hoja escaneada).
 
-   B es mejor documento: la tinta es vectorial (nítida a cualquier zoom) y el
-   resaltador, al venir separado, se puede volver translúcido sin tocar la
-   tinta. Lo hace el CSS del visor, no este script: el asset se sube tal cual. */
-const VARIANTE = /class="image-layer"/.test(html) && /class="text-layer"/.test(html) ? 'layers'
-               : /class="pdf-page"/.test(html)   && /class="pdf-text"/.test(html)   ? 'pdf-page'
+   B y C son mejores documentos: la tinta es vectorial (nítida a cualquier
+   zoom) y el resaltador, al venir separado, se puede volver translúcido sin
+   tocar la tinta — lo hace el CSS del visor, no este script.
+
+   La familia se reconoce por la PÁGINA (.page o .pdf-page); lo que cambia de
+   una variante a otra es el vocabulario del texto, y por eso la detección
+   pregunta por él. Un documento con .pdf-page pero sin .pdf-text no es «otro
+   formato»: es una variante nueva, y hay que añadirla aquí en vez de dejar que
+   el script diga que no lo reconoce. */
+const tieneTexto = (...clases) =>
+  clases.some(c => new RegExp(`class="[^"]*\\b${c}\\b`).test(html));
+
+const VARIANTE = /class="image-layer"/.test(html) && tieneTexto('text-layer') ? 'layers'
+               : /class="pdf-page"/.test(html) && tieneTexto('pdf-text')      ? 'pdf-page'
+               : /class="pdf-page"/.test(html) && tieneTexto('native-line', 'ocr-text') ? 'native-line'
                : null;
 if (!VARIANTE) {
-  console.error('✗ No es un PDF reconstruido en capas (ni .image-layer/.text-layer ni .pdf-page/.pdf-text).');
+  console.error('✗ No es un PDF reconstruido en capas (ni .image-layer ni .pdf-page con texto reconocible).');
   console.error('  Si es un export de Notion, usa upload-resumen-html.mjs.');
+  console.error('  Si no tiene página de tamaño fijo, es un documento de flujo: upload-resumen-doc.mjs.');
   process.exit(1);
 }
 
@@ -246,23 +263,61 @@ const fallos = [];
  * subirlos tal cual existe para no recomprimir un AVIF —que sería una segunda
  * pérdida sobre un formato lossy—, y un SVG es texto. Añadir un atributo no
  * degrada nada y es idempotente. */
+/* Un resaltado puede venir como <path> con forma de rectángulo (Te4) o como
+   <rect> de verdad (Taller 3), así que se miran los dos.
+ *
+ * Y la opacidad no es una sola. Lo normal es 0.45, que deja el color a la
+ * vista sin aplastar la letra. Pero hay conversores que **pierden el color
+ * del resaltador y lo escriben en negro**: en el Taller 3 son 12 rectángulos
+ * `#000000` a opacidad plena, alineados uno a uno con líneas del enunciado
+ * (18 px de alto, partidos donde la selección soltaba). Un resaltado negro no
+ * existe; es un color perdido, no una intención. Al 0.45 seguiría siendo un
+ * gris medio bajo texto negro —ilegible—, así que a los oscuros se les da una
+ * opacidad mucho menor: quedan como un sombreado que dice «esta línea estaba
+ * resaltada» sin tapar nada y sin inventar un color que no consta. */
+const LUMA_OSCURO = 0.4;
+const luma = (hex) => {
+  const m = /^#([0-9a-f]{6})$/i.exec(hex ?? '');
+  if (!m) return 1;
+  const n = parseInt(m[1], 16);
+  return (0.2126 * ((n >> 16) & 255) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;
+};
+
 const svgAtenuado = new Map();
 for (const ref of assets.filter(r => /\.svg$/i.test(r))) {
   const original = readFileSync(join(dir, ref), 'utf8');
-  let tocados = 0;
-  const out = original.replace(/<path\b[^>]*\/>/g, (tag) => {
+  let tocados = 0, oscuros = 0;
+  const atenuar = (tag) => {
+    if (/fill="none"/.test(tag)) return tag;              // no pinta nada
+    if (!/fill-opacity="1(\.0+)?"/.test(tag)) return tag; // ya venía translúcido
+    const fill = tag.match(/fill="(#[0-9a-fA-F]{6})"/)?.[1];
+    const oscuro = luma(fill) < LUMA_OSCURO;
+    if (oscuro) oscuros++;
+    tocados++;
+    return tag.replace(/fill-opacity="1(\.0+)?"/, `fill-opacity="${oscuro ? '0.15' : '0.45'}"`);
+  };
+
+  /* Si el archivo es SÓLO de resaltado no hay nada que discriminar: todo lo
+     que hay dentro es resaltado y se atenúa entero, trazos a mano incluidos
+     (en el Taller 3, 3 barridos de rotulador amarillo que la heurística
+     geométrica habría dejado a opacidad plena). La discriminación por
+     geometría hace falta únicamente cuando tinta y resaltado comparten
+     archivo, que es el caso de un `vectors.svg` único. */
+  const soloResaltado = /marks?-?bg|highlight/i.test(ref);
+
+  let out = original.replace(/<path\b[^>]*\/>/g, (tag) => {
     const d = tag.match(/\bd="([^"]+)"/)?.[1];
     if (!d) return tag;
+    // Un resaltado es un rectángulo (sólo M/H/V/L/Z y pocos comandos); un
+    // trazo de rotulador son decenas o cientos de puntos y se deja intacto.
     const esRectangulo = !/[CcSsQqTtAa]/.test(d) && (d.match(/[A-Za-z]/g) ?? []).length <= 6;
-    if (!esRectangulo) return tag;                       // trazo de tinta: intacto
-    if (/fill="none"/.test(tag)) return tag;             // no pinta nada
-    if (!/fill-opacity="1(\.0+)?"/.test(tag)) return tag; // ya venía translúcido
-    tocados++;
-    return tag.replace(/fill-opacity="1(\.0+)?"/, 'fill-opacity="0.45"');
+    return soloResaltado || esRectangulo ? atenuar(tag) : tag;
   });
+  out = out.replace(/<rect\b[^>]*\/>/g, (tag) => atenuar(tag));
+
   if (tocados) {
     svgAtenuado.set(ref, Buffer.from(out, 'utf8'));
-    console.log(`✓ ${ref}: ${tocados} resaltado(s) rectangular(es) atenuado(s) — la tinta queda intacta`);
+    console.log(`✓ ${ref}: ${tocados} resaltado(s) atenuado(s)${oscuros ? ` — ${oscuros} venían en un color OSCURO (color perdido por el conversor): van al 15 % para no tapar la letra` : ''}; la tinta queda intacta`);
   }
 }
 
@@ -297,18 +352,22 @@ if (fallos.length) {
 // Fuera <head>, el <style> global (html/body/* pisarían el dashboard: los
 // estilos los pone resumenHtml.module.css) y el <script> del fit() (no se
 // ejecuta con dangerouslySetInnerHTML; el escalado lo hace el visor en React).
-const [TAG, ABRE] = VARIANTE === 'layers'
-  ? ['article', '<article class="page"']
-  : ['section', '<section class="pdf-page"'];
-const ini = html.indexOf(ABRE);
+/* La etiqueta que lleva la página se LEE del documento en vez de asumirse: la
+   variante «pdf-page» la trae en un <section> y la «native-line» en un
+   <article> con id, y hardcodear una hacía abortar a la otra. */
+const CLASE_PAGINA = VARIANTE === 'layers' ? 'page' : 'pdf-page';
+const mAbre = html.match(new RegExp(`<(article|section|div)\\b[^>]*class="[^"]*\\b${CLASE_PAGINA}\\b[^"]*"[^>]*>`));
+if (!mAbre) { console.error(`✗ No encontré el elemento con class="${CLASE_PAGINA}".`); process.exit(1); }
+const TAG = mAbre[1];
+const ini = mAbre.index;
 const fin = html.indexOf(`</${TAG}>`, ini);
-if (ini === -1 || fin === -1) { console.error(`✗ No encontré ${ABRE}>.`); process.exit(1); }
+if (fin === -1) { console.error(`✗ No encontré el cierre </${TAG}> de la página.`); process.exit(1); }
 let page = html.slice(ini, fin + `</${TAG}>`.length);
 
 // El visor localiza la página por la clase `.page` para escalarla; la variante
 // «pdf-page» no la trae, así que se le añade sin quitarle la suya (de la que
 // cuelgan los estilos propios de esa variante en el CSS module).
-if (VARIANTE === 'pdf-page') page = page.replace('class="pdf-page"', 'class="page pdf-page"');
+if (VARIANTE !== 'layers') page = page.replace(/class="([^"]*\bpdf-page\b[^"]*)"/, 'class="page $1"');
 
 // rutas locales → CDN público
 let body = page.replace(RE_ASSET, (_, p) => `src="${BASE_PUB}/${PREFIX}/${p.split('/').pop()}"`);

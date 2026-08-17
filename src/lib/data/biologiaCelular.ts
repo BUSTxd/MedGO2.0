@@ -256,6 +256,14 @@ export const semanas: Semana[] = [
           'Inhibición competitiva y no competitiva',
           'Regulación alostérica',
         ],
+        // Envase "en capas", variante «native-line» (ver /addresumencapas): el
+        // taller resuelto a dos columnas — enunciado escaneado a la izquierda y
+        // las respuestas a la derecha, con la tinta y el resaltado en SVG.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-ta-3', label: 'Resumen', formato: 'html' }],
+        },
         docentes: [],
       },
       {

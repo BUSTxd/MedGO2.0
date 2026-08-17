@@ -399,9 +399,18 @@ Del documento original se descartan dos cosas y **ambas se reemplazan en el proy
   el bucle `fit → resize → fit`: ajustar la altura del shell vuelve a disparar el observer, y lo
   corta una guarda de «mismo ancho que la última vez».
 
-**Dos variantes del mismo conversor.** Comparten la idea —página de tamaño fijo, capas absolutas,
+**Tres variantes del mismo conversor.** Comparten la idea —página de tamaño fijo, capas absolutas,
 texto real— pero no el vocabulario, así que el auditor y el uploader detectan cuál es antes de
-tocar nada (`VARIANTE`) y sólo cambian de dónde leen las medidas y dónde vive el resaltador:
+tocar nada (`VARIANTE`) y sólo cambian de dónde leen las medidas y dónde vive el resaltador.
+**La familia se reconoce por la página (`.page`/`.pdf-page`), no por el texto**: un documento con
+`.pdf-page` y sin `.pdf-text` no es otro formato, es una variante que falta — añadirla en vez de
+creerse el «esto no es un PDF en capas». La tercera, **C · «native-line»** (Taller 3), usa
+`.native-line`/`.ocr-text` para el texto, `<figure class="figure">` para las figuras,
+`<img class="annotation-layer">` para la tinta y `<img class="marks-bg">` para el resaltado, más
+`.sheet-border` para el marco de cada hoja escaneada. Dos cosas suyas que las otras no tienen: sus
+capas de anotación **llegan sin regla CSS** (hay que reponer el vocabulario entero en el module —
+`.sheet-border` z1 · `.figure` z2 · `.marks-bg` z3 · texto z4 · `.annotation-layer` z5) y la
+etiqueta de la página es `<article>`, no `<section>`, por lo que el uploader la lee del documento.
 
 | | A · «layers» | B · «pdf-page» |
 |---|---|---|
@@ -580,8 +589,18 @@ sólo el **tema**: estos documentos traen su paleta cerrada —el Taller 1 vení
 `#1f1f1d` y tarjeta blanca— y `.sheet :global(.doc-flujo)` repisa sus custom properties con los
 tokens de la hoja, ganando por especificidad sin `!important`.
 
+**El conversor también pierde a veces el COLOR del resaltado y lo saca en negro.** En el Taller 3
+eran 12 `<rect>` `#000000` opacos, de 18 px de alto, alineados uno a uno con líneas del enunciado
+y partidos donde soltaba la selección: la firma de un resaltado digital, no un tachón. Ahí el
+orden de capas no basta —negro bajo letra negra es ilegible igual, y el 0.45 habitual deja un gris
+medio—, así que el uploader mira la **luminancia del relleno** y a los oscuros les pone `0.15`:
+quedan como un sombreado que marca la línea sin tapar nada y sin inventar un color que no consta.
+Y cuando el SVG es **sólo** de resaltado (`marks-bg`) se atenúa entero, trazos a mano incluidos:
+la discriminación por geometría existe para los archivos donde tinta y resaltado conviven.
+
 Publicado con esta vía:
 - `bcm-ta-1` (Biología Celular, Ta1 — Agua y surfactante) — «documento de flujo», 7 figuras.
+- `bcm-ta-3` (Biología Celular, Ta3 — Enzimas) — capas «native-line», dos columnas, 6 figuras.
 - `bcm-te-8` (Biología Celular, Te8 — Comunicación celular) — «layers».
 - `bcm-ta-4` (Biología Celular, Ta4 — Estructura de la membrana) — «pdf-page», pt, `<img>`.
 - `bcm-te-4-html` (Biología Celular, Te4 — Procariotas y eucariotas) — «pdf-page», px, `<figure>`,
