@@ -130,6 +130,14 @@ export const semanas: Semana[] = [
           'pH, ácidos, bases y amortiguadores',
         ],
         docentes: [],
+        // Envase «documento de flujo» (ver /addresumencapas): el taller resuelto,
+        // reconstruido como HTML real a partir de la foto. Reflowea de verdad, así
+        // que en móvil se lee y los botones A−/A+ del visor funcionan.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-ta-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'bcm-ta-2',

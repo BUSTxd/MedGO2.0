@@ -554,7 +554,24 @@ publicado y un HTML nuevo sin migrar el primero. El id del segundo necesita sufi
 sintetizado y el HTML es la clase anotada a mano. Los rótulos dicen **qué es cada uno**, no en qué
 orden se subieron: «Resumen (tablas)» y «Resumen (visual)» — «Resumen 1 / 2» no ayuda a elegir.
 
+**Tercer envase de la misma skill: «documento de flujo» (`.doc-flujo`).** Cuando el export no
+tiene ni capas ni el `page-body` de Notion, lo que hay es un **HTML de verdad** —escrito a mano o
+reconstruido desde una foto—, con texto en flujo, figuras en rejilla y media queries propias. Es
+el mejor de los tres: reflowea, así que en móvil se lee y A−/A+ funcionan; no hay página fija ni
+escalado. Lo publica `scripts/upload-resumen-doc.mjs` (los otros dos abortan, y el auditor de
+capas también: ese rechazo *es* la señal de que estás en este caso). De los cuatro fallos
+silenciosos sólo aplica el de las extensiones, que el script resuelve contra el disco.
+
+Aquí el `<style>` del documento **no se descarta**, al revés que en los otros dos: la maquetación
+*es* el documento y tirarla apila las figuras en una columna. Se sanea —fuera `html`, `body`, `*`;
+`:root` pasa a ser el contenedor; todo lo demás prefijado con `.doc-flujo`— y viaja dentro del
+fragmento, donde sí se aplica (un `<style>` inyectado funciona; un `<script>` no). Del module sale
+sólo el **tema**: estos documentos traen su paleta cerrada —el Taller 1 venía en oscuro fijo, marco
+`#1f1f1d` y tarjeta blanca— y `.sheet :global(.doc-flujo)` repisa sus custom properties con los
+tokens de la hoja, ganando por especificidad sin `!important`.
+
 Publicado con esta vía:
+- `bcm-ta-1` (Biología Celular, Ta1 — Agua y surfactante) — «documento de flujo», 7 figuras.
 - `bcm-te-8` (Biología Celular, Te8 — Comunicación celular) — «layers».
 - `bcm-ta-4` (Biología Celular, Ta4 — Estructura de la membrana) — «pdf-page», pt, `<img>`.
 - `bcm-te-4-html` (Biología Celular, Te4 — Procariotas y eucariotas) — «pdf-page», px, `<figure>`,

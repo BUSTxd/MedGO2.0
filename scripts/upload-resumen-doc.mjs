@@ -1,0 +1,266 @@
+/**
+ * Publica un resumen de tipo "documento HTML de flujo": un HTML escrito a
+ * mano (o reconstruido a partir de una foto/escaneo) con texto real en flujo
+ * normal, figuras con `width:100%` y sus propias media queries.
+ *
+ *   node scripts/upload-resumen-doc.mjs \
+ *     --dir "C:/Users/BUST/Downloads/biologia/Taller_1_HTML_optimizado" \
+ *     --curso biologia-celular --id bcm-ta-1 --slug ta1-agua
+ *
+ * Tercer hermano de `upload-resumen-html.mjs` (exports de Notion) y
+ * `upload-resumen-capas.mjs` (PDF reconstruido en capas). Existe aparte porque
+ * los otros dos buscan un ancla que este envase no tiene —el
+ * `<div class="page-body">` de Notion, la `.page`/`.pdf-page` de capas— y
+ * abortan.
+ *
+ * Es el MEJOR de los tres envases y por eso merece el suyo: el texto reflowea
+ * de verdad, así que en móvil se lee, y los botones A−/A+ del visor sí hacen
+ * algo. No hay que escalar nada.
+ *
+ * Diferencia de criterio con los otros dos: aquí el <style> del documento
+ * **no se descarta**. En Notion y en capas el estilo es ruido del conversor y
+ * lo pone MedGO, pero en un documento escrito a mano la maquetación ES el
+ * documento (rejillas de figuras, proporciones, cortes por ancho) y tirarla
+ * dejaría las figuras apiladas a una columna. Lo que se hace es sanearlo:
+ *   · se eliminan las reglas globales (html, body, *, y `:root` pasa a ser el
+ *     propio contenedor) — son las que pisarían el dashboard entero;
+ *   · todo lo demás se prefija con `.doc-flujo`, de modo que no puede
+ *     escaparse del fragmento.
+ * El tema (claro/oscuro) lo sigue poniendo `resumenHtml.module.css`, que
+ * redefine las custom properties del documento con los tokens del visor.
+ *
+ * Lo que NO hace (son cambios de código, quedan para el agente):
+ *   - registrar el id en ALLOWED/FILE_ALIAS de la route de resumen-html
+ *   - marcar la actividad en `src/lib/data/<curso>.ts`
+ *
+ * Flags: --dry (no sube, deja `<id>.preview.html`) · --force (re-sube y pisa).
+ */
+
+import { readFileSync, writeFileSync, existsSync, readdirSync } from 'fs';
+import { join, dirname, basename, extname } from 'path';
+import { createClient } from '@supabase/supabase-js';
+import { config } from './load-env.mjs';
+
+const BUCKET_IMG  = 'resumenes-img';   // público
+const BUCKET_HTML = 'resumenes';       // privado
+
+const args = {};
+for (let i = 2; i < process.argv.length; i++) {
+  const a = process.argv[i];
+  if (!a.startsWith('--')) continue;
+  const key = a.slice(2);
+  const next = process.argv[i + 1];
+  if (!next || next.startsWith('--')) args[key] = true;
+  else { args[key] = next; i++; }
+}
+
+const { dir, curso, id, slug, dry, force } = args;
+if (!dir || !curso || !id || !slug) {
+  console.error('Faltan flags. Uso:\n  node scripts/upload-resumen-doc.mjs --dir <carpeta> --curso <slug-curso> --id <id> --slug <slug-doc> [--dry] [--force]');
+  process.exit(1);
+}
+if (!existsSync(dir)) { console.error(`No existe la carpeta: ${dir}`); process.exit(1); }
+
+const PREFIX = `${curso}/${slug}`;
+const kb = (n) => `${(n / 1024).toFixed(0)} KB`;
+
+// ─── 1. localizar y validar el HTML ──────────────────────────────────────
+const htmls = readdirSync(dir).filter(f => f.toLowerCase().endsWith('.html') && !/preview/i.test(f));
+if (htmls.length !== 1) {
+  console.error(`Esperaba 1 .html (sin contar preview), encontré ${htmls.length}: ${htmls.join(', ')}`);
+  process.exit(1);
+}
+let html = readFileSync(join(dir, htmls[0]), 'utf8');
+console.log(`\nHTML   : ${htmls[0]}  (${kb(Buffer.byteLength(html, 'utf8'))})`);
+
+// Mandar cada envase a su script. Publicar un export de Notion o uno en capas
+// por aquí produciría un documento roto de formas difíciles de ver.
+if (/<div class="page-body">/.test(html)) {
+  console.error('✗ Esto es un export de Notion. Usa scripts/upload-resumen-html.mjs (/addresumenhtml).');
+  process.exit(1);
+}
+if (/class="(?:image-layer|text-layer|pdf-page|pdf-text)"/.test(html)) {
+  console.error('✗ Esto es un PDF reconstruido en capas. Usa scripts/upload-resumen-capas.mjs (/addresumencapas).');
+  process.exit(1);
+}
+
+// ─── 2. resolver los assets contra el disco ──────────────────────────────
+/* El fallo silencioso nº1 de estos exports: convertir `assets/*` a AVIF por
+   fuera NO toca el HTML, que sigue pidiendo `.webp`. El documento carga con
+   CERO imágenes y, como el texto sí se ve, parece que "sólo faltan figuras".
+   Aquí se resuelve cada referencia contra lo que hay de verdad en la carpeta. */
+const RE_SRC = /src="([^"]+\.(?:png|jpe?g|webp|avif|svg))"/gi;
+const refs = [...new Set([...html.matchAll(RE_SRC)].map(m => m[1]))];
+if (!refs.length) { console.error('✗ El documento no referencia ninguna imagen.'); process.exit(1); }
+
+const real = new Map();      // ref del HTML → ruta relativa existente
+const faltan = [];
+for (const ref of refs) {
+  if (existsSync(join(dir, ref))) { real.set(ref, ref); continue; }
+  const carpeta = dirname(ref);
+  const base = basename(ref, extname(ref));
+  const cand = ['.avif', '.webp', '.png', '.jpg', '.jpeg', '.svg']
+    .map(e => `${carpeta}/${base}${e}`)
+    .find(p => existsSync(join(dir, p)));
+  if (cand) real.set(ref, cand);
+  else faltan.push(ref);
+}
+if (faltan.length) {
+  console.error(`✗ ${faltan.length} asset(s) referenciados que no están en la carpeta:`);
+  faltan.forEach(f => console.error('   ' + f));
+  process.exit(1);
+}
+const reescritas = [...real.entries()].filter(([a, b]) => a !== b).length;
+console.log(`assets : ${refs.length}  (${reescritas} con la extensión corregida)`);
+
+// ─── 3. sanear el <style> del documento ──────────────────────────────────
+/* Se conserva la maquetación y se tira lo global. Un parser de bloques basta:
+   este CSS es plano (selector { … } y @media { selector { … } }), sin anidar. */
+const ES_GLOBAL = /^(\*|html|body)$/i;
+
+function prefijarSelector(sel) {
+  return sel.split(',').map(s => s.trim()).filter(Boolean).map(s => {
+    if (ES_GLOBAL.test(s)) return null;              // pisaría el dashboard
+    if (/^html\b|^body\b/i.test(s)) return null;
+    // `:root` es el propio documento: sus custom properties se conservan como
+    // valores por defecto, y el CSS module las pisa con los tokens del tema.
+    if (s === ':root') return '.doc-flujo';
+    return `.doc-flujo ${s}`;
+  }).filter(Boolean).join(', ');
+}
+
+function sanearCss(css) {
+  let out = '';
+  let i = 0;
+  while (i < css.length) {
+    const llave = css.indexOf('{', i);
+    if (llave === -1) break;
+    const cabecera = css.slice(i, llave).trim();
+
+    if (cabecera.startsWith('@')) {
+      // bloque anidado (@media, @supports): recortar por balance de llaves
+      let nivel = 0, j = llave;
+      for (; j < css.length; j++) {
+        if (css[j] === '{') nivel++;
+        else if (css[j] === '}' && --nivel === 0) break;
+      }
+      const dentro = sanearCss(css.slice(llave + 1, j));
+      if (dentro.trim()) out += `${cabecera}{${dentro}}`;
+      i = j + 1;
+      continue;
+    }
+
+    const cierre = css.indexOf('}', llave);
+    const decls = css.slice(llave + 1, cierre).trim();
+    const sel = prefijarSelector(cabecera);
+    if (sel && decls) out += `${sel}{${decls}}`;
+    i = cierre + 1;
+  }
+  return out;
+}
+
+const estilos = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map(m => m[1]).join('\n');
+const cssSaneado = sanearCss(estilos)
+  .replace(/\/\*[\s\S]*?\*\//g, '')
+  .replace(/\s+/g, ' ')
+  .trim();
+if (!cssSaneado) { console.error('✗ El <style> quedó vacío tras sanearlo. Revisa el documento.'); process.exit(1); }
+console.log(`estilo : ${kb(Buffer.byteLength(estilos, 'utf8'))} → ${kb(Buffer.byteLength(cssSaneado, 'utf8'))} saneado y prefijado`);
+
+// ─── 4. extraer el cuerpo ────────────────────────────────────────────────
+const mBody = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+if (!mBody) { console.error('✗ No encontré <body>.'); process.exit(1); }
+let body = mBody[1]
+  .replace(/<script[\s\S]*?<\/script>/gi, '')   // no se ejecutarían igualmente
+  .replace(/<style[\s\S]*?<\/style>/gi, '')     // ya está saneado arriba
+  .trim();
+
+// ─── 5. Supabase ─────────────────────────────────────────────────────────
+const URL = config.NEXT_PUBLIC_SUPABASE_URL;
+const KEY = config.SUPABASE_SERVICE_ROLE_KEY;
+if (!URL || !KEY) { console.error('Faltan credenciales en .env.local'); process.exit(1); }
+const sb = createClient(URL, KEY, { auth: { persistSession: false } });
+const BASE_PUB = `${URL}/storage/v1/object/public/${BUCKET_IMG}`;
+
+// ─── 6. subir los assets ─────────────────────────────────────────────────
+// Ya son AVIF: se suben tal cual. Recomprimir un AVIF sería una segunda
+// pérdida sobre un formato que ya es lossy.
+let bytes = 0, subidas = 0;
+const fallos = [];
+for (const ruta of new Set(real.values())) {
+  const buf = readFileSync(join(dir, ruta));
+  bytes += buf.length;
+  const dest = `${PREFIX}/${ruta.split('/').pop()}`;
+  if (dry) { subidas++; continue; }
+  const ext = ruta.split('.').pop().toLowerCase();
+  const mime = ext === 'avif' ? 'image/avif' : ext === 'png' ? 'image/png'
+             : ext === 'webp' ? 'image/webp' : ext === 'svg' ? 'image/svg+xml' : 'image/jpeg';
+  const { error } = await sb.storage.from(BUCKET_IMG).upload(dest, buf, {
+    contentType: mime,
+    cacheControl: '31536000, immutable',  // una figura no se reedita
+    upsert: Boolean(force),
+  });
+  if (error) fallos.push(`${dest}: ${error.message}`);
+  else subidas++;
+  process.stdout.write(`\r  subidos: ${subidas}/${real.size}`);
+}
+console.log(`\r  subidos: ${subidas}/${new Set(real.values()).size}   ${kb(bytes)}`);
+if (fallos.length) {
+  console.error(`\n✗ ${fallos.length} fallos:`);
+  fallos.slice(0, 10).forEach(f => console.error('   ' + f));
+  if (!force) console.error('\n  Si lo estás actualizando, repite con --force.');
+  process.exit(1);
+}
+
+// ─── 7. armar el fragmento ───────────────────────────────────────────────
+// rutas locales → CDN público, con la extensión que de verdad existe
+body = body.replace(RE_SRC, (tag, ref) => {
+  const r = real.get(ref) ?? ref;
+  return `src="${BASE_PUB}/${PREFIX}/${r.split('/').pop()}"`;
+});
+
+// Carga diferida: aquí no hay capas a página completa que excluir, sólo
+// figuras. Se respeta el `loading` que ya traiga el documento.
+body = body.replace(/<img (?![^>]*\bloading=)/g, '<img loading="lazy" decoding="async" ');
+
+/* El <style> viaja DENTRO del fragmento. Un <style> inyectado con
+   dangerouslySetInnerHTML sí se aplica (a diferencia de un <script>, que no se
+   ejecuta), y prefijado con `.doc-flujo` no puede alcanzar nada del visor. */
+const frag = `<div class="doc-flujo"><style>${cssSaneado}</style>${body}</div>`;
+
+const quedan = (frag.match(/src="(?!https:\/\/)/g) || []).length;
+if (quedan) { console.error(`✗ Quedaron ${quedan} rutas locales sin reapuntar.`); process.exit(1); }
+
+console.log(`\nfragmento: ${kb(Buffer.byteLength(frag, 'utf8'))}  ·  ${new Set(real.values()).size} assets`);
+
+// ─── 8. subir el fragmento ───────────────────────────────────────────────
+const destHtml = `${curso}/${id}.html`;
+if (dry) {
+  const out = join(dir, `${id}.preview.html`);
+  writeFileSync(out, frag, 'utf8');
+  console.log(`\n[--dry] nada subido. Fragmento en ${out}`);
+} else {
+  const { error } = await sb.storage.from(BUCKET_HTML).upload(destHtml, Buffer.from(frag, 'utf8'), {
+    contentType: 'text/html',
+    cacheControl: '300',   // de la caché se encarga el ETag de la route
+    upsert: Boolean(force),
+  });
+  if (error) {
+    console.error(`✗ No se pudo subir el HTML: ${error.message}`);
+    if (!force) console.error('  Si lo estás actualizando, repite con --force.');
+    process.exit(1);
+  }
+  console.log(`\n✓ ${BUCKET_HTML}/${destHtml}`);
+  console.log(`✓ ${BUCKET_IMG}/${PREFIX}/  (${subidas} assets)`);
+}
+
+console.log(`
+Falta el código:
+
+ 1. src/app/api/resumen-html/[claseId]/route.ts
+    ALLOWED    → '${id}'
+    FILE_ALIAS → '${id}': '${curso}/${id}'
+
+ 2. src/lib/data/${curso}.ts, en la actividad '${id}':
+    resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: '${id}', label: 'Resumen', formato: 'html' }] }
+`);

@@ -1005,6 +1005,52 @@
   pointer-events: none;
 }
 
+/* ══════════════════════════════════════════════════════════════════════
+   ENVASE «documento de flujo» (.doc-flujo) — /addresumencapas, tercer caso
+
+   Un HTML escrito a mano: texto en flujo real, figuras en rejilla con sus
+   propias media queries. Es el mejor de los tres envases —reflowea, así que
+   en móvil se lee y A−/A+ sirven de algo— y por eso aquí NO hay escalado ni
+   página de tamaño fijo: se comporta como el resumen de Notion.
+
+   La maquetación NO vive aquí: viaja dentro del fragmento, en un <style>
+   saneado y prefijado con `.doc-flujo` por `upload-resumen-doc.mjs`. Meterla
+   en este module habría llenado el CSS compartido de clases de UN taller
+   (`.salt`, `.hbond`, `.dppc`…). Lo que sí es de aquí es el TEMA.
+
+   Estos documentos vienen con su paleta cerrada —el Taller 1 llegaba en
+   oscuro fijo: marco #1f1f1d, texto #f2f2f2 y tarjeta blanca—, que sobre la
+   hoja del visor se vería como una isla ajena y, en claro, directamente mal.
+   El conversor deja esas custom properties en el propio `.doc-flujo`, y aquí
+   se repisan con los tokens de la hoja: `.sheet :global(.doc-flujo)` tiene
+   más especificidad que el `.doc-flujo` del fragmento, así que gana sin
+   necesidad de `!important` y los valores del documento quedan de reserva
+   por si algún día llega uno que no traiga alguna. */
+.sheet :global(.doc-flujo) {
+  --bg: transparent;        /* el marco lo pone la hoja, no el documento */
+  --paper: var(--head-bg);  /* la tarjeta del enunciado */
+  --text: var(--tx);
+  --ink: var(--tx);
+  --muted: var(--tx-soft);
+}
+
+/* El borde de la tarjeta venía en gris fijo (#bdbdbd), que en oscuro se ve
+   como un recuadro sucio. El radio lo añade el visor: el documento no lo
+   traía porque imitaba una hoja impresa. */
+.sheet :global(.doc-flujo .question-card) {
+  border-color: var(--line);
+  border-radius: 12px;
+}
+
+/* Los diagramas son recortes sobre blanco. En modo oscuro quedan como
+   parches luminosos dentro de la tarjeta: el radio y el fondo blanco
+   explícito los convierten en figuras deliberadas en vez de en un error de
+   recorte. Mismo criterio que `figure.image` en los resúmenes de Notion. */
+.sheet :global(.doc-flujo figure img) {
+  border-radius: 8px;
+  background: #fff;
+}
+
 /* Al final del archivo a propósito: el bloque de reduced-motion de más arriba
    está ANTES de la sección "en capas", y a igualdad de especificidad gana la
    última regla — desde allí no podría apagar nada de aquí. */
