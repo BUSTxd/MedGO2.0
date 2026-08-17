@@ -516,6 +516,14 @@ export const semanas: Semana[] = [
           'Vía secretora y vía endocítica',
         ],
         docentes: [],
+        // Envase «documento de flujo» (ver /addresumencapas): tablas de
+        // transporte vesicular y los formularios del taller resueltos. Va en
+        // flujo (cero `position:absolute`), aunque su página fije el ancho.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-ta-7', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'bcm-ta-8',
@@ -728,6 +736,13 @@ export const semanas: Semana[] = [
           'ARN de interferencia',
         ],
         docentes: [],
+        // Envase «documento de flujo» (ver /addresumencapas): 9 hojas del
+        // taller resuelto, con las figuras en flujo.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-ta-10', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'bcm-ta-11',
@@ -759,6 +774,14 @@ export const semanas: Semana[] = [
           'Características del cáncer',
         ],
         docentes: [],
+        // Envase "en capas" (ver /addresumencapas): 3 hojas anotadas dentro de
+        // una página `.pdf-doc`, con las gráficas de p53 y de incidencia por
+        // edad, y una capa de tinta por hoja.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-ta-12', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'bcm-ta-13',

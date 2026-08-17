@@ -584,6 +584,17 @@ publicado y un HTML nuevo sin migrar el primero. El id del segundo necesita sufi
 sintetizado y el HTML es la clase anotada a mano. Los rótulos dicen **qué es cada uno**, no en qué
 orden se subieron: «Resumen (tablas)» y «Resumen (visual)» — «Resumen 1 / 2» no ayuda a elegir.
 
+**🎯 La frontera entre «capas» y «documento de flujo» es la ALTURA FIJA de la página**, no el
+nombre de sus clases: Ta7 tiene `.pdf-page` y no es capas (su página lleva `min-height` y
+`padding`, y el documento no usa **ni un** `position:absolute`). Por eso el uploader de capas busca
+la página **en el CSS** —la clase cuya regla declara `width` y `height` fija, de ≥300 px de lado,
+prefiriendo la que lleve `transform-origin` y, en empate, la de mayor superficie— y si no encuentra
+ninguna remite al uploader de flujo en vez de inventarse una altura; el de flujo hace la
+comprobación simétrica. Dos detalles: el CSS se recorre **partiendo por `}`** (un regex global con
+delimitador consume el `}` que separa dos reglas y la siguiente se queda sin ancla), y al sanear se
+descarta **la clase de página detectada**, no una lista fija, o su `position:relative` empata en
+especificidad con la del module y gana por ir después.
+
 **Tercer envase de la misma skill: «documento de flujo» (`.doc-flujo`).** Cuando el export no
 tiene ni capas ni el `page-body` de Notion, lo que hay es un **HTML de verdad** —escrito a mano o
 reconstruido desde una foto—, con texto en flujo, figuras en rejilla y media queries propias. Es
@@ -628,8 +639,17 @@ número vive en `:root` y hay que leerlo de ahí. Además, su SVG de tinta puede
 **texturas propias por `xlink:href`** que no aparecen en el HTML: hay que subirlas con él o el
 CDN devuelve 404 por cada una.
 
+Los documentos de flujo que **fijan su ancho en píxeles** (1174 px en Ta7, 980 px en Ta10) se
+acotan con un `max-width: 100%` en los hijos directos de `.doc-flujo`: sin eso desbordan y el
+`overflow-x: hidden` del scroller corta la parte derecha. Y en este envase **cualquier `<img>` es
+figura ampliable**, no sólo las envueltas en `<figure>` — aquí no hay capas a página completa que
+justifiquen la lista blanca.
+
 Publicado con esta vía:
 - `bcm-ta-1` (Biología Celular, Ta1 — Agua y surfactante) — «documento de flujo», 7 figuras.
+- `bcm-ta-7` (Ta7 — Tráfico vesicular) y `bcm-ta-10` (Ta10 — Regulación de genes) — «documento de
+  flujo» con ancho fijo.
+- `bcm-ta-12` (Ta12 — Cáncer) — capas «estilo-propio», página `.pdf-doc` con 3 `.inner-page`.
 - `bcm-ta-3` (Biología Celular, Ta3 — Enzimas) — capas «native-line», dos columnas, 6 figuras.
 - `bcm-te-2-html` (Te2 — Carbohidratos y lípidos) y `bcm-ta-2` (Ta2 — Proteínas y ácidos
   nucleicos) — capas «text-block», las dos mitades del mismo export. Te2 va en picker junto a su

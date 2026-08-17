@@ -106,8 +106,45 @@ const tieneTexto = (...clases) => clases.some(tieneClase);
 /* La clase de la página tampoco es estable: `page`, `pdf-page`, `pdf-stage`…
    Se busca cuál de las conocidas está presente, y el nombre encontrado manda
    en todo lo que sigue (extracción, medidas, saneado). */
-const CLASES_PAGINA = ['pdf-page', 'pdf-stage', 'page'];
-const CLASE_PAGINA = CLASES_PAGINA.find(tieneClase);
+/* Se busca en el CSS: la página es la clase cuya regla declara **`height`
+   fija** además de `width` — casi siempre con `transform-origin`, que es la
+   marca del elemento que el `fit()` del export escala.
+
+   Una lista de nombres no vale: han salido `page`, `pdf-page`, `pdf-stage`,
+   `pdf-doc`… Y la altura fija no es un detalle, es LA frontera con el otro
+   envase: un documento cuya página lleva `min-height` y `padding` no está en
+   capas, está en flujo (Ta7, Ta10) y le toca `upload-resumen-doc.mjs`. */
+const estiloDoc = estilosDe(html);
+const LADO_MIN_PAGINA = 300;   // px: por debajo es un icono o una viñeta
+
+/* Se recorre partiendo por `}` en vez de con un regex global con delimitador:
+   un `/(^|[};])…/g` consume el `}` que separa dos reglas, así que la siguiente
+   se queda sin su ancla y no casa. Con eso me eligió `.inner-page` en vez de
+   `.pdf-doc` y `.doc-icon` (40×40) en Ta13. */
+const candidatas = [];
+for (const bloque of estiloDoc.split('}')) {
+  const i = bloque.indexOf('{');
+  if (i === -1) continue;
+  const clase = /^\s*\.([\w-]+)\s*$/.exec(bloque.slice(0, i))?.[1];   // una clase suelta
+  if (!clase || !tieneClase(clase)) continue;
+  const decl = bloque.slice(i + 1);
+  if (!/(?:^|;)\s*height\s*:/.test(decl) || !/(?:^|;)\s*width\s*:/.test(decl)) continue;
+
+  const val = (p) => {
+    const lit = decl.match(new RegExp(`(?:^|;)\\s*${p}:\\s*([\\d.]+)(?:pt|px)`));
+    if (lit) return +lit[1];
+    const v = decl.match(new RegExp(`(?:^|;)\\s*${p}:\\s*var\\(\\s*(--[\\w-]+)`))?.[1];
+    const r = v && estiloDoc.match(new RegExp(`${v}:\\s*([\\d.]+)`));
+    return r ? +r[1] : 0;
+  };
+  const [w, h] = [val('width'), val('height')];
+  if (w < LADO_MIN_PAGINA || h < LADO_MIN_PAGINA) continue;
+  candidatas.push({ clase, area: w * h, escala: /transform-origin/.test(decl) });
+}
+// la que el export escala; si ninguna lo dice, la de mayor superficie: la
+// página contiene a sus hojas, nunca al revés.
+candidatas.sort((a, b) => (b.escala - a.escala) || (b.area - a.area));
+const CLASE_PAGINA = candidatas[0]?.clase;
 
 /* Una variante catalogada lo es POR COMPLETO, página incluida: el CSS del
    module está escrito para `.pdf-page`, así que un documento cuyo texto sea
@@ -127,9 +164,11 @@ const VARIANTE = CLASE_PAGINA === 'page' && /class="image-layer"/.test(html) && 
                : CLASE_PAGINA                                          ? 'estilo-propio'
                : null;
 if (!VARIANTE) {
-  console.error('✗ No es un PDF reconstruido en capas: no encuentro ni .image-layer ni .pdf-page.');
+  console.error('✗ No es un PDF reconstruido en capas: ninguna clase declara una página de ALTURA FIJA.');
+  console.error('  Esa altura es la frontera entre los dos envases. Si la página lleva `min-height`');
+  console.error('  y `padding` (y el documento no usa position:absolute), está en flujo:');
+  console.error('    node scripts/upload-resumen-doc.mjs --dir … --curso … --id … --slug …');
   console.error('  Si es un export de Notion, usa upload-resumen-html.mjs.');
-  console.error('  Si no tiene página de tamaño fijo, es un documento de flujo: upload-resumen-doc.mjs.');
   process.exit(1);
 }
 
@@ -588,7 +627,15 @@ body = body.replace(/<img (?!class="(?:ink|vector-ink|vector-bg|vector-layer)")(
  * responsabilidad del visor. Sin ese segundo recorte, un `.pdf-page` del
  * documento (position:relative, alto fijo) empataría en especificidad con la
  * regla del module y ganaría por ir después, dejando el documento sin escalar. */
-const RECORTAR = /(^|\s)(\.pdf-page|\.pdf-stage|\.page|\.page-shell|\.stage-holder|\.viewport|\.viewer|\.page-wrapper|\.capas)(\s|$|[.:])/;
+/* Se descarta la clase de página REALMENTE detectada, no una lista fija: si su
+   regla sobrevive, `position:relative` y el alto en píxeles del documento
+   empatan en especificidad con la del module y ganan por ir después, dejando
+   el documento sin escalar. Con `.pdf-doc` (Ta12) la lista fija ya no bastaba.
+   Los contenedores exteriores conocidos se descartan igual: son el marco del
+   visor original, no del documento. */
+const RECORTAR = new RegExp(
+  `(^|\\s)(\\.${CLASE_PAGINA}|\\.page|\\.page-shell|\\.stage-holder|\\.viewport|\\.viewer|\\.page-wrap|\\.page-wrapper|\\.wrapper|\\.capas)(\\s|$|[.:])`
+);
 let estilo = '';
 if (VARIANTE === 'estilo-propio') {
   const crudo = estilosDe(html);

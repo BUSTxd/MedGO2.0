@@ -55,7 +55,11 @@ const DEFAULT_SIZE = 1; // índice de 1.0x
    también son <img> a página completa, y abrir una de ellas en el lightbox no
    tendría ningún sentido. El CSS del hover en `resumenHtml.module.css` sigue
    esta misma lista — si se añade un envase, hay que tocar los dos sitios. */
-const FIGURAS = 'img.pdf-image, .pdf-image img, .image-layer img, .figure img, .capas img.asset, .doc-flujo figure img';
+/* En «documento de flujo» vale cualquier <img>: ahí no existen las capas a
+   página completa que obligan a la lista blanca en el envase en capas, y
+   exigir `figure` dejaba mudas las imágenes que el export no envuelve (en Ta7,
+   una de dos; en Ta10, dos de once). */
+const FIGURAS = 'img.pdf-image, .pdf-image img, .image-layer img, .figure img, .capas img.asset, .doc-flujo img';
 
 interface Props {
   claseId: string;

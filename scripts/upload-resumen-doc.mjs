@@ -80,8 +80,22 @@ if (/<div class="page-body">/.test(html)) {
   console.error('✗ Esto es un export de Notion. Usa scripts/upload-resumen-html.mjs (/addresumenhtml).');
   process.exit(1);
 }
-if (/class="(?:image-layer|text-layer|pdf-page|pdf-text)"/.test(html)) {
-  console.error('✗ Esto es un PDF reconstruido en capas. Usa scripts/upload-resumen-capas.mjs (/addresumencapas).');
+/* La frontera con el envase en capas es la **altura fija de la página**, no el
+   nombre de sus clases. Ta7 tiene `.pdf-page`, pero declara `min-height` y
+   `padding` y no usa ni un `position:absolute`: es flujo, y rechazarlo por el
+   nombre lo mandaba a un uploader que no sabe qué altura darle. */
+const estiloDoc = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map(m => m[1]).join('\n');
+const paginaFija = estiloDoc.split('}').some(bloque => {
+  const i = bloque.indexOf('{');
+  if (i === -1) return false;
+  if (!/^\s*\.[\w-]+\s*$/.test(bloque.slice(0, i))) return false;
+  const decl = bloque.slice(i + 1);
+  const alto = decl.match(/(?:^|;)\s*height:\s*(?:([\d.]+)(?:pt|px)|var\()/);
+  return Boolean(alto) && /(?:^|;)\s*width:/.test(decl) && (!alto[1] || +alto[1] >= 300);
+});
+if (/class="(?:image-layer|text-layer|pdf-text)"/.test(html) || paginaFija) {
+  console.error('✗ Esto es un PDF reconstruido en capas (página de altura fija).');
+  console.error('  Usa scripts/upload-resumen-capas.mjs (/addresumencapas).');
   process.exit(1);
 }
 
