@@ -1008,6 +1008,47 @@
 }
 
 /* ──────────────────────────────────────────────────────────────────────
+   Variante «text-block» del envase en capas (Te2 · Carbohidratos y lípidos,
+   Ta2 · Proteínas y ácidos nucleicos)
+
+   El texto va en <h1>/<h2>/<h3>/<p> con clase `.text-block`, cada uno
+   envolviendo `.text-span` con la tipografía inline. Ésta es **la única
+   variante donde los bloques son etiquetas semánticas**, y por eso es la
+   única que hereda de verdad los estilos que este módulo aplica a los
+   títulos y párrafos de un resumen de Notion: márgenes de 2em, `font-size`
+   de 1.62em, `border-bottom`, `color`… que aquí descolocan cada bloque de su
+   coordenada absoluta.
+
+   Es el caso que la nota de CLAUDE.md anticipaba: se ataca **este selector
+   concreto**, nunca una lista de etiquetas genéricas bajo `.sheet` — eso ya
+   se probó y rompió el documento entero. `font: inherit` aquí es seguro (y es
+   lo que hacía el propio export): los `.text-span` hijos traen familia,
+   cuerpo, peso y color inline, y no queda ni un carácter suelto fuera de
+   ellos. */
+.sheet :global(.text-block) {
+  position: absolute;
+  /* Por encima de la tinta (`.ink-layer`, z3): en este export el SVG de
+     anotaciones va ANTES que el texto en el DOM, así que con el z-index
+     empatado ganaba por orden — frágil. Explícito, no por accidente. */
+  z-index: 4;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  line-height: 1;
+  white-space: normal;
+}
+
+.sheet :global(.text-span) {
+  position: absolute;
+  display: block;
+  white-space: pre;
+  line-height: 1;
+  transform-origin: left top;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
    Variante «native-line» del envase en capas (Taller 3 · Enzimas)
 
    Tercera forma del mismo conversor. La página vuelve a ser `.pdf-page`,

@@ -399,7 +399,16 @@ Del documento original se descartan dos cosas y **ambas se reemplazan en el proy
   el bucle `fit → resize → fit`: ajustar la altura del shell vuelve a disparar el observer, y lo
   corta una guarda de «mismo ancho que la última vez».
 
-**Tres variantes del mismo conversor.** Comparten la idea —página de tamaño fijo, capas absolutas,
+**Un export puede traer DOS clases**, y entonces se corta con `--recorte y0:y1` y cada mitad va a
+su actividad (Te2 + Ta2 salieron del mismo archivo de 10 486 px). El corte es **por coordenada**,
+porque aquí no hay estructura que separe secciones: hay que elegir la `y` en un hueco real —dónde
+acaba la última figura de arriba y dónde empieza el título de abajo— y comprobar que los elementos
+conservados + descartados suman el total. Las capas a página completa **no se recortan**: se dejan
+enteras con un `top` negativo y las recorta el `overflow:hidden` de la página, así que las dos
+mitades cargan el mismo SVG de tinta. Los assets sí se calculan sobre la página ya recortada, para
+que cada mitad suba sólo sus figuras.
+
+**Cuatro variantes del mismo conversor.** Comparten la idea —página de tamaño fijo, capas absolutas,
 texto real— pero no el vocabulario, así que el auditor y el uploader detectan cuál es antes de
 tocar nada (`VARIANTE`) y sólo cambian de dónde leen las medidas y dónde vive el resaltador.
 **La familia se reconoce por la página (`.page`/`.pdf-page`), no por el texto**: un documento con
@@ -598,9 +607,21 @@ quedan como un sombreado que marca la línea sin tapar nada y sin inventar un co
 Y cuando el SVG es **sólo** de resaltado (`marks-bg`) se atenúa entero, trazos a mano incluidos:
 la discriminación por geometría existe para los archivos donde tinta y resaltado conviven.
 
+**La variante D · «text-block»** (Te2/Ta2) merece dos avisos propios: es la única cuyos bloques son
+**etiquetas semánticas** (`<h1>`…`<p>`), así que es la única que hereda de verdad los estilos de
+título y párrafo del module y se descoloca — el caso que anticipaba la nota del reset, y se ataca
+en `.text-block`, el selector concreto, donde `font: inherit` sí es seguro porque los `.text-span`
+hijos traen todo inline. Y sus medidas pueden no estar en `.pdf-page`: si usa `var(--page-w)`, el
+número vive en `:root` y hay que leerlo de ahí. Además, su SVG de tinta puede referenciar
+**texturas propias por `xlink:href`** que no aparecen en el HTML: hay que subirlas con él o el
+CDN devuelve 404 por cada una.
+
 Publicado con esta vía:
 - `bcm-ta-1` (Biología Celular, Ta1 — Agua y surfactante) — «documento de flujo», 7 figuras.
 - `bcm-ta-3` (Biología Celular, Ta3 — Enzimas) — capas «native-line», dos columnas, 6 figuras.
+- `bcm-te-2-html` (Te2 — Carbohidratos y lípidos) y `bcm-ta-2` (Ta2 — Proteínas y ácidos
+  nucleicos) — capas «text-block», las dos mitades del mismo export. Te2 va en picker junto a su
+  PDF; Ta2 es su primer material.
 - `bcm-te-8` (Biología Celular, Te8 — Comunicación celular) — «layers».
 - `bcm-ta-4` (Biología Celular, Ta4 — Estructura de la membrana) — «pdf-page», pt, `<img>`.
 - `bcm-te-4-html` (Biología Celular, Te4 — Procariotas y eucariotas) — «pdf-page», px, `<figure>`,

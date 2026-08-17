@@ -114,7 +114,18 @@ export const semanas: Semana[] = [
           'Esteroides y vitaminas',
         ],
         docentes: [],
-        resumen: { tipo: 'pdf' },
+        /* Dos envases para la misma clase, así que la tarjeta abre el picker.
+           El HTML salió de un export que traía la teórica y el Taller 2 en una
+           sola página; se cortó por la coordenada del título del taller y la
+           otra mitad vive en `bcm-ta-2`. Id con sufijo porque `bcm-te-2` ya es
+           el PDF, en otro bucket y otra route. */
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'bcm-te-2', label: 'Resumen (PDF)' },
+            { id: 'bcm-te-2-html', label: 'Resumen (clase anotada)', formato: 'html' },
+          ],
+        },
       },
       {
         id: 'bcm-ta-1',
@@ -154,6 +165,14 @@ export const semanas: Semana[] = [
           'Nucleótidos: ADN y ARN',
         ],
         docentes: [],
+        // Envase "en capas", variante «text-block» (ver /addresumencapas): es la
+        // segunda mitad del mismo export que la teórica Te2, cortada por la
+        // coordenada donde empieza el título del taller.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-ta-2', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'bcm-pl-1',
