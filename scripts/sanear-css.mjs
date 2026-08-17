@@ -8,7 +8,10 @@
  * dashboard entero. Así que ni se descarta ni se copia tal cual: se recorta.
  *
  * Qué se hace con cada regla:
- *   · selectores globales (`html`, `body`, `*`) → fuera;
+ *   · `html` y `body` → fuera (fondo, tipografía y padding los pone el visor);
+ *   · `*` → NO se tira, se acota al contenedor y sus descendientes. Casi
+ *     siempre lleva `box-sizing: border-box`, y sin él una tabla de anchos en
+ *     % con padding se descuadra. Acotado no puede alcanzar el dashboard;
  *   · `:root` → pasa a ser el propio contenedor, para que sus custom
  *     properties sigan resolviéndose sin escaparse;
  *   · los que casen `descartar` → fuera (los usa el envase en capas para
@@ -20,7 +23,7 @@
  * diferencia de un <script>, que no se ejecuta), y por eso esto es viable.
  */
 
-const ES_GLOBAL = /^(\*|html|body)$/i;
+const ES_GLOBAL = /^(html|body)$/i;
 
 /**
  * @param {string} css     contenido de los <style> del documento
@@ -35,6 +38,8 @@ export function sanearCss(css, { prefijo, descartar } = {}) {
       if (ES_GLOBAL.test(s) || /^html\b|^body\b/i.test(s)) return null;
       if (descartar?.test(s)) return null;
       if (s === ':root') return prefijo;
+      // El contenedor también es descendiente de sí mismo para un `*`
+      if (s === '*') return `${prefijo}, ${prefijo} *`;
       return `${prefijo} ${s}`;
     }).filter(Boolean).join(', ');
 

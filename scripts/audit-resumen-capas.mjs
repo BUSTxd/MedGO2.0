@@ -195,6 +195,23 @@ if (VARIANTE === 'layers') {
   )) {
     cajas.push({ id: c[1].split('/').pop(), refOrig: c[1], w: +c[2], h: +c[3] });
   }
+  /* Y una TERCERA unidad: el envase «páginas auto-escaladas» mide en % de su
+     hoja, porque se escala solo. Sin esto el auditor no medía ni una caja de
+     Ta13 y lo decía como «0 cajas», que es justo lo que la nota de arriba
+     manda no volver a hacer. El % se convierte con las medidas de la página,
+     que ya están leídas. */
+  if (PAGE_W && PAGE_H) {
+    for (const c of html.matchAll(
+      /<figure class="figure" style="left:[\d.]+%;top:[\d.]+%;width:([\d.]+)%;height:([\d.]+)%;?"[^>]*>\s*<img[^>]*src="([^"]+)"/g
+    )) {
+      cajas.push({
+        id: c[3].split('/').pop(),
+        refOrig: c[3],
+        w: (+c[1] / 100) * PAGE_W,
+        h: (+c[2] / 100) * PAGE_H,
+      });
+    }
+  }
 }
 
 console.log(`\n② Aspecto de las figuras  (${cajas.length} cajas)`);
@@ -381,7 +398,8 @@ if (!H) {
   console.log('   — sin altura de página, no se puede comprobar');
 } else {
   const cover = new Uint8Array(H);
-  const marca = (t, h) => { for (let y = Math.max(0, Math.round(t)); y < Math.min(H, Math.round(t + h)); y++) cover[y] = 1; };
+  let medidos = 0;
+  const marca = (t, h) => { medidos++; for (let y = Math.max(0, Math.round(t)); y < Math.min(H, Math.round(t + h)); y++) cover[y] = 1; };
   const reFig = VARIANTE === 'layers'
     ? /top:([\d.]+)px;width:[\d.]+px;height:([\d.]+)px/g
     : /top:([\d.]+)(?:pt|px);width:[\d.]+(?:pt|px);height:([\d.]+)(?:pt|px)/g;
@@ -400,7 +418,15 @@ if (!H) {
   if (ini !== null && H - ini > HUECO_MIN) huecos.push([ini, H - 1, H - ini]);
 
   const px = huecos.reduce((s, x) => s + x[2], 0);
-  if (huecos.length > 3 || px / H > 0.05) {
+  /* Sin una sola caja medida no hay diagnóstico, hay un regex que no casó: el
+     documento puede tener sus coordenadas en % (envase «páginas»), por página
+     y no sobre una tira única. Decirlo, en vez de informar «100 % del alto
+     vacío» de un documento completo — que es exactamente lo que pasó con Te11
+     y volvió a pasar aquí. */
+  if (!medidos && !inkRow) {
+    console.log('   — no se pudo medir nada (coordenadas no absolutas o vocabulario no catalogado):');
+    console.log('     este chequeo no aplica a un documento con la posición en % por página.');
+  } else if (huecos.length > 3 || px / H > 0.05) {
     avisos.push(`${huecos.length} franjas vacías (${(px / H * 100).toFixed(1)}% del alto): revisar si se perdió contenido`);
     console.log(`   ⚠ ${huecos.length} franjas vacías · ${(px / H * 100).toFixed(1)}% del alto`);
     for (const [a, b, h] of huecos.slice(0, 8)) console.log(`      y ${a}–${b}  (${h}px)`);

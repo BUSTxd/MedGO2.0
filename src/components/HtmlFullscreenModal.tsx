@@ -69,6 +69,7 @@ const FIGURAS = [
   '.capas .figure img',
   '.capas img.asset',
   '.doc-flujo img',
+  '.doc-paginas .figure img',
 ].join(', ');
 
 interface Props {
@@ -98,6 +99,19 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
    * pintaría con los estilos del envase equivocado.
    */
   const esCapas = html !== null && html.includes('class="capas"');
+
+  /**
+   * Y una tercera forma: «páginas auto-escaladas» (`.doc-paginas`), hojas de
+   * proporción fija que se escalan solas por container query. Trae sus propias
+   * hojas blancas con sombra, así que —como capas— no debe ir dentro de la
+   * tarjeta de lectura del visor, que la enmarcaría por segunda vez.
+   *
+   * Es una bandera aparte de `esCapas` a propósito: comparte la hoja suelta,
+   * pero **no** el escalado. Reutilizar `esCapas` habría metido este documento
+   * en el `fit()`, que le buscaría una `.page` de altura fija que no tiene.
+   */
+  const esPaginas = html !== null && html.includes('class="doc-paginas"');
+  const hojaSuelta = esCapas || esPaginas;
 
   /**
    * ⚠️ El objeto de `dangerouslySetInnerHTML` TIENE que ser estable.
@@ -325,6 +339,91 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
      * nada que ganar. */
   }, [esCapas, html, sizeIndex]);
 
+  /**
+   * Envase «páginas auto-escaladas»: ajuste tipográfico.
+   *
+   * Este export reconstruye el PDF palabra a palabra, cada una en su
+   * coordenada. El ancho que ocupa una palabra en Arial o Times NO es el que
+   * medía en el PDF, así que el conversor guarda el ancho objetivo en
+   * `--target-w` (en % de la página) y trae un `<script>` que estira o encoge
+   * cada palabra con `scaleX` hasta cuadrarlo. Sin él las palabras largas se
+   * montan sobre la siguiente y las cortas dejan huecos.
+   *
+   * Ese `<script>` no se ejecuta al inyectarse con `dangerouslySetInnerHTML`
+   * —la misma razón por la que el `fit()` de capas vive aquí—, de modo que
+   * está portado. Dos diferencias con el original, las dos por rendimiento
+   * sobre ~1900 nodos: se mide en un solo pase (limpiar todos los transform →
+   * leer todos los anchos → escribir todos), en vez de forzar un reflujo por
+   * palabra; y el ancho de página se lee una vez por hoja.
+   */
+  useEffect(() => {
+    if (!esPaginas) return;
+    const sheet = sheetRef.current;
+    const doc = sheet?.querySelector<HTMLElement>('.doc-paginas');
+    if (!doc) return;
+
+    let ultimoAncho = -1;
+    let vivo = true;
+
+    const ajustar = () => {
+      const ancho = doc.clientWidth;
+      // Escribir transforms no cambia el ancho del documento, así que no hay
+      // bucle observer→ajuste→observer; la guarda evita el trabajo inútil.
+      if (!ancho || ancho === ultimoAncho) return;
+      ultimoAncho = ancho;
+
+      const nodos = Array.from(doc.querySelectorAll<HTMLElement>('.word, .patch'));
+      for (const el of nodos) el.style.transform = 'none';
+
+      const anchoDe = new Map<Element, number>();
+      const medidas = nodos.map((el) => {
+        const hoja = el.closest('.pdf-page');
+        if (hoja && !anchoDe.has(hoja)) anchoDe.set(hoja, hoja.getBoundingClientRect().width);
+        return {
+          natural: el.getBoundingClientRect().width,
+          pagina: hoja ? anchoDe.get(hoja)! : 0,
+          // El objetivo de un `.patch` (un bloque reescrito, no una palabra)
+          // es su `max-width`, y sólo se encoge: nunca se estira.
+          maxima: el.classList.contains('patch')
+            ? parseFloat(getComputedStyle(el).maxWidth)
+            : NaN,
+        };
+      });
+
+      nodos.forEach((el, i) => {
+        const { natural, pagina, maxima } = medidas[i];
+        if (!natural || !pagina) return;
+        if (!Number.isNaN(maxima)) {
+          if (natural > maxima && maxima > 0) {
+            el.style.transformOrigin = 'left top';
+            el.style.transform = `scaleX(${maxima / natural})`;
+          }
+          return;
+        }
+        const pct = parseFloat(getComputedStyle(el).getPropertyValue('--target-w'));
+        if (!pct) return;
+        const objetivo = (pct / 100) * pagina;
+        // Los mismos topes que el export: fuera de ellos el conversor midió
+        // mal y deformar la palabra se nota más que el desajuste.
+        el.style.transform = `scaleX(${Math.max(0.55, Math.min(1.65, objetivo / natural))})`;
+      });
+    };
+
+    // Las medidas dependen de la fuente ya cargada; con la de reserva saldrían
+    // unos factores y con la definitiva otros.
+    const arranque = document.fonts?.ready ?? Promise.resolve();
+    arranque.then(() => {
+      if (!vivo) return;
+      ultimoAncho = -1;   // el ancho no cambió, las medidas sí: hay que rehacerlo
+      ajustar();
+    });
+
+    const ro = new ResizeObserver(ajustar);
+    ro.observe(doc);
+    ajustar();
+    return () => { vivo = false; ro.disconnect(); };
+  }, [esPaginas, html]);
+
   const bigger  = useCallback(() => setSizeIndex(i => Math.min(i + 1, SIZES.length - 1)), []);
   const smaller = useCallback(() => setSizeIndex(i => Math.max(i - 1, 0)), []);
   const reset   = useCallback(() => setSizeIndex(DEFAULT_SIZE), []);
@@ -386,7 +485,7 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
         ) : (
           <article
             ref={sheetRef}
-            className={`${styles.sheet} ${esCapas ? styles.sheetCapas : ''}`}
+            className={`${styles.sheet} ${hojaSuelta ? styles.sheetCapas : ''}`}
             // String, no número: para una custom property React entrega el
             // valor tal cual, y un número suelto aquí es más frágil de leer
             // dentro del calc() que la escala.

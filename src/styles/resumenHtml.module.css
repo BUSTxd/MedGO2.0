@@ -1256,6 +1256,73 @@
   max-width: 100%;
 }
 
+/* ══════════════════════════════════════════════════════════════════════
+   ENVASE «páginas auto-escaladas» (.doc-paginas) — /addresumencapas
+
+   El mismo conversor de "capas", pero reconstruyendo el PDF de la única forma
+   que no necesita que nadie lo escale: cada hoja es un `.page-shell` con
+   `container-type: inline-size`, la página guarda su proporción con
+   `aspect-ratio`, y TODO lo de dentro va en `%` y `cqw`. Cabe donde le pongas
+   y la letra crece con la hoja — sin `transform`, sin `ResizeObserver` y sin
+   el `--page-w/--page-h` de capas.
+
+   Por eso vive aquí y no en la sección de capas: comparte con ella la hoja
+   suelta (trae sus propias páginas blancas con sombra, y meterlas dentro de
+   la tarjeta de lectura las enmarcaría dos veces) pero nada del escalado.
+
+   Su maquetación viaja dentro del fragmento, saneada y con el prefijo DOBLE
+   (`.doc-paginas.doc-paginas`), de modo que el documento gana siempre al
+   vocabulario genérico de Notion que no se puede acotar. Aquí sólo va lo que
+   el documento no puede saber: que está dentro de un visor.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Las hojas se dimensionan con `min(96vw, 794px)`, que mide el viewport y no
+   el hueco real: dentro del scroller se pasan de largo y la barra horizontal
+   se comería el margen. */
+.sheet :global(.doc-paginas .page-shell) {
+  max-width: 100%;
+}
+
+/* Sus tablas van en `position:absolute` con anchos en % — son parte del
+   dibujo de la página, no tablas de lectura. Las reglas de tabla del visor
+   (pensadas para Notion) las volverían bloques a ancho completo con margen,
+   scroll y `min-width` por celda, y eso las saca de su sitio.
+
+   Van en `:where()`, que no suma especificidad: quedan al mismo nivel que las
+   reglas que neutralizan y ganan sólo por ir después, así que cualquier cosa
+   que el documento declare —el fondo azul de una celda, su tipografía— sigue
+   mandando. */
+.sheet :global(:where(.doc-paginas) table) {
+  display: table;
+  width: auto;
+  margin: 0;
+  overflow: visible;
+}
+
+.sheet :global(:where(.doc-paginas) th),
+.sheet :global(:where(.doc-paginas) td) {
+  min-width: 0;
+  background: none;
+}
+
+/* El zebrado de Notion, que además va con más especificidad que el resto. */
+.sheet :global(:where(.doc-paginas) tbody tr:nth-child(even) td) {
+  background: none;
+}
+
+/* Figuras: mismo gesto que en los otros dos envases. Los px van **tal cual**
+   —este documento no lleva `transform`, así que no hay que dividir por
+   `--fit`— y sin borde ni radio, porque son recortes del propio papel. */
+.sheet :global(.doc-paginas .figure img) {
+  cursor: zoom-in;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+
+.sheet :global(.doc-paginas .figure img:hover) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(10, 12, 30, 0.2);
+}
+
 /* Al final del archivo a propósito: el bloque de reduced-motion de más arriba
    está ANTES de la sección "en capas", y a igualdad de especificidad gana la
    última regla — desde allí no podría apagar nada de aquí. */
@@ -1265,7 +1332,8 @@
   .sheet :global(:where(.capas) .image-layer img),
   .sheet :global(:where(.capas) .figure img),
   .sheet :global(.capas img.asset),
-  .sheet :global(.doc-flujo img) {
+  .sheet :global(.doc-flujo img),
+  .sheet :global(.doc-paginas .figure img) {
     transition: none;
   }
 
@@ -1276,7 +1344,8 @@
   .sheet :global(:where(.capas) .image-layer img:hover),
   .sheet :global(:where(.capas) .figure img:hover),
   .sheet :global(.capas img.asset:hover),
-  .sheet :global(.doc-flujo img:hover) {
+  .sheet :global(.doc-flujo img:hover),
+  .sheet :global(.doc-paginas .figure img:hover) {
     transform: none;
   }
 }

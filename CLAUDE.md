@@ -613,9 +613,46 @@ completa y no deben abrirse nunca. Dos diferencias respecto a capas: aquí los p
 documento trae `overflow: hidden`, que **recorta la sombra** — se libera con un selector concreto,
 nunca con un reset amplio.
 
+**Cuarto envase, y el mejor de la familia del PDF reconstruido: «páginas auto-escaladas»
+(`.doc-paginas`).** El mismo conversor, pero rehaciendo el PDF de la única forma que no necesita
+que nadie lo escale: cada hoja es un `.page-shell` con `container-type: inline-size`, la página
+guarda su proporción con `aspect-ratio`, y **todo lo de dentro va en `%` y `cqw`**. Cabe donde lo
+pongas y la letra crece con la hoja — sin `transform`, sin `ResizeObserver` de escalado y sin
+`--page-w/--page-h`. Ante un export en capas de una clase que ya tenga uno de éstos, éste gana.
+
+Lo publica el mismo `upload-resumen-doc.mjs`, que **elige envase él solo**: si el `<style>` del
+documento posiciona en absoluto es `doc-paginas`, y si no, `doc-flujo`. Es lo único que de verdad
+los separa —los parches de flujo (`max-width` en los hijos, tabla ancha que scrollea) destrozarían
+un documento posicionado— y no se mira el nombre de las clases, que ya engañó con el `.pdf-page`
+de Ta7. Comparte con capas la **hoja suelta** (`sheetCapas`: trae sus propias páginas blancas con
+sombra y meterlas en la tarjeta de lectura las enmarcaría dos veces) pero nada del escalado, así
+que en el visor es una bandera aparte de `esCapas`: reutilizarla habría mandado el documento al
+`fit()`, que le buscaría una `.page` de altura fija que no tiene.
+
+Tres cosas suyas que no son evidentes:
+
+- **Su `<script>` sí hace falta y hay que portarlo.** Reconstruye el PDF palabra a palabra, y el
+  ancho que ocupa una palabra en Arial o Times no es el que medía en el PDF: el conversor guarda el
+  objetivo en `--target-w` (en % de la página) y un `fitTypography()` estira o encoge cada una con
+  `scaleX`. Sin él las palabras largas se montan sobre la siguiente. Está portado en
+  `HtmlFullscreenModal`, midiendo en **un solo pase** (limpiar todos los `transform` → leer todos
+  los anchos → escribir todos) en vez de forzar un reflujo por palabra, que sobre ~1900 nodos se
+  nota; y esperando a `document.fonts.ready`, porque con la fuente de reserva salen otros factores.
+- **El prefijo del `<style>` saneado va DOBLE** (`.doc-paginas.doc-paginas`). El vocabulario de
+  Notion no se puede acotar —sus fragmentos no llevan envoltorio— y tiene reglas como
+  `tbody tr:nth-child(even) td` (0-2-3) que le ganarían a un `.doc-paginas .bluecell` (0-2-0) y le
+  cambiarían el color a una celda. Con el prefijo doble el documento manda siempre sobre lo
+  genérico del visor, y al module le basta con neutralizar en `:where()` lo que el documento no
+  declara (que la tabla no se vuelva un bloque a ancho completo con `min-width` por celda).
+- **A−/A+ no hacen nada en este envase.** La hoja ya ocupa el ancho disponible, que es su tamaño
+  natural de lectura; no se ha inventado un zoom porque el tope de página (794 px en Ta13) es del
+  documento, no del envase.
+
 Aquí el `<style>` del documento **no se descarta**, al revés que en los otros dos: la maquetación
-*es* el documento y tirarla apila las figuras en una columna. Se sanea —fuera `html`, `body`, `*`;
-`:root` pasa a ser el contenedor; todo lo demás prefijado con `.doc-flujo`— y viaja dentro del
+*es* el documento y tirarla apila las figuras en una columna. Se sanea —fuera `html` y `body`;
+`*` se acota al contenedor en vez de tirarse, porque casi siempre lleva el `box-sizing: border-box`
+del que dependen las tablas de anchos en %; `:root` pasa a ser el contenedor; todo lo demás
+prefijado con la clase del envase— y viaja dentro del
 fragmento, donde sí se aplica (un `<style>` inyectado funciona; un `<script>` no). Del module sale
 sólo el **tema**: estos documentos traen su paleta cerrada —el Taller 1 venía en oscuro fijo, marco
 `#1f1f1d` y tarjeta blanca— y `.sheet :global(.doc-flujo)` repisa sus custom properties con los
@@ -649,7 +686,6 @@ Publicado con esta vía:
 - `bcm-ta-1` (Biología Celular, Ta1 — Agua y surfactante) — «documento de flujo», 7 figuras.
 - `bcm-ta-7` (Ta7 — Tráfico vesicular) y `bcm-ta-10` (Ta10 — Regulación de genes) — «documento de
   flujo» con ancho fijo.
-- `bcm-ta-12` (Ta12 — Cáncer) — capas «estilo-propio», página `.pdf-doc` con 3 `.inner-page`.
 - `bcm-ta-3` (Biología Celular, Ta3 — Enzimas) — capas «native-line», dos columnas, 6 figuras.
 - `bcm-te-2-html` (Te2 — Carbohidratos y lípidos) y `bcm-ta-2` (Ta2 — Proteínas y ácidos
   nucleicos) — capas «text-block», las dos mitades del mismo export. Te2 va en picker junto a su
@@ -662,13 +698,15 @@ Publicado con esta vía:
 - `bcm-te-6-html` (Te6 — Potencial de membrana) y `bcm-afa-1` (AFA1 — Potencial de membrana) —
   «estilo-propio», las dos mitades del mismo export (`--recorte` en 7180). Te6 va en picker junto
   a su PDF como «Resumen (visual)»; AFA1 es casi todo capturas del cuestionario resuelto.
-- `bcm-ta-13` (Ta13 — Caso de integración) — «estilo-propio». Las hojas del taller y su
-  transcripción en 12 `.subpage`, con el texto **palabra a palabra** (2 836 `<span>`) encima del
-  escaneo, así que es buscable. Sus figuras van `aria-hidden` + `pointer-events:none` a propósito
-  —son el fondo, el contenido es el texto—, de modo que no tienen hover ni lightbox.
+- `bcm-ta-12` (Ta12 — Cáncer) — **retirado**: BUST lo cambió por el PDF original. Se borraron el
+  fragmento y sus 7 figuras, y el id pasó al `ALLOWED` de la route de PDF.
+- `bcm-ta-13` (Ta13 — Caso de integración) — **«páginas auto-escaladas»**, 7 hojas A4, 1 895
+  palabras, 16 figuras y 3 tablas posicionadas. Reemplazó a un export en capas de 12 `.subpage` y
+  61 figuras (1.2 MB → 151 KB). El primero que necesitó portar el `fitTypography()`.
 
-**⚠️ Las coordenadas pueden no ser todas absolutas.** Ta13 mete 12 contenedores `.subpage`
-posicionados, y las palabras y figuras de dentro llevan coordenadas **relativas a su subpágina**.
+**⚠️ Las coordenadas pueden no ser todas absolutas.** El export viejo de Ta13 metía 12
+contenedores `.subpage` posicionados, con las palabras y figuras en coordenadas **relativas a su
+subpágina** (y el nuevo, en `%` de su hoja: tampoco son absolutas).
 Cualquier análisis por `top` absoluto ahí es basura —da «86 % de la página vacía» en un documento
 completo— y `--recorte` no sirve tal cual. Señal: el texto se concentra en una franja que no cuadra
 con el alto de la página. **Las medidas de la página, además, se le preguntan al documento**: se

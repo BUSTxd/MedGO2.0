@@ -792,9 +792,10 @@ export const semanas: Semana[] = [
           'Integración de membrana, endomembranas y herencia',
         ],
         docentes: [],
-        // Envase "en capas" (ver /addresumencapas): las hojas del taller a la
-        // izquierda y su transcripción a la derecha, en 12 subpáginas. El texto
-        // va palabra a palabra sobre el escaneo, así que es buscable.
+        // Envase "páginas auto-escaladas" (ver /addresumencapas): 7 hojas A4
+        // con el texto palabra a palabra —buscable— y 3 tablas. Se escala solo
+        // por container query, así que en móvil se lee sin zoom. Sustituyó a un
+        // export en capas de 12 subpáginas y 1.2 MB de figuras.
         resumen: {
           tipo: 'pdf',
           formato: 'html',

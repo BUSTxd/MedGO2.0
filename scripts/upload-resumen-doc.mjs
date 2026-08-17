@@ -1,7 +1,16 @@
 /**
- * Publica un resumen de tipo "documento HTML de flujo": un HTML escrito a
- * mano (o reconstruido a partir de una foto/escaneo) con texto real en flujo
- * normal, figuras con `width:100%` y sus propias media queries.
+ * Publica los dos envases que traen su propia maquetación y NO necesitan que
+ * el visor los escale:
+ *
+ *   · «documento de flujo» (`.doc-flujo`) — un HTML escrito a mano (o
+ *     reconstruido de una foto) con texto en flujo normal, figuras en rejilla
+ *     y sus propias media queries;
+ *   · «páginas auto-escaladas» (`.doc-paginas`) — hojas de proporción fija
+ *     (`aspect-ratio` + `container-type: inline-size`) con el contenido en % y
+ *     `cqw`. Es un PDF reconstruido, como el envase en capas, pero se escala
+ *     solo: no tiene altura fija que ajustar ni hace falta `transform`.
+ *
+ * El script elige por sí mismo (ver «elegir el envase»).
  *
  *   node scripts/upload-resumen-doc.mjs \
  *     --dir "C:/Users/BUST/Downloads/biologia/Taller_1_HTML_optimizado" \
@@ -128,11 +137,36 @@ if (faltan.length) {
 const reescritas = [...real.entries()].filter(([a, b]) => a !== b).length;
 console.log(`assets : ${refs.length}  (${reescritas} con la extensión corregida)`);
 
-// ─── 3. sanear el <style> del documento ──────────────────────────────────
+// ─── 3. elegir el envase ─────────────────────────────────────────────────
+/* Dos documentos pueden llegar aquí, y no quieren el mismo trato:
+     · «flujo» — texto en flujo normal, figuras en rejilla. Necesita los
+       parches del visor: `max-width` en los hijos, tabla ancha que scrollea.
+     · «páginas» — hojas de proporción fija (`aspect-ratio` + `container-type`)
+       con el contenido en % y `cqw`. Se escala solo, así que tampoco es capas
+       (no hay altura fija que el visor tenga que ajustar), pero sus tablas y
+       figuras van en `position:absolute` y aquellos parches las destrozarían.
+
+   Los separa lo único que de verdad los distingue: si el documento posiciona
+   su contenido en absoluto. No se mira el nombre de las clases, que ya engañó
+   una vez con el `.pdf-page` de Ta7. */
+const estilos = estilosDe(html);
+const posicionado = (estilos.match(/position:\s*absolute/gi) || []).length;
+const ENVASE = posicionado ? 'doc-paginas' : 'doc-flujo';
+
+/* El prefijo va DOBLE en «páginas» (`.doc-paginas.doc-paginas`, que casa el
+   mismo elemento y suma una clase de especificidad). El motivo: este envase
+   trae su maquetación entera, incluidas tablas, y el vocabulario de Notion del
+   module —que no se puede acotar, porque sus fragmentos no llevan envoltorio—
+   tiene reglas como `tbody tr:nth-child(even) td` (0-2-3) que le ganarían a un
+   `.doc-paginas .bluecell` (0-2-0) y le cambiarían el color a una celda. Con el
+   prefijo doble el documento manda siempre sobre lo genérico del visor. */
+const PREFIJO = ENVASE === 'doc-paginas' ? '.doc-paginas.doc-paginas' : '.doc-flujo';
+console.log(`envase : ${ENVASE}${posicionado ? `  (${posicionado} reglas position:absolute)` : '  (sin posicionamiento absoluto)'}`);
+
+// ─── 3b. sanear el <style> del documento ─────────────────────────────────
 /* Se conserva la maquetación y se tira lo global; el detalle, en sanear-css.mjs
    (compartido con el uploader de capas, que hace lo mismo con otro prefijo). */
-const estilos = estilosDe(html);
-const cssSaneado = sanearCss(estilos, { prefijo: '.doc-flujo' });
+const cssSaneado = sanearCss(estilos, { prefijo: PREFIJO });
 if (!cssSaneado) { console.error('✗ El <style> quedó vacío tras sanearlo. Revisa el documento.'); process.exit(1); }
 console.log(`estilo : ${kb(Buffer.byteLength(estilos, 'utf8'))} → ${kb(Buffer.byteLength(cssSaneado, 'utf8'))} saneado y prefijado`);
 
@@ -194,8 +228,9 @@ body = body.replace(/<img (?![^>]*\bloading=)/g, '<img loading="lazy" decoding="
 
 /* El <style> viaja DENTRO del fragmento. Un <style> inyectado con
    dangerouslySetInnerHTML sí se aplica (a diferencia de un <script>, que no se
-   ejecuta), y prefijado con `.doc-flujo` no puede alcanzar nada del visor. */
-const frag = `<div class="doc-flujo"><style>${cssSaneado}</style>${body}</div>`;
+   ejecuta), y prefijado con la clase del envase no puede alcanzar nada del
+   visor. */
+const frag = `<div class="${ENVASE}"><style>${cssSaneado}</style>${body}</div>`;
 
 const quedan = (frag.match(/src="(?!https:\/\/)/g) || []).length;
 if (quedan) { console.error(`✗ Quedaron ${quedan} rutas locales sin reapuntar.`); process.exit(1); }
