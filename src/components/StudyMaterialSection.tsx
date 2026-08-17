@@ -72,6 +72,14 @@ export interface PropuestosPdfRef {
   claseId: string;
   desc?: string;
   opciones?: ResumenOpcion[];
+  /**
+   * Qué visor abre, con la misma precedencia que en Resumen (opción → tarjeta
+   * → `pdf`). No todo lo que cuelga de «Banqueo» es un PDF: PL10 de Biología
+   * Celular es un fragmento HTML en capas, que va por `/api/resumen-html`.
+   */
+  formato?: ResumenFormato;
+  /** Título de la barra del visor HTML (el de PDF no lleva). */
+  titulo?: string;
 }
 
 interface Props {
@@ -129,6 +137,12 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
   const activePropuestosId = isPropuestosMulti
     ? selectedPropuestosId
     : (propuestosPdf?.opciones?.[0]?.id ?? propuestosPdf?.claseId ?? null);
+
+  // Y con qué visor, misma precedencia que `activeFormato` en Resumen.
+  const activePropuestosFormato: ResumenFormato =
+    propuestosPdf?.opciones?.find(o => o.id === activePropuestosId)?.formato
+    ?? propuestosPdf?.formato
+    ?? 'pdf';
 
   // Evento curado: el alumno entró a la clase (una vez por montaje).
   useEffect(() => {
@@ -375,15 +389,21 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
       )}
 
       {/* ── Propuestos: mismo visor, id independiente del de Resumen ── */}
-      {propuestosOpen && activePropuestosId && (
-        <PdfFullscreenModal
-          claseId={activePropuestosId}
-          onClose={() => {
-            setPropuestosOpen(false);
-            if (isPropuestosMulti) setSelectedPropuestosId(null);
-          }}
-        />
-      )}
+      {propuestosOpen && activePropuestosId && (() => {
+        const cerrar = () => {
+          setPropuestosOpen(false);
+          if (isPropuestosMulti) setSelectedPropuestosId(null);
+        };
+        return activePropuestosFormato === 'html' ? (
+          <HtmlFullscreenModal
+            claseId={activePropuestosId}
+            titulo={propuestosPdf?.titulo}
+            onClose={cerrar}
+          />
+        ) : (
+          <PdfFullscreenModal claseId={activePropuestosId} onClose={cerrar} />
+        );
+      })()}
     </div>
   );
 }

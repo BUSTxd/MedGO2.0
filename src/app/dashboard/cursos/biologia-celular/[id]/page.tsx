@@ -99,6 +99,17 @@ export default async function ActividadPage({
           resumenOpciones={act.resumen?.opciones}
           resumenFormato={act.resumen?.formato}
           resumenTitulo={act.titulo}
+          propuestosPdf={
+            act.propuestos?.tipo === 'pdf'
+              ? {
+                  claseId: act.propuestos.claseId ?? `${act.id}-prop`,
+                  desc: act.propuestos.desc,
+                  formato: act.propuestos.formato,
+                  titulo: act.titulo,
+                  opciones: act.propuestos.opciones,
+                }
+              : undefined
+          }
         />
       </div>
     </div>

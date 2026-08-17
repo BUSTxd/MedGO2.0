@@ -38,6 +38,20 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
+  /**
+   * PDF que abre desde la tarjeta «Banqueo» en el mismo visor que Resumen
+   * (igual que los propuestos de Física). Aquí es la guía de la práctica ya
+   * resuelta y anotada a mano, que es material de práctica, no un resumen.
+   * Su id de bucket va explícito porque no sigue el patrón `{id}-prop`.
+   */
+  propuestos?: {
+    tipo: 'pdf';
+    claseId?: string;
+    desc?: string;
+    /** `html` cuando lo que cuelga de Banqueo es un fragmento, no un PDF. */
+    formato?: ResumenFormato;
+    opciones?: ResumenOpcion[];
+  };
   /** ISO date YYYY-MM-DD; usado para "Próximos exámenes" en el home. */
   fechaISO?: string;
   /** Sobreescribe el destino del card en el sílabo. */
@@ -657,6 +671,7 @@ export const semanas: Semana[] = [
           'Mutaciones y reparación del ADN',
         ],
         docentes: [],
+        resumen: { tipo: 'pdf' },
       },
       {
         id: 'bcm-te-10',
@@ -840,6 +855,13 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         resumen: { tipo: 'pdf' },
+        // El escaneo de la guía resuelta y anotada a mano (4 hojas) va en
+        // «Banqueo», no en «Resumen»: es la práctica con sus respuestas.
+        propuestos: {
+          tipo: 'pdf',
+          claseId: 'bcm-pl-8-anotado',
+          desc: 'Guía de la práctica resuelta y anotada a mano',
+        },
       },
       {
         id: 'bcm-pl-9',
@@ -856,6 +878,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         resumen: { tipo: 'pdf' },
+        propuestos: {
+          tipo: 'pdf',
+          claseId: 'bcm-pl-9-anotado',
+          desc: 'Guía de la práctica resuelta y anotada a mano',
+        },
       },
       {
         id: 'bcm-pl-10',
@@ -871,6 +898,14 @@ export const semanas: Semana[] = [
           'Relación con la actividad transcripcional',
         ],
         docentes: [],
+        // Guía resuelta y anotada a mano, envase «hojas de tamaño fijo» (5
+        // hojas). Va en Banqueo, no en Resumen: PL10 no tiene resumen propio.
+        propuestos: {
+          tipo: 'pdf',
+          claseId: 'bcm-pl-10-anotado',
+          formato: 'html',
+          desc: 'Guía de la práctica resuelta y anotada a mano',
+        },
       },
     ],
   },
@@ -939,6 +974,12 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Vale 30% de la nota final (EXF).',
+        propuestos: {
+          tipo: 'pdf',
+          claseId: 'bcm-examen-final-resuelto',
+          formato: 'html',
+          desc: 'Examen final resuelto',
+        },
       },
       {
         id: 'bcm-sustitutorio',
@@ -949,6 +990,15 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Reemplaza la nota de parcial o final'],
         docentes: [],
+        // Mismo documento que el examen final: un único fragmento en Storage al
+        // que apuntan las dos actividades. La descripción dice de cuál examen
+        // es, porque desde aquí no se deduce.
+        propuestos: {
+          tipo: 'pdf',
+          claseId: 'bcm-examen-final-resuelto',
+          formato: 'html',
+          desc: 'Examen final resuelto',
+        },
       },
     ],
   },

@@ -85,6 +85,9 @@ const FIGURAS = [
   '.doc-flujo img',
   '.doc-paginas .figure img',
   '.doc-hojas .pdf-image img',
+  // Las dos formas de figura del conversor, igual que en `.capas`: LAB6 envuelve
+  // la imagen en un contenedor `.pdf-image`; LAB10 la marca directamente.
+  '.doc-hojas img.pdf-image',
 ].join(', ');
 
 interface Props {

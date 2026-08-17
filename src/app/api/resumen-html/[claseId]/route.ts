@@ -22,7 +22,12 @@ import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 // la route de PDF: si no está aquí, es 404 sin tocar Storage.
 const ALLOWED = new Set([
   'bcm-afa-1',
+  // Un solo documento para dos actividades: lo abren los Banqueos del examen
+  // final y del parcial, que apuntan al mismo id (no hay copia duplicada).
+  'bcm-examen-final-resuelto',
   'bcm-pl-6',
+  // PL10 lo abre la tarjeta «Banqueo», no «Resumen»: es la guía resuelta.
+  'bcm-pl-10-anotado',
   'bcm-ta-1',
   'bcm-ta-10',
   'bcm-ta-13',
@@ -71,7 +76,9 @@ const ALLOWED = new Set([
 // id → ruta dentro del bucket (sin extensión).
 const FILE_ALIAS: Record<string, string> = {
   'bcm-afa-1': 'biologia-celular/bcm-afa-1',
+  'bcm-examen-final-resuelto': 'biologia-celular/bcm-examen-final-resuelto',
   'bcm-pl-6': 'biologia-celular/bcm-pl-6',
+  'bcm-pl-10-anotado': 'biologia-celular/bcm-pl-10-anotado',
   'bcm-ta-1': 'biologia-celular/bcm-ta-1',
   'bcm-ta-10': 'biologia-celular/bcm-ta-10',
   'bcm-ta-13': 'biologia-celular/bcm-ta-13',

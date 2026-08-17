@@ -1403,12 +1403,14 @@
    hoja sí lleva `transform`, pero la sombra se dibuja dentro de la página
    escalada y compensarla la haría crecer con el zoom. Sin borde ni radio:
    son recortes del propio papel. */
-.sheet :global(.doc-hojas .pdf-image img) {
+.sheet :global(.doc-hojas .pdf-image img),
+.sheet :global(.doc-hojas img.pdf-image) {
   cursor: zoom-in;
   transition: box-shadow 0.18s, transform 0.18s;
 }
 
-.sheet :global(.doc-hojas .pdf-image img:hover) {
+.sheet :global(.doc-hojas .pdf-image img:hover),
+.sheet :global(.doc-hojas img.pdf-image:hover) {
   transform: translateY(-2px);
   box-shadow: 0 10px 28px rgba(10, 12, 30, 0.2);
 }
@@ -1424,7 +1426,8 @@
   .sheet :global(.capas img.asset),
   .sheet :global(.doc-flujo img),
   .sheet :global(.doc-paginas .figure img),
-  .sheet :global(.doc-hojas .pdf-image img) {
+  .sheet :global(.doc-hojas .pdf-image img),
+  .sheet :global(.doc-hojas img.pdf-image) {
     transition: none;
   }
 
@@ -1437,7 +1440,8 @@
   .sheet :global(.capas img.asset:hover),
   .sheet :global(.doc-flujo img:hover),
   .sheet :global(.doc-paginas .figure img:hover),
-  .sheet :global(.doc-hojas .pdf-image img:hover) {
+  .sheet :global(.doc-hojas .pdf-image img:hover),
+  .sheet :global(.doc-hojas img.pdf-image:hover) {
     transform: none;
   }
 }

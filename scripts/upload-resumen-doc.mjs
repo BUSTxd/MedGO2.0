@@ -242,6 +242,52 @@ body = body.replace(RE_SRC, (tag, ref) => {
 // figuras. Se respeta el `loading` que ya traiga el documento.
 body = body.replace(/<img (?![^>]*\bloading=)/g, '<img loading="lazy" decoding="async" ');
 
+/* En «hojas», el visor escala cada hoja leyendo `data-w`/`data-h` del
+   `.page-shell`. No todos los exports los traen: LAB6 sí, pero LAB8 y LAB10
+   declaran las medidas en `var(--page-w)`/`var(--page-h)` sobre `:root`, y sin
+   los atributos el visor hace `continue` — la hoja se queda a tamaño natural y
+   **A−/A+ no hacen nada**, que es como se ve el fallo.
+
+   Se normaliza aquí y no en el visor a propósito: el nombre de la variable
+   cambia con cada export (`--pw`, `--page-w`, `--W`…) y el uploader ya está
+   leyendo el CSS del documento, mientras que el visor lo comparten cuatro
+   envases. Así el contrato del visor sigue siendo uno solo. */
+if (ENVASE === 'doc-hojas') {
+  const varDe = n => {
+    const m = estilos.match(new RegExp(`--${n}\\s*:\\s*([\\d.]+)(px|pt)?`));
+    return m ? (m[2] === 'pt' ? +m[1] * 4 / 3 : +m[1]) : null;
+  };
+  // Medida declarada en la regla de la hoja: literal, o `var(--x)` a resolver.
+  const medidaDe = prop => {
+    const regla = estilos.match(/\.page-shell\s*{([^}]*)}/);
+    if (!regla) return null;
+    const d = regla[1].match(new RegExp(`(?:^|;)\\s*${prop}\\s*:\\s*([^;]+)`));
+    if (!d) return null;
+    const lit = d[1].match(/^\s*([\d.]+)(px|pt)?/);
+    if (lit) return lit[2] === 'pt' ? +lit[1] * 4 / 3 : +lit[1];
+    const v = d[1].match(/var\(\s*--([\w-]+)/);
+    return v ? varDe(v[1]) : null;
+  };
+  let inyectadas = 0;
+  body = body.replace(/<(\w+)([^>]*\bclass="[^"]*(?<![\w-])page-shell(?![\w-])[^"]*"[^>]*)>/g,
+    (tag, el, attrs) => {
+      if (/\bdata-w=/.test(attrs)) return tag;          // el export ya las trae
+      const inline = attrs.match(/--pw\s*:\s*([\d.]+)(px|pt)?/);
+      const inlineH = attrs.match(/--ph\s*:\s*([\d.]+)(px|pt)?/);
+      const W = inline ? (inline[2] === 'pt' ? +inline[1] * 4 / 3 : +inline[1]) : medidaDe('width');
+      const H = inlineH ? (inlineH[2] === 'pt' ? +inlineH[1] * 4 / 3 : +inlineH[1]) : medidaDe('height');
+      if (!W || !H) return tag;
+      inyectadas++;
+      return `<${el}${attrs} data-w="${W}" data-h="${H}">`;
+    });
+  if (inyectadas) console.log(`hojas  : ${inyectadas} con data-w/data-h inyectados (el export no los traía)`);
+  else if (!/\bdata-w=/.test(body)) {
+    console.error('✗ Ninguna hoja tiene data-w/data-h y no pude deducirlos del CSS.');
+    console.error('  El visor no podría escalarlas: revisa dónde declara sus medidas.');
+    process.exit(1);
+  }
+}
+
 /* El <style> viaja DENTRO del fragmento. Un <style> inyectado con
    dangerouslySetInnerHTML sí se aplica (a diferencia de un <script>, que no se
    ejecuta), y prefijado con la clase del envase no puede alcanzar nada del

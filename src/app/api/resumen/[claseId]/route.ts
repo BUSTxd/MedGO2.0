@@ -83,14 +83,17 @@ const ALLOWED = new Set([
   // Física — Examen II (banqueo con selector, ver `propuestos.opciones`)
   'fis-examen2-v1', 'fis-examen2-2020', 'fis-examen2-2018', 'fis-examen2-v2',
   'fis-examen2-sol', 'fis-examen2-2017-sol',
-  // Biología Celular — Teorías Te1-Te7, Te10
+  // Biología Celular — Teorías Te1-Te7, Te9, Te10
   'bcm-te-1', 'bcm-te-2', 'bcm-te-3', 'bcm-te-4',
-  'bcm-te-5', 'bcm-te-6', 'bcm-te-7', 'bcm-te-10',
+  'bcm-te-5', 'bcm-te-6', 'bcm-te-7', 'bcm-te-9', 'bcm-te-10',
   // Biología Celular — Talleres
   'bcm-ta-12',
   // Biología Celular — Laboratorios PL1-PL5, PL7-PL9 (falta PL6 y PL10)
   'bcm-pl-1', 'bcm-pl-2', 'bcm-pl-3', 'bcm-pl-4', 'bcm-pl-5',
   'bcm-pl-7', 'bcm-pl-8', 'bcm-pl-9',
+  // PL8 y PL9 tienen además la guía resuelta y anotada a mano (escaneo de 4
+  // hojas), que abre desde «Banqueo». Id con sufijo: `bcm-pl-8` ya es la guía.
+  'bcm-pl-8-anotado', 'bcm-pl-9-anotado',
   // Aparato Locomotor (prefijo `loc-` evita colisión con tbl-1/tbl-2 de otros cursos)
   'loc-tbl-1', 'loc-tbl-2',
   // Digestivo — Histología (prefijo `dig-` evita colisión con laminas-N/histo-N
@@ -297,6 +300,7 @@ const FILE_ALIAS: Record<string, string> = {
   'bcm-te-5': 'biologia-celular/bcm-te-5',
   'bcm-te-6': 'biologia-celular/bcm-te-6',
   'bcm-te-7': 'biologia-celular/bcm-te-7',
+  'bcm-te-9': 'biologia-celular/bcm-te-9',
   'bcm-te-10': 'biologia-celular/bcm-te-10',
   'bcm-ta-12': 'biologia-celular/bcm-ta-12',
   'bcm-pl-1': 'biologia-celular/bcm-pl-1',
@@ -306,7 +310,9 @@ const FILE_ALIAS: Record<string, string> = {
   'bcm-pl-5': 'biologia-celular/bcm-pl-5',
   'bcm-pl-7': 'biologia-celular/bcm-pl-7',
   'bcm-pl-8': 'biologia-celular/bcm-pl-8',
+  'bcm-pl-8-anotado': 'biologia-celular/bcm-pl-8-anotado',
   'bcm-pl-9': 'biologia-celular/bcm-pl-9',
+  'bcm-pl-9-anotado': 'biologia-celular/bcm-pl-9-anotado',
   // Aparato Locomotor — subcarpeta aparato-locomotor/
   'loc-tbl-1': 'aparato-locomotor/loc-tbl-1',
   'loc-tbl-2': 'aparato-locomotor/loc-tbl-2',
