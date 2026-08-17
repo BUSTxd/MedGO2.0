@@ -609,6 +609,13 @@ export const semanas: Semana[] = [
           'Registro y relocalización de campos',
         ],
         docentes: [],
+        // Envase "hojas de tamaño fijo" (ver /addresumencapas): la guía de la
+        // práctica anotada a mano, 14 hojas —2 tamaños— con la tinta en SVG.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'bcm-pl-6', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'bcm-pl-7',

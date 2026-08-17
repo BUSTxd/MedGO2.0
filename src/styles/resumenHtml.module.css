@@ -1345,6 +1345,74 @@
   box-shadow: 0 10px 28px rgba(10, 12, 30, 0.2);
 }
 
+/* ══════════════════════════════════════════════════════════════════════
+   ENVASE «hojas de tamaño fijo» (.doc-hojas) — /addresumencapas
+
+   El mismo conversor otra vez, pero emitiendo **N páginas** en vez de una
+   tira: cada hoja es un `.page-shell` con SUS medidas inline (`--pw/--ph` +
+   `data-w/data-h`) y una `.pdf-page` dentro que el visor escala con
+   `transform`. LAB6 trae 14, y de dos tamaños distintos — por eso no puede ir
+   por «capas», que escribe un único `--page-w/--page-h` en el envoltorio.
+
+   Capas: figuras z1 · tinta SVG z2 · texto z3, así que el resaltador queda
+   por DEBAJO del texto (el final aceptable nº2 de la regla del resaltado) y
+   no hay que atenuar nada.
+
+   ⛔ Y a esta tinta NO se le pone `mix-blend-mode: multiply`, al revés que en
+   capas. La regla de allí se apoyaba en que «un trazo blanco no existe»; aquí
+   sí: hay parches blancos rectangulares —de 118×14 px, 175×105 px— con los
+   que la autora TAPÓ cosas a mano. `multiply` los volvería invisibles y
+   devolvería a la vista justo lo que quiso ocultar.
+
+   Su maquetación viaja dentro del fragmento con el prefijo doble; aquí sólo
+   va lo que el documento no puede saber. */
+
+/* La caja de una figura trae `overflow:hidden` y recorta la sombra del hover
+   —el mismo fallo que ya costó una iteración en los otros dos envases—. No
+   hace falta para contener la imagen: de eso ya se encarga el `object-fit`. */
+.sheet :global(.doc-hojas .pdf-image) {
+  overflow: visible;
+}
+
+/* Con A+ la hoja se hace más ancha que el hueco; que se desplace dentro de su
+   propia caja en vez de que el `overflow-x: hidden` del scroller la corte. */
+.sheet :global(.doc-hojas .page-shell) {
+  overflow: auto;
+}
+
+/* Sus bloques de texto son `<p>` y `<h2>` de verdad (126 y 2), o sea la misma
+   trampa de la variante «text-block»: heredan los márgenes y el cuerpo que
+   este módulo aplica a los párrafos y títulos de un resumen de Notion, y eso
+   descoloca un bloque que está en coordenada absoluta. Se ataca el selector
+   concreto, nunca una lista de etiquetas bajo `.sheet` — eso ya se probó y
+   rompió un documento entero.
+
+   `font: inherit` es seguro aquí, igual que allí: los `.flow-span` hijos traen
+   familia, cuerpo, peso y color inline, y **no queda ni un carácter suelto
+   fuera de ellos** (comprobado: 0 de 128 bloques con texto fuera de un span).
+
+   En `:where()` para no ganarle al `<style>` del propio documento. */
+.sheet :global(:where(.doc-hojas) .semantic-block) {
+  font: inherit;
+  color: inherit;
+  letter-spacing: normal;
+  text-align: initial;
+}
+
+/* Figuras: mismo gesto que en los otros envases. Los px van **tal cual** — la
+   hoja sí lleva `transform`, pero la sombra se dibuja dentro de la página
+   escalada y compensarla la haría crecer con el zoom. Sin borde ni radio:
+   son recortes del propio papel. */
+.sheet :global(.doc-hojas .pdf-image img) {
+  cursor: zoom-in;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+
+.sheet :global(.doc-hojas .pdf-image img:hover) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(10, 12, 30, 0.2);
+}
+
 /* Al final del archivo a propósito: el bloque de reduced-motion de más arriba
    está ANTES de la sección "en capas", y a igualdad de especificidad gana la
    última regla — desde allí no podría apagar nada de aquí. */
@@ -1355,7 +1423,8 @@
   .sheet :global(:where(.capas) .figure img),
   .sheet :global(.capas img.asset),
   .sheet :global(.doc-flujo img),
-  .sheet :global(.doc-paginas .figure img) {
+  .sheet :global(.doc-paginas .figure img),
+  .sheet :global(.doc-hojas .pdf-image img) {
     transition: none;
   }
 
@@ -1367,7 +1436,8 @@
   .sheet :global(:where(.capas) .figure img:hover),
   .sheet :global(.capas img.asset:hover),
   .sheet :global(.doc-flujo img:hover),
-  .sheet :global(.doc-paginas .figure img:hover) {
+  .sheet :global(.doc-paginas .figure img:hover),
+  .sheet :global(.doc-hojas .pdf-image img:hover) {
     transform: none;
   }
 }

@@ -675,6 +675,35 @@ Tres cosas suyas que no son evidentes:
   condensa: medido en Ta13, Outfit necesita `scaleX` 0,89 de mediana contra 0,99 con Times, o sea
   ~11 % más estrecha. Con eso, 4 de 1 733 pares de palabras contiguas quedan sin hueco (0,2 %).
 
+**Quinto envase: «hojas de tamaño fijo» (`.doc-hojas`).** El mismo conversor emitiendo **N páginas**
+en vez de una tira: cada hoja es un `.page-shell` con **sus** medidas inline (`--pw/--ph` +
+`data-w/data-h`) y una `.pdf-page` dentro que hay que escalar con `transform`. Es de la familia del
+PDF reconstruido, pero **no cabe en «capas»**, que escribe un único `--page-w/--page-h` en el
+envoltorio y escala una sola `.page` — LAB6 trae 14 hojas y de **dos tamaños distintos**.
+
+Lo publica también `upload-resumen-doc.mjs`. **La frontera con capas ya no es sólo la altura fija,
+sino cuántas páginas hay**: los documentos en capas son una página larguísima (aunque dentro lleven
+varias hojas dibujadas — Ta5 tiene 4, Ta12 tres `.inner-page`), así que con página fija y **≥2**
+contenedores de página va por aquí, y con uno solo se remite al uploader de capas.
+
+- **Su `<script>` hace DOS cosas y las dos hacen falta**: el `fit()` por hoja y un `fitLines()` que
+  estira cada línea con `scaleX` hasta el ancho que tenía en el PDF (`data-target`, topes
+  0,78–1,22). Es el mismo problema que en «páginas» una escala arriba — allí es palabra a palabra
+  y aquí línea a línea. Medido en LAB6: mediana 1,00, ninguna línea en los topes y **ninguna se
+  sale de su bloque**.
+- **Se ajusta a ancho, no al `min(1, …)` del export.** Sus hojas de 455 px son la misma página al
+  74 % (la letra baja de 12 a 9,3 px en proporción), así que respetar el tope del export las
+  dejaría más pequeñas que las de 612. Y ampliar no cuesta nitidez: las figuras vienen exportadas
+  a **2× su caja**, de modo que a ancho completo caen en ~1 px por píxel.
+- ⛔ **A esta tinta NO se le pone `mix-blend-mode: multiply`**, al revés que en capas. Aquella regla
+  se apoyaba en que «un trazo blanco no existe»; aquí sí existe: hay **parches blancos
+  rectangulares** (118×14 px, 175×105 px) con los que la autora tapó cosas a mano, y `multiply` los
+  volvería invisibles, devolviendo a la vista justo lo que quiso ocultar. No hace falta igualmente:
+  las capas van figuras z1 · tinta z2 · texto z3, así que el resaltador queda **debajo del texto**
+  —el final aceptable nº2— y se lee perfectamente.
+- Sus 128 bloques son `<p>` y `<h2>` de verdad: la misma trampa de «text-block», atacada en
+  `.semantic-block` (0 de 128 con texto fuera de un `.flow-span`, así que `font: inherit` es seguro).
+
 Aquí el `<style>` del documento **no se descarta**, al revés que en los otros dos: la maquetación
 *es* el documento y tirarla apila las figuras en una columna. Se sanea —fuera `html` y `body`;
 `*` se acota al contenedor en vez de tirarse, porque casi siempre lleva el `box-sizing: border-box`
@@ -727,6 +756,9 @@ Publicado con esta vía:
   a su PDF como «Resumen (visual)»; AFA1 es casi todo capturas del cuestionario resuelto.
 - `bcm-ta-12` (Ta12 — Cáncer) — **retirado**: BUST lo cambió por el PDF original. Se borraron el
   fragmento y sus 7 figuras, y el id pasó al `ALLOWED` de la route de PDF.
+- `bcm-pl-6` (PL6 — Microscopía: límite de resolución y coordenadas) — **«hojas de tamaño fijo»**,
+  14 hojas de dos tamaños, 398 líneas, 18 figuras y 14 SVG de tinta. Era el único laboratorio de
+  Biología Celular sin material.
 - `bcm-ta-13` (Ta13 — Caso de integración) — **«páginas auto-escaladas»**, 7 hojas A4, 1 895
   palabras, 16 figuras y 3 tablas posicionadas. Reemplazó a un export en capas de 12 `.subpage` y
   61 figuras (1.2 MB → 151 KB). El primero que necesitó portar el `fitTypography()`.

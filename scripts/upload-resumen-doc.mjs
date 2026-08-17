@@ -94,16 +94,29 @@ if (/<div class="page-body">/.test(html)) {
    `padding` y no usa ni un `position:absolute`: es flujo, y rechazarlo por el
    nombre lo mandaba a un uploader que no sabe qué altura darle. */
 const estiloDoc = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map(m => m[1]).join('\n');
-const paginaFija = estiloDoc.split('}').some(bloque => {
+const paginasFijas = [];   // clases cuya regla declara una página de tamaño fijo
+for (const bloque of estiloDoc.split('}')) {
   const i = bloque.indexOf('{');
-  if (i === -1) return false;
-  if (!/^\s*\.[\w-]+\s*$/.test(bloque.slice(0, i))) return false;
+  if (i === -1) continue;
+  const sel = bloque.slice(0, i).trim();
+  if (!/^\.[\w-]+$/.test(sel)) continue;
   const decl = bloque.slice(i + 1);
   const alto = decl.match(/(?:^|;)\s*height:\s*(?:([\d.]+)(?:pt|px)|var\()/);
-  return Boolean(alto) && /(?:^|;)\s*width:/.test(decl) && (!alto[1] || +alto[1] >= 300);
-});
-if (/class="(?:image-layer|text-layer|pdf-text)"/.test(html) || paginaFija) {
-  console.error('✗ Esto es un PDF reconstruido en capas (página de altura fija).');
+  if (!alto || !/(?:^|;)\s*width:/.test(decl)) continue;
+  if (alto[1] && +alto[1] < 300) continue;
+  paginasFijas.push(sel.slice(1));
+}
+/* Con página fija hay DOS destinos posibles, y los separa cuántas páginas hay.
+   Los documentos del envase en capas son UNA página larguísima (aunque dentro
+   lleven varias hojas dibujadas: Ta5 tiene 4, Ta12 tres `.inner-page`). Este
+   otro conversor emite **N contenedores de página**, cada uno con sus propias
+   medidas inline (`--pw/--ph` + `data-w/data-h`) — LAB6 trae 14, y encima de
+   dos tamaños distintos. Ahí el modelo de capas no vale: escribe un único
+   `--page-w/--page-h` en el envoltorio y escala una sola `.page`. */
+const nHojas = Math.max(0, ...paginasFijas.map(
+  c => (html.match(new RegExp(`class="[^"]*(?<![\\w-])${c}(?![\\w-])`, 'g')) || []).length));
+if (/class="(?:image-layer|text-layer|pdf-text)"/.test(html) || (paginasFijas.length && nHojas < 2)) {
+  console.error('✗ Esto es un PDF reconstruido en capas (una página de altura fija).');
   console.error('  Usa scripts/upload-resumen-capas.mjs (/addresumencapas).');
   process.exit(1);
 }
@@ -138,20 +151,22 @@ const reescritas = [...real.entries()].filter(([a, b]) => a !== b).length;
 console.log(`assets : ${refs.length}  (${reescritas} con la extensión corregida)`);
 
 // ─── 3. elegir el envase ─────────────────────────────────────────────────
-/* Dos documentos pueden llegar aquí, y no quieren el mismo trato:
+/* Tres documentos pueden llegar aquí, y no quieren el mismo trato:
      · «flujo» — texto en flujo normal, figuras en rejilla. Necesita los
        parches del visor: `max-width` en los hijos, tabla ancha que scrollea.
      · «páginas» — hojas de proporción fija (`aspect-ratio` + `container-type`)
        con el contenido en % y `cqw`. Se escala solo, así que tampoco es capas
        (no hay altura fija que el visor tenga que ajustar), pero sus tablas y
        figuras van en `position:absolute` y aquellos parches las destrozarían.
+     · «hojas» — N páginas de tamaño fijo en px, cada una con sus medidas, que
+       el visor tiene que escalar con `transform` (ver `nHojas` arriba).
 
-   Los separa lo único que de verdad los distingue: si el documento posiciona
-   su contenido en absoluto. No se mira el nombre de las clases, que ya engañó
-   una vez con el `.pdf-page` de Ta7. */
+   Los dos primeros los separa lo único que de verdad los distingue: si el
+   documento posiciona su contenido en absoluto. No se mira el nombre de las
+   clases, que ya engañó una vez con el `.pdf-page` de Ta7. */
 const estilos = estilosDe(html);
 const posicionado = (estilos.match(/position:\s*absolute/gi) || []).length;
-const ENVASE = posicionado ? 'doc-paginas' : 'doc-flujo';
+const ENVASE = nHojas >= 2 ? 'doc-hojas' : posicionado ? 'doc-paginas' : 'doc-flujo';
 
 /* El prefijo va DOBLE en «páginas» (`.doc-paginas.doc-paginas`, que casa el
    mismo elemento y suma una clase de especificidad). El motivo: este envase
@@ -160,8 +175,9 @@ const ENVASE = posicionado ? 'doc-paginas' : 'doc-flujo';
    tiene reglas como `tbody tr:nth-child(even) td` (0-2-3) que le ganarían a un
    `.doc-paginas .bluecell` (0-2-0) y le cambiarían el color a una celda. Con el
    prefijo doble el documento manda siempre sobre lo genérico del visor. */
-const PREFIJO = ENVASE === 'doc-paginas' ? '.doc-paginas.doc-paginas' : '.doc-flujo';
-console.log(`envase : ${ENVASE}${posicionado ? `  (${posicionado} reglas position:absolute)` : '  (sin posicionamiento absoluto)'}`);
+const PREFIJO = ENVASE === 'doc-flujo' ? '.doc-flujo' : `.${ENVASE}.${ENVASE}`;
+console.log(`envase : ${ENVASE}  ${ENVASE === 'doc-hojas' ? `(${nHojas} hojas de tamaño fijo)`
+  : posicionado ? `(${posicionado} reglas position:absolute)` : '(sin posicionamiento absoluto)'}`);
 
 // ─── 3b. sanear el <style> del documento ─────────────────────────────────
 /* Se conserva la maquetación y se tira lo global; el detalle, en sanear-css.mjs

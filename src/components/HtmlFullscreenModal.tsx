@@ -84,6 +84,7 @@ const FIGURAS = [
   '.capas img.asset',
   '.doc-flujo img',
   '.doc-paginas .figure img',
+  '.doc-hojas .pdf-image img',
 ].join(', ');
 
 interface Props {
@@ -125,7 +126,15 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
    * en el `fit()`, que le buscaría una `.page` de altura fija que no tiene.
    */
   const esPaginas = html !== null && html.includes('class="doc-paginas"');
-  const hojaSuelta = esCapas || esPaginas;
+
+  /**
+   * Y una cuarta: «hojas de tamaño fijo» (`.doc-hojas`), N páginas en px que
+   * hay que escalar con `transform` — como capas, pero con las medidas en
+   * cada hoja en vez de una sola en el envoltorio.
+   */
+  const esHojas = html !== null && html.includes('class="doc-hojas"');
+
+  const hojaSuelta = esCapas || esPaginas || esHojas;
 
   /**
    * ⚠️ El objeto de `dangerouslySetInnerHTML` TIENE que ser estable.
@@ -451,6 +460,89 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
       document.fonts?.removeEventListener?.('loadingdone', rehacer);
     };
   }, [esPaginas, html]);
+
+  /**
+   * Envase «hojas de tamaño fijo»: escalado por hoja + ajuste de líneas.
+   *
+   * Aquí el `<script>` del export hace DOS cosas y las dos hacen falta:
+   *
+   *  · `fit()` — escala cada `.pdf-page` al hueco disponible. No vale el
+   *    escalado de «capas», que lee un único `--page-w/--page-h` del
+   *    envoltorio: aquí cada hoja trae las suyas en `data-w`/`data-h`, y en
+   *    LAB6 no son ni siquiera todas iguales (612×792 y 455×588).
+   *  · `fitLines()` — estira o encoge cada línea con `scaleX` hasta el ancho
+   *    que tenía en el PDF (`data-target`). Es el mismo problema que en
+   *    «páginas», una escala arriba: allí se ajusta palabra a palabra y aquí
+   *    línea a línea. Sin esto las líneas largas se salen de su caja.
+   *
+   * Las líneas se miden en coordenadas de la página, así que el `transform`
+   * de la hoja no las afecta y da igual el orden.
+   */
+  useEffect(() => {
+    if (!esHojas) return;
+    const sheet = sheetRef.current;
+    const doc = sheet?.querySelector<HTMLElement>('.doc-hojas');
+    if (!doc) return;
+
+    let ultimo = '';
+    let vivo = true;
+
+    const ajustar = () => {
+      const disponible = doc.clientWidth;
+      if (!disponible) return;
+      const huella = `${disponible}|${SIZES[sizeIndex]}`;
+      if (huella === ultimo) return;
+      ultimo = huella;
+
+      // 1 · líneas. Un solo pase: limpiar → medir → escribir.
+      const lineas = Array.from(doc.querySelectorAll<HTMLElement>('.text-line'));
+      const dentro = lineas.map(l => l.querySelector<HTMLElement>('.line-content'));
+      dentro.forEach(el => { if (el) el.style.transform = 'none'; });
+      const naturales = dentro.map(el => el ? (el.scrollWidth || el.getBoundingClientRect().width) : 0);
+      lineas.forEach((linea, i) => {
+        const el = dentro[i];
+        if (!el || !naturales[i]) return;
+        const objetivo = parseFloat(linea.dataset.target || '') || linea.clientWidth;
+        if (!objetivo) return;
+        // Los mismos topes que el export: más allá, deformar la línea se nota
+        // más que el desajuste que corrige.
+        el.style.transform = `scaleX(${Math.max(0.78, Math.min(1.22, objetivo / naturales[i]))})`;
+      });
+
+      /* 2 · hojas, cada una a SU ancho, como el resto del visor. El `fit()` del
+         export topaba en `min(1, …)` para no ampliar, y aquí eso saldría mal:
+         este documento mezcla hojas de 612 px con otras de 455 —que son la
+         misma página al 74 %, con la letra proporcionalmente menor—, así que
+         sin normalizar por ancho unas se leerían más pequeñas que otras. El
+         zoom de A−/A+ se multiplica encima, y si la hoja se pasa de ancho la
+         desplaza su propio `overflow:auto` en vez de recortarla el scroller. */
+      for (const shell of Array.from(doc.querySelectorAll<HTMLElement>('.page-shell'))) {
+        const pagina = shell.querySelector<HTMLElement>('.pdf-page');
+        const W = parseFloat(shell.dataset.w || '');
+        const H = parseFloat(shell.dataset.h || '');
+        if (!pagina || !W || !H) continue;
+        const s = (disponible / W) * SIZES[sizeIndex];
+        pagina.style.transform = `scale(${s})`;
+        shell.style.width = `${Math.min(W * s, disponible)}px`;
+        shell.style.height = `${H * s}px`;
+      }
+    };
+
+    /* Igual que en «páginas»: una medida hecha con la fuente de reserva deja
+       las líneas mal escaladas y nada lo corrige después. */
+    const rehacer = () => { if (!vivo) return; ultimo = ''; ajustar(); };
+    (document.fonts?.ready ?? Promise.resolve()).then(rehacer);
+    document.fonts?.addEventListener?.('loadingdone', rehacer);
+
+    const ro = new ResizeObserver(ajustar);
+    ro.observe(doc);
+    ajustar();
+    return () => {
+      vivo = false;
+      ro.disconnect();
+      document.fonts?.removeEventListener?.('loadingdone', rehacer);
+    };
+  }, [esHojas, html, sizeIndex]);
 
   const bigger  = useCallback(() => setSizeIndex(i => Math.min(i + 1, SIZES.length - 1)), []);
   const smaller = useCallback(() => setSizeIndex(i => Math.max(i - 1, 0)), []);
