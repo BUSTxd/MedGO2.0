@@ -657,6 +657,16 @@ Tres cosas suyas que no son evidentes:
 - **A−/A+ no hacen nada en este envase.** La hoja ya ocupa el ancho disponible, que es su tamaño
   natural de lectura; no se ha inventado un zoom porque el tope de página (794 px en Ta13) es del
   documento, no del envase.
+- **Una medida hecha con OTRA fuente no se corrige sola, y no parece un fallo de medición.** Cada
+  palabra queda ~11 % más ancha de lo que le toca (lo que Outfit es respecto a Times), se come el
+  hueco de ~5 px que la separa de la siguiente y **el documento entero se lee «todojunto sin
+  espacios»** — que es como lo reportó BUST. No basta con esperar a `fonts.ready` al arrancar: con
+  `font-display: swap` la fuente definitiva puede entrar **después** de medir, así que el ajuste se
+  rehace también en `document.fonts` `loadingdone`. Síntoma para reconocerlo: los huecos entre
+  palabras están **por debajo del ancho de un espacio** (con el ajuste bien, en Ta13 la mediana es
+  5 px contra 3,2 px que mide un espacio). Y ojo en desarrollo: tocar la regla de la fuente con el
+  visor abierto da exactamente este cuadro, porque el CSS se recarga en caliente pero el efecto no
+  vuelve a correr — se arregla recargando.
 - **La fuente del documento se cambia por la del sitio desde el module**, con `!important`: el
   conversor deja Times/Arial en sus reglas y, en los `.patch`, también en el estilo inline, y el
   documento va prefijado doble, así que por especificidad no se gana. Es seguro **gracias** al

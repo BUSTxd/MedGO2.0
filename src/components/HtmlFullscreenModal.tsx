@@ -429,19 +429,27 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
       });
     };
 
-    // Las medidas dependen de la fuente ya cargada; con la de reserva saldrían
-    // unos factores y con la definitiva otros.
-    const arranque = document.fonts?.ready ?? Promise.resolve();
-    arranque.then(() => {
-      if (!vivo) return;
-      ultimoAncho = -1;   // el ancho no cambió, las medidas sí: hay que rehacerlo
-      ajustar();
-    });
+    /* ⚠️ Una medida hecha con OTRA fuente no se corrige sola, y el resultado no
+       parece un error de medición: cada palabra queda ~11 % más ancha de lo que
+       le toca (Outfit lo es respecto a Times), se come el hueco de ~5 px que la
+       separa de la siguiente y el documento se lee «todojunto sin espacios».
+       Así que no basta con esperar a `fonts.ready` al arrancar: hay que rehacer
+       el ajuste cada vez que termine de cargar una fuente, porque con
+       `font-display: swap` la definitiva puede entrar DESPUÉS de haber medido.
+       `ultimoAncho = -1` fuerza el recálculo: lo que cambió no es el ancho del
+       documento, son las medidas. */
+    const rehacer = () => { if (!vivo) return; ultimoAncho = -1; ajustar(); };
+    (document.fonts?.ready ?? Promise.resolve()).then(rehacer);
+    document.fonts?.addEventListener?.('loadingdone', rehacer);
 
     const ro = new ResizeObserver(ajustar);
     ro.observe(doc);
     ajustar();
-    return () => { vivo = false; ro.disconnect(); };
+    return () => {
+      vivo = false;
+      ro.disconnect();
+      document.fonts?.removeEventListener?.('loadingdone', rehacer);
+    };
   }, [esPaginas, html]);
 
   const bigger  = useCallback(() => setSizeIndex(i => Math.min(i + 1, SIZES.length - 1)), []);
