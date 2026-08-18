@@ -87,6 +87,12 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
   }, [open, onClose, receipt]);
 
   const plan = PLANS[planKey];
+  // Cadencia y compromiso son ejes distintos y los dos salen del catálogo, no
+  // del nombre del plan: hay un mensual y un anual por tramo, y el compromiso
+  // lo llevan los dos mensuales (Interno y UFBI) pero ninguno de los anuales.
+  const esMensual = plan.durationDays === 30;
+  const meses = plan.commitmentMonths ?? 0;
+  const tieneLock = meses > 0;
 
   const initialization = useMemo(
     () => ({ amount: plan.amount }),
@@ -171,9 +177,11 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
           <>
             <h3 className={styles.title}>Suscribirme al plan {plan.label}</h3>
             <p className={styles.subtitle}>
-              {planKey === 'interno'
-                ? 'Pago mensual. Compromiso mínimo de 3 meses.'
-                : 'Pago anual. Cancela el próximo cobro cuando quieras.'}
+              {!esMensual
+                ? 'Pago anual. Cancela el próximo cobro cuando quieras.'
+                : tieneLock
+                  ? `Pago mensual. Compromiso mínimo de ${meses} meses.`
+                  : 'Pago mensual. Cancela cuando quieras.'}
             </p>
 
             <div className={styles.priceRow}>
@@ -192,39 +200,33 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
                   onChange={(e) => setTos(e.target.checked)}
                 />
                 <span>
-                  {planKey === 'interno' ? (
+                  Acepto los{' '}
+                  <a
+                    className={styles.tosLink}
+                    href="/terminos"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    términos y condiciones
+                  </a>
+                  {tieneLock ? (
                     <>
-                      Acepto los{' '}
-                      <a
-                        className={styles.tosLink}
-                        href="/terminos"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        términos y condiciones
-                      </a>{' '}
-                      y entiendo que el plan mensual tiene un compromiso mínimo de{' '}
-                      <strong>3 meses</strong>. Después puedo cancelar cuando quiera.
+                      {' '}y entiendo que el plan mensual tiene un compromiso mínimo de{' '}
+                      <strong>{meses} meses</strong>. Después puedo cancelar cuando quiera.
                     </>
                   ) : (
                     <>
-                      Acepto los{' '}
-                      <a
-                        className={styles.tosLink}
-                        href="/terminos"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        términos y condiciones
-                      </a>
-                      . Puedo cancelar el próximo cobro anual cuando quiera; no hay devoluciones del periodo en curso.
+                      . Puedo cancelar el próximo cobro {esMensual ? 'mensual' : 'anual'} cuando
+                      quiera; no hay devoluciones del periodo en curso.
                     </>
                   )}
                 </span>
               </label>
-              {planKey === 'interno' && (
+              {tieneLock && (
                 <div className={styles.tosLockBanner}>
-                  Compromiso mínimo: 3 meses
+                  {/* El total sale del catálogo: con dos mensuales de precio
+                      distinto, un importe escrito a mano se desincroniza. */}
+                  Compromiso mínimo: {meses} meses (S/ {(plan.amount * meses).toFixed(2)} en total)
                 </div>
               )}
             </div>
@@ -290,15 +292,15 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
             </dl>
 
             <p className={styles.receiptNote}>
-              {planKey === 'interno' ? (
+              {tieneLock ? (
                 <>
-                  Tu plan mensual incluye un <strong>compromiso mínimo de 3 meses</strong>. Después podrás cancelar desde{' '}
+                  Tu plan mensual incluye un <strong>compromiso mínimo de {meses} meses</strong>. Después podrás cancelar desde{' '}
                   <strong>Mi cuenta</strong> cuando quieras.
                 </>
               ) : (
                 <>
-                  Puedes cancelar el próximo cobro anual en cualquier momento desde <strong>Mi cuenta</strong>.
-                  No hay devoluciones del periodo en curso.
+                  Puedes cancelar el próximo cobro {esMensual ? 'mensual' : 'anual'} en cualquier
+                  momento desde <strong>Mi cuenta</strong>. No hay devoluciones del periodo en curso.
                 </>
               )}
               {' '}Si no recibes el correo en unos minutos, revisa la carpeta de Spam o Promociones.

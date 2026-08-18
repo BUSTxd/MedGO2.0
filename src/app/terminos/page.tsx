@@ -1,12 +1,22 @@
 import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { PLANS } from '@/lib/plans';
 import styles from '@/styles/legal.module.css';
 
 export const metadata: Metadata = {
   title: 'Términos y Condiciones — MedGO',
-  description: 'Términos y condiciones de uso de MedGO, planes de suscripción y compromiso mínimo del plan Interno.',
+  description: 'Términos y condiciones de uso de MedGO, planes de suscripción y compromiso mínimo de los planes mensuales.',
 };
+
+/** Mensuales primero y dentro de cada grupo por tramo, que es el orden en que
+ *  el alumno los ve en la landing. */
+const PLANES = Object.values(PLANS).sort(
+  (a, b) => a.durationDays - b.durationDays || a.track.localeCompare(b.track),
+);
+/** Los que llevan compromiso mínimo, para la sección 7. */
+const CON_COMPROMISO = PLANES.filter((p) => p.commitmentMonths);
+const SIN_COMPROMISO = PLANES.filter((p) => !p.commitmentMonths);
 
 export default function TerminosPage() {
   return (
@@ -93,18 +103,28 @@ export default function TerminosPage() {
                 <td>S/ 0</td>
                 <td>—</td>
               </tr>
-              <tr>
-                <td>Interno</td>
-                <td>S/ 14.00</td>
-                <td>Mensual (cobro cada 30 días)</td>
-              </tr>
-              <tr>
-                <td>Residente</td>
-                <td>S/ 142.80</td>
-                <td>Anual (cobro cada 365 días)</td>
-              </tr>
+              {/* Recorrido sobre el catálogo, no una lista escrita a mano: al
+                  añadir un plan la tabla legal se actualiza sola. Un precio que
+                  aquí diga otra cosa que el cobrado es un problema, no un typo. */}
+              {PLANES.map((p) => (
+                <tr key={p.key}>
+                  <td>{p.label}</td>
+                  <td>S/ {p.amount.toFixed(2)}</td>
+                  <td>
+                    {p.durationDays === 30
+                      ? 'Mensual (cobro cada 30 días)'
+                      : 'Anual (cobro cada 365 días)'}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
+          <p className={styles.p}>
+            Los planes <strong>UFBI</strong> dan acceso a los cursos del ciclo básico (1.er año,
+            UFBI) y los planes <strong>Interno</strong> y <strong>Residente</strong> a los cursos
+            de la Facultad de Medicina (2.º a 7.º año). Son tramos distintos: contratar uno no
+            otorga acceso a los cursos del otro.
+          </p>
           <p className={styles.p}>
             Los precios están expresados en soles peruanos (PEN) e incluyen los impuestos
             aplicables. MedGO puede actualizar precios con aviso previo de 30 días; los cambios
@@ -113,24 +133,40 @@ export default function TerminosPage() {
         </section>
 
         <section className={styles.callout}>
-          <h2 className={styles.h2}>7. Compromiso mínimo — Plan Interno (mensual)</h2>
+          <h2 className={styles.h2}>7. Compromiso mínimo — planes mensuales</h2>
           <p className={styles.calloutBody}>
-            Al contratar el plan <strong>Interno</strong> el usuario acepta un compromiso
-            mínimo de <strong>3 cobros mensuales consecutivos</strong> (S/ 14 × 3 = S/ 42).
-            El botón de &quot;Cancelar suscripción&quot; en Mi cuenta se habilitará al cumplirse
-            los 3 meses contados desde la fecha de la primera autorización del pago. Antes de
-            esa fecha la suscripción no es cancelable a través de la plataforma. No existe
-            devolución parcial ni total de los cobros realizados dentro de ese periodo.
+            Al contratar un plan mensual el usuario acepta un compromiso mínimo de{' '}
+            <strong>3 cobros mensuales consecutivos</strong>. El botón de &quot;Cancelar
+            suscripción&quot; en Mi cuenta se habilitará al cumplirse los 3 meses contados desde
+            la fecha de la primera autorización del pago. Antes de esa fecha la suscripción no es
+            cancelable a través de la plataforma. No existe devolución parcial ni total de los
+            cobros realizados dentro de ese periodo.
           </p>
+          <ul className={styles.calloutList}>
+            {CON_COMPROMISO.map((p) => (
+              <li key={p.key}>
+                <strong>{p.label}</strong>: S/ {p.amount.toFixed(2)} × {p.commitmentMonths} ={' '}
+                S/ {(p.amount * (p.commitmentMonths ?? 0)).toFixed(2)} durante el periodo de
+                compromiso.
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section className={styles.section}>
-          <h2 className={styles.h2}>8. Plan Residente (anual)</h2>
+          <h2 className={styles.h2}>8. Planes anuales</h2>
           <p className={styles.p}>
-            El plan Residente es <strong>cancelable en cualquier momento</strong> desde Mi
-            cuenta. La cancelación detiene la renovación anual pero el usuario mantiene acceso
-            al contenido premium hasta el final del periodo pagado. <strong>No existen
-            devoluciones del año en curso.</strong>
+            Los planes{' '}
+            {SIN_COMPROMISO.map((p, i) => (
+              <span key={p.key}>
+                {i > 0 && (i === SIN_COMPROMISO.length - 1 ? ' y ' : ', ')}
+                <strong>{p.label}</strong>
+              </span>
+            ))}{' '}
+            son <strong>cancelables en cualquier momento</strong> desde Mi cuenta: al cobrar 12
+            meses por adelantado no llevan compromiso mínimo. La cancelación detiene la renovación
+            anual pero el usuario mantiene acceso al contenido premium hasta el final del periodo
+            pagado. <strong>No existen devoluciones del año en curso.</strong>
           </p>
         </section>
 
@@ -190,7 +226,7 @@ export default function TerminosPage() {
             . La eliminación implica el borrado de sus datos personales y de progreso, salvo
             registros contables que MedGO esté obligado a conservar por ley. La eliminación
             de la cuenta no exime al usuario de los cobros pendientes derivados del compromiso
-            mínimo del plan Interno.
+            mínimo de los planes mensuales.
           </p>
         </section>
 

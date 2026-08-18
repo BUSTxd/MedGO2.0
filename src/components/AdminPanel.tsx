@@ -37,16 +37,20 @@ function formatNextPayment(date: string | null): string {
 }
 
 function planBadgeClass(plan: AdminRow['plan']): string {
-  if (plan === 'interno')   return `${styles.planBadge} ${styles.planInterno}`;
-  if (plan === 'residente') return `${styles.planBadge} ${styles.planResidente}`;
-  if (plan === 'ufbi')      return `${styles.planBadge} ${styles.planUfbi}`;
+  if (plan === 'interno')    return `${styles.planBadge} ${styles.planInterno}`;
+  if (plan === 'residente')  return `${styles.planBadge} ${styles.planResidente}`;
+  // El anual de UFBI comparte color con el mensual: es el mismo tramo, y el
+  // label ya distingue cuál de los dos es.
+  if (plan === 'ufbi')       return `${styles.planBadge} ${styles.planUfbi}`;
+  if (plan === 'ufbi-anual') return `${styles.planBadge} ${styles.planUfbi}`;
   return `${styles.planBadge} ${styles.planFree}`;
 }
 
 function planLabel(plan: AdminRow['plan']): string {
-  if (plan === 'interno')   return 'Interno';
-  if (plan === 'residente') return 'Residente';
-  if (plan === 'ufbi')      return 'UFBI';
+  if (plan === 'interno')    return 'Interno';
+  if (plan === 'residente')  return 'Residente';
+  if (plan === 'ufbi')       return 'UFBI';
+  if (plan === 'ufbi-anual') return 'UFBI Anual';
   return 'Free';
 }
 

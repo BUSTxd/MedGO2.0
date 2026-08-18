@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { cancelPreapproval } from '@/lib/mercadopago';
+import { PLANS, unlockDateFor, type PlanKey } from '@/lib/plans';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -24,7 +25,7 @@ export async function POST() {
       id: string;
       mp_preapproval_id: string;
       status: string;
-      plan_key: 'interno' | 'residente' | 'ufbi';
+      plan_key: PlanKey;
       created_at: string;
     }>();
 
@@ -32,18 +33,19 @@ export async function POST() {
     return NextResponse.json({ error: 'no_active_subscription' }, { status: 404 });
   }
 
-  // Compromiso mínimo de 3 meses para el plan Interno (mensual). Usamos meses
-  // calendario (setMonth +3) en vez de 90 días para que coincida con 3 ciclos
-  // de cobro reales. El plan Residente queda fuera del lock.
-  if (sub.plan_key === 'interno') {
-    const unlockAt = new Date(sub.created_at);
-    unlockAt.setMonth(unlockAt.getMonth() + 3);
-    if (Date.now() < unlockAt.getTime()) {
-      return NextResponse.json(
-        { error: 'lock_period_active', unlockAt: unlockAt.toISOString() },
-        { status: 423 },
-      );
-    }
+  // Compromiso mínimo de los planes mensuales (Interno y UFBI). Sale del
+  // catálogo (`commitmentMonths`), no de una lista de nombres aquí: los anuales
+  // devuelven `null` y quedan fuera del lock sin nombrarlos.
+  const unlockAt = unlockDateFor(sub.plan_key, sub.created_at);
+  if (unlockAt && Date.now() < unlockAt.getTime()) {
+    return NextResponse.json(
+      {
+        error: 'lock_period_active',
+        unlockAt: unlockAt.toISOString(),
+        months: PLANS[sub.plan_key].commitmentMonths,
+      },
+      { status: 423 },
+    );
   }
 
   try {

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import type { PlanKey, ProfilePlan } from '@/lib/plans';
+import { PLANS, unlockDateFor, type PlanKey, type ProfilePlan } from '@/lib/plans';
 import styles from '@/styles/accountPage.module.css';
 
 interface SubRow {
@@ -48,17 +48,24 @@ export default function SubscriptionPanel({
   const isFree = plan === 'free';
   const isCancelled = subscription?.status === 'cancelled';
   const isActive = subscription?.status === 'authorized';
-  const isInterno = subscription?.plan_key === 'interno';
-  const isResidente = subscription?.plan_key === 'residente';
+  // Cadencia del cobro leída del catálogo, no del nombre del plan: hay un
+  // anual por tramo ('residente' y 'ufbi-anual') y comparar nombres deja al
+  // siguiente mostrando «S/ 189.00/mes».
+  const esAnual = subscription
+    ? PLANS[subscription.plan_key].durationDays >= 365
+    : false;
+  // Meses de compromiso del plan contratado (Interno y UFBI: 3). El texto usa
+  // este número, así que cambiarlo en el catálogo actualiza también los avisos.
+  const meses = subscription
+    ? PLANS[subscription.plan_key].commitmentMonths ?? 0
+    : 0;
   const expiresLabel = formatDate(expiresAt);
   const nextPayment = formatDate(subscription?.next_payment_date ?? null);
 
-  const unlockDate = isInterno && subscription
-    ? (() => {
-        const d = new Date(subscription.created_at);
-        d.setMonth(d.getMonth() + 3);
-        return d;
-      })()
+  // Misma función que usa `api/subscriptions/cancel`: si el botón calculara la
+  // fecha por su cuenta podría habilitarse antes de que la API acepte cancelar.
+  const unlockDate = subscription
+    ? unlockDateFor(subscription.plan_key, subscription.created_at)
     : null;
   const isLocked = unlockDate ? unlockDate.getTime() > Date.now() : false;
   const unlockLabel = unlockDate ? formatDate(unlockDate.toISOString()) : null;
@@ -72,7 +79,7 @@ export default function SubscriptionPanel({
       if (!res.ok) {
         if (json?.error === 'lock_period_active' && json?.unlockAt) {
           setError(
-            `Tu plan mensual tiene un compromiso mínimo de 3 meses. Podrás cancelar a partir del ${formatDate(json.unlockAt)}.`,
+            `Tu plan mensual tiene un compromiso mínimo de ${json.months ?? meses} meses. Podrás cancelar a partir del ${formatDate(json.unlockAt)}.`,
           );
         } else if (json?.error === 'no_active_subscription') {
           setError('No tienes una suscripción activa.');
@@ -103,7 +110,7 @@ export default function SubscriptionPanel({
             <div className={styles.planLabel}>Plan {planLabel}</div>
             {!isFree && subscription && (
               <div className={styles.planMeta}>
-                S/ {Number(subscription.amount).toFixed(2)}/{isResidente ? 'año' : 'mes'}
+                S/ {Number(subscription.amount).toFixed(2)}/{esAnual ? 'año' : 'mes'}
               </div>
             )}
           </div>
@@ -152,7 +159,7 @@ export default function SubscriptionPanel({
                 tabIndex={0}
                 aria-label={
                   isLocked
-                    ? `Tu plan Interno tiene un compromiso mínimo de 3 meses. Podrás cancelar a partir del ${unlockLabel}.`
+                    ? `Tu plan ${planLabel} tiene un compromiso mínimo de ${meses} meses. Podrás cancelar a partir del ${unlockLabel}.`
                     : `Mantienes acceso hasta ${expiresLabel ?? 'el final del periodo pagado'}. Después tu cuenta vuelve al plan gratuito.`
                 }
               >
@@ -160,7 +167,7 @@ export default function SubscriptionPanel({
                 <span className={styles.tooltip} role="tooltip">
                   {isLocked ? (
                     <>
-                      Tu plan Interno tiene un compromiso mínimo de 3 meses. Podrás cancelar a partir del{' '}
+                      Tu plan {planLabel} tiene un compromiso mínimo de {meses} meses. Podrás cancelar a partir del{' '}
                       <strong>{unlockLabel}</strong>.
                     </>
                   ) : (

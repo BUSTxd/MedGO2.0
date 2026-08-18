@@ -151,6 +151,37 @@
   line-height: 1.7;
 }
 
+/* Importes del compromiso mínimo, uno por plan mensual. Hereda la forma de
+   `.list` pero con la viñeta en naranja: dentro del callout, un punto azul
+   sería el único elemento fuera de la paleta del aviso. */
+.calloutList {
+  margin: 14px 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.calloutList li {
+  margin-bottom: 6px;
+  color: rgba(240, 238, 255, 0.88);
+  padding-left: 20px;
+  position: relative;
+  /* Cifras tabulares: los importes de los planes quedan alineados en columna
+     aunque el nombre del plan de arriba sea más corto. */
+  font-variant-numeric: tabular-nums;
+}
+
+.calloutList li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  background: var(--orange);
+  border-radius: 50%;
+  opacity: 0.75;
+}
+
 /* ── Links ── */
 .link {
   color: var(--blue);

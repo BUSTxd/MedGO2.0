@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { isAdminEmail } from './admin';
 
-export type PlanKey = 'interno' | 'residente' | 'ufbi';
+export type PlanKey = 'interno' | 'residente' | 'ufbi' | 'ufbi-anual';
 export type ProfilePlan = 'free' | PlanKey;
 
 /**
@@ -23,6 +23,17 @@ export interface PlanCatalogEntry {
   durationDays: number;
   mpPlanIdEnv: string;
   track: Track;
+  /**
+   * Compromiso mínimo en meses: nº de cobros consecutivos que el usuario acepta
+   * antes de poder cancelar. Lo llevan los **mensuales** de los dos tramos; los
+   * anuales no, porque ya cobran 12 meses por adelantado.
+   *
+   * Es un eje aparte de la cadencia (`durationDays`) y no se deduce del nombre
+   * del plan: preguntarlo aquí es lo que evita repetir `planKey === 'interno'`
+   * en el modal de compra, en Mi cuenta y en la ruta de cancelación —los tres
+   * sitios donde ya se desincronizó una vez.
+   */
+  commitmentMonths?: number;
 }
 
 export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
@@ -34,6 +45,7 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
     durationDays: 30,
     mpPlanIdEnv: 'MP_PLAN_INTERNO_ID',
     track: 'medicina',
+    commitmentMonths: 3,
   },
   residente: {
     key: 'residente',
@@ -47,16 +59,34 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
   ufbi: {
     key: 'ufbi',
     label: 'UFBI',
-    amount: 20,
+    amount: 19.70,
     currency: 'PEN',
     durationDays: 30,
     mpPlanIdEnv: 'MP_PLAN_UFBI_ID',
+    track: 'basico',
+    commitmentMonths: 3,
+  },
+  // Anual del tramo básico — el análogo de `residente` en Medicina. 189 son
+  // exactamente el 80 % de 12 × 19.70 (236.40), de ahí el «20 % de descuento»
+  // de la tarjeta: si se toca uno de los dos importes hay que rehacer el otro.
+  'ufbi-anual': {
+    key: 'ufbi-anual',
+    label: 'UFBI Anual',
+    amount: 189,
+    currency: 'PEN',
+    durationDays: 365,
+    mpPlanIdEnv: 'MP_PLAN_UFBI_ANUAL_ID',
     track: 'basico',
   },
 };
 
 export function isPlanKey(value: string): value is PlanKey {
-  return value === 'interno' || value === 'residente' || value === 'ufbi';
+  return (
+    value === 'interno' ||
+    value === 'residente' ||
+    value === 'ufbi' ||
+    value === 'ufbi-anual'
+  );
 }
 
 export function getPlan(planKey: string): (PlanCatalogEntry & { mpPlanId: string }) | null {
@@ -65,6 +95,24 @@ export function getPlan(planKey: string): (PlanCatalogEntry & { mpPlanId: string
   const mpPlanId = process.env[entry.mpPlanIdEnv];
   if (!mpPlanId) return null;
   return { ...entry, mpPlanId };
+}
+
+/**
+ * Fecha a partir de la cual una suscripción se puede cancelar, o `null` si el
+ * plan no tiene compromiso. Se cuenta en **meses calendario** desde la primera
+ * autorización (`setMonth +N`), no en 90 días, para que coincida con N ciclos
+ * de cobro reales.
+ *
+ * Vive aquí y no en cada consumidor a propósito: el botón de Mi cuenta y el
+ * guard de `api/subscriptions/cancel` tienen que dar exactamente la misma
+ * fecha, o el botón se habilita antes de que la API acepte cancelar.
+ */
+export function unlockDateFor(planKey: PlanKey, createdAt: string | Date): Date | null {
+  const months = PLANS[planKey].commitmentMonths;
+  if (!months) return null;
+  const d = new Date(createdAt);
+  d.setMonth(d.getMonth() + months);
+  return d;
 }
 
 export interface PlanState {
@@ -109,7 +157,9 @@ export async function getUserPlanState(supabase: SupabaseClient): Promise<PlanSt
  */
 export function planRank(plan: ProfilePlan): number {
   if (plan === 'free') return 0;
-  if (plan === 'residente') return 2;
+  // Los anuales son el escalón alto de su tramo: 'residente' en medicina,
+  // 'ufbi-anual' en básico. Abren lo mismo que su mensual y algo más.
+  if (plan === 'residente' || plan === 'ufbi-anual') return 2;
   return 1; // interno y ufbi: primer escalón de su respectivo tramo
 }
 
@@ -118,7 +168,8 @@ export function planRank(plan: ProfilePlan): number {
  *
  * Regla clave: los tramos están separados. Un `ufbi` no abre cursos de la
  * Facultad de Medicina, y un `interno`/`residente` no abre los del ciclo
- * básico. Dentro del tramo `medicina` sí se mantiene residente ≥ interno.
+ * básico. Dentro de cada tramo sí se mantiene el orden anual ≥ mensual
+ * (residente ≥ interno, ufbi-anual ≥ ufbi).
  */
 export function planUnlocks(plan: ProfilePlan, required: PlanKey): boolean {
   if (plan === 'free') return false;

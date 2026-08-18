@@ -135,21 +135,65 @@ Definido en `src/lib/plans.ts`. Los planes se agrupan en **dos tramos** (`Track`
 | Plan | Precio | Tramo | Desbloquea |
 |---|---|---|---|
 | `free` | — | — | acceso básico |
-| `ufbi` | S/ 20/mes | `basico` | los 6 cursos del ciclo básico (1.er año, UFBI) |
+| `ufbi` | S/ 19.70/mes | `basico` | los 6 cursos del ciclo básico (1.er año, UFBI) |
+| `ufbi-anual` | S/ 189/año | `basico` | ídem, con precio bloqueado 12 meses |
 | `interno` | S/ 14/mes | `medicina` | los cursos de la Facultad de Medicina (2.º-7.º año) |
 | `residente` | S/ 142.80/año | `medicina` | ídem + extras |
 
-**Regla crítica de acceso**: usar `planUnlocks(plan, required)`, **nunca** comparar `planRank()` a secas. Un plan de un tramo jamás abre cursos del otro; `planRank` solo ordena *dentro* de un mismo tramo (residente ≥ interno). Cada `[id]/page.tsx` de curso declara su tramo vía `requiredPlan` en `<LockedContent>` (`"ufbi"` en los 6 del ciclo básico, `"interno"` en el resto).
+**Cada tramo tiene un mensual y un anual**, y el anual es el escalón alto de su tramo (`planRank` 2). Los cursos siempre declaran el **mensual** como `requiredPlan` (`"ufbi"` / `"interno"`): el anual los abre por rango, así que no hay que tocar ningún curso al añadir uno.
+
+**Los dos anuales se anuncian mensualizados en la landing** (S/ 11.90 y S/ 15.75 en el precio grande, el total anual en el `priceSub`), para que la comparación con la tarjeta mensual de al lado no exija hacer una división mental. El importe que se cobra —y el que va en `PLANS`— es el anual. Los tres números del tramo básico están atados: 12 × 19.70 = 236.40, S/ 189 es su 80 % (de ahí el badge «20 % de descuento») y 189 / 12 = 15.75 exacto. Tocar un precio obliga a rehacer los otros dos y el badge.
+
+**Nada de decidir la cadencia por el nombre del plan.** Con un anual por tramo, un `plan_key === 'residente'` deja al de UFBI anunciado como mensual. Se lee de `PLANS[key].durationDays` (`=== 30` mensual, `>= 365` anual) — así lo hacen `SubscribeModal`, `LockedContent` y `SubscriptionPanel`. El **compromiso de 3 meses es un eje aparte** (`tieneLock`, hoy solo `interno`): mezclarlo con la cadencia hacía que el UFBI mensual se anunciara como «Pago anual».
+
+**Regla crítica de acceso**: usar `planUnlocks(plan, required)`, **nunca** comparar `planRank()` a secas. Un plan de un tramo jamás abre cursos del otro; `planRank` solo ordena *dentro* de un mismo tramo (residente ≥ interno, ufbi-anual ≥ ufbi). Cada `[id]/page.tsx` de curso declara su tramo vía `requiredPlan` en `<LockedContent>` (`"ufbi"` en los 6 del ciclo básico, `"interno"` en el resto).
 
 El admin lleva `allAccess: true` en `PlanState` (`getUserPlanState`) — sin ese flag su plan `residente` pertenece al tramo `medicina` y le bloquearía los cursos de UFBI.
 
 El plan del usuario vive en `profiles.plan` + `profiles.plan_expires_at` en Supabase (ambas tablas tienen CHECK constraints que hay que ampliar al añadir un plan nuevo). Para verificar plan en servidor usar `getCachedPlanState()` de `src/lib/plans-server.ts`.
 
-**Landing (`Pricing.tsx`)**: switch estilo interruptor día/noche que alterna entre tramos; cada uno muestra solo sus tarjetas, para que el alumno nunca compare S/20 (6 cursos) contra S/14 (11 cursos) lado a lado. El acento (`--acc`, triplete RGB heredado desde `.grid[data-track]`) tiñe tarjetas, checks, botón y el brillo pulsante de la tarjeta destacada: azul `#3b9edd` en UFBI, violeta `#8b5cf6` en Medicina.
+**Landing (`Pricing.tsx`)**: switch estilo interruptor día/noche que alterna entre tramos; cada uno muestra solo sus tarjetas (3 y 3, gratuito + mensual + anual), para que el alumno nunca compare S/19.70 (6 cursos) contra S/14 (11 cursos) lado a lado. El acento (`--acc`, triplete RGB heredado desde `.grid[data-track]`) tiñe tarjetas, checks, botón y el brillo pulsante de la tarjeta destacada: azul `#3b9edd` en UFBI, violeta `#8b5cf6` en Medicina.
 
-**⚠️ Pendiente para que el plan UFBI funcione de verdad**:
-1. Crear el plan de **S/ 20/mes** en el panel de Mercado Pago y poner su ID en `MP_PLAN_UFBI_ID` (`.env.local` + Vercel). Sin esa variable `getPlan('ufbi')` devuelve `null` y el checkout responde `invalid plan`.
-2. Decidir si `ufbi` lleva el **compromiso mínimo de 3 meses** que hoy solo aplica a `interno` (lock en `api/subscriptions/cancel/route.ts` + aviso en `SubscriptionPanel.tsx`). Ahora mismo UFBI se puede cancelar cuando sea.
+Los badges de esquina salen de `BADGE_CLASS` (`popular` = naranja base, `annual` = verde, `discount` = verde con `badgePulse`, un halo que respira). **El pulso es exclusivo del de descuento**: los demás son etiquetas, ese es el argumento de venta. El anillo crece 7 px y el badge está a 20 px del borde, así que cabe dentro del `overflow: hidden` de la tarjeta.
+
+**Los planes de Mercado Pago se crean por API, no en el panel.** Los dos de UFBI se
+crearon con `POST /preapproval_plan` usando el access token de la aplicación *Medgoplus*
+(igual que Interno/Residente), y sus IDs van en `MP_PLAN_UFBI_ID` / `MP_PLAN_UFBI_ANUAL_ID`
+— sin esas variables `getPlan()` devuelve `null` y el checkout responde `invalid plan`.
+El motivo de no usar el panel web: un plan creado allí queda bajo **otro `client_id`**, no
+aparece en `GET /preapproval_plan/search` con el token de la app y el `preapproval_plan_id`
+no es fiable desde `createPreapproval()`. Hay **dos juegos de IDs**, uno por entorno: los de
+la cuenta de prueba (`.env.local`, cuyo `MP_ACCESS_TOKEN` es de un test user) y los de
+producción (Vercel). Los IDs no se comparten entre entornos.
+
+**El compromiso mínimo lo llevan los dos MENSUALES** (`interno` y `ufbi`, 3 meses); los
+anuales no, porque ya cobran 12 meses por adelantado. Está en el catálogo como
+`commitmentMonths`, un eje **aparte de la cadencia** (`durationDays`) y que no se deduce del
+nombre del plan: leerlo de `PLANS` es lo que evita repetir `planKey === 'interno'` en los
+tres sitios donde ya se desincronizó una vez —modal de compra, Mi cuenta y la ruta de
+cancelación—. Todos los textos derivan del número (los meses y el total `amount × meses`),
+así que subirlo a 4 no deja ningún «3 meses» escrito a mano por detrás.
+
+La fecha de desbloqueo sale de **`unlockDateFor(planKey, createdAt)`** en `plans.ts`, en meses
+calendario (`setMonth +N`, no 90 días, para que coincida con N ciclos de cobro reales). La
+comparten el botón de Mi cuenta y el guard de `api/subscriptions/cancel` **a propósito**: si
+cada uno la calculara, el botón se habilitaría un día antes de que la API acepte cancelar. El
+guard real es el de la ruta —el botón deshabilitado es sólo la señal visual—, y responde `423`
+con `unlockAt` y `months`.
+
+`/terminos` recorre `PLANS` para la tabla de precios y para la lista de importes del
+compromiso (sección 7) — un plan nuevo aparece solo, y un precio que la página legal
+contradiga no es un typo sino un problema.
+
+**El índice de cada curso (`cursos/<slug>/page.tsx`) también decide acceso, y también va por
+`planUnlocks`.** Los 16 índices comparaban `planRank(plan.plan) >= planRank('interno')`, que
+con dos tramos es directamente falso: un suscriptor de `ufbi-anual` (rango 2) veía los 11
+cursos de la Facultad sin candado en la lista de semanas, y un `interno` veía abiertos los 6
+de UFBI — el `LockedContent` de la clase sí bloqueaba, así que el fallo sólo se notaba al
+entrar. Ahora todos hacen
+`!!plan.allAccess || (plan.isActive && planUnlocks(plan.plan, '<tramo>'))`, con `'ufbi'` en
+los seis del ciclo básico y `'interno'` en el resto, y la variable se llama `hasAcceso`
+(antes `hasInterno`, que ya mentía). Al añadir un curso hay que copiar esa línea, no la vieja.
 
 ---
 

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { semanas, curso, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/fisica';
-import { planRank } from '@/lib/plans';
+import { planUnlocks } from '@/lib/plans';
 import { getCachedPlanState } from '@/lib/plans-server';
 import FisicaIcon from '@/components/icons/FisicaIcon';
 import styles from '@/styles/cursos.module.css';
@@ -15,7 +15,10 @@ const UNIDAD_LABEL: Record<string, string> = {
 
 export default async function FisicaMedicinaPage() {
   const plan = await getCachedPlanState();
-  const hasInterno = plan.isActive && planRank(plan.plan) >= planRank('interno');
+  // Los tramos están separados: un plan de UFBI no abre cursos de la Facultad
+  // (ni al revés), así que se decide con planUnlocks y no comparando rangos.
+  // `allAccess` (admin) va primero: su plan es del tramo medicina.
+  const hasAcceso = !!plan.allAccess || (plan.isActive && planUnlocks(plan.plan, 'ufbi'));
 
   return (
     <div className={styles.microPage}>
@@ -80,7 +83,7 @@ export default async function FisicaMedicinaPage() {
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
               // Si la card redirige a otra sección, no la bloqueamos:
               // el destino maneja su propio acceso.
-              const isLocked = !act.linkOverride && !hasInterno;
+              const isLocked = !act.linkOverride && !hasAcceso;
 
               const href = act.linkOverride ?? `/dashboard/cursos/fisica-medicina/${act.id}`;
 

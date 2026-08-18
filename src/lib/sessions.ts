@@ -7,10 +7,11 @@ import type { ProfilePlan } from '@/lib/plans';
 export const DEVICE_COOKIE = 'device_id';
 
 const PLAN_DEVICE_LIMIT: Record<ProfilePlan, number> = {
-  free:      Number.POSITIVE_INFINITY,
-  interno:   3,
-  residente: 3,
-  ufbi:      3,
+  free:          Number.POSITIVE_INFINITY,
+  interno:       3,
+  residente:     3,
+  ufbi:          3,
+  'ufbi-anual':  3,
 };
 
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;

@@ -138,13 +138,6 @@
   --acc-deep: #6d3fd4;
 }
 
-/* Tramo básico: solo Gratuito + UFBI. Se centran en vez de estirarse a lo
-   ancho de 3 columnas, que dejaría las tarjetas desproporcionadas. */
-.gridTwo {
-  grid-template-columns: repeat(2, minmax(0, 380px));
-  justify-content: center;
-}
-
 .card {
   background:
     linear-gradient(160deg, rgba(var(--acc), 0.09), rgba(var(--acc), 0.02)),
@@ -238,6 +231,29 @@
 
 .badgeAnnual {
   background: linear-gradient(135deg, #10b981, #059669);
+}
+
+/* Descuento: el único badge que, además de teñir, late. Los demás son
+   etiquetas ("Nuevo", "Popular"); este es el argumento de venta del plan
+   anual, así que se gana un halo propio que respira hacia afuera.
+   El anillo cabe dentro del `overflow: hidden` de la tarjeta porque el badge
+   está a 20px de los bordes y el halo crece 7px. */
+.badgeDiscount {
+  background: linear-gradient(135deg, #22c55e, #059669);
+  animation: badgePulse 2.6s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 0 rgba(34, 197, 94, 0.5),
+      0 4px 14px rgba(5, 150, 105, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 0 7px rgba(34, 197, 94, 0),
+      0 4px 18px rgba(5, 150, 105, 0.5);
+  }
 }
 
 .priceSub {
@@ -378,8 +394,7 @@
 }
 
 @media (max-width: 560px) {
-  .grid,
-  .gridTwo {
+  .grid {
     grid-template-columns: 1fr;
   }
 
@@ -429,6 +444,12 @@
     box-shadow:
       0 0 0 1px rgba(var(--acc), 0.24),
       0 12px 44px rgba(var(--acc), 0.36);
+  }
+
+  /* Ídem el badge de descuento: sigue resaltando, pero sin latir. */
+  .badgeDiscount {
+    animation: none;
+    box-shadow: 0 4px 16px rgba(5, 150, 105, 0.45);
   }
 
   .switchKnob,

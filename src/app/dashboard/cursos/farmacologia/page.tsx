@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { semanas, curso, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/farmacologia';
-import { planRank } from '@/lib/plans';
+import { planUnlocks } from '@/lib/plans';
 import { getCachedPlanState } from '@/lib/plans-server';
 import styles from '@/styles/cursos.module.css';
 
@@ -14,7 +14,10 @@ const UNIDAD_LABEL: Record<string, string> = {
 
 export default async function FarmacologiaPage() {
   const plan = await getCachedPlanState();
-  const hasInterno = plan.isActive && planRank(plan.plan) >= planRank('interno');
+  // Los tramos están separados: un plan de UFBI no abre cursos de la Facultad
+  // (ni al revés), así que se decide con planUnlocks y no comparando rangos.
+  // `allAccess` (admin) va primero: su plan es del tramo medicina.
+  const hasAcceso = !!plan.allAccess || (plan.isActive && planUnlocks(plan.plan, 'interno'));
 
   return (
     <div className={styles.microPage}>
@@ -83,7 +86,7 @@ export default async function FarmacologiaPage() {
               const borderColor = UNIDAD_COLOR[act.unidad];
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
               const isLab = act.tipo === 'LAB';
-              const isLocked = !isLab && !hasInterno;
+              const isLocked = !isLab && !hasAcceso;
 
               return (
                 <Link

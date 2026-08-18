@@ -13,7 +13,7 @@ import styles from '@/styles/pricing.module.css';
 const SubscribeModal = dynamic(() => import('./SubscribeModal'), { ssr: false });
 
 interface PlanState {
-  plan: 'free' | 'interno' | 'residente' | 'ufbi';
+  plan: 'free' | PlanKey;
   isActive: boolean;
   expiresAt: string | null;
 }
@@ -35,8 +35,15 @@ type PlanCard = {
   btnText: string;
   featured?: boolean;
   badge?: string;
-  badgeStyle?: 'popular' | 'annual';
-  action: 'free' | 'interno' | 'residente' | 'ufbi';
+  badgeStyle?: 'popular' | 'annual' | 'discount';
+  action: 'free' | PlanKey;
+};
+
+/** El estilo base `.badge` va siempre; esto solo repinta el fondo. */
+const BADGE_CLASS: Record<NonNullable<PlanCard['badgeStyle']>, string> = {
+  popular: '',
+  annual: styles.badgeAnnual,
+  discount: styles.badgeDiscount,
 };
 
 const TRACKS: { key: Track; label: string; sub: string }[] = [
@@ -49,11 +56,14 @@ const FREE_CARD: PlanCard = {
   price: 'S/ 0',
   period: 'Para siempre',
   features: [
-    '1 curso activo',
+    'Cursos limitados',
+    'Calculadora de promedio',
     'Lecciones básicas',
     'Quizzes de práctica',
     { text: 'Sílabo personalizado', disabled: true },
     { text: 'Acceso a todos los cursos', disabled: true },
+    { text: 'Modelos 3D', disabled: true },
+    { text: 'Resúmenes y trabajos', disabled: true },
   ],
   btnStyle: 'ghost',
   btnText: 'Empezar gratis',
@@ -65,14 +75,14 @@ const PLANS_BY_TRACK: Record<Track, PlanCard[]> = {
     FREE_CARD,
     {
       name: 'UFBI',
-      price: 'S/ 20',
+      price: 'S/ 19.70',
       period: '/ mes',
       priceSub: 'Los 6 cursos de tu ciclo',
       features: [
         'Biología Celular, Física y Química Orgánica',
-        'Ciencias Sociales, Comunicación y Cultura Ambiental',
+        'Ciencias Sociales, Comunicación y Cultura Ambiental (beta)',
         'Sílabo personalizado',
-        'Quizzes ilimitados',
+        'Quizzes ilimitados (beta)',
         'Laboratorios y simulaciones',
       ],
       btnStyle: 'primary',
@@ -81,6 +91,29 @@ const PLANS_BY_TRACK: Record<Track, PlanCard[]> = {
       badge: 'Nuevo',
       badgeStyle: 'popular',
       action: 'ufbi',
+    },
+    {
+      // Se anuncia mensualizado (igual que Residente) para que se compare
+      // contra los S/ 19.70 de arriba sin hacer cuentas; el cobro real es el
+      // del priceSub. S/ 189 = 80 % de 12 × 19.70 (236.40) y 189 / 12 = 15.75
+      // exacto: el badge canta ese 20 %, así que tocar un precio obliga a
+      // rehacer los otros dos y el importe de `PLANS` en `src/lib/plans.ts`.
+      name: 'UFBI Anual',
+      price: 'S/ 15.75',
+      period: '/ mes',
+      priceSub: 'S/ 189 al año (pago único)',
+      features: [
+        'Todo lo del plan UFBI',
+        'Obtén un 20% de descuento',
+        'Acceso anticipado a nuevo contenido',
+        'Acceso anticipado a simulaciones',
+        'Sin renovaciones mensuales',
+      ],
+      btnStyle: 'ghost',
+      btnText: 'Suscribirme al año',
+      badge: '20% de descuento',
+      badgeStyle: 'discount',
+      action: 'ufbi-anual',
     },
   ],
   medicina: [
@@ -95,6 +128,8 @@ const PLANS_BY_TRACK: Record<Track, PlanCard[]> = {
         'Quizzes ilimitados',
         'Seguimiento de progreso',
         'Soporte prioritario',
+        'Resúmenes y trabajos',
+        'Modelos 3D',
       ],
       btnStyle: 'primary',
       btnText: 'Empezar ahora',
@@ -112,8 +147,8 @@ const PLANS_BY_TRACK: Record<Track, PlanCard[]> = {
         'Todo lo del plan Interno',
         'Bloqueo de precio por 12 meses',
         'Exámenes simulacro',
-        'Flashcards AI',
-        'Comunidad exclusiva',
+        'Flashcards',
+        'Acceso anticipado a simulaciones',
       ],
       btnStyle: 'ghost',
       btnText: 'Suscribirme al año',
@@ -147,7 +182,7 @@ export default function Pricing() {
         setPlanState(next);
         // Si ya paga un plan, abrimos su tramo para que vea el suyo marcado
         // como actual en vez del tramo por defecto.
-        if (next.plan === 'ufbi') setTrack('basico');
+        if (next.plan === 'ufbi' || next.plan === 'ufbi-anual') setTrack('basico');
       })
       .catch(() => {});
     return () => {
@@ -235,11 +270,7 @@ export default function Pricing() {
 
         {/* key={track} fuerza el remontaje para que la animación de entrada de
             las tarjetas se reproduzca en cada cambio de tramo. */}
-        <div
-          key={track}
-          data-track={track}
-          className={`${styles.grid} ${track === 'basico' ? styles.gridTwo : ''}`}
-        >
+        <div key={track} data-track={track} className={styles.grid}>
           {PLANS_BY_TRACK[track].map((p, i) => {
             const isPremiumPlan = p.action !== 'free';
             const lockCtas = !!planState?.isActive && isPremiumPlan;
@@ -254,7 +285,7 @@ export default function Pricing() {
                 {p.badge && (
                   <span
                     className={`${styles.badge} ${
-                      p.badgeStyle === 'annual' ? styles.badgeAnnual : ''
+                      p.badgeStyle ? BADGE_CLASS[p.badgeStyle] : ''
                     }`}
                   >
                     {p.badge}
