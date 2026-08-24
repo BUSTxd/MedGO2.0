@@ -1,12 +1,23 @@
 'use client';
 import styles from '@/styles/dashboardPages.module.css';
 
+/** Un único buzón para todo el sitio: las seis tarjetas de abajo se diferencian
+ *  por el motivo de la consulta, no por la dirección a la que escribes. */
+const CORREO = 'contacto@medgo.pe';
+
+/** Número de atención. `WHATSAPP_TEL` es el que se muestra y `WHATSAPP_URL` el
+ *  que se abre — se derivan del mismo dato para que no puedan discrepar. */
+const WHATSAPP_NUM = '51995626387';
+const WHATSAPP_TEL = '+51 995 626 387';
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUM}`;
+
 const CONTACTS = [
   {
     id: 'email',
     badge: 'Principal',
     title: 'Correo Principal',
-    summary: 'contacto@medgo.pe',
+    summary: CORREO,
+    href: `mailto:${CORREO}`,
     pill: { label: 'Consultas generales', cls: styles.pillOk },
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5445d8" strokeWidth="2">
@@ -19,7 +30,8 @@ const CONTACTS = [
     id: 'whatsapp',
     badge: 'WhatsApp',
     title: 'WhatsApp',
-    summary: '+51 999 123 456',
+    summary: WHATSAPP_TEL,
+    href: WHATSAPP_URL,
     pill: { label: 'Atención personalizada', cls: styles.pillWarn },
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5445d8" strokeWidth="2">
@@ -31,7 +43,8 @@ const CONTACTS = [
     id: 'support',
     badge: 'Técnico',
     title: 'Soporte Técnico',
-    summary: 'soporte@medgo.pe',
+    summary: CORREO,
+    href: `mailto:${CORREO}`,
     pill: { label: 'Problemas y errores', cls: styles.pillBad },
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5445d8" strokeWidth="2">
@@ -45,7 +58,8 @@ const CONTACTS = [
     id: 'feedback',
     badge: 'Ideas',
     title: 'Sugerencias',
-    summary: 'feedback@medgo.pe',
+    summary: CORREO,
+    href: `mailto:${CORREO}`,
     pill: { label: 'Mejoras y funciones', cls: styles.pillOk },
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5445d8" strokeWidth="2">
@@ -58,7 +72,8 @@ const CONTACTS = [
     id: 'team',
     badge: 'Equipo',
     title: 'Colaboraciones',
-    summary: 'equipo@medgo.pe',
+    summary: CORREO,
+    href: `mailto:${CORREO}`,
     pill: { label: 'Únete al equipo', cls: styles.pillWarn },
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="#5445d8" stroke="#5445d8" strokeWidth="0.5">
@@ -70,7 +85,8 @@ const CONTACTS = [
     id: 'admin',
     badge: 'Premium',
     title: 'Administración',
-    summary: 'admin@medgo.pe',
+    summary: CORREO,
+    href: `mailto:${CORREO}`,
     pill: { label: 'Cuenta y facturación', cls: styles.pillBad },
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5445d8" strokeWidth="2">
@@ -96,7 +112,14 @@ export default function ContactoPage() {
 
       <div className={styles.contactGrid}>
         {CONTACTS.map((c) => (
-          <div key={c.id} className={styles.contactCard}>
+          // La tarjeta es un enlace, no un div: `.contactCard` ya venía con
+          // `cursor: pointer`, así que prometía un clic que no hacía nada.
+          <a
+            key={c.id}
+            href={c.href}
+            className={styles.contactCard}
+            {...(c.id === 'whatsapp' ? { target: '_blank', rel: 'noopener' } : {})}
+          >
             <div className={styles.contactCardIcon}>{c.icon}</div>
             <span className={styles.contactBadge}>{c.badge}</span>
             <h3 className={styles.contactTitle}>{c.title}</h3>
@@ -104,7 +127,7 @@ export default function ContactoPage() {
             <div className={styles.contactMeta}>
               <span className={`${styles.contactPill} ${c.pill.cls}`}>{c.pill.label}</span>
             </div>
-          </div>
+          </a>
         ))}
       </div>
 
@@ -135,7 +158,7 @@ export default function ContactoPage() {
             directo por WhatsApp para recibir atención personalizada.
           </p>
           <div className={styles.contactActions}>
-            <a href="https://wa.me/51999123456" className={styles.contactActionPrimary} target="_blank" rel="noopener">
+            <a href={WHATSAPP_URL} className={styles.contactActionPrimary} target="_blank" rel="noopener">
               Abrir WhatsApp
             </a>
             <a href="/#FAQ" className={styles.contactActionSecondary}>
