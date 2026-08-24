@@ -1,8 +1,12 @@
-'use client';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { getCachedPlanState } from '@/lib/plans-server';
+import { requiredPlanDeCurso, tieneAccesoA, trackDeCurso, trackDelUsuario } from '@/lib/acceso';
+import { PLANS } from '@/lib/plans';
 import KidneyIcon from '@/components/icons/KidneyIcon';
 import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
+import ConstruccionIcon from '@/components/icons/ConstruccionIcon';
+import FisicaIcon from '@/components/icons/FisicaIcon';
 import styles from '@/styles/dashboardPages.module.css';
 
 type Exp = { name: string; desc: string; color: string; href?: string };
@@ -162,6 +166,43 @@ const LAB_TOPICS: Topic[] = [
       { name: 'Morfología de Glóbulos Rojos', desc: '19 microfotografías reales para reconocer alteraciones e inclusiones, con lámina de referencia', color: '#8b5cf6', href: '/dashboard/laboratorio/morfologia-globulos-rojos' },
     ],
   },
+  {
+    // Curso de UFBI: 'fisica-medicina' ya está en CURSOS (track 'basico'), así
+    // que `requiredPlanDeCurso` lo abre con el plan UFBI sin tocar nada más.
+    //
+    // Las filas son las 14 clases del sílabo (`src/lib/data/fisica.ts`), con su
+    // código visible. Antes eran 8 temas de un temario genérico que NO cuadraba
+    // con el curso: «Campo eléctrico y potencial» mezclaba C9 y C10, y C7, C8,
+    // C11, C12 y C14 no existían — así que un módulo nuevo de esas clases no
+    // tenía dónde colgarse. Que C6 encajara fue casualidad.
+    //
+    // Los módulos con contenido viven dentro del curso (`modulo/[id]`) y no bajo
+    // `laboratorio/`: sus simulaciones son las secciones de ese módulo, no
+    // piezas sueltas. El gate real lo pone esa página con `requiredPlan="ufbi"`;
+    // el candado del panel es sólo la señal visual. Las clases sin módulo van
+    // sin `href` y llevan su marca de obra por fila (`.labExpObra`).
+    id: 'fisica-medicina',
+    title: 'Física | UPCH',
+    badge: 'Física',
+    diff: ['easy'],
+    icon: <FisicaIcon size={26} white />,
+    experiments: [
+      { name: 'C1 · Leyes de Newton',            desc: 'Las tres leyes, diagramas de cuerpo libre y fricción aplicada a la biomecánica', color: '#3b9edd' },
+      { name: 'C2 · Trabajo y energía',          desc: 'Energía cinética y potencial, conservación, impulso y colisiones',               color: '#2DC99A' },
+      { name: 'C3 · Dinámica rotacional',        desc: 'Momento de inercia, torque y conservación del momento angular',                  color: '#F5A623' },
+      { name: 'C4 · Equilibrio y elasticidad',   desc: 'Esfuerzo, deformación y las palancas del cuerpo humano',                         color: '#E85B4A' },
+      { name: 'C5 · Mecánica de fluidos',        desc: 'Pascal, Arquímedes, Bernoulli y la viscosidad del flujo sanguíneo',              color: '#8b5cf6' },
+      { name: 'C6 · Movimiento periódico y ondas', desc: 'Módulo interactivo: MAS, péndulo y masa-resorte, ondas mecánicas y sonido, con 4 simulaciones y problemas guiados', color: '#3b9edd', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-6' },
+      { name: 'C7 · Temperatura y calor',        desc: 'Módulo interactivo: escalas, calor específico, cambios de fase y las tres vías de pérdida, con el balance térmico del cuerpo', color: '#E85B4A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-7' },
+      { name: 'C8 · Termodinámica',              desc: 'Primera y segunda ley, entropía, máquinas térmicas y eficiencia',                color: '#F5A623' },
+      { name: 'C9 · Campo eléctrico',            desc: 'Ley de Coulomb, líneas de campo y ley de Gauss',                                 color: '#2DC99A' },
+      { name: 'C10 · Potencial y capacitancia',  desc: 'Superficies equipotenciales, dieléctricos y la energía del desfibrilador',       color: '#8b5cf6' },
+      { name: 'C11 · Corriente y resistencia',   desc: 'Ley de Ohm, Kirchhoff y los efectos fisiológicos de la corriente',               color: '#3b9edd' },
+      { name: 'C12 · Magnetismo e inducción',    desc: 'Fuerza de Lorentz, ley de Faraday y el principio de la resonancia magnética',    color: '#2DC99A' },
+      { name: 'C13 · Óptica geométrica',         desc: 'Ley de Snell, lentes delgadas y los defectos de refracción del ojo',             color: '#F5A623' },
+      { name: 'C14 · Fotones y átomos',          desc: 'Dualidad onda-partícula, estructura atómica y radiación en medicina',            color: '#E85B4A' },
+    ],
+  },
 ];
 
 const DIFF_LABEL: Record<string, string> = {
@@ -171,7 +212,36 @@ const DIFF_CLASS: Record<string, string> = {
   easy: styles.labDiffEasy, medium: styles.labDiffMed, hard: styles.labDiffHard,
 };
 
-export default function LaboratorioPage() {
+export default async function LaboratorioPage() {
+  const plan = await getCachedPlanState();
+  // El tramo de cada panel sale del curso al que pertenece (`topic.id` ya es el
+  // slug del curso), así que un tema nuevo de Química o Física cae solo del
+  // lado de UFBI sin tocar esta página.
+  const propio = trackDelUsuario(plan);
+  const paneles = [...LAB_TOPICS]
+    .map((topic) => {
+      const required = requiredPlanDeCurso(topic.id);
+      // Un experimento tiene contenido si tiene a dónde llevar. Sin ningún
+      // `href` el módulo entero está en obra y se marca como tal; si sólo
+      // faltan algunos, la marca va en esas filas (ver `.labExpObra`).
+      const publicados = topic.experiments.filter((e) => e.href).length;
+      const enObra = publicados === 0;
+      return { topic, required, enObra, publicados, abierto: tieneAccesoA(plan, required) };
+    })
+    // Dos criterios, en este orden: el tramo del alumno manda (los suyos
+    // primero; sin plan no hay «suyos» y no separa nada), y dentro de cada
+    // grupo van los módulos con más material arriba, de modo que los que están
+    // en obra caen solos al final. En empate, `sort` es estable y conserva el
+    // orden del array, que agrupa por curso.
+    .sort((a, b) => {
+      if (propio !== null) {
+        const pa = trackDeCurso(a.topic.id) === propio ? 0 : 1;
+        const pb = trackDeCurso(b.topic.id) === propio ? 0 : 1;
+        if (pa !== pb) return pa - pb;
+      }
+      return b.publicados - a.publicados;
+    });
+
   return (
     <>
       <div className={styles.pagePanelIcon}>
@@ -184,13 +254,27 @@ export default function LaboratorioPage() {
       <p className={styles.pageSub}>Simulaciones de prácticas interactivas por materia.</p>
 
       <div className={styles.labSections}>
-        {LAB_TOPICS.map((topic) => (
-          <div key={topic.id} className={styles.labPanel}>
+        {paneles.map(({ topic, required, abierto, enObra }) => (
+          <div
+            key={topic.id}
+            className={`${styles.labPanel} ${abierto ? '' : styles.labPanelBloqueado} ${
+              enObra ? styles.labPanelObra : ''
+            }`}
+          >
             <div className={styles.labPanelHeader}>
               <div className={styles.labIconBox}>{topic.icon}</div>
               <div className={styles.labPanelInfo}>
                 <h3 className={styles.labPanelTitle}>{topic.title}</h3>
                 <span className={styles.labBadge}>{topic.badge}</span>
+                {!abierto && (
+                  <span className={styles.labPlanTag}>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden>
+                      <rect x="4" y="11" width="16" height="10" rx="2" stroke="currentColor" strokeWidth="2.4" />
+                      <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+                    </svg>
+                    Plan {PLANS[required].label}
+                  </span>
+                )}
                 <div className={styles.labDiff}>
                   {topic.diff.map((d) => (
                     <span key={d} className={`${styles.labDiffBadge} ${DIFF_CLASS[d]}`}>
@@ -201,21 +285,54 @@ export default function LaboratorioPage() {
               </div>
             </div>
             <div className={styles.labExperiments}>
-              {topic.experiments.map((exp) => (
-                <Link
-                  key={exp.name}
-                  href={exp.href ?? '#'}
-                  className={styles.labExp}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <div className={styles.labExpDot} style={{ background: exp.color }} />
-                  <div className={styles.labExpInfo}>
-                    <p className={styles.labExpName}>{exp.name}</p>
-                    <p className={styles.labExpDesc}>{exp.desc}</p>
-                  </div>
-                </Link>
-              ))}
+              {topic.experiments.map((exp) => {
+                const cuerpo = (
+                  <>
+                    <div className={styles.labExpDot} style={{ background: exp.color }} />
+                    <div className={styles.labExpInfo}>
+                      <p className={styles.labExpName}>{exp.name}</p>
+                      <p className={styles.labExpDesc}>{exp.desc}</p>
+                    </div>
+                  </>
+                );
+
+                // Sin `href` no hay nada que abrir: era un <Link href="#">, que
+                // se ve clicable y no lleva a ninguna parte. Va como <div>, y
+                // sólo lleva excavadora propia si el resto del módulo sí tiene
+                // contenido — en un panel entero en obra ya la lleva el panel.
+                if (!exp.href) {
+                  return (
+                    <div key={exp.name} className={`${styles.labExp} ${styles.labExpObra}`}>
+                      {cuerpo}
+                      {!enObra && (
+                        <span className={styles.labExpObraIcon} aria-hidden>
+                          <ConstruccionIcon size={26} />
+                        </span>
+                      )}
+                    </div>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={exp.name}
+                    href={exp.href}
+                    className={styles.labExp}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    {cuerpo}
+                  </Link>
+                );
+              })}
             </div>
+
+            {/* Módulo entero en obra: la excavadora aparece sobre el panel al
+                pasar el cursor, igual que en las tarjetas de curso. */}
+            {enObra && (
+              <span className={styles.labObraArt} aria-hidden>
+                <ConstruccionIcon />
+              </span>
+            )}
           </div>
         ))}
       </div>

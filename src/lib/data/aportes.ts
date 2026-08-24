@@ -187,4 +187,6 @@ export const LABORATORIOS: LaboratorioMeta[] = [
   { slug: 'tronco-encefalico',       nombre: 'Tronco encefálico',            track: 'medicina', autor: 'bust' },
   { slug: 'poligono-willis',         nombre: 'Polígono de Willis',           track: 'medicina', autor: 'bust' },
   { slug: 'biomecanica-extraocular', nombre: 'Biomecánica extraocular',      track: 'medicina', autor: 'bust' },
+  { slug: 'hemograma',               nombre: 'Hemograma completo',           track: 'medicina', autor: 'bust' },
+  { slug: 'morfologia-globulos-rojos', nombre: 'Morfología de glóbulos rojos', track: 'medicina', autor: 'bust' },
 ];

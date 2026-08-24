@@ -4,6 +4,7 @@ import DashboardWrapper from '@/components/DashboardWrapper';
 import { getCachedPlanState } from '@/lib/plans-server';
 import { createClient } from '@/lib/supabase/server';
 import { isAdminEmail, canVerAportes } from '@/lib/admin';
+import { tieneAccesoA } from '@/lib/acceso';
 import { checkDevice, getDeviceId, touchSession } from '@/lib/sessions';
 
 export default async function DashboardRootLayout({
@@ -20,6 +21,9 @@ export default async function DashboardRootLayout({
   const isAdmin = isAdminEmail(user?.email);
   // Permiso propio: las socias ven Aportes sin ser admin.
   const verAportes = canVerAportes(user?.email);
+  // Investigación e Histología son íntegramente de la Facultad. Se decide aquí,
+  // en el servidor, porque el estado de plan del cliente no lleva `allAccess`.
+  const accesoFacultad = tieneAccesoA(planState, 'interno');
 
   // Enforcement de límite de dispositivos. Free pasa siempre. Pagados:
   //  - 'allowed'        → ya está activo, seguir
@@ -58,6 +62,7 @@ export default async function DashboardRootLayout({
       }}
       isAdmin={isAdmin}
       verAportes={verAportes}
+      accesoFacultad={accesoFacultad}
     >
       {children}
     </DashboardWrapper>

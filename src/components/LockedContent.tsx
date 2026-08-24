@@ -22,10 +22,23 @@ interface Props {
   requiredPlan: PlanKey;
   planState: PlanState;
   isAuthed: boolean;
+  /**
+   * Si el contenido bloqueado se pinta detrás del velo como aperitivo.
+   * En una clase sí (se intuye el material). En una sección entera **no**: un
+   * laboratorio 3D montaría Three.js completo detrás del paywall, para que
+   * nadie lo vea. Por defecto `true`, que es lo que hacen los cursos.
+   */
+  preview?: boolean;
   children: React.ReactNode;
 }
 
-export default function LockedContent({ requiredPlan, planState, isAuthed, children }: Props) {
+export default function LockedContent({
+  requiredPlan,
+  planState,
+  isAuthed,
+  preview = true,
+  children,
+}: Props) {
   const router = useRouter();
   const clientPlan = usePlan();
   const [open, setOpen] = useState(false);
@@ -61,8 +74,8 @@ export default function LockedContent({ requiredPlan, planState, isAuthed, child
   }
 
   return (
-    <div className={styles.wrap}>
-      <div className={styles.children} aria-hidden>{children}</div>
+    <div className={`${styles.wrap} ${preview ? '' : styles.wrapSolo}`}>
+      {preview && <div className={styles.children} aria-hidden>{children}</div>}
 
       <div className={styles.overlay}>
         <div className={styles.card}>

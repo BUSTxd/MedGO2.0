@@ -159,6 +159,32 @@
   color: currentColor;
 }
 
+/* Sección de otro tramo: el ítem se ve, con un candado al final. No se
+   deshabilita — al entrar, la página muestra la tarjeta de suscripción. */
+.navItemBloqueado .navIcon,
+.navItemBloqueado .label {
+  opacity: 0.42;
+}
+
+.navItemBloqueado:hover .navIcon,
+.navItemBloqueado:hover .label {
+  opacity: 0.75;
+}
+
+.navLock {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+/* Colapsada solo se ve el ícono: el candado no cabe y sobra, porque tampoco
+   hay etiqueta que matizar. */
+.collapsed .navLock {
+  display: none;
+}
+
 /* Toggle */
 .sidebarToggle {
   padding: 0 12px;

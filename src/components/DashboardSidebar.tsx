@@ -110,7 +110,24 @@ interface Props {
   isAdmin?: boolean;
   /** Acceso al panel de Aportes sin el resto de permisos de admin. */
   verAportes?: boolean;
+  /**
+   * Si el usuario tiene plan de la Facultad. Se calcula **en el servidor**
+   * (`dashboard/layout.tsx`) y no con `usePlan()`: `ClientPlanState` no lleva
+   * `allAccess`, y tras un `refreshPlan()` el admin —que no tiene suscripción—
+   * quedaría como `free` y vería su propio dashboard con candados.
+   */
+  accesoFacultad?: boolean;
 }
+
+/** Secciones cuyo contenido es íntegramente de la Facultad de Medicina. */
+const SOLO_FACULTAD = new Set(['/dashboard/investigacion', '/dashboard/histologia']);
+
+const LockIcon = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <rect x="4" y="11" width="16" height="10" rx="2" stroke="currentColor" strokeWidth="2.4" />
+    <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+  </svg>
+);
 
 const MODELADO_ITEM = {
   label: 'Modelado',
@@ -147,7 +164,7 @@ const ADMIN_ITEM = {
   ),
 };
 
-export default function DashboardSidebar({ collapsed, onToggle, darkMode, onToggleDark, isAdmin = false, verAportes = false }: Props) {
+export default function DashboardSidebar({ collapsed, onToggle, darkMode, onToggleDark, isAdmin = false, verAportes = false, accesoFacultad = false }: Props) {
   const pathname = usePathname();
 
   const navItems = [
@@ -178,16 +195,29 @@ export default function DashboardSidebar({ collapsed, onToggle, darkMode, onTogg
       </Link>
 
       <nav className={styles.nav}>
-        {navItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={`${styles.navItem} ${isActive(item.href) ? styles.active : ''}`}
-          >
-            <span className={styles.navIcon}>{item.icon}</span>
-            <span className={styles.label}>{item.label}</span>
-          </Link>
-        ))}
+        {navItems.map((item) => {
+          // El candado es señal, no cerradura: el enlace sigue navegando y es
+          // el `layout.tsx` de la sección (servidor) el que muestra el paywall.
+          const bloqueado = !accesoFacultad && SOLO_FACULTAD.has(item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`${styles.navItem} ${isActive(item.href) ? styles.active : ''} ${
+                bloqueado ? styles.navItemBloqueado : ''
+              }`}
+              title={bloqueado ? `${item.label} — incluido en el plan Interno` : undefined}
+            >
+              <span className={styles.navIcon}>{item.icon}</span>
+              <span className={styles.label}>{item.label}</span>
+              {bloqueado && (
+                <span className={styles.navLock} aria-label="Requiere plan Interno">
+                  <LockIcon />
+                </span>
+              )}
+            </Link>
+          );
+        })}
       </nav>
 
       {/* Dark mode button — above toggle when collapsed */}

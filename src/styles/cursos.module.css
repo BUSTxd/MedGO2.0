@@ -22,7 +22,7 @@
 .qbankSub {
   font-size: 14px;
   color: #718096;
-  margin-bottom: 28px;
+  margin-bottom: 16px;
   transition: color 0.25s ease;
 }
 
@@ -81,6 +81,178 @@
   opacity: 0.55;
   pointer-events: none;
   cursor: default;
+}
+
+/* Curso en construcción: el panel entero va en ámbar (no sólo el badge) y no
+   se abre. Nada de `pointer-events: none` como en `.qCardLocked`: la tarjeta
+   tiene que recibir el cursor para poder mostrar la excavadora al hover. Que
+   no navegue lo garantiza el JSX, que la pinta como <div> y no como <Link>. */
+/* Indigo (99, 102, 241): de la misma familia que el `#5445d8` de los badges y
+   el `#8b5cf6` de Patología. El fondo va más cargado que en el resto de
+   estados (0.16, no 0.1) porque `.qCard` ya parte de un lila claro `#eef2ff`:
+   con menos alpha, un morado azulado se confunde con la tarjeta normal — que
+   es justo lo que un amarillo no tenía que resolver. */
+.qCardAlpha {
+  background: rgba(99, 102, 241, 0.16);
+  border-color: rgba(99, 102, 241, 0.38);
+  cursor: default;
+  /* Mismo atenuado que `.qCardOtroTramo` (los bloqueados por plan): en reposo
+     va apagado, y al hover sube a pleno como aquéllos. */
+  opacity: 0.62;
+}
+
+:global(.dark-mode) .qCardAlpha {
+  background: rgba(129, 132, 245, 0.14);
+  border-color: rgba(129, 132, 245, 0.3);
+}
+
+.qCardAlpha:hover {
+  opacity: 1;
+  transform: translateY(-3px) scale(1.04);
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 14px 36px rgba(99, 102, 241, 0.3);
+  z-index: 2;
+}
+
+:global(.dark-mode) .qCardAlpha:hover {
+  border-color: rgba(129, 132, 245, 0.55);
+  box-shadow: 0 14px 36px rgba(99, 102, 241, 0.22);
+}
+
+/* La excavadora: oculta en reposo, centrada y por encima de todo el contenido
+   del panel al pasar el cursor. `inset: 0` la centra sobre la tarjeta entera,
+   no sobre el hueco que dejaría en el flujo del flex. */
+.qAlphaArt {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  color: #4338ca;
+  opacity: 0;
+  transform: scale(0.7);
+  pointer-events: none;
+  transition: opacity 0.24s ease, transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+:global(.dark-mode) .qAlphaArt {
+  color: #a5b4fc;
+}
+
+.qAlphaArt svg {
+  width: 44%;
+  height: auto;
+  /* La sombra despega el dibujo del texto de la tarjeta, que sigue debajo. */
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.22));
+}
+
+.qCardAlpha:hover .qAlphaArt {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* El contenido se apaga bajo la excavadora para que el dibujo se lea limpio. */
+.qCardAlpha:hover .qCardTop,
+.qCardAlpha:hover .qTitle,
+.qCardAlpha:hover .qSummary,
+.qCardAlpha:hover .qDiff {
+  opacity: 0.12;
+  transition: opacity 0.24s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qCardAlpha:hover {
+    transform: none;
+  }
+
+  .qAlphaArt {
+    transition: opacity 0.24s ease;
+    transform: none;
+  }
+
+  .qCardAlpha:hover .qAlphaArt {
+    transform: none;
+  }
+}
+
+/* ─── Secciones por tramo (UFBI / Facultad) ───
+   `padding: 0` no es decorativo: `globals.css` tiene un `section { padding:
+   100px 48px }` para la landing, y sin neutralizarlo aquí cada tramo abre con
+   100px de aire y se desplaza 48px respecto del título de la página. */
+.trackSection {
+  padding: 0;
+  margin-bottom: 34px;
+}
+
+.trackHead {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  margin: 0 0 12px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+:global(.dark-mode) .trackHead {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.trackTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #2d3748;
+}
+
+:global(.dark-mode) .trackTitle {
+  color: var(--white);
+}
+
+.trackNote {
+  margin: 0;
+  font-size: 12.5px;
+  color: #718096;
+}
+
+:global(.dark-mode) .trackNote {
+  color: rgba(240, 238, 255, 0.5);
+}
+
+/* Curso del otro tramo: atenuado pero **clicable** — su índice muestra el
+   sílabo con las clases bloqueadas, que es donde está la invitación a pagar.
+   Por eso no reutiliza `.qCardLocked`, que anula el puntero. */
+.qCardOtroTramo {
+  opacity: 0.62;
+}
+
+.qCardOtroTramo:hover {
+  opacity: 1;
+}
+
+.qPlanTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  width: fit-content;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #718096;
+}
+
+:global(.dark-mode) .qPlanTag {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: rgba(240, 238, 255, 0.45);
 }
 
 .qCardTop {

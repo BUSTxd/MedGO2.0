@@ -3,6 +3,6 @@ import { requiredPlanDeLab } from '@/lib/acceso';
 
 // El tramo sale de `LABORATORIOS` (src/lib/data/aportes.ts), no de aquí: un
 // laboratorio nuevo se registra allí con su `track` y este layout no cambia.
-export default function MicroscopioLayout({ children }: { children: React.ReactNode }) {
-  return <SeccionGate required={requiredPlanDeLab('microscopio')}>{children}</SeccionGate>;
+export default function Eva2Layout({ children }: { children: React.ReactNode }) {
+  return <SeccionGate required={requiredPlanDeLab('eva-2')}>{children}</SeccionGate>;
 }

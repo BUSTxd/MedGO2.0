@@ -4,6 +4,14 @@
   isolation: isolate;
 }
 
+/* Sin aperitivo detrás (`preview={false}`, secciones completas): el overlay es
+   lo único que hay, así que el alto lo pone el wrapper en vez del contenido
+   difuminado. */
+.wrapSolo {
+  min-height: 72vh;
+  display: flex;
+}
+
 .children {
   pointer-events: none;
   filter: blur(14px) saturate(0.6);

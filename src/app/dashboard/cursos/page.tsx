@@ -1,5 +1,8 @@
-'use client';
 import Link from 'next/link';
+import { getCachedPlanState } from '@/lib/plans-server';
+import { planDeTrack, requiredPlanDeCurso, tieneAccesoA, trackDelUsuario } from '@/lib/acceso';
+import { PLANS, type Track } from '@/lib/plans';
+import { PRIORIDAD_LANZAMIENTO } from '@/lib/data/aportes';
 import DigestiveIcon from '@/components/icons/DigestiveIcon';
 import LocomotorIcon from '@/components/icons/LocomotorIcon';
 import EndocrineIcon from '@/components/icons/EndocrineIcon';
@@ -10,6 +13,7 @@ import QuimicaOrganicaIcon from '@/components/icons/QuimicaOrganicaIcon';
 import ComunicacionIcon from '@/components/icons/ComunicacionIcon';
 import CulturaAmbientalIcon from '@/components/icons/CulturaAmbientalIcon';
 import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
+import ConstruccionIcon from '@/components/icons/ConstruccionIcon';
 import styles from '@/styles/cursos.module.css';
 
 const DIFF_LABEL: Record<string, string> = {
@@ -316,7 +320,112 @@ const COURSES = [
   },
 ];
 
-export default function CursosPage() {
+/** Los dos tramos, con el texto que encabeza su sección. `propio` es el rótulo
+ *  cuando el alumno ya paga ese tramo; `ajeno`, cuando el contenido pertenece
+ *  al otro plan; `neutro`, cuando aún no tiene ninguno y no hay «tuyo». */
+const SECCION: Record<Track, { propio: string; ajeno: string; neutro: string; nota: string }> = {
+  basico: {
+    propio: 'Tus cursos · Ciencias Básicas',
+    ajeno: 'Ciencias Básicas · 1.er año',
+    neutro: 'Ciencias Básicas · 1.er año (UFBI)',
+    nota: 'Los 6 cursos del ciclo básico, incluidos en el plan UFBI.',
+  },
+  medicina: {
+    propio: 'Tus cursos · Facultad de Medicina',
+    ajeno: 'Facultad de Medicina · 2.º a 7.º año',
+    neutro: 'Facultad de Medicina · 2.º a 7.º año',
+    nota: 'Los cursos de la Facultad, incluidos en el plan Interno.',
+  },
+};
+
+type Curso = (typeof COURSES)[number];
+
+/**
+ * Los únicos cursos que se abren son los 7 de `PRIORIDAD_LANZAMIENTO` (la
+ * lista que ya usa el panel de Aportes). El resto sale en construcción.
+ *
+ * Se deriva de esa lista en vez de marcar diez cursos a mano: es la misma
+ * verdad que decide qué bloquea el lanzamiento, y tenerla dos veces garantiza
+ * que un día discrepen — al terminar un curso basta con añadirlo allí.
+ */
+const LISTOS = new Set(PRIORIDAD_LANZAMIENTO);
+
+function CursoCard({ c, bloqueado }: { c: Curso; bloqueado: boolean }) {
+  const enObra = !LISTOS.has(c.id);
+
+  const cuerpo = (
+    <>
+      <div className={styles.qCardTop}>
+        <span className={styles.qBadge} style={{ color: c.badgeColor, background: c.badgeBg }}>
+          {c.badge}
+        </span>
+        <span className={styles.qCardIconWrap}>{c.icon}</span>
+      </div>
+      <h3 className={styles.qTitle}>{c.nombre}</h3>
+      <p className={styles.qSummary}>{c.desc}</p>
+      <div className={styles.qDiff}>
+        {c.diff.map((d) => (
+          <span key={d} className={styles[DIFF_CLASS[d]]}>{DIFF_LABEL[d]}</span>
+        ))}
+      </div>
+    </>
+  );
+
+  // Sin `activo` la tarjeta no lleva a ningún sitio: el curso aún no existe.
+  if (!c.activo) {
+    return (
+      <div className={`${styles.qCard} ${styles.qCardLocked}`}>
+        {cuerpo}
+        <span className={styles.qComingSoon}>Próximamente</span>
+      </div>
+    );
+  }
+
+  // En obra: el curso existe pero todavía no tiene material que enseñar, así
+  // que no se abre. Distinto de «Próximamente» (que ni existe) y del candado
+  // de tramo (que sí se abre, para enseñar el sílabo e invitar a pagar).
+  if (enObra) {
+    return (
+      <div className={`${styles.qCard} ${styles.qCardAlpha}`}>
+        {cuerpo}
+        {/* La excavadora no vive en la tarjeta: es una capa que sólo aparece
+            al pasar el cursor, centrada y por encima de todo el panel. */}
+        <span className={styles.qAlphaArt} aria-hidden>
+          <ConstruccionIcon />
+        </span>
+      </div>
+    );
+  }
+
+  // Las del otro tramo sí se pueden abrir: el índice del curso muestra el
+  // sílabo con sus clases bloqueadas, que informa mucho más que una tarjeta
+  // muerta y es donde vive la invitación a suscribirse.
+  return (
+    <Link
+      href={`/dashboard/cursos/${c.id}`}
+      className={`${styles.qCard} ${bloqueado ? styles.qCardOtroTramo : ''}`}
+    >
+      {cuerpo}
+      {bloqueado && (
+        <span className={styles.qPlanTag}>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <rect x="4" y="11" width="16" height="10" rx="2" stroke="currentColor" strokeWidth="2.4" />
+            <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+          </svg>
+          Plan {PLANS[requiredPlanDeCurso(c.id)].label}
+        </span>
+      )}
+    </Link>
+  );
+}
+
+export default async function CursosPage() {
+  const plan = await getCachedPlanState();
+  // Su tramo va arriba. Sin plan no hay «suyo», así que manda el orden de la
+  // carrera: primero 1.er año.
+  const propio = trackDelUsuario(plan);
+  const orden: Track[] = propio === 'medicina' ? ['medicina', 'basico'] : ['basico', 'medicina'];
+
   return (
     <>
       <div className={styles.qbankPanelIcon}>
@@ -332,44 +441,34 @@ export default function CursosPage() {
       <h2 className={styles.qbankTitle}>Cursos</h2>
       <p className={styles.qbankSub}>Elige una materia o práctica y comienza.</p>
 
-      <div className={styles.qgrid}>
-        {COURSES.map((c) =>
-          c.activo ? (
-            <Link key={c.id} href={`/dashboard/cursos/${c.id}`} className={styles.qCard}>
-              <div className={styles.qCardTop}>
-                <span className={styles.qBadge} style={{ color: c.badgeColor, background: c.badgeBg }}>
-                  {c.badge}
-                </span>
-                <span className={styles.qCardIconWrap}>{c.icon}</span>
-              </div>
-              <h3 className={styles.qTitle}>{c.nombre}</h3>
-              <p className={styles.qSummary}>{c.desc}</p>
-              <div className={styles.qDiff}>
-                {c.diff.map((d) => (
-                  <span key={d} className={styles[DIFF_CLASS[d]]}>{DIFF_LABEL[d]}</span>
-                ))}
-              </div>
-            </Link>
-          ) : (
-            <div key={c.id} className={`${styles.qCard} ${styles.qCardLocked}`}>
-              <div className={styles.qCardTop}>
-                <span className={styles.qBadge} style={{ color: c.badgeColor, background: c.badgeBg }}>
-                  {c.badge}
-                </span>
-                <span className={styles.qCardIconWrap}>{c.icon}</span>
-              </div>
-              <h3 className={styles.qTitle}>{c.nombre}</h3>
-              <p className={styles.qSummary}>{c.desc}</p>
-              <div className={styles.qDiff}>
-                {c.diff.map((d) => (
-                  <span key={d} className={styles[DIFF_CLASS[d]]}>{DIFF_LABEL[d]}</span>
-                ))}
-              </div>
-              <span className={styles.qComingSoon}>Próximamente</span>
+      {orden.map((track) => {
+        // Dentro de cada tramo, lo que ya se puede estudiar va primero y los
+        // cursos en obra caen al final. `sort` es estable, así que el orden
+        // original (el de la carrera) se conserva dentro de cada grupo.
+        const cursos = COURSES
+          .filter((c) => requiredPlanDeCurso(c.id) === planDeTrack(track))
+          .sort((a, b) => Number(!LISTOS.has(a.id)) - Number(!LISTOS.has(b.id)));
+        if (!cursos.length) return null;
+        const abierto = tieneAccesoA(plan, planDeTrack(track));
+        const textos = SECCION[track];
+        const titulo = propio === null
+          ? textos.neutro
+          : abierto ? textos.propio : textos.ajeno;
+
+        return (
+          <section key={track} className={styles.trackSection}>
+            <div className={styles.trackHead}>
+              <h3 className={styles.trackTitle}>{titulo}</h3>
+              {!abierto && <p className={styles.trackNote}>{textos.nota}</p>}
             </div>
-          )
-        )}
-      </div>
+            <div className={styles.qgrid}>
+              {cursos.map((c) => (
+                <CursoCard key={c.id} c={c} bloqueado={!abierto} />
+              ))}
+            </div>
+          </section>
+        );
+      })}
     </>
   );
 }
