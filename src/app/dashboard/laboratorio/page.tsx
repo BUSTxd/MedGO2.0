@@ -176,31 +176,35 @@ const LAB_TOPICS: Topic[] = [
     // C11, C12 y C14 no existían — así que un módulo nuevo de esas clases no
     // tenía dónde colgarse. Que C6 encajara fue casualidad.
     //
-    // Los módulos con contenido viven dentro del curso (`modulo/[id]`) y no bajo
-    // `laboratorio/`: sus simulaciones son las secciones de ese módulo, no
-    // piezas sueltas. El gate real lo pone esa página con `requiredPlan="ufbi"`;
-    // el candado del panel es sólo la señal visual. Las clases sin módulo van
-    // sin `href` y llevan su marca de obra por fila (`.labExpObra`).
+    // Todo vive dentro del curso (`modulo/[id]`) y no bajo `laboratorio/`: las
+    // simulaciones son los temas de esa clase, no piezas sueltas. El gate real
+    // lo pone esa página con `requiredPlan="ufbi"`; el candado del panel es sólo
+    // la señal visual.
+    //
+    // Las catorce llevan `href` desde que cada clase tiene laboratorio: C6 y C7
+    // abren su módulo completo de teoría y las otras doce el menú de temas.
+    // Ojo al quitar uno: sin `href` la fila deja de ser un enlace y se pinta con
+    // la marca de obra (`.labExpObra`), que es lo que las tenía apagadas.
     id: 'fisica-medicina',
     title: 'Física | UPCH',
     badge: 'Física',
     diff: ['easy'],
     icon: <FisicaIcon size={26} white />,
     experiments: [
-      { name: 'C1 · Leyes de Newton',            desc: 'Las tres leyes, diagramas de cuerpo libre y fricción aplicada a la biomecánica', color: '#3b9edd' },
-      { name: 'C2 · Trabajo y energía',          desc: 'Energía cinética y potencial, conservación, impulso y colisiones',               color: '#2DC99A' },
-      { name: 'C3 · Dinámica rotacional',        desc: 'Momento de inercia, torque y conservación del momento angular',                  color: '#F5A623' },
-      { name: 'C4 · Equilibrio y elasticidad',   desc: 'Esfuerzo, deformación y las palancas del cuerpo humano',                         color: '#E85B4A' },
-      { name: 'C5 · Mecánica de fluidos',        desc: 'Pascal, Arquímedes, Bernoulli y la viscosidad del flujo sanguíneo',              color: '#8b5cf6' },
-      { name: 'C6 · Movimiento periódico y ondas', desc: 'Módulo interactivo: MAS, péndulo y masa-resorte, ondas mecánicas y sonido, con 4 simulaciones y problemas guiados', color: '#3b9edd', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-6' },
-      { name: 'C7 · Temperatura y calor',        desc: 'Módulo interactivo: escalas, calor específico, cambios de fase y las tres vías de pérdida, con el balance térmico del cuerpo', color: '#E85B4A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-7' },
-      { name: 'C8 · Termodinámica',              desc: 'Primera y segunda ley, entropía, máquinas térmicas y eficiencia',                color: '#F5A623' },
-      { name: 'C9 · Campo eléctrico',            desc: 'Ley de Coulomb, líneas de campo y ley de Gauss',                                 color: '#2DC99A' },
-      { name: 'C10 · Potencial y capacitancia',  desc: 'Superficies equipotenciales, dieléctricos y la energía del desfibrilador',       color: '#8b5cf6' },
-      { name: 'C11 · Corriente y resistencia',   desc: 'Ley de Ohm, Kirchhoff y los efectos fisiológicos de la corriente',               color: '#3b9edd' },
-      { name: 'C12 · Magnetismo e inducción',    desc: 'Fuerza de Lorentz, ley de Faraday y el principio de la resonancia magnética',    color: '#2DC99A' },
-      { name: 'C13 · Óptica geométrica',         desc: 'Ley de Snell, lentes delgadas y los defectos de refracción del ojo',             color: '#F5A623' },
-      { name: 'C14 · Fotones y átomos',          desc: 'Dualidad onda-partícula, estructura atómica y radiación en medicina',            color: '#E85B4A' },
+      { name: 'C1 · Leyes de Newton',                    desc: 'Bloque en plano inclinado con su diagrama de cuerpo libre en movimiento: normal, fricción y el ángulo al que empieza a deslizar', color: '#3b9edd', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-1' },
+      { name: 'C2 · Trabajo y energía',                  desc: 'Choque frontal con la restitución como perilla continua: el momento se conserva siempre, la energía sólo si es elástico', color: '#2DC99A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-2' },
+      { name: 'C3 · Dinámica rotacional',                desc: 'Aro, disco, esfera y barra con la misma masa y radio, más el modo patinadora para ver conservarse el momento angular', color: '#F5A623', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-3' },
+      { name: 'C4 · Equilibrio y elasticidad',           desc: 'La palanca del codo: cuánta fuerza hace el bíceps para sostener una carga y qué aguanta de verdad la articulación', color: '#E85B4A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-4' },
+      { name: 'C5 · Mecánica de fluidos',                desc: 'Vaso con estenosis: continuidad y Bernoulli sobre la misma escena, con el número de Reynolds y el umbral del soplo', color: '#8b5cf6', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-5' },
+      { name: 'C6 · Movimiento periódico y ondas',       desc: 'Módulo interactivo: MAS, péndulo y masa-resorte, ondas mecánicas y sonido, con 4 simulaciones y problemas guiados', color: '#3b9edd', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-6' },
+      { name: 'C7 · Temperatura y calor',                desc: 'Módulo interactivo: escalas, calor específico, cambios de fase y las tres vías de pérdida, con el balance térmico del cuerpo', color: '#E85B4A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-7' },
+      { name: 'C8 · Termodinámica',                      desc: 'Cilindro con pistón y diagrama PV sincronizados: los cuatro procesos entre los mismos volúmenes, y el trabajo como área', color: '#F5A623', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-8' },
+      { name: 'C9 · Campo eléctrico',                    desc: 'Dos cargas con sus líneas de campo trazadas de verdad: el 1/r² de la fuerza frente al 1/r del potencial', color: '#2DC99A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-9' },
+      { name: 'C10 · Potencial y capacitancia',          desc: 'Condensador de placas con dos presets: la membrana celular a 70 mV y el desfibrilador a miles de voltios', color: '#8b5cf6', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-10' },
+      { name: 'C11 · Corriente y resistencia',           desc: 'La misma pareja de resistencias en serie y en paralelo, con la escala de efectos fisiológicos en miliamperios', color: '#3b9edd', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-11' },
+      { name: 'C12 · Magnetismo e inducción',            desc: 'Lorentz y Faraday conmutables: el periodo de giro que no depende de la velocidad, y la fem desfasada del flujo', color: '#2DC99A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-12' },
+      { name: 'C13 · Óptica geométrica',                 desc: 'Lente delgada con los tres rayos principales y un modo ojo que sitúa la imagen respecto a la retina', color: '#F5A623', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-13' },
+      { name: 'C14 · Fotones y átomos',                  desc: 'Efecto fotoeléctrico: por debajo del umbral no sale un electrón por mucha intensidad que eches', color: '#E85B4A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-14' },
     ],
   },
 ];
