@@ -1,0 +1,1164 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   Módulo interactivo de una clase teórica de Física.
+
+   Tokens locales en `.wrapper` y su gemelo en dark-mode (regla del proyecto:
+   nada de dark-mode en globals.css). El acento (`--acc`) lo inyecta cada
+   sección por estilo inline, así que aquí sólo se declara el fallback.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.wrapper {
+  --acc: #5E9CD3;
+  --m-bg: #f7f8fc;
+  --m-surface: #ffffff;
+  --m-surface-2: #eef2ff;
+  --m-border: rgba(26, 26, 46, 0.10);
+  --m-border-soft: rgba(26, 26, 46, 0.06);
+  --m-text: #1a1a2e;
+  --m-text-soft: #4a4a68;
+  --m-muted: #718096;
+  --m-shadow: 0 2px 14px rgba(26, 26, 46, 0.06);
+  --m-shadow-lg: 0 10px 40px rgba(26, 26, 46, 0.10);
+
+  min-height: 100%;
+  background: var(--m-bg);
+  color: var(--m-text);
+  padding: 28px 0 96px;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+:global(.dark-mode) .wrapper {
+  --m-bg: #08061a;
+  --m-surface: rgba(255, 255, 255, 0.04);
+  --m-surface-2: rgba(255, 255, 255, 0.06);
+  --m-border: rgba(255, 255, 255, 0.10);
+  --m-border-soft: rgba(255, 255, 255, 0.06);
+  --m-text: #f0eeff;
+  --m-text-soft: rgba(240, 238, 255, 0.78);
+  --m-muted: rgba(240, 238, 255, 0.5);
+  --m-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+  --m-shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (max-width: 640px) {
+  .container { padding: 0 16px; }
+  .wrapper   { padding-top: 16px; }
+}
+
+/* ─── Navegación superior ─────────────────────────────────────────────────── */
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--m-muted);
+  text-decoration: none;
+  margin-bottom: 22px;
+  transition: color 0.18s ease;
+}
+.backLink:hover { color: var(--acc); }
+
+/* ═══ PORTADA ═════════════════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  border-radius: 26px;
+  padding: 44px 40px 40px;
+  background: var(--m-surface);
+  border: 1px solid var(--m-border);
+  box-shadow: var(--m-shadow-lg);
+  overflow: hidden;
+}
+
+/* Halo de acento que respira detrás del título. Puramente decorativo. */
+.heroGlow {
+  position: absolute;
+  top: -160px;
+  right: -120px;
+  width: 460px;
+  height: 460px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in oklab, var(--acc) 26%, transparent) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.heroKicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--acc);
+  background: color-mix(in oklab, var(--acc) 14%, transparent);
+  border: 1px solid color-mix(in oklab, var(--acc) 26%, transparent);
+  padding: 6px 12px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+
+.heroTitle {
+  font-size: clamp(30px, 4.6vw, 46px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -1.1px;
+  margin-bottom: 16px;
+  max-width: 20ch;
+}
+
+.heroGancho {
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.62;
+  color: var(--m-text-soft);
+  max-width: 60ch;
+  margin-bottom: 26px;
+}
+
+/* Fila de datos de la portada. Sin cajas, sin fondos y sin degradados: son
+   metadatos, y encerrarlos en tarjetas los hacía competir con el título. Sólo
+   un filete vertical los separa. */
+.heroDatos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 26px;
+  margin-bottom: 34px;
+}
+
+.dato {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 26px;
+  border-left: 1px solid var(--m-border);
+}
+.dato:first-child { padding-left: 0; border-left: none; }
+
+/* Al envolverse, el filete de la primera de cada fila sobra; pero como no se
+   puede saber dónde cae el salto, se acepta a cambio de no fijar columnas. */
+@media (max-width: 620px) {
+  .heroDatos { gap: 12px; flex-direction: column; align-items: flex-start; }
+  .dato { padding-left: 0; border-left: none; }
+}
+
+/* El SVG va en color plano, sin caja ni degradado. */
+.dato > svg {
+  flex-shrink: 0;
+  color: var(--acc);
+}
+
+.datoTexto {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--m-muted);
+}
+
+.datoTexto strong {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: var(--m-text);
+  line-height: 1.25;
+}
+
+/* Los tres pasos, como texto encadenado por flechas — sin píldoras. */
+.flujo {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+}
+
+.flujoPaso {
+  display: inline-flex;
+  align-items: center;
+  color: var(--m-text);
+}
+.flujoPaso:not(:last-child)::after {
+  content: '→';
+  margin-left: 8px;
+  font-weight: 600;
+  color: var(--m-muted);
+}
+
+/* ─── Recorrido de la portada: las secciones que vienen ───────────────────── */
+.recorridoLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--m-muted);
+  margin-bottom: 16px;
+}
+
+/* `align-items: stretch` (por defecto) + `margin-top:auto` en los chips deja
+   los pies de las 4 tarjetas alineados aunque los títulos ocupen 1 o 2 líneas. */
+.recorrido {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 34px;
+}
+
+@media (max-width: 980px) { .recorrido { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .recorrido { grid-template-columns: 1fr; } }
+
+/* Tarjeta-índice: el ícono es lo primero que se ve, no un adorno de esquina.
+   Es un <button> porque navega a su sección — un índice que no se puede pulsar
+   obliga a volver a leerlo entero cada vez que se quiere repasar algo. */
+.recorridoCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  background: var(--m-surface);
+  border: 1px solid var(--m-border-soft);
+  border-radius: 20px;
+  padding: 20px 18px 16px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.26s cubic-bezier(.22,1,.36,1), box-shadow 0.26s ease,
+              border-color 0.26s ease;
+}
+
+/* Halo del color de la sección: le da identidad a cada tarjeta sin recurrir a
+   un borde grueso que compita con el ícono. */
+.recorridoCard::before {
+  content: '';
+  position: absolute;
+  top: -70px;
+  right: -60px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in oklab, var(--rc) 20%, transparent) 0%, transparent 70%);
+  opacity: 0.7;
+  transition: opacity 0.26s ease, transform 0.26s ease;
+  pointer-events: none;
+}
+
+/* Filete inferior que se completa al pasar por encima. */
+.recorridoCard::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0;
+  background: var(--rc);
+  transition: width 0.32s cubic-bezier(.22,1,.36,1);
+}
+
+.recorridoCard:hover,
+.recorridoCard:focus-visible {
+  transform: translateY(-5px);
+  border-color: color-mix(in oklab, var(--rc) 42%, transparent);
+  box-shadow: 0 16px 34px color-mix(in oklab, var(--rc) 20%, transparent);
+  outline: none;
+}
+.recorridoCard:hover::before,
+.recorridoCard:focus-visible::before { opacity: 1; transform: scale(1.12); }
+.recorridoCard:hover::after,
+.recorridoCard:focus-visible::after { width: 100%; }
+
+.recorridoTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* El SVG, en primer plano: caja de 60 px con el degradado de la sección. */
+.recorridoIconBox {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 17px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--rc) 0%, color-mix(in oklab, var(--rc) 58%, #000) 100%);
+  box-shadow: 0 8px 20px color-mix(in oklab, var(--rc) 38%, transparent);
+  transition: transform 0.28s cubic-bezier(.22,1,.36,1), box-shadow 0.28s ease;
+}
+.recorridoCard:hover .recorridoIconBox,
+.recorridoCard:focus-visible .recorridoIconBox {
+  transform: scale(1.09) rotate(-4deg);
+  box-shadow: 0 12px 28px color-mix(in oklab, var(--rc) 50%, transparent);
+}
+
+.recorridoNum {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--rc);
+  background: color-mix(in oklab, var(--rc) 15%, transparent);
+  border: 1px solid color-mix(in oklab, var(--rc) 28%, transparent);
+}
+
+.recorridoTitulo {
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+
+.recorridoSub {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--m-muted);
+  margin-bottom: 14px;
+}
+
+/* Qué hay dentro de la sección — se calcula del contenido, no está escrito. */
+.recorridoChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.recorridoChip {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--rc);
+  background: color-mix(in oklab, var(--rc) 12%, transparent);
+  border-radius: 999px;
+  padding: 4px 9px;
+  white-space: nowrap;
+}
+
+/* Llamada a la acción: aparece al pasar por encima, sin ocupar sitio antes. */
+.recorridoIr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--rc);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.28s cubic-bezier(.22,1,.36,1), opacity 0.22s ease,
+              margin-top 0.28s cubic-bezier(.22,1,.36,1);
+}
+.recorridoCard:hover .recorridoIr,
+.recorridoCard:focus-visible .recorridoIr {
+  max-height: 26px;
+  opacity: 1;
+  margin-top: 12px;
+}
+
+/* ─── Botón principal ─────────────────────────────────────────────────────── */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--acc) 0%, color-mix(in oklab, var(--acc) 62%, #000) 100%);
+  border: none;
+  border-radius: 14px;
+  padding: 15px 28px;
+  cursor: pointer;
+  box-shadow: 0 8px 22px color-mix(in oklab, var(--acc) 34%, transparent);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px color-mix(in oklab, var(--acc) 42%, transparent);
+  filter: brightness(1.06);
+}
+.cta:active { transform: translateY(0); }
+
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--m-text-soft);
+  background: var(--m-surface-2);
+  border: 1px solid var(--m-border);
+  border-radius: 12px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.ctaGhost:hover {
+  color: var(--acc);
+  border-color: color-mix(in oklab, var(--acc) 40%, transparent);
+}
+
+/* ═══ BARRA DE PROGRESO / NAVEGACIÓN DE SECCIONES ═════════════════════════ */
+
+.progressBar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0 14px;
+  margin-bottom: 26px;
+  background: color-mix(in oklab, var(--m-bg) 88%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--m-border-soft);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.progressBar::-webkit-scrollbar { display: none; }
+
+.progressStep {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--m-muted);
+  background: transparent;
+  border: 1px solid var(--m-border-soft);
+  border-radius: 999px;
+  padding: 7px 14px 7px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.progressStep:hover:not(:disabled) { color: var(--m-text); border-color: var(--m-border); }
+.progressStep:disabled { cursor: not-allowed; opacity: 0.45; }
+
+.progressStepActive {
+  color: #fff;
+  background: var(--sc);
+  border-color: var(--sc);
+  box-shadow: 0 4px 14px color-mix(in oklab, var(--sc) 34%, transparent);
+}
+
+.progressStepDone { color: var(--sc); border-color: color-mix(in oklab, var(--sc) 40%, transparent); }
+
+.progressDot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+  background: color-mix(in oklab, var(--sc) 18%, transparent);
+  color: var(--sc);
+}
+.progressStepActive .progressDot { background: rgba(255,255,255,0.24); color: #fff; }
+
+/* ═══ CABECERA DE SECCIÓN ═════════════════════════════════════════════════ */
+
+.secHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 8px;
+}
+
+.secIconBox {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--acc) 0%, color-mix(in oklab, var(--acc) 62%, #000) 100%);
+  box-shadow: 0 6px 18px color-mix(in oklab, var(--acc) 34%, transparent);
+}
+
+.secTitulo {
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.7px;
+  line-height: 1.14;
+  margin-bottom: 4px;
+}
+
+.secSub {
+  font-size: 14.5px;
+  color: var(--m-muted);
+  line-height: 1.5;
+}
+
+/* Sin caja ni fondo: basta el filete del acento y el rótulo. */
+.objetivo {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  border-left: 3px solid var(--acc);
+  padding: 1px 0 1px 18px;
+  margin: 22px 0 32px;
+  font-size: 14.3px;
+  line-height: 1.6;
+  color: var(--m-text-soft);
+  max-width: 66ch;
+}
+.objetivoLabel {
+  flex-shrink: 0;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acc);
+}
+
+@media (max-width: 560px) {
+  .objetivo { flex-direction: column; gap: 7px; }
+}
+
+/* ═══ FASES ═══════════════════════════════════════════════════════════════ */
+
+.faseHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 20px;
+}
+
+.faseNum {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--acc);
+  background: color-mix(in oklab, var(--acc) 14%, transparent);
+  border: 1px solid color-mix(in oklab, var(--acc) 26%, transparent);
+}
+
+.faseTitulo {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.faseHint {
+  font-size: 13px;
+  color: var(--m-muted);
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .faseHint { display: none; }
+}
+
+/* ═══ BLOQUES DE LÓGICA ═══════════════════════════════════════════════════ */
+
+/* Los siete tipos de bloque tienen SILUETA propia, no sólo color: si todos son
+   el mismo rectángulo con fondo, la página se lee como una lista uniforme y se
+   pierde qué es una idea, qué una advertencia y qué un dato clínico. Sólo la
+   trampa lleva cuerpo sólido — es la que tiene que interrumpir la lectura. */
+.bloques {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  margin-bottom: 38px;
+}
+
+/* Rótulo común de los bloques con encabezado (pasos, contraste). */
+.bloqueRotulo {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--m-muted);
+  margin-bottom: 16px;
+}
+
+/* ─── idea · declaración sin caja ─────────────────────────────────────────── */
+
+.bIdea { padding: 2px 0; }
+
+.ideaFilete {
+  display: block;
+  width: 46px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--acc);
+  margin-bottom: 14px;
+}
+
+.ideaAnte {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 9px;
+}
+
+.ideaTexto {
+  font-size: clamp(16px, 2vw, 18.5px);
+  line-height: 1.62;
+  font-weight: 500;
+  color: var(--m-text);
+  max-width: 62ch;
+  letter-spacing: -0.2px;
+}
+
+/* ─── analogía · nota al margen ───────────────────────────────────────────── */
+
+.bAnalogia {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  padding: 4px 0 4px 20px;
+  border-left: 2px dashed var(--m-border);
+  margin-left: 2px;
+}
+
+.analogiaIcono {
+  flex-shrink: 0;
+  color: var(--m-muted);
+  margin-top: 2px;
+}
+
+.analogiaTitulo {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--m-text);
+  margin-bottom: 6px;
+}
+
+.analogiaTexto {
+  font-size: 14.5px;
+  line-height: 1.68;
+  color: var(--m-text-soft);
+  font-style: italic;
+  max-width: 60ch;
+}
+
+/* ─── fórmula · expresión entre reglas + tabla de términos ────────────────── */
+
+.bFormula { padding: 2px 0; }
+
+/* La expresión respira sola entre dos filetes: es lo que hay que memorizar. */
+.formulaMarco {
+  border-top: 1px solid var(--m-border);
+  border-bottom: 1px solid var(--m-border);
+  margin-bottom: 20px;
+}
+
+.formulaExpr {
+  font-size: clamp(26px, 3.8vw, 38px);
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.5px;
+  color: var(--acc);
+  padding: 24px 8px 26px;
+  font-variant-numeric: tabular-nums;
+}
+
+.formulaPartes {
+  margin-bottom: 18px;
+}
+
+/* Filas con separador, no tarjetas: es una tabla de símbolos. */
+.formulaParte {
+  display: grid;
+  grid-template-columns: 30px 1fr auto;
+  align-items: baseline;
+  gap: 14px;
+  padding: 11px 2px;
+  border-bottom: 1px solid var(--m-border-soft);
+}
+.formulaParte:last-child { border-bottom: none; }
+
+.formulaSimbolo {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--acc);
+  font-style: italic;
+}
+
+.formulaSignificado {
+  font-size: 13.8px;
+  line-height: 1.5;
+  color: var(--m-text-soft);
+}
+
+.formulaUnidad {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--m-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.formulaLectura {
+  font-size: 13.8px;
+  line-height: 1.65;
+  color: var(--m-text-soft);
+  padding-left: 15px;
+  border-left: 2px solid color-mix(in oklab, var(--acc) 40%, transparent);
+  max-width: 62ch;
+}
+
+/* ─── pasos · línea de tiempo vertical ────────────────────────────────────── */
+
+.bPasos { padding: 2px 0; }
+
+.pasos {
+  position: relative;
+  list-style: none;
+  padding-left: 2px;
+}
+
+/* El hilo que une los números: la forma dice «el orden importa». */
+.pasos::before {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  background: color-mix(in oklab, var(--acc) 26%, transparent);
+}
+
+.paso {
+  position: relative;
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding-bottom: 18px;
+}
+.paso:last-child { padding-bottom: 0; }
+
+.pasoNum {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff;
+  background: var(--acc);
+  box-shadow: 0 0 0 4px var(--m-bg);
+}
+
+.pasoTexto {
+  font-size: 14.3px;
+  line-height: 1.65;
+  color: var(--m-text-soft);
+  padding-top: 3px;
+  max-width: 62ch;
+}
+
+/* ─── contraste · dos columnas con divisoria ──────────────────────────────── */
+
+.bContraste { padding: 2px 0; }
+
+.contraste {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 34px;
+}
+
+/* Divisoria central + «vs» encima, en lugar de dos cajas enfrentadas. */
+.contraste::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: var(--m-border);
+}
+
+.contrasteVs {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--m-muted);
+  background: var(--m-bg);
+  padding: 5px 7px;
+}
+
+@media (max-width: 620px) {
+  .contraste { grid-template-columns: 1fr; gap: 26px; }
+  .contraste::before { display: none; }
+  .contrasteVs { display: none; }
+}
+
+.contrasteLado { min-width: 0; }
+
+.contrasteTitulo {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cl);
+  margin-bottom: 14px;
+  padding-bottom: 9px;
+  border-bottom: 2px solid var(--cl);
+}
+
+.contrasteItems {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+
+.contrasteItem {
+  position: relative;
+  padding-left: 17px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--m-text-soft);
+}
+.contrasteItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cl);
+}
+
+/* ─── trampa · apostilla al margen, sin caja ──────────────────────────────── */
+
+/* Misma silueta que `clinico`: filete lateral + sello. Los dos son apuntes al
+   margen del hilo principal y sólo se distinguen por color e ícono, que es
+   exactamente lo que pide la regla de no fiarlo todo al color. Sin fondo, la
+   advertencia ocupa lo que ocupa su texto. */
+.bTrampa {
+  padding: 2px 0 2px 20px;
+  border-left: 3px solid #ef4444;
+}
+
+.trampaSello {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #d33b3b;
+  margin-bottom: 8px;
+}
+:global(.dark-mode) .trampaSello { color: #f87171; }
+
+.trampaTexto {
+  font-size: 14.3px;
+  line-height: 1.68;
+  color: var(--m-text-soft);
+  max-width: 62ch;
+}
+
+/* ─── clínico · sello colgado de un filete ────────────────────────────────── */
+
+.bClinico {
+  padding: 2px 0 2px 20px;
+  border-left: 3px solid #2DC99A;
+}
+
+.clinicoSello {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #1f9e78;
+  margin-bottom: 11px;
+}
+:global(.dark-mode) .clinicoSello { color: #2DC99A; }
+
+.clinicoTitulo {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--m-text);
+  margin-bottom: 7px;
+  letter-spacing: -0.2px;
+}
+
+.clinicoTexto {
+  font-size: 14.3px;
+  line-height: 1.68;
+  color: var(--m-text-soft);
+  max-width: 62ch;
+}
+
+/* ═══ RETOS (junto a la simulación) ═══════════════════════════════════════ */
+
+.retos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 24px 0 30px;
+}
+
+.reto {
+  background: var(--m-surface);
+  border: 1px solid var(--m-border-soft);
+  border-radius: 13px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+.reto:hover { border-color: color-mix(in oklab, var(--acc) 32%, transparent); }
+
+.retoBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  color: var(--m-text);
+  background: transparent;
+  border: none;
+  padding: 14px 16px;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.retoIcon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--acc);
+  background: color-mix(in oklab, var(--acc) 13%, transparent);
+}
+
+.retoChevron {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--m-muted);
+  transition: transform 0.24s ease;
+}
+.retoChevronOpen { transform: rotate(180deg); }
+
+.retoPista {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--m-text-soft);
+  padding: 0 16px 15px 54px;
+  border-top: 1px dashed var(--m-border-soft);
+  padding-top: 13px;
+  margin-top: -1px;
+}
+
+/* ═══ CHEQUEO ═════════════════════════════════════════════════════════════ */
+
+.chequeo {
+  background: var(--m-surface);
+  border: 1px solid var(--m-border);
+  border-radius: 20px;
+  padding: 26px 26px 24px;
+  box-shadow: var(--m-shadow);
+  margin-bottom: 28px;
+}
+
+.chequeoPregunta {
+  font-size: 16.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.2px;
+  margin-bottom: 18px;
+}
+
+.chequeoOpciones {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.chequeoOpcion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  font-family: inherit;
+  font-size: 14.3px;
+  font-weight: 500;
+  text-align: left;
+  line-height: 1.5;
+  color: var(--m-text);
+  background: var(--m-surface-2);
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.chequeoOpcion:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--acc) 40%, transparent);
+  transform: translateX(3px);
+}
+.chequeoOpcion:disabled { cursor: default; }
+
+.opcionLetra {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--m-muted);
+  background: var(--m-surface);
+  border: 1px solid var(--m-border-soft);
+}
+
+.opcionCorrecta {
+  border-color: #2DC99A;
+  background: rgba(45, 201, 154, 0.12);
+}
+.opcionCorrecta .opcionLetra { background: #2DC99A; color: #fff; border-color: #2DC99A; }
+
+.opcionIncorrecta {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.10);
+}
+.opcionIncorrecta .opcionLetra { background: #ef4444; color: #fff; border-color: #ef4444; }
+
+.explicacion {
+  margin-top: 16px;
+  padding: 15px 17px;
+  border-radius: 13px;
+  font-size: 13.8px;
+  line-height: 1.65;
+  color: var(--m-text-soft);
+  background: var(--m-surface-2);
+  border-left: 3px solid var(--acc);
+}
+.explicacionLabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 7px;
+}
+
+/* ═══ PIE DE SECCIÓN ══════════════════════════════════════════════════════ */
+
+.secFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 8px;
+}
+
+@media (max-width: 520px) {
+  .secFooter { flex-direction: column-reverse; align-items: stretch; }
+  .secFooter .cta, .secFooter .ctaGhost { justify-content: center; }
+}
+
+/* ═══ CIERRE ══════════════════════════════════════════════════════════════ */
+
+.cierreGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin: 28px 0 34px;
+}
+
+.cierreCard {
+  background: var(--m-surface);
+  border: 1px solid var(--m-border-soft);
+  border-radius: 16px;
+  padding: 19px 20px;
+  box-shadow: var(--m-shadow);
+  transition: transform 0.22s cubic-bezier(.22,1,.36,1), box-shadow 0.22s ease;
+}
+.cierreCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px color-mix(in oklab, var(--acc) 16%, transparent);
+}
+
+.cierreNum {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #fff;
+  background: var(--acc);
+  margin-bottom: 11px;
+}
+
+.cierreTitulo {
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 7px;
+  letter-spacing: -0.2px;
+}
+
+.cierreTexto {
+  font-size: 13.4px;
+  line-height: 1.62;
+  color: var(--m-text-soft);
+}
+
+/* ═══ ANIMACIÓN DE ENTRADA (fallback sin framer-motion) ═══════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .recorridoCard, .recorridoCard::before, .recorridoCard::after,
+  .recorridoIconBox, .recorridoIr,
+  .cierreCard, .chequeoOpcion, .cta { transition: none !important; }
+  .recorridoCard:hover, .cierreCard:hover, .cta:hover { transform: none; }
+  .recorridoCard:hover .recorridoIconBox { transform: none; }
+  /* La llamada a la acción sigue apareciendo, pero sin desplegarse. */
+  .recorridoCard:hover .recorridoIr { max-height: 26px; opacity: 1; margin-top: 12px; }
+}

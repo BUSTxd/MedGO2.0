@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { findActividad, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/fisica';
 import { banqueoLabelDe } from '@/lib/material-plan';
+import { findModulo } from '@/lib/data/fisica-modulos';
 import styles from '@/styles/cursos.module.css';
 import StudyMaterialSection from '@/components/StudyMaterialSection';
 import LockedContent from '@/components/LockedContent';
@@ -97,6 +98,19 @@ export default async function ActividadPage({
           hasResumen={act.resumen?.tipo === 'pdf'}
           resumenOpciones={act.resumen?.opciones}
           banqueoLabel={banqueoLabel}
+          simulacion={
+            act.modulo
+              ? {
+                  href: `/dashboard/cursos/fisica-medicina/modulo/${act.id}`,
+                  // Dos clases tienen el módulo completo de teoría y las demás
+                  // sólo el laboratorio: prometer «primero la lógica» en las
+                  // segundas dejaría al alumno buscando una fase que no existe.
+                  desc: findModulo(act.id)
+                    ? 'Mini clase interactiva: primero la lógica, después las simulaciones'
+                    : 'Laboratorio virtual: simulación en vivo y panel de fórmulas',
+                }
+              : undefined
+          }
           propuestosPdf={
             act.propuestos?.tipo === 'pdf'
               ? { claseId: `${act.id}-prop`, opciones: act.propuestos.opciones }

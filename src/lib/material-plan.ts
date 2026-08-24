@@ -44,6 +44,13 @@ export interface ActividadLike {
   /** PDF de problemas propuestos (Física C1–C4), abre en el mismo visor que Resumen. */
   propuestos?: unknown;
   simulacion?: { href?: string };
+  /**
+   * Material interactivo propio del curso de Física, que vive fuera del sílabo
+   * (`src/lib/data/fisica-modulos/`). Cumple el mismo papel que `simulacion`
+   * —sustituye la tarjeta «Video»— pero no trae `href` porque la ruta se deriva
+   * del id: `/cursos/fisica-medicina/modulo/{id}`.
+   */
+  modulo?: boolean;
   sinMaterial?: boolean;
 }
 
@@ -123,6 +130,12 @@ export function etiquetaExamen(tipo: string): string {
 interface CursoReglas {
   /** Tipos donde la tarjeta «Video» se sustituye por «Simulación». */
   simulacionEn?: readonly string[];
+  /**
+   * Tipos donde esa misma sustitución la dispara `modulo: true` en vez de un
+   * `simulacion.href`. Es la vía de Física, cuyo material interactivo no es un
+   * enlace suelto sino un runner con ruta propia.
+   */
+  moduloEn?: readonly string[];
   /** Tipos donde la tarjeta de banqueo no se muestra (`hideBanqueo`). */
   sinBanqueoEn?: readonly string[];
   /** Título alternativo de la tarjeta de banqueo, según el tipo de actividad. */
@@ -137,8 +150,12 @@ const REGLAS: Record<string, CursoReglas> = {
   digestivo:                { simulacionEn: ['ANATOMIA', 'HISTOLOGIA'] },
   'endocrino-reproductor':  { simulacionEn: ['ANATOMIA', 'HISTOLOGIA', 'TALLER'] },
   // Todas las clases teóricas (C1–C14) usan el PDF de propuestos, no un banco
-  // interactivo — PC/EXAMEN-T siguen mostrando "Banqueo" por defecto.
-  'fisica-medicina':        { banqueoLabel: { label: 'Propuestos', tipos: ['TEORIA'] } },
+  // interactivo — PC/EXAMEN-T siguen mostrando "Banqueo" por defecto. Y las
+  // catorce tienen laboratorio virtual, que ocupa el sitio de la tarjeta Video.
+  'fisica-medicina': {
+    banqueoLabel: { label: 'Propuestos', tipos: ['TEORIA'] },
+    moduloEn: ['TEORIA'],
+  },
 };
 
 /** Título de la tarjeta de práctica. Lo usan el panel y la página del curso. */
@@ -154,8 +171,12 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
   const esEntrega = TIPOS_ENTREGA.has(act.tipo);
   const esEvaluacion = esExamen || esEntrega;
 
+  // Dos vías al mismo slot: un `simulacion.href` (labs de Hematología e
+  // Inmunología) o un `modulo: true` (laboratorio de Física). Se resuelven
+  // aparte porque la segunda no lleva enlace: la ruta se deriva del id.
   const usaSimulacion = reglas.simulacionEn?.includes(act.tipo) ?? false;
-  const apoyoListo = usaSimulacion && !!act.simulacion?.href;
+  const usaModulo = (reglas.moduloEn?.includes(act.tipo) ?? false) && act.modulo === true;
+  const apoyoListo = usaModulo || (usaSimulacion && !!act.simulacion?.href);
 
   // El banqueo se llena de cuatro formas: examen del bucket, qbank, solucionario
   // paso a paso (Química Orgánica, vive fuera del sílabo) o PDF de práctica.
@@ -179,7 +200,7 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
     examenLabel: esExamen ? etiquetaExamen(act.tipo) : undefined,
     apoyo: {
       kind: 'apoyo',
-      label: usaSimulacion ? 'Simulación' : 'Video',
+      label: usaSimulacion || usaModulo ? 'Simulación' : 'Video',
       estado: apoyoListo ? 'listo' : invitacion ? 'no-aplica' : 'futuro',
     },
     banqueo: {

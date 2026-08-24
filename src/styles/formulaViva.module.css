@@ -1,0 +1,595 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   Fórmula manipulable (fase «entender») y problema guiado (fase «jugar»).
+   Tokens propios en `.viva` / `.problema`, con su gemelo en dark-mode.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.viva {
+  --v-bg: #ffffff;
+  --v-surface: #f4f6fb;
+  --v-border: rgba(26, 26, 46, 0.10);
+  --v-text: #1a1a2e;
+  --v-soft: #4a4a68;
+  --v-muted: #718096;
+  /* Halo OPACO detrás del valor de una perilla. No sirve `--v-bg`: en oscuro es
+     un blanco al 5 %, y un halo translúcido no corta la línea del tirador. */
+  --v-halo: #ffffff;
+
+  margin-top: 16px;
+  padding: 16px 16px 14px;
+  border-radius: 14px;
+  background: var(--v-surface);
+  border: 1px solid var(--v-border);
+}
+
+:global(.dark-mode) .viva {
+  --v-bg: rgba(255, 255, 255, 0.05);
+  --v-surface: rgba(8, 6, 26, 0.4);
+  --v-border: rgba(255, 255, 255, 0.10);
+  --v-text: #f0eeff;
+  --v-soft: rgba(240, 238, 255, 0.78);
+  --v-muted: rgba(240, 238, 255, 0.5);
+  /* El color al que se ve la barra en oscuro (--bg2 con el velo de la tarjeta
+     ya aplicado), para que el halo tape de verdad. */
+  --v-halo: #14122c;
+}
+
+.vivaHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 14px;
+}
+
+/* ─── Split: modelo | mandos ──────────────────────────────────────────────────
+   El modelo a la izquierda y lo que lo gobierna a la derecha (fórmula arriba,
+   perillas debajo). `minmax(0, …)` en las dos pistas es obligatorio: sin él el
+   mínimo de una pista de grid es `auto`, y el canvas —que se mide con
+   ResizeObserver y crece a lo que le den— empujaría la rejilla hasta sacar
+   scroll horizontal en vez de encogerse. */
+
+.vivaGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+/* El modelo se centra en su columna: cuando el panel de mandos es más alto que
+   la escena, la escena queda a media altura en vez de pegada arriba. */
+.vivaModelo {
+  min-width: 0;
+  align-self: center;
+}
+
+.vivaPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* Los márgenes verticales que separaban los bloques en el apilado antiguo los
+   sustituye el `gap` del panel; dejarlos sumaría doble separación. */
+.vivaPanel .sustituida,
+.vivaPanel .perillas { margin-bottom: 0; }
+
+@media (max-width: 900px) {
+  .vivaGrid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ─── Escena 2D de la fórmula ─────────────────────────────────────────────── */
+
+.vizCanvas {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  background: var(--v-bg);
+  border: 1px solid var(--v-border);
+}
+
+/* ─── Barras de control ───────────────────────────────────────────────────── */
+
+/* Apiladas a ancho completo, no en rejilla: la barra ES el rango, así que
+   cuanto más larga, más fino se puede ajustar y más fácil es agarrarla. */
+.perillas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.barra {
+  position: relative;
+  height: 62px;
+  border-radius: 14px;
+  background: var(--v-bg);
+  border: 1.5px solid var(--v-border);
+  cursor: ew-resize;
+  user-select: none;
+  touch-action: none;
+  outline: none;
+  overflow: hidden;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.barra:hover { border-color: color-mix(in oklab, var(--acc) 45%, transparent); }
+.barra:focus-visible {
+  border-color: var(--acc);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--acc) 22%, transparent);
+}
+.barraActiva {
+  border-color: var(--acc);
+  box-shadow: 0 4px 18px color-mix(in oklab, var(--acc) 24%, transparent);
+}
+
+/* Relleno: tiñe el fondo hasta la posición actual. Suave a propósito, para
+   que el texto de encima siga legible en los dos temas. */
+.barraRelleno {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--acc) 14%, transparent),
+    color-mix(in oklab, var(--acc) 26%, transparent)
+  );
+  transition: width 0.06s linear;
+  pointer-events: none;
+}
+
+/* Tirador: la línea vertical que marca el valor exacto. */
+.barraTirador {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  margin-left: -2px;
+  background: var(--acc);
+  border-radius: 2px;
+  box-shadow: 0 0 12px color-mix(in oklab, var(--acc) 55%, transparent);
+  transition: left 0.06s linear;
+  pointer-events: none;
+}
+.barraTirador::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--acc);
+  border: 3px solid var(--v-bg);
+}
+
+.barraContenido {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  height: 100%;
+  padding: 0 16px;
+  pointer-events: none;
+}
+
+.barraSimbolo {
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 7px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #fff;
+  background: var(--acc);
+  box-shadow: 0 2px 8px color-mix(in oklab, var(--acc) 40%, transparent);
+}
+
+/* El valor vive DENTRO de la barra, y el tirador recorre todo el ancho: con la
+   barra estrecha del panel de dos columnas la línea acaba cayendo justo entre
+   la cifra y su unidad («30│N/m»). El halo opaco la corta alrededor de las
+   letras, así que el valor se lee esté donde esté el tirador. */
+.barraValor {
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--v-text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+  text-shadow:
+    0 0 5px var(--v-halo), 0 0 5px var(--v-halo),
+    0 0 10px var(--v-halo), 0 1px 3px var(--v-halo);
+}
+
+.barraUnidad {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--v-muted);
+  margin-left: 5px;
+  text-shadow: 0 0 5px var(--v-halo), 0 0 5px var(--v-halo), 0 0 9px var(--v-halo);
+}
+
+/* Extremos del rango, en las esquinas inferiores. */
+.barraExtremos {
+  position: absolute;
+  z-index: 1;
+  left: 16px;
+  right: 16px;
+  bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--v-muted);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+/* ─── Expresión con los números sustituidos ───────────────────────────────── */
+
+.sustituida {
+  font-size: clamp(15px, 2.2vw, 19px);
+  font-weight: 700;
+  text-align: center;
+  color: var(--v-text);
+  font-variant-numeric: tabular-nums;
+  padding: 12px 8px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  background: var(--v-bg);
+  border: 1px dashed var(--v-border);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* ─── Resultado ───────────────────────────────────────────────────────────── */
+
+.resultadoCaja {
+  padding: 13px 15px 12px;
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--acc) 10%, var(--v-bg));
+  border: 1px solid color-mix(in oklab, var(--acc) 28%, transparent);
+}
+
+.resultadoFila {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 9px;
+}
+
+.resultadoSimbolo {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--acc);
+}
+
+.resultadoValor {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  color: var(--v-text);
+  font-variant-numeric: tabular-nums;
+}
+.resultadoValor span {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--v-muted);
+  margin-left: 5px;
+}
+
+.resultadoBarra {
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--acc) 16%, transparent);
+  overflow: hidden;
+}
+
+.resultadoRelleno {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, color-mix(in oklab, var(--acc) 55%, transparent), var(--acc));
+  transition: width 0.1s linear;
+}
+
+.observa {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--v-muted);
+  margin-top: 11px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barra, .barraRelleno, .barraTirador, .resultadoRelleno { transition: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PROBLEMA GUIADO
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.problema {
+  --v-bg: #ffffff;
+  --v-surface: #f4f6fb;
+  --v-border: rgba(26, 26, 46, 0.10);
+  --v-text: #1a1a2e;
+  --v-soft: #4a4a68;
+  --v-muted: #718096;
+
+  background: var(--v-bg);
+  border: 1px solid var(--v-border);
+  border-radius: 18px;
+  padding: 22px 22px 20px;
+  margin-top: 22px;
+  box-shadow: 0 2px 14px rgba(26, 26, 46, 0.06);
+}
+
+:global(.dark-mode) .problema {
+  --v-bg: rgba(255, 255, 255, 0.04);
+  --v-surface: rgba(8, 6, 26, 0.4);
+  --v-border: rgba(255, 255, 255, 0.10);
+  --v-text: #f0eeff;
+  --v-soft: rgba(240, 238, 255, 0.78);
+  --v-muted: rgba(240, 238, 255, 0.5);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+}
+
+.problemaKicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--acc);
+  background: color-mix(in oklab, var(--acc) 13%, transparent);
+  border-radius: 999px;
+  padding: 5px 11px;
+  margin-bottom: 14px;
+}
+
+.problemaEnunciado {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--v-text);
+  margin-bottom: 16px;
+}
+
+.problemaDatos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.dato {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 12.5px;
+  background: var(--v-surface);
+  border: 1px solid var(--v-border);
+  border-radius: 9px;
+  padding: 7px 12px;
+}
+.datoLabel { color: var(--v-muted); font-weight: 600; }
+.datoValor { color: var(--acc); font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.problemaPregunta {
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--v-text);
+  padding: 13px 16px;
+  border-radius: 11px;
+  border-left: 3px solid var(--acc);
+  background: color-mix(in oklab, var(--acc) 7%, transparent);
+  margin-bottom: 16px;
+}
+
+/* ─── Botón de llevar los datos a la simulación ───────────────────────────── */
+
+.llevar {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--acc) 0%, color-mix(in oklab, var(--acc) 62%, #000) 100%);
+  border: none;
+  border-radius: 11px;
+  padding: 12px 18px;
+  cursor: pointer;
+  margin-bottom: 16px;
+  box-shadow: 0 5px 16px color-mix(in oklab, var(--acc) 30%, transparent);
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+.llevar:hover { transform: translateY(-2px); filter: brightness(1.06); }
+.llevar:active { transform: translateY(0); }
+
+.llevarHecho {
+  background: none;
+  color: #1f9e78;
+  border: 1.5px solid rgba(45, 201, 154, 0.4);
+  box-shadow: none;
+}
+:global(.dark-mode) .llevarHecho { color: #2DC99A; }
+.llevarHecho:hover { transform: none; filter: none; }
+
+/* ─── Hueco de la simulación, intercalada entre pregunta y respuesta ─────── */
+
+.simuladorHueco {
+  margin: 4px -8px 18px;
+}
+
+@media (max-width: 560px) {
+  .simuladorHueco { margin-inline: -14px; }
+}
+
+.respuestaLabel {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 11px;
+}
+
+/* ─── Respuesta ───────────────────────────────────────────────────────────── */
+
+.respuestaFila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.respuestaInput {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--v-text);
+  background: var(--v-surface);
+  border: 1.5px solid var(--v-border);
+  border-radius: 11px;
+  padding: 12px 14px;
+  width: 130px;
+  outline: none;
+  font-variant-numeric: tabular-nums;
+  transition: border-color 0.16s ease;
+}
+.respuestaInput:focus { border-color: var(--acc); }
+
+.respuestaUnidad {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--v-muted);
+}
+
+.comprobar {
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--acc);
+  border: none;
+  border-radius: 11px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: filter 0.16s ease;
+}
+.comprobar:hover { filter: brightness(1.08); }
+.comprobar:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.verPasos {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--v-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 6px;
+}
+.verPasos:hover { color: var(--acc); }
+
+/* ─── Veredicto ───────────────────────────────────────────────────────────── */
+
+.veredicto {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 600;
+  border-radius: 11px;
+  padding: 13px 15px;
+  margin-top: 14px;
+}
+
+.veredictoBien {
+  color: #1f9e78;
+  background: rgba(45, 201, 154, 0.12);
+  border: 1px solid rgba(45, 201, 154, 0.3);
+}
+:global(.dark-mode) .veredictoBien { color: #2DC99A; }
+
+.veredictoMal {
+  color: #d33b3b;
+  background: rgba(239, 68, 68, 0.10);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+}
+:global(.dark-mode) .veredictoMal { color: #f87171; }
+
+/* ─── Resolución paso a paso ──────────────────────────────────────────────── */
+
+.pasosCaja {
+  margin-top: 16px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: var(--v-surface);
+  border: 1px solid var(--v-border);
+}
+
+.pasosTitulo {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 13px;
+}
+
+.pasoItem {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 13.8px;
+  line-height: 1.6;
+  color: var(--v-soft);
+  margin-bottom: 11px;
+}
+.pasoItem:last-child { margin-bottom: 0; }
+
+.pasoBolita {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  background: var(--acc);
+}
+
+.comprueba {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.58;
+  color: var(--v-soft);
+  margin-top: 14px;
+  padding-top: 13px;
+  border-top: 1px dashed var(--v-border);
+}
+.comprueba svg { flex-shrink: 0; color: var(--acc); margin-top: 2px; }
+
+@media (max-width: 520px) {
+  .respuestaFila { flex-direction: column; align-items: stretch; }
+  .respuestaInput { width: 100%; }
+}

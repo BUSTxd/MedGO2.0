@@ -1,0 +1,589 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   Laboratorio virtual de Física — carcasa compartida por las simulaciones 2D.
+
+   Todo vive dentro de `.lab`, que hereda `--acc` de la sección del módulo. El
+   canvas se dibuja en JS leyendo los tokens de aquí vía `getComputedStyle`,
+   para que respete light/dark sin duplicar la paleta.
+
+   La rejilla es escena | fórmulas, con el mando en una franja al pie. Bajo
+   1000 px colapsa a una columna: en un móvil dos columnas de 350 px no dejan
+   sitio ni para el dibujo ni para la expresión.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.lab {
+  --s-bg: #ffffff;
+  --s-stage: #f4f6fb;
+  --s-border: rgba(26, 26, 46, 0.10);
+  --s-border-soft: rgba(26, 26, 46, 0.06);
+  --s-text: #1a1a2e;
+  --s-text-soft: #4a4a68;
+  --s-muted: #718096;
+  --s-grid: rgba(26, 26, 46, 0.07);
+  --s-ink: #1a1a2e;
+
+  background: var(--s-bg);
+  border: 1px solid var(--s-border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(26, 26, 46, 0.06);
+  margin-bottom: 8px;
+}
+
+:global(.dark-mode) .lab {
+  --s-bg: rgba(255, 255, 255, 0.04);
+  --s-stage: rgba(8, 6, 26, 0.55);
+  --s-border: rgba(255, 255, 255, 0.10);
+  --s-border-soft: rgba(255, 255, 255, 0.06);
+  --s-text: #f0eeff;
+  --s-text-soft: rgba(240, 238, 255, 0.78);
+  --s-muted: rgba(240, 238, 255, 0.5);
+  --s-grid: rgba(255, 255, 255, 0.07);
+  --s-ink: #f0eeff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Barra superior ──────────────────────────────────────────────────────── */
+.labBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--s-border-soft);
+  background: color-mix(in oklab, var(--acc) 5%, var(--s-bg));
+}
+
+.labTitulo {
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: var(--s-text);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.labTitulo svg { color: var(--acc); flex-shrink: 0; }
+
+.labBarSpacer {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ─── Rejilla escena | fórmulas ───────────────────────────────────────────── */
+.labGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(268px, 0.82fr);
+  align-items: stretch;
+}
+
+.labStage {
+  position: relative;
+  background: var(--s-stage);
+  border-right: 1px solid var(--s-border-soft);
+  display: flex;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+}
+
+/* ─── Panel de fórmulas ───────────────────────────────────────────────────── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 14px 16px 16px;
+  background: var(--s-bg);
+}
+
+.panelRotulo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--s-muted);
+  margin-bottom: 10px;
+}
+.panelRotulo svg { color: var(--acc); }
+
+/* Lista con scroll propio: con 7 fórmulas, dejarla crecer haría el panel más
+   alto que la escena y la columna izquierda quedaría con un hueco muerto. */
+.panelLista {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 212px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+  margin-right: -4px;
+}
+.panelLista::-webkit-scrollbar { width: 5px; }
+.panelLista::-webkit-scrollbar-thumb {
+  background: var(--s-border);
+  border-radius: 999px;
+}
+
+.panelItem {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+  font-family: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease;
+}
+.panelItem:hover { background: var(--s-stage); }
+
+.panelItemActivo {
+  background: color-mix(in oklab, var(--acc) 9%, var(--s-bg));
+  border-color: color-mix(in oklab, var(--acc) 34%, transparent);
+}
+
+.panelItemNombre {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--s-muted);
+}
+.panelItemActivo .panelItemNombre { color: var(--acc); }
+
+.panelItemExpr {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--s-text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── Detalle de la fórmula elegida ───────────────────────────────────────── */
+.panelDetalle {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--s-border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.panelDice {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--s-text-soft);
+}
+
+/* La expresión con los números dentro: es la que el alumno compara con lo que
+   está calculando a mano, así que va en cifras tabulares y puede envolver. */
+.panelSustituida {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.75;
+  color: var(--s-text);
+  font-variant-numeric: tabular-nums;
+  word-break: break-word;
+}
+
+.panelResultado {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--acc) 8%, var(--s-bg));
+  border: 1px solid color-mix(in oklab, var(--acc) 22%, transparent);
+}
+
+.panelResultadoSimbolo {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--acc);
+}
+
+.panelResultadoValor {
+  margin-left: auto;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--acc);
+  font-variant-numeric: tabular-nums;
+}
+.panelResultadoValor span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--s-muted);
+  margin-left: 4px;
+}
+
+/* Cada hueco `{id}` de la plantilla. El resaltado marca la perilla que se
+   acaba de mover: es lo que ata el mando de abajo con la fórmula de aquí. */
+.simbolo {
+  display: inline-block;
+  padding: 0 3px;
+  border-radius: 5px;
+  font-weight: 700;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.simboloTocado {
+  background: color-mix(in oklab, var(--acc) 22%, transparent);
+  color: var(--acc);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--acc) 34%, transparent);
+}
+
+/* ─── Tablero de magnitudes en vivo ───────────────────────────────────────── */
+.tablero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+  gap: 1px;
+  background: var(--s-border-soft);
+  border-top: 1px solid var(--s-border-soft);
+}
+
+.tableroCelda {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 11px 14px;
+  background: var(--s-bg);
+}
+
+.tableroLabel {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--s-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tableroLabel b {
+  font-weight: 800;
+  color: var(--s-text-soft);
+  margin-right: 2px;
+}
+
+.tableroValor {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  color: var(--s-text);
+  font-variant-numeric: tabular-nums;
+}
+.tableroValor span {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--s-muted);
+  margin-left: 3px;
+}
+
+/* La magnitud que despeja la fórmula elegida, para poder seguirla de un lado
+   al otro del panel sin buscarla. */
+.tableroCeldaSalida .tableroValor { color: var(--acc); }
+.tableroCeldaSalida .tableroLabel b { color: var(--acc); }
+
+/* ─── Mando ───────────────────────────────────────────────────────────────── */
+.labMando {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--s-border-soft);
+  background: color-mix(in oklab, var(--acc) 3%, var(--s-bg));
+  flex-wrap: wrap;
+}
+
+.reloj {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.relojBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  font-family: inherit;
+  color: var(--s-text-soft);
+  background: var(--s-bg);
+  border: 1px solid var(--s-border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: color 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+}
+.relojBtn:hover {
+  color: var(--acc);
+  border-color: color-mix(in oklab, var(--acc) 42%, transparent);
+}
+
+.relojBtnPrimario {
+  color: #fff;
+  background: var(--acc);
+  border-color: var(--acc);
+  box-shadow: 0 3px 10px color-mix(in oklab, var(--acc) 34%, transparent);
+}
+.relojBtnPrimario:hover { color: #fff; filter: brightness(1.07); }
+
+.relojVel {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  margin-left: 4px;
+  background: var(--s-stage);
+  border: 1px solid var(--s-border-soft);
+  border-radius: 10px;
+}
+
+.relojVelBtn {
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--s-muted);
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  padding: 5px 9px;
+  cursor: pointer;
+  transition: color 0.16s ease, background 0.16s ease;
+  font-variant-numeric: tabular-nums;
+}
+.relojVelBtn:hover { color: var(--s-text); }
+.relojVelBtnActivo {
+  color: #fff;
+  background: var(--acc);
+}
+
+.mandoPerillas {
+  flex: 1 1 340px;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(178px, 1fr));
+  gap: 12px 20px;
+}
+
+/* Fila de botones (modos, presets) dentro del mando: ocupa el ancho entero
+   para no partir la rejilla de perillas en dos. */
+.mandoFila {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mandoFilaLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--s-muted);
+}
+
+.perilla {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.perillaHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.perillaLabel {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--s-text-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.perillaValor {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--acc);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Slider: track y thumb teñidos con el acento de la sección. */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--acc) 22%, var(--s-stage));
+  outline: none;
+  cursor: pointer;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--acc);
+  border: 2.5px solid var(--s-bg);
+  box-shadow: 0 2px 7px color-mix(in oklab, var(--acc) 45%, transparent);
+  cursor: grab;
+  transition: transform 0.15s ease;
+}
+.slider::-webkit-slider-thumb:active { transform: scale(1.18); cursor: grabbing; }
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--acc);
+  border: 2.5px solid var(--s-bg);
+  box-shadow: 0 2px 7px color-mix(in oklab, var(--acc) 45%, transparent);
+  cursor: grab;
+}
+
+/* ─── Botones de la sim ───────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--s-text-soft);
+  background: var(--s-bg);
+  border: 1px solid var(--s-border);
+  border-radius: 9px;
+  padding: 7px 12px;
+  cursor: pointer;
+  transition: all 0.17s ease;
+  white-space: nowrap;
+}
+.btn:hover {
+  color: var(--acc);
+  border-color: color-mix(in oklab, var(--acc) 42%, transparent);
+}
+
+.btnActivo {
+  color: #fff;
+  background: var(--acc);
+  border-color: var(--acc);
+  box-shadow: 0 3px 10px color-mix(in oklab, var(--acc) 34%, transparent);
+}
+.btnActivo:hover { color: #fff; filter: brightness(1.07); }
+
+/* Grupo segmentado (transversal | longitudinal). */
+.segmented {
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  background: var(--s-stage);
+  border: 1px solid var(--s-border-soft);
+  border-radius: 11px;
+}
+.segmentedBtn {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--s-muted);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 13px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+.segmentedBtn:hover { color: var(--s-text); }
+.segmentedBtnActivo {
+  color: #fff;
+  background: var(--acc);
+  box-shadow: 0 2px 8px color-mix(in oklab, var(--acc) 34%, transparent);
+}
+
+/* ─── Nota al pie ─────────────────────────────────────────────────────────── */
+.simNota {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--s-muted);
+  padding: 13px 18px;
+  border-top: 1px solid var(--s-border-soft);
+  background: color-mix(in oklab, var(--acc) 4%, var(--s-bg));
+}
+.simNota svg { flex-shrink: 0; color: var(--acc); margin-top: 1px; }
+
+/* ─── Selector de paleta ──────────────────────────────────────────────────── */
+.paleta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.paletaSwatch {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: var(--sw);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.16s ease, border-color 0.16s ease;
+}
+.paletaSwatch:hover { transform: scale(1.16); }
+.paletaSwatchActivo {
+  border-color: var(--s-bg);
+  box-shadow: 0 0 0 2px var(--sw);
+}
+
+/* ─── Adaptación ──────────────────────────────────────────────────────────── */
+
+/* Una sola columna: el panel pasa debajo de la escena y la lista puede crecer,
+   porque ya no compite en altura con el canvas. */
+@media (max-width: 1000px) {
+  .labGrid { grid-template-columns: 1fr; }
+  .labStage { border-right: none; border-bottom: 1px solid var(--s-border-soft); }
+  .panelLista { max-height: none; }
+}
+
+@media (max-width: 560px) {
+  .labBar { flex-wrap: wrap; }
+  .labBarSpacer { margin-left: 0; }
+  .labMando { padding: 14px; gap: 14px; }
+  .mandoPerillas { grid-template-columns: 1fr; }
+  .tableroValor { font-size: 15px; }
+  .panelResultadoValor { font-size: 19px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider::-webkit-slider-thumb,
+  .btn,
+  .segmentedBtn,
+  .paletaSwatch,
+  .panelItem,
+  .relojBtn,
+  .relojVelBtn,
+  .simbolo { transition: none; }
+}

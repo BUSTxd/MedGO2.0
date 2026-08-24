@@ -185,6 +185,43 @@ con `unlockAt` y `months`.
 compromiso (sección 7) — un plan nuevo aparece solo, y un precio que la página legal
 contradiga no es un typo sino un problema.
 
+**Qué ve cada tramo en el dashboard** — `src/lib/acceso.ts` es el único sitio que traduce «este
+contenido, ¿de qué tramo es?» a «¿este alumno puede entrar?». No repite la tabla de tramos: la lee
+de `CURSOS` y `LABORATORIOS` (`src/lib/data/aportes.ts`), que ya la tenían para el panel de
+Aportes. Expone `requiredPlanDeCurso(slug)`, `requiredPlanDeLab(slug)`, `planDeTrack(track)`,
+`tieneAccesoA(planState, required)` —el `!!allAccess || (isActive && planUnlocks(...))` que antes
+se reescribía en cada página— y `trackDelUsuario(planState)`, que solo decide **qué sección va
+primero**. Un slug sin registrar cae en `medicina`: bloquear de más es el fallo seguro, pero un
+laboratorio de Física sin registrar saldría bloqueado justo para UFBI.
+
+| Sección | UFBI | Facultad | free |
+|---|---|---|---|
+| Cursos | sus 6, el resto atenuado | sus 11, el resto atenuado | los 17 atenuados, en dos secciones |
+| Laboratorio | índice abierto, paneles de Facultad con candado | todo | igual que UFBI |
+| Histología · Investigación | candado | todo | candado |
+
+- **Rejillas partidas en dos** (`cursos/page.tsx` y `laboratorio/page.tsx`, ahora RSC — eran
+  `'use client'` sin usar un solo hook). El tramo del alumno va arriba; sin plan manda el orden de
+  la carrera, 1.er año primero. Las tarjetas del otro tramo se atenúan pero **siguen siendo
+  clicables**: el índice del curso enseña el sílabo con sus clases bloqueadas, que informa más que
+  una tarjeta muerta y es donde está la invitación a pagar.
+- **Secciones completas: el gate va en un `layout.tsx`**, no en la página. `SeccionGate` (RSC) lee
+  el plan y envuelve en `LockedContent`; colgado del layout cubre el índice **y** las rutas hijas
+  (`histologia/[curso]`, `investigacion/[nivel]`) sin tocar unas páginas que son de cliente y
+  algunas de más de 400 líneas. Cada laboratorio tiene el suyo, de cuatro líneas, con
+  `requiredPlanDeLab('<slug>')`.
+- **`LockedContent` acepta `preview`** (por defecto `true`). En una clase el contenido difuminado
+  detrás del velo es un aperitivo; en una sección entera significaría montar la escena 3D completa
+  de un laboratorio para que nadie la vea, así que ahí va en `false`.
+- **El candado del sidebar es señal, no cerradura.** `DashboardSidebar` recibe `accesoFacultad`
+  calculado **en el servidor** (`dashboard/layout.tsx`): con `usePlan()` no valdría, porque
+  `ClientPlanState` no lleva `allAccess` y tras un `refreshPlan()` el admin —que no tiene
+  suscripción— quedaría como `free` y vería su propio dashboard con candados. El enlace sigue
+  navegando; quien bloquea de verdad es el layout de la sección.
+- **Esto quitó acceso a contenido que antes era gratis para todos**: hasta ahora Histología,
+  Investigación y los laboratorios no tenían ningún control de plan, así que un usuario `free`
+  entraba a todo. Si se bloqueaba solo a UFBI, el que paga vería menos que el que no paga.
+
 **El índice de cada curso (`cursos/<slug>/page.tsx`) también decide acceso, y también va por
 `planUnlocks`.** Los 16 índices comparaban `planRank(plan.plan) >= planRank('interno')`, que
 con dos tramos es directamente falso: un suscriptor de `ufbi-anual` (rango 2) veía los 11
@@ -1078,6 +1115,95 @@ Sección `dashboard/investigacion`: mapa serpenteante (estilo Duolingo) donde ca
 **Fuente en elementos interactivos**: los `<button>` no heredan `font-family` del `<body>` por defecto (usan la del navegador) — todo botón custom necesita `font-family: inherit` explícito o el texto sale en una tipografía distinta al resto del sitio. Revisar esto primero si un texto "no parece tener la fuente de la web". Relacionado: Outfit se carga con pesos `['400','500','600','700','800','900']` en `layout.tsx` — si se usa `font-weight: 900` en CSS sin ese peso cargado, el navegador simula negrita (faux-bold) y se ve visualmente distinto al resto.
 
 **Para crear un nivel nuevo (tema-NN)**: crear `src/lib/investigacion/niveles/tema-NN.ts` (mismo shape que `tema-01.ts`), registrarlo en `CONTENIDO` y poner `disponible: true` en `NIVELES`. No se toca el motor. Reglas de contenido: por concepto, 3 ejemplos (académico / cotidiano inesperado / absurdo memorable) + un "dato que sorprende".
+
+---
+
+## Laboratorio virtual de Física (las 14 clases de `fisica-medicina`)
+
+Tarjeta «Simulación» de cada clase → `/cursos/fisica-medicina/modulo/{id}`. El sílabo sólo
+declara `modulo: true`; **qué se abre lo decide `src/lib/data/fisica-modulos/index.ts`**, y el
+orden importa: si la clase tiene `ModuloTeoria` manda ése (recorrido guiado lógica → simulación →
+problema → chequeo, hoy C6 y C7), y si sólo tiene `LaboratorioClase` se abre el **menú de temas**
+del laboratorio (`LabRunner`). Así, el día que una clase gane su módulo completo, basta con
+registrarlo: ni el sílabo ni el enlace se tocan. La diferencia entre los dos runners no es de
+envase sino de contrato — en el módulo **no se puede saltar** a la simulación sin haber leído el
+razonamiento, y en el laboratorio **no hay orden**: fingir un recorrido guiado sin el contenido
+que lo justifica sería peor que no tenerlo.
+
+### La vista de simulación: escena | fórmulas, y el mando al pie
+
+`LabShell` (`sims/LabShell.tsx`) es la carcasa de las 17 escenas. **Escena a la izquierda, panel
+de fórmulas a la derecha**, y play/pausa · reinicio · velocidad (×0,5 ×1 ×2) · perillas en una
+franja discreta abajo. Apiladas —como estaban— el alumno leía la fórmula, bajaba a los sliders y
+ya no tenía la expresión delante mientras la movía; lo que se aprende aquí es que la fórmula y el
+dibujo son la misma cosa, y para eso tienen que verse a la vez.
+
+- **El reloj vive dentro de `useSimCanvas`**, no en cada sim: es el mismo mando en las diecisiete.
+  `onReiniciar` es para las escenas que integran de verdad (péndulo) o guardan rastro (ondas):
+  poner `t` a cero no les basta. Las analíticas no lo pasan.
+- **Escenas sin reloj**: térmico, palanca, Coulomb y lente son **estados estables**, no evoluciones.
+  No se les pasa `reloj`, así que no dibujan play/pausa — un ×2 ahí sugeriría que el dibujo avanza.
+- **El panel se alimenta de dos fuentes que se funden**: `magnitudes` (derivadas del estado de
+  React: T, E, λ — cambian al mover una perilla) y `vivoRef` (instantáneas que la escena escribe en
+  cada frame: t, x, v). Las segundas **no pueden pasar por estado**: serían 60 renders por segundo
+  del árbol entero. Se leen de la ref a ~11 Hz y sólo re-renderiza el panel.
+- **El resaltado ata el mando con la fórmula**: cada `LabSlider` lleva su `magnitud` (clave del
+  catálogo) y al moverla se enciende su símbolo dentro de la expresión. Se apaga solo a los 2,6 s:
+  es una señal de «esto es lo que acabas de mover», no un estado — encendido, a las tres perillas
+  ya no se sabría cuál se mira.
+
+### El catálogo de fórmulas (`sims/formulas.ts` + `formulas-clases.ts`)
+
+Cada sim tiene un `CatalogoLab`: `magnitudes` (símbolo, unidad, decimales), `formulas` y
+`tablero`. Las fórmulas son **PLANTILLAS con huecos** (`'T = 2π · √( {m} / {k} )'`) que se pintan
+dos veces desde la misma fuente: con símbolos en la lista y con números en el detalle. Una sola
+fuente para las dos vistas es lo que impide que la expresión y la sustitución se desincronicen al
+retocar una, y el hueco es además lo que permite resaltar.
+
+**Dos reglas duras, y las dos ya se rompieron una vez:**
+
+1. **Cada plantilla es EXACTAMENTE la que la escena resuelve, constantes incluidas.** El valor
+   grande sale del estado real de la sim, no de la plantilla, así que un desajuste se delata solo
+   — y sería justo el fallo que el laboratorio existe para evitar: una animación decorativa
+   desconectada de los números. Ejemplos que hubo que corregir: el plano decía `f = μ·N` con salida
+   en la fricción real, pero **en reposo la fricción no vale μN** sino lo justo para empatar a W∥
+   (ahora la fórmula despeja `frCin` y el tablero muestra la real); y su `θ_c = arctan(μ)` ignoraba
+   el μ_e = 1,2·μ que la escena usa de umbral.
+2. **Todo en unidades SI dentro de la plantilla**, aunque el mando enseñe cm, mm o mmHg. Si la
+   sustitución mezclara unidades, la aritmética que el alumno rehaga a mano no le daría. Lo clínico
+   vive en el mando y en el tablero (`P1mm`, `lamNm`, `fMHz`), nunca dentro de la expresión.
+
+`CATALOGO` y el `REGISTRO` de `sims/index.tsx` son los dos `Record<SimId, …>`: añadir una clave a
+`SimId` sin catálogo o sin componente **no compila**. Entre los dos hacen imposible publicar media
+simulación.
+
+### Las 17 escenas
+
+C6 aporta `resorte`, `pendulo`, `ondas` y `sonido`; C7 comparte `termico` entre sus cuatro
+secciones. Las otras doce clases tienen una cada una: `plano` (C1, con su diagrama de cuerpo
+libre), `colision` (C2, restitución como perilla continua), `rotacional` (C3, aro/disco/esfera/
+barra y el modo patinadora), `palanca` (C4, el codo), `fluidos` (C5, estenosis), `gas` (C8,
+diagrama PV), `coulomb` (C9), `capacitor` (C10, membrana celular y desfibrilador), `circuito`
+(C11, con la escala fisiológica en mA), `magnetico` (C12, Lorentz y Faraday conmutables), `lente`
+(C13, con modo ojo) y `fotoelectrico` (C14).
+
+**No hay «cinemática» ni «tiro parabólico»**: este curso no los tiene como clase propia, y una sim
+que no case con una actividad del sílabo sería material huérfano.
+
+**Rigor sobre vistosidad, en tres decisiones que se tomaron al revés de lo cómodo:**
+- El **veredicto del ojo** dice dónde cae la imagen, no da un diagnóstico: un ojo sano mirando de
+  cerca también enfoca detrás de la retina y lo resuelve acomodando. Llamar «hipermetropía» a eso,
+  en un curso de Medicina, no es un matiz.
+- El **rendimiento de Carnot** se calcula con `min/max` de las dos temperaturas. Con `1 − T₂/T₁` a
+  secas, comprimir el gas daba un rendimiento negativo — que no es un resultado, es la fórmula mal
+  aplicada.
+- El fotoeléctrico **no publica «electrones/s»** con el recuento de la pantalla: cuántos caben es
+  una decisión de dibujo, y darla por magnitud sería inventar un dato.
+
+**El panel de Aportes lo cuenta por `moduloEn`** (`material-plan.ts`), no por `simulacion.href`:
+Física es el único curso cuyo material interactivo no es un enlace suelto sino un runner con ruta
+propia derivada del id. Sin esa regla, las catorce clases saldrían como «Video · pendiente»
+teniendo el laboratorio hecho.
 
 ---
 
