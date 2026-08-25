@@ -224,9 +224,12 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
               </label>
               {tieneLock && (
                 <div className={styles.tosLockBanner}>
-                  {/* El total sale del catálogo: con dos mensuales de precio
-                      distinto, un importe escrito a mano se desincroniza. */}
-                  Compromiso mínimo: {meses} meses (S/ {(plan.amount * meses).toFixed(2)} en total)
+                  {/* Sin el importe total: la landing ya lo explica antes de
+                      llegar aquí, y repetirlo al lado del formulario de pago
+                      hace que el compromiso parezca un cobro único de S/ 59.10
+                      cuando lo que se cobra ahora son S/ 19.70. El desglose
+                      completo sigue en /terminos, que es donde toca. */}
+                  Compromiso mínimo: {meses} meses
                 </div>
               )}
             </div>
