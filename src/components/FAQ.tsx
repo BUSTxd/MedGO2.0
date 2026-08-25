@@ -1,7 +1,56 @@
 'use client';
 
 import { useState } from 'react';
+import { PLANS, type PlanKey } from '@/lib/plans';
 import styles from '@/styles/faq.module.css';
+
+/**
+ * La respuesta sobre cancelación se compone del catálogo y no se escribe a
+ * mano: hay un mensual y un anual por tramo, el compromiso lo llevan sólo los
+ * mensuales, y los dos ejes (cadencia y compromiso) salen de `PLANS`.
+ *
+ * El texto fijo que había aquí ya se desincronizó una vez: decía que sólo
+ * Interno tenía compromiso, cuando UFBI mensual también lo tiene — y era
+ * justamente el comprador de UFBI el que menos avisos veía antes de pagar.
+ */
+function respuestaCancelacion(): string {
+  const claves = Object.keys(PLANS) as PlanKey[];
+  const dePago = claves.filter((k) => PLANS[k].amount > 0);
+  const conLock = dePago.filter((k) => (PLANS[k].commitmentMonths ?? 0) > 0);
+  const sinLock = dePago.filter((k) => !PLANS[k].commitmentMonths);
+
+  const lista = (ks: PlanKey[]) => {
+    const nombres = ks.map((k) => PLANS[k].label);
+    if (nombres.length <= 1) return nombres[0] ?? '';
+    return `${nombres.slice(0, -1).join(', ')} y ${nombres[nombres.length - 1]}`;
+  };
+
+  const partes: string[] = [];
+
+  if (conLock.length) {
+    // Hoy los dos mensuales comparten el mismo compromiso. Si algún día
+    // difieren, este número dejaría de ser uno solo y habría que desglosarlo.
+    const meses = PLANS[conLock[0]].commitmentMonths ?? 0;
+    const varios = conLock.length > 1;
+    partes.push(
+      `${varios ? 'Los planes mensuales' : 'El plan mensual'} (${lista(conLock)}) ` +
+      `${varios ? 'tienen' : 'tiene'} un compromiso mínimo de ${meses} meses: ` +
+      'el botón de cancelar se habilita una vez cumplidos.',
+    );
+  }
+
+  if (sinLock.length) {
+    const varios = sinLock.length > 1;
+    partes.push(
+      `${varios ? 'Los planes anuales' : 'El plan anual'} (${lista(sinLock)}) ` +
+      `${varios ? 'son cancelables' : 'es cancelable'} cuando quieras desde Mi cuenta ` +
+      '— mantienes el acceso hasta el final del periodo pagado.',
+    );
+  }
+
+  partes.push('En ningún caso hay devolución del periodo en curso.');
+  return partes.join(' ');
+}
 
 const faqs = [
   {
@@ -26,7 +75,7 @@ const faqs = [
   },
   {
     q: '¿Cómo cancelo mi suscripción?',
-    a: 'El plan Interno (mensual) tiene un compromiso mínimo de 3 meses: el botón de cancelar se habilita una vez cumplidos. El plan Residente (anual) es cancelable cuando quieras desde Mi cuenta — mantienes el acceso hasta el final del periodo pagado. En ningún caso hay devolución del periodo en curso.',
+    a: respuestaCancelacion(),
   },
 ];
 

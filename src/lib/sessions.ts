@@ -1,6 +1,7 @@
 import 'server-only';
 import { cookies } from 'next/headers';
 import { unstable_cache, revalidateTag } from 'next/cache';
+import { after } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import type { ProfilePlan } from '@/lib/plans';
 
@@ -195,7 +196,16 @@ export async function touchSession(params: {
       console.error('[sessions] touch insert', insErr);
       return 'noop';
     }
-    revalidateTag(sessionsTag(params.userId), { expire: 0 });
+    // ⚠️ Vía `after()` y NO directo: `dashboard/layout.tsx` llama a esta
+    // función durante el render, y `revalidateTag` dentro de un render es un
+    // error de Next («used revalidateTag during render which is unsupported»)
+    // que tumba la página entera con un 500. Con `after()` la invalidación
+    // ocurre cuando la respuesta ya salió, que es donde está permitida.
+    //
+    // Quien toque esto: el otro llamante (`/api/streak/ping`) es un route
+    // handler y allí revalidar directo sí valdría — pero la función es la misma
+    // para los dos, así que la restricción la marca el llamante más estricto.
+    after(() => revalidateTag(sessionsTag(params.userId), { expire: 0 }));
     return 'registered';
   }
 

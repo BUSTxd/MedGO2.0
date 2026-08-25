@@ -92,6 +92,10 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
   // lo llevan los dos mensuales (Interno y UFBI) pero ninguno de los anuales.
   const esMensual = plan.durationDays === 30;
   const meses = plan.commitmentMonths ?? 0;
+  // El compromiso se dice en el subtítulo y en la casilla de términos, y el
+  // desglose con el importe vive en /terminos. Un tercer aviso repetía la misma
+  // frase al lado del formulario de pago, donde además el total se leía como si
+  // fuera el cobro de ahora.
   const tieneLock = meses > 0;
 
   const initialization = useMemo(
@@ -222,16 +226,6 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
                   )}
                 </span>
               </label>
-              {tieneLock && (
-                <div className={styles.tosLockBanner}>
-                  {/* Sin el importe total: la landing ya lo explica antes de
-                      llegar aquí, y repetirlo al lado del formulario de pago
-                      hace que el compromiso parezca un cobro único de S/ 59.10
-                      cuando lo que se cobra ahora son S/ 19.70. El desglose
-                      completo sigue en /terminos, que es donde toca. */}
-                  Compromiso mínimo: {meses} meses
-                </div>
-              )}
             </div>
 
             <div className={styles.brickWrap}>
