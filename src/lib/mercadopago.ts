@@ -8,6 +8,27 @@ function token(): string {
   return t;
 }
 
+/**
+ * Error de la API de Mercado Pago con su código HTTP a mano.
+ *
+ * El `status` es lo que separa un fallo del que tiene sentido reintentar (5xx,
+ * corte de red) de uno que no va a arreglarse solo (404: el recurso no existe).
+ * Sin él, el webhook trataba los dos igual y contestaba 502 siempre — y como MP
+ * reintenta cada 15 minutos hasta recibir un 200, un 404 se convertía en un
+ * bucle infinito.
+ */
+export class MpError extends Error {
+  readonly status: number;
+  readonly path: string;
+
+  constructor(status: number, path: string, body: string) {
+    super(`MP ${status} ${path}: ${body}`);
+    this.name = 'MpError';
+    this.status = status;
+    this.path = path;
+  }
+}
+
 async function mpFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
   const res = await fetch(`${MP_BASE}${path}`, {
     ...init,
@@ -20,7 +41,7 @@ async function mpFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
   });
   const text = await res.text();
   if (!res.ok) {
-    throw new Error(`MP ${res.status} ${path}: ${text}`);
+    throw new MpError(res.status, path, text);
   }
   return text ? (JSON.parse(text) as T) : ({} as T);
 }
@@ -72,6 +93,38 @@ export function getAuthorizedPayment(paymentId: string): Promise<AuthorizedPayme
   return mpFetch<AuthorizedPaymentResponse>(
     `/authorized_payments/${encodeURIComponent(paymentId)}`,
   );
+}
+
+/**
+ * Igual que `getAuthorizedPayment`, pero aguantando la carrera de MP: la
+ * notificación `subscription_authorized_payment` llega antes de que el recurso
+ * sea consultable, así que el primer GET puede devolver 404 sobre un pago que
+ * sí existe.
+ *
+ * Sólo reintenta en 404. Un 5xx o un corte de red se propagan tal cual para que
+ * el webhook conteste 502 y MP reintente por su cuenta, que es lo que toca con
+ * un fallo transitorio de verdad.
+ *
+ * El presupuesto es de ~3 s frente a los 22 s que MP da para responder: de
+ * sobra para la carrera, y lejos del límite aunque MP vaya lento.
+ */
+export async function getAuthorizedPaymentConEspera(
+  paymentId: string,
+  intentos = 3,
+): Promise<AuthorizedPaymentResponse> {
+  let ultimo: unknown;
+  for (let i = 0; i < intentos; i++) {
+    try {
+      return await getAuthorizedPayment(paymentId);
+    } catch (err) {
+      if (!(err instanceof MpError) || err.status !== 404) throw err;
+      ultimo = err;
+      if (i < intentos - 1) {
+        await new Promise((r) => setTimeout(r, 1000 * (i + 1)));
+      }
+    }
+  }
+  throw ultimo;
 }
 
 /**

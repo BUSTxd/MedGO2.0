@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { getPreapproval, getAuthorizedPayment, verifyWebhookSignature } from '@/lib/mercadopago';
+import {
+  MpError,
+  getPreapproval,
+  getAuthorizedPaymentConEspera,
+  verifyWebhookSignature,
+} from '@/lib/mercadopago';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -43,12 +48,36 @@ export async function POST(req: Request) {
     if (type === 'subscription_authorized_payment') {
       // data.id es el payment ID (numérico), no el preapproval ID.
       // Primero buscamos el pago para obtener el preapproval_id real.
-      const payment = await getAuthorizedPayment(dataId);
+      const payment = await getAuthorizedPaymentConEspera(dataId);
       preapproval = await getPreapproval(payment.preapproval_id);
     } else {
       preapproval = await getPreapproval(dataId);
     }
   } catch (err) {
+    /*
+     * El código HTTP decide qué contestar, y no es un detalle: MP reintenta
+     * cada 15 minutos HASTA recibir un 200/201, indefinidamente.
+     *
+     * 404 — el recurso no existe y no va a existir. Devolver 502 aquí dejaba a
+     * MP reenviando la misma notificación para siempre: en los logs salieron
+     * cuatro intentos sobre `/authorized_payments/7031230226` con el mismo id,
+     * y la cuenta iba a seguir recibiéndolos cada cuarto de hora. Se contesta
+     * 200 para cortar el bucle, pero con un log al nivel de error: aceptar la
+     * notificación no es lo mismo que haberla procesado, y si esto aparece de
+     * forma recurrente hay un cobro que no se está sincronizando.
+     *
+     * Cualquier otro fallo (5xx de MP, corte de red) SÍ es transitorio y ahí
+     * el 502 es lo correcto: que MP la reenvíe hasta que entre.
+     */
+    if (err instanceof MpError && err.status === 404) {
+      console.error(
+        '[mp webhook] recurso inexistente en MP tras reintentos — se acepta la ' +
+        'notificación para no dejar a MP reintentando cada 15 min. ' +
+        `type=${type} data.id=${dataId}`,
+        err.message,
+      );
+      return NextResponse.json({ ok: true, ignored: 'mp 404' });
+    }
     console.error('[mp webhook] fetch failed', err);
     return NextResponse.json({ error: 'mp fetch failed' }, { status: 502 });
   }
