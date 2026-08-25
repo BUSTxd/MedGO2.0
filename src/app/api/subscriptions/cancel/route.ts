@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
+import { isAdminEmail } from '@/lib/admin';
 import { cancelPreapproval } from '@/lib/mercadopago';
 import { PLANS, unlockDateFor, type PlanKey } from '@/lib/plans';
 
@@ -36,7 +37,17 @@ export async function POST() {
   // Compromiso mínimo de los planes mensuales (Interno y UFBI). Sale del
   // catálogo (`commitmentMonths`), no de una lista de nombres aquí: los anuales
   // devuelven `null` y quedan fuera del lock sin nombrarlos.
-  const unlockAt = unlockDateFor(sub.plan_key, sub.created_at);
+  //
+  // La cuenta del admin queda exenta: es la que prueba el flujo real de compra
+  // contra Mercado Pago, y con el compromiso tendría que esperar tres meses
+  // para volver a probar la cancelación. No es un permiso de «cancelar por
+  // otros»: sigue cancelando únicamente la suscripción suya que devolvió la
+  // consulta de arriba (`user_id = user.id`).
+  const exentoDeCompromiso = isAdminEmail(user.email);
+
+  const unlockAt = exentoDeCompromiso
+    ? null
+    : unlockDateFor(sub.plan_key, sub.created_at);
   if (unlockAt && Date.now() < unlockAt.getTime()) {
     return NextResponse.json(
       {

@@ -22,6 +22,12 @@ interface Props {
   planLabel: string;
   expiresAt: string | null;
   subscription: SubRow | null;
+  /**
+   * Exime del compromiso mínimo del plan mensual. Lo calcula el servidor
+   * (`isAdminEmail`) y aquí sólo apaga la señal visual: quien decide de verdad
+   * es el guard de `api/subscriptions/cancel`, que repite la comprobación.
+   */
+  exentoDeCompromiso?: boolean;
 }
 
 const formatDate = (iso: string | null) => {
@@ -39,6 +45,7 @@ export default function SubscriptionPanel({
   planLabel,
   expiresAt,
   subscription,
+  exentoDeCompromiso = false,
 }: Props) {
   const router = useRouter();
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -64,7 +71,7 @@ export default function SubscriptionPanel({
 
   // Misma función que usa `api/subscriptions/cancel`: si el botón calculara la
   // fecha por su cuenta podría habilitarse antes de que la API acepte cancelar.
-  const unlockDate = subscription
+  const unlockDate = subscription && !exentoDeCompromiso
     ? unlockDateFor(subscription.plan_key, subscription.created_at)
     : null;
   const isLocked = unlockDate ? unlockDate.getTime() > Date.now() : false;

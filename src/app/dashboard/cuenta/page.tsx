@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import SubscriptionPanel from '@/components/SubscriptionPanel';
 import DeviceList, { type DeviceListItem } from '@/components/DeviceList';
 import { PLANS, type PlanKey, type ProfilePlan } from '@/lib/plans';
+import { isAdminEmail } from '@/lib/admin';
 import {
   getDeviceId,
   listActiveSessions,
@@ -93,6 +94,7 @@ export default async function AccountPage() {
         planLabel={planLabel}
         expiresAt={expiresAt}
         subscription={sub ?? null}
+        exentoDeCompromiso={isAdminEmail(user.email)}
       />
 
       <section className={styles.devicesSection}>
