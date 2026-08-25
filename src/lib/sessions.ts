@@ -247,6 +247,11 @@ export async function revokeSession(userId: string, sessionId: string): Promise<
   }
   // Invalida cache: el siguiente checkDevice verá el set actualizado y el
   // dispositivo revocado caerá en kind='revoked'.
+  //
+  // Aquí SÍ va directo, al contrario que en `touchSession`: el único llamante
+  // es `/api/sessions/revoke`, un route handler, y ahí revalidar está
+  // permitido. Si algún día se llama a esto desde un Server Component, hay que
+  // envolverlo en `after()` como el otro — o la página se caerá con un 500.
   revalidateTag(sessionsTag(userId), { expire: 0 });
   return true;
 }
