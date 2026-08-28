@@ -1,4 +1,5 @@
 import { findSolucionario } from '@/lib/data/solucionarios';
+import { findBanco } from '@/lib/data/banco';
 
 /**
  * Fuente única de verdad de «qué material tiene y qué le falta a una actividad».
@@ -178,14 +179,21 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
   const usaModulo = (reglas.moduloEn?.includes(act.tipo) ?? false) && act.modulo === true;
   const apoyoListo = usaModulo || (usaSimulacion && !!act.simulacion?.href);
 
-  // El banqueo se llena de cuatro formas: examen del bucket, qbank, solucionario
-  // paso a paso (Química Orgánica, vive fuera del sílabo) o PDF de práctica.
+  // El banqueo se llena de cinco formas: examen del bucket, qbank, solucionario
+  // paso a paso (Química Orgánica), banco de preguntas (`?banco=1`) o PDF de
+  // práctica. Las dos del medio viven fuera del sílabo y se buscan por id.
   //
   // Aquí sólo se decide si está o no está. Si ese material se armó o sólo se
   // consiguió no se puede deducir del sílabo —el mismo PDF puede ser trabajo
   // propio o una descarga—, así que lo declara quien lo subió al marcar su
   // círculo en «Quién subió qué» (`OrigenMarca` en `aportes-marcas.ts`).
-  const banqueoListo = !!(act.examen || act.qbank || act.propuestos || findSolucionario(act.id));
+  const banqueoListo = !!(
+    act.examen ||
+    act.qbank ||
+    act.propuestos ||
+    findSolucionario(act.id) ||
+    findBanco(act.id)
+  );
   // Los exámenes sí exigen banqueo; los entregables no tienen nada que banquear.
   const banqueoNoAplica =
     invitacion || esEntrega || (reglas.sinBanqueoEn?.includes(act.tipo) ?? false);

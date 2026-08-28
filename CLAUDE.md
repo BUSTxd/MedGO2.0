@@ -1132,13 +1132,13 @@ que lo justifica sería peor que no tenerlo.
 
 ### La vista de simulación: escena | fórmulas, y el mando al pie
 
-`LabShell` (`sims/LabShell.tsx`) es la carcasa de las 17 escenas. **Escena a la izquierda, panel
+`LabShell` (`sims/LabShell.tsx`) es la carcasa de las 18 escenas. **Escena a la izquierda, panel
 de fórmulas a la derecha**, y play/pausa · reinicio · velocidad (×0,5 ×1 ×2) · perillas en una
 franja discreta abajo. Apiladas —como estaban— el alumno leía la fórmula, bajaba a los sliders y
 ya no tenía la expresión delante mientras la movía; lo que se aprende aquí es que la fórmula y el
 dibujo son la misma cosa, y para eso tienen que verse a la vez.
 
-- **El reloj vive dentro de `useSimCanvas`**, no en cada sim: es el mismo mando en las diecisiete.
+- **El reloj vive dentro de `useSimCanvas`**, no en cada sim: es el mismo mando en las dieciocho.
   `onReiniciar` es para las escenas que integran de verdad (péndulo) o guardan rastro (ondas):
   poner `t` a cero no les basta. Las analíticas no lo pasan.
 - **Escenas sin reloj**: térmico, palanca, Coulomb y lente son **estados estables**, no evoluciones.
@@ -1177,7 +1177,7 @@ retocar una, y el hueco es además lo que permite resaltar.
 `SimId` sin catálogo o sin componente **no compila**. Entre los dos hacen imposible publicar media
 simulación.
 
-### Las 17 escenas
+### Las 18 escenas
 
 C6 aporta `resorte`, `pendulo`, `ondas` y `sonido`; C7 comparte `termico` entre sus cuatro
 secciones. Las otras doce clases tienen una cada una: `plano` (C1, con su diagrama de cuerpo
@@ -1185,10 +1185,125 @@ libre), `colision` (C2, restitución como perilla continua), `rotacional` (C3, a
 barra y el modo patinadora), `palanca` (C4, el codo), `fluidos` (C5, estenosis), `gas` (C8,
 diagrama PV), `coulomb` (C9), `capacitor` (C10, membrana celular y desfibrilador), `circuito`
 (C11, con la escala fisiológica en mA), `magnetico` (C12, Lorentz y Faraday conmutables), `lente`
-(C13, con modo ojo) y `fotoelectrico` (C14).
+(C13, con modo ojo) y `fotoelectrico` (C14). C3 es la única con **dos**: `torque` (la barra con
+apoyo) y `rotacional` (el momento de inercia) — el laboratorio de una clase acepta N temas, y
+partir «torque y momento de inercia» en dos escenas es más honesto que meter dos diagramas
+distintos en un selector dentro de la misma.
 
 **No hay «cinemática» ni «tiro parabólico»**: este curso no los tiene como clase propia, y una sim
 que no case con una actividad del sílabo sería material huérfano.
+
+### La barra con punto de apoyo (`torque`, C3)
+
+El diagrama del examen —barra rígida, apoyo en B, F₁ vertical en A y F₂ a θ en C— pero **vivo**:
+gira de verdad cuando los torques no se empatan y se para cuando sí. Ver caer el lado que gana es
+lo que convierte «Στ = 0» en algo comprobable en vez de creíble. Cuatro decisiones del modelo, y
+ninguna es de dibujo:
+
+- **θ se mide respecto a la BARRA**, como en el enunciado, así que F₂ gira con ella y **su torque no
+  cambia al inclinarse**; F₁ es vertical, fija en el espacio, y **pierde brazo con el coseno**. Que
+  una cambie y la otra no es justo lo que hay que ver, y obliga a que la plantilla de τ₁ lleve el
+  `cos φ` dentro: sin él la sustitución dejaría de cuadrar con el valor en cuanto la barra se
+  moviera.
+- **El peso propio se cuenta siempre.** Con `masa = 0` la barra es la ideal del enunciado, no puede
+  acelerar (I = 0), no gira, y el veredicto dice hacia dónde lo haría. Despreciar el peso para los
+  torques pero usar la masa para la inercia sería el número mentiroso de siempre. El botón
+  «Enunciado del problema» pone masa 0 y con eso **F₁\* da 650 N exactos**, la respuesta del libro.
+- El eje lleva un **rozamiento viscoso declarado**: sin él, el caso en que la barra encuentra su
+  equilibrio inclinada —τ₁ ∝ cos φ decreciente hasta empatar con τ₂— oscilaría para siempre.
+- **El arrastre y las perillas tienen que aterrizar en los MISMOS valores.** No basta con compartir
+  los topes (la lección de la lente): también el **paso**. El `<input type="range">` redondea lo que
+  enseña, pero el gesto dejaba el estado en el valor continuo — arrastrando F₂ salía θ = 54,4°, la
+  perilla decía «54°» y el panel sustituía «800 · sen 54» para dar 651 N, cuando esa cuenta a mano
+  da 647. Lo cierra `ajusta(v, paso, lim)`. De ahí también el **umbral de «equilibrio»**: no puede
+  ser cero exacto, porque el mejor ajuste posible deja medio paso por el brazo.
+
+**El tope de giro (`ANG_MAX`) es un parámetro de ENCUADRE, no un adorno.** El encuadre reserva lo
+que suben y bajan los extremos, así que subirlo encoge la barra en pantalla; a 0,34 rad (19,5°) la
+barra más desfavorable sigue midiendo 223 px y queda recorrido para el caso que enseña —F₁ un 5 %
+por encima del equilibrio **se frena sola en ~18°**, mientras que un 5 % por debajo se va al tope—.
+
+Dos trampas del canvas que costaron una pasada cada una:
+
+- **Un arco entre dos direcciones se calcula NORMALIZANDO la diferencia a ±π.** El arco del ángulo
+  θ usaba `min`/`max` de los dos ángulos crudos: con la barra inclinada caen a lados opuestos de
+  ±π y se dibujaba el arco largo — **330° donde tenía que haber 30°**.
+- **Lo que se ancla al eje horizontal, la barra inclinada lo atraviesa.** Los arcos de torque
+  arrancan pegados a la barra (`angBarra ± 0,3 rad`, que a radio 44 son los 13 px que libran su
+  semigrosor) y barren hacia abajo; con radios distintos, para que al inclinarse no se toquen entre
+  sí por debajo del apoyo.
+
+Se verifica igual que la lente, **sin navegador**: barrido en Node de los 76 800 casos del espacio
+de perillas × ángulo × ancho, con seis comprobaciones (extremos y puntas fuera del canvas, dibujo
+invadiendo la franja de la balanza, rótulo cortado, arco desbordado, barra encogida hasta ser
+ilegible) → 0 fallos, contrastado contra el encuadre ingenuo, que caza 72 588. Y un segundo script
+integra la dinámica para comprobar que se para en equilibrio, cae hacia el lado que gana y se frena
+sola en el caso fino.
+
+### Encuadre automático y arrastre con el ratón (hecho en `lente`, C13)
+
+Una escala **fija** en píxeles por metro se rompe sola en cuanto la física diverge: en la lente, con
+`s → f` la imagen se va al infinito y su flecha —y la del objeto, multiplicada por un factor de
+exageración vertical arbitrario— salían del canvas. No era un caso raro: era justo el que la clase
+enseña. Lo que lo sustituye:
+
+- **El encuadre se resuelve en dos pasos, no en uno**: primero el horizontal, y con él ya se sabe si
+  la imagen cae dentro; sólo entonces el vertical. La altura de algo que no se ve no puede robarle
+  sitio a lo que sí — pero si sí se ve, **se respeta entera**: recortarla contra la altura del
+  objeto no evita nada, sólo deja que la punta se salga por arriba.
+- **Lo que no cabe se rotula, no se encoge.** Una imagen a 3 m junto a un objeto a 9 cm no puede
+  verse a la vez, y encoger todo hasta que quepa deja la escena en un punto: va un marcador en el
+  borde diciendo dónde cayó. Y como la escala ya no es fija, el dibujo lleva **cotas** (s, s′) o el
+  alumno no sabe a qué distancia está nada.
+- **⚠️ El arrastre mapea puntero→magnitud con la escala CONGELADA al empezar el gesto**, nunca con
+  la del frame en curso. Con la del frame hay realimentación positiva —alejo el objeto, el encuadre
+  se encoge, el objeto parece haberse alejado más— y el arrastre se dispara solo. En `pointerdown`
+  se guarda `{x0, y0, valor0, px0, py0, lenteX0}` y todo sale de deltas; la cámara sí se suaviza con
+  un lerp por frame (el bucle de `useSimCanvas` corre siempre, aunque la escena sea estática).
+- El puente escena↔puntero es una **`geoRef` que el dibujo escribe en cada frame** con lo que el
+  hit-test necesita. Así el asa está siempre donde se ve, sin recalcular la geometría aparte.
+- **⚠️ Un rayo tiene que refractarse SOBRE algo dibujado.** La construcción paraxial dobla los
+  rayos en el *plano* de la lente, que es infinito, mientras que el vidrio dibujado tiene un
+  tamaño: si la lente se dibuja con una altura fija, el rayo paralelo al eje —que entra a la altura
+  del objeto— y el que sale por el foco —que entra a la altura de la **imagen**— se doblan **en el
+  aire**, por encima y por debajo del cristal. Es el fallo que reportó BUST («cuando una tiende a
+  bajar pasa esto»), y no es un caso raro: pasa en cuanto la imagen es mayor que el objeto. La
+  lente crece para cubrirlos y se ensancha con su altura para no ser un fideo; el plano punteado
+  es la red de seguridad cuando ni así llega.
+- El reverso del mismo error: **la lente no puede crecer por un rayo que no se dibuja.** Con la
+  imagen fuera del cuadro el tercer rayo se omite, y si su altura seguía contando, el vidrio se
+  comía la escena entera. La condición que decide dibujarlo y la que fija la altura tienen que ser
+  **la misma variable**, no dos expresiones equivalentes que un día se separan.
+- **Los rótulos van pegados a la punta de su flecha**, no anclados al eje: con la imagen invertida,
+  un rótulo al otro lado del eje queda a 150 px de lo que nombra y parece señalar otra cosa. Eso
+  obliga a descontar su alto del encuadre vertical, o el rótulo cae sobre la cota.
+- **⛔ El mando se acota por lo FÍSICAMENTE posible, no por lo que la fórmula admite.** La ecuación
+  de la lente acepta cualquier `s` y cualquier `f`, pero un ojo con 40 D no es un ojo —es una lupa—
+  y un objeto a 4 cm no lo enfoca nadie: el punto próximo está en ~10 cm. Con esos valores el dibujo
+  salía roto (la imagen 12,6 mm detrás de una retina que está a 17 mm) y parecía un fallo de
+  encuadre. No lo era: era un imposible pedido al dibujo. En el ojo el rango es **10–120 cm** y
+  **54–72 D** (59 relajado, ~70 acomodando al máximo), y con eso el peor caso cae al 84 % del
+  espacio reservado. La regla general: cada escena declara los suyos, el arrastre usa **los mismos**
+  (si no, el mando deja de coincidir con el dibujo justo en los valores que rompen), y los presets
+  del sílabo también pasan por ellos.
+- Los presets que no aplican a una escena **se ocultan**, no se dejan inertes: «objeto dentro del
+  foco» en modo ojo pediría un objeto a 1,7 cm del ojo.
+- Se verifica **sin navegador**: replicar la función de encuadre en un script Node y barrer los
+  rangos reales de los sliders × varios anchos de canvas. Las seis comprobaciones que valen la
+  pena: puntas fuera del canvas, rótulos cortados, rótulo encima de una cota, rayo que se refracta
+  fuera de la lente y del plano, lente desproporcionada respecto a lo que tiene que cubrir, y —en
+  el ojo— foco fuera del cuadro. **Un barrido que da 0 hay que contrastarlo corriéndolo contra el
+  código ANTERIOR**: si no caza los casos ya reportados, el 0 no significa nada.
+
+### ⚠️ Una excepción en `draw` dejaba el canvas en blanco para siempre
+
+`useSimCanvas` pedía el `requestAnimationFrame` siguiente **después** de llamar a `draw`: una sola
+excepción se llevaba esa línea por delante y el bucle no volvía a arrancar nunca. La escena quedaba
+en blanco en una página que por lo demás funcionaba, sin nada que lo explicara — el peor modo de
+fallo posible aquí, y afecta a las 18 sims. Ahora `draw` va en `try/catch`: se registra el error una
+vez, se repone la transformación del DPR (un `save()` sin su `restore()` la deja sucia) y el bucle
+sigue, de modo que un fallo transitorio se recupera solo; a los 60 frames fallando seguidos se
+detiene, porque cada frame apilaría más `save()` huérfanos.
 
 **Rigor sobre vistosidad, en tres decisiones que se tomaron al revés de lo cómodo:**
 - El **veredicto del ojo** dice dónde cae la imagen, no da un diagnóstico: un ojo sano mirando de

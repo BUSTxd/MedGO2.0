@@ -13,6 +13,8 @@ import SinMaterialSection from '@/components/SinMaterialSection';
 import LockedContent from '@/components/LockedContent';
 import TrackRecentClass from '@/components/TrackRecentClass';
 import ExamRunner from '@/components/ExamRunner';
+import BancoPreguntas from '@/components/BancoPreguntas';
+import { findBanco } from '@/lib/data/banco';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
 
@@ -30,7 +32,7 @@ export default async function PatologiaActividadPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ examen?: string }>;
+  searchParams: Promise<{ examen?: string; banco?: string }>;
 }) {
   const { id } = await params;
   const sp = await searchParams;
@@ -38,6 +40,9 @@ export default async function PatologiaActividadPage({
   if (!result) notFound();
 
   const { actividad: act, semana } = result;
+  // El banco vive fuera del sílabo y se descubre por el id de la actividad,
+  // igual que los solucionarios: añadir un tema no obliga a tocar patologia.ts.
+  const banco = findBanco(act.id);
   const badge = TIPO_BADGE[act.tipo];
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
@@ -52,6 +57,17 @@ export default async function PatologiaActividadPage({
       ? Promise.resolve({ plan: 'free' as const, isActive: true })
       : getCachedPlanState(),
   ]);
+
+  // Banco de preguntas: gratis, como el resto de exámenes del proyecto, así que
+  // no pasa por LockedContent. Va dentro de `.microPage` porque es esa clase la
+  // que define las variables de tema (--white, --muted, --card-bg…).
+  if (sp?.banco === '1' && banco) {
+    return (
+      <div className={styles.microPage}>
+        <BancoPreguntas tema={banco} backHref={`/dashboard/cursos/patologia/${id}`} />
+      </div>
+    );
+  }
 
   const examMode = sp?.examen === '1' && !!act.examen;
 
@@ -147,8 +163,18 @@ export default async function PatologiaActividadPage({
             claseId={act.id}
             hasResumen={act.resumen?.tipo === 'pdf'}
             resumenOpciones={act.resumen?.opciones}
+            resumenFormato={act.resumen?.formato}
+            resumenTitulo={act.titulo}
             examen={act.examen}
             examenTitle={act.titulo}
+            banco={
+              banco
+                ? {
+                    href: `/dashboard/cursos/patologia/${id}?banco=1`,
+                    desc: `${banco.tandas.length} exámenes con explicación, uno por pregunta`,
+                  }
+                : undefined
+            }
           />
         )}
       </div>

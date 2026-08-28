@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "verificar:banco": "node --experimental-strip-types --no-warnings scripts/verificar-banco.mjs"
   },
   "dependencies": {
     "@mercadopago/sdk-react": "^1.0.7",

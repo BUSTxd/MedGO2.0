@@ -57,6 +57,17 @@ export interface SolucionarioRef {
 }
 
 /**
+ * Convierte la tarjeta «Banqueo» en el banco de preguntas (`?banco=1`): una
+ * pregunta a la vez, con la explicación revelada al responder. Va **delante de
+ * `examen`** en la precedencia: si una actividad llegara a tener los dos, el
+ * banco es el envase que queremos enseñar.
+ */
+export interface BancoRef {
+  href: string;
+  desc?: string;
+}
+
+/**
  * Convierte la tarjeta «Banqueo» en un PDF de problemas propuestos que se abre
  * en el mismo visor a pantalla completa que Resumen (reutiliza
  * `PdfFullscreenModal`/`/api/resumen/{claseId}`, no es un banco interactivo).
@@ -94,6 +105,7 @@ interface Props {
   examen?: ExamenRef;
   examenTitle?: string;
   simulacion?: SimulacionRef;
+  banco?: BancoRef;
   solucionario?: SolucionarioRef;
   propuestosPdf?: PropuestosPdfRef;
   /** Omite del todo la tarjeta de Banqueo (ni siquiera "Próximamente") — para
@@ -120,7 +132,7 @@ const BanqueoIcon = () => (
   </svg>
 );
 
-export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, simulacion, solucionario, propuestosPdf, hideBanqueo, banqueoLabel }: Props) {
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel }: Props) {
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
   const isPropuestosMulti = propuestosPdf?.opciones && propuestosPdf.opciones.length > 1;
   const pathname = usePathname();
@@ -235,7 +247,22 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
 
         {/* Banco de preguntas / examen interactivo — omitido del todo en
             actividades donde nunca va a existir (hideBanqueo). */}
-        {hideBanqueo ? null : examen ? (
+        {hideBanqueo ? null : banco ? (
+          <Link
+            href={banco.href}
+            className={`${styles.studyCard} ${styles.studyCardActive}`}
+            onClick={() => trackEvent('banco_iniciado', { claseId, examKey: claseId })}
+          >
+            <div className={styles.studyCardIcon}>
+              <BanqueoIcon />
+            </div>
+            <p className={styles.studyCardTitle}>{banqueoLabel ?? 'Banqueo'}</p>
+            <p className={styles.studyCardDesc}>
+              {banco.desc ?? 'Una pregunta a la vez, con explicación al responder'}
+            </p>
+            <span className={styles.studyAvailable}>Comenzar ▸</span>
+          </Link>
+        ) : examen ? (
           <Link
             href={`${pathname}?examen=1`}
             className={`${styles.studyCard} ${styles.studyCardActive}`}
