@@ -88,6 +88,10 @@ const FIGURAS = [
   // Las dos formas de figura del conversor, igual que en `.capas`: LAB6 envuelve
   // la imagen en un contenedor `.pdf-image`; LAB10 la marca directamente.
   '.doc-hojas img.pdf-image',
+  // Notion envuelve sus figuras en <a href="…avif"> y por ahí se interceptan
+  // antes de llegar aquí; un documento «integrado» trae la <img> suelta dentro
+  // del mismo `figure.image`, y sin esta entrada el clic no haría nada.
+  'figure.image img',
 ].join(', ');
 
 interface Props {
@@ -193,6 +197,19 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
     if (href?.endsWith('.avif')) {
       e.preventDefault();
       setLightbox(href);
+      return;
+    }
+
+    /* Índice interno (los documentos «integrados» abren con uno). Dejarlo al
+       navegador funciona —el scroll lo hace el scroller del visor—, pero le
+       cuelga el `#ancla` a la URL del dashboard, que se queda ahí después de
+       cerrar el resumen. Se hace a mano sobre el nodo, sin tocar la ruta. */
+    if (href?.startsWith('#') && href.length > 1) {
+      const destino = sheetRef.current?.querySelector(`[id="${CSS.escape(href.slice(1))}"]`);
+      if (destino) {
+        e.preventDefault();
+        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
       return;
     }
 

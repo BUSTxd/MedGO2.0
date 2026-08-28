@@ -140,6 +140,7 @@ for (const ref of refs) {
 let origBytes = 0, avifBytes = 0, subidas = 0, yaAvif = 0, colapsadas = 0;
 const fallos = [];
 const destDe = new Map(); // ref (decodificado) → dest en el bucket
+const anchoDe = new Map(); // dest → ancho intrínseco en px
 
 for (const [canon, miembros] of grupos) {
   const dest = `${PREFIX}/${nombreEnStorage(canon)}.avif`;
@@ -173,6 +174,9 @@ for (const [canon, miembros] of grupos) {
     buf = await sharp(src).avif({ quality: AVIF_QUALITY }).toBuffer();
   }
   avifBytes += buf.length;
+  // El ancho real del archivo: hace falta cuando el documento no trae el
+  // `width:NNNpx` inline de Notion (ver 5e).
+  try { anchoDe.set(dest, (await sharp(buf).metadata()).width); } catch { /* no crítico */ }
 
   if (dry) { subidas++; continue; }
 
@@ -219,11 +223,26 @@ const urlDe = (raw) => {
 //     tipografía) y el emoji/favicon de la página. El estilo lo pone MedGO.
 const ini = html.indexOf('<div class="page-body">');
 const fin = html.lastIndexOf('</div></article>');
-if (ini === -1 || fin === -1) {
-  console.error('✗ No encontré <div class="page-body"> … </div></article>. ¿Es un export de Notion?');
-  process.exit(1);
+let body;
+if (ini !== -1 && fin !== -1) {
+  body = html.slice(ini + '<div class="page-body">'.length, fin);
+} else {
+  // Un documento redactado con el vocabulario de Notion pero armado a mano
+  // (los «INTEGRADO») no trae el envoltorio `page-body`: el contenido cuelga
+  // directo del <article> de la página. Se toma ése, y se descartan aparte el
+  // <header> y el <h1 class="page-title">, que en un export normal quedan
+  // FUERA del page-body — el título ya lo pone la cabecera del visor, y
+  // dejarlo dentro lo duplicaría.
+  const art = html.match(/<article[^>]*>/);
+  const finArt = html.lastIndexOf('</article>');
+  if (!art || finArt === -1) {
+    console.error('✗ No encontré <div class="page-body"> … </div></article> ni un <article>. ¿Es un export de Notion?');
+    process.exit(1);
+  }
+  body = html.slice(art.index + art[0].length, finArt)
+    .replace(/<header[\s\S]*?<\/header>/i, '')
+    .replace(/^\s*<h1 class="page-title">[\s\S]*?<\/h1>/i, '');
 }
-let body = html.slice(ini + '<div class="page-body">'.length, fin);
 
 // 5b. imágenes → CDN público (href del enlace y src de la figura)
 body = body.replace(/href="([^"]+\.(?:png|jpe?g|webp))"/gi, (_, p) => `href="${urlDe(p)}"`);
@@ -243,10 +262,49 @@ body = body.replace(/<img /g, '<img loading="lazy" decoding="async" ');
 //     que no hacía nada.
 body = body.replace(/(<img[^>]*?)style="width:([\d.]+)px"/g, '$1style="--w:$2px"');
 
-// 5f. fuera lo que no aporta al render (los id son UUID de bloque de Notion y
-//     no hay anclas internas que los usen)
+// 5e-bis. Un documento redactado a mano con el vocabulario de Notion no trae
+//     ese `width` inline, así que sus figuras se quedarían sin --w y el CSS
+//     caería al fallback 100%: una captura pequeña estirada hasta el ancho del
+//     texto, borrosa. Se les pone el ancho REAL del archivo (el `max-width:
+//     100%` del visor sigue encogiendo las grandes), que es justo lo que hace
+//     Notion cuando no se le fija un ancho a mano.
+const anchoPorUrl = new Map(
+  [...anchoDe].map(([dest, w]) => [`${BASE_PUB_ROOT}/${dest}`, w]),
+);
+body = body.replace(/<img((?:(?!\sstyle=)[^>])*?)src="([^"]+)"((?:(?!\sstyle=)[^>])*?)(\/?)>/g,
+  (todo, pre, src, post, cierre) => {
+    const w = anchoPorUrl.get(src);
+    // El `/` de cierre se recoloca al final: dejarlo donde estaba pondría el
+    // style después de la barra y el atributo se perdería.
+    return w ? `<img${pre}src="${src}"${post} style="--w:${w}px"${cierre}>` : todo;
+  });
+
+// 5e-ter. Y sus <figure> vienen sin clase: `figure.image` es el selector por
+//     el que el visor les da margen, borde, hover y clic para ampliar. Sólo
+//     las que envuelven una imagen — un <figure> con una tabla no lo es.
+body = body.replace(/<figure>(\s*<img[^>]*>)/g, '<figure class="image">$1');
+
+// 5e-quater. Una tabla que hospeda un `.matiz` (la aclaración que sale al pasar
+//     el cursor) renuncia a su scroll horizontal: el `overflow` del visor
+//     recortaría el aviso contra el borde de la tabla. Se marca aquí, sobre el
+//     documento, en vez de quitarle el scroll a TODAS las tablas — que es lo
+//     que impide que una tabla ancha desborde el resumen.
+body = body.replace(/<table([^>]*)>([\s\S]*?)<\/table>/g, (todo, attrs, dentro) => {
+  if (!dentro.includes('class="matiz"')) return todo;
+  return /class="/.test(attrs)
+    ? `<table${attrs.replace(/class="/, 'class="matiz-host ')}>${dentro}</table>`
+    : `<table${attrs} class="matiz-host">${dentro}</table>`;
+});
+
+// 5f. fuera lo que no aporta al render (los id son UUID de bloque de Notion,
+//     puro peso). EXCEPCIÓN: los que son destino de un `href="#…"` del propio
+//     documento — un apunte con índice al principio se quedaría con 18 enlaces
+//     que no llevan a ninguna parte.
+const anclas = new Set(
+  [...body.matchAll(/href="#([^"]+)"/g)].map(m => decodeURIComponent(m[1])),
+);
 body = body
-  .replace(/\sid="[^"]*"/g, '')
+  .replace(/\sid="([^"]*)"/g, (todo, valor) => (anclas.has(valor) ? todo : ''))
   .replace(/\sdata-notion-[a-z-]+="[^"]*"/g, '')
   .replace(/\sdir="(auto|ltr)"/g, '')
   .replace(/\sclass=""/g, '');

@@ -71,6 +71,7 @@ const ALLOWED = new Set([
   'loc-clase-13',
   'loc-clase-14',
   'loc-clase-15',
+  'pat-acp-1',
 ]);
 
 // id → ruta dentro del bucket (sin extensión).
@@ -120,6 +121,7 @@ const FILE_ALIAS: Record<string, string> = {
   'loc-clase-13': 'aparato-locomotor/loc-clase-13',
   'loc-clase-14': 'aparato-locomotor/loc-clase-14',
   'loc-clase-15': 'aparato-locomotor/loc-clase-15',
+  'pat-acp-1': 'patologia/pat-acp-1',
 };
 
 export async function GET(

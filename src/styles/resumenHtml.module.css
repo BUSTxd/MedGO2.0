@@ -475,9 +475,175 @@
   transition: box-shadow 0.18s, transform 0.18s;
 }
 
-.sheet :global(figure.image a:hover img) {
+/* Con enlace (Notion, que envuelve cada figura en <a href="…avif">) y sin él
+   (los documentos «integrados», que traen la <img> suelta): el hover tiene que
+   verse igual en los dos, o la figura parece muerta justo donde no hay enlace. */
+.sheet :global(figure.image a:hover img),
+.sheet :global(figure.image img:hover) {
   box-shadow: 0 10px 28px rgba(10, 12, 30, 0.2);
   transform: translateY(-2px);
+}
+
+/* ─── Índice de un documento «integrado» ───
+   Un <div class="toc"> con la lista de enlaces a los <h2> del propio texto.
+   Sin caja se lee como una lista suelta al principio del resumen; con ella se
+   distingue del contenido y se ve que es navegación. */
+.sheet :global(.toc) {
+  margin: 1.4em 0;
+  padding: 1.1em 1.3em;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--head-bg);
+}
+
+.sheet :global(.toc > p:first-child) {
+  margin-top: 0;
+}
+
+.sheet :global(.toc a) {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.sheet :global(.toc a:hover) {
+  border-bottom-color: currentColor;
+}
+
+.sheet :global(.disclaimer) {
+  opacity: 0.7;
+  font-size: calc(14px * var(--s));
+}
+
+/* ─── Matiz: la aclaración que aparece sobre una frase del texto ───
+
+   Para el detalle que corrige una frase del apunte sin poder meterse en la
+   frase misma («contracción de las células endoteliales» es correcto, pero se
+   lee como si las células se encogieran). Ponerlo en el cuerpo alargaría una
+   lista de signos cardinales que vale por ser corta; en un callout aparte se
+   despegaría de la frase que matiza.
+
+   Sin JS: el visor inyecta el HTML tal cual, así que esto tiene que salir del
+   propio documento. `focus-within` + el tabindex del <span> es lo que lo hace
+   funcionar también con un toque en móvil, donde no hay cursor que pasar. */
+.sheet :global(.matiz) {
+  position: relative;
+  border-bottom: 1px dashed currentColor;
+  cursor: help;
+  outline: none;
+}
+
+.sheet :global(.matiz-pop) {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 10px);
+  z-index: 5;
+  width: max-content;
+  max-width: min(440px, 78vw);
+  padding: 0.85em 1em;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  /* Opaco a la fuerza: `--head-bg` es un rgba pensado para teñir la hoja, y
+     usarlo a secas dejaría leer el texto que el aviso tapa. El color va de
+     base y el tinte encima, como capa. */
+  background-color: var(--sheet-bg);
+  background-image: linear-gradient(var(--head-bg), var(--head-bg));
+  box-shadow: 0 12px 32px rgba(10, 12, 30, 0.28);
+  font-size: calc(14.5px * var(--s));
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.16s, transform 0.16s, visibility 0.16s;
+}
+
+.sheet :global(.matiz:hover .matiz-pop),
+.sheet :global(.matiz:focus-within .matiz-pop) {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Dentro de una TABLA el problema es el recorte, y se ataca en la tabla.
+
+   Las tablas del visor son `display:block; overflow-x:auto` para que las
+   anchas scrolleen en su caja en vez de desbordar el documento, y ese overflow
+   recorta cualquier hijo absoluto: el aviso saldría cortado por el borde de la
+   tabla, y encima le añadiría scroll vertical.
+
+   ⛔ `position: fixed` NO es la salida, aunque escape del recorte: sin `top`
+   conserva su posición estática, que en un `fixed` se resuelve **una vez** —
+   no sigue al scroll—, así que al bajar hasta la tabla el aviso se queda en
+   una coordenada de pantalla que ya no le corresponde y no se ve. Se probó y
+   ese fue exactamente el fallo.
+
+   La tabla que hospeda un matiz renuncia a su scroll (la marca el uploader).
+   Es seguro porque son tablas de TEXTO: sin `display:block` vuelven a ser una
+   tabla normal, que reparte el ancho y hace wrap en las celdas en vez de
+   desbordar. El scroll horizontal sigue estando para todas las demás. */
+.sheet :global(table.matiz-host) {
+  display: table;
+  overflow: visible;
+}
+
+/* Centrado sobre el término: desde una celda del medio, un `left: 0` con 440px
+   de ancho se saldría por la derecha, y el scroller del visor la recorta
+   (`overflow-x: hidden`). */
+.sheet :global(table .matiz-pop) {
+  left: 50%;
+  transform: translate(-50%, -4px);
+  max-width: min(460px, 82vw);
+}
+
+.sheet :global(table .matiz:hover .matiz-pop),
+.sheet :global(table .matiz:focus-within .matiz-pop) {
+  transform: translate(-50%, 0);
+}
+
+/* …salvo en las celdas de los extremos, donde el centrado sí se saldría de la
+   hoja — y el scroller del visor recorta en horizontal, así que la mitad del
+   aviso desaparecería. Se ancla al borde del término: por la izquierda en la
+   primera columna, por la derecha en la última. */
+.sheet :global(table td:first-child .matiz-pop),
+.sheet :global(table th:first-child .matiz-pop) {
+  left: 0;
+  transform: translateY(-4px);
+}
+
+.sheet :global(table td:last-child .matiz-pop),
+.sheet :global(table th:last-child .matiz-pop) {
+  left: auto;
+  right: 0;
+  transform: translateY(-4px);
+}
+
+.sheet :global(table td:first-child .matiz:hover .matiz-pop),
+.sheet :global(table td:first-child .matiz:focus-within .matiz-pop),
+.sheet :global(table td:last-child .matiz:hover .matiz-pop),
+.sheet :global(table td:last-child .matiz:focus-within .matiz-pop) {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet :global(.matiz-pop) {
+    transition: none;
+  }
+  .sheet :global(.matiz-pop) {
+    transform: none;
+  }
+  /* El desplazamiento de entrada sí se quita, pero el `translate(-50%)` de la
+     variante en tabla NO: ahí no es animación, es el centrado en la ventana.
+     Sin reponerlo, el aviso saldría medio ancho a la derecha. */
+  .sheet :global(table .matiz-pop),
+  .sheet :global(table .matiz:hover .matiz-pop),
+  .sheet :global(table .matiz:focus-within .matiz-pop) {
+    transform: translate(-50%, 0);
+  }
+  .sheet :global(table td:first-child .matiz-pop),
+  .sheet :global(table td:last-child .matiz-pop) {
+    transform: none;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -706,7 +872,8 @@
   .sheet :global(figure.image img) {
     transition: none;
   }
-  .sheet :global(figure.image a:hover img) {
+  .sheet :global(figure.image a:hover img),
+  .sheet :global(figure.image img:hover) {
     transform: none;
   }
 }

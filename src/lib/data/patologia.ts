@@ -15,9 +15,14 @@ export type Unidad =
   | 'INTEGRACION'
   | 'EVALUACION';
 
+/** Envase del resumen: PDF en el bucket `resumenes`, o fragmento HTML. */
+export type ResumenFormato = 'pdf' | 'html';
+
 export interface ResumenOpcion {
   id: string;
   label: string;
+  /** Por opción además de por tarjeta: un picker puede mezclar los dos envases. */
+  formato?: ResumenFormato;
 }
 
 export interface ExamenRef {
@@ -39,7 +44,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   examen?: ExamenRef;
   /** ISO date YYYY-MM-DD; usado para "Próximos exámenes" en el home. */
   fechaISO?: string;
@@ -280,6 +285,11 @@ export const semanas: Semana[] = [
         subtemas: ['Mediadores de la inflamación', 'SIRS'],
         docentes: [],
         nota: NOTA_ACP,
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'pat-acp-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'pat-lab-3',
