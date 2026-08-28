@@ -226,6 +226,101 @@ export const ROTACIONAL: CatalogoLab = {
   tablero: ['I', 'tau', 'alpha', 'om', 'L', 'Krot'],
 };
 
+/* ═══ C3 · Torque sobre una barra con punto de apoyo ═════════════════════════ */
+
+/**
+ * El diagrama del examen, con una salvedad que la escena hace visible: los dos
+ * torques NO se comportan igual al inclinarse la barra. θ se mide respecto a la
+ * barra, así que F₂ gira con ella y su torque es constante; F₁ es vertical y
+ * pierde brazo con el coseno. De ahí el `cos φ` dentro de la plantilla de τ₁ —
+ * sin él, la sustitución dejaría de cuadrar con el valor en cuanto la barra se
+ * moviera, que es exactamente el desajuste que este catálogo existe para evitar.
+ */
+export const TORQUE: CatalogoLab = {
+  magnitudes: {
+    F1:     { simbolo: 'F₁',  nombre: 'Fuerza en A',          unidad: 'N',      decimales: 0 },
+    F2:     { simbolo: 'F₂',  nombre: 'Fuerza en C',          unidad: 'N',      decimales: 0 },
+    theta:  { simbolo: 'θ',   nombre: 'Ángulo con la barra',  unidad: '°',      decimales: 0 },
+    d1:     { simbolo: 'd₁',  nombre: 'Brazo A→B',            unidad: 'm',      decimales: 2 },
+    d2:     { simbolo: 'd₂',  nombre: 'Brazo B→C',            unidad: 'm',      decimales: 2 },
+    L:      { simbolo: 'L',   nombre: 'Largo de la barra',    unidad: 'm',      decimales: 2 },
+    m:      { simbolo: 'm',   nombre: 'Masa de la barra',     unidad: 'kg',     decimales: 1 },
+    W:      { simbolo: 'W',   nombre: 'Peso de la barra',     unidad: 'N',      decimales: 1 },
+    xcm:    { simbolo: 'x',   nombre: 'Centro de masa desde B', unidad: 'm',    decimales: 2 },
+    F2perp: { simbolo: 'F⊥',  nombre: 'Componente que gira',  unidad: 'N',      decimales: 0 },
+    F2par:  { simbolo: 'F∥',  nombre: 'Componente al eje',    unidad: 'N',      decimales: 0 },
+    tau1:   { simbolo: 'τ₁',  nombre: 'Torque de F₁',         unidad: 'N·m',    decimales: 1 },
+    tau2:   { simbolo: 'τ₂',  nombre: 'Torque de F₂',         unidad: 'N·m',    decimales: 1 },
+    tauW:   { simbolo: 'τ_W', nombre: 'Torque del peso',      unidad: 'N·m',    decimales: 1 },
+    tauW0:  { simbolo: 'τ_W', nombre: 'Torque del peso (horizontal)', unidad: 'N·m', decimales: 1 },
+    tauNet: { simbolo: 'Στ',  nombre: 'Torque resultante',    unidad: 'N·m',    decimales: 1 },
+    f1eq:   { simbolo: 'F₁*', nombre: 'F₁ de equilibrio',     unidad: 'N',      decimales: 0 },
+    I:      { simbolo: 'I',   nombre: 'Inercia respecto a B', unidad: 'kg·m²',  decimales: 3 },
+    alphaT: { simbolo: 'α',   nombre: 'Aceleración angular',  unidad: 'rad/s²', decimales: 2 },
+    om:     { simbolo: 'ω',   nombre: 'Velocidad angular',    unidad: 'rad/s',  decimales: 2 },
+    angDeg: { simbolo: 'φ',   nombre: 'Inclinación',          unidad: '°',      decimales: 1 },
+  },
+  formulas: [
+    {
+      id: 'descomp',
+      nombre: 'Componente que gira',
+      plantilla: 'F⊥ = {F2} · sen {theta}',
+      salida: 'F2perp',
+      dice: 'Sólo la parte perpendicular a la barra hace girar. La otra apunta al apoyo y se la come el eje.',
+    },
+    {
+      id: 'torque2',
+      nombre: 'Torque de F₂',
+      plantilla: 'τ₂ = {F2perp} · {d2}',
+      salida: 'tau2',
+      dice: 'No cambia al inclinarse la barra: θ está medido respecto a ella, así que F₂ gira con la barra.',
+    },
+    {
+      id: 'torque1',
+      nombre: 'Torque de F₁',
+      plantilla: 'τ₁ = {F1} · {d1} · cos {angDeg}',
+      salida: 'tau1',
+      dice: 'F₁ es vertical, no gira con la barra: en cuanto ésta se inclina, su brazo efectivo se acorta.',
+    },
+    {
+      id: 'pesobarra',
+      nombre: 'Torque del peso',
+      plantilla: 'τ_W = {W} · {xcm} · cos {angDeg}',
+      salida: 'tauW',
+      dice: 'El peso actúa en el centro de la barra. Si el apoyo no está en el medio, también hace girar.',
+    },
+    {
+      id: 'neto',
+      nombre: 'Torque resultante',
+      plantilla: 'Στ = {tau1} − {tau2} − {tauW}',
+      salida: 'tauNet',
+      dice: 'Positivo gira antihorario (A baja). Cero es el equilibrio que pide el problema.',
+    },
+    {
+      id: 'equilibrio',
+      nombre: 'F₁ de equilibrio',
+      plantilla: 'F₁* = ( {tau2} + {tauW0} ) / {d1}',
+      salida: 'f1eq',
+      dice: 'Despejar F₁ de Στ = 0 con la barra horizontal. Es la respuesta que pide el enunciado.',
+    },
+    {
+      id: 'inercia-barra',
+      nombre: 'Inercia respecto a B',
+      plantilla: 'I = {m} · ( {L}² / 12 + {xcm}² )',
+      salida: 'I',
+      dice: 'Steiner: la barra gira por el apoyo, no por su centro, y el desplazamiento suma inercia.',
+    },
+    {
+      id: 'alfa-barra',
+      nombre: 'Aceleración angular',
+      plantilla: 'α = {tauNet} / {I}',
+      salida: 'alphaT',
+      dice: 'Lo que sobra de torque es lo que la hace caer. Con la barra ideal (m = 0) no hay nada que acelerar.',
+    },
+  ],
+  tablero: ['tau1', 'tau2', 'tauW', 'tauNet', 'alphaT', 'f1eq'],
+};
+
 /* ═══ C4 · Equilibrio y palancas ═════════════════════════════════════════════ */
 
 export const PALANCA: CatalogoLab = {

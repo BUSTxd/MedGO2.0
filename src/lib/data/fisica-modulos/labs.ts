@@ -95,11 +95,39 @@ export const LABS: LaboratorioClase[] = [
     claseId: 'fis-c-3',
     codigo: 'C3',
     titulo: 'Dinámica rotacional de cuerpos rígidos',
-    gancho: 'Aro, disco, esfera y barra con la misma masa y el mismo radio: sólo cambia dónde está repartida, y eso lo cambia todo.',
+    gancho: 'Una barra que se cae cuando los torques no se empatan, y cuatro cuerpos con la misma masa que no arrancan igual.',
     temas: [
       {
+        id: 'torque-barra',
+        titulo: 'Torque: la barra y su punto de apoyo',
+        subtitulo: 'Στ = 0, comprobado dejándola caer',
+        acento: MECANICA,
+        icono: 'torque',
+        objetivo:
+          'Ver que sólo la componente perpendicular a la barra hace girar, y que el equilibrio no es que las fuerzas se empaten sino que se empaten sus torques.',
+        sim: 'torque',
+        retos: [
+          {
+            pregunta: 'Con F₂ = 400 N a 30°, d₁ = 40 cm y d₂ = 130 cm, ¿qué F₁ deja la barra quieta?',
+            pista: 'Pulsa «Enunciado del problema» y sube F₁ hasta que la balanza de abajo quede partida por la mitad. Después compáralo con F₁* en el tablero.',
+          },
+          {
+            pregunta: 'Sube θ de 30° a 90° sin tocar F₂. ¿Por qué cambia el torque si la fuerza es la misma?',
+            pista: 'Mira la flecha punteada: es la parte de F₂ que apunta al apoyo. A 90° desaparece y toda la fuerza gira.',
+          },
+          {
+            pregunta: 'Sube F₁ un 5 % por encima del equilibrio, y luego bájalo un 5 % por debajo. ¿Por qué no pasa lo mismo en los dos lados?',
+            pista: 'τ₁ lleva un cos φ y τ₂ no. Si el que sobra es el de F₁, al inclinarse se encoge hasta empatar y la barra se frena sola; si es el que falta, la diferencia sólo puede crecer y se va al tope.',
+          },
+          {
+            pregunta: 'Pon la masa de la barra en 8 kg. ¿Hacia dónde la empuja su propio peso?',
+            pista: 'El círculo ámbar es el centro de masa. Fíjate en si cae a la izquierda o a la derecha del apoyo, y lee τ_W.',
+          },
+        ],
+      },
+      {
         id: 'inercia',
-        titulo: 'Torque y momento de inercia',
+        titulo: 'Momento de inercia',
         subtitulo: 'Por qué la forma pesa más que la masa',
         acento: MECANICA,
         icono: 'giro',

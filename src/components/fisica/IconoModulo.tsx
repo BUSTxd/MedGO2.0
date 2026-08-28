@@ -87,6 +87,15 @@ const ICONOS: Record<string, React.ReactNode> = {
       <circle cx="12" cy="12" r="1.8" fill="currentColor" />
     </>
   ),
+  torque: (
+    <>
+      <path d="M3 12h18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M9.5 20l2.5-5 2.5 5Z" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" />
+      <path d="M6 8.5V5M18 8.5V5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M4.2 6.8 6 4.6l1.8 2.2M16.2 6.8 18 4.6l1.8 2.2" stroke="currentColor"
+        strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </>
+  ),
   palanca: (
     <>
       <path d="M3.5 15h17" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />

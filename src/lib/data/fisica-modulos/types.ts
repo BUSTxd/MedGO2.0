@@ -32,7 +32,8 @@ export type SimId =
      una sim que no case con una actividad del sílabo sería material huérfano. */
   | 'plano'          // C1 · plano inclinado con fricción, con su diagrama de cuerpo libre
   | 'colision'       // C2 · choque 1D: de elástico a perfectamente inelástico
-  | 'rotacional'     // C3 · torque, momento de inercia y conservación de L
+  | 'rotacional'     // C3 · momento de inercia y conservación de L
+  | 'torque'         // C3 · la barra con punto de apoyo: Στ = 0 y el balance de torques
   | 'palanca'        // C4 · palanca del codo: la de tercer género del cuerpo
   | 'fluidos'        // C5 · continuidad y Bernoulli en un vaso con estenosis
   | 'gas'            // C8 · procesos termodinámicos sobre el diagrama PV

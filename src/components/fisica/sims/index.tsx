@@ -6,8 +6,8 @@ import type { SimId } from '@/lib/data/fisica-modulos/types';
 /**
  * Registro de simulaciones del laboratorio de Física.
  *
- * Cada una se carga sólo cuando el alumno llega a su tema: son diecisiete
- * escenas con su propio bucle de rAF, y montarlas de entrada dejaría diecisiete
+ * Cada una se carga sólo cuando el alumno llega a su tema: son dieciocho
+ * escenas con su propio bucle de rAF, y montarlas de entrada dejaría dieciocho
  * canvas invisibles dibujando a la vez. `ssr: false` porque todas tocan
  * `getComputedStyle` y `ResizeObserver` en el montaje.
  *
@@ -30,6 +30,7 @@ const REGISTRO: Record<SimId, React.ComponentType<PropsSim>> = {
   plano:         dynamic(() => import('./SimPlano'),         { ssr: false }), // C1
   colision:      dynamic(() => import('./SimColision'),      { ssr: false }), // C2
   rotacional:    dynamic(() => import('./SimRotacional'),    { ssr: false }), // C3
+  torque:        dynamic(() => import('./SimTorque'),        { ssr: false }), // C3
   palanca:       dynamic(() => import('./SimPalanca'),       { ssr: false }), // C4
   fluidos:       dynamic(() => import('./SimFluidos'),       { ssr: false }), // C5
   gas:           dynamic(() => import('./SimGas'),           { ssr: false }), // C8

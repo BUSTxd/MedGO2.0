@@ -1,6 +1,6 @@
 import type { SimId } from '@/lib/data/fisica-modulos/types';
 import {
-  PLANO, COLISION, ROTACIONAL, PALANCA, FLUIDOS, GAS,
+  PLANO, COLISION, ROTACIONAL, TORQUE, PALANCA, FLUIDOS, GAS,
   COULOMB, CAPACITOR, CIRCUITO, MAGNETICO, LENTE, FOTOELECTRICO,
 } from './formulas-clases';
 
@@ -400,6 +400,7 @@ export const CATALOGO: Record<SimId, CatalogoLab> = {
   plano:         PLANO,
   colision:      COLISION,
   rotacional:    ROTACIONAL,
+  torque:        TORQUE,
   palanca:       PALANCA,
   fluidos:       FLUIDOS,
   gas:           GAS,

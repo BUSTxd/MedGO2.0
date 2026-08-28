@@ -107,6 +107,8 @@ export function useSimCanvas(
     let raf = 0;
     let ultimo = performance.now();
     let anchoCss = 0;
+    let dprActual = 1;
+    let fallos = 0;
 
     // Los colores salen de los tokens CSS del propio nodo, de modo que el
     // canvas cambia con el tema sin que la paleta esté escrita dos veces.
@@ -126,6 +128,7 @@ export function useSimCanvas(
       const rect = canvas.getBoundingClientRect();
       if (rect.width === 0) return;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dprActual = dpr;
       anchoCss = rect.width;
       canvas.width = Math.round(rect.width * dpr);
       canvas.height = Math.round(opts.alto * dpr);
@@ -144,13 +147,33 @@ export function useSimCanvas(
 
       if (anchoCss > 0) {
         ctx.clearRect(0, 0, anchoCss, opts.alto);
-        drawRef.current({
-          ctx,
-          w: anchoCss,
-          h: opts.alto,
-          t: tRef.current,
-          paleta: leerPaleta(),
-        });
+        // Sin esta guarda, UNA excepción dentro de `draw` se lleva por delante
+        // el `requestAnimationFrame` de la línea siguiente y el bucle no vuelve
+        // a arrancar: la escena queda en blanco para siempre, en una página que
+        // por lo demás funciona. Es el peor modo de fallo posible aquí —el
+        // alumno ve un hueco y no hay nada que lo explique—, así que un fallo
+        // suelto (un NaN que se cuela un frame) se registra y se sigue.
+        try {
+          drawRef.current({
+            ctx,
+            w: anchoCss,
+            h: opts.alto,
+            t: tRef.current,
+            paleta: leerPaleta(),
+          });
+          fallos = 0;
+        } catch (err) {
+          if (fallos === 0) console.error('[sim] error al dibujar la escena:', err);
+          // Un `save()` sin su `restore()` deja la transformación sucia para el
+          // frame siguiente; se repone la del DPR, que es la única que importa.
+          ctx.setTransform(dprActual, 0, 0, dprActual, 0, 0);
+          // Si falla siempre, cada frame apilaría más `save()` huérfanos: se
+          // corta en vez de degradarse en silencio.
+          if (++fallos > 60) {
+            console.error('[sim] escena detenida: 60 frames seguidos fallando');
+            return;
+          }
+        }
       }
       raf = requestAnimationFrame(frame);
     };
