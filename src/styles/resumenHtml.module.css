@@ -321,6 +321,18 @@
   margin-top: 0;
 }
 
+/* El título de portada (<h1 class="page-title">, prependido por el uploader)
+   se distingue de un h1 de sección: más grande, centrado y sin el filete
+   inferior que separa secciones — ese filete aquí leería como que el título
+   YA es la primera sección, en vez de la presentación del documento entero. */
+.sheet :global(h1.page-title) {
+  font-size: 1.9em;
+  margin: 0 0 1em;
+  padding-bottom: 0;
+  border-bottom: none;
+  text-align: center;
+}
+
 /* Un h1/h2 con fondo de color en Notion es un separador de bloque grande:
    aquí se convierte en una banda con su color, no en un texto resaltado. */
 .sheet :global(h1[class*='block-color-']),
@@ -810,6 +822,50 @@
   flex-shrink: 0;
   font-size: 1.15em;
   line-height: 1.4;
+}
+
+/* ─── Toggle (bloque plegable) ─── */
+/* <details class="toggle"><summary>…</summary><div class="indented">…</div></details>.
+   Sin regla propia se ve con el marcador nativo del navegador — ni el
+   fondo/borde del resto de bloques ni el triángulo estilizado. El
+   `.indented` hijo ya tiene su borde izquierdo; aquí se le quita para no
+   duplicar el marco. */
+.sheet :global(details.toggle) {
+  margin: 1.1em 0;
+  padding: 0.8em 1.1em;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--head-bg);
+}
+
+.sheet :global(details.toggle > summary) {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+}
+
+.sheet :global(details.toggle > summary::-webkit-details-marker) {
+  display: none;
+}
+
+.sheet :global(details.toggle > summary::before) {
+  content: '▸';
+  display: inline-block;
+  width: 1em;
+  margin-right: 0.4em;
+  color: var(--tx-soft);
+  transition: transform 0.15s ease;
+}
+
+.sheet :global(details.toggle[open] > summary::before) {
+  transform: rotate(90deg);
+}
+
+.sheet :global(details.toggle > .indented) {
+  margin-top: 0.6em;
+  margin-bottom: 0;
+  border-left: none;
+  padding-left: 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

@@ -199,6 +199,11 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Adaptaciones celulares'],
         docentes: [],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'pat-ai-3', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'pat-ai-4',
@@ -439,6 +444,9 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Unidad 1 · semanas 1 – 5'],
         docentes: [],
+        // Banqueo 2024 completo (40 preguntas, 10 con imagen). Lleva
+        // `duration_min: 80` en el JSON, que es lo que enciende el cronómetro.
+        examen: { key: 'patologia/parcial-1', free: true },
       },
     ],
   },

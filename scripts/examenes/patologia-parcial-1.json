@@ -1,0 +1,550 @@
+{
+  "version": 1,
+  "key": "patologia/parcial-1",
+  "title": "Examen Parcial 1 — Respuesta celular y tisular al daño",
+  "duration_min": 80,
+  "questions": [
+    {
+      "id": "p1",
+      "stem": "Varón de 45 años, obrero desde hace 20 años, acude a consulta por presencia de nódulo indoloro en muslo izquierdo desde hace 5 años que ha ido incrementando gradualmente su tamaño. Se toma biopsia (ver imagen). ¿Cuál de las siguientes alternativas está relacionada a su patología?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1/pregunta_01.avif",
+      "imageAlt": "Lesión quística de pared fibrosa gruesa rodeada de tejido adiposo, con granulaciones basófilas en la periferia",
+      "imageW": 800,
+      "imageH": 507,
+      "options": [
+        { "id": "a", "text": "Las microcalcificaciones de aspecto basófilo apoyan el diagnóstico", "correct": true },
+        { "id": "b", "text": "Está asociado a infección por bacterias gram positivo", "correct": false },
+        { "id": "c", "text": "La presencia de células gigantes es una característica principal", "correct": false },
+        { "id": "d", "text": "La presencia de histiocitos epiteloides es una clave diagnóstica", "correct": false },
+        { "id": "e", "text": "El infiltrado inflamatorio nos indica una necrosis licuefactiva", "correct": false }
+      ],
+      "explanation": "Una lesión **indolora de cinco años** de evolución es daño crónico, y sobre tejido previamente lesionado el calcio precipita aunque la calcemia sea normal: eso es **calcificación distrófica**. En H&E el calcio se ve **basófilo** (azul-morado), que es justo lo que apoya el diagnóstico en esta biopsia.\n\nLas demás alternativas describen otra lesión: los **histiocitos epitelioides** y las **células gigantes** son la firma de una inflamación granulomatosa, y la **necrosis licuefactiva** con infiltrado denso corresponde a un absceso. Nada de eso está en la imagen.",
+      "tags": ["Acumulaciones y calcificación"]
+    },
+    {
+      "id": "p2",
+      "stem": "Un paciente es vacunado contra fiebre tifoidea. Seis meses después desarrolla un cuadro de fiebre de 40 °C, se hace un cultivo de sangre (hemocultivo) y se aísla Salmonella typhi. En relación a la activación del sistema de complemento en este paciente:",
+      "options": [
+        { "id": "a", "text": "C3b es causante de la adherencia de leucocitos en el tejido inflamado", "correct": false },
+        { "id": "b", "text": "Componentes de la membrana de las bacterias gram negativas inhiben la activación del complemento", "correct": false },
+        { "id": "c", "text": "Los niveles en sangre de C3 están disminuidos y los de C4 están dentro de límites normales", "correct": false },
+        { "id": "d", "text": "La vía de las lectinas está activada", "correct": false },
+        { "id": "e", "text": "La vía clásica y alterna están activadas", "correct": true }
+      ],
+      "explanation": "El dato clave es que **está vacunado**: ya tiene anticuerpos contra Salmonella. La IgG/IgM unida a la bacteria fija C1q y dispara la **vía clásica**, mientras que la propia superficie microbiana activa en paralelo la **vía alterna**, que no necesita anticuerpo. Las dos corren a la vez.\n\n**C3b** es la opsonina que marca a la bacteria para la fagocitosis; la adherencia del leucocito al endotelio la hacen selectinas e integrinas, no C3b. Un consumo por vía clásica bajaría **C3 y C4 juntos**, no sólo C3 (eso último es propio de la alterna). Y las gram negativas no inhiben el complemento: el LPS lo activa.",
+      "tags": ["Complemento"]
+    },
+    {
+      "id": "p3",
+      "stem": "El complemento interviene en los siguientes procesos:",
+      "options": [
+        { "id": "a", "text": "Quimiotaxis e inhibición del neutrófilo", "correct": false },
+        { "id": "b", "text": "La producción de anticuerpos", "correct": false },
+        { "id": "c", "text": "Producción de citoquina IL-2", "correct": false },
+        { "id": "d", "text": "Inflamación, citólisis,", "correct": true }
+      ],
+      "explanation": "El complemento hace tres cosas, y todas caben en la alternativa d: **inflamación** (C3a y C5a son anafilotoxinas que degranulan al mastocito y atraen leucocitos), **citólisis** (el complejo de ataque a la membrana C5b-9 perfora la bacteria) y opsonización (C3b).\n\nLo que **no** hace: producir anticuerpos —eso es del linfocito B— ni IL-2, que es del linfocito T. Y sobre el neutrófilo, C5a lo **atrae y lo activa**; nunca lo inhibe, así que la alternativa a se cae por su segunda mitad.",
+      "tags": ["Complemento"],
+      "reviewNote": "La alternativa d aparece truncada («Inflamación, citólisis,») en el examen original; se transcribe tal cual."
+    },
+    {
+      "id": "p4",
+      "stem": "Usted está evaluando un paciente con un cuadro inflamatorio y sospecha que las proteínas de fase aguda están elevadas en sangre. ¿Cuál de las siguientes afirmaciones es CORRECTA?",
+      "options": [
+        { "id": "a", "text": "Aumento de la Velocidad de Sedimentación Globular (VSG) y proteína amiloide A", "correct": true },
+        { "id": "b", "text": "Niveles altos de catecolaminas y proteína amiloide A", "correct": false },
+        { "id": "c", "text": "Niveles altos de fibrinógeno y caspasas", "correct": false },
+        { "id": "d", "text": "Niveles altos de proteína C reactiva e incremento de hepatocina", "correct": false }
+      ],
+      "explanation": "Las tres proteínas de fase aguda clásicas las fabrica el hígado bajo el mando de **IL-6**: proteína C reactiva, **fibrinógeno** y **amiloide sérico A**. El fibrinógeno hace que los hematíes se apilen en pilas de monedas (*rouleaux*) y por eso sedimentan más rápido: de ahí que la **VSG suba**. Las dos mitades de la alternativa a son consecuencia del mismo mecanismo.\n\nEn las otras, la primera mitad suele ser correcta y la segunda la hunde: las **catecolaminas** son la respuesta al estrés, no reactantes de fase aguda; las **caspasas** son proteasas intracelulares de la apoptosis y no circulan; y la «hepatocina» no existe como reactante —la que sí sube es la **hepcidina**, responsable de la anemia de la inflamación—.",
+      "tags": ["Respuesta sistémica"]
+    },
+    {
+      "id": "p5",
+      "stem": "Paciente varón de 75 años, con historia de neumonía aguda, usted sospecha que está entrando a un cuadro de Síndrome de Respuesta Inflamatoria Sistémica (SIRS). Solicita varios análisis de sangre; de los siguientes resultados, ¿cuáles estarían elevados?",
+      "options": [
+        { "id": "a", "text": "Amilasa, IL-18, Factor VII", "correct": false },
+        { "id": "b", "text": "Factor de transferencia, Fosfatasa Alcalina, Bilirrubina", "correct": false },
+        { "id": "c", "text": "IL-6, C5a", "correct": true },
+        { "id": "d", "text": "IL-10, IL-22", "correct": false }
+      ],
+      "explanation": "**IL-6** es la citocina que ordena al hígado la respuesta de fase aguda y la que sostiene la fiebre; **C5a** es la anafilotoxina del complemento que recluta neutrófilos. Las dos son mediadores proinflamatorios y suben en un cuadro sistémico.\n\n**IL-10** e **IL-22** van en la dirección contraria: la primera apaga la inflamación y la segunda repara el epitelio. La amilasa señala páncreas, y la fosfatasa alcalina con bilirrubina señalan vía biliar: son marcadores de órgano, no de inflamación sistémica.",
+      "tags": ["Respuesta sistémica", "Caso clínico"]
+    },
+    {
+      "id": "p6",
+      "stem": "¿Cuál es el orden correcto de eventos que debe seguir un neutrófilo para capturar y matar una bacteria?",
+      "options": [
+        { "id": "a", "text": "Activación, quimiotaxis, marginación, transmigración, adhesión firme, fagocitosis", "correct": false },
+        { "id": "b", "text": "Quimiotaxis, activación, marginación, adhesión firme, transmigración, fagocitosis", "correct": true },
+        { "id": "c", "text": "Marginación, quimiotaxis, adhesión firme, transmigración, activación, fagocitosis", "correct": false },
+        { "id": "d", "text": "Diapédesis, activación, quimiotaxis, marginación, adhesión firme, transmigración, fagocitosis", "correct": false }
+      ],
+      "explanation": "La cascada va **de la luz del vaso hacia el tejido** y tiene dos pasos que no se pueden invertir: la **adhesión firme siempre precede a la transmigración** (no se sale del vaso sin haberse anclado), y la **activación precede a la salida** (las quimiocinas activan las integrinas del leucocito estando aún dentro del vaso). La alternativa b es la única que respeta ambos.\n\nLas otras rompen uno de los dos: **a** pone la adhesión firme *después* de transmigrar, **c** activa al neutrófilo cuando ya está en el tejido, y **d** arranca por la diapédesis, es decir, saliendo del vaso antes de haber hecho nada.\n\nEn el orden canónico de Robbins la secuencia empieza por la **marginación** y el **rolling**; aquí la quimiotaxis figura primero porque el gradiente químico existe desde antes de que el leucocito reaccione.",
+      "tags": ["Reclutamiento leucocitario"]
+    },
+    {
+      "id": "p7",
+      "stem": "Uno de los tipos de diabetes se caracteriza por la destrucción de los islotes de Langerhans y presentar autoanticuerpos contra las células beta del islote, las que son productoras de insulina. Estos autoanticuerpos se encuentran también circulando en sangre; para demostrar su presencia se toma una muestra de sangre del paciente, se extrae el suero, se incuba este suero con cortes por congelación de páncreas normal y luego se incuba dicho tejido con un anti-anticuerpo marcado con un fluorocromo. Esta prueba se denomina:",
+      "options": [
+        { "id": "a", "text": "Inmunofluorescencia indirecta", "correct": true },
+        { "id": "b", "text": "Inmunofluorescencia directa", "correct": false },
+        { "id": "c", "text": "Citometría de flujo", "correct": false },
+        { "id": "d", "text": "Hibridación in-situ fluorescente (FISH)", "correct": false },
+        { "id": "e", "text": "Inmunohistoquímica", "correct": false }
+      ],
+      "explanation": "Lo que delata la técnica son **dos incubaciones y un tejido ajeno**: el sustrato es **páncreas normal** (no del paciente), el primer anticuerpo lo aporta el **suero del enfermo** y el fluorocromo viaja en un **segundo** anticuerpo que reconoce al primero. Eso es **inmunofluorescencia indirecta**, y sirve para buscar autoanticuerpos *circulantes*.\n\nEn la **directa** hay un solo paso: se aplica el anticuerpo ya conjugado sobre el tejido **del paciente**, para ver depósitos ya formados *in situ* (piel, riñón). La **inmunohistoquímica** usa enzima y cromógeno en vez de fluorocromo, el **FISH** busca ADN con sondas, y la citometría trabaja con células en suspensión, no con cortes.",
+      "tags": ["Métodos diagnósticos"]
+    },
+    {
+      "id": "p8",
+      "stem": "¿Cuál de las siguientes definiciones es correcta?",
+      "options": [
+        { "id": "a", "text": "La hiperemia es un proceso activo que consiste en el incremento de suero en los tejidos.", "correct": false },
+        { "id": "b", "text": "La congestión es un proceso activo que consiste en el incremento de volumen de sangre en los tejidos.", "correct": false },
+        { "id": "c", "text": "La hiperemia y la congestión son siempre patológicas.", "correct": false },
+        { "id": "d", "text": "La congestión es un proceso pasivo que consiste en el incremento de suero en los tejidos.", "correct": false },
+        { "id": "e", "text": "La hiperemia es proceso activo que consiste en el incremento de volumen de sangre en los tejidos.", "correct": true }
+      ],
+      "explanation": "Las dos son un aumento del **volumen de sangre**, y se separan por el mecanismo. La **hiperemia** es **activa**: dilatación arteriolar que mete más sangre oxigenada, así que el tejido se ve rojo y caliente (músculo en ejercicio, foco inflamatorio). La **congestión** es **pasiva**: el retorno venoso falla y la sangre se estanca desoxigenada, así que el tejido se ve cianótico.\n\nDos trampas repetidas en las otras alternativas: el aumento de **suero** en los tejidos es **edema**, no hiperemia ni congestión; y ninguna de las dos es siempre patológica —la hiperemia del ejercicio es fisiológica—.",
+      "tags": ["Trastornos hemodinámicos"]
+    },
+    {
+      "id": "p9",
+      "stem": "El infarto rojo se caracteriza por lo siguiente:",
+      "options": [
+        { "id": "a", "text": "Ocurre principalmente en órganos sólidos", "correct": false },
+        { "id": "b", "text": "Está relacionado con oclusiones arteriales", "correct": false },
+        { "id": "c", "text": "Ocurre en sistemas donde no hay reperfusión", "correct": false },
+        { "id": "d", "text": "Ocurre principalmente en tejidos laxos", "correct": true },
+        { "id": "e", "text": "El corazón es uno de los órganos con este tipo de infarto", "correct": false }
+      ],
+      "explanation": "El infarto rojo (hemorrágico) necesita que **la sangre pueda entrar en la zona necrótica**, y eso ocurre en cuatro situaciones: obstrucción **venosa** (torsión testicular, ovario), **doble circulación** (pulmón, intestino delgado), tejido **laxo** que deja acumular la sangre extravasada, y cuando **se restablece el flujo** (reperfusión, trombólisis).\n\nPor eso las demás son justo lo contrario: los **órganos sólidos** con circulación terminal —corazón, bazo, riñón— hacen infarto **blanco**, porque el parénquima compacto no deja que la sangre se filtre, y la ausencia de reperfusión también empuja hacia el blanco.",
+      "tags": ["Trastornos hemodinámicos"]
+    },
+    {
+      "id": "p10",
+      "stem": "Usted está asistiendo en una cirugía menor para extirpación de una lesión de piel. La muestra deberá ser estudiada. ¿En qué tipo de fijador deberá colocar la muestra?",
+      "options": [
+        { "id": "a", "text": "Formol al 10%", "correct": true },
+        { "id": "b", "text": "Alcohol corriente", "correct": false },
+        { "id": "c", "text": "Solución salina al 0.9%", "correct": false },
+        { "id": "d", "text": "Ácido acético", "correct": false },
+        { "id": "e", "text": "La muestra se analiza microscópicamente antes de ser procesada.", "correct": false }
+      ],
+      "explanation": "El fijador estándar para **tejido en bloque** es el **formol tamponado al 10 %**, en volumen 10 veces mayor que la pieza: entrecruza proteínas, detiene la autólisis y conserva la arquitectura para el corte en parafina.\n\nLa **solución salina no fija** —sólo hidrata, y el tejido se autoliza—; el **alcohol** se reserva para extendidos citológicos (ver la pregunta de los frotis cérvicovaginales), donde lo que importa es el detalle nuclear y no el bloque; y el ácido acético es un reactivo de tinción, no un fijador de piezas.",
+      "tags": ["Métodos diagnósticos"]
+    },
+    {
+      "id": "p11",
+      "stem": "¿Cuál es la característica distintiva que diferencia la inflamación crónica de la inflamación aguda?",
+      "options": [
+        { "id": "a", "text": "La inflamación crónica siempre sigue a una infección viral.", "correct": false },
+        { "id": "b", "text": "La inflamación crónica nunca involucra intentos de reparación tisular.", "correct": false },
+        { "id": "c", "text": "La inflamación crónica siempre comienza con una reacción aguda previa.", "correct": false },
+        { "id": "d", "text": "La inflamación crónica está asociada con fibrosis en etapas tardías.", "correct": true },
+        { "id": "e", "text": "La inflamación crónica se caracteriza por la resolución rápida del daño tisular.", "correct": false }
+      ],
+      "explanation": "La inflamación crónica se define por la **coexistencia de daño y reparación al mismo tiempo**: infiltrado de macrófagos, linfocitos y células plasmáticas, angiogénesis y depósito de colágeno, que en etapas tardías deja **fibrosis**. Ése es su sello frente a la aguda, que es de neutrófilos y días.\n\nLas otras cuatro fallan por los absolutos: **no siempre** viene precedida de una fase aguda (la artritis reumatoide o la tuberculosis empiezan ya crónicas), **no siempre** la causa un virus, sí intenta reparar —de hecho es lo que la caracteriza— y no resuelve rápido: dura semanas o años.",
+      "tags": ["Inflamación crónica"]
+    },
+    {
+      "id": "p12",
+      "stem": "¿Cuál de las siguientes afirmaciones describe mejor el papel de la inflamación crónica en el desarrollo de tumores?",
+      "options": [
+        { "id": "a", "text": "La inflamación crónica resulta en la eliminación total de células tumorales.", "correct": false },
+        { "id": "b", "text": "La inflamación crónica inhibe la angiogénesis, lo que previene el crecimiento tumoral.", "correct": false },
+        { "id": "c", "text": "La inflamación crónica es irrelevante para la mayoría de los procesos cancerígenos.", "correct": false },
+        { "id": "d", "text": "La inflamación crónica siempre protege contra la formación de tumores.", "correct": false },
+        { "id": "e", "text": "La inflamación crónica fomenta un ambiente que puede promover el desarrollo tumoral.", "correct": true }
+      ],
+      "explanation": "La inflamación crónica crea un microambiente pro-tumoral por tres vías: los **radicales libres** de macrófagos y neutrófilos dañan el ADN, la **proliferación reparativa sostenida** multiplica las oportunidades de mutación, y los factores de crecimiento con la **angiogénesis** alimentan al clon transformado. De ahí las asociaciones clásicas: colitis ulcerosa → carcinoma de colon, hepatitis crónica → hepatocarcinoma, gastritis por *H. pylori* → carcinoma y linfoma MALT, esófago de Barrett → adenocarcinoma.\n\nLas demás invierten el sentido: la inflamación crónica **estimula** la angiogénesis en vez de inhibirla, y no elimina ni protege de manera fiable.",
+      "tags": ["Inflamación crónica", "Neoplasia"]
+    },
+    {
+      "id": "p13",
+      "stem": "¿Cuál es la principal función de los macrófagos activados clásicamente (M1)?",
+      "options": [
+        { "id": "a", "text": "Reparación tisular", "correct": false },
+        { "id": "b", "text": "Destrucción de organismos ingeridos y estimulación de la inflamación", "correct": true },
+        { "id": "c", "text": "Producción de IL-4 y IL-13", "correct": false },
+        { "id": "d", "text": "Promover la angiogénesis", "correct": false },
+        { "id": "e", "text": "Producción de colágeno", "correct": false }
+      ],
+      "explanation": "El macrófago **M1** se activa por vía clásica (**IFN-γ** y productos microbianos) y es el brazo **destructor**: genera especies reactivas de oxígeno y óxido nítrico, digiere lo que fagocita y secreta IL-1, IL-12 y TNF para amplificar la inflamación.\n\nTodo lo demás de la lista es el perfil **M2**, activado por **IL-4 e IL-13**: apaga la inflamación, promueve la angiogénesis y estimula a los fibroblastos a producir colágeno, es decir, repara y fibrosa.",
+      "tags": ["Macrófagos"]
+    },
+    {
+      "id": "p14",
+      "stem": "¿Cuál es el rol de los linfocitos T en la formación de granulomas inmunes?",
+      "options": [
+        { "id": "a", "text": "Producen citocinas como IFN-γ, que activan macrófagos.", "correct": true },
+        { "id": "b", "text": "Inhiben la respuesta inflamatoria para prevenir el daño tisular.", "correct": false },
+        { "id": "c", "text": "Secretan anticuerpos para neutralizar el agente infeccioso.", "correct": false },
+        { "id": "d", "text": "Activan células B para producir más inmunoglobulinas.", "correct": false },
+        { "id": "e", "text": "Destruyen directamente los patógenos intracelulares.", "correct": false }
+      ],
+      "explanation": "Lo que distingue a un granuloma **inmune** de uno de cuerpo extraño es precisamente el linfocito T: el macrófago presenta el antígeno, el **Th1** responde con **IFN-γ** y ese IFN-γ transforma al macrófago en **célula epitelioide** y en célula gigante multinucleada. Sin linfocito T no hay granuloma inmune, y por eso el paciente con VIH avanzado forma granulomas mal constituidos.\n\nLas otras confunden estirpes: los **anticuerpos** los secreta la célula plasmática (linfocito B), no el T; y el T CD4 no mata al patógeno intracelular por sí mismo, sino que **delega** en el macrófago activado.",
+      "tags": ["Granulomas"]
+    },
+    {
+      "id": "p15",
+      "stem": "Acerca del diagnóstico del tejido mostrado en la imagen, marcar la mejor respuesta:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1/pregunta_15.avif",
+      "imageAlt": "Corte de pared intestinal con mucosa en vías de destrucción y submucosa intensamente hemorrágica",
+      "imageW": 800,
+      "imageH": 447,
+      "options": [
+        { "id": "a", "text": "Es una necrosis licuefactiva intestinal, que se encuentra asociada a abundante infiltrado inflamatorio.", "correct": false },
+        { "id": "b", "text": "La causa principal de esta patología es el trauma de órganos con abundante tejido adiposo, también llamada: necrosis enzimática.", "correct": false },
+        { "id": "c", "text": "Es una necrosis coagulativa. Puede darse en múltiples órganos, pero principalmente en cerebro.", "correct": false },
+        { "id": "d", "text": "Es un tipo de muerte celular causado por la falta abrupta de irrigación sanguínea al tejido.", "correct": true }
+      ],
+      "explanation": "La imagen es un **infarto intestinal**: mucosa destruida y submucosa embebida en sangre, el patrón hemorrágico que da el intestino por tener doble irrigación. El mecanismo detrás es exactamente lo que dice la alternativa d: **interrupción brusca del flujo** (isquemia).\n\nLas otras tres fallan en la localización o en el mecanismo. La necrosis **enzimática** (grasa) es la de la pancreatitis y el trauma sobre tejido adiposo. La **coagulativa** sí es la del infarto en órganos sólidos, pero se da en todos **menos** en el cerebro, que es la excepción licuefactiva. Y la licuefactiva del intestino aparece cuando se sobreañade la supuración, no como diagnóstico de base.",
+      "tags": ["Necrosis", "Isquemia"]
+    },
+    {
+      "id": "p16",
+      "stem": "Le consultan por una lesión hiperpigmentada en espalda menor de 1 cm en su diámetro mayor, que ha aumentado de tamaño en los últimos meses (ver imagen). Usted recomienda… (marque la mejor respuesta).",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1/pregunta_16.avif",
+      "imageAlt": "Lesión cutánea pigmentada de bordes irregulares y color heterogéneo, menor de 1 cm",
+      "imageW": 800,
+      "imageH": 538,
+      "options": [
+        { "id": "a", "text": "Realizar una biopsia incisional para determinar la estirpe del tumor", "correct": false },
+        { "id": "b", "text": "Realizar una biopsia por congelación con anestesia general", "correct": false },
+        { "id": "c", "text": "Realizar una biopsia excisional informando el estado de los márgenes quirúrgicos", "correct": true },
+        { "id": "d", "text": "Realizar una biopsia citológica de la lesión para evaluar las células", "correct": false }
+      ],
+      "explanation": "Lesión pigmentada, asimétrica, de bordes irregulares y **que crece**: hay que descartar melanoma, y para eso el patólogo necesita la lesión **entera** —el espesor de Breslow se mide desde la capa granulosa hasta la célula tumoral más profunda, y un fragmento no permite medirlo—. Como es **menor de 1 cm**, extirparla completa con margen estrecho es factible: **biopsia excisional con informe de márgenes**.\n\nLa **incisional** se reserva para lesiones grandes o en zonas donde extirpar todo de entrada mutila (cara, palma, planta) —es la respuesta correcta en el caso del tumor de 15 cm en el pie de este mismo examen, y conviene no confundirlas—. La **citología** no da arquitectura ni espesor, y la **congelación** no es fiable para diagnosticar una lesión melanocítica.",
+      "tags": ["Métodos diagnósticos", "Caso clínico"]
+    },
+    {
+      "id": "p17",
+      "stem": "Se está organizando una campaña de citología cérvicovaginal dirigida a pacientes de una comunidad lejana. Para preservar correctamente los frotis se deberá utilizar:",
+      "options": [
+        { "id": "a", "text": "Formol al 10%", "correct": false },
+        { "id": "b", "text": "Alcohol corriente", "correct": true },
+        { "id": "c", "text": "Solución salina al 0.9%", "correct": false },
+        { "id": "d", "text": "Ácido acético", "correct": false }
+      ],
+      "explanation": "Un frotis es un **extendido de células sobre una lámina**, no un bloque de tejido, y se fija con **alcohol** (etanol de 96°) o con spray fijador: es lo que conserva el detalle **nuclear** del que vive la tinción de Papanicolaou.\n\nEl **formol** —correcto para la pieza de piel de la otra pregunta— aquí es el error clásico: endurece y altera la cromatina, y el citólogo pierde justo el criterio que usa. La salina no fija nada y el **ácido acético** es el reactivo de la inspección visual (IVAA), un método de tamizaje distinto.",
+      "tags": ["Métodos diagnósticos"]
+    },
+    {
+      "id": "p18",
+      "stem": "Endometrio de paciente de 70 años. El cambio observado se explica por:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1/pregunta_18.avif",
+      "imageAlt": "Endometrio con estroma denso y escasas glándulas inactivas, una de ellas quística",
+      "imageW": 1000,
+      "imageH": 552,
+      "options": [
+        { "id": "a", "text": "Menor síntesis y mayor degradación de proteínas", "correct": true },
+        { "id": "b", "text": "Reprogramación de células madre tisulares", "correct": false },
+        { "id": "c", "text": "Degradación de mitocondrias con salida de citocromo", "correct": false },
+        { "id": "d", "text": "Activación de la vía extrínseca de las caspasas", "correct": false }
+      ],
+      "explanation": "Una mujer de 70 años tiene un **endometrio atrófico**: sin estímulo estrogénico, el estroma queda denso y las glándulas escasas e inactivas, alguna dilatada de forma quística. La **atrofia** es reducción del tamaño y del contenido celular, y su mecanismo es exactamente el de la alternativa a: **menos síntesis proteica y más degradación**, por la vía ubicuitina-proteasoma y por autofagia.\n\nLas demás nombran otros procesos: la **reprogramación de células madre** es el mecanismo de la **metaplasia**; la salida de **citocromo c** por la mitocondria es la vía **intrínseca** de la apoptosis, y los receptores de muerte la **extrínseca**. Aquí no hay muerte celular, hay menos célula.",
+      "tags": ["Adaptaciones celulares"]
+    },
+    {
+      "id": "p19",
+      "stem": "Paciente que ha estado hospitalizado en UCI por 1 mes por un cuadro respiratorio. Observa que sus extremidades se encuentran bastante adelgazadas, esto podría explicarse por:",
+      "options": [
+        { "id": "a", "text": "Activación de enzimas celulares como fosfolipasas y proteasas", "correct": false },
+        { "id": "b", "text": "Apertura del poro mitocondrial", "correct": false },
+        { "id": "c", "text": "Acumulación de radicales libres", "correct": false },
+        { "id": "d", "text": "Activación de ubicuitina ligasas", "correct": true }
+      ],
+      "explanation": "Un mes inmóvil produce **atrofia por desuso** del músculo esquelético, y la maquinaria que la ejecuta es el **sistema ubicuitina-proteasoma**: las **ubicuitina ligasas** (atrogina-1, MuRF1, inducidas por corticoides y por la propia enfermedad crítica) marcan las proteínas contráctiles con ubicuitina y el proteasoma las degrada. La fibra no muere: **encoge**.\n\nEsa es la clave para descartar las otras tres, que son mecanismos de **lesión y muerte** celular —fosfolipasas y proteasas, poro de transición mitocondrial, radicales libres—. Si estuvieran actuando aquí, el músculo se necrosaría y habría rabdomiólisis, no un adelgazamiento progresivo.",
+      "tags": ["Adaptaciones celulares", "Caso clínico"]
+    },
+    {
+      "id": "p20",
+      "stem": "Paciente de sexo masculino con un defecto genético caracterizado por deficiencia de integrinas en los leucocitos polimorfonucleares (PMN), sufre de una infección pulmonar bacteriana por neumococo. Señale cuál de las opciones es la correcta:",
+      "options": [
+        { "id": "a", "text": "Leucocitosis a predominio de linfocitos", "correct": false },
+        { "id": "b", "text": "Presentará leucocitosis (número de leucocitos aumentado en sangre) a predominio de PMN y ausencia de PMN en el tejido infectado.", "correct": true },
+        { "id": "c", "text": "Leucocitosis a predominio de linfocitos", "correct": false },
+        { "id": "d", "text": "Número de leucocitos PMN normales en sangre y presencia de abundantes PMN en el tejido infectado.", "correct": false }
+      ],
+      "explanation": "Es una **deficiencia de adhesión leucocitaria (LAD-1)**. Sin integrinas **LFA-1 y Mac-1**, el neutrófilo llega a rodar sobre el endotelio —el *rolling* depende de selectinas, que están intactas— pero **no consigue la adhesión firme** y por tanto no transmigra.\n\nEl resultado es el disociado que describe la alternativa b: los PMN se acumulan **en la sangre** (leucocitosis marcada a predominio de neutrófilos, porque además no se consumen en el tejido) y **faltan donde hacen falta**. Clínicamente son infecciones bacterianas graves **sin pus** y con retraso en la caída del cordón umbilical.",
+      "tags": ["Reclutamiento leucocitario", "Caso clínico"],
+      "reviewNote": "El examen original repite literalmente la misma alternativa en a y c; se transcriben tal cual."
+    },
+    {
+      "id": "p21",
+      "stem": "En relación a la efusión (acumulación de líquidos en cavidades) en el proceso inflamatorio, señale lo correcto:",
+      "options": [
+        { "id": "a", "text": "El trasudado tiene gravedad específica < de 1.015 y concentración baja de proteínas.", "correct": true },
+        { "id": "b", "text": "El trasudado tiene gravedad específica > de 1.015 y concentración baja de proteínas.", "correct": false },
+        { "id": "c", "text": "El exudado tiene gravedad específica > de 1.015 y concentración baja de proteínas.", "correct": false },
+        { "id": "d", "text": "El trasudado posee un pH < 7.3", "correct": false },
+        { "id": "e", "text": "El trasudado contiene niveles altos de Deshidrogenasa Láctica (LDH)", "correct": false }
+      ],
+      "explanation": "El **trasudado** es un ultrafiltrado del plasma: sale por desequilibrio **hidrostático u oncótico** con el endotelio íntegro, así que arrastra agua y poco más. Por eso todo en él es **bajo**: proteínas, densidad (**< 1,015**), LDH y celularidad, con pH normal. Es el líquido de la insuficiencia cardiaca o del síndrome nefrótico.\n\nEl **exudado** es inflamatorio: la permeabilidad vascular aumenta y pasan proteínas y células, de modo que todo es **alto** (densidad > 1,020, proteínas, LDH) y el pH puede bajar. Las alternativas b, c, d y e mezclan justamente una mitad de cada perfil.",
+      "tags": ["Inflamación aguda"]
+    },
+    {
+      "id": "p22",
+      "stem": "Una mujer obesa de 34 años ha experimentado epigastralgia por reflujo gastroesofágico durante los últimos 5 años después de ingerir abundantes comidas. Se somete a una endoscopia digestiva alta y se obtiene una biopsia de esófago distal. ¿Cuál de los siguientes cambios adaptativos ha ocurrido?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1/pregunta_22.avif",
+      "imageAlt": "Mucosa esofágica distal donde el epitelio escamoso limita con un epitelio cilíndrico glandular",
+      "imageW": 1000,
+      "imageH": 551,
+      "options": [
+        { "id": "a", "text": "Hiperplasia de células caliciformes", "correct": false },
+        { "id": "b", "text": "Metaplasia intestinal", "correct": true },
+        { "id": "c", "text": "Displasia escamosa", "correct": false },
+        { "id": "d", "text": "Atrofia de la lámina propia", "correct": false },
+        { "id": "e", "text": "Hipertrofia de la mucosa", "correct": false }
+      ],
+      "explanation": "Es un **esófago de Barrett**. En la imagen se ve la frontera: el epitelio **escamoso** estratificado del esófago cede el sitio a un epitelio **cilíndrico con células caliciformes**, que aguanta el ácido mucho mejor. Cambiar un tipo celular diferenciado por otro más resistente es la definición de **metaplasia**.\n\nNo es **hiperplasia** (no es que haya más caliciformes: es que antes no había ninguna), no es **displasia** —ésa vendría después, con atipia nuclear y pérdida de maduración, y es el paso hacia el adenocarcinoma— y no es hipertrofia ni atrofia, que hablan de tamaño y no de estirpe.",
+      "tags": ["Adaptaciones celulares", "Caso clínico"]
+    },
+    {
+      "id": "p23",
+      "stem": "¿Cuál de los siguientes mecanismos adaptativos tisulares es un evento previo relacionado con mayor probabilidad con la ocurrencia de un carcinoma epidermoide en pulmón?",
+      "options": [
+        { "id": "a", "text": "Metaplasia", "correct": true },
+        { "id": "b", "text": "Hiperplasia", "correct": false },
+        { "id": "c", "text": "Hipertrofia", "correct": false },
+        { "id": "d", "text": "Atrofia", "correct": false }
+      ],
+      "explanation": "El bronquio está tapizado por epitelio **cilíndrico ciliado**; un carcinoma **epidermoide** (escamoso) sólo puede surgir donde hay epitelio escamoso, y en el bronquio ese epitelio no es nativo: aparece por **metaplasia escamosa** inducida por el humo del tabaco. La secuencia es metaplasia → displasia → carcinoma in situ → invasor.\n\nLa **hipertrofia** (más tamaño) y la **atrofia** (menos) no cambian la estirpe, y la **hiperplasia** multiplica células del mismo tipo: ninguna de las tres explica de dónde salen las células escamosas.",
+      "tags": ["Adaptaciones celulares", "Neoplasia"]
+    },
+    {
+      "id": "p24",
+      "stem": "Paciente de 60 años con tumoración de 15 cm que deforma el pie izquierdo, con características invasivas en los estudios de imágenes. Usted recomienda inicialmente… (marque la mejor respuesta):",
+      "options": [
+        { "id": "a", "text": "Realizar una biopsia incisional para determinar la estirpe del tumor", "correct": true },
+        { "id": "b", "text": "Realizar una biopsia excisional para diagnóstico y tratamiento", "correct": false },
+        { "id": "c", "text": "Realizar una biopsia por aspiración con aguja fina", "correct": false },
+        { "id": "d", "text": "Realizar una biopsia por congelación en sala de operaciones", "correct": false }
+      ],
+      "explanation": "Una masa de **15 cm, invasiva y en el pie** obliga a saber **qué es** antes de decidir la cirugía: la estirpe y el grado cambian por completo el plan (neoadyuvancia, márgenes, amputación o preservación). Eso lo da una **biopsia incisional** —un fragmento representativo, con el trayecto planificado para que luego se extirpe junto con la pieza—.\n\nLa **excisional** aquí es el error grave: extirpar a ciegas un probable sarcoma de ese tamaño contamina planos y compromete la cirugía definitiva. La **PAAF** da células sueltas sin arquitectura, insuficiente para tipificar un sarcoma, y la **congelación** sirve para decisiones intraoperatorias (márgenes, si hay tejido diagnóstico), no como diagnóstico primario. Compárese con la lesión pigmentada **menor de 1 cm**, donde sí procede la excisional.",
+      "tags": ["Métodos diagnósticos", "Caso clínico"]
+    },
+    {
+      "id": "p25",
+      "stem": "Biopsia renal de paciente de 50 años, que cursa con proteinuria severa. Antecedente de tuberculosis tratada hace 8 años. Marque la mejor respuesta: (ver imagen)",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1/pregunta_25.avif",
+      "imageAlt": "Corteza renal con glomérulos expandidos por material eosinófilo homogéneo y acelular",
+      "imageW": 1000,
+      "imageH": 710,
+      "options": [
+        { "id": "a", "text": "La imagen histológica es de una pielonefritis crónica", "correct": false },
+        { "id": "b", "text": "Formación de granulomas por reactivación de la enfermedad. Realizar coloración Ziehl Neelsen", "correct": false },
+        { "id": "c", "text": "Depósito de material proteináceo extracelular. Comprobar con tinción Rojo de Congo", "correct": true },
+        { "id": "d", "text": "Formación de cicatriz colágena. Comprobar con tinción PAS", "correct": false }
+      ],
+      "explanation": "Los glomérulos están expandidos por un material **eosinófilo, homogéneo y acelular**, no por células: es depósito **extracelular de amiloide**, y explica la proteinuria severa. Se confirma con **Rojo de Congo**, que en luz polarizada da la birrefringencia **verde manzana**.\n\nEl antecedente encaja: una inflamación crónica prolongada como la tuberculosis eleva el amiloide sérico A y produce amiloidosis **AA** (secundaria). Si se tratara de una **reactivación** habría granulomas con necrosis caseosa —y entonces sí, Ziehl-Neelsen—; una **cicatriz colágena** se demuestra con tricrómico, no con PAS; y la pielonefritis crónica daña túbulos e intersticio, no llena los glomérulos de material homogéneo.",
+      "tags": ["Acumulaciones y calcificación", "Caso clínico"]
+    },
+    {
+      "id": "p26",
+      "stem": "Analice la biopsia y marque la respuesta correcta: (ver imagen)",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1/pregunta_26.avif",
+      "imageAlt": "Parénquima hepático con hepatocitos ocupados por vacuolas redondeadas ópticamente vacías de distinto tamaño",
+      "imageW": 800,
+      "imageH": 632,
+      "options": [
+        { "id": "a", "text": "Acumulación intracelular de triglicéridos en paciente con obesidad", "correct": true },
+        { "id": "b", "text": "Depósitos de ésteres de colesterol en un paciente con enfermedad de Niemann-pick", "correct": false },
+        { "id": "c", "text": "Macrófagos cargados de colesterol en paciente con hipercolesterolemia", "correct": false },
+        { "id": "d", "text": "Depósitos de triglicéridos en paciente con Hígado graso agudo del embarazo.", "correct": false }
+      ],
+      "explanation": "Es **esteatosis hepática**: vacuolas redondeadas y ópticamente vacías —la grasa se disuelve en el procesamiento— dentro de **hepatocitos**, muchas de ellas grandes y desplazando el núcleo (patrón **macrovesicular**). Ese patrón corresponde a **triglicéridos**, y su causa más frecuente es la obesidad / hígado graso no alcohólico.\n\nLas otras cambian la molécula o la célula: **Niemann-Pick** acumula **esfingomielina** (no ésteres de colesterol); los **macrófagos espumosos** cargados de colesterol están en el ateroma y los xantomas, y aquí las células vacuoladas son hepatocitos; y el **hígado graso agudo del embarazo** es **microvesicular** —vacuolas diminutas con el núcleo centrado—, un cuadro grave que no cuadra con esta imagen.",
+      "tags": ["Acumulaciones y calcificación"]
+    },
+    {
+      "id": "p27",
+      "stem": "Paciente de 20 años es operado de emergencia por una apendicitis aguda. Al examen microscópico se observa: (ver imagen)",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1/pregunta_27.avif",
+      "imageAlt": "Corte transversal de apéndice con inflamación que compromete todas las capas; el recuadro muestra neutrófilos entre las fibras musculares",
+      "imageW": 1000,
+      "imageH": 680,
+      "options": [
+        { "id": "a", "text": "Polimorfonucleares en la muscular propia y necrosis licuefactiva", "correct": true },
+        { "id": "b", "text": "Necrosis fibrinoide por lesión endotelial", "correct": false },
+        { "id": "c", "text": "Necrosis enzimática y gran cantidad de leucocitos en todas las capas", "correct": false },
+        { "id": "d", "text": "Extensa necrosis coagulativa extensa", "correct": false },
+        { "id": "e", "text": "Presencia de neutrófilos que se limitan a la mucosa, necrosis caseosa", "correct": false }
+      ],
+      "explanation": "El criterio histológico que **define** la apendicitis aguda es la presencia de **neutrófilos en la muscular propia** —justo lo que muestra el recuadro a mayor aumento—. La inflamación supurada digiere el tejido con las enzimas del neutrófilo y produce **necrosis licuefactiva**.\n\nEso descarta el resto: los neutrófilos **limitados a la mucosa** no bastan para el diagnóstico (pueden verse en cualquier irritación); la necrosis **fibrinoide** es de las vasculitis y la hipertensión maligna; la **enzimática** es la de la pancreatitis; la **coagulativa** correspondería a un infarto, no a una supuración; y la **caseosa** exige granulomas que aquí no hay.",
+      "tags": ["Inflamación aguda", "Necrosis"]
+    },
+    {
+      "id": "p28",
+      "stem": "Un hombre de 38 años se somete a un examen médico. Tiene una radiografía de tórax de rutina que muestra un nódulo de 2 cm en el lóbulo inferior derecho. El nódulo tiene calcificaciones focales. Se realiza una resección en cuña del nódulo. En el examen microscópico, el nódulo muestra necrosis caseosa y calcificación. ¿Cuál de los siguientes procesos explica la aparición de la deposición de calcio?",
+      "options": [
+        { "id": "a", "text": "Ingesta excesiva de calcio", "correct": false },
+        { "id": "b", "text": "Hipercalcemia", "correct": false },
+        { "id": "c", "text": "Calcificación distrófica", "correct": true },
+        { "id": "d", "text": "Apoptosis", "correct": false },
+        { "id": "e", "text": "Calcificación metastásica", "correct": false }
+      ],
+      "explanation": "Hay **necrosis caseosa** previa —un granuloma tuberculoso curado— y el calcio se deposita **sobre ese tejido muerto**, con calcemia **normal**: eso es **calcificación distrófica**. El tejido necrótico pierde la capacidad de excluir el calcio y las membranas dañadas sirven de nido para el fosfato cálcico.\n\nLa **metastásica** es lo contrario: ocurre en tejidos **sanos** y exige **hipercalcemia** (hiperparatiroidismo, metástasis óseas, exceso de vitamina D, sarcoidosis), y se localiza en mucosa gástrica, riñón, pulmón y vasos. La apoptosis no calcifica: no deja restos, porque los cuerpos apoptóticos se fagocitan.",
+      "tags": ["Acumulaciones y calcificación", "Caso clínico"]
+    },
+    {
+      "id": "p29",
+      "stem": "Paciente de 50 años, con desnutrición crónica, fue operada hace 2 semanas por una hernia inguinal estrangulada. A pesar de que la herida no muestra signos de infección, hasta ahora no cierra. ¿Qué factor puede estar interviniendo en el retraso de la cicatrización en este caso? (marque la mejor respuesta)",
+      "options": [
+        { "id": "a", "text": "Mala perfusión", "correct": false },
+        { "id": "b", "text": "Localización de la herida", "correct": false },
+        { "id": "c", "text": "Infección asociada", "correct": false },
+        { "id": "d", "text": "Déficit de proteínas", "correct": true },
+        { "id": "e", "text": "Antecedente de formación de cicatriz queloide", "correct": false }
+      ],
+      "explanation": "El enunciado ya descarta las demás: dice **«no muestra signos de infección»**, la hernia inguinal no es una localización problemática y un **queloide** sería exceso de cicatriz, no ausencia. Queda la **desnutrición crónica**.\n\nSin aminoácidos no hay síntesis de **colágeno**, y sin vitamina C no hay hidroxilación de prolina y lisina, así que la matriz nueva no adquiere resistencia y la herida permanece abierta o dehisce. Es la causa más frecuente de mala cicatrización en un paciente desnutrido y, a diferencia de las otras, es corregible.",
+      "tags": ["Reparación y cicatrización", "Caso clínico"]
+    },
+    {
+      "id": "p30",
+      "stem": "Son células / tejidos estables:",
+      "options": [
+        { "id": "a", "text": "Enterocitos / condrocitos", "correct": false },
+        { "id": "b", "text": "Músculo esquelético / epitelio escamoso", "correct": false },
+        { "id": "c", "text": "Músculo cardiaco / músculo esquelético", "correct": false },
+        { "id": "d", "text": "Neuronas olfatorias / neuronas motoras", "correct": false },
+        { "id": "e", "text": "Células endoteliales / tejido óseo", "correct": true }
+      ],
+      "explanation": "**Estable** significa quiescente en G₀ pero **capaz de volver al ciclo si hay lesión**: hígado, riñón, páncreas, fibroblastos, músculo liso, **endotelio** y **hueso**. Sólo la alternativa e tiene los dos elementos en esa categoría.\n\nLos otros pares mezclan categorías: **lábiles** —se dividen continuamente— son los **enterocitos** y el **epitelio escamoso**; **permanentes** son el **músculo cardiaco**, el **esquelético** (con la salvedad de las células satélite) y las **neuronas motoras**. Los **condrocitos** tienen capacidad regenerativa muy limitada, y las **neuronas olfatorias** son la excepción del sistema nervioso, con recambio a partir de células madre.",
+      "tags": ["Reparación y cicatrización"]
+    },
+    {
+      "id": "p31",
+      "stem": "Paciente mujer de 15 años con linfadenopatía cervical eritematosa que fistuliza al exterior. Se toma una biopsia del ganglio, el cual presenta los cambios mostrados en la imagen. Según los hallazgos histopatológicos, marcar la alternativa correcta. (ver imagen)",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1/pregunta_31.avif",
+      "imageAlt": "Estructura nodular con zona central eosinófila amorfa rodeada por células de citoplasma amplio y una corona de linfocitos",
+      "imageW": 800,
+      "imageH": 586,
+      "options": [
+        { "id": "a", "text": "Se trata de estructuras redondeadas con centro necrótico purulento, que tienen una corona de linfocitos", "correct": false },
+        { "id": "b", "text": "Se observa una estructura con necrosis central rodeada por células epitelioides y linfocitos", "correct": true },
+        { "id": "c", "text": "Formación de granuloma tipo cuerpo extraño", "correct": false },
+        { "id": "d", "text": "Se evidencia una necrosis de tipo licuefactiva central rodeada por linfocitos y células epitelioides", "correct": false },
+        { "id": "e", "text": "En la necrosis central se observa neutrófilos", "correct": false }
+      ],
+      "explanation": "La imagen es un **granuloma caseificante**: centro **eosinófilo y amorfo** (necrosis caseosa, sin estructuras reconocibles), un manguito de **células epitelioides** —macrófagos activados con citoplasma amplio— y una corona de **linfocitos**. Con adenopatía cervical que **fistuliza** en una adolescente, el cuadro es la escrófula tuberculosa.\n\nEl detalle que separa las alternativas es **qué hay en el centro**: la necrosis caseosa **no es purulenta ni licuefactiva** y **no tiene neutrófilos** (eso sería un absceso). Y el granuloma de **cuerpo extraño** no lleva necrosis central: se organiza alrededor del material extraño, visible con luz polarizada.",
+      "tags": ["Granulomas", "Necrosis"]
+    },
+    {
+      "id": "p32",
+      "stem": "Varón de 65 años, fumador desde los 20 años. Presenta tumoración pulmonar central dependiente del bronquio. Resultado de la biopsia: «neoplasia maligna (carcinoma) de células escamosas». ¿Cómo explica este hallazgo?",
+      "options": [
+        { "id": "a", "text": "El tabaco se asocia con más frecuencia a neoplasias glandulares", "correct": false },
+        { "id": "b", "text": "Los fumadores tienen mayor riesgo de hiperplasia escamosa bronquial", "correct": false },
+        { "id": "c", "text": "Es normal encontrar células escamosas en el epitelio bronquial", "correct": false },
+        { "id": "d", "text": "Probablemente ocurrió a partir de una metaplasia escamosa del epitelio bronquial", "correct": true }
+      ],
+      "explanation": "El bronquio **no tiene** epitelio escamoso: es cilíndrico seudoestratificado ciliado. El humo destruye los cilios y el epitelio se sustituye por uno **escamoso** más resistente (**metaplasia**); sobre ese epitelio nuevo se desarrollan después la displasia y el carcinoma escamoso, típicamente **central y dependiente del bronquio**, como aquí.\n\nPor eso c es falsa —encontrar escamosas ahí **no es normal**— y b confunde el término: no es hiperplasia de algo que no existía, es metaplasia. La alternativa a describe el **adenocarcinoma**, que es el más frecuente en no fumadores y de localización periférica.",
+      "tags": ["Adaptaciones celulares", "Neoplasia"]
+    },
+    {
+      "id": "p33",
+      "stem": "¿En qué situación se podría encontrar necrosis fibrinoide?",
+      "options": [
+        { "id": "a", "text": "Vasculitis autoinmune", "correct": true },
+        { "id": "b", "text": "Infarto agudo de miocardio", "correct": false },
+        { "id": "c", "text": "Pie diabético", "correct": false },
+        { "id": "d", "text": "Hepatitis viral", "correct": false },
+        { "id": "e", "text": "Pancreatitis", "correct": false }
+      ],
+      "explanation": "La necrosis **fibrinoide** es exclusiva de la **pared vascular**: los complejos antígeno-anticuerpo se depositan en el vaso, se les suma fibrina del plasma extravasado y el conjunto se ve como un material rosado brillante y amorfo. Es el hallazgo de las **vasculitis inmunitarias** (poliarteritis nodosa, fiebre reumática) y de la hipertensión maligna.\n\nCada una de las otras tiene su propio patrón: el infarto de miocardio da **coagulativa**, el pie diabético **gangrenosa**, la pancreatitis **enzimática o grasa**, y la hepatitis viral **apoptosis** de hepatocitos (cuerpos de Councilman).",
+      "tags": ["Necrosis"]
+    },
+    {
+      "id": "p34",
+      "stem": "Tejido hepático de paciente fallecido por virus de la fiebre amarilla. Le llama la atención (flechas verdes) hepatocitos retraídos, de citoplasma eosinofílico, núcleos retraídos fragmentados, con algunos linfocitos alrededor. No se observa inflamación neutrofílica. ¿Qué ha sucedido con estas células?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1/pregunta_34.avif",
+      "imageAlt": "Hepatocitos aislados retraídos e intensamente eosinófilos señalados con flechas verdes, sin infiltrado neutrofílico",
+      "imageW": 800,
+      "imageH": 671,
+      "options": [
+        { "id": "a", "text": "Necrosis", "correct": false },
+        { "id": "b", "text": "Autofagia", "correct": false },
+        { "id": "c", "text": "Degeneración balonizante", "correct": false },
+        { "id": "d", "text": "Apoptosis", "correct": true },
+        { "id": "e", "text": "Cambios grasos", "correct": false }
+      ],
+      "explanation": "Tres datos apuntan al mismo sitio: célula **retraída** (no hinchada), citoplasma **intensamente eosinófilo** y núcleo **fragmentado** (cariorrexis), **sin neutrófilos** alrededor. Eso es **apoptosis**, y en el hígado esas células reciben el nombre de **cuerpos de Councilman**, característicos de la fiebre amarilla y de las hepatitis virales.\n\nLa clave para descartar la **necrosis** es doble: allí la célula **se hincha** y **rompe la membrana**, así que su contenido dispara una inflamación **neutrofílica** que aquí no existe. La **degeneración balonizante** también hincha la célula, y los **cambios grasos** dejarían vacuolas ópticamente vacías, no citoplasma denso y rosado.",
+      "tags": ["Apoptosis", "Caso clínico"]
+    },
+    {
+      "id": "p35",
+      "stem": "Relacione las columnas según la capacidad regenerativa de los tejidos.\n\n1. Páncreas · 2. Epitelio respiratorio · 3. Fibroblastos · 4. Músculo cardiaco · 5. Células endoteliales\n\nA. Tejidos lábiles · B. Tejidos estables · C. Tejidos permanentes",
+      "options": [
+        { "id": "a", "text": "1B – 2A – 3B – 4C – 5B", "correct": true },
+        { "id": "b", "text": "1A – 2A – 3B – 4C – 5A", "correct": false },
+        { "id": "c", "text": "1B – 2B – 3C – 4C – 5C", "correct": false },
+        { "id": "d", "text": "1A – 2B – 3C – 4B – 5C", "correct": false }
+      ],
+      "explanation": "Sólo uno de los cinco es **lábil** y sólo uno es **permanente**; los otros tres son **estables**, y esa proporción ya descarta tres alternativas.\n\n· **Páncreas → estable (B)**: quiescente, pero regenera tras la lesión.\n· **Epitelio respiratorio → lábil (A)**: epitelio de superficie en recambio continuo desde células basales.\n· **Fibroblastos → estables (B)**: en reposo hasta que una herida los llama.\n· **Músculo cardiaco → permanente (C)**: el miocardiocito no se divide, y por eso el infarto cura con **cicatriz**, no con músculo nuevo.\n· **Endotelio → estable (B)**: prolifera en la angiogénesis de la reparación.",
+      "tags": ["Reparación y cicatrización"]
+    },
+    {
+      "id": "p36",
+      "stem": "El Infarto Agudo de Miocardio y el Accidente Cerebro Vascular (Stroke) isquémico comparten características fisiopatológicas, por lo que el manejo también tiene similitudes. Un ejemplo de esto es el uso de __________ para ambos casos. (Marque la mejor respuesta)",
+      "options": [
+        { "id": "a", "text": "Metformina", "correct": false },
+        { "id": "b", "text": "Betabloqueadores", "correct": false },
+        { "id": "c", "text": "Morfina", "correct": false },
+        { "id": "d", "text": "Corticoides", "correct": false },
+        { "id": "e", "text": "Reperfusión", "correct": true }
+      ],
+      "explanation": "Los dos son **necrosis isquémica por oclusión arterial trombótica**, así que comparten el mismo objetivo terapéutico: **restablecer el flujo antes de que el tejido muera**, con trombólisis o intervención endovascular. Además, en ambos existe una ventana de tiempo estrecha —«time is muscle», «time is brain»— y el mismo riesgo de **lesión por reperfusión**.\n\nLas otras no son comunes a ambos: los **betabloqueadores** y la **morfina** pertenecen al manejo del síndrome coronario, la **metformina** trata la diabetes y los **corticoides** no tienen papel en el ictus isquémico.",
+      "tags": ["Isquemia", "Caso clínico"]
+    },
+    {
+      "id": "p37",
+      "stem": "Biopsia de piel donde se observan algunos queratinocitos retraídos, de citoplasma eosinofílico, con cromatina condensada, sin infiltrado inflamatorio asociado. ¿Cuál de los siguientes mecanismos explica mejor los cambios descritos?",
+      "options": [
+        { "id": "a", "text": "Menor actividad de la bomba Na+K dependiente de ATP", "correct": false },
+        { "id": "b", "text": "Activación de Bcl-2", "correct": false },
+        { "id": "c", "text": "Activación de las caspasas", "correct": true },
+        { "id": "d", "text": "Ruptura de lisosomas", "correct": false }
+      ],
+      "explanation": "Célula **retraída**, citoplasma eosinófilo, **cromatina condensada** y —sobre todo— **sin inflamación**: es apoptosis, y sus ejecutoras son las **caspasas** (la 3 y la 6 degradan el citoesqueleto, la CAD fragmenta el ADN). La ausencia de infiltrado se explica porque la membrana no se rompe y los cuerpos apoptóticos se fagocitan de inmediato.\n\nLas otras describen **necrosis** o lo contrario: fallar la **bomba Na⁺/K⁺** hincha la célula (tumefacción hidrópica), la **ruptura de lisosomas** vierte hidrolasas y digiere el tejido —con inflamación—, y **Bcl-2** es **antiapoptótico**: activarlo impediría precisamente lo que se está viendo.",
+      "tags": ["Apoptosis"]
+    },
+    {
+      "id": "p38",
+      "stem": "Biopsia de pulmón donde se observa pigmento antracótico, el cual se acumula porque:",
+      "options": [
+        { "id": "a", "text": "La célula no dispone de la maquinaria enzimática para degradarlo", "correct": true },
+        { "id": "b", "text": "La velocidad del metabolismo es inadecuada para su eliminación", "correct": false },
+        { "id": "c", "text": "Defectos hereditarios en las enzimas necesarias para su metabolismo", "correct": false },
+        { "id": "d", "text": "Defectos en el plegamiento, transporte e incapacidad para su degradación", "correct": false }
+      ],
+      "explanation": "El pigmento antracótico es **carbón**: una sustancia **exógena e inerte**. El macrófago lo fagocita y se queda con él de por vida sencillamente porque **ninguna enzima humana degrada carbono**. No es un fallo del paciente, es que ese sustrato no tiene ruta metabólica.\n\nLas otras tres son los demás mecanismos de acumulación intracelular, cada uno con su ejemplo: metabolismo **insuficiente para la carga** (esteatosis hepática), **defecto hereditario enzimático** (enfermedades por depósito lisosomal, como Tay-Sachs o Gaucher) y **plegamiento anómalo** (déficit de α₁-antitripsina).",
+      "tags": ["Acumulaciones y calcificación"]
+    },
+    {
+      "id": "p39",
+      "stem": "Un paciente con aterosclerosis avanzada desarrolla un infarto agudo de miocardio. ¿Qué proceso fisiopatológico es más probable que haya precedido el infarto?",
+      "options": [
+        { "id": "a", "text": "Desprendimiento de un émbolo proveniente de una placa aterosclerótica estable", "correct": false },
+        { "id": "b", "text": "Formación de nuevas colaterales coronarias que compensan la isquemia", "correct": false },
+        { "id": "c", "text": "Incremento agudo de la presión arterial sin cambios en la placa aterosclerótica", "correct": false },
+        { "id": "d", "text": "Ruptura de una placa aterosclerótica con formación subsecuente de trombo", "correct": true }
+      ],
+      "explanation": "El evento que convierte una aterosclerosis crónica en un infarto **agudo** es la **rotura de la placa**: se expone el colágeno y el factor tisular del núcleo lipídico, se activan las plaquetas y se forma un **trombo oclusivo** en minutos. Por eso las placas peligrosas son las **inestables** —núcleo lipídico grande, cápsula fibrosa fina, inflamación— y no necesariamente las más estenóticas.\n\nUna placa **estable** no emboliza así, las **colaterales** protegen en vez de infartar, y una subida de presión sin cambio en la placa puede causar isquemia por desbalance de demanda, pero no es el mecanismo habitual del infarto con elevación del ST.",
+      "tags": ["Trastornos hemodinámicos", "Isquemia"]
+    },
+    {
+      "id": "p40",
+      "stem": "Un hombre de 63 años es trasladado a emergencias por dificultad para respirar de inicio súbito y dolor torácico. La ecografía a pie de cama muestra un patrón de derrame pleural. El drenaje muestra líquido hemático con una concentración alta de proteínas. Según el mecanismo fisiopatológico, ¿qué enfermedad encaja mejor en el cuadro del paciente?",
+      "options": [
+        { "id": "a", "text": "Infarto pulmonar por tromboembolismo pulmonar", "correct": true },
+        { "id": "b", "text": "Neumonía bacteriana", "correct": false },
+        { "id": "c", "text": "Pancreatitis crónica", "correct": false },
+        { "id": "d", "text": "Falla cardiaca congestiva", "correct": false }
+      ],
+      "explanation": "Tres datos y cada uno descarta algo: **inicio súbito** con disnea y dolor torácico, líquido **hemático** y **proteínas altas** (exudado). Un derrame **exudativo y sanguinolento** de instalación brusca corresponde al **infarto pulmonar** por tromboembolismo: el pulmón tiene doble circulación, de modo que su infarto es **rojo** y sangra hacia la pleura.\n\nLa **falla cardiaca** produce un **trasudado** —proteínas bajas— por aumento de la presión hidrostática, y además se instala de forma progresiva. La **neumonía** da exudado, pero purulento y no hemático de inicio súbito. Y la pancreatitis crónica no explica este cuadro agudo.",
+      "tags": ["Trastornos hemodinámicos", "Caso clínico"]
+    }
+  ]
+}

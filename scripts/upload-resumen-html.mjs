@@ -221,18 +221,25 @@ const urlDe = (raw) => {
 
 // 5a. sólo el cuerpo: fuera <head>, el CSS de Notion (claro-only y con su
 //     tipografía) y el emoji/favicon de la página. El estilo lo pone MedGO.
+//     El título de portada SÍ se conserva: en un export normal vive en un
+//     <header> FUERA de page-body y se descartaba confiando en que la
+//     cabecera del visor bastaba, pero esa cabecera repite el título de la
+//     ACTIVIDAD del sílabo, no el del documento, y un resumen que arranca en
+//     frío con una figura queda sin ninguna presentación — el caso que
+//     reportó BUST en Patología AI3. Se antepone como <h1 class="page-title">.
+const tituloMatch = html.match(/<h1 class="page-title"[^>]*>([\s\S]*?)<\/h1>/i);
+const tituloHtml = tituloMatch ? `<h1 class="page-title">${tituloMatch[1]}</h1>` : '';
+
 const ini = html.indexOf('<div class="page-body">');
 const fin = html.lastIndexOf('</div></article>');
 let body;
 if (ini !== -1 && fin !== -1) {
-  body = html.slice(ini + '<div class="page-body">'.length, fin);
+  body = tituloHtml + html.slice(ini + '<div class="page-body">'.length, fin);
 } else {
   // Un documento redactado con el vocabulario de Notion pero armado a mano
   // (los «INTEGRADO») no trae el envoltorio `page-body`: el contenido cuelga
-  // directo del <article> de la página. Se toma ése, y se descartan aparte el
-  // <header> y el <h1 class="page-title">, que en un export normal quedan
-  // FUERA del page-body — el título ya lo pone la cabecera del visor, y
-  // dejarlo dentro lo duplicaría.
+  // directo del <article> de la página, con su título ya dentro del flujo
+  // (no en un <header> aparte) — no hace falta prependerlo aquí también.
   const art = html.match(/<article[^>]*>/);
   const finArt = html.lastIndexOf('</article>');
   if (!art || finArt === -1) {
@@ -240,8 +247,7 @@ if (ini !== -1 && fin !== -1) {
     process.exit(1);
   }
   body = html.slice(art.index + art[0].length, finArt)
-    .replace(/<header[\s\S]*?<\/header>/i, '')
-    .replace(/^\s*<h1 class="page-title">[\s\S]*?<\/h1>/i, '');
+    .replace(/<header[\s\S]*?<\/header>/i, '');
 }
 
 // 5b. imágenes → CDN público (href del enlace y src de la figura)
