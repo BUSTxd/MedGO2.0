@@ -118,7 +118,7 @@ src/app/
 | `src/components/DashboardWrapper.tsx` | Shell del dashboard: sidebar + dark mode + providers |
 | `src/components/DashboardSidebar.tsx` | Sidebar de navegación. Array `NAV` con label/href/icon. Ícono de Cursos: book-bookmark SVG con `stroke="currentColor"` |
 | `src/components/StudyMaterialSection.tsx` | 3 tarjetas de material por clase: Video, Banqueo, Resumen |
-| `src/components/ExamRunner.tsx` | Examen inline (`?examen=1`). Lee del bucket privado `examenes`. Soporta N grupos independientes vía `groupKeys?: string[]` — selector cuadros A/B/C… en esquina superior derecha, carga diferida por grupo, puntuación independiente |
+| `src/components/ExamRunner.tsx` | Examen inline (`?examen=1`). Lee del bucket privado `examenes`. Soporta N grupos independientes vía `groupKeys?: string[]` — selector cuadros A/B/C… en esquina superior derecha, carga diferida por grupo, puntuación independiente. Cronómetro y animaciones: ver **Cronómetro del ExamRunner** |
 | `src/components/AnatExam.tsx` | Motor compartido de los EVAs de anatomía (EVA 2/3, futuro EVA 1). Examen interactivo A→B; ver sección **Sistema de EVAs** |
 | `src/components/PdfFullscreenModal.tsx` | Viewer PDF fullscreen con zoom. Usa signed URLs + sessionStorage cache |
 | `src/components/PlanProvider.tsx` | Context con `plan`, `isActive`, `expiresAt`. Consumido con `usePlan()` |
@@ -244,7 +244,83 @@ examen: { key: 'neurologia/snc-histologia', free: true, groups: ['neurologia/snc
 ```
 La prop `groupKeys={act.examen.groups}` pasa a `<ExamRunner>`. Cada clave en `groups` referencia un JSON independiente en el bucket `examenes` y debe estar registrada en el whitelist `EXAMENES` de `src/app/api/examen/[...examKey]/route.ts`.
 
-**Imágenes de exámenes**: bucket **público** `examenes-img` (no firmadas). Path `<curso>/<grupo>/<archivo>.webp`. Se embeben con URL completa en el JSON, renderizadas con `next/image` + `sizes="(max-width: 600px) 100vw, 560px"`. Conversión con `sharp` (máx 1200px, q82) antes de subir.
+**El JSON fuente se versiona en `scripts/examenes/`** aunque lo que sirve la web sea la copia del
+bucket. Los cuatro exámenes anteriores viven **sólo** en el bucket, y eso significa que reeditar
+uno obliga a bajarlo con la service role key; para los nuevos, la fuente está en git y se publica
+con `node scripts/upload-examen.mjs <archivo> <curso>/<clave>.json`. Hecho:
+`patologia/parcial-1` (banqueo 2024 del Examen Parcial 1, 40 preguntas, 10 con micrografía,
+explicación en todas). Los enunciados y alternativas se transcriben **tal cual** del examen real
+—sin reescribir distractores para equilibrar longitudes, como en el banco de ACP1—, y lo que el
+examen original trae roto (una alternativa truncada, dos alternativas idénticas) se transcribe
+igual y se avisa con `reviewNote`, que pinta el badge «Pendiente a revisión» con su tooltip.
+
+**Imágenes de exámenes**: bucket **público** `examenes-img` (no firmadas). Path
+`<curso>/<grupo>/<archivo>`. Se embeben con URL completa en el JSON, renderizadas con
+`next/image` + `sizes="(max-width: 600px) 100vw, 560px"`. Un banqueo entero llega como carpeta y
+lo sube `scripts/upload-examen-img-dir.mjs --dir <carpeta> --prefix <ruta>`, que imprime el mapa
+`archivo → { url, w, h }` listo para pegar (las medidas evitan el layout shift al cambiar de
+pregunta). **Un `.avif`/`.webp` de origen se sube tal cual** —recomprimirlo sería una segunda
+pérdida sobre un formato lossy—; los `.png`/`.jpg` sí pasan por `sharp` a WEBP q82.
+`upload-examen-img.mjs` es el script viejo, con su lista escrita a mano.
+
+**Cronómetro del ExamRunner** — lo enciende **`duration_min` del JSON**, que son minutos
+**recomendados y no un límite**: el reloj cuenta hacia **arriba** desde 0, va azul (`--blue`)
+mientras quepa dentro y vira a **rojo** al pasarse, con un único latido de aviso —un pulso
+permanente sería ruido durante el resto del examen— y sin cortar nada, porque el mismo banco se
+usa para estudiar sin prisa. Con `duration_min: null` no aparece, que es como estaban los cuatro
+exámenes anteriores. El tiempo sale siempre de restar contra el instante de arranque, no de sumar
+1 por tick, o se atrasaría con la pestaña en segundo plano; se reinicia con el **intento**
+(`stage`+`runId`), no al pasar de pregunta, y el total se guarda en el intento de `localStorage`
+(`seconds`, opcional: los intentos viejos no lo llevan).
+
+**El reloj se PAUSA, y el aro es el botón**: el centro del anillo alterna ⏸/▶ y en pausa el bloque
+vira a ámbar. El total pasa a ser «tramos cerrados + tramo abierto» (`acumuladoRef` + el instante
+de arranque del tramo en curso), de modo que sigue sin sumar por tick y el rato en pausa no entra
+ni en el aro ni en el `seconds` que se guarda. **Al pausar se retira la pregunta** y queda una
+escena con el tiempo congelado: si el enunciado siguiera a la vista, pausar sería la forma cómoda
+de pensar con el reloj parado.
+
+**Animaciones del examen**: la tarjeta lleva `key` por pregunta —así remonta y su entrada se
+repite en vez de correr sólo la primera vez—, las alternativas entran en cascada con `--i`, el
+acierto late y el fallo se sacude 4 px (más amplitud vuelve ilegible una alternativa de tres
+líneas), y la nota final cuenta hasta su valor. Todo apagado bajo `prefers-reduced-motion`, en un
+bloque **al final** del module. Al avanzar de pregunta se mueve la **ventana**
+(`window.scrollTo`), nunca `scrollIntoView`: el examen vive dentro de `.microPage`, que lleva
+`overflow: hidden`, y el navegador desplazaría también ese contenedor recortando su contenido.
+
+**El enunciado respeta los saltos de línea** (`white-space: pre-line`): las preguntas de
+relacionar columnas traen las dos listas en el propio `stem`.
+
+**La hoja del examen no lleva tarjetas-panel.** La jerarquía la marcan el aire, la tipografía y
+filetes finos; sólo tienen forma propia las piezas que se manipulan. En concreto:
+
+- **Mando** (contador · rastro · reloj) en vez de barra de progreso plana. El **rastro** es una
+  marca por pregunta —verde/roja según fue, la actual sobresale— y dice *cómo* va, no sólo cuánto
+  falta; por encima de **60 preguntas** vuelve a ser barra continua, porque cada marca mediría
+  menos de un píxel.
+- **La pregunta no es una caja**: número de folio con su filete a la izquierda (62 px + 22 px de
+  gap, de ahí el `padding-left: 84px` del pie, que alinea el botón con el cuerpo) y el contenido a
+  la derecha; en móvil el folio pasa a ser un rótulo en fila. El enunciado se corta a `66ch`: a
+  todo el ancho un caso clínico da líneas de ~85 caracteres.
+- **Las alternativas son una lista, no una pila de cajas**: fondo transparente, filete separador
+  interno y un barrido de color que entra desde la izquierda (`::before` con `scaleX`) al pasar por
+  encima y al responder. Se pueden contestar con **A–E / 1–5** y avanzar con **Enter** (el
+  listener ignora `Enter` con el foco en un `<button>`/`<a>`, que ya dispara su propio click, o
+  avanzaría dos preguntas).
+- **La explicación va DEBAJO de las alternativas**, no encima: arriba empujaba las opciones fuera
+  de vista justo cuando el alumno mira su ✓/✕. Su envase es un filete de acento que se desvanece,
+  sin caja ni borde lateral.
+
+**Las imágenes se amplían con un clic** — la figura *es* el botón, con su chip «Ampliar» visible
+sin depender del hover (en táctil no lo hay). El visor va por **portal a `<body>`** (dentro de
+`.microPage`, con su `overflow: hidden`, quedaría recortado), es oscuro en los dos temas como el
+visor de PDF, y lleva zoom con rueda/botones/doble clic y arrastre. Tres cosas que costaron un
+arreglo: la rueda se registra a mano con `passive: false` (React adjunta `onWheel` como pasivo y
+ahí `preventDefault()` no surte efecto), la barra de controles necesita `z-index` explícito porque
+el `transform` del lienzo crea contexto de apilamiento y lo taparía al ampliar, y **nada de
+`backdrop-filter`** — en esta app ya dejó el fondo en blanco al cerrar un overlay. La figura de la
+explicación no se eleva al hover: ese bloque lleva `overflow: hidden` mientras se despliega y se
+comería la sombra.
 
 **Imágenes**: `next/image` con formato AVIF, prop `sizes` responsivo. Bucket público `histologia`, `micologia`. Bucket privado `examenes`.
 

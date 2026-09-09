@@ -1,46 +1,84 @@
-/* Examen embebido — vive dentro de .microPage, no es modal */
+/* Examen embebido — vive dentro de .microPage, no es modal.
+   La hoja NO usa tarjetas-panel para el contenido: la jerarquía la marcan el
+   aire, la tipografía y filetes finos. Sólo tienen forma propia las piezas que
+   se manipulan (alternativas, mando, botones). */
 
 .shell {
+  --acc: #6C63C9;
+  --acc-rgb: 108, 99, 201;
+  --acc-2: #9B8EF8;
+  --acc-grad: linear-gradient(135deg, #7B72D4 0%, #9B8EF8 100%);
+  --ok: #2EA057;
+  --ok-rgb: 46, 160, 87;
+  --mal: #D64045;
+  --mal-rgb: 214, 64, 69;
+  --ambar: #E0932A;
+  --ambar-rgb: 224, 147, 42;
+
   max-width: 880px;
   margin: 0 auto;
-  padding: 32px 24px 80px;
+  padding: 28px 24px 88px;
   color: var(--white);
   position: relative;
   z-index: 1;
 }
 
-/* Selector de grupo en la esquina superior derecha (Examen: [A] [B]) */
+:global(.dark-mode) .shell {
+  --acc: #9B8EF8;
+  --acc-rgb: 155, 142, 248;
+}
+
+/* ── Barra superior: volver + selector de grupos ──────────── */
+.barraSuperior {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 13.5px;
+  text-decoration: none;
+  transition: color 0.15s, gap 0.15s;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  font-family: inherit;
+}
+
+.backLink:hover { color: var(--acc); gap: 10px; }
+
 .groupSelector {
-  position: absolute;
-  top: 22px;
-  right: 24px;
-  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .groupSelectorLabel {
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-.groupSquares {
-  display: flex;
-  gap: 8px;
-}
+.groupSquares { display: flex; gap: 7px; }
 
 .groupSquare {
   width: 34px;
   height: 34px;
-  border-radius: 9px;
-  border: 1.5px solid rgba(123, 114, 212, 0.35);
-  background: rgba(123, 114, 212, 0.10);
-  color: #9B8EF8;
+  border-radius: 10px;
+  border: 1.5px solid rgba(var(--acc-rgb), 0.3);
+  background: rgba(var(--acc-rgb), 0.07);
+  color: var(--acc);
   font-weight: 800;
   font-size: 14px;
   font-family: inherit;
@@ -48,170 +86,453 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s ease;
+  transition: transform 0.15s, background 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 
 .groupSquare:hover {
-  border-color: rgba(123, 114, 212, 0.6);
-  background: rgba(123, 114, 212, 0.18);
+  border-color: rgba(var(--acc-rgb), 0.6);
+  background: rgba(var(--acc-rgb), 0.16);
   transform: translateY(-1px);
 }
 
 .groupSquareActive,
 .groupSquareActive:hover {
-  background: linear-gradient(135deg, #7B72D4 0%, #9B8EF8 100%);
+  background: var(--acc-grad);
   border-color: transparent;
   color: #fff;
-  box-shadow: 0 4px 12px rgba(123, 114, 212, 0.35);
+  box-shadow: 0 5px 14px rgba(123, 114, 212, 0.38);
 }
 
-.backLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--muted);
-  font-size: 14px;
-  text-decoration: none;
-  margin-bottom: 24px;
-  transition: color 0.15s;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  font-family: inherit;
-}
-
-.backLink:hover { color: var(--white); }
-
-/* ── Cabecera (título + meta + progreso) ─────────────────── */
-.header {
-  margin-bottom: 28px;
-}
+/* ── Cabecera ─────────────────────────────────────────────── */
+.header { margin-bottom: 6px; }
 
 .eyebrow {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #7B72D4;
-  background: rgba(123, 114, 212, 0.12);
-  padding: 5px 10px;
-  border-radius: 6px;
-  margin-bottom: 14px;
+  color: var(--acc);
+  margin-bottom: 12px;
+}
+
+/* Guioncillo delante del rótulo: lo separa del título sin encajonarlo. */
+.eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--acc-grad);
 }
 
 .title {
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.18;
   color: var(--white);
-  margin: 0 0 8px 0;
-  letter-spacing: -0.01em;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.025em;
+  max-width: 20ch;
 }
 
 .metaLine {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--muted);
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 9px;
 }
 
 .metaLine span + span::before {
   content: '·';
-  margin-right: 10px;
-  opacity: 0.5;
+  margin-right: 9px;
+  opacity: 0.55;
 }
 
 .partHint {
-  margin: 0 0 24px 0;
-  padding: 12px 16px;
-  font-size: 13.5px;
-  line-height: 1.55;
+  margin: 16px 0 0 0;
+  font-size: 13px;
+  line-height: 1.6;
   color: var(--muted);
-  background: rgba(123, 114, 212, 0.06);
-  border: 1px solid rgba(123, 114, 212, 0.18);
-  border-left: 3px solid #7B72D4;
-  border-radius: 10px;
+  max-width: 62ch;
 }
 
 .partHint strong { color: var(--white); font-weight: 600; }
 
-/* ── Progreso ────────────────────────────────────────────── */
-.progressWrap {
-  margin-bottom: 32px;
+/* ── Mando: contador · rastro · cronómetro ────────────────────
+   Sustituye a la barra de progreso plana. El rastro no dice sólo cuánto falta:
+   dice cómo va yendo, marca a marca. */
+.mando {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: 22px 0 0;
+  padding: 16px 0 18px;
 }
 
-.progressLabels {
+.mando::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(var(--acc-rgb), 0.4), var(--card-border) 45%, transparent);
+}
+
+.contador {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
-  font-size: 12px;
+  gap: 1px;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.contadorNum {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  background: var(--acc-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.contadorTotal {
+  font-size: 15px;
+  font-weight: 700;
   color: var(--muted);
-  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.mandoCentro {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mandoPie {
+  font-size: 11.5px;
+  color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 
-.progressLabelMain {
-  font-weight: 600;
-  color: var(--white);
-  font-size: 13px;
+/* Rastro segmentado: una marca por pregunta, alineadas por abajo para que la
+   actual pueda sobresalir sin mover a las demás. */
+.rastro {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 15px;
 }
 
-.progressTrack {
+.seg {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--card-border);
+  transition: height 0.25s cubic-bezier(0.22, 0.61, 0.36, 1), background 0.3s;
+}
+
+.segPendiente { background: var(--card-border); }
+
+.segOk { background: linear-gradient(180deg, #3EC27A, var(--ok)); }
+
+.segMal { background: linear-gradient(180deg, #E8636A, var(--mal)); }
+
+.segActual {
+  height: 15px;
+  background: var(--acc-grad);
+  box-shadow: 0 0 10px rgba(var(--acc-rgb), 0.55);
+}
+
+/* Barra continua: reemplaza al rastro cuando hay demasiadas preguntas para que
+   cada marca siga siendo visible. */
+.rastroBarra {
   height: 6px;
+  border-radius: 999px;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 999px;
   overflow: hidden;
-  position: relative;
 }
 
-.progressFill {
+.rastroBarraFill {
   height: 100%;
-  background: linear-gradient(90deg, #7B72D4 0%, #9B8EF8 100%);
+  background: var(--acc-grad);
   border-radius: 999px;
   transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 12px rgba(123, 114, 212, 0.35);
+  box-shadow: 0 0 12px rgba(var(--acc-rgb), 0.35);
 }
 
-/* ── Tarjeta de pregunta ─────────────────────────────────── */
-.questionCard {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
-  padding: 28px 32px;
-  margin-bottom: 20px;
+/* ── Cronómetro (pausable) ───────────────────────────────────
+   Cuenta hacia ARRIBA desde 0 y es azul mientras el alumno vaya dentro del
+   tiempo recomendado que declara el examen; al pasarse vira a rojo, y en pausa
+   a ámbar. No corta nada: avisa. Los colores viven aquí (no en globals) y valen
+   para claro y oscuro, porque son señales, no fondo. */
+.crono {
+  --crono: var(--blue, #3b9edd);
+  --crono-rgb: 59, 158, 221;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  transition: opacity 0.3s;
+}
+
+.cronoExcedido {
+  --crono: #D64045;
+  --crono-rgb: 214, 64, 69;
+  /* Un solo latido al cruzar el umbral: un pulso permanente convertiría el
+     aviso en ruido durante el resto del examen. */
+  animation: cronoAviso 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) 1;
+}
+
+/* Va después de .cronoExcedido a propósito: mientras dure la pausa, el estado
+   que importa es ése. */
+.cronoPausado {
+  --crono: #E0932A;
+  --crono-rgb: 224, 147, 42;
+}
+
+@keyframes cronoAviso {
+  0%   { transform: scale(1);    }
+  35%  { transform: scale(1.05); }
+  100% { transform: scale(1);    }
+}
+
+/* El botón ES el aro: `--p` son los grados de tiempo recorrido. El anillo se
+   recorta con `mask` en vez de taparse con un disco del color del fondo: así no
+   hay que repetir aquí el fondo de la página (que cambia con el tema) y el
+   centro queda realmente transparente. La máscara va en `::before` porque
+   enmascarar el elemento recortaría también el icono. */
+.cronoBoton {
+  --p: 0deg;
   position: relative;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-family: inherit;
+  transition: transform 0.16s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.cronoBoton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--crono) var(--p),
+    rgba(var(--crono-rgb), 0.16) var(--p)
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3.5px), #000 calc(100% - 3.5px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 3.5px), #000 calc(100% - 3.5px));
+  transition: background 0.5s linear;
+}
+
+.cronoBoton:hover { transform: scale(1.07); }
+.cronoBoton:active { transform: scale(0.97); }
+
+.cronoBotonCentro {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--crono);
+  background: rgba(var(--crono-rgb), 0.14);
+  transition: background 0.18s, color 0.4s;
+}
+
+.cronoBoton:hover .cronoBotonCentro { background: rgba(var(--crono-rgb), 0.28); }
+
+.cronoTextos {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.25;
+}
+
+.cronoTiempo {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--crono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  transition: color 0.4s ease;
+}
+
+.cronoRef {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.cronoExcedido .cronoRef,
+.cronoPausado .cronoRef {
+  color: var(--crono);
+  font-weight: 600;
+}
+
+/* ── Escena de pausa ─────────────────────────────────────────
+   Con el reloj parado la pregunta se retira: si siguiera a la vista, pausar
+   sería la forma cómoda de pensar sin que corra el tiempo. */
+.pausa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 72px 24px 64px;
+  text-align: center;
+  animation: pausaEntra 0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes pausaEntra {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.pausaAro {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--ambar);
+  background: radial-gradient(circle at 32% 28%, rgba(var(--ambar-rgb), 0.22), rgba(var(--ambar-rgb), 0.05));
+  border: 2px solid rgba(var(--ambar-rgb), 0.4);
+  margin-bottom: 6px;
+}
+
+.pausaAro svg { width: 30px; height: 30px; }
+
+.pausaTitulo {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+
+.pausaTexto {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 14px 0;
+  max-width: 42ch;
+  line-height: 1.6;
+}
+
+.pausaTexto strong {
+  color: var(--ambar);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+/* ── Bloque de pregunta ──────────────────────────────────────
+   Sin tarjeta: un número de folio a la izquierda, con su filete, y el contenido
+   a la derecha. La jerarquía la da la tipografía, no una caja gris. */
+.pregunta {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 0 22px;
+  margin: 26px 0 26px;
+  /* Entra desde la derecha, en la misma dirección en que avanza el examen. El
+     bloque lleva `key` por pregunta, así que remonta y esto se repite. */
+  animation: preguntaEntra 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes preguntaEntra {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.preguntaIndice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding-top: 2px;
+}
+
+.preguntaNum {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  background: var(--acc-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.85;
+}
+
+.preguntaFilete {
+  width: 2px;
+  flex: 1;
+  min-height: 44px;
+  margin-left: 3px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(var(--acc-rgb), 0.42), transparent 88%);
+}
+
+.preguntaCuerpo { min-width: 0; }
+
+.stem {
+  font-size: 17.5px;
+  line-height: 1.68;
+  color: var(--white);
+  margin: 0 0 24px 0;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  /* Los casos clínicos son párrafos largos: a todo el ancho del bloque salen
+     líneas de ~85 caracteres y el ojo pierde el renglón al volver. */
+  max-width: 66ch;
+  /* Los enunciados que relacionan dos columnas traen saltos de línea en el
+     texto; sin esto se leerían como un párrafo corrido. */
+  white-space: pre-line;
 }
 
 /* ── Badge "Pendiente a revisión" ────────────────────────── */
 .reviewBadge {
-  position: absolute;
-  top: 14px;
-  right: 16px;
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: rgba(245, 166, 35, 0.10);
-  border: 1px solid rgba(245, 166, 35, 0.28);
+  gap: 6px;
+  background: rgba(245, 166, 35, 0.1);
+  border: 1px solid rgba(245, 166, 35, 0.3);
   border-radius: 999px;
-  padding: 4px 11px;
+  padding: 4px 12px;
   font-size: 11px;
   font-weight: 700;
-  color: #f5a623;
+  color: #C77F12;
   cursor: default;
   user-select: none;
   white-space: nowrap;
+  margin-bottom: 14px;
   z-index: 2;
 }
+
+:global(.dark-mode) .reviewBadge { color: #f5a623; }
 
 .reviewTooltip {
   position: absolute;
   top: calc(100% + 8px);
-  right: 0;
+  left: 0;
   width: 270px;
   background: #12102a;
   border: 1px solid rgba(245, 166, 35, 0.22);
@@ -227,19 +548,12 @@
   transform: translateY(-4px);
   transition: opacity 0.18s, transform 0.18s;
   z-index: 10;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
 
 .reviewBadge:hover .reviewTooltip {
   opacity: 1;
   transform: translateY(0);
-}
-
-.stem {
-  font-size: 17px;
-  line-height: 1.65;
-  color: var(--white);
-  margin: 0 0 28px 0;
-  font-weight: 500;
 }
 
 /* ── Capa de precarga (oculta) ────────────────────────────
@@ -256,271 +570,437 @@
   z-index: -1;
 }
 
-/* ── Figura / micrografía de la pregunta ─────────────────── */
-.figure {
-  margin: 0 0 26px 0;
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-}
-
-.figureImg {
+/* ── Figura ampliable ────────────────────────────────────────
+   La imagen ES el botón que abre el visor; el chip de la esquina lo anuncia sin
+   depender del hover (en táctil no lo hay). */
+.figura {
+  position: relative;
   display: block;
   width: 100%;
-  max-width: 560px;
-  height: auto;
-  border-radius: 12px;
+  max-width: 620px;
+  margin: 0 0 26px 0;
+  padding: 0;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card-bg);
+  cursor: zoom-in;
+  font-family: inherit;
+  transition: transform 0.2s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.2s, border-color 0.2s;
 }
 
-.options {
+.figura:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--acc-rgb), 0.4);
+  box-shadow: 0 12px 30px rgba(10, 8, 30, 0.16);
+}
+
+.figuraImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.figuraChip {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: rgba(10, 8, 26, 0.66);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  opacity: 0.82;
+  transition: opacity 0.18s, transform 0.18s;
+}
+
+.figura:hover .figuraChip {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* Dentro de la explicación la figura no se eleva: ese bloque lleva
+   `overflow: hidden` mientras se despliega y se comería la sombra del hover. */
+.figuraExplicacion { max-width: 520px; margin-bottom: 0; }
+.figuraExplicacion:hover { transform: none; box-shadow: none; }
+
+/* ── Alternativas ────────────────────────────────────────────
+   Lista, no pila de cajas: el fondo entra barrido desde la izquierda al pasar
+   por encima y la letra se enciende. Los separadores son filetes internos. */
+.opciones {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  margin-top: 4px;
 }
 
-.option {
+.opcion {
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  padding: 14px 16px;
-  background: var(--card-bg);
-  border: 1.5px solid var(--card-border);
-  border-radius: 12px;
+  padding: 14px 14px 14px 10px;
+  background: transparent;
+  border: 0;
+  border-radius: 11px;
   cursor: pointer;
   text-align: left;
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: 15.5px;
+  line-height: 1.55;
   color: var(--white);
-  transition: all 0.15s ease;
   font-family: inherit;
   width: 100%;
+  transition: transform 0.18s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.25s;
+  /* Entran en cascada bajo el enunciado, no todas de golpe: el orden en que
+     aparecen es el orden en que se leen. `--i` lo pone el componente. */
+  animation: opcionEntra 0.34s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(0.1s + var(--i, 0) * 0.055s);
 }
 
-.option:hover:not(:disabled) {
-  border-color: rgba(123, 114, 212, 0.5);
-  transform: translateY(-1px);
-  background: rgba(123, 114, 212, 0.04);
+@keyframes opcionEntra {
+  from { opacity: 0; transform: translateY(9px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.option:disabled { cursor: default; }
+/* Barrido de fondo */
+.opcion::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 11px;
+  background: linear-gradient(90deg, rgba(var(--acc-rgb), 0.14), rgba(var(--acc-rgb), 0));
+  transform: scaleX(0);
+  transform-origin: left;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.2s;
+}
 
-.optionLabel {
-  font-weight: 700;
+/* Filete separador, retirado en el último */
+.opcion::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 0;
+  height: 1px;
+  background: var(--card-border);
+}
+
+.opcion:last-child::after { display: none; }
+
+.opcion:hover:not(:disabled) { transform: translateX(4px); }
+
+.opcion:hover:not(:disabled)::before {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.opcion:focus-visible {
+  outline: 2px solid rgba(var(--acc-rgb), 0.6);
+  outline-offset: 2px;
+}
+
+.opcion:disabled { cursor: default; }
+
+.opcionLetra {
+  position: relative;
+  z-index: 1;
+  font-weight: 800;
   font-size: 13px;
   color: var(--muted);
   background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  min-width: 28px;
-  height: 28px;
-  border-radius: 8px;
+  border: 1.5px solid var(--card-border);
+  min-width: 30px;
+  height: 30px;
+  border-radius: 9px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: all 0.15s;
+  transition: all 0.18s;
 }
 
-.option:hover:not(:disabled) .optionLabel {
-  color: #7B72D4;
-  border-color: rgba(123, 114, 212, 0.5);
+.opcion:hover:not(:disabled) .opcionLetra {
+  color: #fff;
+  border-color: transparent;
+  background: var(--acc-grad);
+  box-shadow: 0 5px 14px rgba(var(--acc-rgb), 0.4);
 }
 
-.optionText { flex: 1; padding-top: 3px; }
-
-/* feedback states */
-.optionCorrect {
-  background: rgba(46, 160, 87, 0.10);
-  border-color: rgba(46, 160, 87, 0.5);
-}
-.optionCorrect .optionLabel {
-  background: rgba(46, 160, 87, 0.2);
-  border-color: rgba(46, 160, 87, 0.4);
-  color: #2EA057;
+.opcionTexto {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  padding-top: 3px;
 }
 
-.optionWrong {
-  background: rgba(214, 64, 69, 0.08);
-  border-color: rgba(214, 64, 69, 0.5);
-}
-.optionWrong .optionLabel {
-  background: rgba(214, 64, 69, 0.18);
-  border-color: rgba(214, 64, 69, 0.4);
-  color: #D64045;
-}
-
-.optionDimmed { opacity: 0.42; }
-
-.optionIcon {
+.opcionMarca {
+  position: relative;
+  z-index: 1;
   margin-left: auto;
-  font-size: 18px;
-  line-height: 1;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
   flex-shrink: 0;
+  margin-top: 3px;
+  color: #fff;
+  animation: marcaEntra 0.34s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  animation-delay: 0.08s;
 }
-.optionCorrect .optionIcon { color: #2EA057; }
-.optionWrong .optionIcon { color: #D64045; }
 
-/* ── Explicación ─────────────────────────────────────────── */
-.explanation {
-  background: rgba(123, 114, 212, 0.05);
-  border: 1px solid rgba(123, 114, 212, 0.18);
-  border-left: 3px solid #7B72D4;
-  border-radius: 12px;
-  padding: 0 24px;
-  font-size: 14.5px;
-  line-height: 1.7;
-  color: var(--white);
+@keyframes marcaEntra {
+  from { opacity: 0; transform: scale(0.4); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.marcaOk { background: var(--ok); }
+.marcaMal { background: var(--mal); }
+
+/* Estados de respuesta: el fondo se rellena de color (barrido), no aparece de
+   golpe una caja de color. */
+.opcionOk::before {
+  background: linear-gradient(90deg, rgba(var(--ok-rgb), 0.2), rgba(var(--ok-rgb), 0.02));
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.opcionOk .opcionLetra {
+  background: var(--ok);
+  border-color: transparent;
+  color: #fff;
+}
+
+.opcionOk .opcionTexto { font-weight: 600; }
+
+.opcionMal::before {
+  background: linear-gradient(90deg, rgba(var(--mal-rgb), 0.18), rgba(var(--mal-rgb), 0.02));
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.opcionMal {
+  /* Recorrido corto (4 px): marca el fallo sin zarandear una alternativa de
+     tres líneas, que a mayor amplitud se vuelve ilegible. */
+  animation: falloSacude 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes falloSacude {
+  0%, 100% { transform: translateX(0); }
+  18%      { transform: translateX(-4px); }
+  42%      { transform: translateX(4px); }
+  68%      { transform: translateX(-2px); }
+  86%      { transform: translateX(2px); }
+}
+
+.opcionMal .opcionLetra {
+  background: var(--mal);
+  border-color: transparent;
+  color: #fff;
+}
+
+.opcionApagada { opacity: 0.4; }
+
+/* ── Explicación ─────────────────────────────────────────────
+   Ni panel ni borde lateral: un filete de acento que se desvanece hacia la
+   derecha y el rótulo montado sobre él. */
+.explicacion {
+  position: relative;
+  margin-top: 26px;
   overflow: hidden;
-  transform-origin: top;
-  /* Retardo de 0.9s: el alumno primero ve el ✓/✕ en su alternativa. Luego el
-     bloque se despliega: el alto/padding/margen crecen JUNTO con el contenido
-     (no se reserva el espacio de golpe). `both` lo mantiene colapsado durante
-     el retardo y conserva el estado final al terminar. */
-  animation: explanationReveal 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) 0.9s both;
+  /* Retardo de 0.8s: el alumno primero ve el ✓/✕ en su alternativa. Luego el
+     bloque se despliega: el alto/padding crecen JUNTO con el contenido (no se
+     reserva el espacio de golpe). `both` lo mantiene colapsado durante el
+     retardo y conserva el estado final al terminar. */
+  animation: explicacionAbre 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) 0.8s both;
 }
 
-@keyframes explanationReveal {
+.explicacion::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(var(--acc-rgb), 0.6), var(--card-border) 40%, transparent 85%);
+}
+
+@keyframes explicacionAbre {
   from {
     opacity: 0;
     max-height: 0;
     padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
     transform: translateY(-6px);
   }
   to {
     opacity: 1;
-    max-height: 1400px;
+    max-height: 1600px;
     padding-top: 20px;
-    padding-bottom: 20px;
-    margin-top: 4px;
-    margin-bottom: 22px;
     transform: translateY(0);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .explanation {
-    animation: none;
-    max-height: none;
-    padding: 20px 24px;
-    margin: 4px 0 22px 0;
-    opacity: 1;
-  }
-}
-
-.explanationLabel {
-  display: flex;
+.explicacionRotulo {
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-weight: 800;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #7B72D4;
+  color: var(--acc);
   margin-bottom: 12px;
 }
 
-.explanation p { margin: 0 0 12px 0; }
-.explanation p:last-child { margin-bottom: 0; }
-.explanation strong { color: var(--white); font-weight: 700; }
-
-.explanationFigureWrap {
-  margin-top: 16px;
+.explicacionIcono {
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: var(--acc-grad);
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(var(--acc-rgb), 0.32);
 }
 
-.explanationFigureCaption {
+.explicacionTexto {
+  font-size: 14.8px;
+  line-height: 1.72;
+  color: var(--white);
+  max-width: 68ch;
+}
+
+.explicacionTexto p { margin: 0 0 12px 0; }
+.explicacionTexto p:last-child { margin-bottom: 0; }
+.explicacionTexto strong { color: var(--white); font-weight: 700; }
+.explicacionTexto ul, .explicacionTexto ol { margin: 0 0 12px 0; padding-left: 20px; }
+.explicacionTexto li { margin-bottom: 5px; }
+
+.explicacionFigura { margin-top: 18px; }
+
+.explicacionCaption {
   font-size: 12px;
   font-weight: 600;
-  color: rgba(8, 6, 26, 0.55);
+  color: var(--muted);
   text-align: left;
   margin: 0 0 8px 0;
   letter-spacing: 0.01em;
 }
 
-:global(.dark-mode) .explanationFigureCaption {
-  color: rgba(240, 238, 255, 0.6);
-}
-
-.explanationFigure {
-  border-radius: 10px;
-  overflow: hidden;
-  text-align: center;
-}
-.explanationFigureImg {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  display: block;
-}
-
-/* ── Footer con tags + botón ─────────────────────────────── */
-.footer {
+/* ── Pie: tags + atajos + botón ──────────────────────────── */
+.pie {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 16px;
+  align-items: flex-end;
+  gap: 18px;
   flex-wrap: wrap;
+  padding-left: 84px; /* alinea con la columna del cuerpo de la pregunta */
+}
+
+.pieIzq {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  flex: 1;
+  min-width: 0;
 }
 
 .tagsRow {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  flex: 1;
 }
 
 .tag {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  background: rgba(var(--acc-rgb), 0.08);
+  border: 1px solid rgba(var(--acc-rgb), 0.18);
   padding: 4px 10px;
-  border-radius: 6px;
+  border-radius: 7px;
   font-size: 11px;
+  font-weight: 600;
+  color: var(--acc);
+}
+
+.atajos {
+  margin: 0;
+  font-size: 11.5px;
   color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.atajos kbd {
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 5px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--white);
+  line-height: 1.4;
 }
 
 .nextBtn {
-  background: linear-gradient(135deg, #7B72D4 0%, #9B8EF8 100%);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--acc-grad);
   border: none;
   color: white;
-  padding: 12px 28px;
-  border-radius: 10px;
-  font-weight: 600;
+  padding: 13px 26px;
+  border-radius: 12px;
+  font-weight: 700;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 14.5px;
   font-family: inherit;
-  transition: transform 0.15s, box-shadow 0.15s;
-  box-shadow: 0 4px 14px rgba(123, 114, 212, 0.25);
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+  box-shadow: 0 6px 18px rgba(var(--acc-rgb), 0.3);
+  flex-shrink: 0;
 }
+
+.nextFlecha { transition: transform 0.2s cubic-bezier(0.22, 0.61, 0.36, 1); }
 
 .nextBtn:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(123, 114, 212, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(var(--acc-rgb), 0.42);
 }
 
+.nextBtn:hover:not(:disabled) .nextFlecha { transform: translateX(4px); }
+
 .nextBtn:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
   box-shadow: none;
 }
 
 .ghostBtn {
+  display: inline-flex;
+  align-items: center;
   background: transparent;
   border: 1px solid var(--card-border);
   color: var(--white);
-  padding: 12px 22px;
-  border-radius: 10px;
-  font-weight: 500;
+  padding: 13px 22px;
+  border-radius: 12px;
+  font-weight: 600;
   cursor: pointer;
   font-size: 14px;
   font-family: inherit;
-  transition: background 0.15s, border-color 0.15s;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
 }
 
 .ghostBtn:hover {
-  background: var(--card-bg);
-  border-color: rgba(123, 114, 212, 0.4);
+  background: rgba(var(--acc-rgb), 0.07);
+  border-color: rgba(var(--acc-rgb), 0.4);
+  transform: translateY(-1px);
 }
 
 /* ── Loading / error ─────────────────────────────────────── */
@@ -536,7 +1016,7 @@
   width: 28px;
   height: 28px;
   border: 2.5px solid var(--card-border);
-  border-top-color: #7B72D4;
+  border-top-color: var(--acc);
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
   margin: 0 auto 16px;
@@ -544,87 +1024,227 @@
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Pantalla de resultados ──────────────────────────────── */
-.resultShell { text-align: center; padding: 40px 0 0; }
+/* ── Resultados ──────────────────────────────────────────────
+   Aro que se dibuja hasta la nota, alimentado por el mismo valor animado que la
+   cifra: número y arco no se pueden desincronizar. */
+.resultShell {
+  text-align: center;
+  padding: 34px 0 0;
+}
 
-.scoreCircle {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  margin: 0 auto 28px;
+.notaWrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 22px;
+  animation: notaEntra 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes notaEntra {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.notaAro {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.notaPista {
+  fill: none;
+  stroke: var(--card-border);
+  stroke-width: 9;
+}
+
+.notaValor {
+  fill: none;
+  stroke: var(--tono, #7B72D4);
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+
+.notaCentro {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 30% 30%, rgba(123, 114, 212, 0.18), rgba(123, 114, 212, 0.04));
-  border: 3px solid rgba(123, 114, 212, 0.45);
-  box-shadow: 0 12px 36px rgba(123, 114, 212, 0.22);
+  gap: 4px;
 }
 
-.scoreNum {
-  font-size: 48px;
+.notaNum {
+  display: flex;
+  align-items: baseline;
+  font-size: 46px;
   font-weight: 800;
   color: var(--white);
   line-height: 1;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+
+.notaTotal {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--muted);
   letter-spacing: -0.02em;
 }
 
-.scorePct {
-  font-size: 13px;
+.notaPct {
+  font-size: 12.5px;
   color: var(--muted);
-  margin-top: 8px;
   font-variant-numeric: tabular-nums;
 }
 
 .resultTitle {
-  font-size: 26px;
-  font-weight: 700;
+  font-size: 27px;
+  font-weight: 800;
   margin: 0 0 8px 0;
   color: var(--white);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.025em;
 }
 
 .resultSub {
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--muted);
-  margin: 0 0 36px 0;
+  margin: 0 0 28px 0;
 }
 
+/* Cifras del intento: sin tarjetas, separadas por filetes verticales. */
+.resultCifras {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.cifra {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.cifraNum {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.cifraOk { color: var(--ok); }
+.cifraMal { color: var(--mal); }
+.cifraTiempo { color: var(--blue, #3b9edd); }
+
+.cifraLabel {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.cifraSep {
+  width: 1px;
+  height: 30px;
+  background: var(--card-border);
+}
+
+.resultRastro {
+  max-width: 460px;
+  margin: 0 auto 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rastroFinal .seg {
+  height: 9px;
+  animation: segEntra 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 0.018s);
+}
+
+@keyframes segEntra {
+  from { opacity: 0; transform: scaleY(0.3); }
+  to   { opacity: 1; transform: scaleY(1); }
+}
+
+.resultRastroPie {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+/* Historial: filas con su propia barra, sin caja contenedora. */
 .history {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 14px;
-  padding: 20px 24px;
-  margin: 0 auto 28px;
-  max-width: 380px;
+  margin: 0 auto 30px;
+  max-width: 420px;
   text-align: left;
 }
 
 .historyTitle {
-  font-size: 11px;
+  font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   color: var(--muted);
-  margin: 0 0 12px 0;
-  font-weight: 700;
+  margin: 0 0 10px 0;
+  font-weight: 800;
 }
 
 .historyRow {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  font-size: 13.5px;
+  gap: 12px;
+  font-size: 13px;
   color: var(--white);
-  padding: 8px 0;
+  padding: 9px 0;
   border-bottom: 1px solid var(--card-border);
 }
 
 .historyRow:last-child { border-bottom: none; }
 
-.historyScore {
-  font-weight: 600;
+.historyFecha {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 108px;
+  color: var(--muted);
+}
+
+.historyTime {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  color: var(--muted);
   font-variant-numeric: tabular-nums;
-  color: #7B72D4;
+}
+
+.historyBarra {
+  flex: 1;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--card-border);
+  overflow: hidden;
+  min-width: 40px;
+}
+
+.historyBarraFill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--acc-grad);
+}
+
+.historyScore {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--acc);
+  min-width: 54px;
+  text-align: right;
 }
 
 .resultActions {
@@ -635,36 +1255,253 @@
 }
 
 .primaryBtn {
-  background: linear-gradient(135deg, #7B72D4 0%, #9B8EF8 100%);
+  background: var(--acc-grad);
   border: none;
   color: white;
   padding: 13px 30px;
-  border-radius: 10px;
-  font-weight: 600;
+  border-radius: 12px;
+  font-weight: 700;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 14.5px;
   font-family: inherit;
   transition: transform 0.15s, box-shadow 0.15s;
-  box-shadow: 0 6px 18px rgba(123, 114, 212, 0.3);
+  box-shadow: 0 6px 18px rgba(var(--acc-rgb), 0.32);
 }
 
 .primaryBtn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 22px rgba(123, 114, 212, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(var(--acc-rgb), 0.42);
+}
+
+/* ── Visor de imagen (portal a <body>) ───────────────────────
+   Oscuro en los dos temas, como el visor de PDF: lo que se mira es una
+   micrografía y un marco claro le roba contraste. Sin `backdrop-filter`: obliga
+   a rasterizar todo lo de detrás y en esta app ya ha dejado el fondo en blanco
+   al cerrar. */
+.lbCapa {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 68px 24px 56px;
+  background: rgba(6, 8, 20, 0.88);
+  overscroll-behavior: contain;
+  animation: lbEntra 0.2s ease-out both;
+}
+
+@keyframes lbEntra {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* z-index explícito: el lienzo va después en el DOM y su `transform` crea
+   contexto de apilamiento, así que al ampliar taparía los controles. */
+.lbBarra {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  left: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lbZoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.lbBtn,
+.lbPct,
+.lbCerrar {
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.88);
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s, opacity 0.15s;
+}
+
+.lbBtn {
+  width: 32px;
+  height: 32px;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+}
+
+.lbBtn:hover:not(:disabled),
+.lbPct:hover,
+.lbCerrar:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
+
+.lbBtn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.lbPct {
+  min-width: 58px;
+  height: 32px;
+  font-size: 12.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.lbCerrar {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+}
+
+.lbLienzo {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  cursor: zoom-in;
+  transform-origin: center;
+  will-change: transform;
+  animation: lbImgEntra 0.24s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes lbImgEntra {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; }
+}
+
+.lbLienzoMovible { cursor: grab; touch-action: none; }
+.lbLienzoArrastrando { cursor: grabbing; }
+
+.lbImg {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(1400px, 92vw);
+  max-height: calc(100vh - 132px); /* fallback: sin dvh la imagen no tendría tope */
+  max-height: calc(100dvh - 132px);
+  border-radius: 10px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.lbPie {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  text-align: center;
+  margin: 0;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  pointer-events: none;
+}
+
+.lbPie kbd {
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* ── Responsive ──────────────────────────────────────────── */
-@media (max-width: 640px) {
-  .shell { padding: 20px 16px 60px; }
-  .title { font-size: 22px; }
-  .questionCard { padding: 20px 18px; }
-  .stem { font-size: 15.5px; }
-  .option { padding: 12px 14px; gap: 12px; }
-  .scoreCircle { width: 130px; height: 130px; }
-  .scoreNum { font-size: 38px; }
-  /* El selector va arriba a la derecha; deja aire al título para que no choque */
-  .groupSelector { top: 18px; right: 16px; }
-  .groupSquare { width: 30px; height: 30px; font-size: 13px; }
-  .header { padding-top: 4px; }
-  .title { padding-right: 84px; }
+@media (max-width: 720px) {
+  .shell { padding: 18px 16px 64px; }
+  .title { font-size: 23px; max-width: none; }
+
+  /* La columna del folio desaparece: el número pasa a ser un rótulo en fila
+     sobre el enunciado. */
+  .pregunta {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 20px 0;
+  }
+  .preguntaIndice { flex-direction: row; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .preguntaNum { font-size: 25px; }
+  .preguntaFilete {
+    width: auto;
+    flex: 1;
+    height: 2px;
+    min-height: 0;
+    margin: 0;
+    background: linear-gradient(90deg, rgba(var(--acc-rgb), 0.42), transparent 90%);
+  }
+
+  .pie { padding-left: 0; }
+  .stem { font-size: 16px; }
+  .opcion { padding: 12px 12px 12px 8px; font-size: 15px; gap: 12px; }
+
+  .mando { flex-wrap: wrap; gap: 12px 16px; }
+  .mandoCentro { order: 3; flex-basis: 100%; }
+  .crono { margin-left: auto; }
+  .cronoRef { display: none; } /* el estado ya lo dice el color y el icono */
+  .contadorNum { font-size: 27px; }
+
+  .notaWrap { width: 150px; height: 150px; }
+  .notaNum { font-size: 38px; }
+  .lbPie { display: none; }
+  .lbCapa { padding: 62px 12px 20px; }
+  .lbImg {
+    max-height: calc(100vh - 92px);
+    max-height: calc(100dvh - 92px);
+  }
+}
+
+@media (max-width: 420px) {
+  .nextBtn { width: 100%; justify-content: center; }
+  .pie { gap: 14px; }
+}
+
+/* ── Movimiento reducido ─────────────────────────────────────
+   Va al FINAL del archivo a propósito: a igual especificidad manda la última
+   regla, y desde más arriba no apagaría las animaciones declaradas después. */
+@media (prefers-reduced-motion: reduce) {
+  .pregunta,
+  .opcion,
+  .opcionMal,
+  .opcionMarca,
+  .cronoExcedido,
+  .notaWrap,
+  .pausa,
+  .lbCapa,
+  .lbLienzo,
+  .rastroFinal .seg {
+    animation: none;
+  }
+  .explicacion {
+    animation: none;
+    max-height: none;
+    padding-top: 20px;
+    opacity: 1;
+  }
+  .rastroBarraFill,
+  .cronoBoton::before,
+  .cronoTiempo,
+  .seg,
+  .figura,
+  .opcion::before {
+    transition: none;
+  }
 }

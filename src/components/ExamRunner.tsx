@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
@@ -35,6 +36,12 @@ interface ExamPayload {
   version: number;
   key: string;
   title: string;
+  /**
+   * Minutos **recomendados** para el examen, no un límite: el cronómetro cuenta
+   * hacia arriba desde 0 y sólo cambia de color al pasarse. Con `null` el examen
+   * no lleva cronómetro (es el caso de los bancos de histología, que se hacen a
+   * ritmo libre); con un número, aparece.
+   */
   duration_min: number | null;
   questions: ExamQuestion[];
 }
@@ -46,6 +53,8 @@ interface Attempt {
   score: number;
   total: number;
   finishedAt: string;
+  /** Segundos que duró el intento. Ausente en los intentos guardados antes del cronómetro. */
+  seconds?: number;
 }
 
 interface Props {
@@ -66,6 +75,16 @@ interface Props {
 const EXPIRY_BUFFER_MS = 15 * 60 * 1000;
 const urlCacheKey = (k: string) => `examen-url-${k}`;
 const attemptsKey = (k: string) => `medgo:attempts:${k}`;
+
+/** Letras de las alternativas: rotulan los botones y son su atajo de teclado. */
+const LETRAS = 'ABCDEFGHIJ';
+
+/**
+ * Por encima de este número de preguntas el rastro deja de dibujarse segmento a
+ * segmento y vuelve a ser una barra continua: con 100 preguntas cada marca
+ * mediría menos de un píxel y dejaría de informar de nada.
+ */
+const MAX_SEGMENTOS = 60;
 
 function shuffle<T>(arr: T[]): T[] {
   const out = arr.slice();
@@ -140,6 +159,461 @@ async function fetchExam(key: string): Promise<ExamPayload> {
 
 type Phase = 'running' | 'finished';
 
+const prefiereQuieto = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function formatoTiempo(seg: number, conHoras: boolean): string {
+  const s = Math.max(0, Math.floor(seg));
+  const mm = Math.floor(s / 60) % 60;
+  const ss = s % 60;
+  const dd = (n: number) => String(n).padStart(2, '0');
+  if (!conHoras) return `${dd(Math.floor(s / 60))}:${dd(ss)}`;
+  return `${Math.floor(s / 3600)}:${dd(mm)}:${dd(ss)}`;
+}
+
+/**
+ * Cronómetro ascendente **con pausa**. El tiempo de cada tramo sale siempre de
+ * la diferencia contra el instante en que ese tramo arrancó —no de sumar 1 en
+ * cada tick—, para que no se atrase si la pestaña queda en segundo plano y el
+ * navegador estrangula los timers.
+ *
+ * La pausa cierra el tramo en curso y lo suma a `acumuladoRef`; al reanudar se
+ * abre un tramo nuevo. Por eso el total es «acumulado + tramo abierto», y el
+ * tiempo en pausa no entra en la cuenta ni en el intento que se guarda.
+ *
+ * `reinicio` es la identidad del intento (grupo + reintento): al cambiar, el
+ * cronómetro vuelve a cero; mientras no cambie, pasar de pregunta no lo toca.
+ */
+function useCronometro(activo: boolean, reinicio: string) {
+  const [segundos, setSegundos] = useState(0);
+  const inicioRef = useRef<number | null>(null);
+  const acumuladoRef = useRef(0);
+
+  useEffect(() => {
+    inicioRef.current = null;
+    acumuladoRef.current = 0;
+    setSegundos(0);
+  }, [reinicio]);
+
+  useEffect(() => {
+    if (!activo) {
+      // Cierra el tramo abierto (pausa, fin del examen o desmontaje lógico).
+      if (inicioRef.current !== null) {
+        acumuladoRef.current += Date.now() - inicioRef.current;
+        inicioRef.current = null;
+        setSegundos(Math.floor(acumuladoRef.current / 1000));
+      }
+      return;
+    }
+    inicioRef.current = Date.now();
+    const tick = () => {
+      const abierto = inicioRef.current === null ? 0 : Date.now() - inicioRef.current;
+      setSegundos(Math.floor((acumuladoRef.current + abierto) / 1000));
+    };
+    tick();
+    const id = window.setInterval(tick, 500);
+    return () => window.clearInterval(id);
+  }, [activo, reinicio]);
+
+  return segundos;
+}
+
+/** Cuenta de 0 a `objetivo` para la nota final. Sin animación si el sistema la desactiva. */
+function useConteo(objetivo: number, ms = 900) {
+  // Arranca ya en el valor final si no va a haber animación; si arrancara en 0
+  // se vería un cero durante un frame. (No hay riesgo de desajuste con el HTML
+  // del servidor: la nota sólo se monta al terminar el examen.)
+  const [valor, setValor] = useState(() => (prefiereQuieto() ? objetivo : 0));
+
+  useEffect(() => {
+    if (prefiereQuieto() || objetivo <= 0) {
+      setValor(objetivo);
+      return;
+    }
+    const t0 = performance.now();
+    let raf = 0;
+    const paso = (t: number) => {
+      const p = Math.min(1, (t - t0) / ms);
+      // easeOutCubic: arranca rápido y frena, como un contador que se asienta.
+      setValor(objetivo * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) raf = requestAnimationFrame(paso);
+    };
+    raf = requestAnimationFrame(paso);
+    return () => cancelAnimationFrame(raf);
+  }, [objetivo, ms]);
+
+  return valor;
+}
+
+/* ── Iconos ────────────────────────────────────────────────────────────────
+   SVG inline con `currentColor`: heredan el color del bloque y se adaptan a
+   claro/oscuro sin duplicar reglas. */
+
+function IconoPausa() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <rect x="6.5" y="5" width="4" height="14" rx="1.4" />
+      <rect x="13.5" y="5" width="4" height="14" rx="1.4" />
+    </svg>
+  );
+}
+
+function IconoPlay() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M8 5.2c0-.9 1-1.5 1.8-1l9 6.3c.7.5.7 1.5 0 2l-9 6.3c-.8.5-1.8-.1-1.8-1V5.2Z" />
+    </svg>
+  );
+}
+
+function IconoReloj({ size = 15 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+      <path
+        d="M12 7v5l3.2 1.9"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconoLupa() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="11" cy="11" r="6.4" stroke="currentColor" strokeWidth="2" />
+      <path d="M15.8 15.8 20 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M11 8.6v4.8M8.6 11h4.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconoCheck() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="m5 12.5 4.6 4.5L19 7"
+        stroke="currentColor"
+        strokeWidth="2.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconoCruz() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M6.5 6.5 17.5 17.5M17.5 6.5 6.5 17.5" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconoAviso() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M12 4.6 21 20H3l9-15.4Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path d="M12 10v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="12" cy="17" r="1.05" fill="currentColor" />
+    </svg>
+  );
+}
+
+function IconoIdea() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M12 3.2a6 6 0 0 0-3.4 10.9c.6.4.9 1 .9 1.7v.4h5v-.4c0-.7.3-1.3.9-1.7A6 6 0 0 0 12 3.2Z"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinejoin="round"
+      />
+      <path d="M10 19.2h4M10.6 21.2h2.8" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconoCerrar() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/* ── Visor de imagen a pantalla completa ──────────────────────────────────── */
+
+interface Ampliada {
+  src: string;
+  alt: string;
+  w: number;
+  h: number;
+}
+
+const ESC_MIN = 1;
+const ESC_MAX = 5;
+
+/**
+ * Lightbox de las micrografías. Va por **portal a `<body>`**: el examen vive
+ * dentro de `.microPage`, que lleva `overflow: hidden`, y montarlo ahí dentro
+ * dejaría el visor recortado por la caja del panel.
+ *
+ * La cáscara es oscura en los dos temas, igual que el visor de PDF: lo que se
+ * mira es una micrografía, y un marco claro alrededor le roba contraste.
+ */
+function VisorImagen({ img, onClose }: { img: Ampliada; onClose: () => void }) {
+  const [destino, setDestino] = useState<HTMLElement | null>(null);
+  const [escala, setEscala] = useState(1);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [arrastrando, setArrastrando] = useState(false);
+  const capaRef = useRef<HTMLDivElement>(null);
+  const escalaRef = useRef(1);
+  const gestoRef = useRef<{ px: number; py: number; x: number; y: number } | null>(null);
+
+  useEffect(() => { setDestino(document.body); }, []);
+
+  const aplicarEscala = useCallback((n: number) => {
+    const v = Math.min(ESC_MAX, Math.max(ESC_MIN, n));
+    escalaRef.current = v;
+    setEscala(v);
+    // A tamaño natural la imagen vuelve al centro: si no, quedaría desplazada
+    // fuera del cuadro sin forma de recuperarla salvo volviendo a ampliar.
+    if (v === 1) setPos({ x: 0, y: 0 });
+  }, []);
+
+  // Esc cierra · +/− amplían · el scroll de la página se bloquea mientras dure.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { e.stopPropagation(); onClose(); return; }
+      if (e.key === '+' || e.key === '=') aplicarEscala(escalaRef.current * 1.25);
+      if (e.key === '-' || e.key === '_') aplicarEscala(escalaRef.current / 1.25);
+      if (e.key === '0') aplicarEscala(1);
+    };
+    document.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose, aplicarEscala]);
+
+  // La rueda se registra a mano con `passive: false`: React adjunta `onWheel`
+  // al root como pasivo y ahí `preventDefault()` no surte efecto.
+  useEffect(() => {
+    const el = capaRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      aplicarEscala(escalaRef.current * (e.deltaY > 0 ? 0.88 : 1.14));
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, [aplicarEscala]);
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    if (escalaRef.current <= 1) return;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    gestoRef.current = { px: e.clientX, py: e.clientY, x: pos.x, y: pos.y };
+    setArrastrando(true);
+  };
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    const g = gestoRef.current;
+    if (!g) return;
+    setPos({ x: g.x + (e.clientX - g.px), y: g.y + (e.clientY - g.py) });
+  };
+
+  const soltar = () => {
+    gestoRef.current = null;
+    setArrastrando(false);
+  };
+
+  if (!destino) return null;
+
+  const visor = (
+    <div
+      className={styles.lbCapa}
+      ref={capaRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Imagen ampliada"
+      onClick={e => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <div className={styles.lbBarra}>
+        <div className={styles.lbZoom}>
+          <button
+            type="button"
+            className={styles.lbBtn}
+            onClick={() => aplicarEscala(escala / 1.25)}
+            disabled={escala <= ESC_MIN}
+            aria-label="Reducir"
+          >
+            −
+          </button>
+          <button
+            type="button"
+            className={styles.lbPct}
+            onClick={() => aplicarEscala(1)}
+            aria-label="Tamaño original"
+          >
+            {Math.round(escala * 100)}%
+          </button>
+          <button
+            type="button"
+            className={styles.lbBtn}
+            onClick={() => aplicarEscala(escala * 1.25)}
+            disabled={escala >= ESC_MAX}
+            aria-label="Ampliar"
+          >
+            +
+          </button>
+        </div>
+        <button type="button" className={styles.lbCerrar} onClick={onClose} aria-label="Cerrar imagen">
+          <IconoCerrar />
+        </button>
+      </div>
+
+      <div
+        className={`${styles.lbLienzo} ${escala > 1 ? styles.lbLienzoMovible : ''} ${arrastrando ? styles.lbLienzoArrastrando : ''}`}
+        style={{ transform: `translate(${pos.x}px, ${pos.y}px) scale(${escala})` }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={soltar}
+        onPointerCancel={soltar}
+        onDoubleClick={() => aplicarEscala(escala > 1 ? 1 : 2)}
+      >
+        <Image
+          src={img.src}
+          alt={img.alt}
+          width={img.w}
+          height={img.h}
+          sizes="96vw"
+          className={styles.lbImg}
+          priority
+          draggable={false}
+        />
+      </div>
+
+      <p className={styles.lbPie}>
+        Rueda o <kbd>+</kbd> <kbd>−</kbd> para acercar · doble clic alterna · arrastra para mover ·{' '}
+        <kbd>Esc</kbd> cierra
+      </p>
+    </div>
+  );
+
+  return createPortal(visor, destino);
+}
+
+/** Figura ampliable: la imagen es el botón, con su chip «Ampliar» en la esquina. */
+function FiguraAmpliable({
+  src,
+  alt,
+  w,
+  h,
+  onAmpliar,
+  variante = 'pregunta',
+}: {
+  src: string;
+  alt: string;
+  w: number;
+  h: number;
+  onAmpliar: (img: Ampliada) => void;
+  variante?: 'pregunta' | 'explicacion';
+}) {
+  return (
+    <button
+      type="button"
+      className={`${styles.figura} ${variante === 'explicacion' ? styles.figuraExplicacion : ''}`}
+      onClick={() => onAmpliar({ src, alt, w, h })}
+      aria-label="Ampliar imagen"
+    >
+      {/* next/image: srcset + AVIF/WebP redimensionado al ancho real del
+          dispositivo (vía `sizes`), para que el móvil no descargue la
+          micrografía a tamaño completo. */}
+      <Image
+        src={src}
+        alt={alt}
+        width={w}
+        height={h}
+        sizes="(max-width: 600px) 100vw, 620px"
+        className={styles.figuraImg}
+      />
+      <span className={styles.figuraChip}>
+        <IconoLupa />
+        Ampliar
+      </span>
+    </button>
+  );
+}
+
+/** Rastro del examen: una marca por pregunta, pintada según cómo fue. */
+type MarcaRastro = 'pendiente' | 'actual' | 'ok' | 'mal';
+
+function Rastro({ marcas, final = false }: { marcas: MarcaRastro[]; final?: boolean }) {
+  const claseDe = (m: MarcaRastro) =>
+    m === 'ok' ? styles.segOk
+      : m === 'mal' ? styles.segMal
+      : m === 'actual' ? styles.segActual
+      : styles.segPendiente;
+
+  return (
+    <div className={`${styles.rastro} ${final ? styles.rastroFinal : ''}`} aria-hidden>
+      {marcas.map((m, i) => (
+        <span key={i} className={`${styles.seg} ${claseDe(m)}`} style={{ '--i': i } as React.CSSProperties} />
+      ))}
+    </div>
+  );
+}
+
+/**
+ * Nota final: aro que se dibuja hasta el porcentaje obtenido, con el mismo
+ * valor animado alimentando la cifra — así el número y el arco nunca se
+ * desincronizan. Va en su propio componente porque el bloque de resultados es
+ * una IIFE dentro del JSX y ahí no se pueden llamar hooks.
+ */
+function NotaFinal({ score, total, pct }: { score: number; total: number; pct: number }) {
+  const avance = useConteo(score);
+  const vistos = Math.round(avance);
+  const fraccion = total > 0 ? avance / total : 0;
+  const R = 68;
+  const C = 2 * Math.PI * R;
+  const tono = pct >= 80 ? '#2EA057' : pct >= 60 ? '#7B72D4' : pct >= 40 ? '#E0932A' : '#D64045';
+
+  return (
+    <div className={styles.notaWrap} style={{ '--tono': tono } as React.CSSProperties}>
+      <svg className={styles.notaAro} viewBox="0 0 160 160" aria-hidden>
+        <circle className={styles.notaPista} cx="80" cy="80" r={R} />
+        <circle
+          className={styles.notaValor}
+          cx="80"
+          cy="80"
+          r={R}
+          strokeDasharray={C}
+          strokeDashoffset={C * (1 - fraccion)}
+        />
+      </svg>
+      <div className={styles.notaCentro}>
+        <span className={styles.notaNum}>
+          {vistos}
+          <span className={styles.notaTotal}>/{total}</span>
+        </span>
+        <span className={styles.notaPct}>{pct}% correcto</span>
+      </div>
+    </div>
+  );
+}
+
 export default function ExamRunner({
   examKey,
   fallbackTitle,
@@ -163,8 +637,15 @@ export default function ExamRunner({
   // Respuestas acumuladas a lo largo de TODAS las etapas resueltas.
   const [answersAll, setAnswersAll] = useState<{ q: string; a: string; ok: boolean }[]>([]);
   const [phase, setPhase] = useState<Phase>('running');
+  const [pausado, setPausado] = useState(false);
+  const [ampliada, setAmpliada] = useState<Ampliada | null>(null);
 
   const stageKey = stages[stage].key;
+  const shellRef = useRef<HTMLDivElement>(null);
+
+  // Identidad del intento: cambiar de grupo o reintentar arranca un cronómetro
+  // nuevo; avanzar de pregunta, no.
+  const intentoId = `${stage}-${runId}`;
 
   // Carga de la etapa actual. El Grupo B solo se pide cuando `stage` pasa a 1.
   useEffect(() => {
@@ -199,17 +680,70 @@ export default function ExamRunner({
   const current = deck?.[currentIdx];
   const total = deck?.length ?? 0;
 
+  const aciertoActual = picked && current
+    ? current.options.find(o => o.id === picked)?.correct === true
+    : null;
+
+  // Rastro: una marca por pregunta. La actual ya se pinta con su resultado en
+  // cuanto el alumno responde, sin esperar a que pulse «Siguiente».
+  const marcas: MarcaRastro[] = useMemo(() => {
+    return Array.from({ length: total }, (_, i) => {
+      if (i < answersAll.length) return answersAll[i].ok ? 'ok' : 'mal';
+      if (i === currentIdx) {
+        if (aciertoActual === null) return 'actual';
+        return aciertoActual ? 'ok' : 'mal';
+      }
+      return 'pendiente';
+    });
+  }, [total, answersAll, currentIdx, aciertoActual]);
+
   const progressPct = total > 0
     ? Math.round(((currentIdx + (picked ? 1 : 0)) / total) * 100)
     : 0;
 
+  // ── Cronómetro ───────────────────────────────────────────────────────────
+  // Sube desde 0 y se pinta azul mientras quepa en el tiempo recomendado que
+  // declara el examen; al pasarse vira a rojo. No corta nada: es un aviso, no
+  // un límite, porque el banco se usa también para estudiar sin prisa. Se puede
+  // pausar: el tiempo detenido no cuenta ni para el aro ni para el intento.
+  const recomendadoSeg = (payload?.duration_min ?? 0) * 60;
+  const conCronometro = recomendadoSeg > 0;
+  const segundos = useCronometro(
+    conCronometro && phase === 'running' && !!payload && !pausado,
+    intentoId,
+  );
+  const excedido = conCronometro && segundos > recomendadoSeg;
+  const conHoras = recomendadoSeg >= 3600;
+  // Fracción recorrida del tiempo recomendado; alimenta el aro del reloj.
+  const pctTiempo = conCronometro ? Math.min(1, segundos / recomendadoSeg) : 0;
+
+  // Al pasar de pregunta, volver al enunciado: con micrografía y cinco
+  // alternativas, la siguiente empieza fuera de la pantalla.
+  //
+  // Se mueve la VENTANA, no `scrollIntoView`: el examen vive dentro de
+  // `.microPage`, que lleva `overflow: hidden`, y el navegador también
+  // desplazaría ese contenedor —recortando el contenido dentro de su caja—.
+  useEffect(() => {
+    if (currentIdx === 0) return;
+    const rect = shellRef.current?.getBoundingClientRect();
+    if (!rect || rect.top > -8) return; // ya se ve el inicio: no hay nada que mover
+    window.scrollTo({
+      top: rect.top + window.scrollY - 12,
+      behavior: prefiereQuieto() ? 'auto' : 'smooth',
+    });
+  }, [currentIdx]);
+
+  // La imagen ampliada se cierra sola al cambiar de pregunta, de grupo o al
+  // reintentar: si no, quedaría abierta sobre una pregunta que ya no es la suya.
+  useEffect(() => { setAmpliada(null); }, [currentIdx, stage, runId]);
+
   const handlePick = (id: string) => {
-    if (picked) return;
+    if (picked || pausado) return;
     setPicked(id);
   };
 
   const handleNext = () => {
-    if (!current || !picked) return;
+    if (!current || !picked || pausado) return;
     const ok = current.options.find(o => o.id === picked)?.correct === true;
     const nextAll = [...answersAll, { q: current.id, a: picked, ok }];
     setAnswersAll(nextAll);
@@ -223,6 +757,7 @@ export default function ExamRunner({
         score,
         total: nextAll.length,
         finishedAt: new Date().toISOString(),
+        ...(conCronometro ? { seconds: segundos } : {}),
       });
       trackEvent('examen_completado', { examKey: stageKey, score, total: nextAll.length });
       setPhase('finished');
@@ -230,6 +765,38 @@ export default function ExamRunner({
       setCurrentIdx(i => i + 1);
     }
   };
+
+  // Atajos de teclado: A–E (o 1–5) responden y Enter avanza. En un banco de 40
+  // preguntas ahorra el viaje al ratón en cada una. Las acciones viven en una
+  // ref para que el listener no se vuelva a montar en cada render.
+  const accionesRef = useRef({ handlePick, handleNext });
+  useEffect(() => { accionesRef.current = { handlePick, handleNext }; });
+
+  useEffect(() => {
+    if (phase !== 'running' || !current || pausado || ampliada) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const tag = (e.target as HTMLElement | null)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      if (e.key === 'Enter') {
+        // Enter sobre un botón o enlace enfocado ya dispara su propio click:
+        // atenderlo también aquí avanzaría dos preguntas de una.
+        if (tag === 'BUTTON' || tag === 'A') return;
+        if (picked) { e.preventDefault(); accionesRef.current.handleNext(); }
+        return;
+      }
+      if (picked) return; // ya respondida: las letras no cambian nada
+      const k = e.key.toUpperCase();
+      const porLetra = LETRAS.indexOf(k);
+      const porNumero = /^[1-9]$/.test(e.key) ? Number(e.key) - 1 : -1;
+      const idx = porLetra >= 0 ? porLetra : porNumero;
+      if (idx < 0 || idx >= current.options.length) return;
+      e.preventDefault();
+      accionesRef.current.handlePick(current.options[idx].id);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [phase, current, picked, pausado, ampliada]);
 
   // Salto directo a un grupo desde el selector (o desde la pantalla de
   // resultados). Reinicia el estado: cada grupo es un intento independiente.
@@ -240,6 +807,7 @@ export default function ExamRunner({
     setPicked(null);
     setAnswersAll([]);
     setPhase('running');
+    setPausado(false);
   };
 
   const handleRetry = () => {
@@ -249,37 +817,40 @@ export default function ExamRunner({
     setPicked(null);
     setAnswersAll([]);
     setPhase('running');
+    setPausado(false);
   };
 
   const title = payload?.title ?? fallbackTitle ?? 'Examen';
 
   return (
-    <div className={styles.shell}>
-      {isGrouped && phase !== 'finished' && (
-        <div className={styles.groupSelector}>
-          <span className={styles.groupSelectorLabel}>Examen:</span>
-          <div className={styles.groupSquares}>
-            {stages.map((s, i) => (
-              <button
-                key={s.key}
-                type="button"
-                className={`${styles.groupSquare} ${i === stage ? styles.groupSquareActive : ''}`}
-                onClick={() => handleSwitchStage(i)}
-                aria-pressed={i === stage}
-                aria-label={`Ir al Grupo ${String.fromCharCode(65 + i)}`}
-              >
-                {String.fromCharCode(65 + i)}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+    <div className={styles.shell} ref={shellRef}>
+      <div className={styles.barraSuperior}>
+        {backHref ? (
+          <Link href={backHref} className={styles.backLink}>
+            <span aria-hidden>←</span> {backLabel}
+          </Link>
+        ) : <span />}
 
-      {backHref ? (
-        <Link href={backHref} className={styles.backLink}>
-          ← {backLabel}
-        </Link>
-      ) : null}
+        {isGrouped && phase !== 'finished' && (
+          <div className={styles.groupSelector}>
+            <span className={styles.groupSelectorLabel}>Examen</span>
+            <div className={styles.groupSquares}>
+              {stages.map((s, i) => (
+                <button
+                  key={s.key}
+                  type="button"
+                  className={`${styles.groupSquare} ${i === stage ? styles.groupSquareActive : ''}`}
+                  onClick={() => handleSwitchStage(i)}
+                  aria-pressed={i === stage}
+                  aria-label={`Ir al Grupo ${String.fromCharCode(65 + i)}`}
+                >
+                  {String.fromCharCode(65 + i)}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
 
       <header className={styles.header}>
         <span className={styles.eyebrow}>Banco de preguntas</span>
@@ -288,8 +859,12 @@ export default function ExamRunner({
           <div className={styles.metaLine}>
             {isGrouped && <span>Grupo {String.fromCharCode(65 + stage)}</span>}
             <span>{total} preguntas</span>
-            <span>{payload.duration_min ? `${payload.duration_min} min` : 'Sin tiempo límite'}</span>
-            <span>Respuestas y opciones aleatorizadas</span>
+            <span>
+              {payload.duration_min
+                ? `${payload.duration_min} min recomendados`
+                : 'Sin tiempo límite'}
+            </span>
+            <span>Preguntas y alternativas aleatorizadas</span>
           </div>
         )}
         {payload && phase === 'running' && isGrouped && (
@@ -329,7 +904,7 @@ export default function ExamRunner({
                     alt=""
                     width={q.imageW ?? 1000}
                     height={q.imageH ?? 750}
-                    sizes="(max-width: 600px) 100vw, 560px"
+                    sizes="(max-width: 600px) 100vw, 620px"
                     loading="eager"
                   />
                 ) : null,
@@ -337,111 +912,209 @@ export default function ExamRunner({
             </div>
           )}
 
-          <div className={styles.progressWrap}>
-            <div className={styles.progressLabels}>
-              <span className={styles.progressLabelMain}>
-                {isGrouped ? `Grupo ${String.fromCharCode(65 + stage)} · ` : ''}Pregunta {currentIdx + 1} de {total}
+          {/* ── Mando: contador · rastro · cronómetro ─────────────────────── */}
+          <div className={styles.mando}>
+            <div className={styles.contador}>
+              <span className={styles.contadorNum}>
+                {String(currentIdx + 1).padStart(2, '0')}
               </span>
-              <span>{progressPct}% completado</span>
+              <span className={styles.contadorTotal}>/{String(total).padStart(2, '0')}</span>
             </div>
-            <div className={styles.progressTrack}>
-              <div className={styles.progressFill} style={{ width: `${progressPct}%` }} />
-            </div>
-          </div>
 
-          <div className={styles.questionCard}>
-            {current.reviewNote && (
-              <div className={styles.reviewBadge}>
-                ⚠ Pendiente a revisión
-                <span className={styles.reviewTooltip}>{current.reviewNote}</span>
-              </div>
-            )}
-            <p className={styles.stem}>{current.stem}</p>
-
-            {current.image && (
-              <div className={styles.figure}>
-                {/* next/image: srcset + AVIF/WebP redimensionado al ancho real del
-                    dispositivo (vía `sizes`), para que el móvil no descargue la
-                    micrografía a tamaño completo. */}
-                <Image
-                  src={current.image}
-                  alt={current.imageAlt ?? 'Imagen de la pregunta'}
-                  width={current.imageW ?? 1000}
-                  height={current.imageH ?? 750}
-                  sizes="(max-width: 600px) 100vw, 560px"
-                  className={styles.figureImg}
-                />
-              </div>
-            )}
-
-            {picked && current.explanation && (
-              <div className={styles.explanation}>
-                <div className={styles.explanationLabel}>
-                  <span>◆</span> Explicación
+            <div className={styles.mandoCentro}>
+              {total <= MAX_SEGMENTOS ? (
+                <Rastro marcas={marcas} />
+              ) : (
+                <div className={styles.rastroBarra}>
+                  <div className={styles.rastroBarraFill} style={{ width: `${progressPct}%` }} />
                 </div>
-                <ReactMarkdown>{current.explanation}</ReactMarkdown>
-                {current.explanationImage && (
-                  <div className={styles.explanationFigureWrap}>
-                    {current.explanationImageCaption && (
-                      <p className={styles.explanationFigureCaption}>{current.explanationImageCaption}</p>
-                    )}
-                    <div className={styles.explanationFigure}>
-                      <Image
-                        src={current.explanationImage}
-                        alt={current.explanationImageAlt ?? 'Imagen de referencia'}
-                        width={800}
-                        height={600}
-                        sizes="(max-width: 600px) 100vw, 560px"
-                        className={styles.explanationFigureImg}
-                      />
-                    </div>
-                  </div>
-                )}
+              )}
+              <span className={styles.mandoPie}>
+                {isGrouped && <>Grupo {String.fromCharCode(65 + stage)} · </>}
+                {answersAll.filter(a => a.ok).length} correctas de {answersAll.length} respondidas
+              </span>
+            </div>
+
+            {conCronometro && (
+              <div
+                className={`${styles.crono} ${excedido ? styles.cronoExcedido : ''} ${pausado ? styles.cronoPausado : ''}`}
+                role="timer"
+                aria-live="off"
+              >
+                {/* El aro se llena con el tiempo recomendado; al completarse, el
+                    bloque entero vira a rojo y el aro deja de crecer. El centro
+                    es el botón de pausa: el icono dice siempre qué va a pasar
+                    al pulsarlo. */}
+                <button
+                  type="button"
+                  className={styles.cronoBoton}
+                  style={{ '--p': `${pctTiempo * 360}deg` } as React.CSSProperties}
+                  onClick={() => setPausado(p => !p)}
+                  aria-label={pausado ? 'Reanudar el cronómetro' : 'Pausar el cronómetro'}
+                  title={pausado ? 'Reanudar' : 'Pausar'}
+                >
+                  <span className={styles.cronoBotonCentro}>
+                    {pausado ? <IconoPlay /> : <IconoPausa />}
+                  </span>
+                </button>
+                <span className={styles.cronoTextos}>
+                  <span className={styles.cronoTiempo}>{formatoTiempo(segundos, conHoras)}</span>
+                  <span className={styles.cronoRef}>
+                    {pausado
+                      ? 'En pausa · toca para seguir'
+                      : excedido
+                        ? `Pasaste los ${formatoTiempo(recomendadoSeg, conHoras)} recomendados`
+                        : `de ${formatoTiempo(recomendadoSeg, conHoras)} recomendados`}
+                  </span>
+                </span>
               </div>
             )}
-
-            <div className={styles.options}>
-              {current.options.map((opt, i) => {
-                const isPicked = picked === opt.id;
-                const showFeedback = picked !== null;
-                const cls = [styles.option];
-                if (showFeedback) {
-                  if (opt.correct) cls.push(styles.optionCorrect);
-                  else if (isPicked) cls.push(styles.optionWrong);
-                  else cls.push(styles.optionDimmed);
-                }
-                const label = String.fromCharCode(65 + i);
-                return (
-                  <button
-                    key={opt.id}
-                    className={cls.join(' ')}
-                    onClick={() => handlePick(opt.id)}
-                    disabled={showFeedback}
-                  >
-                    <span className={styles.optionLabel}>{label}</span>
-                    <span className={styles.optionText}>{opt.text}</span>
-                    {showFeedback && opt.correct && <span className={styles.optionIcon}>✓</span>}
-                    {showFeedback && isPicked && !opt.correct && <span className={styles.optionIcon}>✕</span>}
-                  </button>
-                );
-              })}
-            </div>
           </div>
 
-          <div className={styles.footer}>
-            <div className={styles.tagsRow}>
-              {picked && current.tags?.map(t => (
-                <span key={t} className={styles.tag}>{t}</span>
-              ))}
+          {pausado ? (
+            /* Con el reloj parado se retira la pregunta: si siguiera a la vista,
+               pausar sería la forma cómoda de pensar sin que corra el tiempo. */
+            <div className={styles.pausa}>
+              <span className={styles.pausaAro}>
+                <IconoPausa />
+              </span>
+              <h2 className={styles.pausaTitulo}>Examen en pausa</h2>
+              <p className={styles.pausaTexto}>
+                El cronómetro está detenido en <strong>{formatoTiempo(segundos, conHoras)}</strong>.
+                La pregunta {currentIdx + 1} vuelve en cuanto reanudes.
+              </p>
+              <button type="button" className={styles.primaryBtn} onClick={() => setPausado(false)}>
+                Reanudar examen
+              </button>
             </div>
-            <button
-              className={styles.nextBtn}
-              onClick={handleNext}
-              disabled={!picked}
-            >
-              {currentIdx + 1 >= total ? 'Terminar examen' : 'Siguiente →'}
-            </button>
-          </div>
+          ) : (
+            <>
+              {/* `key` remonta el bloque en cada pregunta, así su animación de
+                  entrada se repite en vez de correr sólo la primera vez. */}
+              <article className={styles.pregunta} key={`${intentoId}-${currentIdx}`}>
+                <div className={styles.preguntaIndice} aria-hidden>
+                  <span className={styles.preguntaNum}>{String(currentIdx + 1).padStart(2, '0')}</span>
+                  <span className={styles.preguntaFilete} />
+                </div>
+
+                <div className={styles.preguntaCuerpo}>
+                  {current.reviewNote && (
+                    <div className={styles.reviewBadge}>
+                      <IconoAviso />
+                      Pendiente a revisión
+                      <span className={styles.reviewTooltip}>{current.reviewNote}</span>
+                    </div>
+                  )}
+
+                  <p className={styles.stem}>{current.stem}</p>
+
+                  {current.image && (
+                    <FiguraAmpliable
+                      src={current.image}
+                      alt={current.imageAlt ?? 'Imagen de la pregunta'}
+                      w={current.imageW ?? 1000}
+                      h={current.imageH ?? 750}
+                      onAmpliar={setAmpliada}
+                    />
+                  )}
+
+                  <div className={styles.opciones}>
+                    {current.options.map((opt, i) => {
+                      const isPicked = picked === opt.id;
+                      const showFeedback = picked !== null;
+                      const cls = [styles.opcion];
+                      if (showFeedback) {
+                        if (opt.correct) cls.push(styles.opcionOk);
+                        else if (isPicked) cls.push(styles.opcionMal);
+                        else cls.push(styles.opcionApagada);
+                      }
+                      const label = LETRAS[i] ?? String(i + 1);
+                      return (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          className={cls.join(' ')}
+                          style={{ '--i': i } as React.CSSProperties}
+                          onClick={() => handlePick(opt.id)}
+                          disabled={showFeedback}
+                        >
+                          <span className={styles.opcionLetra}>{label}</span>
+                          <span className={styles.opcionTexto}>{opt.text}</span>
+                          {showFeedback && opt.correct && (
+                            <span className={`${styles.opcionMarca} ${styles.marcaOk}`}><IconoCheck /></span>
+                          )}
+                          {showFeedback && isPicked && !opt.correct && (
+                            <span className={`${styles.opcionMarca} ${styles.marcaMal}`}><IconoCruz /></span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* La explicación va DEBAJO de las alternativas: primero el
+                      alumno ve el ✓/✕ sobre la suya y después lee el porqué.
+                      Encima empujaba las opciones fuera de vista justo al
+                      responder. */}
+                  {picked && current.explanation && (
+                    <div className={styles.explicacion}>
+                      <div className={styles.explicacionRotulo}>
+                        <span className={styles.explicacionIcono}><IconoIdea /></span>
+                        Por qué
+                      </div>
+                      <div className={styles.explicacionTexto}>
+                        <ReactMarkdown>{current.explanation}</ReactMarkdown>
+                      </div>
+                      {current.explanationImage && (
+                        <div className={styles.explicacionFigura}>
+                          {current.explanationImageCaption && (
+                            <p className={styles.explicacionCaption}>{current.explanationImageCaption}</p>
+                          )}
+                          <FiguraAmpliable
+                            src={current.explanationImage}
+                            alt={current.explanationImageAlt ?? 'Imagen de referencia'}
+                            w={800}
+                            h={600}
+                            onAmpliar={setAmpliada}
+                            variante="explicacion"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </article>
+
+              <div className={styles.pie}>
+                <div className={styles.pieIzq}>
+                  {picked && current.tags?.length ? (
+                    <div className={styles.tagsRow}>
+                      {current.tags.map(t => (
+                        <span key={t} className={styles.tag}>{t}</span>
+                      ))}
+                    </div>
+                  ) : null}
+                  <p className={styles.atajos}>
+                    {picked ? (
+                      <><kbd>Enter</kbd> para continuar</>
+                    ) : (
+                      <>
+                        <kbd>{LETRAS[0]}</kbd>–<kbd>{LETRAS[current.options.length - 1]}</kbd> para responder
+                      </>
+                    )}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className={styles.nextBtn}
+                  onClick={handleNext}
+                  disabled={!picked}
+                >
+                  {currentIdx + 1 >= total ? 'Terminar examen' : 'Siguiente'}
+                  <span className={styles.nextFlecha} aria-hidden>→</span>
+                </button>
+              </div>
+            </>
+          )}
         </>
       )}
 
@@ -450,12 +1123,11 @@ export default function ExamRunner({
         const grandTotal = answersAll.length;
         const pct = grandTotal > 0 ? Math.round((score / grandTotal) * 100) : 0;
         const history = loadAttempts(stageKey);
+        const marcasFinal: MarcaRastro[] = answersAll.map(a => (a.ok ? 'ok' : 'mal'));
         return (
           <div className={styles.resultShell}>
-            <div className={styles.scoreCircle}>
-              <span className={styles.scoreNum}>{score}/{grandTotal}</span>
-              <span className={styles.scorePct}>{pct}% correcto</span>
-            </div>
+            <NotaFinal score={score} total={grandTotal} pct={pct} />
+
             <h2 className={styles.resultTitle}>
               {pct >= 80 ? '¡Excelente!' : pct >= 60 ? '¡Buen trabajo!' : pct >= 40 ? 'Vas por buen camino' : 'A repasar este tema'}
             </h2>
@@ -464,15 +1136,61 @@ export default function ExamRunner({
               Tu intento se guardó en este navegador.
             </p>
 
+            <div className={styles.resultCifras}>
+              <span className={styles.cifra}>
+                <span className={`${styles.cifraNum} ${styles.cifraOk}`}>{score}</span>
+                <span className={styles.cifraLabel}>correctas</span>
+              </span>
+              <span className={styles.cifraSep} aria-hidden />
+              <span className={styles.cifra}>
+                <span className={`${styles.cifraNum} ${styles.cifraMal}`}>{grandTotal - score}</span>
+                <span className={styles.cifraLabel}>falladas</span>
+              </span>
+              {conCronometro && (
+                <>
+                  <span className={styles.cifraSep} aria-hidden />
+                  <span className={styles.cifra}>
+                    <span className={`${styles.cifraNum} ${excedido ? styles.cifraMal : styles.cifraTiempo}`}>
+                      {formatoTiempo(segundos, conHoras)}
+                    </span>
+                    <span className={styles.cifraLabel}>
+                      {excedido
+                        ? `sobre ${formatoTiempo(recomendadoSeg, conHoras)}`
+                        : `de ${formatoTiempo(recomendadoSeg, conHoras)}`}
+                    </span>
+                  </span>
+                </>
+              )}
+            </div>
+
+            {marcasFinal.length > 1 && marcasFinal.length <= MAX_SEGMENTOS && (
+              <div className={styles.resultRastro}>
+                <Rastro marcas={marcasFinal} final />
+                <span className={styles.resultRastroPie}>Tu recorrido, pregunta a pregunta</span>
+              </div>
+            )}
+
             {history.length > 1 && (
               <div className={styles.history}>
                 <p className={styles.historyTitle}>Intentos previos</p>
                 {history.slice(0, 5).map(att => (
                   <div key={att.id} className={styles.historyRow}>
-                    <span>
+                    <span className={styles.historyFecha}>
                       {new Date(att.finishedAt).toLocaleDateString('es-PE', {
                         day: 'numeric', month: 'short',
                       })}
+                      {typeof att.seconds === 'number' && (
+                        <span className={styles.historyTime}>
+                          <IconoReloj size={12} />
+                          {formatoTiempo(att.seconds, att.seconds >= 3600)}
+                        </span>
+                      )}
+                    </span>
+                    <span className={styles.historyBarra} aria-hidden>
+                      <span
+                        className={styles.historyBarraFill}
+                        style={{ width: `${att.total > 0 ? (att.score / att.total) * 100 : 0}%` }}
+                      />
                     </span>
                     <span className={styles.historyScore}>
                       {att.score} / {att.total}
@@ -483,18 +1201,19 @@ export default function ExamRunner({
             )}
 
             <div className={styles.resultActions}>
+              <button type="button" className={styles.primaryBtn} onClick={handleRetry}>
+                Reintentar examen
+              </button>
               {backHref && (
                 <Link href={backHref} className={styles.ghostBtn}>
                   Volver a la clase
                 </Link>
               )}
-              <button className={styles.primaryBtn} onClick={handleRetry}>
-                Reintentar examen
-              </button>
               {isGrouped && stages.map((s, i) =>
                 i !== stage ? (
                   <button
                     key={s.key}
+                    type="button"
                     className={styles.ghostBtn}
                     onClick={() => handleSwitchStage(i)}
                   >
@@ -506,6 +1225,8 @@ export default function ExamRunner({
           </div>
         );
       })()}
+
+      {ampliada && <VisorImagen img={ampliada} onClose={() => setAmpliada(null)} />}
     </div>
   );
 }
