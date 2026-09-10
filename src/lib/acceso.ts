@@ -52,6 +52,17 @@ export function requiredPlanDeLab(slug: string): PlanKey {
   return PLAN_DE_TRACK[trackDeLab(slug)];
 }
 
+const LABS_GRATIS = new Set(LABORATORIOS.filter((l) => l.gratis).map((l) => l.slug));
+
+/**
+ * Laboratorio abierto a cualquier cuenta (flag `gratis` en `LABORATORIOS`).
+ * Su tramo no cambia —sigue contando para el panel de Aportes—; sólo deja de
+ * pedir plan. Lo consultan su `layout.tsx` y el índice del laboratorio.
+ */
+export function labEsGratis(slug: string): boolean {
+  return LABS_GRATIS.has(slug);
+}
+
 /**
  * ¿El estado de plan del usuario abre contenido que exige `required`?
  *

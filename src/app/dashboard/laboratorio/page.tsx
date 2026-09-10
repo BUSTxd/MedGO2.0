@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { getCachedPlanState } from '@/lib/plans-server';
-import { requiredPlanDeCurso, tieneAccesoA, trackDeCurso, trackDelUsuario } from '@/lib/acceso';
+import { labEsGratis, requiredPlanDeCurso, tieneAccesoA, trackDeCurso, trackDelUsuario } from '@/lib/acceso';
 import { PLANS } from '@/lib/plans';
 import KidneyIcon from '@/components/icons/KidneyIcon';
 import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
@@ -291,11 +291,19 @@ export default async function LaboratorioPage() {
             </div>
             <div className={styles.labExperiments}>
               {topic.experiments.map((exp) => {
+                // Un laboratorio `gratis` dentro de un panel bloqueado: el panel
+                // sigue con su candado, pero esta fila avisa de que sí abre. Con
+                // acceso al panel la etiqueta no dice nada y no se pinta.
+                const slug = exp.href?.startsWith('/dashboard/laboratorio/') ? exp.href.split('/').pop()! : null;
+                const gratis = !abierto && slug !== null && labEsGratis(slug);
                 const cuerpo = (
                   <>
                     <div className={styles.labExpDot} style={{ background: exp.color }} />
                     <div className={styles.labExpInfo}>
-                      <p className={styles.labExpName}>{exp.name}</p>
+                      <p className={styles.labExpName}>
+                        {exp.name}
+                        {gratis && <span className={styles.labExpGratis}>Gratis</span>}
+                      </p>
                       <p className={styles.labExpDesc}>{exp.desc}</p>
                     </div>
                   </>

@@ -861,6 +861,28 @@
 /* ─── Experimento suelto sin contenido, dentro de un módulo que sí tiene ───
    Aquí la excavadora va siempre visible y pequeña: es la única señal de que
    esa fila concreta todavía no lleva a ninguna parte. */
+/* Laboratorio gratis dentro de un panel bloqueado (flag `gratis` de LABORATORIOS). */
+.labExpGratis {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(45, 201, 154, 0.14);
+  border: 1px solid rgba(45, 201, 154, 0.4);
+  color: #13845f;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: 2px;
+}
+
+:global(.dark-mode) .labExpGratis {
+  background: rgba(45, 201, 154, 0.16);
+  border-color: rgba(45, 201, 154, 0.45);
+  color: #5fe0b5;
+}
+
 .labExpObra {
   position: relative;
   background: rgba(99, 102, 241, 0.09);

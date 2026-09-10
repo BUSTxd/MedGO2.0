@@ -195,6 +195,11 @@ se reescribía en cada página— y `trackDelUsuario(planState)`, que solo decid
 primero**. Un slug sin registrar cae en `medicina`: bloquear de más es el fallo seguro, pero un
 laboratorio de Física sin registrar saldría bloqueado justo para UFBI.
 
+**Laboratorios gratis**: `gratis: true` en su entrada de `LABORATORIOS` y `labEsGratis(slug)`.
+Su `layout.tsx` no monta `SeccionGate` y el índice del laboratorio le pone la etiqueta «Gratis»
+cuando su panel sale bloqueado (con acceso no se pinta: no diría nada). El tramo no cambia, así
+que sigue contando en Aportes. Hoy sólo lo es `cascada-coagulacion`.
+
 | Sección | UFBI | Facultad | free |
 |---|---|---|---|
 | Cursos | sus 6, el resto atenuado | sus 11, el resto atenuado | los 17 atenuados, en dos secciones |
@@ -1440,7 +1445,8 @@ teniendo el laboratorio hecho.
 
 ## Vías de la coagulación (Hematología · `laboratorio/cascada-coagulacion`)
 
-La lámina «Vías de la coagulación (hemostasia 2.ª)» de la Clase 9 hecha lienzo. **Sin cabecera
+La lámina «Vías de la coagulación (hemostasia 2.ª)» de la Clase 9 hecha lienzo. **Gratis para
+cualquier cuenta** (flag `gratis` en `LABORATORIOS`, ver «Laboratorios gratis»). **Sin cabecera
 ni título, a propósito**: se entra directo a una cuadrícula con la cascada entera; la vuelta al
 laboratorio va en la barra flotante. El wrapper anula el padding del `.panel` con márgenes
 negativos y ocupa su altura (`calc(100dvh - 48px)`); la sidebar sigue visible.

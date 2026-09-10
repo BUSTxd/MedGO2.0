@@ -168,6 +168,12 @@ export interface LaboratorioMeta {
   autor: Colaborador;
   /** Simulación 3D/interactiva pesada, no un atlas de imágenes. */
   pesado?: boolean;
+  /**
+   * Abierto para cualquier cuenta, también `free`: su `layout.tsx` no monta el
+   * paywall y el índice del laboratorio lo marca «Gratis» dentro de un panel
+   * bloqueado. Lo lee `labEsGratis` (src/lib/acceso.ts).
+   */
+  gratis?: boolean;
 }
 
 /** Laboratorios y simuladores publicados en /dashboard/laboratorio. */
@@ -189,5 +195,5 @@ export const LABORATORIOS: LaboratorioMeta[] = [
   { slug: 'biomecanica-extraocular', nombre: 'Biomecánica extraocular',      track: 'medicina', autor: 'bust' },
   { slug: 'hemograma',               nombre: 'Hemograma completo',           track: 'medicina', autor: 'bust' },
   { slug: 'morfologia-globulos-rojos', nombre: 'Morfología de glóbulos rojos', track: 'medicina', autor: 'bust' },
-  { slug: 'cascada-coagulacion',     nombre: 'Cascada de coagulación',       track: 'medicina', autor: 'bust', pesado: true },
+  { slug: 'cascada-coagulacion',     nombre: 'Cascada de coagulación',       track: 'medicina', autor: 'bust', pesado: true, gratis: true },
 ];
