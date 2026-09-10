@@ -189,4 +189,5 @@ export const LABORATORIOS: LaboratorioMeta[] = [
   { slug: 'biomecanica-extraocular', nombre: 'Biomecánica extraocular',      track: 'medicina', autor: 'bust' },
   { slug: 'hemograma',               nombre: 'Hemograma completo',           track: 'medicina', autor: 'bust' },
   { slug: 'morfologia-globulos-rojos', nombre: 'Morfología de glóbulos rojos', track: 'medicina', autor: 'bust' },
+  { slug: 'cascada-coagulacion',     nombre: 'Cascada de coagulación',       track: 'medicina', autor: 'bust', pesado: true },
 ];

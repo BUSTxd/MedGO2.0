@@ -104,6 +104,7 @@ const LAB_TOPICS: Topic[] = [
       // Compartido con Patología — sin página todavía (enlace inerte, como el resto de pendientes).
       { name: 'Morfología de Glóbulos Rojos', desc: '19 microfotografías reales para reconocer alteraciones e inclusiones, con lámina de referencia', color: '#8b5cf6', href: '/dashboard/laboratorio/morfologia-globulos-rojos' },
       { name: 'Microscopio: Médula Ósea y Serie Blanca · Simulación', desc: 'Práctica 2: microscopio virtual, identificación de la serie blanca y fórmula diferencial', color: '#F5A623', href: '/dashboard/laboratorio/microscopio-hematologia' },
+      { name: 'Vías de la coagulación', desc: 'La cascada completa en un lienzo: mueve los factores, despliega sus avisos y completa cada vía paso a paso', color: '#2CA9BC', href: '/dashboard/laboratorio/cascada-coagulacion' },
       { name: 'Pruebas de Coagulación', desc: 'Estudios de hemostasia y factores de coagulación',  color: '#E85B4A' },
       { name: 'Conteo de Reticulocitos',desc: 'Evaluación de la producción de glóbulos rojos',    color: '#F5A623' },
       { name: 'Electroforesis Hb',      desc: 'Identificación de hemoglobinopatías',               color: '#E85B4A' },

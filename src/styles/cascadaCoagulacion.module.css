@@ -1,0 +1,1229 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Laboratorio «Vías de la coagulación» (dashboard/laboratorio/cascada-coagulacion)
+
+   Un lienzo cuadriculado que ocupa el panel entero, sin cabecera. Colores de
+   zona calcados de la lámina de Hematología (turquesa, beige, amarillo,
+   verde-amarillo, azul grisáceo); rosa = dependiente de vitamina K, verde =
+   cofactor. Claro por defecto; oscuro en :global(.dark-mode).
+
+   Los tokens se declaran también sobre .globo y .tarjeta: van por portal a
+   <body> y no heredan del .wrapper.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.wrapper,
+.globo,
+.tarjeta {
+  --c-bg: #fbfcfe;
+  --c-grid: rgba(26, 37, 87, 0.05);
+  --c-grid-major: rgba(26, 37, 87, 0.095);
+  --c-ink: #171a33;
+  --c-ink-2: #4f5572;
+  --c-ink-3: #868ca6;
+  --c-surface: #ffffff;
+  --c-line: rgba(23, 26, 51, 0.12);
+  --c-accent: #2f8fd6;
+  --c-sombra: rgba(20, 24, 60, 0.16);
+
+  --c-vitk-bg: #f9d2db;
+  --c-vitk-br: #e393a6;
+  --c-cof-bg: #4c9637;
+  --c-flecha: #23263f;
+  --c-gris: #9aa1b8;
+  --c-inhibe: #d43f58;
+  --c-estimula: #2c9a57;
+  --c-caja-br: #b8cb4c;
+  --c-calcio: #e5762a;
+
+  --z-contacto-bg: #dcf2f6;   --z-contacto-br: #a9dde7;   --z-contacto-tx: #167b8d;
+  --z-cininas-bg: #f4ece1;    --z-cininas-br: #e2d1b9;    --z-cininas-tx: #84633a;
+  --z-extrinseca-bg: #fdf4d6; --z-extrinseca-br: #f0da97; --z-extrinseca-tx: #8f6c0c;
+  --z-comun-bg: #eef4d0;      --z-comun-br: #d2de8c;      --z-comun-tx: #586c10;
+  --z-fibrinolitico-bg: #e4ebf8; --z-fibrinolitico-br: #bccce8; --z-fibrinolitico-tx: #385a90;
+  --z-regulacion-bg: #fce6ea; --z-regulacion-br: #eeb4c0; --z-regulacion-tx: #ad3450;
+}
+
+:global(.dark-mode) .wrapper,
+:global(.dark-mode) .globo,
+:global(.dark-mode) .tarjeta {
+  --c-bg: #0b0d1f;
+  --c-grid: rgba(255, 255, 255, 0.035);
+  --c-grid-major: rgba(255, 255, 255, 0.07);
+  --c-ink: #eceaff;
+  --c-ink-2: rgba(236, 234, 255, 0.68);
+  --c-ink-3: rgba(236, 234, 255, 0.42);
+  --c-surface: #161935;
+  --c-line: rgba(255, 255, 255, 0.11);
+  --c-accent: #4aa8ea;
+  --c-sombra: rgba(0, 0, 0, 0.5);
+
+  --c-vitk-bg: rgba(240, 110, 145, 0.2);
+  --c-vitk-br: rgba(240, 110, 145, 0.6);
+  --c-cof-bg: #4c9637;
+  --c-flecha: #d6d4f3;
+  --c-gris: #6e7494;
+  --c-inhibe: #ff6b82;
+  --c-estimula: #4fd08a;
+  --c-caja-br: rgba(190, 210, 80, 0.55);
+  --c-calcio: #ff9a4d;
+
+  --z-contacto-bg: rgba(44, 169, 188, 0.1);   --z-contacto-br: rgba(44, 169, 188, 0.38);   --z-contacto-tx: #6fd3e2;
+  --z-cininas-bg: rgba(214, 178, 132, 0.09);  --z-cininas-br: rgba(214, 178, 132, 0.34);  --z-cininas-tx: #dcc19b;
+  --z-extrinseca-bg: rgba(240, 196, 70, 0.09); --z-extrinseca-br: rgba(240, 196, 70, 0.34); --z-extrinseca-tx: #f0cf6a;
+  --z-comun-bg: rgba(172, 204, 60, 0.09);     --z-comun-br: rgba(172, 204, 60, 0.34);     --z-comun-tx: #c3da6a;
+  --z-fibrinolitico-bg: rgba(110, 150, 220, 0.11); --z-fibrinolitico-br: rgba(110, 150, 220, 0.38); --z-fibrinolitico-tx: #9dbbef;
+  --z-regulacion-bg: rgba(232, 90, 122, 0.11); --z-regulacion-br: rgba(232, 90, 122, 0.4); --z-regulacion-tx: #f28da2;
+}
+
+/* Tintes por zona: los usan las zonas del lienzo, las baldosas del selector,
+   el marcador y la bandeja del modo aprender. */
+.z_contacto      { --zbg: var(--z-contacto-bg);      --zbr: var(--z-contacto-br);      --ztx: var(--z-contacto-tx); }
+.z_cininas       { --zbg: var(--z-cininas-bg);       --zbr: var(--z-cininas-br);       --ztx: var(--z-cininas-tx); }
+.z_extrinseca    { --zbg: var(--z-extrinseca-bg);    --zbr: var(--z-extrinseca-br);    --ztx: var(--z-extrinseca-tx); }
+.z_comun         { --zbg: var(--z-comun-bg);         --zbr: var(--z-comun-br);         --ztx: var(--z-comun-tx); }
+.z_fibrinolitico { --zbg: var(--z-fibrinolitico-bg); --zbr: var(--z-fibrinolitico-br); --ztx: var(--z-fibrinolitico-tx); }
+.z_regulacion    { --zbg: var(--z-regulacion-bg);    --zbr: var(--z-regulacion-br);    --ztx: var(--z-regulacion-tx); }
+
+/* ─── Contenedor: anula el padding del panel y ocupa toda su altura ───────── */
+.wrapper {
+  position: relative;
+  margin: -28px -28px -36px;
+  height: calc(100dvh - 48px);
+  min-height: 480px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--font-outfit), system-ui, sans-serif;
+}
+
+.cargando {
+  background-image:
+    linear-gradient(var(--c-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ─── Viewport y cuadrícula ───────────────────────────────────────────────── */
+.viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+  background-color: var(--c-bg);
+  background-image:
+    linear-gradient(var(--c-grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-grid-major) 1px, transparent 1px),
+    linear-gradient(var(--c-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-grid) 1px, transparent 1px);
+  background-size:
+    calc(var(--gs, 24px) * 5) calc(var(--gs, 24px) * 5),
+    calc(var(--gs, 24px) * 5) calc(var(--gs, 24px) * 5),
+    var(--gs, 24px) var(--gs, 24px),
+    var(--gs, 24px) var(--gs, 24px);
+  background-position: var(--gx, 0) var(--gy, 0);
+}
+.viewport:global(.arrastrando-fondo) { cursor: grabbing; }
+
+/* Sin `will-change: transform`: con él Chrome rasteriza el texto a la escala
+   del primer frame y al acercar lo estira borroso. Sin él lo re-rasteriza
+   nítido en cada zoom, y 40 nodos no pesan. */
+.mundo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+}
+
+.capaSvg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* ─── Zonas ───────────────────────────────────────────────────────────────── */
+.zona { animation: aparecer 0.6s ease-out var(--retardo-z, 0ms) backwards; }
+.arranque .zona { --retardo-z: 120ms; }
+.zonaRect {
+  fill: var(--zbg);
+  stroke: var(--zbr);
+  stroke-width: 1.5;
+}
+.zonaRotulo {
+  fill: var(--ztx);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.zonaDetalle { font-weight: 500; opacity: 0.8; }
+
+/* ─── Hilos ───────────────────────────────────────────────────────────────── */
+.hilo { transition: opacity 0.22s ease; }
+.hilo.tenue { opacity: 0.13; }
+.arranque .hilo { --retardo: calc(var(--i) * 22ms + 260ms); }
+
+.hiloTrazo {
+  fill: none;
+  stroke: var(--hc, var(--c-flecha));
+  stroke-linecap: round;
+}
+.h_convierte, .h_activa, .h_discontinua { --hc: var(--c-flecha); }
+.h_trombina { --hc: var(--c-gris); }
+.h_inhibe   { --hc: var(--c-inhibe); }
+.h_estimula { --hc: var(--c-estimula); }
+.h_discontinua .hiloTrazo { stroke-dasharray: 6 5; }
+
+/* Hilo fantasma del modo aprender: une lo conocido con el hueco. */
+.fantasma .hiloTrazo {
+  stroke: var(--c-ink-3);
+  stroke-dasharray: 3 6;
+  animation: hormigas 1.4s linear infinite, aparecer 0.35s ease-out backwards;
+}
+
+/* Trazado: con pathLength=1 el guion ocupa la curva entera y el offset la dibuja. */
+.dibuja {
+  stroke-dasharray: 1;
+  animation: trazar 0.6s cubic-bezier(0.3, 0.7, 0.3, 1) var(--retardo, 0ms) backwards;
+}
+.aparece { animation: aparecer 0.45s ease-out var(--retardo, 0ms) backwards; }
+
+.mk_convierte, .mk_activa, .mk_discontinua { fill: var(--c-flecha); }
+.mk_trombina { fill: var(--c-gris); }
+.mk_fantasma { fill: var(--c-ink-3); }
+.mk_estimula { fill: var(--c-estimula); }
+.mk_inhibe {
+  fill: none;
+  stroke: var(--c-inhibe);
+  stroke-width: 2.8;
+  stroke-linecap: round;
+}
+
+.signo { color: var(--hc); }
+.signo circle {
+  fill: var(--c-surface);
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+.signo path {
+  stroke: currentColor;
+  stroke-width: 2.1;
+  stroke-linecap: round;
+}
+
+/* ─── Nodos ───────────────────────────────────────────────────────────────── */
+/* `max-content`: el mundo mide 0 px de ancho, y sin esto un nodo con texto que
+   envuelve (el colágeno, las cajas) se encogería a una palabra por línea. El
+   `max-width` de su cuerpo sigue acotándolo. */
+.nodo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: max-content;
+  touch-action: none;
+  cursor: grab;
+}
+.nodo:hover { z-index: 3; }
+.agarrado { cursor: grabbing; z-index: 6; }
+.arranque .nodo { --retardo-n: calc(var(--i) * 20ms); }
+
+.cuerpo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+  transition: opacity 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  animation: entrar 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) var(--retardo-n, 0ms) backwards;
+}
+
+.lab {
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+}
+.sub {
+  margin-top: 1px;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--c-ink-2);
+}
+
+/* Cimógeno: en caja, como en la lámina. */
+.t_factor .cuerpo {
+  min-width: 50px;
+  padding: 5px 13px 6px;
+  border: 1.6px solid var(--c-ink);
+  border-radius: 7px;
+  background: var(--c-surface);
+  box-shadow: 0 3px 10px -5px var(--c-sombra);
+}
+.t_factor.vitK .cuerpo {
+  background: var(--c-vitk-bg);
+  border-color: var(--c-vitk-br);
+}
+.t_factor .sub { color: var(--c-ink-2); }
+
+/* Forma activa: texto en negrita, sin caja. */
+.t_activo .cuerpo {
+  padding: 4px 9px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--c-bg) 60%, transparent);
+}
+.t_activo .lab { font-size: 18.5px; }
+
+.t_cofactor .cuerpo {
+  min-width: 50px;
+  padding: 5px 12px 6px;
+  border-radius: 7px;
+  background: var(--c-cof-bg);
+  color: #fff;
+  box-shadow: 0 5px 14px -6px rgba(46, 110, 30, 0.65);
+}
+
+.t_disparador .cuerpo {
+  max-width: 210px;
+  padding: 4px 6px;
+  white-space: normal;
+}
+.t_disparador .lab { font-size: 14px; font-weight: 700; line-height: 1.25; }
+
+.t_regulador .cuerpo {
+  max-width: 150px;
+  padding: 4px 6px;
+  white-space: normal;
+}
+.t_regulador .lab { font-size: 12.5px; font-weight: 600; line-height: 1.3; color: var(--c-ink-2); }
+
+.t_efecto .cuerpo { padding: 3px 6px; }
+.t_efecto .lab { font-size: 14px; font-weight: 600; }
+
+.t_producto .cuerpo {
+  max-width: 220px;
+  padding: 6px 10px;
+  white-space: normal;
+}
+.t_producto .lab { font-size: 14.5px; font-weight: 700; line-height: 1.25; }
+.glifo {
+  width: 48px;
+  margin-bottom: 5px;
+  fill: none;
+  stroke: var(--c-ink-2);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+/* Cajas de fármacos y reguladores: tarjeta con filete verde-amarillo, como
+   en la lámina. La única pieza del lienzo con forma de tarjeta. */
+.t_caja .cuerpo {
+  width: 256px;
+  align-items: stretch;
+  padding: 10px 14px 11px;
+  border: 2px solid var(--c-caja-br);
+  border-radius: 10px;
+  background: var(--c-surface);
+  text-align: left;
+  white-space: normal;
+  box-shadow: 0 6px 18px -10px var(--c-sombra);
+}
+.cajaTitulo {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.cajaLista {
+  display: grid;
+  gap: 3px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--c-ink-2);
+}
+.cajaLista li::before {
+  content: '–';
+  margin-right: 6px;
+  color: var(--c-ink-3);
+}
+
+.calcio {
+  position: absolute;
+  top: -9px;
+  left: -8px;
+  font-size: 19px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--c-calcio);
+}
+
+/* Interacción */
+.nodo:hover .cuerpo { transform: translateY(-2px); }
+.t_factor:hover .cuerpo,
+.t_cofactor:hover .cuerpo,
+.t_caja:hover .cuerpo { box-shadow: 0 10px 22px -10px var(--c-sombra); }
+.agarrado .cuerpo {
+  transform: scale(1.06);
+  box-shadow: 0 16px 32px -12px var(--c-sombra);
+}
+.nodo:focus-visible { outline: none; }
+.nodo:focus-visible .cuerpo { outline: 3px solid var(--c-accent); outline-offset: 3px; border-radius: 9px; }
+
+/* Resaltado de la cadena aguas abajo. */
+.nodo.tenue .cuerpo { opacity: 0.22; }
+
+/* Oculto en el modo aprender. */
+.oculto { pointer-events: none; }
+.oculto .cuerpo {
+  opacity: 0;
+  transform: scale(0.85);
+  animation: none;
+}
+
+/* Recién revelado. */
+.recien .cuerpo { animation: pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) backwards; }
+
+/* ─── Hueco del modo aprender ─────────────────────────────────────────────── */
+.esHueco { --acc-hueco: var(--c-accent); cursor: pointer; z-index: 4; }
+.esHueco .cuerpo {
+  justify-content: center;
+  width: 66px;
+  height: 44px;
+  border: 2px dashed var(--acc-hueco);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--acc-hueco) 9%, var(--c-surface));
+  animation:
+    entrar 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) backwards,
+    latido 1.9s ease-in-out 0.45s infinite;
+}
+.huecoMarca {
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--acc-hueco);
+}
+.esHueco.objetivo .cuerpo {
+  border-style: solid;
+  transform: scale(1.14);
+  background: color-mix(in srgb, var(--acc-hueco) 18%, var(--c-surface));
+}
+.esHueco .cuerpo.sacude {
+  animation:
+    sacudir 0.36s ease-in-out,
+    latido 1.9s ease-in-out 0.5s infinite;
+}
+
+/* ─── Balizas de aviso ────────────────────────────────────────────────────── */
+.baliza {
+  position: absolute;
+  top: -11px;
+  right: -11px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--c-accent);
+  color: #fff;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 2px 7px -1px rgba(47, 143, 214, 0.55);
+  /* Compensa el zoom: al alejar no se vuelve un punto imposible de tocar. */
+  scale: clamp(1, calc(1 / var(--k, 1)), 2.2);
+  transition: transform 0.18s ease, background-color 0.2s ease;
+}
+.baliza svg { width: 12px; height: 12px; }
+/* Área táctil de 38 px aunque el círculo mida 22. */
+.baliza::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+}
+.baliza:not(.balizaVista)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--c-accent);
+  animation: onda 2.4s ease-out infinite;
+  pointer-events: none;
+}
+.baliza:hover { transform: scale(1.14); }
+.baliza:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 3px; }
+.balizaVista {
+  background: var(--c-surface);
+  color: var(--c-accent);
+  box-shadow: inset 0 0 0 1.6px var(--c-accent), 0 2px 6px -2px var(--c-sombra);
+}
+.oculto .baliza { display: none; }
+
+/* ─── Globo (hover) ───────────────────────────────────────────────────────── */
+.globo {
+  position: fixed;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-width: 270px;
+  padding: 10px 13px 9px;
+  border-radius: 12px;
+  background: #1a1d38;
+  color: #f2f1ff;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  box-shadow: 0 12px 28px -12px rgba(10, 12, 30, 0.55);
+  pointer-events: none;
+  animation: globoIn 0.16s ease-out;
+}
+:global(.dark-mode) .globo {
+  background: #262a4f;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.09), 0 12px 28px -12px rgba(0, 0, 0, 0.7);
+}
+.globoTitulo { font-size: 13.5px; font-weight: 800; }
+.globoTexto { font-size: 12.5px; line-height: 1.4; color: rgba(242, 241, 255, 0.82); }
+.globoPie { margin-top: 3px; font-size: 11px; font-weight: 700; color: #7cc3f2; letter-spacing: 0.02em; }
+
+/* ─── Tarjeta desplegada (clic) ───────────────────────────────────────────── */
+.tarjeta {
+  position: fixed;
+  z-index: 1201;
+  width: min(350px, calc(100vw - 16px));
+  max-height: min(70vh, 520px);
+  overflow-y: auto;
+  padding: 14px 16px 12px;
+  border: 1px solid var(--c-line);
+  border-radius: 16px;
+  background: var(--c-surface);
+  color: var(--c-ink);
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  box-shadow: 0 22px 50px -18px var(--c-sombra), 0 2px 8px -4px var(--c-sombra);
+  transform-origin: 50% 100%;
+  animation: tarjetaIn 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+}
+.tarjetaDebajo { transform-origin: 50% 0; }
+.tarjetaCab {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+.tarjetaTitulo { font-size: 15.5px; font-weight: 800; line-height: 1.3; padding-top: 3px; }
+.tarjetaCerrar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin: -3px -6px 0 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--c-ink-3);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+.tarjetaCerrar svg { width: 15px; height: 15px; }
+.tarjetaCerrar:hover { background: var(--c-line); color: var(--c-ink); }
+.mnemo {
+  margin: 8px 0 10px;
+  padding-left: 11px;
+  border-left: 3px solid var(--c-accent);
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: var(--c-accent);
+  font-variant-numeric: tabular-nums;
+}
+.tarjetaCuerpo p {
+  margin: 8px 0 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--c-ink-2);
+  animation: subir 0.28s ease-out calc(var(--i) * 45ms + 60ms) backwards;
+}
+
+/* ─── Barra flotante ──────────────────────────────────────────────────────── */
+.barra,
+.barraDer {
+  position: absolute;
+  top: 14px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.barra { left: 14px; }
+.barraDer { right: 14px; }
+
+.volver,
+.segmento,
+.zoomGrupo,
+.btnIcono {
+  border: 1px solid var(--c-line);
+  background: color-mix(in srgb, var(--c-surface) 94%, transparent);
+  box-shadow: 0 4px 14px -8px var(--c-sombra);
+}
+
+.volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 38px;
+  padding: 0 14px 0 9px;
+  border-radius: 999px;
+  color: var(--c-ink-2);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s, transform 0.15s;
+}
+.volver svg { width: 17px; height: 17px; }
+.volver:hover { color: var(--c-ink); }
+.volver:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 2px; }
+
+.segmento {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+}
+.segBtn {
+  height: 32px;
+  padding: 0 15px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--c-ink-2);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.segBtn:hover { color: var(--c-ink); }
+.segBtn:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 1px; }
+.segActivo,
+.segActivo:hover {
+  background: var(--c-ink);
+  color: var(--c-bg);
+}
+
+.zoomGrupo {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 12px;
+}
+.zoomGrupo .btnIcono { border: none; background: transparent; box-shadow: none; }
+.zoomPct {
+  min-width: 50px;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--c-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.btnIcono {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: 12px;
+  color: var(--c-ink-2);
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s;
+}
+.btnIcono svg { width: 16px; height: 16px; }
+.btnIcono:hover { color: var(--c-ink); background: color-mix(in srgb, var(--c-line) 60%, var(--c-surface)); }
+.btnIcono:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 2px; }
+
+/* ─── Leyenda ─────────────────────────────────────────────────────────────── */
+.leyenda {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 20;
+  width: 262px;
+  border: 1px solid var(--c-line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--c-surface) 95%, transparent);
+  box-shadow: 0 8px 22px -12px var(--c-sombra);
+  animation: subir 0.35s ease-out var(--retardo-l, 0ms) backwards;
+}
+.arranque .leyenda { --retardo-l: 900ms; }
+.leyendaCerrada { width: auto; }
+.leyendaCab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 14px;
+  border: none;
+  background: transparent;
+  color: var(--c-ink-2);
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.leyendaCab:focus-visible { outline: 3px solid var(--c-accent); outline-offset: -3px; border-radius: 14px; }
+.leyendaFlecha { width: 14px; height: 14px; transition: transform 0.2s ease; }
+.leyendaCerrada .leyendaFlecha { transform: rotate(180deg); }
+.leyendaLista {
+  margin: 0;
+  padding: 0 14px 12px;
+  list-style: none;
+  font-size: 12.5px;
+  color: var(--c-ink-2);
+}
+.leyendaLista li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 7px;
+}
+.lgCaja {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 19px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.lgVitK { background: var(--c-vitk-bg); border: 1.4px solid var(--c-vitk-br); color: var(--c-ink); }
+.lgCofactor { background: var(--c-cof-bg); color: #fff; }
+.lgAst {
+  flex: none;
+  width: 28px;
+  font-size: 19px;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+  color: var(--c-calcio);
+}
+.lgLinea { flex: none; width: 28px; height: 10px; overflow: visible; }
+.lgSolida, .lgDiscontinua, .lgTrombina, .lgPunta {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lgSolida, .lgPunta { stroke: var(--c-flecha); }
+.lgDiscontinua { stroke: var(--c-flecha); stroke-dasharray: 4 3.5; }
+.lgTrombina { stroke: var(--c-gris); }
+.lgSigno {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  margin-left: 5px;
+  border: 1.8px solid currentColor;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+.lgSigno:first-child { margin-left: 5px; }
+.lgInhibe { color: var(--c-inhibe); }
+.lgEstimula { color: var(--c-estimula); margin-left: 14px; }
+.lgAyuda {
+  flex-wrap: wrap;
+  gap: 4px !important;
+  margin-top: 10px !important;
+  padding-top: 9px;
+  border-top: 1px dashed var(--c-line);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--c-ink-3);
+}
+.lgBaliza {
+  display: inline-grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+/* ─── Modo aprender: selector ─────────────────────────────────────────────── */
+.velo {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: color-mix(in srgb, var(--c-bg) 72%, transparent);
+  animation: aparecer 0.25s ease-out;
+}
+.selector {
+  width: min(780px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 22px 22px 18px;
+  border: 1px solid var(--c-line);
+  border-radius: 22px;
+  background: var(--c-surface);
+  box-shadow: 0 30px 70px -30px var(--c-sombra);
+  animation: selectorIn 0.34s cubic-bezier(0.2, 0.85, 0.25, 1);
+}
+.selectorCab {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.selectorPregunta { margin: 0; font-size: 21px; font-weight: 800; letter-spacing: -0.01em; }
+.selectorSub { margin: 5px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--c-ink-2); }
+.selectorCuenta { font-weight: 700; color: var(--c-ink); }
+
+.viasGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 10px;
+  margin: 18px 0 16px;
+}
+.viaTile {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 14px 12px;
+  border: 1.5px solid var(--zbr);
+  border-radius: 15px;
+  background: var(--zbg);
+  color: var(--c-ink);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  animation: subir 0.34s ease-out calc(var(--i) * 45ms + 80ms) backwards;
+}
+.viaTile:hover {
+  transform: translateY(-2px);
+  border-color: var(--ztx);
+  box-shadow: 0 12px 26px -16px var(--ztx);
+}
+.viaTile:focus-visible { outline: 3px solid var(--ztx); outline-offset: 2px; }
+.viaNombre { font-size: 15.5px; font-weight: 800; }
+.viaPrueba { font-size: 12.5px; color: var(--c-ink-2); }
+.viaCadena {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin: 9px 0 5px;
+}
+.viaSemilla {
+  padding: 2px 7px;
+  border: 1px solid var(--zbr);
+  border-radius: 6px;
+  background: var(--c-surface);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.viaPunto {
+  width: 9px;
+  height: 9px;
+  border: 1.6px dashed var(--ztx);
+  border-radius: 50%;
+  opacity: 0.85;
+}
+.viaHecha .viaPunto { border-style: solid; background: var(--ztx); }
+.viaPie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--c-ink-3);
+}
+.viaCheck { display: inline-flex; align-items: center; gap: 3px; color: var(--ztx); }
+.viaCheck svg { width: 13px; height: 13px; }
+
+.dificultad {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--c-line);
+}
+.dificultadRotulo {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-ink-3);
+}
+.dificultadDesc { font-size: 12.5px; color: var(--c-ink-2); }
+.dificultad .segmento { box-shadow: none; }
+
+/* ─── Modo aprender: marcador ─────────────────────────────────────────────── */
+.hud {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: calc(100% - 28px);
+  padding: 5px 5px 5px 16px;
+  border: 1.5px solid var(--zbr);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--c-surface) 95%, transparent);
+  box-shadow: 0 6px 18px -10px var(--c-sombra);
+  transform: translateX(-50%);
+  animation: hudIn 0.34s cubic-bezier(0.2, 0.85, 0.25, 1);
+}
+.hudNombre { font-size: 13.5px; font-weight: 800; color: var(--ztx); white-space: nowrap; }
+.hudPasos { display: flex; align-items: center; gap: 4px; }
+.hudPunto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-line);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.hudHecho { background: var(--ztx); }
+.hudActual {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--ztx);
+  transform: scale(1.3);
+}
+.hudErrores {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--c-ink-3);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.hudConErrores { color: var(--c-inhibe); }
+.hudBtn {
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--c-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--c-ink-2);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.hudBtn:hover { color: var(--c-ink); border-color: var(--c-ink-3); }
+
+/* ─── Modo aprender: bandeja (fichas / escribir) ──────────────────────────── */
+/* El único bloque que se manipula: va teñido con el color de su vía. */
+.bandeja,
+.cierre {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  z-index: 20;
+  width: min(660px, calc(100% - 28px));
+  padding: 14px 16px 12px;
+  border: 1.5px solid var(--zbr);
+  border-radius: 18px;
+  background:
+    linear-gradient(var(--zbg), var(--zbg)),
+    var(--c-surface);
+  box-shadow: 0 16px 36px -18px var(--c-sombra);
+  transform: translateX(-50%);
+  animation: bandejaIn 0.32s cubic-bezier(0.2, 0.85, 0.25, 1);
+}
+.bandejaTexto { display: flex; flex-direction: column; gap: 2px; }
+.bandejaPregunta {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ztx);
+}
+.bandejaPista { font-size: 15.5px; font-weight: 600; line-height: 1.35; }
+.fichas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 6px;
+}
+.ficha {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1.6px solid var(--c-ink);
+  border-radius: 11px;
+  background: var(--c-surface);
+  color: var(--c-ink);
+  font-size: 15px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: 0 2px 0 var(--c-line);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.2s ease;
+  animation: subir 0.3s ease-out calc(var(--i) * 55ms) backwards;
+}
+.ficha:hover { transform: translateY(-2px); box-shadow: 0 8px 16px -8px var(--c-sombra); }
+.ficha:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 2px; }
+.fichaVitK { background: var(--c-vitk-bg); border-color: var(--c-vitk-br); }
+.fichaCofactor { background: var(--c-cof-bg); border-color: var(--c-cof-bg); color: #fff; }
+.fichaElegida {
+  outline: 3px solid var(--c-accent);
+  outline-offset: 2px;
+  transform: translateY(-2px);
+}
+.fichaArrastrada { opacity: 0.3; }
+.fichaFuera {
+  opacity: 0.35;
+  text-decoration: line-through;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+}
+.fichaFantasma {
+  position: fixed;
+  z-index: 1300;
+  pointer-events: none;
+  transform: translate(-50%, -60%) rotate(-3deg) scale(1.06);
+  box-shadow: 0 18px 34px -12px var(--c-sombra);
+  animation: none;
+}
+.bandejaAyuda { margin: 2px 0 0; font-size: 12px; color: var(--c-ink-3); }
+
+.escribir { display: flex; gap: 8px; margin: 12px 0 4px; }
+.escribirInput {
+  flex: 1;
+  min-width: 0;
+  height: 46px;
+  padding: 0 14px;
+  border: 1.6px solid var(--c-line);
+  border-radius: 11px;
+  background: var(--c-surface);
+  color: var(--c-ink);
+  font-family: inherit;
+  font-size: 16px; /* 16 px: iOS no hace zoom al enfocar */
+  font-weight: 600;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.escribirInput::placeholder { color: var(--c-ink-3); font-weight: 500; }
+.escribirInput:focus {
+  outline: none;
+  border-color: var(--ztx);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ztx) 22%, transparent);
+}
+
+.mensaje {
+  margin: 9px 0 1px;
+  padding-left: 10px;
+  border-left: 3px solid currentColor;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  animation: subir 0.22s ease-out;
+}
+.mensajeMal { color: var(--c-inhibe); }
+.mensajeRegalo { color: var(--ztx); }
+
+.btnPrimario,
+.btnSecundario {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 11px;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease, border-color 0.15s ease;
+}
+.btnPrimario {
+  border: none;
+  background: var(--c-ink);
+  color: var(--c-bg);
+}
+.btnPrimario:hover:not(:disabled) { transform: translateY(-1px); }
+.btnPrimario:disabled { opacity: 0.35; cursor: not-allowed; }
+.btnSecundario {
+  border: 1.5px solid var(--c-line);
+  background: var(--c-surface);
+  color: var(--c-ink);
+}
+.btnSecundario:hover { border-color: var(--c-ink-3); }
+.btnPrimario:focus-visible,
+.btnSecundario:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 2px; }
+
+/* ─── Modo aprender: cierre ───────────────────────────────────────────────── */
+.cierre { width: min(580px, calc(100% - 28px)); padding: 16px 18px 16px; }
+.cierreCab { display: flex; align-items: center; gap: 13px; }
+.cierreSello {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--ztx);
+  color: var(--c-surface);
+  animation: pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) 0.1s backwards;
+}
+.cierreSello svg { width: 24px; height: 24px; }
+.cierreSello path {
+  stroke-dasharray: 24;
+  animation: trazarSello 0.45s ease-out 0.4s backwards;
+}
+.cierreTitulo { margin: 0; font-size: 17.5px; font-weight: 800; }
+.cierreDatos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: var(--c-ink-2);
+}
+.cierreDatos b { color: var(--c-ink); font-weight: 800; font-variant-numeric: tabular-nums; }
+.cierreMnemo {
+  margin: 13px 0 0;
+  padding-left: 11px;
+  border-left: 3px solid var(--ztx);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--ztx);
+}
+.cierreBotones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+/* ─── Animaciones ─────────────────────────────────────────────────────────── */
+@keyframes aparecer { from { opacity: 0; } }
+@keyframes entrar {
+  from { opacity: 0; transform: translateY(6px) scale(0.94); }
+}
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.55); }
+  60% { opacity: 1; }
+}
+@keyframes trazar {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes trazarSello { from { stroke-dashoffset: 24; } }
+@keyframes hormigas { to { stroke-dashoffset: -18; } }
+@keyframes latido {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--acc-hueco) 0%, transparent); }
+  50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--acc-hueco) 16%, transparent); }
+}
+@keyframes sacudir {
+  0%, 100% { transform: translateX(0); border-color: var(--c-inhibe); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(2px); }
+}
+@keyframes onda {
+  from { transform: scale(1); opacity: 0.7; }
+  to { transform: scale(1.9); opacity: 0; }
+}
+@keyframes subir { from { opacity: 0; transform: translateY(6px); } }
+@keyframes globoIn { from { opacity: 0; transform: translateY(4px); } }
+@keyframes tarjetaIn { from { opacity: 0; transform: scale(0.95); } }
+@keyframes selectorIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } }
+@keyframes hudIn { from { opacity: 0; transform: translate(-50%, -8px); } }
+@keyframes bandejaIn { from { opacity: 0; transform: translate(-50%, 14px); } }
+
+/* ─── Móvil ───────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .wrapper {
+    margin: -18px -16px -28px;
+    height: calc(100dvh - 88px);
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 720px) {
+  .barra { top: 10px; left: 10px; gap: 6px; }
+  .barraDer { top: 10px; right: 10px; gap: 6px; }
+  .volverTexto { display: none; }
+  .volver { padding: 0 10px; }
+  .segBtn { padding: 0 11px; }
+  .zoomPct { display: none; }
+  .barraDer > .btnIcono:last-child { display: none; }
+  .hud { top: 60px; gap: 8px; padding-left: 12px; }
+  .hudNombre { max-width: 34vw; overflow: hidden; text-overflow: ellipsis; }
+  .hudPasos { gap: 3px; }
+  .hudPunto { width: 7px; height: 7px; }
+  .hudErrores { display: none; }
+  .leyenda { left: 10px; bottom: 10px; width: min(262px, calc(100% - 20px)); }
+  .leyendaCerrada { width: auto; }
+  .bandeja,
+  .cierre { bottom: 10px; width: calc(100% - 20px); padding: 12px 12px 10px; }
+  .bandejaPista { font-size: 14.5px; }
+  .fichas { gap: 6px; margin-top: 10px; }
+  .ficha { padding: 0 12px; font-size: 14px; }
+  .selector { padding: 18px 16px 14px; border-radius: 18px; }
+  .selectorPregunta { font-size: 18.5px; }
+  .viasGrid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+  .viaTile { padding: 12px 12px 10px; }
+}
+
+/* ─── Movimiento reducido (al final, para ganar por orden) ────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cuerpo,
+  .zona,
+  .dibuja,
+  .aparece,
+  .fantasma .hiloTrazo,
+  .esHueco .cuerpo,
+  .esHueco .cuerpo.sacude,
+  .recien .cuerpo,
+  .baliza:not(.balizaVista)::after,
+  .globo,
+  .tarjeta,
+  .tarjetaCuerpo p,
+  .leyenda,
+  .velo,
+  .selector,
+  .viaTile,
+  .hud,
+  .bandeja,
+  .cierre,
+  .ficha,
+  .mensaje,
+  .cierreSello,
+  .cierreSello path {
+    animation: none !important;
+  }
+  .cuerpo,
+  .hilo,
+  .baliza,
+  .viaTile,
+  .ficha { transition-duration: 0.01ms !important; }
+}

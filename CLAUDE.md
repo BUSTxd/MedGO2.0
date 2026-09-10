@@ -98,6 +98,7 @@ src/app/
     │   ├── atlas-microbiologia/
     │   ├── atlas-parasitologia/
     │   ├── atlas-micologia/          # Selector modo alternativas/escribir
+    │   ├── cascada-coagulacion/      # Lienzo de la cascada: explorar + aprender (ver sección propia)
     │   └── microscopio/
     ├── investigacion/
     │   ├── page.tsx                  # Mapa serpenteante de 14 niveles (NivelMap)
@@ -1434,6 +1435,78 @@ teniendo el laboratorio hecho.
 **Modo claro/oscuro propio:** al ser un HTML aparte, no hereda `.dark-mode` del dashboard — lee el mismo `localStorage('medgo-dark')` vía tokens CSS (`:root` claro por defecto, `:root.dark` override) con un script inline síncrono en el `<head>` y un listener de `storage` para resincronizar en vivo. Los colores 3D no cambian por tema (igual que el resto de visores de microscopio del sitio).
 
 **Tarjeta «Simulación»**: `StudyMaterialSection` acepta `simulacion?: { href?: string; desc?: string }`, que sustituye la tarjeta **Video** por una con el ícono beaker. Sólo se activa en las prácticas LAB de Hematología — `hematologia/[id]/page.tsx` pasa `simulacion={isLab ? (act.simulacion ?? {}) : undefined}` y el campo `simulacion` vive en cada actividad de `src/lib/data/hematologia.ts`. Sin `href` la tarjeta queda como «Próximamente». Evento de analítica `simulacion_abierta` (whitelist duplicada en `src/lib/analytics.ts` y `src/app/api/track/route.ts`).
+
+---
+
+## Vías de la coagulación (Hematología · `laboratorio/cascada-coagulacion`)
+
+La lámina «Vías de la coagulación (hemostasia 2.ª)» de la Clase 9 hecha lienzo. **Sin cabecera
+ni título, a propósito**: se entra directo a una cuadrícula con la cascada entera; la vuelta al
+laboratorio va en la barra flotante. El wrapper anula el padding del `.panel` con márgenes
+negativos y ocupa su altura (`calc(100dvh - 48px)`); la sidebar sigue visible.
+
+**Datos — `src/lib/data/coagulacion.ts`** (fuente única, sin lógica de UI): `NODOS` (con `tipo`,
+`vitK`, `calcio`, `zona`, coordenadas de mundo y `alias` para el modo escribir), `HILOS`, `ZONAS`,
+`AVISOS` (las notas al pie de la lámina, que aquí son balizas) y `VIAS` (modo aprender). Un hilo
+puede llegar **a otra flecha** (`a: 'hilo:c-x'`): la enzima que actúa sobre una conversión cae en
+el punto medio de esa curva, como en la lámina. Sólo las conversiones nodo→nodo pueden ser
+destino; por eso el bucle dibuja primero esas y luego las que llegan a una flecha.
+
+**El reparto React / bucle es la regla que sostiene el rendimiento**: React pinta *qué* hay
+(nodos, qué está visible, qué se atenúa) y un rAF escribe *dónde* (el `transform` de cada nodo,
+el `d` de cada `<path>`, las cajas de las zonas) directo en el DOM. Los `<path>` **no reciben `d`
+por props** —React lo pisaría en el siguiente render— y el bucle sólo corre mientras algo se
+mueve. `NodoFactor` va con `memo`, así que todo callback que recibe tiene que ser estable: `dnd`
+de `useDragDrop` es un objeto nuevo en cada render y se le pasa vía ref, o cada movimiento de una
+ficha re-renderizaría los 40 nodos.
+
+**Hilos elásticos** (`hilos.ts`, funciones puras): bézier cuadrática cuyo punto de control es una
+masa con resorte. Recto mientras el hilo mide su largo de la lámina o más; si acercas sus extremos,
+la holgura lo comba hacia abajo, y al soltar vibra y se asienta (~1 s). Con
+`prefers-reduced-motion` va directo al objetivo. Tiene una zona muerta de 10 px: el recorte en el
+borde de los nodos mueve los extremos y sin ella todos arrancarían combados.
+
+**Cámara** (`useCamara.ts`): el estado vive en un ref y se aplica como `transform` del mundo y
+custom properties de la cuadrícula (`--gx/--gy/--gs`) y de las balizas (`--k`, que las
+contra-escala para que sigan siendo tocables a 40 %). La rueda va con listener manual
+`passive: false`. `asegurarVisible` no actúa con un vuelo en curso: cancelaría el encuadre de la
+vía al empezar. Sin `will-change: transform` en el mundo, por precaución y **sin verificarlo en
+este lienzo**: con él Chrome suele rasterizar el texto a la escala inicial y al acercar se ve
+borroso. Si hiciera falta por rendimiento, probarlo antes de darlo por malo.
+
+**Tres trampas de maquetación, cazadas leyendo el código antes de publicar**:
+- El mundo mide 0 px de ancho, y un nodo `position:absolute` con texto que envuelve se encogería a
+  una palabra por línea: `.nodo { width: max-content }`, con el `max-width` en el cuerpo.
+- La caja de cada zona sale de sus nodos visibles (así acompaña al arrastrar y en el modo
+  aprender crece a medida que se revela la vía). A la escala ×2 de la imagen original contacto
+  pisaba a extrínseca y común a fibrinolítico: al mover coordenadas, comprobar que ninguna zona
+  invade otra.
+- Las animaciones de entrada van con `backwards`, nunca `both`: con `forwards` la opacidad final
+  quedaría fijada por la animación y el atenuado de la cadena (`.tenue`) no surtiría efecto.
+
+**Explorar**: arrastrar un factor estira sus hilos; pasar el cursor por un nodo resalta su cadena
+aguas abajo y atenúa el resto (un toque la fija, para táctil); las balizas «i» laten hasta que se
+abren una vez (`localStorage`), el globo sale al pasar el cursor y la tarjeta al hacer clic, ambos
+por portal a `<body>` y sin `backdrop-filter`. Posiciones en `medgo-coag-layout-v1`; «Reordenar»
+las devuelve a la lámina deslizándose.
+
+**Aprender**: selector de 6 vías (extrínseca/TP, intrínseca/TTPa, común, cininas, fibrinólisis,
+regulación y fármacos) y dificultad **Fichas** (4 opciones, se reutiliza `useDragDrop`) o
+**Escribir** (`normalizar` pasa arábigos a romanos y conserva la `a`: «9a» = IXa, «IX» ≠ «IXa»).
+Se ve la semilla y el siguiente paso como hueco «?» con su hilo fantasma y su pista; al tercer
+fallo se revela resuelto (como la B del AnatExam). Progreso en `medgo-coag-progreso-v1`. Un hilo
+que apunta a una flecha que aún no existe sólo se dibuja si cae sobre el **hueco** (`destinoDe`):
+así el fantasma dice «esto viene de aquí» sin inventar relaciones con nodos visibles.
+
+**Las dos cajas de anticoagulantes se rotulan igual, como en la lámina**, y su ficha nombra los
+fármacos (`ficha`): rotularlas «sobre el Xa» regalaría la respuesta a la pista «fármacos que
+actúan sobre el Xa». Por lo mismo, en el modo escribir una caja no se acepta por su etiqueta sino
+por sus `alias`, y «heparina» a secas no vale en ninguna de las dos (actúa sobre ambas).
+
+**Para añadir una vía**: una entrada en `VIAS` con `semilla` y `pasos` (cada uno con su `pista`).
+Antes de publicarla conviene comprobar en Node que cada paso tiene 3 distractores válidos, que
+ninguna forma aceptada vale para dos nodos de la misma vía y el sesgo de longitud de la ficha
+correcta (hoy: única más larga en 17 %, única más corta en 27 %, frente al 25 % del azar).
 
 ---
 
