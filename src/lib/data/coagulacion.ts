@@ -364,6 +364,15 @@ export const AVISOS: Aviso[] = [
     ],
   },
   {
+    id: 'factor-v', ancla: 'v', titulo: 'Cómo se activa el factor V',
+    corto: 'Las primeras trazas de trombina lo convierten en Va',
+    cuerpo: [
+      'Xa + Ca²⁺ + fosfolípidos (sin Va todavía) puede convertir protrombina en trombina, pero a una velocidad muy lenta — se estima que el complejo completo con Va es ~300,000 veces más eficiente que Xa solo.',
+      'Esa actividad basal y lenta genera las primeras trazas mínimas de trombina.',
+      'Esas trazas de trombina activan al factor V → Va (y VIII → VIIIa, y plaquetas, y XI).',
+    ],
+  },
+  {
     id: 'trombina', ancla: 'iia', titulo: 'Trombina: el centro de todo',
     corto: 'Líneas grises: lo que la trombina activa de vuelta',
     cuerpo: [
