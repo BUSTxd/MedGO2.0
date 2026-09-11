@@ -92,6 +92,14 @@ export interface CursoMeta {
   track: Track;
   /** Quién aportó el material base (resúmenes, PPT, prácticas) del curso. */
   materialDe: Colaborador[];
+  /**
+   * Abierto para cualquier cuenta, también `free`: el grid de `/dashboard/cursos`
+   * lo muestra activo (sin el estado "en obra") y sin candado de plan, y su
+   * índice y cada clase quedan sin `LockedContent`. Su tramo no cambia —sigue
+   * contando para el panel de Aportes—; sólo deja de pedir plan. Lo lee
+   * `cursoEsGratis` (src/lib/acceso.ts).
+   */
+  gratis?: boolean;
 }
 
 /**
@@ -127,7 +135,7 @@ export const CURSOS: CursoMeta[] = [
   { slug: 'inmunologia',           nombre: 'Inmunología',                track: 'medicina', materialDe: ['sofia'] },
   { slug: 'digestivo',             nombre: 'Sistema Digestivo',          track: 'medicina', materialDe: ['sofia'] },
   { slug: 'endocrino-reproductor', nombre: 'Endocrino y Reproductor',    track: 'medicina', materialDe: ['sofia'] },
-  { slug: 'patologia',             nombre: 'Patología',                  track: 'medicina', materialDe: ['sofia'] },
+  { slug: 'patologia',             nombre: 'Patología',                  track: 'medicina', materialDe: ['sofia'], gratis: true },
 
   // ── UFBI · Ciencias Básicas (1.er año) ──
   { slug: 'biologia-celular',        nombre: 'Biología Celular',      track: 'basico', materialDe: ['ufbi-1', 'ufbi-2'] },

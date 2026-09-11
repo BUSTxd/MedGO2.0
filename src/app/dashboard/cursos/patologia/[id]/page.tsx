@@ -17,6 +17,7 @@ import BancoPreguntas from '@/components/BancoPreguntas';
 import { findBanco } from '@/lib/data/banco';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
+import { cursoEsGratis } from '@/lib/acceso';
 
 const UNIDAD_LABEL: Record<string, string> = {
   UNIDAD_1:    'Respuesta celular y tisular al daño',
@@ -50,7 +51,8 @@ export default async function PatologiaActividadPage({
 
   const isLab = act.tipo === 'LAB';
   const isFreeExam = act.examen?.free === true;
-  const isFreeAccess = isLab || isFreeExam;
+  // Patología es curso `gratis`: abierto para cualquier cuenta.
+  const isFreeAccess = isLab || isFreeExam || cursoEsGratis('patologia');
   const [user, planState] = await Promise.all([
     getUser(),
     isFreeAccess

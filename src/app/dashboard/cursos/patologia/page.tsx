@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { semanas, curso, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/patologia';
-import { planUnlocks } from '@/lib/plans';
+import { cursoEsGratis, requiredPlanDeCurso, tieneAccesoA } from '@/lib/acceso';
 import { getCachedPlanState } from '@/lib/plans-server';
 import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
 import styles from '@/styles/cursos.module.css';
@@ -16,9 +16,8 @@ const UNIDAD_LABEL: Record<string, string> = {
 
 export default async function PatologiaPage() {
   const plan = await getCachedPlanState();
-  // `allAccess` (admin) primero: sin él su plan 'residente' abriría el tramo
-  // medicina igual, pero el flag es lo que garantiza que nunca vea candados.
-  const hasAcceso = !!plan.allAccess || (plan.isActive && planUnlocks(plan.plan, 'interno'));
+  // Curso `gratis`: abierto para cualquier cuenta, sin pasar por el plan.
+  const hasAcceso = cursoEsGratis('patologia') || tieneAccesoA(plan, requiredPlanDeCurso('patologia'));
 
   return (
     <div className={styles.microPage}>

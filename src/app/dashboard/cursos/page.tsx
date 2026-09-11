@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { getCachedPlanState } from '@/lib/plans-server';
-import { planDeTrack, requiredPlanDeCurso, tieneAccesoA, trackDelUsuario } from '@/lib/acceso';
+import { cursoEsGratis, planDeTrack, requiredPlanDeCurso, tieneAccesoA, trackDelUsuario } from '@/lib/acceso';
 import { PLANS, type Track } from '@/lib/plans';
 import { PRIORIDAD_LANZAMIENTO } from '@/lib/data/aportes';
 import DigestiveIcon from '@/components/icons/DigestiveIcon';
@@ -351,7 +351,9 @@ type Curso = (typeof COURSES)[number];
 const LISTOS = new Set(PRIORIDAD_LANZAMIENTO);
 
 function CursoCard({ c, bloqueado }: { c: Curso; bloqueado: boolean }) {
-  const enObra = !LISTOS.has(c.id);
+  // Un curso `gratis` (hoy sólo Patología) sí tiene material real detrás,
+  // así que no se muestra "en obra" aunque no esté entre los prioritarios.
+  const enObra = !LISTOS.has(c.id) && !cursoEsGratis(c.id);
 
   const cuerpo = (
     <>
@@ -463,7 +465,7 @@ export default async function CursosPage() {
             </div>
             <div className={styles.qgrid}>
               {cursos.map((c) => (
-                <CursoCard key={c.id} c={c} bloqueado={!abierto} />
+                <CursoCard key={c.id} c={c} bloqueado={!abierto && !cursoEsGratis(c.id)} />
               ))}
             </div>
           </section>

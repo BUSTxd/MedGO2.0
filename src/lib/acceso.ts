@@ -63,6 +63,18 @@ export function labEsGratis(slug: string): boolean {
   return LABS_GRATIS.has(slug);
 }
 
+const CURSOS_GRATIS = new Set(CURSOS.filter((c) => c.gratis).map((c) => c.slug));
+
+/**
+ * Curso abierto a cualquier cuenta (flag `gratis` en `CURSOS`), mismo patrón
+ * que `labEsGratis`. Su tramo no cambia —sigue contando para Aportes—; sólo
+ * deja de pedir plan. Lo consultan el grid de `/dashboard/cursos`, el índice
+ * del curso y el `[id]/page.tsx` de cada clase.
+ */
+export function cursoEsGratis(slug: string): boolean {
+  return CURSOS_GRATIS.has(slug);
+}
+
 /**
  * ¿El estado de plan del usuario abre contenido que exige `required`?
  *
