@@ -347,6 +347,11 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'pat-tbl-2', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'pat-acp-2',
