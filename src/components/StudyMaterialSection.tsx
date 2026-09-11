@@ -34,6 +34,18 @@ interface ResumenOpcion {
 interface ExamenRef {
   key: string;
   free?: boolean;
+  groups?: string[];
+  /** Rótulo por clave (año del banqueo). Con él la tarjeta anuncia qué años trae. */
+  labels?: Record<string, string>;
+}
+
+/** «Banqueo 2024» o «Banqueos 2024 · 2020», en el orden del selector del runner. */
+function descExamen(examen: ExamenRef): string {
+  const anios = [examen.key, ...(examen.groups ?? [])]
+    .map(k => examen.labels?.[k])
+    .filter((a): a is string => !!a);
+  if (!anios.length) return 'Preguntas tipo examen con explicación';
+  return `${anios.length > 1 ? 'Banqueos' : 'Banqueo'} ${anios.join(' · ')} con explicación`;
 }
 
 /**
@@ -272,7 +284,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
               <BanqueoIcon />
             </div>
             <p className={styles.studyCardTitle}>{banqueoLabel ?? 'Banqueo'}</p>
-            <p className={styles.studyCardDesc}>Preguntas tipo examen con explicación</p>
+            <p className={styles.studyCardDesc}>{descExamen(examen)}</p>
             <span className={styles.studyAvailable}>Comenzar ▸</span>
           </Link>
         ) : propuestosPdf ? (

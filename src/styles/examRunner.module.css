@@ -72,9 +72,13 @@
 
 .groupSquares { display: flex; gap: 7px; }
 
+/* `min-width` + padding en vez de un ancho fijo: una letra (A, B…) sigue dando
+   un cuadrado, y un rótulo de año («2024») ensancha el botón lo justo. */
 .groupSquare {
-  width: 34px;
+  min-width: 34px;
   height: 34px;
+  padding: 0 10px;
+  font-variant-numeric: tabular-nums;
   border-radius: 10px;
   border: 1.5px solid rgba(var(--acc-rgb), 0.3);
   background: rgba(var(--acc-rgb), 0.07);

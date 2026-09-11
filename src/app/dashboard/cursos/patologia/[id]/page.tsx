@@ -79,6 +79,7 @@ export default async function PatologiaActividadPage({
         <ExamRunner
           examKey={act.examen.key}
           groupKeys={act.examen.groups}
+          groupLabels={act.examen.labels}
           fallbackTitle={act.titulo}
           backHref={`/dashboard/cursos/patologia/${id}`}
         />

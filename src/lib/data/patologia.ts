@@ -26,10 +26,18 @@ export interface ResumenOpcion {
 }
 
 export interface ExamenRef {
+  /** Banqueo que abre por defecto (el más reciente, cuando hay varios años). */
   key: string;
   free?: boolean;
   /** Grupos adicionales (B, C, …); cada uno se descarga solo al pulsar su cuadro. */
   groups?: string[];
+  /**
+   * Rótulo de cada banqueo, por su clave (`key` y cada una de `groups`). Con él
+   * el selector deja de decir A/B/C y nombra cada JSON por el año del examen del
+   * que salió («2024», «2020»). Va por clave, no por posición, para que
+   * reordenar `groups` no pueda cruzar un año con el JSON de otro.
+   */
+  labels?: Record<string, string>;
 }
 
 export interface Actividad {
@@ -449,9 +457,21 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Unidad 1 · semanas 1 – 5'],
         docentes: [],
-        // Banqueo 2024 completo (40 preguntas, 10 con imagen). Lleva
-        // `duration_min: 80` en el JSON, que es lo que enciende el cronómetro.
-        examen: { key: 'patologia/parcial-1', free: true },
+        // Un banqueo por año, cada uno su propio JSON con su nota e historial.
+        // El de 2024 (40 preguntas, 10 con imagen, `duration_min: 80`) conserva
+        // la clave original sin sufijo: renombrarla borraría los intentos que
+        // los alumnos ya tienen guardados en `localStorage`. Los demás van como
+        // `parcial-1-<año>`, del más reciente al más antiguo. Para añadir uno:
+        // subir el JSON, registrarlo en `EXAMENES` de la route y sumarlo aquí a
+        // `groups` y a `labels`.
+        examen: {
+          key: 'patologia/parcial-1',
+          free: true,
+          groups: [],
+          labels: {
+            'patologia/parcial-1': '2024',
+          },
+        },
       },
     ],
   },

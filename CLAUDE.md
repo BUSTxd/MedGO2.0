@@ -250,6 +250,25 @@ examen: { key: 'neurologia/snc-histologia', free: true, groups: ['neurologia/snc
 ```
 La prop `groupKeys={act.examen.groups}` pasa a `<ExamRunner>`. Cada clave en `groups` referencia un JSON independiente en el bucket `examenes` y debe estar registrada en el whitelist `EXAMENES` de `src/app/api/examen/[...examKey]/route.ts`.
 
+**Banqueos de varios años (`labels`)** — el mismo selector sirve para el examen de 2024 y el de
+2020 de un parcial, pero rotulado por año: `labels: Record<clave, rótulo>` en el `ExamenRef`, que la
+página pasa como `groupLabels={act.examen.labels}`. Con rótulos el runner habla de «Banqueo 2024»
+en vez de «Grupo A», los cuadros enseñan el año (se ensanchan con `min-width` + padding) y la
+tarjeta Banqueo de la clase anuncia «Banqueos 2024 · 2020 con explicación». Con un solo banqueo
+rotulado no hay selector, pero el año sale igual en la cabecera. El rótulo va **por clave, no por
+posición**: reordenar `groups` no puede cruzar un año con el JSON de otro. Cada banqueo lleva su
+propia nota e historial (los intentos se guardan por clave).
+
+Hecho en Patología · Examen Parcial 1 (`pat-ex-1`). El de 2024 **conserva la clave original
+`patologia/parcial-1`, sin sufijo**: renombrarla borraría los intentos que los alumnos ya tienen en
+`localStorage`. Los demás van como `parcial-1-<año>`, del más reciente al más antiguo. Para añadir
+un año: JSON fuente en `scripts/examenes/patologia-parcial-1-<año>.json` →
+`node scripts/upload-examen.mjs <archivo> patologia/parcial-1-<año>.json` → registrarlo en
+`EXAMENES` → sumarlo a `groups` y a `labels` de la actividad. Sin el paso de `EXAMENES` el cuadro
+sale en el selector y la route responde 404 al pulsarlo. Hoy sólo Patología y Neurología pasan
+`groupKeys` al runner, y sólo Patología `groupLabels`: otro curso que quiera años tiene que
+añadir `labels` a su `ExamenRef` y la prop en su `[id]/page.tsx`.
+
 **El JSON fuente se versiona en `scripts/examenes/`** aunque lo que sirve la web sea la copia del
 bucket. Los cuatro exámenes anteriores viven **sólo** en el bucket, y eso significa que reeditar
 uno obliga a bajarlo con la service role key; para los nuevos, la fuente está en git y se publica

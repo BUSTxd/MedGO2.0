@@ -70,6 +70,14 @@ interface Props {
    * alumno pulsa su cuadro en el selector. Se rotulan por índice (A, B, C, …).
    */
   groupKeys?: string[];
+  /**
+   * Rótulo de cada etapa, por su clave (la de `examKey` y las de `groupKeys`).
+   * Con rótulos, el runner deja de hablar de «Grupo A/B» y pasa a «Banqueo
+   * 2024/2020»: cada JSON es el examen de un año, no una partición del mismo.
+   * Va por clave y no por posición para que reordenar `groupKeys` nunca pueda
+   * cruzar un año con el JSON de otro. Una clave sin rótulo cae en su letra.
+   */
+  groupLabels?: Record<string, string>;
 }
 
 const EXPIRY_BUFFER_MS = 15 * 60 * 1000;
@@ -620,13 +628,23 @@ export default function ExamRunner({
   backHref,
   backLabel = 'Volver a la clase',
   groupKeys,
+  groupLabels,
 }: Props) {
   // Etapas: Grupo A (examKey) + grupos adicionales. Sin extras → examen simple.
   const stages = useMemo(
-    () => [examKey, ...(groupKeys ?? [])].map(key => ({ key })),
-    [examKey, groupKeys],
+    () => [examKey, ...(groupKeys ?? [])].map((key, i) => ({
+      key,
+      rotulo: groupLabels?.[key] ?? String.fromCharCode(65 + i),
+    })),
+    [examKey, groupKeys, groupLabels],
   );
   const isGrouped = stages.length > 1;
+  // Banqueos de años distintos (con rótulo) o grupos de un mismo examen (letra).
+  // Con rótulo, el año se enseña aunque sea el único banqueo: saber de qué año
+  // es el examen que estás haciendo informa por sí solo.
+  const conRotulos = stages.some(s => groupLabels?.[s.key]);
+  const nombreEtapa = (i: number) => `${conRotulos ? 'Banqueo' : 'Grupo'} ${stages[i].rotulo}`;
+  const mostrarEtapa = isGrouped || conRotulos;
 
   const [stage, setStage] = useState(0);
   const [payload, setPayload] = useState<ExamPayload | null>(null);
@@ -833,7 +851,7 @@ export default function ExamRunner({
 
         {isGrouped && phase !== 'finished' && (
           <div className={styles.groupSelector}>
-            <span className={styles.groupSelectorLabel}>Examen</span>
+            <span className={styles.groupSelectorLabel}>{conRotulos ? 'Banqueo' : 'Examen'}</span>
             <div className={styles.groupSquares}>
               {stages.map((s, i) => (
                 <button
@@ -842,9 +860,9 @@ export default function ExamRunner({
                   className={`${styles.groupSquare} ${i === stage ? styles.groupSquareActive : ''}`}
                   onClick={() => handleSwitchStage(i)}
                   aria-pressed={i === stage}
-                  aria-label={`Ir al Grupo ${String.fromCharCode(65 + i)}`}
+                  aria-label={`Ir al ${nombreEtapa(i)}`}
                 >
-                  {String.fromCharCode(65 + i)}
+                  {s.rotulo}
                 </button>
               ))}
             </div>
@@ -857,7 +875,7 @@ export default function ExamRunner({
         <h1 className={styles.title}>{title}</h1>
         {payload && phase === 'running' && (
           <div className={styles.metaLine}>
-            {isGrouped && <span>Grupo {String.fromCharCode(65 + stage)}</span>}
+            {mostrarEtapa && <span>{nombreEtapa(stage)}</span>}
             <span>{total} preguntas</span>
             <span>
               {payload.duration_min
@@ -869,10 +887,14 @@ export default function ExamRunner({
         )}
         {payload && phase === 'running' && isGrouped && (
           <p className={styles.partHint}>
-            Este examen tiene <strong>{stages.length} grupos independientes</strong>. Estás en el{' '}
-            <strong>Grupo {String.fromCharCode(65 + stage)}</strong>; usa los cuadros{' '}
-            <strong>{stages.map((_, i) => String.fromCharCode(65 + i)).join(' / ')}</strong> de arriba a la
-            derecha para cambiar de grupo cuando quieras.
+            {conRotulos ? (
+              <>Este examen tiene <strong>{stages.length} banqueos de años distintos</strong>, cada uno con su propia nota.</>
+            ) : (
+              <>Este examen tiene <strong>{stages.length} grupos independientes</strong>.</>
+            )}{' '}
+            Estás en el <strong>{nombreEtapa(stage)}</strong>; usa los cuadros{' '}
+            <strong>{stages.map(s => s.rotulo).join(' / ')}</strong> de arriba a la
+            derecha para cambiar de {conRotulos ? 'banqueo' : 'grupo'} cuando quieras.
           </p>
         )}
       </header>
@@ -884,7 +906,7 @@ export default function ExamRunner({
       {!error && !payload && (
         <div className={styles.loading}>
           <div className={styles.spinner} />
-          {stage > 0 ? `Cargando Grupo ${String.fromCharCode(65 + stage)}…` : 'Cargando examen…'}
+          {stage > 0 ? `Cargando ${nombreEtapa(stage)}…` : 'Cargando examen…'}
         </div>
       )}
 
@@ -930,7 +952,7 @@ export default function ExamRunner({
                 </div>
               )}
               <span className={styles.mandoPie}>
-                {isGrouped && <>Grupo {String.fromCharCode(65 + stage)} · </>}
+                {mostrarEtapa && <>{nombreEtapa(stage)} · </>}
                 {answersAll.filter(a => a.ok).length} correctas de {answersAll.length} respondidas
               </span>
             </div>
@@ -1132,7 +1154,7 @@ export default function ExamRunner({
               {pct >= 80 ? '¡Excelente!' : pct >= 60 ? '¡Buen trabajo!' : pct >= 40 ? 'Vas por buen camino' : 'A repasar este tema'}
             </h2>
             <p className={styles.resultSub}>
-              {isGrouped && <>Grupo {String.fromCharCode(65 + stage)} · </>}
+              {mostrarEtapa && <>{nombreEtapa(stage)} · </>}
               Tu intento se guardó en este navegador.
             </p>
 
@@ -1217,7 +1239,7 @@ export default function ExamRunner({
                     className={styles.ghostBtn}
                     onClick={() => handleSwitchStage(i)}
                   >
-                    Ir al Grupo {String.fromCharCode(65 + i)} →
+                    Ir al {nombreEtapa(i)} →
                   </button>
                 ) : null,
               )}
