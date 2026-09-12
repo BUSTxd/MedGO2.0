@@ -26,6 +26,7 @@ const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey }> = {
   'patologia/parcial-1': { free: true },
   // De pago aunque Patología sea un curso gratis: es el reclamo del plan.
   'patologia/parcial-1-2020': {},
+  'patologia/parcial-1-2020-b': {},
 };
 
 const SIGNED_URL_TTL_SECONDS = 60 * 60 * 24 * 7;

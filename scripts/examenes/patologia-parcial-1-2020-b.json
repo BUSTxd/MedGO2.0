@@ -1,0 +1,1734 @@
+{
+  "version": 1,
+  "key": "patologia/parcial-1-2020-b",
+  "title": "Examen Parcial 1 — Respuesta celular y tisular al daño",
+  "duration_min": 98,
+  "questions": [
+    {
+      "id": "p1",
+      "stem": "Para resaltar las bandas de colágeno en un hígado con fibrosis se utiliza:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tricrómico de Masson",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Tinción de Giemsa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Ácido-periódico-schiff (PAS)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hematoxilina y eosina (H&E)",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Rojo de Congo",
+          "correct": false
+        }
+      ],
+      "explanation": "El **tricrómico de Masson** tiñe el **colágeno de azul (o verde)** y deja el músculo y el citoplasma en rojo: es la tinción de elección para ver y cuantificar la **fibrosis**, por ejemplo los tabiques de una cirrosis.\n\n**Giemsa** se usa en hematología y para microorganismos (*H. pylori*, parásitos); **PAS** marca glucógeno, mucinas y membranas basales; con **H&E** el colágeno se ve rosado y no se distingue bien de otras proteínas; el **rojo Congo** es la tinción del **amiloide**.",
+      "tags": [
+        "Métodos diagnósticos"
+      ]
+    },
+    {
+      "id": "p2",
+      "stem": "El frotis de cuello uterino para colorear con la tinción de Papanicolaou",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se fija con alcohol corriente (70-96%) inmediatamente",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Se fija con alcohol corriente después de 30 segundos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se fija con alcohol corriente después de dejar secar por completo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se fija con formol al 10% inmediatamente",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "No se fija",
+          "correct": false
+        }
+      ],
+      "explanation": "La citología de Papanicolaou exige **fijación húmeda inmediata** en alcohol (95 %, por inmersión o spray) apenas se extiende la muestra. Si el frotis **se seca al aire**, las células se hinchan, los núcleos pierden detalle y la tinción sale pálida e ininterpretable.\n\nEsperar 30 segundos o dejar secar por completo introduce justo ese artefacto. El **formol** es el fijador de las biopsias, no de los frotis citológicos, y un frotis sin fijar no sirve para Papanicolaou.",
+      "tags": [
+        "Métodos diagnósticos"
+      ]
+    },
+    {
+      "id": "p3",
+      "stem": "Paciente que sufre un accidente de tránsito y pierde grandes cantidades de sangre. ¿Qué proceso adaptativo se producirá en la médula ósea?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hiperplasia fisiológica de la serie eritroide",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Hiperplasia patológica de la serie eritroide",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Metaplasia de la serie eritroide",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Atrofia patológica de la serie eritroide",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "No se encontrará serie eritroide",
+          "correct": false
+        }
+      ],
+      "explanation": "Tras una hemorragia, la hipoxia tisular estimula la liberación de **eritropoyetina**, y la médula responde multiplicando sus precursores eritroides: es una **hiperplasia compensadora**, que se clasifica como **fisiológica** porque es la respuesta normal y adecuada a una necesidad, y remite cuando se recupera la masa eritrocitaria.\n\nSería **patológica** si el estímulo fuera anormal o excesivo (p. ej. un exceso hormonal). La **metaplasia** es el cambio de un tipo celular por otro y la **atrofia**, una disminución, lo contrario de lo que ocurre aquí.",
+      "tags": [
+        "Adaptaciones celulares",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p4",
+      "stem": "Paciente varón de 50 años con presión arterial (P°A) de 150/95 mmHg (valores elevados), tiene diagnóstico reciente de hipertensión arterial. En caso se niega a recibir tratamiento o no logre controlar la P°A, con los años desarrollará ________ de miocardio:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hipertrofia",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Hiperplasia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Atrofia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Metaplasia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Infarto",
+          "correct": false
+        }
+      ],
+      "explanation": "Ante una **sobrecarga de presión** mantenida, el miocardio, cuyas células casi no se dividen (tejido **permanente**), sólo puede adaptarse aumentando el tamaño de cada cardiomiocito: **hipertrofia**, en este caso **concéntrica** del ventrículo izquierdo.\n\nLa **hiperplasia** requiere células capaces de proliferar; la **atrofia** es la respuesta a una carga menor, no mayor. El **infarto** puede llegar como complicación, pero no es la adaptación que produce la hipertensión.",
+      "tags": [
+        "Adaptaciones celulares",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p5",
+      "stem": "Son características de la muerte celular por apoptosis:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Membrana celular intacta / liberación de cuerpos apoptósicos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Membrana celular intacta / inflamación neutrofílica prominente",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Núcleo aumentado de tamaño / fragmentación de la membrana celular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Invariablemente patológico",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Activada por un único mecanismo",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **apoptosis** la célula se encoge, la cromatina se condensa y se fragmenta, y la célula se divide en **cuerpos apoptósicos** envueltos por **membrana íntegra**, que los macrófagos fagocitan sin que salga contenido celular. Por eso **no provoca inflamación**.\n\nLa inflamación neutrofílica y la ruptura de membrana con núcleo aumentado son propias de la **necrosis**. La apoptosis tampoco es siempre patológica (embriogénesis, involución hormonal, recambio de epitelios) ni tiene un único mecanismo: tiene una vía **intrínseca (mitocondrial)** y otra **extrínseca (receptores de muerte)**.",
+      "tags": [
+        "Apoptosis"
+      ]
+    },
+    {
+      "id": "p6",
+      "stem": "La apoptosis puede ser activada por ________. Por eso en algunos casos de infecciones virales como VHB y CMV se observa mayor presencia de ________ en el tejido.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Macrófagos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Eosinófilos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Células plasmáticas",
+          "correct": false
+        }
+      ],
+      "explanation": "Una de las vías de la apoptosis la desencadenan los **linfocitos T citotóxicos**, que reconocen antígenos virales en la superficie de la célula infectada y la matan mediante **perforina/granzimas** o el ligando **Fas**. En las hepatitis virales (VHB) y en la infección por CMV, el tejido muestra por eso un **infiltrado linfocitario** junto a células apoptóticas (los cuerpos de **Councilman** en el hígado).\n\nMacrófagos, neutrófilos, eosinófilos y células plasmáticas no son los efectores que inducen apoptosis en las células infectadas por virus.",
+      "tags": [
+        "Apoptosis"
+      ]
+    },
+    {
+      "id": "p7",
+      "stem": "Se estudian los patrones de estilo de vida de personas sanas de 20 a 30 años. Un subconjunto de estas personas tiene un estilo de vida caracterizado por el consumo de mucho chicharrón y muy poco ejercicio físico. ¿Cuál de los siguientes cambios en los tejidos es más probable que se desarrolle en este subconjunto de personas como consecuencia de este estilo de vida?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Esteatosis hepática",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Necrosis grasa pancreática",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Degeneración grasa del miocardio",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hipertrofia de esteatocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Metaplasia del músculo a tejido adiposo",
+          "correct": false
+        }
+      ],
+      "explanation": "Una dieta rica en grasa con sedentarismo lleva a obesidad y resistencia a la insulina, y el primer órgano que acumula el exceso de **triglicéridos** en sus células parenquimatosas es el **hígado**: **esteatosis hepática** (hígado graso no alcohólico), que puede aparecer ya en adultos jóvenes.\n\nLa **necrosis grasa pancreática** es propia de la pancreatitis aguda; la **degeneración grasa del miocardio** se ve en hipoxia o intoxicaciones graves. El tejido adiposo crece en tamaño, pero no se describe como «hipertrofia de esteatocitos», y el músculo no se transforma en grasa (**metaplasia**).",
+      "tags": [
+        "Acumulaciones y calcificación"
+      ]
+    },
+    {
+      "id": "p8",
+      "stem": "Una niña de 5 años se cae de la bicicleta y se golpea el muslo. La piel no está lacerada. A los 2 días aparece un color púrpura en el sitio del golpe. ¿Cuál de las sustancias con mayor probabilidad se ha acumulado para luego producir una lesión marrón amarillenta a los 16 días?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hemosiderina",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Lipofuscina",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Melanina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Glucógeno",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Bilirrubina",
+          "correct": false
+        }
+      ],
+      "explanation": "En un hematoma, los macrófagos fagocitan los eritrocitos extravasados y degradan la hemoglobina. El hierro se almacena como **hemosiderina**, un pigmento **pardo-dorado** que da el tono marrón amarillento de las contusiones de varias semanas. El paso previo por **biliverdina** y **bilirrubina** da los tonos verdosos y amarillentos intermedios.\n\nLa **lipofuscina** es el pigmento del desgaste celular (envejecimiento), la **melanina** la producen los melanocitos y el **glucógeno** no es un pigmento.",
+      "tags": [
+        "Acumulaciones y calcificación",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p9",
+      "stem": "Se obtiene un aspirado de ganglio linfático para evaluación en un paciente con linfadenomegalias y la microscopía muestra material granular con algunas sombras celulares, células epitelioides, linfocitos y escasas células plasmáticas. La coloración HE no mostró presencia de gérmenes. Estos hallazgos con mayor probabilidad corresponden a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tuberculosis",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Sarcoidosis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tifoidea",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Dermatomiositis",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Amebas de vida libre",
+          "correct": false
+        }
+      ],
+      "explanation": "El «**material granular con sombras celulares**» es la descripción citológica de la **necrosis caseosa**, y junto con **células epitelioides** y linfocitos forma un **granuloma necrotizante**: la tuberculosis es la causa más frecuente, sobre todo en los ganglios linfáticos de nuestro medio. Que la H&E no muestre gérmenes no la descarta: el bacilo **no se ve con H&E** y hace falta Ziehl-Neelsen, cultivo o PCR.\n\nLa **sarcoidosis** forma granulomas **no necrotizantes**. La **tifoidea** produce acúmulos de macrófagos sin granuloma caseoso, y la dermatomiositis y las amebas de vida libre no se presentan así.",
+      "tags": [
+        "Granulomas",
+        "Inflamación crónica",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p10",
+      "stem": "Un paciente con historia de fiebre, baja de peso y derrame pleural es sometido a una biopsia de pleura, la que mostró una corona de linfocitos que rodeaban un centro rico en histiocitos epitelioides con algunas células gigantes tipo Langhans. La coloración para BAAR resultó negativa en el tejido. Señale lo correcto:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Realizaría nuevas coloraciones en el tejido para búsqueda de BK o PCR",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "El paciente tiene inflamación crónica inespecífica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "No le daría importancia a los hallazgos, total no se observa necrosis tisular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Recomendaría un cultivo y esperaría un mes para según su resultado dar el tratamiento que corresponda",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Ninguna de las anteriores",
+          "correct": false
+        }
+      ],
+      "explanation": "Linfocitos alrededor de un centro de **histiocitos epitelioides** con **células gigantes de Langhans** es un **granuloma**, y con fiebre, pérdida de peso y derrame pleural la primera sospecha es **tuberculosis**. Un **BAAR negativo en el tejido no la descarta**: los bacilos suelen ser escasos. Hay que buscarlos con más cortes y tinciones, o por **PCR** para *M. tuberculosis*.\n\nNo es inflamación crónica inespecífica: el granuloma es un patrón específico. La ausencia de necrosis no le quita importancia al hallazgo, y esperar un mes al cultivo para tratar retrasaría el tratamiento sin necesidad.",
+      "tags": [
+        "Granulomas",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p11",
+      "stem": "Marque lo correcto respecto a inflamación crónica.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Típicamente la tuberculosis pulmonar muestra granulomas necrotizantes con células gigantes multinucleadas en el parénquima pulmonar",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La Enfermedad celiaca típicamente muestra un patrón de inflamación crónica granulomatosa en el duodeno",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La asociación entre el desarrollo de ciertas neoplasias y procesos inflamatorios crónicos no está documentada",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La reacción de Hipersensibilidad tipo IV no está relacionada con la formación de granulomas en TBC",
+          "correct": false
+        }
+      ],
+      "explanation": "La tuberculosis pulmonar produce típicamente **granulomas necrotizantes (caseificantes)** con **células gigantes multinucleadas** de tipo Langhans.\n\nLas demás son falsas: la **enfermedad celíaca** muestra atrofia vellositaria con linfocitos intraepiteliales, no granulomas; la relación entre **inflamación crónica y cáncer** está bien documentada (hepatitis crónica y hepatocarcinoma, colitis ulcerosa, *H. pylori*); y el granuloma tuberculoso es justamente el ejemplo clásico de **hipersensibilidad tipo IV**.",
+      "tags": [
+        "Inflamación crónica",
+        "Granulomas"
+      ]
+    },
+    {
+      "id": "p12",
+      "stem": "Paciente de 50 años, con desnutrición crónica, fue operado hace 1 semana por una hernia umbilical incarcerada. A pesar de que la herida no muestra signos de infección, hasta ahora no cierra. ¿Qué factor puede estar interviniendo en el retraso de la cicatrización en este caso? (marque la mejor respuesta)",
+      "options": [
+        {
+          "id": "a",
+          "text": "Déficit de proteínas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Mala perfusión",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Localización de la herida",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Antecedente de formación de cicatriz queloide",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Infección asociada",
+          "correct": false
+        }
+      ],
+      "explanation": "La **desnutrición** retrasa la cicatrización porque falta **proteína** para sintetizar colágeno y matriz (además de vitamina C y zinc). Es el factor sistémico que el caso destaca, y sin infección que lo explique es la mejor respuesta.\n\nLa mala perfusión y la localización de la herida también influyen, pero nada en el caso apunta a ellas. El **queloide** es un exceso de cicatriz, no un retraso, y el enunciado descarta la **infección**.",
+      "tags": [
+        "Reparación y cicatrización",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p13",
+      "stem": "Se examina al microscopio un riñón con extensas áreas de fibrosis intersticial y glomerular e inflamación aguda y crónica severa. El factor de crecimiento más importante asociado a este cambio histológico es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Factor de crecimiento transformante beta (TGF-b)",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Factor de crecimiento transformante alfa (TGF-a)",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Factor de crecimiento de fibroblastos (FGFs)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Factor de crecimiento endotelial vascular (VEGF)",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Factor de crecimiento epidérmico (EGF)",
+          "correct": false
+        }
+      ],
+      "explanation": "El **TGF-β** es el principal factor **fibrogénico**: estimula a los fibroblastos a producir colágeno y otros componentes de la matriz, inhibe su degradación (menos metaloproteinasas, más TIMP) y es a la vez antiinflamatorio. Es el mediador central de la fibrosis en el riñón, el pulmón y el hígado.\n\nEl **TGF-α** y el **EGF** estimulan sobre todo la proliferación de epitelios; los **FGF** intervienen en la angiogénesis y la reparación; el **VEGF** es el factor angiogénico por excelencia.",
+      "tags": [
+        "Reparación y cicatrización"
+      ]
+    },
+    {
+      "id": "p14",
+      "stem": "Mujer 30 años con hemorragia digestiva alta. Se realiza endoscopía observando erosiones de la mucosa gástrica. La biopsia revela actividad neutrofílica con daño del epitelio. Señale la mejor respuesta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Regeneración del tejido gracias a proliferación de células residuales",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Quedará una cicatriz en la zona de lesión",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se verá depósito de matriz extracelular como mecanismo de regeneración",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Formación de tejido de granulación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Proliferación de células endoteliales y fibroblastos como mecanismo de regeneración",
+          "correct": false
+        }
+      ],
+      "explanation": "Una **erosión** daña sólo la mucosa superficial, y el epitelio gástrico es un tejido **lábil**: repone lo perdido por **proliferación de las células residuales** y de las células madre de los cuellos glandulares, así que el tejido se **regenera** sin cicatriz.\n\nLa **cicatriz**, el depósito de matriz extracelular, el **tejido de granulación** y la proliferación de endotelio y fibroblastos son la vía de la **reparación por tejido conectivo**, la que aparece cuando el daño es profundo (una úlcera) o destruye el armazón.",
+      "tags": [
+        "Reparación y cicatrización",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p15",
+      "stem": "Referente a los tejidos lábiles, marque la mejor respuesta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células hematopoyéticas y epitelios",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Células en estado quiescente",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mínima actividad mitótica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Fibroblastos, células endoteliales y otras células del estroma",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Tienen células con diferenciación terminal",
+          "correct": false
+        }
+      ],
+      "explanation": "Los tejidos **lábiles** están en división continua: **células hematopoyéticas** y **epitelios** de superficie (piel, mucosa digestiva, vías urinarias). Regeneran con facilidad mientras se conserven sus células madre.\n\nLas células **quiescentes** con poca actividad mitótica —**fibroblastos, endotelio y estroma**, hepatocitos— son los tejidos **estables**, y la **diferenciación terminal** (neuronas, músculo cardíaco) define a los **permanentes**.",
+      "tags": [
+        "Reparación y cicatrización"
+      ]
+    },
+    {
+      "id": "p16",
+      "stem": "¿Cuál de las siguientes entidades produce una efusión de tipo exudado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tuberculosis",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Síndrome nefrótico",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Sobrecarga de fluidos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hipotiroidismo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Síndrome de mala absorción",
+          "correct": false
+        }
+      ],
+      "explanation": "Un **exudado** se forma porque la **permeabilidad vascular está aumentada**, casi siempre por inflamación, y es rico en proteínas y células. La **tuberculosis** (derrame pleural tuberculoso) es un ejemplo típico.\n\nLas demás producen **trasudados**, pobres en proteínas, por un desequilibrio de presiones: el **síndrome nefrótico** y la **malabsorción** bajan la albúmina (menos presión oncótica), la **sobrecarga de fluidos** eleva la presión hidrostática y el **hipotiroidismo** da derrames trasudativos.",
+      "tags": [
+        "Trastornos hemodinámicos"
+      ]
+    },
+    {
+      "id": "p17",
+      "stem": "¿Cuál de las siguientes afirmaciones es verdadera?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La congestión crónica puede causar isquemia",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La hiperemia es un proceso pasivo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La congestión es un proceso activo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El ejercicio produce congestión",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La falla cardiaca congestiva produce hiperemia",
+          "correct": false
+        }
+      ],
+      "explanation": "La **congestión crónica** estanca sangre poco oxigenada, y la **hipoxia** mantenida puede causar **daño isquémico**, muerte celular y fibrosis (el hígado en nuez moscada o el pulmón de la insuficiencia cardíaca).\n\nLas demás invierten los términos: la **hiperemia** es un proceso **activo** (dilatación arteriolar que aumenta el aflujo, como en el **ejercicio** o la inflamación) y la **congestión** es **pasiva** (menor salida venosa, como en la **insuficiencia cardíaca congestiva**).",
+      "tags": [
+        "Trastornos hemodinámicos"
+      ]
+    },
+    {
+      "id": "p18",
+      "stem": "¿Cuál de las siguientes afirmaciones es verdadera?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La congestión crónica puede causar isquemia",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La hiperemia es un proceso pasivo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La congestión es un proceso activo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El ejercicio produce congestión",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La falla cardiaca congestiva produce hiperemia",
+          "correct": false
+        }
+      ],
+      "explanation": "La **congestión crónica** estanca sangre poco oxigenada, y la **hipoxia** mantenida puede causar **daño isquémico**, muerte celular y fibrosis.\n\nLa **hiperemia** es **activa** (aumento del aflujo arterial: ejercicio, inflamación) y la **congestión**, **pasiva** (menor salida venosa: insuficiencia cardíaca congestiva). Por eso las otras cuatro son falsas.",
+      "reviewNote": "En el examen original esta pregunta repite, palabra por palabra, a la pregunta 17. Se transcribe tal cual.",
+      "tags": [
+        "Trastornos hemodinámicos"
+      ]
+    },
+    {
+      "id": "p19",
+      "stem": "La neoplasia maligna de origen mesenquimal se denomina:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sarcoma",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Carcinoma",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hamartoma",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Teratoma",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Fibroma",
+          "correct": false
+        }
+      ],
+      "explanation": "Las neoplasias malignas de origen **mesenquimal** (tejido conectivo, músculo, hueso, grasa, vasos) se llaman **sarcomas**: fibrosarcoma, liposarcoma, osteosarcoma…\n\nEl **carcinoma** es la neoplasia maligna **epitelial**. El **hamartoma** es una masa desorganizada de tejidos propios del órgano, no una neoplasia maligna. El **teratoma** deriva de células germinales con varias capas embrionarias y el **fibroma** es la versión **benigna** mesenquimal.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p21",
+      "stem": "La vía de señalización que regula el crecimiento celular y se encuentra mutada con mayor frecuencia en el cáncer es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vía de la tirosina cinasa de los receptores",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Vía del receptor acoplado a la proteína G",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Vía JAK/STAT",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Vía WNT",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Vía NOTCH",
+          "correct": false
+        }
+      ],
+      "explanation": "La vía de los **receptores con actividad tirosina cinasa**, con su cascada **RAS → RAF → MAPK** y **PI3K/AKT**, es la vía de señalización del crecimiento que aparece mutada con **más frecuencia** en los cánceres humanos. *RAS* es el oncogén mutado con más frecuencia (en torno al 30 % de los tumores), y hay además receptores activados como *EGFR*, *HER2* o *KIT*.\n\nLas otras (receptores acoplados a proteína G, JAK/STAT, WNT, NOTCH) también se alteran en tumores concretos, pero con mucha menos frecuencia global.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p22",
+      "stem": "Referente a las alteraciones en el sistema de reparación del ADN que generan inestabilidad genómica es correcto:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las mutaciones en los genes BRCA1 y BRCA2 se asocian a un mayor riesgo de Cáncer de mama",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La inestabilidad de microsatélites es un mecanismo protector de cáncer de colon.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "En las mutaciones de los genes BRCA1 y BRCA2 hay un defecto en el sistema de reparación por escisión de nucleótidos.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los pacientes con xerodermia pigmentosa tienen menor riesgo de cáncer de piel.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "En las mutaciones de los genes MLH1 y MSH2 hay un defecto en el sistema de reparación del ADN por recombinación homóloga.",
+          "correct": false
+        }
+      ],
+      "explanation": "Las mutaciones de **BRCA1 y BRCA2** anulan la reparación del ADN por **recombinación homóloga** y aumentan mucho el riesgo de **cáncer de mama** (y de ovario, próstata y páncreas).\n\nLas demás cambian el mecanismo de sitio: la **inestabilidad de microsatélites** es un mecanismo **de** cáncer de colon (síndrome de Lynch), no protector; BRCA no participa en la **escisión de nucleótidos** (esa es la del xeroderma pigmentoso, que **aumenta** el riesgo de cáncer de piel); y **MLH1/MSH2** son genes de **reparación de desapareamientos** (*mismatch repair*), no de recombinación homóloga.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p23",
+      "stem": "En el Linfoma Folicular se presenta un cambio cromosómico de tipo................., que genera la ...........................",
+      "options": [
+        {
+          "id": "a",
+          "text": "Translocación – sobreexpresión de la proteína bcl2",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Deleción- presencia de un gen de fusión BCR-ABL",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Translocación – sobreexpresión de la proteína myc.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Deleción- sobreexpresión de la proteína bcl2",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Translocación – presencia de un gen de fusión BCR-ABL",
+          "correct": false
+        }
+      ],
+      "explanation": "El **linfoma folicular** tiene la **translocación t(14;18)**, que coloca el gen **BCL2** junto al promotor de la cadena pesada de las inmunoglobulinas. El resultado es la **sobreexpresión de BCL2**, una proteína **antiapoptótica**: las células B no mueren cuando deberían y se acumulan.\n\nEl gen de fusión **BCR-ABL** es de la leucemia mieloide crónica y procede de una **translocación** t(9;22), no de una deleción. La sobreexpresión de **MYC**, por t(8;14), es la del **linfoma de Burkitt**.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p24",
+      "stem": "El gen supresor de tumores que se encuentra mutado con más frecuencia en las neoplasias humanas y cuya pérdida de su función representa uno de los principales mecanismos de inestabilidad genómica es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "TP53",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CDH1",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "PTEN",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "RB",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "APC",
+          "correct": false
+        }
+      ],
+      "explanation": "**TP53** es el gen supresor de tumores mutado con **más frecuencia** en los cánceres humanos (más de la mitad de ellos). La proteína p53, el «guardián del genoma», detiene el ciclo celular en G1 ante un daño del ADN y, si no se puede reparar, activa la **apoptosis**. Sin ella, las células dañadas proliferan y acumulan mutaciones: **inestabilidad genómica**.\n\n**CDH1** (E-cadherina), **PTEN**, **RB** y **APC** también son supresores, pero se mutan con menos frecuencia o en tumores concretos.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p25",
+      "stem": "Referente a las fases de la carcinogénesis química, marque la respuesta correcta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El resultado final de la iniciación es un daño no letal e irreparable del ADN",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Al final de la iniciación tenemos células neoplásicas que evolucionarán invariablemente a cáncer",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Si transcurren algunos años de la exposición a un agente iniciador, el daño del ADN desaparece, y con ello el riesgo de malignización.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El daño en el ADN causado por los agentes promotores es suficiente para que se genere una neoplasia maligna",
+          "correct": false
+        }
+      ],
+      "explanation": "La **iniciación** produce un **daño permanente e irreversible del ADN que no mata a la célula**: una mutación que se hereda en sus descendientes. Por sí sola no basta para el tumor.\n\nPor eso las demás fallan. Una célula iniciada **no evoluciona inevitablemente** a cáncer, porque necesita la **promoción**. El daño **no desaparece** con los años. Y los **promotores no dañan el ADN**: estimulan la proliferación de las células ya iniciadas, y su efecto es reversible si se retiran.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p26",
+      "stem": "Paciente mujer de 40 años con una lesión hiperpigmentada en piel, mal delimitada que ha mostrado crecimiento rápido. El resultado de la biopsia informa un Melanoma maligno. Marque la mejor respuesta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Está asociado principalmente con exposición intensa intermitente a radiación UVB.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Está asociado principalmente con exposición total acumulada a radiación UVC.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La radiación ultravioleta genera principalmente rupturas cromosómicas, deleciones y rearreglos del ADN.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La radiación ultravioleta provoca principalmente mutaciones de los genes supresores p53 y Rb",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La radiación ultravioleta produce un daño directo e irreparable del ADN",
+          "correct": false
+        }
+      ],
+      "explanation": "El **melanoma** se asocia sobre todo a la exposición **intensa e intermitente** a la radiación **UVB**, la que produce **quemaduras solares** (sobre todo en la infancia). El carcinoma epidermoide, en cambio, depende de la exposición **total acumulada**.\n\nLa UV actúa formando **dímeros de pirimidina**, no rupturas cromosómicas ni reordenamientos (eso es la radiación **ionizante**). Ese daño **sí es reparable**, por escisión de nucleótidos. La **UVC** la filtra la capa de ozono, y el daño a p53 es propio del carcinoma epidermoide, no lo principal del melanoma.",
+      "tags": [
+        "Neoplasia",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p27",
+      "stem": "Un amigo cercano le pide su ayuda para interpretar el resultado de anatomía patológica de su padre, recientemente operado por cáncer de estómago, ante esto usted le dice: (marque la mejor opción)",
+      "options": [
+        {
+          "id": "a",
+          "text": "La estadificación de las neoplasias malignas sólidas se basa en el tamaño de la lesión, compromiso de los nódulos linfáticos regionales y la presencia de metástasis",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "El grado de diferenciación no guarda relación con el comportamiento clínico local",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Para la estadificación del tumor es necesario conocer el grado de diferenciación tumoral",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Lo más importante para la gradación de un tumor es el índice mitótico",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Una correcta gradación de un tumor es más importante que una correcta estadificación.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **estadificación** (sistema **TNM**) mide la extensión del tumor: su **tamaño o infiltración (T)**, el compromiso de los **ganglios regionales (N)** y las **metástasis a distancia (M)**. Es lo que más pesa en el pronóstico y el tratamiento de los tumores sólidos.\n\nEl **grado** (cuánto se parece el tumor a su tejido de origen) sí se relaciona con el comportamiento, pero **no es necesario para estadificar**. Se basa sobre todo en la **diferenciación**, no sólo en el índice mitótico, y clínicamente **la estadificación tiene más valor que la gradación**.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p28",
+      "stem": "Usted recibe el resultado de anatomía patológica de un ganglio linfático supraclavicular de una paciente de 50 años: \"Neoplasia maligna indiferenciada\". Con este resultado usted decide: (marque la mejor respuesta)",
+      "options": [
+        {
+          "id": "a",
+          "text": "Solicitar inmunohistoquímica para determinar la estirpe y origen primario de la neoplasia",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Iniciar quimioterapia inmediatamente por la agresividad de la neoplasia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "No es necesario ampliar los estudios, es suficiente con ese resultado",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Está claro que la paciente tiene un linfoma, se iniciará la quimioterapia para esta neoplasia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Solicito una citometría de flujo para detectar antígenos celulares expresados por el tumor",
+          "correct": false
+        }
+      ],
+      "explanation": "Una **neoplasia maligna indiferenciada** no dice de qué estirpe es (carcinoma, linfoma, melanoma, sarcoma) ni de dónde viene, y el tratamiento depende de ambas cosas. La **inmunohistoquímica** sobre la misma biopsia resuelve las dos preguntas (queratinas, CD45, S100, TTF-1, CK7/CK20…).\n\nEmpezar quimioterapia sin saber qué tumor es sería un error, igual que dar el resultado por suficiente o suponer un linfoma sin demostrarlo. La **citometría de flujo** necesita células en suspensión y sirve sobre todo para neoplasias hematológicas: no es el primer paso ante un tumor indiferenciado en tejido.",
+      "tags": [
+        "Métodos diagnósticos",
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p29",
+      "stem": "¿Cuál de las siguientes exposiciones está más relacionada con el cáncer de tiroides e infertilidad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Radioterapia en la infancia temprana",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Infección temprana por Epstein barr virus",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Exposición prolongada a hidrocarburos aromáticos policíclicos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Exposición temprana a aminas aromáticas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Uso de agentes alquilantes en la infancia",
+          "correct": false
+        }
+      ],
+      "explanation": "La **radiación ionizante** en la infancia (radioterapia de cabeza y cuello, accidentes nucleares) es el factor clásico del **cáncer de tiroides**, sobre todo papilar, porque la tiroides infantil es muy radiosensible. Esa misma radiación daña las **gónadas**, de ahí la **infertilidad**.\n\nEl **VEB** se asocia a linfomas y al carcinoma nasofaríngeo; los **hidrocarburos aromáticos policíclicos**, al cáncer de pulmón; las **aminas aromáticas**, al de vejiga. Los **agentes alquilantes** causan leucemias secundarias e infertilidad, pero no se asocian al cáncer de tiroides.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p30",
+      "stem": "Los oncogenes son:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Protooncogenes mutados",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Genes normales",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Oncoproteínas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Enzimas",
+          "correct": false
+        }
+      ],
+      "explanation": "Un **oncogén** es un **protooncogén mutado** o sobreexpresado. El protooncogén es el gen normal que regula el crecimiento celular; al alterarse, se vuelve un oncogén que empuja a la célula a proliferar sin control.\n\nLos **genes normales** son los protooncogenes, antes de mutar. Las **oncoproteínas** son el **producto** de los oncogenes, no los genes. Y las **enzimas** son proteínas, no genes (aunque algunas oncoproteínas, como las tirosina cinasas, lo sean).",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p31",
+      "stem": "Un paciente presenta múltiples lesiones cancerígenas cutáneas recurrentes en zonas fotoexpuestas. En el examen genético se demuestra que presenta defectos en la reparación de la escisión de nucleótidos. El paciente probablemente tiene:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Xerodermia pigmentosa",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Síndrome de Bloom",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Síndrome de Li-Fraumeni",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Neuroblastoma",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Ataxia telangiectásica",
+          "correct": false
+        }
+      ],
+      "explanation": "Múltiples cánceres de piel en zonas **fotoexpuestas** y a edad temprana con un defecto en la **reparación por escisión de nucleótidos** definen el **xeroderma pigmentoso**: el paciente no puede reparar los **dímeros de pirimidina** que produce la luz UV.\n\nEl **síndrome de Bloom** y la **ataxia telangiectasia** son otros síndromes de inestabilidad cromosómica, con defectos de reparación distintos (helicasa BLM, gen ATM). El **Li-Fraumeni** es una mutación germinal de **TP53**, y el **neuroblastoma** es un tumor, no un síndrome de reparación del ADN.",
+      "tags": [
+        "Neoplasia",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p32",
+      "stem": "Paciente mujer de 70 años, agricultora, con lesión en rostro compatible con carcinoma epidermoide. Marque la mejor respuesta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lesión causada por exposición total acumulada de radiación ultravioleta",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Lesión causada por exposición intensa intermitente a los rayos UVB",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los rayos UVB son considerados dentro del grupo 4 de agentes carcinogénicos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Su ocupación no significa un riesgo para esta neoplasia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La causa es un daño directo de genes antitumorales como p53",
+          "correct": false
+        }
+      ],
+      "explanation": "El **carcinoma epidermoide** de piel se relaciona con la exposición solar **total acumulada** a lo largo de la vida, típica de las personas mayores que trabajan al aire libre, como esta agricultora.\n\nLa exposición **intensa e intermitente** es la del **melanoma**. La radiación UV está en el **grupo 1** de carcinógenos de la IARC (probada en humanos), no en el 4. Su ocupación **sí** es un factor de riesgo, y la UV actúa creando dímeros de pirimidina que, si no se reparan, generan mutaciones: no es un «daño directo» sobre p53.",
+      "tags": [
+        "Neoplasia",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p33",
+      "stem": "Acude a la emergencia una paciente de 20 años, con fiebre alta y escalofríos desde hace una semana, asociado a ardor al orinar y dolor lumbar. El doctor le realiza un examen de orina y urocultivo y diagnostica pielonefritis por Escherichia coli. La fiebre está en relación a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Producción por los macrófagos de TNF, IL-1, IL6",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Debido a la pielonefritis, la paciente liberó TNF pero no IL-1",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-1 se encuentra disminuida por el consumo de la misma por el proceso inflamatorio",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Al medir en sangre la Proteína C Reactiva (PCR) no se encuentra niveles incrementados",
+          "correct": false
+        }
+      ],
+      "explanation": "La **fiebre** la producen las **citocinas pirógenas** —**TNF, IL-1 e IL-6**— que liberan los **macrófagos** activados por los productos bacterianos (el LPS de *E. coli*). Estas citocinas inducen **prostaglandina E2** en el hipotálamo, que sube el punto de ajuste de la temperatura.\n\nTNF e IL-1 se liberan **juntas**, y la IL-1 **aumenta**, no disminuye. La **PCR** es un reactante de fase aguda que el hígado sintetiza por estímulo de la IL-6, así que en una pielonefritis estará **elevada**.",
+      "tags": [
+        "Respuesta sistémica",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p34",
+      "stem": "Paciente de 65 años con diagnóstico de shock séptico severo debido a un absceso subdiafragmático por Klebsiella sp, presenta los siguientes signos excepto:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los niveles de IL-6 en sangre no están elevados",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Hipotensión arterial debido a vasodilatación y disminución del volumen intravascular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Activación del sistema de coagulación (coagulación intravascular)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Broncoconstricción",
+          "correct": false
+        }
+      ],
+      "explanation": "En el **shock séptico** hay una tormenta de citocinas: la **IL-6 está elevada** en sangre (y es de hecho un marcador de gravedad). Por eso esa afirmación es la **excepción**.\n\nLo demás se presenta. La **hipotensión** se debe a la vasodilatación por NO y mediadores, más la fuga capilar que baja el volumen intravascular. El factor tisular y el daño endotelial **activan la coagulación** (CID). Y los mediadores liberados, como leucotrienos y complemento, pueden causar **broncoconstricción** y afectación pulmonar.",
+      "tags": [
+        "Respuesta sistémica",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p35",
+      "stem": "Está estudiando el fenómeno de vasoconstricción en el laboratorio, ensaya con varios compuestos, pero uno de ellos no causa vasoconstricción, indique cuál es ese compuesto:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Bradiquinina",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "C5a",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "C3a",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Epinefrina",
+          "correct": false
+        }
+      ],
+      "explanation": "La **bradicinina** es un potente **vasodilatador**: aumenta la permeabilidad vascular y produce dolor. Es el compuesto de la lista que no causa vasoconstricción.\n\nLa **epinefrina** contrae los vasos a través de los receptores **α1**. Las anafilatoxinas **C3a y C5a** contraen el músculo liso, y en algunos lechos vasculares producen vasoconstricción a través de los leucotrienos y el tromboxano que liberan.",
+      "tags": [
+        "Inflamación aguda",
+        "Complemento"
+      ]
+    },
+    {
+      "id": "p36",
+      "stem": "El proceso inflamatorio agudo ocurre principalmente en:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vénulas post capilares",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Venas de pequeño calibre",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Arteriolas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Capilares arteriales",
+          "correct": false
+        }
+      ],
+      "explanation": "El aumento de la **permeabilidad vascular** y la **salida de leucocitos**, el corazón de la inflamación aguda, ocurren sobre todo en las **vénulas poscapilares**. Ahí se concentran los receptores de histamina, las uniones entre células endoteliales son más laxas y es donde se expresan las selectinas e integrinas para la adhesión leucocitaria.\n\nLas **arteriolas** participan en la vasodilatación inicial, pero no son el sitio de la fuga ni de la migración. Las venas de pequeño calibre y los «capilares arteriales» no son el sitio principal.",
+      "tags": [
+        "Inflamación aguda"
+      ]
+    },
+    {
+      "id": "p37",
+      "stem": "A su consulta acude una paciente de 22 años de edad que refiere dolor torácico, tos y fiebre de 3 días de evolución. El hemograma que le solicita muestra número de leucocitos: 19,000 /uL, Abastonados 10%, Monocitos 1%, Linfocitos 20%. Hemocultivo: se aisló Streptococcus pneumoniae. Adicionalmente solicita Proteína C Reactiva (PCR) cuyo valor es de 65 mg/L (rango de referencia: 0 - 5 mg/L). Se le solicita interpretar estos hallazgos:",
+      "options": [
+        {
+          "id": "a",
+          "text": "TNF, IL-1, IL6 favorecen la producción y la liberación de granulocitos por la médula ósea e incrementan la síntesis de PCR por el hígado",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "PCR incrementado debido a la acción de TNF, IL-1, IL6 en el Sistema nervioso central, pero estas citoquinas no ejercen ninguna influencia sobre la médula ósea para explicar la leucocitosis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El incremento del Leucocitos y PCR se debe a que existe la activación del complemento por la E. coli (vía alterna)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "PCR incrementado debido a la acción de la activación del complemento y TNF, IL-1, IL-6 influencian sobre la médula ósea para explicar la leucocitosis",
+          "correct": false
+        }
+      ],
+      "explanation": "La **TNF, IL-1 e IL-6** hacen dos cosas a la vez. Estimulan la médula ósea para liberar granulocitos, de ahí la **leucocitosis con desviación a la izquierda** (10 % de abastonados). Y hacen que el **hígado** sintetice **reactantes de fase aguda** como la **PCR**, sobre todo por la IL-6.\n\nNiegan esa acción sobre la médula ósea o atribuyen la PCR al complemento: la PCR la produce el hígado por estímulo de las citocinas. Además, la opción del complemento habla de ***E. coli***, cuando el hemocultivo aisló ***S. pneumoniae***.",
+      "tags": [
+        "Respuesta sistémica",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p38",
+      "stem": "Una niña de 4 años de edad con deficiencia congénita de C3 sufre una infección bacteriana, en esta paciente, (comparado con pacientes que no tienen deficiencia de C3):",
+      "options": [
+        {
+          "id": "a",
+          "text": "El reclutamiento de polimorfonucleares en el sitio de la inflamación está bastante disminuido",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La quimiotaxis en el sitio de la inflamación está conservada",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Las bacterias son eliminadas adecuadamente por el sistema del complemento por el MAC (citólisis).",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los macrófagos y polimorfonucleares fagocitan eficientemente",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Los mastocitos son adecuadamente activados.",
+          "correct": false
+        }
+      ],
+      "explanation": "El **C3** es el punto donde convergen las tres vías del complemento. Sin él no se forma la C5 convertasa y, por tanto, faltan **C5a**, el gran quimiotáctico de neutrófilos (el **reclutamiento de polimorfonucleares** cae), **C3b**, la principal opsonina, y el **complejo de ataque a membrana** (C5b-9).\n\nPor eso las demás son falsas: la quimiotaxis **no** se conserva, el MAC no se forma, la fagocitosis es **ineficiente** sin opsonización por C3b, y sin C3a ni C5a los mastocitos se activan peor. Estos niños tienen infecciones graves por bacterias piógenas.",
+      "tags": [
+        "Complemento",
+        "Reclutamiento leucocitario",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p39",
+      "stem": "El Lupus eritematoso sistémico es una enfermedad autoinmune en la que se ha demostrado anticuerpos IgG Anti-DNA de doble cadena, estos complejos se depositan en los glomérulos renales. En las biopsias renales de estos pacientes indique qué técnica emplearía para demostrar la presencia de IgG (autoinmune) en los complejos depositados en los glomérulos:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inmunofluorescencia directa",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Hibridación in situ con marcadores no fluorescentes",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Citometría de Flujo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "FISH",
+          "correct": false
+        }
+      ],
+      "explanation": "Para demostrar **inmunoglobulinas y complemento depositados en el tejido** se usa la **inmunofluorescencia directa**: un anticuerpo anti-IgG humana marcado con fluorocromo se aplica sobre el corte congelado de la biopsia renal y revela los depósitos de inmunocomplejos en los glomérulos del lupus.\n\nLa **hibridación in situ** y la **FISH** detectan **ácidos nucleicos**, no proteínas, y la **citometría de flujo** analiza células en suspensión, no depósitos en un tejido.",
+      "tags": [
+        "Métodos diagnósticos"
+      ]
+    },
+    {
+      "id": "p40",
+      "stem": "En una paciente con carcinoma de mama que presenta niveles altos de Her2-neu en suero usted sospecha que este hallazgo se debería a que en las células tumorales se encuentran varias copias del gen Her2-neu, para demostrarlo usted emplearía:",
+      "options": [
+        {
+          "id": "a",
+          "text": "FISH",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Inmunohistoquímica directa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inmunofluorescencia indirecta",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Western Blot",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "PCR",
+          "correct": false
+        }
+      ],
+      "explanation": "La pregunta es por el **número de copias del gen**, es decir, por la **amplificación** de *HER2*, y eso lo cuenta la **FISH** (hibridación in situ fluorescente) con una sonda del gen sobre el tejido tumoral.\n\nLa **inmunohistoquímica** mide la **proteína** HER2 en la membrana, no las copias del gen. La inmunofluorescencia indirecta busca autoanticuerpos en suero, el **Western blot** detecta proteínas y la **PCR** amplifica secuencias, pero no sirve para contar copias en cada célula del tejido.",
+      "tags": [
+        "Métodos diagnósticos",
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "pr1",
+      "stem": "En el granuloma descrito en los ganglios linfáticos de un paciente con Tuberculosis se observan las siguientes estructuras que son indicadas por las flechas.",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2020-b/practico_01.avif",
+      "imageAlt": "Ganglio linfático con un granuloma: centro rosado amorfo señalado por una flecha y, abajo, una célula gigante multinucleada señalada por otra, rodeados de linfocitos",
+      "imageW": 1200,
+      "imageH": 900,
+      "options": [
+        {
+          "id": "a",
+          "text": "Necrosis caseosa central y célula gigante multinucleada.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos centrales y célula gigante multinucleada.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Célula gigante multinucleada y abundantes Polimorfonucleares en corona periférica.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Necrosis caseosa central y linfocitos periféricos.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Células epitelioides y Polimorfonucleares en corona periférica.",
+          "correct": false
+        }
+      ],
+      "explanation": "La flecha superior señala el **centro del granuloma**, un material **rosado, granular y amorfo** sin núcleos reconocibles: la **necrosis caseosa**. La inferior señala una **célula gigante multinucleada** (tipo Langhans), formada por la fusión de macrófagos epitelioides. Alrededor queda la corona de **linfocitos** del ganglio.\n\nLos linfocitos están en la **periferia**, no en el centro. En un granuloma tuberculoso no hay **polimorfonucleares** en corona: su presencia apuntaría a una inflamación aguda o supurativa.",
+      "tags": [
+        "Granulomas",
+        "Inflamación crónica"
+      ]
+    },
+    {
+      "id": "pr2",
+      "stem": "La mucosa gástrica puede sufrir cambios producto de un cuadro inflamatorio persistente. Los cambios morfológicos que podemos encontrar asociados a esta patología y que se señalan en la imagen corresponden a:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2020-b/practico_02.avif",
+      "imageAlt": "Mucosa gástrica con un folículo linfoide denso señalado por una flecha y, a la derecha, glándulas con células caliciformes señaladas por otra",
+      "imageW": 1200,
+      "imageH": 900,
+      "options": [
+        {
+          "id": "a",
+          "text": "Folículo linfoide y metaplasia intestinal de tipo completa.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos atípicos y metaplasia intestinal de tipo incompleta.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Polimorfonucleares en lámina propia y metaplasia gástrica.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Folículo linfoide y metaplasia intestinal de tipo incompleta.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos atípicos y metaplasia intestinal de tipo completa.",
+          "correct": false
+        }
+      ],
+      "explanation": "La gastritis crónica, sobre todo por *H. pylori*, deja dos marcas que se ven aquí. La flecha izquierda señala un **folículo linfoide**, un acúmulo denso de linfocitos en la lámina propia (en el estómago normal no los hay). La derecha señala glándulas con **células caliciformes**: **metaplasia intestinal**.\n\nLa metaplasia es **completa** (tipo I) cuando el epitelio imita al del **intestino delgado**: células caliciformes entre **enterocitos absortivos con borde en cepillo**. La **incompleta** mezcla caliciformes con células columnares secretoras de moco, se parece más al colon y conlleva más riesgo de displasia. No hay **linfocitos atípicos** (eso sería un linfoma) ni **polimorfonucleares** que dominen la lámina propia.",
+      "tags": [
+        "Inflamación crónica",
+        "Adaptaciones celulares"
+      ]
+    },
+    {
+      "id": "pr3",
+      "stem": "Una mujer obesa de 34 años ha experimentado epigastralgia por reflujo gastroesofágico durante los últimos 5 años después de ingerir abundantes comidas. Se somete a una endoscopia digestiva alta y se obtiene una biopsia de esófago distal. ¿Cuál de los siguientes cambios microscópicos, que se ven en la figura, es más probable que haya ocurrido?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2020-b/practico_03.avif",
+      "imageAlt": "Biopsia de esófago distal: a la izquierda, mucosa glandular columnar con células caliciformes; a la derecha, epitelio escamoso cortado en tangente",
+      "imageW": 1200,
+      "imageH": 900,
+      "options": [
+        {
+          "id": "a",
+          "text": "Metaplasia intestinal",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Hiperplasia de células caliciformes",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Atrofia de la lámina propia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Displasia escamosa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Hipertrofia de la mucosa",
+          "correct": false
+        }
+      ],
+      "explanation": "El reflujo ácido crónico lleva a que el epitelio **escamoso** del esófago distal (a la derecha, cortado en tangente) se reemplace por un epitelio **columnar de tipo intestinal con células caliciformes** (a la izquierda). Es la **metaplasia intestinal**, que define el **esófago de Barrett**, una lesión que predispone al adenocarcinoma.\n\nLas caliciformes no están en «hiperplasia»: aparecen porque el epitelio cambió de tipo. No hay **displasia escamosa**, la lámina propia no está atrófica y la mucosa no es hipertrófica.",
+      "tags": [
+        "Adaptaciones celulares",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "pr4",
+      "stem": "Se observa en la imagen un corte histológico de endometrio. Con respecto a los hallazgos, marcar lo correcto.",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2020-b/practico_04.avif",
+      "imageAlt": "Endometrio delgado con pocas glándulas tubulares dispersas en un estroma escaso, sobre el miometrio en la parte inferior",
+      "imageW": 1200,
+      "imageH": 900,
+      "options": [
+        {
+          "id": "a",
+          "text": "Existe una disminución del numero de glándulas y del estroma",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Es un endometrio atrófico, se evidencia gran disminución del estroma pero no del componente glandular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hay una hiperplasia endometrial, donde el componente estromal está aumentado",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se observa una unión bien definida entre el endometrio y el miometrio",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Es una atrofia endometrial, las figuras de mitosis se ven aumentadas",
+          "correct": false
+        }
+      ],
+      "explanation": "El endometrio es **delgado**, con **pocas glándulas** dispersas y un **estroma escaso**, apoyado casi directamente sobre el miometrio: es un **endometrio atrófico**, en el que disminuyen **tanto las glándulas como el estroma** (típico de la posmenopausia, sin estímulo estrogénico).\n\nEn la atrofia no se conserva el componente glandular mientras se pierde el estroma, y **no aumentan las mitosis** (la actividad proliferativa baja). La **hiperplasia** sería lo opuesto: glándulas abundantes y apiñadas. Y la unión endometrio-miometrio es normalmente **irregular**, no una línea bien definida.",
+      "tags": [
+        "Adaptaciones celulares"
+      ]
+    },
+    {
+      "id": "pr5",
+      "stem": "Estudiante universitario que presenta desde hace un mes, dolor abdominal tipo ardor en el epigastrio y que cede temporalmente con el uso de antiácidos. En la endoscopía se observa eritema difuso a nivel antro-pilórico. Se toma una biopsia donde se encuentra lo observado en la imagen:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2020-b/practico_05.avif",
+      "imageAlt": "Mucosa gástrica con epitelio foveolar conservado, lámina propia con abundantes linfocitos, células plasmáticas y algunos neutrófilos, y capilares congestivos",
+      "imageW": 1200,
+      "imageH": 900,
+      "options": [
+        {
+          "id": "a",
+          "text": "Inflamación aguda y crónica",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Pérdida de la arquitectura glandular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Necrosis y metaplasia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Acúmulos de histiocitos epitelioides",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Metaplasia intestinal y displasia",
+          "correct": false
+        }
+      ],
+      "explanation": "La lámina propia está ocupada por **linfocitos y células plasmáticas** (el componente **crónico**), con **neutrófilos** entre ellos y en el epitelio (la **actividad**, el componente **agudo**), además de **congestión** vascular. Es el cuadro de una **gastritis crónica activa**, típico de la infección por *H. pylori* en el antro.\n\nLa **arquitectura glandular está conservada**. No hay **necrosis** ni **metaplasia**, ni acúmulos de **histiocitos epitelioides** (granulomas), ni **displasia**.",
+      "tags": [
+        "Inflamación aguda",
+        "Inflamación crónica",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "pr6",
+      "stem": "Paciente diabético de 60 años que muere en un accidente de tránsito. Se realiza una necropsia. En uno de los cortes histológicos de miocardio se observa las características evidenciadas en la imagen. Mencionar la alternativa correcta sobre el hallazgo histológico mostrado en dicha imagen.",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2020-b/practico_06.avif",
+      "imageAlt": "Miocardio con una extensa zona pálida de tejido fibroso, pobre en células y con algunos vasos, bajo una banda de cardiomiocitos conservados",
+      "imageW": 1200,
+      "imageH": 900,
+      "options": [
+        {
+          "id": "a",
+          "text": "Corresponde a un infarto antiguo de miocardio",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Corresponde a un infarto reciente de miocardio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se observa edema asociado a necrosis coagulativa importante y fibrosis",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los cambios observados no afectarían la contractilidad cardiaca",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El músculo cardiaco adyacente presenta atrofia",
+          "correct": false
+        }
+      ],
+      "explanation": "Bajo los cardiomiocitos conservados hay una zona extensa de **tejido fibroso**, pálido, pobre en células y con escasos vasos: el músculo muerto fue sustituido por una **cicatriz de colágeno**. Es un **infarto antiguo (cicatrizado)**, de semanas a meses de evolución, frecuente y a menudo silente en diabéticos.\n\nUn infarto **reciente** mostraría **necrosis coagulativa** (fibras hipereosinófilas sin núcleo) con neutrófilos o tejido de granulación, no una cicatriz madura. La fibrosis **no se contrae**, así que sí afecta la contractilidad. Y el músculo vecino suele estar **hipertrófico**, no atrófico, porque compensa la pérdida.",
+      "tags": [
+        "Isquemia",
+        "Reparación y cicatrización"
+      ]
+    },
+    {
+      "id": "pr7",
+      "stem": "Paciente de 50 años, con antecedente de TBC hace 15 años, presenta pruebas de función renal alteradas y no se encuentra una explicación aparente. En la biopsia renal se observa:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2020-b/practico_07.avif",
+      "imageAlt": "Corteza renal con un glomérulo ocupado por material rosado amorfo, túbulos atróficos con cilindros y congestión",
+      "imageW": 1200,
+      "imageH": 900,
+      "options": [
+        {
+          "id": "a",
+          "text": "Depósitos de material amorfo eosinofílico en el mesangio y perivasculares, atrofia tubular; recomienda realizar una coloración de Rojo Congo para descartar amiloidosis",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Depósitos de material hialino en los glomérulos, atrofia tubular e inflamación crónica, recomendaría una coloración Rojo de Congo para descartar fibrosis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El paciente tiene TBC renal, solicito una tinción Ziehl Neelsen para observar el bacilo de Koch",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Depósitos de material amorfo eosinofílico en el mesangio y perivasculares, atrofia tubular; recomienda realizar una coloración Tricrómica de Masson para descartar amiloidosis",
+          "correct": false
+        }
+      ],
+      "explanation": "El glomérulo está ocupado por un **material rosado, amorfo y acelular** en el mesangio y alrededor de los vasos, con **atrofia tubular**. En un paciente con una infección crónica (TBC) es el cuadro de la **amiloidosis secundaria (AA)**: la inflamación mantenida eleva la proteína amiloide A sérica, que se deposita en el riñón y causa síndrome nefrótico e insuficiencia renal.\n\nSe confirma con **rojo Congo**, que tiñe el amiloide y da **birrefringencia verde manzana** con luz polarizada. El **tricrómico de Masson** marca colágeno (fibrosis), no amiloide. Y el rojo Congo no sirve para descartar fibrosis. Tampoco hay granulomas que sugieran TBC renal activa.",
+      "tags": [
+        "Acumulaciones y calcificación",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "pr8",
+      "stem": "Escalador de 40 años que realiza su segundo intento de subir al Everest. Luego de una larga jornada se retira a descansar a su campamento. A la mañana siguiente el paciente amanece cadáver. Se hace la necropsia, usted puede decir que:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2020-b/practico_08.avif",
+      "imageAlt": "Pulmón con los alvéolos llenos de un líquido rosado homogéneo y tabiques alveolares con capilares congestivos",
+      "imageW": 1200,
+      "imageH": 900,
+      "options": [
+        {
+          "id": "a",
+          "text": "Hay líquido en los alvéolos y congestión vascular importante. El paciente sufrió un edema agudo de pulmón",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Tiene sangre en los alvéolos, el paciente sufrió un tromboembolismo por estar tantas horas sentado",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tiene necrosis coagulativa. El paciente sufrió un infarto pulmonar por la altura",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El paciente murió por complicación de una neumonía",
+          "correct": false
+        }
+      ],
+      "explanation": "Los alvéolos están llenos de un **líquido rosado homogéneo**, rico en proteínas, y los tabiques tienen los **capilares congestivos**: es un **edema agudo de pulmón**. En un escalador que muere tras una jornada a gran altura es el **edema pulmonar de altura**, por vasoconstricción hipóxica desigual e hipertensión pulmonar.\n\nNo hay alvéolos llenos de **sangre** (hemorragia o infarto), ni **necrosis coagulativa** de los tabiques, ni los **neutrófilos** que llenarían los alvéolos en una neumonía.",
+      "tags": [
+        "Trastornos hemodinámicos",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "pr9",
+      "stem": "Paciente mujer de 60 años, en cama desde hace 1 mes por una fractura de cadera, presenta bruscamente dolor torácico y dificultad respiratoria. Muere a las pocas horas. Se realiza una necropsia y encuentra el siguiente hallazgo:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2020-b/practico_09.avif",
+      "imageAlt": "Pulmón con los alvéolos llenos de eritrocitos y tabiques alveolares con pérdida de núcleos",
+      "imageW": 1200,
+      "imageH": 900,
+      "options": [
+        {
+          "id": "a",
+          "text": "Necrosis coagulativa de los tabiques alveolares y sangrado intraalveolar. La paciente murió por una embolia pulmonar",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Congestión a nivel de los tabiques alveolares y líquido eosinofílico intraalveolar. La paciente murió por un edema pulmonar",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Presencia de polimorfonucleares intraalveolares. La paciente murió de una neumonía complicada",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Necrosis fibrinosa alrededor de los vasos y sangrado intraalveolar. La paciente murió por una vasculitis",
+          "correct": false
+        }
+      ],
+      "explanation": "Los alvéolos están **llenos de eritrocitos** y los tabiques alveolares pierden sus núcleos (**necrosis coagulativa**): es un **infarto pulmonar hemorrágico**. En una paciente **inmovilizada** en cama tras una fractura de cadera, con dolor torácico y disnea súbitos, la causa es una **embolia pulmonar** desde una trombosis venosa profunda. El infarto del pulmón es rojo porque la **circulación bronquial** sigue aportando sangre a la zona.\n\nEl **edema** llenaría los alvéolos de líquido rosado, no de sangre; la **neumonía**, de neutrófilos; y en la imagen no hay vasos con la **necrosis fibrinoide** de una vasculitis.",
+      "tags": [
+        "Trastornos hemodinámicos",
+        "Necrosis",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "pr10",
+      "stem": "Células de la inmunidad relacionadas con los procesos inflamatorios crónicos: (señaladas en la imagen)",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2020-b/practico_10.avif",
+      "imageAlt": "Tejido con infiltrado inflamatorio crónico; las flechas señalan células redondas de núcleo excéntrico y citoplasma amplio",
+      "imageW": 1200,
+      "imageH": 900,
+      "options": [
+        {
+          "id": "a",
+          "text": "células plasmáticas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "linfocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "macrófagos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "eosinófilos",
+          "correct": false
+        }
+      ],
+      "explanation": "Las flechas señalan células con **núcleo excéntrico**, cromatina en «**rueda de carreta**», citoplasma amplio algo basófilo y un **halo claro junto al núcleo** (el aparato de Golgi): son **células plasmáticas**, los linfocitos B diferenciados que producen anticuerpos, típicas de la **inflamación crónica**.\n\nLos **linfocitos** también son células de la inflamación crónica, pero son pequeños, con núcleo redondo y central y casi sin citoplasma (los de la parte superior de la imagen). Los **macrófagos** son más grandes, con núcleo arriñonado; los **neutrófilos** y **eosinófilos** tienen núcleo segmentado y son propios de la inflamación aguda y alérgica.",
+      "tags": [
+        "Inflamación crónica"
+      ]
+    }
+  ]
+}

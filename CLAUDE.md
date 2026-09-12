@@ -267,6 +267,19 @@ duplicando byte a byte a la 01: se emparejaron **mirando cada micrografía contr
 no por el nombre, y la del práctico 7 (la embolia) falta — va sin imagen y con `reviewNote`.
 Ante un banqueo así, comparar hashes antes de subir y no fiarse de ningún nombre de archivo.
 
+El **2020 B** (`parcial-1-2020-b`, la otra versión del mismo parcial) va como banqueo aparte, y
+los dos de 2020 se rotulan «2020 A» / «2020 B». Llegó **sin ninguna marca de la correcta**, pero
+el PDF sigue una convención que el A deja comprobada: **la correcta es siempre la primera
+alternativa** (en el A, 49 de 49). El runner baraja las opciones, así que eso no se nota. Antes de
+publicar se resolvieron las 49 una a una y todas coincidieron con la primera. 49 preguntas (falta
+la 20, que el PDF deja como «20. OK»; la 18 repite palabra por palabra a la 17 y lleva
+`reviewNote`) más 10 del práctico. Esta vez los nombres de las imágenes sí casaban con sus
+enunciados. Por pedido de BUST, **las que pasaban de 100 KB se recomprimieron** —excepción
+consciente a la regla de no recomprimir un AVIF—: 1200 px, AVIF q35 con croma 4:2:0 (sharp usa
+4:4:4 por defecto en AVIF, y en micrografías eso dobla el peso), de 1,8 MB a 0,87 MB. Por debajo
+de q35 se empastan los núcleos. El JSON se genera desde el HTML con un script que copia enunciados
+y alternativas tal cual.
+
 El de 2024 **conserva la clave original
 `patologia/parcial-1`, sin sufijo**: renombrarla borraría los intentos que los alumnos ya tienen en
 `localStorage`. Los demás van como `parcial-1-<año>`, del más reciente al más antiguo. Para añadir
@@ -278,8 +291,8 @@ sale en el selector y la route responde 404 al pulsarlo. Hoy sólo Patología y 
 añadir `labels` a su `ExamenRef` y la prop en su `[id]/page.tsx`.
 
 **Banqueos de pago dentro de un curso gratis (`dePago` + `suscripcion`)** — Patología es curso
-`gratis`, pero su banqueo **2020 exige el plan Interno**: el de 2024 queda abierto como muestra y el
-2020 es el reclamo. Dos capas, y la que bloquea es la del servidor:
+`gratis`, pero sus banqueos **2020 A y 2020 B exigen el plan Interno**: el de 2024 queda abierto
+como muestra y los de 2020 son el reclamo. Dos capas, y la que bloquea es la del servidor:
 - **Route**: la clave va en `EXAMENES` **sin `free`**. Las claves de pago se comprueban con
   `tieneAccesoA(getUserPlanState(), meta.plan ?? requiredPlanDeCurso(<curso>))`. Antes bastaba con
   que `profiles.plan` no fuera `'free'`, así que una suscripción vencida o de UFBI abría un examen

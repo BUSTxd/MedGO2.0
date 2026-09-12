@@ -470,18 +470,22 @@ export const semanas: Semana[] = [
         // `parcial-1-<año>`, del más reciente al más antiguo. Para añadir uno:
         // subir el JSON, registrarlo en `EXAMENES` de la route y sumarlo aquí a
         // `groups` y a `labels`.
-        // 2020 (examen A): 49 preguntas —el PDF de origen empieza en la 2—, 10 del
-        // práctico; la micrografía de la pregunta 7 del práctico no llegó.
+        // 2020 tiene dos versiones del mismo parcial, A y B, cada una su banqueo:
+        // A (clave sin letra, por los intentos ya guardados), 49 preguntas —el
+        // PDF empieza en la 2—, 10 del práctico y sin la micrografía del 7; B
+        // (`-2020-b`), 49 preguntas —falta la 20, que el PDF no desarrolla—, 10
+        // del práctico, y la 18 repite a la 17.
         examen: {
           key: 'patologia/parcial-1',
           free: true,
-          groups: ['patologia/parcial-1-2020'],
+          groups: ['patologia/parcial-1-2020', 'patologia/parcial-1-2020-b'],
           labels: {
             'patologia/parcial-1': '2024',
-            'patologia/parcial-1-2020': '2020',
+            'patologia/parcial-1-2020': '2020 A',
+            'patologia/parcial-1-2020-b': '2020 B',
           },
-          // El 2024 queda abierto como muestra; el 2020 es del plan Interno.
-          dePago: ['patologia/parcial-1-2020'],
+          // El 2024 queda abierto como muestra; los de 2020 son del plan Interno.
+          dePago: ['patologia/parcial-1-2020', 'patologia/parcial-1-2020-b'],
         },
       },
     ],
