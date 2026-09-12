@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
+import type { ExamenRef } from '@/lib/data/examen';
 import styles from '@/styles/cursos.module.css';
 
 // Loaded only when the user opens the resumen
@@ -29,14 +30,6 @@ interface ResumenOpcion {
   id: string;
   label: string;
   formato?: ResumenFormato;
-}
-
-interface ExamenRef {
-  key: string;
-  free?: boolean;
-  groups?: string[];
-  /** Rótulo por clave (año del banqueo). Con él la tarjeta anuncia qué años trae. */
-  labels?: Record<string, string>;
 }
 
 /** «Banqueo 2024» o «Banqueos 2024 · 2020», en el orden del selector del runner. */

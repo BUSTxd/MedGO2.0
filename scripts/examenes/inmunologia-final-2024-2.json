@@ -1,0 +1,962 @@
+{
+  "version": 1,
+  "key": "inmunologia/final-2024-2",
+  "title": "Examen Final — Inmunología",
+  "duration_min": 54,
+  "questions": [
+    {
+      "id": "p1",
+      "stem": "Un paciente presenta síntomas alérgicos severos tras la exposición a un alérgeno conocido. El médico explica que las inmunoglobulinas IgE juegan un papel crucial en la activación de ciertas células inmunitarias responsables de la respuesta alérgica, como los basófilos. ¿Cómo interactúa la IgE con los basófilos para desencadenar esta respuesta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La cadena constante de la IgE se une al receptor CD4 en la membrana del basófilo.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La cadena constante de la IgE se une al receptor FcεRI en la membrana del basófilo.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "La cadena variable de la IgE se une al receptor FcγRII en la membrana del basófilo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La cadena variable de la IgE se une al receptor CD8 en la membrana del basófilo",
+          "correct": false
+        }
+      ],
+      "explanation": "La IgE se une por su **porción constante (Fc)** al **FcεRI**, el receptor de alta afinidad que tienen los **basófilos** y los mastocitos. Queda pegada a la membrana con la región variable hacia afuera; cuando el alérgeno **entrecruza** dos IgE vecinas, la célula se degranula y libera histamina y leucotrienos.\n\nLa **región variable** es la que reconoce el antígeno, no la que se ancla a la célula. **CD4 y CD8** son correceptores de los linfocitos T que se unen al MHC, no a inmunoglobulinas, y el **FcγRII** es un receptor de **IgG**.",
+      "tags": [
+        "Células del sistema inmune",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p2",
+      "stem": "Un paciente masculino de 25 años acude a consulta por dolor de garganta, fatiga intensa y fiebre de 38.5°C que ha durado cinco días. Al examen físico, se observan ganglios linfáticos cervicales agrandados y dolorosos al tacto. El médico sospecha de mononucleosis infecciosa y solicita un hemograma completo. Resultados del hemograma: Hb: 14.5 , leucocitos (12, 500), basófilos 0.5%, eosinófilos 2%, neutrofilos segmentados 50%, neutrófilos abastonados 2%, linfocitos 45%",
+      "options": [
+        {
+          "id": "a",
+          "text": "Infección bacteriana aguda",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Mononucleosis infecciosa",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Reacción alérgica aguda",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Anemia ferropénica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Geohelmintiasis",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos son el 45 % de 12 500: unos **5 600/µL**, una **linfocitosis absoluta**. Con fiebre, faringitis, **adenopatías cervicales** dolorosas y fatiga intensa en un adulto joven, el cuadro es de **mononucleosis infecciosa** por el virus de Epstein-Barr.\n\nUna **infección bacteriana aguda** daría **neutrofilia** con desviación a la izquierda (aquí los abastonados son sólo 2 %). La **reacción alérgica** y la **geohelmintiasis** darían **eosinofilia** (aquí 2 %, normal). Y con 14.5 de hemoglobina no hay **anemia**.",
+      "tags": [
+        "Células del sistema inmune",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p3",
+      "stem": "Una mujer de 50 años con fiebre prolongada presenta monocitosis en su hemograma. Se sospecha una infección crónica. ¿Qué función desempeñan los monocitos en este contexto?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Presentan antígenos y fagocitan patógenos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Producen inmunoglobulinas IgG",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Estimulan la respuesta de células B",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Producen histamina y causan vasodilatación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Liberan colagenasas para reparar tejido",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **monocitos** salen de la sangre al tejido y se convierten en **macrófagos**: **fagocitan** al microorganismo y **presentan sus antígenos** por MHC-II a los linfocitos T. En las infecciones crónicas (tuberculosis, brucelosis, endocarditis) su número sube y son los que sostienen los granulomas.\n\nLa **IgG** la producen las **células plasmáticas**; la **histamina**, los **basófilos y mastocitos**; y la ayuda a los **linfocitos B** la dan los **T helper foliculares**. Los macrófagos sí participan en la reparación, pero no es eso lo que explica la monocitosis de una infección crónica.",
+      "tags": [
+        "Células del sistema inmune",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p4",
+      "stem": "Un paciente de 32 años presenta una herida infectada en la pierna tras un accidente de bicicleta. Al examen físico, se observa enrojecimiento, calor, hinchazón y pus en la zona afectada, signos típicos de una respuesta inflamatoria aguda. ¿Cuál de los siguientes componentes de la inmunidad innata es más probable que esté mediando la eliminación inicial de los patógenos en esta herida?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T CD8+",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Neutrófilos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Sistema de complemento",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mastocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Células dendríticas",
+          "correct": false
+        }
+      ],
+      "explanation": "El **pus** es la firma de los **neutrófilos**: son los primeros leucocitos en llegar a una herida infectada (entre 6 y 24 horas), fagocitan a las bacterias y, al morir junto con ellas, forman el exudado purulento.\n\nLos **linfocitos T CD8+** son de la inmunidad **adaptativa** y actúan contra células infectadas por virus. El **complemento** ayuda (opsoniza y atrae neutrófilos con C5a), pero no es quien elimina la bacteria en una herida con pus. Los **mastocitos** inician la inflamación con histamina y las **células dendríticas** capturan el antígeno para llevarlo al ganglio.",
+      "tags": [
+        "Inmunidad innata",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p5",
+      "stem": "Un paciente de 48 años, con diagnóstico de lupus eritematoso sistémico (LES), presenta fiebre, dolor en las articulaciones, y erupciones cutáneas. Los estudios de laboratorio revelan niveles bajos de C3 y C4, componentes del sistema del complemento, en suero. ¿Cuál es el efecto más probable de esta deficiencia de complemento en la defensa del paciente contra infecciones?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Disminución en la opsonización de patógenos y una mayor susceptibilidad a infecciones bacterianas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Aumento en la activación de linfocitos B y T, mejorando la respuesta inmune adaptativa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Incremento de la inflamación debido a la acumulación de inmunocomplejos en los tejidos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mejora en la lisis de células infectadas por virus debido a una mayor actividad del complemento",
+          "correct": false
+        }
+      ],
+      "explanation": "En el **lupus** los inmunocomplejos **consumen** el complemento, y por eso bajan **C3 y C4**. Sin **C3b** falla la **opsonización**: los fagocitos reconocen peor a las bacterias, sobre todo a las encapsuladas, y el paciente es más susceptible a infecciones bacterianas.\n\nLa **acumulación de inmunocomplejos** en los tejidos es real en el lupus, pero la pregunta es por la **defensa contra infecciones**. Un complemento bajo **no mejora** la respuesta adaptativa ni aumenta la lisis de células infectadas: al revés, la debilita.",
+      "tags": [
+        "Inmunidad innata",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p6",
+      "stem": "Un niño de 8 años, que ha estado previamente sano, desarrolla síntomas de fiebre y erupción cutánea tras una picadura de insecto. La biopsia de la piel revela mastocitos degranulados. ¿Cuál es la consecuencia más probable de la degranulación de mastocitos en este caso?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Liberación de histamina, causando vasodilatación y aumento de la permeabilidad vascular",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Aumento en la producción de interferón-gamma por linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Activación de la vía clásica del complemento para destruir células infectadas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Incremento en la producción de inmunoglobulina E (IgE) en respuesta a alérgenos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Inhibición de la migración de neutrófilos al sitio de inflamación",
+          "correct": false
+        }
+      ],
+      "explanation": "Al **degranularse**, el mastocito libera la **histamina** que tiene preformada en sus gránulos: produce **vasodilatación** y **aumento de la permeabilidad** de las vénulas, que es la roncha, el eritema y el edema tras la picadura.\n\nEl **IFN-γ** lo producen los linfocitos Th1 y las NK. La **vía clásica** del complemento la activan anticuerpos IgG o IgM unidos al antígeno, no el mastocito. La **IgE** es **anterior** a la degranulación (es la que la dispara), no su consecuencia. Y los mediadores del mastocito (TNF, leucotrieno B4) **atraen** neutrófilos, no los inhiben.",
+      "tags": [
+        "Inmunidad innata",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p7",
+      "stem": "Paciente varón de 20 años viene por fiebre y dolor de garganta desde hace 8 días. Tiene ganglios linfáticos cervicales y el bazo aumentados de tamaño. La garganta está inflamada. Se encuentra el siguiente hallazgo en la lámina periférica: ¿A qué tipo de célula corresponde con mayor probabilidad el señalado por la flecha?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2024-2/q07_lamina_periferica_atipica_mejorada.avif",
+      "imageAlt": "Frotis de sangre periférica: linfocito grande de citoplasma amplio y azul pálido que se amolda a los hematíes vecinos, señalado con una flecha amarilla",
+      "imageW": 1058,
+      "imageH": 686,
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocito T CD8",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfocito T CD4",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocito B",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Monocito",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Célula NK",
+          "correct": false
+        }
+      ],
+      "explanation": "La flecha señala un **linfocito atípico** (reactivo, o **célula de Downey**): grande, de citoplasma **amplio y azul pálido** que se amolda a los hematíes vecinos, con el borde más basófilo. Es el hallazgo típico de la **mononucleosis infecciosa**, que es lo que tiene este paciente (fiebre, faringitis, adenopatías y **esplenomegalia**).\n\nEl virus de Epstein-Barr infecta a los **linfocitos B** (por CD21), pero las células atípicas que se ven en sangre son los **linfocitos T CD8+** activados que responden contra esos B infectados. Un **monocito** tendría el núcleo arriñonado y el citoplasma gris con vacuolas, y una **NK** sería un linfocito granular grande, con gránulos azurófilos.",
+      "tags": [
+        "Hemograma y reactantes de fase aguda",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p8",
+      "stem": "Paciente varón de 80 años es llevado a emergencia por sus familiares porque desde hace 3 días tiene tos con flema, fiebre, falta de aire y confusión. ¿Qué es lo que se señala en su lámina periférica y cuál es una posible causa de este hallazgo?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2024-2/q08_lamina_periferica_cuerpo_dohle_mejorada.avif",
+      "imageAlt": "Frotis de sangre periférica: neutrófilo con granulación gruesa y una pequeña inclusión azul grisácea en el borde del citoplasma, señalada con una flecha amarilla",
+      "imageW": 984,
+      "imageH": 728,
+      "options": [
+        {
+          "id": "a",
+          "text": "Vacuolas citoplasmáticas - Leucemia",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Granulaciones tóxicas - Reacción autoinmune",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cuerpo de Dohle - Infección",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Granulaciones tóxicas - Leucemia",
+          "correct": false
+        }
+      ],
+      "explanation": "La flecha señala una pequeña inclusión **azul grisácea en la periferia del citoplasma** del neutrófilo: es un **cuerpo de Döhle**, un resto de retículo endoplásmico rugoso. Junto a la granulación tóxica, indica una **infección bacteriana** grave; aquí, una **neumonía** (tos con flema, fiebre, disnea y confusión en un anciano).\n\nLas **granulaciones tóxicas** son gránulos gruesos y oscuros repartidos por todo el citoplasma, no una mancha azul en el borde, y también se asocian a infección, no a **autoinmunidad** ni a **leucemia**. Las **vacuolas citoplasmáticas** son otro signo de sepsis, no de leucemia.",
+      "tags": [
+        "Hemograma y reactantes de fase aguda",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p9",
+      "stem": "Paciente femenino de 70 años con pérdida de peso inexplicable desde hace 2 años, fatiga extrema, sudoración nocturna y palidez facial. Al examen físico se observa palidez conjuntival en ambos lados, hepatoesplenomegalia y linfadenopatía supraclavicular derecha. En el hemograma se evidencia marcada neutropenia, anemia y trombocitopenia, por lo que se le realiza una lámina periférica ¿Cuál de las siguientes patologías es la causa más probable de este hallazgo?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2024-2/q09_lamina_periferica_llc_mejorada.avif",
+      "imageAlt": "Frotis de sangre periférica: abundantes linfocitos pequeños de cromatina en grumos y varias células rotas, sin citoplasma, una de ellas señalada con una flecha roja",
+      "imageW": 1060,
+      "imageH": 680,
+      "options": [
+        {
+          "id": "a",
+          "text": "Leucemia linfocítica crónica",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Micosis fungoides",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mieloma múltiple",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Policitemia vera",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfoma de Burkitt",
+          "correct": false
+        }
+      ],
+      "explanation": "El frotis está lleno de **linfocitos pequeños y maduros**, de cromatina en grumos, y la flecha señala una **sombra de Gumprecht** (*smudge cell*): un linfocito frágil que se rompe al hacer el extendido. Es la imagen de la **leucemia linfocítica crónica**, que encaja con el cuadro: adulta mayor con **adenopatías**, **hepatoesplenomegalia**, síntomas B y **citopenias** por infiltración de la médula.\n\nLa **micosis fungoides** es un linfoma T cutáneo (en sangre, células de Sézary de núcleo cerebriforme). El **mieloma múltiple** es de células plasmáticas, en la médula. La **policitemia vera** aumenta los glóbulos rojos. El **linfoma de Burkitt** tiene células grandes de citoplasma vacuolado y afecta sobre todo a niños y jóvenes.",
+      "tags": [
+        "Hemograma y reactantes de fase aguda",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p10",
+      "stem": "El síndrome poliglandular autoinmunitario tipo 1 (APS-1) es una enfermedad rara que afecta a múltiples órganos debido a una falla en la expresión de antígenos tisulares en el timo, lo que impide la eliminación de linfocitos T autorreactivos. Esta disfunción se debe a mutaciones en un gen clave. ¿Cuál es este gen y cuál es su función principal en el sistema inmunitario?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El gen FOXP3, que regula la función de los linfocitos T reguladores.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El gen AIRE, que controla la expresión de antígenos periféricos en las células medulares del timo.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "El gen IL2RA, que regula la producción de citoquinas proinflamatorias.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Rpta 4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El gen CTLA-4, que inhibe la activación excesiva de linfocitos T.",
+          "correct": false
+        }
+      ],
+      "explanation": "El gen **AIRE** (*autoimmune regulator*) hace que las **células epiteliales de la médula del timo** expresen antígenos propios de otros tejidos (insulina, tiroglobulina…). Así los timocitos que los reconocen se eliminan por **selección negativa**. Sin AIRE escapan y atacan varias glándulas: es el **APS-1** (candidiasis mucocutánea, hipoparatiroidismo, Addison).\n\n**FOXP3** es el factor de los **linfocitos T reguladores** (su falla da el síndrome IPEX). **IL2RA** codifica CD25, la cadena del receptor de IL-2, que también afecta a los Treg. **CTLA-4** frena la coestimulación en la periferia. Ninguno controla qué antígenos se muestran en el timo.",
+      "reviewNote": "En el examen original la alternativa d dice sólo «Rpta 4»: es un texto de relleno sin contenido. Se transcribe tal cual.",
+      "tags": [
+        "Órganos linfoides primarios"
+      ]
+    },
+    {
+      "id": "p11",
+      "stem": "La barrera hematotímica es crucial para proteger a los linfocitos T en desarrollo y está formada por una serie de estructuras que filtran el contacto entre la sangre y el timo. ¿Cuál es la principal función de esta barrera y qué elementos la componen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Proteger las células epiteliales del timo; compuesta por células epiteliales tímicas tipo II, tejido conjuntivo perivascular y la pared del capilar.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Facilitar el intercambio de nutrientes entre el timo y la sangre; compuesta por capilares fenestrados, células epiteliales tímicas tipo III y tejido conjuntivo perivascular.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Aislar a los linfocitos T inmaduros de antígenos extraños en la sangre; compuesta por células epiteliales tímicas tipo I, tejido conjuntivo perivascular y la pared del capilar.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Proteger a los timocitos de antígenos extraños en la sangre; compuesta por células epiteliales tímicas tipo I, tejido conjuntivo perivascular y trabéculas de la cápsula tímica.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Aislar a los linfocitos T maduros de antígenos extraños en la sangre; compuesta por células epiteliales tímicas tipo I, tejido conjuntivo perivascular y la pared del capilar.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **barrera hematotímica** está en la **corteza**, donde maduran los **linfocitos T inmaduros**: impide que los antígenos de la sangre lleguen a ellos durante la selección. La forman la **pared del capilar** (endotelio continuo y su lámina basal), el **tejido conjuntivo perivascular** con macrófagos y las **células epiteliales tímicas tipo I** con su lámina basal.\n\nNo protege a las células epiteliales ni sirve para **intercambiar nutrientes**, y sus capilares son continuos, **no fenestrados**. Las **trabéculas de la cápsula** no forman parte de ella. Y los linfocitos T **maduros** están en la médula, fuera de la barrera.",
+      "tags": [
+        "Órganos linfoides primarios"
+      ]
+    },
+    {
+      "id": "p12",
+      "stem": "El timo es un órgano fundamental en la maduración de los linfocitos T durante la infancia, pero su tamaño y función disminuyen con la edad en un proceso llamado involución tímica. ¿Cómo afecta la involución del timo al sistema inmunológico en la adultez y qué cambios histológicos se observan en este proceso?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Disminuye la producción de linfocitos T, y el tejido tímico es reemplazado progresiva y principalmente por tejido adiposo.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Incrementa la capacidad del timo para producir células epiteliales tímicas, y el tejido tímico es reemplazado progresivamente por tejido necrosado.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Incrementa la capacidad del timo para producir linfocitos T reguladores, a pesar de que el tejido tímico es reemplazado progresivamente por tejido adiposo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Disminuye la producción de linfocitos T, y el tejido tímico es reemplazado progresivamente solo por tejido fibroso.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "No afecta significativamente la inmunidad, ya que otros órganos como el bazo compensan la función del timo involucionado, y el tejido tímico es reemplazado por la expansión del tejido conjuntivo.",
+          "correct": false
+        }
+      ],
+      "explanation": "Desde la pubertad el timo **involuciona**: produce **menos linfocitos T** nuevos, así que el adulto depende de los que ya tiene y responde peor a antígenos nuevos (de ahí la menor respuesta a vacunas en el anciano). En la histología el parénquima se reemplaza **progresiva y principalmente por tejido adiposo**, con islotes de tejido tímico que persisten.\n\nNo aumenta la producción de células epiteliales ni de Treg, el tejido **no se necrosa** y el reemplazo no es **sólo fibroso**. El **bazo no compensa**: la maduración y selección de los linfocitos T ocurre únicamente en el timo.",
+      "tags": [
+        "Órganos linfoides primarios"
+      ]
+    },
+    {
+      "id": "p13",
+      "stem": "Se aísla una célula inmune de una muestra de sangre. La función principal de esta célula es combatir los patógenos intracelulares. Contiene proteínas de superficie CD3, CD4 y CD40 y estimula los macrófagos y las células T citotóxicas. ¿Cuál de las siguientes células probablemente fue aislada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células natural killer",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Célula T helper folicular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Célula T helper tipo 2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Célula T reguladora",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Célula T helper tipo 1",
+          "correct": true
+        }
+      ],
+      "explanation": "**CD3 más CD4** es un linfocito **T helper**. El que combate **patógenos intracelulares**, activa a los **macrófagos** (con IFN-γ) y apoya a los **T citotóxicos** (con IL-2) es el **Th1**. La ayuda al macrófago pasa por el par **CD40L–CD40**.\n\nLas **NK** no expresan CD3 ni CD4. El **T helper folicular** ayuda a los linfocitos B en el centro germinal (IL-21). El **Th2** responde a helmintos y alérgenos (IL-4, IL-5, IL-13), y el **T regulador** (CD25, FOXP3) frena la respuesta en vez de estimularla.",
+      "tags": [
+        "Inmunidad adaptativa"
+      ]
+    },
+    {
+      "id": "p14",
+      "stem": "Un lactante de 4 meses de edad es traído a consulta por su madre debido a infecciones recurrentes desde los 3 meses de vida. Inicialmente presentó otitis media bilateral, tratada con antibióticos, pero posteriormente desarrolló neumonía y fiebre persistente. La madre refiere que Juan ha tenido múltiples episodios de fiebre alta sin causa aparente desde los 3 meses. En el examen físico, se observa una disminución del tamaño de las amígdalas y los ganglios linfáticos. Indicar ¿Cuál es el mecanismo más probable de este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se presenta hiperplasia de amígdalas por la infección aguda.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Las células afectadas no coexpresaron IgM, IgD adecuadamente",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "La población de células CD25+, CD4+ tiene complicaciones en su desarrollo y por ende se encuentran en niveles séricos bajos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los anticuerpos IgM están en niveles séricos altos porque se trata de una respuesta primaria de anticuerpos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Los anticuerpos IgG están en niveles séricos altos porque se trata de una respuesta secundaria de anticuerpos",
+          "correct": false
+        }
+      ],
+      "explanation": "Es la **agammaglobulinemia ligada al X** (enfermedad de Bruton): una mutación de **BTK** detiene la maduración en la etapa pre-B, así que no llegan a formarse linfocitos B maduros, que son los que **coexpresan IgM e IgD**. Las infecciones empiezan a los 3-6 meses, cuando se acaba la IgG de la madre, y las **amígdalas y los ganglios son pequeños** porque les faltan los folículos de células B.\n\n**Todas** las inmunoglobulinas están **bajas**: ni la IgM ni la IgG pueden estar altas. Los **CD25+ CD4+** son linfocitos T reguladores, que en esta enfermedad son normales. Y las amígdalas no están hiperplásicas, sino **hipoplásicas**.",
+      "tags": [
+        "Inmunidad adaptativa",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p15",
+      "stem": "Relacionar las alternativas e indicar la respuesta correcta I. Manto folicular A. Proliferación de linfocitos B II. Cordones medulares B. Linfocitos B no activados III. Zona oscura de centro germinal C. Células plasmáticas IV. Zona clara de centro germinal D. Selección de linfocitos B",
+      "options": [
+        {
+          "id": "a",
+          "text": "I-A, II-B, IV-D, III-C",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "I-B, II-C, IV-D, III-A",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "I-A, II-B, IV-C, III-D",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "I-C, II-B, IV-D, III-A",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "I-B, II-D, IV-C, III-A",
+          "correct": false
+        }
+      ],
+      "explanation": "En el **folículo secundario** del ganglio, el **manto** está formado por **linfocitos B no activados** (vírgenes), que el centro germinal empuja hacia afuera. En la **zona oscura** del centro germinal los centroblastos **proliferan** e hipermutan, y en la **zona clara** los centrocitos se **seleccionan** por su afinidad con el antígeno. Los **cordones medulares** están llenos de **células plasmáticas**.\n\nQueda I-B, II-C, III-A, IV-D, que es la b. Las demás cruzan la zona oscura con la clara o ponen a las células plasmáticas en el manto.",
+      "tags": [
+        "Inmunidad adaptativa"
+      ]
+    },
+    {
+      "id": "p16",
+      "stem": "Se aísla una población de células B y se la expone a una citocina en particular, estas células B comienzan a producir un anticuerpo que fija el complemento y se encuentra únicamente como monómero ¿Cuál de las siguientes citocinas es más probable que sea responsable de estimular estas las células B?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IFN-γ",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-5",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-4",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-13",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-2",
+          "correct": false
+        }
+      ],
+      "explanation": "Un anticuerpo que **fija el complemento** y existe **sólo como monómero** es la **IgG** (la IgM también fija complemento, pero es un pentámero). El cambio de isotipo a IgG lo estimulan sobre todo el **IFN-γ** y la IL-21.\n\nLa **IL-5** favorece la IgA; la **IL-4** y la **IL-13**, la **IgE**; y la **IL-2** hace crecer a los linfocitos T (helper, citotóxicos y reguladores) y a las NK, no cambia el isotipo.",
+      "tags": [
+        "Inmunidad adaptativa"
+      ]
+    },
+    {
+      "id": "p17",
+      "stem": "Un grupo de investigadores está estudiando células resistentes a la infección por VIH. Observan que hay una mutación en la proteína CCR5 que confiere inmunidad. ¿Cuál de las siguientes proteínas del VIH no puede unirse a las células huésped debido a esta mutación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Gp160",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "P24",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD4",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Gp 120",
+          "correct": true
+        }
+      ],
+      "explanation": "La **gp120** de la envoltura se une primero a **CD4** y, al cambiar de forma, a un **correceptor**: **CCR5** (en macrófagos y linfocitos T de memoria) o CXCR4. Con CCR5 mutado (la deleción Δ32 en homocigosis), el virus R5 no puede anclarse y la persona es resistente.\n\nLa **gp160** es el precursor que se corta en gp120 y gp41 (esta última hace la fusión). La **p24** es la proteína de la cápside, la que detectan las pruebas de cuarta generación. Y **CD4** es el receptor de la célula, no una proteína del virus.",
+      "tags": [
+        "VIH"
+      ]
+    },
+    {
+      "id": "p18",
+      "stem": "Un chico de 21 años VIH positivo se presenta en el centro de salud de la universidad debido a una faringitis. El paciente ha experimentado un empeoramiento de la faringitis, la astenia y la inflamación de los ganglios linfáticos durante los últimos 10 días. Además, ha estado teniendo tos leve. La exploración bucofaríngea revela una inflamación amigdalina bilateral con exudado. La enfermedad del paciente ataca a un tipo de célula inmunitaria mediante el receptor CD21, se conoce a esta célula por:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Formar cadenas con el sistema de complemento",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Citotoxicidad",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inmunidad adaptativa, diferenciarse a células plasmáticas y producir anticuerpos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Presentadora de antígenos",
+          "correct": false
+        }
+      ],
+      "explanation": "El **CD21** (CR2, receptor del complemento) es la puerta de entrada del **virus de Epstein-Barr** a los **linfocitos B**. Lo que tiene ahora el paciente (faringitis exudativa, adenopatías, astenia) es una **mononucleosis**; que sea VIH positivo no cambia la célula atacada. El linfocito B es la célula de la **inmunidad adaptativa humoral**: se diferencia en **célula plasmática** y produce anticuerpos.\n\nLa **citotoxicidad** es de los T CD8 y las NK. Los B pueden presentar antígenos, pero no es lo que los define (las presentadoras por excelencia son las células dendríticas). Y las células no «forman cadenas» con el complemento: el que se ensambla en cadena es el propio complemento, en el complejo de ataque a la membrana.",
+      "tags": [
+        "VIH",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p19",
+      "stem": "Un hombre de 45 años diagnosticado con VIH desde hace cinco años ha estado en tratamiento antirretroviral con un régimen que incluye un inhibidor de la transcriptasa reversa (ITR) y un inhibidor de la proteasa (IP). En su último control, presenta una carga viral persistente de 50,000 copias/ml y un conteo de CD4 de 200 células/mm³. Se sospecha que hay un problema con el mecanismo de acción de los medicamentos. ¿Cuál de los siguientes mecanismos de acción describe mejor cómo actúan los inhibidores de la transcriptasa reversa y los inhibidores de la proteasa en el tratamiento del VIH?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los inhibidores de la transcriptasa reversa bloquean la transcripción del ARN viral a ADN, mientras que los inhibidores de la proteasa impiden la maduración de las proteínas virales.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Los inhibidores de la transcriptasa reversa interrumpen la integración del ADN viral en el genoma del huésped, y los inhibidores de la proteasa activan la respuesta inmune del huésped.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los inhibidores de la transcriptasa reversa aumentan la producción de citoquinas antivirales, y los inhibidores de la proteasa generan variantes del VIH menos virulentas.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los inhibidores de la transcriptasa reversa inducen la apoptosis en células T CD4, mientras que los inhibidores de la proteasa aumentan la resistencia del VIH al sistema inmune.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **inhibidores de la transcriptasa reversa** (tenofovir, efavirenz) impiden que el **ARN viral se copie a ADN**. Los **inhibidores de la proteasa** (darunavir, lopinavir) impiden que la proteasa corte las poliproteínas Gag-Pol, así que los viriones salen **inmaduros y no infecciosos**. Una carga viral alta con ese esquema hace pensar en resistencia o mala adherencia, no en otro mecanismo.\n\nBloquear la **integración** del ADN viral es el mecanismo de los **inhibidores de la integrasa** (dolutegravir). Ninguno de los dos grupos aumenta citoquinas, activa la respuesta inmune, genera variantes menos virulentas ni induce apoptosis de los CD4.",
+      "tags": [
+        "VIH",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p20",
+      "stem": "John es traído a emergencia por Rafael, su pareja, luego que este lo encontró somnoliento, en shock y con fiebre alta. En los cultivos de sangre crece Streptococcus pneumoniae. Hace 10 años le retiraron el bazo luego de un accidente de tránsito. ¿La alteración en cuál de los siguientes explica la severidad del cuadro de John?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ensamblaje del MAC",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Producción de IFN gamma",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Activación del complemento",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Aclaramiento de bacterias",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Formación de sistema antígeno-anticuerpo",
+          "correct": false
+        }
+      ],
+      "explanation": "El **bazo** filtra la sangre: en la **pulpa roja** sus macrófagos retiran las bacterias que circulan, y en la **zona marginal** los linfocitos B producen IgM contra los polisacáridos de la cápsula. Sin bazo falla el **aclaramiento de bacterias encapsuladas** (*S. pneumoniae*, *H. influenzae* b, meningococo) y aparece la **sepsis fulminante posesplenectomía**, como la de John.\n\nEl **complemento** se fabrica en el hígado y se activa y ensambla el **MAC** igual sin bazo. El **IFN-γ** lo producen linfocitos T y NK de cualquier órgano, y los anticuerpos se siguen formando en los ganglios.",
+      "tags": [
+        "Órganos linfoides secundarios",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p21",
+      "stem": "Acude al consultorio una paciente con dolor al tragar y signos de infección respiratoria. Al revisar las amígdalas palatinas, se observa inflamación de las mismas con presencia de pus, indicando una posible amigdalitis bacteriana. ¿Cómo se relaciona con la fisiología de este órgano?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las amígdalas palatinas filtran el aire inhalado, atrapando las bacterias en su superficie externa.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Las amígdalas palatinas producen grandes cantidades de moco para impedir la entrada de patógenos.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Las criptas de las amígdalas palatinas albergan linfocitos que detectan y responden a los antígenos bacterianos, lo que activa la respuesta inmune.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Las células epiteliales de las amígdalas palatinas secretan enzimas bactericidas que causan la formación de pus en la infección.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Las amígdalas palatinas aumentan la producción de linfocitos T para secretar anticuerpos directamente en las criptas.",
+          "correct": false
+        }
+      ],
+      "explanation": "Las **amígdalas palatinas** son órganos linfoides secundarios del **anillo de Waldeyer**. Su epitelio escamoso se hunde formando **criptas**, donde los antígenos que entran por la boca contactan con los **folículos linfoides** que hay debajo y activan la respuesta inmune. El pus de la amigdalitis son neutrófilos y detritos acumulados en esas criptas.\n\nNo filtran el aire ni producen moco (su epitelio escamoso no tiene células caliciformes). El pus no lo forman enzimas del epitelio. Y los **anticuerpos** los secretan las **células plasmáticas**, que vienen de los linfocitos B, no los linfocitos T.",
+      "tags": [
+        "Órganos linfoides secundarios",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p22",
+      "stem": "Un paciente con cáncer acude a consulta y se detectan varios ganglios linfáticos aumentados de tamaño cerca de la zona afectada por el tumor. ¿Cuál es el papel de los ganglios linfáticos en la propagación del cáncer?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los ganglios linfáticos filtran células tumorales, destruyéndolas antes de que se diseminen a otros órganos.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los ganglios linfáticos aumentan de tamaño debido a la acumulación de tejido necrótico provocado por el tumor.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los ganglios linfáticos actúan como barreras que impiden la migración de células tumorales a través del sistema linfático.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los ganglios linfáticos pueden capturar células tumorales, permitiendo su crecimiento y facilitando la diseminación a otras partes del cuerpo.",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Los ganglios linfáticos se inflaman debido a la respuesta inmune contra las células cancerosas, pero no participan en la diseminación del tumor.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los ganglios reciben la linfa que drena el tumor. Las células tumorales que viajan por los linfáticos quedan atrapadas en el **seno subcapsular** y pueden **crecer allí** (metástasis ganglionar), y desde ahí seguir a los ganglios siguientes y a la sangre. Por eso se estudia el **ganglio centinela** y por eso el compromiso ganglionar es la N del TNM.\n\nEl ganglio no destruye todas las células tumorales ni es una barrera que las detenga. Su aumento de tamaño no se debe a tejido necrótico, y aunque puede haber una reacción inmune, el ganglio **sí participa** en la diseminación.",
+      "tags": [
+        "Órganos linfoides secundarios",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p23",
+      "stem": "Llega a su centro de salud un paciente varón de 6 meses de edad. Viene por su 3era dosis contra hepatitis B, la cual es es una vacuna a base de subunidades. En relación a esta vacuna, ¿cuál de las siguientes afirmaciones es correcta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La inmunogenicidad de este tipo de vacunas es muy alta",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El riesgo de que el niño tenga alguna reacción adversa a esta vacuna es alto",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se estimulará una respuesta inmune celular y humoral",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La cadena invariante y el MHC-II están involucrados en el procesamiento y presentación de antígeno",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Le brindará al niño un nivel adecuado de LT CD8 activados para combatir una infección de hepatitis B en el futuro",
+          "correct": false
+        }
+      ],
+      "explanation": "La vacuna de la hepatitis B es el **HBsAg recombinante**, una proteína que llega **desde afuera** de la célula. La presentadora la capta por endocitosis y la procesa por la **vía exógena**: sus péptidos se cargan en el **MHC-II**, cuya hendidura venía ocupada por la **cadena invariante**. Así se activan los CD4, que ayudan a los B a producir anti-HBs.\n\nLas vacunas de subunidades son **poco inmunógenas** (por eso llevan adyuvante y tres dosis) y dan **pocas reacciones adversas**, porque no contienen un patógeno vivo. Su respuesta es sobre todo **humoral**: para activar bien a los **CD8** el antígeno tiene que estar en el citosol y presentarse por MHC-I, como en las vacunas vivas.",
+      "tags": [
+        "Vacunas",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p24",
+      "stem": "Paciente mujer de 28 años, diagnosticada con VIH. Acude al hospital para ponerse al día con sus vacunas. Antes de esto, se le realiza un examen de sangre para evaluar sus niveles de linfocitos T CD4 (160/mm3). Al analizar estos resultados, usted le comenta que la vacuna que no puede aplicarse es la siguiente:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vacuna contra SARS-CoV-2 PFIZER (mRNA)",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Vacuna contra la fiebre amarilla",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Vacuna intramuscular contra influenza",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Vacuna contra la rabia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Vacuna antineumocócica",
+          "correct": false
+        }
+      ],
+      "explanation": "La vacuna de la **fiebre amarilla** es de **virus vivo atenuado**. Con **menos de 200 CD4/mm³** está contraindicada, porque el propio virus vacunal puede causar una enfermedad grave (viscerotrópica o neurológica).\n\nLas demás no llevan virus vivo: la de **ARNm** de Pfizer, la **influenza intramuscular** (inactivada; la viva es la intranasal), la **antirrábica** (inactivada) y la **antineumocócica** (conjugada o de polisacáridos). Se pueden aplicar, aunque con CD4 bajos la respuesta sea menor.",
+      "tags": [
+        "Vacunas",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p25",
+      "stem": "¿Cuál de los siguientes enunciados explica la protección inmunológica conferida al recién nacido en los primeros meses de vida?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los recién nacidos tienen una inmunización pasiva por la transferencia de IgM de madre a hijo a través de la leche materna los primeros meses de vida.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los recién nacidos tienen una inmunización activa por la transferencia de IgG de madre a hijo a través de la leche materna los primeros meses de vida",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los recién nacidos tienen una inmunización pasiva por la transferencia transplacentaria de IgG de madre a hijo que lo protege temporalmente los primeros meses de vida.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Los recién nacidos tienen una inmunización activa por la transferencia transplacentaria de IgG de madre a hijo.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Los recién nacidos tienen una inmunización pasiva por la transferencia transplacentaria de IgM de madre a hijo que lo protege temporalmente los primeros meses de vida.",
+          "correct": false
+        },
+        {
+          "id": "f",
+          "text": "Los recién nacidos tienen una inmunización pasiva por la transferencia transplacentaria de IgA de madre a hijo que lo protege temporalmente los primeros meses de vida.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **IgG** es la única inmunoglobulina que **cruza la placenta**, transportada por el receptor **FcRn** del sinciciotrofoblasto. Es inmunidad **pasiva**, porque el niño recibe anticuerpos que no fabricó él, y lo protege unos **6 meses**, hasta que se degradan.\n\nSería **activa** si el niño produjera sus propios anticuerpos. La **IgM** (un pentámero) y la **IgA** no atraviesan la placenta. La leche materna aporta sobre todo **IgA secretora**, que protege la mucosa intestinal pero no pasa a la sangre del niño.",
+      "reviewNote": "En el PDF la sexta alternativa (f, la de la IgA transplacentaria) quedó fuera de la lista; se reconstruyó desde el texto que la sigue. Se quitó el «f.» suelto que el PDF dejó al final de la e.",
+      "tags": [
+        "Vacunas"
+      ]
+    },
+    {
+      "id": "p26",
+      "stem": "Un niño de 10 años presenta infecciones recurrentes y una hipergammaglobulinemia. Se le diagnostica síndrome linfoproliferativo autoinmunitario (ALPS) tras detectar mutaciones en el gen Fas. ¿Qué mecanismo de tolerancia inmunitaria está afectado en este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La eliminación de linfocitos T autorreactivos mediante apoptosis en los tejidos periféricos está defectuosa.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La anergia de linfocitos B específicos contra antígenos propios en la médula ósea no se logra adecuadamente.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La regulación por linfocitos T reguladores falla debido a la falta de IL-2.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los linfocitos T en los órganos linfoides periféricos no reciben coestimulación suficiente para inducir apoptosis.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La selección negativa en el timo no es eficiente para eliminar linfocitos autorreactivos.",
+          "correct": false
+        }
+      ],
+      "explanation": "En el **síndrome linfoproliferativo autoinmunitario** falla **Fas** (CD95) o su ligando. Esa vía es la que **elimina por apoptosis a los linfocitos T autorreactivos** y a los ya activados en los tejidos periféricos (muerte inducida por activación). Sin ella se acumulan linfocitos: adenopatías, esplenomegalia, citopenias autoinmunes y linfocitos T doble negativos (CD4− CD8−).\n\nLa **selección negativa en el timo** depende de AIRE, no de Fas. La falla de los **Treg** por falta de IL-2 es otro defecto (el de CD25). La falta de **coestimulación** produce anergia, no apoptosis. Y la tolerancia de los B en la médula ósea no pasa por Fas.",
+      "tags": [
+        "Regulación y fallas del sistema inmune",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p27",
+      "stem": "Un paciente de 60 años, con un historial de infecciones crónicas, se presenta con síntomas de poliartritis. Se encuentran elevados títulos de factor reumatoide. Además, se detecta una deficiencia en la señalización del receptor de PD-1 en sus linfocitos T CD8+, lo que sugiere una alteración en los mecanismos de control inmunitario.",
+      "options": [
+        {
+          "id": "a",
+          "text": "La falta de coestimulación adecuada en los linfocitos B provocó la activación de linfocitos T autorreactivos.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La señalización de PD-1 defectuosa resultó en una inhibición ineficaz de los linfocitos T, lo que permite la activación crónica contra antígenos propios.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "La alteración de los linfocitos T reguladores no inhibió correctamente a los linfocitos T autorreactivos.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La respuesta inmunitaria innata exagerada activó a los linfocitos B contra antígenos propios.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La falta de apoptosis mediada por Fas/FasL en linfocitos T CD8+ evitó su eliminación en los tejidos periféricos.",
+          "correct": false
+        }
+      ],
+      "explanation": "**PD-1** es un receptor inhibitorio de los linfocitos T activados: al unirse a PD-L1 o PD-L2 **frena su activación**, uno de los mecanismos de **tolerancia periférica**. Si su señalización falla, los T autorreactivos no se apagan y siguen activos contra antígenos propios, aquí con **poliartritis y factor reumatoide**. Es lo mismo que se ve con los fármacos anti-PD-1, que causan efectos adversos autoinmunes.\n\nLa **falta de coestimulación** produce anergia, no activación. El enunciado no dice nada de los **Treg** ni de una respuesta **innata** exagerada. Y la falla de **Fas/FasL** es el mecanismo del síndrome linfoproliferativo autoinmunitario, no el de un defecto de PD-1.",
+      "reviewNote": "En el PDF el enunciado termina sin la pregunta, y las alternativas b y e quedaron fuera de la lista. Se reconstruyeron por el orden de las letras sueltas que dejó el PDF («… b.», «… e.»).",
+      "tags": [
+        "Regulación y fallas del sistema inmune",
+        "Caso clínico"
+      ]
+    }
+  ]
+}

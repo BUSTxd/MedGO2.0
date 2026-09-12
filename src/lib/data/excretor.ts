@@ -21,10 +21,8 @@ export interface ResumenOpcion {
   label: string;
 }
 
-export interface ExamenRef {
-  key: string;
-  free?: boolean;
-}
+import type { ExamenRef } from './examen';
+export type { ExamenRef };
 
 export interface Actividad {
   id: string;

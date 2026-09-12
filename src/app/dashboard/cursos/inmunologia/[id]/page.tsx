@@ -5,6 +5,7 @@ import styles from '@/styles/cursos.module.css';
 import StudyMaterialSection from '@/components/StudyMaterialSection';
 import LockedContent from '@/components/LockedContent';
 import TrackRecentClass from '@/components/TrackRecentClass';
+import ExamenDeCurso from '@/components/ExamenDeCurso';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
 
@@ -17,14 +18,29 @@ const UNIDAD_LABEL: Record<string, string> = {
 
 export default async function ActividadPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ examen?: string }>;
 }) {
   const { id } = await params;
+  const sp = await searchParams;
   const result = findActividad(id);
   if (!result) notFound();
 
   const { actividad: act, semana } = result;
+
+  if (sp?.examen === '1' && act.examen) {
+    return (
+      <ExamenDeCurso
+        curso="inmunologia"
+        examen={act.examen}
+        titulo={act.titulo}
+        backHref={`/dashboard/cursos/inmunologia/${id}`}
+      />
+    );
+  }
+
   const badge = TIPO_BADGE[act.tipo];
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
@@ -98,6 +114,8 @@ export default async function ActividadPage({
           claseId={act.id}
           hasResumen={act.resumen?.tipo === 'pdf'}
           resumenOpciones={act.resumen?.opciones}
+          examen={act.examen}
+          examenTitle={act.titulo}
           /* En las prácticas de laboratorio la primera tarjeta es «Simulación». */
           simulacion={isLab ? (act.simulacion ?? {}) : undefined}
           /* Los labs no tienen banco de preguntas: sólo Simulación y Resumen. */

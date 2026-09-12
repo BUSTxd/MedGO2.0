@@ -29,6 +29,8 @@ const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey }> = {
   'patologia/parcial-1-2022': {},
   'patologia/parcial-1-2020': {},
   'patologia/parcial-1-2020-b': { free: true },
+  // De pago como el resto de Inmunología: sin `free`, lo abre el plan del tramo.
+  'inmunologia/final-2024-2': {},
 };
 
 const SIGNED_URL_TTL_SECONDS = 60 * 60 * 24 * 7;

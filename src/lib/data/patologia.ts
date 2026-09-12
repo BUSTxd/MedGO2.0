@@ -25,26 +25,8 @@ export interface ResumenOpcion {
   formato?: ResumenFormato;
 }
 
-export interface ExamenRef {
-  /** Banqueo que abre por defecto (el más reciente, cuando hay varios años). */
-  key: string;
-  free?: boolean;
-  /** Grupos adicionales (B, C, …); cada uno se descarga solo al pulsar su cuadro. */
-  groups?: string[];
-  /**
-   * Rótulo de cada banqueo, por su clave (`key` y cada una de `groups`). Con él
-   * el selector deja de decir A/B/C y nombra cada JSON por el año del examen del
-   * que salió («2024», «2020»). Va por clave, no por posición, para que
-   * reordenar `groups` no pueda cruzar un año con el JSON de otro.
-   */
-  labels?: Record<string, string>;
-  /**
-   * Banqueos que exigen suscripción aunque el curso sea gratis: los abre el plan
-   * del tramo del curso. Las mismas claves van sin `free` en `EXAMENES` de la
-   * route, que es quien los bloquea de verdad; esto sólo pinta el candado.
-   */
-  dePago?: string[];
-}
+import type { ExamenRef } from './examen';
+export type { ExamenRef };
 
 export interface Actividad {
   id: string;

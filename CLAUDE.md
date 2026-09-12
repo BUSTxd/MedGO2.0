@@ -120,6 +120,7 @@ src/app/
 | `src/components/DashboardSidebar.tsx` | Sidebar de navegación. Array `NAV` con label/href/icon. Ícono de Cursos: book-bookmark SVG con `stroke="currentColor"` |
 | `src/components/StudyMaterialSection.tsx` | 3 tarjetas de material por clase: Video, Banqueo, Resumen |
 | `src/components/ExamRunner.tsx` | Examen inline (`?examen=1`). Lee del bucket privado `examenes`. Soporta N grupos independientes vía `groupKeys?: string[]` — selector cuadros A/B/C… en esquina superior derecha, carga diferida por grupo, puntuación independiente. Cronómetro y animaciones: ver **Cronómetro del ExamRunner** |
+| `src/components/ExamenDeCurso.tsx` | Plantilla común del examen de una actividad: plan del tramo, velo, años y aviso de suscripción. Un curso sólo aporta su `ExamenRef` (ver **Plantilla común**) |
 | `src/components/AnatExam.tsx` | Motor compartido de los EVAs de anatomía (EVA 2/3, futuro EVA 1). Examen interactivo A→B; ver sección **Sistema de EVAs** |
 | `src/components/PdfFullscreenModal.tsx` | Viewer PDF fullscreen con zoom. Usa signed URLs + sessionStorage cache |
 | `src/components/PlanProvider.tsx` | Context con `plan`, `isActive`, `expiresAt`. Consumido con `usePlan()` |
@@ -294,9 +295,33 @@ El de 2024 **conserva la clave original
 un año: JSON fuente en `scripts/examenes/patologia-parcial-1-<año>.json` →
 `node scripts/upload-examen.mjs <archivo> patologia/parcial-1-<año>.json` → registrarlo en
 `EXAMENES` → sumarlo a `groups` y a `labels` de la actividad. Sin el paso de `EXAMENES` el cuadro
-sale en el selector y la route responde 404 al pulsarlo. Hoy sólo Patología y Neurología pasan
-`groupKeys` al runner, y sólo Patología `groupLabels`: otro curso que quiera años tiene que
-añadir `labels` a su `ExamenRef` y la prop en su `[id]/page.tsx`.
+sale en el selector y la route responde 404 al pulsarlo.
+
+**Plantilla común: `ExamenDeCurso` + `ExamenRef` (`src/lib/data/examen.ts`).** El examen es el
+mismo en todos los cursos y sólo cambia el contenido, así que ya no se copia el bloque del runner
+en cada `[id]/page.tsx`. `ExamenDeCurso` (RSC) recibe `curso`, `examen`, `titulo` y `backHref`, y
+se encarga del resto: lee el plan, saca el plan requerido del **tramo del curso**
+(`requiredPlanDeCurso`), pasa `groups`/`labels`/`dePago` al runner con el aviso cada 7 preguntas,
+y pone el velo de `LockedContent` salvo que el curso sea gratis o el banqueo lleve `free`.
+`ExamenRef` es un único tipo: Patología, Neurología, Excretor, Inmunología y `StudyMaterialSection`
+lo importan de ahí en vez de declarar cada uno el suyo. **Para dar banqueo a un curso nuevo**:
+1. JSON fuente en `scripts/examenes/<curso>-<examen>.json` y `upload-examen.mjs`;
+2. la clave en `EXAMENES` de la route (con `free` o sin él);
+3. `examen?: ExamenRef` en el `Actividad` del curso y el `examen` en la actividad;
+4. en su `[id]/page.tsx`: `searchParams`, el `if (sp?.examen === '1' && act.examen) return
+   <ExamenDeCurso … />` y `examen` + `examenTitle` en `StudyMaterialSection`.
+Usan la plantilla Patología e Inmunología. Neurología y Excretor siguen montando el runner a mano
+**a propósito**: pasarlas activaría el aviso de suscripción en exámenes que hoy no lo tienen.
+
+**Inmunología · Examen Final** (`inmunologia/final-2024-2`, «2024-II», **de pago como el resto del
+curso**): 27 preguntas del PDF (el final real son 60) y 3 láminas periféricas. Su HTML **no marca
+ninguna correcta** —sólo la 14 y la 16 traen la clave en una nota— y las correctas **no siguen la
+convención de «siempre la primera»** de Patología: la clave se resolvió pregunta por pregunta, cada
+una con su explicación, y queda marcada en el JSON fuente. El conversor dejó alternativas fuera de la lista (la f de la 25,
+la b y la e de la 27, con la letra suelta pegada al final de la anterior): se reconstruyeron y
+llevan `reviewNote`, igual que la d de la 10, que en el original dice «Rpta 4». Otra vez una
+imagen con el nombre en mayúscula (`Q07_…`) frente al `q07_` que pide el HTML. Las etiquetas salen
+del `<h2>` de tema que precede a cada pregunta.
 
 **Banqueos de pago dentro de un curso gratis (`dePago` + `suscripcion`)** — Patología es curso
 `gratis`, pero sus banqueos **2022 y 2020 A exigen el plan Interno**: el 2024 y el 2020 B quedan

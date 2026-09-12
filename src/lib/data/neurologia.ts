@@ -27,12 +27,8 @@ export interface ResumenOpcion {
   label: string;
 }
 
-export interface ExamenRef {
-  key: string;
-  free?: boolean;
-  /** Grupos adicionales (B, C, …); cada uno se descarga solo al pulsar su cuadro. */
-  groups?: string[];
-}
+import type { ExamenRef } from './examen';
+export type { ExamenRef };
 
 export interface Actividad {
   id: string;
