@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react';
 import { PLANS, type PlanKey } from '@/lib/plans';
@@ -167,7 +168,13 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
     router.refresh();
   };
 
-  return (
+  // Por portal a <body>: el modal se abre también desde dentro del examen, cuya
+  // `.shell` lleva `z-index: 1` y crea un contexto de apilamiento. Montado ahí,
+  // su `z-index: 1000` sólo competiría dentro de esa caja y la sidebar (fija, z
+  // 100) quedaría por encima. Sus colores no dependen del panel: `.modal`
+  // declara sus propias variables en claro y en oscuro. Los tres que lo usan lo
+  // cargan con `ssr: false`, así que `document` existe siempre aquí.
+  return createPortal(
     <div
       className={styles.backdrop}
       onClick={() => { if (!receipt) onClose(); }}
@@ -309,6 +316,7 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

@@ -311,6 +311,14 @@ Se cierra con la X y **se va solo al avanzar**; qué tanda se cerró se recuerda
 reintentar no lo deja apagado para siempre. Nunca lo ve quien ya tiene el plan (servidor **o** plan
 vivo, igual que `LockedContent`), y con el modal abierto las teclas A–E no contestan la pregunta de
 detrás. Es la única caja de la hoja fuera de las piezas que se manipulan: interrumpe a propósito.
+«Quien ya tiene el plan» es **plan activo de la Facultad**: un alumno con plan UFBI, o con un
+Interno vencido, ve el aviso y el candado, como decidió BUST.
+
+**`SubscribeModal` va por portal a `<body>`.** Desde el examen se monta dentro de `.shell`, que
+lleva `z-index: 1` y crea un contexto de apilamiento: ahí dentro su `z-index: 1000` sólo competía
+dentro de esa caja, y la sidebar (fija, z 100) quedaba **por encima del modal de pago**, tanto el
+del aviso como el del candado del 2020 A. El portal es seguro porque `.modal` declara sus propias
+variables en claro y en oscuro y no hereda nada del panel.
 
 **El JSON fuente se versiona en `scripts/examenes/`** aunque lo que sirve la web sea la copia del
 bucket. Los cuatro exámenes anteriores viven **sólo** en el bucket, y eso significa que reeditar
