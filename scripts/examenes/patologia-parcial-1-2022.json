@@ -1,0 +1,1364 @@
+{
+  "version": 1,
+  "key": "patologia/parcial-1-2022",
+  "title": "Examen Parcial 1 — Respuesta celular y tisular al daño",
+  "duration_min": 80,
+  "questions": [
+    {
+      "id": "p1",
+      "stem": "Usted está observando al microscopio una lesión de tejido con inflamación aguda. Usted encontrará predominantemente:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Acumulación de neutrófilos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Formación de vasos nuevos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Incremento del número de células endoteliales",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Acumulación principalmente de linfocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Acumulación de macrófagos y células plasmáticas",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **inflamación aguda** la célula que domina el infiltrado son los **neutrófilos**: son los primeros en llegar (entre 6 y 24 horas) y los que forman el exudado purulento.\n\nLa **formación de vasos nuevos** (angiogénesis) y la **proliferación de células endoteliales** pertenecen a la **reparación**. Los **linfocitos**, los **macrófagos** y las **células plasmáticas** son el infiltrado de la **inflamación crónica**.",
+      "tags": [
+        "Inflamación aguda"
+      ]
+    },
+    {
+      "id": "p2",
+      "stem": "La inflamación aguda puede ser iniciada por:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Activación de mastocitos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Influjo de linfocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Un incremento de permeabilidad de arterias",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Lisozima",
+          "correct": false
+        }
+      ],
+      "explanation": "Al **activarse**, el **mastocito** libera **histamina** preformada en segundos: vasodilatación y aumento de la permeabilidad de las vénulas. Es uno de los primeros disparadores de la respuesta aguda (por traumatismo, calor, anafilotoxinas C3a/C5a o IgE).\n\nEl **influjo de linfocitos** es propio de la inflamación **crónica**. El aumento de permeabilidad ocurre en las **vénulas poscapilares**, no en las arterias. La **lisozima** es una enzima antibacteriana de los gránulos, no un iniciador del proceso.",
+      "tags": [
+        "Inflamación aguda"
+      ]
+    },
+    {
+      "id": "p3",
+      "stem": "¿Cuál de las siguientes citoquinas induce la producción de las proteínas de fase aguda por el hígado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-6",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-14",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-18",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TGFβ",
+          "correct": false
+        }
+      ],
+      "explanation": "La **IL-6** (con ayuda de IL-1 y TNF) es la citoquina que ordena al **hepatocito** fabricar las **proteínas de fase aguda**: **proteína C reactiva**, amiloide A sérico y **fibrinógeno**. Por eso sube la PCR y la VSG en cualquier inflamación importante.\n\nLa **IL-18** favorece la producción de IFN-γ (respuesta Th1), el **TGF-β** es antiinflamatorio y profibrótico, y la **IL-14** actúa sobre linfocitos B; ninguna es la señal principal de la fase aguda.",
+      "tags": [
+        "Respuesta sistémica"
+      ]
+    },
+    {
+      "id": "p4",
+      "stem": "En relación a las funciones de la histamina, marque la opción verdadera:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Induce la expresión de moléculas de adhesión en el endotelio",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Causa constricción de arteriolas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "No tiene efecto sobre la permeabilidad de las vénulas post capilares",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tiene efecto quimiotáctico sobre los neutrófilos",
+          "correct": false
+        }
+      ],
+      "explanation": "La **histamina** hace que la célula endotelial saque a su superficie la **P-selectina** guardada en los cuerpos de Weibel-Palade: es una **molécula de adhesión** que inicia el rodamiento de los leucocitos. Por eso esta es la verdadera.\n\nSus otros efectos van al revés de lo que dicen las alternativas: **dilata** las arteriolas (no las contrae), su efecto principal es **aumentar la permeabilidad de las vénulas poscapilares** y **no es un quimiotáctico** de neutrófilos (esos son C5a, LTB4 e IL-8).",
+      "tags": [
+        "Inflamación aguda"
+      ]
+    },
+    {
+      "id": "p5",
+      "stem": "Paciente mujer de 35 años, con historia de infección urinaria alta (pielonefritis), usted sospecha que esta está entrando a un cuadro de Síndrome Inflamatorio Sistémico (SIRS). Solicita varios análisis de sangre, de los siguientes resultados ¿cuáles estarían elevados?:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Número de leucocitos, Proteína C Reactiva, IL-6, C5a",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Histamina, albúmina, IL-10, IL-4",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Fibrinógeno, Fosfatasa Alcalina, Bilirrubina",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **respuesta inflamatoria sistémica** suben los **leucocitos** (leucocitosis), la **proteína C reactiva** (fase aguda), la **IL-6** (la citoquina que la induce) y el **C5a** (el complemento se activa por la infección bacteriana). Es el único grupo en que todo aumenta.\n\nEn la b, la **albúmina** es un reactante de fase aguda **negativo**: baja. En la c, el fibrinógeno sí sube, pero la **fosfatasa alcalina** y la **bilirrubina** hablan de colestasis, no de SIRS.",
+      "tags": [
+        "Respuesta sistémica",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p6",
+      "stem": "Paciente sexo masculino con un defecto genético caracterizado por deficiencia de integrinas en los leucocitos polimorfonucleares (PMN), sufre de una infección pulmonar bacteriana por neumococo, señale cuál de las opciones es la correcta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Presentará leucocitosis (número de leucocitos aumentado en sangre) a predominio de PMN y ausencia de PMN en el tejido infectado.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Número de leucocitos PMN normales en sangre y presencia de abundantes PMN en el tejido infectado.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Leucocitosis a predominio de linfocitos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Leucocitosis a predominio de linfocitos",
+          "correct": false
+        }
+      ],
+      "explanation": "Es la **deficiencia de adhesión leucocitaria tipo 1** (defecto de las **integrinas β2**, CD18). Sin integrinas el neutrófilo rueda por el endotelio pero **no se adhiere firmemente ni transmigra**: se queda en la sangre.\n\nEl resultado es una **leucocitosis marcada a predominio de PMN** con **ausencia de neutrófilos en el tejido infectado** (infecciones graves sin pus). Un tejido lleno de PMN o una leucocitosis linfocitaria son justo lo contrario de lo que produce el defecto.",
+      "reviewNote": "En el examen original las alternativas c y d son idénticas («Leucocitosis a predominio de linfocitos»). Se transcriben tal cual.",
+      "tags": [
+        "Reclutamiento leucocitario",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p7",
+      "stem": "Un paciente con deficiencia congénita de C3 y con un proceso inflamatorio agudo bacteriano. Marque la opción INCORRECTA:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las bacterias son eliminadas adecuadamente por citólisis.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Los macrófagos y polimorfonucleares no pueden fagocitar eficientemente.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "No se presenta el fenómeno de quimiotaxis en el sitio de la inflamación.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El reclutamiento de polimorfonucleares en el sitio de la inflamación estará disminuido.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Los mastocitos no son eficientemente activados.",
+          "correct": false
+        }
+      ],
+      "explanation": "Sin **C3** no se forma la C5 convertasa y, por lo tanto, **no se ensambla el complejo de ataque a la membrana** (C5b-9). La **citólisis** de las bacterias queda anulada, así que decir que se eliminan adecuadamente es lo **incorrecto**.\n\nLas demás son consecuencias reales del déficit: sin **C3b** falla la **opsonización** (fagocitosis ineficiente); sin **C5a** falta un quimiotáctico clave y el **reclutamiento de PMN** disminuye; y sin las anafilotoxinas **C3a y C5a** los **mastocitos** no se activan bien.",
+      "tags": [
+        "Complemento",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p8",
+      "stem": "Ud. desea demostrar que un paciente presenta anticuerpos circulantes contra proteínas de la membrana basal del epitelio escamoso, toma una muestra de sangre del paciente, extrae el suero, incuba este suero con cortes histológicos de piel humana normal y luego incuba dicho tejido con un anti-anticuerpo marcado con un fluorocromo. La prueba que está realizando se llama:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inmunofluorescencia indirecta",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Inmunohistoquímica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Citometría de flujo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Inmunofluorescencia directa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Hibridización in-situ fluorescente (FISH)",
+          "correct": false
+        }
+      ],
+      "explanation": "Es **inmunofluorescencia indirecta**: se busca el **anticuerpo en el suero** del paciente usando un tejido **normal** como sustrato, y se revela con un segundo anticuerpo (anti-inmunoglobulina humana) marcado con fluorocromo.\n\nEn la **directa** se estudia la **biopsia del propio paciente** con el anticuerpo marcado aplicado directamente. La **inmunohistoquímica** revela con enzima y cromógeno (no fluorescencia), la **citometría de flujo** analiza células en suspensión y el **FISH** detecta secuencias de ADN, no anticuerpos.",
+      "tags": [
+        "Métodos diagnósticos"
+      ]
+    },
+    {
+      "id": "p9",
+      "stem": "Es (son) función(es) del complemento en la inflamación:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Activación de mastocitos, opsonización, vasodilatación.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Activación de células endoteliales, apoptosis.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Activación de mastocitos, inhibición del sistema de coagulación, vasoconstricción.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Activación de linfocitos y fibroblastos, citólisis",
+          "correct": false
+        }
+      ],
+      "explanation": "Las funciones inflamatorias del complemento son tres: **C3a y C5a** (anafilotoxinas) **activan mastocitos**, que liberan histamina y producen **vasodilatación** y permeabilidad; **C3b opsoniza**; y **C5a** es quimiotáctico. A eso se suma la lisis por el complejo de ataque a la membrana.\n\nEl complemento no induce **apoptosis**, no **inhibe la coagulación** ni causa **vasoconstricción**, y la activación de **linfocitos y fibroblastos** no es una de sus funciones en la inflamación.",
+      "tags": [
+        "Complemento"
+      ]
+    },
+    {
+      "id": "p10",
+      "stem": "En relación a la efusión (acumulación de líquidos en cavidades) en el proceso inflamatorio:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El exudado tiene gravedad específica > de 1.015 y concentración alta de proteínas.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "El exudado tiene gravedad específica < de 1.015 y concentración baja de proteínas.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El transudado tiene gravedad específica > de 1.015 y concentración baja de proteínas.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El transudado contiene niveles altos de Deshidrogenasa Láctica (LDH).",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El transudado posee un pH < 7.3.",
+          "correct": false
+        }
+      ],
+      "explanation": "El **exudado** sale por vasos con la **permeabilidad aumentada** (inflamación): es rico en **proteínas** y células, y por eso tiene **gravedad específica alta** (> 1.015-1.020), **LDH alta** y a veces **pH bajo**.\n\nEl **trasudado** es un ultrafiltrado del plasma por un desequilibrio de presiones (hidrostática u oncótica): **pocas proteínas**, gravedad específica **baja** (< 1.012), LDH baja y pH normal. Las alternativas b a e le atribuyen a cada uno los rasgos del otro.",
+      "tags": [
+        "Trastornos hemodinámicos",
+        "Inflamación aguda"
+      ]
+    },
+    {
+      "id": "p11",
+      "stem": "¿Qué tipo de célula favorece a la atracción y activación de los eosinófilos ante un proceso alérgico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos TH 2",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos TH 17",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Neutrófilos",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **linfocitos Th2** secretan **IL-5**, la citoquina que **activa a los eosinófilos**, e **IL-4** e IL-13, que favorecen la IgE y la producción de **eotaxina**, su quimiotáctico. Son el eje de la inflamación alérgica y de la respuesta a helmintos.\n\nLos **Th17** (IL-17) reclutan **neutrófilos**, no eosinófilos, y los **neutrófilos** no orquestan la respuesta alérgica.",
+      "reviewNote": "En el PDF la tercera alternativa aparece recortada y sólo se ven tres. Se conserva la lectura visible.",
+      "tags": [
+        "Inflamación crónica"
+      ]
+    },
+    {
+      "id": "p12",
+      "stem": "Verdadero o Falso:\n\na) Los TH1 secretan citoquinas (IFN-γ, TNF) que atraen a mayor macrófagos, convirtiéndolos en histiocitos epitelioides.\nb) Los productos bacterianos estimulan una respuesta inmunitaria, liberando citoquinas como la IL 6, IL 1 y TNF.\nc) Ante un estímulo lesivo, la primera vía que se activa es la clásica, generando la fagocitosis y muerte de numerosos microorganismos.\nd) La activación de la vía alternativa se da por IFN-γ generando la reparación de los tejidos.\ne) La histología del granuloma de tuberculosis se caracteriza solo por un granuloma con necrosis caseosa.",
+      "options": [
+        {
+          "id": "a",
+          "text": "VVVFF",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "FFFFF",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "VVVFV",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "VVVVF",
+          "correct": false
+        }
+      ],
+      "explanation": "**a) Verdadera.** El **IFN-γ** de los Th1 activa a los macrófagos y los transforma en **células epitelioides**, la base del granuloma. **b) Verdadera.** Los productos bacterianos (como el LPS) estimulan a los macrófagos a liberar **IL-1, IL-6 y TNF**.\n\n**d) Falsa:** la vía alternativa la activan las **superficies microbianas**, no el IFN-γ, y el complemento no repara tejidos. **e) Falsa:** el granuloma tuberculoso tiene además **células epitelioides, células gigantes de Langhans y una corona de linfocitos**; la necrosis caseosa no es lo único.\n\nCon a, b verdaderas y d, e falsas, la única combinación posible entre las ofrecidas es **VVVFF**. Ojo con la c: en rigor, sin anticuerpos la primera vía en activarse es la **alternativa**.",
+      "reviewNote": "La c) es discutible: sin anticuerpos previos, la vía del complemento que se activa primero es la alternativa (o la de las lectinas), no la clásica. Como ninguna alternativa ofrece VVFFF, la clave del examen (VVVFF) queda como la mejor opción.",
+      "tags": [
+        "Granulomas",
+        "Complemento"
+      ]
+    },
+    {
+      "id": "p13",
+      "stem": "En la formación del granuloma inmunitario ¿Qué tipo de célula interviene en la patogenia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos TH 1: IFN-γ",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos TH1: IL4, IL5",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos TH 2: IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos TH17: IL17",
+          "correct": false
+        }
+      ],
+      "explanation": "El **granuloma inmunitario** lo organizan los **linfocitos Th1**: reconocen el antígeno persistente (p. ej. *M. tuberculosis*) y secretan **IFN-γ**, que activa a los macrófagos y los convierte en **células epitelioides** y células gigantes.\n\nLa **IL-4 y la IL-5** son citoquinas **Th2**, no Th1; los Th2 no producen IFN-γ; y los **Th17** con su IL-17 reclutan sobre todo neutrófilos.",
+      "tags": [
+        "Granulomas"
+      ]
+    },
+    {
+      "id": "p14",
+      "stem": "¿Cuál de las siguientes afirmaciones es correcta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La congestión crónica puede causar isquemia",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La hiperemia se caracteriza por ser un proceso pasivo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La congestión se caracteriza por ser un proceso activo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La actividad física produce congestión",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La falla cardiaca congestiva produce hiperemia",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **congestión crónica** la sangre venosa se estanca y queda **mal oxigenada**: la **hipoxia** sostenida produce lesión isquémica, muerte celular y fibrosis (p. ej. el hígado en nuez moscada o el pulmón con macrófagos cargados de hemosiderina).\n\nLas demás invierten los conceptos: la **hiperemia es activa** (dilatación arteriolar, como en el ejercicio) y la **congestión es pasiva** (falla del drenaje venoso, como en la insuficiencia cardiaca congestiva).",
+      "tags": [
+        "Trastornos hemodinámicos"
+      ]
+    },
+    {
+      "id": "p15",
+      "stem": "¿Cuál de las siguientes entidades produce una efusión de tipo trasudado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Falla cardiaca congestiva",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Artritis reumatoidea",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Lupus eritematoso sistémico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tuberculosis",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Carcinoma bronquial",
+          "correct": false
+        }
+      ],
+      "explanation": "La **insuficiencia cardiaca congestiva** aumenta la **presión hidrostática** venosa y empuja fuera un ultrafiltrado pobre en proteínas: un **trasudado** (derrame pleural bilateral, edema, ascitis).\n\nLa **artritis reumatoide**, el **lupus**, la **tuberculosis** y el **carcinoma bronquial** dañan la serosa con inflamación o infiltración tumoral, así que producen **exudados**.",
+      "tags": [
+        "Trastornos hemodinámicos"
+      ]
+    },
+    {
+      "id": "p16",
+      "stem": "¿Cuál de las siguientes entidades produce una efusión de tipo exudado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tuberculosis",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Síndrome nefrótico",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Sobrecarga de fluidos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hipotiroidismo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Síndrome de malabsorción",
+          "correct": false
+        }
+      ],
+      "explanation": "La **tuberculosis** inflama la serosa y aumenta la permeabilidad vascular: produce un **exudado** rico en proteínas y linfocitos (derrame pleural tuberculoso con ADA alta).\n\nEl **síndrome nefrótico** y la **malabsorción** bajan la **presión oncótica** (hipoalbuminemia), la **sobrecarga de fluidos** eleva la hidrostática y el **hipotiroidismo** da derrames por otro desequilibrio de presiones: todos son **trasudados**.",
+      "tags": [
+        "Trastornos hemodinámicos"
+      ]
+    },
+    {
+      "id": "p17",
+      "stem": "¿Cuál de los siguientes factores de coagulación NO participa en la vía intrínseca?",
+      "options": [
+        {
+          "id": "a",
+          "text": "VII",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "XII",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "XI",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IX",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "VIII",
+          "correct": false
+        }
+      ],
+      "explanation": "El **factor VII** es el de la **vía extrínseca**: se activa al unirse al **factor tisular** y es el que mide el **tiempo de protrombina** (TP).\n\nLos factores **XII, XI, IX y VIII** son los de la **vía intrínseca**, la que mide el **TTPa**.",
+      "tags": [
+        "Trastornos hemodinámicos"
+      ]
+    },
+    {
+      "id": "p18",
+      "stem": "¿Cuál de los siguientes mecanismos adaptativos tisulares es un evento previo relacionado con mayor probabilidad con la ocurrencia de un carcinoma epidermoide en pulmón?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Metaplasia",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Atrofia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hiperplasia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hipertrofia",
+          "correct": false
+        }
+      ],
+      "explanation": "Por el humo del tabaco, el epitelio cilíndrico ciliado del bronquio se reemplaza por **epitelio escamoso**: es la **metaplasia escamosa**. Sobre ese epitelio aparecen displasia y luego el **carcinoma epidermoide**, que por eso es un tumor escamoso en un órgano que normalmente no tiene epitelio escamoso.\n\nLa **atrofia**, la **hiperplasia** y la **hipertrofia** no cambian el tipo de epitelio y no son la antesala habitual de este cáncer.",
+      "tags": [
+        "Adaptaciones celulares",
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p19",
+      "stem": "En la transición de una lesión benigna a una lesión maligna en tejidos epiteliales generalmente existe una etapa intermedia que se puede identificar histológicamente como:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Displasia",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Anaplasia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hiperplasia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hipertrofia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Apoptosis",
+          "correct": false
+        }
+      ],
+      "explanation": "La **displasia** es el crecimiento desordenado del epitelio (pérdida de maduración, atipia nuclear, mitosis por encima de la capa basal) **sin invasión** de la membrana basal. Es la lesión **preneoplásica** que se identifica en biopsias antes del carcinoma.\n\nLa **anaplasia** es la falta de diferenciación de un tumor **ya maligno**; la **hiperplasia** y la **hipertrofia** son adaptaciones; y la **apoptosis** es una forma de muerte celular.",
+      "tags": [
+        "Neoplasia",
+        "Adaptaciones celulares"
+      ]
+    },
+    {
+      "id": "p20",
+      "stem": "¿Cuál de las siguientes características corresponderá, con mayor probabilidad, a una neoplasia maligna originada en mutación de genes reparadores del ADN?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Estará asociada a herencia familiar",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Se originará de mutaciones inducidas por virus",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Las células neoplásicas serán insensibles a mecanismos apoptóticos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se manifestará en etapas tardías de la vida",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Tendrá un índice replicativo muy elevado",
+          "correct": false
+        }
+      ],
+      "explanation": "Muchos defectos de **genes reparadores del ADN** se **heredan**: el **síndrome de Lynch** (genes de reparación de errores de emparejamiento), **BRCA1/2** o el **xeroderma pigmentoso**. De ahí la **agregación familiar** de estos cánceres.\n\nNo se deben a **virus**, la **resistencia a la apoptosis** es otro rasgo distinto del cáncer y el índice replicativo no los define. Además, al ser hereditarios suelen aparecer **más temprano**, no en etapas tardías de la vida.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p21",
+      "stem": "¿Cuál de los siguientes es un gen supresor tumoral que detiene el ciclo celular a través de la mediación de p21 y estimula la apoptosis a través de la inducción de la expresión del gen BAX?",
+      "options": [
+        {
+          "id": "a",
+          "text": "P53",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "P16",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "APC",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "MYC",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "MSH-1",
+          "correct": false
+        }
+      ],
+      "explanation": "Es **p53**, el «guardián del genoma». Ante un daño del ADN induce la transcripción de **p21**, que inhibe los complejos ciclina-CDK y **detiene el ciclo en G1**; si el daño no se repara, induce **BAX** y otros genes proapoptóticos y la célula muere por **apoptosis**.\n\n**p16** también frena el ciclo, pero inhibiendo directamente CDK4/6, no a través de p21. **APC** controla la β-catenina, **MYC** es un **oncogén** y los genes **MSH** reparan errores de emparejamiento.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p22",
+      "stem": "En una biopsia líquida de un paciente con un tumor de pulmón se identifica ADN neoplásico con una mutación específica del gen que codifica el receptor de factor de crecimiento epidérmico. El mecanismo relacionado con el origen y progresión de esta neoplasia, con mayor probabilidad está vinculado a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Activación de un oncogen",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Inhibición de un gen supresor tumoral",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Alteración de genes reparadores del ADN",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Inhibición de la apoptosis",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Estimulación de la angiogénesis",
+          "correct": false
+        }
+      ],
+      "explanation": "El **receptor del factor de crecimiento epidérmico (EGFR)** es una tirosina cinasa: una mutación que lo deja **activo permanentemente** convierte al gen en un **oncogén**. Es típica del adenocarcinoma de pulmón en no fumadores y se trata con inhibidores de tirosina cinasa (gefitinib, osimertinib).\n\nNo es un gen supresor ni un gen reparador, y la inhibición de la apoptosis o la angiogénesis son consecuencias posibles, no el mecanismo directo de esta mutación.",
+      "tags": [
+        "Neoplasia",
+        "Métodos diagnósticos"
+      ]
+    },
+    {
+      "id": "p23",
+      "stem": "En un modelo experimental se descubre accidentalmente una molécula que tiene la capacidad de estimular la salida de citocromo c de las mitocondrias en las células neoplásicas. Esta molécula tendría mayor efectividad en el tratamiento de cánceres asociados a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inhibición de la apoptosis",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Activación de un oncogen",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inhibición de un gen supresor tumoral",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Alteración de genes reparadores del ADN",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Estimulación de la angiogénesis",
+          "correct": false
+        }
+      ],
+      "explanation": "La salida del **citocromo c** de la mitocondria dispara la **vía intrínseca de la apoptosis** (apoptosoma con Apaf-1 y caspasa-9). Esa molécula sería más útil en los tumores que sobreviven porque **tienen bloqueada la apoptosis**, como el linfoma folicular, con **BCL-2** sobreexpresado por la t(14;18): BCL-2 es justamente lo que impide que el citocromo c salga.\n\nEn las demás alternativas el defecto no está en ese paso, así que liberar citocromo c no corrige el problema de fondo.",
+      "tags": [
+        "Apoptosis",
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p24",
+      "stem": "Defectos a nivel del emparejamiento de nucleótidos, de la escisión de nucleótidos y de la recombinación homóloga están relacionados con el origen y progresión de cánceres caracterizados por:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inestabilidad genómica",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Inhibición de la apoptosis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Activación de un oncogen",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Inhibición de un gen supresor tumoral",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Estimulación de la angiogénesis",
+          "correct": false
+        }
+      ],
+      "explanation": "Los tres son **mecanismos de reparación del ADN**: el emparejamiento de nucleótidos (**síndrome de Lynch**, inestabilidad de microsatélites), la escisión de nucleótidos (**xeroderma pigmentoso**) y la recombinación homóloga (**BRCA1/2**). Cuando fallan, las mutaciones se acumulan: es la **inestabilidad genómica**, el rasgo que facilita los demás.\n\nLa inhibición de la apoptosis, los oncogenes, los supresores tumorales y la angiogénesis son otros rasgos del cáncer que no dependen de esos defectos de reparación.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p25",
+      "stem": "Paciente de 60 años con tumoración de 15 cm que deforma el pie izquierdo, con características invasivas en los estudios de imágenes. Usted recomienda inicialmente ... (marque la mejor respuesta):",
+      "options": [
+        {
+          "id": "a",
+          "text": "Realizar una biopsia incisional para determinar la estirpe del tumor",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Realizar una biopsia excisional para diagnóstico y tratamiento",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Realizar una biopsia por congelación en sala de operaciones",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Realizar una biopsia por aspiración con aguja fina",
+          "correct": false
+        }
+      ],
+      "explanation": "Una masa de **15 cm, invasiva**, en el pie de un adulto hace sospechar un **sarcoma**. Lo primero es una **biopsia incisional** (sacar un fragmento) para saber la **estirpe y el grado** antes de planificar la cirugía definitiva.\n\nLa **excisional** (sacar la lesión entera) se reserva para lesiones pequeñas. La **biopsia por congelación** es intraoperatoria, para márgenes o diagnósticos urgentes, no el estudio inicial. La **aspiración con aguja fina** da citología sin arquitectura, insuficiente para tipificar y graduar un sarcoma.",
+      "tags": [
+        "Métodos diagnósticos",
+        "Neoplasia",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p26",
+      "stem": "El mejor fijador de tejidos es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Formol al 10%",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Formol al 40%",
+          "correct": false
+        }
+      ],
+      "explanation": "El fijador estándar de las biopsias es el **formol al 10 %** (idealmente tamponado), que equivale a **formaldehído al 4 %**: fija las proteínas por entrecruzamiento, conserva la morfología y es compatible con la inmunohistoquímica y muchas técnicas moleculares.\n\nEl **formol al 40 %** es la solución **concentrada de fábrica**, que se diluye para preparar el de 10 %; usado tal cual endurece y retrae el tejido.",
+      "reviewNote": "En el PDF la página corta el resto de alternativas de esta pregunta; sólo se conservan las dos visibles.",
+      "tags": [
+        "Métodos diagnósticos"
+      ]
+    },
+    {
+      "id": "p27",
+      "stem": "Biopsia renal de paciente de 50 años, que cursa con proteinuria severa. Antecedente de tuberculosis tratada hace 8 años. Marque la mejor respuesta (ver imagen).",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2022/q27_biopsia_renal.avif",
+      "imageAlt": "Corte de riñón teñido con H&E: dos glomérulos ocupados por un material rosado, amorfo y acelular, rodeados de túbulos con cilindros",
+      "imageW": 800,
+      "imageH": 568,
+      "options": [
+        {
+          "id": "a",
+          "text": "Depósito de material proteináceo extracelular. Comprobar con tinción Rojo de Congo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Formación de granulomas por reactivación de la enfermedad. Realizar coloración Ziehl Neelsen",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Formación de cicatriz colágena. Comprobar con tinción PAS",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La imagen histológica es de una pielonefritis crónica",
+          "correct": false
+        }
+      ],
+      "explanation": "Los glomérulos están reemplazados por un **material eosinófilo, amorfo y acelular**: es **amiloide**, un depósito de **proteína extracelular**. En un paciente con **tuberculosis** antigua y **proteinuria severa**, lo esperable es la **amiloidosis secundaria (AA)**, por la inflamación crónica. Se confirma con **rojo Congo**, que da birrefringencia verde manzana con luz polarizada.\n\nNo hay granulomas (células epitelioides ni gigantes), así que no hay reactivación. El **colágeno** se ve con tricrómico de Masson, no con PAS. La **pielonefritis crónica** mostraría inflamación intersticial y túbulos «tiroidizados», no glomérulos llenos de material amorfo.",
+      "tags": [
+        "Acumulaciones y calcificación",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p28",
+      "stem": "Analice la biopsia y marque la respuesta correcta (ver imagen).",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2022/q28_esteatosis_hepatica.avif",
+      "imageAlt": "Hígado con H&E: hepatocitos con grandes vacuolas claras y redondas que desplazan el núcleo a la periferia",
+      "imageW": 800,
+      "imageH": 593,
+      "options": [
+        {
+          "id": "a",
+          "text": "Acumulación intracelular de triglicéridos en paciente con obesidad",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Macrófagos cargados de colesterol en paciente con hipercolesterolemia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Depósitos de ésteres de colesterol en un paciente con enfermedad de Niemann-Pick",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Depósitos de triglicéridos en paciente con hígado graso agudo del embarazo.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los hepatocitos tienen **grandes vacuolas claras** y redondas que **empujan el núcleo a la periferia**: es la **esteatosis macrovesicular**, una acumulación **intracelular de triglicéridos**. La causa más frecuente hoy es la **obesidad** (enfermedad hepática grasa asociada a disfunción metabólica), junto al alcohol.\n\nLos **macrófagos cargados de colesterol** son las células espumosas de la aterosclerosis. En **Niemann-Pick** se acumulan sobre todo esfingomielina y colesterol **en macrófagos**, de citoplasma espumoso fino. El **hígado graso agudo del embarazo** da esteatosis **microvesicular**, con gotitas pequeñas y núcleo central.",
+      "tags": [
+        "Acumulaciones y calcificación"
+      ]
+    },
+    {
+      "id": "p29",
+      "stem": "Paciente de 20 años es operado de emergencia por una Apendicitis Aguda. Al examen microscópico se observa (ver las 2 imágenes):",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2022/q29_apendicitis_macro.avif",
+      "imageAlt": "Panorámica del apéndice con H&E: pared inflamada y luz ocupada por material necrótico y purulento",
+      "imageW": 800,
+      "imageH": 577,
+      "extraImages": [
+        {
+          "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2022/q29_apendicitis_micro.avif",
+          "alt": "Mayor aumento de la pared del apéndice: haces de músculo liso infiltrados por abundantes neutrófilos de núcleo segmentado",
+          "w": 800,
+          "h": 522
+        }
+      ],
+      "options": [
+        {
+          "id": "a",
+          "text": "Polimorfonucleares en la muscular propia y necrosis licuefactiva",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Necrosis enzimática y gran cantidad de leucocitos en todas las capas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Presencia de neutrófilos que se limitan a la mucosa, necrosis caseosa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Necrosis fibrinoide por lesión endotelial",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Extensa necrosis coagulativa extensa",
+          "correct": false
+        }
+      ],
+      "explanation": "El criterio histológico de **apendicitis aguda** es la presencia de **neutrófilos en la muscular propia** (la inflamación atraviesa la pared), que es lo que muestra la segunda imagen. Las enzimas de los neutrófilos digieren el tejido y dan **necrosis licuefactiva** (supuración), visible en la luz de la panorámica.\n\nLa **necrosis enzimática** es la grasa del páncreas; la **caseosa**, la de la tuberculosis; la **fibrinoide**, la de las vasculitis; y la **coagulativa** extensa, la del infarto. Neutrófilos limitados a la mucosa no bastan para el diagnóstico.",
+      "tags": [
+        "Inflamación aguda",
+        "Necrosis",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p30",
+      "stem": "Mujer 60 años acude por sangrado vaginal. Ecografía: endometrio mide 1 mm. Se realiza una biopsia, marque la mejor respuesta (ver imagen).",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2022/q30_endometrio.avif",
+      "imageAlt": "Biopsia de endometrio con H&E: estroma compacto con escasas glándulas dilatadas de epitelio aplanado",
+      "imageW": 800,
+      "imageH": 556,
+      "options": [
+        {
+          "id": "a",
+          "text": "La desaparición de glándulas es debido a apoptosis fisiológica",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La paciente presenta hiperplasia endometrial leve",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Ha ocurrido una atrofia patológica por falta de estímulo hormonal",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Estos cambios se acompañan de edema e inflamación neutrofílica",
+          "correct": false
+        }
+      ],
+      "explanation": "Un endometrio de **1 mm** en una mujer de 60 años es un **endometrio atrófico**, la causa más frecuente de sangrado posmenopáusico: glándulas escasas, a veces dilatadas, con epitelio aplanado. Al retirarse los estrógenos, las células endometriales mueren por **apoptosis fisiológica**, el mismo mecanismo de la involución de los tejidos dependientes de hormonas.\n\nPor eso la c falla: la atrofia por menopausia es **fisiológica**, no patológica. No hay **hiperplasia** (el endometrio sería grueso) ni **edema con neutrófilos**.",
+      "tags": [
+        "Adaptaciones celulares",
+        "Apoptosis",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p31",
+      "stem": "Un hombre de 38 años se somete a un examen médico. Tiene una radiografía de tórax de rutina que muestra un nódulo de 2 cm en el lóbulo inferior derecho. El nódulo tiene calcificaciones focales. Se realiza una resección en cuña del nódulo. En el examen microscópico, el nódulo muestra necrosis caseosa y calcificación. ¿Cuál de los siguientes procesos explica la aparición de la deposición de calcio?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Calcificación distrófica",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Apoptosis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hipercalcemia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Calcificación metastásica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Ingesta excesiva de calcio",
+          "correct": false
+        }
+      ],
+      "explanation": "El calcio se deposita sobre un tejido **ya necrótico** (aquí, la **necrosis caseosa** de un granuloma tuberculoso antiguo) con el **calcio sérico normal**: eso es **calcificación distrófica**.\n\nLa **calcificación metastásica** ocurre en tejidos **sanos** cuando hay **hipercalcemia**, que también es lo que causaría una ingesta excesiva de calcio. La **apoptosis** no explica el depósito de calcio en un nódulo caseoso.",
+      "tags": [
+        "Acumulaciones y calcificación",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p32",
+      "stem": "Paciente de 50 años, con desnutrición crónica, fue operada hace 2 semanas por una hernia inguinal estrangulada. A pesar de que la herida no muestra signos de infección, hasta ahora no cierra. ¿Qué factor puede estar interviniendo en el retraso de la cicatrización en este caso? (marque la mejor respuesta)",
+      "options": [
+        {
+          "id": "a",
+          "text": "Déficit de proteínas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Mala perfusión",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Localización de la herida",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Antecedente de formación de cicatriz queloide",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Infección asociada",
+          "correct": false
+        }
+      ],
+      "explanation": "La **desnutrición crónica** deja al paciente sin **proteínas** (y a menudo sin vitamina C y zinc), que son la materia prima del **colágeno** y del tejido de granulación. Sin ellas la herida no progresa aunque no esté infectada.\n\nEl enunciado descarta la **infección**. La región inguinal está bien perfundida, su localización no es desfavorable y el **queloide** es un exceso de cicatrización, no un retraso.",
+      "tags": [
+        "Reparación y cicatrización",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p33",
+      "stem": "Son células / tejidos estables:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células endoteliales / tejido óseo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Músculo esquelético / epitelio escamoso",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Enterocitos / condrocitos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Neuronas olfatorias / neuronas motoras",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Músculo cardiaco / músculo esquelético",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células **estables** están quietas en G0 pero pueden volver a dividirse ante una lesión: parénquima de hígado y riñón, **células endoteliales**, fibroblastos, músculo liso y tejido conectivo como el **hueso**.\n\nEl **epitelio escamoso** y los **enterocitos** son **lábiles** (se dividen siempre). El **músculo esquelético**, el **cardiaco** y las **neuronas motoras** son **permanentes**, y cada alternativa incorrecta mezcla alguno de ellos.",
+      "tags": [
+        "Reparación y cicatrización"
+      ]
+    },
+    {
+      "id": "p34",
+      "stem": "Paciente mujer de 15 años con linfadenopatía cervical eritematosa que fistuliza al exterior. Se toma una biopsia del ganglio, el cual presenta los cambios mostrados en la imagen. Según los hallazgos histopatológicos, marcar la alternativa correcta (ver imagen).",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2022/q34_granuloma_ganglio.avif",
+      "imageAlt": "Ganglio linfático con H&E: centro rosado y granular sin núcleos, rodeado de células epitelioides alargadas y, por fuera, linfocitos",
+      "imageW": 800,
+      "imageH": 584,
+      "options": [
+        {
+          "id": "a",
+          "text": "Se observa una estructura con necrosis central rodeada por células epitelioides y linfocitos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "En la necrosis central se observa siluetas de las células tumorales",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se evidencia una necrosis de tipo licuefactiva central rodeada por linfocitos y células epitelioides",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Formación de granuloma tipo cuerpo extraño",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Se trata de estructuras redondeadas con centro necrótico purulento, que tienen una corona de linfocitos",
+          "correct": false
+        }
+      ],
+      "explanation": "Una adenopatía cervical que **fistuliza** en una adolescente es la **escrófula** (linfadenitis tuberculosa). La imagen muestra un **granuloma**: centro de **necrosis** rosada, granular y sin núcleos (caseosa), rodeado de **células epitelioides** alargadas y, por fuera, de **linfocitos**.\n\nNo hay **siluetas de células tumorales**. La necrosis es **caseosa**, no licuefactiva. No hay material extraño para un granuloma **a cuerpo extraño**, y un centro **purulento** (lleno de neutrófilos) sería un granuloma supurativo, como el de la enfermedad por arañazo de gato.",
+      "tags": [
+        "Granulomas",
+        "Necrosis",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p35",
+      "stem": "Es una característica de este tipo de inflamación, marque la mejor respuesta (ver imagen).",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-1-2022/q35_inflamacion_cronica.avif",
+      "imageAlt": "Tejido renal con H&E: denso infiltrado intersticial de linfocitos y células plasmáticas entre túbulos y glomérulos",
+      "imageW": 800,
+      "imageH": 608,
+      "options": [
+        {
+          "id": "a",
+          "text": "Tiene duración de semanas a meses",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Es no específica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Predominan neutrófilos y macrófagos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Aumento de la permeabilidad vascular",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Exudación y edema",
+          "correct": false
+        }
+      ],
+      "explanation": "La imagen muestra un **infiltrado de células mononucleares** (linfocitos y células plasmáticas) en el intersticio: es **inflamación crónica**, cuya característica es durar **semanas a meses**, con destrucción de tejido y reparación en paralelo.\n\nLa **inespecificidad**, el predominio de **neutrófilos**, el **aumento de la permeabilidad vascular** y la **exudación con edema** son rasgos de la inflamación **aguda**. La crónica, en cambio, es **específica** porque participa la inmunidad adaptativa.",
+      "tags": [
+        "Inflamación crónica"
+      ]
+    },
+    {
+      "id": "p36",
+      "stem": "Biopsia de estómago, paciente de 35 años. Marque la mejor respuesta (ver imagen).",
+      "options": [
+        {
+          "id": "a",
+          "text": "La infección crónica por H. pylori produce estrés oxidativo y con esto, lesión celular",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Previo al desarrollo de adenocarcinoma se observa una hiperplasia glandular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El Helicobacter pylori sólo se ha visto relacionado al desarrollo de adenocarcinoma gástrico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El efecto carcinogénico del H. pylori es debido a inhibición de la proteína Rb",
+          "correct": false
+        }
+      ],
+      "explanation": "La infección crónica por ***H. pylori*** mantiene una gastritis con neutrófilos y macrófagos que liberan **especies reactivas de oxígeno**: el **estrés oxidativo** daña el ADN del epitelio y es uno de los motores de su efecto carcinogénico.\n\nLa secuencia al adenocarcinoma es gastritis crónica → **atrofia → metaplasia intestinal → displasia**, no una hiperplasia glandular. *H. pylori* también causa el **linfoma MALT**, así que no se asocia sólo al adenocarcinoma. La **inhibición de Rb** es el mecanismo de la proteína E7 del **VPH**, no de *H. pylori* (que actúa con CagA).",
+      "reviewNote": "El enunciado dice «ver imagen», pero en el PDF original no hay ninguna imagen asociada a esta pregunta.",
+      "tags": [
+        "Neoplasia",
+        "Inflamación crónica",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p37",
+      "stem": "¿Cuál de las siguientes exposiciones está más relacionada con el cáncer de tiroides e infertilidad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Radioterapia en la infancia temprana",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Infección temprana por Epstein barr virus",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Exposición prolongada a hidrocarburos aromáticos policíclicos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Exposición temprana a aminas aromáticas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Uso de agentes alquilantes en la infancia",
+          "correct": false
+        }
+      ],
+      "explanation": "La **radiación ionizante** en la infancia es el gran factor de riesgo del **carcinoma papilar de tiroides** (la tiroides infantil es muy radiosensible) y, al alcanzar las gónadas, causa **infertilidad**.\n\nEl **virus de Epstein-Barr** se asocia a linfomas y al carcinoma nasofaríngeo, los **hidrocarburos aromáticos policíclicos** al cáncer de pulmón y las **aminas aromáticas** al de vejiga. Los **agentes alquilantes** sí producen infertilidad, pero su cáncer típico es la **leucemia**, no el de tiroides.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p38",
+      "stem": "Referente a las fases de la carcinogénesis química, marque la respuesta correcta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El resultado final de la iniciación es un daño no letal e irreparable del ADN",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Al final de la iniciación tenemos células neoplásicas que evolucionarán invariablemente a cáncer",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Si transcurren algunos años de la exposición a un agente iniciador, el daño del ADN desaparece, y con ello el riesgo de malignización.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El daño en el ADN causado por los agentes promotores es suficiente para que se genere una neoplasia maligna",
+          "correct": false
+        }
+      ],
+      "explanation": "La **iniciación** es un **daño permanente del ADN** (una mutación) que la célula **no repara y al que sobrevive**: por eso es **no letal e irreparable**.\n\nUna célula iniciada **no es todavía neoplásica** ni progresa inevitablemente: necesita **promotores**. El daño **no desaparece** con los años, porque la mutación queda. Y los **promotores** no dañan el ADN: estimulan la proliferación de la célula ya iniciada, y por sí solos no bastan para producir un cáncer.",
+      "tags": [
+        "Neoplasia"
+      ]
+    },
+    {
+      "id": "p39",
+      "stem": "Paciente mujer de 70 años, agricultora, con lesión en rostro compatible con carcinoma epidermoide. Marque la mejor respuesta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lesión causada por exposición total acumulada de radiación ultravioleta",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Lesión causada por exposición intensa intermitente a los rayos UVB",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los rayos UVB son considerados dentro del grupo 4 de agentes carcinogénicos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El antecedente de exposición solar no significa un riesgo para esta neoplasia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La causa es un daño directo de genes antitumorales como p53",
+          "correct": false
+        }
+      ],
+      "explanation": "El **carcinoma epidermoide** de piel se relaciona con la **exposición total acumulada** a la radiación UV: aparece en zonas expuestas (cara) de personas mayores con trabajo al aire libre, como una agricultora de 70 años.\n\nLa exposición **intensa e intermitente** (quemaduras) se asocia al **melanoma** y al carcinoma basocelular. La radiación UV es **grupo 1** de la IARC (carcinógeno comprobado), no grupo 4, y la exposición solar es su principal factor de riesgo. La UV sí muta **TP53**, pero ese es el mecanismo, no la causa que se pregunta.",
+      "tags": [
+        "Neoplasia",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p40",
+      "stem": "Un amigo cercano le pide su ayuda para interpretar el resultado de anatomía patológica de su padre, recientemente operado por cáncer de estómago, ante esto usted le dice (marque la mejor opción):",
+      "options": [
+        {
+          "id": "a",
+          "text": "La estadificación de las neoplasias malignas sólidas se basa en el tamaño de la lesión, compromiso de los nódulos linfáticos regionales y la presencia de metástasis",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "El grado de diferenciación no guarda relación con el comportamiento clínico local",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Para la estadificación del tumor es necesario conocer el grado de diferenciación tumoral",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Lo más importante para la gradación de un tumor es el índice mitótico",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Una correcta gradación de un tumor es más importante que una correcta estadificación.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **estadificación** (sistema **TNM**) se basa en el **tamaño y la extensión** del tumor primario (T), el compromiso de los **ganglios linfáticos regionales** (N) y las **metástasis** a distancia (M).\n\nEl **grado de diferenciación** sí se relaciona con el comportamiento del tumor, pero no es necesario para estadificar. La gradación considera sobre todo la **diferenciación** y la atipia, no sólo el índice mitótico. Y la **estadificación** tiene **más valor pronóstico** que la gradación, no menos.",
+      "tags": [
+        "Neoplasia",
+        "Caso clínico"
+      ]
+    }
+  ]
+}

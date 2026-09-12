@@ -281,6 +281,13 @@ consciente a la regla de no recomprimir un AVIF—: 1200 px, AVIF q35 con croma 
 de q35 se empastan los núcleos. El JSON se genera desde el HTML con un script que copia enunciados
 y alternativas tal cual.
 
+El **2022** (`parcial-1-2022`, gratis) llegó igual que el 2020 A —HTML de un PDF con la correcta
+resaltada, que vuelve a ser **siempre la primera**—, pero con dos trampas nuevas: el HTML pedía
+`.png`/`.jpg` y las imágenes venían en `.avif` con el mismo nombre salvo dos (`Q12_…` en
+mayúscula y `…_micro4`), y la 29 pide «ver las 2 imágenes». El V/F de la 12 venía como captura de
+texto y se transcribió al `stem`. 40 preguntas, 5 con `reviewNote` (alternativas duplicadas o
+recortadas por el PDF, una «ver imagen» sin imagen, y la c) de la 12, discutible).
+
 El de 2024 **conserva la clave original
 `patologia/parcial-1`, sin sufijo**: renombrarla borraría los intentos que los alumnos ya tienen en
 `localStorage`. Los demás van como `parcial-1-<año>`, del más reciente al más antiguo. Para añadir
@@ -335,7 +342,10 @@ igual y se avisa con `reviewNote`, que pinta el badge «Pendiente a revisión» 
 `next/image` + `sizes="(max-width: 600px) 100vw, 560px"`. Un banqueo entero llega como carpeta y
 lo sube `scripts/upload-examen-img-dir.mjs --dir <carpeta> --prefix <ruta>`, que imprime el mapa
 `archivo → { url, w, h }` listo para pegar (las medidas evitan el layout shift al cambiar de
-pregunta). **Un `.avif`/`.webp` de origen se sube tal cual** —recomprimirlo sería una segunda
+pregunta). Una pregunta con **varias imágenes** lleva la primera en `image` y el resto en
+`extraImages: [{ src, alt, w, h }]`: van lado a lado en el ancho de una sola (`.figuras`, se apilan
+en móvil) y cada una se amplía por separado; apiladas a 620 px empujaban las alternativas a
+dos pantallas. **Un `.avif`/`.webp` de origen se sube tal cual** —recomprimirlo sería una segunda
 pérdida sobre un formato lossy—; los `.png`/`.jpg` sí pasan por `sharp` a WEBP q82.
 `upload-examen-img.mjs` es el script viejo, con su lista escrita a mano.
 

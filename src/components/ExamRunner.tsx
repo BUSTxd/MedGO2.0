@@ -30,6 +30,11 @@ interface ExamQuestion {
   /** Dimensiones intrínsecas de la imagen (para evitar layout shift). */
   imageW?: number;
   imageH?: number;
+  /**
+   * Imágenes que acompañan a `image` cuando el enunciado pide ver varias
+   * («ver las 2 imágenes»). Van lado a lado, cada una ampliable por separado.
+   */
+  extraImages?: { src: string; alt?: string; w?: number; h?: number }[];
   options: ExamOption[];
   explanation?: string;
   explanationImage?: string;
@@ -638,6 +643,24 @@ function VisorImagen({ img, onClose }: { img: Ampliada; onClose: () => void }) {
   return createPortal(visor, destino);
 }
 
+/** `sizes` de una figura sola (a todo el bloque) y de las que van de a dos por fila. */
+const SIZES_UNA = '(max-width: 600px) 100vw, 620px';
+const SIZES_PAR = '(max-width: 600px) 100vw, 310px';
+
+/** Todas las imágenes del enunciado, en orden: `image` primero y luego `extraImages`. */
+function figurasDe(q: ExamQuestion): Ampliada[] {
+  if (!q.image) return [];
+  return [
+    { src: q.image, alt: q.imageAlt ?? 'Imagen de la pregunta', w: q.imageW ?? 1000, h: q.imageH ?? 750 },
+    ...(q.extraImages ?? []).map((x, i) => ({
+      src: x.src,
+      alt: x.alt ?? `Imagen ${i + 2} de la pregunta`,
+      w: x.w ?? 1000,
+      h: x.h ?? 750,
+    })),
+  ];
+}
+
 /** Figura ampliable: la imagen es el botón, con su chip «Ampliar» en la esquina. */
 function FiguraAmpliable({
   src,
@@ -646,6 +669,7 @@ function FiguraAmpliable({
   h,
   onAmpliar,
   variante = 'pregunta',
+  sizes = SIZES_UNA,
 }: {
   src: string;
   alt: string;
@@ -653,6 +677,7 @@ function FiguraAmpliable({
   h: number;
   onAmpliar: (img: Ampliada) => void;
   variante?: 'pregunta' | 'explicacion';
+  sizes?: string;
 }) {
   return (
     <button
@@ -669,7 +694,7 @@ function FiguraAmpliable({
         alt={alt}
         width={w}
         height={h}
-        sizes="(max-width: 600px) 100vw, 620px"
+        sizes={sizes}
         className={styles.figuraImg}
       />
       <span className={styles.figuraChip}>
@@ -1062,19 +1087,20 @@ export default function ExamRunner({
               El navegador descarga la misma variante optimizada → cache hit. */}
           {deck && (
             <div aria-hidden className={styles.preloadLayer}>
-              {deck.map(q =>
-                q.image ? (
+              {deck.flatMap(q => {
+                const figuras = figurasDe(q);
+                return figuras.map((f, i) => (
                   <Image
-                    key={q.id}
-                    src={q.image}
+                    key={`${q.id}-${i}`}
+                    src={f.src}
                     alt=""
-                    width={q.imageW ?? 1000}
-                    height={q.imageH ?? 750}
-                    sizes="(max-width: 600px) 100vw, 620px"
+                    width={f.w}
+                    height={f.h}
+                    sizes={figuras.length > 1 ? SIZES_PAR : SIZES_UNA}
                     loading="eager"
                   />
-                ) : null,
-              )}
+                ));
+              })}
             </div>
           )}
 
@@ -1186,15 +1212,19 @@ export default function ExamRunner({
 
                   <p className={styles.stem}>{current.stem}</p>
 
-                  {current.image && (
-                    <FiguraAmpliable
-                      src={current.image}
-                      alt={current.imageAlt ?? 'Imagen de la pregunta'}
-                      w={current.imageW ?? 1000}
-                      h={current.imageH ?? 750}
-                      onAmpliar={setAmpliada}
-                    />
-                  )}
+                  {(() => {
+                    const figuras = figurasDe(current);
+                    if (figuras.length === 0) return null;
+                    const lista = figuras.map(f => (
+                      <FiguraAmpliable
+                        key={f.src}
+                        {...f}
+                        sizes={figuras.length > 1 ? SIZES_PAR : SIZES_UNA}
+                        onAmpliar={setAmpliada}
+                      />
+                    ));
+                    return figuras.length > 1 ? <div className={styles.figuras}>{lista}</div> : lista;
+                  })()}
 
                   <div className={styles.opciones}>
                     {current.options.map((opt, i) => {

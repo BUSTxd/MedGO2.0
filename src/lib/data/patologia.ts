@@ -475,17 +475,20 @@ export const semanas: Semana[] = [
         // PDF empieza en la 2—, 10 del práctico y sin la micrografía del 7; B
         // (`-2020-b`), 49 preguntas —falta la 20, que el PDF no desarrolla—, 10
         // del práctico, y la 18 repite a la 17.
+        // 2022 (`-2022`), 40 preguntas, 7 imágenes: la 29 lleva dos (la segunda
+        // en `extraImages`) y el V/F de la 12 va transcrito en el enunciado.
         examen: {
           key: 'patologia/parcial-1',
           free: true,
-          groups: ['patologia/parcial-1-2020', 'patologia/parcial-1-2020-b'],
+          groups: ['patologia/parcial-1-2022', 'patologia/parcial-1-2020', 'patologia/parcial-1-2020-b'],
           labels: {
             'patologia/parcial-1': '2024',
+            'patologia/parcial-1-2022': '2022',
             'patologia/parcial-1-2020': '2020 A',
             'patologia/parcial-1-2020-b': '2020 B',
           },
-          // El 2024 y el 2020 B quedan abiertos (con el aviso de suscripción cada
-          // 7 preguntas); el 2020 A es del plan Interno.
+          // El 2024, el 2022 y el 2020 B quedan abiertos (con el aviso de
+          // suscripción cada 7 preguntas); el 2020 A es del plan Interno.
           dePago: ['patologia/parcial-1-2020'],
         },
       },

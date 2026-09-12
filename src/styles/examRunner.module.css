@@ -628,6 +628,19 @@
   transform: translateY(-1px);
 }
 
+/* Varias imágenes en un mismo enunciado («ver las 2 imágenes»): lado a lado en
+   el ancho de una sola, para que las alternativas no queden a dos pantallas de
+   distancia. En móvil se apilan solas (cada columna pide 220 px). */
+.figuras {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: start;
+  gap: 12px;
+  max-width: 620px;
+  margin: 0 0 26px 0;
+}
+.figuras .figura { margin: 0; }
+
 /* Dentro de la explicación la figura no se eleva: ese bloque lleva
    `overflow: hidden` mientras se despliega y se comería la sombra del hover. */
 .figuraExplicacion { max-width: 520px; margin-bottom: 0; }
