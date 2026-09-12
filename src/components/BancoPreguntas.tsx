@@ -51,22 +51,6 @@ function guardarIntento(tandaId: string, intento: Intento): Intento[] {
   return next;
 }
 
-/**
- * Baraja las alternativas evitando que salga la permutación identidad, para que
- * la correcta no caiga siempre en la letra en que fue escrita. Mismo criterio
- * que `shuffleOptionsAntiRepeat` en ExamRunner.
- */
-function barajarOpciones(opciones: BancoOpcion[]): BancoOpcion[] {
-  if (opciones.length < 2) return opciones.slice();
-  let intento = shuffle(opciones);
-  let tries = 0;
-  while (tries < 8 && opciones.every((o, i) => intento[i].id === o.id)) {
-    intento = shuffle(opciones);
-    tries++;
-  }
-  return intento;
-}
-
 type Respuesta = { opcionId: string; ok: boolean };
 type Paso = 'jugando' | 'bisagra' | 'resultado';
 
@@ -117,7 +101,10 @@ export default function BancoPreguntas({ tema, backHref, backLabel = 'Volver a l
   const opcionesPorPregunta = useMemo(() => {
     const mapa: Record<string, BancoOpcion[]> = {};
     for (const f of tanda.fases) {
-      for (const q of f.preguntas) mapa[q.id] = barajarOpciones(q.opciones);
+      // Barajado puro, sin descartar el orden escrito: descartarlo alejaba la
+      // correcta de la letra en que fue escrita y eso filtraba la respuesta
+      // (ver `shuffle` en ExamRunner).
+      for (const q of f.preguntas) mapa[q.id] = shuffle(q.opciones);
     }
     return mapa;
     // eslint-disable-next-line react-hooks/exhaustive-deps

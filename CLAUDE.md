@@ -272,7 +272,14 @@ El **2020 B** (`parcial-1-2020-b`, la otra versión del mismo parcial) va como b
 los dos de 2020 se rotulan «2020 A» / «2020 B». A diferencia del A, el B es **gratis** (`free`, fuera
 de `dePago`), como el 2024. Llegó **sin ninguna marca de la correcta**, pero
 el PDF sigue una convención que el A deja comprobada: **la correcta es siempre la primera
-alternativa** (en el A, 49 de 49). El runner baraja las opciones, así que eso no se nota. Antes de
+alternativa** (en el A, 49 de 49). El runner baraja las opciones, así que eso no se nota — **siempre
+que el barajado sea puro**. Hubo una versión que repetía el barajado cuando salía el orden del JSON
+(«que la correcta no quede donde fue escrita») y eso filtraba la respuesta: con la correcta
+siempre en la A del PDF, la A pasaba a ser la letra menos probable, y en la pregunta de 2
+alternativas del 2022 la correcta salía **siempre** en la B. `ExamRunner` y `BancoPreguntas`
+usan ahora Fisher-Yates a secas, sin descartar ningún orden. Se comprueba simulando miles de
+intentos con la función real y comparando cada letra contra su esperado (1/k por pregunta de k
+alternativas): la E sale menos porque sólo existe en las de 5, no por sesgo. Antes de
 publicar se resolvieron las 49 una a una y todas coincidieron con la primera. 49 preguntas (falta
 la 20, que el PDF deja como «20. OK»; la 18 repite palabra por palabra a la 17 y lleva
 `reviewNote`) más 10 del práctico. Esta vez los nombres de las imágenes sí casaban con sus

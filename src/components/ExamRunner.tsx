@@ -123,6 +123,18 @@ const LETRAS = 'ABCDEFGHIJ';
  */
 const MAX_SEGMENTOS = 60;
 
+/**
+ * Fisher-Yates: cada posición recibe un índice al azar entre los que quedan, así
+ * que cada orden sale con la misma probabilidad y la correcta cae en cualquier
+ * letra por igual. Es lo mismo que `random.shuffle` de Python.
+ *
+ * Las alternativas se barajan con esto A SECAS, sin descartar ningún orden. Antes
+ * se repetía el barajado cuando salía el orden del JSON, y eso filtraba la
+ * respuesta: en los banqueos donde la correcta es siempre la primera del PDF
+ * (Patología 2020 y 2022), la A pasaba a ser la letra menos probable —en una
+ * pregunta de 4 alternativas, 22 % en vez de 25 %— y en una de 2 la correcta
+ * salía SIEMPRE en la B.
+ */
 function shuffle<T>(arr: T[]): T[] {
   const out = arr.slice();
   for (let i = out.length - 1; i > 0; i--) {
@@ -130,17 +142,6 @@ function shuffle<T>(arr: T[]): T[] {
     [out[i], out[j]] = [out[j], out[i]];
   }
   return out;
-}
-
-function shuffleOptionsAntiRepeat(opts: ExamOption[]): ExamOption[] {
-  if (opts.length < 2) return opts.slice();
-  let attempt = shuffle(opts);
-  let tries = 0;
-  while (tries < 8 && opts.every((o, i) => attempt[i].id === o.id)) {
-    attempt = shuffle(opts);
-    tries++;
-  }
-  return attempt;
 }
 
 function readUrlCache(k: string): SignedUrlEntry | null {
@@ -857,7 +858,7 @@ export default function ExamRunner({
     if (!payload) return null;
     return shuffle(payload.questions).map(q => ({
       ...q,
-      options: shuffleOptionsAntiRepeat(q.options),
+      options: shuffle(q.options),
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payload, runId, stage]);
