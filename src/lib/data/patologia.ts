@@ -38,6 +38,12 @@ export interface ExamenRef {
    * reordenar `groups` no pueda cruzar un año con el JSON de otro.
    */
   labels?: Record<string, string>;
+  /**
+   * Banqueos que exigen suscripción aunque el curso sea gratis: los abre el plan
+   * del tramo del curso. Las mismas claves van sin `free` en `EXAMENES` de la
+   * route, que es quien los bloquea de verdad; esto sólo pinta el candado.
+   */
+  dePago?: string[];
 }
 
 export interface Actividad {
@@ -474,6 +480,8 @@ export const semanas: Semana[] = [
             'patologia/parcial-1': '2024',
             'patologia/parcial-1-2020': '2020',
           },
+          // El 2024 queda abierto como muestra; el 2020 es del plan Interno.
+          dePago: ['patologia/parcial-1-2020'],
         },
       },
     ],

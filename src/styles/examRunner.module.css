@@ -1481,7 +1481,120 @@
 /* ── Movimiento reducido ─────────────────────────────────────
    Va al FINAL del archivo a propósito: a igual especificidad manda la última
    regla, y desde más arriba no apagaría las animaciones declaradas después. */
+/* ── Suscripción: candado del selector y aviso cada N preguntas ──────────
+   El aviso es la única pieza con caja propia de la hoja además de las que se
+   manipulan: interrumpe a propósito, y tiene que leerse como algo aparte de la
+   pregunta, no como parte del enunciado. */
+.candado {
+  margin-left: 5px;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.aviso {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 26px;
+  padding: 16px 48px 16px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(var(--acc-rgb), 0.28);
+  background: linear-gradient(120deg, rgba(var(--acc-rgb), 0.10), rgba(var(--acc-rgb), 0.03) 70%);
+  animation: avisoEntra 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+.avisoIcono {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--acc-grad);
+  box-shadow: 0 6px 16px rgba(var(--acc-rgb), 0.3);
+}
+.avisoIcono .candado { margin: 0; opacity: 1; }
+
+.avisoTexto { min-width: 0; }
+
+.avisoTitulo {
+  margin: 0 0 3px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.avisoCuerpo {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.avisoCuerpo strong { color: var(--white); font-weight: 700; }
+
+.avisoCta {
+  background: var(--acc-grad);
+  border: none;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 5px 14px rgba(var(--acc-rgb), 0.3);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.avisoCta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(var(--acc-rgb), 0.4);
+}
+
+.avisoCerrar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.avisoCerrar:hover {
+  background: rgba(var(--acc-rgb), 0.12);
+  color: var(--white);
+}
+.avisoCerrar:focus-visible,
+.avisoCta:focus-visible {
+  outline: 2px solid rgba(var(--acc-rgb), 0.6);
+  outline-offset: 2px;
+}
+
+@keyframes avisoEntra {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* En móvil el botón baja a su propia fila, a todo el ancho del texto. */
+@media (max-width: 600px) {
+  .aviso {
+    grid-template-columns: auto 1fr;
+    padding: 14px 44px 14px 14px;
+    gap: 12px 14px;
+  }
+  .avisoCta { grid-column: 1 / -1; justify-self: stretch; }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .aviso,
   .pregunta,
   .opcion,
   .opcionMal,

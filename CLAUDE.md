@@ -277,6 +277,27 @@ sale en el selector y la route responde 404 al pulsarlo. Hoy sólo Patología y 
 `groupKeys` al runner, y sólo Patología `groupLabels`: otro curso que quiera años tiene que
 añadir `labels` a su `ExamenRef` y la prop en su `[id]/page.tsx`.
 
+**Banqueos de pago dentro de un curso gratis (`dePago` + `suscripcion`)** — Patología es curso
+`gratis`, pero su banqueo **2020 exige el plan Interno**: el de 2024 queda abierto como muestra y el
+2020 es el reclamo. Dos capas, y la que bloquea es la del servidor:
+- **Route**: la clave va en `EXAMENES` **sin `free`**. Las claves de pago se comprueban con
+  `tieneAccesoA(getUserPlanState(), meta.plan ?? requiredPlanDeCurso(<curso>))`. Antes bastaba con
+  que `profiles.plan` no fuera `'free'`, así que una suscripción vencida o de UFBI abría un examen
+  de la Facultad; ya no.
+- **Runner**: `dePago: [claves]` en el `ExamenRef` sólo pinta el candado en el cuadro del año y
+  evita pedir el JSON (sería un 403). El cuerpo de ese banqueo va dentro de `LockedContent`
+  (`PuertaDePago`), y **es `LockedContent` quien decide, no el runner**: tras pagar, el plan vivo
+  cambia al instante y, si decidiera el runner, el `SubscribeModal` se desmontaría a mitad del
+  recibo. `LockedContent` admite ahora `titulo`/`descripcion` porque su texto dice «esta clase».
+
+**Aviso de suscripción cada N preguntas** (`suscripcion.avisoCada`, 7 en Patología): al entrar en
+la pregunta 8, 15, 22… aparece una tarjeta con el precio del plan, los banqueos que abre y un botón
+que monta el `SubscribeModal` —sólo entonces, para no cargar el SDK de Mercado Pago a cada alumno—.
+Se cierra con la X y **se va solo al avanzar**; qué tanda se cerró se recuerda por intento, así que
+reintentar no lo deja apagado para siempre. Nunca lo ve quien ya tiene el plan (servidor **o** plan
+vivo, igual que `LockedContent`), y con el modal abierto las teclas A–E no contestan la pregunta de
+detrás. Es la única caja de la hoja fuera de las piezas que se manipulan: interrumpe a propósito.
+
 **El JSON fuente se versiona en `scripts/examenes/`** aunque lo que sirve la web sea la copia del
 bucket. Los cuatro exámenes anteriores viven **sólo** en el bucket, y eso significa que reeditar
 uno obliga a bajarlo con la service role key; para los nuevos, la fuente está en git y se publica

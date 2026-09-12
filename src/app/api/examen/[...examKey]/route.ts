@@ -1,11 +1,18 @@
 import { NextResponse } from 'next/server';
 import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/server';
+import { getUserPlanState, type PlanKey } from '@/lib/plans';
+import { requiredPlanDeCurso, tieneAccesoA } from '@/lib/acceso';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const EXAMENES: Record<string, { free?: boolean }> = {
+/**
+ * `free` abre el examen a cualquier cuenta. Sin él, hace falta un plan activo
+ * que abra `plan` o, si no se declara, el tramo del curso (primer segmento de
+ * la clave): un plan de UFBI no abre un examen de la Facultad.
+ */
+const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey }> = {
   'excretor/tbl-3-asa-henle': { free: true },
   'neurologia/snp-histologia': { free: true },
   'neurologia/snp-histologia-b': { free: true },
@@ -17,7 +24,8 @@ const EXAMENES: Record<string, { free?: boolean }> = {
   'neurologia/piel-histologia-c': { free: true },
   'neurologia/piel-histologia-b': { free: true },
   'patologia/parcial-1': { free: true },
-  'patologia/parcial-1-2020': { free: true },
+  // De pago aunque Patología sea un curso gratis: es el reclamo del plan.
+  'patologia/parcial-1-2020': {},
 };
 
 const SIGNED_URL_TTL_SECONDS = 60 * 60 * 24 * 7;
@@ -41,13 +49,13 @@ export async function GET(
     if (!user) {
       return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
     }
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('plan')
-      .eq('id', user.id)
-      .maybeSingle<{ plan: string | null }>();
-    if (!profile?.plan || profile.plan === 'free') {
-      return NextResponse.json({ error: 'plan_required' }, { status: 403 });
+    // Antes bastaba con que `profiles.plan` no fuera 'free': una suscripción
+    // vencida o de otro tramo abría igual. `tieneAccesoA` exige plan activo del
+    // tramo correcto y deja pasar al admin por `allAccess`.
+    const estado = await getUserPlanState(supabase);
+    const requerido = meta.plan ?? requiredPlanDeCurso(key.split('/')[0]);
+    if (!tieneAccesoA(estado, requerido)) {
+      return NextResponse.json({ error: 'plan_required', plan: requerido }, { status: 403 });
     }
   }
 

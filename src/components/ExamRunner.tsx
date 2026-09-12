@@ -4,9 +4,16 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import ReactMarkdown from 'react-markdown';
 import { trackEvent } from '@/lib/analytics';
+import { PLANS, planUnlocks, type PlanKey, type ProfilePlan } from '@/lib/plans';
+import LockedContent from './LockedContent';
+import { usePlan } from './PlanProvider';
 import styles from '@/styles/examRunner.module.css';
+
+// El SDK de Mercado Pago pesa: el modal sólo se monta cuando alguien lo abre.
+const SubscribeModal = dynamic(() => import('./SubscribeModal'), { ssr: false });
 
 interface ExamOption {
   id: string;
@@ -57,6 +64,22 @@ interface Attempt {
   seconds?: number;
 }
 
+/**
+ * Banqueos de pago y aviso de suscripción. Sin él, el examen se comporta como
+ * siempre: nada se bloquea ni se anuncia.
+ */
+export interface SuscripcionExamen {
+  /** El plan que abre los banqueos de pago y el que anuncia el aviso. */
+  plan: PlanKey;
+  /** Plan leído en el servidor. Con `allAccess` el admin nunca ve candados. */
+  estado: { plan: ProfilePlan; isActive: boolean; allAccess?: boolean };
+  isAuthed: boolean;
+  /** Claves (`examKey` o de `groupKeys`) que sólo abre `plan`. */
+  etapasDePago?: string[];
+  /** Cada cuántas preguntas respondidas aparece el aviso, a quien no tiene `plan`. */
+  avisoCada?: number;
+}
+
 interface Props {
   examKey: string;
   fallbackTitle?: string;
@@ -78,6 +101,7 @@ interface Props {
    * cruzar un año con el JSON de otro. Una clave sin rótulo cae en su letra.
    */
   groupLabels?: Record<string, string>;
+  suscripcion?: SuscripcionExamen;
 }
 
 const EXPIRY_BUFFER_MS = 15 * 60 * 1000;
@@ -359,6 +383,97 @@ function IconoCerrar() {
   );
 }
 
+/** El mismo candado que la rejilla de cursos y el sílabo. */
+function IconoCandado({ size = 11 }: { size?: number }) {
+  return (
+    <svg className={styles.candado} width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="4" y="11" width="16" height="10" rx="2" stroke="currentColor" strokeWidth="2.4" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/* ── Suscripción ──────────────────────────────────────────────────────────── */
+
+/**
+ * Aviso entre pregunta y pregunta. Es una pausa, no un muro: se cierra con la X
+ * y la pregunta sigue debajo, sin perder ni el tiempo ni la respuesta.
+ */
+function AvisoSuscripcion({
+  plan,
+  dePago,
+  onVer,
+  onCerrar,
+}: {
+  plan: PlanKey;
+  /** Nombres de los banqueos que abre el plan («Banqueo 2020»). */
+  dePago: string[];
+  onVer: () => void;
+  onCerrar: () => void;
+}) {
+  const p = PLANS[plan];
+  return (
+    <aside className={styles.aviso} aria-label={`Suscríbete al plan ${p.label}`}>
+      <span className={styles.avisoIcono}>
+        <IconoCandado size={18} />
+      </span>
+      <div className={styles.avisoTexto}>
+        <p className={styles.avisoTitulo}>¿Te está sirviendo el banqueo?</p>
+        <p className={styles.avisoCuerpo}>
+          Con el plan <strong>{p.label}</strong> (S/ {p.amount.toFixed(2)} / {p.durationDays === 30 ? 'mes' : 'año'})
+          desbloqueas {dePago.length > 0 && <><strong>el {dePago.join(' y el ')}</strong> y </>}
+          {p.track === 'basico' ? 'los cursos del ciclo básico' : 'los cursos de la Facultad de Medicina'}.
+        </p>
+      </div>
+      <button type="button" className={styles.avisoCta} onClick={onVer}>
+        Ver plan {p.label}
+      </button>
+      <button type="button" className={styles.avisoCerrar} onClick={onCerrar} aria-label="Cerrar aviso">
+        <IconoCerrar />
+      </button>
+    </aside>
+  );
+}
+
+/**
+ * Envuelve el cuerpo de un banqueo de pago en el paywall. La decisión final la
+ * toma LockedContent, que también mira el plan vivo y mantiene el recibo a la
+ * vista tras pagar: si la tomara el runner, el modal se desmontaría en cuanto el
+ * plan cambiase, a mitad del recibo.
+ */
+function PuertaDePago({
+  activa,
+  suscripcion,
+  nombre,
+  children,
+}: {
+  activa: boolean;
+  suscripcion?: SuscripcionExamen;
+  nombre: string;
+  children: React.ReactNode;
+}) {
+  if (!activa || !suscripcion) return <>{children}</>;
+  const p = PLANS[suscripcion.plan];
+  return (
+    <LockedContent
+      requiredPlan={suscripcion.plan}
+      planState={suscripcion.estado}
+      isAuthed={suscripcion.isAuthed}
+      preview={false}
+      titulo={`${nombre} bloqueado`}
+      descripcion={
+        <>
+          El <strong>{nombre}</strong> es parte del plan <strong>{p.label}</strong>, junto con el resto de{' '}
+          {p.track === 'basico' ? 'los cursos del ciclo básico' : 'los cursos de la Facultad de Medicina'}.
+          Los demás banqueos de este examen siguen abiertos.
+        </>
+      }
+    >
+      {children}
+    </LockedContent>
+  );
+}
+
 /* ── Visor de imagen a pantalla completa ──────────────────────────────────── */
 
 interface Ampliada {
@@ -629,6 +744,7 @@ export default function ExamRunner({
   backLabel = 'Volver a la clase',
   groupKeys,
   groupLabels,
+  suscripcion,
 }: Props) {
   // Etapas: Grupo A (examKey) + grupos adicionales. Sin extras → examen simple.
   const stages = useMemo(
@@ -646,6 +762,16 @@ export default function ExamRunner({
   const nombreEtapa = (i: number) => `${conRotulos ? 'Banqueo' : 'Grupo'} ${stages[i].rotulo}`;
   const mostrarEtapa = isGrouped || conRotulos;
 
+  // Plan del servidor o plan vivo del Provider: basta con que uno abra, igual que
+  // en LockedContent. El vivo es el que cambia sin recargar tras pagar en el modal.
+  const planVivo = usePlan();
+  const acceso = !suscripcion
+    || !!suscripcion.estado.allAccess
+    || (suscripcion.estado.isActive && planUnlocks(suscripcion.estado.plan, suscripcion.plan))
+    || (planVivo.isActive && planUnlocks(planVivo.plan, suscripcion.plan));
+  const esDePago = (key: string) => !!suscripcion?.etapasDePago?.includes(key);
+  const [modalAbierto, setModalAbierto] = useState(false);
+
   const [stage, setStage] = useState(0);
   const [payload, setPayload] = useState<ExamPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -659,17 +785,33 @@ export default function ExamRunner({
   const [ampliada, setAmpliada] = useState<Ampliada | null>(null);
 
   const stageKey = stages[stage].key;
+  // Un banqueo de pago sin plan no se pide: la route respondería 403, y lo que
+  // toca enseñar es la tarjeta de suscripción, no un error.
+  const bloqueada = esDePago(stageKey) && !acceso;
   const shellRef = useRef<HTMLDivElement>(null);
 
   // Identidad del intento: cambiar de grupo o reintentar arranca un cronómetro
   // nuevo; avanzar de pregunta, no.
   const intentoId = `${stage}-${runId}`;
 
+  // Aviso de suscripción: aparece al entrar en la pregunta que sigue a cada
+  // tanda de `avisoCada` respondidas (la 8, la 15…) y se va al avanzar o al
+  // cerrarlo. Se recuerda qué tanda se cerró, por intento, para que reintentar
+  // no lo deje apagado para siempre.
+  const [avisoCerrado, setAvisoCerrado] = useState<string | null>(null);
+  const avisoCada = suscripcion?.avisoCada ?? 0;
+  const respondidas = answersAll.length;
+  const idAviso = `${intentoId}:${respondidas}`;
+  const mostrarAviso = avisoCada > 0 && !acceso && phase === 'running'
+    && respondidas > 0 && respondidas % avisoCada === 0 && currentIdx === respondidas
+    && avisoCerrado !== idAviso;
+
   // Carga de la etapa actual. El Grupo B solo se pide cuando `stage` pasa a 1.
   useEffect(() => {
     let cancelled = false;
     setError(null);
     setPayload(null);
+    if (bloqueada) return;
 
     (async () => {
       try {
@@ -683,7 +825,7 @@ export default function ExamRunner({
     })();
 
     return () => { cancelled = true; };
-  }, [stageKey, runId]);
+  }, [stageKey, runId, bloqueada]);
 
   // Shuffle de preguntas + opciones (re-corre al cambiar de etapa o reintentar).
   const deck = useMemo(() => {
@@ -791,7 +933,7 @@ export default function ExamRunner({
   useEffect(() => { accionesRef.current = { handlePick, handleNext }; });
 
   useEffect(() => {
-    if (phase !== 'running' || !current || pausado || ampliada) return;
+    if (phase !== 'running' || !current || pausado || ampliada || modalAbierto) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       const tag = (e.target as HTMLElement | null)?.tagName;
@@ -814,7 +956,7 @@ export default function ExamRunner({
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [phase, current, picked, pausado, ampliada]);
+  }, [phase, current, picked, pausado, ampliada, modalAbierto]);
 
   // Salto directo a un grupo desde el selector (o desde la pantalla de
   // resultados). Reinicia el estado: cada grupo es un intento independiente.
@@ -860,9 +1002,10 @@ export default function ExamRunner({
                   className={`${styles.groupSquare} ${i === stage ? styles.groupSquareActive : ''}`}
                   onClick={() => handleSwitchStage(i)}
                   aria-pressed={i === stage}
-                  aria-label={`Ir al ${nombreEtapa(i)}`}
+                  aria-label={`Ir al ${nombreEtapa(i)}${esDePago(s.key) && !acceso ? ` (requiere plan ${PLANS[suscripcion!.plan].label})` : ''}`}
                 >
                   {s.rotulo}
+                  {esDePago(s.key) && !acceso && <IconoCandado />}
                 </button>
               ))}
             </div>
@@ -899,6 +1042,7 @@ export default function ExamRunner({
         )}
       </header>
 
+      <PuertaDePago activa={esDePago(stageKey)} suscripcion={suscripcion} nombre={nombreEtapa(stage)}>
       {error && (
         <div className={styles.errorBlock}>{error}</div>
       )}
@@ -1011,6 +1155,18 @@ export default function ExamRunner({
             </div>
           ) : (
             <>
+              {mostrarAviso && suscripcion && (
+                <AvisoSuscripcion
+                  plan={suscripcion.plan}
+                  dePago={stages.flatMap((st, i) => (esDePago(st.key) ? [nombreEtapa(i)] : []))}
+                  onVer={() => {
+                    if (suscripcion.isAuthed) setModalAbierto(true);
+                    else window.location.href = '/auth/login?next=' + encodeURIComponent(window.location.pathname);
+                  }}
+                  onCerrar={() => setAvisoCerrado(idAviso)}
+                />
+              )}
+
               {/* `key` remonta el bloque en cada pregunta, así su animación de
                   entrada se repite en vez de correr sólo la primera vez. */}
               <article className={styles.pregunta} key={`${intentoId}-${currentIdx}`}>
@@ -1248,7 +1404,13 @@ export default function ExamRunner({
         );
       })()}
 
+      </PuertaDePago>
+
       {ampliada && <VisorImagen img={ampliada} onClose={() => setAmpliada(null)} />}
+
+      {suscripcion && modalAbierto && (
+        <SubscribeModal open planKey={suscripcion.plan} onClose={() => setModalAbierto(false)} />
+      )}
     </div>
   );
 }

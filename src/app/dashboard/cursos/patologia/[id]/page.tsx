@@ -17,7 +17,7 @@ import BancoPreguntas from '@/components/BancoPreguntas';
 import { findBanco } from '@/lib/data/banco';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
-import { cursoEsGratis } from '@/lib/acceso';
+import { cursoEsGratis, requiredPlanDeCurso } from '@/lib/acceso';
 
 const UNIDAD_LABEL: Record<string, string> = {
   UNIDAD_1:    'Respuesta celular y tisular al daño',
@@ -27,6 +27,9 @@ const UNIDAD_LABEL: Record<string, string> = {
   INTEGRACION: 'Integración clínico-patológica',
   EVALUACION:  'Evaluación',
 };
+
+/** Cada cuántas preguntas respondidas aparece el aviso de suscripción. */
+const AVISO_CADA = 7;
 
 export default async function PatologiaActividadPage({
   params,
@@ -53,12 +56,10 @@ export default async function PatologiaActividadPage({
   const isFreeExam = act.examen?.free === true;
   // Patología es curso `gratis`: abierto para cualquier cuenta.
   const isFreeAccess = isLab || isFreeExam || cursoEsGratis('patologia');
-  const [user, planState] = await Promise.all([
-    getUser(),
-    isFreeAccess
-      ? Promise.resolve({ plan: 'free' as const, isActive: true })
-      : getCachedPlanState(),
-  ]);
+  // El plan real hace falta aunque el curso sea gratis: decide el candado de
+  // los banqueos de pago y a quién se le enseña el aviso de suscripción. No
+  // cuesta una consulta extra: el layout del dashboard ya la hizo y va cacheada.
+  const [user, planState] = await Promise.all([getUser(), getCachedPlanState()]);
 
   // Banco de preguntas: gratis, como el resto de exámenes del proyecto, así que
   // no pasa por LockedContent. Va dentro de `.microPage` porque es esa clase la
@@ -80,6 +81,18 @@ export default async function PatologiaActividadPage({
           examKey={act.examen.key}
           groupKeys={act.examen.groups}
           groupLabels={act.examen.labels}
+          suscripcion={{
+            plan: requiredPlanDeCurso('patologia'),
+            estado: {
+              plan: planState.plan,
+              isActive: planState.isActive,
+              allAccess: planState.allAccess,
+            },
+            isAuthed: !!user,
+            etapasDePago: act.examen.dePago,
+            // Cada 7 preguntas, un aviso para suscribirse (sólo a quien no tiene plan).
+            avisoCada: AVISO_CADA,
+          }}
           fallbackTitle={act.titulo}
           backHref={`/dashboard/cursos/patologia/${id}`}
         />

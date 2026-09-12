@@ -29,6 +29,9 @@ interface Props {
    * nadie lo vea. Por defecto `true`, que es lo que hacen los cursos.
    */
   preview?: boolean;
+  /** Título y texto de la tarjeta, cuando lo bloqueado no es una clase (p. ej. un banqueo). */
+  titulo?: string;
+  descripcion?: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -37,6 +40,8 @@ export default function LockedContent({
   planState,
   isAuthed,
   preview = true,
+  titulo = 'Contenido bloqueado',
+  descripcion,
   children,
 }: Props) {
   const router = useRouter();
@@ -88,12 +93,16 @@ export default function LockedContent({
             </svg>
           </div>
 
-          <h2 className={styles.title}>Contenido bloqueado</h2>
+          <h2 className={styles.title}>{titulo}</h2>
           <p className={styles.desc}>
-            Suscríbete al plan <strong>{plan.label}</strong> para acceder a esta clase y al resto de{' '}
-            {plan.track === 'basico'
-              ? 'los cursos del ciclo básico'
-              : 'los cursos de la Facultad de Medicina'}.
+            {descripcion ?? (
+              <>
+                Suscríbete al plan <strong>{plan.label}</strong> para acceder a esta clase y al resto de{' '}
+                {plan.track === 'basico'
+                  ? 'los cursos del ciclo básico'
+                  : 'los cursos de la Facultad de Medicina'}.
+              </>
+            )}
           </p>
 
           <span className={styles.priceTag}>
