@@ -1,10 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { createClient } from '@supabase/supabase-js';
+import { config } from './load-env.mjs';
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+// Lee `.env.local` como el resto de scripts de subida; una variable exportada
+// en la shell sigue teniendo prioridad.
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? config.NEXT_PUBLIC_SUPABASE_URL;
+const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? config.SUPABASE_SERVICE_ROLE_KEY;
 if (!url || !key) {
-  console.error('Faltan env vars NEXT_PUBLIC_SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY');
+  console.error('Faltan NEXT_PUBLIC_SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY (ni en la shell ni en .env.local)');
   process.exit(1);
 }
 

@@ -464,12 +464,15 @@ export const semanas: Semana[] = [
         // `parcial-1-<año>`, del más reciente al más antiguo. Para añadir uno:
         // subir el JSON, registrarlo en `EXAMENES` de la route y sumarlo aquí a
         // `groups` y a `labels`.
+        // 2020 (examen A): 49 preguntas —el PDF de origen empieza en la 2—, 10 del
+        // práctico; la micrografía de la pregunta 7 del práctico no llegó.
         examen: {
           key: 'patologia/parcial-1',
           free: true,
-          groups: [],
+          groups: ['patologia/parcial-1-2020'],
           labels: {
             'patologia/parcial-1': '2024',
+            'patologia/parcial-1-2020': '2020',
           },
         },
       },

@@ -259,7 +259,15 @@ rotulado no hay selector, pero el año sale igual en la cabecera. El rótulo va 
 posición**: reordenar `groups` no puede cruzar un año con el JSON de otro. Cada banqueo lleva su
 propia nota e historial (los intentos se guardan por clave).
 
-Hecho en Patología · Examen Parcial 1 (`pat-ex-1`). El de 2024 **conserva la clave original
+Hecho en Patología · Examen Parcial 1 (`pat-ex-1`), con **2024 y 2020**. El de 2020
+(`parcial-1-2020`, examen A) llegó como HTML convertido de un PDF, con la alternativa correcta
+marcada `highlighted-in-source`: 49 preguntas (el PDF empieza en la 2) y 10 del práctico. Sus
+imágenes llegaron **con otro nombre que el que pedía el HTML y en otro orden**, y con la 10
+duplicando byte a byte a la 01: se emparejaron **mirando cada micrografía contra su enunciado**,
+no por el nombre, y la del práctico 7 (la embolia) falta — va sin imagen y con `reviewNote`.
+Ante un banqueo así, comparar hashes antes de subir y no fiarse de ningún nombre de archivo.
+
+El de 2024 **conserva la clave original
 `patologia/parcial-1`, sin sufijo**: renombrarla borraría los intentos que los alumnos ya tienen en
 `localStorage`. Los demás van como `parcial-1-<año>`, del más reciente al más antiguo. Para añadir
 un año: JSON fuente en `scripts/examenes/patologia-parcial-1-<año>.json` →

@@ -17,6 +17,7 @@ const EXAMENES: Record<string, { free?: boolean }> = {
   'neurologia/piel-histologia-c': { free: true },
   'neurologia/piel-histologia-b': { free: true },
   'patologia/parcial-1': { free: true },
+  'patologia/parcial-1-2020': { free: true },
 };
 
 const SIGNED_URL_TTL_SECONDS = 60 * 60 * 24 * 7;
