@@ -1,0 +1,1621 @@
+{
+  "version": 1,
+  "key": "inmunologia/final-2023",
+  "title": "Examen Final — Inmunología",
+  "duration_min": 84,
+  "questions": [
+    {
+      "id": "p1",
+      "stem": "¿Cuál es la técnica de ELISA de elección para detectar un analito con alta especificidad (reducir los falsos positivos) y alta sensibilidad (reducir los falsos negativos)?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p02_q01_img01.avif",
+      "imageAlt": "Cuatro esquemas de ELISA sobre la placa, rotulados A, B, C y D, con distinto número de anticuerpos apilados sobre el antígeno (círculo rojo)",
+      "imageW": 700,
+      "imageH": 394,
+      "options": [
+        {
+          "id": "a",
+          "text": "Esquema A",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Esquema B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Esquema C",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Esquema D",
+          "correct": false
+        }
+      ],
+      "explanation": "C es el **sándwich indirecto**, y reúne las dos cosas que pide la pregunta:\n\n- **Especificidad**: el antígeno tiene que ser reconocido **dos veces**, por el anticuerpo de captura y por el de detección, cada uno contra un epítope distinto. Una proteína que se parezca por un solo epítope no queda atrapada y detectada a la vez.\n- **Sensibilidad**: el anticuerpo **secundario** marcado se une varias veces a cada anticuerpo primario y **amplifica** la señal, así que detecta concentraciones pequeñas.\n\nA es el **ELISA directo** (antígeno pegado a la placa y un solo anticuerpo marcado): simple, pero poco sensible. B es el **ELISA indirecto**, el de elección para detectar **anticuerpos** (IgG) en el suero; amplifica, pero con el antígeno pegado directo a la placa hay más reacción cruzada. D es el **sándwich directo** (prueba de embarazo, TNF): muy específico, pero sin secundario no amplifica y es menos sensible que C.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p02_q01_img03.avif",
+      "explanationImageAlt": "Esquemas de ELISA sándwich directo, indirecto y con estreptavidina-biotina",
+      "explanationImageCaption": "El sándwich indirecto suma un anticuerpo secundario marcado sobre el de detección: esa capa extra es la que amplifica la señal.",
+      "tags": [
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "p2",
+      "stem": "Un niño de 12 meses es hospitalizado por una infección severa. Los laboratorios evidencian niveles en sangre normales de linfocitos B y linfocitos T, con niveles bajos de todas las inmunoglobulinas. Una prueba genética determina un defecto en un gen que regula la transcripción del antígeno leucocitario humano. Se realiza una citometría de flujo de sangre periférica del paciente, que se compara con la de una persona sana. ¿Cuál de los siguientes procesos está más probablemente alterado debido a la mutación en este paciente?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p02_q02_img01.avif",
+      "imageAlt": "Citometría de flujo del paciente y de un control sano: gráficos de CD4 frente a CD3 y de MHC-II frente a CD3",
+      "imageW": 800,
+      "imageH": 1000,
+      "options": [
+        {
+          "id": "a",
+          "text": "Presentación de antígenos procesados en los lisosomas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Presentación de antígenos procesados en el proteasoma",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Recombinación V(D)J de los genes del receptor antigénico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Cambio de isotipo mediado por la unión CD40–CD40L",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Coestimulación del linfocito T mediante CD28 y B7",
+          "correct": false
+        }
+      ],
+      "explanation": "Un defecto en un gen que regula la **transcripción del HLA de clase II** (CIITA o los factores RFX) es el **síndrome del linfocito desnudo tipo II**: las células no expresan **HLA-DR**, el MHC-II. Los linfocitos B siguen ahí (CD19+) y los T también; lo que falta es la molécula que presenta.\n\nEl MHC-II carga péptidos de proteínas **endocitadas y degradadas en el endosoma-lisosoma** y se los muestra a los **CD4**. Sin esa presentación no hay ayuda T: los linfocitos B no cambian de isotipo ni maduran a plasmáticas, y por eso bajan **todas** las inmunoglobulinas.\n\nEl **proteasoma** alimenta al MHC-I (vía de los CD8). Un defecto en la **recombinación V(D)J** (RAG) dejaría sin B ni T. En el déficit de **CD40L** la IgM está normal o alta (hiper-IgM), no todas bajas. Y **CD28** se expresa con normalidad: el problema no es la coestimulación.",
+      "reviewNote": "El apunte sólo conserva la respuesta; las demás alternativas se reconstruyeron. En la figura, tal como llegó, el panel de MHC-II del control sano tampoco muestra células MHC-II+; esa población (linfocitos B y monocitos HLA-DR+) es justamente la que falta en el paciente.",
+      "tags": [
+        "Inmunodeficiencias",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p3",
+      "stem": "Se desea realizar un ELISA directo para reconocer IgG contra toxoplasma en el plasma del paciente. ¿Contra cuál porción de la IgG anti-toxoplasma dirigiría los anticuerpos del ELISA para que este sea lo más específico posible?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p02_q03_img01.avif",
+      "imageAlt": "Esquema de una IgG con cinco regiones señaladas: A, B, C, D y E",
+      "imageW": 800,
+      "imageH": 600,
+      "options": [
+        {
+          "id": "a",
+          "text": "Región A",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Región B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Región C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Región D",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Región E",
+          "correct": false
+        }
+      ],
+      "explanation": "D es la **región variable** (el dominio de la punta del brazo). Es lo único que distingue a la IgG **anti-toxoplasma** de todas las demás IgG del plasma: su sitio de unión al antígeno (el **idiotipo**) es propio de esa clona.\n\nEl resto es igual en cualquier IgG. A es la **región constante de la cadena ligera** (κ o λ, compartida por todas las inmunoglobulinas); B, la **bisagra**; C y E, **dominios constantes de la cadena pesada**. Un anticuerpo contra C, por ejemplo, detectaría «IgG» en general, no la que va contra el toxoplasma.",
+      "tags": [
+        "Técnicas inmunológicas",
+        "Anticuerpos y respuesta humoral"
+      ]
+    },
+    {
+      "id": "p4",
+      "stem": "Usted coloca 1 µL de una suspensión de PBMCs en 99 µL de azul de tripano. De esta dilución, toma 10 µL y lo coloca en la cámara para realizar el conteo de células. Al microscopio observa lo siguiente (ver imagen). Usted decide utilizar el método que le permite maximizar la precisión del conteo. Además, considera e incluye dentro del conteo a las células que yacen en los bordes derecho e inferior de cada cuadrante. ¿Cuál es la concentración de células no viables (azules)?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p03_q04_img01_limpia.avif",
+      "imageAlt": "Cámara de Neubauer al microscopio con células blancas (viables) y azules (no viables) repartidas entre los cuadrantes",
+      "imageW": 800,
+      "imageH": 800,
+      "options": [
+        {
+          "id": "a",
+          "text": "2,5 × 10⁶ células/mL",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "2,75 × 10⁶ células/mL",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "1 × 10⁷ células/mL",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "2,5 × 10⁴ células/mL",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "2,5 × 10⁵ células/mL",
+          "correct": false
+        }
+      ],
+      "explanation": "El conteo más preciso es el de los **cuatro cuadrantes grandes de las esquinas**: cuantos más cuadrantes, menor el error. Las azules son las **no viables** (el azul de tripano sólo entra en células con la membrana dañada).\n\nAzules en las esquinas: 1 (superior izquierdo) + 2 (superior derecho) + 5 (inferior izquierdo) + 2 (inferior derecho) = **10**. La azul que cae sobre el **borde izquierdo** del cuadrante superior derecho no cuenta: sólo se incluyen los bordes derecho e inferior. Las del centro y los laterales tampoco, porque no están en un cuadrante de conteo.\n\nConcentración = (10 ÷ 4) × **100** (dilución 1:100: 1 µL en 100 µL totales) × **10⁴** (cada cuadrante es 0,1 µL) = **2,5 × 10⁶ células/mL**.\n\n2,75 × 10⁶ sale de contar también la del borde izquierdo (11 ÷ 4); 10⁷, de no dividir entre los cuadrantes; 2,5 × 10⁴, de olvidar la dilución, y 2,5 × 10⁵, de tomarla como 1:10.",
+      "reviewNote": "El apunte sólo conserva la respuesta; las demás alternativas se reconstruyeron. En la imagen original el alumno había resaltado a mano las células azules que se cuentan: se quitó el resaltado.",
+      "tags": [
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "p5",
+      "stem": "Usted realiza un ensayo de citometría de flujo y usa anticuerpos contra CD3, CD4 y CD8. Después de realizar un gate en la población de linfocitos y luego un gate en aquellos que son CD3+, analiza el siguiente diagrama. ¿Cuál o cuáles poblaciones esperaría encontrar en mayor cantidad en la médula del timo?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p03_q05_img01.avif",
+      "imageAlt": "Dot plot de CD4 frente a CD8 dividido en cuatro cuadrantes: A (CD4+CD8−), B (doble negativo), C (doble positivo) y D (CD4−CD8+)",
+      "imageW": 800,
+      "imageH": 800,
+      "options": [
+        {
+          "id": "a",
+          "text": "A y D",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Solo C",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Solo B",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "B y C",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "A, C y D",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **médula del timo** están los timocitos **maduros**, los que ya pasaron la selección positiva: los **simples positivos**, CD4+CD8− (A) y CD4−CD8+ (D). Allí completan la selección negativa antes de salir a la sangre.\n\nLos **doble positivos** (C) viven en la **corteza**, que es donde ocurre la selección positiva, y en la médula son pocos: por eso «A, C y D» sobra. Los **doble negativos** (B) son los más inmaduros y se encuentran en la zona subcapsular de la corteza.",
+      "reviewNote": "El apunte sólo conserva la respuesta; las demás alternativas se reconstruyeron.",
+      "tags": [
+        "Órganos linfoides primarios",
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "p6",
+      "stem": "En una muestra de sangre total (no solo linfocitos) usted realiza el siguiente histograma en citometría. ¿Cuál es una función importante de las células presentes entre ambas líneas rojas?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p03_q06_img01.avif",
+      "imageAlt": "Histograma de CD4 en sangre total: un gran pico negativo, una meseta de intensidad intermedia entre dos líneas rojas y un segundo pico de intensidad alta",
+      "imageW": 800,
+      "imageH": 800,
+      "options": [
+        {
+          "id": "a",
+          "text": "Migrar a los tejidos y diferenciarse en macrófagos para fagocitar",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Activar a los macrófagos M1 y M2 mediante la secreción de citocinas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Diferenciarse en células plasmáticas productoras de anticuerpos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Destruir células infectadas por virus mediante perforina y granzimas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Formar trampas extracelulares (NETs) contra bacterias en la sangre",
+          "correct": false
+        }
+      ],
+      "explanation": "CD4 no es exclusivo de los linfocitos T: los **monocitos** también lo expresan, pero con **baja intensidad** (CD4 *dim*). En sangre total el histograma se reparte así: el gran pico de la izquierda son las células **CD4−** (neutrófilos, linfocitos B, CD8 y NK); **entre las líneas rojas**, la población de intensidad intermedia son los **monocitos**, y el pico brillante de la derecha son los **linfocitos T helper**.\n\nLa función del monocito es **salir a los tejidos**, diferenciarse en **macrófago** (o célula dendrítica) y **fagocitar**.\n\nActivar macrófagos M1 y M2 es tarea de los **T helper**, que están pasada la segunda línea. Las plasmáticas vienen de los **linfocitos B**, la citotoxicidad con perforina es de los **CD8 y NK**, y las NETs, de los **neutrófilos**: todas células CD4−.",
+      "reviewNote": "El apunte sólo conserva la respuesta y menciona una alternativa sobre la activación de M1 y M2; las demás se reconstruyeron.",
+      "tags": [
+        "Técnicas inmunológicas",
+        "Células del sistema inmune"
+      ]
+    },
+    {
+      "id": "p7",
+      "stem": "A una paciente de 3 años con infecciones respiratorias recurrentes, incluyendo varios episodios de neumonía, se le realizaron varios estudios inmunológicos. Se encontraron niveles bajos de IgG. Su recuento leucocitario era normal, pero su recuento absoluto de linfocitos era bajo. En la citometría de flujo se determinó que su subpoblación A en la figura 1, así como las subpoblaciones B y H en la figura 2, estaban casi ausentes. Tras analizar estos resultados, ¿cuál sería el mejor examen para confirmar su sospecha diagnóstica?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p03_q07_img01.avif",
+      "imageAlt": "Figura 1: CD3 frente a CD19 con cuadrantes A a D. Figura 2: CD4 frente a CD3 (cuadrantes A a D) y CD8 frente a CD3 (cuadrantes E a H)",
+      "imageW": 1000,
+      "imageH": 563,
+      "options": [
+        {
+          "id": "a",
+          "text": "Estudio genético para mutación en el cromosoma 14 (translocación)",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "ELISA de cuarta generación para VIH",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Estudio genético para mutación del gen que codifica la enzima BTK",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Citometría de flujo para evaluar la expresión de CD40L",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Estudio genético para mutación del gen que codifica la enzima RAG",
+          "correct": false
+        }
+      ],
+      "explanation": "A en la figura 1 son los **linfocitos T** (CD3+CD19−); B en la figura 2 son los **CD3+CD4+**, y H, los CD3+CD8−, es decir, también los CD4. La paciente tiene linfopenia **a expensas de los T helper CD4+**. Con esa pérdida selectiva, en una niña de 3 años lo primero es descartar el **VIH** (transmisión vertical), y se confirma con el **ELISA de cuarta generación** (antígeno p24 más anticuerpos).\n\nEl **cromosoma 14** lleva el locus de la cadena pesada de las inmunoglobulinas: sus translocaciones son de linfomas. En el déficit de **BTK** faltarían los **linfocitos B** (D de la figura 1), no los T. En el déficit de **CD40L** los CD4 están en número normal: sólo no expresan esa molécula. Y sin **RAG** no habría ni B ni T.",
+      "reviewNote": "El apunte dice «su recuento absoluto de leucocitos era bajo», que contradice el «recuento leucocitario normal» de la misma frase; por su propia explicación (linfopenia) debe decir linfocitos, y así se transcribió.",
+      "tags": [
+        "VIH",
+        "Técnicas inmunológicas",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p8",
+      "stem": "Señale lo correcto acerca de los histogramas en citometría de flujo.",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p04_q08_img01.avif",
+      "imageAlt": "Histograma de citometría: intensidad de fluorescencia de Ki67 en el eje X y número de eventos en el eje Y",
+      "imageW": 800,
+      "imageH": 800,
+      "options": [
+        {
+          "id": "a",
+          "text": "La distribución de datos se da en 4 cuadrantes",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Representa cada evento como un punto",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Traza la intensidad detectada en un canal (eje X) vs. el número de eventos (eje Y)",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Puede representar la intensidad de canales diferentes",
+          "correct": false
+        }
+      ],
+      "explanation": "El **histograma** muestra **un solo parámetro**: la intensidad de fluorescencia de un canal en el eje X y cuántos eventos (células) tienen esa intensidad en el eje Y.\n\nLos **cuadrantes** y **un punto por evento** son del **dot plot**, que cruza dos parámetros. Para ver dos canales a la vez también hace falta un dot plot o un density plot, no un histograma.",
+      "tags": [
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "p9",
+      "stem": "La citometría de flujo es un método inmunológico que permite caracterizar las células según:",
+      "options": [
+        {
+          "id": "a",
+          "text": "La dispersión lateral (side scatter) a 90° y hacia delante (forward scatter) de un haz de luz interrumpido",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La dispersión del ángulo frontal de un haz de luz interrumpido",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La absorbancia de luz por diferentes tipos de células",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La transmitancia de luz por células en solución",
+          "correct": false
+        }
+      ],
+      "explanation": "Cada célula que cruza el láser **dispersa** la luz en dos direcciones: hacia delante (**forward scatter**, FSC), que refleja su **tamaño**, y a 90° (**side scatter**, SSC), que refleja su **complejidad interna** o granularidad. Con esos dos datos, más la fluorescencia de los anticuerpos marcados, se caracteriza cada célula.\n\nLa segunda alternativa se queda con la mitad (sólo el FSC). La **absorbancia** y la **transmitancia** son de la espectrofotometría: el citómetro no mide cuánta luz absorbe la célula, sino cuánta dispersa.",
+      "tags": [
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "p10",
+      "stem": "¿Cuál de las siguientes gráficas representa correctamente la cinética de los anticuerpos séricos en la respuesta inmune primaria y en la secundaria?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p04_q13_graficas.avif",
+      "imageAlt": "Tres pares de gráficas, A, B y C, cada uno con el título de IgM e IgG en el tiempo durante la respuesta primaria y la secundaria",
+      "imageW": 1472,
+      "imageH": 1122,
+      "options": [
+        {
+          "id": "a",
+          "text": "Gráfica A",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Gráfica B",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Gráfica C",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **respuesta primaria** la **IgM** aparece primero (pico hacia los 7–10 días) y la **IgG** llega después, con un título moderado. En la **secundaria**, los linfocitos B de memoria ya cambiaron de isotipo: la IgG sube **casi desde el inicio**, más rápido y a un título **mucho mayor**, y se mantiene alta; la IgM queda parecida a la de la primaria. Es lo que muestra B.\n\nEn A la **secundaria** está mal: la IgG tarda lo mismo que en la primaria y sólo llega más alto. En C la **primaria** está mal: la IgG sube a la vez que la IgM, y la IgM domina con un título mayor que el de la propia secundaria.",
+      "reviewNote": "El apunte sólo dice que «la primera imagen está bien» y trae otras dos gráficas incorrectas; se montaron las tres como A, B y C, con la correcta en la B.",
+      "tags": [
+        "Anticuerpos y respuesta humoral"
+      ]
+    },
+    {
+      "id": "p11",
+      "stem": "La siguiente imagen muestra un esquema simplificado de la interacción de un linfocito B con un linfocito T helper. Asumiendo que ocurren todos los pasos previos, uniones y citocinas necesarias (que no se muestran en la imagen) para que el linfocito B se active por la vía T dependiente, ¿contra cuál o cuáles epítopes del polipéptido amarillo mostrado producirá anticuerpos dicho linfocito?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p05_q14_img01.avif",
+      "imageAlt": "Linfocito B (LB) con su BCR unido a una cadena de epítopes amarillos y tres moléculas de MHC-II que presentan los péptidos A, B y C; el péptido C está en contacto con el TCR del linfocito T helper (LTh)",
+      "imageW": 800,
+      "imageH": 600,
+      "options": [
+        {
+          "id": "a",
+          "text": "Solo A",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Solo B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Solo C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "B y C",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "A, B y C",
+          "correct": false
+        }
+      ],
+      "explanation": "El anticuerpo que produce un linfocito B es su **BCR secretado**: tiene exactamente la misma especificidad. En la figura el BCR (en verde) está unido al epítope **A** del polipéptido, así que la clona fabricará anticuerpos **contra A**.\n\nDespués de unirse, el BCR **endocita la proteína entera**, la procesa y presenta **varios** de sus péptidos (A, B y C) en el **MHC-II**. El linfocito T helper reconoce uno de ellos (C) y da la ayuda para la activación, pero eso **no cambia** contra qué va el anticuerpo. «Solo C» confunde lo que ve el T con lo que reconoce el B, y «A, B y C» confunde lo que presenta el MHC-II con lo que reconoce el BCR.",
+      "reviewNote": "El apunte anota «RPTA: B». En esta figura, sin embargo, el BCR está unido al epítope A, así que se marca A, con el criterio que da el propio apunte: el anticuerpo va contra lo que reconoce el BCR. Si esa «B» era la letra de la alternativa y no del epítope, las dos cosas coinciden.",
+      "tags": [
+        "Anticuerpos y respuesta humoral"
+      ]
+    },
+    {
+      "id": "p12",
+      "stem": "Usted está investigando un nuevo método diagnóstico de SARS-CoV-2, agente causal del COVID-19. Para esto, realiza una técnica de inmunoensayo donde coloca la proteína spike (S) del virus en la base del pocillo. Luego agrega un anticuerpo conjugado a un fluorocromo y coloca su sustrato para evaluar la presencia de la proteína spike (lavando en cada paso los pocillos). Realiza un estudio de campo cuyos resultados no le convencen del todo, ya que es muy costoso y no logra identificar a la mayoría de pacientes infectados (corroborado por RT-PCR). Por tanto, decide modificar su método diagnóstico: en lugar de agregar un anticuerpo conjugado con fluorocromo, agrega un anticuerpo sin conjugar y luego un anticuerpo conjugado dirigido contra la región Fc del anticuerpo anterior. Con esto logra éxito en su método diagnóstico y es financiado por el estado para poder masificarlo. El método descrito que logró éxito corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "ELISA indirecto",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "ELISA directo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ELISA sándwich directo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ELISA sándwich indirecto",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "ELISA competitivo",
+          "correct": false
+        }
+      ],
+      "explanation": "El primer método (antígeno pegado a la placa y un único anticuerpo marcado) es un **ELISA directo**. Su problema es la **sensibilidad**: no detectaba a la mayoría de los infectados.\n\nAl cambiarlo por un anticuerpo **primario sin marcar** más un **secundario marcado contra su Fc**, pasa a ser un **ELISA indirecto**. Varios secundarios se unen a cada primario y **amplifican** la señal (más sensible), y un mismo secundario marcado sirve para cualquier primario (más barato).\n\nNo es un **sándwich** porque no hay anticuerpo de captura: la proteína S va pegada directamente al pocillo. En el **competitivo**, un antígeno marcado compite con el de la muestra.",
+      "reviewNote": "El apunte sólo conserva la respuesta; las alternativas se reconstruyeron. En el enunciado dice que agrega «un anticuerpo sin conjugar, dirigido contra la región Fc del anticuerpo anterior», que así no daría señal: se completó con el paso del secundario conjugado, que es lo que describe un ELISA indirecto.",
+      "tags": [
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "p13",
+      "stem": "¿Cuál de los siguientes gráficos representa mejor la activación de un mastocito (color azul) ante la presencia de un alérgeno (color verde) al que ha sido previamente sensibilizado?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p05_q17_img01.avif",
+      "imageAlt": "Cinco esquemas, A a E, de células azules unidas por anticuerpos rojos a un alérgeno verde en distintas disposiciones",
+      "imageW": 800,
+      "imageH": 450,
+      "options": [
+        {
+          "id": "a",
+          "text": "Gráfico A",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Gráfico B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Gráfico C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Gráfico D",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Gráfico E",
+          "correct": false
+        }
+      ],
+      "explanation": "Estar **sensibilizado** significa tener **IgE unida por su Fc** al receptor **FcεRI** del mastocito, con la región variable libre hacia afuera. La activación exige que el alérgeno **entrecruce** varias IgE vecinas, agregando sus receptores en la membrana: eso dispara la degranulación.\n\nEs lo que muestra A: tres IgE ancladas a la célula por su Fc y unidas al alérgeno por sus brazos. En B las IgE están **invertidas** (tocan la célula con la región que debería reconocer al alérgeno), y C repite ese error y además añade IgE libres por encima. En D el alérgeno queda entre dos células, con una sola IgE en cada una: sin **agregación** de receptores en la misma célula no hay activación. Un anticuerpo haciendo de puente entre dos células, como en E, es la imagen de la **citotoxicidad mediada por anticuerpos** (ADCC).",
+      "tags": [
+        "Hipersensibilidad"
+      ]
+    },
+    {
+      "id": "p14",
+      "stem": "Acude a consulta un paciente varón de 4 años traído por su padre adoptivo. Refiere que el menor ha tenido múltiples episodios de diarrea acuosa y que hace 1 año le diagnosticaron diabetes mellitus tipo 1. El ELISA de 4.ª generación para VIH es negativo. Usted sospecha una inmunodeficiencia primaria, por lo que realiza un análisis genético. En dicho análisis le indican que el paciente tiene una mutación en un gen que codifica un factor de transcripción encargado de producir citocinas que regulan a la baja el sistema inmune, haciendo el diagnóstico de síndrome IPEX. ¿Cuál combinación de marcadores de superficie es más probable que se encuentre ausente en el paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD4, FOXP3",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD3, CD20, CD127",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD3, CD4, CD25",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CD19, CD21",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD16, CD56",
+          "correct": false
+        },
+        {
+          "id": "f",
+          "text": "CD4, CD8, CD40",
+          "correct": false
+        }
+      ],
+      "explanation": "El **IPEX** es la mutación de **FOXP3**, el factor de transcripción de los **linfocitos T reguladores**. Sin Tregs no hay freno (IL-10, TGF-β) y aparecen enteropatía autoinmune (la diarrea), diabetes tipo 1 de inicio temprano y dermatitis. Lo que falta es la población **CD3+ CD4+ CD25+** (con CD25 alto).\n\n**FOXP3** es nuclear: no es un marcador de **superficie**. **CD20** es de los linfocitos B, y los Tregs llevan **CD127 bajo**, no alto. **CD19 y CD21** son de los B; **CD16 y CD56**, de las NK, y **CD40**, de los B y las células presentadoras.",
+      "tags": [
+        "Regulación y fallas del sistema inmune",
+        "Inmunodeficiencias",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p15",
+      "stem": "Usted trabaja en el laboratorio de hematología y le envían una muestra de sangre de un paciente procedente de emergencia. No le envían mayor información sobre su cuadro clínico. Identifica que el hallazgo de la imagen se encuentra presente en casi todo el frotis del paciente. ¿Cuál de las siguientes pruebas espera encontrar alterada con mayor probabilidad?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p05_q19_img01.avif",
+      "imageAlt": "Frotis de sangre periférica con los hematíes apilados en cadenas largas",
+      "imageW": 800,
+      "imageH": 600,
+      "options": [
+        {
+          "id": "a",
+          "text": "Velocidad de sedimentación globular (VSG)",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Prueba de antiglobulina directa (Coombs directo)",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tiempo de protrombina (TP)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Recuento de reticulocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Hemoglobina glicosilada (HbA1c)",
+          "correct": false
+        }
+      ],
+      "explanation": "Los hematíes están apilados en cadenas: son **pilas de monedas** (*rouleaux*). Aparecen cuando suben las proteínas plasmáticas grandes (**fibrinógeno**, **inmunoglobulinas**: inflamación, mieloma) y neutralizan la carga negativa que mantiene separados a los glóbulos rojos. Las pilas pesan más y sedimentan antes: la **VSG** sale **elevada**.\n\nEl **Coombs directo** busca anticuerpos pegados al hematíe, que dan **aglutinación** (grumos irregulares, como en una transfusión incompatible), no cadenas ordenadas. El **tiempo de protrombina** mide la coagulación, los **reticulocitos** la respuesta de la médula a una anemia y la **HbA1c** la glucemia de los últimos meses.",
+      "reviewNote": "El apunte sólo conserva la respuesta; las demás alternativas se reconstruyeron.",
+      "tags": [
+        "Hemograma y reactantes de fase aguda"
+      ]
+    },
+    {
+      "id": "p16",
+      "stem": "¿Qué población controla la infección por VIH en un paciente que no recibe tratamiento antirretroviral? Las imágenes muestran el gate de la población de linfocitos.",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p06_q20_img01.avif",
+      "imageAlt": "Figura 1: CD3 frente a CD19 con cuadrantes A a D. Figura 2: CD4 frente a CD3 (cuadrantes A a D) y CD8 frente a CD3 (cuadrantes E a H)",
+      "imageW": 900,
+      "imageH": 361,
+      "options": [
+        {
+          "id": "a",
+          "text": "Solo F (figura 2)",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Solo A (figura 1)",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Solo B (figura 2)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "A (figura 1) y B (figura 2)",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Solo D (figura 1)",
+          "correct": false
+        }
+      ],
+      "explanation": "Sin tratamiento, lo que mantiene a raya al VIH (y fija la carga viral de equilibrio) son sobre todo los **linfocitos T CD8+ citotóxicos**, que destruyen a las células infectadas. Son la población **F**: CD3+CD8+.\n\n**A** (figura 1) incluye a **todos** los linfocitos T, CD4 incluidos. **B** (figura 2) son los **CD4+**: las células que el virus infecta y destruye, no las que lo controlan. **D** (figura 1) son los **linfocitos B**: sus anticuerpos neutralizantes llegan tarde y el virus escapa de ellos.",
+      "reviewNote": "El apunte sólo conserva la respuesta y comenta las alternativas A, B y «A y B»; se completaron con una más.",
+      "tags": [
+        "VIH",
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "p17",
+      "stem": "¿En qué región es más probable encontrar células CD3+?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p06_q21_img01.avif",
+      "imageAlt": "Corte histológico teñido con hematoxilina-eosina con cuatro regiones señaladas: A, B, C y D",
+      "imageW": 700,
+      "imageH": 525,
+      "options": [
+        {
+          "id": "a",
+          "text": "Región A",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Región B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Región C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Región D",
+          "correct": true
+        }
+      ],
+      "explanation": "Es **bazo**: pulpa blanca (tejido linfoide, en violeta) junto a pulpa roja (los sinusoides, más claros). D señala la **arteriola central** de la pulpa blanca, y la vaina de linfocitos que la rodea es la **PALS** (vaina linfoide periarteriolar): la zona **T** del bazo, donde abundan las células **CD3+**.\n\nC es el **folículo**, zona B (CD19, CD20). B es un **sinusoide** de la pulpa roja, y A, la **cápsula**.",
+      "tags": [
+        "Órganos linfoides secundarios"
+      ]
+    },
+    {
+      "id": "p18",
+      "stem": "Usted coloca 1 µL de una suspensión de PBMCs en 99 µL de azul de tripano. De esta dilución, toma 10 µL y lo coloca en la cámara de hemocitómetro para realizar el conteo de células. Al microscopio observa lo siguiente (ver imagen). Usted decide contar solo en los cuadrados superior derecho y superior izquierdo. Además, considera incluir dentro del conteo a las células que aparecen en los bordes izquierdo y superior de cada cuadrante. ¿Cuál es la concentración (expresada en millones de células por mililitro) de células viables?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p06_q22_img01_limpia.avif",
+      "imageAlt": "Cámara de hemocitómetro al microscopio con células blancas (viables) y azules (no viables) repartidas entre los cuadrantes",
+      "imageW": 548,
+      "imageH": 610,
+      "options": [
+        {
+          "id": "a",
+          "text": "6 millones/mL",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "6,5 millones/mL",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "7 millones/mL",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "12 millones/mL",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "0,6 millones/mL",
+          "correct": false
+        }
+      ],
+      "explanation": "Las **viables** son las **blancas**: excluyen el azul de tripano porque tienen la membrana íntegra.\n\n- **Superior izquierdo**: 5 células dentro. Hay dos más que no cuentan: una tocando el **borde derecho** y otra el **inferior** (sólo se incluyen el izquierdo y el superior).\n- **Superior derecho**: 7.\n\nTotal: **12** en 2 cuadrantes. Concentración = (12 ÷ 2) × **100** (dilución 1:100) × **10⁴** (cada cuadrante es 0,1 µL) = 6 × 10⁶ células/mL, es decir, **6 millones/mL**.\n\n6,5 y 7 salen de contar también la del borde derecho, o las dos de los bordes que no tocan; 12, de no dividir entre los cuadrantes, y 0,6, de tomar la dilución como 1:10.",
+      "reviewNote": "El enunciado venía dentro de la imagen y se pasó a texto. El apunte no trae la respuesta: se contó sobre la figura, y las 12 células que el alumno había resaltado en los dos cuadrantes superiores coinciden con el conteo. Se quitó ese resaltado y la «C» de versión del examen; las alternativas se reconstruyeron.",
+      "tags": [
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "p19",
+      "stem": "Acude una madre con su recién nacido de 29 días de vida debido a que aún no se le cae el cordón umbilical. Además, ha notado que la zona alrededor del cordón umbilical está roja y dolorosa al tacto. Al examen físico no se evidencia pus en el cordón, pero sí eritema y edema. Se realiza un hemograma donde se evidencia neutrofilia marcada. Luego de varios análisis se diagnostica déficit de adhesión leucocitaria tipo 1, generado por una mutación en el gen de CD18, componente importante de las integrinas CD11/CD18. ¿Cuál de los siguientes pasos en la migración de los neutrófilos a los tejidos se vería afectado en el paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Transmigración",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Quimiotaxis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Marginación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Rodamiento",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Adhesión",
+          "correct": true
+        }
+      ],
+      "explanation": "En el **DAL-1** faltan las **integrinas β2** (LFA-1 = CD11a/CD18 y Mac-1 = CD11b/CD18), que son las que fijan al neutrófilo al **ICAM-1** del endotelio. El neutrófilo rueda pero **no se detiene**, así que no sale del vaso: por eso hay **neutrofilia marcada sin pus** y el cordón se cae tarde.\n\nEl **rodamiento** depende de las **selectinas** (su defecto es el DAL-2). La **marginación** es un fenómeno físico del flujo sanguíneo. La **transmigración** (diapedesis, PECAM-1) viene **después** de la adhesión: falla porque no se llega a ella, pero el paso defectuoso es la adhesión. La **quimiotaxis** depende de las quimiocinas y sus receptores.",
+      "reviewNote": "En el apunte la alternativa A dice «Transaminasa» (por transmigración) y el enunciado habla de «un gen a CD11»: el DAL-1 se debe a mutaciones de CD18 (ITGB2), la subunidad que comparten las integrinas CD11a/b/c. Se corrigieron las dos cosas.",
+      "tags": [
+        "Inmunidad innata",
+        "Inmunodeficiencias",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p20",
+      "stem": "En la siguiente imagen se muestra una célula hepática infectada con un virus que en su superficie expresa un péptido viral (círculo verde). La figura roja representa un anticuerpo. La célula X representa una célula del sistema inmune. El rectángulo celeste corresponde con mayor probabilidad a un receptor/proteína de superficie llamado:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p06_q24_img01.avif",
+      "imageAlt": "Hepatocito infectado con un virus y una célula X unidos por un anticuerpo rojo: los brazos del anticuerpo tocan el péptido viral y su tallo, un rectángulo celeste en la superficie de X",
+      "imageW": 700,
+      "imageH": 933,
+      "options": [
+        {
+          "id": "a",
+          "text": "CD16",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD56",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD8",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "MHC-I",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "MHC-II",
+          "correct": false
+        },
+        {
+          "id": "f",
+          "text": "TCR",
+          "correct": false
+        },
+        {
+          "id": "g",
+          "text": "BCR",
+          "correct": false
+        }
+      ],
+      "explanation": "Es la **citotoxicidad celular dependiente de anticuerpos** (ADCC). La IgG se une por sus brazos al péptido viral del hepatocito y por su **Fc** a la célula X, una **NK**. El receptor que reconoce ese Fc es el **FcγRIII**, es decir, **CD16**; al entrecruzarse, la NK libera perforina y granzimas sobre la célula infectada.\n\n**CD56** también marca a las NK, pero no se une a anticuerpos. **CD8** y el **TCR** son del linfocito T, que reconoce péptidos en el MHC-I, no anticuerpos. **MHC-I y MHC-II** son moléculas presentadoras, y el **BCR** es en sí mismo un anticuerpo de membrana, no un receptor de Fc.",
+      "tags": [
+        "Inmunidad innata",
+        "Anticuerpos y respuesta humoral"
+      ]
+    },
+    {
+      "id": "p21",
+      "stem": "Acude un padre con su hija de 10 meses porque desde los 7 meses de vida ha presentado infecciones recurrentes que han requerido hospitalización y manejo antibiótico endovenoso. Usted sospecha una inmunodeficiencia primaria, por lo que realiza una citometría de flujo de sangre total. El diagrama B representa un gate de la población del círculo rojo del diagrama A. ¿Cuál de las siguientes proteínas/enzimas es más probable que se encuentre deficiente en este paciente?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p07_q25_img01.avif",
+      "imageAlt": "Diagrama A: SSC frente a CD45 con los linfocitos rodeados en rojo. Diagrama B: CD19 frente a CD3 de esa población, con células sólo en los dos cuadrantes inferiores",
+      "imageW": 700,
+      "imageH": 525,
+      "options": [
+        {
+          "id": "a",
+          "text": "Tirosina cinasa de Bruton (BTK)",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Recombinasas RAG1 y RAG2",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Ligando de CD40 (CD40L)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Adenosina desaminasa (ADA)",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Cadena γ común de los receptores de citocinas",
+          "correct": false
+        }
+      ],
+      "explanation": "En A, el círculo rojo marca a los **linfocitos** (CD45 brillante, granularidad baja). En B, dentro de ellos, hay células **CD3+** (linfocitos T) y **CD3−CD19−** (NK), pero **ninguna CD19+**: faltan los **linfocitos B**. Las infecciones empiezan hacia los 6–7 meses, cuando se agota la IgG que pasó de la madre: es una **agammaglobulinemia**.\n\nLa **BTK** es imprescindible para que el pre-B madure a linfocito B. El defecto clásico está ligado al X; en una niña sería excepcional y el mismo cuadro puede venir de defectos autosómicos (cadena μ, BLNK), pero entre estas opciones es la única que explica que falten sólo los B.\n\nSin **RAG** faltarían también los T. En el déficit de **CD40L** los B están presentes (hiper-IgM). La **ADA** y la **cadena γ común** causan inmunodeficiencia combinada grave, sin linfocitos T.",
+      "reviewNote": "El apunte no trae ni alternativas ni respuesta; se reconstruyeron desde la figura, donde sólo faltan los CD19+.",
+      "tags": [
+        "Inmunodeficiencias",
+        "Técnicas inmunológicas",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p22",
+      "stem": "Varón de 55 años procedente de la selva acude a consulta por un cuadro de varios años caracterizado por lesiones en la piel. Sus familiares refieren que su cara ha cambiado. Usted sospecha una infección por M. leprae y realiza una biopsia de piel. En la biopsia se evidencian abundantes macrófagos dispersos sin formar una estructura definida, así como escasos linfocitos. Al realizar una tinción especial, observa varios bacilos de M. leprae dentro y fuera de los macrófagos. ¿Cuáles de las siguientes citocinas serán responsables de la formación incompleta de granuloma en este paciente?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p07_q26_img01.avif",
+      "imageAlt": "Paciente con infiltración nodular difusa de la cara y biopsia de piel con un infiltrado difuso bajo la epidermis, sin granulomas",
+      "imageW": 800,
+      "imageH": 502,
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-4, IL-5 e IL-10",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-2 e IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-12, IFN-γ y TNF-α",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-17 e IL-22",
+          "correct": false
+        }
+      ],
+      "explanation": "Es **lepra lepromatosa**: facies leonina, bacilos abundantes y macrófagos espumosos que no llegan a organizarse. Predomina una respuesta **Th2**: la **IL-4**, la **IL-5** y la **IL-10** frenan a los Th1 y la activación del macrófago, así que el bacilo se multiplica dentro de él sin que se forme el granuloma.\n\n**IL-2, IFN-γ, IL-12 y TNF-α** son el perfil **Th1** de la lepra **tuberculoide**, la de los granulomas bien formados y pocos bacilos. **IL-17 e IL-22** son de los Th17 (neutrófilos, barreras).",
+      "reviewNote": "El apunte dice «abundantes mastocitos»; en la lepra lepromatosa lo que abunda son macrófagos espumosos (células de Virchow), que es además lo que retoma la frase siguiente («dentro y fuera de los macrófagos»). También se corrigió «información incompleta» por «formación». Las alternativas se reconstruyeron.",
+      "tags": [
+        "Citocinas y respuesta T",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p23",
+      "stem": "¿Qué citocinas favorecen la formación de la estructura mostrada en la imagen?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p07_q27_img01.avif",
+      "imageAlt": "Corte histológico con un acúmulo redondeado de linfocitos y macrófagos con células gigantes multinucleadas en su interior",
+      "imageW": 800,
+      "imageH": 600,
+      "options": [
+        {
+          "id": "a",
+          "text": "TNF-α, IL-5",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IFN-α, TNF-α",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-4, IL-5",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-12, IL-10",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-2, IFN-γ",
+          "correct": true
+        }
+      ],
+      "explanation": "Es un **granuloma**, con **células gigantes multinucleadas** rodeadas de linfocitos. Su formación es obra de la respuesta **Th1**: el macrófago produce IL-12, el Th1 prolifera gracias a la **IL-2** y libera **IFN-γ**, que activa al macrófago y lo convierte en célula epitelioide y célula gigante.\n\nEn la primera, el TNF-α sí participa (mantiene el granuloma), pero la **IL-5** es Th2 (eosinófilos). El **IFN-α** es un interferón antiviral de tipo I. **IL-4 e IL-5** son Th2, y en la cuarta la IL-12 sí favorece, pero la **IL-10** inhibe.",
+      "tags": [
+        "Citocinas y respuesta T"
+      ]
+    },
+    {
+      "id": "p24",
+      "stem": "Un varón de 22 años acude a consulta por dolor de espalda baja hace varias semanas. Refiere que el dolor mejora al realizar deporte y empeora con el reposo. Los marcadores inflamatorios se encuentran elevados. Usted sospecha una enfermedad autoinmune llamada espondilitis anquilosante. Uno de los mecanismos propuestos de la enfermedad es la alteración de la microbiota intestinal, que favorece una respuesta Th17, sobre todo en pacientes que tienen el gen HLA-B27. En base a lo explicado, ¿cuáles citocinas estarían involucradas en la inflamación presente en el paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-17, TNF-α",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-2, IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-4, IFN-α",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-5, TNF-α",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-10, TGF-β",
+          "correct": false
+        }
+      ],
+      "explanation": "La respuesta **Th17** se define por la **IL-17** (junto con IL-21 e IL-22), que recluta neutrófilos y sostiene la inflamación en la entesis. El **TNF-α** es la otra citocina central de las espondiloartritis: los anti-TNF y los anti-IL-17 son justamente su tratamiento.\n\n**IL-2 e IFN-γ** son Th1. La tercera mezcla una citocina Th2 (IL-4) con un interferón antiviral (IFN-α). La **IL-5** es Th2 (eosinófilos). Y **IL-10 y TGF-β** son el perfil regulador, antiinflamatorio.",
+      "reviewNote": "En el apunte la alternativa a dice «IL-17. TNFa también está…»; se transcribió como «IL-17, TNF-α», en pares como las demás.",
+      "tags": [
+        "Citocinas y respuesta T",
+        "Regulación y fallas del sistema inmune",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p25",
+      "stem": "Jorge tiene enfermedad de Crohn, una enfermedad inflamatoria intestinal autoinmune donde predomina la activación de Th1. Usted decide iniciar tratamiento antiinflamatorio con un anticuerpo monoclonal quimérico (formado por la combinación de la región variable derivada de ratón y la región constante derivada de humano) contra TNF-α. Antes de iniciar el tratamiento realiza una prueba QuantiFERON, cuyos resultados se muestran en la imagen 1. Usted recurre al manual de laboratorio de la prueba realizada y encuentra la tabla que le permite interpretar los resultados del paciente (imagen 2). En base a lo mostrado, la prueba QuantiFERON en Jorge se puede interpretar como:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p08_q29_imagenes.avif",
+      "imageAlt": "Imagen 1: resultados de QuantiFERON (Nil 4.51, TB Antigen 6.62, TB Antigen minus Nil 2.11, Mitogen 9.14, Mitogen minus Nil 4.63). Imagen 2: tabla de interpretación del fabricante",
+      "imageW": 1040,
+      "imageH": 1132,
+      "options": [
+        {
+          "id": "a",
+          "text": "Positivo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Negativo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Indeterminado",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Falso positivo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Falso negativo",
+          "correct": false
+        }
+      ],
+      "explanation": "La tabla se lee en orden:\n\n1. **Nil = 4.51**, que es **≤ 8.0**: no cae en la última fila (indeterminado por fondo alto).\n2. **TB Antigen − Nil = 2.11**: es **≥ 0.35** y también **≥ 25 % del Nil** (25 % de 4.51 = 1.13). Eso es **positivo**, y con un positivo el mitógeno da igual («Any»).\n\nInterpretación: **infección por *M. tuberculosis* probable** (latente). Hay que tratarla **antes** de empezar el anti-TNF, porque el TNF-α es el que mantiene contenido el granuloma y bloquearlo reactiva la tuberculosis.\n\nLa tabla sólo ofrece tres resultados —positivo, negativo e indeterminado—: «falso positivo» y «falso negativo» no son una lectura posible de la prueba.",
+      "reviewNote": "La «imagen 2» que llegó con el apunte estaba redibujada con errores («BIL» por Nil, «T3» por TB) y con el corte de Nil en 1.0: con esa tabla, el Nil de Jorge (4.51) daría indeterminado y no positivo, que es la clave. Se rehízo con el corte de 8.0 del inserto de QuantiFERON-TB Gold, el único con el que la clave cuadra.",
+      "tags": [
+        "Técnicas inmunológicas",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p26",
+      "stem": "Jorge tiene enfermedad de Crohn, una enfermedad inflamatoria intestinal donde predomina la activación de Th1. Usted decide iniciar tratamiento con infliximab por vía endovenosa, un anticuerpo monoclonal quimérico formado por la combinación de la región variable derivada del ratón y la región constante derivada de humano, contra TNF-α. Luego de unas semanas, Jorge acude a consulta y le refiere una gran mejoría de sus síntomas, por lo que deciden continuar con el mismo tratamiento. Cuatro meses después, Jorge acude a consulta por reaparición gradual de sus síntomas en las últimas semanas, a pesar de haber estado recibiendo adecuadamente el tratamiento. ¿Cuál de los siguientes es la mejor explicación del empeoramiento de los síntomas de Jorge?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inhibición del CYP-450",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Formación de anticuerpos neutralizantes anti-fármaco",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Activación de la vía Th2 por falta de respuesta de la Th1",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mayor producción de IL-10 por las células inmunes",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Mala absorción gastrointestinal del fármaco debido a la inflamación",
+          "correct": false
+        }
+      ],
+      "explanation": "La **región variable de ratón** del infliximab es extraña para el sistema inmune de Jorge, que acaba produciendo **anticuerpos anti-fármaco**. Esos anticuerpos **neutralizan** el infliximab y aceleran su eliminación: es la **pérdida secundaria de respuesta**, que aparece tras una mejoría inicial.\n\nLos anticuerpos monoclonales se degradan por proteólisis, no por el **CYP-450**. Activar la vía **Th2** o producir más **IL-10** frenaría la inflamación Th1: Jorge estaría mejor, no peor. Y la **mala absorción** no aplica a un fármaco que se da por vía endovenosa.",
+      "tags": [
+        "Anticuerpos y respuesta humoral",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p27",
+      "stem": "¿Cuál de los siguientes es una propiedad de una inmunoglobulina que puede realizar transcitosis mediada por receptor y luego usar parte de dicho receptor para su propia estructura?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se produce en mayor cantidad en la respuesta inmune primaria",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Activa eficientemente la vía clásica del complemento",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Atraviesa la placenta",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se secreta como dímero unido por la cadena J",
+          "correct": true
+        }
+      ],
+      "explanation": "La inmunoglobulina es la **IgA**. Se secreta como **dímero unido por la cadena J**, y ese dímero es el que se une al **receptor de Ig polimérica** (pIgR) en la cara basal del epitelio. El receptor la **transcita** hasta la luz, donde se corta, y un fragmento suyo —el **componente secretor**— queda formando parte de la **IgA secretora** y la protege de las proteasas.\n\nLa que predomina en la **respuesta primaria** es la IgM. La **vía clásica** del complemento la activan la IgM y la IgG, no la IgA. Y la que **atraviesa la placenta** es la IgG: también lo hace por transcitosis (por el FcRn), pero no se queda con ninguna parte del receptor.",
+      "reviewNote": "El apunte trae tres alternativas (a–c) y, en lugar de la cuarta, la anotación «IgA». Ninguna de las tres es propiedad de la IgA, así que la cuarta se reconstruyó.",
+      "tags": [
+        "Anticuerpos y respuesta humoral"
+      ]
+    },
+    {
+      "id": "p28",
+      "stem": "Usted está leyendo un artículo sobre una nueva prueba de laboratorio que involucra el uso de citometría de flujo. En esta prueba se toma una muestra de sangre periférica de una persona y se aíslan los granulocitos. Luego se incuban con un estimulante de granulocitos llamado PMA (acetato de tetradecanoilforbol); posteriormente se agrega DHR (dihidrorodamina), un compuesto que de por sí no es fluorescente y que fluoresce con una longitud de onda de emisión de 488 nm solo en presencia de radicales libres, al convertirse en rodamina. Luego se analiza la onda de emisión en el citómetro de flujo. Usted evalúa a un paciente con infecciones recurrentes y lo compara con una persona sana. Se muestran los resultados de la prueba en la fila A (células no estimuladas: se usó salino en lugar de PMA) y en la fila B (células estimuladas con PMA). ¿Cuál de los siguientes es más probable que se encuentre ausente o disminuido en el paciente?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p09_q32_img01.avif",
+      "imageAlt": "Histogramas de fluorescencia de DHR en el control sano y en el paciente, sin estimular (fila A) y estimulados con PMA (fila B)",
+      "imageW": 1000,
+      "imageH": 750,
+      "options": [
+        {
+          "id": "a",
+          "text": "NADPH oxidasa",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Mieloperoxidasa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD40L",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "RAG1/2",
+          "correct": false
+        }
+      ],
+      "explanation": "Es la **prueba de dihidrorodamina (DHR)**. En el control sano, al estimular con PMA el pico se desplaza a la derecha (10³–10⁴): el **estallido respiratorio** produce radicales libres que oxidan la DHR a rodamina fluorescente. En el paciente el pico **no se mueve**: sus granulocitos no producen radicales. Falta la **NADPH oxidasa**, y el diagnóstico es **enfermedad granulomatosa crónica**.\n\nLa **mieloperoxidasa** actúa **después**, sobre el H₂O₂ que ya generó la NADPH oxidasa, y su déficit suele ser asintomático. **CD40L** es de los linfocitos T (hiper-IgM) y **RAG1/2**, de la recombinación V(D)J: ninguno interviene en el estallido respiratorio.",
+      "reviewNote": "El apunte transcribe la b como «Mieloductasa», que no existe (la propia nota lo corrige); se escribió mieloperoxidasa.",
+      "tags": [
+        "Inmunodeficiencias",
+        "Técnicas inmunológicas",
+        "Inmunidad innata"
+      ]
+    },
+    {
+      "id": "p29",
+      "stem": "En el laboratorio de patología se recibe una muestra de un tumor abdominal procedente de un paciente de 45 años. Al microscopio usted evidencia la presencia de linfocitos que, vía inmunohistoquímica, son CD3+. Un mayor análisis de la muestra indica que las células tumorales expresan gran cantidad de PD-L1. ¿Cuál de los siguientes eventos está ocurriendo con mayor probabilidad en el microambiente tumoral?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Menor liberación de IL-10 y TGF-β",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Menor síntesis de especies reactivas de nitrógeno",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Menor producción de IL-2",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Mayor activación de células dendríticas",
+          "correct": false
+        }
+      ],
+      "explanation": "El **PD-L1** del tumor se une al **PD-1** de los linfocitos T que lo infiltran (los CD3+). PD-1 recluta una fosfatasa (SHP-2) que apaga la señal del TCR y de CD28: el linfocito deja de producir **IL-2**, no prolifera y entra en **agotamiento**. Por eso los inhibidores de PD-1/PD-L1 funcionan en estos tumores.\n\nEn el microambiente tumoral la **IL-10 y el TGF-β** aumentan, no disminuyen. Las **especies reactivas de nitrógeno** son cosa del macrófago, no del eje PD-1/PD-L1, que actúa sobre el linfocito T. Y el tumor **suprime** a las células dendríticas, no las activa.",
+      "reviewNote": "El apunte no marca la respuesta de esta pregunta, y la b aparece como un comentario pegado a la a; se separó como alternativa.",
+      "tags": [
+        "Inmunología tumoral"
+      ]
+    },
+    {
+      "id": "p30",
+      "stem": "Le piden evaluar a un recién nacido de 12 horas de vida que nació a las 38 semanas. La madre refiere que en su séptimo mes de embarazo tuvo fiebre, malestar general y crecimiento de ganglios en el cuello, pero que se autolimitó y no le dio importancia. El bebé es diagnosticado con toxoplasmosis congénita. Asumiendo que la infección que la madre tuvo fue toxoplasmosis aguda, ¿cuál de los siguientes niveles de anticuerpos anti-toxoplasma espera encontrar en ese momento?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p09_q34_img01.avif",
+      "imageAlt": "Tabla con cinco filas, A a E, que combinan IgM e IgG de la madre y del bebé, cada una elevada (flecha) o ausente (guiones)",
+      "imageW": 1000,
+      "imageH": 499,
+      "options": [
+        {
+          "id": "a",
+          "text": "Fila A",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Fila B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Fila C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Fila D",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Fila E",
+          "correct": false
+        }
+      ],
+      "explanation": "La madre se infectó hace unos dos meses: tiene **IgM** (persiste meses tras una infección aguda) e **IgG** (ya seroconvirtió).\n\nEn el bebé la **IgG** estará alta, pero no dice nada por sí sola: es la de la madre, que **atraviesa la placenta**. La que confirma la infección congénita es la **IgM**: es un pentámero, **no cruza la placenta**, así que si el bebé la tiene, la fabricó él. Todo elevado: fila **A**.\n\nEn B y C la madre no tiene IgG dos meses después de infectarse, lo que no es posible. En D le falta la IgM, que tras una infección aguda tan reciente seguiría presente. En E el bebé no tiene IgM propia, y entonces nada probaría la infección congénita.",
+      "tags": [
+        "Anticuerpos y respuesta humoral",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p31",
+      "stem": "Se descubre que las células neoplásicas del tumor X han desarrollado un mecanismo de evasión para no ser destruidas por el sistema inmune. Dicho mecanismo consta en la mayor expresión de una molécula de superficie que suprime la activación de linfocitos T y se expresa constitutivamente en linfocitos T regulatorios. Para contrarrestar específicamente este mecanismo, usted desarrolla una inmunoterapia que se basa en:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inhibición de CD28",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Inhibición de PD-L1",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inhibición de CTLA-4",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Activación de PD-1",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Inhibición de FOXP3",
+          "correct": false
+        },
+        {
+          "id": "f",
+          "text": "Activación de CD25",
+          "correct": false
+        }
+      ],
+      "explanation": "La molécula que **suprime la activación del linfocito T** y se expresa **de forma constitutiva en los Tregs** es **CTLA-4**: se une a B7 (CD80/CD86) con más afinidad que CD28 y le quita la coestimulación. Bloquearla (ipilimumab) libera la respuesta antitumoral.\n\n**PD-L1** también es un freno y lo expresan las células tumorales, pero no es la molécula constitutiva de los Tregs (PD-1 aparece en los T activados). **Activar PD-1** frenaría aún más la respuesta. **CD28** es el coestimulador: inhibirlo empeoraría las cosas. **FOXP3** es un factor de transcripción nuclear, no una molécula de superficie. Y **CD25** es la cadena α del receptor de IL-2: activarlo favorecería a los propios Tregs.",
+      "tags": [
+        "Inmunología tumoral"
+      ]
+    },
+    {
+      "id": "p32",
+      "stem": "Varón de 60 años es llevado a emergencia por alteración de la conciencia. Al examen físico se encuentra febril y presenta aumento de volumen del pie derecho, con secreción de pus. Según los datos dados y los hallazgos en la lámina periférica, ¿qué espera encontrar en el hemograma?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p09_q36_img01.avif",
+      "imageAlt": "Frotis de sangre periférica con abundantes neutrófilos, varios de ellos con núcleo en banda, sin segmentar",
+      "imageW": 800,
+      "imageH": 600,
+      "options": [
+        {
+          "id": "a",
+          "text": "Leucocitos 15 000/mm³, neutrófilos 80 %, abastonados 500/mm³",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Leucocitos 3 500/mm³, neutrófilos 40 %, linfocitos 50 %",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Leucocitos 15 000/mm³, linfocitos 65 %, linfocitos atípicos 10 %",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Leucocitos 12 000/mm³, eosinófilos 25 %, abastonados 0/mm³",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Leucocitos 7 000/mm³, neutrófilos 60 %, abastonados 0/mm³",
+          "correct": false
+        }
+      ],
+      "explanation": "Un pie con pus, fiebre y alteración de la conciencia es una **infección bacteriana** con probable sepsis. La lámina lo confirma: abundan los **neutrófilos**, y varios tienen el núcleo en **banda** (abastonados), sin segmentar. Se espera **leucocitosis con neutrofilia** y abastonados en sangre, que es la desviación a la izquierda de una médula que libera formas jóvenes.\n\nLa leucopenia con linfocitos altos y la linfocitosis con linfocitos atípicos son de las infecciones **virales**. La **eosinofilia** es de parásitos y alergias. Y un hemograma **normal** no encaja con la lámina ni con el cuadro.",
+      "reviewNote": "El apunte sólo conserva la respuesta; las demás alternativas se reconstruyeron.",
+      "tags": [
+        "Hemograma y reactantes de fase aguda",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p33",
+      "stem": "¿Con qué combinación de marcadores podría identificar a las células linfoides que se encuentran en la estructura señalada con el recuadro grande?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p09_q37_img01.avif",
+      "imageAlt": "Corte histológico con H-E de un órgano linfoide lobulado: un recuadro grande sobre una zona oscura, densamente celular, y uno pequeño alrededor de una estructura redondeada eosinófila en una zona más pálida",
+      "imageW": 700,
+      "imageH": 525,
+      "options": [
+        {
+          "id": "a",
+          "text": "Doble positivos CD4+CD8+ y doble negativos CD4−CD8−",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Simples positivos CD4+CD8− y CD4−CD8+ maduros",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos B CD19+ CD20+ con IgM e IgD de superficie",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Treg CD3+ CD4+ CD25+ con FOXP3 intracelular",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Células NK CD3− CD16+ CD56+",
+          "correct": false
+        }
+      ],
+      "explanation": "Es **timo**: el recuadro pequeño enmarca un **corpúsculo de Hassall**, que sólo existe en la médula tímica. El recuadro grande está sobre la zona **oscura** y densamente celular del lobulillo: la **corteza**, repleta de timocitos inmaduros. Allí están los **doble negativos** (CD4−CD8−, los más jóvenes, en la zona subcapsular) y, sobre todo, los **doble positivos** (CD4+CD8+), que pasan la selección positiva.\n\nLos **simples positivos** maduros están en la **médula**, que es la zona pálida del corpúsculo de Hassall, y también es en la médula donde se generan los **Treg**. Los **linfocitos B** y las **NK** son escasos en el timo.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p10_q37_hassall.avif",
+      "explanationImageAlt": "Corpúsculo de Hassall: capas concéntricas de células epiteliales queratinizadas, rodeado de linfocitos",
+      "explanationImageCaption": "El corpúsculo de Hassall marca la médula del timo; la corteza, más oscura, es la de los doble negativos y doble positivos.",
+      "reviewNote": "La figura trae dos recuadros; por la clave del apunte (doble positivos y doble negativos) la estructura señalada es el grande, sobre la corteza, y así se aclaró en el enunciado. Las alternativas se reconstruyeron.",
+      "tags": [
+        "Órganos linfoides primarios"
+      ]
+    },
+    {
+      "id": "p34",
+      "stem": "Niño de 3 años es llevado a consulta por incremento de tamaño de un ganglio cervical. El niño se encuentra asintomático y le indican que ha recibido una vacuna hace 2 semanas. Se realiza una biopsia del ganglio afectado, donde el aumento de tamaño del ganglio es a expensas de la región mostrada en la imagen. ¿Cuál de los siguientes explica el aumento del tamaño del ganglio en el paciente?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p10_q38_img01.avif",
+      "imageAlt": "Corte histológico de ganglio: una lámina uniforme de linfocitos pequeños, sin folículos, atravesada por una vénula de endotelio alto",
+      "imageW": 700,
+      "imageH": 525,
+      "options": [
+        {
+          "id": "a",
+          "text": "Aumento en número y tamaño de centros germinales",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Expansión del manto",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Aumento del número de linfocitos CD20+ CD3− en la corteza",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Expansión de la zona marginal",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Aumento de linfocitos CD3+ CD20− en la paracorteza",
+          "correct": true
+        }
+      ],
+      "explanation": "La imagen muestra una lámina de linfocitos pequeños **sin folículos** y una **vénula de endotelio alto**, con su endotelio cúbico: es la **paracorteza**, la zona **T** del ganglio, por donde entran los linfocitos desde la sangre. Si el ganglio crece a expensas de ella, es una **hiperplasia paracortical**: más linfocitos **CD3+ CD20−**, como pasa tras una vacuna o una infección viral.\n\nLos **centros germinales**, el **manto** y los linfocitos **CD20+** de la corteza son del folículo, la zona B. La **zona marginal** es propia del bazo y del tejido linfoide de mucosas.",
+      "reviewNote": "El apunte trae las alternativas a–d y anota como respuesta «incremento de linfocitos T en la paracorteza / endotelio alto», que no está entre ellas; se añadió como e, al estilo de la c.",
+      "tags": [
+        "Órganos linfoides secundarios",
+        "Vacunas",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p35",
+      "stem": "Las enfermedades autoinmunes se producen cuando el sistema inmune ataca erróneamente a sus propios tejidos y órganos con linfocitos autorreactivos. Estas enfermedades surgen de un fallo en la capacidad del sistema inmune para distinguir entre antígenos propios y extraños. Si células como las que se observan en la imagen hubieran sufrido una mutación en el gen AIRE que disminuye su función, ¿cuál será la consecuencia?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p10_q39_img01.avif",
+      "imageAlt": "Corte histológico de médula tímica con corpúsculos de Hassall eosinófilos entre linfocitos y células epiteliales",
+      "imageW": 700,
+      "imageH": 525,
+      "options": [
+        {
+          "id": "a",
+          "text": "La alteración en la función del gen AIRE en las células tímicas corticales puede resultar en un aumento en la eliminación de linfocitos T que reconocen antígenos propios con alta avidez, disminuyendo el riesgo de enfermedades autoinmunes",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Una mutación en el gen AIRE en las células epiteliales tímicas medulares puede conducir a una deficiente expresión de antígenos propios durante la selección negativa, permitiendo que los linfocitos T autorreactivos escapen del timo y potencialmente ataquen tejidos y órganos propios",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Una mutación en el gen AIRE en las células epiteliales tímicas corticales puede conducir a un incremento de la expresión de antígenos propios durante la selección positiva, permitiendo que los linfocitos T autorreactivos escapen del timo y potencialmente ataquen tejidos y órganos propios",
+          "correct": false
+        }
+      ],
+      "explanation": "La imagen es **médula tímica** (corpúsculos de Hassall). **AIRE** se expresa en las **células epiteliales tímicas medulares**, y les permite fabricar proteínas propias de otros tejidos (insulina, tiroglobulina…) para mostrárselas a los timocitos durante la **selección negativa**. Sin AIRE esos antígenos no se muestran, los linfocitos T que los reconocen **no se eliminan** y salen a la periferia: es el síndrome poliglandular autoinmune tipo 1 (APECED).\n\nLa primera y la tercera ponen a AIRE en la **corteza**, que no es donde actúa. La primera, además, dice que su falla **aumenta** la eliminación y protege, y la tercera, que **aumenta** la expresión de antígenos durante la selección **positiva**: una pérdida de función hace lo contrario, y la positiva no es la que elimina autorreactivos.",
+      "reviewNote": "El enunciado dice «como las que se señalan en la imagen», pero la figura no lleva ninguna marca: se cambió a «se observan».",
+      "tags": [
+        "Órganos linfoides primarios",
+        "Regulación y fallas del sistema inmune"
+      ]
+    },
+    {
+      "id": "p36",
+      "stem": "¿Qué tipo de inmunoglobulina espera que se produzca predominantemente en la región resaltada de rojo?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p10_q40_img01.avif",
+      "imageAlt": "Corte de intestino delgado con vellosidades y una fila de folículos linfoides en la mucosa y submucosa; uno de ellos, con su cúpula, está enmarcado en rojo",
+      "imageW": 700,
+      "imageH": 525,
+      "options": [
+        {
+          "id": "a",
+          "text": "IgA",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IgG",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgM",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgE",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IgD",
+          "correct": false
+        }
+      ],
+      "explanation": "Es **íleon** con sus **placas de Peyer**, y el recuadro enmarca uno de sus folículos con la cúpula. Allí, con el **TGF-β** (más IL-5, IL-10 y APRIL/BAFF de las células dendríticas), los linfocitos B hacen **cambio de isotipo a IgA**. Las plasmáticas resultantes migran a la lámina propia y la IgA sale a la luz como IgA secretora.\n\nLa **IgG** predomina en la sangre y en las respuestas de ganglio y bazo; la **IgM**, en la respuesta primaria; la **IgE**, en la defensa antiparasitaria y la alergia, y la **IgD** está sobre todo en la superficie del linfocito B virgen.",
+      "reviewNote": "El apunte sólo conserva la respuesta; las demás alternativas se reconstruyeron.",
+      "tags": [
+        "Órganos linfoides secundarios",
+        "Anticuerpos y respuesta humoral"
+      ]
+    },
+    {
+      "id": "p37",
+      "stem": "¿Cuál o cuáles de las siguientes regiones de un anticuerpo nunca varían durante toda la vida útil de una clona específica de linfocitos B activada por la vía T dependiente?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p11_q41_img01.avif",
+      "imageAlt": "Esquema de una IgG con cinco regiones señaladas: A, B, C, D y E",
+      "imageW": 800,
+      "imageH": 600,
+      "options": [
+        {
+          "id": "a",
+          "text": "A y B",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Solo D",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "C y E",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "A y D",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "B, C y E",
+          "correct": false
+        }
+      ],
+      "explanation": "A es la **región constante de la cadena ligera** (κ o λ): queda fijada cuando la cadena ligera se reordena, y nada de lo que ocurre en la activación T dependiente la modifica. Según la clave del examen, la B —la **bisagra**, con los puentes disulfuro que unen las dos cadenas pesadas— tampoco cambia.\n\nD es la **región variable**: la **hipermutación somática** del centro germinal la modifica un poco (maduración de la afinidad). C y E son **dominios constantes de la cadena pesada**, y son justo lo que cambia con el **cambio de isotipo** (IgM → IgG, IgA o IgE).",
+      "reviewNote": "Clave del apunte: A y B. La A es indiscutible; la B es discutible, porque la bisagra se codifica en la región constante de la cadena pesada y su secuencia también cambia con el cambio de isotipo (la IgM y la IgE ni siquiera la tienen). Se respeta la clave del examen y las alternativas se reconstruyeron a partir de ella.",
+      "tags": [
+        "Anticuerpos y respuesta humoral"
+      ]
+    },
+    {
+      "id": "p38",
+      "stem": "La diferenciación de los linfocitos T CD4 hacia el Th responsable de mediar la inmunidad antiparasitaria se ve inhibida principalmente por cuál de las siguientes citocinas:",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-4",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-10",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IFN-γ",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "IL-1 e IL-6",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-2",
+          "correct": false
+        }
+      ],
+      "explanation": "La inmunidad contra los **helmintos** es **Th2**, y la diferenciación hacia Th2 la **inhibe el IFN-γ**, la citocina del Th1: cada perfil frena al otro (T-bet frente a GATA-3).\n\nLa **IL-4** es justamente la que **induce** a los Th2. La **IL-10** frena sobre todo a los Th1 y a los macrófagos (y la producen los propios Th2 y los Treg). **IL-1 e IL-6** empujan hacia Th17, y la **IL-2** sostiene la proliferación de los T, Th2 incluidos.",
+      "tags": [
+        "Citocinas y respuesta T"
+      ]
+    },
+    {
+      "id": "p39",
+      "stem": "¿Cuál de los siguientes tipos de vacuna suele generar una respuesta inmune duradera que incluye a los linfocitos T citotóxicos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ARNm",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Inactivada entera",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inactivada de subunidades",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Polisacárida conjugada",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Polisacárida no conjugada",
+          "correct": false
+        }
+      ],
+      "explanation": "Con la vacuna de **ARNm** la proteína del patógeno se **fabrica dentro de la célula** del vacunado: se degrada en el proteasoma, se presenta por **MHC-I** y activa a los **linfocitos T CD8** citotóxicos. Además, las células presentadoras la muestran por MHC-II, así que también hay CD4, anticuerpos y memoria.\n\nLas vacunas **inactivadas** y de **subunidades** llevan un antígeno exógeno, que va por MHC-II: generan anticuerpos y CD4, pero pocos CD8. La **polisacárida conjugada** consigue ayuda T gracias a la proteína transportadora (MHC-II) y deja memoria, pero no CTL. La **no conjugada** es T independiente: IgM, sin memoria y sin CTL.",
+      "tags": [
+        "Vacunas"
+      ]
+    },
+    {
+      "id": "p40",
+      "stem": "El test para evaluar la función de la vía clásica del complemento se denomina CH50, mientras que el test para evaluar la vía alternativa del complemento se denomina AH50. En ambos tests se mide como resultado final la lisis celular. ¿Cómo espera que se encuentre cada uno de estos tests en un paciente con infecciones recurrentes por Neisseria en quien se descubre que la causa de fondo es una deleción del gen que codifica a properdina?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CH50 bajo, AH50 bajo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CH50 normal, AH50 normal",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CH50 bajo, AH50 normal",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CH50 normal, AH50 bajo",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "CH50 alto, AH50 normal",
+          "correct": false
+        }
+      ],
+      "explanation": "La **properdina** estabiliza la **C3 convertasa de la vía alternativa** (C3bBb). Sin ella sólo falla esa vía: el **AH50 sale bajo**. La vía clásica (C1, C4, C2) está intacta y el complejo de ataque a la membrana también, así que el **CH50 es normal**.\n\nLos dos bajos a la vez indican un déficit **común a ambas vías**: C3 o los componentes terminales (C5–C9), que también dan infecciones por *Neisseria* y son la trampa clásica de esta pregunta. CH50 bajo con AH50 normal señala un déficit de la vía clásica (C1, C4, C2), que se asocia a lupus.",
+      "tags": [
+        "Inmunidad innata",
+        "Inmunodeficiencias",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p41",
+      "stem": "Una mujer embarazada acude a su consultorio porque su hermano menor tiene lesiones en piel compatibles con eritema infeccioso (causado por el virus Parvovirus B19). La paciente pregunta cuál es su riesgo de contagiarse. Usted le solicita anticuerpos contra virus de Parvovirus B19 IgG e IgM con los siguientes resultados: IgG: 4 UI/mL (VN 0-10), IgM 0.8 UI/mL (VN: 0-1). Usted recomienda:",
+      "options": [
+        {
+          "id": "a",
+          "text": "No hay medidas a tomar porque existe evidencia de infección previa.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Inicia tratamiento con antivirales porque los anticuerpos muestran que la paciente tiene infección activa.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Si bien la paciente está protegida, debe recibir una vacuna de refuerzo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La paciente tiene riesgo de contagio.",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "La paciente se encuentra en la fase convaleciente de la infección.",
+          "correct": false
+        },
+        {
+          "id": "f",
+          "text": "Tanto la paciente como el feto se encuentran protegidos.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los dos resultados están **dentro del valor normal**, es decir, son **negativos**. IgG 4 UI/mL (< 10): nunca se infectó y **no es inmune**. IgM 0.8 UI/mL (< 1): tampoco tiene una infección actual. Es una gestante **seronegativa**: tiene **riesgo de contagio**, y un parvovirus B19 en el embarazo puede causar anemia fetal e hidropesía. Hay que evitar la exposición y repetir la serología.\n\nPara hablar de **infección previa** o de **protección** la IgG tendría que superar 10. La IgM negativa descarta una **infección activa**, y contra el parvovirus no hay antiviral específico. No existe **vacuna** contra el parvovirus B19. Y la **fase convaleciente** sería IgG positiva con la IgM en descenso.",
+      "tags": [
+        "Anticuerpos y respuesta humoral",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p42",
+      "stem": "¿En cuál de las siguientes regiones esperaría encontrar una gran actividad de la enzima citidina desaminasa inducida por la activación (AID)?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p11_q46_img01.avif",
+      "imageAlt": "Corte histológico de ganglio linfático con cinco regiones señaladas con flechas: A, B, C, D y E",
+      "imageW": 700,
+      "imageH": 525,
+      "options": [
+        {
+          "id": "a",
+          "text": "Región A",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Región B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Región C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Región D",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Región E",
+          "correct": false
+        }
+      ],
+      "explanation": "La **AID** es la enzima de la **hipermutación somática** y del **cambio de isotipo**, y trabaja en los linfocitos B del **centro germinal**: A señala el centro claro de un folículo secundario. La hipermutación ocurre en su **zona oscura**, donde los centroblastos proliferan.\n\nB es la **zona del manto**, de linfocitos B vírgenes que rodean al centro germinal. D es la **paracorteza**: allí el linfocito B recibe la primera ayuda del T, pero la actividad de la AID empieza después, cuando migra al folículo. C y E son la **médula** del ganglio (cordones y senos), donde las plasmáticas ya salen con el isotipo cambiado y las mutaciones hechas.",
+      "tags": [
+        "Órganos linfoides secundarios",
+        "Anticuerpos y respuesta humoral"
+      ]
+    }
+  ]
+}

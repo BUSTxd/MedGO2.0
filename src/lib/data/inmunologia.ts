@@ -601,12 +601,16 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Vale 40% de la nota final y exige un mínimo de 11.00 de forma independiente. Quien desapruebe rinde el Examen Sustitutorio, cuya nota máxima es 11.',
-        // Banqueo del final 2024-II: 27 preguntas del PDF (no las 60 del examen
-        // real), 3 con lámina periférica. De pago, como el resto del curso. Otro
-        // año se suma con `groups` + `labels`, como en Patología.
+        // Banqueos del final, de pago como el resto del curso: el 2024-II (27
+        // preguntas del PDF, no las 60 del examen real) y el 2023 (42, sacadas de
+        // un apunte con la clave; ver CLAUDE.md). El más reciente abre por defecto.
         examen: {
           key: 'inmunologia/final-2024-2',
-          labels: { 'inmunologia/final-2024-2': '2024-II' },
+          groups: ['inmunologia/final-2023'],
+          labels: {
+            'inmunologia/final-2024-2': '2024-II',
+            'inmunologia/final-2023': '2023',
+          },
         },
       },
     ],

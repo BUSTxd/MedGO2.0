@@ -330,6 +330,26 @@ llevan `reviewNote`, igual que la d de la 10, que en el original dice «Rpta 4»
 imagen con el nombre en mayúscula (`Q07_…`) frente al `q07_` que pide el HTML. Las etiquetas salen
 del `<h2>` de tema que precede a cada pregunta.
 
+**Inmunología · Examen Final 2023** (`inmunologia/final-2023`, «2023», de pago, en `groups` del
+mismo `examen`): 42 preguntas. **No llegó un examen sino el apunte de un alumno** (HTML de un PDF):
+enunciados a medias, la clave escrita como «RPTA: …» entre comentarios suyos y, en 16 preguntas,
+sin alternativas o sin la correcta entre ellas: se reconstruyeron, y todo lo que se tocó lleva
+`reviewNote` (25 preguntas). Tres cosas de este tipo de fuente que no avisan solas:
+- **Las figuras vienen redibujadas, y el texto dentro de una figura puede estar mal.** La tabla de
+  QuantiFERON (p29) decía «BIL», «T3» y un corte de Nil en **1.0**: con eso el Nil del caso (4.51)
+  daba *indeterminado* y no *positivo*, que es la clave. Se rehízo con el 8.0 del inserto, el único
+  con el que la clave cuadra. Ante una clave que la figura contradice, sospechar de la figura antes
+  que de la clave.
+- **El alumno resalta en la propia imagen lo que hay que contar** (las células de las dos cámaras
+  de Neubauer, p4 y p22): publicado así, la figura regala la respuesta. Se quitó por píxel con `sharp`, reponiendo las
+  líneas de la cámara que tapaba el resaltado — no basta con pintar de fondo, o la cuadrícula
+  queda con huecos.
+- **Una pregunta anotada dos veces** (la 10 = 44, 11 = 45, 12 = 46 del apunte) se deja una sola
+  vez, la versión completa. La 45 sólo existía como **captura del examen** con sus seis
+  alternativas: se transcribió desde la imagen.
+La clave de la 41 («A y B»: la bisagra no cambia) es discutible —la bisagra es región constante de
+la cadena pesada y cambia con el isotipo— y se respetó con `reviewNote`, sin ofrecer «Solo A».
+
 **Banqueos de pago dentro de un curso gratis (`dePago` + `suscripcion`)** — Patología es curso
 `gratis`, pero sus banqueos **2022 y 2020 A exigen el plan Interno**: el 2024 y el 2020 B quedan
 abiertos como muestra (con el aviso cada 7 preguntas) y los otros dos son el reclamo. Dos capas, y la que bloquea es la del servidor:
