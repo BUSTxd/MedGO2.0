@@ -161,6 +161,12 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        // Un solo resumen para las dos partes: C1 y AI1 abren el mismo fragmento.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'pat-c-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'pat-ai-1',
@@ -172,6 +178,11 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'pat-c-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'pat-ai-2',
