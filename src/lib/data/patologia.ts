@@ -484,8 +484,9 @@ export const semanas: Semana[] = [
             'patologia/parcial-1-2020': '2020 A',
             'patologia/parcial-1-2020-b': '2020 B',
           },
-          // El 2024 queda abierto como muestra; los de 2020 son del plan Interno.
-          dePago: ['patologia/parcial-1-2020', 'patologia/parcial-1-2020-b'],
+          // El 2024 y el 2020 B quedan abiertos (con el aviso de suscripción cada
+          // 7 preguntas); el 2020 A es del plan Interno.
+          dePago: ['patologia/parcial-1-2020'],
         },
       },
     ],

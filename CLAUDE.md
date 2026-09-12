@@ -268,7 +268,8 @@ no por el nombre, y la del práctico 7 (la embolia) falta — va sin imagen y co
 Ante un banqueo así, comparar hashes antes de subir y no fiarse de ningún nombre de archivo.
 
 El **2020 B** (`parcial-1-2020-b`, la otra versión del mismo parcial) va como banqueo aparte, y
-los dos de 2020 se rotulan «2020 A» / «2020 B». Llegó **sin ninguna marca de la correcta**, pero
+los dos de 2020 se rotulan «2020 A» / «2020 B». A diferencia del A, el B es **gratis** (`free`, fuera
+de `dePago`), como el 2024. Llegó **sin ninguna marca de la correcta**, pero
 el PDF sigue una convención que el A deja comprobada: **la correcta es siempre la primera
 alternativa** (en el A, 49 de 49). El runner baraja las opciones, así que eso no se nota. Antes de
 publicar se resolvieron las 49 una a una y todas coincidieron con la primera. 49 preguntas (falta
@@ -291,8 +292,8 @@ sale en el selector y la route responde 404 al pulsarlo. Hoy sólo Patología y 
 añadir `labels` a su `ExamenRef` y la prop en su `[id]/page.tsx`.
 
 **Banqueos de pago dentro de un curso gratis (`dePago` + `suscripcion`)** — Patología es curso
-`gratis`, pero sus banqueos **2020 A y 2020 B exigen el plan Interno**: el de 2024 queda abierto
-como muestra y los de 2020 son el reclamo. Dos capas, y la que bloquea es la del servidor:
+`gratis`, pero su banqueo **2020 A exige el plan Interno**: el 2024 y el 2020 B quedan abiertos
+como muestra (con el aviso cada 7 preguntas) y el 2020 A es el reclamo. Dos capas, y la que bloquea es la del servidor:
 - **Route**: la clave va en `EXAMENES` **sin `free`**. Las claves de pago se comprueban con
   `tieneAccesoA(getUserPlanState(), meta.plan ?? requiredPlanDeCurso(<curso>))`. Antes bastaba con
   que `profiles.plan` no fuera `'free'`, así que una suscripción vencida o de UFBI abría un examen
