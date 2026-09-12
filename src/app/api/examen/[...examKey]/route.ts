@@ -24,9 +24,9 @@ const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey }> = {
   'neurologia/piel-histologia-c': { free: true },
   'neurologia/piel-histologia-b': { free: true },
   'patologia/parcial-1': { free: true },
-  'patologia/parcial-1-2022': { free: true },
-  // De pago aunque Patología sea un curso gratis: es el reclamo del plan. El
+  // De pago aunque Patología sea un curso gratis: son el reclamo del plan. El
   // 2020 B queda abierto como el 2024, con el aviso de suscripción del runner.
+  'patologia/parcial-1-2022': {},
   'patologia/parcial-1-2020': {},
   'patologia/parcial-1-2020-b': { free: true },
 };

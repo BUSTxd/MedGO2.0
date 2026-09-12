@@ -281,7 +281,7 @@ consciente a la regla de no recomprimir un AVIF—: 1200 px, AVIF q35 con croma 
 de q35 se empastan los núcleos. El JSON se genera desde el HTML con un script que copia enunciados
 y alternativas tal cual.
 
-El **2022** (`parcial-1-2022`, gratis) llegó igual que el 2020 A —HTML de un PDF con la correcta
+El **2022** (`parcial-1-2022`, de pago como el 2020 A) llegó igual que el 2020 A —HTML de un PDF con la correcta
 resaltada, que vuelve a ser **siempre la primera**—, pero con dos trampas nuevas: el HTML pedía
 `.png`/`.jpg` y las imágenes venían en `.avif` con el mismo nombre salvo dos (`Q12_…` en
 mayúscula y `…_micro4`), y la 29 pide «ver las 2 imágenes». El V/F de la 12 venía como captura de
@@ -299,8 +299,8 @@ sale en el selector y la route responde 404 al pulsarlo. Hoy sólo Patología y 
 añadir `labels` a su `ExamenRef` y la prop en su `[id]/page.tsx`.
 
 **Banqueos de pago dentro de un curso gratis (`dePago` + `suscripcion`)** — Patología es curso
-`gratis`, pero su banqueo **2020 A exige el plan Interno**: el 2024 y el 2020 B quedan abiertos
-como muestra (con el aviso cada 7 preguntas) y el 2020 A es el reclamo. Dos capas, y la que bloquea es la del servidor:
+`gratis`, pero sus banqueos **2022 y 2020 A exigen el plan Interno**: el 2024 y el 2020 B quedan
+abiertos como muestra (con el aviso cada 7 preguntas) y los otros dos son el reclamo. Dos capas, y la que bloquea es la del servidor:
 - **Route**: la clave va en `EXAMENES` **sin `free`**. Las claves de pago se comprueban con
   `tieneAccesoA(getUserPlanState(), meta.plan ?? requiredPlanDeCurso(<curso>))`. Antes bastaba con
   que `profiles.plan` no fuera `'free'`, así que una suscripción vencida o de UFBI abría un examen
