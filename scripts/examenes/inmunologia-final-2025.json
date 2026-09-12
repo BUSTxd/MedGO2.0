@@ -1,0 +1,767 @@
+{
+  "version": 1,
+  "key": "inmunologia/final-2025",
+  "title": "Examen Final — Inmunología",
+  "duration_min": 40,
+  "questions": [
+    {
+      "id": "p1",
+      "stem": "Mujer de 47 años con fiebre, dolor lumbar intenso y disuria; hipotensa, taquicárdica y con dolor en ángulo costovertebral derecho. Hemograma: leucocitos 19 800/µL; neutrófilos segmentados 78%; en banda 14%; linfocitos 6%; monocitos 2%. ¿Cuál es la mejor interpretación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Infección viral aguda",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Reacción leucemoide",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Leucemia mieloide crónica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Neutrofilia con desviación a la izquierda por infección bacteriana",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Pancitopenia inducida por fármacos",
+          "correct": false
+        }
+      ],
+      "explanation": "Fiebre, disuria y dolor en el ángulo costovertebral con hipotensión es una **pielonefritis** con sepsis. El hemograma lo acompaña: **leucocitosis** (19 800/µL) con **neutrofilia** (78 %) y un **14 % de abastonados**, que es la **desviación a la izquierda**: la médula suelta formas jóvenes para responder a la bacteria.\n\nUna infección **viral** daría linfocitos altos, no un 6 %. La **reacción leucemoide** supera los 50 000/µL, y la **leucemia mieloide crónica** muestra toda la serie mieloide (mielocitos, metamielocitos, basofilia) con un cuadro de meses, no una sepsis aguda. **Pancitopenia** sería lo contrario: los leucocitos están altos.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q01_inmunidad_innata_respuesta_inflamatoria.avif",
+      "explanationImageAlt": "Esquema de la respuesta inflamatoria aguda: entrada del microbio por una herida, células centinela que liberan mediadores, aumento de la permeabilidad vascular y migración de leucocitos al tejido",
+      "explanationImageCaption": "Respuesta inflamatoria aguda: los mediadores de las células centinela reclutan neutrófilos desde la sangre, y la médula repone con formas jóvenes (abastonados).",
+      "tags": [
+        "Hemograma y reactantes de fase aguda",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p2",
+      "stem": "Niño de 7 años con fiebre baja, tos seca, faringitis y exantema maculopapular; adenopatías cervicales dolorosas y hepatomegalia leve. Hemograma: leucocitos 11 500/µL; linfocitos 68%; neutrófilos 20%; monocitos 8%; eosinófilos 4%. Diagnóstico más probable:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Leucemia linfoblástica aguda",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Infección viral aguda",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Alergia respiratoria crónica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Reacción leucemoide",
+          "correct": false
+        }
+      ],
+      "explanation": "Fiebre, faringitis, exantema, adenopatías y hepatomegalia con **linfocitosis** (68 % de 11 500 ≈ 7 800/µL) es una **infección viral aguda**; con este cuadro, típicamente mononucleosis, y en la lámina aparecen **linfocitos reactivos** (atípicos): grandes, de citoplasma amplio y azul que se amolda a los hematíes.\n\nEn una **leucemia linfoblástica** habría blastos y citopenias (anemia, trombocitopenia), no un hemograma con el resto conservado. La **alergia** daría eosinofilia, y aquí los eosinófilos están en 4 %. La **reacción leucemoide** es una neutrofilia extrema, no una linfocitosis.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q02_lamina_linfocito_atipico.avif",
+      "explanationImageAlt": "Frotis de sangre periférica con cuatro linfocitos grandes de citoplasma amplio y azul pálido que se amolda a los hematíes vecinos",
+      "explanationImageCaption": "Linfocitos reactivos (atípicos): son linfocitos T activados que responden al virus.",
+      "tags": [
+        "Hemograma y reactantes de fase aguda",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p3",
+      "stem": "Varón de 67 años tratado con ceftriaxona + clindamicina; 3 días después presenta diarrea acuosa, fiebre y colitis pseudomembranosa por toxina A/B de C. difficile. ¿Cuál es el mecanismo inmunológico que explica la colitis severa tras antibióticos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Déficit de IgA secretora contra C. difficile",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Expansión de linfocitos T CD8⁺ contra enterocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Disminución de la microbiota intestinal normal",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Activación de células NK por ausencia de MHC en bacterias intracelulares",
+          "correct": false
+        }
+      ],
+      "explanation": "La **microbiota normal** es una barrera más de la inmunidad innata: compite por nutrientes y espacio, produce sustancias antimicrobianas y transforma los ácidos biliares que impiden germinar a *C. difficile*. La ceftriaxona y la clindamicina la **arrasan**, y *C. difficile* —resistente a ellas— coloniza el colon y libera sus toxinas A y B.\n\nNo es un problema de **IgA** ni de **linfocitos CD8** contra el enterocito: el daño lo hacen las toxinas. Y *C. difficile* no es una bacteria intracelular: las **NK** reconocen células propias sin MHC-I, no bacterias.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q03_barreras_inmunidad_innata.avif",
+      "explanationImageAlt": "Tabla de barreras epiteliales de piel, intestino, pulmones y ojos: mecánicas, químicas y microbiológicas (microbiota normal)",
+      "explanationImageCaption": "Barreras de la inmunidad innata: la microbiota normal es la barrera microbiológica de todos los epitelios.",
+      "tags": [
+        "Inmunidad innata",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p4",
+      "stem": "Varón de 45 años con mastocitosis sistémica, equimosis, epistaxis, dolor abdominal e hiperacidez; TTPa prolongado con INR y plaquetas normales. ¿Cuál explica mejor las alteraciones de coagulación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Destrucción autoinmune de plaquetas mediada por IgG",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Potenciación de la acción de la antitrombina",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Infiltración medular con producción insuficiente de megacariocitos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Deficiencia adquirida de vitamina K por malabsorción",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **mastocitos** (como los basófilos) guardan **heparina** en sus gránulos. En una mastocitosis sistémica la liberan en exceso: la heparina se une a la **antitrombina** y multiplica su acción sobre la trombina y el factor Xa. Eso prolonga el **TTPa** con el INR normal y explica los sangrados. La hiperacidez y el dolor abdominal son de la **histamina** (receptores H2 del estómago).\n\nCon las **plaquetas normales** se descartan la destrucción autoinmune y la falta de megacariocitos. El déficit de **vitamina K** alargaría primero el **INR** (el factor VII es el de vida media más corta), y aquí está normal.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q04_heparina_antitrombina.avif",
+      "explanationImageAlt": "Esquema: la heparina activa a la antitrombina III, que bloquea el paso de protrombina a trombina y de fibrinógeno a fibrina",
+      "explanationImageCaption": "La heparina de los gránulos del mastocito y del basófilo potencia a la antitrombina: no se forma el coágulo de fibrina.",
+      "tags": [
+        "Células del sistema inmune",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p5",
+      "stem": "Varón de 38 años con Crohn ileal; biopsia con inflamación crónica y reducción de las células señaladas en la imagen. ¿Cuál es el principal producto secretado por esas células disminuidas?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q05_cripta_intestinal.avif",
+      "imageAlt": "Esquema de una cripta intestinal con dos líneas que señalan las células de su base",
+      "imageW": 760,
+      "imageH": 587,
+      "options": [
+        {
+          "id": "a",
+          "text": "Inmunoglobulina A secretora (IgA)",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Defensinas y lisozima",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Histamina y heparina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-4 e IL-13",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Lactoferrina y colagenasas",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células de la **base de la cripta** del intestino delgado son las **células de Paneth**. Secretan hacia la luz **α-defensinas** (criptidinas), **lisozima** y RegIII, que mantienen la cripta —donde están las células madre— libre de bacterias. En el **Crohn ileal** su número y su función bajan (hay variantes de NOD2 y ATG16L1 que las afectan), y la barrera antimicrobiana se debilita.\n\nLa **IgA secretora** la producen las células plasmáticas de la lámina propia y la transporta el enterocito. **Histamina y heparina** son de mastocitos y basófilos; **IL-4 e IL-13**, de los Th2, y **lactoferrina y colagenasas**, de los gránulos del neutrófilo.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q05_epitelio_intestinal_celulas_paneth.avif",
+      "explanationImageAlt": "Esquema del epitelio intestinal: células caliciformes, macrófago y células de Paneth en la base de la cripta secretando α-defensinas y RegIII",
+      "explanationImageCaption": "Las células de Paneth, en la base de la cripta, liberan α-defensinas y RegIII hacia la luz.",
+      "reviewNote": "El export del PDF no trae la imagen de la pregunta, sólo la lámina de la respuesta, que rotula las células de Paneth y las α-defensinas. Para el enunciado se usa un recorte de esa lámina sin los rótulos (las líneas que señalaban las células de Paneth quedan como señaladores), y la lámina completa va en la explicación.",
+      "tags": [
+        "Inmunidad innata",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p6",
+      "stem": "Mujer de 45 años con sospecha de leucemia aguda; ¿sitio preferido para biopsia de médula ósea en adultos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Esternón (tercio inferior del cuerpo)",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Espina ilíaca posterosuperior",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Diáfisis tibial",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Radio distal",
+          "correct": false
+        }
+      ],
+      "explanation": "En el adulto la médula **roja** (hematopoyética) se retira de los huesos largos y queda en el esqueleto axial: **vértebras, pelvis**, esternón y costillas. La **espina ilíaca posterosuperior** es el sitio de elección: tiene médula activa abundante, está lejos de órganos vitales y permite sacar el cilindro de la biopsia.\n\nEl **esternón** sirve sólo para **aspirado**, y en la parte alta del cuerpo (a la altura del 2.º espacio intercostal), no en el tercio inferior: es delgado y por detrás están el corazón y los grandes vasos, así que no se usa para biopsia. La **tibia** es el sitio en los lactantes, en los que la médula de los huesos largos aún está activa; en el adulto la **diáfisis tibial** y el **radio distal** tienen médula amarilla (grasa).",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q06_hematopoyesis_por_edad.avif",
+      "explanationImageAlt": "Gráfico de celularidad hematopoyética por órgano según la edad: en el adulto se mantiene alta en vértebras y pelvis y cae en fémur y tibia",
+      "explanationImageCaption": "La hematopoyesis se retira de los huesos largos con la edad y queda en vértebras y pelvis.",
+      "tags": [
+        "Órganos linfoides primarios",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p7",
+      "stem": "Mujer de 50 años con pielonefritis aguda; en la lámina periférica la flecha amarilla señala:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q07_lamina_neutrofilo_granulaciones_toxicas.avif",
+      "imageAlt": "Frotis de sangre periférica: un neutrófilo con granulación gruesa en el citoplasma, señalada con una flecha amarilla, y una pequeña inclusión azulada señalada con una flecha roja",
+      "imageW": 1200,
+      "imageH": 900,
+      "options": [
+        {
+          "id": "a",
+          "text": "Fagolisosoma",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Cuerpos de Döhle",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Granulaciones tóxicas",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Endosomas",
+          "correct": false
+        }
+      ],
+      "explanation": "La flecha amarilla señala los **gránulos gruesos y oscuros** repartidos por el citoplasma del neutrófilo: son **granulaciones tóxicas**, gránulos primarios (azurófilos) que siguen visibles porque la médula, bajo el estímulo de la infección, suelta neutrófilos a toda prisa. Son el signo típico de una **infección bacteriana** como esta pielonefritis.\n\nEl **cuerpo de Döhle** es otra cosa: una mancha **azul grisácea** en la periferia del citoplasma, que es lo que marca la flecha roja. El **fagolisosoma** y el **endosoma** son vesículas de la fagocitosis: al microscopio óptico se verían, si acaso, como vacuolas claras, no como gránulos.",
+      "tags": [
+        "Hemograma y reactantes de fase aguda",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p8",
+      "stem": "Niña de 7 años con encefalitis recurrente por HSV-1; mutación que afecta reconocimiento de ARN bicatenario en endosomas y producción de IFN tipo I. ¿Receptor deficiente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "TLR2",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "TLR3",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "TLR4",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TLR5",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "TLR9",
+          "correct": false
+        }
+      ],
+      "explanation": "El **TLR3** está en la membrana del **endosoma** y reconoce **ARN de doble cadena**, que aparece al replicarse muchos virus. Su señal (vía TRIF) induce **IFN de tipo I**. Los defectos en la vía TLR3 son la causa clásica de **encefalitis herpética** en niños por lo demás sanos: las neuronas dependen de ese IFN para frenar al HSV-1.\n\n**TLR2** y **TLR4** están en la membrana plasmática y reconocen lipopéptidos y LPS de bacterias; **TLR5**, la flagelina. **TLR9** también es endosomal, pero reconoce **ADN** con motivos CpG, no ARN bicatenario.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q08_receptores_TLR.avif",
+      "explanationImageAlt": "Esquema de los receptores tipo Toll: TLR1, 2, 4, 5 y 6 en la membrana plasmática y TLR3, 7, 8 y 9 en el endosoma, con sus ligandos",
+      "explanationImageCaption": "Receptores tipo Toll: el TLR3 reconoce ARN bicatenario dentro del endosoma.",
+      "tags": [
+        "Inmunidad innata",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p9",
+      "stem": "Paciente en quimioterapia con reactivación de CMV; control inicial mediado por células activadas por IFN-α/β e IL-12 que inducen apoptosis (perforina/granzimas) y ADCC. Población responsable:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T CD8⁺ activados por MHC I",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos T CD4⁺ productores de IL-4 e IL-5",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células NK activadas por IFN-α/β e IL-12",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Neutrófilos productores de ERO",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Eosinófilos activados por IgE",
+          "correct": false
+        }
+      ],
+      "explanation": "Las **NK** son la primera línea contra los virus: el **IFN-α/β** que liberan las células infectadas y la **IL-12** de los macrófagos las activan en horas, sin necesidad de sensibilización previa. Matan con **perforina y granzimas** y, por su **CD16**, hacen **ADCC** sobre las células cubiertas de IgG. El CMV, además, baja el MHC-I de la célula infectada, que es justo la señal que dispara a la NK.\n\nLos **CD8** también matan con perforina, pero reconocen el péptido en el MHC-I, no hacen ADCC y tardan días en expandirse: no son el control **inicial**. Los **Th2** (IL-4, IL-5), los **neutrófilos** y los **eosinófilos** no son la defensa antiviral.",
+      "tags": [
+        "Inmunidad innata",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p10",
+      "stem": "Mujer de 25 años con LES, anemia hemolítica y proteinuria. C3 bajo, C4 muy bajo, CH50 indetectable, AH50 bajo, C1q normal. ¿Cuál es el mecanismo inmunológico más relevante?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Activación persistente de la vía alterna por polisacáridos bacterianos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Presencia de complejos inmunes",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Déficit congénito de C1q",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Activación excesiva del MAC (C5–C9)",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Deficiencia adquirida de properdina",
+          "correct": false
+        }
+      ],
+      "explanation": "En el **lupus** los autoanticuerpos forman **complejos inmunes** que activan la **vía clásica** y la **consumen**: C4 muy bajo, C3 bajo y CH50 indetectable. El AH50 baja porque las dos vías comparten C3 y el final común. Esos complejos se depositan en el glomérulo (la proteinuria), y los anticuerpos contra el hematíe causan la hemólisis.\n\nUna activación de la **vía alterna** bajaría C3 con el **C4 normal**, que no es el caso. El **déficit de C1q** queda descartado con un C1q normal. Un exceso de **MAC** no consume C4, y la falta de **properdina** afectaría sólo al AH50.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q10_opsonizacion_complejos_inmunes.avif",
+      "explanationImageAlt": "Esquema: los complejos inmunes opsonizados con C3b se unen al CR1 de los hematíes, que los llevan al hígado y al bazo para su fagocitosis",
+      "explanationImageCaption": "Los complejos inmunes activan el complemento y se eliminan unidos al CR1 de los hematíes: en el lupus se forman más de los que se pueden limpiar.",
+      "tags": [
+        "Inmunidad innata",
+        "Regulación y fallas del sistema inmune",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p11",
+      "stem": "Varón de 26 años con asma atópica y reacción bifásica; 6 horas después reaparece broncoespasmo con histamina plasmática estable. Mediador más probable de la fase tardía:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Histamina",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Heparina",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Triptasa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Leucotrienos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "TNF-α",
+          "correct": false
+        }
+      ],
+      "explanation": "La **fase inmediata** la dan los mediadores **preformados** del mastocito (histamina, triptasa, heparina), que se liberan en minutos. La **fase tardía**, horas después, depende de mediadores **sintetizados de novo** a partir del ácido araquidónico y de las células que llegan al tejido (eosinófilos). Entre ellos, los **leucotrienos cisteinílicos** (LTC4, LTD4, LTE4) son los broncoconstrictores más potentes, y por eso se usan antileucotrienos (montelukast) en el asma.\n\nCon la **histamina** estable, no es ella. **Heparina** y **triptasa** son preformadas, de la fase inmediata. El **TNF-α** recluta células inflamatorias, pero no contrae el músculo bronquial.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q11_via_leucotrienos.avif",
+      "explanationImageAlt": "Vía de los leucotrienos: del ácido araquidónico por la 5-lipoxigenasa al LTA4, y de ahí al LTB4 y a los LTC4, D4 y E4, que por el receptor Cys-LT1 producen broncoconstricción",
+      "explanationImageCaption": "Los leucotrienos C4, D4 y E4, por el receptor Cys-LT1, causan broncoconstricción, edema y reclutamiento de eosinófilos.",
+      "tags": [
+        "Hipersensibilidad",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p12",
+      "stem": "Adolescente de 15 años con glomerulopatía por depósitos de C3; C3 muy bajo; C4 normal; CH50 y AH50 disminuidos. Mecanismo fisiopatológico:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deficiencia en la inhibición de la vía clásica con consumo de C4",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Activación no regulada de la vía alterna con consumo de C3",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Déficit de C5–C9 con falla del MAC",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Deficiencia de properdina que impide estabilizar la convertasa alterna",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Alteración en la síntesis hepática de C1q",
+          "correct": false
+        }
+      ],
+      "explanation": "Un **C3 muy bajo con C4 normal** dice que el consumo no viene de la vía clásica sino de la **alterna**. En la **glomerulopatía C3**, un defecto de sus reguladores (factor H, factor I) o un autoanticuerpo que estabiliza la convertasa (el **factor nefrítico C3**) deja la vía alterna **sin freno**: consume C3 continuamente y sus fragmentos se depositan en el glomérulo. El CH50 cae también porque sin C3 no se completa la lisis por ninguna vía.\n\nUn fallo de la vía **clásica** consumiría **C4**, que está normal. En el déficit de **C5–C9** el C3 es normal. Sin **properdina** la vía alterna se activa **menos**, así que no consumiría C3. Y el **C1q** es de la vía clásica.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q12_vias_complemento.avif",
+      "explanationImageAlt": "Esquema de las vías alternativa, clásica y de las lectinas del complemento hasta la formación de las convertasas de C3 y C5",
+      "explanationImageCaption": "La vía alterna forma su convertasa (C3bBb) sin pasar por C4: por eso su activación descontrolada baja el C3 con el C4 normal.",
+      "tags": [
+        "Inmunidad innata",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p13",
+      "stem": "Mujer de 29 años con VIH (CD4 180/µL) y candidiasis mucosa. La susceptibilidad aumentada se explica por defecto en:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Producción de IL-17 por Th17",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Actividad citotóxica de T CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Producción de IgM por B",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Activación de células NK",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Producción de IFN tipo I por pDC",
+          "correct": false
+        }
+      ],
+      "explanation": "La defensa de las mucosas contra ***Candida*** depende de los **Th17**: la **IL-17** recluta neutrófilos y la **IL-22** hace que el epitelio produzca péptidos antimicrobianos. Los Th17 son **CD4** y el VIH los depleta pronto, sobre todo en la mucosa intestinal; con CD4 por debajo de 200/µL la candidiasis mucosa es la infección oportunista típica.\n\nLos **CD8** y las **NK** son la defensa antiviral y antitumoral; la **IgM** apenas protege contra la cándida en las mucosas, y el **IFN tipo I** de las células dendríticas plasmacitoides es antiviral.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q13_subtipos_linfocitos_CD4.avif",
+      "explanationImageAlt": "Tabla de los subtipos de linfocitos T CD4 (Th1, Th2, Th17, Tfh, Treg) con sus citocinas, las células que activan y los microbios contra los que actúan",
+      "explanationImageCaption": "Los Th17, con IL-17 e IL-22, dirigen la defensa contra bacterias extracelulares y hongos como Candida albicans.",
+      "tags": [
+        "VIH",
+        "Citocinas y respuesta T",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p14",
+      "stem": "Mujer de 35 años con fiebre 40 °C, hipotensión, exantema difuso palmo-plantar, conjuntivitis no purulenta, y descamación a los 7 días; cultivo de sangre negativo; colonizada por S. aureus; IL-2, IFN-γ y TNF-α muy elevados. ¿Cuál es el mecanismo inmunológico responsable del cuadro (síndrome de choque tóxico)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Activación masiva de linfocitos T por superantígenos que enlazan TCR-Vβ y MHC II",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Endotoxina (LPS) activando TLR4 en macrófagos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hipersensibilidad tipo III por complejos inmunes",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Anafilaxia mediada por IgE",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Activación del MAC (C5–C9)",
+          "correct": false
+        }
+      ],
+      "explanation": "La **toxina del síndrome de choque tóxico** (TSST-1) de *S. aureus* es un **superantígeno**: no se procesa ni entra en el surco del MHC, sino que une por fuera el **MHC-II** de la célula presentadora con la región **Vβ del TCR**. Así activa a todos los linfocitos T que llevan esa Vβ, un 20–30 % del total frente al 0,01 % de una respuesta normal, y la tormenta de **IL-2, IFN-γ y TNF-α** produce el choque. Por eso el hemocultivo es negativo: basta la toxina.\n\n*S. aureus* es grampositivo: no tiene **LPS** que active el TLR4. La **hipersensibilidad tipo III** y la **anafilaxia** no dan ese perfil de citocinas T, y el **MAC** lisa células sin causar este cuadro.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q14_superantigeno_choque_toxico.avif",
+      "explanationImageAlt": "Comparación entre la presentación normal de antígeno (el péptido en el surco del MHC-II) y el superantígeno, que une el MHC-II con la región Vβ del TCR por fuera del surco",
+      "explanationImageCaption": "El superantígeno une el MHC-II y la Vβ del TCR sin péptido: activa al 20–30 % de los linfocitos T.",
+      "tags": [
+        "Citocinas y respuesta T",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p15",
+      "stem": "Experimento con linfocitos T CD8⁺ de un paciente inmunizado contra influenza: solo destruyen células infectadas del mismo individuo. Principio inmunológico que lo explica:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Restricción del MHC",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Presencia de células NK",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La citotoxicidad depende solo de receptores Fc que reconocen IgG",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Activación policlonal de T CD8⁺ frente a antígenos virales",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Reconocen antígenos libres sin necesidad de MHC",
+          "correct": false
+        }
+      ],
+      "explanation": "El TCR no reconoce el péptido viral solo, sino el **complejo péptido + MHC propio**. Los CD8 del paciente se seleccionaron en su timo contra **sus** alelos de MHC-I, así que sólo matan células infectadas que presenten el péptido en ese mismo MHC: es la **restricción por el MHC** (el experimento clásico de Zinkernagel y Doherty).\n\nLas **NK** matarían sin esa restricción. La citotoxicidad por **receptores Fc** es la ADCC de las NK, no la del CD8. La respuesta del CD8 es **específica** (clonal), no policlonal, y el TCR **no** reconoce antígenos libres: eso es cosa del BCR.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q15_restriccion_MHC.avif",
+      "explanationImageAlt": "Tres paneles: el TCR reconoce el péptido x en el MHC-a; no lo reconoce en el MHC-b ni reconoce otro péptido y en el MHC-a",
+      "explanationImageCaption": "Restricción por el MHC: el TCR necesita el mismo péptido en el mismo alelo de MHC.",
+      "tags": [
+        "Inmunidad adaptativa"
+      ]
+    },
+    {
+      "id": "p16",
+      "stem": "Varón de 18 años con hepatitis aguda; en biopsia, hepatocitos apoptóticos (cuerpos acidófilos). ¿Qué puede causar este daño?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocito T CD4⁺",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocito T CD8⁺",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Célula plasmática",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Macrófago",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "TNF-α",
+          "correct": false
+        }
+      ],
+      "explanation": "En la hepatitis viral el daño lo hacen sobre todo los **linfocitos T CD8⁺**, no el virus: reconocen los péptidos virales en el MHC-I del hepatocito y lo matan por **apoptosis**, con **perforina y granzimas** o por **Fas-FasL**. El hepatocito apoptótico se retrae y queda como un **cuerpo acidófilo** (de Councilman).\n\nLos **CD4** ayudan y producen citocinas, pero no matan al hepatocito directamente. La **célula plasmática** produce anticuerpos. El **macrófago** limpia los restos, y el **TNF-α** puede inducir apoptosis, pero no es la causa selectiva de hepatocitos infectados que se ve aquí.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q16_citotoxicidad_apoptosis.avif",
+      "explanationImageAlt": "Esquema de citotoxicidad: células NK que inducen apoptosis en la célula diana por Fas-FasL y por perforina y granzimas, con activación de caspasas y fragmentación del ADN",
+      "explanationImageCaption": "Las dos vías de muerte por apoptosis (Fas-FasL y perforina-granzimas). En la lámina las ejecuta una NK; el CD8 usa exactamente las mismas.",
+      "tags": [
+        "Inmunidad adaptativa",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p17",
+      "stem": "Ipilimumab (anti-CTLA-4) vs pembrolizumab (anti-PD-1) con diferentes toxicidades inmunes. Mejor explicación:",
+      "options": [
+        {
+          "id": "a",
+          "text": "CTLA-4 actúa en ganglios (fase de inducción) y PD-1 en tejidos periféricos (fase efectora)",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CTLA-4 inhibe T CD8⁺ y PD-1 solo B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CTLA-4 regula el TCR directamente y PD-1 inhibe NK",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CTLA-4 estimula dendríticas y PD-1 bloquea neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CTLA-4 se expresa en tumorales y PD-1 en macrófagos",
+          "correct": false
+        }
+      ],
+      "explanation": "**CTLA-4** frena la **activación inicial** del linfocito T en los **órganos linfoides secundarios**: compite con CD28 por B7 y se lo quita a la célula presentadora (además, es la herramienta de los Treg). Bloquearlo libera muchos clones nuevos, también autorreactivos, y da una toxicidad más amplia y frecuente (colitis, hipofisitis).\n\n**PD-1** actúa **en los tejidos**, sobre linfocitos T ya activados (sobre todo CD8) que reconocen PD-L1: frena la **fase efectora**. Bloquearlo reactiva sobre todo a los T que ya están en el tejido, con toxicidad más localizada (neumonitis, tiroiditis).\n\nLas demás alternativas asignan CTLA-4 y PD-1 a células que no los usan: los dos son frenos de los **linfocitos T**, y ninguno se expresa típicamente en la célula tumoral (lo que expresa el tumor es PD-L1).",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q17_CTLA4_PD1_comparacion.avif",
+      "explanationImageAlt": "Tabla comparativa de CTLA-4 y PD-1: sitio de acción, fase inhibida, tipo celular, expresión, señales y papel en los Treg",
+      "explanationImageCaption": "CTLA-4 actúa en los órganos linfoides durante la inducción; PD-1, en los tejidos durante la fase efectora.",
+      "tags": [
+        "Inmunología tumoral",
+        "Regulación y fallas del sistema inmune"
+      ]
+    },
+    {
+      "id": "p18",
+      "stem": "Lactante de 7 meses con infecciones por encapsulados y Pneumocystis; T y NK normales; B CD19⁺ casi ausentes; Ig séricas indetectables; mutación en λ5 (cadena ligera sustitutiva). Defecto responsable:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Bloqueo en etapa pre-B por fallo del pre-BCR",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Defecto en recombinación V(D)J por RAG1/2",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mutación en BTK con detención del desarrollo B",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Pérdida de tolerancia central B",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Deficiencia de BAFF-R que impide maduración en bazo",
+          "correct": false
+        }
+      ],
+      "explanation": "Cuando el linfocito pre-B reordena su cadena pesada μ, la expone en superficie junto a una **cadena ligera sustitutiva** (VpreB + **λ5**): es el **pre-BCR**. Su señal confirma que la cadena pesada sirve y deja pasar a la siguiente etapa. Sin λ5 no hay pre-BCR y el desarrollo se **detiene en pre-B**: faltan los linfocitos B maduros y todas las inmunoglobulinas, con T y NK normales (una agammaglobulinemia autosómica recesiva).\n\nSin **RAG1/2** faltarían también los **T**. **BTK** transmite la señal del mismo pre-BCR y da un cuadro idéntico, pero el enunciado nombra la mutación en λ5. La **tolerancia central** no quita los B, y la falta de **BAFF-R** deja B inmaduros en sangre, no los hace desaparecer.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q18_desarrollo_linfocitos_B_preBCR.avif",
+      "explanationImageAlt": "Etapas del desarrollo del linfocito B desde la célula madre hasta el B maduro, con el estado de los genes de cadena pesada y ligera y el pre-BCR en el pre-B grande",
+      "explanationImageCaption": "El pre-BCR (cadena μ + cadena ligera sustitutiva) aparece en el pre-B grande; sin él el desarrollo se detiene ahí.",
+      "tags": [
+        "Inmunodeficiencias",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "p19",
+      "stem": "Varón de 23 años con adenopatías; biopsia con centro germinal con zona oscura y clara. Diferencia funcional principal:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los centroblastos proliferan y sufren hipermutación somática",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Los centrocitos secretan IgM de baja afinidad",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los centroblastos inducen apoptosis de T CD4",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los centrocitos realizan cambio de isotipo independiente de T",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Los centroblastos migran al timo para completar maduración",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **zona oscura** del centro germinal están los **centroblastos**, que **proliferan** y sufren **hipermutación somática** (AID) en los genes variables. Pasan después a la **zona clara** como **centrocitos**, donde las células dendríticas foliculares les presentan el antígeno y los **Tfh** seleccionan a los de mayor afinidad; los demás mueren por apoptosis.\n\nLos centrocitos no secretan anticuerpos: eso lo hacen las **plasmáticas** que salen del centro germinal. Los centroblastos no matan a los **CD4**. El cambio de isotipo del centro germinal es **dependiente de T** (CD40-CD40L y citocinas del Tfh). Y los linfocitos B no pasan por el **timo**.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q19_centro_germinal_respuesta_B.avif",
+      "explanationImageAlt": "Reacción del centro germinal: proliferación de linfocitos B en la zona oscura, selección por afinidad con células dendríticas foliculares y Tfh en la zona clara, y salida de plasmáticas y B de memoria; al lado, la histología de un folículo secundario",
+      "explanationImageCaption": "Zona oscura: proliferación e hipermutación. Zona clara: selección por afinidad.",
+      "tags": [
+        "Órganos linfoides secundarios",
+        "Anticuerpos y respuesta humoral"
+      ]
+    },
+    {
+      "id": "p20",
+      "stem": "Varón de 38 años con lesiones cutáneas eritemato-descamativas crónicas; biopsia con acantosis, parakeratosis e infiltrado Th17 (psoriasis). Terapia dirigida más lógica:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Bloqueo de IL-22 para reducir hiperproliferación de queratinocitos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Estimulación de IL-4 para aumentar respuesta Th2",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Neutralización de IL-10 para potenciar inflamación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Activación de IFN-γ para favorecer Th1",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Bloqueo del receptor CD56",
+          "correct": false
+        }
+      ],
+      "explanation": "En la psoriasis el eje **IL-23 → Th17** produce **IL-17** e **IL-22**. La **IL-22** actúa sobre el queratinocito: lo hace **proliferar** y le impide diferenciarse, que es la **acantosis** y la **paraqueratosis** de la biopsia. Bloquear las citocinas del Th17 es la terapia lógica; en la práctica los fármacos aprobados van contra la IL-17 (secukinumab) y la IL-23 (guselkumab), y entre las alternativas la única que apunta a ese eje es la IL-22.\n\nNeutralizar la **IL-10** o activar el **IFN-γ** empeoraría la inflamación (el Th1 también participa en la psoriasis). Estimular la **IL-4** no es un tratamiento dirigido, y el **CD56** es un marcador de las NK, no un receptor que medie la enfermedad.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q20_citoquinas_diferenciacion_Th.avif",
+      "explanationImageAlt": "Tabla de las citocinas que inducen cada subtipo de linfocito T CD4 y las que produce: el Th17 nace con TGF-β, IL-6 e IL-23 y produce IL-17 e IL-22",
+      "explanationImageCaption": "El Th17 se diferencia con TGF-β, IL-6 e IL-23 y produce IL-17 e IL-22.",
+      "tags": [
+        "Citocinas y respuesta T",
+        "Caso clínico"
+      ]
+    }
+  ]
+}

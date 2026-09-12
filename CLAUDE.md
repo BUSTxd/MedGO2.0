@@ -350,6 +350,18 @@ sin alternativas o sin la correcta entre ellas: se reconstruyeron, y todo lo que
 La clave de la 41 («A y B»: la bisagra no cambia) es discutible —la bisagra es región constante de
 la cadena pesada y cambia con el isotipo— y se respetó con `reviewNote`, sin ofrecer «Solo A».
 
+**Inmunología · Examen Final 2025** (`inmunologia/final-2025`, «2025», de pago, y ahora la `key`
+por defecto del `examen`: cambiar cuál es la `key` no borra intentos, que se guardan por clave):
+20 casos del **repaso final de los docentes**. El PDF alterna pregunta → respuesta → **lámina
+explicativa**, así que casi todas las figuras que trae el export son de la **explicación**, no del
+enunciado: van en `explanationImage`. Sólo la 7 (la lámina con las flechas) es figura de la pregunta.
+Dos trampas: la 5 dice «las células de la imagen» y la única figura es la lámina de la respuesta,
+con «Paneth cells» rotulado —en el enunciado va un **recorte sin rótulos** y la lámina entera en la
+explicación—; y el HTML pide dos archivos que no llegaron (`q03_…paneth`, `q20_subtipos_Th…`). El
+runner admite **una** imagen por explicación, así que en la 2 y la 17 se quedó la más directa (el
+frotis de linfocitos reactivos; la tabla CTLA-4/PD-1). En 6 de 20 la correcta es la más larga: son
+alternativas del docente y se transcribieron tal cual.
+
 **Banqueos de pago dentro de un curso gratis (`dePago` + `suscripcion`)** — Patología es curso
 `gratis`, pero sus banqueos **2022 y 2020 A exigen el plan Interno**: el 2024 y el 2020 B quedan
 abiertos como muestra (con el aviso cada 7 preguntas) y los otros dos son el reclamo. Dos capas, y la que bloquea es la del servidor:
