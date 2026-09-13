@@ -755,9 +755,9 @@
         }
       ],
       "explanation": "En la psoriasis el eje **IL-23 → Th17** produce **IL-17** e **IL-22**. La **IL-22** actúa sobre el queratinocito: lo hace **proliferar** y le impide diferenciarse, que es la **acantosis** y la **paraqueratosis** de la biopsia. Bloquear las citocinas del Th17 es la terapia lógica; en la práctica los fármacos aprobados van contra la IL-17 (secukinumab) y la IL-23 (guselkumab), y entre las alternativas la única que apunta a ese eje es la IL-22.\n\nNeutralizar la **IL-10** o activar el **IFN-γ** empeoraría la inflamación (el Th1 también participa en la psoriasis). Estimular la **IL-4** no es un tratamiento dirigido, y el **CD56** es un marcador de las NK, no un receptor que medie la enfermedad.",
-      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q20_citoquinas_diferenciacion_Th.avif",
-      "explanationImageAlt": "Tabla de las citocinas que inducen cada subtipo de linfocito T CD4 y las que produce: el Th17 nace con TGF-β, IL-6 e IL-23 y produce IL-17 e IL-22",
-      "explanationImageCaption": "El Th17 se diferencia con TGF-β, IL-6 e IL-23 y produce IL-17 e IL-22.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q20_subtipos_y_citoquinas_Th.avif",
+      "explanationImageAlt": "Arriba, tabla de los subtipos de linfocitos T CD4 con sus citocinas y sus células diana (el Th17 actúa con IL-22 sobre las células epiteliales); abajo, las citocinas que inducen cada subtipo: el Th17 nace con TGF-β, IL-6 e IL-23",
+      "explanationImageCaption": "La IL-22 del Th17 actúa sobre el epitelio (arriba); el Th17 se diferencia con TGF-β, IL-6 e IL-23 (abajo).",
       "tags": [
         "Citocinas y respuesta T",
         "Caso clínico"

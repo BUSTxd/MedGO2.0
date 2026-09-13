@@ -358,8 +358,10 @@ enunciado: van en `explanationImage`. Sólo la 7 (la lámina con las flechas) es
 Dos trampas: la 5 dice «las células de la imagen» y la única figura es la lámina de la respuesta,
 con «Paneth cells» rotulado —en el enunciado va un **recorte sin rótulos** y la lámina entera en la
 explicación—; y el HTML pide dos archivos que no llegaron (`q03_…paneth`, `q20_subtipos_Th…`). El
-runner admite **una** imagen por explicación, así que en la 2 y la 17 se quedó la más directa (el
-frotis de linfocitos reactivos; la tabla CTLA-4/PD-1). En 6 de 20 la correcta es la más larga: son
+de la 20 es la **misma lámina de subtipos Th que trae la 13** (lo detectó BUST): se montó encima de
+la tabla de citocinas en una sola figura, porque el runner admite **una** imagen por explicación.
+Por eso mismo, en la 2 y la 17 se quedó sólo la más directa (el frotis de linfocitos reactivos; la
+tabla CTLA-4/PD-1). En 6 de 20 la correcta es la más larga: son
 alternativas del docente y se transcribieron tal cual.
 
 **Banqueos de pago dentro de un curso gratis (`dePago` + `suscripcion`)** — Patología es curso
