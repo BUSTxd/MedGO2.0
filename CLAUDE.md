@@ -357,9 +357,11 @@ explicativa**, así que casi todas las figuras que trae el export son de la **ex
 enunciado: van en `explanationImage`. Sólo la 7 (la lámina con las flechas) es figura de la pregunta.
 Dos trampas: la 5 dice «las células de la imagen» y la única figura es la lámina de la respuesta,
 con «Paneth cells» rotulado —en el enunciado va un **recorte sin rótulos** y la lámina entera en la
-explicación—; y el HTML pide dos archivos que no llegaron (`q03_…paneth`, `q20_subtipos_Th…`). El
-de la 20 **no falta**: BUST lo borró por ser idéntico a `q13_subtipos_linfocitos_CD4`, así que la 20
-reutiliza esa URL. En 6 de 20 la correcta es la más larga: son alternativas del docente y se
+explicación—; y el HTML pide dos archivos que no llegaron (`q03_…paneth`, `q20_subtipos_Th…`). **Ninguno
+de los dos falta**: BUST los borró por repetidos. El de la 20 es idéntico a
+`q13_subtipos_linfocitos_CD4` y el de la 3, a `q05_epitelio_intestinal_celulas_paneth` (que llegó
+después en AVIF y se subió tal cual en lugar del PNG); cada pregunta reutiliza esa URL. Ante un
+archivo que el HTML pide y no está, preguntar si es un repetido antes de darlo por perdido. En 6 de 20 la correcta es la más larga: son alternativas del docente y se
 transcribieron tal cual.
 
 **Varias láminas en la explicación: `explanationExtraImages`** (mismo shape que `extraImages`), que

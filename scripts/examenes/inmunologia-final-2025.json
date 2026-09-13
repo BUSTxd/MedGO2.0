@@ -113,7 +113,15 @@
       "explanation": "La **microbiota normal** es una barrera más de la inmunidad innata: compite por nutrientes y espacio, produce sustancias antimicrobianas y transforma los ácidos biliares que impiden germinar a *C. difficile*. La ceftriaxona y la clindamicina la **arrasan**, y *C. difficile* —resistente a ellas— coloniza el colon y libera sus toxinas A y B.\n\nNo es un problema de **IgA** ni de **linfocitos CD8** contra el enterocito: el daño lo hacen las toxinas. Y *C. difficile* no es una bacteria intracelular: las **NK** reconocen células propias sin MHC-I, no bacterias.",
       "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q03_barreras_inmunidad_innata.avif",
       "explanationImageAlt": "Tabla de barreras epiteliales de piel, intestino, pulmones y ojos: mecánicas, químicas y microbiológicas (microbiota normal)",
-      "explanationImageCaption": "Barreras de la inmunidad innata: la microbiota normal es la barrera microbiológica de todos los epitelios.",
+      "explanationImageCaption": "La microbiota normal es la barrera microbiológica de todos los epitelios (izquierda); en el intestino, las células de Paneth suman su barrera química de α-defensinas y RegIII (derecha).",
+      "explanationExtraImages": [
+        {
+          "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q05_epitelio_intestinal_celulas_paneth.avif",
+          "alt": "Esquema del epitelio intestinal: células caliciformes, macrófago y células de Paneth en la base de la cripta secretando α-defensinas y RegIII",
+          "w": 787,
+          "h": 477
+        }
+      ],
       "tags": [
         "Inmunidad innata",
         "Caso clínico"
