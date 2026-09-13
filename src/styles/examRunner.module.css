@@ -645,6 +645,9 @@
    `overflow: hidden` mientras se despliega y se comería la sombra del hover. */
 .figuraExplicacion { max-width: 520px; margin-bottom: 0; }
 .figuraExplicacion:hover { transform: none; box-shadow: none; }
+/* Varias láminas en la explicación: el mismo par lado a lado del enunciado,
+   sin el margen inferior (el bloque de la explicación ya cierra ahí). */
+.figurasExplicacion { margin-bottom: 0; }
 
 /* ── Alternativas ────────────────────────────────────────────
    Lista, no pila de cajas: el fondo entra barrido desde la izquierda al pasar

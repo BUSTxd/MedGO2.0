@@ -358,11 +358,15 @@ enunciado: van en `explanationImage`. Sólo la 7 (la lámina con las flechas) es
 Dos trampas: la 5 dice «las células de la imagen» y la única figura es la lámina de la respuesta,
 con «Paneth cells» rotulado —en el enunciado va un **recorte sin rótulos** y la lámina entera en la
 explicación—; y el HTML pide dos archivos que no llegaron (`q03_…paneth`, `q20_subtipos_Th…`). El
-de la 20 es la **misma lámina de subtipos Th que trae la 13** (lo detectó BUST): se montó encima de
-la tabla de citocinas en una sola figura, porque el runner admite **una** imagen por explicación.
-Por eso mismo, en la 2 y la 17 se quedó sólo la más directa (el frotis de linfocitos reactivos; la
-tabla CTLA-4/PD-1). En 6 de 20 la correcta es la más larga: son
-alternativas del docente y se transcribieron tal cual.
+de la 20 **no falta**: BUST lo borró por ser idéntico a `q13_subtipos_linfocitos_CD4`, así que la 20
+reutiliza esa URL. En 6 de 20 la correcta es la más larga: son alternativas del docente y se
+transcribieron tal cual.
+
+**Varias láminas en la explicación: `explanationExtraImages`** (mismo shape que `extraImages`), que
+van lado a lado con `explanationImage` y comparten su pie. Nació en este banqueo, donde la respuesta
+del PDF trae dos láminas en la 2, la 17 y la 20. ⛔ Antes de que existiera se probó **fundir las dos
+en una sola imagen** y BUST lo rechazó: son dos láminas distintas del PDF, cada una tiene que poder
+ampliarse sola, y el orden es el del HTML.
 
 **Banqueos de pago dentro de un curso gratis (`dePago` + `suscripcion`)** — Patología es curso
 `gratis`, pero sus banqueos **2022 y 2020 A exigen el plan Interno**: el 2024 y el 2020 B quedan

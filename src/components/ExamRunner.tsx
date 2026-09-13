@@ -40,6 +40,12 @@ interface ExamQuestion {
   explanationImage?: string;
   explanationImageAlt?: string;
   explanationImageCaption?: string;
+  /**
+   * Láminas que acompañan a `explanationImage` cuando la respuesta del PDF trae
+   * varias (el repaso de Inmunología 2025 muestra dos en algunas). Van lado a
+   * lado como las `extraImages` del enunciado, y el pie es uno para todas.
+   */
+  explanationExtraImages?: { src: string; alt?: string; w?: number; h?: number }[];
   reviewNote?: string;
   tags?: string[];
 }
@@ -662,6 +668,20 @@ function figurasDe(q: ExamQuestion): Ampliada[] {
   ];
 }
 
+/** Las láminas de la explicación, en orden: `explanationImage` y luego las extra. */
+function figurasExplicacionDe(q: ExamQuestion): Ampliada[] {
+  if (!q.explanationImage) return [];
+  return [
+    { src: q.explanationImage, alt: q.explanationImageAlt ?? 'Imagen de referencia', w: 800, h: 600 },
+    ...(q.explanationExtraImages ?? []).map((x, i) => ({
+      src: x.src,
+      alt: x.alt ?? `Imagen de referencia ${i + 2}`,
+      w: x.w ?? 800,
+      h: x.h ?? 600,
+    })),
+  ];
+}
+
 /** Figura ampliable: la imagen es el botón, con su chip «Ampliar» en la esquina. */
 function FiguraAmpliable({
   src,
@@ -1273,21 +1293,29 @@ export default function ExamRunner({
                       <div className={styles.explicacionTexto}>
                         <ReactMarkdown>{current.explanation}</ReactMarkdown>
                       </div>
-                      {current.explanationImage && (
-                        <div className={styles.explicacionFigura}>
-                          {current.explanationImageCaption && (
-                            <p className={styles.explicacionCaption}>{current.explanationImageCaption}</p>
-                          )}
+                      {(() => {
+                        const figuras = figurasExplicacionDe(current);
+                        if (figuras.length === 0) return null;
+                        const lista = figuras.map(f => (
                           <FiguraAmpliable
-                            src={current.explanationImage}
-                            alt={current.explanationImageAlt ?? 'Imagen de referencia'}
-                            w={800}
-                            h={600}
+                            key={f.src}
+                            {...f}
+                            sizes={figuras.length > 1 ? SIZES_PAR : SIZES_UNA}
                             onAmpliar={setAmpliada}
                             variante="explicacion"
                           />
-                        </div>
-                      )}
+                        ));
+                        return (
+                          <div className={styles.explicacionFigura}>
+                            {current.explanationImageCaption && (
+                              <p className={styles.explicacionCaption}>{current.explanationImageCaption}</p>
+                            )}
+                            {figuras.length > 1 ? (
+                              <div className={`${styles.figuras} ${styles.figurasExplicacion}`}>{lista}</div>
+                            ) : lista}
+                          </div>
+                        );
+                      })()}
                     </div>
                   )}
                 </div>

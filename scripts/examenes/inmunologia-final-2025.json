@@ -69,9 +69,17 @@
         }
       ],
       "explanation": "Fiebre, faringitis, exantema, adenopatías y hepatomegalia con **linfocitosis** (68 % de 11 500 ≈ 7 800/µL) es una **infección viral aguda**; con este cuadro, típicamente mononucleosis, y en la lámina aparecen **linfocitos reactivos** (atípicos): grandes, de citoplasma amplio y azul que se amolda a los hematíes.\n\nEn una **leucemia linfoblástica** habría blastos y citopenias (anemia, trombocitopenia), no un hemograma con el resto conservado. La **alergia** daría eosinofilia, y aquí los eosinófilos están en 4 %. La **reacción leucemoide** es una neutrofilia extrema, no una linfocitosis.",
-      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q02_lamina_linfocito_atipico.avif",
-      "explanationImageAlt": "Frotis de sangre periférica con cuatro linfocitos grandes de citoplasma amplio y azul pálido que se amolda a los hematíes vecinos",
-      "explanationImageCaption": "Linfocitos reactivos (atípicos): son linfocitos T activados que responden al virus.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q02_funciones_linfocitos_T.avif",
+      "explanationImageAlt": "Funciones de los linfocitos T efectores: los CD4 Th1 y Th17 activan fagocitos e inflamación, y los CD8 citotóxicos matan células infectadas",
+      "explanationImageCaption": "Los CD8 citotóxicos matan a las células infectadas por el virus (izquierda); esos linfocitos T activados son los reactivos que se ven en la lámina (derecha).",
+      "explanationExtraImages": [
+        {
+          "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q02_lamina_linfocito_atipico.avif",
+          "alt": "Frotis de sangre periférica con cuatro linfocitos grandes de citoplasma amplio y azul pálido que se amolda a los hematíes vecinos",
+          "w": 1200,
+          "h": 900
+        }
+      ],
       "tags": [
         "Hemograma y reactantes de fase aguda",
         "Caso clínico"
@@ -638,9 +646,17 @@
         }
       ],
       "explanation": "**CTLA-4** frena la **activación inicial** del linfocito T en los **órganos linfoides secundarios**: compite con CD28 por B7 y se lo quita a la célula presentadora (además, es la herramienta de los Treg). Bloquearlo libera muchos clones nuevos, también autorreactivos, y da una toxicidad más amplia y frecuente (colitis, hipofisitis).\n\n**PD-1** actúa **en los tejidos**, sobre linfocitos T ya activados (sobre todo CD8) que reconocen PD-L1: frena la **fase efectora**. Bloquearlo reactiva sobre todo a los T que ya están en el tejido, con toxicidad más localizada (neumonitis, tiroiditis).\n\nLas demás alternativas asignan CTLA-4 y PD-1 a células que no los usan: los dos son frenos de los **linfocitos T**, y ninguno se expresa típicamente en la célula tumoral (lo que expresa el tumor es PD-L1).",
-      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q17_CTLA4_PD1_comparacion.avif",
-      "explanationImageAlt": "Tabla comparativa de CTLA-4 y PD-1: sitio de acción, fase inhibida, tipo celular, expresión, señales y papel en los Treg",
-      "explanationImageCaption": "CTLA-4 actúa en los órganos linfoides durante la inducción; PD-1, en los tejidos durante la fase efectora.",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q17_CTLA4_PD1_mecanismos.avif",
+      "explanationImageAlt": "Mecanismos: CTLA-4 bloquea y retira B7 de la célula presentadora; PD-1 recluta SHP2 e inhibe las señales del TCR y de CD28",
+      "explanationImageCaption": "CTLA-4 le quita B7 a la célula presentadora; PD-1 apaga la señal del TCR y de CD28 (izquierda). CTLA-4 actúa en los órganos linfoides durante la inducción; PD-1, en los tejidos durante la fase efectora (derecha).",
+      "explanationExtraImages": [
+        {
+          "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q17_CTLA4_PD1_comparacion.avif",
+          "alt": "Tabla comparativa de CTLA-4 y PD-1: sitio de acción, fase inhibida, tipo celular, expresión, señales y papel en los Treg",
+          "w": 1200,
+          "h": 900
+        }
+      ],
       "tags": [
         "Inmunología tumoral",
         "Regulación y fallas del sistema inmune"
@@ -755,9 +771,17 @@
         }
       ],
       "explanation": "En la psoriasis el eje **IL-23 → Th17** produce **IL-17** e **IL-22**. La **IL-22** actúa sobre el queratinocito: lo hace **proliferar** y le impide diferenciarse, que es la **acantosis** y la **paraqueratosis** de la biopsia. Bloquear las citocinas del Th17 es la terapia lógica; en la práctica los fármacos aprobados van contra la IL-17 (secukinumab) y la IL-23 (guselkumab), y entre las alternativas la única que apunta a ese eje es la IL-22.\n\nNeutralizar la **IL-10** o activar el **IFN-γ** empeoraría la inflamación (el Th1 también participa en la psoriasis). Estimular la **IL-4** no es un tratamiento dirigido, y el **CD56** es un marcador de las NK, no un receptor que medie la enfermedad.",
-      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q20_subtipos_y_citoquinas_Th.avif",
-      "explanationImageAlt": "Arriba, tabla de los subtipos de linfocitos T CD4 con sus citocinas y sus células diana (el Th17 actúa con IL-22 sobre las células epiteliales); abajo, las citocinas que inducen cada subtipo: el Th17 nace con TGF-β, IL-6 e IL-23",
-      "explanationImageCaption": "La IL-22 del Th17 actúa sobre el epitelio (arriba); el Th17 se diferencia con TGF-β, IL-6 e IL-23 (abajo).",
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q13_subtipos_linfocitos_CD4.avif",
+      "explanationImageAlt": "Tabla de los subtipos de linfocitos T CD4 con sus citocinas y sus células diana: el Th17 actúa con IL-22 sobre las células epiteliales",
+      "explanationImageCaption": "La IL-22 del Th17 actúa sobre el epitelio (izquierda); el Th17 se diferencia con TGF-β, IL-6 e IL-23 (derecha).",
+      "explanationExtraImages": [
+        {
+          "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2025/q20_citoquinas_diferenciacion_Th.avif",
+          "alt": "Tabla de las citocinas que inducen cada subtipo de linfocito T CD4 y las que produce: el Th17 nace con TGF-β, IL-6 e IL-23 y produce IL-17 e IL-22",
+          "w": 656,
+          "h": 322
+        }
+      ],
       "tags": [
         "Citocinas y respuesta T",
         "Caso clínico"
