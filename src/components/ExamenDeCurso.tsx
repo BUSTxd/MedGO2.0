@@ -48,6 +48,7 @@ export default async function ExamenDeCurso({
         examKey={examen.key}
         groupKeys={examen.groups}
         groupLabels={examen.labels}
+        groupHints={examen.hints}
         suscripcion={{
           plan,
           estado: {

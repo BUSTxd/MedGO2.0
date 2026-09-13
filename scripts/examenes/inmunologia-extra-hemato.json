@@ -1,0 +1,1243 @@
+{
+  "version": 1,
+  "key": "inmunologia/extra-hemato",
+  "title": "Examen Final — Inmunología",
+  "duration_min": 80,
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "El cambio (switching) de IgM a IgG durante la respuesta de anticuerpos supone que:",
+      "options": [
+        {
+          "id": "a",
+          "text": "las células B pertenecientes a una misma clona pueden cambiar el tipo de cadena ligera del anticuerpo que producen.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "las células B han experimentado una activación policlonal.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "las células B de un mismo clon pueden cambiar la clase de inmunoglobulina que producen sin cambiar las regiones variables.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "intervienen dos clonas diferentes de células B, una para producir IgM y otra para producir IgG.",
+          "correct": false
+        }
+      ],
+      "explanation": "El **cambio de isotipo** (switching) ocurre dentro de **un mismo clon**: el linfocito B conserva su exón **VDJ**, y con él la especificidad, y lo recombina con otra región constante (Cμ → Cγ). Por eso la IgG de la respuesta reconoce el mismo antígeno que la IgM inicial.\n\nLa **cadena ligera** no cambia con el isotipo: κ o λ se decide en la médula ósea. Tampoco hace falta un segundo clon ni una activación policlonal. El cambio lo dirigen el CD40L y las citocinas del T colaborador.",
+      "tags": [
+        "Anticuerpos",
+        "Linfocitos B"
+      ]
+    },
+    {
+      "id": "q2",
+      "stem": "Señale la afirmación correcta respecto a las funciones del CTLA-4",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inhibe la coestimulación CD28",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Función exclusiva sobre linfocitos CD8",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Permite la deleción clonal en el Timo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Función exclusivo sobre Linfocitos CD4+",
+          "correct": false
+        }
+      ],
+      "explanation": "**CTLA-4** se une a **B7 (CD80/CD86)** con más afinidad que CD28. Así se lo quita a CD28 y además retira el B7 de la célula presentadora: el resultado es **menos coestimulación**. Por eso es uno de los frenos centrales de la activación T.\n\nSe expresa sobre todo en los **T reguladores** y en los T activados, tanto CD4 como CD8: no es exclusivo de ninguna población. La **deleción clonal en el timo** es la selección negativa (AIRE, afinidad alta por lo propio), no obra de CTLA-4.",
+      "tags": [
+        "Tolerancia",
+        "Coestimulación"
+      ]
+    },
+    {
+      "id": "q3",
+      "stem": "Sobre el metabolismo del Hierro MARQUE LO CORRECTO",
+      "options": [
+        {
+          "id": "a",
+          "text": "En el torrente sanguíneo, se encuentra como hierro libre",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La resonancia magnética es un método no invasivo para evaluar la sobrecarga de hierro en los tejidos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "La deficiencia de hierro estimula la síntesis de hepcidina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La mayor parte del hierro se encuentra como ferritina",
+          "correct": false
+        }
+      ],
+      "explanation": "La **resonancia magnética (T2\\*)** mide el hierro del hígado y del corazón sin biopsia. Es el método de elección para seguir la sobrecarga de hierro (hemocromatosis, pacientes politransfundidos).\n\nEn la sangre el hierro **no circula libre**, que sería tóxico: va unido a la **transferrina**. La ferropenia **inhibe** la hepcidina para que se absorba más hierro. Y la mayor parte del hierro corporal está en la **hemoglobina** (~65 %), no en la ferritina.",
+      "tags": [
+        "Hematología",
+        "Metabolismo del hierro"
+      ]
+    },
+    {
+      "id": "q4",
+      "stem": "Respecto al sistema del complemento, es cierto que",
+      "options": [
+        {
+          "id": "a",
+          "text": "El complejo de ataque de membrana incluye C5a.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El Complemento más abundante es C5",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "C3a se une al grupo hidroxilo o amino de patógenos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La conversión de C3 a C3b ocurre con frecuencia en forma espontánea",
+          "correct": true
+        }
+      ],
+      "explanation": "El enlace tioéster de **C3** se hidroliza espontáneamente en el plasma a bajo ritmo (*tickover*). El C3(H₂O) arranca la **vía alternativa** sin necesidad de anticuerpos, y así la mantiene lista frente a cualquier superficie que no tenga reguladores.\n\nEl **complejo de ataque de membrana** es C5b-C9: el **C5a** es una anafilatoxina soluble que queda fuera. El componente más abundante es el **C3**, no el C5. Y quien se une covalentemente a los grupos hidroxilo o amino del microbio es el **C3b**, gracias a su tioéster. El C3a es otra anafilatoxina.",
+      "tags": [
+        "Complemento"
+      ]
+    },
+    {
+      "id": "q5",
+      "stem": "Edward últimamente ha presentado fatiga por la mañana y noche. Él cree que tiene anemia por lo que acude al Dr Luis quien le dice que tiene un tipo especial de anemia llamada Hemoglobinuria paroxística nocturna y le explica que de noche la cantidad de hemólisis es mayor. Esto se debe a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Melatonina liberada al dormir",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Aumento de temperatura corporal al dormir",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Disminución del pH en sangre al dormir",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Aumento en la producción de urea al dormir",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **hemoglobinuria paroxística nocturna**, una mutación de **PIG-A** deja a los eritrocitos sin anclas GPI y, con ellas, sin **CD55 (DAF)** ni **CD59**, los reguladores que frenan el complemento sobre la membrana.\n\nDurante el sueño la **hipoventilación** retiene CO₂ y el pH de la sangre **baja** levemente. Ese medio ácido favorece la activación de la vía alternativa, que en estos eritrocitos no encuentra freno. De ahí la orina oscura de la primera micción de la mañana. La melatonina, la temperatura y la urea no tienen ese efecto.",
+      "tags": [
+        "Complemento",
+        "Hematología",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q6",
+      "stem": "Los adipocitos pertenecientes a la Médula ósea producen factores que",
+      "options": [
+        {
+          "id": "a",
+          "text": "Estimulan la linfopoyesis",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Promueven la granulopoyesis",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Estimulan a la apoptosis de las células endoteliales",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Inhiben la osteogénesis",
+          "correct": false
+        }
+      ],
+      "explanation": "Según la clave, los adipocitos de la médula ósea producen factores que **promueven la granulopoyesis**, como G-CSF, IL-6 y TNF. En la regeneración medular aportan además SCF a la hematopoyesis. No estimulan la linfopoyesis ni inducen la apoptosis del endotelio.\n\nLa **d** también tiene respaldo. Adipocito y osteoblasto salen del mismo precursor mesenquimal, y más grasa medular suele ir con menos hueso, como en la osteoporosis. Por eso la pregunta queda marcada para revisión.",
+      "reviewNote": "La clave marca la b, pero el papel de los adipocitos medulares en la hematopoyesis sigue en discusión (hay trabajos en los que frenan la granulopoyesis). Y la d también se defiende: sus adipocinas y su competencia por el precursor mesenquimal inhiben la osteogénesis.",
+      "tags": [
+        "Hematología",
+        "Médula ósea"
+      ]
+    },
+    {
+      "id": "q7",
+      "stem": "En relación a la activación clásica de los macrófagos señale lo correcto",
+      "options": [
+        {
+          "id": "a",
+          "text": "La activación se produce por IL 4",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La IL10 activa al macrófago para la incorporación de ON y ROS",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se produce estimulación de la inflamación por IL 1, IL 12, IL 23",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Se potencia la fagocitosis con producción de fibrosis",
+          "correct": false
+        }
+      ],
+      "explanation": "La **activación clásica (M1)** la inducen el **IFN-γ** y los ligandos de TLR, como el LPS. El macrófago M1 mata microbios con **ROS y óxido nítrico**, y promueve la inflamación liberando **IL-1, IL-12, IL-23**, TNF e IL-6.\n\nLa **IL-4** y la IL-13 inducen la **activación alternativa (M2)**, que repara el tejido y produce fibrosis. La **IL-10** es antiinflamatoria: apaga al macrófago, no lo activa.",
+      "tags": [
+        "Macrófagos",
+        "Citocinas"
+      ]
+    },
+    {
+      "id": "q8",
+      "stem": "En un paciente que acaban de diagnosticarle parasitosis, señale lo correcto en relación a su respuesta inmune",
+      "options": [
+        {
+          "id": "a",
+          "text": "Presenta elevadas cantidades de IgM con memoria inmune",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Actividad de Células Th2 para la secreción de IL5 e IL4",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Citocinas como IFN tipo I son las mediadoras de la respuesta",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los granulocitos elevados principalmente son neutrófilos",
+          "correct": false
+        }
+      ],
+      "explanation": "Frente a los helmintos la respuesta es **Th2**. La **IL-4** induce el cambio a **IgE**, la **IL-5** recluta y activa a los **eosinófilos**, y la IL-13 aumenta el moco y la motilidad intestinal.\n\nLa **IgM** es propia de la respuesta primaria y no deja memoria. Los **IFN tipo I** son la respuesta antiviral. Y el granulocito que sube es el **eosinófilo**, no el neutrófilo.",
+      "tags": [
+        "Linfocitos T",
+        "Parásitos"
+      ]
+    },
+    {
+      "id": "q9",
+      "stem": "Los eosinófilos intervienen en la respuesta inmune mediante ciertos mecanismos, señale el correcto.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos Th2 liberan IL5 que estimulan su actividad",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Los eosinófilos se unen a la porción Fab de IgE",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Realiza fagocitosis al degranular mieloperoxidasa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Su función citotóxica no depende de anticuerpos",
+          "correct": false
+        }
+      ],
+      "explanation": "La **IL-5** es la citocina del eosinófilo. La producen los Th2 (y las ILC2), y estimula la producción de eosinófilos en la médula, su supervivencia y su activación.\n\nEl eosinófilo reconoce a la **IgE** por su porción **Fc**, a través de FcεRI/RII. El Fab es la parte que se une al antígeno. Su arma es **extracelular**: un parásito es demasiado grande para fagocitarlo, así que degranula sobre él proteína básica mayor, **peroxidasa eosinofílica** y proteína catiónica. Y esa citotoxicidad es justamente **dependiente de anticuerpos** (ADCC mediada por IgE).",
+      "tags": [
+        "Granulocitos",
+        "Parásitos"
+      ]
+    },
+    {
+      "id": "q10",
+      "stem": "Paciente varón de 20 años que presenta sangrado articular y disminución del factor VIII. ¿Cuál de los tiempos se encuentra alterado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tiempo parcial de tromboplastina",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Tiempo de trombina",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tiempo de protrombina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Dosaje de fibrinógeno",
+          "correct": false
+        }
+      ],
+      "explanation": "Un varón joven con **hemartrosis** y **factor VIII bajo** tiene una **hemofilia A**. El factor VIII es de la **vía intrínseca**, y esa vía la mide el **TTPa** (tiempo parcial de tromboplastina activada). Por eso es el tiempo que se alarga.\n\nEl **tiempo de protrombina** explora la vía extrínseca (factor VII) y la común, y sale normal. El **tiempo de trombina** y el **fibrinógeno** evalúan el último paso, el paso de fibrinógeno a fibrina, que en la hemofilia está intacto.",
+      "tags": [
+        "Hemostasia",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q11",
+      "stem": "Los Antígenos unidos a moléculas del MHC-I de los linfocitos B son reconocidos por",
+      "options": [
+        {
+          "id": "a",
+          "text": "Neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos T citotóxicos CD8+",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos T cooperadores CD4+",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células presentadoras de antígenos",
+          "correct": false
+        }
+      ],
+      "explanation": "El **MHC de clase I** está en todas las células nucleadas, linfocitos B incluidos, y presenta péptidos citosólicos a los **linfocitos T CD8+**: el CD8 se une al dominio α3 de la clase I.\n\nLos **CD4+** reconocen el MHC de **clase II**. Los neutrófilos no tienen TCR. Y las células presentadoras son las que *presentan* el antígeno, no las que reconocen el complejo péptido-MHC.",
+      "tags": [
+        "MHC"
+      ]
+    },
+    {
+      "id": "q12",
+      "stem": "Las enfermedades infecciosas granulomatosas se caracterizan por:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Activación de macrófagos porque células Th2 secretan IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL 12 secretados por células Th1 estimulan la producción de IFN-γ por macrófago",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "En la lepra lepromatosa existen lesiones granulomatosas con pocas bacterias",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Macrófagos secretan citocinas como TNF-α para la formación de granulomas",
+          "correct": true
+        }
+      ],
+      "explanation": "El **granuloma** es la respuesta a un microbio que el macrófago no consigue eliminar, como en la tuberculosis o la lepra. Los **macrófagos activados** liberan **TNF-α**, que recluta células, organiza el granuloma y lo mantiene. Por eso los anti-TNF pueden reactivar una tuberculosis latente.\n\nEl IFN-γ lo secretan los **Th1**, no los Th2. La **IL-12** la producen los macrófagos y las células dendríticas, y es la que empuja a los Th1 a producir IFN-γ, no al revés. En la **lepra lepromatosa** la respuesta es pobre y las lesiones están llenas de bacilos. La de granulomas bien formados con pocos bacilos es la **tuberculoide**.",
+      "tags": [
+        "Hipersensibilidad",
+        "Macrófagos"
+      ]
+    },
+    {
+      "id": "q13",
+      "stem": "Que expresan los trofoblastos durante el embarazo para la tolerancia inmunológica",
+      "options": [
+        {
+          "id": "a",
+          "text": "HLA G",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "HLA A",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "HLA DR",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "HLA DQ",
+          "correct": false
+        }
+      ],
+      "explanation": "El **trofoblasto extravelloso** no expresa HLA-A ni HLA-B, y así escapa de los CD8 maternos. En su lugar expresa **HLA-G**, una molécula de clase I no clásica y casi sin polimorfismo. El HLA-G inhibe a las **NK uterinas** (vía KIR2DL4/ILT2), que de otro modo atacarían a una célula con poca clase I.\n\nEl HLA-A es de clase I clásica y polimórfica, y sería blanco de rechazo. HLA-DR y HLA-DQ son de clase II, que el trofoblasto no expresa.",
+      "tags": [
+        "MHC",
+        "Tolerancia"
+      ]
+    },
+    {
+      "id": "q14",
+      "stem": "La membrana del eritrocito presenta proteínas integrales, señale a una de éstas:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tropomiosina",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Anquirina",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Espectrina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Glicoforina",
+          "correct": true
+        }
+      ],
+      "explanation": "Las **proteínas integrales** atraviesan la bicapa: son las **glicoforinas** (A–D) y la **banda 3**. Las glicoforinas llevan el ácido siálico que da al eritrocito su carga negativa.\n\n**Espectrina**, **anquirina** y **tropomiosina** son del **citoesqueleto**: proteínas periféricas de la cara interna. Sus defectos causan la **esferocitosis hereditaria**.",
+      "tags": [
+        "Hematología",
+        "Eritrocito"
+      ]
+    },
+    {
+      "id": "q15",
+      "stem": "Señale la respuesta correcta respecto a los mastocitos",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se activan por acción del complemento",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Tiene origen linfoide",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Son precursores de los macrófagos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Participan en respuestas alérgicas",
+          "correct": true
+        }
+      ],
+      "explanation": "El **mastocito** es la célula efectora de la **hipersensibilidad tipo I**. Lleva IgE unida a su **FcεRI**, y cuando el alérgeno entrecruza esas IgE libera histamina, triptasa, leucotrienos y prostaglandinas.\n\nEs de **origen mieloide**, no linfoide, y no es precursor de los macrófagos. La **a** también es cierta: las anafilatoxinas **C3a y C5a** degranulan al mastocito sin necesidad de IgE. Por eso la pregunta queda marcada para revisión.",
+      "reviewNote": "La clave marca la d, pero la a también es cierta: las anafilatoxinas C3a y C5a activan y degranulan al mastocito.",
+      "tags": [
+        "Granulocitos",
+        "Hipersensibilidad"
+      ]
+    },
+    {
+      "id": "q16",
+      "stem": "Son características del MHC",
+      "options": [
+        {
+          "id": "a",
+          "text": "monomórfico y monogénico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Poligénico y polimórfica",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "poligénico y monomórfico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "monomórfico y poligénico",
+          "correct": false
+        }
+      ],
+      "explanation": "El **MHC** es **poligénico**: hay varios genes de clase I (HLA-A, -B, -C) y de clase II (DR, DQ, DP), así que cada persona presenta antígenos con varias moléculas distintas. Y es **polimórfico**: cada gen tiene cientos o miles de alelos en la población, y se expresan los dos alelos, el materno y el paterno (codominancia).\n\nJuntas, las dos propiedades amplían el repertorio de péptidos que una persona puede presentar. También explican que un trasplante entre personas no emparentadas rara vez sea compatible.",
+      "tags": [
+        "MHC"
+      ]
+    },
+    {
+      "id": "q17",
+      "stem": "En relación al reconocimiento de antígenos y la coestimulación:",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD3 bloquea la señal de transducción.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "B7 tiene una función inhibitoria de la coestimulación.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CTLA-4 cumple la función de coestimulación.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La unión del linfocito T y las células presentadoras de antígenos se estabiliza por integrinas.",
+          "correct": true
+        }
+      ],
+      "explanation": "La sinapsis entre el linfocito T y la presentadora se estabiliza con **integrinas**. La **LFA-1** del linfocito T se une a la **ICAM-1** de la presentadora y forma el anillo externo de la sinapsis inmunológica.\n\n**CD3** es el que **transduce** la señal del TCR; no la bloquea. **B7** (CD80/86) es la molécula **coestimuladora**, que activa a través de CD28. Y **CTLA-4** es su contrapartida **inhibitoria**.",
+      "tags": [
+        "Coestimulación",
+        "Linfocitos T"
+      ]
+    },
+    {
+      "id": "q18",
+      "stem": "En relación a los mecanismos de tolerancia central.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se produce la anergia de los linfocitos CD4+y CD8+",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los linfocitos T reguladores provocan la selección negativa en el timo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los linfocitos B inmaduros autorreactivos en la médula osea cambian su receptor de antígenos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Los linfocitos T inmaduros autorreactivos en el timo cambian su receptor de antígenos",
+          "correct": false
+        }
+      ],
+      "explanation": "La **tolerancia central** ocurre en los órganos linfoides primarios. En la médula ósea, un **linfocito B inmaduro** que reconoce con fuerza un antígeno propio puede reactivar RAG y cambiar su cadena ligera: es la **edición del receptor**. Si no lo consigue, muere por apoptosis.\n\nLa **anergia** es un mecanismo de tolerancia **periférica**. La selección negativa en el timo depende de la afinidad por lo propio (AIRE); los T reguladores son uno de sus productos, no quienes la hacen. Y los **timocitos** autorreactivos se eliminan: la edición del receptor es propia de los linfocitos B.",
+      "tags": [
+        "Tolerancia"
+      ]
+    },
+    {
+      "id": "q19",
+      "stem": "En relación a la aparición de autoinmunidad.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se origina por una actividad incrementada de los linfocitos T reguladores",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La susceptibilidad genética para autoinmunidad generalmente es monogénica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Ocurre cuando los microbios producen inhibición de la coestimulación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los microbios pueden estimular su aparición por reacción cruzada con antígenos propios.",
+          "correct": true
+        }
+      ],
+      "explanation": "Un microbio puede disparar autoinmunidad por **mimetismo molecular**: comparte epítopos con proteínas propias, y los linfocitos que activa atacan después al tejido. El ejemplo clásico es la **fiebre reumática**, en la que la proteína M del estreptococo cruza con la miosina cardíaca.\n\nLa autoinmunidad aparece cuando los T reguladores **fallan**, no cuando están aumentados. La susceptibilidad suele ser **poligénica** (el HLA y muchos otros genes); las formas monogénicas, como APECED (AIRE) o IPEX (FOXP3), son raras. Y los microbios la favorecen **aumentando** la coestimulación, por la inflamación y el B7, no inhibiéndola.",
+      "tags": [
+        "Autoinmunidad"
+      ]
+    },
+    {
+      "id": "q20",
+      "stem": "Las subpoblaciones de los linfocitos CD4+ TH, se caracterizan por la producción de:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Th1: IL 23",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Tfh: IL 21",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Th17: IL 4",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Th2: IFN-γ",
+          "correct": false
+        }
+      ],
+      "explanation": "Cada subpoblación CD4 tiene su citocina. La de los **Tfh** es la **IL-21**: con ella, con la IL-4 y con el CD40L ayudan al linfocito B en el centro germinal.\n\nLas demás están cruzadas. Los **Th1** producen **IFN-γ**; la IL-23 la produce el macrófago, y lo que hace es mantener a los Th17. Los **Th17** producen **IL-17** e IL-22. Y los **Th2** producen **IL-4**, IL-5 e IL-13.",
+      "tags": [
+        "Linfocitos T",
+        "Citocinas"
+      ]
+    },
+    {
+      "id": "q21",
+      "stem": "Las células T participan en la respuesta inmune mediante la producción de citocinas. Señale el enunciado correcto.",
+      "options": [
+        {
+          "id": "a",
+          "text": "IFN-γ suprime la función de los Th1 y activa a los Th2",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL 12 producida por macrófagos direcciona la producción de Th1",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Las Células Th2 activan a las células T CD8 y macrófagos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Las Células Th1 activan a las células B para producir de anticuerpos",
+          "correct": false
+        }
+      ],
+      "explanation": "La **IL-12** la producen los macrófagos y las células dendríticas al reconocer microbios intracelulares. En el linfocito T naive activa **STAT4** y **T-bet**, y lo diferencia a **Th1**.\n\nEl **IFN-γ** hace lo contrario de lo que dice la a: refuerza a los Th1 e inhibe a los Th2. Los que activan a los **macrófagos** y ayudan a los **CD8** son los **Th1**, no los Th2. Y ayudar al linfocito B a producir anticuerpos es la función clásica de los **Th2** y los Tfh.",
+      "reviewNote": "La clave del documento marca la d, pero la b es la afirmación de libro y se tomó como correcta. La d es cierta sólo en parte: los Th1 inducen algunas subclases de IgG opsonizantes, pero ayudar al linfocito B es la función clásica de los Th2 y los Tfh.",
+      "tags": [
+        "Linfocitos T",
+        "Citocinas"
+      ]
+    },
+    {
+      "id": "q22",
+      "stem": "Un folículo secundario normal se caracteriza por presentar:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Zona oscura con predominio de centroblastos y zona clara con predominio de centrocitos y macrófagos con cuerpos teñibles",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Centro folicular de aspecto homogéneo con presencia de centrocitos y centroblastos entremezclados y macrófagos con cuerpos teñibles",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Centro folicular de aspecto homogéneo con presencia de centrocitos y centroblastos entremezclados y macrófagos sin cuerpos teñibles",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Zona clara con predominio de centroblastos y zona oscura con predominio de centrocitos y macrófagos sin cuerpos teñibles",
+          "correct": false
+        }
+      ],
+      "explanation": "El **folículo secundario** es un folículo con centro germinal, y ese centro está **polarizado**:\n- en la **zona oscura** están los **centroblastos**, que proliferan y sufren hipermutación somática;\n- en la **zona clara**, los **centrocitos**, que se seleccionan sobre las células dendríticas foliculares, y los **macrófagos con cuerpos teñibles** (*tingible bodies*), que se comen a los que mueren por apoptosis.\n\nUn centro homogéneo, sin polaridad ni cuerpos teñibles, sugiere un **linfoma folicular**, no un folículo reactivo normal. La d invierte las zonas.",
+      "tags": [
+        "Órganos linfoides",
+        "Linfocitos B"
+      ]
+    },
+    {
+      "id": "q23",
+      "stem": "Es correcto en relación al Factor Tisular (FT):",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se activa mediante el estímulo del complejo tenasa intrínseco en la superficie plaquetaria.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se expresa de forma constitutiva en las células extravasculares, tipo músculo liso y fibroblastos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "En pacientes normales se puede encontrar FT circulante en micropartículas de fragmentos de membrana",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Permanece en estado inactivo (con alta afinidad por factor VII) en aterosclerosis, diabetes o inflamación.",
+          "correct": false
+        }
+      ],
+      "explanation": "El **factor tisular** se expresa de forma **constitutiva** en las células que rodean al vaso: adventicia, fibroblastos y músculo liso. La sangre sólo lo encuentra cuando el vaso se rompe, y entonces se une al factor VIIa y arranca la coagulación.\n\nComo es el iniciador, **no lo activa** el complejo tenasa intrínseco: ocurre al revés. En sujetos sanos apenas hay FT circulante; las micropartículas con FT aparecen en la inflamación, la sepsis o el cáncer. Y en la aterosclerosis, la diabetes o la inflamación el FT está **aumentado y activo**, no inactivo.",
+      "tags": [
+        "Hemostasia"
+      ]
+    },
+    {
+      "id": "q24",
+      "stem": "A un ratón de laboratorio usted le inocula una dosis de antígeno el día 1 día 21 y día 35. El día 45 usted obtiene una muestra de suero del ratón, los anticuerpos (inmunoglobulinas) que encontrará son:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Anticuerpos IgA monoméricos.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Anticuerpos IgM de alta afinidad",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Anticuerpos IgG de baja afinidad",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Anticuerpos IgG de alta afinidad",
+          "correct": true
+        }
+      ],
+      "explanation": "Tres dosis del mismo antígeno (días 1, 21 y 35) son una **inmunización con refuerzos**. Diez días después del tercer contacto hay una **respuesta secundaria** en marcha. Los linfocitos B de memoria ya pasaron por el centro germinal: cambiaron a **IgG** y maduraron su **afinidad** por hipermutación somática y selección.\n\nLa **IgM** domina la respuesta primaria y es de baja afinidad. La **IgA** del suero es sobre todo monomérica, pero no es la clase que predomina tras una inmunización sistémica.",
+      "tags": [
+        "Anticuerpos"
+      ]
+    },
+    {
+      "id": "q25",
+      "stem": "En relación a los linfocitos CD8+",
+      "options": [
+        {
+          "id": "a",
+          "text": "La IL2 no produce la diferenciación y proliferación de los linfocitos T CD8+",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "No se producen linfocitos CD8+ de memoria.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los linfocitos CD4+ Helper estimula la diferenciación de los linfocitos T citotóxico",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Su activación requiere la presentación del antígeno por MHC clase II y de coestimulación.",
+          "correct": false
+        }
+      ],
+      "explanation": "Para activar del todo a un **CD8+** naive, sobre todo frente a virus latentes o antígenos poco inflamatorios, hace falta la **ayuda del CD4+**. El CD4 **licencia** a la célula dendrítica a través de **CD40L-CD40**, y la dendrítica sube su B7 y secreta IL-12. Además, el CD4 aporta **IL-2**, que hace proliferar al CD8 y lo diferencia a citotóxico.\n\nLa **IL-2** sí produce esa proliferación. Hay **CD8+ de memoria**, y su calidad depende justamente de la ayuda CD4. Y el CD8 reconoce el antígeno en el **MHC de clase I**, no en la clase II.",
+      "tags": [
+        "Linfocitos T"
+      ]
+    },
+    {
+      "id": "q26",
+      "stem": "Mariel le gusta comer en la calle. Su amigo le advierte que puede ingerir parásitos como helmintos. Si tuviera helmintos, ella respondería a esta infección a través del linfocito T helper activado por IL-4. Además, este linfocito activado tendrá acción sobre un fagocito. ¿De qué se está hablando?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocito Tfh: linfocito B",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocito Th17: neutrófilo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocito Th2: eosinófilos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Linfocito Th1: basófilo",
+          "correct": false
+        }
+      ],
+      "explanation": "Un helminto y un T colaborador que se diferencia bajo **IL-4**: es un **Th2**. El Th2 libera **IL-5**, que activa a los **eosinófilos**, la célula que ataca al helminto. En rigor el eosinófilo no lo fagocita, porque el parásito es demasiado grande: lo destruye degranulando sobre él.\n\nEl **Tfh** ayuda al linfocito B, que no es un fagocito. El **Th17** recluta **neutrófilos** frente a bacterias extracelulares y hongos. Y el **Th1** activa a los **macrófagos**, no a los basófilos.",
+      "tags": [
+        "Linfocitos T",
+        "Parásitos",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q27",
+      "stem": "El Dr Pedro recibió en Emergencia a un paciente joven de 29 años, fiebre alta con escalofríos desde hace una semana, tos con expectoración verdosa y malestar general. El doctor confirma el diagnóstico de Neumonía por neumococo y le inicia tratamiento con antibióticos endovenosos. Pero a pesar del tratamiento persiste la fiebre y la presión arterial baja, la frecuencia cardiaca sube y presenta hipoxia. En relación al cuadro de citocinas liberadas en el paciente, señale la respuesta correcta",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL1 se encuentra disminuida por el consumo de la misma por la sepsis",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Debido a la sepsis secundaria a la neumonía el paciente se liberó TNF beta",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La fiebre es manifestación de IL 6 que producirá elevación de PCR",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Hay una disminución de la actividad de quimiotaxis por citocinas",
+          "correct": false
+        }
+      ],
+      "explanation": "Una neumonía neumocócica que evoluciona con hipotensión, taquicardia e hipoxia es una **sepsis**, y en ella circulan elevadas las citocinas proinflamatorias: **TNF-α, IL-1 e IL-6**. La **IL-6** actúa sobre el hipotálamo, donde produce la fiebre por la vía de la PGE₂. También actúa sobre el hígado, donde induce las **proteínas de fase aguda**, entre ellas la **PCR**.\n\nLa IL-1 está **aumentada**, no consumida. El mediador central del shock séptico es el **TNF-α**; el TNF-β (linfotoxina) lo producen los linfocitos. Y la quimiotaxis está **aumentada**, por la IL-8/CXCL8 y el C5a.",
+      "tags": [
+        "Citocinas",
+        "Inmunidad innata",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q28",
+      "stem": "En una biopsia de piel normal que al microscopio de luz (H/E) no presenta anormalidades, se demuestra la presencia de células que expresan MHC clase I y MHC clase II simultáneamente en el estrato espinoso. Un fragmento estudiado mediante microscopía electrónica de transmisión demuestra la presencia de células de aspecto dendrítico con gránulos de Birbeck y ausencia de desmosomas. Las mismas células se hallan en un ganglio linfático que recibe linfa de la piel biopsiada. Usted concluye que se trata de:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Macrófagos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células de Langerhans",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Células dendríticas foliculares",
+          "correct": false
+        }
+      ],
+      "explanation": "Una célula **dendrítica** del **estrato espinoso**, sin desmosomas, con **gránulos de Birbeck** al microscopio electrónico y que expresa **MHC I y II** es una **célula de Langerhans**. La falta de desmosomas descarta que sea un queratinocito. Los gránulos de Birbeck, en forma de raqueta, son la marca de la **langerina** (CD207).\n\nCuando capta un antígeno migra por la linfa hasta el **ganglio regional**, y por eso también se la encuentra allí, presentándolo a los linfocitos T. La **célula dendrítica folicular** no es de origen hematopoyético y no presenta péptidos por MHC-II: retiene complejos inmunes para los linfocitos B.",
+      "tags": [
+        "Células presentadoras",
+        "Piel"
+      ]
+    },
+    {
+      "id": "q29",
+      "stem": "En cuál de los siguientes órganos se encuentra la principal reserva de plaquetas",
+      "options": [
+        {
+          "id": "a",
+          "text": "Timo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Riñón",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hígado",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Bazo",
+          "correct": true
+        }
+      ],
+      "explanation": "El **bazo** retiene cerca de **un tercio** de las plaquetas circulantes, en un pool que se intercambia con la sangre. Por eso la **esplenomegalia** (hiperesplenismo) causa trombocitopenia por secuestro, y tras una esplenectomía las plaquetas suben.\n\nEl **hígado** produce la trombopoyetina y retira las plaquetas envejecidas, pero no es su reserva.",
+      "tags": [
+        "Hematología",
+        "Órganos linfoides"
+      ]
+    },
+    {
+      "id": "q30",
+      "stem": "La anergia de los linfocitos T",
+      "options": [
+        {
+          "id": "a",
+          "text": "Es una consecuencia de la apoptosis del linfocito T",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Puede originarse por la unión del linfocito T con CTLA-4 y PD-1",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Es un mecanismo de la tolerancia central",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ocurre como consecuencia de la acción del linfocito T regulador.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **anergia** es una falta de respuesta **funcional**: el linfocito T sigue vivo, pero ya no responde al antígeno. Aparece cuando lo reconoce **sin coestimulación** o cuando actúan sobre él los **receptores inhibidores CTLA-4 y PD-1**.\n\nNo es consecuencia de la apoptosis, que es la **deleción**, otro mecanismo. Es tolerancia **periférica**, no central. Y la supresión por los **T reguladores** es un tercer mecanismo, distinto de la anergia.",
+      "tags": [
+        "Tolerancia",
+        "Coestimulación"
+      ]
+    },
+    {
+      "id": "q31",
+      "stem": "Sobre el linfocito B es cierto que",
+      "options": [
+        {
+          "id": "a",
+          "text": "El BCR es un anticuerpo de tipo IgM que está anclado a la membrana",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Indispensable para la activación de las células dendríticas.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tiene origen mieloide",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Presenta exclusivamente el sistema de histocompatibilidad II a los linfocitos T",
+          "correct": false
+        }
+      ],
+      "explanation": "El **BCR** es una **inmunoglobulina de membrana**: IgM, y también IgD en el linfocito B maduro naive. Tiene una región transmembrana y va asociada a **Igα/Igβ** (CD79a/b), que son las que transducen la señal.\n\nEl linfocito B es de **origen linfoide** y no es indispensable para activar a las células dendríticas. Presenta péptidos por **MHC-II** a los T CD4, pero como toda célula nucleada también expresa MHC-I. Por eso no presenta «exclusivamente» por clase II.",
+      "tags": [
+        "Linfocitos B"
+      ]
+    },
+    {
+      "id": "q32",
+      "stem": "En comparación con la respuesta primaria, los anticuerpos de la respuesta secundaria.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Aparecen rápidamente y son de clase IgG principalmente.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Aparecen con mayor rapidez pero no perduran más tiempo.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Aparecen más lentamente pero perduran más tiempo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Son de la Clase IgD.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **respuesta secundaria** parte de linfocitos B de memoria que ya cambiaron de isotipo y maduraron su afinidad. Por eso es **más rápida**, más intensa y **más duradera**, y sus anticuerpos son sobre todo **IgG** (o IgA e IgE según el sitio) y de **mayor afinidad**.\n\nDura más que la primaria, no menos. Y la **IgD** casi no se secreta: es sobre todo un receptor del linfocito B naive.",
+      "tags": [
+        "Anticuerpos"
+      ]
+    },
+    {
+      "id": "q33",
+      "stem": "Sobre la hemoglobina MARQUE LA RESPUESTA VERDADERA.",
+      "options": [
+        {
+          "id": "a",
+          "text": "La disminución de la G6PDH facilita la liberación de oxígeno en los tejidos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La curva de afinidad de la Hb fetal y el oxígeno está desviada a la derecha.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La persistencia de Hb fetal en el adulto no tiene importancia clinica",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "La metahemoglobinemia existe en pequeñas cantidades en el organismo y son eliminadas normalmente presencia de reductasas",
+          "correct": false
+        }
+      ],
+      "explanation": "La **persistencia hereditaria de hemoglobina fetal** en el adulto es **asintomática**: la HbF transporta bien el oxígeno y no causa enfermedad por sí sola. Sí importa cuando acompaña a una hemoglobinopatía, porque atenúa la drepanocitosis y la talasemia.\n\nLa **Hb fetal** tiene **más afinidad** por el oxígeno, porque une menos 2,3-BPG, así que su curva está desviada a la **izquierda**. El déficit de **G6PD** no facilita la liberación de oxígeno: deja al eritrocito sin NADPH y expuesto a la hemólisis oxidativa.\n\nLa **d** también se defiende. La metahemoglobina existe normalmente en pequeña cantidad (<1–2 %) y la citocromo b5 reductasa la reduce de vuelta a hemoglobina. La pregunta queda marcada para revisión.",
+      "reviewNote": "La clave marca la c, pero la d también es cierta: la metahemoglobina existe normalmente en pequeña cantidad y la reducen las reductasas del eritrocito. La c tiene además un matiz: la HbF persistente atenúa la drepanocitosis y la talasemia.",
+      "tags": [
+        "Hematología",
+        "Hemoglobina"
+      ]
+    },
+    {
+      "id": "q34",
+      "stem": "El bazo es un órgano linfoide importante en el sistema inmune uno de los siguientes enunciados es correcto respecto a una función alterada de este órgano:",
+      "options": [
+        {
+          "id": "a",
+          "text": "incremento de la actividad de opsonización por inmunoglobulinas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "incremento de la actividad fagocítica de macrófagos en la zona marginal",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los glóbulos rojos viejos son removidos en la zona de pulpa roja.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Incremento del riesgo de infecciones por microorganismo encapsulados.",
+          "correct": true
+        }
+      ],
+      "explanation": "El bazo es el filtro de la sangre frente a las **bacterias encapsuladas**: neumococo, *Haemophilus* y meningococo. Los macrófagos de su **zona marginal** las atrapan, y sus linfocitos B de zona marginal responden a los polisacáridos de la cápsula con IgM T-independiente. Sin bazo, o con un bazo que no funciona (tras una esplenectomía, en la drepanocitosis), **aumenta el riesgo de sepsis por encapsulados**.\n\nLa opsonización y la fagocitosis **disminuyen**, no aumentan. Y retirar los eritrocitos viejos en la pulpa roja es la función **normal** del bazo, no una alteración.",
+      "tags": [
+        "Órganos linfoides"
+      ]
+    },
+    {
+      "id": "q35",
+      "stem": "Las citocinas son péptidos que permiten la comunicación intercelular señale la afirmación verdadera en relación a su funcion:",
+      "options": [
+        {
+          "id": "a",
+          "text": "IFN tipo 1 es mediador de la inmunidad adaptativa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL 3 estimula la actividad de hematopoyesis",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "El Sistema inmune innato comprende la acción de IL 2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL 10 es un citocina proinflamatoria de la respuesta adaptativa",
+          "correct": false
+        }
+      ],
+      "explanation": "La **IL-3** es un factor de crecimiento **multilinaje**. Estimula a los progenitores hematopoyéticos tempranos y, junto con el GM-CSF, a los mieloides: granulocitos, monocitos, mastocitos y megacariocitos.\n\nLos **IFN tipo I** median la inmunidad **innata** antiviral. La **IL-2** es de la inmunidad **adaptativa**: la produce el linfocito T activado. Y la **IL-10** es **antiinflamatoria**.",
+      "tags": [
+        "Citocinas",
+        "Hematología"
+      ]
+    },
+    {
+      "id": "q36",
+      "stem": "Codifica proteínas que desempeñan funciones inmunitarias como C2, C3, factor B, TNFalfa",
+      "options": [
+        {
+          "id": "a",
+          "text": "MHC II",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "MHC I",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "MHC III",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CD 1",
+          "correct": false
+        }
+      ],
+      "explanation": "El MHC humano, en el cromosoma 6, tiene tres regiones. Entre la clase I y la clase II está la **región de clase III**, que no codifica moléculas presentadoras sino otras proteínas inmunitarias: **C2, C4 y factor B** del complemento, **TNF-α** y linfotoxina, y proteínas de choque térmico.\n\nEl **C3** está en realidad en el cromosoma 19, fuera del MHC. Aun con ese error del enunciado, la región que se describe es la III. **CD1**, que presenta lípidos, se codifica fuera del MHC.",
+      "tags": [
+        "MHC",
+        "Complemento"
+      ]
+    },
+    {
+      "id": "q37",
+      "stem": "Los neutrófilos son células que se caracterizan porque:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Presentan gránulos pequeños específicos como la fosfatasa ácida",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Son presentadoras de antígenos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La opsonización se realiza con las IgM",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se fusiona con el fagosoma para la destrucción de patógenos",
+          "correct": true
+        }
+      ],
+      "explanation": "Tras fagocitar al microbio, los **gránulos** del neutrófilo se **fusionan con el fagosoma** y forman el fagolisosoma. Allí vuelcan mieloperoxidasa, lisozima, elastasa y defensinas, que junto con el estallido respiratorio destruyen al microbio. El enunciado lo dice abreviado.\n\nLos gránulos **específicos** llevan lactoferrina, lisozima y colagenasa; la **fosfatasa ácida** es lisosomal. El neutrófilo **no presenta antígenos** de forma profesional. Y la opsonina que usa es la **IgG** (junto con el C3b): no tiene receptor para el Fc de la IgM.",
+      "tags": [
+        "Granulocitos",
+        "Fagocitosis"
+      ]
+    },
+    {
+      "id": "q38",
+      "stem": "Las plaquetas son elementos de la sangre que se caracterizan por presentar en sus gránulos.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Serotonina",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Histamina",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Prostaglandina I2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Peroxidasa",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **gránulos densos** (δ) de la plaqueta guardan **serotonina**, ADP, ATP y calcio. La serotonina liberada contrae el vaso y recluta más plaquetas. Los **gránulos α** llevan fibrinógeno, factor de von Willebrand, PF4 y PDGF.\n\nLa **histamina** es del mastocito y del basófilo, y la **peroxidasa**, del neutrófilo y el eosinófilo. La **prostaciclina (PGI₂)** la produce el endotelio, y hace lo contrario: inhibe la agregación. La plaqueta sintetiza tromboxano A₂, pero no lo almacena en gránulos.",
+      "tags": [
+        "Hemostasia",
+        "Hematología"
+      ]
+    },
+    {
+      "id": "q39",
+      "stem": "Respecto a las células Natural Killer (NK) señale el enunciado verdadero",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las células NK destruyen células con MHC reducidos.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Las células NK maduran en el Timo.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Las células NK presentan memoria inmune.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Las células NK producen IFN tipo I.",
+          "correct": false
+        }
+      ],
+      "explanation": "Las **NK** reconocen la **falta de lo propio** (*missing self*). Sus receptores inhibidores (KIR, CD94/NKG2A) leen el **MHC de clase I**. Una célula infectada por un virus, o una célula tumoral, que baja su clase I para escapar de los CD8 pierde ese freno, y la NK la destruye.\n\nLas NK maduran en la **médula ósea** y en los tejidos, no en el timo. Tienen una memoria limitada (las NK frente al CMV), pero no es la memoria adaptativa clásica. Y producen **IFN-γ**, que es de tipo II. Los **IFN tipo I** los producen las células infectadas y las dendríticas plasmocitoides, y son los que activan a la NK.",
+      "tags": [
+        "Inmunidad innata"
+      ]
+    },
+    {
+      "id": "q40",
+      "stem": "Los antígenos T-independientes se caracterizan por",
+      "options": [
+        {
+          "id": "a",
+          "text": "inducir anticuerpos de alta afinidad",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Producir anticuerpos IgM de baja afinidad",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Ser moléculas de bajo peso molecular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ser buenos inductores de memoria inmunológica",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **antígenos T-independientes** (polisacáridos, lípidos, ácidos nucleicos) tienen epítopos repetidos que **entrecruzan muchos BCR** a la vez, y así activan al linfocito B sin ayuda T. Sin esa ayuda no hay centro germinal. La respuesta es de **IgM de baja afinidad**, casi sin cambio de isotipo ni maduración de la afinidad, y deja **poca memoria**.\n\nSuelen ser moléculas **grandes** y poliméricas, no pequeñas. Por eso las vacunas de polisacáridos se **conjugan** con una proteína: así reclutan la ayuda T.",
+      "tags": [
+        "Anticuerpos",
+        "Linfocitos B"
+      ]
+    }
+  ]
+}

@@ -60,6 +60,8 @@
   align-items: flex-end;
   gap: 6px;
   flex-shrink: 0;
+  max-width: 100%;
+  margin-left: auto;
 }
 
 .groupSelectorLabel {
@@ -70,7 +72,13 @@
   color: var(--muted);
 }
 
-.groupSquares { display: flex; gap: 7px; }
+/* Con cinco banqueos rotulados (Inmunología) la fila mide ~360 px: en móvil el
+   selector baja bajo «Volver» y, si aun así no cabe, parte en dos filas. */
+.groupSquares { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+
+@media (max-width: 560px) {
+  .barraSuperior { flex-wrap: wrap; }
+}
 
 /* `min-width` + padding en vez de un ancho fijo: una letra (A, B…) sigue dando
    un cuadrado, y un rótulo de año («2024») ensancha el botón lo justo. */
@@ -105,6 +113,48 @@
   border-color: transparent;
   color: #fff;
   box-shadow: 0 5px 14px rgba(123, 114, 212, 0.38);
+}
+
+/* Nota del banqueo («Enfocado en inmunopatología»). Anclada al borde DERECHO del
+   cuadro y creciendo hacia la izquierda: el selector vive pegado al margen
+   derecho, y centrada se saldría de la hoja. Oscura en los dos temas, como un
+   tooltip; en táctil no hay hover y la misma nota va en la cabecera. */
+.groupSquare { position: relative; }
+
+.groupTooltip {
+  position: absolute;
+  top: calc(100% + 9px);
+  right: 0;
+  z-index: 20;
+  padding: 7px 11px;
+  border-radius: 8px;
+  background: #1b1840;
+  border: 1px solid rgba(var(--acc-rgb), 0.35);
+  color: #f0eeff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  white-space: nowrap;
+  box-shadow: 0 8px 22px rgba(8, 6, 26, 0.28);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.groupTooltip::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  right: 14px;
+  border: 6px solid transparent;
+  border-bottom-color: #1b1840;
+}
+
+.groupSquare:hover .groupTooltip,
+.groupSquare:focus-visible .groupTooltip {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ── Cabecera ─────────────────────────────────────────────── */
@@ -1634,7 +1684,8 @@
   .cronoTiempo,
   .seg,
   .figura,
-  .opcion::before {
+  .opcion::before,
+  .groupTooltip {
     transition: none;
   }
 }

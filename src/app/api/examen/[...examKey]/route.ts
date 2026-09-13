@@ -33,6 +33,8 @@ const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey }> = {
   'inmunologia/final-2024-2': {},
   'inmunologia/final-2023': {},
   'inmunologia/final-2025': {},
+  'inmunologia/extra-hemato': {},
+  'inmunologia/extra-pato': {},
 };
 
 const SIGNED_URL_TTL_SECONDS = 60 * 60 * 24 * 7;

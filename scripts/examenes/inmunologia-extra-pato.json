@@ -1,0 +1,1255 @@
+{
+  "version": 1,
+  "key": "inmunologia/extra-pato",
+  "title": "Examen Final — Inmunología",
+  "duration_min": 80,
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "En relación a las técnicas inmunológicas, señale la opción correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "La lisis de los eritrocitos en la técnica de fijación de complemento, indica que los anticuerpos IgG buscados se hallan presentes en la muestra testeada.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Puede dosarse IgE sérica por citometría de flujo.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La técnica de Western Blotting permite determinar el peso molecular de una proteína, basándose en la formación de halos de precipitación, cuando la relación proteína-anticuerpo alcanza la zona de equivalencia.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todas son incorrectas.",
+          "correct": true
+        }
+      ],
+      "explanation": "Las tres afirmaciones están mal:\n- En la **fijación de complemento**, si el suero tiene el anticuerpo, este forma complejos con el antígeno y **consume** el complemento. Entonces los eritrocitos sensibilizados del sistema indicador **no se lisan**. La lisis indica, al revés, que el anticuerpo **no** estaba.\n- La **IgE sérica** se dosa por inmunoensayo: ELISA, PRIST/RAST o quimioluminiscencia. La **citometría** analiza células, no proteínas solubles.\n- El **Western blot** separa las proteínas por **electroforesis** (SDS-PAGE), las transfiere a una membrana y las revela con anticuerpos marcados. Los **halos de precipitación** en la zona de equivalencia son de la inmunodifusión.",
+      "tags": [
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "q2",
+      "stem": "Señale la opción correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "En la técnica de evaluación de estallido respiratorio en fagocitos se observan diferencias entre pacientes granulomatosos crónicos e individuos normales.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los pacientes deficientes en el receptor de interferón gamma, no podrán defenderse en forma eficiente contra la infección por patógenos presentes en el compartimiento vacuolar del macrófago.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los pacientes deficientes en el componente C2 de la vía clásica presentan una incidencia significativa de manifestaciones de naturaleza reumática.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todas son correctas.",
+          "correct": true
+        }
+      ],
+      "explanation": "Las tres son ciertas:\n- En la **enfermedad granulomatosa crónica** falta la NADPH oxidasa, y las pruebas de **estallido respiratorio** (NBT, dihidrorrodamina por citometría) dan negativas frente a un control normal.\n- Sin **receptor de IFN-γ** el macrófago no se activa y no controla los patógenos que viven en su **fagosoma**: las micobacterias, incluida la BCG, y la *Salmonella*.\n- El déficit de **C2** (como el de C1q y C4) de la vía clásica se asocia al **lupus** y a otras enfermedades por complejos inmunes. Falla la eliminación de los complejos y de las células apoptóticas.\n\nLa respuesta es, entonces, **todas son correctas**.",
+      "reviewNote": "La clave del documento marca la c, pero la a y la b también son ciertas: se tomó como correcta la d («Todas son correctas»).",
+      "tags": [
+        "Inmunodeficiencias",
+        "Complemento"
+      ]
+    },
+    {
+      "id": "q3",
+      "stem": "Señale la opción correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "la presentación antigénica ocurre solamente en los órganos linfáticos secundarios.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La hipermutación somática involucra recombinaciones de fragmentos génicos en la zona que codifica para la porción variable de la inmunoglobulina.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El switch de isotipo involucra el rearreglo de una misma zona variable con distintas regiones constantes.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Para la activación de linfocitos B vírgenes específicos para antígenos T dependientes, se necesita la colaboración de linfocitos TCD4 vírgenes.",
+          "correct": false
+        }
+      ],
+      "explanation": "En el **cambio de isotipo** el linfocito B conserva su exón VDJ, es decir, su **región variable**. Por recombinación de cambio lo acerca a otra **región constante** y borra las que había en medio. Así conserva la especificidad y cambia la función del anticuerpo.\n\n- La presentación antigénica **no** ocurre sólo en los órganos linfáticos secundarios. El linfocito T efector reconoce su antígeno en los tejidos periféricos, y en el timo también se presentan antígenos durante la selección.\n- La **hipermutación somática** introduce **mutaciones puntuales** (por la AID) en la región variable ya reordenada; no recombina fragmentos génicos.\n- El linfocito B virgen necesita la ayuda de un **T CD4 ya activado** (Tfh) por el mismo antígeno, no de un T virgen.",
+      "reviewNote": "La clave del documento marca la a, pero «solamente en los órganos linfáticos secundarios» es falso, y la 31 de este mismo examen da por correcto que los macrófagos presentan antígenos en los tejidos periféricos. La única afirmación cierta es la c, y se tomó como correcta.",
+      "tags": [
+        "Linfocitos B",
+        "Presentación antigénica"
+      ]
+    },
+    {
+      "id": "q4",
+      "stem": "Señale la opción incorrecta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los LB vírgenes necesitan dos señales para activarse en respuesta a antígenos T dependiente, la primera es reconocer al Ag a través del BCR y la segunda es una señal dada por un linfocito T activado previamente por el mismo antígeno.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los linfocitos TH1 para mediar su función proinflamatoria en periferia requieren 2 señales, la primera proviene del reconocimiento del complejo péptido antigénico-HLA y la segunda se origina a través de la interacción de moléculas coestimuladoras (interacción B7-CD28).",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "El linfocito TH2 a fin de colaborar con el linfocito B, debe reconocer sobre el linfocito B el mismo péptido que reconoció previamente en una CPA para activarse.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La presencia de IL-12 e IL-18, producidas por macrófagos, favorece la activación de los linfocitos TCD4 vírgenes en un perfil TH1.",
+          "correct": false
+        }
+      ],
+      "explanation": "Se busca la **incorrecta**. Un linfocito T **efector** ya diferenciado, como el Th1, no necesita **coestimulación B7-CD28** para ejercer su función en la periferia: le basta reconocer el complejo péptido-HLA. Las dos señales las necesita el T **virgen** para activarse.\n\nLas demás son ciertas. El linfocito B virgen necesita su BCR y la ayuda de un T activado por el mismo antígeno. El Th2 reconoce en el B el mismo péptido que vio en la presentadora (**reconocimiento ligado**). Y la **IL-12** y la **IL-18** del macrófago polarizan al CD4 virgen hacia **Th1**.",
+      "tags": [
+        "Linfocitos T",
+        "Coestimulación"
+      ]
+    },
+    {
+      "id": "q5",
+      "stem": "Señale la opción correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "La presentación antigénica es mediada solo a través de células presentadoras profesionales.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los linfocitos T efectores median sus funciones solo en periferia.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Solo las células TH1 producen interferón-gamma.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todas son incorrectas.",
+          "correct": true
+        }
+      ],
+      "explanation": "Las tres son falsas por el **«solo»**:\n- También presentan antígenos las células **no profesionales**: toda célula nucleada presenta por MHC-I a los CD8.\n- Hay T efectores que actúan en los **órganos linfáticos**: el **Tfh** ayuda al linfocito B en el folículo del ganglio.\n- El **IFN-γ** no es exclusivo de los Th1: también lo producen los **CD8** citotóxicos, las **NK** y las ILC1.",
+      "tags": [
+        "Linfocitos T",
+        "Presentación antigénica"
+      ]
+    },
+    {
+      "id": "q6",
+      "stem": "Señale la opción incorrecta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "La hipermutación somática es el mecanismo subyacente a la maduración en la afinidad de los anticuerpos.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El linfocito B maduro sale de médula ósea portando en su membrana inmunoglobulinas de superficie del tipo IgM e IgG.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los rearreglos en la porción variable de las inmunoglobulinas (recombinación génica) se producen en respuesta a la estimulación antigénica.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Los linfocitos B de un individuo adulto son capaces de activarse en ausencia de colaboración.",
+          "correct": false
+        }
+      ],
+      "explanation": "Se busca la **incorrecta**. Los reordenamientos V(D)J de la inmunoglobulina ocurren en la **médula ósea**, **antes** de cualquier contacto con el antígeno y **sin** que este los dispare. Así se genera un repertorio que ya está listo cuando llega el microbio: es la selección clonal.\n\nLa **a** es cierta: la hipermutación somática, sumada a la selección en el centro germinal, es la base de la maduración de la afinidad. La **d** también, porque los antígenos T-independientes activan al B sin colaboración. La **b**, en cambio, también es falsa: el linfocito B maduro naive sale con **IgM e IgD**, no con IgG.",
+      "reviewNote": "La clave marca la c, pero la b también es incorrecta: el linfocito B maduro naive lleva IgM e IgD de superficie, no IgG.",
+      "tags": [
+        "Linfocitos B"
+      ]
+    },
+    {
+      "id": "q7",
+      "stem": "Señale la opción correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "algunos linfocitos B serán rescatados de la apoptosis en el centro germinal, luego de ocurrido el proceso de hipermutación somática.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Los linfocitos T vírgenes pueden ingresar a los tejidos periféricos inflamados debido a que expresan L-selectina.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los microorganismos que replican en el citoplasma son procesados y sus péptidos derivados presentados a través de MHC tipo II a los LT citotóxicos.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ninguna opción es correcta.",
+          "correct": false
+        }
+      ],
+      "explanation": "En el **centro germinal**, los centrocitos que salen de la hipermutación somática compiten por el antígeno retenido en las **células dendríticas foliculares** y por la ayuda de los **Tfh**. Los que ganaron afinidad reciben señales de supervivencia (por el BCR y el CD40L) y se **rescatan de la apoptosis**. El resto muere.\n\nLa **b** es falsa. La **L-selectina** es el receptor de *homing* hacia los **ganglios**, a través de las HEV. Al tejido inflamado llegan los T **efectores y de memoria**, que la pierden y expresan otras moléculas de adhesión. La **c** también es falsa: los antígenos citosólicos se presentan por **MHC-I** a los CD8.",
+      "reviewNote": "La clave del documento marca la d («Ninguna opción es correcta»), pero la a es cierta, y la 15 de este mismo examen da por correcta la misma idea. Se tomó como correcta la a.",
+      "tags": [
+        "Linfocitos B",
+        "Órganos linfoides"
+      ]
+    },
+    {
+      "id": "q8",
+      "stem": "En relación a los linfocitos TH1 señale la opción correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Producen interferón-gamma, citoquina que ejerce un efecto inhibitorio sobre la génesis de respuestas de tipo TH2.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Producen IL-2, citoquina que ejerce una actividad mitógena sobre células T.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se generan en los tejidos linfáticos secundarios.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todas son correctas.",
+          "correct": true
+        }
+      ],
+      "explanation": "Las tres son ciertas:\n- El **IFN-γ** de los Th1 inhibe la diferenciación a **Th2**, y la IL-4 de los Th2 inhibe a los Th1: las dos respuestas se contrarregulan.\n- Los T activados, Th1 incluidos, producen **IL-2**, el principal factor de crecimiento (mitógeno) de los linfocitos T.\n- La diferenciación a Th1 ocurre en los **órganos linfáticos secundarios**, donde el T virgen se encuentra con la célula dendrítica.",
+      "tags": [
+        "Linfocitos T",
+        "Citocinas"
+      ]
+    },
+    {
+      "id": "q9",
+      "stem": "El médico recibe el siguiente análisis realizado por citometría de flujo. Porcentaje de células mononucleares positivas para CD14: 10%, CD3: 30%, CD4: 20%, CD8: 10% e Ig de superficie 54% (57% kappa y 3% lambda). El resultado es compatible con (SEÑALE LA OPCION CORRECTA)",
+      "options": [
+        {
+          "id": "a",
+          "text": "linfocitosis asociada con una posible infección viral.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Expansión clonal B maligna.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Inmunodeficiencia T.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todas las opciones son incorrectas.",
+          "correct": false
+        }
+      ],
+      "explanation": "Lo que decide es el **cociente κ/λ** de los linfocitos B, los que tienen Ig de superficie. Una población B normal es policlonal, con un κ:λ cercano a **2:1**. Aquí κ aplasta a λ (57 % frente a 3 %): casi todos los B llevan la **misma cadena ligera**. Esa es la firma de una **expansión clonal**, es decir, de un **linfoma o una leucemia B**, y encima los B son más de la mitad de las células mononucleares.\n\nUna **linfocitosis viral** sería de linfocitos **T**, sobre todo CD8, y policlonal. Y las cifras de CD4 y CD8 no alcanzan para hablar de una **inmunodeficiencia T**.",
+      "tags": [
+        "Técnicas inmunológicas",
+        "Linfocitos B",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q10",
+      "stem": "En relación a las células TH1 señale la respuesta correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "participan en la destrucción de bacterias extracelulares.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se diferencian por la acción de la IL-12 liberada por las células NK",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Liberan citoquinas responsables de inducir hipersensibilidad de tipo IV.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Interaccionan a través de su TCR con péptidos presentados por MHC de clase I.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **Th1** producen **IFN-γ**, que activa a los **macrófagos**. Esa es la base de la **hipersensibilidad tipo IV**, o retardada: la tuberculina, la dermatitis de contacto, el granuloma.\n\nLas bacterias **extracelulares** son cosa de los **Th17**, que reclutan neutrófilos, y de los anticuerpos. La **IL-12** que diferencia a los Th1 la producen los macrófagos y las células dendríticas; lo que aportan las NK es IFN-γ. Y el CD4 reconoce péptidos presentados en el **MHC de clase II**.",
+      "tags": [
+        "Linfocitos T",
+        "Hipersensibilidad"
+      ]
+    },
+    {
+      "id": "q11",
+      "stem": "En la respuesta inmune secundaria los anticuerpos producidos: Señale la opción correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "reconocen distintos epitopes que los anticuerpos de la respuesta primaria.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Reconocen los mismos epitopes que en la respuesta primaria, pero con mayor afinidad.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Reconocen los mismos epitopes que en la respuesta primaria, pero con menor afinidad.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Poseen todos idéntica porción variable.",
+          "correct": false
+        }
+      ],
+      "explanation": "La respuesta secundaria sale de los linfocitos B de **memoria** de los mismos clones que respondieron la primera vez, así que sus anticuerpos reconocen los **mismos epítopos**. Pero esos B ya pasaron por el centro germinal, y la hipermutación somática y la selección les dieron **más afinidad**.\n\nNo reconocen epítopos distintos ni lo hacen con menos afinidad. Y no todos tienen idéntica porción variable: la respuesta es **policlonal** y, dentro de cada clon, la hipermutación diversificó la región variable.",
+      "tags": [
+        "Anticuerpos"
+      ]
+    },
+    {
+      "id": "q12",
+      "stem": "En relación a los mastocitos, señale el enunciado correcto.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se degranulan cuando la IgE se une a sus receptores de alta afinidad.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Activan la respuestas TH1 a través de la liberación de citoquinas.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Incrementan la permeabilidad vascular a través de la secreción de interferón-gamma.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ninguna es correcta.",
+          "correct": false
+        }
+      ],
+      "explanation": "El mastocito lleva IgE unida a su receptor de alta afinidad, el **FcεRI**. Cuando un alérgeno **entrecruza** esas IgE, el mastocito se **degranula**: libera histamina, triptasa y heparina, y sintetiza leucotrienos y prostaglandinas. En rigor, lo que dispara la degranulación es el entrecruzamiento: la IgE unida, por sí sola, no basta.\n\nSus citocinas (IL-4, IL-5, IL-13) favorecen la respuesta **Th2**, no la Th1. Y la permeabilidad vascular la aumenta con **histamina** y leucotrienos, no con IFN-γ.",
+      "tags": [
+        "Hipersensibilidad",
+        "Granulocitos"
+      ]
+    },
+    {
+      "id": "q13",
+      "stem": "En relación a las células TH2 señale la respuesta correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Son relevantes en la generación de reacciones de hipersensibilidad tipo I.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "son relevantes en la inmunidad contra bacterias extracelulares.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Reconocen péptidos antigénicos presentados por moléculas HLA de clase II.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todas son correctas.",
+          "correct": true
+        }
+      ],
+      "explanation": "Las tres son ciertas en el modelo Th1/Th2 del curso:\n- Los **Th2** dirigen el cambio a **IgE** con la IL-4 y reclutan eosinófilos con la IL-5: son la base de la **hipersensibilidad tipo I**.\n- Ayudan al linfocito B a producir anticuerpos neutralizantes y opsonizantes, y eso los hace relevantes contra las **bacterias extracelulares**. El modelo actual reparte ese papel con los Th17.\n- Como todo **CD4**, reconocen péptidos presentados por **HLA de clase II**.",
+      "tags": [
+        "Linfocitos T",
+        "Hipersensibilidad"
+      ]
+    },
+    {
+      "id": "q14",
+      "stem": "Señale la opción correcta, Una prueba de intradermorreacción positiva (tuberculina) se interpreta como que el individuo.",
+      "options": [
+        {
+          "id": "a",
+          "text": "posee linfocitos TH1 de memoria contra el antígeno inoculado.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Posee linfocitos TH2 de memoria contra el antígeno inoculado.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Posee linfocitos B de memoria contra el antígeno inoculado.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Posee anticuerpos circulantes contra el antígeno inoculado.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **intradermorreacción de tuberculina** (PPD) es una **hipersensibilidad tipo IV**, o retardada. A las 48–72 h, los **linfocitos Th1 de memoria** que reconocen los antígenos del bacilo migran al sitio, liberan **IFN-γ** y activan a los macrófagos, y de ahí sale la induración.\n\nNo la median los **Th2** ni los **anticuerpos**, y los linfocitos B de memoria no participan. Por eso la prueba evalúa la **inmunidad celular**, como da por cierto la 29 de este examen.",
+      "reviewNote": "La clave del documento marca la b (Th2), pero la tuberculina es una hipersensibilidad tipo IV mediada por Th1, y la 10 de este mismo examen lo da por correcto. Se tomó como correcta la a.",
+      "tags": [
+        "Hipersensibilidad",
+        "Linfocitos T"
+      ]
+    },
+    {
+      "id": "q15",
+      "stem": "Señale el enunciado correcto.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los centrocitos, que interactúan a través de receptores de alta afinidad con el antígeno en el centro germinal, son rescatados de la apoptosis.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Durante la selección positiva en el timo, la mayoría de los timocitos doble positivos muere por apoptosis.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El reconocimiento de moléculas HLA de clase I por parte de células NK inhibe su activación.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todas son correctas.",
+          "correct": true
+        }
+      ],
+      "explanation": "Las tres son ciertas:\n- En el **centro germinal**, los centrocitos que unen el antígeno con **alta afinidad** reciben señales de supervivencia y se **rescatan de la apoptosis**.\n- En la **selección positiva**, la mayoría de los timocitos doble positivos (CD4+CD8+) **no reconoce** el MHC propio y muere **por abandono** (*death by neglect*).\n- Los receptores inhibidores de la **NK** (KIR, CD94/NKG2A) reconocen el **HLA de clase I**, y ese reconocimiento la **inhibe**.",
+      "tags": [
+        "Timo",
+        "Linfocitos B",
+        "Inmunidad innata"
+      ]
+    },
+    {
+      "id": "q16",
+      "stem": "Señale la opción incorrecta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "los anticuerpos participan en la inmunidad anti-viral",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "las células TCD4 pueden participar en los mecanismos conducentes a la activación de las células TCD8 citotóxicas.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Un incremento en la expresión de moléculas HLA clase I en la célula blanco no incrementa su susceptibilidad a la actividad citotóxica NK.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Las células TCD8 citotóxicas al activarse producen altos niveles de IL-4.",
+          "correct": true
+        }
+      ],
+      "explanation": "Se busca la **incorrecta**. Los **CD8 citotóxicos** activados producen **IFN-γ** y TNF, y matan con perforina, granzimas y FasL. La **IL-4** es la citocina de los **Th2**.\n\nLas demás son ciertas. Los anticuerpos **neutralizan** a los virus. Los CD4 **licencian** a la célula dendrítica y aportan IL-2 para activar a los CD8. Y **más** HLA de clase I **protege** a la célula de las NK, en vez de hacerla más susceptible.",
+      "tags": [
+        "Linfocitos T",
+        "Inmunidad antiviral"
+      ]
+    },
+    {
+      "id": "q17",
+      "stem": "Señale la opción correcta",
+      "options": [
+        {
+          "id": "a",
+          "text": "Una expresión defectuosa en la molécula CTLA-4 no se asocia con una falla en la respuesta B frente a antígenos T dependientes.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Un paciente con expresión defectuosa de la molécula DAF (factor acelerador del decaimiento) suele expresar niveles plasmáticos reducidos de C3.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Una expresión defectuosa en receptores para componentes del complemento y receptores para el fragmento Fc de IgG suele conducir a defectos en la respuesta B.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todas son correctas.",
+          "correct": true
+        }
+      ],
+      "explanation": "Según la clave, las tres son ciertas:\n- Un defecto de **CTLA-4** no impide la respuesta B frente a antígenos T-dependientes: lo que se pierde es un **freno**, y el cuadro es de **autoinmunidad** y linfoproliferación. La falta que sí anula esa respuesta es la de **CD40L**, en el síndrome hiper-IgM.\n- Sin **DAF** (CD55), las convertasas de C3 no se disocian sobre las células propias y el C3 se **consume**.\n- Una buena respuesta B necesita los receptores de complemento (el **CR2/CD21**, correceptor del BCR) y los **FcγR** de las células dendríticas foliculares, que retienen los complejos inmunes.",
+      "reviewNote": "En el documento la molécula de la a se lee «CHA 4». Se transcribió como CTLA-4, la lectura con la que cuadra la clave «Todas son correctas»: si fuera CD40L, la a sería falsa.",
+      "tags": [
+        "Complemento",
+        "Linfocitos B",
+        "Inmunodeficiencias"
+      ]
+    },
+    {
+      "id": "q18",
+      "stem": "Señale la opción correcta",
+      "options": [
+        {
+          "id": "a",
+          "text": "La inmunodifusión radial es una técnica de alta sensibilidad.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La citometría de flujo permite analizar en forma simultánea la expresión de dos antígenos sobre la superficie celular.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "La inmunoelectroforesis permite cuantificar niveles de IgG.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ninguna opción es correcta.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **citometría de flujo** marca las células con anticuerpos acoplados a fluorocromos distintos y los lee **a la vez**, célula por célula. Con dos colores se ve, por ejemplo, cuántos linfocitos son CD3+CD4+ y cuántos CD3+CD8+, y los equipos actuales leen muchos más de dos.\n\nLa **inmunodifusión radial** es de **baja** sensibilidad: sirve para proteínas abundantes, como la IgG. Y la **inmunoelectroforesis** es **cualitativa**: identifica bandas, no cuantifica.",
+      "reviewNote": "La clave del documento marca la d («Ninguna opción es correcta»), pero la b es cierta (la 36 de este mismo examen da por correcta otra capacidad de la citometría). Se tomó como correcta la b.",
+      "tags": [
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "q19",
+      "stem": "Señale la opción incorrecta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los macrófagos activados se distinguen por su capacidad de producir IL-12, IL-18 e interferón-gamma.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los mastocitos pueden activarse y degranularse a través de mecanismos que no involucran a los anticuerpos IgE.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La IgA secretoria es producida, fundamentalmente durante el transcurso de la respuesta inmune humoral secundaria.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "La composición de las convertasas de C3 y C5 difiere en las vías clásicas y alternativa.",
+          "correct": false
+        }
+      ],
+      "explanation": "Se busca la **incorrecta**. La **IgA secretoria** es la inmunoglobulina de las mucosas, y se produce **continuamente** en los tejidos linfoides asociados a mucosas, también en la respuesta primaria. No es un rasgo de la respuesta secundaria: es la clase que corresponde a ese sitio.\n\nLas demás son ciertas:\n- El mastocito también se degranula por **C3a y C5a**, por neuropéptidos o por fármacos.\n- Las **convertasas** son distintas en cada vía: C4b2a y C4b2a3b en la clásica, C3bBb y C3bBbC3b en la alternativa.\n- El macrófago activado produce **IL-12** e **IL-18**. El IFN-γ es sobre todo de los Th1 y las NK, aunque el macrófago también puede producirlo en presencia de IL-12 e IL-18.",
+      "tags": [
+        "Anticuerpos",
+        "Complemento",
+        "Inmunidad de mucosas"
+      ]
+    },
+    {
+      "id": "q20",
+      "stem": "Señale la opción correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "La selección positiva opera en el área cortical del timo.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La expresión de CD3 y el reordenamiento de los genes alfa y beta del receptor T es previa a la selección positiva.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La selección positiva y negativa involucra el reconocimiento por parte de timocitos de moléculas HLA expresadas en las células epiteliales y células presentadoras profesionales de antígenos respectivamente.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todas las opciones son correctas.",
+          "correct": true
+        }
+      ],
+      "explanation": "Las tres son ciertas:\n- La **selección positiva** ocurre en la **corteza** del timo.\n- Cuando llega a ella, el timocito ya reordenó las cadenas **α y β** y expresa el TCR con **CD3**: es ese TCR el que se pone a prueba.\n- La selección positiva la hacen las **células epiteliales corticales**. La negativa, las presentadoras de la médula: las **dendríticas** y el epitelio medular con AIRE.\n\nEl documento marca esta clave con duda, pero se sostiene.",
+      "tags": [
+        "Timo"
+      ]
+    },
+    {
+      "id": "q21",
+      "stem": "Señale la opción correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "en la respuesta inmune generada frente a un segundo contacto antigénico los macrófagos procesan el antígeno con mayor eficiencia.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La maduración de la respuesta inmune no conduce a la generación de clones T de mayor afinidad.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Durante la respuesta inmune primaria no se producen anticuerpos IgG.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ninguna es correcta.",
+          "correct": true
+        }
+      ],
+      "explanation": "Según la clave, ninguna es correcta:\n- El macrófago procesa el antígeno **igual** en el primer y en el segundo contacto. Lo que cambia en la respuesta secundaria son los **linfocitos** de memoria.\n- La **b** también se da por falsa. El TCR no sufre hipermutación somática, pero a lo largo de la respuesta se **seleccionan** los clones T con más afinidad por el antígeno.\n- En la **respuesta primaria** sí hay IgG: el cambio de isotipo empieza a los pocos días, aunque predomine la IgM.",
+      "reviewNote": "La b depende del enfoque: si «maduración» se entiende como hipermutación somática, que en los linfocitos T no existe, la b sería correcta. La clave marca la d.",
+      "tags": [
+        "Anticuerpos",
+        "Linfocitos T"
+      ]
+    },
+    {
+      "id": "q22",
+      "stem": "La inmunidad innata es capaz de condicionar la eficiencia y/o el curso de la respuesta inmune adaptativa (humoral o celular) a través de: Señale la opción incorrecta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "la secreción de citoquinas.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "la activación del complemento.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "la inducción de una respuesta edematosa que favorezca el drenaje antigénico.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "la hipermutación somática de sus receptores.",
+          "correct": true
+        }
+      ],
+      "explanation": "Se busca la **incorrecta**. La inmunidad innata **condiciona** a la adaptativa de tres maneras:\n- con sus **citocinas**: la IL-12 lleva a Th1, y la IL-6 y el TGF-β, a Th17;\n- con el **complemento**: el C3d unido al antígeno se une al CR2 y baja el umbral de activación del linfocito B;\n- con el **edema** de la inflamación, que empuja líquido y antígeno hacia la linfa y el ganglio.\n\nLa **hipermutación somática** es exclusiva de los receptores **adaptativos**, como el BCR. Los receptores de la inmunidad innata vienen fijados en la línea germinal y no mutan.",
+      "reviewNote": "La d no aparece en el documento (la clave la marca con duda) y se reconstruyó.",
+      "tags": [
+        "Inmunidad innata"
+      ]
+    },
+    {
+      "id": "q23",
+      "stem": "Señale la opción incorrecta en relación al complejo de ataque a la membrana del sistema complemento.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Su generación deviene tanto de la activación de la vía clásica como alternativa.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Constituye un mecanismo relevante en la inducción de injuria tisular en la hipersensibilidad de tipo III.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "En individuos deficientes absolutos de C3 no puede formarse.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se inserta en la superficie celular formando poros.",
+          "correct": false
+        }
+      ],
+      "explanation": "Se busca la **incorrecta**. En la **hipersensibilidad tipo III**, el daño lo producen los **complejos inmunes** que se depositan en los tejidos. Esos complejos activan el complemento, y las anafilatoxinas **C3a y C5a** reclutan **neutrófilos**, que liberan enzimas y radicales sobre el tejido. El **MAC** no es el mecanismo relevante.\n\nLas demás son ciertas. El MAC (C5b-9) se forma desde **cualquier vía**, porque todas convergen en el C5. Sin **C3** no hay convertasa de C5, así que no se forma. Y se inserta en la membrana formando **poros**.",
+      "tags": [
+        "Complemento",
+        "Hipersensibilidad"
+      ]
+    },
+    {
+      "id": "q24",
+      "stem": "Señale la opción correcta en relación a los anticuerpos IgG",
+      "options": [
+        {
+          "id": "a",
+          "text": "A diferencia de la IgM, los anticuerpos IgG atraviesan placenta merced a su menor peso molecular.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "solo aquellos anticuerpos IgG presentes bajo la forma de CI muestran capacidad para activar a diferentes tipos leucocitarios a través de su interacción con los receptores celulares para el fragmento Fc de IgG.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "los anticuerpos IgG, en ausencia de fenómenos inflamatorios, se hallan localizados solo en el compartimiento vascular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ninguna opción es correcta.",
+          "correct": true
+        }
+      ],
+      "explanation": "Las tres son falsas:\n- La IgG atraviesa la placenta porque la transporta el receptor **FcRn** del sincitiotrofoblasto, no por su peso molecular.\n- El **FcγRI** (CD64) une la IgG **monomérica** con alta afinidad. Los complejos inmunes activan mejor a los receptores de baja afinidad (FcγRII/III), pero no son la única forma de hacerlo.\n- La IgG difunde al **espacio extravascular** aun sin inflamación: casi la mitad está fuera de los vasos.",
+      "tags": [
+        "Anticuerpos"
+      ]
+    },
+    {
+      "id": "q25",
+      "stem": "Señale la opción correcta",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un resultado positivo en una prueba de alergia cutánea indica que el individuo estuvo previamente expuesto al alérgeno testeado.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Los macrófagos no son eficientes células presentadoras de antígenos en respuestas inmunes secundarias debido a su escasa expresión de CD28.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Para que se establezca la cooperación T-B no es imprescindible que el linfocito B presente péptidos antigénicos a través de moléculas de clase II.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La cooperación T-B es posible una vez que el linfocito B reconoce al antígeno. Lo procesa y presenta a través de moléculas de clase I.",
+          "correct": false
+        }
+      ],
+      "explanation": "Una **prueba cutánea de alergia** positiva (pápula y eritema a los 15–20 min) significa que hay **IgE específica** unida a los mastocitos de la piel. Para tenerla, el individuo tuvo que **sensibilizarse**: estuvo **expuesto previamente** al alérgeno.\n\n- Los macrófagos **sí** presentan antígenos en la respuesta secundaria. Además, el **CD28** está en el linfocito T; la presentadora expresa B7.\n- La cooperación T-B **exige** que el linfocito B presente el péptido por **MHC de clase II**.\n- Por lo mismo, la **d** es falsa: el linfocito B procesa el antígeno que captó por su BCR y lo presenta por **clase II**, no por clase I.",
+      "reviewNote": "La clave del documento marca la d, pero la d dice «clase I», y la cooperación T-B va por clase II (así lo da por correcto la 32 de este mismo examen). La única cierta es la a, y se tomó como correcta.",
+      "tags": [
+        "Hipersensibilidad",
+        "Linfocitos B"
+      ]
+    },
+    {
+      "id": "q26",
+      "stem": "En relación a la selección positiva en el timo, señale el enunciado incorrecto",
+      "options": [
+        {
+          "id": "a",
+          "text": "Previene respuestas autoinmunes posteriores.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Depende de la expresión de moléculas de histocompatibilidad de clase I y II.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Es posterior al rearreglo de los genes de la porción variable del receptor para el antígeno.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Opera sobre timocitos doble positivos.",
+          "correct": false
+        }
+      ],
+      "explanation": "Se busca la **incorrecta**. Lo que previene la autoinmunidad es la **selección negativa**, que elimina a los timocitos que reconocen lo propio con **alta afinidad**. La **positiva** hace otra cosa: rescata a los que reconocen el MHC propio con afinidad **baja o moderada**, y así fija la **restricción por el MHC**.\n\nLas demás son ciertas. Depende del **MHC de clase I y II**: según cuál reconozca, el timocito queda CD8 o CD4. Ocurre **después** del reordenamiento del TCR. Y actúa sobre los **doble positivos**.",
+      "tags": [
+        "Timo",
+        "Tolerancia"
+      ]
+    },
+    {
+      "id": "q27",
+      "stem": "En relación al receptor antigénico del linfocito T, indique el enunciado incorrecto",
+      "options": [
+        {
+          "id": "a",
+          "text": "La porción variable de las cadenas alfa y beta no sufre hipermutación somática.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Las cadenas alfa y beta pueden transducir señales de activación.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Los genes de la porción variable del receptor T sufren reordenamientos en el timo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El receptor para el antígeno del linfocito T no se encuentra asociado a moléculas de histocompatibilidad.",
+          "correct": false
+        }
+      ],
+      "explanation": "Se busca la **incorrecta**. Las cadenas **α y β** del TCR tienen colas citoplasmáticas cortísimas y **no transducen señales**. Eso lo hacen el **CD3** (γ, δ, ε) y la cadena **ζ**, con sus motivos ITAM, que fosforila Lck.\n\nLas demás son ciertas. El TCR **no sufre hipermutación somática**, a diferencia del BCR. Sus genes V se **reordenan en el timo**. Y el TCR no está unido físicamente al MHC: lo reconoce en otra célula.",
+      "reviewNote": "La clave del documento marca la a, pero la a es cierta: el TCR no sufre hipermutación somática. La incorrecta es la b, y se tomó como respuesta.",
+      "tags": [
+        "Linfocitos T"
+      ]
+    },
+    {
+      "id": "q28",
+      "stem": "Señale el enunciado correcto",
+      "options": [
+        {
+          "id": "a",
+          "text": "la IgE unida a receptores de alta afinidad presentes en el mastocito puede cuantificarse por la técnica de PRIST.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "en la hipersensibilidad de tipo IV la activación del complemento juega un papel relevante.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "en la hipersensibilidad de tipo II, el daño tisular es inducido por anticuerpos de IgG unidos al antígeno.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "todas las opciones son correctas.",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **hipersensibilidad tipo II**, el daño lo producen anticuerpos **IgG** (o IgM) unidos a antígenos de la superficie celular o de la matriz. Esos anticuerpos opsonizan, activan el complemento o median ADCC. Así ocurre en las anemias hemolíticas autoinmunes, el síndrome de Goodpasture y la fiebre reumática.\n\nEl **PRIST** mide la **IgE total del suero**, no la unida a los mastocitos. En la **tipo IV** el daño lo median los linfocitos T y los macrófagos, y el complemento no tiene un papel relevante.",
+      "tags": [
+        "Hipersensibilidad",
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "q29",
+      "stem": "Señale la opción correcta. Las siguientes técnicas son útiles a fin de evaluar funcionalidad T",
+      "options": [
+        {
+          "id": "a",
+          "text": "Análisis de la expresión de receptores antigénicos por citometría de flujo.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Cuantificación de la producción de IL-8 por ELISA.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Intradermorreacción frente a tuberculina.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Cross-match.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **intradermorreacción de tuberculina** evalúa in vivo la **función** de los linfocitos T. Pone a prueba si los Th1 de memoria reconocen el antígeno, migran y activan a los macrófagos: es una hipersensibilidad tipo IV.\n\nMedir por citometría la **expresión** de receptores dice cuántas células hay, no si funcionan. La **IL-8** es una quimiocina de macrófagos y células epiteliales que atrae neutrófilos, no un producto típico del T. Y el **cross-match** busca **anticuerpos** del receptor contra las células del donante.",
+      "tags": [
+        "Técnicas inmunológicas",
+        "Linfocitos T"
+      ]
+    },
+    {
+      "id": "q30",
+      "stem": "Señale el enunciado incorrecto",
+      "options": [
+        {
+          "id": "a",
+          "text": "En suero, los anticuerpos IgE específicos hacia un antígeno pueden cuantificarse por RAST.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La prueba de Coombs indirecta detecta eritrocitos con anticuerpos fijados en su superficie.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "En la técnica de fijación de complemento, una reacción positiva se evidencia por la ausencia de lisis en el sistema indicador.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La detección de un antígeno viral en linfocitos infectados se puede realizar por citometría de flujo.",
+          "correct": false
+        }
+      ],
+      "explanation": "Se busca la **incorrecta**. La **Coombs indirecta** busca anticuerpos **libres en el suero**, antes de una transfusión o durante el embarazo: se incuba el suero con eritrocitos reactivos y luego se añade antiglobulina. La que detecta eritrocitos que **ya tienen** anticuerpos fijados es la **Coombs directa**.\n\nLas demás son ciertas. El **RAST** cuantifica la IgE **específica** del suero. En la **fijación de complemento**, la **ausencia de lisis** del sistema indicador es la reacción positiva. Y la **citometría**, permeabilizando la célula, detecta antígenos virales intracelulares.",
+      "reviewNote": "La clave del documento marca la d, pero la d es cierta (la citometría detecta antígenos virales intracelulares) y la b describe la Coombs directa. Se tomó como respuesta la b.",
+      "tags": [
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "q31",
+      "stem": "Señale la opción correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las células foliculares dendríticas endocitan al antígeno que forma parte de un complejo inmune.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los macrófagos pueden presentar antígenos a linfocitos T en los tejidos periféricos.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "La interacción CD40-CD40L (ligando) ocurre únicamente durante la cooperación T-B.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La interacción Fas-Fas ligando puede conducir a la necrosis de la célula que expresa Fas.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **macrófagos** presentan antígenos por MHC-II a los **T efectores** en los **tejidos periféricos**, y así es como los Th1 los activan en el foco infeccioso.\n\nLas **células dendríticas foliculares** no endocitan: **retienen** los complejos inmunes en su superficie para que los vean los linfocitos B. La interacción **CD40-CD40L** también activa a los macrófagos y las células dendríticas. Y **Fas-FasL** induce **apoptosis**, no necrosis.",
+      "tags": [
+        "Presentación antigénica"
+      ]
+    },
+    {
+      "id": "q32",
+      "stem": "Señale la opción correcta",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las cadenas alfa y beta de las moléculas de histocompatibilidad de clase II sufren recombinación génica.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El polimorfismo del complejo mayor de histocompatibilidad permite la expresión de los alelos maternos y paternos en una misma célula.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Un individuo carente de moléculas de histocompatibilidad de clase II no presentará células TCD4 o presentará un número muy reducido de células TCD4.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Las moléculas de clase II se expresan en todas las células pero son funcionales únicamente en las presentadoras de antígenos profesionales.",
+          "correct": false
+        }
+      ],
+      "explanation": "Sin **MHC de clase II** no hay **selección positiva** de los timocitos CD4, así que casi no salen CD4 a la periferia. Es el **síndrome del linfocito desnudo tipo II**.\n\nLas moléculas del MHC **no sufren recombinación génica**: eso lo hacen el TCR y el BCR. Que se expresen los alelos materno y paterno se debe a la **codominancia**, no al polimorfismo. Y la clase II se expresa sólo en las **presentadoras profesionales** (y en otras células cuando la induce el IFN-γ): no está en todas las células.",
+      "tags": [
+        "MHC",
+        "Timo"
+      ]
+    },
+    {
+      "id": "q33",
+      "stem": "Señale la opción incorrecta",
+      "options": [
+        {
+          "id": "a",
+          "text": "La expresión de receptores para Fc de IgG (RFcγ) en monocitos puede ponerse en evidencia por citometría de flujo.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los eosinófilos activados pueden destruir células recubiertas por IgE.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "los mastocitos expresan RFcε, a consecuencia de su activación por citoquinas.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "la IgE específica contra un alérgeno suele cuantificarse por RAST.",
+          "correct": false
+        }
+      ],
+      "explanation": "Se busca la **incorrecta**. El mastocito expresa el **FcεRI de forma constitutiva**, y por eso está siempre «armado» con IgE. No lo expresa como consecuencia de su activación por citoquinas; en todo caso, la IgE aumenta su expresión.\n\nLas demás son ciertas. Los **FcγR** de los monocitos se ven por citometría. Los **eosinófilos** destruyen parásitos recubiertos de **IgE** (ADCC). Y la IgE **específica** se cuantifica por **RAST**.",
+      "tags": [
+        "Hipersensibilidad",
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "q34",
+      "stem": "En relación a las células NK, señale la opción correcta",
+      "options": [
+        {
+          "id": "a",
+          "text": "reconocen moléculas MHC de clase I a través de sus receptores antigénicos.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "median ADCC a través de receptores para C3b.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "secretan IL-4 luego de activarse por reconocimiento específico del antígeno.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ninguna es correcta.",
+          "correct": true
+        }
+      ],
+      "explanation": "Ninguna es cierta:\n- La NK lee el MHC de clase I con **receptores inhibidores** codificados en la línea germinal; no tiene receptores **antigénicos** reordenados.\n- Hace **ADCC** a través del **FcγRIII (CD16)**, que une la IgG, no el C3b.\n- Secreta **IFN-γ**, no IL-4, y no reconoce antígenos de forma **específica**.",
+      "tags": [
+        "Inmunidad innata"
+      ]
+    },
+    {
+      "id": "q35",
+      "stem": "Señale la opción correcta",
+      "options": [
+        {
+          "id": "a",
+          "text": "El interferón gamma induce la secreción de proteínas de fase aguda.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La IL-4 secretada por los linfocitos B aumenta la expresión de CD40 ligando en los linfocitos T.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La IL-5 estimula la producción de eosinófilos en la médula ósea.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "El TNFalfa aumenta la expresión de L-selectina sobre las HEV.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **IL-5** la producen los Th2, las ILC2 y los mastocitos, y es el factor que estimula la **producción de eosinófilos en la médula ósea**, su maduración y su supervivencia. Por eso el anticuerpo anti-IL-5 (mepolizumab) baja los eosinófilos en el asma.\n\n- Las **proteínas de fase aguda** las induce en el hígado sobre todo la **IL-6**, junto con la IL-1 y el TNF; no el IFN-γ.\n- La IL-4 del linfocito B no sube la expresión de **CD40L** en el T.\n- El TNF-α aumenta en el endotelio las **selectinas E y P**, la ICAM-1 y la VCAM-1. La **L-selectina** está en los leucocitos, no en las HEV.",
+      "reviewNote": "La clave del documento marca la a, con signo de duda. Pero las proteínas de fase aguda las induce la IL-6, no el IFN-γ, y la c es cierta: se tomó como correcta la c.",
+      "tags": [
+        "Citocinas"
+      ]
+    },
+    {
+      "id": "q36",
+      "stem": "Señale la opción correcta",
+      "options": [
+        {
+          "id": "a",
+          "text": "La IgG puede ser cuantificada por inmunodifusión radial.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La fijación de complemento no es una técnica cuantificativa.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La citometría de flujo permite evaluar la densidad con la cual se expresa una proteína en la superficie celular.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todas son correctas.",
+          "correct": true
+        }
+      ],
+      "explanation": "Las tres son ciertas en el enfoque del curso:\n- La **inmunodifusión radial** cuantifica proteínas abundantes, como la IgG: el diámetro del halo es proporcional a la concentración.\n- La **fijación de complemento** es una técnica de **detección**: da un título por diluciones, pero no una concentración.\n- La **citometría** mide la **intensidad de fluorescencia** de cada célula, que refleja cuántas moléculas de la proteína hay en su superficie.",
+      "tags": [
+        "Técnicas inmunológicas"
+      ]
+    },
+    {
+      "id": "q37",
+      "stem": "Señale la opción correcta",
+      "options": [
+        {
+          "id": "a",
+          "text": "El tráfico de monocitos involucra su migración a través de la HEV de los tejidos linfáticos secundarios.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los neutrófilos activados pueden volver a la circulación desde el tejido inflamado.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los plasmoblastos pueden migrar a la médula ósea para completar su diferenciación a plasmocitos.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "El tráfico de células NK involucra su recirculación a través de los tejidos linfáticos secundarios.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **plasmoblastos** que salen del centro germinal migran a la **médula ósea**, guiados por **CXCR4/CXCL12**. Allí terminan de diferenciarse a **plasmocitos de vida larga**, que sostienen durante años los niveles de anticuerpo.\n\n- Los **monocitos** no entran por las HEV, que son la puerta de los linfocitos vírgenes.\n- Que los **neutrófilos** vuelvan del tejido a la circulación (migración reversa) está descrito, pero no forma parte del esquema clásico.\n- Las **NK** van de la sangre a los tejidos. No recirculan por los órganos linfáticos secundarios como los linfocitos T y B vírgenes.",
+      "reviewNote": "La clave del documento marca la d, pero la c es la afirmación de libro y se tomó como correcta. La d es discutible: una fracción de las NK (las CD56bright) sí entra en los ganglios.",
+      "tags": [
+        "Tráfico celular",
+        "Linfocitos B"
+      ]
+    },
+    {
+      "id": "q38",
+      "stem": "En relación a los linfocitos T, seleccione la respuesta correcta",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los linfocitos T vírgenes, para activarse, necesitan interaccionar con linfocitos B.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Las células TH2 ingresan al ganglio para colaborar con los linfocitos B, cruzando endotelios HEV.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los linfocitos CD8+ y los CD4+ se diferencian en timo a partir de dos precursores diferentes.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todas son incorrectas.",
+          "correct": true
+        }
+      ],
+      "explanation": "Las tres son falsas:\n- El T virgen se activa con la **célula dendrítica**, no con el linfocito B.\n- Los **Th2** efectores no vuelven a entrar por las HEV. El T que ayuda al B se diferencia **dentro** del propio ganglio (el Tfh) y migra al borde del folículo.\n- Los CD4 y los CD8 salen de un **mismo precursor**, el timocito **doble positivo**, que se compromete con uno u otro linaje durante la selección positiva.",
+      "tags": [
+        "Linfocitos T",
+        "Timo",
+        "Tráfico celular"
+      ]
+    },
+    {
+      "id": "q39",
+      "stem": "Seleccione la respuesta incorrecta",
+      "options": [
+        {
+          "id": "a",
+          "text": "La inmunidad innata no desarrolla memoria inmunológica.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "En respuesta a la entrada de un microorganismo, en los ganglios linfáticos primarios se generaran linfocitos con receptores capaces de reconocerlo.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "El componente C3b no media una acción quimiotáctica.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La unión de C3b a un antígeno incrementa su capacidad de inducir una respuesta inmune humoral.",
+          "correct": false
+        }
+      ],
+      "explanation": "Se busca la **incorrecta**. Según la **selección clonal**, los linfocitos con receptores capaces de reconocer un microbio **ya existen antes** de que este entre. El reordenamiento V(D)J es previo e independiente del antígeno: el microbio sólo **selecciona** esos clones y los expande. Además, los órganos linfoides **primarios** son el timo y la médula ósea; los ganglios son **secundarios**.\n\nLas demás son ciertas. La inmunidad innata no tiene memoria clásica. El **C3b** es una opsonina y no es quimiotáctico; lo son el C5a y el C3a. Y el C3b/C3d unido al antígeno se une al **CR2** del linfocito B y potencia la respuesta humoral.",
+      "reviewNote": "La clave del documento marca la c, pero la c es cierta (el C3b no es quimiotáctico) y la b contradice la selección clonal. Se tomó como respuesta la b.",
+      "tags": [
+        "Inmunidad innata",
+        "Complemento"
+      ]
+    },
+    {
+      "id": "q40",
+      "stem": "Seleccione la respuesta correcta",
+      "options": [
+        {
+          "id": "a",
+          "text": "La inoculación de una proteína que presenta un único epitope en forma reiterada a un animal activara a un único clon linfocitario B.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La inoculación de un hapteno no genera anticuerpos, debido a que no logra reclutar la ayuda T necesaria para activar a los linfocitos B.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Anticuerpos de distintos isotipos no pueden poseer la misma especificidad.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Luego de la intensa proliferación B en el centro germinal, todos los centrocitos originados a partir de una célula B, poseen BCRs idénticos al de la célula que los originó.",
+          "correct": false
+        }
+      ],
+      "explanation": "Un **hapteno** es demasiado pequeño: puede unirse a un anticuerpo, pero no lo induce. No tiene epítopos T, así que el linfocito B no consigue ayuda. Unido a una **proteína transportadora**, esta aporta los péptidos para los T, y ya se generan anticuerpos contra el hapteno.\n\n- Un único epítopo, inyectado una y otra vez, activa **muchos clones** B que lo reconocen con distinta afinidad: la respuesta es policlonal.\n- Anticuerpos de **isotipos distintos** pueden tener la **misma especificidad**, porque el cambio de isotipo conserva la región variable.\n- La **hipermutación somática** hace que los centrocitos que salen de un mismo linfocito B tengan BCR **distintos** entre sí.",
+      "tags": [
+        "Anticuerpos",
+        "Linfocitos B"
+      ]
+    }
+  ]
+}

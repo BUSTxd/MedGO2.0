@@ -606,13 +606,26 @@ export const semanas: Semana[] = [
         // las 60 del examen real) y el 2023 (42, sacadas de un apunte con la
         // clave; ver CLAUDE.md). El más reciente abre por defecto; los intentos se
         // guardan por clave, así que cambiar cuál es `key` no borra ninguno.
+        // Detrás de los años, dos banqueos sin año (40 + 40) rotulados «Extra»:
+        // su enfoque va en `hints`, que el selector enseña al pasar el cursor.
         examen: {
           key: 'inmunologia/final-2025',
-          groups: ['inmunologia/final-2024-2', 'inmunologia/final-2023'],
+          groups: [
+            'inmunologia/final-2024-2',
+            'inmunologia/final-2023',
+            'inmunologia/extra-hemato',
+            'inmunologia/extra-pato',
+          ],
           labels: {
             'inmunologia/final-2025': '2025',
             'inmunologia/final-2024-2': '2024-II',
             'inmunologia/final-2023': '2023',
+            'inmunologia/extra-hemato': 'Extra 1',
+            'inmunologia/extra-pato': 'Extra 2',
+          },
+          hints: {
+            'inmunologia/extra-hemato': 'Enfocado en inmuno-hematología',
+            'inmunologia/extra-pato': 'Enfocado en inmunopatología',
           },
         },
       },

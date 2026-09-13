@@ -18,6 +18,12 @@ export interface ExamenRef {
    */
   labels?: Record<string, string>;
   /**
+   * Nota breve de un banqueo, por su clave, para cuando el rótulo no lo explica
+   * solo (un «Extra 1» no dice de qué va). Sale al pasar el cursor por su cuadro
+   * del selector y junto al rótulo en la cabecera, que es lo que se ve en táctil.
+   */
+  hints?: Record<string, string>;
+  /**
    * Banqueos que exigen suscripción aunque el curso sea gratis: los abre el plan
    * del tramo del curso. Las mismas claves van sin `free` en `EXAMENES` de la
    * route, que es quien los bloquea de verdad; esto sólo pinta el candado.

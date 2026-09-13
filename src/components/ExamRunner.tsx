@@ -112,6 +112,8 @@ interface Props {
    * cruzar un año con el JSON de otro. Una clave sin rótulo cae en su letra.
    */
   groupLabels?: Record<string, string>;
+  /** Nota de un banqueo, por su clave: tooltip de su cuadro y cola del rótulo en la cabecera. */
+  groupHints?: Record<string, string>;
   suscripcion?: SuscripcionExamen;
 }
 
@@ -790,6 +792,7 @@ export default function ExamRunner({
   backLabel = 'Volver a la clase',
   groupKeys,
   groupLabels,
+  groupHints,
   suscripcion,
 }: Props) {
   // Etapas: Grupo A (examKey) + grupos adicionales. Sin extras → examen simple.
@@ -797,8 +800,9 @@ export default function ExamRunner({
     () => [examKey, ...(groupKeys ?? [])].map((key, i) => ({
       key,
       rotulo: groupLabels?.[key] ?? String.fromCharCode(65 + i),
+      nota: groupHints?.[key],
     })),
-    [examKey, groupKeys, groupLabels],
+    [examKey, groupKeys, groupLabels, groupHints],
   );
   const isGrouped = stages.length > 1;
   // Banqueos de años distintos (con rótulo) o grupos de un mismo examen (letra).
@@ -1048,10 +1052,11 @@ export default function ExamRunner({
                   className={`${styles.groupSquare} ${i === stage ? styles.groupSquareActive : ''}`}
                   onClick={() => handleSwitchStage(i)}
                   aria-pressed={i === stage}
-                  aria-label={`Ir al ${nombreEtapa(i)}${esDePago(s.key) && !acceso ? ` (requiere plan ${PLANS[suscripcion!.plan].label})` : ''}`}
+                  aria-label={`Ir al ${nombreEtapa(i)}${s.nota ? ` · ${s.nota}` : ''}${esDePago(s.key) && !acceso ? ` (requiere plan ${PLANS[suscripcion!.plan].label})` : ''}`}
                 >
                   {s.rotulo}
                   {esDePago(s.key) && !acceso && <IconoCandado />}
+                  {s.nota && <span className={styles.groupTooltip} aria-hidden>{s.nota}</span>}
                 </button>
               ))}
             </div>
@@ -1064,7 +1069,9 @@ export default function ExamRunner({
         <h1 className={styles.title}>{title}</h1>
         {payload && phase === 'running' && (
           <div className={styles.metaLine}>
-            {mostrarEtapa && <span>{nombreEtapa(stage)}</span>}
+            {mostrarEtapa && (
+              <span>{nombreEtapa(stage)}{stages[stage].nota && ` · ${stages[stage].nota}`}</span>
+            )}
             <span>{total} preguntas</span>
             <span>
               {payload.duration_min
@@ -1077,7 +1084,7 @@ export default function ExamRunner({
         {payload && phase === 'running' && isGrouped && (
           <p className={styles.partHint}>
             {conRotulos ? (
-              <>Este examen tiene <strong>{stages.length} banqueos de años distintos</strong>, cada uno con su propia nota.</>
+              <>Este examen tiene <strong>{stages.length} banqueos {stages.some(s => s.nota) ? 'distintos' : 'de años distintos'}</strong>, cada uno con su propia nota.</>
             ) : (
               <>Este examen tiene <strong>{stages.length} grupos independientes</strong>.</>
             )}{' '}

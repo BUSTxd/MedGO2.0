@@ -364,6 +364,25 @@ después en AVIF y se subió tal cual en lugar del PNG); cada pregunta reutiliza
 archivo que el HTML pide y no está, preguntar si es un repetido antes de darlo por perdido. En 6 de 20 la correcta es la más larga: son alternativas del docente y se
 transcribieron tal cual.
 
+**Inmunología · banqueos «Extra 1» y «Extra 2»** (`inmunologia/extra-hemato` y
+`inmunologia/extra-pato`, de pago, detrás del 2023 en `groups`): dos exámenes **sin año** de 40
+preguntas cada uno, sin imágenes. El rótulo no dice de qué va cada uno, así que el `ExamenRef`
+admite **`hints`** (por clave, como `labels`). La nota sale en un tooltip al pasar el cursor por
+el cuadro del selector, y junto al rótulo en la cabecera, que es lo que se ve en táctil, donde
+no hay hover. Extra 1 es inmuno-hematología y Extra 2, inmunopatología. Los dos llegaron con la
+correcta resaltada, pero **la clave no es fiable en ninguno**:
+- En el de **inmunopatología**, 11 de las 40 contradecían al libro **o a otra pregunta del mismo
+  examen**. Por ejemplo, la 14 da la tuberculina como Th2 mientras que la 10 la da como Th1, y la 3
+  dice «sólo en órganos linfáticos secundarios» mientras que la 31 da por buena la presentación
+  en periferia. Esas 11 se corrigieron y llevan `reviewNote` citando la letra original.
+- En el de **hematología** se corrigió sólo la 21.
+
+Cruzar una pregunta con las demás del mismo examen es la prueba más barata de que una clave está
+mal. Las dudosas que se respetaron también llevan `reviewNote`. La d de la 22 de patología no
+estaba en el documento y se reconstruyó. «CHA 4» se leyó como CTLA-4 y «Prostaglandina 1x» como
+«I2». Los artefactos del OCR (`lgG`, `IFNY`, tildes perdidas) se corrigen en el script; el
+contenido no se reescribe.
+
 **Varias láminas en la explicación: `explanationExtraImages`** (mismo shape que `extraImages`), que
 van lado a lado con `explanationImage` y comparten su pie. Nació en este banqueo, donde la respuesta
 del PDF trae dos láminas en la 2, la 17 y la 20. ⛔ Antes de que existiera se probó **fundir las dos
