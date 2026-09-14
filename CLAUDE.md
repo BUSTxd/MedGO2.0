@@ -350,6 +350,33 @@ sin alternativas o sin la correcta entre ellas: se reconstruyeron, y todo lo que
 La clave de la 41 («A y B»: la bisagra no cambia) es discutible —la bisagra es región constante de
 la cadena pesada y cambia con el isotipo— y se respetó con `reviewNote`, sin ofrecer «Solo A».
 
+**Después llegó el examen original del 2023** (`EXAMEN_INMUNOLOGIA_2023.html`, 60 preguntas, **sin
+ninguna correcta marcada** y con 8 vacías, sólo con una «F»). Se cruzó pregunta por pregunta con las
+42 del apunte, mirando también las figuras: 26 se repiten y **26 faltaban**. Las 19 sin imagen ya
+están (ids `ex` + su número en el original, p. ej. `ex45`), con la clave resuelta aquí. Quedan las 7
+con figura: la 23, 24, 43, 46, 47, 54 y 55. A la 23 le faltan las alternativas y a la 54 el enunciado.
+Tres cosas que sirvieron:
+- **Una pregunta del original que se repite en el apunte puede traer las alternativas REALES**
+  donde el apunte tenía reconstruidas. Esas van como `variante` (ver abajo), no como pregunta nueva.
+- **Una clave que el original no ofrece es un aviso, no un detalle.** En la de la cámara de Neubauer
+  (p18), el conteo con la regla del enunciado da 12 viables → 6 millones/mL, y el original no trae el
+  6: sus cifras (6,5 / 13 / 7,5 / 15…) están construidas sobre 13 y 15 células. Quedó sin variante
+  hasta tener la clave oficial; publicarla habría hecho correcta en una versión la cifra que la otra
+  explica como error.
+- **Las figuras del original son fotos de la pantalla del proyector.** En la de la respuesta
+  primaria/secundaria (p10) el cursor señala justo la gráfica correcta, y en otra la cabeza de un
+  alumno tapa media gráfica: no se publican sin una versión limpia.
+
+**Variantes de una pregunta (`variante` en el JSON).** La misma pregunta en dos versiones —la del
+apunte, «Reconstruida», y la del examen, «Original»— con un interruptor sobre el enunciado
+(`SelectorVersion`). **No es una pregunta más**: comparte número, rastro y nota, y la respuesta vale
+en la versión en que se dio, porque la corrección busca el `id` en las alternativas de las dos
+(`esCorrecta`). Por eso los `id` de la variante llevan prefijo (`va`, `vb`…) y no pueden repetir los
+de la base. Si se cambia de versión tras responder, la otra sale ya resuelta, con su clave y su
+explicación, sin volver a preguntar. Lo que la variante no declara se hereda (figura, enunciado),
+**salvo `reviewNote`**: heredar «se reconstruyeron las alternativas» sobre las originales mentiría.
+Vuelve a la base al pasar de pregunta. Hoy la llevan p15, p16, p21 y p27 del 2023.
+
 **Inmunología · Examen Final 2025** (`inmunologia/final-2025`, «2025», de pago, y ahora la `key`
 por defecto del `examen`: cambiar cuál es la `key` no borra intentos, que se guardan por clave):
 20 casos del **repaso final de los docentes**. El PDF alterna pregunta → respuesta → **lámina

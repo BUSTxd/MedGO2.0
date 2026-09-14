@@ -610,6 +610,76 @@
   transform: translateY(0);
 }
 
+/* ── Interruptor de versión (preguntas con `variante`) ─────────
+   Un par de botones sobre una pista, con un pulgar que se desliza al lado
+   elegido. Es un mando de la hoja, no una alternativa: por eso es una píldora
+   pequeña y no una fila de la lista. */
+.versiones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 16px;
+}
+
+.versionesPista {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(var(--acc-rgb), 0.08);
+  border: 1px solid rgba(var(--acc-rgb), 0.22);
+}
+
+/* Media pista menos el relleno: `translateX(100%)` lo deja justo en la segunda
+   columna, que mide lo mismo. */
+.versionesPista::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 999px;
+  background: var(--acc-grad);
+  box-shadow: 0 4px 12px rgba(var(--acc-rgb), 0.32);
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.versionesPista[data-lado='variante']::before { transform: translateX(100%); }
+
+.versionBtn {
+  position: relative;
+  z-index: 1;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.versionBtn:hover { color: var(--white); }
+
+.versionBtnActiva,
+.versionBtnActiva:hover { color: #fff; }
+
+.versionBtn:focus-visible {
+  outline: 2px solid rgba(var(--acc-rgb), 0.6);
+  outline-offset: 2px;
+}
+
+.versionesNota {
+  font-size: 12px;
+  color: var(--muted);
+}
+
 /* ── Capa de precarga (oculta) ────────────────────────────
    Monta las micrografías de la etapa fuera de pantalla para que el navegador
    las descargue de inmediato. No usar display:none (algunos navegadores no
@@ -1685,7 +1755,8 @@
   .seg,
   .figura,
   .opcion::before,
-  .groupTooltip {
+  .groupTooltip,
+  .versionesPista::before {
     transition: none;
   }
 }

@@ -2,7 +2,7 @@
   "version": 1,
   "key": "inmunologia/final-2023",
   "title": "Examen Final — Inmunología",
-  "duration_min": 84,
+  "duration_min": 122,
   "questions": [
     {
       "id": "p1",
@@ -575,7 +575,39 @@
       "reviewNote": "El apunte sólo conserva la respuesta; las demás alternativas se reconstruyeron.",
       "tags": [
         "Hemograma y reactantes de fase aguda"
-      ]
+      ],
+      "variante": {
+        "rotuloBase": "Reconstruida",
+        "rotulo": "Original",
+        "options": [
+          {
+            "id": "va",
+            "text": "PCR",
+            "correct": false
+          },
+          {
+            "id": "vb",
+            "text": "VSG",
+            "correct": true
+          },
+          {
+            "id": "vc",
+            "text": "Procalcitonina",
+            "correct": false
+          },
+          {
+            "id": "vd",
+            "text": "Ferritina",
+            "correct": false
+          },
+          {
+            "id": "ve",
+            "text": "Albúmina",
+            "correct": false
+          }
+        ],
+        "explanation": "La imagen muestra **rouleaux**: glóbulos rojos apilados como monedas en casi todo el frotis. Aparecen cuando suben las proteínas plasmáticas grandes, como el fibrinógeno y las globulinas (en una inflamación o en un mieloma), que neutralizan la carga negativa que mantiene separados a los glóbulos rojos. Apilados pesan más y **sedimentan más rápido**: la **VSG** es la prueba que mide justo eso.\n\n- La **PCR**, la **procalcitonina** y la **ferritina** pueden subir en una inflamación o una infección, pero no dependen del apilamiento ni lo explican.\n- La **albúmina** no provoca los rouleaux: al contrario, frena la sedimentación."
+      }
     },
     {
       "id": "p16",
@@ -616,7 +648,46 @@
       "tags": [
         "VIH",
         "Técnicas inmunológicas"
-      ]
+      ],
+      "variante": {
+        "rotuloBase": "Reconstruida",
+        "rotulo": "Original",
+        "stem": "¿Cuál o cuáles de las siguientes poblaciones celulares se ha demostrado que juegan un rol fundamental en el control de la infección por VIH en un paciente que no recibe tratamiento antirretroviral? Todas las imágenes representan un gate en la población de linfocitos.",
+        "options": [
+          {
+            "id": "va",
+            "text": "Solo F (figura 2)",
+            "correct": true
+          },
+          {
+            "id": "vb",
+            "text": "A (figura 1) y B (figura 2)",
+            "correct": false
+          },
+          {
+            "id": "vc",
+            "text": "Solo H (figura 2)",
+            "correct": false
+          },
+          {
+            "id": "vd",
+            "text": "D (figura 1) y H (figura 2)",
+            "correct": false
+          },
+          {
+            "id": "ve",
+            "text": "A (figura 1) y D (figura 2)",
+            "correct": false
+          },
+          {
+            "id": "vf",
+            "text": "C (figura 1) y B (figura 2)",
+            "correct": false
+          }
+        ],
+        "explanation": "Sin tratamiento, lo que mantiene a raya al VIH son sobre todo los **linfocitos T CD8+ citotóxicos**, que destruyen a las células infectadas. Son la población **F**: CD3+CD8+.\n\n- **A** (figura 1) incluye a **todos** los linfocitos T, CD4 incluidos.\n- **B** (figura 2) y **H** (figura 2, CD3+CD8−) son los **T CD4**: las células que el virus infecta y destruye, no las que lo controlan.\n- **D** (figura 1) son los **linfocitos B**, cuyos anticuerpos neutralizantes llegan tarde y de los que el virus escapa.\n- **C** (figura 1) son células CD3−CD19−, sobre todo NK.\n- La **D** de la figura 2 (CD3+CD4−) son casi todos T CD8, pero la e la combina con A (figura 1), que incluye a los CD4.",
+        "reviewNote": "La D de la figura 2 (CD3+CD4−) también son en su mayoría T CD8. Se descartó la e porque la acompaña A (figura 1), que incluye a los T CD4, y se tomó «Solo F», la población que la figura identifica sin ambigüedad."
+      }
     },
     {
       "id": "p17",
@@ -820,7 +891,49 @@
         "Inmunodeficiencias",
         "Técnicas inmunológicas",
         "Caso clínico"
-      ]
+      ],
+      "variante": {
+        "rotuloBase": "Reconstruida",
+        "rotulo": "Original",
+        "options": [
+          {
+            "id": "va",
+            "text": "RAG",
+            "correct": false
+          },
+          {
+            "id": "vb",
+            "text": "Artemis",
+            "correct": false
+          },
+          {
+            "id": "vc",
+            "text": "VDJ recombinasa",
+            "correct": false
+          },
+          {
+            "id": "vd",
+            "text": "BTK",
+            "correct": true
+          },
+          {
+            "id": "ve",
+            "text": "ADA",
+            "correct": false
+          },
+          {
+            "id": "vf",
+            "text": "TdT",
+            "correct": false
+          },
+          {
+            "id": "vg",
+            "text": "AID",
+            "correct": false
+          }
+        ],
+        "explanation": "En el diagrama B sólo hay células **CD3+** (linfocitos T): faltan los **CD19+**. Una niña sin linfocitos B, con T normales e infecciones desde los 7 meses (cuando se agota la IgG materna), es una **agammaglobulinemia**. La **BTK** transmite la señal del pre-BCR, y sin ella el desarrollo del linfocito B se detiene en el estadio pre-B.\n\n- **RAG**, **Artemis** y la **VDJ recombinasa** (el complejo RAG más las enzimas de reparación) hacen falta para reordenar el TCR **y** el BCR: faltarían los T y los B (inmunodeficiencia combinada grave).\n- Sin **ADA** se acumulan metabolitos tóxicos que matan a los T, los B y las NK.\n- La **TdT** sólo añade nucleótidos en las uniones: sin ella hay menos diversidad, pero no faltan linfocitos.\n- Sin **AID** hay linfocitos B, pero no hacen cambio de isotipo (hiper-IgM).\n\nComo la BTK está en el cromosoma X, en una niña sería rara: las agammaglobulinemias autosómicas recesivas (cadena μ, BLNK) dan el mismo cuadro. De las opciones, la BTK es la única que detiene sólo a los linfocitos B."
+      }
     },
     {
       "id": "p22",
@@ -1041,7 +1154,39 @@
       "reviewNote": "El apunte trae tres alternativas (a–c) y, en lugar de la cuarta, la anotación «IgA». Ninguna de las tres es propiedad de la IgA, así que la cuarta se reconstruyó.",
       "tags": [
         "Anticuerpos y respuesta humoral"
-      ]
+      ],
+      "variante": {
+        "rotuloBase": "Reconstruida",
+        "rotulo": "Original",
+        "options": [
+          {
+            "id": "va",
+            "text": "Producida en mayor cantidad en la respuesta inmune primaria",
+            "correct": false
+          },
+          {
+            "id": "vb",
+            "text": "Activación del complemento",
+            "correct": false
+          },
+          {
+            "id": "vc",
+            "text": "Paso por la placenta",
+            "correct": false
+          },
+          {
+            "id": "vd",
+            "text": "Citotoxicidad mediada por anticuerpos",
+            "correct": false
+          },
+          {
+            "id": "ve",
+            "text": "Formación de dímero",
+            "correct": true
+          }
+        ],
+        "explanation": "La inmunoglobulina es la **IgA**. El receptor poli-Ig la transporta a través del epitelio (**transcitosis**) y, al liberarla en la luz, le deja un fragmento unido: el **componente secretor**. Se secreta como **dímero**, dos monómeros unidos por la cadena J.\n\n- La más abundante en la **respuesta primaria** es la IgM.\n- La **activación del complemento** por la vía clásica es de la IgM y la IgG; la IgA no la activa.\n- El **paso por la placenta** es exclusivo de la IgG (por el receptor FcRn).\n- La **citotoxicidad mediada por anticuerpos** es sobre todo de la IgG, que reconocen las NK por su CD16."
+      }
     },
     {
       "id": "p28",
@@ -1615,6 +1760,694 @@
       "tags": [
         "Órganos linfoides secundarios",
         "Anticuerpos y respuesta humoral"
+      ]
+    },
+    {
+      "id": "ex01",
+      "stem": "Usted está revisando una lámina histológica al microscopio y observa una célula con citoplasma basófilo y un núcleo excéntrico con heterocromatina dispuesta en forma de «rueda de carro». ¿Cuál de las siguientes es una función de la célula descrita?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Producción de inmunoglobulinas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Citotoxicidad celular mediada por anticuerpos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Liberación de histamina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Eliminación de parásitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Formación de granulomas",
+          "correct": false
+        },
+        {
+          "id": "f",
+          "text": "Fagocitosis una vez activadas",
+          "correct": false
+        }
+      ],
+      "explanation": "Es una **célula plasmática**: núcleo excéntrico con la cromatina en «rueda de carro» y citoplasma **basófilo** por la enorme cantidad de retículo endoplásmico rugoso, a menudo con un halo claro junto al núcleo (el Golgi). Es el linfocito B en su diferenciación final, dedicado a **secretar anticuerpos**.\n\n- La **citotoxicidad mediada por anticuerpos** la hacen sobre todo las NK, por su CD16.\n- La **histamina** la liberan los mastocitos y los basófilos.\n- Los **parásitos** grandes los atacan los eosinófilos.\n- Los **granulomas** y la **fagocitosis tras activarse** son cosa de los macrófagos.",
+      "tags": [
+        "Linfocitos B",
+        "Células del sistema inmune"
+      ]
+    },
+    {
+      "id": "ex02",
+      "stem": "Un paciente de 18 años acude a emergencia por dolor en el pie derecho. Hace unos días sufrió una caída mientras jugaba y se hizo una herida. Al examen, el pie luce inflamado. ¿Cuál de los siguientes pares de componentes son quimiotácticos para las principales células que migran al área inflamada en un inicio?",
+      "options": [
+        {
+          "id": "a",
+          "text": "C5a y LTB4",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CXCL8 y TNF-α",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IFN-γ y IL-1",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-2 y IL-4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "5-HETE y VCAM-1",
+          "correct": false
+        }
+      ],
+      "explanation": "En las primeras horas de una inflamación aguda las células que llegan son los **neutrófilos**. Sus quimioatrayentes clásicos son la **C5a** (anafilatoxina del complemento), el **LTB4** (leucotrieno de la vía de la 5-lipooxigenasa), la **CXCL8** (IL-8) y los péptidos bacterianos formilados. La a es el único par en el que **los dos** atraen neutrófilos.\n\n- La **CXCL8** sí es quimiotáctica, pero el **TNF-α** no: activa el endotelio (selectinas, ICAM-1) y facilita la llegada, sin guiarla.\n- El **IFN-γ** activa macrófagos y la **IL-1** activa el endotelio y da fiebre.\n- La **IL-2** y la **IL-4** son citocinas de linfocitos T.\n- **VCAM-1** es una molécula de adhesión del endotelio (se une a la VLA-4 de monocitos y linfocitos), no un quimioatrayente.",
+      "tags": [
+        "Inmunidad innata",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "ex03",
+      "stem": "Usted está estudiando el cambio de isotipo de inmunoglobulinas. Evalúa la producción de anticuerpos en respuesta a la estimulación por IL-5. ¿Cuál de las siguientes es una propiedad de la principal inmunoglobulina producida en respuesta a dicha citoquina?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Proliferación de eosinófilos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Inmunidad pasiva al feto",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Activación de mastocitos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Gran capacidad de opsonización",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Tener un componente secretor",
+          "correct": true
+        }
+      ],
+      "explanation": "La **IL-5** favorece en el linfocito B el cambio de isotipo a **IgA** (en el ser humano la señal principal es el TGF-β, y la IL-5 la potencia). La IgA de las mucosas es un **dímero** unido por la cadena J. Cruza el epitelio gracias al receptor poli-Ig y, al salir a la luz, conserva un fragmento de ese receptor: el **componente secretor**, que la protege de las proteasas.\n\n- La **proliferación de eosinófilos** es un efecto de la propia IL-5, no de un anticuerpo.\n- La **inmunidad pasiva al feto** la da la IgG, que cruza la placenta.\n- La **activación de mastocitos** es de la IgE.\n- La **opsonización** eficaz es de la IgG, que se une a los receptores Fcγ de los fagocitos.",
+      "reviewNote": "La alternativa e llega cortada en el examen («Tener un componente…»): se completó como «componente secretor», la propiedad de la IgA que la pregunta busca.",
+      "tags": [
+        "Anticuerpos y respuesta humoral",
+        "Citocinas"
+      ]
+    },
+    {
+      "id": "ex30",
+      "stem": "Una paciente de 14 años acude por dolor articular y un rash en forma de mariposa en la cara. Los laboratorios evidencian niveles bajos de C3 y C4, así como la presencia de anticuerpos contra ADN de doble cadena. Los estudios revelan una anormalidad en el proceso del desarrollo de linfocitos B donde se generan linfocitos B autorreactivos que migran a la circulación. ¿Cuál de los siguientes procesos en el desarrollo del linfocito B es más probable que se encuentre afectado en la paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Recombinación VD en el estadio pro-B",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Rearreglo de la cadena ligera en el estadio pre-B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Selección positiva en el estadio pre-B tardío",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Selección negativa en el estadio de linfocito B inmaduro",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Edición del receptor en el estadio pre-temprano",
+          "correct": false
+        },
+        {
+          "id": "f",
+          "text": "Hipermutación somática de los folículos linfoides",
+          "correct": false
+        }
+      ],
+      "explanation": "Es un **lupus**, y sus anticuerpos anti-ADN de doble cadena salen de linfocitos B autorreactivos que no se eliminaron. El control ocurre en la médula ósea sobre el **B inmaduro**, el primero que ya lleva un BCR completo (IgM de superficie). Si reconoce lo propio con alta afinidad, intenta la edición del receptor y, si no lo logra, muere por apoptosis: es la **selección negativa**, la tolerancia central del linfocito B. Si falla, los autorreactivos salen a la circulación.\n\n- La **recombinación VDJ** de la cadena pesada (pro-B) y el **rearreglo de la cadena ligera** (pre-B) construyen el receptor. Si fallaran, no habría linfocitos B, en vez de haberlos autorreactivos.\n- La **«selección positiva»** del pre-B es la señal del pre-BCR, que premia a la célula por tener una cadena pesada funcional: no mira si reconoce lo propio.\n- La **edición del receptor** es del B inmaduro, no de un estadio temprano: sin cadena ligera no hay receptor que editar.\n- La **hipermutación somática** ocurre en los centros germinales, fuera de la médula, y ya no es parte del desarrollo del linfocito B.",
+      "tags": [
+        "Tolerancia",
+        "Linfocitos B",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "ex32",
+      "stem": "Usted está desarrollando un suero para tratar ofidismo por Crotalus (mordedura de serpiente). Este suero lo obtiene en el laboratorio (in vitro) luego de estimular a varios linfocitos B aislados de ratón con el veneno de serpiente (el cual tiene componente peptídico) y extraer los anticuerpos antiveneno producidos. Esta terapia logra mejorar los síntomas en los pacientes afectados. En otro experimento, usted decide inyectar el veneno directamente a los ratones y luego de unos días extraer el plasma (que contiene los anticuerpos antiveneno). Al usar este segundo método, observa que es más efectivo en mejorar los síntomas de los pacientes. ¿Un aumento de cuál de los siguientes explica mejor la mejoría en la efectividad del antiveneno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Valencia de la inmunoglobulina individual",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Avidez de la inmunoglobulina individual",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Afinidad de la inmunoglobulina individual",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Número de epítopes antigénicos reconocidos",
+          "correct": false
+        }
+      ],
+      "explanation": "Un veneno con componente **peptídico** es un antígeno **T-dependiente**. Los linfocitos B aislados en una placa no reciben la ayuda del T colaborador ni forman centros germinales, así que producen sobre todo **IgM de baja afinidad**. En el ratón, en cambio, el T folicular (Tfh) y el centro germinal permiten la **hipermutación somática** y la selección de los clones que mejor se unen: la **maduración de la afinidad**. Cada anticuerpo se une con más fuerza a su epítope y neutraliza mejor el veneno.\n\n- La **valencia** no aumenta: al pasar de IgM (10 sitios) a IgG (2) disminuye.\n- La **avidez** de una inmunoglobulina suma afinidad y valencia. La IgM pentamérica ya tiene una avidez alta por sus 10 sitios, y el cambio a IgG la reduce: lo que sube de verdad es la afinidad de cada sitio.\n- El **número de epítopes** depende de cuántos clones responden, y los dos métodos estimulan varios.",
+      "reviewNote": "El examen admite varias respuestas («Elija una o varias»). Se tomó sólo la c, la maduración de la afinidad: que la respuesta en el ratón reconozca más epítopes (d) es posible, pero no es lo que el enunciado contrapone.",
+      "tags": [
+        "Anticuerpos y respuesta humoral",
+        "Linfocitos B"
+      ]
+    },
+    {
+      "id": "ex42",
+      "stem": "Una mujer de 34 años acude preocupada al infectólogo debido a un resultado de laboratorio reciente enviado por su ginecólogo. La paciente está en un tratamiento de fertilidad esperando tener su primer hijo. Trae un resultado que indica IgG positivo para Toxoplasma gondii. Usted amplía los estudios enviándole un test de avidez de IgG anti-Toxoplasma. El resultado es una avidez alta de 85 %. ¿Qué puede concluir respecto a este resultado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La infección aguda ocurrió hace un tiempo considerable",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La infección aguda está ocurriendo en este momento",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La infección aguda ocurrió hace un tiempo relativamente corto",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La paciente nunca ha estado infectada",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Es necesario medir IgM anti-Toxoplasma para generar una conclusión",
+          "correct": false
+        }
+      ],
+      "explanation": "La **avidez** mide la fuerza con que la IgG se une al antígeno. Tras una infección, la IgG va madurando su afinidad durante meses: al principio la avidez es **baja** y con el tiempo se hace **alta**. Una avidez alta (85 %) **descarta una infección en los últimos 3–4 meses**: la paciente se infectó hace tiempo y ya es inmune. Para el embarazo que busca, es la mejor noticia.\n\n- Una infección **actual** o **reciente** daría una avidez baja.\n- Con IgG positiva, la paciente **sí** estuvo infectada.\n- La **IgM** no hace falta: puede persistir meses o años tras la infección (IgM residual), y justamente por eso se usa la avidez para fechar el contagio. Con avidez alta, una IgM positiva no cambiaría la conclusión.",
+      "tags": [
+        "Anticuerpos y respuesta humoral",
+        "Técnicas inmunológicas",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "ex44",
+      "stem": "Las principales citoquinas secretadas por macrófagos M2 son:",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-12, IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-1, IL-23",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-10, TGF-β",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "IFN-α, TNF-β",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-4, IL-13",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **macrófagos M2** (de activación alternativa) reparan tejido y frenan la inflamación. Secretan sobre todo **IL-10** y **TGF-β**, además de factores de crecimiento, y producen arginasa, que favorece la fibrosis.\n\n- La **IL-4** y la **IL-13**, de los Th2, son las que **inducen** a los M2, no las que ellos secretan.\n- La **IL-12** es del macrófago M1, y el **IFN-γ** (de Th1 y NK) es lo que lo activa.\n- La **IL-1** y la **IL-23** son inflamatorias, propias del M1 y de las dendríticas (la IL-23 mantiene a los Th17).\n- El **IFN-α** lo producen sobre todo las dendríticas plasmocitoides, y el **TNF-β** (linfotoxina), los linfocitos.",
+      "tags": [
+        "Macrófagos",
+        "Citocinas"
+      ]
+    },
+    {
+      "id": "ex45",
+      "stem": "El factor de transcripción RORγt es fundamental para la diferenciación hacia un subset de LT helper luego de que el LTh naive sea estimulado por las siguientes citoquinas:",
+      "options": [
+        {
+          "id": "a",
+          "text": "IFN-γ, IL-12",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-2, IL-4",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-6, TGF-β",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "TGF-β, IL-2",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-1, IL-5",
+          "correct": false
+        }
+      ],
+      "explanation": "**RORγt** es el factor de transcripción de los **Th17**. El T CD4 virgen se diferencia hacia Th17 cuando recibe **TGF-β junto con IL-6** (en el ser humano también IL-1β), y la IL-23 los mantiene después.\n\n- **IFN-γ + IL-12** inducen T-bet: Th1.\n- La **IL-4** induce GATA-3: Th2.\n- **TGF-β + IL-2** inducen FOXP3: T regulador. Es la pareja que más se confunde, porque el TGF-β está en las dos: la **IL-6** es la que inclina la balanza de T regulador a Th17.\n- **IL-1 + IL-5** no definen ningún subtipo.",
+      "tags": [
+        "Citocinas y respuesta T"
+      ]
+    },
+    {
+      "id": "ex48",
+      "stem": "Usted está desarrollando un nuevo tipo de vacuna ARNm para influenza. El ARNm codifica para la proteína hemaglutinina viral de influenza. El ARNm se coloca dentro de microesferas lipídicas y luego es inyectado en los pacientes. El efecto protector de dicha vacuna involucra uno de los siguientes mecanismos:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Generación de anticuerpos contra el ARNm",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Expresión de la proteína viral en MHC-I y MHC-II",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Integración del ARNm en el genoma del huésped",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mayor actividad de interferón alfa y beta",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Menor actividad de enzimas ARNasas",
+          "correct": false
+        }
+      ],
+      "explanation": "La nanopartícula lipídica entrega el ARNm al **citoplasma** de las células del músculo y de las dendríticas, que lo traducen en **hemaglutinina**. Como la proteína se fabrica dentro de la célula, sus péptidos se presentan en **MHC I** y activan a los T CD8. La proteína que se secreta, o que captan las dendríticas, se presenta en **MHC II** a los T CD4, que ayudan a los linfocitos B a producir anticuerpos neutralizantes. Por eso protege con anticuerpos **y** con T citotóxicos.\n\n- Los anticuerpos protectores van contra la **hemaglutinina**, no contra el ARNm.\n- El ARNm **no entra al núcleo ni se integra** en el genoma: no hay transcriptasa inversa.\n- El **interferón tipo I** que dispara el ARNm es un efecto adyuvante, que incluso se reduce a propósito con nucleósidos modificados: no es lo que protege.\n- Las **ARNasas** no se inhiben: la microesfera lipídica protege al ARNm en el trayecto.",
+      "tags": [
+        "Vacunas"
+      ]
+    },
+    {
+      "id": "ex49",
+      "stem": "Una paciente es diagnosticada con cáncer de mama. Se realiza inmunohistoquímica y el cáncer es positivo para HER2, un receptor tirosina quinasa de la familia de receptores de factor de crecimiento epidérmico (EGFR). Usted inicia tratamiento con trastuzumab, un anticuerpo monoclonal dirigido contra HER2. Luego de 2 meses de tratamiento el cáncer ha disminuido de tamaño. ¿Cuál de los siguientes es un mediador importante en la acción del tratamiento usado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células NK y granzima",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos B e IgM",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Neutrófilos y lisozimas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos T CD8 e IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Activación de la vía alternativa del complemento",
+          "correct": false
+        }
+      ],
+      "explanation": "El **trastuzumab** es una IgG1 humanizada. Además de bloquear la señal de HER2, recubre a la célula tumoral, y su porción **Fc** la reconoce el **CD16** (FcγRIIIa) de las **células NK**. La NK libera entonces **perforina y granzimas** y mata a la célula: es la **citotoxicidad celular dependiente de anticuerpos** (ADCC).\n\n- Los **linfocitos B** y la **IgM** no intervienen: el fármaco ya es el anticuerpo, y es una IgG.\n- Los **neutrófilos** y la **lisozima** son defensa antibacteriana.\n- Los **T CD8** reconocen péptidos en el MHC I, no células recubiertas por anticuerpos.\n- La IgG1 activa la vía **clásica** del complemento, no la alternativa.",
+      "tags": [
+        "Inmunología tumoral",
+        "Anticuerpos",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "ex50",
+      "stem": "Un paciente varón de 43 años es diagnosticado con anemia severa, por lo que se decide transfundirle glóbulos rojos. Durante la transfusión el paciente presenta fiebre, escalofríos y dolor lumbar; los glóbulos rojos sufren lisis dentro del torrente sanguíneo. Una investigación revela que se transfundió el grupo sanguíneo equivocado, ya que el paciente era grupo O y se transfundió grupo A, teniendo el paciente anticuerpos contra el grupo A en su plasma. ¿Cuál de los siguientes mecanismos inmunológicos explica la lisis intravascular de los glóbulos rojos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fagocitosis por macrófagos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Activación del MAC",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Destrucción por linfocitos T CD8",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Opsonización por IgA",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Endocitosis mediada por receptor por los linfocitos B",
+          "correct": false
+        }
+      ],
+      "explanation": "Los anticuerpos anti-A de una persona del grupo O son **isohemaglutininas IgM**. Como pentámero, una sola molécula unida al glóbulo rojo fija **C1q** y activa la **vía clásica** completa, hasta el **complejo de ataque a la membrana** (C5b-C9, MAC), que perfora la membrana dentro del vaso. Es una hipersensibilidad de tipo II: **hemólisis intravascular**, con hemoglobinuria, dolor lumbar y riesgo de coagulación intravascular diseminada.\n\n- La **fagocitosis por macrófagos** del bazo y el hígado es la hemólisis **extravascular**, típica de los anticuerpos IgG (como en la incompatibilidad Rh).\n- Los **T CD8** no destruyen glóbulos rojos: no expresan MHC I.\n- La **IgA** no es la isohemaglutinina ni opsoniza glóbulos rojos.\n- La **endocitosis** por linfocitos B no destruye células.",
+      "tags": [
+        "Hipersensibilidad",
+        "Complemento",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "ex51",
+      "stem": "Se desarrolla una novedosa inmunoterapia para tratar cáncer basada en el uso de terapia de células T con receptores de antígeno quimérico (CAR-T). En una de las terapias, la región de reconocimiento de antígeno del CAR-T es modificada para que pueda reconocer a la molécula que actúa como receptor de C3d. ¿Cuál de las siguientes complicaciones esperaría por el uso de dicho tratamiento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hipogammaglobulinemia",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Hipocomplementemia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Pancitopenia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Endocrinopatía autoinmune",
+          "correct": false
+        }
+      ],
+      "explanation": "El receptor de C3d es **CD21** (CR2): forma con CD19 y CD81 el correceptor del BCR, y lo expresan los **linfocitos B maduros** (y las células dendríticas foliculares). Un CAR-T contra CD21 elimina los linfocitos B. Sin ellos no se forman células plasmáticas nuevas y bajan las inmunoglobulinas: **hipogammaglobulinemia**. Es lo que ya ocurre con los CAR-T anti-CD19 en uso, que obligan a reponer IgG por vía endovenosa.\n\n- El CAR-T no elimina **proteínas del complemento**: reconoce su receptor en una célula.\n- CD21 no está en los precursores de la médula ni en las demás series, así que no causa **pancitopenia**.\n- La **endocrinopatía autoinmune** es propia de las fallas de tolerancia de los T (IPEX, AIRE), no de quedarse sin linfocitos B.",
+      "tags": [
+        "Linfocitos B",
+        "Inmunología tumoral"
+      ]
+    },
+    {
+      "id": "ex52",
+      "stem": "¿Qué porción del anticuerpo es reconocida por receptores de macrófagos para favorecer la fagocitosis del patógeno opsonizado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Región constante de la cadena pesada",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Región variable de la cadena pesada",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Región variable de la cadena ligera",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Región constante de la cadena ligera",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Región bisagra",
+          "correct": false
+        }
+      ],
+      "explanation": "Los receptores **Fcγ** del macrófago reconocen la región **Fc** del anticuerpo, formada por los **dominios constantes de las cadenas pesadas** (CH2 y CH3 en la IgG). Así, un patógeno recubierto de IgG queda «marcado» para ser fagocitado.\n\n- Las **regiones variables**, de la cadena pesada y de la ligera, forman el sitio que se une al antígeno: están ocupadas con el patógeno.\n- La **región constante de la cadena ligera** forma parte del Fab, no del Fc.\n- La **bisagra** da flexibilidad y separa el Fab del Fc, pero no es donde se une el receptor.",
+      "tags": [
+        "Anticuerpos",
+        "Fagocitosis"
+      ]
+    },
+    {
+      "id": "ex53",
+      "stem": "¿Cuál de las siguientes es una característica de las células T reguladoras inducidas/periféricas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Expresión de PD-L1",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Expresión del receptor de IL-2 de baja afinidad",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Secreción de IL-10 y TNF-β",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Expresión de CTLA-4",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Expresión de CD40",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **T reguladores periféricos** se forman fuera del timo, a partir de T CD4 vírgenes que reconocen un antígeno en presencia de TGF-β e IL-2, y expresan **FOXP3**. Su rasgo más característico es **CTLA-4**, que expresan de forma constante y con el que le quitan el B7 a las presentadoras.\n\n- Expresan **CD25**, la cadena α que da el receptor de IL-2 de **alta** afinidad, no el de baja.\n- Secretan **IL-10 y TGF-β**. La c pone **TNF-β**, que es la linfotoxina, una citocina inflamatoria.\n- **PD-L1** lo expresan sobre todo las presentadoras, los tejidos y los tumores: no es lo que define a un T regulador.\n- **CD40** está en las presentadoras y los linfocitos B. El T lleva su ligando, CD40L.",
+      "tags": [
+        "Tolerancia",
+        "Linfocitos T"
+      ]
+    },
+    {
+      "id": "ex56",
+      "stem": "Uno de los siguientes microorganismos será presentado principalmente en HLA A/B/C. ¿De qué microorganismo más probablemente se trata?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Candida albicans",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Neumococo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "HSV-1",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Strongyloides stercoralis",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Stenotrophomonas maltophilia",
+          "correct": false
+        }
+      ],
+      "explanation": "**HLA-A, -B y -C** son las moléculas de **MHC de clase I**. Presentan péptidos de proteínas del **citosol**, es decir, de los patógenos que se replican **dentro** de la célula: los virus. El **virus del herpes simple 1** se presenta así a los T CD8.\n\n- Los hongos (*Candida*), las bacterias extracelulares (neumococo, *Stenotrophomonas*) y los helmintos (*Strongyloides*) se captan por endocitosis y sus péptidos van al **MHC de clase II** (HLA-DR, -DQ y -DP), para los T CD4.",
+      "reviewNote": "El enunciado original está mal redactado («Uno de los siguientes mecanismos microorganismos que serán presentados…»): se ordenó sin cambiar lo que pregunta.",
+      "tags": [
+        "MHC",
+        "Presentación antigénica"
+      ]
+    },
+    {
+      "id": "ex57",
+      "stem": "Los receptores de los linfocitos T (TCR) se denominan clonotípicos porque:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tras clonaje molecular y reordenamientos génicos, los linfocitos adquieren especificidad antigénica clonal",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Varios linfocitos y sus descendencias (clonas) expresan varios tipos de TCR con varias especificidades antigénicas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cada linfocito y su descendencia (clona) expresa un único tipo de TCR con varias especificidades antigénicas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Cada linfocito y su descendencia (clona) expresa un único tipo de TCR con una sola especificidad antigénica",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Distintas clonas expresan receptores con la misma especificidad antigénica",
+          "correct": false
+        }
+      ],
+      "explanation": "Cada linfocito T reordena sus genes V(D)J una sola vez y produce **un único TCR, con una sola especificidad**. Al proliferar, toda su descendencia (la **clona**) hereda ese mismo receptor: el TCR es la «firma» de la clona, su clonotipo.\n\n- La b y la c contradicen la regla de un linfocito, un receptor, una especificidad.\n- En la e, distintas clonas tienen, por definición, especificidades distintas.\n- La a mezcla el **clonaje molecular**, que es una técnica de laboratorio, con la expansión clonal.",
+      "tags": [
+        "Linfocitos T"
+      ]
+    },
+    {
+      "id": "ex58",
+      "stem": "¿Cuál de las siguientes propiedades es característica de la inmunidad innata?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sus componentes celulares y humorales principales son los linfocitos (T y B) y los anticuerpos, respectivamente.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Es llevada a cabo por receptores celulares y solubles altamente polimórficos con una distribución clonal.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tiene un tiempo de acción lento o diferido (días o semanas).",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Las barreras químicas representan el primer punto de encuentro ante un patógeno externo.",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Su ausencia lleva a una proliferación del patógeno mucho más rápida y descontrolada comparado con la ausencia de la inmunidad adaptativa.",
+          "correct": true
+        }
+      ],
+      "explanation": "Las dos ciertas son de la inmunidad innata:\n- las **barreras epiteliales**, con sus componentes químicos (pH, lisozima, defensinas), son la primera línea con la que choca un patógeno;\n- sin inmunidad innata el patógeno **crece sin freno en horas**. Sin la adaptativa, en cambio, la innata lo contiene al principio y el patógeno escapa después.\n\nLas otras tres describen la **inmunidad adaptativa**: linfocitos T y B con sus anticuerpos, receptores muy diversos con distribución **clonal**, y una respuesta que tarda **días** en arrancar.",
+      "reviewNote": "El examen admite varias respuestas («Elija una o varias»): la d y la e son ciertas, y cualquiera de las dos cuenta como acierto.",
+      "tags": [
+        "Inmunidad innata"
+      ]
+    },
+    {
+      "id": "ex59",
+      "stem": "¿Cuál de las siguientes respuestas es cierta respecto a las moléculas de HLA?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La probabilidad de tener un hermano(a) compatible es 1 de cada 5.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Interaccionan con las citocinas para modular la respuesta inmune.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El gran polimorfismo explica la variedad de HLA en una misma célula.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La herencia es de tipo codominante.",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "El gran polimorfismo se debe a la recombinación genética que ocurre en cada generación durante la meiosis.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los genes HLA se heredan en bloque (un **haplotipo** del padre y otro de la madre) y se expresan **los dos alelos a la vez**: la herencia es **codominante**.\n\n- La probabilidad de que un hermano sea idéntico es de **1 de cada 4**: cada hijo recibe uno de los dos haplotipos de cada progenitor.\n- Las moléculas HLA presentan péptidos al TCR; no «interaccionan con citocinas», aunque el IFN-γ sí aumenta su expresión.\n- La variedad **dentro de una célula** se debe a que hay varios genes (A, B, C, DR, DQ, DP) y a la codominancia. El **polimorfismo** es la variedad **entre personas**.\n- El polimorfismo es la acumulación de muchísimos alelos en la población a lo largo de la evolución, no una recombinación en cada meiosis: justamente, el HLA se hereda en bloque y casi no se recombina.",
+      "tags": [
+        "MHC"
+      ]
+    },
+    {
+      "id": "ex60",
+      "stem": "Un investigador se encuentra experimentando con ratones. Se tiene un ratón A y un ratón B. En ambos ratones se introduce en la piel un compuesto antigénico que genera la activación del sistema inmune, donde las células dendríticas fagocitan al antígeno y viajan al ganglio como es de esperarse. Luego realiza una biopsia del ganglio que drena el área correspondiente al lugar de la inyección. En el ratón A se observa una mayor migración de linfocitos de la sangre al ganglio, mientras que en el ratón B esto no ha ocurrido. ¿Qué estructura es más probable que se encuentre ausente en el ratón B?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfático aferente",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Seno medular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Vénula postcapilar",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Vénula de endotelio alto",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Linfático eferente",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos entran al ganglio **desde la sangre** a través de las **vénulas de endotelio alto** (HEV) de la paracorteza. Su endotelio es cúbico y expresa las adresinas a las que se une la L-selectina, y presenta las quimiocinas CCL19 y CCL21, que atraen a los linfocitos por su CCR7. En el ratón B las dendríticas sí llegaron (por el linfático aferente, que está intacto), pero los linfocitos de la sangre no pueden entrar.\n\n- Las HEV **son** vénulas postcapilares, pero especializadas. Una vénula postcapilar común no tiene esa maquinaria: la d nombra la estructura concreta.\n- El **linfático aferente** trae linfa y dendríticas, no linfocitos de la sangre.\n- El **seno medular** y el **linfático eferente** son la vía de **salida** del ganglio.",
+      "reviewNote": "El examen escribe «Linfocito aferente» y «Linfocito eferente»: por el contexto son los vasos linfáticos, y así se transcribieron.",
+      "tags": [
+        "Órganos linfoides secundarios",
+        "Tráfico celular"
       ]
     }
   ]

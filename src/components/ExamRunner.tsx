@@ -48,6 +48,55 @@ interface ExamQuestion {
   explanationExtraImages?: { src: string; alt?: string; w?: number; h?: number }[];
   reviewNote?: string;
   tags?: string[];
+  /** La misma pregunta en otra versión; el alumno elige cuál ver con un interruptor. */
+  variante?: VariantePregunta;
+}
+
+/**
+ * Otra versión de la MISMA pregunta: en el Final 2023 de Inmunología, la del
+ * apunte (alternativas reconstruidas) y la del examen (las originales). No es
+ * una pregunta más: comparte número, rastro y nota, y la respuesta vale en la
+ * versión en que se dio. Lo que no declara se hereda de la base —la figura y el
+ * enunciado suelen ser los mismos—, salvo `reviewNote`, que es de cada versión:
+ * heredar «se reconstruyeron las alternativas» sobre las originales mentiría.
+ * Los `id` de sus opciones no pueden repetir los de la base.
+ */
+interface VariantePregunta {
+  /** Rótulo del interruptor para esta versión y para la base. */
+  rotulo: string;
+  rotuloBase: string;
+  stem?: string;
+  image?: string;
+  imageAlt?: string;
+  imageW?: number;
+  imageH?: number;
+  extraImages?: ExamQuestion['extraImages'];
+  options: ExamOption[];
+  explanation?: string;
+  reviewNote?: string;
+}
+
+/** La pregunta tal como se ve en la versión elegida. Conserva `variante` para el interruptor. */
+function vistaDe(q: ExamQuestion, enVariante: boolean): ExamQuestion {
+  const v = q.variante;
+  if (!enVariante || !v) return q;
+  return {
+    ...q,
+    stem: v.stem ?? q.stem,
+    image: v.image ?? q.image,
+    imageAlt: v.image ? v.imageAlt : q.imageAlt,
+    imageW: v.image ? v.imageW : q.imageW,
+    imageH: v.image ? v.imageH : q.imageH,
+    extraImages: v.image ? v.extraImages : q.extraImages,
+    options: v.options,
+    explanation: v.explanation ?? q.explanation,
+    reviewNote: v.reviewNote,
+  };
+}
+
+/** ¿`id` es una alternativa correcta? Busca en las dos versiones: vale donde se respondió. */
+function esCorrecta(q: ExamQuestion, id: string): boolean {
+  return [...q.options, ...(q.variante?.options ?? [])].find(o => o.id === id)?.correct === true;
 }
 
 interface ExamPayload {
@@ -728,6 +777,54 @@ function FiguraAmpliable({
   );
 }
 
+/**
+ * Interruptor entre las dos versiones de una pregunta con `variante`. Un par de
+ * botones con un pulgar que se desliza, no una alternativa más: cambiar de
+ * versión no suma ni resta nada.
+ */
+function SelectorVersion({
+  rotulos,
+  enVariante,
+  onCambiar,
+  respondidaEnOtra,
+}: {
+  rotulos: [string, string];
+  enVariante: boolean;
+  onCambiar: (enVariante: boolean) => void;
+  respondidaEnOtra: boolean;
+}) {
+  return (
+    <div className={styles.versiones}>
+      <div
+        className={styles.versionesPista}
+        data-lado={enVariante ? 'variante' : 'base'}
+        role="group"
+        aria-label="Versión de la pregunta"
+      >
+        {rotulos.map((r, i) => {
+          const activa = (i === 1) === enVariante;
+          return (
+            <button
+              key={r}
+              type="button"
+              className={`${styles.versionBtn} ${activa ? styles.versionBtnActiva : ''}`}
+              aria-pressed={activa}
+              onClick={() => onCambiar(i === 1)}
+            >
+              {r}
+            </button>
+          );
+        })}
+      </div>
+      <span className={styles.versionesNota}>
+        {respondidaEnOtra
+          ? 'La respondiste en la otra versión: aquí sólo ves su clave.'
+          : 'Misma pregunta, otras alternativas · cuenta una sola vez'}
+      </span>
+    </div>
+  );
+}
+
 /** Rastro del examen: una marca por pregunta, pintada según cómo fue. */
 type MarcaRastro = 'pendiente' | 'actual' | 'ok' | 'mal';
 
@@ -833,6 +930,9 @@ export default function ExamRunner({
   const [phase, setPhase] = useState<Phase>('running');
   const [pausado, setPausado] = useState(false);
   const [ampliada, setAmpliada] = useState<Ampliada | null>(null);
+  // Versión que se ve de la pregunta actual, en las que traen `variante`. Vuelve
+  // a la base al pasar de pregunta: es una elección sobre ESTA pregunta.
+  const [enVariante, setEnVariante] = useState(false);
 
   const stageKey = stages[stage].key;
   // Un banqueo de pago sin plan no se pide: la route respondería 403, y lo que
@@ -883,16 +983,18 @@ export default function ExamRunner({
     return shuffle(payload.questions).map(q => ({
       ...q,
       options: shuffle(q.options),
+      ...(q.variante ? { variante: { ...q.variante, options: shuffle(q.variante.options) } } : {}),
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payload, runId, stage]);
 
-  const current = deck?.[currentIdx];
+  // `base` es la pregunta con sus dos versiones; `current`, la que se ve. La
+  // corrección va siempre contra `base`: la respuesta puede ser de la otra.
+  const base = deck?.[currentIdx];
+  const current = base ? vistaDe(base, enVariante) : undefined;
   const total = deck?.length ?? 0;
 
-  const aciertoActual = picked && current
-    ? current.options.find(o => o.id === picked)?.correct === true
-    : null;
+  const aciertoActual = picked && base ? esCorrecta(base, picked) : null;
 
   // Rastro: una marca por pregunta. La actual ya se pinta con su resultado en
   // cuanto el alumno responde, sin esperar a que pulse «Siguiente».
@@ -945,7 +1047,7 @@ export default function ExamRunner({
 
   // La imagen ampliada se cierra sola al cambiar de pregunta, de grupo o al
   // reintentar: si no, quedaría abierta sobre una pregunta que ya no es la suya.
-  useEffect(() => { setAmpliada(null); }, [currentIdx, stage, runId]);
+  useEffect(() => { setAmpliada(null); }, [currentIdx, stage, runId, enVariante]);
 
   const handlePick = (id: string) => {
     if (picked || pausado) return;
@@ -953,11 +1055,12 @@ export default function ExamRunner({
   };
 
   const handleNext = () => {
-    if (!current || !picked || pausado) return;
-    const ok = current.options.find(o => o.id === picked)?.correct === true;
-    const nextAll = [...answersAll, { q: current.id, a: picked, ok }];
+    if (!base || !picked || pausado) return;
+    const ok = esCorrecta(base, picked);
+    const nextAll = [...answersAll, { q: base.id, a: picked, ok }];
     setAnswersAll(nextAll);
     setPicked(null);
+    setEnVariante(false);
 
     if (currentIdx + 1 >= total) {
       // Grupo terminado: cada grupo se califica de forma independiente.
@@ -1015,6 +1118,7 @@ export default function ExamRunner({
     setStage(i);
     setCurrentIdx(0);
     setPicked(null);
+    setEnVariante(false);
     setAnswersAll([]);
     setPhase('running');
     setPausado(false);
@@ -1025,6 +1129,7 @@ export default function ExamRunner({
     setRunId(r => r + 1);
     setCurrentIdx(0);
     setPicked(null);
+    setEnVariante(false);
     setAnswersAll([]);
     setPhase('running');
     setPausado(false);
@@ -1116,10 +1221,12 @@ export default function ExamRunner({
           {deck && (
             <div aria-hidden className={styles.preloadLayer}>
               {deck.flatMap(q => {
-                const figuras = figurasDe(q);
-                return figuras.map((f, i) => (
+                // La variante sólo trae figuras propias si declara `image`. Cada
+                // juego lleva el `sizes` con el que se pinta, o no habría cache hit.
+                const juegos = [figurasDe(q), q.variante?.image ? figurasDe(vistaDe(q, true)) : []];
+                return juegos.flatMap((figuras, j) => figuras.map((f, i) => (
                   <Image
-                    key={`${q.id}-${i}`}
+                    key={`${q.id}-${j}-${i}`}
                     src={f.src}
                     alt=""
                     width={f.w}
@@ -1127,7 +1234,7 @@ export default function ExamRunner({
                     sizes={figuras.length > 1 ? SIZES_PAR : SIZES_UNA}
                     loading="eager"
                   />
-                ));
+                )));
               })}
             </div>
           )}
@@ -1223,13 +1330,25 @@ export default function ExamRunner({
 
               {/* `key` remonta el bloque en cada pregunta, así su animación de
                   entrada se repite en vez de correr sólo la primera vez. */}
-              <article className={styles.pregunta} key={`${intentoId}-${currentIdx}`}>
+              {/* Cambiar de versión también remonta el bloque: la entrada se
+                  repite y deja claro que lo de abajo es otro juego de alternativas. */}
+              <article className={styles.pregunta} key={`${intentoId}-${currentIdx}${enVariante ? '-v' : ''}`}>
                 <div className={styles.preguntaIndice} aria-hidden>
                   <span className={styles.preguntaNum}>{String(currentIdx + 1).padStart(2, '0')}</span>
                   <span className={styles.preguntaFilete} />
                 </div>
 
                 <div className={styles.preguntaCuerpo}>
+                  {base?.variante && (
+                    <SelectorVersion
+                      rotulos={[base.variante.rotuloBase, base.variante.rotulo]}
+                      enVariante={enVariante}
+                      onCambiar={setEnVariante}
+                      // Respondida en la otra versión: ésta sólo enseña su clave.
+                      respondidaEnOtra={!!picked && !current.options.some(o => o.id === picked)}
+                    />
+                  )}
+
                   {current.reviewNote && (
                     <div className={styles.reviewBadge}>
                       <IconoAviso />
