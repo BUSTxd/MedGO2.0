@@ -364,6 +364,15 @@ después en AVIF y se subió tal cual en lugar del PNG); cada pregunta reutiliza
 archivo que el HTML pide y no está, preguntar si es un repetido antes de darlo por perdido. En 6 de 20 la correcta es la más larga: son alternativas del docente y se
 transcribieron tal cual.
 
+**Inmunología · Examen Final 2022** (`inmunologia/final-2022`, «2022», de pago, detrás del 2023 en
+`groups`): 25 preguntas sin imágenes, transcritas a HTML desde las capturas del PDF, con la correcta
+resaltada y repetida en una nota «Respuesta correcta según el material». El generador comprueba que
+las dos coincidan. Esta vez **la clave aguanta**: ninguna pregunta contradice a otra del examen.
+Cinco llevan `reviewNote`: cuatro claves discutibles que se respetaron (la 11: Fas/FasL; la 14: el
+DAF también disocia la C3 convertasa; la 23: recibió también inmunización pasiva artificial, que no
+está entre las opciones; la 24: la citocina linfoide clásica es la IL-7) y la 20, cuyo enunciado
+llama «penicilina» a la ceftriaxona (se transcribió tal cual).
+
 **Inmunología · banqueos «Extra 1» y «Extra 2»** (`inmunologia/extra-hemato` y
 `inmunologia/extra-pato`, de pago, detrás del 2023 en `groups`): dos exámenes **sin año** de 40
 preguntas cada uno, sin imágenes. El rótulo no dice de qué va cada uno, así que el `ExamenRef`

@@ -1,0 +1,784 @@
+{
+  "version": 1,
+  "key": "inmunologia/final-2022",
+  "title": "Examen Final — Inmunología",
+  "duration_min": 50,
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "NN es un paciente que va a consulta porque tiene lesiones de infección bacteriana en piel y lesiones por infección por hongos en la cavidad oral. A usted le llama la atención este caso; revisando sus apuntes sospecha que hay una alteración en la función de las células Th17 que producen:",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL22",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "PDGF",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Defensinas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL23",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **Th17** producen sobre todo **IL-17** e **IL-22**. La IL-22 actúa sobre los epitelios de la piel y las mucosas: refuerza la barrera y les hace producir **defensinas**. La IL-17 recluta neutrófilos. Si fallan, aparecen justo las dos cosas del caso: **candidiasis mucocutánea** e infecciones bacterianas de piel (*S. aureus*), como en el síndrome hiper-IgE por STAT3.\n\n- Las **defensinas** las fabrican los epitelios y los neutrófilos cuando reciben IL-22 e IL-17, no el propio Th17.\n- La **IL-23** la producen las células dendríticas y los macrófagos para mantener y expandir a los Th17: les llega, no la secretan.\n- El **PDGF** es un factor de crecimiento de plaquetas y de reparación, sin papel en esta vía.",
+      "tags": [
+        "Citocinas y respuesta T",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q2",
+      "stem": "A emergencia llega una paciente con fiebre alta y escalofríos desde hace una semana, asociado a tos con flema amarillenta. El doctor de turno le realiza radiografía de tórax y análisis de laboratorio confirmando el diagnóstico de neumonía bacteriana, pero a pesar del tratamiento persiste la fiebre y se añade presión arterial baja. En relación al cuadro de citocinas liberadas en el paciente, señale la respuesta correcta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Al medir en sangre la proteína C Reactiva (PCR) no está incrementada su concentración.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-1 se encuentra disminuida por el consumo de la misma por la sepsis.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Uno de los mecanismos que explican el cuadro clínico es la producción incrementada de TNF, IL-1, IL-6.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Debido a la sepsis secundaria a la neumonía el paciente liberó TNF pero no IL-1.",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **sepsis** los macrófagos liberan a la vez **TNF, IL-1 e IL-6**. Actúan sobre el hipotálamo (fiebre, vía PGE2) y sobre el endotelio: vasodilatación y fuga capilar, que explican la **hipotensión** del shock séptico. La IL-6 además hace que el hígado fabrique proteínas de fase aguda.\n\n- Por eso la **PCR** estaría **elevada**, no normal.\n- La IL-1 no «se consume» hasta disminuir: sube junto con el TNF.\n- TNF e IL-1 no se separan en la sepsis: los dos aparecen y se potencian.",
+      "tags": [
+        "Citocinas",
+        "Inmunidad innata",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q3",
+      "stem": "En un accidente vehicular un amigo quedó grave y de emergencia tuvieron que sacarle el bazo. Ahora el paciente no cuenta con un órgano linfoide secundario y es susceptible a infecciones por microorganismos de tipo:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Retrovirus",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Coronavirus",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Helmintos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Encapsulados",
+          "correct": true
+        }
+      ],
+      "explanation": "El **bazo** filtra la sangre. Sus macrófagos retiran las bacterias opsonizadas, y los **linfocitos B de la zona marginal** responden rápido con IgM frente a los **polisacáridos capsulares**, que son antígenos T-independientes. Sin bazo esa defensa falta, y el riesgo es la sepsis fulminante por bacterias **encapsuladas**: *S. pneumoniae*, *H. influenzae* tipo b y *N. meningitidis*. Por eso se vacuna contra ellas a quien va a ser esplenectomizado.\n\nLos virus (retrovirus, coronavirus) se controlan con linfocitos T citotóxicos, NK e interferones, y los helmintos con la respuesta Th2 (IgE, eosinófilos): ninguno depende en especial del bazo.",
+      "tags": [
+        "Órganos linfoides secundarios",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q4",
+      "stem": "El co-receptor CD19+ participa en:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Apoptosis en células diana",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Reconocimiento por células CD8+",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Reconocimiento por células B",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Reconocimiento por células T CD4+",
+          "correct": false
+        }
+      ],
+      "explanation": "**CD19** es el correceptor del **BCR**: forma un complejo con **CD21** (CR2) y **CD81**. CD21 se une al **C3d** que recubre un antígeno opsonizado, y CD19 amplifica la señal del BCR (recluta PI3K). Así baja el umbral de activación del linfocito B. Además es el marcador pan-B que se usa en citometría.\n\n- Los correceptores de los linfocitos T son **CD4** y **CD8**, no CD19.\n- La apoptosis de las células diana es obra de los T citotóxicos y las NK.",
+      "tags": [
+        "Linfocitos B"
+      ]
+    },
+    {
+      "id": "q5",
+      "stem": "La hermana de mi amiga padece de una enfermedad autoinmune que se caracteriza porque hay una respuesta a los antígenos propios. Si la falla de la enfermedad de esta paciente estuviera en los linfocitos B inmaduros, el mecanismo alterado estaría en:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Edición de receptores",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Reconocimiento de antígenos propios en timo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Supresión por células T reguladoras",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Expresión de CTLA-4",
+          "correct": false
+        }
+      ],
+      "explanation": "La tolerancia central de los linfocitos B ocurre en la **médula ósea**. Cuando un **B inmaduro** reconoce con alta afinidad un antígeno propio, reactiva los genes **RAG** y reordena de nuevo su cadena ligera: es la **edición de receptores**, que cambia su especificidad. Si no lo logra, muere por apoptosis (deleción); con baja afinidad queda anérgico.\n\n- El reconocimiento de lo propio **en el timo** es la tolerancia central de los linfocitos **T**.\n- La supresión por **T reguladores** y la expresión de **CTLA-4** son mecanismos periféricos sobre los linfocitos T.",
+      "tags": [
+        "Tolerancia",
+        "Linfocitos B"
+      ]
+    },
+    {
+      "id": "q6",
+      "stem": "Al realizar una práctica de laboratorio, probamos en anular el gen que expresa a IL-4 en un ratón. Este hecho produciría en el ratón una:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mayor predisposición a alergias",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Ausencia de producción de IgE",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Sensibilidad a infecciones víricas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Diferenciación preferencial hacia Th2",
+          "correct": false
+        }
+      ],
+      "explanation": "La **IL-4** (con la IL-13), secretada por los Th2 y los Tfh, es la señal que induce en el linfocito B el **cambio de isotipo a IgE**. En el ratón sin IL-4 la IgE es prácticamente indetectable.\n\n- Sin IL-4 hay **menos** alergia, no más: falta la IgE que arma a los mastocitos.\n- La IL-4 es también la citocina que polariza a los T hacia **Th2**: sin ella, esa diferenciación se pierde en vez de preferirse.\n- Los virus se controlan con Th1 (IFN-γ), T citotóxicos y NK, que no dependen de la IL-4.",
+      "tags": [
+        "Citocinas y respuesta T",
+        "Hipersensibilidad"
+      ]
+    },
+    {
+      "id": "q7",
+      "stem": "El mecanismo de tolerancia inmunológica que media la inducción de apoptosis por la activación de caspasas, debido a la expresión de la siguiente proteína de transmembrana:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fas Ligando",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "TGF-β",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "PD1",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "FOXP3",
+          "correct": false
+        }
+      ],
+      "explanation": "El **Fas ligando** (FasL) es una **proteína de transmembrana** de la familia del TNF. La expresan los linfocitos T activados una y otra vez. Al unirse a **Fas** (CD95) recluta FADD y activa la **caspasa-8**: apoptosis por vía extrínseca. Es la **muerte celular inducida por activación**, una forma de tolerancia periférica por deleción. Su falla (mutaciones de FAS o FASL) da el síndrome linfoproliferativo autoinmune.\n\n- El **TGF-β** es una citocina **soluble** que secretan los T reguladores para suprimir, no una proteína de membrana que induzca apoptosis.\n- **PD-1** es un receptor inhibidor: frena al T (anergia, agotamiento) sin activar caspasas.\n- **FOXP3** es un factor de transcripción **intracelular**, propio de los T reguladores.",
+      "tags": [
+        "Tolerancia"
+      ]
+    },
+    {
+      "id": "q8",
+      "stem": "Durante su rotación de verano decidió viajar a EEUU para entrenarse en Inmunohistoquímica. En el laboratorio donde trabaja encuentra interés en los linfocitos NK y, al recordar sus clases de Métodos en Inmunología, las relaciona con el siguiente marcador:",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD56",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD20",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD3",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD41",
+          "correct": false
+        }
+      ],
+      "explanation": "Las **NK** se identifican en citometría e inmunohistoquímica como **CD56⁺** (y CD16⁺) y **CD3⁻**: no tienen TCR.\n\n- **CD20** marca linfocitos B.\n- **CD3** marca linfocitos T.\n- **CD41** (GPIIb) marca plaquetas y megacariocitos.",
+      "tags": [
+        "Técnicas inmunológicas",
+        "Células del sistema inmune"
+      ]
+    },
+    {
+      "id": "q9",
+      "stem": "En el papel de la coestimulación sobre la activación de las células T, las células APC (células presentadoras de antígeno) expresan:",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD28",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "ICOS",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CTLA-4",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD40",
+          "correct": true
+        }
+      ],
+      "explanation": "La célula presentadora expresa **B7-1/B7-2** (CD80/CD86) y **CD40**. El linfocito T expresa sus contrapartes: **CD28** y **CTLA-4** (que se unen a B7), **ICOS** (que se une a ICOS-L) y **CD40L**.\n\nCuando el CD40L del T activado se une al **CD40** de la presentadora, la activa: le hace expresar más B7 y secretar IL-12. Por eso CD28, ICOS y CTLA-4 están del lado del T, y CD40 es la única de las cuatro que corresponde a la presentadora.",
+      "tags": [
+        "Coestimulación"
+      ]
+    },
+    {
+      "id": "q10",
+      "stem": "Los antígenos unidos a moléculas MHC I de los linfocitos B son reconocidos por:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T CD8",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos T CD4",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos Tfh",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos T CD3",
+          "correct": false
+        }
+      ],
+      "explanation": "El **MHC I** está en todas las células nucleadas, incluidos los linfocitos B. Presenta péptidos citosólicos a los **T CD8**: la molécula CD8 se une al dominio α3 del MHC I.\n\n- Los **T CD4**, y con ellos los **Tfh** (que son CD4), reconocen péptidos en el **MHC II**.\n- **CD3** forma parte del complejo del TCR de **todos** los linfocitos T: no dice a qué MHC está restringido un T.",
+      "tags": [
+        "MHC",
+        "Presentación antigénica"
+      ]
+    },
+    {
+      "id": "q11",
+      "stem": "Característica de los linfocitos T citotóxicos:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Expresa en su superficie al receptor Fas (Fas L)",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Las integrinas estabilizan su unión con células infectadas",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Las perforinas activan a las enzimas caspasas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Las granzimas interrumpen la integridad de la membrana",
+          "correct": false
+        }
+      ],
+      "explanation": "El T citotóxico forma con su diana una **sinapsis inmunitaria**, estabilizada por la integrina **LFA-1** unida al **ICAM-1** de la célula infectada. Sin esa adhesión el contacto sería demasiado breve para matarla.\n\n- La **perforina** abre poros en la membrana de la diana; por ellos entran las **granzimas**, que son las que activan las caspasas. La c y la d intercambian las dos funciones.\n- La a confunde el receptor con el ligando: **Fas** es el receptor, en la diana, y **FasL** es el que expresa el T citotóxico.",
+      "reviewNote": "La a es ambigua: pone «FasL» entre paréntesis, y el T citotóxico sí expresa FasL (además, los T activados también expresan Fas). Se respetó la clave: la b es la única sin reparos.",
+      "tags": [
+        "Linfocitos T"
+      ]
+    },
+    {
+      "id": "q12",
+      "stem": "Los activadores de la formación del inflamosoma son:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Complemento",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "ITAM",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Proteínas de fase aguda",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "PAMPs",
+          "correct": true
+        }
+      ],
+      "explanation": "El **inflamasoma** (el más estudiado es **NLRP3**) es un sensor citosólico que se ensambla al detectar **PAMPs**, y también DAMPs como el ATP extracelular, los cristales de urato o la salida de K⁺. Al formarse (NLRP3 + ASC + caspasa-1), la caspasa-1 corta la pro-IL-1β y la pro-IL-18 en sus formas activas, y puede causar piroptosis.\n\n- El **complemento** y las **proteínas de fase aguda** son otras ramas de la inmunidad innata, no activadores del inflamasoma.\n- Los **ITAM** son motivos de señalización en la cola de receptores como el TCR, el BCR y los receptores Fc.",
+      "tags": [
+        "Inmunidad innata"
+      ]
+    },
+    {
+      "id": "q13",
+      "stem": "Los antígenos T-independientes como los polisacáridos presentes en la cápsula de algunas bacterias se caracterizan por:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inducir anticuerpos de alta afinidad",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Ser moléculas de bajo peso molecular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Producir anticuerpos IgM de baja afinidad",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Ser buenos inductores de memoria inmunológica",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **antígenos T-independientes** son polisacáridos de **alto peso molecular** con epítopes repetidos: entrecruzan muchos BCR a la vez y activan a los B de la zona marginal y a los B1 sin ayuda de un T colaborador. Sin esa ayuda casi no hay cambio de isotipo, ni maduración de afinidad, ni memoria: el resultado es **IgM de baja afinidad**.\n\nPor eso las vacunas contra encapsulados conjugan el polisacárido con una proteína: al volverlo T-dependiente, logran IgG de alta afinidad y memoria.",
+      "tags": [
+        "Anticuerpos y respuesta humoral"
+      ]
+    },
+    {
+      "id": "q14",
+      "stem": "Actualmente se encuentra estudiando en animales la vía alterna del sistema del complemento. Teniendo interés en las proteínas reguladoras del complemento y en especial la proteína que tiene como función inhibir la acción de la C3 convertasa. Esta proteína es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Membrane cofactor protein (MCP)",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Factor B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Decay-accelerating factor (DAF)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Factor H",
+          "correct": true
+        }
+      ],
+      "explanation": "El **factor H** es la proteína plasmática que regula la **vía alterna**. Desplaza al Bb de la C3 convertasa alterna (**C3bBb**) y sirve de cofactor al factor I para degradar el C3b. Reconoce las superficies propias por su ácido siálico, y así impide que el complemento las ataque.\n\n- El **factor B** no inhibe la convertasa: es una de sus piezas (el Bb).\n- **DAF** (CD55) acelera la disociación de las C3 convertasas, pero está anclado a la membrana y actúa en las vías clásica y alterna.\n- **MCP** (CD46) es cofactor del factor I para degradar C3b y C4b, no un inhibidor directo de la convertasa.",
+      "reviewNote": "El DAF también inhibe la C3 convertasa alterna (acelera su disociación), así que la c es defendible. Se respetó la clave: el factor H es el regulador propio de la vía alterna.",
+      "tags": [
+        "Complemento"
+      ]
+    },
+    {
+      "id": "q15",
+      "stem": "Madre acude con su hijo de 10 meses debido a infecciones respiratorias recurrentes en los últimos meses. Las infecciones fueron causadas por bacterias encapsuladas y recientemente ha estado hospitalizado por una infección por Pneumocystis jirovecii. La madre tiene VIH pero refiere que recibió todos los cuidados durante su gestación y es adherente al tratamiento. Se realiza un test genético en el paciente que muestra una mutación en el gen de CD40 ligando. ¿La interacción entre cuáles de los siguientes componentes inmunes está más probablemente alterada en este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocito B y proteínas del complemento",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos B y antígenos extraños",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos T y células presentadoras de antígeno",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Neutrófilos y células endoteliales vasculares",
+          "correct": false
+        }
+      ],
+      "explanation": "Es el **síndrome de hiper-IgM ligado al X**. El **CD40L** del T CD4 activado no puede unirse al **CD40** de las presentadoras (linfocitos B, macrófagos y células dendríticas):\n- el linfocito B no hace **cambio de isotipo**: IgM normal o alta, e IgG, IgA e IgE bajas. De ahí las infecciones por **encapsuladas**;\n- el macrófago y la dendrítica no se activan (poca IL-12, poca respuesta Th1). De ahí la neumonía por ***Pneumocystis***.\n\nEl VIH de la madre es un distractor: el test genético ya da la causa.\n\n- El BCR reconoce el antígeno sin problema: lo que falla es la señal de ayuda del T.\n- El complemento no depende de CD40L.\n- La interacción entre neutrófilo y endotelio es la que falla en las deficiencias de adhesión leucocitaria (LAD).",
+      "tags": [
+        "Inmunodeficiencias",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q16",
+      "stem": "Paciente varón de 56 años acude a consulta para seguimiento. Tiene historia de melanoma maligno avanzado con metástasis y resistente a quimioterapia estándar. Se le informa al paciente la posibilidad de iniciar tratamiento con un anticuerpo monoclonal. Este anticuerpo bloquea un receptor de superficie específico que se encuentra en los linfocitos T. Como resultado de la unión, los linfocitos T son capaces de reconocer a los antígenos tumorales y destruir a las células cancerígenas. ¿Cuál de los siguientes receptores de superficie es bloqueado por dichos anticuerpos monoclonales?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD28",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CCR5",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD19",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "PD-1",
+          "correct": true
+        }
+      ],
+      "explanation": "**PD-1** es un receptor inhibidor de los linfocitos T activados y agotados. Muchos tumores, entre ellos el melanoma, expresan su ligando **PD-L1** y así apagan a los T que los reconocen. Los anticuerpos **anti-PD-1** (nivolumab, pembrolizumab) bloquean ese freno y el T vuelve a destruir la célula tumoral.\n\n- **CD28** es el receptor **coestimulador**: bloquearlo apagaría al T en vez de activarlo.\n- **CCR5** es el correceptor del VIH (lo bloquea el maraviroc).\n- **CD19** es un marcador de linfocitos B, no de T.",
+      "tags": [
+        "Inmunología tumoral",
+        "Coestimulación",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q17",
+      "stem": "Paciente mujer de 27 años previamente sana es evaluada por la aparición de un exantema (rash) cutáneo asociado a dolor articular, falla renal y anemia hemolítica autoinmune. Se encuentra que los niveles séricos de C3 y C4 están disminuidos, y el nivel de factor B está normal. ¿Cuál de los siguientes eventos activó el sistema de complemento en la paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Unión de antígeno a IgA",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Formación de complejos inmunes antígeno-anticuerpo",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Autoactivación de C3",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Formación de complejo de membrana asociado a C9",
+          "correct": false
+        }
+      ],
+      "explanation": "El cuadro (rash, artritis, falla renal y anemia hemolítica autoinmune en una mujer joven) es un **lupus**. Sus **complejos inmunes** antígeno-anticuerpo (hipersensibilidad tipo III) fijan **C1q** y activan la **vía clásica**, que consume **C4** y **C3**. El **factor B normal** confirma que la vía alterna no se está consumiendo.\n\n- La **IgA** no activa la vía clásica.\n- La **autoactivación de C3** es el arranque espontáneo de la vía alterna, y consumiría factor B.\n- El complejo de ataque a la membrana (C5b-C9) es el **final** de la cascada, no lo que la inicia.",
+      "tags": [
+        "Complemento",
+        "Hipersensibilidad",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q18",
+      "stem": "Un hombre de 24 años sufre una quemadura en la pierna al caerle agua caliente. Minutos luego, la zona de la quemadura y la zona adyacente están rojas, sin ampollas. ¿Cuál de los siguientes es el principal mediador en la reacción observada por el paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Contracción endotelial mediada por serotonina",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Liberación de histamina por mastocitos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Extravasación de neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Extravasación de exudado mediado por TNFα e IL-1",
+          "correct": false
+        }
+      ],
+      "explanation": "Un eritema que aparece **en minutos** tras una lesión térmica es la respuesta vascular **inmediata**: los **mastocitos** se degranulan y liberan **histamina**, que dilata las arteriolas (enrojecimiento) y aumenta la permeabilidad de las vénulas.\n\n- En el ser humano el principal mediador de esta fase es la histamina; la serotonina tiene más peso en los roedores.\n- La **extravasación de neutrófilos** tarda horas.\n- El **TNF** y la **IL-1** hay que sintetizarlos: también actúan en horas, no en minutos.",
+      "tags": [
+        "Inmunidad innata",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q19",
+      "stem": "Acude a consulta un paciente varón de 4 años traído por su padre adoptivo. Refiere que el menor ha tenido múltiples episodios de diarrea acuosa y que hace 1 año le diagnosticaron diabetes mellitus tipo 1. El ELISA de 4ta generación para VIH es negativo. Usted sospecha en una inmunodeficiencia primaria por lo que realiza un análisis genético. En dicho análisis le indican que el paciente tiene una mutación en el gen de FOXP3. ¿Cuál combinación de marcadores de superficie es más probable que se encuentre ausente en el paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD14, CD45, CD1a",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD3, CD4, CD8",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD3, CD19, CD20",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD3, CD4, CD25",
+          "correct": true
+        }
+      ],
+      "explanation": "La mutación de **FOXP3** causa el **síndrome IPEX** (ligado al X): sin FOXP3 no se forman los **T reguladores**. Sin ellos aparece autoinmunidad precoz: enteropatía (la diarrea), endocrinopatía (la **diabetes tipo 1** a los 3 años) y dermatitis.\n\nLos T reguladores son **CD3⁺ CD4⁺ CD25⁺** (CD25 es la cadena α del receptor de IL-2, que expresan en abundancia). FOXP3 es intracelular, por eso la pregunta los identifica por sus marcadores de superficie.\n\n- CD14, CD45 y CD1a marcan monocitos, leucocitos en general y células de Langerhans.\n- CD3, CD4 y CD8 son los T en conjunto, que no faltan.\n- CD3, CD19 y CD20 mezclan T y B.",
+      "tags": [
+        "Inmunodeficiencias",
+        "Tolerancia",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q20",
+      "stem": "Varón de 45 años es hospitalizado por un cuadro de neumonía por Streptococcus pneumoniae. Se inicia tratamiento con ceftriaxona (antibiótico de la familia de las penicilinas). A los 3 días presenta mejoría pero usted nota que el paciente se encuentra levemente ictérico y en los laboratorios se evidencian signos de anemia hemolítica. Usted sospecha que la causa de la hemólisis es la ceftriaxona, ya que se une al eritrocito y estimula la producción de anticuerpos contra estos. ¿Cómo se denomina al grupo de compuestos que actúan de forma similar a la descrita con la ceftriaxona en este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Haptenos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Superantígenos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Antígenos timo-independientes",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Epítopes",
+          "correct": false
+        }
+      ],
+      "explanation": "Un **hapteno** es una molécula pequeña que no genera respuesta por sí sola: necesita unirse a una **proteína portadora**, aquí la membrana del eritrocito. El conjunto sí es inmunogénico: se producen anticuerpos (IgG) contra el eritrocito recubierto, que es destruido. Es una **hipersensibilidad tipo II**, la anemia hemolítica por fármacos.\n\n- Los **superantígenos** (p. ej., la toxina del shock tóxico) unen el MHC II y la cadena Vβ del TCR fuera del surco, y activan de forma policlonal a muchos T.\n- Los **antígenos timo-independientes** son polisacáridos grandes, lo contrario de un fármaco pequeño.\n- Un **epítope** es la porción del antígeno que reconoce el anticuerpo, no una clase de compuesto.",
+      "reviewNote": "El enunciado llama a la ceftriaxona «antibiótico de la familia de las penicilinas»: es una cefalosporina de tercera generación (betalactámico, como las penicilinas). Se transcribió tal cual; no cambia la respuesta.",
+      "tags": [
+        "Hipersensibilidad",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q21",
+      "stem": "La molécula de CTLA-4 se une e inactiva a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD28",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "PDL1",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "B7",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "PD1",
+          "correct": false
+        }
+      ],
+      "explanation": "**CTLA-4** se une a **B7-1/B7-2** (CD80/CD86) con mucha más afinidad que CD28. Así se los quita a CD28 e incluso los retira de la presentadora por transendocitosis: el T se queda sin coestimulación. Es uno de los frenos que usan los T reguladores.\n\n- **CD28** es el receptor rival de CTLA-4, no su ligando.\n- **PD-1** es otro receptor inhibidor del T.\n- **PD-L1** es el ligando de PD-1.",
+      "tags": [
+        "Coestimulación",
+        "Tolerancia"
+      ]
+    },
+    {
+      "id": "q22",
+      "stem": "La inmunidad durante los primeros meses de vida se debe a que la siguiente inmunoglobulina pasa la barrera placentaria:",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgG",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IgA",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgE",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgM",
+          "correct": false
+        }
+      ],
+      "explanation": "La **IgG** es el único isotipo que atraviesa la placenta. La transporta el receptor **FcRn** del sincitiotrofoblasto, y protege al lactante durante sus primeros meses, mientras madura su propia producción.\n\n- La **IgA** llega al lactante por la leche materna (sobre todo el calostro), no por la placenta.\n- La **IgM** es un pentámero demasiado grande: si se encuentra IgM específica en el recién nacido, la fabricó él, y eso sugiere una infección congénita.\n- La **IgE** no cruza la placenta.",
+      "tags": [
+        "Anticuerpos"
+      ]
+    },
+    {
+      "id": "q23",
+      "stem": "Un médico recién graduado tuvo un accidente con una herida punzocortante al hincarse con aguja cuando sacaba sangre a un paciente con Hepatitis viral B activa. El médico no se ha vacunado contra hepatitis B por lo que se le coloca inmunoglobulina humana contra el antígeno de superficie de hepatitis B así como la vacuna contra hepatitis B. ¿Qué tipo de inmunización ha recibido el médico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Activa natural",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Pasiva natural",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Activa artificial",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Ninguna",
+          "correct": false
+        }
+      ],
+      "explanation": "El médico recibió **dos** inmunizaciones a la vez:\n- la **inmunoglobulina** anti-HBs es **pasiva artificial**: protege de inmediato, pero dura sólo semanas y no deja memoria;\n- la **vacuna** (HBsAg) es **activa artificial**: su propio sistema inmune produce anticuerpos y memoria, aunque tarda en proteger.\n\n«Natural» se reserva a lo que ocurre sin intervención médica: la infección (activa) o el paso de anticuerpos por la placenta o la leche (pasiva).",
+      "reviewNote": "También recibió inmunización pasiva artificial (la inmunoglobulina), pero esa opción no está entre las cuatro: «activa artificial» es la única que describe algo de lo recibido. Se respetó la clave.",
+      "tags": [
+        "Vacunas",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "q24",
+      "stem": "Señale una de las citoquinas involucrada en la diferenciación linfoide:",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL3",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL17",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL6",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TNF alfa",
+          "correct": false
+        }
+      ],
+      "explanation": "La **IL-3** (o multi-CSF) la producen los linfocitos T activados. Actúa sobre los **progenitores multipotentes** de la médula ósea, sosteniendo su proliferación y diferenciación hacia varios linajes. Es la única de la lista que actúa en la hematopoyesis.\n\n- La **IL-17** es la citocina efectora de los Th17: recluta neutrófilos.\n- El **TNF-α** es una citocina inflamatoria.\n- La **IL-6** es inflamatoria y dispara la fase aguda, aunque también ayuda a que el linfocito B termine como célula plasmática.",
+      "reviewNote": "La citocina linfopoyética clásica es la IL-7, que no está entre las opciones. La IL-3 actúa sobre progenitores multipotentes, sobre todo en el linaje mieloide, y la IL-6 también participa en la diferenciación del linfocito B a célula plasmática. Se respetó la clave.",
+      "tags": [
+        "Citocinas",
+        "Médula ósea"
+      ]
+    },
+    {
+      "id": "q25",
+      "stem": "En clase del Dr. Antúnez se mostró que el tipo de interferones tipo II eran:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Beta",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL28",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Alfa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Gamma",
+          "correct": true
+        }
+      ],
+      "explanation": "Los interferones se agrupan en tres tipos:\n- **tipo I**: **α** y **β**, que produce casi cualquier célula infectada por un virus (sobre todo las dendríticas plasmocitoides);\n- **tipo II**: **γ**, el único de su tipo. Lo producen las NK, los Th1 y los T citotóxicos, y activa a los macrófagos;\n- **tipo III**: **λ** (IL-28A/B e IL-29), que actúa sobre todo en los epitelios.\n\nPor eso la **IL-28** no es de tipo II sino de tipo III.",
+      "tags": [
+        "Citocinas",
+        "Inmunidad antiviral"
+      ]
+    }
+  ]
+}

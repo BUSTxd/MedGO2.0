@@ -32,6 +32,7 @@ const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey }> = {
   // De pago como el resto de Inmunología: sin `free`, lo abre el plan del tramo.
   'inmunologia/final-2024-2': {},
   'inmunologia/final-2023': {},
+  'inmunologia/final-2022': {},
   'inmunologia/final-2025': {},
   'inmunologia/extra-hemato': {},
   'inmunologia/extra-pato': {},

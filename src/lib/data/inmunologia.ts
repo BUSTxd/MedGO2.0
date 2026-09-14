@@ -603,8 +603,9 @@ export const semanas: Semana[] = [
         nota: 'Vale 40% de la nota final y exige un mínimo de 11.00 de forma independiente. Quien desapruebe rinde el Examen Sustitutorio, cuya nota máxima es 11.',
         // Banqueos del final, de pago como el resto del curso: el 2025 (20 casos
         // del repaso final de los docentes), el 2024-II (27 preguntas del PDF, no
-        // las 60 del examen real) y el 2023 (42, sacadas de un apunte con la
-        // clave; ver CLAUDE.md). El más reciente abre por defecto; los intentos se
+        // las 60 del examen real), el 2023 (42, sacadas de un apunte con la
+        // clave; ver CLAUDE.md) y el 2022 (25, transcritas de capturas del
+        // examen). El más reciente abre por defecto; los intentos se
         // guardan por clave, así que cambiar cuál es `key` no borra ninguno.
         // Detrás de los años, dos banqueos sin año (40 + 40) rotulados «Extra»:
         // su enfoque va en `hints`, que el selector enseña al pasar el cursor.
@@ -613,6 +614,7 @@ export const semanas: Semana[] = [
           groups: [
             'inmunologia/final-2024-2',
             'inmunologia/final-2023',
+            'inmunologia/final-2022',
             'inmunologia/extra-hemato',
             'inmunologia/extra-pato',
           ],
@@ -620,6 +622,7 @@ export const semanas: Semana[] = [
             'inmunologia/final-2025': '2025',
             'inmunologia/final-2024-2': '2024-II',
             'inmunologia/final-2023': '2023',
+            'inmunologia/final-2022': '2022',
             'inmunologia/extra-hemato': 'Extra 1',
             'inmunologia/extra-pato': 'Extra 2',
           },
