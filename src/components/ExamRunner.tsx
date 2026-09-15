@@ -19,6 +19,12 @@ interface ExamOption {
   id: string;
   text: string;
   correct: boolean;
+  /**
+   * Alternativa que ES una imagen (las seis células de la 23 del Final 2023 de
+   * Inmunología). Con que una la lleve, la pregunta pinta sus alternativas como
+   * fichas: la foto se amplía y la barra de abajo marca la respuesta.
+   */
+  image?: { src: string; w: number; h: number; alt?: string };
 }
 
 interface ExamQuestion {
@@ -50,6 +56,12 @@ interface ExamQuestion {
   tags?: string[];
   /** La misma pregunta en otra versión; el alumno elige cuál ver con un interruptor. */
   variante?: VariantePregunta;
+  /**
+   * No barajar las alternativas: van en el orden del JSON. Sólo para las que
+   * traen su letra dentro de la imagen, o la letra del botón y la de la foto
+   * dejarían de coincidir.
+   */
+  ordenFijo?: boolean;
 }
 
 /**
@@ -711,6 +723,15 @@ function VisorImagen({ img, onClose }: { img: Ampliada; onClose: () => void }) {
 /** `sizes` de una figura sola (a todo el bloque) y de las que van de a dos por fila. */
 const SIZES_UNA = '(max-width: 600px) 100vw, 620px';
 const SIZES_PAR = '(max-width: 600px) 100vw, 310px';
+/** Ficha de una alternativa con imagen: tres por fila, dos en móvil. */
+const SIZES_OPCION = '(max-width: 600px) 50vw, 210px';
+
+/**
+ * Alto máximo de una figura muy vertical. A todo el ancho, una molécula de MHC
+ * de 457×1000 mediría 1360 px y dejaría las alternativas a dos pantallas; con
+ * el tope, la figura se estrecha en vez de estirarse. Las demás no cambian.
+ */
+const ALTO_MAX_FIGURA = 480;
 
 /** Todas las imágenes del enunciado, en orden: `image` primero y luego `extraImages`. */
 function figurasDe(q: ExamQuestion): Ampliada[] {
@@ -758,10 +779,14 @@ function FiguraAmpliable({
   variante?: 'pregunta' | 'explicacion';
   sizes?: string;
 }) {
+  // Sólo las MUY verticales: por debajo de 1,4 hay figuras con texto (la tabla
+  // del QuantiFERON, 1040×1132) que al estrecharse se volverían ilegibles.
+  const vertical = h > w * 1.4;
   return (
     <button
       type="button"
       className={`${styles.figura} ${variante === 'explicacion' ? styles.figuraExplicacion : ''}`}
+      style={vertical ? { maxWidth: Math.round((ALTO_MAX_FIGURA * w) / h) } : undefined}
       onClick={() => onAmpliar({ src, alt, w, h })}
       aria-label="Ampliar imagen"
     >
@@ -992,8 +1017,10 @@ export default function ExamRunner({
     if (!payload) return null;
     return shuffle(payload.questions).map(q => ({
       ...q,
-      options: shuffle(q.options),
-      ...(q.variante ? { variante: { ...q.variante, options: shuffle(q.variante.options) } } : {}),
+      options: q.ordenFijo ? q.options : shuffle(q.options),
+      ...(q.variante
+        ? { variante: { ...q.variante, options: q.ordenFijo ? q.variante.options : shuffle(q.variante.options) } }
+        : {}),
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payload, runId, stage]);
@@ -1234,17 +1261,31 @@ export default function ExamRunner({
                 // La variante sólo trae figuras propias si declara `image`. Cada
                 // juego lleva el `sizes` con el que se pinta, o no habría cache hit.
                 const juegos = [figurasDe(q), q.variante?.image ? figurasDe(vistaDe(q, true)) : []];
-                return juegos.flatMap((figuras, j) => figuras.map((f, i) => (
-                  <Image
-                    key={`${q.id}-${j}-${i}`}
-                    src={f.src}
-                    alt=""
-                    width={f.w}
-                    height={f.h}
-                    sizes={figuras.length > 1 ? SIZES_PAR : SIZES_UNA}
-                    loading="eager"
-                  />
-                )));
+                const deOpciones = [...q.options, ...(q.variante?.options ?? [])].flatMap(o => (o.image ? [o.image] : []));
+                return [
+                  ...juegos.flatMap((figuras, j) => figuras.map((f, i) => (
+                    <Image
+                      key={`${q.id}-${j}-${i}`}
+                      src={f.src}
+                      alt=""
+                      width={f.w}
+                      height={f.h}
+                      sizes={figuras.length > 1 ? SIZES_PAR : SIZES_UNA}
+                      loading="eager"
+                    />
+                  ))),
+                  ...deOpciones.map((f, i) => (
+                    <Image
+                      key={`${q.id}-op-${i}`}
+                      src={f.src}
+                      alt=""
+                      width={f.w}
+                      height={f.h}
+                      sizes={SIZES_OPCION}
+                      loading="eager"
+                    />
+                  )),
+                ];
               })}
             </div>
           )}
@@ -1383,38 +1424,88 @@ export default function ExamRunner({
                     return figuras.length > 1 ? <div className={styles.figuras}>{lista}</div> : lista;
                   })()}
 
-                  <div className={styles.opciones}>
-                    {current.options.map((opt, i) => {
-                      const isPicked = picked === opt.id;
-                      const showFeedback = picked !== null;
-                      const cls = [styles.opcion];
-                      if (showFeedback) {
-                        if (opt.correct) cls.push(styles.opcionOk);
-                        else if (isPicked) cls.push(styles.opcionMal);
-                        else cls.push(styles.opcionApagada);
-                      }
-                      const label = LETRAS[i] ?? String(i + 1);
-                      return (
-                        <button
-                          key={opt.id}
-                          type="button"
-                          className={cls.join(' ')}
-                          style={{ '--i': i } as React.CSSProperties}
-                          onClick={() => handlePick(opt.id)}
-                          disabled={showFeedback}
-                        >
-                          <span className={styles.opcionLetra}>{label}</span>
-                          <span className={styles.opcionTexto}>{opt.text}</span>
-                          {showFeedback && opt.correct && (
-                            <span className={`${styles.opcionMarca} ${styles.marcaOk}`}><IconoCheck /></span>
-                          )}
-                          {showFeedback && isPicked && !opt.correct && (
-                            <span className={`${styles.opcionMarca} ${styles.marcaMal}`}><IconoCruz /></span>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
+                  {/* Con alternativas que son imágenes, la lista pasa a ser una
+                      rejilla de fichas: la foto se AMPLÍA y la barra de abajo
+                      MARCA. Si la foto también marcara, quien sólo quiere verla
+                      de cerca respondería sin querer, y eso no se deshace. */}
+                  {(() => {
+                    const conImagen = current.options.some(o => o.image);
+                    return (
+                      <div className={`${styles.opciones} ${conImagen ? styles.opcionesImagen : ''}`}>
+                        {current.options.map((opt, i) => {
+                          const isPicked = picked === opt.id;
+                          const showFeedback = picked !== null;
+                          const estado = !showFeedback ? null
+                            : opt.correct ? 'ok'
+                            : isPicked ? 'mal'
+                            : 'apagada';
+                          const cls = [styles.opcion];
+                          if (estado === 'ok') cls.push(styles.opcionOk);
+                          else if (estado === 'mal') cls.push(styles.opcionMal);
+                          // En una ficha se apaga la ficha entera, no sólo su barra.
+                          else if (estado === 'apagada' && !conImagen) cls.push(styles.opcionApagada);
+                          const label = LETRAS[i] ?? String(i + 1);
+                          const boton = (
+                            <button
+                              key={opt.id}
+                              type="button"
+                              className={cls.join(' ')}
+                              style={{ '--i': i } as React.CSSProperties}
+                              onClick={() => handlePick(opt.id)}
+                              disabled={showFeedback}
+                              aria-label={conImagen ? `Marcar la alternativa ${label}` : undefined}
+                            >
+                              <span className={styles.opcionLetra}>{label}</span>
+                              <span className={styles.opcionTexto}>{opt.text}</span>
+                              {showFeedback && opt.correct && (
+                                <span className={`${styles.opcionMarca} ${styles.marcaOk}`}><IconoCheck /></span>
+                              )}
+                              {showFeedback && isPicked && !opt.correct && (
+                                <span className={`${styles.opcionMarca} ${styles.marcaMal}`}><IconoCruz /></span>
+                              )}
+                            </button>
+                          );
+                          if (!conImagen) return boton;
+                          const fichaCls = [styles.opcionImg];
+                          if (estado === 'ok') fichaCls.push(styles.opcionImgOk);
+                          else if (estado === 'mal') fichaCls.push(styles.opcionImgMal);
+                          else if (estado === 'apagada') fichaCls.push(styles.opcionImgApagada);
+                          const img = opt.image;
+                          return (
+                            <div key={opt.id} className={fichaCls.join(' ')} style={{ '--i': i } as React.CSSProperties}>
+                              {img && (
+                                <button
+                                  type="button"
+                                  className={styles.opcionImgFoto}
+                                  onClick={() => setAmpliada({
+                                    src: img.src,
+                                    alt: img.alt ?? `Alternativa ${label}`,
+                                    w: img.w,
+                                    h: img.h,
+                                  })}
+                                  aria-label={`Ampliar la imagen de la alternativa ${label}`}
+                                >
+                                  <Image
+                                    src={img.src}
+                                    alt={img.alt ?? `Alternativa ${label}`}
+                                    width={img.w}
+                                    height={img.h}
+                                    sizes={SIZES_OPCION}
+                                    className={styles.figuraImg}
+                                  />
+                                  <span className={styles.figuraChip}>
+                                    <IconoLupa />
+                                    Ampliar
+                                  </span>
+                                </button>
+                              )}
+                              {boton}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  })()}
 
                   {/* La explicación va DEBAJO de las alternativas: primero el
                       alumno ve el ✓/✕ sobre la suya y después lee el porqué.

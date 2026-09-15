@@ -2,7 +2,7 @@
   "version": 1,
   "key": "inmunologia/final-2023",
   "title": "Examen Final — Inmunología",
-  "duration_min": 122,
+  "duration_min": 136,
   "questions": [
     {
       "id": "p1",
@@ -2484,6 +2484,357 @@
       "tags": [
         "Órganos linfoides secundarios",
         "Tráfico celular"
+      ]
+    },
+    {
+      "id": "ex23",
+      "stem": "¿Cuál o cuáles de las siguientes células puede encontrar en la población de células de color azul de la citometría de flujo de sangre total mostrada en la imagen?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p06_q23_citometria_poblaciones.avif",
+      "imageAlt": "Citometría de flujo de sangre total, FSC-A contra SSC-A, con tres poblaciones rodeadas: roja abajo, verde al medio y azul arriba a la derecha",
+      "imageW": 800,
+      "imageH": 729,
+      "ordenFijo": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "",
+          "correct": true,
+          "image": {
+            "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p07_q23_celula_a.avif",
+            "w": 314,
+            "h": 354,
+            "alt": "Célula A del frotis"
+          }
+        },
+        {
+          "id": "b",
+          "text": "",
+          "correct": true,
+          "image": {
+            "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p07_q23_celula_b.avif",
+            "w": 334,
+            "h": 354,
+            "alt": "Célula B del frotis"
+          }
+        },
+        {
+          "id": "c",
+          "text": "",
+          "correct": false,
+          "image": {
+            "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p07_q23_celula_c.avif",
+            "w": 307,
+            "h": 354,
+            "alt": "Célula C del frotis"
+          }
+        },
+        {
+          "id": "d",
+          "text": "",
+          "correct": false,
+          "image": {
+            "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p07_q23_celula_d.avif",
+            "w": 311,
+            "h": 331,
+            "alt": "Célula D del frotis"
+          }
+        },
+        {
+          "id": "e",
+          "text": "",
+          "correct": false,
+          "image": {
+            "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p07_q23_celula_e.avif",
+            "w": 332,
+            "h": 331,
+            "alt": "Célula E del frotis"
+          }
+        },
+        {
+          "id": "f",
+          "text": "",
+          "correct": false,
+          "image": {
+            "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p07_q23_celula_f.avif",
+            "w": 308,
+            "h": 331,
+            "alt": "Célula F del frotis"
+          }
+        }
+      ],
+      "explanation": "En un gráfico **FSC** (tamaño) contra **SSC** (complejidad interna, que dan sobre todo los gránulos) la sangre total se separa en tres nubes: los **linfocitos** abajo (roja: pequeños y casi sin gránulos), los **monocitos** algo más arriba (verde) y los **granulocitos** arriba y a la derecha (azul), porque sus gránulos dispersan mucha luz hacia el lado. Lo negro, en la esquina, son restos celulares.\n\nEn la nube azul están el **neutrófilo** (A) y el **eosinófilo** (B), y cualquiera de las dos cuenta como acierto.\n\n- **D** es un **basófilo**. Es un granulocito, pero en citometría es la excepción: su dispersión lateral es baja y en el FSC/SSC cae junto a los linfocitos, no en la nube azul. Por eso se lo identifica con marcadores (CD123, FcεRI) y no por su dispersión.\n- **C** es un **linfocito** pequeño: nube roja.\n- **E** y **F** son células grandes de citoplasma amplio y pálido, con aspecto de macrófago (E con material fagocitado). Son células de los tejidos, no de la sangre, y no tienen los gránulos que dan un SSC alto.",
+      "reviewNote": "El examen admite varias respuestas («Cuál o cuáles»): la A y la B son correctas y cualquiera de las dos cuenta como acierto. La D (basófilo) es un granulocito, pero en FSC/SSC no cae en la población azul sino junto a los linfocitos. Las seis células eran las alternativas de esta pregunta; el OCR del HTML las había puesto en la 24.",
+      "tags": [
+        "Técnicas inmunológicas",
+        "Células del sistema inmune",
+        "Granulocitos"
+      ]
+    },
+    {
+      "id": "ex24",
+      "stem": "Usted realiza una biopsia de médula ósea a un paciente de 4 años que acude por una serie de síntomas. Se muestra la biopsia en la imagen. Además se muestra un frotis de sangre periférica donde se evidencia gran cantidad de unas células de tamaño mayor a lo usual y con nucléolo prominente. Al magnificar la imagen de la biopsia de médula ósea, usted encuentra las mismas células ocupando prácticamente toda la médula ósea. ¿Cuál de los siguientes es más probable encontrar en el hemograma del paciente?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p07_q24_medula_osea_frotis.avif",
+      "imageAlt": "A la izquierda, biopsia de médula ósea hipercelular; a la derecha, frotis de sangre periférica con células grandes de núcleo intensamente teñido",
+      "imageW": 1000,
+      "imageH": 452,
+      "options": [
+        {
+          "id": "a",
+          "text": "Leucocitosis + anemia + trombocitopenia",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Neutropenia + policitemia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Trombocitosis + desviación izquierda",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Bicitopenia + neutrofilia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Leucemia + anemia + neutrofilia",
+          "correct": false
+        }
+      ],
+      "explanation": "Células grandes con nucléolo prominente que ocupan casi toda la médula y salen a la sangre son **blastos**: en un niño de 4 años, lo más probable es una **leucemia aguda** (a esa edad, la linfoblástica es la más frecuente). Los blastos desplazan a los precursores normales de la médula: faltan glóbulos rojos (**anemia**) y plaquetas (**trombocitopenia**), y el recuento de leucocitos sube por los propios blastos (**leucocitosis**), aunque los neutrófilos maduros suelen estar bajos.\n\n- Con la médula ocupada por blastos no puede haber **policitemia** ni **trombocitosis**.\n- La **neutrofilia** y la **desviación izquierda** son la respuesta de una médula sana a una infección, no de una médula invadida.\n- «Leucemia» es el diagnóstico, no un hallazgo del hemograma.",
+      "tags": [
+        "Hematología",
+        "Médula ósea",
+        "Caso clínico"
+      ]
+    },
+    {
+      "id": "ex43",
+      "stem": "¿Qué enunciado es correcto sobre la molécula mostrada en la imagen?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p15_q43_molecula_MHC_II.avif",
+      "imageAlt": "Esquema de una molécula de membrana de dos cadenas, con los dominios α1 y α2 en una y β1 y β2 en la otra",
+      "imageW": 457,
+      "imageH": 1000,
+      "options": [
+        {
+          "id": "a",
+          "text": "Está presente en plaquetas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "En su formación está implicada la recombinación V(D)J",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Permite expresar péptidos endógenos y exógenos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se une con su ligando en el retículo endoplásmico",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Interactúa con HLA-DM en la vía de procesamiento del péptido",
+          "correct": true
+        },
+        {
+          "id": "f",
+          "text": "El gen que la codifica se encuentra en el cromosoma 8",
+          "correct": false
+        }
+      ],
+      "explanation": "Dos cadenas, **α** y **β**, cada una con dos dominios (α1, α2, β1, β2) y ancladas a la membrana: es un **MHC de clase II**, con el surco formado por α1 y β1. En el retículo endoplásmico nace unida a la **cadena invariante**, que le tapa el surco. En el endosoma esa cadena se degrada hasta dejar sólo el fragmento **CLIP**, y **HLA-DM** lo retira para que entre un péptido exógeno.\n\n- Las **plaquetas** no expresan MHC II (sí MHC I): el MHC II es de las presentadoras profesionales (dendríticas, macrófagos, linfocitos B) y del epitelio tímico.\n- La **recombinación V(D)J** es de los genes del TCR y del BCR; los del MHC no se reordenan.\n- El MHC II presenta péptidos **exógenos**, captados por endocitosis. Los endógenos son del MHC I; que algunos lleguen al MHC II por autofagia es la excepción, no su vía.\n- Quien carga su péptido en el **retículo endoplásmico** es el MHC I; el II lo hace en el endosoma.\n- Los genes del MHC (HLA) están en el **cromosoma 6**.",
+      "tags": [
+        "MHC",
+        "Presentación antigénica"
+      ]
+    },
+    {
+      "id": "ex46",
+      "stem": "¿Por cuál de las zonas señaladas ingresan al timo la gran mayoría de precursores de linfocitos T provenientes de la médula ósea?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p15_q46_histologia_timo.avif",
+      "imageAlt": "Corte histológico de un lobulillo del timo con ocho zonas señaladas de la A a la H",
+      "imageW": 557,
+      "imageH": 800,
+      "ordenFijo": true,
+      "options": [
+        {
+          "id": "a",
+          "text": "Zona A",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Zona B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Zona C",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Zona D",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Zona E",
+          "correct": false
+        },
+        {
+          "id": "f",
+          "text": "Zona F",
+          "correct": false
+        },
+        {
+          "id": "g",
+          "text": "Zona G",
+          "correct": false
+        },
+        {
+          "id": "h",
+          "text": "Zona H",
+          "correct": false
+        }
+      ],
+      "explanation": "Los precursores llegan desde la médula ósea por la sangre y salen de los vasos en la **unión corticomedular** (C), el límite entre la corteza, oscura y densa, y la médula, más clara. Desde ahí recorren la corteza hacia la cápsula mientras maduran (de doble negativos a doble positivos, con la selección positiva) y vuelven hacia la médula (selección negativa), de donde salen como T maduros.\n\n- **A** es la **cápsula** y **B**, un **tabique** de tejido conectivo que la prolonga hacia dentro.\n- **E** es la **corteza**: densa, llena de timocitos en maduración.\n- **F** y **H** caen en la **médula**, más clara.\n- **D** y **G** son **corpúsculos de Hassall**, propios de la médula.",
+      "tags": [
+        "Timo",
+        "Órganos linfoides primarios"
+      ]
+    },
+    {
+      "id": "ex47",
+      "stem": "El siguiente gráfico muestra distintas poblaciones de timocitos. El eje Y representa el número de timocitos y el eje X representa la afinidad del TCR para el complejo péptido propio-MHC. ¿Qué es más probable que suceda con las células de la población C?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p16_q47_afinidad_TCR.avif",
+      "imageAlt": "Gráfico del número de timocitos según la afinidad de su TCR por péptido propio y MHC propio, con cuatro poblaciones A, B, C y D de menor a mayor afinidad",
+      "imageW": 900,
+      "imageH": 675,
+      "options": [
+        {
+          "id": "a",
+          "text": "Sufran necrosis",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Sufran apoptosis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Expresen FOXP3",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Hagan anergia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Sufran agotamiento",
+          "correct": false
+        },
+        {
+          "id": "f",
+          "text": "Sean «ignoradas»",
+          "correct": false
+        }
+      ],
+      "explanation": "El gráfico ordena a los timocitos por la **afinidad** de su TCR por lo propio:\n- **A**, afinidad nula: no reciben la señal de supervivencia y mueren por abandono (fallan la selección positiva).\n- **B**, afinidad baja: pasan la **selección positiva** y salen como T vírgenes convencionales.\n- **C**, afinidad intermedia-alta: demasiada para un T convencional, pero no tanta como para eliminarlos. Se desvían a **T reguladores** y **expresan FOXP3** (selección agonista).\n- **D**, afinidad alta: **selección negativa**, mueren por **apoptosis**.\n\nLa apoptosis es, entonces, lo de D (y lo de A), no lo de C. Los timocitos no mueren por **necrosis**. La **anergia** y el **agotamiento** son destinos de T maduros en la periferia, y la **ignorancia** es la de un T que nunca encuentra su antígeno.",
+      "tags": [
+        "Timo",
+        "Tolerancia"
+      ]
+    },
+    {
+      "id": "ex54",
+      "stem": "¿Cuál es la mejor interpretación del siguiente hemograma?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p17_q54_hemograma.avif",
+      "imageAlt": "Hemograma con leucocitos 2.5 x10³/µL; segmentados 12 %, linfocitos 64 %, monocitos 20 %, eosinófilos 4 %",
+      "imageW": 900,
+      "imageH": 675,
+      "options": [
+        {
+          "id": "a",
+          "text": "Leucopenia + neutropenia",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Neutropenia + linfocitosis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Monocitosis + linfopenia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Monocitopenia + leucopenia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitosis + leucopenia + neutropenia",
+          "correct": false
+        }
+      ],
+      "explanation": "Un porcentaje alto no es un aumento: cada población hay que pasarla a **número absoluto** (porcentaje × leucocitos).\n- Leucocitos **2,5** ×10³/µL: **leucopenia**.\n- Segmentados 12 % → **0,3**: **neutropenia**, muy por debajo de 1,8.\n- Linfocitos 64 % → **1,6** y monocitos 20 % → **0,5**: normales. Parecen altos sólo porque faltan neutrófilos; son aumentos **relativos**.\n\nPor eso sobran la linfocitosis de la b y la e, la monocitosis de la c y la monocitopenia de la d. Con el rango de niños, los linfocitos (1,6) quedarían algo bajos, pero la respuesta no cambia: la a es la única sin un dato falso.",
+      "reviewNote": "El examen original no trae el enunciado de esta pregunta, sólo la figura y las alternativas: se escribió uno genérico.",
+      "tags": [
+        "Hemograma y reactantes de fase aguda"
+      ]
+    },
+    {
+      "id": "ex55",
+      "stem": "Mario (19 años) viene por fiebre y dolor de garganta desde hace 8 días. Tiene ganglios linfáticos cervicales (del cuello) aumentados de tamaño. La garganta está inflamada. ¿Cuál de las siguientes es la mejor interpretación del hemograma?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p18_q55_hemograma.avif",
+      "imageAlt": "Hemograma con leucocitos 11.0 x10³/µL; segmentados 28 %, linfocitos 59 %, monocitos 2 %, eosinófilos 1 %, otros 10 %",
+      "imageW": 900,
+      "imageH": 675,
+      "options": [
+        {
+          "id": "a",
+          "text": "Neutropenia + linfocitosis",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Neutropenia relativa + linfocitosis",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Eosinofilia + neutropenia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hemograma normal",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Leucocitosis + linfocitosis",
+          "correct": false
+        }
+      ],
+      "explanation": "Fiebre, faringitis y ganglios cervicales en un joven sugieren una **mononucleosis infecciosa** (virus de Epstein-Barr). En números absolutos:\n- Leucocitos **11,0** ×10³/µL: dentro del rango (hasta 11,3). No hay leucocitosis.\n- Linfocitos 59 % → **6,5**: **linfocitosis** (el máximo es 5,0). El 10 % de «otros» serían los **linfocitos atípicos** (reactivos) de la mononucleosis.\n- Segmentados 28 % → **3,1**: normales en número absoluto (1,8–7,7). Sólo el porcentaje está bajo: **neutropenia relativa**.\n- Eosinófilos 1 % → 0,11: normales.\n\nLa a toma la neutropenia por absoluta, la c inventa una eosinofilia y la e, una leucocitosis.",
+      "tags": [
+        "Hemograma y reactantes de fase aguda",
+        "Caso clínico"
       ]
     }
   ]

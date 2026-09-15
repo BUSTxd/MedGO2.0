@@ -951,6 +951,116 @@
 
 .opcionApagada { opacity: 0.4; }
 
+/* ── Alternativas con imagen ─────────────────────────────────
+   Cuando las alternativas son fotos, la lista pasa a rejilla de fichas: foto
+   arriba (amplía) y la barra de la alternativa abajo (marca). Es la única
+   excepción a «las alternativas son una lista»: seis células en fila de a una
+   serían seis pantallas. */
+.opcionesImagen {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 620px;
+}
+
+@media (max-width: 600px) {
+  .opcionesImagen {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+}
+
+.opcionImg {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card-bg);
+  transition: border-color 0.2s, box-shadow 0.2s, opacity 0.25s;
+  animation: opcionEntra 0.34s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(0.1s + var(--i, 0) * 0.055s);
+}
+
+.opcionImg:hover { border-color: rgba(var(--acc-rgb), 0.4); }
+
+/* Las micrografías vienen sobre blanco: el fondo de la foto es blanco en los
+   dos temas, igual que una lámina. */
+.opcionImgFoto {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1.08;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: #fff;
+  cursor: zoom-in;
+}
+
+/* Los recortes no miden todos lo mismo (1:0,99 a 1:1,15) y, a su tamaño, las
+   barras de una misma fila quedaban a distinta altura. La ficha fija la
+   proporción y la foto se ancla arriba a la izquierda, donde va su letra; el
+   visor sigue mostrándola entera. */
+.opcionImgFoto .figuraImg {
+  height: 100%;
+  object-fit: cover;
+  object-position: left top;
+}
+
+.opcionImgFoto:focus-visible {
+  outline: 2px solid rgba(var(--acc-rgb), 0.6);
+  outline-offset: -2px;
+}
+
+.opcionImgFoto .figuraChip {
+  right: 8px;
+  bottom: 8px;
+  padding: 4px 9px;
+  font-size: 10.5px;
+}
+
+.opcionImgFoto:hover .figuraChip {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* La barra ES la alternativa. Entra con su ficha (no por su cuenta), sin el
+   filete de la lista ni el desplazamiento lateral del hover. */
+.opcionImg .opcion {
+  align-items: center;
+  padding: 10px 12px;
+  border-top: 1px solid var(--card-border);
+  border-radius: 0;
+  animation: none;
+}
+
+.opcionImg .opcion::before { border-radius: 0; }
+.opcionImg .opcion::after { display: none; }
+.opcionImg .opcion:hover:not(:disabled) { transform: none; }
+
+.opcionImg .opcionTexto {
+  padding-top: 0;
+  font-size: 13.5px;
+}
+
+.opcionImg .opcionMarca { margin-top: 0; }
+
+.opcionImgOk {
+  border-color: rgba(var(--ok-rgb), 0.65);
+  box-shadow: 0 0 0 1px rgba(var(--ok-rgb), 0.35);
+}
+
+/* El fallo sacude la ficha entera: la barra sola quedaría moviéndose bajo una
+   foto quieta. */
+.opcionImgMal {
+  border-color: rgba(var(--mal-rgb), 0.6);
+  animation: falloSacude 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.opcionImgApagada { opacity: 0.45; }
+
 /* ── Explicación ─────────────────────────────────────────────
    Ni panel ni borde lateral: un filete de acento que se desvanece hacia la
    derecha y el rótulo montado sobre él. */
@@ -1738,6 +1848,8 @@
   .pregunta,
   .opcion,
   .opcionMal,
+  .opcionImg,
+  .opcionImgMal,
   .opcionMarca,
   .cronoExcedido,
   .notaWrap,

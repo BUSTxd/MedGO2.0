@@ -352,9 +352,17 @@ la cadena pesada y cambia con el isotipo— y se respetó con `reviewNote`, sin 
 
 **Después llegó el examen original del 2023** (`EXAMEN_INMUNOLOGIA_2023.html`, 60 preguntas, **sin
 ninguna correcta marcada** y con 8 vacías, sólo con una «F»). Se cruzó pregunta por pregunta con las
-42 del apunte, mirando también las figuras: 26 se repiten y **26 faltaban**. Las 19 sin imagen ya
-están (ids `ex` + su número en el original, p. ej. `ex45`), con la clave resuelta aquí. Quedan las 7
-con figura: la 23, 24, 43, 46, 47, 54 y 55. A la 23 le faltan las alternativas y a la 54 el enunciado.
+42 del apunte, mirando también las figuras: 26 se repiten y **26 faltaban**. Ya están las 26 (ids `ex`
++ su número en el original, p. ej. `ex45`), con la clave resuelta aquí: el banqueo tiene **68**. Las
+figuras de las 7 con imagen llegaron limpias en AVIF y se subieron tal cual. A la 54 le falta el
+enunciado en el original: lleva uno genérico y `reviewNote`.
+- **La 23 no tenía alternativas porque sus alternativas son una lámina**: seis células A–F, que el
+  OCR del HTML asignó a la 24. Se partió en seis fichas (`p07_q23_celula_a…f.avif`) buscando las
+  franjas blancas entre paneles. Cortar obliga a recodificar, así que va a AVIF q72 4:4:4, alto a
+  propósito.
+- **La clave de la 23 es A y B, no D.** En un FSC/SSC la nube azul (SSC alto) son neutrófilos y
+  eosinófilos. El basófilo (D) es un granulocito, pero su dispersión lateral es baja y cae junto a
+  los linfocitos: es la trampa de la pregunta, no su respuesta.
 Tres cosas que sirvieron:
 - **Una pregunta del original que se repite en el apunte puede traer las alternativas REALES**
   donde el apunte tenía reconstruidas. Esas van como `variante` (ver abajo), no como pregunta nueva.
@@ -383,6 +391,23 @@ de la base. Si se cambia de versión tras responder, la otra sale ya resuelta, c
 explicación, sin volver a preguntar. Lo que la variante no declara se hereda (figura, enunciado),
 **salvo `reviewNote`**: heredar «se reconstruyeron las alternativas» sobre las originales mentiría.
 Vuelve a la base al pasar de pregunta. Hoy la llevan p10, p15, p16, p21 y p27 del 2023.
+
+**Alternativas que son imágenes (`image` en la opción).** Con que una opción la lleve, la lista de
+alternativas pasa a ser una **rejilla de fichas** (3 por fila, 2 en móvil): la foto arriba **amplía**
+con el visor de siempre y la barra de abajo, con la letra, **marca** (o las teclas A–F). Si la foto
+también marcara, quien sólo quiere verla de cerca respondería sin querer, y una respuesta no se
+deshace. En la ficha, el acierto, el fallo (la sacudida) y el atenuado se aplican a la ficha entera,
+no sólo a la barra. La foto tiene proporción fija (`aspect-ratio`) y se ancla arriba a la izquierda:
+los recortes no miden lo mismo y, sin eso, las barras de una fila quedaban a distinta altura.
+
+**`ordenFijo` en la pregunta** desactiva el barajado de sus alternativas. Sólo para las que llevan
+la letra dentro de la imagen (las células de la 23) o que son letras de la figura («Zona A…H», la 46):
+barajadas, la letra del botón dejaría de coincidir con la de la foto. No filtra la respuesta, porque
+en esas preguntas el orden no dice nada.
+
+**Figuras muy verticales**: si miden más de 1,4 veces su ancho de alto, el runner limita el alto a
+480 px en vez de estirarlas a todo el ancho (la MHC II de la 43, 457×1000, medía 1360 px). El
+umbral deja fuera a propósito la tabla del QuantiFERON (1040×1132), que estrechada sería ilegible.
 
 **Inmunología · Examen Final 2025** (`inmunologia/final-2025`, «2025», de pago, y ahora la `key`
 por defecto del `examen`: cambiar cuál es la `key` no borra intentos, que se guardan por clave):
