@@ -63,7 +63,7 @@ const ALLOWED = new Set([
   // Inmunología: con prefijo, a diferencia de sus PDF (`t-10`, `sgp-1`…),
   // porque `t-N` es un nombre que cualquier otro curso podría usar.
   'inm-t-1', 'inm-t-2', 'inm-t-3', 'inm-t-4', 'inm-t-5', 'inm-t-6', 'inm-t-7',
-  'inm-t-8', 'inm-t-9', 'inm-t-11', 'inm-t-12', 'inm-t-13', 'inm-t-14',
+  'inm-t-8', 'inm-t-9', 'inm-t-10', 'inm-t-11', 'inm-t-12', 'inm-t-13', 'inm-t-14',
   'loc-clase-2',
   'loc-clase-2-osteo',
   'loc-clase-3',
@@ -126,6 +126,7 @@ const FILE_ALIAS: Record<string, string> = {
   'inm-t-7': 'inmunologia/inm-t-7',
   'inm-t-8': 'inmunologia/inm-t-8',
   'inm-t-9': 'inmunologia/inm-t-9',
+  'inm-t-10': 'inmunologia/inm-t-10',
   'inm-t-11': 'inmunologia/inm-t-11',
   'inm-t-12': 'inmunologia/inm-t-12',
   'inm-t-13': 'inmunologia/inm-t-13',

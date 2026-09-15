@@ -424,7 +424,11 @@ export const semanas: Semana[] = [
           'Recirculación linfocitaria',
         ],
         docentes: [],
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-10', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'h-2',
