@@ -178,7 +178,14 @@ const LETRAS = 'ABCDEFGHIJ';
  * segmento y vuelve a ser una barra continua: con 100 preguntas cada marca
  * mediría menos de un píxel y dejaría de informar de nada.
  */
-const MAX_SEGMENTOS = 60;
+const MAX_SEGMENTOS = 80;
+
+/**
+ * Desde aquí el rastro junta sus marcas (hueco de 2 px en vez de 3): así el
+ * Final 2023 de Inmunología, con 61 preguntas, conserva el mismo rastro que los
+ * demás exámenes y en móvil cada marca sigue midiendo casi 2 px.
+ */
+const DENSO_DESDE = 40;
 
 /**
  * Fisher-Yates: cada posición recibe un índice al azar entre los que quedan, así
@@ -836,7 +843,10 @@ function Rastro({ marcas, final = false }: { marcas: MarcaRastro[]; final?: bool
       : styles.segPendiente;
 
   return (
-    <div className={`${styles.rastro} ${final ? styles.rastroFinal : ''}`} aria-hidden>
+    <div
+      className={`${styles.rastro} ${final ? styles.rastroFinal : ''} ${marcas.length > DENSO_DESDE ? styles.rastroDenso : ''}`}
+      aria-hidden
+    >
       {marcas.map((m, i) => (
         <span key={i} className={`${styles.seg} ${claseDe(m)}`} style={{ '--i': i } as React.CSSProperties} />
       ))}

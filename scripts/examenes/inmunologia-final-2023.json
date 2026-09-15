@@ -352,7 +352,7 @@
     },
     {
       "id": "p10",
-      "stem": "¿Cuál de las siguientes gráficas representa correctamente la cinética de los anticuerpos séricos en la respuesta inmune primaria y en la secundaria?",
+      "stem": "¿Cuál de las siguientes gráficas representa correctamente la cinética de los anticuerpos séricos en la respuesta inmune primaria y en la secundaria a un mismo antígeno proteico?",
       "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p04_q13_graficas.avif",
       "imageAlt": "Tres pares de gráficas, A, B y C, cada uno con el título de IgM e IgG en el tiempo durante la respuesta primaria y la secundaria",
       "imageW": 1472,
@@ -374,11 +374,47 @@
           "correct": false
         }
       ],
-      "explanation": "En la **respuesta primaria** la **IgM** aparece primero (pico hacia los 7–10 días) y la **IgG** llega después, con un título moderado. En la **secundaria**, los linfocitos B de memoria ya cambiaron de isotipo: la IgG sube **casi desde el inicio**, más rápido y a un título **mucho mayor**, y se mantiene alta; la IgM queda parecida a la de la primaria. Es lo que muestra B.\n\nEn A la **secundaria** está mal: la IgG tarda lo mismo que en la primaria y sólo llega más alto. En C la **primaria** está mal: la IgG sube a la vez que la IgM, y la IgM domina con un título mayor que el de la propia secundaria.",
+      "explanation": "En la **respuesta primaria** la **IgM** aparece primero (pico hacia los 7–10 días) y la **IgG** llega después, con un título moderado. En la **secundaria**, los linfocitos B de memoria ya cambiaron de isotipo: la IgG sube **casi desde el inicio**, más rápido y a un título **mucho mayor**, y se mantiene alta; la IgM queda parecida a la de la primaria. Es lo que muestra B.\n\nEn A la **secundaria** está mal: la IgG tarda lo mismo que en la primaria y sólo llega más alto. En C la **primaria** está mal: la IgG sube a la vez que la IgM, y la IgM domina con un título mayor que el de la propia secundaria.\n\nEl antígeno es **proteico**, es decir, T-dependiente: eso es lo que permite el cambio de isotipo y la memoria. Con un polisacárido no habría una respuesta secundaria.",
       "reviewNote": "El apunte sólo dice que «la primera imagen está bien» y trae otras dos gráficas incorrectas; se montaron las tres como A, B y C, con la correcta en la B.",
       "tags": [
         "Anticuerpos y respuesta humoral"
-      ]
+      ],
+      "variante": {
+        "rotuloBase": "Reconstruida",
+        "rotulo": "Original",
+        "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p04_q13_graficas_a-e.avif",
+        "imageAlt": "Cinco pares de gráficas, A a E, cada uno con el título de IgM e IgG en el tiempo durante la respuesta primaria y la secundaria",
+        "imageW": 1472,
+        "imageH": 1658,
+        "options": [
+          {
+            "id": "va",
+            "text": "Gráfica A",
+            "correct": false
+          },
+          {
+            "id": "vb",
+            "text": "Gráfica B",
+            "correct": true
+          },
+          {
+            "id": "vc",
+            "text": "Gráfica C",
+            "correct": false
+          },
+          {
+            "id": "vd",
+            "text": "Gráfica D",
+            "correct": false
+          },
+          {
+            "id": "ve",
+            "text": "Gráfica E",
+            "correct": false
+          }
+        ],
+        "explanation": "En la **respuesta primaria** la **IgM** aparece primero (pico hacia los 7–10 días) y la **IgG** llega después, con un título moderado. En la **secundaria**, los linfocitos B de memoria ya cambiaron de isotipo: la IgG sube **casi desde el inicio**, más rápido y a un título **mucho mayor**, y se mantiene alta; la IgM queda parecida a la de la primaria. Es lo que muestra B.\n\n- En **A** la **secundaria** está mal: la IgG tarda lo mismo que en la primaria y sólo llega más alto.\n- En **C** la **primaria** está mal: la IgG sube a la vez que la IgM, y la IgM domina con un título mayor que el de la propia secundaria.\n- En **D** la **secundaria** está al revés: domina la IgM y la IgG queda baja, cuando la memoria es justamente de linfocitos B que ya cambiaron a IgG.\n- En **E** la **primaria** está mal: la IgG sube junto con la IgM y por encima de ella, cuando en una primera exposición todavía no ha habido cambio de isotipo.\n\nEl antígeno es **proteico**, es decir, T-dependiente: eso es lo que permite el cambio de isotipo y la memoria. Con un polisacárido no habría una respuesta secundaria."
+      }
     },
     {
       "id": "p11",

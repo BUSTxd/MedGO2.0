@@ -359,13 +359,20 @@ Tres cosas que sirvieron:
 - **Una pregunta del original que se repite en el apunte puede traer las alternativas REALES**
   donde el apunte tenía reconstruidas. Esas van como `variante` (ver abajo), no como pregunta nueva.
 - **Una clave que el original no ofrece es un aviso, no un detalle.** En la de la cámara de Neubauer
-  (p18), el conteo con la regla del enunciado da 12 viables → 6 millones/mL, y el original no trae el
-  6: sus cifras (6,5 / 13 / 7,5 / 15…) están construidas sobre 13 y 15 células. Quedó sin variante
-  hasta tener la clave oficial; publicarla habría hecho correcta en una versión la cifra que la otra
-  explica como error.
+  (p18), el conteo con la regla del enunciado da 12 viables → 6 millones/mL (BUST lo confirmó), y
+  el original no trae el 6: sus cifras (6,5 / 13 / 7,5 / 15…) están construidas sobre 13 y 15
+  células. Esa versión **no se publica**, ni como variante ni como pregunta aparte: no tendría
+  ninguna alternativa correcta. Por el camino pareció otra figura; **no lo es**. La
+  `p06_q22_img01.avif` de la carpeta del apunte y la p18 publicada (su versión `_limpia`) son el
+  mismo dibujo, con el mismo resaltado del alumno y la misma «C» de versión. La otra pregunta de
+  Neubauer, la p4, sí tiene una figura distinta (fondo azul). Compararlas lado a lado lo zanja; los
+  hashes no, porque una reconversión cambia los bytes.
 - **Las figuras del original son fotos de la pantalla del proyector.** En la de la respuesta
-  primaria/secundaria (p10) el cursor señala justo la gráfica correcta, y en otra la cabeza de un
-  alumno tapa media gráfica: no se publican sin una versión limpia.
+  primaria/secundaria (p10) el cursor señala justo la gráfica correcta: no se publican sin una
+  versión limpia. La variante de la p10 usa la composición A/B/C ya publicada, intacta, más D y E
+  (dos distractores limpios que pasó BUST) en `p04_q13_graficas_a-e.avif`, con el mismo rótulo
+  amarillo que A–C. La letra circulada que traían se recortó: dos estilos de rótulo en la misma
+  figura hacían que D y E parecieran un añadido.
 
 **Variantes de una pregunta (`variante` en el JSON).** La misma pregunta en dos versiones —la del
 apunte, «Reconstruida», y la del examen, «Original»— con un interruptor sobre el enunciado
@@ -375,7 +382,7 @@ en la versión en que se dio, porque la corrección busca el `id` en las alterna
 de la base. Si se cambia de versión tras responder, la otra sale ya resuelta, con su clave y su
 explicación, sin volver a preguntar. Lo que la variante no declara se hereda (figura, enunciado),
 **salvo `reviewNote`**: heredar «se reconstruyeron las alternativas» sobre las originales mentiría.
-Vuelve a la base al pasar de pregunta. Hoy la llevan p15, p16, p21 y p27 del 2023.
+Vuelve a la base al pasar de pregunta. Hoy la llevan p10, p15, p16, p21 y p27 del 2023.
 
 **Inmunología · Examen Final 2025** (`inmunologia/final-2025`, «2025», de pago, y ahora la `key`
 por defecto del `examen`: cambiar cuál es la `key` no borra intentos, que se guardan por clave):
@@ -509,8 +516,9 @@ filetes finos; sólo tienen forma propia las piezas que se manipulan. En concret
 
 - **Mando** (contador · rastro · reloj) en vez de barra de progreso plana. El **rastro** es una
   marca por pregunta —verde/roja según fue, la actual sobresale— y dice *cómo* va, no sólo cuánto
-  falta; por encima de **60 preguntas** vuelve a ser barra continua, porque cada marca mediría
-  menos de un píxel.
+  falta; por encima de **80 preguntas** vuelve a ser barra continua, porque cada marca mediría
+  menos de un píxel. Desde 40 el hueco entre marcas baja a 2 px (`rastroDenso`). El tope estaba en
+  60 y el Final 2023 de Inmunología, con 61, salió con barra: se leyó como un cambio de diseño.
 - **La pregunta no es una caja**: número de folio con su filete a la izquierda (62 px + 22 px de
   gap, de ahí el `padding-left: 84px` del pie, que alinea el botón con el cuerpo) y el contenido a
   la derecha; en móvil el folio pasa a ser un rótulo en fila. El enunciado se corta a `66ch`: a

@@ -287,6 +287,10 @@
   height: 15px;
 }
 
+/* Con muchas preguntas el hueco se estrecha: a 3 px, 61 marcas en un móvil
+   dejarían más hueco que marca. */
+.rastroDenso { gap: 2px; }
+
 .seg {
   flex: 1 1 0;
   min-width: 0;
