@@ -868,6 +868,45 @@
   padding-left: 0;
 }
 
+/* ─── Encabezado desplegable ─── */
+/* <details> SIN clase con un <hN> dentro del <summary>. Notion le pone al
+   summary un font-size inline (1.875em / 1.25em) que se multiplicaría con el
+   del título —un h1 saldría a ~3em— y al título un `inline-block` que corta su
+   filete: por eso los dos !important. Es un título, no una caja: sin marco, y
+   su contenido fluye como el resto del documento. */
+.sheet :global(details:not(.toggle):has(> summary > :is(h1, h2, h3)) > summary) {
+  font-size: inherit !important;
+  cursor: pointer;
+  list-style: none;
+}
+
+.sheet :global(details:not(.toggle):has(> summary > :is(h1, h2, h3)) > summary::-webkit-details-marker) {
+  display: none;
+}
+
+.sheet :global(details:not(.toggle) > summary > :is(h1, h2, h3)) {
+  display: block !important;
+}
+
+.sheet :global(details:not(.toggle) > summary > :is(h1, h2, h3)::before) {
+  content: '▸';
+  display: inline-block;
+  width: 1em;
+  margin-right: 0.3em;
+  color: var(--tx-soft);
+  transition: transform 0.15s ease;
+}
+
+.sheet :global(details[open]:not(.toggle) > summary > :is(h1, h2, h3)::before) {
+  transform: rotate(90deg);
+}
+
+.sheet :global(details:not(.toggle):has(> summary > :is(h1, h2, h3)) > .indented) {
+  margin: 0;
+  padding-left: 0;
+  border-left: none;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════
    Responsive
    ═══════════════════════════════════════════════════════════════════════ */

@@ -194,7 +194,7 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
     if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
 
     const href = (e.target as HTMLElement).closest?.('a')?.getAttribute('href');
-    if (href?.endsWith('.avif')) {
+    if (href && /\.(avif|webp)$/.test(href)) {
       e.preventDefault();
       setLightbox(href);
       return;

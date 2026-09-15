@@ -232,7 +232,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluado por el tutor facilitador al final de la semana. Promedio de SGP = 30% de la nota final.',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-sgp-1', label: 'Resumen', formato: 'html' }],
+        },
       },
     ],
   },
@@ -258,7 +262,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluación: 60% examen individual + 40% trabajo grupal. Promedio de TBL = 10% de la nota final.',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-tbl-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 't-6',
@@ -358,7 +366,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluado por el tutor facilitador al final de la semana. Promedio de SGP = 30% de la nota final.',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-sgp-2', label: 'Resumen', formato: 'html' }],
+        },
       },
     ],
   },
@@ -385,7 +397,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluación: 60% examen individual + 40% trabajo grupal. Promedio de TBL = 10% de la nota final.',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-tbl-2', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 't-9',
@@ -483,7 +499,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluado por el tutor facilitador al final de la semana. Promedio de SGP = 30% de la nota final.',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-sgp-3', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'repaso-1',
@@ -522,7 +542,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluación: 60% examen individual + 40% trabajo grupal. Promedio de TBL = 10% de la nota final.',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-tbl-3', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 't-12',
@@ -622,7 +646,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluado por el tutor facilitador al final de la semana. Promedio de SGP = 30% de la nota final.',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-sgp-4', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'repaso-2',

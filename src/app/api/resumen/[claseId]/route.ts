@@ -42,11 +42,8 @@ const ALLOWED = new Set([
   'qor-examen-final-3-2018', 'qor-examen-final-4-2018',
   'qor-examen-final-3-2019', 'qor-examen-final-4-2019',
   'qor-lab-1', 'qor-lab-2', 'qor-lab-3', 'qor-lab-4',
-  // Inmunología (ids bare tal como están en inmunologia.ts — sin colisión
-  // actual con otros cursos; el path en Storage sí lleva prefijo inmunologia/).
-  // Las T pasaron a HTML (`inm-t-N`, route de resumen-html).
-  'sgp-1', 'sgp-2', 'sgp-3', 'sgp-4',
-  'tbl-1', 'tbl-2', 'tbl-3',
+  // Inmunología ya no tiene PDF: todos sus resúmenes son HTML (`inm-*`,
+  // route de resumen-html).
   // Física — 'fis-c-N-prop' es el PDF de propuestos (tarjeta «Propuestos»)
   'fis-c-1', 'fis-c-1-prop',
   'fis-c-2', 'fis-c-2-prop',
@@ -205,14 +202,6 @@ const FILE_ALIAS: Record<string, string> = {
   'qor-lab-2': 'quimica-organica/qor-lab-2',
   'qor-lab-3': 'quimica-organica/qor-lab-3',
   'qor-lab-4': 'quimica-organica/qor-lab-4',
-  // Inmunología — subcarpeta inmunologia/
-  'sgp-1': 'inmunologia/sgp-1',
-  'sgp-2': 'inmunologia/sgp-2',
-  'sgp-3': 'inmunologia/sgp-3',
-  'sgp-4': 'inmunologia/sgp-4',
-  'tbl-1': 'inmunologia/tbl-1',
-  'tbl-2': 'inmunologia/tbl-2',
-  'tbl-3': 'inmunologia/tbl-3',
   // Física — subcarpeta fisica-medicina/
   'fis-c-1':      'fisica-medicina/fis-c-1',
   'fis-c-1-prop': 'fisica-medicina/fis-c-1-propuestos',

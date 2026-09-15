@@ -143,27 +143,33 @@ const destDe = new Map(); // ref (decodificado) → dest en el bucket
 const anchoDe = new Map(); // dest → ancho intrínseco en px
 
 for (const [canon, miembros] of grupos) {
-  const dest = `${PREFIX}/${nombreEnStorage(canon)}.avif`;
-  for (const ref of miembros) destDe.set(ref, dest);
   if (miembros.length > 1) colapsadas += miembros.length - 1;
 
   // Busca el primer miembro del grupo cuyo archivo exista en disco (falta
   // el "canónico" cuando sólo se guardó una de las copias repetidas).
-  let src = null, yaEsAvif = false;
+  // Un .webp junto al nombre que pide el HTML cuenta como ya convertido,
+  // igual que un .avif: también es lossy y pasarlo a AVIF sería una segunda
+  // pérdida. Se sube en su formato.
+  let src = null, formato = null;
   for (const ref of miembros) {
     const base = ref.replace(/\.(png|jpe?g|webp|avif)$/i, '');
     const srcAvif = join(dir, `${base}.avif`);
+    const srcWebp = join(dir, `${base}.webp`);
     const srcOriginal = join(dir, ref);
-    if (existsSync(srcAvif)) { src = srcAvif; yaEsAvif = true; break; }
-    if (existsSync(srcOriginal)) { src = srcOriginal; yaEsAvif = false; break; }
+    if (existsSync(srcAvif)) { src = srcAvif; formato = 'avif'; break; }
+    if (existsSync(srcWebp)) { src = srcWebp; formato = 'webp'; break; }
+    if (existsSync(srcOriginal)) { src = srcOriginal; formato = null; break; }
   }
 
   if (!src) { fallos.push(`falta el archivo ${miembros[0]}`); continue; }
 
+  const dest = `${PREFIX}/${nombreEnStorage(canon)}.${formato ?? 'avif'}`;
+  for (const ref of miembros) destDe.set(ref, dest);
+
   origBytes += statSync(src).size;
 
   let buf;
-  if (yaEsAvif) {
+  if (formato) {
     // Ya convertida por fuera (imgto.xyz u otra herramienta): se sube tal
     // cual, sin pasar por sharp.
     buf = readFileSync(src);
@@ -184,7 +190,7 @@ for (const [canon, miembros] of grupos) {
   // header se ignora y el objeto queda en `no-cache`). Immutable porque una
   // figura nunca se reedita — si cambia, cambia el nombre.
   const { error } = await sb.storage.from(BUCKET_IMG).upload(dest, buf, {
-    contentType: 'image/avif',
+    contentType: formato === 'webp' ? 'image/webp' : 'image/avif',
     cacheControl: '31536000, immutable',
     upsert: Boolean(force),
   });
@@ -193,7 +199,7 @@ for (const [canon, miembros] of grupos) {
   process.stdout.write(`\r  imágenes: ${subidas}/${grupos.size}`);
 }
 
-const nota = yaAvif ? `  (${yaAvif} ya eran .avif, sin recomprimir)` : '';
+const nota = yaAvif ? `  (${yaAvif} ya eran .avif/.webp, sin recomprimir)` : '';
 const notaColapso = colapsadas
   ? `  (${colapsadas} repetida${colapsadas > 1 ? 's' : ''} en la página, subida${colapsadas > 1 ? 's' : ''} una sola vez)`
   : '';
@@ -256,7 +262,7 @@ body = body.replace(/src="([^"]+\.(?:png|jpe?g|webp))"/gi, (_, p) => `src="${url
 
 // 5c. el enlace queda de fallback: el visor intercepta el clic y abre el
 //     lightbox, pero ctrl+clic sigue abriendo en pestaña nueva
-body = body.replace(/<a href="(https:\/\/[^"]+\.avif)"/g,
+body = body.replace(/<a href="(https:\/\/[^"]+\.(?:avif|webp))"/g,
   '<a target="_blank" rel="noopener noreferrer" href="$1"');
 
 // 5d. carga diferida: decenas de figuras no pueden pedirse todas de golpe
@@ -316,7 +322,8 @@ body = body
   .replace(/\sclass=""/g, '');
 
 const bytesFragmento = Buffer.byteLength(body, 'utf8');
-const pngSueltos = (body.match(/\.(png|jpe?g|webp)"/gi) || []).length;
+// Sólo cuentan las rutas locales: un .webp ya subido al CDN es legítimo.
+const pngSueltos = (body.match(/(?:src|href)="(?!https?:)[^"]+\.(png|jpe?g|webp)"/gi) || []).length;
 if (pngSueltos) {
   console.error(`✗ Quedaron ${pngSueltos} referencias sin convertir. Abortado.`);
   process.exit(1);
