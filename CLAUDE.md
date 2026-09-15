@@ -400,6 +400,14 @@ deshace. En la ficha, el acierto, el fallo (la sacudida) y el atenuado se aplica
 no sólo a la barra. La foto tiene proporción fija (`aspect-ratio`) y se ancla arriba a la izquierda:
 los recortes no miden lo mismo y, sin eso, las barras de una fila quedaban a distinta altura.
 
+**Respuesta múltiple (`multiple: true` en la pregunta).** Tocar una alternativa sólo la marca o la
+desmarca (acento, sin verde ni rojo), y la respuesta se da con **Comprobar** (o Enter). Acierta sólo
+si se marcan **exactamente** las correctas (`acierta`). Antes, una pregunta con dos `correct` se daba
+por buena al tocar cualquiera de las dos, y al responder se encendían ambas: BUST lo vio en la 23 y
+lo pidió así. Al corregir, la correcta que no se marcó sale **hueca** («Faltó marcarla»; en ficha, un
+borde discontinuo): pintarla como las acertadas haría creer que se respondió bien. `picked` es ahora
+una lista de ids, y en una pregunta sin `multiple` lleva uno solo. Sólo lo tiene la ex23 del 2023.
+
 **`ordenFijo` en la pregunta** desactiva el barajado de sus alternativas. Sólo para las que llevan
 la letra dentro de la imagen (las células de la 23) o que son letras de la figura («Zona A…H», la 46):
 barajadas, la letra del botón dejaría de coincidir con la de la foto. No filtra la respuesta, porque

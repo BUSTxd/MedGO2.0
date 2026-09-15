@@ -62,6 +62,12 @@ interface ExamQuestion {
    * dejarían de coincidir.
    */
   ordenFijo?: boolean;
+  /**
+   * Respuesta múltiple: el alumno marca todas las que crea correctas y pulsa
+   * «Comprobar». Acierta sólo si marca EXACTAMENTE las correctas: sin esto, una
+   * pregunta con dos correctas se daba por buena al tocar cualquiera de ellas.
+   */
+  multiple?: boolean;
 }
 
 /**
@@ -106,9 +112,17 @@ function vistaDe(q: ExamQuestion, enVariante: boolean): ExamQuestion {
   };
 }
 
-/** ¿`id` es una alternativa correcta? Busca en las dos versiones: vale donde se respondió. */
-function esCorrecta(q: ExamQuestion, id: string): boolean {
-  return [...q.options, ...(q.variante?.options ?? [])].find(o => o.id === id)?.correct === true;
+/**
+ * ¿La respuesta `ids` es correcta? Se juzga en la versión que la contiene (base
+ * o variante): vale donde se respondió. En una pregunta `multiple` hay que
+ * marcar exactamente sus correctas; en las demás, basta con que la marcada lo sea.
+ */
+function acierta(q: ExamQuestion, ids: string[]): boolean {
+  if (ids.length === 0) return false;
+  const version = q.options.some(o => o.id === ids[0]) ? q.options : (q.variante?.options ?? []);
+  if (!q.multiple) return version.find(o => o.id === ids[0])?.correct === true;
+  const correctas = version.filter(o => o.correct).map(o => o.id);
+  return correctas.length === ids.length && correctas.every(id => ids.includes(id));
 }
 
 interface ExamPayload {
@@ -959,7 +973,11 @@ export default function ExamRunner({
   const [error, setError] = useState<string | null>(null);
   const [runId, setRunId] = useState(0);
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [picked, setPicked] = useState<string | null>(null);
+  // Respuesta dada a la pregunta actual (una alternativa, o varias en las
+  // `multiple`). `marcadas` es la selección provisional de una `multiple`,
+  // antes de pulsar «Comprobar»: se puede marcar y desmarcar sin responder.
+  const [picked, setPicked] = useState<string[] | null>(null);
+  const [marcadas, setMarcadas] = useState<string[]>([]);
   // Respuestas acumuladas a lo largo de TODAS las etapas resueltas.
   const [answersAll, setAnswersAll] = useState<{ q: string; a: string; ok: boolean }[]>([]);
   const [phase, setPhase] = useState<Phase>('running');
@@ -1031,7 +1049,7 @@ export default function ExamRunner({
   const current = base ? vistaDe(base, enVariante) : undefined;
   const total = deck?.length ?? 0;
 
-  const aciertoActual = picked && base ? esCorrecta(base, picked) : null;
+  const aciertoActual = picked && base ? acierta(base, picked) : null;
 
   // Rastro: una marca por pregunta. La actual ya se pinta con su resultado en
   // cuanto el alumno responde, sin esperar a que pulse «Siguiente».
@@ -1088,15 +1106,27 @@ export default function ExamRunner({
 
   const handlePick = (id: string) => {
     if (picked || pausado) return;
-    setPicked(id);
+    // En una `multiple` tocar una alternativa sólo la marca o desmarca: la
+    // respuesta se da con «Comprobar».
+    if (current?.multiple) {
+      setMarcadas(m => (m.includes(id) ? m.filter(x => x !== id) : [...m, id]));
+      return;
+    }
+    setPicked([id]);
+  };
+
+  const handleComprobar = () => {
+    if (picked || pausado || marcadas.length === 0) return;
+    setPicked(marcadas);
   };
 
   const handleNext = () => {
     if (!base || !picked || pausado) return;
-    const ok = esCorrecta(base, picked);
-    const nextAll = [...answersAll, { q: base.id, a: picked, ok }];
+    const ok = acierta(base, picked);
+    const nextAll = [...answersAll, { q: base.id, a: picked.join(','), ok }];
     setAnswersAll(nextAll);
     setPicked(null);
+    setMarcadas([]);
     setEnVariante(false);
 
     if (currentIdx + 1 >= total) {
@@ -1119,8 +1149,8 @@ export default function ExamRunner({
   // Atajos de teclado: A–E (o 1–5) responden y Enter avanza. En un banco de 40
   // preguntas ahorra el viaje al ratón en cada una. Las acciones viven en una
   // ref para que el listener no se vuelva a montar en cada render.
-  const accionesRef = useRef({ handlePick, handleNext });
-  useEffect(() => { accionesRef.current = { handlePick, handleNext }; });
+  const accionesRef = useRef({ handlePick, handleNext, handleComprobar });
+  useEffect(() => { accionesRef.current = { handlePick, handleNext, handleComprobar }; });
 
   useEffect(() => {
     if (phase !== 'running' || !current || pausado || ampliada || modalAbierto) return;
@@ -1133,6 +1163,7 @@ export default function ExamRunner({
         // atenderlo también aquí avanzaría dos preguntas de una.
         if (tag === 'BUTTON' || tag === 'A') return;
         if (picked) { e.preventDefault(); accionesRef.current.handleNext(); }
+        else if (current.multiple && marcadas.length) { e.preventDefault(); accionesRef.current.handleComprobar(); }
         return;
       }
       if (picked) return; // ya respondida: las letras no cambian nada
@@ -1146,7 +1177,7 @@ export default function ExamRunner({
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [phase, current, picked, pausado, ampliada, modalAbierto]);
+  }, [phase, current, picked, marcadas, pausado, ampliada, modalAbierto]);
 
   // Salto directo a un grupo desde el selector (o desde la pantalla de
   // resultados). Reinicia el estado: cada grupo es un intento independiente.
@@ -1155,6 +1186,7 @@ export default function ExamRunner({
     setStage(i);
     setCurrentIdx(0);
     setPicked(null);
+    setMarcadas([]);
     setEnVariante(false);
     setAnswersAll([]);
     setPhase('running');
@@ -1166,6 +1198,7 @@ export default function ExamRunner({
     setRunId(r => r + 1);
     setCurrentIdx(0);
     setPicked(null);
+    setMarcadas([]);
     setEnVariante(false);
     setAnswersAll([]);
     setPhase('running');
@@ -1394,9 +1427,10 @@ export default function ExamRunner({
                     <SelectorVersion
                       rotulos={[base.variante.rotuloBase, base.variante.rotulo]}
                       enVariante={enVariante}
-                      onCambiar={setEnVariante}
+                      // Lo marcado a medias es de la otra versión: se descarta.
+                      onCambiar={v => { setEnVariante(v); setMarcadas([]); }}
                       // Respondida en la otra versión: ésta sólo enseña su clave.
-                      respondidaEnOtra={!!picked && !current.options.some(o => o.id === picked)}
+                      respondidaEnOtra={!!picked && !current.options.some(o => picked.includes(o.id))}
                     />
                   )}
 
@@ -1428,22 +1462,34 @@ export default function ExamRunner({
                       rejilla de fichas: la foto se AMPLÍA y la barra de abajo
                       MARCA. Si la foto también marcara, quien sólo quiere verla
                       de cerca respondería sin querer, y eso no se deshace. */}
+                  {current.multiple && !picked && (
+                    <p className={styles.multipleAviso}>
+                      Puede haber más de una correcta: marca todas las que lo sean y pulsa <strong>Comprobar</strong>.
+                    </p>
+                  )}
+
                   {(() => {
                     const conImagen = current.options.some(o => o.image);
+                    // ¿Se respondió en ESTA versión? Si no, la otra sólo enseña su clave.
+                    const respondidaAqui = !!picked && current.options.some(o => picked.includes(o.id));
                     return (
                       <div className={`${styles.opciones} ${conImagen ? styles.opcionesImagen : ''}`}>
                         {current.options.map((opt, i) => {
-                          const isPicked = picked === opt.id;
+                          const isPicked = !!picked?.includes(opt.id);
+                          const marcada = !picked && marcadas.includes(opt.id);
                           const showFeedback = picked !== null;
+                          // «falta»: correcta de una `multiple` que el alumno no marcó.
                           const estado = !showFeedback ? null
-                            : opt.correct ? 'ok'
+                            : opt.correct ? (current.multiple && respondidaAqui && !isPicked ? 'falta' : 'ok')
                             : isPicked ? 'mal'
                             : 'apagada';
                           const cls = [styles.opcion];
                           if (estado === 'ok') cls.push(styles.opcionOk);
+                          else if (estado === 'falta') cls.push(styles.opcionOk, styles.opcionFalta);
                           else if (estado === 'mal') cls.push(styles.opcionMal);
                           // En una ficha se apaga la ficha entera, no sólo su barra.
                           else if (estado === 'apagada' && !conImagen) cls.push(styles.opcionApagada);
+                          if (marcada) cls.push(styles.opcionMarcada);
                           const label = LETRAS[i] ?? String(i + 1);
                           const boton = (
                             <button
@@ -1453,10 +1499,12 @@ export default function ExamRunner({
                               style={{ '--i': i } as React.CSSProperties}
                               onClick={() => handlePick(opt.id)}
                               disabled={showFeedback}
+                              aria-pressed={current.multiple ? marcada || isPicked : undefined}
                               aria-label={conImagen ? `Marcar la alternativa ${label}` : undefined}
                             >
                               <span className={styles.opcionLetra}>{label}</span>
                               <span className={styles.opcionTexto}>{opt.text}</span>
+                              {estado === 'falta' && <span className={styles.opcionNota}>Faltó marcarla</span>}
                               {showFeedback && opt.correct && (
                                 <span className={`${styles.opcionMarca} ${styles.marcaOk}`}><IconoCheck /></span>
                               )}
@@ -1468,8 +1516,10 @@ export default function ExamRunner({
                           if (!conImagen) return boton;
                           const fichaCls = [styles.opcionImg];
                           if (estado === 'ok') fichaCls.push(styles.opcionImgOk);
+                          else if (estado === 'falta') fichaCls.push(styles.opcionImgFalta);
                           else if (estado === 'mal') fichaCls.push(styles.opcionImgMal);
                           else if (estado === 'apagada') fichaCls.push(styles.opcionImgApagada);
+                          if (marcada) fichaCls.push(styles.opcionImgMarcada);
                           const img = opt.image;
                           return (
                             <div key={opt.id} className={fichaCls.join(' ')} style={{ '--i': i } as React.CSSProperties}>
@@ -1560,6 +1610,11 @@ export default function ExamRunner({
                   <p className={styles.atajos}>
                     {picked ? (
                       <><kbd>Enter</kbd> para continuar</>
+                    ) : current.multiple ? (
+                      <>
+                        <kbd>{LETRAS[0]}</kbd>–<kbd>{LETRAS[current.options.length - 1]}</kbd> para marcar ·{' '}
+                        <kbd>Enter</kbd> para comprobar
+                      </>
                     ) : (
                       <>
                         <kbd>{LETRAS[0]}</kbd>–<kbd>{LETRAS[current.options.length - 1]}</kbd> para responder
@@ -1567,15 +1622,29 @@ export default function ExamRunner({
                     )}
                   </p>
                 </div>
-                <button
-                  type="button"
-                  className={styles.nextBtn}
-                  onClick={handleNext}
-                  disabled={!picked}
-                >
-                  {currentIdx + 1 >= total ? 'Terminar examen' : 'Siguiente'}
-                  <span className={styles.nextFlecha} aria-hidden>→</span>
-                </button>
+                {/* En una `multiple` el botón primero comprueba lo marcado y, ya
+                    respondida, pasa a ser «Siguiente» como en las demás. */}
+                {current.multiple && !picked ? (
+                  <button
+                    type="button"
+                    className={styles.nextBtn}
+                    onClick={handleComprobar}
+                    disabled={marcadas.length === 0}
+                  >
+                    Comprobar
+                    <span className={styles.nextFlecha} aria-hidden>✓</span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className={styles.nextBtn}
+                    onClick={handleNext}
+                    disabled={!picked}
+                  >
+                    {currentIdx + 1 >= total ? 'Terminar examen' : 'Siguiente'}
+                    <span className={styles.nextFlecha} aria-hidden>→</span>
+                  </button>
+                )}
               </div>
             </>
           )}
