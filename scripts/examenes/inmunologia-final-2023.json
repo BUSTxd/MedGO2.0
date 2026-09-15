@@ -2400,7 +2400,7 @@
         {
           "id": "d",
           "text": "Las barreras químicas representan el primer punto de encuentro ante un patógeno externo.",
-          "correct": true
+          "correct": false
         },
         {
           "id": "e",
@@ -2408,8 +2408,8 @@
           "correct": true
         }
       ],
-      "explanation": "Las dos ciertas son de la inmunidad innata:\n- las **barreras epiteliales**, con sus componentes químicos (pH, lisozima, defensinas), son la primera línea con la que choca un patógeno;\n- sin inmunidad innata el patógeno **crece sin freno en horas**. Sin la adaptativa, en cambio, la innata lo contiene al principio y el patógeno escapa después.\n\nLas otras tres describen la **inmunidad adaptativa**: linfocitos T y B con sus anticuerpos, receptores muy diversos con distribución **clonal**, y una respuesta que tarda **días** en arrancar.",
-      "reviewNote": "El examen admite varias respuestas («Elija una o varias»): la d y la e son ciertas, y cualquiera de las dos cuenta como acierto.",
+      "explanation": "Sin **inmunidad innata** el patógeno **crece sin freno desde las primeras horas**. Sin la adaptativa, en cambio, la innata lo contiene al principio y el patógeno escapa después. Es el argumento clásico de por qué la innata es imprescindible.\n\n- La **d** es la trampa. Las barreras químicas (pH ácido, ácidos grasos del sebo, lisozima, defensinas) sí son parte de la inmunidad innata, pero no son **el primer punto de encuentro**. Lo primero con lo que choca un patógeno es la barrera **física**: la queratina de la piel, el epitelio con sus uniones estrechas, el moco y el barrido ciliar. Las químicas actúan sobre esa misma superficie como complemento.\n- La **a**, la **b** y la **c** describen la **inmunidad adaptativa**: linfocitos T y B con sus anticuerpos, receptores muy diversos con distribución **clonal**, y una respuesta que tarda **días** en arrancar.",
+      "reviewNote": "El examen original admite varias respuestas («Elija una o varias») y no trae la clave. Se tomó como oficial la e. La d es discutible: las barreras químicas sí son innatas, pero la frase les atribuye sólo a ellas el primer contacto, que corresponde a la barrera física.",
       "tags": [
         "Inmunidad innata"
       ]
