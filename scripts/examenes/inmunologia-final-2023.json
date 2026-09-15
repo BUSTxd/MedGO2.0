@@ -2532,7 +2532,7 @@
         {
           "id": "d",
           "text": "",
-          "correct": false,
+          "correct": true,
           "image": {
             "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/inmunologia/final-2023/p07_q23_celula_d.avif",
             "w": 311,
@@ -2563,8 +2563,8 @@
           }
         }
       ],
-      "explanation": "En un gráfico **FSC** (tamaño) contra **SSC** (complejidad interna, que dan sobre todo los gránulos) la sangre total se separa en tres nubes: los **linfocitos** abajo (roja: pequeños y casi sin gránulos), los **monocitos** algo más arriba (verde) y los **granulocitos** arriba y a la derecha (azul), porque sus gránulos dispersan mucha luz hacia el lado. Lo negro, en la esquina, son restos celulares.\n\nEn la nube azul están el **neutrófilo** (A) y el **eosinófilo** (B): hay que marcar **las dos**.\n\n- **D** es un **basófilo**. Es un granulocito, pero en citometría es la excepción: su dispersión lateral es baja y en el FSC/SSC cae junto a los linfocitos, no en la nube azul. Por eso se lo identifica con marcadores (CD123, FcεRI) y no por su dispersión.\n- **C** es un **linfocito** pequeño: nube roja.\n- **E** y **F** son células grandes de citoplasma amplio y pálido, con aspecto de macrófago (E con material fagocitado). Son células de los tejidos, no de la sangre, y no tienen los gránulos que dan un SSC alto.",
-      "reviewNote": "Respuesta múltiple («Cuál o cuáles»): hay que marcar la A y la B, las dos y sólo esas. La D (basófilo) es un granulocito, pero en FSC/SSC no cae en la población azul sino junto a los linfocitos. Las seis células eran las alternativas de esta pregunta; el OCR del HTML las había puesto en la 24.",
+      "explanation": "En un gráfico **FSC** (tamaño) contra **SSC** (complejidad interna, que dan sobre todo los gránulos) la sangre total se separa en tres nubes: los **linfocitos** abajo (roja: pequeños y casi sin gránulos), los **monocitos** algo más arriba (verde) y los **granulocitos** arriba y a la derecha (azul), porque sus gránulos dispersan mucha luz hacia el lado. Lo negro, en la esquina, son restos celulares.\n\nEn la nube azul están los **granulocitos**: el **neutrófilo** (A), el **eosinófilo** (B) y el **basófilo** (D). Hay que marcar **las tres**.\n\n- Ojo con **D**: el basófilo es un granulocito, pero en citometría es la excepción, porque sus gránulos dispersan menos luz y en el FSC/SSC puede caer más abajo, cerca de los linfocitos. Por eso en la práctica se lo identifica con marcadores (CD123, FcεRI) y no sólo por su dispersión. En un banqueo de otro año la única marcada era el basófilo, así que esta clave está **pendiente de confirmar**.\n- **C** es un **linfocito** pequeño: nube roja.\n- **E** y **F** son células grandes de citoplasma amplio y pálido, con aspecto de macrófago (E con material fagocitado). Son células de los tejidos, no de la sangre, y no tienen los gránulos que dan un SSC alto.",
+      "reviewNote": "Clave pendiente de confirmar con el docente. Se dan como correctas la A (neutrófilo), la B (eosinófilo) y la D (basófilo), los tres granulocitos. Pero en otro banqueo sólo se marcaba el basófilo, y en FSC/SSC el basófilo suele caer fuera de la nube azul, junto a los linfocitos.",
       "tags": [
         "Técnicas inmunológicas",
         "Células del sistema inmune",

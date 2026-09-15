@@ -360,9 +360,10 @@ enunciado en el original: lleva uno genérico y `reviewNote`.
   OCR del HTML asignó a la 24. Se partió en seis fichas (`p07_q23_celula_a…f.avif`) buscando las
   franjas blancas entre paneles. Cortar obliga a recodificar, así que va a AVIF q72 4:4:4, alto a
   propósito.
-- **La clave de la 23 es A y B, no D.** En un FSC/SSC la nube azul (SSC alto) son neutrófilos y
-  eosinófilos. El basófilo (D) es un granulocito, pero su dispersión lateral es baja y cae junto a
-  los linfocitos: es la trampa de la pregunta, no su respuesta.
+- **La clave de la 23 es A, B y D, y está pendiente de revisión.** La nube azul (SSC alto) son los
+  granulocitos. Al principio se dejó sin el basófilo (D), que por su dispersión lateral baja suele
+  caer junto a los linfocitos. BUST pidió sumarlo porque en otro banqueo la **única** marcada era
+  el basófilo. Lleva `reviewNote` hasta confirmarlo con el docente.
 Tres cosas que sirvieron:
 - **Una pregunta del original que se repite en el apunte puede traer las alternativas REALES**
   donde el apunte tenía reconstruidas. Esas van como `variante` (ver abajo), no como pregunta nueva.
