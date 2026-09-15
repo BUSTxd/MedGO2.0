@@ -170,7 +170,13 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluación: 60% individual (Kahoot) + 40% grupal (rúbrica). Promedio de las 2 prácticas = 5% de la nota final.',
-        linkOverride: '/dashboard/histologia/inmunologia',
+        // Sin `linkOverride` al atlas: la tarjeta tiene que abrir la clase,
+        // que es donde está el Resumen. El atlas sigue en Histología.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-h-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 't-4',
@@ -460,7 +466,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluación: 60% individual (Kahoot) + 40% grupal (rúbrica). Promedio de las 2 prácticas = 5% de la nota final.',
-        linkOverride: '/dashboard/histologia/inmunologia',
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-h-2', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 't-11',

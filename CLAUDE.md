@@ -1216,6 +1216,32 @@ regex, no diagnóstico del documento** — contrastar a mano antes de creerlo.
 - `bcm-te-4-html` (Biología Celular, Te4 — Procariotas y eucariotas) — «pdf-page», px, `<figure>`,
   tinta y resaltado en un `vectors.svg` único. Segunda opción del picker, junto al PDF.
 
+### Diapositivas en PDF → «páginas auto-escaladas» (`scripts/diapositivas-pdf-a-html.py`)
+
+Cuando lo que llega es un **PowerPoint exportado a PDF** (con o sin un `pdftohtml` y unos recortes
+de figuras al lado), el resumen se reconstruye **desde el PDF** con PyMuPDF y sale en el envase
+`.doc-paginas`: una `.pdf-page` por diapositiva, vectores en `<svg>` con el viewBox de la página,
+imágenes en `.figure` y el texto real en `.word` con `--target-w`, todo en el orden de dibujo del
+PDF (`seqno` de `get_bboxlog`). Se publica con `upload-resumen-doc.mjs`, que ya lo reconoce. Hecho
+en Inmunología **H1** (`inm-h-1`, Timo, págs. 2–7) y **H2** (`inm-h-2`, bazo y ganglio, págs. 8–40),
+las dos mitades del mismo PDF de Histo 2.
+
+- **Los recortes que se hacen «desde la diapositiva» no sirven como figuras**: son capturas de esa
+  zona y llevan quemadas las etiquetas y flechas que la diapositiva dibuja encima (CORTEZA,
+  CÁPSULA…). Con el texto real encima, todo sale doble. Las imágenes se extraen limpias del PDF (con
+  su `smask`, su volteo y la proporción de su caja); del recorte sólo se reutiliza el nombre.
+- El `pdftohtml` que acompaña a estos PDF pide una capa `assets/layout/page_NNN.webp` que no llega
+  y deja las flechas de Wingdings como caracteres privados (`U+F0E0` →, `U+F0DF` ←).
+- Las **tabulaciones** son huecos dentro de una línea del PDF: ajustada entera, «1.⇥Vasos» sale
+  pegado. Se parte en tramos. Las **viñetas** van en Arial (la de Outfit es un punto diminuto).
+- Las sombras de texto de PowerPoint llegan como PNG grises del alto de una línea: no se publican y
+  el texto lleva `text-shadow`. Los degradados (`fill-shade`) se rasterizan de una copia sin texto.
+- Se verificó **sin el visor**: una vista local con Outfit y el `fitTypography` portado, capturada
+  con Edge headless y comparada diapositiva a diapositiva contra el render del PDF.
+
+H1 y H2 tenían `linkOverride` al atlas de histología: con él la tarjeta del sílabo no abría la
+clase y el Resumen era inalcanzable. Se quitó; el atlas sigue en Histología.
+
 ### Antes de tocar el visor — las cuatro cosas que se han roto en silencio
 
 Casi todos los fallos de esta sección no se vieron al hacer el cambio, sino semanas después y
