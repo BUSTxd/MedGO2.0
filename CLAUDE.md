@@ -751,7 +751,14 @@ pueda mezclar un HTML nuevo con PDFs de clases anteriores.
   queda en `no-cache`.
 - Si junto a un `.png` referenciado por el HTML ya existe un `.avif` con el mismo nombre base
   (convertido a mano, p. ej. con imgto.xyz), el script lo sube **tal cual, sin pasar por sharp**:
-  recomprimir un AVIF ya lossy sería una segunda pérdida de calidad.
+  recomprimir un AVIF ya lossy sería una segunda pérdida de calidad. Lo mismo con un `.webp`,
+  que se sube en su formato (`image/webp`). Por eso el visor abre el lightbox con enlaces
+  `.avif` **o** `.webp`.
+- **Encabezados desplegables de Notion**: un `<details>` sin clase con un `<h1>`–`<h3>` dentro del
+  `<summary>` (distinto del `details.toggle`, que es una caja). Notion le pone al summary un
+  `font-size` inline que se multiplica con el del título (un h1 salía a ~3em), y al título un
+  `inline-block` que corta su filete. Tienen regla propia, acotada con `:has(> summary > hN)`.
+  Llegaron con Inmunología (SGP 1 trae 21).
 
 ---
 
