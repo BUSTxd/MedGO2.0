@@ -406,7 +406,8 @@ barajadas, la letra del botón dejaría de coincidir con la de la foto. No filtr
 en esas preguntas el orden no dice nada.
 
 **Figuras muy verticales**: si miden más de 1,4 veces su ancho de alto, el runner limita el alto a
-480 px en vez de estirarlas a todo el ancho (la MHC II de la 43, 457×1000, medía 1360 px). El
+480 px en vez de estirarlas a todo el ancho (la MHC II de la 43, 457×1000, medía 1360 px), y las
+centra (`figuraVertical`): estrechas y pegadas a la izquierda parecían una columna suelta. El
 umbral deja fuera a propósito la tabla del QuantiFERON (1040×1132), que estrechada sería ilegible.
 
 **Inmunología · Examen Final 2025** (`inmunologia/final-2025`, «2025», de pago, y ahora la `key`

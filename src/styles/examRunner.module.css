@@ -729,6 +729,14 @@
   height: auto;
 }
 
+/* Figura muy vertical, estrechada por el tope de alto: pegada a la izquierda
+   quedaba como una columna suelta junto a un hueco. Centrada en el bloque de la
+   pregunta. Dentro de `.figuras` sigue mandando su propia rejilla. */
+.figuraVertical {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .figuraChip {
   position: absolute;
   right: 10px;

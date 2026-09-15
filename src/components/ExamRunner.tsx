@@ -785,7 +785,7 @@ function FiguraAmpliable({
   return (
     <button
       type="button"
-      className={`${styles.figura} ${variante === 'explicacion' ? styles.figuraExplicacion : ''}`}
+      className={`${styles.figura} ${variante === 'explicacion' ? styles.figuraExplicacion : ''} ${vertical ? styles.figuraVertical : ''}`}
       style={vertical ? { maxWidth: Math.round((ALTO_MAX_FIGURA * w) / h) } : undefined}
       onClick={() => onAmpliar({ src, alt, w, h })}
       aria-label="Ampliar imagen"
