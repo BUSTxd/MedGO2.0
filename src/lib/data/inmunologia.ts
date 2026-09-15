@@ -12,9 +12,12 @@ export type TipoActividad =
 
 export type Unidad = 'INNATA' | 'ADAPTATIVA' | 'INMUNOPATOLOGIA' | 'EVALUACION';
 
+export type ResumenFormato = 'pdf' | 'html';
+
 export interface ResumenOpcion {
   id: string;
   label: string;
+  formato?: ResumenFormato;
 }
 
 export interface Actividad {
@@ -29,7 +32,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   examen?: ExamenRef;
   /**
    * Módulo interactivo de la práctica. En las actividades LAB la tarjeta
@@ -105,6 +108,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 't-2',
@@ -121,7 +129,11 @@ export const semanas: Semana[] = [
           'Reconocimiento en lámina periférica',
         ],
         docentes: [],
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-2', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 't-3',
@@ -137,7 +149,11 @@ export const semanas: Semana[] = [
           'Educación y selección linfocitaria',
         ],
         docentes: [],
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-3', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'h-1',
@@ -172,7 +188,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-4', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 't-5',
@@ -190,7 +210,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Paso corto: evaluado durante la sesión (cuenta para pasos cortos, 10%).',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-5', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'sgp-1',
@@ -251,7 +275,11 @@ export const semanas: Semana[] = [
           'Células NK e inflamasoma',
         ],
         docentes: [],
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-6', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'l-1',
@@ -286,7 +314,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Paso corto: evaluado durante la sesión (cuenta para pasos cortos, 10%).',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-7', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 't-8',
@@ -304,7 +336,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-8', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'sgp-2',
@@ -367,7 +403,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-9', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 't-10',
@@ -417,7 +457,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-11', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'sgp-3',
@@ -492,7 +536,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-12', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 't-13',
@@ -509,7 +557,11 @@ export const semanas: Semana[] = [
           'Inmunofenotipo y marcadores CD',
         ],
         docentes: [],
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-13', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'l-2',
@@ -544,7 +596,11 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Paso corto: evaluado durante la sesión (cuenta para pasos cortos, 10%).',
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-t-14', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'sgp-4',

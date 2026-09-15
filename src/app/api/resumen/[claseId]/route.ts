@@ -43,9 +43,9 @@ const ALLOWED = new Set([
   'qor-examen-final-3-2019', 'qor-examen-final-4-2019',
   'qor-lab-1', 'qor-lab-2', 'qor-lab-3', 'qor-lab-4',
   // Inmunología (ids bare tal como están en inmunologia.ts — sin colisión
-  // actual con otros cursos; el path en Storage sí lleva prefijo inmunologia/)
-  't-2', 't-3', 't-4', 't-5', 't-6', 't-7', 't-8', 't-9', 't-10',
-  't-11', 't-12', 't-13', 't-14',
+  // actual con otros cursos; el path en Storage sí lleva prefijo inmunologia/).
+  // El resto de las T pasaron a HTML (`inm-t-N`, route de resumen-html).
+  't-10',
   'sgp-1', 'sgp-2', 'sgp-3', 'sgp-4',
   'tbl-1', 'tbl-2', 'tbl-3',
   // Física — 'fis-c-N-prop' es el PDF de propuestos (tarjeta «Propuestos»)
@@ -207,19 +207,7 @@ const FILE_ALIAS: Record<string, string> = {
   'qor-lab-3': 'quimica-organica/qor-lab-3',
   'qor-lab-4': 'quimica-organica/qor-lab-4',
   // Inmunología — subcarpeta inmunologia/
-  't-2':   'inmunologia/t-2',
-  't-3':   'inmunologia/t-3',
-  't-4':   'inmunologia/t-4',
-  't-5':   'inmunologia/t-5',
-  't-6':   'inmunologia/t-6',
-  't-7':   'inmunologia/t-7',
-  't-8':   'inmunologia/t-8',
-  't-9':   'inmunologia/t-9',
   't-10':  'inmunologia/t-10',
-  't-11':  'inmunologia/t-11',
-  't-12':  'inmunologia/t-12',
-  't-13':  'inmunologia/t-13',
-  't-14':  'inmunologia/t-14',
   'sgp-1': 'inmunologia/sgp-1',
   'sgp-2': 'inmunologia/sgp-2',
   'sgp-3': 'inmunologia/sgp-3',
