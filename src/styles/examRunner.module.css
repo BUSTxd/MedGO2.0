@@ -1584,109 +1584,113 @@
 .muestraPie strong { font-weight: 800; }
 
 /* Corte de la muestra en la pantalla final: el análisis se queda y el resto del
-   banqueo se defiende. Dorado y no ámbar plano: es la pieza premium. */
-.corteMuestra {
-  --oro: #c08a22;
-  --oro-2: #e8b33e;
-  --oro-rgb: 200, 138, 34;
+   banqueo se defiende. No es una tarjeta-panel —la hoja del examen no las
+   usa—: es una portada a dos columnas, argumento a la izquierda y mural a la
+   derecha, con un halo violeta que sostiene la ilustración. */
+.corte {
+  --prem: #6C3BF4;
+  --prem-2: #8A3FFC;
+  --prem-3: #4B00FF;
+  --prem-rgb: 108, 59, 244;
 
   position: relative;
-  overflow: hidden;
-  margin: 0 auto 30px;
-  max-width: 500px;
-  padding: 20px 22px;
-  border: 1px solid rgba(var(--oro-rgb), 0.32);
-  border-radius: 20px;
-  background:
-    radial-gradient(110% 130% at 100% 0%, rgba(var(--oro-rgb), 0.2) 0%, rgba(var(--oro-rgb), 0.06) 45%, transparent 100%),
-    #fdf8ee;
-  box-shadow: 0 12px 34px rgba(var(--oro-rgb), 0.14);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+  align-items: center;
+  gap: 18px 30px;
+  margin: 0 0 40px;
   text-align: left;
 }
 
-:global(.dark-mode) .corteMuestra {
-  --oro: #e8b33e;
-  --oro-2: #f7d27a;
-  --oro-rgb: 232, 179, 62;
-
-  background:
-    radial-gradient(110% 130% at 100% 0%, rgba(var(--oro-rgb), 0.16) 0%, rgba(var(--oro-rgb), 0.05) 45%, transparent 100%),
-    #1a1608;
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+:global(.dark-mode) .corte {
+  --prem: #A78BFF;
+  --prem-2: #C4A9FF;
+  --prem-3: #7C4DFF;
+  --prem-rgb: 167, 139, 255;
 }
 
-/* Filete superior: la línea dorada que marca que esto es de pago. */
-.corteMuestra::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--oro), var(--oro-2), var(--oro));
-}
+.corteCol { min-width: 0; }
 
-.corteEyebrow {
+.corteBadge {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  margin: 0 0 9px 0;
-  font-size: 10px;
+  gap: 8px;
+  margin: 0 0 14px 0;
+  padding: 7px 13px 7px 11px;
+  border-radius: 999px;
+  background: rgba(var(--prem-rgb), 0.12);
+  color: var(--prem);
+  font-size: 10.5px;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--oro);
 }
 
 .corteTitulo {
-  font-size: 17px;
+  margin: 0 0 12px 0;
+  font-size: clamp(24px, 3.4vw, 33px);
   font-weight: 800;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   color: var(--white);
-  margin: 0 0 7px 0;
+}
+
+/* Segunda línea en violeta: la promesa, no el verbo. */
+.corteTituloAcc {
+  display: block;
+  color: var(--prem);
 }
 
 .corteCuerpo {
-  font-size: 12.5px;
-  line-height: 1.55;
+  margin: 0 0 20px 0;
+  max-width: 44ch;
+  font-size: 13.5px;
+  line-height: 1.6;
   color: var(--muted);
-  margin: 0 0 14px 0;
 }
 
 .corteCuerpo strong { color: var(--white); font-weight: 700; }
 
-/* Qué hay detrás del corte, en cifras. Viñeta de rombo en vez de recuadros. */
+/* Qué hay detrás del corte, en cifras. Cada dato es ícono + número arriba y
+   rótulo debajo: la columna izquierda ya lleva mucho texto corrido. */
 .corteDatos {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 18px;
-  margin: 0 0 18px 0;
+  gap: 14px 26px;
+  margin: 0 0 24px 0;
   padding: 0;
   list-style: none;
 }
 
-.corteDatos li {
-  display: inline-flex;
+.corteDato {
+  display: grid;
+  grid-template-columns: auto auto;
   align-items: center;
-  gap: 7px;
-  font-size: 12px;
-  color: var(--muted);
+  column-gap: 8px;
+  row-gap: 2px;
 }
 
-.corteDatos li::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  flex: none;
-  border-radius: 1px;
-  transform: rotate(45deg);
-  background: var(--oro);
+.corteDatoIcono {
+  grid-column: 1;
+  display: inline-flex;
+  color: var(--prem);
 }
 
-.corteDatos strong {
-  color: var(--white);
+.corteDatoNum {
+  grid-column: 2;
+  font-size: 19px;
   font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--white);
   font-variant-numeric: tabular-nums;
+}
+
+.corteDatoLabel {
+  grid-column: 1 / -1;
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--muted);
+  max-width: 13ch;
 }
 
 .corteCta {
@@ -1694,23 +1698,25 @@
   overflow: hidden;
   display: inline-flex;
   align-items: center;
-  padding: 12px 22px;
+  gap: 12px;
+  padding: 16px 26px;
   border: none;
-  border-radius: 12px;
-  background: linear-gradient(140deg, var(--oro-2) 0%, var(--oro) 55%, #a9741a 100%);
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--prem-2) 0%, var(--prem) 48%, var(--prem-3) 100%);
   color: #fff;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
   text-decoration: none;
-  text-shadow: 0 1px 2px rgba(80, 52, 0, 0.35);
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(var(--oro-rgb), 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  box-shadow: 0 10px 26px rgba(var(--prem-rgb), 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.22);
   transition: transform 0.18s cubic-bezier(0.34, 1.3, 0.64, 1), box-shadow 0.18s ease;
 }
 
-.corteCta span { position: relative; z-index: 1; }
+.corteCta > * { position: relative; z-index: 1; }
+
+.corteCtaFlecha { transition: transform 0.18s ease; }
 
 /* Brillo que barre el botón al pasar el cursor. */
 .corteCta::after {
@@ -1718,20 +1724,71 @@
   position: absolute;
   inset: 0;
   transform: translateX(-120%);
-  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.45) 50%, transparent 80%);
+  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.4) 50%, transparent 80%);
   transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .corteCta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(var(--oro-rgb), 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: 0 16px 34px rgba(var(--prem-rgb), 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.32);
 }
 
 .corteCta:hover::after { transform: translateX(120%); }
+.corteCta:hover .corteCtaFlecha { transform: translateX(3px); }
 
 .corteCta:focus-visible {
-  outline: 2px solid var(--oro);
+  outline: 2px solid var(--prem);
   outline-offset: 3px;
+}
+
+.cortePie {
+  margin: 14px 0 0 0;
+  max-width: 44ch;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.cortePie strong { color: var(--white); font-weight: 700; }
+
+/* El mural: la ilustración es de tinta violeta sobre nada, así que el halo lo
+   pone el fondo y no la imagen. */
+.corteArte {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.corteArte::before {
+  content: '';
+  position: absolute;
+  inset: -12% -8%;
+  border-radius: 50%;
+  background: radial-gradient(60% 60% at 50% 45%, rgba(var(--prem-rgb), 0.18) 0%, rgba(var(--prem-rgb), 0.06) 45%, transparent 72%);
+}
+
+.corteArte img {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 320px;
+}
+
+/* En oscuro las fichas son casi blancas: se bajan un punto para que no compitan
+   con la nota final. */
+:global(.dark-mode) .corteArte img { opacity: 0.92; }
+
+@media (max-width: 760px) {
+  .corte {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  /* El mural pasa a ser remate, no protagonista: la columna de texto manda. */
+  .corteArte { order: 2; margin-top: 6px; }
+  .corteArte img { max-width: 220px; }
+  .corteCta { width: 100%; justify-content: center; }
 }
 
 /* Desglose por tema: va después de la solución y en tono secundario — es el
@@ -2381,12 +2438,14 @@
   .avisoCtaFlecha,
   .corteCta,
   .corteCta::after,
+  .corteCtaFlecha,
   .versionesPista::before {
     transition: none;
   }
   .avisoCta:hover .avisoCtaFlecha { transform: none; }
   .corteCta:hover { transform: none; }
   .corteCta:hover::after { transform: translateX(-120%); }
+  .corteCta:hover .corteCtaFlecha { transform: none; }
   .fichasRevolver .ficha { animation: none; }
   .ficha:hover .fichaLibro,
   .ficha:focus-visible .fichaLibro { transform: none; }
