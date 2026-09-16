@@ -1427,16 +1427,12 @@ export default function ExamRunner({
 
   // Al terminar, el primer impulso es bajar a leer el análisis por temas, así
   // que el corte se abriría fuera de la pantalla y nadie vería la animación.
-  // Cuando el bloque empieza a abrirse, la ventana sube sola hasta él: todavía
-  // mide 0 px de alto, así que lo que se ve es cómo crece.
+  // Cuando el bloque empieza a abrirse, la ventana sube al tope de la página
+  // (no sólo hasta el bloque): así el título "Mejora con preguntas premium"
+  // no queda pegado al borde superior, sino con aire encima.
   useEffect(() => {
     if (!corteAbierto) return;
-    const el = corteRef.current;
-    if (!el) return;
-    window.scrollTo({
-      top: el.getBoundingClientRect().top + window.scrollY - 24,
-      behavior: prefiereQuieto() ? 'auto' : 'smooth',
-    });
+    window.scrollTo({ top: 0, behavior: prefiereQuieto() ? 'auto' : 'smooth' });
   }, [corteAbierto]);
 
   // La imagen ampliada se cierra sola al cambiar de pregunta, de grupo o al
@@ -1751,7 +1747,13 @@ export default function ExamRunner({
               {mostrarAviso && suscripcion && (
                 <AvisoSuscripcion
                   plan={suscripcion.plan}
-                  dePago={stages.flatMap((st, i) => (esDePago(st.key) ? [nombreEtapa(i)] : []))}
+                  dePago={[
+                    ...stages.flatMap((st, i) => (esDePago(st.key) ? [nombreEtapa(i)] : [])),
+                    // El 2023 no lleva candado —se ve a medias, como muestra—,
+                    // pero el plan también lo completa: lo que falta merece
+                    // el mismo protagonismo que los banqueos ya bloqueados.
+                    ...(muestra ? [`${nombreEtapa(stage)} completo (${muestra.total} preguntas)`] : []),
+                  ]}
                   onVer={() => {
                     if (suscripcion.isAuthed) setModalAbierto(true);
                     else window.location.href = '/auth/login?next=' + encodeURIComponent(window.location.pathname);
