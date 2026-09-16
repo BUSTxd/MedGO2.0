@@ -305,6 +305,13 @@ async function fetchExam(key: string): Promise<{ payload: ExamPayload; muestra?:
 
 type Phase = 'running' | 'finished';
 
+/**
+ * Lo que se espera, tras terminar, antes de que baje el resultado y se abra el
+ * corte premium. Da tiempo a que la rueda termine de contar (0,55 s de entrada
+ * + el conteo de la nota) y a leer los aciertos.
+ */
+const ESPERA_CORTE = 2400;
+
 const prefiereQuieto = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -733,6 +740,7 @@ function CortePremium({
 }) {
   const p = PLANS[muestra.plan];
   const faltan = muestra.total - muestra.mostradas;
+  const precio = Number.isInteger(p.amount) ? String(p.amount) : p.amount.toFixed(2);
   return (
     <section className={styles.corte} aria-label="Mejora con preguntas premium">
       <div className={styles.corteCol}>
@@ -787,7 +795,10 @@ function CortePremium({
         {isAuthed ? (
           <button type="button" className={styles.corteCta} onClick={onVer}>
             <IconoCandado size={17} />
-            <span>Desbloquear las {faltan} que faltan</span>
+            <span>
+              Todo por S/ {precio}
+              <span className={styles.corteCtaUnidad}>/ {p.durationDays === 30 ? 'mes' : 'año'}</span>
+            </span>
             <svg className={styles.corteCtaFlecha} width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path d="M5 12h13M12 5.5 18.5 12 12 18.5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -802,12 +813,9 @@ function CortePremium({
           </Link>
         )}
 
-        {/* El precio sale de PLANS, nunca escrito a mano: la cadencia se lee de
-            `durationDays`, no del nombre del plan. */}
         <p className={styles.cortePie}>
           Desbloquea además <strong>todos los resúmenes de todas las clases</strong> de{' '}
           {p.track === 'basico' ? 'los seis cursos del ciclo básico' : 'todos los años de la Facultad'}.
-          Todo por <strong>S/ {p.amount.toFixed(2)}</strong> {p.durationDays === 30 ? 'al mes' : 'al año'}.
         </p>
       </div>
 
@@ -1280,6 +1288,11 @@ export default function ExamRunner({
   // Versión que se ve de la pregunta actual, en las que traen `variante`. Vuelve
   // a la base al pasar de pregunta: es una elección sobre ESTA pregunta.
   const [enVariante, setEnVariante] = useState(false);
+  // El corte premium NO entra con la nota: primero se lee el resultado —la
+  // rueda contando, los aciertos y los fallos— y sólo después el bloque baja
+  // todo eso y se abre. Con `prefers-reduced-motion` aparece de una: la espera
+  // también es movimiento.
+  const [corteAbierto, setCorteAbierto] = useState(false);
 
   const stageKey = stages[stage].key;
   // Un banqueo de pago sin plan no se pide: la route respondería 403, y lo que
@@ -1395,6 +1408,13 @@ export default function ExamRunner({
       behavior: prefiereQuieto() ? 'auto' : 'smooth',
     });
   }, [currentIdx]);
+
+  useEffect(() => {
+    if (phase !== 'finished' || !muestra) { setCorteAbierto(false); return; }
+    if (prefiereQuieto()) { setCorteAbierto(true); return; }
+    const t = setTimeout(() => setCorteAbierto(true), ESPERA_CORTE);
+    return () => clearTimeout(t);
+  }, [phase, muestra]);
 
   // La imagen ampliada se cierra sola al cambiar de pregunta, de grupo o al
   // reintentar: si no, quedaría abierta sobre una pregunta que ya no es la suya.
@@ -1969,11 +1989,18 @@ export default function ExamRunner({
         return (
           <div className={styles.resultShell}>
             {muestra && (
-              <CortePremium
-                muestra={muestra}
-                isAuthed={!!suscripcion?.isAuthed}
-                onVer={() => setModalAbierto(true)}
-              />
+              <div
+                className={`${styles.corteWrap} ${corteAbierto ? styles.corteWrapAbierto : ''}`}
+                inert={!corteAbierto}
+              >
+                <div className={styles.corteWrapInner}>
+                  <CortePremium
+                    muestra={muestra}
+                    isAuthed={!!suscripcion?.isAuthed}
+                    onVer={() => setModalAbierto(true)}
+                  />
+                </div>
+              </div>
             )}
 
             <NotaFinal score={score} total={grandTotal} pct={pct} />

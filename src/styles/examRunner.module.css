@@ -1583,6 +1583,56 @@
 
 .muestraPie strong { font-weight: 800; }
 
+/* El corte no entra con la nota: la pantalla de resultados se lee primero y,
+   pasados un par de segundos, este bloque empuja todo hacia abajo y se abre.
+   El hueco se anima con `grid-template-rows: 0fr → 1fr`, que interpola la
+   altura REAL del contenido: ni medirla en JS ni inventar un `max-height` que
+   se quede corto cuando el banqueo trae cuatro cifras en vez de dos. */
+.corteWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.corteWrapInner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.corteWrapAbierto { grid-template-rows: 1fr; }
+
+/* Con el hueco ya abriéndose, las piezas entran en cascada. Los retardos son
+   el orden de lectura: insignia → titular → argumento → cifras → botón. */
+.corteWrapAbierto .corteBadge,
+.corteWrapAbierto .corteTitulo,
+.corteWrapAbierto .corteCuerpo,
+.corteWrapAbierto .corteDatos,
+.corteWrapAbierto .corteCta,
+.corteWrapAbierto .cortePie {
+  animation: corteEntra 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.corteWrapAbierto .corteBadge { animation-delay: 0.14s; }
+.corteWrapAbierto .corteTitulo { animation-delay: 0.22s; }
+.corteWrapAbierto .corteCuerpo { animation-delay: 0.32s; }
+.corteWrapAbierto .corteDatos { animation-delay: 0.42s; }
+.corteWrapAbierto .corteCta { animation-delay: 0.52s; }
+.corteWrapAbierto .cortePie { animation-delay: 0.62s; }
+
+.corteWrapAbierto .corteArte {
+  animation: corteArteEntra 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s both;
+}
+
+@keyframes corteEntra {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes corteArteEntra {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: none; }
+}
+
 /* Corte de la muestra en la pantalla final: el análisis se queda y el resto del
    banqueo se defiende. No es una tarjeta-panel —la hoja del examen no las
    usa—: es una portada a dos columnas, argumento a la izquierda y mural a la
@@ -1717,6 +1767,15 @@
 .corteCta > * { position: relative; z-index: 1; }
 
 .corteCtaFlecha { transition: transform 0.18s ease; }
+
+/* «/ mes» dentro del botón: el importe manda, la cadencia acompaña — pero está,
+   porque «S/ 14» a secas se leería como pago único. */
+.corteCtaUnidad {
+  margin-left: 5px;
+  font-size: 12.5px;
+  font-weight: 700;
+  opacity: 0.8;
+}
 
 /* Brillo que barre el botón al pasar el cursor. */
 .corteCta::after {
@@ -2446,6 +2505,14 @@
   .corteCta:hover { transform: none; }
   .corteCta:hover::after { transform: translateX(-120%); }
   .corteCta:hover .corteCtaFlecha { transform: none; }
+  .corteWrap { transition: none; }
+  .corteWrapAbierto .corteBadge,
+  .corteWrapAbierto .corteTitulo,
+  .corteWrapAbierto .corteCuerpo,
+  .corteWrapAbierto .corteDatos,
+  .corteWrapAbierto .corteCta,
+  .corteWrapAbierto .cortePie,
+  .corteWrapAbierto .corteArte { animation: none; }
   .fichasRevolver .ficha { animation: none; }
   .ficha:hover .fichaLibro,
   .ficha:focus-visible .fichaLibro { transform: none; }
