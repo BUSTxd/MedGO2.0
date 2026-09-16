@@ -39,7 +39,7 @@ export default async function ActividadPage({
         titulo={act.titulo}
         backHref={`/dashboard/cursos/inmunologia/${id}`}
         /* Los banqueos abiertos son el reclamo del plan: el aviso entra pronto. */
-        avisoCada={4}
+        avisoCada={3}
       />
     );
   }

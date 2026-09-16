@@ -14,6 +14,12 @@
   --mal-rgb: 214, 64, 69;
   --ambar: #E0932A;
   --ambar-rgb: 224, 147, 42;
+  /* Oro: la marca de lo que está detrás del plan. No es el ámbar de aviso ni
+     el violeta del acento — es su propio color para que, de un vistazo, el
+     rastro separe «esto lo hiciste» de «esto ni siquiera se te cargó». */
+  --oro: #C2911D;
+  --oro-2: #E9C46A;
+  --oro-rgb: 194, 145, 29;
 
   max-width: 880px;
   margin: 0 auto;
@@ -26,6 +32,9 @@
 :global(.dark-mode) .shell {
   --acc: #9B8EF8;
   --acc-rgb: 155, 142, 248;
+  --oro: #E3B23C;
+  --oro-2: #F6DC9A;
+  --oro-rgb: 227, 178, 60;
 }
 
 /* ── Barra superior: volver + selector de grupos ──────────── */
@@ -264,6 +273,13 @@
   letter-spacing: -0.01em;
 }
 
+/* En una muestra el total es el del banqueo entero, así que deja de ser un
+   dato apagado: es la promesa. Va en oro, igual que las marcas cerradas. */
+.contadorTotalPremium {
+  color: var(--oro);
+  font-weight: 800;
+}
+
 .mandoCentro {
   flex: 1;
   min-width: 0;
@@ -310,6 +326,16 @@
   height: 15px;
   background: var(--acc-grad);
   box-shadow: 0 0 10px rgba(var(--acc-rgb), 0.55);
+}
+
+/* Las preguntas que la muestra no abre. Se dibujan algo más bajas que las
+   pendientes —no se van a responder— pero en oro y con brillo, para que el
+   tramo cerrado se lea como lo que falta comprar, no como relleno muerto. */
+.segPremium {
+  height: 4px;
+  background: linear-gradient(180deg, var(--oro-2), var(--oro));
+  box-shadow: 0 0 6px rgba(var(--oro-rgb), 0.35);
+  opacity: 0.66;
 }
 
 /* Barra continua: reemplaza al rastro cuando hay demasiadas preguntas para que

@@ -694,13 +694,19 @@ export const semanas: Semana[] = [
         // guardan por clave, así que cambiar cuál es `key` no borra ninguno.
         // Detrás de los años, dos banqueos sin año (40 + 40) rotulados «Extra»:
         // su enfoque va en `hints`, que el selector enseña al pasar el cursor.
+        // Los dos van con candado, como el 2022.
         examen: {
           key: 'inmunologia/final-2025',
-          // El banqueo se abre a cualquier cuenta. El 2022 lleva candado; el
-          // 2023 NO puede llevarlo, porque entonces el runner no pediría el
-          // JSON y se perdería la muestra que recorta la route (34 de 68).
+          // El banqueo se abre a cualquier cuenta. El 2022 y los dos Extra
+          // llevan candado; el 2023 NO puede llevarlo, porque entonces el
+          // runner no pediría el JSON y se perdería la muestra que recorta la
+          // route (34 de 68).
           free: true,
-          dePago: ['inmunologia/final-2022'],
+          dePago: [
+            'inmunologia/final-2022',
+            'inmunologia/extra-hemato',
+            'inmunologia/extra-pato',
+          ],
           groups: [
             'inmunologia/final-2024-2',
             'inmunologia/final-2023',

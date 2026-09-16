@@ -1173,13 +1173,14 @@ function SelectorVersion({
 }
 
 /** Rastro del examen: una marca por pregunta, pintada según cómo fue. */
-type MarcaRastro = 'pendiente' | 'actual' | 'ok' | 'mal';
+type MarcaRastro = 'pendiente' | 'actual' | 'ok' | 'mal' | 'premium';
 
 function Rastro({ marcas, final = false }: { marcas: MarcaRastro[]; final?: boolean }) {
   const claseDe = (m: MarcaRastro) =>
     m === 'ok' ? styles.segOk
       : m === 'mal' ? styles.segMal
       : m === 'actual' ? styles.segActual
+      : m === 'premium' ? styles.segPremium
       : styles.segPendiente;
 
   return (
@@ -1299,6 +1300,7 @@ export default function ExamRunner({
   // toca enseñar es la tarjeta de suscripción, no un error.
   const bloqueada = esDePago(stageKey) && !acceso;
   const shellRef = useRef<HTMLDivElement>(null);
+  const corteRef = useRef<HTMLDivElement>(null);
 
   // Identidad del intento: cambiar de grupo o reintentar arranca un cronómetro
   // nuevo; avanzar de pregunta, no.
@@ -1357,13 +1359,20 @@ export default function ExamRunner({
   const base = deck?.[currentIdx];
   const current = base ? vistaDe(base, enVariante) : undefined;
   const total = deck?.length ?? 0;
+  // En una muestra el mando cuenta sobre el banqueo COMPLETO —el 2023 son 68
+  // preguntas, no 34—: `total` es lo que se puede responder y `totalReal` lo
+  // que hay detrás. Sin muestra los dos son el mismo número.
+  const totalReal = muestra?.total ?? total;
 
   const aciertoActual = picked && base ? acierta(base, picked) : null;
 
   // Rastro: una marca por pregunta. La actual ya se pinta con su resultado en
   // cuanto el alumno responde, sin esperar a que pulse «Siguiente».
   const marcas: MarcaRastro[] = useMemo(() => {
-    return Array.from({ length: total }, (_, i) => {
+    return Array.from({ length: totalReal }, (_, i) => {
+      // Lo que la muestra no abre sigue dibujado, en oro: la línea guía enseña
+      // el banqueo entero aunque el navegador sólo haya recibido el principio.
+      if (i >= total) return 'premium';
       if (i < answersAll.length) return answersAll[i].ok ? 'ok' : 'mal';
       if (i === currentIdx) {
         if (aciertoActual === null) return 'actual';
@@ -1371,7 +1380,7 @@ export default function ExamRunner({
       }
       return 'pendiente';
     });
-  }, [total, answersAll, currentIdx, aciertoActual]);
+  }, [total, totalReal, answersAll, currentIdx, aciertoActual]);
 
   const progressPct = total > 0
     ? Math.round(((currentIdx + (picked ? 1 : 0)) / total) * 100)
@@ -1415,6 +1424,20 @@ export default function ExamRunner({
     const t = setTimeout(() => setCorteAbierto(true), ESPERA_CORTE);
     return () => clearTimeout(t);
   }, [phase, muestra]);
+
+  // Al terminar, el primer impulso es bajar a leer el análisis por temas, así
+  // que el corte se abriría fuera de la pantalla y nadie vería la animación.
+  // Cuando el bloque empieza a abrirse, la ventana sube sola hasta él: todavía
+  // mide 0 px de alto, así que lo que se ve es cómo crece.
+  useEffect(() => {
+    if (!corteAbierto) return;
+    const el = corteRef.current;
+    if (!el) return;
+    window.scrollTo({
+      top: el.getBoundingClientRect().top + window.scrollY - 24,
+      behavior: prefiereQuieto() ? 'auto' : 'smooth',
+    });
+  }, [corteAbierto]);
 
   // La imagen ampliada se cierra sola al cambiar de pregunta, de grupo o al
   // reintentar: si no, quedaría abierta sobre una pregunta que ya no es la suya.
@@ -1646,11 +1669,13 @@ export default function ExamRunner({
               <span className={styles.contadorNum}>
                 {String(currentIdx + 1).padStart(2, '0')}
               </span>
-              <span className={styles.contadorTotal}>/{String(total).padStart(2, '0')}</span>
+              <span className={`${styles.contadorTotal} ${muestra ? styles.contadorTotalPremium : ''}`}>
+                /{String(totalReal).padStart(2, '0')}
+              </span>
             </div>
 
             <div className={styles.mandoCentro}>
-              {total <= MAX_SEGMENTOS ? (
+              {totalReal <= MAX_SEGMENTOS ? (
                 <Rastro marcas={marcas} />
               ) : (
                 <div className={styles.rastroBarra}>
@@ -1990,6 +2015,7 @@ export default function ExamRunner({
           <div className={styles.resultShell}>
             {muestra && (
               <div
+                ref={corteRef}
                 className={`${styles.corteWrap} ${corteAbierto ? styles.corteWrapAbierto : ''}`}
                 inert={!corteAbierto}
               >

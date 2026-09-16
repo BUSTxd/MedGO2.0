@@ -35,14 +35,15 @@ const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?: numbe
   'patologia/parcial-1-2022': {},
   'patologia/parcial-1-2020': {},
   'patologia/parcial-1-2020-b': { free: true },
-  // Inmunología: cuatro banqueos abiertos como muestra del curso, con el aviso
-  // de suscripción del runner cada pocas preguntas. El 2022 y el 2023 (el más
-  // elaborado) siguen detrás del plan del tramo.
+  // Inmunología: dos banqueos abiertos como muestra del curso (2025 y 2024-II),
+  // con el aviso de suscripción del runner cada pocas preguntas. El 2022 y los
+  // dos Extra están detrás del plan del tramo; el 2023 —el más elaborado— se
+  // entrega recortado a 34 de sus 68 preguntas.
   'inmunologia/final-2025': { free: true },
   'inmunologia/final-2024-2': { free: true },
-  'inmunologia/extra-hemato': { free: true },
-  'inmunologia/extra-pato': { free: true },
   'inmunologia/final-2022': {},
+  'inmunologia/extra-hemato': {},
+  'inmunologia/extra-pato': {},
   'inmunologia/final-2023': { muestra: 34 },
 };
 
