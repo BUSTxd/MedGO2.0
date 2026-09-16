@@ -671,6 +671,10 @@ export const semanas: Semana[] = [
         id: 'examen-t',
         tipo: 'EXAMEN-T',
         unidad: 'EVALUACION',
+        // Abierta: es la puerta de entrada del curso. Sin esto la clase salía
+        // con velo y el alumno sin plan no llegaba ni a la tarjeta del banqueo,
+        // aunque los banqueos de dentro sí estuvieran abiertos.
+        gratis: true,
         titulo: 'Examen Final Teórico',
         fecha: '27 set',
         fechaISO: '2025-09-27',
