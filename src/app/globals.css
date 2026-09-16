@@ -25,7 +25,10 @@ body {
   font-family: var(--font-outfit), sans-serif;
   background: var(--bg);
   color: var(--white);
-  overflow-x: hidden;
+  /* `clip` y no `hidden`: corta igual el desborde horizontal, pero sin hacer
+     del body un contenedor de scroll — con `hidden` no funciona ningún
+     `position: sticky` de la app. */
+  overflow-x: clip;
 }
 
 /* ─── SHARED SECTION LAYOUT ─── */

@@ -133,6 +133,11 @@ interface Muestra {
   mostradas: number;
   total: number;
   plan: PlanKey;
+  /** Qué trae el banqueo COMPLETO: lo cuenta la route, que sí lo ve entero. */
+  variantes?: number;
+  conExplicacion?: number;
+  conNota?: number;
+  conImagen?: number;
 }
 
 interface ExamPayload {
@@ -617,16 +622,24 @@ function AvisoSuscripcion({
         <IconoCandado size={18} />
       </span>
       <div className={styles.avisoTexto}>
-        <p className={styles.avisoTitulo}>¿Te está sirviendo el banqueo?</p>
+        <p className={styles.avisoTitulo}>
+          ¿Te está sirviendo el banqueo?
+          <span className={styles.avisoPrecio}>
+            S/ {p.amount.toFixed(2)} <span className={styles.avisoPrecioUnidad}>/ {p.durationDays === 30 ? 'mes' : 'año'}</span>
+          </span>
+        </p>
         <p className={styles.avisoCuerpo}>
-          Con el plan <strong>{p.label}</strong> (S/ {p.amount.toFixed(2)} / {p.durationDays === 30 ? 'mes' : 'año'})
-          desbloqueas {dePago.length > 0 && <><strong>el {dePago.join(' y el ')}</strong>, </>}
+          Con el plan <strong>{p.label}</strong> desbloqueas{' '}
+          {dePago.length > 0 && <><strong>el {dePago.join(' y el ')}</strong>, </>}
           los resúmenes de todas las clases, el atlas de histología y{' '}
           {p.track === 'basico' ? 'los cursos del ciclo básico' : 'los cursos de la Facultad de Medicina'}.
         </p>
       </div>
       <button type="button" className={styles.avisoCta} onClick={onVer}>
         Ver plan {p.label}
+        <svg className={styles.avisoCtaFlecha} width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M5 12h13M12 5.5 18.5 12 12 18.5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </button>
       <button type="button" className={styles.avisoCerrar} onClick={onCerrar} aria-label="Cerrar aviso">
         <IconoCerrar />
@@ -1781,21 +1794,44 @@ export default function ExamRunner({
           <div className={styles.resultShell}>
             {muestra && (
               <div className={styles.corteMuestra}>
+                <p className={styles.corteEyebrow}>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M12 3l2.4 5.5 6 .5-4.6 3.9 1.4 5.9L12 15.6l-5.2 3.1 1.4-5.9L3.6 9l6-.5L12 3z"
+                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  El banqueo más completo del curso
+                </p>
                 <p className={styles.corteTitulo}>
-                  Hiciste las {muestra.mostradas} preguntas abiertas de {muestra.total}
+                  Hiciste {muestra.mostradas} de las {muestra.total} preguntas
                 </p>
                 <p className={styles.corteCuerpo}>
-                  Tu análisis por temas cuenta igual. Con el plan{' '}
-                  <strong>{PLANS[muestra.plan].label}</strong> se abren las{' '}
-                  {muestra.total - muestra.mostradas} que faltan, y con ellas el resto del banqueo.
+                  Es el banqueo del que <strong>más preguntas se repiten</strong> en el examen real, y el
+                  único que trae la versión <strong>original y la reconstruida</strong> de una misma pregunta.
+                  Tu análisis por temas de abajo cuenta igual.
                 </p>
+
+                <ul className={styles.corteDatos}>
+                  {!!muestra.conExplicacion && (
+                    <li><strong>{muestra.conExplicacion}</strong> con explicación</li>
+                  )}
+                  {!!muestra.variantes && (
+                    <li><strong>{muestra.variantes}</strong> con variante</li>
+                  )}
+                  {!!muestra.conNota && (
+                    <li><strong>{muestra.conNota}</strong> con nota de revisión</li>
+                  )}
+                  {!!muestra.conImagen && (
+                    <li><strong>{muestra.conImagen}</strong> con la imagen del examen</li>
+                  )}
+                </ul>
+
                 {suscripcion?.isAuthed ? (
                   <button type="button" className={styles.corteCta} onClick={() => setModalAbierto(true)}>
-                    Seguir con el banqueo completo
+                    <span>Desbloquear las {muestra.total - muestra.mostradas} que faltan</span>
                   </button>
                 ) : (
                   <Link href="/auth/login" className={styles.corteCta}>
-                    Inicia sesión para continuar
+                    <span>Inicia sesión para continuar</span>
                   </Link>
                 )}
               </div>

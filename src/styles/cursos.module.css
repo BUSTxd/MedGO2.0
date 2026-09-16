@@ -376,7 +376,10 @@
   min-height: 500px;
   margin: -4px;
   position: relative;
-  overflow: hidden;
+  /* `clip` y no `hidden`: recorta igual contra el borde redondeado, pero no
+     crea un contenedor de scroll, que anularía el `position: sticky` de lo que
+     lleve dentro (el aviso de suscripción del examen). */
+  overflow: clip;
   /* CSS var overrides so descendant var()-based rules adapt automatically */
   --white: #1a1a2e;
   --muted: #718096;

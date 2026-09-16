@@ -99,13 +99,25 @@ export async function GET(
       return NextResponse.json({ error: 'not_available' }, { status: 404 });
     }
 
-    const payload = JSON.parse(await blob.text()) as { questions?: unknown[] };
+    type PreguntaCruda = { variante?: unknown; explanation?: string; reviewNote?: string; image?: string };
+    const payload = JSON.parse(await blob.text()) as { questions?: PreguntaCruda[] };
     const todas = Array.isArray(payload.questions) ? payload.questions : [];
+    const cuantas = (fn: (q: PreguntaCruda) => unknown) => todas.filter(q => !!fn(q)).length;
 
     return NextResponse.json(
       {
         payload: { ...payload, questions: todas.slice(0, meta.muestra) },
-        muestra: { mostradas: Math.min(meta.muestra, todas.length), total: todas.length, plan: requerido },
+        // Lo que hay detrás del corte se cuenta aquí: el cliente sólo recibe la
+        // muestra y no podría saber qué trae el resto del banqueo.
+        muestra: {
+          mostradas: Math.min(meta.muestra, todas.length),
+          total: todas.length,
+          plan: requerido,
+          variantes: cuantas(q => q.variante),
+          conExplicacion: cuantas(q => q.explanation),
+          conNota: cuantas(q => q.reviewNote),
+          conImagen: cuantas(q => q.image),
+        },
       },
       { headers: { 'Cache-Control': 'private, no-store' } },
     );
