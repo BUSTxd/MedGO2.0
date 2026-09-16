@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import ReactMarkdown from 'react-markdown';
 import { trackEvent } from '@/lib/analytics';
 import { PLANS, planUnlocks, type PlanKey, type ProfilePlan } from '@/lib/plans';
+import { cursoDe, desglosarIntento, registrarIntento, UMBRAL_FLOJO, type Desglose } from '@/lib/temas-flojos';
 import LockedContent from './LockedContent';
 import { usePlan } from './PlanProvider';
 import styles from '@/styles/examRunner.module.css';
@@ -54,6 +55,8 @@ interface ExamQuestion {
   explanationExtraImages?: { src: string; alt?: string; w?: number; h?: number }[];
   reviewNote?: string;
   tags?: string[];
+  /** Tema del vocabulario del curso. Sin esto la pregunta queda fuera del informe. */
+  tema?: string;
   /** La misma pregunta en otra versión; el alumno elige cuál ver con un interruptor. */
   variante?: VariantePregunta;
   /**
@@ -123,6 +126,13 @@ function acierta(q: ExamQuestion, ids: string[]): boolean {
   if (!q.multiple) return version.find(o => o.id === ids[0])?.correct === true;
   const correctas = version.filter(o => o.correct).map(o => o.id);
   return correctas.length === ids.length && correctas.every(id => ids.includes(id));
+}
+
+/** Banqueo recortado por el servidor para quien no tiene el plan. */
+interface Muestra {
+  mostradas: number;
+  total: number;
+  plan: PlanKey;
 }
 
 interface ExamPayload {
@@ -266,7 +276,7 @@ function saveAttempt(k: string, attempt: Attempt) {
   } catch {}
 }
 
-async function fetchExam(key: string): Promise<ExamPayload> {
+async function fetchExam(key: string): Promise<{ payload: ExamPayload; muestra?: Muestra }> {
   let entry = readUrlCache(key);
   if (!entry) {
     const r = await fetch(`/api/examen/${key}`);
@@ -276,13 +286,16 @@ async function fetchExam(key: string): Promise<ExamPayload> {
       if (r.status === 404) throw new Error('Examen no disponible.');
       throw new Error('Error cargando el examen.');
     }
-    const data = (await r.json()) as SignedUrlEntry;
+    const data = (await r.json()) as SignedUrlEntry | { payload: ExamPayload; muestra: Muestra };
+    // Recorte del servidor: llega sin URL, con las preguntas que tocan y nada
+    // más. No se cachea: al cambiar el plan la respuesta tiene que cambiar.
+    if ('payload' in data) return { payload: data.payload, muestra: data.muestra };
     writeUrlCache(key, data);
     entry = data;
   }
   const jsonRes = await fetch(entry.url);
   if (!jsonRes.ok) throw new Error('No se pudo descargar el contenido.');
-  return (await jsonRes.json()) as ExamPayload;
+  return { payload: (await jsonRes.json()) as ExamPayload };
 }
 
 type Phase = 'running' | 'finished';
@@ -489,6 +502,96 @@ function IconoCandado({ size = 11 }: { size?: number }) {
   );
 }
 
+/** El mismo book-bookmark que Cursos en la sidebar: ata el resumen a su clase. */
+function IconoLibro({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" d="M19.8978 16H7.89778C6.96781 16 6.50282 16 6.12132 16.1022C5.08604 16.3796 4.2774 17.1883 4 18.2235" />
+      <path stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" d="M8 7H16" />
+      <path stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" d="M8 10.5H13" />
+      <path stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" d="M13 16V19.5309C13 19.8065 13 19.9443 12.9051 20C12.8103 20.0557 12.6806 19.9941 12.4211 19.8708L11.1789 19.2808C11.0911 19.2391 11.0472 19.2182 11 19.2182C10.9528 19.2182 10.9089 19.2391 10.8211 19.2808L9.57889 19.8708C9.31943 19.9941 9.18971 20.0557 9.09485 20C9 19.9443 9 19.8065 9 19.5309V16.45" />
+      <path stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" d="M10 22C7.17157 22 5.75736 22 4.87868 21.1213C4 20.2426 4 18.8284 4 16V8C4 5.17157 4 3.75736 4.87868 2.87868C5.75736 2 7.17157 2 10 2H14C16.8284 2 18.2426 2 19.1213 2.87868C20 3.75736 20 5.17157 20 8M14 22C16.8284 22 18.2426 22 19.1213 21.1213C20 20.2426 20 18.8284 20 16V12" />
+    </svg>
+  );
+}
+
+/**
+ * Los resúmenes que resuelven los temas fallados, en revólver: los tres más
+ * críticos en el centro y el resto asomando a los lados, reducidos y
+ * difuminados. El tamaño lo decide la posición en la pista, no el índice, así
+ * que al arrastrar el que entra al centro crece (`animation-timeline: view`).
+ */
+function CarruselResumenes({
+  temas,
+  acceso,
+  planLabel,
+}: {
+  temas: Desglose[];
+  acceso: boolean;
+  planLabel: string;
+}) {
+  const pistaRef = useRef<HTMLDivElement>(null);
+
+  // Los tres críticos van al medio; los demás se reparten alternando a un lado
+  // y a otro, de más crítico (pegado al centro) a menos.
+  const orden = useMemo(() => {
+    const criticos = temas.slice(0, 3);
+    const extras = temas.slice(3);
+    const izquierda = extras.filter((_, i) => i % 2 === 1).reverse();
+    const derecha = extras.filter((_, i) => i % 2 === 0);
+    return [...izquierda, ...criticos, ...derecha];
+  }, [temas]);
+
+  const enRevolver = orden.length > 3;
+
+  // La pista arranca centrada en los críticos, no al principio.
+  useEffect(() => {
+    const el = pistaRef.current;
+    if (!el) return;
+    el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+  }, [orden.length]);
+
+  return (
+    <div
+      ref={pistaRef}
+      className={`${styles.fichasPista} ${enRevolver ? styles.fichasPistaRevolver : ''}`}
+    >
+      <div className={`${styles.fichas} ${enRevolver ? styles.fichasRevolver : ''}`}>
+        {orden.map(d => {
+          const c = d.clases[0];
+          const cerrada = !c.gratis && !acceso;
+          return (
+            <Link
+              key={`${d.curso}-${d.temaId}`}
+              // Sin `?resumen=1` si está cerrada: el visor va por portal y se
+              // montaría por delante del velo del paywall.
+              href={`/dashboard/cursos/${d.curso}/${c.claseId}${c.conResumen && !cerrada ? '?resumen=1' : ''}`}
+              className={`${styles.ficha} ${cerrada ? styles.fichaCerrada : ''}`}
+              // Nativo y no un globo propio: la pista lleva scroll horizontal, y
+              // cualquier flotante suyo se recortaría.
+              title={`${c.codigo} — ${c.titulo}\n${
+                cerrada ? `Desbloquear con el plan ${planLabel}` : c.conResumen ? 'Abrir el resumen' : 'Ver la clase'
+              }`}
+            >
+              <span className={styles.fichaLibro} aria-hidden>
+                <IconoLibro size={34} />
+                {cerrada && (
+                  <span className={styles.fichaCandado}>
+                    <IconoCandado size={11} />
+                  </span>
+                )}
+              </span>
+              <span className={styles.fichaCodigo}>{c.codigo}</span>
+              <span className={styles.fichaTema}>{d.label}</span>
+              <span className={styles.fichaFallos}>{d.total - d.ok} de {d.total} falladas</span>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 /* ── Suscripción ──────────────────────────────────────────────────────────── */
 
 /**
@@ -517,7 +620,8 @@ function AvisoSuscripcion({
         <p className={styles.avisoTitulo}>¿Te está sirviendo el banqueo?</p>
         <p className={styles.avisoCuerpo}>
           Con el plan <strong>{p.label}</strong> (S/ {p.amount.toFixed(2)} / {p.durationDays === 30 ? 'mes' : 'año'})
-          desbloqueas {dePago.length > 0 && <><strong>el {dePago.join(' y el ')}</strong> y </>}
+          desbloqueas {dePago.length > 0 && <><strong>el {dePago.join(' y el ')}</strong>, </>}
+          los resúmenes de todas las clases, el atlas de histología y{' '}
           {p.track === 'basico' ? 'los cursos del ciclo básico' : 'los cursos de la Facultad de Medicina'}.
         </p>
       </div>
@@ -970,6 +1074,7 @@ export default function ExamRunner({
 
   const [stage, setStage] = useState(0);
   const [payload, setPayload] = useState<ExamPayload | null>(null);
+  const [muestra, setMuestra] = useState<Muestra | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [runId, setRunId] = useState(0);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -1014,13 +1119,15 @@ export default function ExamRunner({
     let cancelled = false;
     setError(null);
     setPayload(null);
+    setMuestra(null);
     if (bloqueada) return;
 
     (async () => {
       try {
-        const json = await fetchExam(stageKey);
+        const { payload: json, muestra: m } = await fetchExam(stageKey);
         if (cancelled) return;
         setPayload(json);
+        setMuestra(m ?? null);
       } catch (err) {
         if (cancelled) return;
         setError(err instanceof Error ? err.message : 'Error desconocido.');
@@ -1139,6 +1246,7 @@ export default function ExamRunner({
         finishedAt: new Date().toISOString(),
         ...(conCronometro ? { seconds: segundos } : {}),
       });
+      registrarIntento(cursoDe(stageKey), desglosarIntento(cursoDe(stageKey), nextAll, deck ?? []));
       trackEvent('examen_completado', { examKey: stageKey, score, total: nextAll.length });
       setPhase('finished');
     } else {
@@ -1344,6 +1452,12 @@ export default function ExamRunner({
                 {mostrarEtapa && <>{nombreEtapa(stage)} · </>}
                 {answersAll.filter(a => a.ok).length} correctas de {answersAll.length} respondidas
               </span>
+              {muestra && (
+                <span className={styles.muestraPie}>
+                  Muestra gratuita · <strong>{muestra.mostradas} de {muestra.total}</strong> preguntas.
+                  {' '}Las {muestra.total - muestra.mostradas} restantes se abren con el plan {PLANS[muestra.plan].label}.
+                </span>
+              )}
             </div>
 
             {conCronometro && (
@@ -1657,17 +1771,56 @@ export default function ExamRunner({
         const pct = grandTotal > 0 ? Math.round((score / grandTotal) * 100) : 0;
         const history = loadAttempts(stageKey);
         const marcasFinal: MarcaRastro[] = answersAll.map(a => (a.ok ? 'ok' : 'mal'));
+        const desglose = desglosarIntento(cursoDe(stageKey), answersAll, deck ?? []);
+        // Todos los temas flojos, no un top: la pista de fichas se arrastra en
+        // horizontal, así que cabe un examen fallado de arriba abajo.
+        const aRepasar = desglose.filter(d => d.pct < UMBRAL_FLOJO);
+        const hayCerradas = !!suscripcion && !acceso
+          && aRepasar.some(d => !d.clases[0].gratis);
         return (
           <div className={styles.resultShell}>
+            {muestra && (
+              <div className={styles.corteMuestra}>
+                <p className={styles.corteTitulo}>
+                  Hiciste las {muestra.mostradas} preguntas abiertas de {muestra.total}
+                </p>
+                <p className={styles.corteCuerpo}>
+                  Tu análisis por temas cuenta igual. Con el plan{' '}
+                  <strong>{PLANS[muestra.plan].label}</strong> se abren las{' '}
+                  {muestra.total - muestra.mostradas} que faltan, y con ellas el resto del banqueo.
+                </p>
+                {suscripcion?.isAuthed ? (
+                  <button type="button" className={styles.corteCta} onClick={() => setModalAbierto(true)}>
+                    Seguir con el banqueo completo
+                  </button>
+                ) : (
+                  <Link href="/auth/login" className={styles.corteCta}>
+                    Inicia sesión para continuar
+                  </Link>
+                )}
+              </div>
+            )}
+
             <NotaFinal score={score} total={grandTotal} pct={pct} />
 
+            {/* Con temas flojos el titular es la salida, no el juicio de la nota. */}
             <h2 className={styles.resultTitle}>
-              {pct >= 80 ? '¡Excelente!' : pct >= 60 ? '¡Buen trabajo!' : pct >= 40 ? 'Vas por buen camino' : 'A repasar este tema'}
+              {aRepasar.length > 0
+                ? 'Tenemos la solución'
+                : pct >= 80 ? '¡Excelente!' : pct >= 60 ? '¡Buen trabajo!' : pct >= 40 ? 'Vas por buen camino' : 'A repasar este tema'}
             </h2>
             <p className={styles.resultSub}>
               {mostrarEtapa && <>{nombreEtapa(stage)} · </>}
               Tu intento se guardó en este navegador.
             </p>
+
+            {aRepasar.length > 0 && (
+              <CarruselResumenes
+                temas={aRepasar}
+                acceso={acceso}
+                planLabel={suscripcion ? PLANS[suscripcion.plan].label : ''}
+              />
+            )}
 
             <div className={styles.resultCifras}>
               <span className={styles.cifra}>
@@ -1700,6 +1853,26 @@ export default function ExamRunner({
               <div className={styles.resultRastro}>
                 <Rastro marcas={marcasFinal} final />
                 <span className={styles.resultRastroPie}>Tu recorrido, pregunta a pregunta</span>
+              </div>
+            )}
+
+            {desglose.length > 0 && (
+              <div className={styles.temas}>
+                <p className={styles.temasTitulo}>Dónde fallaste · este banqueo</p>
+                {desglose.map(d => (
+                  <div key={d.temaId} className={styles.temaRow}>
+                    <span className={styles.temaNombre}>{d.label}</span>
+                    <span className={styles.temaBarra}>
+                      <span
+                        className={`${styles.temaBarraFill} ${
+                          d.pct < UMBRAL_FLOJO ? styles.temaFillMal : d.pct < 80 ? styles.temaFillMedio : styles.temaFillOk
+                        }`}
+                        style={{ width: `${d.pct}%` }}
+                      />
+                    </span>
+                    <span className={styles.temaScore}>{d.ok}/{d.total}</span>
+                  </div>
+                ))}
               </div>
             )}
 

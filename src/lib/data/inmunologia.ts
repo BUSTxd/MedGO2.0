@@ -32,6 +32,8 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
+  /** Abre la clase entera a cualquier cuenta, como muestra del curso. */
+  gratis?: boolean;
   resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   examen?: ExamenRef;
   /**
@@ -119,6 +121,7 @@ export const semanas: Semana[] = [
         tipo: 'MAGISTRAL',
         unidad: 'INNATA',
         codigo: 'T2',
+        gratis: true,
         titulo: 'T2 — Células del sistema inmune y lámina periférica',
         fecha: '1 set',
         hora: '—',
@@ -160,6 +163,7 @@ export const semanas: Semana[] = [
         tipo: 'HISTOLOGIA',
         unidad: 'INNATA',
         codigo: 'H1',
+        gratis: true,
         titulo: 'H1 — Timo y tejido linfoide asociado a mucosas',
         fecha: '2 – 5 set · según subgrupo',
         hora: '—',
@@ -205,6 +209,7 @@ export const semanas: Semana[] = [
         tipo: 'MAGISTRAL',
         unidad: 'INNATA',
         codigo: 'T5',
+        gratis: true,
         titulo: 'T5 — Respuestas innatas moleculares',
         fecha: '5 set',
         hora: '—',
@@ -414,6 +419,7 @@ export const semanas: Semana[] = [
         tipo: 'INVERTIDA',
         unidad: 'ADAPTATIVA',
         codigo: 'T9',
+        gratis: true,
         titulo: 'T9 — Respuesta humoral y linfocitos B',
         fecha: '15 set',
         hora: '—',
@@ -498,6 +504,7 @@ export const semanas: Semana[] = [
         tipo: 'SGP',
         unidad: 'ADAPTATIVA',
         codigo: 'SGP-3',
+        gratis: true,
         titulo: 'SGP 3 — Autoinmunidad: artritis reumatoide y autoanticuerpos',
         fecha: '16 – 19 set · flexible',
         hora: '—',
@@ -685,6 +692,11 @@ export const semanas: Semana[] = [
         // su enfoque va en `hints`, que el selector enseña al pasar el cursor.
         examen: {
           key: 'inmunologia/final-2025',
+          // El banqueo se abre a cualquier cuenta. El 2022 lleva candado; el
+          // 2023 NO puede llevarlo, porque entonces el runner no pediría el
+          // JSON y se perdería la muestra que recorta la route (34 de 68).
+          free: true,
+          dePago: ['inmunologia/final-2022'],
           groups: [
             'inmunologia/final-2024-2',
             'inmunologia/final-2023',

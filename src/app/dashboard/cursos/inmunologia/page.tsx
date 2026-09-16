@@ -79,11 +79,14 @@ export default async function InmunologiaPage() {
               const badge = TIPO_BADGE[act.tipo];
               const borderColor = UNIDAD_COLOR[act.unidad];
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
-              // Las prácticas (laboratorio e histología) son libres.
-              const isPractica = act.tipo === 'LAB' || act.tipo === 'HISTOLOGIA';
+              // Los laboratorios son libres, y las clases marcadas `gratis` son
+              // la muestra del curso (misma regla que su `[id]/page.tsx`).
+              const esLibre = act.tipo === 'LAB' || !!act.gratis;
               // Si la card redirige a otra sección, no la bloqueamos:
               // el destino maneja su propio acceso.
-              const isLocked = !isPractica && !act.linkOverride && !hasAcceso;
+              const isLocked = !esLibre && !act.linkOverride && !hasAcceso;
+              // La etiqueta sólo informa a quien no tiene el curso abierto.
+              const mostrarGratis = !!act.gratis && !hasAcceso;
 
               const href = act.linkOverride ?? `/dashboard/cursos/inmunologia/${act.id}`;
 
@@ -114,6 +117,7 @@ export default async function InmunologiaPage() {
                       {docStr && ` · ${docStr}`}
                     </div>
                   </div>
+                  {mostrarGratis && <span className={styles.activityFree}>Gratis</span>}
                   {isLocked ? (
                     <span className={styles.activityLock} title="Requiere plan Interno" aria-hidden>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">

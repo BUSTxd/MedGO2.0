@@ -33,7 +33,8 @@
       "tags": [
         "Células del sistema inmune",
         "Caso clínico"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "p2",
@@ -69,7 +70,8 @@
       "tags": [
         "Células del sistema inmune",
         "Caso clínico"
-      ]
+      ],
+      "tema": "celulas-inmunes"
     },
     {
       "id": "p3",
@@ -105,7 +107,8 @@
       "tags": [
         "Células del sistema inmune",
         "Caso clínico"
-      ]
+      ],
+      "tema": "innata-celular"
     },
     {
       "id": "p4",
@@ -141,7 +144,8 @@
       "tags": [
         "Inmunidad innata",
         "Caso clínico"
-      ]
+      ],
+      "tema": "inflamacion"
     },
     {
       "id": "p5",
@@ -172,7 +176,8 @@
       "tags": [
         "Inmunidad innata",
         "Caso clínico"
-      ]
+      ],
+      "tema": "complemento"
     },
     {
       "id": "p6",
@@ -208,7 +213,8 @@
       "tags": [
         "Inmunidad innata",
         "Caso clínico"
-      ]
+      ],
+      "tema": "inflamacion"
     },
     {
       "id": "p7",
@@ -248,7 +254,8 @@
       "tags": [
         "Hemograma y reactantes de fase aguda",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hemograma-rfa"
     },
     {
       "id": "p8",
@@ -283,7 +290,8 @@
       "tags": [
         "Hemograma y reactantes de fase aguda",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hemograma-rfa"
     },
     {
       "id": "p9",
@@ -323,7 +331,8 @@
       "tags": [
         "Hemograma y reactantes de fase aguda",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hemograma-rfa"
     },
     {
       "id": "p10",
@@ -359,7 +368,8 @@
       "reviewNote": "En el examen original la alternativa d dice sólo «Rpta 4»: es un texto de relleno sin contenido. Se transcribe tal cual.",
       "tags": [
         "Órganos linfoides primarios"
-      ]
+      ],
+      "tema": "organos-primarios"
     },
     {
       "id": "p11",
@@ -394,7 +404,8 @@
       "explanation": "La **barrera hematotímica** está en la **corteza**, donde maduran los **linfocitos T inmaduros**: impide que los antígenos de la sangre lleguen a ellos durante la selección. La forman la **pared del capilar** (endotelio continuo y su lámina basal), el **tejido conjuntivo perivascular** con macrófagos y las **células epiteliales tímicas tipo I** con su lámina basal.\n\nNo protege a las células epiteliales ni sirve para **intercambiar nutrientes**, y sus capilares son continuos, **no fenestrados**. Las **trabéculas de la cápsula** no forman parte de ella. Y los linfocitos T **maduros** están en la médula, fuera de la barrera.",
       "tags": [
         "Órganos linfoides primarios"
-      ]
+      ],
+      "tema": "organos-primarios"
     },
     {
       "id": "p12",
@@ -429,7 +440,8 @@
       "explanation": "Desde la pubertad el timo **involuciona**: produce **menos linfocitos T** nuevos, así que el adulto depende de los que ya tiene y responde peor a antígenos nuevos (de ahí la menor respuesta a vacunas en el anciano). En la histología el parénquima se reemplaza **progresiva y principalmente por tejido adiposo**, con islotes de tejido tímico que persisten.\n\nNo aumenta la producción de células epiteliales ni de Treg, el tejido **no se necrosa** y el reemplazo no es **sólo fibroso**. El **bazo no compensa**: la maduración y selección de los linfocitos T ocurre únicamente en el timo.",
       "tags": [
         "Órganos linfoides primarios"
-      ]
+      ],
+      "tema": "organos-primarios"
     },
     {
       "id": "p13",
@@ -464,7 +476,8 @@
       "explanation": "**CD3 más CD4** es un linfocito **T helper**. El que combate **patógenos intracelulares**, activa a los **macrófagos** (con IFN-γ) y apoya a los **T citotóxicos** (con IL-2) es el **Th1**. La ayuda al macrófago pasa por el par **CD40L–CD40**.\n\nLas **NK** no expresan CD3 ni CD4. El **T helper folicular** ayuda a los linfocitos B en el centro germinal (IL-21). El **Th2** responde a helmintos y alérgenos (IL-4, IL-5, IL-13), y el **T regulador** (CD25, FOXP3) frena la respuesta en vez de estimularla.",
       "tags": [
         "Inmunidad adaptativa"
-      ]
+      ],
+      "tema": "diferenciacion-t"
     },
     {
       "id": "p14",
@@ -500,7 +513,8 @@
       "tags": [
         "Inmunidad adaptativa",
         "Caso clínico"
-      ]
+      ],
+      "tema": "inmunodeficiencias"
     },
     {
       "id": "p15",
@@ -535,7 +549,8 @@
       "explanation": "En el **folículo secundario** del ganglio, el **manto** está formado por **linfocitos B no activados** (vírgenes), que el centro germinal empuja hacia afuera. En la **zona oscura** del centro germinal los centroblastos **proliferan** e hipermutan, y en la **zona clara** los centrocitos se **seleccionan** por su afinidad con el antígeno. Los **cordones medulares** están llenos de **células plasmáticas**.\n\nQueda I-B, II-C, III-A, IV-D, que es la b. Las demás cruzan la zona oscura con la clara o ponen a las células plasmáticas en el manto.",
       "tags": [
         "Inmunidad adaptativa"
-      ]
+      ],
+      "tema": "organos-secundarios"
     },
     {
       "id": "p16",
@@ -570,7 +585,8 @@
       "explanation": "Un anticuerpo que **fija el complemento** y existe **sólo como monómero** es la **IgG** (la IgM también fija complemento, pero es un pentámero). El cambio de isotipo a IgG lo estimulan sobre todo el **IFN-γ** y la IL-21.\n\nLa **IL-5** favorece la IgA; la **IL-4** y la **IL-13**, la **IgE**; y la **IL-2** hace crecer a los linfocitos T (helper, citotóxicos y reguladores) y a las NK, no cambia el isotipo.",
       "tags": [
         "Inmunidad adaptativa"
-      ]
+      ],
+      "tema": "linfocitos-b"
     },
     {
       "id": "p17",
@@ -600,7 +616,8 @@
       "explanation": "La **gp120** de la envoltura se une primero a **CD4** y, al cambiar de forma, a un **correceptor**: **CCR5** (en macrófagos y linfocitos T de memoria) o CXCR4. Con CCR5 mutado (la deleción Δ32 en homocigosis), el virus R5 no puede anclarse y la persona es resistente.\n\nLa **gp160** es el precursor que se corta en gp120 y gp41 (esta última hace la fusión). La **p24** es la proteína de la cápside, la que detectan las pruebas de cuarta generación. Y **CD4** es el receptor de la célula, no una proteína del virus.",
       "tags": [
         "VIH"
-      ]
+      ],
+      "tema": "vih"
     },
     {
       "id": "p18",
@@ -631,7 +648,8 @@
       "tags": [
         "VIH",
         "Caso clínico"
-      ]
+      ],
+      "tema": "vih"
     },
     {
       "id": "p19",
@@ -662,7 +680,8 @@
       "tags": [
         "VIH",
         "Caso clínico"
-      ]
+      ],
+      "tema": "vih"
     },
     {
       "id": "p20",
@@ -698,7 +717,8 @@
       "tags": [
         "Órganos linfoides secundarios",
         "Caso clínico"
-      ]
+      ],
+      "tema": "organos-secundarios"
     },
     {
       "id": "p21",
@@ -734,7 +754,8 @@
       "tags": [
         "Órganos linfoides secundarios",
         "Caso clínico"
-      ]
+      ],
+      "tema": "organos-secundarios"
     },
     {
       "id": "p22",
@@ -770,7 +791,8 @@
       "tags": [
         "Órganos linfoides secundarios",
         "Caso clínico"
-      ]
+      ],
+      "tema": "organos-secundarios"
     },
     {
       "id": "p23",
@@ -806,7 +828,8 @@
       "tags": [
         "Vacunas",
         "Caso clínico"
-      ]
+      ],
+      "tema": "vacunas"
     },
     {
       "id": "p24",
@@ -842,7 +865,8 @@
       "tags": [
         "Vacunas",
         "Caso clínico"
-      ]
+      ],
+      "tema": "vacunas"
     },
     {
       "id": "p25",
@@ -883,7 +907,8 @@
       "reviewNote": "En el PDF la sexta alternativa (f, la de la IgA transplacentaria) quedó fuera de la lista; se reconstruyó desde el texto que la sigue. Se quitó el «f.» suelto que el PDF dejó al final de la e.",
       "tags": [
         "Vacunas"
-      ]
+      ],
+      "tema": "vacunas"
     },
     {
       "id": "p26",
@@ -919,7 +944,8 @@
       "tags": [
         "Regulación y fallas del sistema inmune",
         "Caso clínico"
-      ]
+      ],
+      "tema": "regulacion"
     },
     {
       "id": "p27",
@@ -956,7 +982,8 @@
       "tags": [
         "Regulación y fallas del sistema inmune",
         "Caso clínico"
-      ]
+      ],
+      "tema": "regulacion"
     }
   ]
 }

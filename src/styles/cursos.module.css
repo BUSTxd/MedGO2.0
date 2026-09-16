@@ -846,6 +846,27 @@
   color: var(--muted);
 }
 
+/* Clase abierta a cualquier cuenta dentro de un curso de pago (flag `gratis`).
+   Mismo verde que la etiqueta del índice de Laboratorio. */
+.activityFree {
+  flex-shrink: 0;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(45, 201, 154, 0.14);
+  border: 1px solid rgba(45, 201, 154, 0.4);
+  color: #13845f;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:global(.dark-mode) .activityFree {
+  background: rgba(45, 201, 154, 0.16);
+  border-color: rgba(45, 201, 154, 0.45);
+  color: #5fe0b5;
+}
+
 .activityLock {
   display: inline-flex;
   align-items: center;

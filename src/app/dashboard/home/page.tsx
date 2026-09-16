@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useRecentClasses } from '@/components/RecentClassesProvider';
 import type { RecentClass } from '@/components/RecentClassesProvider';
 import { getUpcomingExams, shortExamLabel } from '@/lib/data/microbiologia';
+import RepasaEsto from '@/components/RepasaEsto';
 import styles from '@/styles/dashboardPages.module.css';
 
 const MONTH_ABBR = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
@@ -208,6 +209,9 @@ export default function HomePage() {
 
         {/* Exam Dates — solo si el usuario ya entró a Microbiología */}
         <ProximosExamenes recent={recent} />
+
+        {/* Temas flojos acumulados; no se pinta si no hay banqueos etiquetados. */}
+        <RepasaEsto />
 
 
         {/* Continuar viendo */}

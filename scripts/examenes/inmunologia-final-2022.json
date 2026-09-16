@@ -33,7 +33,8 @@
       "tags": [
         "Citocinas y respuesta T",
         "Caso clínico"
-      ]
+      ],
+      "tema": "citocinas"
     },
     {
       "id": "q2",
@@ -65,7 +66,8 @@
         "Citocinas",
         "Inmunidad innata",
         "Caso clínico"
-      ]
+      ],
+      "tema": "citocinas"
     },
     {
       "id": "q3",
@@ -96,7 +98,8 @@
       "tags": [
         "Órganos linfoides secundarios",
         "Caso clínico"
-      ]
+      ],
+      "tema": "organos-secundarios"
     },
     {
       "id": "q4",
@@ -126,7 +129,8 @@
       "explanation": "**CD19** es el correceptor del **BCR**: forma un complejo con **CD21** (CR2) y **CD81**. CD21 se une al **C3d** que recubre un antígeno opsonizado, y CD19 amplifica la señal del BCR (recluta PI3K). Así baja el umbral de activación del linfocito B. Además es el marcador pan-B que se usa en citometría.\n\n- Los correceptores de los linfocitos T son **CD4** y **CD8**, no CD19.\n- La apoptosis de las células diana es obra de los T citotóxicos y las NK.",
       "tags": [
         "Linfocitos B"
-      ]
+      ],
+      "tema": "linfocitos-b"
     },
     {
       "id": "q5",
@@ -157,7 +161,8 @@
       "tags": [
         "Tolerancia",
         "Linfocitos B"
-      ]
+      ],
+      "tema": "tolerancia"
     },
     {
       "id": "q6",
@@ -188,7 +193,8 @@
       "tags": [
         "Citocinas y respuesta T",
         "Hipersensibilidad"
-      ]
+      ],
+      "tema": "hipersensibilidad"
     },
     {
       "id": "q7",
@@ -218,7 +224,8 @@
       "explanation": "El **Fas ligando** (FasL) es una **proteína de transmembrana** de la familia del TNF. La expresan los linfocitos T activados una y otra vez. Al unirse a **Fas** (CD95) recluta FADD y activa la **caspasa-8**: apoptosis por vía extrínseca. Es la **muerte celular inducida por activación**, una forma de tolerancia periférica por deleción. Su falla (mutaciones de FAS o FASL) da el síndrome linfoproliferativo autoinmune.\n\n- El **TGF-β** es una citocina **soluble** que secretan los T reguladores para suprimir, no una proteína de membrana que induzca apoptosis.\n- **PD-1** es un receptor inhibidor: frena al T (anergia, agotamiento) sin activar caspasas.\n- **FOXP3** es un factor de transcripción **intracelular**, propio de los T reguladores.",
       "tags": [
         "Tolerancia"
-      ]
+      ],
+      "tema": "tolerancia"
     },
     {
       "id": "q8",
@@ -249,7 +256,8 @@
       "tags": [
         "Técnicas inmunológicas",
         "Células del sistema inmune"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "q9",
@@ -279,7 +287,8 @@
       "explanation": "La célula presentadora expresa **B7-1/B7-2** (CD80/CD86) y **CD40**. El linfocito T expresa sus contrapartes: **CD28** y **CTLA-4** (que se unen a B7), **ICOS** (que se une a ICOS-L) y **CD40L**.\n\nCuando el CD40L del T activado se une al **CD40** de la presentadora, la activa: le hace expresar más B7 y secretar IL-12. Por eso CD28, ICOS y CTLA-4 están del lado del T, y CD40 es la única de las cuatro que corresponde a la presentadora.",
       "tags": [
         "Coestimulación"
-      ]
+      ],
+      "tema": "coestimulacion"
     },
     {
       "id": "q10",
@@ -310,7 +319,8 @@
       "tags": [
         "MHC",
         "Presentación antigénica"
-      ]
+      ],
+      "tema": "presentacion-mhc"
     },
     {
       "id": "q11",
@@ -341,7 +351,8 @@
       "reviewNote": "La a es ambigua: pone «FasL» entre paréntesis, y el T citotóxico sí expresa FasL (además, los T activados también expresan Fas). Se respetó la clave: la b es la única sin reparos.",
       "tags": [
         "Linfocitos T"
-      ]
+      ],
+      "tema": "diferenciacion-t"
     },
     {
       "id": "q12",
@@ -371,7 +382,8 @@
       "explanation": "El **inflamasoma** (el más estudiado es **NLRP3**) es un sensor citosólico que se ensambla al detectar **PAMPs**, y también DAMPs como el ATP extracelular, los cristales de urato o la salida de K⁺. Al formarse (NLRP3 + ASC + caspasa-1), la caspasa-1 corta la pro-IL-1β y la pro-IL-18 en sus formas activas, y puede causar piroptosis.\n\n- El **complemento** y las **proteínas de fase aguda** son otras ramas de la inmunidad innata, no activadores del inflamasoma.\n- Los **ITAM** son motivos de señalización en la cola de receptores como el TCR, el BCR y los receptores Fc.",
       "tags": [
         "Inmunidad innata"
-      ]
+      ],
+      "tema": "innata-celular"
     },
     {
       "id": "q13",
@@ -401,7 +413,8 @@
       "explanation": "Los **antígenos T-independientes** son polisacáridos de **alto peso molecular** con epítopes repetidos: entrecruzan muchos BCR a la vez y activan a los B de la zona marginal y a los B1 sin ayuda de un T colaborador. Sin esa ayuda casi no hay cambio de isotipo, ni maduración de afinidad, ni memoria: el resultado es **IgM de baja afinidad**.\n\nPor eso las vacunas contra encapsulados conjugan el polisacárido con una proteína: al volverlo T-dependiente, logran IgG de alta afinidad y memoria.",
       "tags": [
         "Anticuerpos y respuesta humoral"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "q14",
@@ -432,7 +445,8 @@
       "reviewNote": "El DAF también inhibe la C3 convertasa alterna (acelera su disociación), así que la c es defendible. Se respetó la clave: el factor H es el regulador propio de la vía alterna.",
       "tags": [
         "Complemento"
-      ]
+      ],
+      "tema": "complemento"
     },
     {
       "id": "q15",
@@ -463,7 +477,8 @@
       "tags": [
         "Inmunodeficiencias",
         "Caso clínico"
-      ]
+      ],
+      "tema": "inmunodeficiencias"
     },
     {
       "id": "q16",
@@ -495,7 +510,8 @@
         "Inmunología tumoral",
         "Coestimulación",
         "Caso clínico"
-      ]
+      ],
+      "tema": "tumoral"
     },
     {
       "id": "q17",
@@ -527,7 +543,8 @@
         "Complemento",
         "Hipersensibilidad",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hipersensibilidad"
     },
     {
       "id": "q18",
@@ -558,7 +575,8 @@
       "tags": [
         "Inmunidad innata",
         "Caso clínico"
-      ]
+      ],
+      "tema": "inflamacion"
     },
     {
       "id": "q19",
@@ -590,7 +608,8 @@
         "Inmunodeficiencias",
         "Tolerancia",
         "Caso clínico"
-      ]
+      ],
+      "tema": "inmunodeficiencias"
     },
     {
       "id": "q20",
@@ -622,7 +641,8 @@
       "tags": [
         "Hipersensibilidad",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hipersensibilidad"
     },
     {
       "id": "q21",
@@ -653,7 +673,8 @@
       "tags": [
         "Coestimulación",
         "Tolerancia"
-      ]
+      ],
+      "tema": "coestimulacion"
     },
     {
       "id": "q22",
@@ -683,7 +704,8 @@
       "explanation": "La **IgG** es el único isotipo que atraviesa la placenta. La transporta el receptor **FcRn** del sincitiotrofoblasto, y protege al lactante durante sus primeros meses, mientras madura su propia producción.\n\n- La **IgA** llega al lactante por la leche materna (sobre todo el calostro), no por la placenta.\n- La **IgM** es un pentámero demasiado grande: si se encuentra IgM específica en el recién nacido, la fabricó él, y eso sugiere una infección congénita.\n- La **IgE** no cruza la placenta.",
       "tags": [
         "Anticuerpos"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "q23",
@@ -715,7 +737,8 @@
       "tags": [
         "Vacunas",
         "Caso clínico"
-      ]
+      ],
+      "tema": "vacunas"
     },
     {
       "id": "q24",
@@ -747,7 +770,8 @@
       "tags": [
         "Citocinas",
         "Médula ósea"
-      ]
+      ],
+      "tema": "organos-primarios"
     },
     {
       "id": "q25",
@@ -778,7 +802,8 @@
       "tags": [
         "Citocinas",
         "Inmunidad antiviral"
-      ]
+      ],
+      "tema": "citocinas"
     }
   ]
 }

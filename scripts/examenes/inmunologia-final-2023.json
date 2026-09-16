@@ -39,7 +39,8 @@
       "explanationImageCaption": "El sándwich indirecto suma un anticuerpo secundario marcado sobre el de detección: esa capa extra es la que amplifica la señal.",
       "tags": [
         "Técnicas inmunológicas"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "p2",
@@ -80,7 +81,8 @@
       "tags": [
         "Inmunodeficiencias",
         "Caso clínico"
-      ]
+      ],
+      "tema": "inmunodeficiencias"
     },
     {
       "id": "p3",
@@ -120,7 +122,8 @@
       "tags": [
         "Técnicas inmunológicas",
         "Anticuerpos y respuesta humoral"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "p4",
@@ -160,7 +163,8 @@
       "reviewNote": "El apunte sólo conserva la respuesta; las demás alternativas se reconstruyeron. En la imagen original el alumno había resaltado a mano las células azules que se cuentan: se quitó el resaltado.",
       "tags": [
         "Técnicas inmunológicas"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "p5",
@@ -201,7 +205,8 @@
       "tags": [
         "Órganos linfoides primarios",
         "Técnicas inmunológicas"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "p6",
@@ -242,7 +247,8 @@
       "tags": [
         "Técnicas inmunológicas",
         "Células del sistema inmune"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "p7",
@@ -284,7 +290,8 @@
         "VIH",
         "Técnicas inmunológicas",
         "Caso clínico"
-      ]
+      ],
+      "tema": "vih"
     },
     {
       "id": "p8",
@@ -318,7 +325,8 @@
       "explanation": "El **histograma** muestra **un solo parámetro**: la intensidad de fluorescencia de un canal en el eje X y cuántos eventos (células) tienen esa intensidad en el eje Y.\n\nLos **cuadrantes** y **un punto por evento** son del **dot plot**, que cruza dos parámetros. Para ver dos canales a la vez también hace falta un dot plot o un density plot, no un histograma.",
       "tags": [
         "Técnicas inmunológicas"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "p9",
@@ -348,7 +356,8 @@
       "explanation": "Cada célula que cruza el láser **dispersa** la luz en dos direcciones: hacia delante (**forward scatter**, FSC), que refleja su **tamaño**, y a 90° (**side scatter**, SSC), que refleja su **complejidad interna** o granularidad. Con esos dos datos, más la fluorescencia de los anticuerpos marcados, se caracteriza cada célula.\n\nLa segunda alternativa se queda con la mitad (sólo el FSC). La **absorbancia** y la **transmitancia** son de la espectrofotometría: el citómetro no mide cuánta luz absorbe la célula, sino cuánta dispersa.",
       "tags": [
         "Técnicas inmunológicas"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "p10",
@@ -414,7 +423,8 @@
           }
         ],
         "explanation": "En la **respuesta primaria** la **IgM** aparece primero (pico hacia los 7–10 días) y la **IgG** llega después, con un título moderado. En la **secundaria**, los linfocitos B de memoria ya cambiaron de isotipo: la IgG sube **casi desde el inicio**, más rápido y a un título **mucho mayor**, y se mantiene alta; la IgM queda parecida a la de la primaria. Es lo que muestra B.\n\n- En **A** la **secundaria** está mal: la IgG tarda lo mismo que en la primaria y sólo llega más alto.\n- En **C** la **primaria** está mal: la IgG sube a la vez que la IgM, y la IgM domina con un título mayor que el de la propia secundaria.\n- En **D** la **secundaria** está al revés: domina la IgM y la IgG queda baja, cuando la memoria es justamente de linfocitos B que ya cambiaron a IgG.\n- En **E** la **primaria** está mal: la IgG sube junto con la IgM y por encima de ella, cuando en una primera exposición todavía no ha habido cambio de isotipo.\n\nEl antígeno es **proteico**, es decir, T-dependiente: eso es lo que permite el cambio de isotipo y la memoria. Con un polisacárido no habría una respuesta secundaria."
-      }
+      },
+      "tema": "anticuerpos"
     },
     {
       "id": "p11",
@@ -454,7 +464,8 @@
       "reviewNote": "El apunte anota «RPTA: B». En esta figura, sin embargo, el BCR está unido al epítope A, así que se marca A, con el criterio que da el propio apunte: el anticuerpo va contra lo que reconoce el BCR. Si esa «B» era la letra de la alternativa y no del epítope, las dos cosas coinciden.",
       "tags": [
         "Anticuerpos y respuesta humoral"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "p12",
@@ -490,7 +501,8 @@
       "reviewNote": "El apunte sólo conserva la respuesta; las alternativas se reconstruyeron. En el enunciado dice que agrega «un anticuerpo sin conjugar, dirigido contra la región Fc del anticuerpo anterior», que así no daría señal: se completó con el paso del secundario conjugado, que es lo que describe un ELISA indirecto.",
       "tags": [
         "Técnicas inmunológicas"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "p13",
@@ -529,7 +541,8 @@
       "explanation": "Estar **sensibilizado** significa tener **IgE unida por su Fc** al receptor **FcεRI** del mastocito, con la región variable libre hacia afuera. La activación exige que el alérgeno **entrecruce** varias IgE vecinas, agregando sus receptores en la membrana: eso dispara la degranulación.\n\nEs lo que muestra A: tres IgE ancladas a la célula por su Fc y unidas al alérgeno por sus brazos. En B las IgE están **invertidas** (tocan la célula con la región que debería reconocer al alérgeno), y C repite ese error y además añade IgE libres por encima. En D el alérgeno queda entre dos células, con una sola IgE en cada una: sin **agregación** de receptores en la misma célula no hay activación. Un anticuerpo haciendo de puente entre dos células, como en E, es la imagen de la **citotoxicidad mediada por anticuerpos** (ADCC).",
       "tags": [
         "Hipersensibilidad"
-      ]
+      ],
+      "tema": "hipersensibilidad"
     },
     {
       "id": "p14",
@@ -571,7 +584,8 @@
         "Regulación y fallas del sistema inmune",
         "Inmunodeficiencias",
         "Caso clínico"
-      ]
+      ],
+      "tema": "inmunodeficiencias"
     },
     {
       "id": "p15",
@@ -643,7 +657,8 @@
           }
         ],
         "explanation": "La imagen muestra **rouleaux**: glóbulos rojos apilados como monedas en casi todo el frotis. Aparecen cuando suben las proteínas plasmáticas grandes, como el fibrinógeno y las globulinas (en una inflamación o en un mieloma), que neutralizan la carga negativa que mantiene separados a los glóbulos rojos. Apilados pesan más y **sedimentan más rápido**: la **VSG** es la prueba que mide justo eso.\n\n- La **PCR**, la **procalcitonina** y la **ferritina** pueden subir en una inflamación o una infección, pero no dependen del apilamiento ni lo explican.\n- La **albúmina** no provoca los rouleaux: al contrario, frena la sedimentación."
-      }
+      },
+      "tema": "hemograma-rfa"
     },
     {
       "id": "p16",
@@ -723,7 +738,8 @@
         ],
         "explanation": "Sin tratamiento, lo que mantiene a raya al VIH son sobre todo los **linfocitos T CD8+ citotóxicos**, que destruyen a las células infectadas. Son la población **F**: CD3+CD8+.\n\n- **A** (figura 1) incluye a **todos** los linfocitos T, CD4 incluidos.\n- **B** (figura 2) y **H** (figura 2, CD3+CD8−) son los **T CD4**: las células que el virus infecta y destruye, no las que lo controlan.\n- **D** (figura 1) son los **linfocitos B**, cuyos anticuerpos neutralizantes llegan tarde y de los que el virus escapa.\n- **C** (figura 1) son células CD3−CD19−, sobre todo NK.\n- La **D** de la figura 2 (CD3+CD4−) son casi todos T CD8, pero la e la combina con A (figura 1), que incluye a los CD4.",
         "reviewNote": "La D de la figura 2 (CD3+CD4−) también son en su mayoría T CD8. Se descartó la e porque la acompaña A (figura 1), que incluye a los T CD4, y se tomó «Solo F», la población que la figura identifica sin ambigüedad."
-      }
+      },
+      "tema": "vih"
     },
     {
       "id": "p17",
@@ -757,7 +773,8 @@
       "explanation": "Es **bazo**: pulpa blanca (tejido linfoide, en violeta) junto a pulpa roja (los sinusoides, más claros). D señala la **arteriola central** de la pulpa blanca, y la vaina de linfocitos que la rodea es la **PALS** (vaina linfoide periarteriolar): la zona **T** del bazo, donde abundan las células **CD3+**.\n\nC es el **folículo**, zona B (CD19, CD20). B es un **sinusoide** de la pulpa roja, y A, la **cápsula**.",
       "tags": [
         "Órganos linfoides secundarios"
-      ]
+      ],
+      "tema": "organos-secundarios"
     },
     {
       "id": "p18",
@@ -797,7 +814,8 @@
       "reviewNote": "El enunciado venía dentro de la imagen y se pasó a texto. El apunte no trae la respuesta: se contó sobre la figura, y las 12 células que el alumno había resaltado en los dos cuadrantes superiores coinciden con el conteo. Se quitó ese resaltado y la «C» de versión del examen; las alternativas se reconstruyeron.",
       "tags": [
         "Técnicas inmunológicas"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "p19",
@@ -835,7 +853,8 @@
         "Inmunidad innata",
         "Inmunodeficiencias",
         "Caso clínico"
-      ]
+      ],
+      "tema": "inmunodeficiencias"
     },
     {
       "id": "p20",
@@ -885,7 +904,8 @@
       "tags": [
         "Inmunidad innata",
         "Anticuerpos y respuesta humoral"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "p21",
@@ -969,7 +989,8 @@
           }
         ],
         "explanation": "En el diagrama B sólo hay células **CD3+** (linfocitos T): faltan los **CD19+**. Una niña sin linfocitos B, con T normales e infecciones desde los 7 meses (cuando se agota la IgG materna), es una **agammaglobulinemia**. La **BTK** transmite la señal del pre-BCR, y sin ella el desarrollo del linfocito B se detiene en el estadio pre-B.\n\n- **RAG**, **Artemis** y la **VDJ recombinasa** (el complejo RAG más las enzimas de reparación) hacen falta para reordenar el TCR **y** el BCR: faltarían los T y los B (inmunodeficiencia combinada grave).\n- Sin **ADA** se acumulan metabolitos tóxicos que matan a los T, los B y las NK.\n- La **TdT** sólo añade nucleótidos en las uniones: sin ella hay menos diversidad, pero no faltan linfocitos.\n- Sin **AID** hay linfocitos B, pero no hacen cambio de isotipo (hiper-IgM).\n\nComo la BTK está en el cromosoma X, en una niña sería rara: las agammaglobulinemias autosómicas recesivas (cadena μ, BLNK) dan el mismo cuadro. De las opciones, la BTK es la única que detiene sólo a los linfocitos B."
-      }
+      },
+      "tema": "inmunodeficiencias"
     },
     {
       "id": "p22",
@@ -1005,7 +1026,8 @@
       "tags": [
         "Citocinas y respuesta T",
         "Caso clínico"
-      ]
+      ],
+      "tema": "citocinas"
     },
     {
       "id": "p23",
@@ -1044,7 +1066,8 @@
       "explanation": "Es un **granuloma**, con **células gigantes multinucleadas** rodeadas de linfocitos. Su formación es obra de la respuesta **Th1**: el macrófago produce IL-12, el Th1 prolifera gracias a la **IL-2** y libera **IFN-γ**, que activa al macrófago y lo convierte en célula epitelioide y célula gigante.\n\nEn la primera, el TNF-α sí participa (mantiene el granuloma), pero la **IL-5** es Th2 (eosinófilos). El **IFN-α** es un interferón antiviral de tipo I. **IL-4 e IL-5** son Th2, y en la cuarta la IL-12 sí favorece, pero la **IL-10** inhibe.",
       "tags": [
         "Citocinas y respuesta T"
-      ]
+      ],
+      "tema": "citocinas"
     },
     {
       "id": "p24",
@@ -1082,7 +1105,8 @@
         "Citocinas y respuesta T",
         "Regulación y fallas del sistema inmune",
         "Caso clínico"
-      ]
+      ],
+      "tema": "citocinas"
     },
     {
       "id": "p25",
@@ -1123,7 +1147,8 @@
       "tags": [
         "Técnicas inmunológicas",
         "Caso clínico"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "p26",
@@ -1159,7 +1184,8 @@
       "tags": [
         "Anticuerpos y respuesta humoral",
         "Caso clínico"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "p27",
@@ -1222,7 +1248,8 @@
           }
         ],
         "explanation": "La inmunoglobulina es la **IgA**. El receptor poli-Ig la transporta a través del epitelio (**transcitosis**) y, al liberarla en la luz, le deja un fragmento unido: el **componente secretor**. Se secreta como **dímero**, dos monómeros unidos por la cadena J.\n\n- La más abundante en la **respuesta primaria** es la IgM.\n- La **activación del complemento** por la vía clásica es de la IgM y la IgG; la IgA no la activa.\n- El **paso por la placenta** es exclusivo de la IgG (por el receptor FcRn).\n- La **citotoxicidad mediada por anticuerpos** es sobre todo de la IgG, que reconocen las NK por su CD16."
-      }
+      },
+      "tema": "anticuerpos"
     },
     {
       "id": "p28",
@@ -1259,7 +1286,8 @@
         "Inmunodeficiencias",
         "Técnicas inmunológicas",
         "Inmunidad innata"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "p29",
@@ -1290,7 +1318,8 @@
       "reviewNote": "El apunte no marca la respuesta de esta pregunta, y la b aparece como un comentario pegado a la a; se separó como alternativa.",
       "tags": [
         "Inmunología tumoral"
-      ]
+      ],
+      "tema": "tumoral"
     },
     {
       "id": "p30",
@@ -1330,7 +1359,8 @@
       "tags": [
         "Anticuerpos y respuesta humoral",
         "Caso clínico"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "p31",
@@ -1370,7 +1400,8 @@
       "explanation": "La molécula que **suprime la activación del linfocito T** y se expresa **de forma constitutiva en los Tregs** es **CTLA-4**: se une a B7 (CD80/CD86) con más afinidad que CD28 y le quita la coestimulación. Bloquearla (ipilimumab) libera la respuesta antitumoral.\n\n**PD-L1** también es un freno y lo expresan las células tumorales, pero no es la molécula constitutiva de los Tregs (PD-1 aparece en los T activados). **Activar PD-1** frenaría aún más la respuesta. **CD28** es el coestimulador: inhibirlo empeoraría las cosas. **FOXP3** es un factor de transcripción nuclear, no una molécula de superficie. Y **CD25** es la cadena α del receptor de IL-2: activarlo favorecería a los propios Tregs.",
       "tags": [
         "Inmunología tumoral"
-      ]
+      ],
+      "tema": "tumoral"
     },
     {
       "id": "p32",
@@ -1411,7 +1442,8 @@
       "tags": [
         "Hemograma y reactantes de fase aguda",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hemograma-rfa"
     },
     {
       "id": "p33",
@@ -1454,7 +1486,8 @@
       "reviewNote": "La figura trae dos recuadros; por la clave del apunte (doble positivos y doble negativos) la estructura señalada es el grande, sobre la corteza, y así se aclaró en el enunciado. Las alternativas se reconstruyeron.",
       "tags": [
         "Órganos linfoides primarios"
-      ]
+      ],
+      "tema": "organos-primarios"
     },
     {
       "id": "p34",
@@ -1496,7 +1529,8 @@
         "Órganos linfoides secundarios",
         "Vacunas",
         "Caso clínico"
-      ]
+      ],
+      "tema": "organos-secundarios"
     },
     {
       "id": "p35",
@@ -1527,7 +1561,8 @@
       "tags": [
         "Órganos linfoides primarios",
         "Regulación y fallas del sistema inmune"
-      ]
+      ],
+      "tema": "organos-primarios"
     },
     {
       "id": "p36",
@@ -1568,7 +1603,8 @@
       "tags": [
         "Órganos linfoides secundarios",
         "Anticuerpos y respuesta humoral"
-      ]
+      ],
+      "tema": "organos-secundarios"
     },
     {
       "id": "p37",
@@ -1608,7 +1644,8 @@
       "reviewNote": "Clave del apunte: A y B. La A es indiscutible; la B es discutible, porque la bisagra se codifica en la región constante de la cadena pesada y su secuencia también cambia con el cambio de isotipo (la IgM y la IgE ni siquiera la tienen). Se respeta la clave del examen y las alternativas se reconstruyeron a partir de ella.",
       "tags": [
         "Anticuerpos y respuesta humoral"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "p38",
@@ -1643,7 +1680,8 @@
       "explanation": "La inmunidad contra los **helmintos** es **Th2**, y la diferenciación hacia Th2 la **inhibe el IFN-γ**, la citocina del Th1: cada perfil frena al otro (T-bet frente a GATA-3).\n\nLa **IL-4** es justamente la que **induce** a los Th2. La **IL-10** frena sobre todo a los Th1 y a los macrófagos (y la producen los propios Th2 y los Treg). **IL-1 e IL-6** empujan hacia Th17, y la **IL-2** sostiene la proliferación de los T, Th2 incluidos.",
       "tags": [
         "Citocinas y respuesta T"
-      ]
+      ],
+      "tema": "citocinas"
     },
     {
       "id": "p39",
@@ -1678,7 +1716,8 @@
       "explanation": "Con la vacuna de **ARNm** la proteína del patógeno se **fabrica dentro de la célula** del vacunado: se degrada en el proteasoma, se presenta por **MHC-I** y activa a los **linfocitos T CD8** citotóxicos. Además, las células presentadoras la muestran por MHC-II, así que también hay CD4, anticuerpos y memoria.\n\nLas vacunas **inactivadas** y de **subunidades** llevan un antígeno exógeno, que va por MHC-II: generan anticuerpos y CD4, pero pocos CD8. La **polisacárida conjugada** consigue ayuda T gracias a la proteína transportadora (MHC-II) y deja memoria, pero no CTL. La **no conjugada** es T independiente: IgM, sin memoria y sin CTL.",
       "tags": [
         "Vacunas"
-      ]
+      ],
+      "tema": "vacunas"
     },
     {
       "id": "p40",
@@ -1715,7 +1754,8 @@
         "Inmunidad innata",
         "Inmunodeficiencias",
         "Caso clínico"
-      ]
+      ],
+      "tema": "inmunodeficiencias"
     },
     {
       "id": "p41",
@@ -1756,7 +1796,8 @@
       "tags": [
         "Anticuerpos y respuesta humoral",
         "Caso clínico"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "p42",
@@ -1796,7 +1837,8 @@
       "tags": [
         "Órganos linfoides secundarios",
         "Anticuerpos y respuesta humoral"
-      ]
+      ],
+      "tema": "organos-secundarios"
     },
     {
       "id": "ex01",
@@ -1837,7 +1879,8 @@
       "tags": [
         "Linfocitos B",
         "Células del sistema inmune"
-      ]
+      ],
+      "tema": "linfocitos-b"
     },
     {
       "id": "ex02",
@@ -1873,7 +1916,8 @@
       "tags": [
         "Inmunidad innata",
         "Caso clínico"
-      ]
+      ],
+      "tema": "inflamacion"
     },
     {
       "id": "ex03",
@@ -1910,7 +1954,8 @@
       "tags": [
         "Anticuerpos y respuesta humoral",
         "Citocinas"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "ex30",
@@ -1952,7 +1997,8 @@
         "Tolerancia",
         "Linfocitos B",
         "Caso clínico"
-      ]
+      ],
+      "tema": "tolerancia"
     },
     {
       "id": "ex32",
@@ -1984,7 +2030,8 @@
       "tags": [
         "Anticuerpos y respuesta humoral",
         "Linfocitos B"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "ex42",
@@ -2021,7 +2068,8 @@
         "Anticuerpos y respuesta humoral",
         "Técnicas inmunológicas",
         "Caso clínico"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "ex44",
@@ -2057,7 +2105,8 @@
       "tags": [
         "Macrófagos",
         "Citocinas"
-      ]
+      ],
+      "tema": "innata-celular"
     },
     {
       "id": "ex45",
@@ -2092,7 +2141,8 @@
       "explanation": "**RORγt** es el factor de transcripción de los **Th17**. El T CD4 virgen se diferencia hacia Th17 cuando recibe **TGF-β junto con IL-6** (en el ser humano también IL-1β), y la IL-23 los mantiene después.\n\n- **IFN-γ + IL-12** inducen T-bet: Th1.\n- La **IL-4** induce GATA-3: Th2.\n- **TGF-β + IL-2** inducen FOXP3: T regulador. Es la pareja que más se confunde, porque el TGF-β está en las dos: la **IL-6** es la que inclina la balanza de T regulador a Th17.\n- **IL-1 + IL-5** no definen ningún subtipo.",
       "tags": [
         "Citocinas y respuesta T"
-      ]
+      ],
+      "tema": "citocinas"
     },
     {
       "id": "ex48",
@@ -2127,7 +2177,8 @@
       "explanation": "La nanopartícula lipídica entrega el ARNm al **citoplasma** de las células del músculo y de las dendríticas, que lo traducen en **hemaglutinina**. Como la proteína se fabrica dentro de la célula, sus péptidos se presentan en **MHC I** y activan a los T CD8. La proteína que se secreta, o que captan las dendríticas, se presenta en **MHC II** a los T CD4, que ayudan a los linfocitos B a producir anticuerpos neutralizantes. Por eso protege con anticuerpos **y** con T citotóxicos.\n\n- Los anticuerpos protectores van contra la **hemaglutinina**, no contra el ARNm.\n- El ARNm **no entra al núcleo ni se integra** en el genoma: no hay transcriptasa inversa.\n- El **interferón tipo I** que dispara el ARNm es un efecto adyuvante, que incluso se reduce a propósito con nucleósidos modificados: no es lo que protege.\n- Las **ARNasas** no se inhiben: la microesfera lipídica protege al ARNm en el trayecto.",
       "tags": [
         "Vacunas"
-      ]
+      ],
+      "tema": "vacunas"
     },
     {
       "id": "ex49",
@@ -2164,7 +2215,8 @@
         "Inmunología tumoral",
         "Anticuerpos",
         "Caso clínico"
-      ]
+      ],
+      "tema": "tumoral"
     },
     {
       "id": "ex50",
@@ -2201,7 +2253,8 @@
         "Hipersensibilidad",
         "Complemento",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hipersensibilidad"
     },
     {
       "id": "ex51",
@@ -2232,7 +2285,8 @@
       "tags": [
         "Linfocitos B",
         "Inmunología tumoral"
-      ]
+      ],
+      "tema": "tumoral"
     },
     {
       "id": "ex52",
@@ -2268,7 +2322,8 @@
       "tags": [
         "Anticuerpos",
         "Fagocitosis"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "ex53",
@@ -2304,7 +2359,8 @@
       "tags": [
         "Tolerancia",
         "Linfocitos T"
-      ]
+      ],
+      "tema": "tolerancia"
     },
     {
       "id": "ex56",
@@ -2341,7 +2397,8 @@
       "tags": [
         "MHC",
         "Presentación antigénica"
-      ]
+      ],
+      "tema": "presentacion-mhc"
     },
     {
       "id": "ex57",
@@ -2376,7 +2433,8 @@
       "explanation": "Cada linfocito T reordena sus genes V(D)J una sola vez y produce **un único TCR, con una sola especificidad**. Al proliferar, toda su descendencia (la **clona**) hereda ese mismo receptor: el TCR es la «firma» de la clona, su clonotipo.\n\n- La b y la c contradicen la regla de un linfocito, un receptor, una especificidad.\n- En la e, distintas clonas tienen, por definición, especificidades distintas.\n- La a mezcla el **clonaje molecular**, que es una técnica de laboratorio, con la expansión clonal.",
       "tags": [
         "Linfocitos T"
-      ]
+      ],
+      "tema": "linfocitos-t"
     },
     {
       "id": "ex58",
@@ -2412,7 +2470,8 @@
       "reviewNote": "El examen original admite varias respuestas («Elija una o varias») y no trae la clave. Se tomó como oficial la e. La d es discutible: las barreras químicas sí son innatas, pero la frase les atribuye sólo a ellas el primer contacto, que corresponde a la barrera física.",
       "tags": [
         "Inmunidad innata"
-      ]
+      ],
+      "tema": "generalidades"
     },
     {
       "id": "ex59",
@@ -2447,7 +2506,8 @@
       "explanation": "Los genes HLA se heredan en bloque (un **haplotipo** del padre y otro de la madre) y se expresan **los dos alelos a la vez**: la herencia es **codominante**.\n\n- La probabilidad de que un hermano sea idéntico es de **1 de cada 4**: cada hijo recibe uno de los dos haplotipos de cada progenitor.\n- Las moléculas HLA presentan péptidos al TCR; no «interaccionan con citocinas», aunque el IFN-γ sí aumenta su expresión.\n- La variedad **dentro de una célula** se debe a que hay varios genes (A, B, C, DR, DQ, DP) y a la codominancia. El **polimorfismo** es la variedad **entre personas**.\n- El polimorfismo es la acumulación de muchísimos alelos en la población a lo largo de la evolución, no una recombinación en cada meiosis: justamente, el HLA se hereda en bloque y casi no se recombina.",
       "tags": [
         "MHC"
-      ]
+      ],
+      "tema": "presentacion-mhc"
     },
     {
       "id": "ex60",
@@ -2484,7 +2544,8 @@
       "tags": [
         "Órganos linfoides secundarios",
         "Tráfico celular"
-      ]
+      ],
+      "tema": "organos-secundarios"
     },
     {
       "id": "ex23",
@@ -2569,7 +2630,8 @@
         "Técnicas inmunológicas",
         "Células del sistema inmune",
         "Granulocitos"
-      ]
+      ],
+      "tema": "tecnicas"
     },
     {
       "id": "ex24",
@@ -2610,7 +2672,8 @@
         "Hematología",
         "Médula ósea",
         "Caso clínico"
-      ]
+      ],
+      "tema": "organos-primarios"
     },
     {
       "id": "ex43",
@@ -2655,7 +2718,8 @@
       "tags": [
         "MHC",
         "Presentación antigénica"
-      ]
+      ],
+      "tema": "presentacion-mhc"
     },
     {
       "id": "ex46",
@@ -2711,7 +2775,8 @@
       "tags": [
         "Timo",
         "Órganos linfoides primarios"
-      ]
+      ],
+      "tema": "organos-primarios"
     },
     {
       "id": "ex47",
@@ -2756,7 +2821,8 @@
       "tags": [
         "Timo",
         "Tolerancia"
-      ]
+      ],
+      "tema": "tolerancia"
     },
     {
       "id": "ex54",
@@ -2796,7 +2862,8 @@
       "reviewNote": "El examen original no trae el enunciado de esta pregunta, sólo la figura y las alternativas: se escribió uno genérico.",
       "tags": [
         "Hemograma y reactantes de fase aguda"
-      ]
+      ],
+      "tema": "hemograma-rfa"
     },
     {
       "id": "ex55",
@@ -2836,7 +2903,8 @@
       "tags": [
         "Hemograma y reactantes de fase aguda",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hemograma-rfa"
     }
   ]
 }

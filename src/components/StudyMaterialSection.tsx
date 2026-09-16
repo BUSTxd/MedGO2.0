@@ -120,6 +120,8 @@ interface Props {
   /** Sobreescribe el título de la tarjeta "Banqueo" — p. ej. "Propuestos" en
    *  las clases teóricas de Física. */
   banqueoLabel?: string;
+  /** Abre el resumen al entrar (`?resumen=1`): lo usan las recomendaciones de estudio. */
+  abrirResumen?: boolean;
 }
 
 const BeakerIcon = () => (
@@ -137,13 +139,16 @@ const BanqueoIcon = () => (
   </svg>
 );
 
-export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel }: Props) {
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel, abrirResumen }: Props) {
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
   const isPropuestosMulti = propuestosPdf?.opciones && propuestosPdf.opciones.length > 1;
   const pathname = usePathname();
 
-  const [pickerOpen, setPickerOpen]       = useState(false);
-  const [fullscreenOpen, setFullscreenOpen] = useState(false);
+  // Estado inicial, no efecto: al cerrar el visor el alumno se queda en la
+  // clase sin que el query param lo vuelva a abrir.
+  const deepLink = !!abrirResumen && hasResumen;
+  const [pickerOpen, setPickerOpen]       = useState(deepLink && !!isMulti);
+  const [fullscreenOpen, setFullscreenOpen] = useState(deepLink && !isMulti);
   const [selectedId, setSelectedId]       = useState<string | null>(null);
   const [propuestosOpen, setPropuestosOpen] = useState(false);
   const [propuestosPickerOpen, setPropuestosPickerOpen] = useState(false);

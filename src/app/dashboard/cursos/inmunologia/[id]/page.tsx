@@ -8,6 +8,7 @@ import TrackRecentClass from '@/components/TrackRecentClass';
 import ExamenDeCurso from '@/components/ExamenDeCurso';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
+import { tieneAccesoA } from '@/lib/acceso';
 
 const UNIDAD_LABEL: Record<string, string> = {
   INNATA:          'Sistema inmune e inflamación',
@@ -21,7 +22,7 @@ export default async function ActividadPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ examen?: string }>;
+  searchParams: Promise<{ examen?: string; resumen?: string }>;
 }) {
   const { id } = await params;
   const sp = await searchParams;
@@ -37,6 +38,8 @@ export default async function ActividadPage({
         examen={act.examen}
         titulo={act.titulo}
         backHref={`/dashboard/cursos/inmunologia/${id}`}
+        /* Los banqueos abiertos son el reclamo del plan: el aviso entra pronto. */
+        avisoCada={4}
       />
     );
   }
@@ -45,14 +48,14 @@ export default async function ActividadPage({
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
 
-  // Gating: las prácticas (laboratorio e histología) son libres; las clases
-  // magistrales / invertidas / TBL / SGP / repasos / examen están detrás del
-  // plan Interno.
+  // Gating: los laboratorios son libres, y además las clases marcadas `gratis`
+  // como muestra del curso. El resto está detrás del plan Interno. Histología
+  // ya NO es libre por tipo: H1 lleva el flag y H2 es de pago.
   const isLab = act.tipo === 'LAB';
-  const isPractica = isLab || act.tipo === 'HISTOLOGIA';
+  const esLibre = isLab || !!act.gratis;
   const [user, planState] = await Promise.all([
     getUser(),
-    isPractica
+    esLibre
       ? Promise.resolve({ plan: 'free' as const, isActive: true })
       : getCachedPlanState(),
   ]);
@@ -122,12 +125,15 @@ export default async function ActividadPage({
           simulacion={isLab ? (act.simulacion ?? {}) : undefined}
           /* Los labs no tienen banco de preguntas: sólo Simulación y Resumen. */
           hideBanqueo={isLab}
+          /* El visor va por portal al body: se montaría por delante del velo de
+             LockedContent, así que sólo se abre si la clase está accesible. */
+          abrirResumen={sp?.resumen === '1' && (esLibre || tieneAccesoA(planState, 'interno'))}
         />
       </div>
     </div>
   );
 
-  if (isPractica) return detail;
+  if (esLibre) return detail;
 
   return (
     <LockedContent requiredPlan="interno" planState={planState} isAuthed={!!user}>

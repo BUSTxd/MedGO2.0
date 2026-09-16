@@ -41,7 +41,8 @@
       "tags": [
         "Hemograma y reactantes de fase aguda",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hemograma-rfa"
     },
     {
       "id": "p2",
@@ -83,7 +84,8 @@
       "tags": [
         "Hemograma y reactantes de fase aguda",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hemograma-rfa"
     },
     {
       "id": "p3",
@@ -125,7 +127,8 @@
       "tags": [
         "Inmunidad innata",
         "Caso clínico"
-      ]
+      ],
+      "tema": "barreras"
     },
     {
       "id": "p4",
@@ -159,7 +162,8 @@
       "tags": [
         "Células del sistema inmune",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hematologia"
     },
     {
       "id": "p5",
@@ -203,7 +207,8 @@
       "tags": [
         "Inmunidad innata",
         "Caso clínico"
-      ]
+      ],
+      "tema": "barreras"
     },
     {
       "id": "p6",
@@ -237,7 +242,8 @@
       "tags": [
         "Órganos linfoides primarios",
         "Caso clínico"
-      ]
+      ],
+      "tema": "organos-primarios"
     },
     {
       "id": "p7",
@@ -272,7 +278,8 @@
       "tags": [
         "Hemograma y reactantes de fase aguda",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hemograma-rfa"
     },
     {
       "id": "p8",
@@ -311,7 +318,8 @@
       "tags": [
         "Inmunidad innata",
         "Caso clínico"
-      ]
+      ],
+      "tema": "innata-celular"
     },
     {
       "id": "p9",
@@ -347,7 +355,8 @@
       "tags": [
         "Inmunidad innata",
         "Caso clínico"
-      ]
+      ],
+      "tema": "innata-celular"
     },
     {
       "id": "p10",
@@ -387,7 +396,8 @@
         "Inmunidad innata",
         "Regulación y fallas del sistema inmune",
         "Caso clínico"
-      ]
+      ],
+      "tema": "regulacion"
     },
     {
       "id": "p11",
@@ -426,7 +436,8 @@
       "tags": [
         "Hipersensibilidad",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hipersensibilidad"
     },
     {
       "id": "p12",
@@ -465,7 +476,8 @@
       "tags": [
         "Inmunidad innata",
         "Caso clínico"
-      ]
+      ],
+      "tema": "complemento"
     },
     {
       "id": "p13",
@@ -505,7 +517,8 @@
         "VIH",
         "Citocinas y respuesta T",
         "Caso clínico"
-      ]
+      ],
+      "tema": "vih"
     },
     {
       "id": "p14",
@@ -544,7 +557,8 @@
       "tags": [
         "Citocinas y respuesta T",
         "Caso clínico"
-      ]
+      ],
+      "tema": "citocinas"
     },
     {
       "id": "p15",
@@ -582,7 +596,8 @@
       "explanationImageCaption": "Restricción por el MHC: el TCR necesita el mismo péptido en el mismo alelo de MHC.",
       "tags": [
         "Inmunidad adaptativa"
-      ]
+      ],
+      "tema": "presentacion-mhc"
     },
     {
       "id": "p16",
@@ -621,7 +636,8 @@
       "tags": [
         "Inmunidad adaptativa",
         "Caso clínico"
-      ]
+      ],
+      "tema": "diferenciacion-t"
     },
     {
       "id": "p17",
@@ -668,7 +684,8 @@
       "tags": [
         "Inmunología tumoral",
         "Regulación y fallas del sistema inmune"
-      ]
+      ],
+      "tema": "tumoral"
     },
     {
       "id": "p18",
@@ -707,7 +724,8 @@
       "tags": [
         "Inmunodeficiencias",
         "Caso clínico"
-      ]
+      ],
+      "tema": "inmunodeficiencias"
     },
     {
       "id": "p19",
@@ -746,7 +764,8 @@
       "tags": [
         "Órganos linfoides secundarios",
         "Anticuerpos y respuesta humoral"
-      ]
+      ],
+      "tema": "organos-secundarios"
     },
     {
       "id": "p20",
@@ -793,7 +812,8 @@
       "tags": [
         "Citocinas y respuesta T",
         "Caso clínico"
-      ]
+      ],
+      "tema": "citocinas"
     }
   ]
 }

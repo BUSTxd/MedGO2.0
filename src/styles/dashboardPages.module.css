@@ -205,6 +205,71 @@
   text-align: center;
 }
 
+/* Con «Repasa esto» montado el grid tiene 5 hijos y Estadísticas queda sola en
+   su fila: que la ocupe entera en vez de dejar dos huecos. Sin el panel hay 4
+   hijos y este selector no engancha, así que el home queda como estaba.
+   Es posicional: revisar si algún día se añade otro panel al grid. */
+@media (min-width: 768px) {
+  .homeDashboard > .statsPanel:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+  .homeDashboard > .statsPanel:nth-child(5) .statsMiniGrid {
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Panel «Repasa esto»: temas flojos acumulados de los banqueos. */
+.repasaItem {
+  display: block;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(126, 107, 255, 0.1);
+  text-decoration: none;
+}
+
+.repasaItem:last-child { border-bottom: none; }
+
+.repasaTema {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1e60;
+}
+
+.repasaCurso {
+  display: block;
+  font-size: 11px;
+  color: #718096;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+.repasaBarra {
+  display: block;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(126, 107, 255, 0.12);
+  overflow: hidden;
+  margin: 7px 0 6px;
+}
+
+.repasaBarraFill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: #f5a623;
+}
+
+.repasaClase {
+  display: block;
+  font-size: 13px;
+  color: #718096;
+}
+
+.repasaClase strong { color: #7e6bff; }
+
 .circularChartWrap {
   position: relative;
   width: 110px;
@@ -710,6 +775,13 @@
 :global(.dark-mode) .examDateDate        { color: rgba(240, 238, 255, 0.5); }
 :global(.dark-mode) .recentExamName      { color: #f0eeff; }
 :global(.dark-mode) .recentExamScore     { color: rgba(240, 238, 255, 0.5); }
+
+:global(.dark-mode) .repasaTema          { color: #f0eeff; }
+:global(.dark-mode) .repasaCurso         { color: rgba(240, 238, 255, 0.5); }
+:global(.dark-mode) .repasaClase         { color: rgba(240, 238, 255, 0.5); }
+:global(.dark-mode) .repasaClase strong  { color: #9b8ef8; }
+:global(.dark-mode) .repasaItem          { border-bottom-color: rgba(255, 255, 255, 0.08); }
+:global(.dark-mode) .repasaBarra         { background: rgba(255, 255, 255, 0.08); }
 
 :global(.dark-mode) .circleBg    { stroke: rgba(255, 255, 255, 0.08); }
 :global(.dark-mode) .chartPct    { color: #f0eeff; }

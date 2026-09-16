@@ -33,7 +33,8 @@
       "tags": [
         "Anticuerpos",
         "Linfocitos B"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "q2",
@@ -64,7 +65,8 @@
       "tags": [
         "Tolerancia",
         "Coestimulación"
-      ]
+      ],
+      "tema": "coestimulacion"
     },
     {
       "id": "q3",
@@ -95,7 +97,8 @@
       "tags": [
         "Hematología",
         "Metabolismo del hierro"
-      ]
+      ],
+      "tema": "hematologia"
     },
     {
       "id": "q4",
@@ -125,7 +128,8 @@
       "explanation": "El enlace tioéster de **C3** se hidroliza espontáneamente en el plasma a bajo ritmo (*tickover*). El C3(H₂O) arranca la **vía alternativa** sin necesidad de anticuerpos, y así la mantiene lista frente a cualquier superficie que no tenga reguladores.\n\nEl **complejo de ataque de membrana** es C5b-C9: el **C5a** es una anafilatoxina soluble que queda fuera. El componente más abundante es el **C3**, no el C5. Y quien se une covalentemente a los grupos hidroxilo o amino del microbio es el **C3b**, gracias a su tioéster. El C3a es otra anafilatoxina.",
       "tags": [
         "Complemento"
-      ]
+      ],
+      "tema": "complemento"
     },
     {
       "id": "q5",
@@ -157,7 +161,8 @@
         "Complemento",
         "Hematología",
         "Caso clínico"
-      ]
+      ],
+      "tema": "complemento"
     },
     {
       "id": "q6",
@@ -189,7 +194,8 @@
       "tags": [
         "Hematología",
         "Médula ósea"
-      ]
+      ],
+      "tema": "organos-primarios"
     },
     {
       "id": "q7",
@@ -220,7 +226,8 @@
       "tags": [
         "Macrófagos",
         "Citocinas"
-      ]
+      ],
+      "tema": "innata-celular"
     },
     {
       "id": "q8",
@@ -251,7 +258,8 @@
       "tags": [
         "Linfocitos T",
         "Parásitos"
-      ]
+      ],
+      "tema": "diferenciacion-t"
     },
     {
       "id": "q9",
@@ -282,7 +290,8 @@
       "tags": [
         "Granulocitos",
         "Parásitos"
-      ]
+      ],
+      "tema": "innata-celular"
     },
     {
       "id": "q10",
@@ -313,7 +322,8 @@
       "tags": [
         "Hemostasia",
         "Caso clínico"
-      ]
+      ],
+      "tema": "hematologia"
     },
     {
       "id": "q11",
@@ -343,7 +353,8 @@
       "explanation": "El **MHC de clase I** está en todas las células nucleadas, linfocitos B incluidos, y presenta péptidos citosólicos a los **linfocitos T CD8+**: el CD8 se une al dominio α3 de la clase I.\n\nLos **CD4+** reconocen el MHC de **clase II**. Los neutrófilos no tienen TCR. Y las células presentadoras son las que *presentan* el antígeno, no las que reconocen el complejo péptido-MHC.",
       "tags": [
         "MHC"
-      ]
+      ],
+      "tema": "presentacion-mhc"
     },
     {
       "id": "q12",
@@ -374,7 +385,8 @@
       "tags": [
         "Hipersensibilidad",
         "Macrófagos"
-      ]
+      ],
+      "tema": "hipersensibilidad"
     },
     {
       "id": "q13",
@@ -405,7 +417,8 @@
       "tags": [
         "MHC",
         "Tolerancia"
-      ]
+      ],
+      "tema": "tolerancia"
     },
     {
       "id": "q14",
@@ -436,7 +449,8 @@
       "tags": [
         "Hematología",
         "Eritrocito"
-      ]
+      ],
+      "tema": "hematologia"
     },
     {
       "id": "q15",
@@ -468,7 +482,8 @@
       "tags": [
         "Granulocitos",
         "Hipersensibilidad"
-      ]
+      ],
+      "tema": "hipersensibilidad"
     },
     {
       "id": "q16",
@@ -498,7 +513,8 @@
       "explanation": "El **MHC** es **poligénico**: hay varios genes de clase I (HLA-A, -B, -C) y de clase II (DR, DQ, DP), así que cada persona presenta antígenos con varias moléculas distintas. Y es **polimórfico**: cada gen tiene cientos o miles de alelos en la población, y se expresan los dos alelos, el materno y el paterno (codominancia).\n\nJuntas, las dos propiedades amplían el repertorio de péptidos que una persona puede presentar. También explican que un trasplante entre personas no emparentadas rara vez sea compatible.",
       "tags": [
         "MHC"
-      ]
+      ],
+      "tema": "presentacion-mhc"
     },
     {
       "id": "q17",
@@ -529,7 +545,8 @@
       "tags": [
         "Coestimulación",
         "Linfocitos T"
-      ]
+      ],
+      "tema": "coestimulacion"
     },
     {
       "id": "q18",
@@ -559,7 +576,8 @@
       "explanation": "La **tolerancia central** ocurre en los órganos linfoides primarios. En la médula ósea, un **linfocito B inmaduro** que reconoce con fuerza un antígeno propio puede reactivar RAG y cambiar su cadena ligera: es la **edición del receptor**. Si no lo consigue, muere por apoptosis.\n\nLa **anergia** es un mecanismo de tolerancia **periférica**. La selección negativa en el timo depende de la afinidad por lo propio (AIRE); los T reguladores son uno de sus productos, no quienes la hacen. Y los **timocitos** autorreactivos se eliminan: la edición del receptor es propia de los linfocitos B.",
       "tags": [
         "Tolerancia"
-      ]
+      ],
+      "tema": "tolerancia"
     },
     {
       "id": "q19",
@@ -589,7 +607,8 @@
       "explanation": "Un microbio puede disparar autoinmunidad por **mimetismo molecular**: comparte epítopos con proteínas propias, y los linfocitos que activa atacan después al tejido. El ejemplo clásico es la **fiebre reumática**, en la que la proteína M del estreptococo cruza con la miosina cardíaca.\n\nLa autoinmunidad aparece cuando los T reguladores **fallan**, no cuando están aumentados. La susceptibilidad suele ser **poligénica** (el HLA y muchos otros genes); las formas monogénicas, como APECED (AIRE) o IPEX (FOXP3), son raras. Y los microbios la favorecen **aumentando** la coestimulación, por la inflamación y el B7, no inhibiéndola.",
       "tags": [
         "Autoinmunidad"
-      ]
+      ],
+      "tema": "autoinmunidad"
     },
     {
       "id": "q20",
@@ -620,7 +639,8 @@
       "tags": [
         "Linfocitos T",
         "Citocinas"
-      ]
+      ],
+      "tema": "citocinas"
     },
     {
       "id": "q21",
@@ -652,7 +672,8 @@
       "tags": [
         "Linfocitos T",
         "Citocinas"
-      ]
+      ],
+      "tema": "citocinas"
     },
     {
       "id": "q22",
@@ -683,7 +704,8 @@
       "tags": [
         "Órganos linfoides",
         "Linfocitos B"
-      ]
+      ],
+      "tema": "linfocitos-b"
     },
     {
       "id": "q23",
@@ -713,7 +735,8 @@
       "explanation": "El **factor tisular** se expresa de forma **constitutiva** en las células que rodean al vaso: adventicia, fibroblastos y músculo liso. La sangre sólo lo encuentra cuando el vaso se rompe, y entonces se une al factor VIIa y arranca la coagulación.\n\nComo es el iniciador, **no lo activa** el complejo tenasa intrínseco: ocurre al revés. En sujetos sanos apenas hay FT circulante; las micropartículas con FT aparecen en la inflamación, la sepsis o el cáncer. Y en la aterosclerosis, la diabetes o la inflamación el FT está **aumentado y activo**, no inactivo.",
       "tags": [
         "Hemostasia"
-      ]
+      ],
+      "tema": "hematologia"
     },
     {
       "id": "q24",
@@ -743,7 +766,8 @@
       "explanation": "Tres dosis del mismo antígeno (días 1, 21 y 35) son una **inmunización con refuerzos**. Diez días después del tercer contacto hay una **respuesta secundaria** en marcha. Los linfocitos B de memoria ya pasaron por el centro germinal: cambiaron a **IgG** y maduraron su **afinidad** por hipermutación somática y selección.\n\nLa **IgM** domina la respuesta primaria y es de baja afinidad. La **IgA** del suero es sobre todo monomérica, pero no es la clase que predomina tras una inmunización sistémica.",
       "tags": [
         "Anticuerpos"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "q25",
@@ -773,7 +797,8 @@
       "explanation": "Para activar del todo a un **CD8+** naive, sobre todo frente a virus latentes o antígenos poco inflamatorios, hace falta la **ayuda del CD4+**. El CD4 **licencia** a la célula dendrítica a través de **CD40L-CD40**, y la dendrítica sube su B7 y secreta IL-12. Además, el CD4 aporta **IL-2**, que hace proliferar al CD8 y lo diferencia a citotóxico.\n\nLa **IL-2** sí produce esa proliferación. Hay **CD8+ de memoria**, y su calidad depende justamente de la ayuda CD4. Y el CD8 reconoce el antígeno en el **MHC de clase I**, no en la clase II.",
       "tags": [
         "Linfocitos T"
-      ]
+      ],
+      "tema": "diferenciacion-t"
     },
     {
       "id": "q26",
@@ -805,7 +830,8 @@
         "Linfocitos T",
         "Parásitos",
         "Caso clínico"
-      ]
+      ],
+      "tema": "diferenciacion-t"
     },
     {
       "id": "q27",
@@ -837,7 +863,8 @@
         "Citocinas",
         "Inmunidad innata",
         "Caso clínico"
-      ]
+      ],
+      "tema": "citocinas"
     },
     {
       "id": "q28",
@@ -868,7 +895,8 @@
       "tags": [
         "Células presentadoras",
         "Piel"
-      ]
+      ],
+      "tema": "presentacion-mhc"
     },
     {
       "id": "q29",
@@ -899,7 +927,8 @@
       "tags": [
         "Hematología",
         "Órganos linfoides"
-      ]
+      ],
+      "tema": "hematologia"
     },
     {
       "id": "q30",
@@ -930,7 +959,8 @@
       "tags": [
         "Tolerancia",
         "Coestimulación"
-      ]
+      ],
+      "tema": "tolerancia"
     },
     {
       "id": "q31",
@@ -960,7 +990,8 @@
       "explanation": "El **BCR** es una **inmunoglobulina de membrana**: IgM, y también IgD en el linfocito B maduro naive. Tiene una región transmembrana y va asociada a **Igα/Igβ** (CD79a/b), que son las que transducen la señal.\n\nEl linfocito B es de **origen linfoide** y no es indispensable para activar a las células dendríticas. Presenta péptidos por **MHC-II** a los T CD4, pero como toda célula nucleada también expresa MHC-I. Por eso no presenta «exclusivamente» por clase II.",
       "tags": [
         "Linfocitos B"
-      ]
+      ],
+      "tema": "linfocitos-b"
     },
     {
       "id": "q32",
@@ -990,7 +1021,8 @@
       "explanation": "La **respuesta secundaria** parte de linfocitos B de memoria que ya cambiaron de isotipo y maduraron su afinidad. Por eso es **más rápida**, más intensa y **más duradera**, y sus anticuerpos son sobre todo **IgG** (o IgA e IgE según el sitio) y de **mayor afinidad**.\n\nDura más que la primaria, no menos. Y la **IgD** casi no se secreta: es sobre todo un receptor del linfocito B naive.",
       "tags": [
         "Anticuerpos"
-      ]
+      ],
+      "tema": "anticuerpos"
     },
     {
       "id": "q33",
@@ -1022,7 +1054,8 @@
       "tags": [
         "Hematología",
         "Hemoglobina"
-      ]
+      ],
+      "tema": "hematologia"
     },
     {
       "id": "q34",
@@ -1052,7 +1085,8 @@
       "explanation": "El bazo es el filtro de la sangre frente a las **bacterias encapsuladas**: neumococo, *Haemophilus* y meningococo. Los macrófagos de su **zona marginal** las atrapan, y sus linfocitos B de zona marginal responden a los polisacáridos de la cápsula con IgM T-independiente. Sin bazo, o con un bazo que no funciona (tras una esplenectomía, en la drepanocitosis), **aumenta el riesgo de sepsis por encapsulados**.\n\nLa opsonización y la fagocitosis **disminuyen**, no aumentan. Y retirar los eritrocitos viejos en la pulpa roja es la función **normal** del bazo, no una alteración.",
       "tags": [
         "Órganos linfoides"
-      ]
+      ],
+      "tema": "organos-secundarios"
     },
     {
       "id": "q35",
@@ -1083,7 +1117,8 @@
       "tags": [
         "Citocinas",
         "Hematología"
-      ]
+      ],
+      "tema": "citocinas"
     },
     {
       "id": "q36",
@@ -1114,7 +1149,8 @@
       "tags": [
         "MHC",
         "Complemento"
-      ]
+      ],
+      "tema": "presentacion-mhc"
     },
     {
       "id": "q37",
@@ -1145,7 +1181,8 @@
       "tags": [
         "Granulocitos",
         "Fagocitosis"
-      ]
+      ],
+      "tema": "innata-celular"
     },
     {
       "id": "q38",
@@ -1176,7 +1213,8 @@
       "tags": [
         "Hemostasia",
         "Hematología"
-      ]
+      ],
+      "tema": "hematologia"
     },
     {
       "id": "q39",
@@ -1206,7 +1244,8 @@
       "explanation": "Las **NK** reconocen la **falta de lo propio** (*missing self*). Sus receptores inhibidores (KIR, CD94/NKG2A) leen el **MHC de clase I**. Una célula infectada por un virus, o una célula tumoral, que baja su clase I para escapar de los CD8 pierde ese freno, y la NK la destruye.\n\nLas NK maduran en la **médula ósea** y en los tejidos, no en el timo. Tienen una memoria limitada (las NK frente al CMV), pero no es la memoria adaptativa clásica. Y producen **IFN-γ**, que es de tipo II. Los **IFN tipo I** los producen las células infectadas y las dendríticas plasmocitoides, y son los que activan a la NK.",
       "tags": [
         "Inmunidad innata"
-      ]
+      ],
+      "tema": "innata-celular"
     },
     {
       "id": "q40",
@@ -1237,7 +1276,8 @@
       "tags": [
         "Anticuerpos",
         "Linfocitos B"
-      ]
+      ],
+      "tema": "anticuerpos"
     }
   ]
 }

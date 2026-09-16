@@ -1572,6 +1572,265 @@
   text-align: right;
 }
 
+/* Aviso de muestra en el mando, bajo el pie de aciertos. */
+.muestraPie {
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--ambar);
+  text-align: center;
+  max-width: 420px;
+}
+
+.muestraPie strong { font-weight: 800; }
+
+/* Corte de la muestra en la pantalla final: el análisis se queda, el resto del
+   banqueo se anuncia. */
+.corteMuestra {
+  margin: 0 auto 30px;
+  max-width: 460px;
+  padding: 16px 18px;
+  border: 1px solid rgba(var(--ambar-rgb), 0.3);
+  border-radius: 16px;
+  background: rgba(var(--ambar-rgb), 0.08);
+  text-align: left;
+}
+
+.corteTitulo {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--white);
+  margin: 0 0 6px 0;
+}
+
+.corteCuerpo {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0 0 12px 0;
+}
+
+.corteCuerpo strong { color: var(--ambar); }
+
+.corteCta {
+  display: inline-block;
+  padding: 9px 16px;
+  border: none;
+  border-radius: 10px;
+  background: var(--ambar);
+  color: #1a1408;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition: filter 0.16s ease;
+}
+
+.corteCta:hover { filter: brightness(1.08); }
+
+/* Desglose por tema: va después de la solución y en tono secundario — es el
+   diagnóstico, no la acción. Filas calcadas del historial. */
+.temas {
+  margin: 0 auto 30px;
+  max-width: 460px;
+  text-align: left;
+}
+
+.temasTitulo {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin: 0 0 8px 0;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+/* Fichas de resumen, al aire y sin recuadro: sólo el libro de Cursos, el código
+   y el tema. La pista se arrastra en horizontal cuando hay muchos temas
+   fallados; con pocos queda centrada (`width: fit-content` + `margin auto`). */
+.fichasPista {
+  margin: 0 auto 26px;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  /* Sin barra: la señal de que hay más son las fichas difuminadas del canto. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Sitio para que el crecimiento del hover no se recorte contra los bordes. */
+  padding: 8px 4px 10px;
+}
+
+.fichasPista::-webkit-scrollbar { display: none; }
+
+/* Los cantos se desvanecen, así el revólver no termina en un corte seco. */
+.fichasPistaRevolver {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%);
+}
+
+.fichas {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  /* `max-content` + margen automático: centrado mientras caben, y cuando no,
+     el margen se resuelve a 0 y la pista arrastra sin recortar la primera. */
+  width: max-content;
+  margin: 0 auto;
+  scroll-snap-type: x proximity;
+}
+
+/* Revólver: el tamaño lo decide la posición dentro de la pista, no el orden, de
+   modo que al arrastrar la que llega al centro crece y las de los cantos se
+   van reduciendo. `view(inline)` es Chromium; donde no exista, las fichas
+   quedan todas a tamaño completo y el carrusel sigue funcionando. */
+@keyframes fichaRevolver {
+  0% {
+    transform: scale(0.66);
+    opacity: 0.4;
+    filter: blur(1.6px);
+  }
+  38%, 62% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    transform: scale(0.66);
+    opacity: 0.4;
+    filter: blur(1.6px);
+  }
+}
+
+@supports (animation-timeline: view(inline)) {
+  .fichasRevolver .ficha {
+    animation: fichaRevolver linear both;
+    animation-timeline: view(inline);
+  }
+}
+
+.ficha {
+  position: relative;
+  flex: none;
+  width: 132px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 4px 2px;
+  text-align: center;
+  text-decoration: none;
+  scroll-snap-align: center;
+}
+
+/* No hay recuadro que crecer: lo que responde al cursor es el SVG. */
+.fichaLibro {
+  position: relative;
+  display: inline-flex;
+  line-height: 0;
+  color: var(--acc);
+  margin-bottom: 10px;
+  transition: transform 0.2s cubic-bezier(0.34, 1.35, 0.64, 1);
+}
+
+.ficha:hover .fichaLibro,
+.ficha:focus-visible .fichaLibro { transform: scale(1.3); }
+
+.fichaCandado {
+  position: absolute;
+  right: -5px;
+  bottom: -2px;
+  display: inline-flex;
+  padding: 2.5px;
+  border-radius: 999px;
+  background: var(--bg2);
+  color: var(--ambar);
+  line-height: 0;
+}
+
+.fichaCodigo {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--acc);
+  transition: color 0.16s ease;
+}
+
+.fichaTema {
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--white);
+  overflow-wrap: anywhere;
+}
+
+.fichaFallos {
+  font-size: 10.5px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.ficha:hover .fichaCodigo,
+.ficha:focus-visible .fichaCodigo { color: var(--acc-2); }
+
+/* Sin `view(inline)` no hay revólver, así que ahí el tamaño lo marca el orden:
+   las tres primeras enteras y el resto reducido asomando por el canto. */
+@supports not (animation-timeline: view(inline)) {
+  .fichasRevolver .ficha:nth-child(n + 4) {
+    opacity: 0.55;
+    transform: scale(0.78);
+    transform-origin: top center;
+  }
+}
+
+.fichaCerrada .fichaLibro,
+.fichaCerrada .fichaCodigo { color: var(--ambar); }
+.fichaCerrada:hover .fichaCodigo,
+.fichaCerrada:focus-visible .fichaCodigo { color: var(--ambar); filter: brightness(1.15); }
+
+.temaRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--white);
+  padding: 9px 0;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.temaRow:last-child { border-bottom: none; }
+
+.temaNombre {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.temaBarra {
+  width: 96px;
+  flex: none;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--card-border);
+  overflow: hidden;
+}
+
+.temaBarraFill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+}
+
+.temaFillMal   { background: var(--mal); }
+.temaFillMedio { background: var(--ambar); }
+.temaFillOk    { background: var(--ok); }
+
+.temaScore {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  min-width: 46px;
+  text-align: right;
+}
+
 .resultActions {
   display: flex;
   gap: 12px;
@@ -1943,7 +2202,12 @@
   .figura,
   .opcion::before,
   .groupTooltip,
+  .fichaLibro,
+  .fichaCodigo,
   .versionesPista::before {
     transition: none;
   }
+  .fichasRevolver .ficha { animation: none; }
+  .ficha:hover .fichaLibro,
+  .ficha:focus-visible .fichaLibro { transform: none; }
 }
