@@ -1648,6 +1648,12 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
   align-items: center;
   gap: 18px 30px;
+  /* `padding: 0` no es decorativo: `globals.css` lleva un `section { padding:
+     100px 48px }` para la landing, y esto es un `<section>` — sin neutralizarlo
+     el bloque abre con 100 px de aire y se mete 48 px por cada lado, que es
+     justo lo que rompía la simetría con el título. Misma trampa que
+     `.trackSection` en cursos.module.css. */
+  padding: 0;
   margin: 0 0 40px;
   text-align: left;
 }
