@@ -5,6 +5,7 @@
  */
 export type AnalyticsEvent =
   | 'pagina_vista'
+  | 'pagina_salida'
   | 'clase_abierta'
   | 'banco_iniciado'
   | 'examen_completado'
@@ -20,18 +21,25 @@ export type AnalyticsEvent =
  *
  * `keepalive` evita perder el evento si dispara justo durante una navegación.
  * Fire-and-forget: nunca lanza ni bloquea la UI.
+ *
+ * `path` sustituye a la ruta actual (la salida de una página se manda cuando la
+ * URL ya es la siguiente). `beacon` usa sendBeacon, lo único que el navegador
+ * garantiza entregar mientras la pestaña se oculta o se cierra.
  */
 export function trackEvent(
   event: AnalyticsEvent,
   props: Record<string, unknown> = {},
+  opts: { path?: string; beacon?: boolean } = {},
 ): void {
   if (typeof window === 'undefined') return;
   try {
+    const body = JSON.stringify({ event, props, path: opts.path ?? window.location.pathname });
+    if (opts.beacon && navigator.sendBeacon?.('/api/track', new Blob([body], { type: 'application/json' }))) return;
     fetch('/api/track', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       keepalive: true,
-      body: JSON.stringify({ event, props, path: window.location.pathname }),
+      body,
     }).catch(() => {});
   } catch {}
 }

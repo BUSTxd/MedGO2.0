@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import DashboardSidebar from './DashboardSidebar';
 import { PlanProvider, type ClientPlanState } from './PlanProvider';
 import { RecentClassesProvider } from './RecentClassesProvider';
@@ -52,7 +52,8 @@ export default function DashboardWrapper({
   return (
     <PlanProvider value={planState}>
       <ClarityPlanTag />
-      {!isAdmin && <PaginaVistaTracker />}
+      {/* useSearchParams exige Suspense o el prerender del dashboard cae a cliente */}
+      {!isAdmin && <Suspense fallback={null}><PaginaVistaTracker /></Suspense>}
       <RecentClassesProvider>
         <div className={styles.layout}>
           <DashboardSidebar

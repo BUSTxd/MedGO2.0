@@ -35,6 +35,21 @@ export interface EventoLegible {
   acceso: string;
   cursoSlug: string | null;
   path: string | null;
+  /** Hasta cuándo siguió en esa página y cuánto tiempo la tuvo a la vista. */
+  estancia: Estancia | null;
+}
+
+export interface Estancia {
+  hasta: string;
+  segundos: number;
+}
+
+/** Tramo continuo de uso: se corta tras 30 min sin registros. */
+export interface Sesion {
+  inicio: string;
+  fin: string;
+  /** El fin es una salida registrada; si no, es el último evento (se fue en algún momento después). */
+  exacto: boolean;
 }
 
 export interface CursoDeUsuario {
@@ -60,6 +75,7 @@ export interface ActividadUsuario {
   cursos: CursoDeUsuario[];
   eventos: EventoLegible[];
   bloqueos: Bloqueo[];
+  sesiones: Sesion[];
   truncado: boolean;
 }
 
@@ -81,6 +97,7 @@ const SECCIONES: Record<string, string> = {
 
 const ACCION: Record<string, string> = {
   pagina_vista: 'Visitó',
+  pagina_salida: 'Salió de',
   clase_abierta: 'Abrió la clase',
   resumen_abierto: 'Abrió el resumen',
   banco_iniciado: 'Empezó el banqueo',
@@ -159,7 +176,7 @@ export function lugarDeRuta(path: string | null): { lugar: string; cursoSlug: st
  * - Laboratorios: su flag `gratis`, que es lo que decide su SeccionGate.
  */
 export function accesoAlRegistrar(event: string, path: string | null, props: Record<string, unknown>): Acceso | null {
-  if (event === 'contenido_bloqueado' || event === 'pago_abierto') return null;
+  if (event === 'contenido_bloqueado' || event === 'pago_abierto' || event === 'pagina_salida') return null;
   const examKey = props.examKey;
   if (typeof examKey === 'string' && EXAMENES[examKey]) {
     const meta = EXAMENES[examKey];
@@ -171,8 +188,19 @@ export function accesoAlRegistrar(event: string, path: string | null, props: Rec
   return null;
 }
 
+function duracion(segundos: number): string {
+  if (segundos < 60) return `${segundos} s`;
+  const min = Math.round(segundos / 60);
+  if (min < 60) return `${min} min`;
+  return `${Math.floor(min / 60)} h ${min % 60} min`;
+}
+
 function detalleDe(e: EventoRow): string | null {
   const p = e.props ?? {};
+  if (e.event === 'pagina_salida') {
+    const seg = typeof p.segundos === 'number' ? p.segundos : 0;
+    return `${duracion(seg)} a la vista · ${p.motivo === 'navego' ? 'pasó a otra página' : 'ocultó la pestaña o cerró'}`;
+  }
   const examKey = typeof p.examKey === 'string' ? p.examKey : null;
   if (e.event === 'examen_completado' && typeof p.score === 'number' && typeof p.total === 'number') {
     const pct = p.total > 0 ? Math.round((p.score / p.total) * 100) : 0;
@@ -211,13 +239,54 @@ export function legible(e: EventoRow): EventoLegible {
     fecha: e.created_at,
     evento: e.event,
     accion: ACCION[e.event] ?? e.event,
-    lugar,
+    lugar: e.props?.banqueo === true ? `${lugar} · banqueo` : lugar,
     detalle: detalleDe(e),
     etiqueta: etiquetaDe(acceso),
     acceso,
     cursoSlug,
     path: e.path,
+    estancia: null,
   };
+}
+
+/**
+ * Cierra cada `pagina_vista` con las salidas que le siguen en la misma página
+ * (una por vez que ocultó la pestaña y volvió). Una salida que no casa con la
+ * última página abierta (otra pestaña, o una vista fuera del límite) se ignora.
+ * `eventos` va del más reciente al más antiguo, como `filas`.
+ */
+function asignarEstancias(filas: EventoRow[], eventos: EventoLegible[]): void {
+  let abierta: EventoLegible | null = null;
+  let clave = '';
+  for (let i = filas.length - 1; i >= 0; i--) {
+    const f = filas[i];
+    const k = `${f.path}|${f.props?.banqueo === true}`;
+    if (f.event === 'pagina_vista') {
+      abierta = eventos[i];
+      clave = k;
+    } else if (f.event === 'pagina_salida' && abierta && k === clave) {
+      const seg = typeof f.props?.segundos === 'number' ? f.props.segundos : 0;
+      abierta.estancia = { hasta: f.created_at, segundos: (abierta.estancia?.segundos ?? 0) + seg };
+    }
+  }
+}
+
+const CORTE_SESION_MS = 30 * 60_000;
+
+function sesionesDe(filas: EventoRow[]): Sesion[] {
+  const out: Sesion[] = [];
+  for (let i = filas.length - 1; i >= 0; i--) {
+    const f = filas[i];
+    const t = new Date(f.created_at).getTime();
+    const s = out[out.length - 1];
+    if (s && t - new Date(s.fin).getTime() < CORTE_SESION_MS) {
+      s.fin = f.created_at;
+      s.exacto = f.event === 'pagina_salida';
+    } else {
+      out.push({ inicio: f.created_at, fin: f.created_at, exacto: f.event === 'pagina_salida' });
+    }
+  }
+  return out.reverse();
 }
 
 /**
@@ -277,6 +346,7 @@ export async function cargarActividadUsuario(userId: string): Promise<ActividadU
   ]);
 
   const eventos = filas.map(legible);
+  asignarEstancias(filas, eventos);
   const dias = new Set(filas.map((f) => diaLima(f.created_at)));
   return {
     totalEventos: count ?? filas.length,
@@ -285,6 +355,7 @@ export async function cargarActividadUsuario(userId: string): Promise<ActividadU
     cursos: cursosRes.get(userId) ?? [],
     eventos,
     bloqueos: resumirBloqueos(eventos),
+    sesiones: sesionesDe(filas),
     truncado,
   };
 }

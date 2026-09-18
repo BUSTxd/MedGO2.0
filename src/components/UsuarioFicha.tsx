@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
-import type { ActividadUsuario, Etiqueta, EventoLegible } from '@/lib/actividad-usuario';
+import type { ActividadUsuario, Etiqueta, EventoLegible, Sesion } from '@/lib/actividad-usuario';
 import styles from '@/styles/usuarioFicha.module.css';
 
 type Filtro = 'todo' | 'material' | 'banqueos' | 'bloqueos' | 'paginas';
@@ -48,6 +48,19 @@ function hace(iso: string): string {
   return d === 1 ? 'ayer' : `hace ${d} días`;
 }
 
+function duracion(segundos: number): string {
+  if (segundos < 60) return `${segundos} s`;
+  const min = Math.round(segundos / 60);
+  if (min < 60) return `${min} min`;
+  return `${Math.floor(min / 60)} h ${min % 60} min`;
+}
+
+function textoSesion(s: Sesion): string {
+  const seg = Math.round((new Date(s.fin).getTime() - new Date(s.inicio).getTime()) / 1000);
+  if (seg < 30 && !s.exacto) return `${hora(s.inicio)} · un solo registro`;
+  return `${hora(s.inicio)} → ${s.exacto ? '' : 'después de '}${hora(s.fin)} · ${s.exacto ? '' : 'más de '}${duracion(seg)}`;
+}
+
 const VENTANA_MS = 10_000;
 
 function tiemposPorRuta(eventos: EventoLegible[], cumple: (e: EventoLegible) => boolean): Map<string, number[]> {
@@ -71,13 +84,22 @@ function cerca(m: Map<string, number[]>, e: EventoLegible, t: number): boolean {
  * Una clase con candado también «se abre» (se monta detrás del velo): ahí
  * manda el candado.
  */
-function sinEcos(eventos: EventoLegible[]): EventoLegible[] {
+function sinEcos(todos: EventoLegible[]): EventoLegible[] {
+  // Las salidas no son una fila propia: su tiempo ya va en la visita que cierran.
+  const eventos = todos.filter((e) => e.evento !== 'pagina_salida').map((e) => ({ ...e }));
   const acciones = tiemposPorRuta(eventos, (e) => e.evento !== 'pagina_vista');
   const candados = tiemposPorRuta(eventos, (e) => e.evento === 'contenido_bloqueado');
   const ultimo = new Map<string, number>();
   return eventos.filter((e) => {
     const t = new Date(e.fecha).getTime();
-    if (e.evento === 'pagina_vista' && cerca(acciones, e, t)) return false;
+    if (e.evento === 'pagina_vista' && cerca(acciones, e, t)) {
+      // La visita se esconde tras la acción que la acompaña: la estancia pasa a ésa.
+      const destino = e.estancia && eventos.find((a) =>
+        a.evento !== 'pagina_vista' && !a.estancia && a.path === e.path
+        && Math.abs(new Date(a.fecha).getTime() - t) < VENTANA_MS);
+      if (destino) destino.estancia = e.estancia;
+      return false;
+    }
     if (e.evento === 'clase_abierta' && cerca(candados, e, t)) return false;
     const key = `${e.evento}|${e.path}|${e.detalle ?? ''}`;
     const prev = ultimo.get(key);
@@ -160,6 +182,15 @@ export default function UsuarioFicha({
   }, [visibles]);
 
   const ultimo = eventos[0];
+  const sesionesPorDia = useMemo(() => {
+    const m = new Map<string, Sesion[]>();
+    for (const s of datos?.sesiones ?? []) {
+      const d = diaLima(s.inicio);
+      m.set(d, [...(m.get(d) ?? []), s]);
+    }
+    return m;
+  }, [datos]);
+  const sesionActual = datos?.sesiones[0];
   const objetivo = datos?.cursos[0];
   const maxDias = Math.max(1, ...(datos?.cursos.map((c) => c.dias) ?? []));
 
@@ -217,6 +248,12 @@ export default function UsuarioFicha({
             {ultimo && (
               <p className={styles.ultimo}>
                 Lo último: <strong>{ultimo.accion.toLowerCase()}</strong> {ultimo.lugar}
+                {ultimo.estancia && <> · siguió ahí hasta las {hora(ultimo.estancia.hasta)}</>}
+                {sesionActual && (
+                  <span className={styles.ultimoSesion}>
+                    Última sesión: {fechaCorta(sesionActual.inicio)}, {textoSesion(sesionActual)}
+                  </span>
+                )}
               </p>
             )}
 
@@ -279,6 +316,11 @@ export default function UsuarioFicha({
                 porDia.map((g) => (
                   <div key={g.dia} className={styles.dia}>
                     <p className={styles.diaTitulo}>{tituloDia(g.dia)}</p>
+                    {sesionesPorDia.has(g.dia) && (
+                      <p className={styles.sesiones}>
+                        En la web: {sesionesPorDia.get(g.dia)!.map(textoSesion).join('  ·  ')}
+                      </p>
+                    )}
                     <ul className={styles.eventos}>
                       {g.items.map((e, i) => (
                         <li key={`${e.fecha}-${i}`} className={styles.evento}>
@@ -293,6 +335,11 @@ export default function UsuarioFicha({
                               </span>
                             )}
                             {e.detalle && <span className={styles.detalle}>{e.detalle}</span>}
+                            {e.estancia && (
+                              <span className={styles.estancia}>
+                                Hasta las {hora(e.estancia.hasta)} · {duracion(e.estancia.segundos)} a la vista
+                              </span>
+                            )}
                           </span>
                         </li>
                       ))}

@@ -14,6 +14,7 @@ export const dynamic = 'force-dynamic';
  */
 const ALLOWED_EVENTS = new Set([
   'pagina_vista',
+  'pagina_salida',
   'clase_abierta',
   'banco_iniciado',
   'examen_completado',
@@ -42,10 +43,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'invalid event' }, { status: 400 });
   }
 
-  const props =
+  let props =
     body.props && typeof body.props === 'object' && !Array.isArray(body.props)
       ? (body.props as Record<string, unknown>)
       : {};
+  if (event === 'pagina_salida') {
+    // Lo único que la ficha suma: un número fuera de rango descuadraría los tiempos.
+    const s = Number(props.segundos);
+    props = {
+      segundos: Number.isFinite(s) ? Math.min(Math.max(Math.round(s), 0), 86_400) : 0,
+      motivo: props.motivo === 'navego' ? 'navego' : 'oculto',
+      ...(props.banqueo === true ? { banqueo: true } : {}),
+    };
+  }
   const path = typeof body.path === 'string' ? body.path.slice(0, 300) : null;
 
   // user_id real (puede ser null en la landing pública) + plan como fuente de
