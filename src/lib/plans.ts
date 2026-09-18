@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { isAdminEmail } from './admin';
+import { isAdminEmail, tieneAccesoTotal } from './admin';
 
 export type PlanKey = 'interno' | 'residente' | 'ufbi' | 'ufbi-anual';
 export type ProfilePlan = 'free' | PlanKey;
@@ -134,7 +134,7 @@ export async function getUserPlanState(supabase: SupabaseClient): Promise<PlanSt
   // del admin expira.
   // `allAccess` es lo que realmente abre todo: sin él, 'residente' pertenece al
   // tramo `medicina` y dejaría los 6 cursos de UFBI bloqueados para el admin.
-  if (isAdminEmail(user.email)) {
+  if (isAdminEmail(user.email) || tieneAccesoTotal(user.email)) {
     return { plan: 'residente', isActive: true, expiresAt: null, allAccess: true };
   }
 

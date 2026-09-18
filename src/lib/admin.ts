@@ -7,6 +7,20 @@ export function isAdminEmail(email: string | null | undefined): boolean {
 }
 
 /**
+ * Cuentas con todo el contenido abierto (los dos tramos), sin pagar y sin ser
+ * admin: reciben el `allAccess` del plan pero NO el panel de Admin ni Modelado.
+ * Un plan normal no sirve para esto: ninguno abre UFBI y Facultad a la vez.
+ * Es una lista, no una regla: cada correo se añade a mano y a sabiendas.
+ */
+const EMAILS_ACCESO_TOTAL: ReadonlySet<string> = new Set([
+  'sofiacolchado12@gmail.com',
+]);
+
+export function tieneAccesoTotal(email: string | null | undefined): boolean {
+  return !!email && EMAILS_ACCESO_TOTAL.has(email.toLowerCase());
+}
+
+/**
  * Quienes aportan el material de los cursos. Ven el panel de avance y aportes
  * porque es el registro sobre el que se calcula el reparto —y donde marcan lo
  * que han subido—, pero no el panel de Admin ni el editor de Modelado.
