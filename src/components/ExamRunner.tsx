@@ -224,7 +224,8 @@ interface Props {
 }
 
 const EXPIRY_BUFFER_MS = 15 * 60 * 1000;
-const urlCacheKey = (k: string) => `examen-url-${k}`;
+// v2: la entrada lleva `premiumDesde`; las cacheadas antes no lo traían.
+const urlCacheKey = (k: string) => `examen-url-v2-${k}`;
 const attemptsKey = (k: string) => `medgo:attempts:${k}`;
 
 /** Letras de las alternativas: rotulan los botones y son su atajo de teclado. */
@@ -1370,13 +1371,18 @@ export default function ExamRunner({
   // Shuffle de preguntas + opciones (re-corre al cambiar de etapa o reintentar).
   const deck = useMemo(() => {
     if (!payload) return null;
-    // Lo premium se marca ANTES de barajar: el índice es el del JSON, que es
-    // por donde corta la muestra.
+    // Con el plan, la mitad gratis y la premium se barajan cada una por su lado
+    // y lo premium va detrás: el rastro queda como en la muestra, con la
+    // segunda parte entera en oro. El corte es por índice del JSON.
     const marcadas = payload.questions.map((q, i) => ({
       ...q,
       premium: premiumDesde != null && i >= premiumDesde,
     }));
-    return shuffle(marcadas).map(q => ({
+    const orden = [
+      ...shuffle(marcadas.filter(q => !q.premium)),
+      ...shuffle(marcadas.filter(q => q.premium)),
+    ];
+    return orden.map(q => ({
       ...q,
       options: q.ordenFijo ? q.options : shuffle(q.options),
       ...(q.variante
