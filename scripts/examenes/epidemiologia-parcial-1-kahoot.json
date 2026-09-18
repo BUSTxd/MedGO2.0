@@ -1,0 +1,451 @@
+{
+  "version": 1,
+  "key": "epidemiologia/parcial-1-kahoot",
+  "title": "Kahoots — Primer examen de Epidemiología",
+  "duration_min": null,
+  "questions": [
+    {
+      "id": "f1-01",
+      "stem": "Según la Directiva Administrativa N.° 197-MINSA/DGSP-V.01, la Cartera de Servicios de Salud de un establecimiento de salud se define como:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El listado de todos los medicamentos disponibles en la farmacia del centro de salud.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El conjunto de diferentes prestaciones que brinda un establecimiento de salud, respondiendo a las necesidades de la población.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "El documento que establece el horario de atención exclusivo para pacientes con citas programadas.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El registro de las atenciones realizadas en el último trimestre para la planificación.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **Cartera de Servicios de Salud** es el **conjunto de prestaciones** que brinda un establecimiento, definido según las **necesidades de salud de la población** y las prioridades sanitarias.\n\n- Farmacia, horarios o registros de atenciones son insumos o documentos de gestión, no la cartera.",
+      "tema": "cartera",
+      "subtema": "Definición de cartera de servicios",
+      "tags": [
+        "Definición de cartera de servicios"
+      ]
+    },
+    {
+      "id": "f1-02",
+      "stem": "Para el profesional de Atención Primaria, la Cartera de Servicios es una herramienta que facilita:",
+      "options": [
+        {
+          "id": "a",
+          "text": "La eliminación de la variabilidad clínica y limita el acto médico.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La solicitud de aumentos salariales basados en la productividad.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Actuaciones según su competencia y mejora la coordinación con atención especializada.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "La atención preferente a pacientes sin seguro de salud.",
+          "correct": false
+        }
+      ],
+      "explanation": "La cartera ordena **qué hace cada profesional según su competencia** y deja claro qué se resuelve en el primer nivel y qué se deriva, lo que **mejora la coordinación con la atención especializada**.\n\n- No elimina el juicio clínico ni prioriza a un grupo de pacientes, y no es una herramienta salarial.",
+      "tema": "cartera",
+      "subtema": "Utilidad de la cartera en atención primaria",
+      "tags": [
+        "Utilidad de la cartera en atención primaria"
+      ]
+    },
+    {
+      "id": "f1-03",
+      "stem": "La “Oferta Móvil” es particularmente útil porque:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reemplaza por completo la necesidad de tener establecimientos de salud físicos.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Permite llegar a poblaciones dispersas y tradicionalmente excluidas.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Es la estrategia más barata y requiere menos recursos humanos.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Atiende únicamente emergencias de alto riesgo en urbanizaciones.",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **oferta móvil** el equipo de salud **se desplaza** hacia la población: su razón de ser es llegar a **poblaciones dispersas o excluidas**.\n\n- **Complementa** a la oferta fija, no la reemplaza, y no se limita a emergencias urbanas.",
+      "tema": "modalidades-oferta",
+      "subtema": "Oferta móvil",
+      "tags": [
+        "Oferta móvil"
+      ]
+    },
+    {
+      "id": "f1-04",
+      "stem": "Según la clase, la Telesalud en el Perú se desarrolla en varios ejes. ¿Cuál de los siguientes NO es uno de ellos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Telemedicina.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Telegestión.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tele-IEC.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Telefarmacia.",
+          "correct": true
+        }
+      ],
+      "explanation": "Los **ejes de la Telesalud** en el Perú son **Telemedicina**, **Telegestión**, **Tele-IEC** (información, educación y comunicación) y **Telecapacitación**.\n\n- **Telefarmacia** no figura entre los ejes.",
+      "tema": "modalidades-oferta",
+      "subtema": "Ejes de Telesalud",
+      "tags": [
+        "Ejes de Telesalud"
+      ]
+    },
+    {
+      "id": "f1-05",
+      "stem": "La “Referencia” es el proceso mediante el cual:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un establecimiento de salud de mayor capacidad resuelve todos los problemas del paciente y lo da de alta definitiva.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se transfiere la responsabilidad de la atención a un establecimiento de mayor capacidad resolutiva.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "El paciente elige libremente el hospital al que quiere ir para una consulta especializada.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **referencia** es el proceso administrativo-asistencial por el que un establecimiento **transfiere la responsabilidad de la atención** de un paciente a otro de **mayor capacidad resolutiva**.\n\n- El retorno al establecimiento de origen es la **contrarreferencia**; no es una elección libre del paciente.",
+      "tema": "referencia",
+      "subtema": "Definición de referencia",
+      "tags": [
+        "Definición de referencia"
+      ]
+    },
+    {
+      "id": "f1-06",
+      "stem": "Según la normativa, los establecimientos de salud deben publicar su Cartera de Servicios aprobada:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Solo en el portal web nacional del MINSA.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Únicamente en la municipalidad distrital correspondiente.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Exclusivamente en diarios de circulación nacional.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "En un lugar visible para los usuarios y/o en el portal web de la DIRESA/GERESA.",
+          "correct": true
+        }
+      ],
+      "explanation": "La cartera aprobada se difunde **en un lugar visible del establecimiento** y/o en el **portal web de la DIRESA/GERESA**, para que el usuario sepa qué prestaciones puede recibir allí.\n\n- Las demás alternativas restringen la difusión a un solo medio que no es el que fija la norma.",
+      "tema": "cartera",
+      "subtema": "Publicación de la cartera",
+      "tags": [
+        "Publicación de la cartera"
+      ]
+    },
+    {
+      "id": "f1-07",
+      "stem": "La modalidad de “Oferta Fija” de servicios de salud se caracteriza por:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Brindar servicios de salud con horarios reducidos y limitados.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Trasladar equipos de profesionales con equipamiento necesario a zonas alejadas.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Entregar las prestaciones en locales destinados para este fin, a donde debe acudir la demanda.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Utilizar exclusivamente aplicativos de telemedicina para todas las consultas.",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **oferta fija** las prestaciones se dan **en el establecimiento**: es la población la que acude.\n\n- Trasladar equipos a zonas alejadas es **oferta móvil**; usar aplicativos a distancia es **Telesalud**.",
+      "tema": "modalidades-oferta",
+      "subtema": "Oferta fija",
+      "tags": [
+        "Oferta fija"
+      ]
+    },
+    {
+      "id": "f1-08",
+      "stem": "¿Cuál de los siguientes es un ejemplo de “Oferta Móvil”?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un paciente que recibe orientación a través de la línea 113.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Una consulta por videollamada con un médico de familia.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Un hospital que atiende las 24 horas en su consultorio externo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Una brigada de salud que se traslada a un colegio para aplicar vacunas.",
+          "correct": true
+        }
+      ],
+      "explanation": "La **brigada que se traslada** al colegio es **oferta móvil**: el equipo va hacia la población.\n\n- La línea 113 y la videollamada son **Telesalud**.\n- El consultorio externo del hospital es **oferta fija**.",
+      "tema": "modalidades-oferta",
+      "subtema": "Oferta móvil: ejemplos",
+      "tags": [
+        "Oferta móvil: ejemplos"
+      ]
+    },
+    {
+      "id": "f1-09",
+      "stem": "El Plan Esencial de Aseguramiento en Salud (PEAS) es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El conjunto de condiciones garantizadas y financiadas para todos los asegurados.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Un seguro privado complementario para funcionarios del gobierno.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Un programa de donación de medicamentos de alto costo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Un listado de todas las enfermedades raras y huérfanas.",
+          "correct": false
+        }
+      ],
+      "explanation": "El **PEAS** es la lista **mínima de condiciones asegurables** e intervenciones que **toda IAFAS debe financiar** a sus asegurados, en el marco del Aseguramiento Universal en Salud.\n\n- No es un seguro privado ni un programa de medicamentos.",
+      "tema": "sistema-salud",
+      "subtema": "Aseguramiento: PEAS",
+      "tags": [
+        "Aseguramiento: PEAS"
+      ]
+    },
+    {
+      "id": "f1-10",
+      "stem": "¿Qué aplicativo facilita el trámite de referencias y contrarreferencias en el MINSA?",
+      "options": [
+        {
+          "id": "a",
+          "text": "FUA.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "SISFOH.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "PEAS.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "REFCON.",
+          "correct": true
+        }
+      ],
+      "explanation": "**REFCON** es el aplicativo informático del MINSA para registrar y tramitar **referencias y contrarreferencias**.\n\n- **FUA**: formato único de atención del SIS.\n- **SISFOH**: sistema de focalización de hogares.\n- **PEAS**: plan esencial de aseguramiento.",
+      "tema": "referencia",
+      "subtema": "REFCON",
+      "tags": [
+        "REFCON"
+      ]
+    },
+    {
+      "id": "f1-11",
+      "stem": "¿Qué es una Cartera de Servicios de Salud?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lista de médicos en un hospital.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Plan de seguro de salud.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Costos de las consultas.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Conjunto de diferentes prestaciones.",
+          "correct": true
+        }
+      ],
+      "explanation": "La cartera es el **conjunto de prestaciones** que ofrece un establecimiento según las necesidades de su población.\n\n- No es la plantilla de médicos, ni un plan de seguro, ni un tarifario.",
+      "tema": "cartera",
+      "subtema": "Definición de cartera de servicios",
+      "tags": [
+        "Definición de cartera de servicios"
+      ]
+    },
+    {
+      "id": "f1-12",
+      "stem": "“Los hospitales itinerantes es ejemplo de oferta fija”.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Verdadero",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Falso",
+          "correct": true
+        }
+      ],
+      "explanation": "**Falso.** Los **hospitales itinerantes** trasladan profesionales, equipos e insumos hacia la población: son **oferta móvil**.\n\n- La oferta fija se brinda en el propio establecimiento.",
+      "tema": "modalidades-oferta",
+      "subtema": "Oferta fija vs. móvil",
+      "tags": [
+        "Oferta fija vs. móvil"
+      ],
+      "ordenFijo": true
+    },
+    {
+      "id": "f1-13",
+      "stem": "“Respecto a planes de seguro: SIS Emprendedor es un régimen subsidiado”.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Verdadero",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Falso",
+          "correct": true
+        }
+      ],
+      "explanation": "**Falso.** El **SIS Emprendedor** es **semicontributivo**: lo paga el afiliado (trabajador independiente).\n\n- El régimen **subsidiado** es el **SIS Gratuito**, financiado por el Estado.",
+      "tema": "sistema-salud",
+      "subtema": "Aseguramiento: regímenes del SIS",
+      "tags": [
+        "Aseguramiento: regímenes del SIS"
+      ],
+      "ordenFijo": true
+    },
+    {
+      "id": "f1-14",
+      "stem": "“La afiliación al seguro puede ser presencial o virtual”.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Verdadero",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Falso",
+          "correct": false
+        }
+      ],
+      "explanation": "**Verdadero.** La afiliación puede hacerse **presencialmente** (en el establecimiento u oficinas del SIS) o **virtualmente** (plataformas en línea).",
+      "tema": "sistema-salud",
+      "subtema": "Aseguramiento: afiliación",
+      "tags": [
+        "Aseguramiento: afiliación"
+      ],
+      "ordenFijo": true
+    },
+    {
+      "id": "f1-15",
+      "stem": "Respecto a Telesalud: el intercambio de información clínica entre especialistas es ejemplo de:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Telemedicina.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Teleorientación.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Teleinterconsulta.",
+          "correct": true
+        }
+      ],
+      "explanation": "La **teleinterconsulta** es la consulta a distancia **entre profesionales de la salud** (por ejemplo, un médico general con un especialista) para intercambiar información clínica.\n\n- La **teleorientación** va dirigida al paciente o la población.\n- **Telemedicina** es el eje amplio que engloba a ambas.",
+      "tema": "modalidades-oferta",
+      "subtema": "Telesalud: teleinterconsulta",
+      "tags": [
+        "Telesalud: teleinterconsulta"
+      ]
+    }
+  ]
+}

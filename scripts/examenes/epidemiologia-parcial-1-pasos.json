@@ -1,0 +1,1498 @@
+{
+  "version": 1,
+  "key": "epidemiologia/parcial-1-pasos",
+  "title": "PASOS — Primer examen de Epidemiología",
+  "duration_min": null,
+  "questions": [
+    {
+      "id": "p1a-q1",
+      "stem": "Las DIRIS - Direcciones de Redes Integradas de Salud, como órganos del Ministerio de Salud, dependen organizacionalmente de:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dirección General de Operaciones en Salud.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Dirección General de Aseguramiento.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Dirección de Intercambio Prestacional.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Dirección de Salud Pública.",
+          "correct": false
+        }
+      ],
+      "explanation": "Las **DIRIS** son órganos desconcentrados del MINSA en Lima Metropolitana y dependen de la **Dirección General de Operaciones en Salud (DGOS)**.\n\n- Aseguramiento e intercambio prestacional ven el financiamiento; Salud Pública es un área normativa.",
+      "tema": "sistema-salud",
+      "subtema": "Organización del MINSA: DIRIS",
+      "tags": [
+        "Organización del MINSA: DIRIS"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1A_Q1.avif",
+      "explanationImageAlt": "Lámina explicativa · Organización del MINSA: DIRIS"
+    },
+    {
+      "id": "p1a-q2",
+      "stem": "Identifique las Dimensiones del Modelo de la Red Integrada de Salud (RIS):",
+      "options": [
+        {
+          "id": "a",
+          "text": "Prestación, Generación de Recursos, Financiamiento, Gobernanza.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Prestación, Gobernanza, Financiamiento y Gestión.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Prestación, Financiamiento, Gestión, Longitudinalidad.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Prestación, Financiamiento, Gobernanza, Integridad.",
+          "correct": false
+        }
+      ],
+      "explanation": "El modelo RIS se organiza en cuatro dimensiones: **Prestación, Gobernanza, Financiamiento y Gestión**.\n\n- **Generación de recursos** es una función del sistema de salud, no una dimensión de la RIS.\n- **Longitudinalidad** es un atributo de la APS.",
+      "tema": "ris",
+      "subtema": "Dimensiones del modelo RIS",
+      "tags": [
+        "Dimensiones del modelo RIS"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1A_Q2.avif",
+      "explanationImageAlt": "Lámina explicativa · Dimensiones del modelo RIS"
+    },
+    {
+      "id": "p1a-q3",
+      "stem": "Las personas deben ser asignadas a una Red Integrada de Salud - RIS, de acuerdo a su dirección consignada en:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Documento Nacional de Identidad (D.N.I.).",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Recibo de luz.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Registro de SUNAT.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Recibo de teléfono.",
+          "correct": false
+        }
+      ],
+      "explanation": "La población se **adscribe** a la RIS según la **dirección de su DNI**, que es el dato oficial de residencia usado para asignar la población a cada establecimiento.",
+      "tema": "ris",
+      "subtema": "Adscripción territorial a la RIS",
+      "tags": [
+        "Adscripción territorial a la RIS"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1A_Q3.avif",
+      "explanationImageAlt": "Lámina explicativa · Adscripción territorial a la RIS"
+    },
+    {
+      "id": "p1a-q4",
+      "stem": "Son atributos de la estrategia de atención primaria de salud:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Longitudinalidad, primer contacto, integralidad, continuidad.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Gobernanza, longitudinalidad, integralidad, primer contacto.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Primer contacto, longitudinalidad, financiamiento, integralidad.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Integralidad, primer contacto, prestación, continuidad.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los atributos de la APS (Starfield) son **primer contacto, longitudinalidad, integralidad y continuidad/coordinación**.\n\n- **Gobernanza, financiamiento y prestación** son dimensiones o funciones del sistema, y cada distractor mete una de ellas.",
+      "tema": "sistema-salud",
+      "subtema": "Atributos de la APS",
+      "tags": [
+        "Atributos de la APS"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1A_Q4.avif",
+      "explanationImageAlt": "Lámina explicativa · Atributos de la APS"
+    },
+    {
+      "id": "p1a-q5",
+      "stem": "Marque la aseveración correcta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las IPRESS y las IAFAS son actores del sistema de salud peruano.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Las IPRESS son las Instituciones Administradoras de Fondos de Salud.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Las IAFAS son las instituciones prestadoras de salud.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los usuarios del sistema de salud son exclusivamente personas con enfermedad.",
+          "correct": false
+        }
+      ],
+      "explanation": "**IPRESS** (prestadoras de servicios) e **IAFAS** (administradoras de fondos) son actores del sistema.\n\n- B y C intercambian las siglas.\n- Los usuarios no son sólo personas enfermas: incluyen a toda la población (promoción y prevención).",
+      "tema": "sistema-salud",
+      "subtema": "Actores: IPRESS, IAFAS y usuarios",
+      "tags": [
+        "Actores: IPRESS, IAFAS y usuarios"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1A_Q5.avif",
+      "explanationImageAlt": "Lámina explicativa · Actores: IPRESS, IAFAS y usuarios"
+    },
+    {
+      "id": "p1b-q1",
+      "stem": "¿Cuál es el atributo de la Atención Primaria de Salud (APS) que representa el punto de inicio de la atención y filtro para acceder a los servicios de salud?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Primer contacto.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Longitudinalidad.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Integralidad.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Continuidad.",
+          "correct": false
+        }
+      ],
+      "explanation": "El **primer contacto** es la puerta de entrada: el punto donde se inicia la atención y el **filtro** para acceder al resto del sistema.\n\n- **Longitudinalidad**: relación sostenida en el tiempo.\n- **Integralidad**: atender todas las necesidades.\n- **Continuidad**: coordinación entre niveles.",
+      "tema": "sistema-salud",
+      "subtema": "APS: primer contacto",
+      "tags": [
+        "APS: primer contacto"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1B_Q1.avif",
+      "explanationImageAlt": "Lámina explicativa · APS: primer contacto"
+    },
+    {
+      "id": "p1b-q2",
+      "stem": "¿Cuáles son los establecimientos de salud (E.S.) de una Red Integrada de Salud (RIS) que tienen rol de puerta de entrada al Sistema Nacional de Salud?",
+      "options": [
+        {
+          "id": "a",
+          "text": "E.S. del primer nivel de atención de salud.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "E.S. del segundo nivel de atención de salud.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "E.S. del tercer nivel de atención de salud.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todos los E.S. de los niveles de atención.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los establecimientos del **primer nivel** son la **puerta de entrada** al sistema; el segundo y el tercer nivel reciben pacientes por **referencia**.",
+      "tema": "ris",
+      "subtema": "Puerta de entrada: primer nivel",
+      "tags": [
+        "Puerta de entrada: primer nivel"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1B_Q2.avif",
+      "explanationImageAlt": "Lámina explicativa · Puerta de entrada: primer nivel"
+    },
+    {
+      "id": "p1b-q3",
+      "stem": "Identifique la afirmación correcta que se relaciona a los niveles de gobierno responsables en el sistema de salud:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Directamente tienen que ver con la salud y el bienestar social del ciudadano.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los municipios realizan la ejecución de la atención primaria de la salud.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El gobierno nacional mediante el Ministerio de Salud, el gobierno regional mediante la Dirección Regional de Salud y los municipios.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "En la ciudad de Lima se llaman DIRIS.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los tres niveles de gobierno responsables son el **nacional (MINSA)**, el **regional (DIRESA/GERESA)** y el **local (municipios)**.\n\n- Los municipios no ejecutan la APS: la prestación está a cargo de los establecimientos de salud.",
+      "tema": "sistema-salud",
+      "subtema": "Gobernanza y niveles de gobierno",
+      "tags": [
+        "Gobernanza y niveles de gobierno"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1B_Q3.avif",
+      "explanationImageAlt": "Lámina explicativa · Gobernanza y niveles de gobierno"
+    },
+    {
+      "id": "p1b-q4",
+      "stem": "¿Cuál es la Unidad Territorial Sanitaria (UTS) más pequeña en una Red Integrada de Salud (RIS)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sector sanitario.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Zona sanitaria.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Área sanitaria.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Región sanitaria.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **sectorización** divide el territorio de la RIS en unidades cada vez menores; la más pequeña es el **sector sanitario**, a cargo de un equipo multidisciplinario.",
+      "tema": "ris",
+      "subtema": "Unidades territoriales sanitarias",
+      "tags": [
+        "Unidades territoriales sanitarias"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1B_Q4.avif",
+      "explanationImageAlt": "Lámina explicativa · Unidades territoriales sanitarias"
+    },
+    {
+      "id": "p1b-q5",
+      "stem": "Equipo Multidisciplinario de Salud - EMS en el primer nivel de atención, está conformado por:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Médico - Enfermera - Obstetra - Técnico de Enfermería.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Médico - Enfermera - Técnico de Enfermería - Psicólogo.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Médico - Enfermera - Obstetra - Odontólogo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Médico - Nutricionista - Asistenta Social - Enfermera.",
+          "correct": false
+        }
+      ],
+      "explanation": "El **EMS básico** del primer nivel está formado por **médico, enfermera, obstetra y técnico de enfermería**; otros profesionales (psicólogo, odontólogo, nutricionista) se suman según la categoría del establecimiento.",
+      "tema": "ris",
+      "subtema": "Equipo multidisciplinario de salud (EMS)",
+      "tags": [
+        "Equipo multidisciplinario de salud (EMS)"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1B_Q5.avif",
+      "explanationImageAlt": "Lámina explicativa · Equipo multidisciplinario de salud (EMS)"
+    },
+    {
+      "id": "p1c-q1",
+      "stem": "En la organización de servicios de salud en respuesta a la pandemia del COVID-19 la primera estrategia es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Gestión de la cadena de suministros.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Manejo clínico sindrómico y testeo.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Organización territorial y efectiva sectorización.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Rastreo de casos y seguimiento clínico.",
+          "correct": false
+        }
+      ],
+      "explanation": "La primera estrategia es la **organización territorial y la sectorización efectiva**: sin saber qué población corresponde a cada equipo no pueden organizarse el testeo, el rastreo ni los suministros.",
+      "tema": "ris",
+      "subtema": "Organización territorial y sectorización",
+      "tags": [
+        "Organización territorial y sectorización"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1C_Q1.avif",
+      "explanationImageAlt": "Lámina explicativa · Organización territorial y sectorización"
+    },
+    {
+      "id": "p1c-q2",
+      "stem": "A la agrupación de organizaciones que presta o hace arreglos para prestar servicios de salud equitativos e integrales a una población definida se le denomina:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Red de Organizaciones de base.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Red Integrada de Servicios de Salud.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Sistema Integrado de Salud.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Sector Salud.",
+          "correct": false
+        }
+      ],
+      "explanation": "Es la definición de la OPS de las **Redes Integradas de Servicios de Salud (RISS)**: organizaciones que prestan servicios **equitativos e integrales** a una **población definida** y rinden cuentas por sus resultados.",
+      "tema": "ris",
+      "subtema": "Definición de RIS",
+      "tags": [
+        "Definición de RIS"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1C_Q2.avif",
+      "explanationImageAlt": "Lámina explicativa · Definición de RIS"
+    },
+    {
+      "id": "p1c-q3",
+      "stem": "La implementación de los octógonos de advertencia en los alimentos industrializados ¿a cuál de las funciones del Sistema de Salud corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Financiamiento.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Prestación de Servicios.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Generación de recursos.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Gobernanza.",
+          "correct": true
+        }
+      ],
+      "explanation": "Los octógonos son una **regulación**: el Estado fija reglas que protegen la salud, y eso es **gobernanza** (rectoría).\n\n- No se financia ni se presta un servicio, ni se generan recursos.\n\n*En la hoja original de PASOS aparece marcada la B (Prestación de servicios), anotada como incorrecta; la propia página indica que la respuesta es Gobernanza; la lámina de la explicación respalda la respuesta de aquí.*",
+      "tema": "sistema-salud",
+      "subtema": "Funciones del sistema: gobernanza",
+      "tags": [
+        "Funciones del sistema: gobernanza"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1C_Q3.avif",
+      "explanationImageAlt": "Lámina explicativa · Funciones del sistema: gobernanza"
+    },
+    {
+      "id": "p1d-q1",
+      "stem": "La Sra. Portales de 75 años es hipertensa y tiene EsSALUD, pero debido a la pandemia COVID-19 no desea ir a su centro de atención para recibir sus medicamentos. Por ello, compra sus medicinas en farmacias particulares o acude a centros de salud del Ministerio de Salud. ¿Qué problema se expresa en lo sucedido?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Congestión del Sistema.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Segmentación del Sistema.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Fragmentación de Servicios.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Dispersión del Sistema.",
+          "correct": false
+        }
+      ],
+      "explanation": "Hay **segmentación** cuando coexisten **subsistemas** (EsSalud, MINSA, privados) con distintas formas de financiamiento y afiliación: la paciente es de EsSalud pero termina atendida en el MINSA o en el sector privado.\n\n- La **fragmentación** es la falta de coordinación entre servicios de una misma red.",
+      "tema": "sistema-salud",
+      "subtema": "Segmentación vs. fragmentación",
+      "tags": [
+        "Segmentación vs. fragmentación"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P1D_Q1.avif",
+      "explanationImageAlt": "Lámina explicativa · Segmentación vs. fragmentación"
+    },
+    {
+      "id": "p2a-q1",
+      "stem": "La categorización es un proceso que clasifica a las instituciones prestadoras de servicios de salud (IPRESS) según su:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nivel de accesibilidad.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Eficacia, efectividad y eficiencia.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Nivel de complejidad y características funcionales comunes.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Tamaño de la jurisdicción.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **categorización** agrupa a las IPRESS según su **nivel de complejidad** y sus **características funcionales comunes** (UPSS y actividades), que determinan su capacidad resolutiva.",
+      "tema": "categorias",
+      "subtema": "Categorización y complejidad",
+      "tags": [
+        "Categorización y complejidad"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P2A_Q1.avif",
+      "explanationImageAlt": "Lámina explicativa · Categorización y complejidad"
+    },
+    {
+      "id": "p2a-q2",
+      "stem": "Señale la alternativa que solo menciona a Unidades Productoras de Servicios de Salud (UPSS) de Atención Directa, donde se realizan las prestaciones finales a los usuarios:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Centro Quirúrgico, Laboratorio, Farmacia, Emergencia.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Consulta Externa, Hospitalización, Emergencia, Centro Quirúrgico.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Consulta Externa, Farmacia, Central Esterilización, Unidad de Cuidados Intensivos.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Centro Quirúrgico, Hospitalización, Diagnóstico por Imágenes, Farmacia.",
+          "correct": false
+        }
+      ],
+      "explanation": "Son **UPSS de atención directa** Consulta Externa, Hospitalización, Emergencia, Centro Quirúrgico, Centro Obstétrico y UCI.\n\n- **Farmacia, Laboratorio (Patología Clínica), Diagnóstico por Imágenes y Central de Esterilización** son de **soporte**, y cada distractor incluye al menos una.\n\n*En la hoja original de PASOS aparece marcada la C, aunque junto a la B hay una anotación «SI»; la lámina de la explicación respalda la respuesta de aquí.*",
+      "tema": "upss",
+      "subtema": "UPSS de atención directa vs. soporte",
+      "tags": [
+        "UPSS de atención directa vs. soporte"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P2A_Q2.avif",
+      "explanationImageAlt": "Lámina explicativa · UPSS de atención directa vs. soporte"
+    },
+    {
+      "id": "p2a-q3",
+      "stem": "Establecimiento de Salud con población asignada categorizado como I-3 debe tener los siguientes UPSS:",
+      "options": [
+        {
+          "id": "a",
+          "text": "UPSS Patología Clínica, UPSS Farmacia.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Solo la UPSS Consulta externa.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "UPSS Consulta Externa y UPSS Patología Clínica.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "UPSS Farmacia, UPSS Consulta Externa.",
+          "correct": false
+        }
+      ],
+      "explanation": "El **I-3** es el primer establecimiento del primer nivel que exige **dos UPSS**: **Consulta Externa** y **Patología Clínica** (laboratorio).\n\n- Los I-1 y I-2 no tienen UPSS obligatorias; en el I-4 se agregan Farmacia e Internamiento, entre otras.",
+      "tema": "categorias",
+      "subtema": "Categoría I-3 y sus UPSS",
+      "tags": [
+        "Categoría I-3 y sus UPSS"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P2A_Q3.avif",
+      "explanationImageAlt": "Lámina explicativa · Categoría I-3 y sus UPSS",
+      "explanationExtraImages": [
+        {
+          "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/SUP_P2_04_tabla_primer_nivel_I1_I4.avif",
+          "w": 1816,
+          "h": 1029,
+          "alt": "Tabla comparativa del primer nivel, I-1 a I-4"
+        }
+      ]
+    },
+    {
+      "id": "p2a-q4",
+      "stem": "Un Sistema de Salud basado en Atención Primaria de Salud (APS):",
+      "options": [
+        {
+          "id": "a",
+          "text": "Desarrolla intervenciones en salud para los pobres.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se organiza en niveles de atención.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Tiene el enfoque recuperativo de la salud.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Es opuesto a una atención hospitalaria.",
+          "correct": false
+        }
+      ],
+      "explanation": "Un sistema basado en APS **se organiza en niveles de atención**, con el primer nivel como puerta de entrada.\n\n- No es «atención para pobres», su enfoque no es sólo recuperativo (prioriza la promoción y la prevención) y no se opone al hospital: lo integra.",
+      "tema": "categorias",
+      "subtema": "Niveles de atención en un sistema basado en APS",
+      "tags": [
+        "Niveles de atención en un sistema basado en APS"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P2A_Q4.avif",
+      "explanationImageAlt": "Lámina explicativa · Niveles de atención en un sistema basado en APS"
+    },
+    {
+      "id": "p2a-q5",
+      "stem": "¿Dónde se mencionan las prestaciones de salud que brinda el equipo multidisciplinario en el primer nivel de atención?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cartera de servicio de salud de primer contacto.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Cartera de servicio de salud de zona sanitaria.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cartera de servicios de salud de atención especializada.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Cartera de servicios de salud de atención subespecializada.",
+          "correct": false
+        }
+      ],
+      "explanation": "Las prestaciones del EMS del primer nivel están en la **Cartera de Servicios de Salud de primer contacto**; la especializada y la subespecializada corresponden al segundo y tercer nivel.",
+      "tema": "cartera",
+      "subtema": "Cartera de primer contacto",
+      "tags": [
+        "Cartera de primer contacto"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P2A_Q5.avif",
+      "explanationImageAlt": "Lámina explicativa · Cartera de primer contacto"
+    },
+    {
+      "id": "p2b-q1",
+      "stem": "En relación a los establecimientos de salud considerados en el Segundo Nivel de Atención, identifique la afirmación correcta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Disponen para atención de Unidad de Cuidados Intensivos y Unidad de Hemodiálisis.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Brindan servicios de salud a una Población Asignada 24 horas al día y 365 días al año.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Solo dan atención en Consulta Externa en las Especialidades de Medicina, Ginecología y Pediatría.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Cuentan con camas de hospitalización en Medicina, Pediatría, Cirugía General, Ginecología y Obstetricia.",
+          "correct": true
+        }
+      ],
+      "explanation": "El segundo nivel tiene **hospitalización en las cuatro especialidades básicas**: Medicina, Pediatría, Cirugía General y Gineco-Obstetricia.\n\n- La hemodiálisis y la UCI especializada son propias del tercer nivel.\n- Los hospitales trabajan con **población referencial**, no asignada.\n- No se limitan a la consulta externa.",
+      "tema": "categorias",
+      "subtema": "Segundo nivel de atención",
+      "tags": [
+        "Segundo nivel de atención"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P2B_Q1.avif",
+      "explanationImageAlt": "Lámina explicativa · Segundo nivel de atención",
+      "explanationExtraImages": [
+        {
+          "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/SUP_P2_03_categorias_II_III.avif",
+          "w": 1200,
+          "h": 680,
+          "alt": "Segundo y tercer nivel: categorías II y III"
+        }
+      ]
+    },
+    {
+      "id": "p2b-q2",
+      "stem": "Se considera la puerta de entrada al sistema de salud, en el que se brindan el 80% de las atenciones:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Atención Primaria.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Primer Nivel de Atención.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Segundo Nivel de Atención.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tercer Nivel de Atención.",
+          "correct": false
+        }
+      ],
+      "explanation": "El **primer nivel de atención** es la puerta de entrada y resuelve cerca del **80 %** de las necesidades de salud.\n\n- **Atención Primaria** es una **estrategia**, no un nivel de atención: es la confusión que busca la pregunta.",
+      "tema": "categorias",
+      "subtema": "Primer nivel como puerta de entrada",
+      "tags": [
+        "Primer nivel como puerta de entrada"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P2B_Q2.avif",
+      "explanationImageAlt": "Lámina explicativa · Primer nivel como puerta de entrada"
+    },
+    {
+      "id": "p2b-q3",
+      "stem": "¿Cuáles son las modalidades de oferta para brindar las prestaciones de salud por el equipo multidisciplinario de salud en el primer nivel de atención?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Oferta móvil.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Oferta fija.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Telesalud.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Todas las anteriores.",
+          "correct": true
+        }
+      ],
+      "explanation": "Las tres son modalidades de oferta del EMS: **fija** (en el establecimiento), **móvil** (el equipo se desplaza) y **Telesalud** (a distancia).",
+      "tema": "modalidades-oferta",
+      "subtema": "Oferta fija, móvil y Telesalud",
+      "tags": [
+        "Oferta fija, móvil y Telesalud"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P2B_Q3.avif",
+      "explanationImageAlt": "Lámina explicativa · Oferta fija, móvil y Telesalud",
+      "ordenFijo": true
+    },
+    {
+      "id": "p2b-q4",
+      "stem": "La capacidad resolutiva es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Producir el tipo de servicios que necesita la población.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Ofrecer servicios más complejos para la población.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Producir número de servicios suficientes para atender a la población.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tener clasificación en un nivel de atención.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **capacidad resolutiva** es producir el **tipo** de servicios que la población necesita (cualitativa).\n\n- Producir la **cantidad** suficiente es la **capacidad de oferta** (cuantitativa): es el distractor C.",
+      "tema": "cartera",
+      "subtema": "Capacidad resolutiva vs. capacidad de oferta",
+      "tags": [
+        "Capacidad resolutiva vs. capacidad de oferta"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P2B_Q4.avif",
+      "explanationImageAlt": "Lámina explicativa · Capacidad resolutiva vs. capacidad de oferta"
+    },
+    {
+      "id": "p2b-q5",
+      "stem": "Respecto a los niveles de atención del sistema de salud:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El tercer nivel de atención debe tener una Oferta de gran tamaño.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El segundo nivel de atención es el de mayor capacidad resolutiva.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Las necesidades de salud más frecuentes acceden por el primer nivel de atención.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "La Atención Integral de Salud iniciada en el primer nivel se complementa en el tercer nivel de salud.",
+          "correct": false
+        }
+      ],
+      "explanation": "Las **necesidades más frecuentes** entran por el **primer nivel**, que tiene la oferta más grande.\n\n- El tercer nivel tiene una oferta **pequeña** pero la **mayor capacidad resolutiva**.\n- La atención iniciada en el primer nivel se complementa en el **segundo**.",
+      "tema": "categorias",
+      "subtema": "Funciones de los niveles de atención",
+      "tags": [
+        "Funciones de los niveles de atención"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P2B_Q5.avif",
+      "explanationImageAlt": "Lámina explicativa · Funciones de los niveles de atención",
+      "explanationExtraImages": [
+        {
+          "src": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/SUP_P2_01_APS_niveles.avif",
+          "w": 1816,
+          "h": 1029,
+          "alt": "Sistema basado en APS y niveles de atención"
+        }
+      ]
+    },
+    {
+      "id": "p3a-q1",
+      "stem": "La Cartera de Servicios de Salud de un establecimiento responde a las necesidades de salud de la población y a las prioridades sanitarias sectoriales.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Verdadero",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Falso",
+          "correct": false
+        }
+      ],
+      "explanation": "**Verdadero.** La cartera se define a partir de las **necesidades de salud de la población** y de las **prioridades sanitarias** del sector.",
+      "tema": "cartera",
+      "subtema": "Definición y finalidad de la cartera",
+      "tags": [
+        "Definición y finalidad de la cartera"
+      ],
+      "ordenFijo": true,
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P3A_Q1.avif",
+      "explanationImageAlt": "Lámina explicativa · Definición y finalidad de la cartera"
+    },
+    {
+      "id": "p3a-q2",
+      "stem": "Es un criterio de la oferta para la elaboración de la Cartera de Servicios de Salud del establecimiento de Salud:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Población referencial.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Perfil epidemiológico.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Accesibilidad geográfica.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Continuidad de la atención.",
+          "correct": true
+        }
+      ],
+      "explanation": "La **continuidad de la atención** es un criterio de **oferta**.\n\n- **Población referencial, perfil epidemiológico y accesibilidad geográfica** describen a la población, así que son criterios de **demanda**.\n\n*En la hoja original de PASOS aparece marcada la B (Perfil epidemiológico); la lámina de la explicación respalda la respuesta de aquí.*",
+      "tema": "cartera",
+      "subtema": "Criterios de demanda vs. oferta",
+      "tags": [
+        "Criterios de demanda vs. oferta"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P3A_Q2.avif",
+      "explanationImageAlt": "Lámina explicativa · Criterios de demanda vs. oferta"
+    },
+    {
+      "id": "p3a-q3",
+      "stem": "Señale cuál es el UPSS de Atención Directa:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Emergencia.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Farmacia.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Medicina de Rehabilitación.",
+          "correct": false
+        }
+      ],
+      "explanation": "**Emergencia** es una UPSS de **atención directa**: allí se da la prestación final al usuario.\n\n- **Farmacia** y **Medicina de Rehabilitación** son UPSS de **soporte**.",
+      "tema": "upss",
+      "subtema": "UPSS de atención directa",
+      "tags": [
+        "UPSS de atención directa"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P3A_Q3.avif",
+      "explanationImageAlt": "Lámina explicativa · UPSS de atención directa"
+    },
+    {
+      "id": "p3a-q4",
+      "stem": "Con respecto a la Modalidad de Oferta fija, marque lo correcto:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se brinda en instalaciones móviles.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El personal de la salud se desplaza a la población para prestar servicio.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se brinda en el establecimiento de salud.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Son los hospitales itinerantes, que trasladan profesionales de la salud, equipos e insumos.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **oferta fija** se brinda **en el establecimiento de salud**.\n\n- Las instalaciones móviles, el desplazamiento del personal y los hospitales itinerantes son **oferta móvil**.",
+      "tema": "modalidades-oferta",
+      "subtema": "Oferta fija vs. móvil",
+      "tags": [
+        "Oferta fija vs. móvil"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P3A_Q4.avif",
+      "explanationImageAlt": "Lámina explicativa · Oferta fija vs. móvil"
+    },
+    {
+      "id": "p3a-q5",
+      "stem": "La telecapacitación está dirigida a personal de salud y población de la comunidad.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Verdadero",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Falso",
+          "correct": true
+        }
+      ],
+      "explanation": "**Falso.** La **telecapacitación** es el proceso de enseñanza-aprendizaje a distancia dirigido al **personal de salud**.\n\n- Lo que se dirige a la población es la **Tele-IEC** (información, educación y comunicación).\n\n*En la hoja original de PASOS aparece marcada la «Verdadero»; la página superpone «FALSO»; la lámina de la explicación respalda la respuesta de aquí.*",
+      "tema": "modalidades-oferta",
+      "subtema": "Telesalud: telecapacitación",
+      "tags": [
+        "Telesalud: telecapacitación"
+      ],
+      "ordenFijo": true,
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P3A_Q5.avif",
+      "explanationImageAlt": "Lámina explicativa · Telesalud: telecapacitación"
+    },
+    {
+      "id": "p3b-q1",
+      "stem": "¿Cada cuánto tiempo se debe actualizar la Cartera de Servicios de Salud de un establecimiento de Salud?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tres meses.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Seis meses.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Doce meses.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Quince meses.",
+          "correct": false
+        }
+      ],
+      "explanation": "La cartera se actualiza **cada año (doce meses)**, o antes si cambian la categoría, la infraestructura o los recursos del establecimiento.",
+      "tema": "cartera",
+      "subtema": "Actualización anual de la cartera",
+      "tags": [
+        "Actualización anual de la cartera"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P3B_Q1.avif",
+      "explanationImageAlt": "Lámina explicativa · Actualización anual de la cartera"
+    },
+    {
+      "id": "p3b-q2",
+      "stem": "Los establecimientos de salud para la definición de su cartera de servicio de salud deben considerar criterios de demanda y de oferta. Elija solo la opción que corresponde a Demanda:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Accesibilidad geográfica.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Continuidad de la atención.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Campo clínico.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Nivel de atención.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **accesibilidad geográfica** describe a la población, así que es un criterio de **demanda**.\n\n- **Continuidad de la atención, campo clínico y nivel de atención** dependen del establecimiento: son criterios de **oferta**.",
+      "tema": "cartera",
+      "subtema": "Criterios de demanda vs. oferta",
+      "tags": [
+        "Criterios de demanda vs. oferta"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P3B_Q2.avif",
+      "explanationImageAlt": "Lámina explicativa · Criterios de demanda vs. oferta"
+    },
+    {
+      "id": "p3b-q3",
+      "stem": "Señale cuál es una Unidad Productora de Servicios de Salud (UPSS) de Atención de Soporte:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Centro Quirúrgico.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Emergencia.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Unidad de Cuidados Intensivos.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Nutrición y Dietética.",
+          "correct": true
+        }
+      ],
+      "explanation": "**Nutrición y Dietética** es una UPSS de **soporte**: apoya a las prestaciones finales sin ser una de ellas.\n\n- Centro Quirúrgico, Emergencia y UCI son de **atención directa**.",
+      "tema": "upss",
+      "subtema": "UPSS de atención de soporte",
+      "tags": [
+        "UPSS de atención de soporte"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P3B_Q3.avif",
+      "explanationImageAlt": "Lámina explicativa · UPSS de atención de soporte"
+    },
+    {
+      "id": "p3b-q4",
+      "stem": "Evitar exámenes duplicados es un beneficio de la Telesalud:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Verdadero",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Falso",
+          "correct": false
+        }
+      ],
+      "explanation": "**Verdadero.** Al compartir la información clínica a distancia, la Telesalud **evita repetir exámenes** y traslados innecesarios.",
+      "tema": "modalidades-oferta",
+      "subtema": "Telesalud: beneficios",
+      "tags": [
+        "Telesalud: beneficios"
+      ],
+      "ordenFijo": true,
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P3B_Q4.avif",
+      "explanationImageAlt": "Lámina explicativa · Telesalud: beneficios"
+    },
+    {
+      "id": "p3b-q5",
+      "stem": "Identifique cuál es un eje de Telesalud:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Telemedicina.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Teleinterconsulta.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Teleorientación.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Telemonitoreo.",
+          "correct": false
+        }
+      ],
+      "explanation": "**Telemedicina** es uno de los **ejes** de la Telesalud, junto con Telegestión, Tele-IEC y Telecapacitación.\n\n- Teleinterconsulta, teleorientación y telemonitoreo son **servicios dentro de** la telemedicina, no ejes.",
+      "tema": "modalidades-oferta",
+      "subtema": "Ejes de Telesalud",
+      "tags": [
+        "Ejes de Telesalud"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P3B_Q5.avif",
+      "explanationImageAlt": "Lámina explicativa · Ejes de Telesalud"
+    },
+    {
+      "id": "p4a-q1",
+      "stem": "Identifique las actividades de salud que responden a las necesidades de salud no sentidas:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Promoción y recuperación.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Prevención y promoción de la salud.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Recuperación y rehabilitación.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Prevención y recuperación.",
+          "correct": false
+        }
+      ],
+      "explanation": "Las necesidades **no sentidas** son las que la persona no percibe (aún no está enferma): se atienden con **promoción y prevención**.\n\n- Las necesidades **sentidas** (enfermedad ya presente) se atienden con recuperación y rehabilitación.",
+      "tema": "sistema-salud",
+      "subtema": "Necesidades sentidas y no sentidas",
+      "tags": [
+        "Necesidades sentidas y no sentidas"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P4A_Q1.avif",
+      "explanationImageAlt": "Lámina explicativa · Necesidades sentidas y no sentidas"
+    },
+    {
+      "id": "p4a-q2",
+      "stem": "De acuerdo a la OMS son líneas estratégicas para la promoción de la salud:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Facilitar la participación y el empoderamiento de la comunidad.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La Salud como eje fundamental e integrador de todas las políticas públicas.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Empoderamiento y participación social en salud.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Abordaje de los determinantes sociales de la salud.",
+          "correct": false
+        }
+      ],
+      "explanation": "Entre las **líneas estratégicas de la OMS/OPS** para la promoción de la salud está **facilitar la participación y el empoderamiento de la comunidad**, con esa redacción.\n\n- Las otras alternativas se parecen a los **lineamientos de promoción del Perú**; no hay que mezclar los dos marcos.",
+      "tema": "sistema-salud",
+      "subtema": "Promoción de la salud: líneas OMS",
+      "tags": [
+        "Promoción de la salud: líneas OMS"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P4A_Q2.avif",
+      "explanationImageAlt": "Lámina explicativa · Promoción de la salud: líneas OMS"
+    },
+    {
+      "id": "p4a-q3",
+      "stem": "Identifique el enunciado que corresponde a una acción de Prevención Primaria:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección precoz de la enfermedad.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Tratamiento oportuno.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Identificación de factores de riesgo.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Detección temprana de complicaciones.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **prevención primaria** actúa **antes de que aparezca la enfermedad**: identifica factores de riesgo y da protección específica.\n\n- La detección precoz y el tratamiento oportuno son prevención **secundaria**.\n- Las complicaciones corresponden a la **terciaria**.",
+      "tema": "sistema-salud",
+      "subtema": "Prevención primaria",
+      "tags": [
+        "Prevención primaria"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P4A_Q3.avif",
+      "explanationImageAlt": "Lámina explicativa · Prevención primaria"
+    },
+    {
+      "id": "p4a-q4",
+      "stem": "¿Cuál es un principio del Modelo de Cuidado Integral de Salud (MCI)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Universalidad.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Justicia.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Perseverancia.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Honradez.",
+          "correct": false
+        }
+      ],
+      "explanation": "**Universalidad** es uno de los **principios del MCI**, junto con equidad, integralidad, calidad y otros.\n\n- Justicia, perseverancia y honradez son valores generales, no principios del modelo.",
+      "tema": "sistema-salud",
+      "subtema": "MCI: principios",
+      "tags": [
+        "MCI: principios"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P4A_Q4.avif",
+      "explanationImageAlt": "Lámina explicativa · MCI: principios"
+    },
+    {
+      "id": "p4a-q5",
+      "stem": "¿Cuál es un enfoque del Modelo de Cuidado Integral de Salud (MCI)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Biopsicosocial.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Continuidad.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Coordinación.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Integralidad.",
+          "correct": true
+        }
+      ],
+      "explanation": "Se respeta la respuesta de la hoja original (**Integralidad**), pero la lámina enumera como **enfoques del MCI**: derechos humanos, equidad de género, interculturalidad y curso de vida, y ninguna alternativa coincide con ellos.\n\n- «Integralidad» aparece en el material como **principio**, no como enfoque.",
+      "tema": "sistema-salud",
+      "subtema": "MCI: enfoques",
+      "tags": [
+        "MCI: enfoques"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P4A_Q5.avif",
+      "explanationImageAlt": "Lámina explicativa · MCI: enfoques",
+      "reviewNote": "Ninguna alternativa coincide con los enfoques del MCI que muestra la lámina (derechos humanos, equidad de género, interculturalidad, curso de vida). Se deja la respuesta marcada en la hoja original."
+    },
+    {
+      "id": "p4b-q1",
+      "stem": "Identifique las actividades de salud que responden a las necesidades de salud sentidas:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Recuperación y Rehabilitación.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Promoción y prevención primaria.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Prevención y promoción de la salud.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Prevención secundaria.",
+          "correct": false
+        }
+      ],
+      "explanation": "Las necesidades **sentidas** son las que la persona percibe (ya hay enfermedad o daño): se responden con **recuperación y rehabilitación**.\n\n- La promoción y la prevención responden a las **no sentidas**.",
+      "tema": "sistema-salud",
+      "subtema": "Necesidades sentidas y no sentidas",
+      "tags": [
+        "Necesidades sentidas y no sentidas"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P4B_Q1.avif",
+      "explanationImageAlt": "Lámina explicativa · Necesidades sentidas y no sentidas"
+    },
+    {
+      "id": "p4b-q2",
+      "stem": "Son lineamientos estratégicos en la promoción de la salud en el Perú:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fortalecer la gobernanza y la acción intersectorial y abordar los determinantes sociales de la salud.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La persona, la familia y la comunidad como el centro de la gestión territorial en salud.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Facilitar la participación y el empoderamiento de la comunidad.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Fortalecer el desarrollo de entornos saludables en la familia y comunidad.",
+          "correct": false
+        }
+      ],
+      "explanation": "«**La persona, la familia y la comunidad como el centro de la gestión territorial en salud**» reproduce literalmente un **lineamiento de promoción de la salud del Perú**.\n\n- La opción C es una línea estratégica de la **OMS** (la de la pregunta hermana): no hay que mezclar los dos marcos.\n\n*En la hoja original de PASOS aparece marcada la C; la lámina de la explicación respalda la respuesta de aquí.*",
+      "tema": "sistema-salud",
+      "subtema": "Promoción de la salud: lineamientos del Perú",
+      "tags": [
+        "Promoción de la salud: lineamientos del Perú"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P4B_Q2.avif",
+      "explanationImageAlt": "Lámina explicativa · Promoción de la salud: lineamientos del Perú"
+    },
+    {
+      "id": "p4b-q3",
+      "stem": "Identifique el enunciado que corresponde a una acción de Prevención secundaria:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Intervenciones que evitan o atenúan las consecuencias de la actividad innecesaria o excesiva del intervencionismo médico y del sistema sanitario.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección precoz de la enfermedad, tratamiento oportuno de enfermedad, prevención de complicaciones.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Detección temprana de complicaciones, tratamiento de las complicaciones, rehabilitación.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Identificación de factor de riesgo y protección específica.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **prevención secundaria** actúa con la enfermedad ya iniciada: **detección precoz y tratamiento oportuno**.\n\n- A: prevención **cuaternaria**.\n- C: **terciaria**.\n- D: **primaria**.",
+      "tema": "sistema-salud",
+      "subtema": "Prevención secundaria",
+      "tags": [
+        "Prevención secundaria"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P4B_Q3.avif",
+      "explanationImageAlt": "Lámina explicativa · Prevención secundaria"
+    },
+    {
+      "id": "p4b-q4",
+      "stem": "¿Cuál es un principio del Modelo de Cuidado Integral de Salud (MCI)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Derecho.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Equidad.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Pulcritud.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Confianza.",
+          "correct": false
+        }
+      ],
+      "explanation": "**Equidad** es un **principio del MCI**, junto con universalidad, integralidad y calidad.\n\n- Derecho, pulcritud y confianza no figuran en el listado de principios.",
+      "tema": "sistema-salud",
+      "subtema": "MCI: principios",
+      "tags": [
+        "MCI: principios"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P4B_Q4.avif",
+      "explanationImageAlt": "Lámina explicativa · MCI: principios"
+    },
+    {
+      "id": "p4b-q5",
+      "stem": "¿Cuáles son los componentes del Modelo de Cuidado Integral de Salud (MCI)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Provisión, organización, gestión y financiamiento.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Gobernanza.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Equidad de Género.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Derechos humanos.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **componentes del MCI** son **provisión, organización, gestión y financiamiento**.\n\n- Equidad de género y derechos humanos son **enfoques**; la gobernanza es una función del sistema.",
+      "tema": "sistema-salud",
+      "subtema": "MCI: componentes",
+      "tags": [
+        "MCI: componentes"
+      ],
+      "explanationImage": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/epidemiologia/pasos-1/P4B_Q5.avif",
+      "explanationImageAlt": "Lámina explicativa · MCI: componentes"
+    }
+  ]
+}
