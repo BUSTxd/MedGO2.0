@@ -42,6 +42,8 @@ export interface Actividad {
   fechaISO?: string;
   /** No tiene ni va a tener material propio: muestra la invitación a colaborar. */
   sinMaterial?: boolean;
+  /** De pago aunque el curso sea gratis: pide el plan del tramo (Interno). */
+  premium?: boolean;
 }
 
 export interface Semana {
@@ -108,7 +110,8 @@ function semanaDeClases(
 ): Actividad[] {
   return [
     {
-      ...(teoria.resumen && { resumen: teoria.resumen }),
+      // Una teoría con resumen es premium: el resumen es lo que vende el plan.
+      ...(teoria.resumen && { resumen: teoria.resumen, premium: true }),
       id: `epi-t-${n}`,
       tipo: 'TEORIA',
       unidad,

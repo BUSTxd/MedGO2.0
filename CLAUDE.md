@@ -221,6 +221,8 @@ Cada pregunta declara **un** `tema` (string, no array) del vocabulario de su cur
 
 **Clases liberadas dentro de un curso de pago**: `gratis?: boolean` en el `Actividad` del sílabo. Hoy T2, T5, T9, SGP-3 y H1 de Inmunología. La regla se repite en `[id]/page.tsx` y en el índice del curso (que además pinta la etiqueta «Gratis», sólo a quien no tiene acceso). **Histología ya no es libre por tipo**: H1 lleva el flag y H2 es de pago.
 
+**Lo inverso — clases de pago dentro de un curso gratis**: `premium?: boolean` en el `Actividad` de Epidemiología (hoy T2-T4, las teorías con resumen). Tres capas: velo en `[id]/page.tsx`, candado en el índice, y **403 en `api/resumen-html`** (Set `DE_PAGO`) — esa route no comprueba plan para ningún otro resumen, así que la cerradura real de estas tres es ese Set. En la tabla de temas van **sin** `gratis`, para que el carrusel del informe las pinte con candado.
+
 **El JSON fuente se versiona en `scripts/examenes/`** aunque lo que sirve la web sea la copia del bucket; se publica con `node scripts/upload-examen.mjs <archivo> <curso>/<clave>.json`. Enunciados y alternativas se transcriben **tal cual** del examen real; lo que el original trae roto se transcribe igual con `reviewNote` (pinta el badge «Pendiente a revisión»).
 
 **Imágenes de exámenes**: bucket **público** `examenes-img` (no firmadas), path `<curso>/<grupo>/<archivo>`, URL completa en el JSON, `next/image` + `sizes`. Carpeta entera → `scripts/upload-examen-img-dir.mjs --dir <carpeta> --prefix <ruta>` (imprime `archivo → { url, w, h }`). Varias imágenes por pregunta: primera en `image`, resto en `extraImages`. **Un `.avif`/`.webp` de origen se sube tal cual**; `.png`/`.jpg` pasan por `sharp` a WEBP q82.

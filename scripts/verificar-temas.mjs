@@ -29,12 +29,11 @@ const CURSOS = [
     prefijoResumen: 'inm-',
   },
   {
-    // Aún sin recomendación de clases: los temas van con `clases: []`.
     slug: 'epidemiologia',
     temas: path.join(RAIZ, 'src', 'lib', 'data', 'temas', 'epidemiologia.ts'),
     silabo: path.join(RAIZ, 'src', 'lib', 'data', 'epidemiologia.ts'),
-    prefijoResumen: 'epi-',
-    sinClases: true,
+    // Los ids de clase ya llevan el prefijo (`epi-t-2`) y el resumen usa el mismo.
+    prefijoResumen: '',
   },
 ];
 

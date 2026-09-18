@@ -7,8 +7,9 @@ import styles from '@/styles/cursos.module.css';
 
 export default async function EpidemiologiaPage() {
   const plan = await getCachedPlanState();
-  // Curso `gratis`: abierto para cualquier cuenta, sin pasar por el plan.
-  const hasAcceso = cursoEsGratis('epidemiologia') || tieneAccesoA(plan, requiredPlanDeCurso('epidemiologia'));
+  // Curso `gratis`: abierto para cualquier cuenta, salvo las clases `premium`.
+  const tienePlan = tieneAccesoA(plan, requiredPlanDeCurso('epidemiologia'));
+  const hasAcceso = cursoEsGratis('epidemiologia') || tienePlan;
 
   return (
     <div className={styles.microPage}>
@@ -74,7 +75,7 @@ export default async function EpidemiologiaPage() {
               const badge = TIPO_BADGE[act.tipo];
               const borderColor = UNIDAD_COLOR[act.unidad];
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
-              const isLocked = !hasAcceso;
+              const isLocked = act.premium ? !tienePlan : !hasAcceso;
 
               return (
                 <Link

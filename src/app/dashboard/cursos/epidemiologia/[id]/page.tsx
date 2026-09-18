@@ -35,8 +35,9 @@ export default async function EpidemiologiaActividadPage({
   const unidadLabel = UNIDAD_LABEL[act.unidad];
 
   const isFreeExam = act.examen?.free === true;
-  // Epidemiología es curso `gratis`: abierto para cualquier cuenta.
-  const isFreeAccess = isFreeExam || cursoEsGratis('epidemiologia');
+  // Epidemiología es curso `gratis`: abierto para cualquier cuenta, salvo las
+  // clases `premium` (las que tienen resumen), que piden el plan Interno.
+  const isFreeAccess = isFreeExam || (cursoEsGratis('epidemiologia') && !act.premium);
   const [user, planState] = await Promise.all([getUser(), getCachedPlanState()]);
 
   if (sp?.examen === '1' && act.examen) {
