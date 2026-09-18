@@ -1,4 +1,5 @@
 import { temasInmunologia } from './inmunologia';
+import { temasEpidemiologia } from './epidemiologia';
 
 export interface ClaseRecomendada {
   /** Id de la actividad: /dashboard/cursos/<curso>/<claseId>. */
@@ -15,7 +16,11 @@ export interface ClaseRecomendada {
 
 export interface Tema {
   label: string;
-  /** De la más directa a la más tangencial; la primera es la que se recomienda sola. */
+  /**
+   * De la más directa a la más tangencial; la primera es la que se recomienda sola.
+   * Vacía en un curso aún sin mapear (Epidemiología): el informe dice el tema
+   * fallado pero no recomienda clase.
+   */
   clases: ClaseRecomendada[];
 }
 
@@ -24,6 +29,7 @@ export type TablaTemas = Record<string, Tema>;
 /** Por slug de curso, el mismo del primer segmento de la clave del examen. */
 export const TEMAS_POR_CURSO: Record<string, TablaTemas> = {
   inmunologia: temasInmunologia,
+  epidemiologia: temasEpidemiologia,
 };
 
 export function tablaDeCurso(curso: string): TablaTemas | undefined {

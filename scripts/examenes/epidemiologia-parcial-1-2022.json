@@ -1,0 +1,1659 @@
+{
+  "version": 1,
+  "key": "epidemiologia/parcial-1-2022",
+  "title": "Primer examen — Epidemiología 2022-II",
+  "duration_min": 50,
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "¿De qué Dirección del Ministerio de Salud dependen organizacionalmente las DIRIS – Direcciones de Redes Integradas de Salud (Lima Metropolitana)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dirección General de Aseguramiento e Intercambio Prestacional",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Dirección de Salud Pública",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Dirección General de Operaciones",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Dirección de Intervenciones Sanitarias",
+          "correct": false
+        }
+      ],
+      "explanation": "Las **DIRIS** son órganos desconcentrados del MINSA en Lima Metropolitana y dependen de la **Dirección General de Operaciones en Salud (DGOS)**, que conduce la gestión de las redes y de la prestación.\n\n- La **DGAIN** (Aseguramiento e Intercambio Prestacional) ve el aseguramiento, no la operación de las redes.\n- **Salud Pública** e **Intervenciones Sanitarias** son áreas normativas de programas, no la cadena de mando de las DIRIS.",
+      "tema": "ris",
+      "subtema": "Organización institucional de las DIRIS",
+      "tags": [
+        "Organización institucional de las DIRIS"
+      ],
+      "repite": "También en el SUSTI · P1"
+    },
+    {
+      "id": "q2",
+      "stem": "A la agrupación de organizaciones que presta o hace arreglos para prestar servicios de salud equitativos e integrales a una población definida se le denomina:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Red de Organizaciones de base",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Red Integrada de Servicios de Salud",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Sistema Integrado de Salud",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Sector Salud",
+          "correct": false
+        }
+      ],
+      "explanation": "La OPS define las **Redes Integradas de Servicios de Salud (RISS)** como la red de organizaciones que presta, o hace arreglos para prestar, servicios **equitativos e integrales** a una **población definida**, y que rinde cuentas por sus resultados.\n\n- El **Sector Salud** es el conjunto de instituciones del país, no una red con población asignada.\n- Un **sistema integrado** no es el término de la definición; las **organizaciones de base** son comunitarias, no prestadoras.",
+      "tema": "ris",
+      "subtema": "Concepto y definición de red integrada",
+      "tags": [
+        "Concepto y definición de red integrada"
+      ],
+      "repite": "También en el SUSTI · P2"
+    },
+    {
+      "id": "q3",
+      "stem": "La implementación de los octógonos de advertencia en los alimentos industrializados, ¿a cuál de las funciones del Sistema de Salud corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Financiamiento",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Prestación de Servicios",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Generación de recursos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Gobernanza",
+          "correct": true
+        }
+      ],
+      "explanation": "Los **octógonos** son una norma (Ley de Alimentación Saludable): el Estado **regula** y fija reglas para todos. Eso es la función de **gobernanza** (rectoría) del sistema de salud.\n\n- **Financiamiento** es recaudar y asignar fondos.\n- **Prestación** es atender a las personas.\n- **Generación de recursos** es formar personal, infraestructura, medicamentos y tecnología.",
+      "tema": "sistema-salud",
+      "subtema": "Funciones del sistema de salud: gobernanza",
+      "tags": [
+        "Funciones del sistema de salud: gobernanza"
+      ],
+      "repite": "También en el SUSTI · P3"
+    },
+    {
+      "id": "q4",
+      "stem": "¿Cuál es la puerta de entrada al sistema de salud?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hospital de nivel I",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Hospital de nivel II",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Centros y puestos de salud",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Hospital de nivel III",
+          "correct": false
+        }
+      ],
+      "explanation": "La puerta de entrada al sistema es el **primer nivel de atención**: los **puestos y centros de salud** (categorías I-1 a I-4). Allí se resuelve la mayoría de problemas y desde allí se refiere a mayor complejidad.\n\n- Los **hospitales** (niveles II y III) reciben pacientes referidos; no son la entrada habitual.",
+      "tema": "sistema-salud",
+      "subtema": "Atención Primaria de Salud y puerta de entrada al sistema",
+      "tags": [
+        "Atención Primaria de Salud y puerta de entrada al sistema"
+      ],
+      "repite": "También en el SUSTI · P4"
+    },
+    {
+      "id": "q5",
+      "stem": "Un estudiante universitario tiene \"síntomas\" de infección COVID-19, por lo que acude al mercado local y compra ajos, eucalipto y kion para prepararse una infusión que el chamán le \"recetó\", sintiendo mejoría total. ¿Cuál es el nombre del componente del Sistema de Salud que usó el estudiante para resolver su problema?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tradicional",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Institucional",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cultural",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Popular",
+          "correct": false
+        }
+      ],
+      "explanation": "El estudiante acudió a un **chamán** y usó plantas: eso es el componente **tradicional**, basado en saberes ancestrales y agentes propios de la cultura (curanderos, parteras, chamanes).\n\n- **Institucional** es el sistema formal (MINSA, EsSalud, clínicas).\n- **Popular** suele referirse a la automedicación y saberes caseros sin un agente tradicional de por medio; aquí hay uno que «recetó».",
+      "tema": "sistema-salud",
+      "subtema": "Componentes de atención: medicina tradicional",
+      "tags": [
+        "Componentes de atención: medicina tradicional"
+      ],
+      "repite": "También en el SUSTI · P5"
+    },
+    {
+      "id": "q6",
+      "stem": "En el marco de la N.T. 021 V.03, un centro de salud tiene implementado el sistema de vigilancia epidemiológica. ¿A qué tipo de actividad corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Atención Directa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Finales",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "De Soporte",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Operativas",
+          "correct": false
+        }
+      ],
+      "explanation": "La NT 021 separa las actividades de un establecimiento en **atención directa** (las que se dan al paciente) y **atención de soporte** (las que sostienen esa atención). La **vigilancia epidemiológica** no atiende a nadie directamente: es una actividad **de soporte**.\n\n- **Finales** y **operativas** no son categorías de la norma.",
+      "tema": "upss",
+      "subtema": "Actividades de soporte: vigilancia epidemiológica",
+      "tags": [
+        "Actividades de soporte: vigilancia epidemiológica"
+      ],
+      "repite": "También en el SUSTI · P6"
+    },
+    {
+      "id": "q7",
+      "stem": "En el concepto de Municipio Saludable, las acciones de la estrategia de Ciudades Saludables se enfocan hacia la intervención en:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Campañas de prevención",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Campañas de tamizaje",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Atención de enfermedades",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Determinantes sociales",
+          "correct": true
+        }
+      ],
+      "explanation": "Municipios y Ciudades Saludables es una estrategia de **promoción de la salud**: trabaja sobre las condiciones en que la gente vive (agua, vivienda, entorno, educación), es decir, sobre los **determinantes sociales**.\n\n- Las **campañas** de prevención o de tamizaje y la **atención de enfermedades** actúan sobre el daño o el riesgo individual, no sobre sus causas sociales.",
+      "tema": "sistema-salud",
+      "subtema": "Promoción de la salud y determinantes sociales",
+      "tags": [
+        "Promoción de la salud y determinantes sociales"
+      ],
+      "repite": "También en el SUSTI · P7"
+    },
+    {
+      "id": "q8",
+      "stem": "Son funciones del sistema de salud:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Prestación de servicios, Administración, financiamiento y Generación de recursos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Prestación de servicios, Gobernanza, financiamiento y Municipio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Prestación de servicios, Gobernanza, financiamiento y Atención Integral de Salud",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Prestación de servicios, Gobernanza, financiamiento y Generación de recursos",
+          "correct": true
+        }
+      ],
+      "explanation": "Según la OMS, las cuatro funciones del sistema de salud son **prestación de servicios, gobernanza (rectoría), financiamiento y generación de recursos**.\n\n- **Administración**, **Municipio** y **Atención Integral de Salud** no son funciones del sistema: cada distractor cambia una de las cuatro por algo que suena parecido.",
+      "tema": "sistema-salud",
+      "subtema": "Funciones del sistema: prestación, gobernanza, financiamiento y generación de recursos",
+      "tags": [
+        "Funciones del sistema: prestación, gobernanza, financiamiento y generación de recursos"
+      ],
+      "repite": "También en el SUSTI · P8"
+    },
+    {
+      "id": "q9",
+      "stem": "Las personas deben ser asignadas a una Red Integrada de Salud – RIS, según la dirección consignada en:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Documento Nacional de Identidad",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Recibo de luz",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Recibo de teléfono",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Recibo de agua",
+          "correct": false
+        }
+      ],
+      "explanation": "La población se adscribe a una RIS según la **dirección consignada en el DNI**: es el dato oficial y único que permite asignar a cada persona a un territorio y a su establecimiento de referencia.\n\n- Los **recibos** de servicios no son documentos de identidad ni están a nombre de todas las personas.",
+      "tema": "ris",
+      "subtema": "Adscripción territorial de la población a una RIS",
+      "tags": [
+        "Adscripción territorial de la población a una RIS"
+      ],
+      "repite": "También en el SUSTI · P9"
+    },
+    {
+      "id": "q10",
+      "stem": "¿Con qué UPSS deben contar las IPRESS con Categoría I-4?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Consulta Externa, Farmacia y Hospitalización",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Patología Clínica, Farmacia y Centro Obstétrico",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Consulta Externa, Patología Clínica y Hospitalización",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Consulta Externa, Patología Clínica y Farmacia",
+          "correct": true
+        }
+      ],
+      "explanation": "Un **I-4** debe contar con tres UPSS: **Consulta Externa, Patología Clínica y Farmacia**. El internamiento y la atención del parto son **actividades**, no UPSS: por eso sobran «Hospitalización» y «Centro Obstétrico».\n\n- Las UPSS de **Hospitalización** y **Centro Obstétrico** aparecen recién en el segundo nivel.",
+      "tema": "categorias",
+      "subtema": "Categoría I-4 y UPSS requeridas",
+      "tags": [
+        "Categoría I-4 y UPSS requeridas"
+      ],
+      "repite": "También en el SUSTI · P10"
+    },
+    {
+      "id": "q11",
+      "stem": "¿Cuál de las siguientes es una Unidad Productora de Servicios de Salud de soporte?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Centro Quirúrgico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Centro Obstétrico",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Consulta Externa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Patología Clínica",
+          "correct": true
+        }
+      ],
+      "explanation": "Las UPSS se dividen en **atención directa** (donde se atiende al paciente: Consulta Externa, Centro Quirúrgico, Centro Obstétrico…) y **soporte** (las que apoyan el diagnóstico y tratamiento). **Patología Clínica** (laboratorio) es de **soporte**.\n\n- **Centro Quirúrgico**, **Centro Obstétrico** y **Consulta Externa** son de atención directa.",
+      "tema": "upss",
+      "subtema": "UPSS de soporte",
+      "tags": [
+        "UPSS de soporte"
+      ],
+      "repite": "También en el SUSTI · P11"
+    },
+    {
+      "id": "q12",
+      "stem": "Un centro de salud realizó campaña de pruebas antigénicas COVID-19 mediante hisopado para la detección de infectados de COVID-19. ¿A qué tipo de prevención corresponde esta actividad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Terciaria",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Cuaternaria",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Primaria",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Secundaria",
+          "correct": true
+        }
+      ],
+      "explanation": "Una prueba antigénica para **detectar infectados** busca la enfermedad ya presente, en fase temprana: es **prevención secundaria** (diagnóstico precoz y tamizaje).\n\n- **Primaria**: evitar que aparezca (vacunas, lavado de manos).\n- **Terciaria**: limitar secuelas y rehabilitar.\n- **Cuaternaria**: evitar el daño de intervenciones innecesarias.",
+      "tema": "cartera",
+      "subtema": "Prevención secundaria y tamizaje",
+      "tags": [
+        "Prevención secundaria y tamizaje"
+      ],
+      "repite": "También en el SUSTI · P12"
+    },
+    {
+      "id": "q13",
+      "stem": "Según la NT 021 V.03, ¿cuál de los siguientes es un establecimiento de salud de primer nivel con internamiento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "I-3",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "I-4",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "I-1",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "I-2",
+          "correct": false
+        }
+      ],
+      "explanation": "En el primer nivel, el **I-4** es el único con **internamiento** (y atención del parto). Del I-1 al I-3 la atención es ambulatoria.\n\n- **I-1**: puesto de salud con profesional no médico.\n- **I-2**: puesto con médico.\n- **I-3**: centro de salud sin internamiento.",
+      "tema": "categorias",
+      "subtema": "Primer nivel de atención con internamiento",
+      "tags": [
+        "Primer nivel de atención con internamiento"
+      ],
+      "repite": "También en el SUSTI · P13"
+    },
+    {
+      "id": "q14",
+      "stem": "En una región se culminó la implementación de las redes integradas de salud, el registro y categorización del 100% de establecimientos de salud, el sistema de referencia y contrarreferencia y la oferta móvil de servicios de salud. ¿A qué componente del Modelo de Cuidado Integral de Salud corresponden?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Gestión",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Organización",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Financiamiento",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Prestación",
+          "correct": false
+        }
+      ],
+      "explanation": "Implementar las **RIS**, **categorizar** establecimientos, montar la **referencia y contrarreferencia** y la **oferta móvil** es ordenar cómo se dispone la oferta de servicios: es el componente de **organización** del Modelo de Cuidado Integral.\n\n- **Gestión**: planificar, conducir y medir (sistemas de información).\n- **Financiamiento**: de dónde sale el dinero.\n- **Prestación**: la atención misma a las personas.",
+      "tema": "ris",
+      "subtema": "Organización de la red: categorización, referencia y oferta de servicios",
+      "tags": [
+        "Organización de la red: categorización, referencia y oferta de servicios"
+      ],
+      "repite": "También en el SUSTI · P14"
+    },
+    {
+      "id": "q15",
+      "stem": "El jefe de un Centro de Salud de categoría I-3 desea recategorizar al nivel inmediato superior. Según la NT 021 V.03, ¿cuál de las siguientes UPSS de soporte obligatorio deberá implementar para lograr ese objetivo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Anatomía Patológica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Patología Clínica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Diagnóstico por Imágenes",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Farmacia",
+          "correct": true
+        }
+      ],
+      "explanation": "Para pasar de **I-3 a I-4**, entre las UPSS de soporte obligatorias el I-4 exige **Farmacia**, además de Consulta Externa y Patología Clínica.\n\n- **Anatomía Patológica** y **Diagnóstico por Imágenes** como UPSS corresponden a niveles hospitalarios; en el I-4 la ecografía y la radiología son actividades, no UPSS.",
+      "tema": "categorias",
+      "subtema": "Recategorización de I-3 a I-4 y UPSS obligatorias",
+      "tags": [
+        "Recategorización de I-3 a I-4 y UPSS obligatorias"
+      ],
+      "repite": "También en el SUSTI · P15"
+    },
+    {
+      "id": "q16",
+      "stem": "¿A qué enfoque del Modelo de Cuidado Integral corresponde la atención de parto vertical en diferentes regiones de la Sierra del Perú?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cursos de Vida",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Interculturalidad",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Derecho",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Género",
+          "correct": false
+        }
+      ],
+      "explanation": "El **parto vertical** respeta la forma en que las mujeres andinas prefieren dar a luz: adaptar la atención a la cultura de la población es el enfoque de **interculturalidad**.\n\n- **Género** mira las desigualdades entre hombres y mujeres.\n- **Derechos** mira la salud como derecho exigible.\n- **Curso de vida** organiza el cuidado por etapas de la vida.",
+      "tema": "sistema-salud",
+      "subtema": "Modelo de Cuidado Integral: enfoque de interculturalidad",
+      "tags": [
+        "Modelo de Cuidado Integral: enfoque de interculturalidad"
+      ],
+      "repite": "También en el SUSTI · P16"
+    },
+    {
+      "id": "q17",
+      "stem": "Al realizar el diagnóstico de la comunidad del C.S. San Fernando, el grupo de práctica visitó el Comité 5 del Vaso de Leche para conocer su funcionamiento y beneficiarios. ¿Qué tipo de organización es el Comité?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Del Estado",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Funcional",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "De la Sociedad Civil",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Territorial",
+          "correct": false
+        }
+      ],
+      "explanation": "El **Vaso de Leche** es una organización social de base **funcional**: se forma alrededor de una **función** (alimentación, apoyo social), no de un territorio.\n\n- Las **territoriales** se organizan por espacio: asentamientos humanos, juntas vecinales, urbanizaciones.\n- No es un órgano **del Estado** aunque reciba fondos municipales.",
+      "tema": "sistema-salud",
+      "subtema": "Organización y participación comunitaria",
+      "tags": [
+        "Organización y participación comunitaria"
+      ],
+      "repite": "También en el SUSTI · P17"
+    },
+    {
+      "id": "q18",
+      "stem": "En la dimensión prestación de las Redes Integradas de Salud, ¿quiénes integran el equipo multidisciplinario de salud?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Médico, enfermera, obstetra y psicóloga",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Médico, enfermera, psicóloga y técnica de enfermería",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Médico, obstetra, psicóloga y técnica de enfermería",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Médico, enfermera, obstetra y técnica de enfermería",
+          "correct": true
+        }
+      ],
+      "explanation": "El **equipo multidisciplinario básico** de la RIS en el primer nivel lo forman **médico, enfermera, obstetra y técnico(a) de enfermería**.\n\n- Cada distractor saca a uno de los cuatro y mete a la **psicóloga**, que participa en la red pero no integra el equipo básico.",
+      "tema": "ris",
+      "subtema": "Dimensión prestación: equipo multidisciplinario",
+      "tags": [
+        "Dimensión prestación: equipo multidisciplinario"
+      ],
+      "repite": "También en el SUSTI · P18"
+    },
+    {
+      "id": "q19",
+      "stem": "El consentimiento informado en Telemedicina solo es necesario en:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tele Interconsulta",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Tele Consulta",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Teleorientación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Telemonitoreo",
+          "correct": false
+        }
+      ],
+      "explanation": "Esta pregunta aparece dos veces en las capturas del 2022-II **con claves distintas**: la captura principal marca **Tele Interconsulta** y otra captura del mismo examen marca **Tele Consulta**.\n\n- **Teleconsulta**: el profesional atiende al paciente a distancia.\n- **Teleinterconsulta**: un profesional consulta a otro sobre un paciente.\n- **Teleorientación** y **telemonitoreo**: orientación y seguimiento a distancia.\n\nSe deja la clave de la captura principal hasta confirmar cuál tomó el docente.",
+      "tema": "modalidades-oferta",
+      "subtema": "Telesalud: consentimiento informado en telemedicina",
+      "tags": [
+        "Telesalud: consentimiento informado en telemedicina"
+      ],
+      "repite": "Sólo en el 2022",
+      "reviewNote": "Clave distinta entre capturas del mismo examen: la principal marca «Tele Interconsulta» y otra captura del 2022-II marca «Tele Consulta»."
+    },
+    {
+      "id": "q20",
+      "stem": "En la organización de servicios de salud en respuesta a la pandemia del COVID-19, la primera estrategia es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Gestión de la cadena de suministros",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Manejo clínico sindrómico y testeo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Organización territorial y efectiva sectorización",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Rastreo de casos y seguimiento clínico",
+          "correct": false
+        }
+      ],
+      "explanation": "En el primer nivel, la respuesta al COVID-19 empezó por la **organización territorial y la sectorización**: saber qué población y qué territorio le toca a cada establecimiento es la base para rastrear, testear y hacer seguimiento.\n\n- **Rastreo**, **testeo y manejo sindrómico** y la **cadena de suministros** son estrategias posteriores que se apoyan en esa sectorización.",
+      "tema": "ris",
+      "subtema": "Organización territorial y sectorización de servicios",
+      "tags": [
+        "Organización territorial y sectorización de servicios"
+      ],
+      "repite": "También en el SUSTI · P19"
+    },
+    {
+      "id": "q21",
+      "stem": "¿A qué curso de vida pertenece un paciente de 29 años 11 meses y 29 días que acude a consulta por COVID-19 al C.S.?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Adulto Mayor",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Adolescente",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Adulto",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Joven",
+          "correct": true
+        }
+      ],
+      "explanation": "En el Modelo de Cuidado Integral, el curso de vida **joven** va de los **18 a los 29 años, 11 meses y 29 días**. Este paciente todavía no cumple 30.\n\n- **Adolescente**: 12 a 17 años.\n- **Adulto**: 30 a 59 años.\n- **Adulto mayor**: 60 años a más.",
+      "tema": "cartera",
+      "subtema": "Atención integral por curso de vida: joven",
+      "tags": [
+        "Atención integral por curso de vida: joven"
+      ],
+      "repite": "También en el SUSTI · P20"
+    },
+    {
+      "id": "q22",
+      "stem": "Jorge de 20 años es atendido en un establecimiento de salud por presentar cefalea y mareos; al ofrecer el paquete de atención integral se encuentra que tiene problemas familiares y laborales y es derivado para evaluación por psicología. ¿Qué principio del Modelo de Cuidado Integral se cumplió?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Equidad",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Calidad",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Eficiencia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Integralidad",
+          "correct": true
+        }
+      ],
+      "explanation": "Consultó por cefalea y, al ofrecerle el **paquete de atención integral**, se detectaron problemas familiares y laborales y se le derivó a psicología: atender a la persona en todas sus dimensiones es el principio de **integralidad**.\n\n- **Equidad**: dar más a quien más necesita.\n- **Calidad** y **eficiencia**: hacerlo bien y con los recursos justos.",
+      "tema": "cartera",
+      "subtema": "Paquete de atención integral e integralidad",
+      "tags": [
+        "Paquete de atención integral e integralidad"
+      ],
+      "repite": "También en el SUSTI · P21"
+    },
+    {
+      "id": "q23",
+      "stem": "Carmen de 44 años de edad convive con Pedro de 50 años; tienen un hijo de 25 años quien ya no vive con ellos, junto con su abuelo materno. ¿En qué ciclo vital familiar se encuentra la familia de Pedro y Carmen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dispersión",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Contracción",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Formación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Expansión",
+          "correct": false
+        }
+      ],
+      "explanation": "La familia está en **contracción**: el ciclo empieza cuando **los hijos dejan el hogar**. Aquí el hijo de 25 ya no vive con ellos.\n\n- **Formación**: la pareja antes del primer hijo.\n- **Expansión**: nacen y crecen los hijos pequeños.\n- **Dispersión**: hijos en edad escolar y adolescentes, todavía en casa.",
+      "tema": "cartera",
+      "subtema": "Atención familiar: ciclo vital familiar",
+      "tags": [
+        "Atención familiar: ciclo vital familiar"
+      ],
+      "repite": "También en el SUSTI · P22"
+    },
+    {
+      "id": "q24",
+      "stem": "El diseño de sistemas integrados de información gerencial (Balanced Scorecard) permitirá disponer de información estratégica para la evaluación basada en el desempeño. ¿A qué componente del MCI corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Organización",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Prestación",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Financiamiento",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Gestión",
+          "correct": true
+        }
+      ],
+      "explanation": "Los **sistemas de información gerencial** para evaluar el **desempeño** son herramientas del componente de **gestión** del MCI: planificar, medir y tomar decisiones con información.\n\n- **Organización**: cómo se dispone la oferta (redes, categorías, referencia).\n- **Prestación**: la atención a la persona.\n- **Financiamiento**: los fondos.",
+      "tema": "sistema-salud",
+      "subtema": "Modelo de Cuidado Integral: gestión e información para el desempeño",
+      "tags": [
+        "Modelo de Cuidado Integral: gestión e información para el desempeño"
+      ],
+      "repite": "También en el SUSTI · P23"
+    },
+    {
+      "id": "q25",
+      "stem": "¿Cuál de las transiciones en el campo de la salud pública se relaciona con el uso de la prueba rápida para diagnóstico de VIH?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tecnológica",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Política",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Social",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Cultural",
+          "correct": false
+        }
+      ],
+      "explanation": "La **prueba rápida de VIH** es una innovación diagnóstica: cambia cómo se detecta la enfermedad gracias a la tecnología. Es la transición **tecnológica**.\n\n- Las transiciones **política**, **social** y **cultural** hablan de cambios en el poder, la sociedad o las creencias, no de herramientas nuevas.",
+      "tema": "sistema-salud",
+      "subtema": "Transiciones en salud pública: transición tecnológica",
+      "tags": [
+        "Transiciones en salud pública: transición tecnológica"
+      ],
+      "repite": "También en el SUSTI · P24"
+    },
+    {
+      "id": "q26",
+      "stem": "Un alumno del Curso de Salud Comunitaria procesa la ficha familiar que realizó en su zona asignada. En dicha ficha encontró lo siguiente: 01 niño de 1 año con vacunas incompletas, 01 adolescente embarazada, 01 gestante sin controles oportunos y 01 adulto mayor hipertenso sin control desde hace un año. ¿En qué parte del PAIFAM debe registrar cada uno de estos hallazgos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Funciones de la familia",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Condiciones materiales de vida y entornos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Salud individual",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Riesgos a identificar según etapa de vida",
+          "correct": false
+        }
+      ],
+      "explanation": "Un niño con vacunas incompletas, una adolescente embarazada, una gestante sin control y un hipertenso sin control son **problemas de cada integrante**: se registran en la sección de **salud individual** del PAIFAM.\n\n- **Funciones de la familia**: cómo cumple su rol (afecto, crianza, economía).\n- **Condiciones materiales y entornos**: vivienda, servicios, barrio.\n- **Riesgos según etapa de vida**: los riesgos esperables por edad, no los hallazgos concretos.",
+      "tema": "cartera",
+      "subtema": "PAIFAM: salud individual y riesgos por etapa de vida",
+      "tags": [
+        "PAIFAM: salud individual y riesgos por etapa de vida"
+      ],
+      "repite": "También en el SUSTI · P25"
+    },
+    {
+      "id": "q27",
+      "stem": "¿Cuál es el atributo de la atención primaria de salud relacionado a la atención en salud permanente en el tiempo y la vinculación entre el usuario y un proveedor estable de los servicios de salud?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Integralidad",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Accesibilidad",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Continuidad",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Longitudinalidad",
+          "correct": true
+        }
+      ],
+      "explanation": "La **longitudinalidad** es la relación **estable en el tiempo** entre el usuario y un mismo proveedor, que lo conoce y lo acompaña.\n\n- **Continuidad**: que la atención no se corte entre servicios y niveles (referencias, seguimiento de un episodio).\n- **Accesibilidad**: poder llegar a la atención.\n- **Integralidad**: atender todas las dimensiones.",
+      "tema": "sistema-salud",
+      "subtema": "Atención Primaria de Salud: longitudinalidad",
+      "tags": [
+        "Atención Primaria de Salud: longitudinalidad"
+      ],
+      "repite": "También en el SUSTI · P26"
+    },
+    {
+      "id": "q28",
+      "stem": "Gestante de 17 años, G1P0, es referida de obstetricia a los servicios de medicina, psicología y servicio social para la provisión de los cuidados individuales. ¿Cuál es el componente del Modelo de Cuidado Integral de establecer el flujo de atención?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Organización",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Gestión",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Coordinación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Prestación",
+          "correct": false
+        }
+      ],
+      "explanation": "Definir **por dónde pasa** la gestante (obstetricia → medicina, psicología, servicio social) es establecer el **flujo de atención**, algo que el MCI ubica en el componente de **organización**.\n\n- **Prestación** sería la atención misma que recibe en cada servicio.\n- **Gestión** es planificar y medir.\n- **Coordinación** no es un componente del modelo.",
+      "tema": "referencia",
+      "subtema": "Flujo de atención y articulación entre servicios",
+      "tags": [
+        "Flujo de atención y articulación entre servicios"
+      ],
+      "repite": "También en el SUSTI · P27"
+    },
+    {
+      "id": "q29",
+      "stem": "¿Cuál es el Ciclo Vital Familiar donde se generan estrategias para enfrentarse a los desacuerdos y reajustarse con la familia de origen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Formación",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Contracción",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Expansión",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Dispersión",
+          "correct": false
+        }
+      ],
+      "explanation": "En la etapa de **formación** la pareja recién unida construye sus propias reglas: aprende a manejar **desacuerdos** y a **reajustarse con las familias de origen**.\n\n- **Expansión**: llegan los hijos.\n- **Dispersión**: hijos escolares y adolescentes.\n- **Contracción**: los hijos se van del hogar.",
+      "tema": "cartera",
+      "subtema": "Atención familiar: etapa de formación",
+      "tags": [
+        "Atención familiar: etapa de formación"
+      ],
+      "repite": "También en el SUSTI · P28"
+    },
+    {
+      "id": "q30",
+      "stem": "¿A qué edad se inicia la suplementación preventiva con hierro polimaltosado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "3.er y 4.º mes de vida",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "4.º y 5.º mes de vida",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "5.º y 6.º mes de vida",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "4.º y 6.º mes de vida",
+          "correct": false
+        }
+      ],
+      "explanation": "La **suplementación preventiva con hierro** (gotas de hierro polimaltosado o sulfato ferroso) se inicia **a los 4 meses**, entre el 4.º y el 5.º mes de vida, cuando empiezan a agotarse las reservas de hierro con que nace el niño.\n\n- Los distractores corren una o dos casillas esa ventana.",
+      "tema": "cartera",
+      "subtema": "Curso de vida niño: suplementación preventiva con hierro",
+      "tags": [
+        "Curso de vida niño: suplementación preventiva con hierro"
+      ],
+      "repite": "También en el SUSTI · P29"
+    },
+    {
+      "id": "q31",
+      "stem": "¿Cuál es una de nuestras principales tareas al intervenir en el ciclo vital Familia en Contracción?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ensayar el despegue de los hijos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Aceptar roles y metas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Aceptar cambio generacional de roles",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Integrar a un nuevo miembro",
+          "correct": false
+        }
+      ],
+      "explanation": "En la **contracción** los hijos se van y los padres pasan a ser abuelos, jubilados o cuidadores: la tarea es **aceptar el cambio generacional de roles**.\n\n- **Ensayar el despegue de los hijos** corresponde a la dispersión.\n- **Aceptar roles y metas** e **integrar a un nuevo miembro** corresponden a la formación y la expansión.",
+      "tema": "cartera",
+      "subtema": "Atención familiar: etapa de contracción",
+      "tags": [
+        "Atención familiar: etapa de contracción"
+      ],
+      "repite": "También en el SUSTI · P30"
+    },
+    {
+      "id": "q32",
+      "stem": "¿Cuál es la temperatura en la cual se mantiene una correcta cadena de frío?",
+      "options": [
+        {
+          "id": "a",
+          "text": "4 °C a 8 °C",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "0 °C a 8 °C",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "2 °C a 8 °C",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "6 °C a 8 °C",
+          "correct": false
+        }
+      ],
+      "explanation": "La **cadena de frío** mantiene las vacunas entre **+2 °C y +8 °C**. Por debajo pueden congelarse y perder potencia; por encima, degradarse.",
+      "tema": "cartera",
+      "subtema": "Inmunizaciones: cadena de frío",
+      "tags": [
+        "Inmunizaciones: cadena de frío"
+      ],
+      "repite": "También en el SUSTI · P31"
+    },
+    {
+      "id": "q33",
+      "stem": "¿Cuál de las siguientes tareas corresponde al cuidado por ciclo vital de la familia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Realizar atención episódica según la necesidad del paciente",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Incluir la dinámica y la función de la familia",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Implicar cuidados de primer contacto y referencia inmediata al especialista",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Realizar enfoque epidemiológico del problema",
+          "correct": false
+        }
+      ],
+      "explanation": "El **cuidado por ciclo vital de la familia** mira a la familia como unidad: incluye su **dinámica** (cómo se relacionan) y su **función** (qué necesita resolver en esa etapa).\n\n- La atención **episódica**, el **primer contacto con referencia inmediata** y el **enfoque epidemiológico** hablan del individuo o de la población, no de la familia.",
+      "tema": "cartera",
+      "subtema": "Cuidado por ciclo vital de la familia",
+      "tags": [
+        "Cuidado por ciclo vital de la familia"
+      ],
+      "repite": "También en el SUSTI · P32"
+    },
+    {
+      "id": "q34",
+      "stem": "¿Cuál es la finalidad del Modelo de Cuidado Integral por curso de vida para la persona, familia y comunidad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mejorar, con equidad, las condiciones o el nivel de salud de la población residente",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Privilegiar las acciones de promoción de la salud y de la enfermedad",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Elaborar un análisis de la situación de salud del Perú",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Garantizar el derecho pleno y progresivo de toda persona a la seguridad social en salud",
+          "correct": false
+        }
+      ],
+      "explanation": "La finalidad del MCI por curso de vida es **mejorar, con equidad, las condiciones o el nivel de salud de la población**.\n\n- **Privilegiar la promoción** es un medio, no la finalidad.\n- El **ASIS** es una herramienta de diagnóstico.\n- El **derecho a la seguridad social** es la finalidad del aseguramiento universal, no del MCI.",
+      "tema": "sistema-salud",
+      "subtema": "Modelo de Cuidado Integral: finalidad del cuidado por curso de vida",
+      "tags": [
+        "Modelo de Cuidado Integral: finalidad del cuidado por curso de vida"
+      ],
+      "repite": "También en el SUSTI · P33"
+    },
+    {
+      "id": "q35",
+      "stem": "Gestante a término de 40 semanas acude en trabajo de parto al C.S. Magdalena. Cuenta con la UPSS de Consulta Externa, UPSS de Patología Clínica, UPSS de Farmacia y brinda actividades relacionadas de Atención Directa y de Atención de Soporte Obligatorias: Atención de Urgencia y Emergencias, Internamiento, Atención de la Gestante en el periodo del parto, Ecografía y Radiología. ¿Cuál es la categoría del centro de salud?",
+      "options": [
+        {
+          "id": "a",
+          "text": "I-1",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "I-2",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "I-4",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "I-3",
+          "correct": false
+        }
+      ],
+      "explanation": "Tiene tres UPSS (**Consulta Externa, Patología Clínica y Farmacia**) y además **internamiento**, **atención del parto** y urgencias: eso define un **I-4**.\n\n- El **I-3** no tiene internamiento ni atiende partos como actividad obligatoria.\n- **I-1** e **I-2** son puestos de salud.",
+      "tema": "categorias",
+      "subtema": "Identificación de categoría I-4 según UPSS y actividades",
+      "tags": [
+        "Identificación de categoría I-4 según UPSS y actividades"
+      ],
+      "repite": "También en el SUSTI · P34"
+    },
+    {
+      "id": "q36",
+      "stem": "¿Cuáles son las tres modalidades de oferta para la realización de los procesos del CIRCUITO DE ATENCIÓN IRA COVID-19 en un establecimiento de salud?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Telesalud, telecapacitación, teleconsulta",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Oferta fija, oferta móvil y telesalud",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Oferta móvil, autotriaje, automonitoreo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Triaje, automonitoreo, autotriaje",
+          "correct": false
+        }
+      ],
+      "explanation": "El circuito de atención de IRA/COVID-19 se organizó en tres modalidades de oferta: **oferta fija** (en el establecimiento), **oferta móvil** (equipos que salen a la comunidad) y **telesalud**.\n\n- **Teleconsulta** y **telecapacitación** son servicios dentro de la telesalud, no modalidades aparte.\n- **Triaje**, **autotriaje** y **automonitoreo** son procesos, no modalidades de oferta.",
+      "tema": "modalidades-oferta",
+      "subtema": "Oferta fija, oferta móvil y telesalud",
+      "tags": [
+        "Oferta fija, oferta móvil y telesalud"
+      ],
+      "repite": "Sólo en el 2022"
+    },
+    {
+      "id": "q37",
+      "stem": "Un médico recién egresado es contratado para atender pacientes COVID en consulta externa en un Hospital Nivel II-1. Cuando recibe los EPP no está seguro si recibió todo lo necesario. ¿Cuáles son los EPP que debió recibir?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mascarilla, guantes, mandilón, gorro",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Mascarilla, guantes, mandilón, protector facial",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Respirador, protector facial, mandilón, gorro",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Respirador, guantes, mandilón, gorro",
+          "correct": true
+        }
+      ],
+      "explanation": "Para atender pacientes COVID en consulta externa, la clave marca **respirador, guantes, mandilón y gorro**.\n\n- La **mascarilla quirúrgica** no protege lo suficiente frente a pacientes COVID: se usa **respirador** (N95 o equivalente).\n- El **protector facial** no reemplaza a los guantes en esta lista.",
+      "tema": "cartera",
+      "subtema": "Bioseguridad en la prestación: equipos de protección personal",
+      "tags": [
+        "Bioseguridad en la prestación: equipos de protección personal"
+      ],
+      "repite": "También en el SUSTI · P35"
+    },
+    {
+      "id": "q38",
+      "stem": "¿Cuál de las siguientes alternativas describe el uso permanente incorrecto de los respiradores por parte del personal de salud?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Áreas COVID",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Áreas no COVID",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Salas de procedimientos que generen aerosoles",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Salas de aislamiento hospitalario",
+          "correct": false
+        }
+      ],
+      "explanation": "El respirador se reserva para **áreas COVID** y para **procedimientos que generan aerosoles**. Usarlo **de forma permanente en áreas no COVID** es incorrecto: desperdicia un insumo escaso y no aporta protección adicional allí.\n\n- Las **áreas COVID**, las **salas de procedimientos con aerosoles** y las **salas de aislamiento** sí lo requieren.",
+      "tema": "cartera",
+      "subtema": "Bioseguridad en la prestación: uso de respiradores",
+      "tags": [
+        "Bioseguridad en la prestación: uso de respiradores"
+      ],
+      "repite": "También en el SUSTI · P36"
+    },
+    {
+      "id": "q39",
+      "stem": "El Alcalde de San Martín de Porres desea conformar el Comité Coordinador COVID distrital y le indica a la Gerente de Desarrollo Social que convoque a las organizaciones funcionales de la comunidad. ¿A cuáles se refiere?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vaso de Leche, comedores populares, clubes de madres",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Centro de salud e instituciones educativas estatales",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Iglesias, bomberos, ONG, comisarías",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Asentamiento humano, urbanizaciones, asociación de vivienda",
+          "correct": false
+        }
+      ],
+      "explanation": "Las **organizaciones funcionales** se forman alrededor de una función social: **Vaso de Leche, comedores populares y clubes de madres**.\n\n- **Asentamientos humanos, urbanizaciones y asociaciones de vivienda** son organizaciones **territoriales**.\n- **Centros de salud, colegios, comisarías y bomberos** son instituciones, no organizaciones comunitarias de base.",
+      "tema": "ris",
+      "subtema": "Articulación territorial con organizaciones comunitarias",
+      "tags": [
+        "Articulación territorial con organizaciones comunitarias"
+      ],
+      "repite": "También en el SUSTI · P37"
+    },
+    {
+      "id": "q40",
+      "stem": "¿Cuál de las siguientes alternativas describe riesgos de salud familiar?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Persona desempleada, sin seguro de salud, mala comunicación familiar",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Niño sin DNI, gestante sin control prenatal, hipertenso que no acude al establecimiento de salud",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hacinamiento, delincuencia, derrumbes, presencia de vectores",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Familia monoparental, integrante víctima de violencia familiar, malas pautas de crianza y convivencia",
+          "correct": true
+        }
+      ],
+      "explanation": "Los **riesgos de salud familiar** son los que dependen del funcionamiento de la familia: **familia monoparental, violencia familiar, malas pautas de crianza y convivencia**.\n\n- **Desempleo y falta de seguro**: riesgos socioeconómicos.\n- **Niño sin DNI, gestante sin control, hipertenso que no acude**: riesgos individuales.\n- **Hacinamiento, delincuencia, vectores**: riesgos del entorno.",
+      "tema": "cartera",
+      "subtema": "Atención familiar: identificación de riesgos de salud familiar",
+      "tags": [
+        "Atención familiar: identificación de riesgos de salud familiar"
+      ],
+      "repite": "También en el SUSTI · P38"
+    },
+    {
+      "id": "q41",
+      "stem": "Proceso que consiste en proporcionar a las personas, familias y comunidades los medios necesarios para mejorar su salud y ejercer un mayor control sobre la misma:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Consejería en Salud",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Prevención de la Salud",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Capacitación en Salud",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Promoción de la Salud",
+          "correct": true
+        }
+      ],
+      "explanation": "Es la definición de **promoción de la salud** de la Carta de Ottawa (1986): dar a las personas **los medios para mejorar su salud y ejercer mayor control sobre ella**.\n\n- La **prevención** evita enfermedades concretas.\n- La **consejería** y la **capacitación** son herramientas que puede usar la promoción, no el proceso en sí.",
+      "tema": "sistema-salud",
+      "subtema": "Promoción de la salud",
+      "tags": [
+        "Promoción de la salud"
+      ],
+      "repite": "También en el SUSTI · P39"
+    },
+    {
+      "id": "q42",
+      "stem": "En el marco de la pandemia por COVID-19, el lavado de manos, el consumo habitual de frutas y verduras y la actividad física constante corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Recuperación de salud",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Estilos de vida saludable",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Prevención de riesgos y daños",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Cuidados paliativos",
+          "correct": false
+        }
+      ],
+      "explanation": "Lavarse las manos, comer frutas y verduras y hacer actividad física son **estilos de vida saludables**: hábitos cotidianos que protegen la salud.\n\n- **Prevención de riesgos y daños** apunta a un riesgo concreto (vacunar, tamizar).\n- **Recuperación** y **cuidados paliativos** se dan cuando ya hay enfermedad.",
+      "tema": "sistema-salud",
+      "subtema": "Estilos de vida saludable",
+      "tags": [
+        "Estilos de vida saludable"
+      ],
+      "repite": "También en el SUSTI · P40"
+    },
+    {
+      "id": "q43",
+      "stem": "Según la Directiva N.° 093, ¿qué tipo de vacuna debe recibir el personal de salud?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Influenza y antitetánica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Influenza y neumococo",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Influenza y varicela",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Influenza y hepatitis B",
+          "correct": false
+        }
+      ],
+      "explanation": "Según la Directiva citada en el examen, el personal de salud debe recibir las vacunas contra **influenza y neumococo**.\n\n- Cada distractor mantiene la influenza y cambia la segunda vacuna.",
+      "tema": "cartera",
+      "subtema": "Salud del personal: inmunizaciones",
+      "tags": [
+        "Salud del personal: inmunizaciones"
+      ],
+      "repite": "También en el SUSTI · P41"
+    },
+    {
+      "id": "q44",
+      "stem": "¿Cuál de las siguientes es parte de las actividades individuales en el Curso de Vida Niño?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Intervenciones en Instituciones Educativas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Intervenciones en Comunidades Saludables",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Atención Integrada de Enfermedades Prevalentes de la Infancia",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Intervenciones en Municipios Saludables",
+          "correct": false
+        }
+      ],
+      "explanation": "La **AIEPI** (Atención Integrada a las Enfermedades Prevalentes de la Infancia) se aplica **niño por niño** en la consulta: es una actividad **individual** del curso de vida niño.\n\n- Las intervenciones en **instituciones educativas**, **comunidades** y **municipios saludables** son actividades **colectivas**, sobre grupos y entornos.",
+      "tema": "cartera",
+      "subtema": "Curso de vida niño: AIEPI",
+      "tags": [
+        "Curso de vida niño: AIEPI"
+      ],
+      "repite": "También en el SUSTI · P42"
+    },
+    {
+      "id": "q45",
+      "stem": "Es uno de los Órganos Desconcentrados en el Ministerio de Salud:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Superintendencia Nacional de Salud (SUSALUD)",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Instituto Nacional de Salud (INS)",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Seguro Integral de Salud (SIS)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Centro Nacional de Abastecimiento de Recursos Estratégicos en Salud (CENARES)",
+          "correct": true
+        }
+      ],
+      "explanation": "**CENARES** es un **órgano desconcentrado** del MINSA: parte del propio ministerio, encargado de abastecer medicamentos e insumos estratégicos.\n\n- **SUSALUD**, **INS** y **SIS** son **organismos públicos adscritos**: tienen personería propia y solo están vinculados al MINSA.",
+      "tema": "sistema-salud",
+      "subtema": "Organización del MINSA: órganos desconcentrados",
+      "tags": [
+        "Organización del MINSA: órganos desconcentrados"
+      ],
+      "repite": "También en el SUSTI · P43"
+    },
+    {
+      "id": "q46",
+      "stem": "Grupo específico de personas que a menudo viven en una zona geográfica definida, comparten la misma cultura, valores y normas, y están organizadas en una estructura social:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Territorio",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Comunidad",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Ayllu",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Población",
+          "correct": false
+        }
+      ],
+      "explanation": "Es la definición de **comunidad**: un grupo de personas en una zona definida que comparte **cultura, valores y normas** y está **organizada** en una estructura social.\n\n- **Población**: conjunto de habitantes, sin exigir identidad ni organización compartidas.\n- **Territorio**: el espacio, no las personas.\n- **Ayllu**: la forma andina de comunidad, no la definición general.",
+      "tema": "sistema-salud",
+      "subtema": "Comunidad: concepto y organización social",
+      "tags": [
+        "Comunidad: concepto y organización social"
+      ],
+      "repite": "También en el SUSTI · P44"
+    },
+    {
+      "id": "q47",
+      "stem": "La Sra. Portales, de 75 años, es hipertensa y tiene EsSalud, pero debido a la pandemia COVID-19 no desea ir a su centro de atención para recibir sus medicamentos. Por ello, compra sus medicinas en farmacias particulares o acude a los centros de salud del Ministerio de Salud. ¿Qué problema se expresa en lo sucedido a la Sra. Portales?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Congestión del Sistema",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Segmentación del Sistema",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Fragmentación de Servicios",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Dispersión del Sistema",
+          "correct": false
+        }
+      ],
+      "explanation": "La Sra. Portales tiene EsSalud pero termina atendiéndose en el MINSA y en farmacias privadas: el sistema está dividido en **subsistemas separados** (EsSalud, MINSA, privado), cada uno con su población y su financiamiento. Eso es la **segmentación**.\n\n- **Fragmentación**: falta de coordinación entre establecimientos y niveles de un mismo subsistema.\n- **Congestión** y **dispersión** no son los problemas que la teoría describe con estos términos.",
+      "tema": "sistema-salud",
+      "subtema": "Segmentación del sistema de salud",
+      "tags": [
+        "Segmentación del sistema de salud"
+      ],
+      "repite": "También en el SUSTI · P45"
+    },
+    {
+      "id": "q48",
+      "stem": "En el marco del COVID-19, la Municipalidad de Surco solicitó al MINSA una charla virtual a los beneficiarios de los Comedores Populares y del Vaso de Leche del distrito sobre estilos de vida saludables contra el COVID. ¿Qué opción de Telesalud se puede realizar?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Teleconsulta",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Tele IEC",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Telemonitoreo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tele Interconsulta",
+          "correct": false
+        }
+      ],
+      "explanation": "Una **charla virtual** sobre estilos de vida a un grupo de la comunidad es **Tele IEC** (información, educación y comunicación a distancia).\n\n- **Teleconsulta**, **telemonitoreo** y **teleinterconsulta** son atenciones sobre pacientes concretos, no educación a grupos.",
+      "tema": "modalidades-oferta",
+      "subtema": "Telesalud: Tele-IEC",
+      "tags": [
+        "Telesalud: Tele-IEC"
+      ],
+      "repite": "Sólo en el 2022"
+    },
+    {
+      "id": "q49",
+      "stem": "Según el flujograma de atención móvil de un paciente diagnosticado por COVID-19 leve que no tiene las condiciones de aislamiento domiciliario, ¿cuál es la decisión correcta a tomar?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Referencia a hospitales sin UCI",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Solo observación del paciente",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Referencia a hospitales con UCI",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Transporte asistido a CAAT",
+          "correct": true
+        }
+      ],
+      "explanation": "Un paciente con **COVID-19 leve** no necesita hospital, pero si **no puede aislarse en casa** se le traslada a un **CAAT** (Centro de Atención y Aislamiento Temporal).\n\n- Referirlo a hospital, con o sin UCI, sería sobredimensionar un caso leve.\n- **Solo observarlo** deja sin resolver el aislamiento, que es el problema.",
+      "tema": "referencia",
+      "subtema": "Referencia, traslado y continuidad asistencial en atención móvil",
+      "tags": [
+        "Referencia, traslado y continuidad asistencial en atención móvil"
+      ],
+      "repite": "También en el SUSTI · P46"
+    },
+    {
+      "id": "q50",
+      "stem": "La Sra. Rosa es hipertensa y diabética desde hace 20 años y necesita sus medicamentos para controlar ambas enfermedades. ¿Cuál de las siguientes opciones de Telesalud se adecua para atender sus necesidades?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Telecapacitación",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Tele IEC",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Telemonitoreo",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Tele Interconsulta",
+          "correct": false
+        }
+      ],
+      "explanation": "La Sra. Rosa tiene enfermedades **crónicas** que necesitan **seguimiento periódico** y reposición de medicamentos: eso es **telemonitoreo**.\n\n- **Telecapacitación** y **Tele IEC** forman o educan, no atienden a una paciente.\n- **Teleinterconsulta** es entre profesionales.",
+      "tema": "modalidades-oferta",
+      "subtema": "Telesalud: telemonitoreo",
+      "tags": [
+        "Telesalud: telemonitoreo"
+      ],
+      "repite": "Sólo en el 2022"
+    }
+  ]
+}

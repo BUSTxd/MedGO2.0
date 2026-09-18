@@ -57,6 +57,17 @@ interface ExamQuestion {
   tags?: string[];
   /** Tema del vocabulario del curso. Sin esto la pregunta queda fuera del informe. */
   tema?: string;
+  /**
+   * Tipo de pregunta dentro del tema («Categoría I-4 y UPSS requeridas»). El
+   * informe final lo lista bajo su tema cuando se falla.
+   */
+  subtema?: string;
+  /**
+   * Dónde más salió esta pregunta («También en el SUSTI · P12»). Se pinta sobre
+   * el enunciado antes de responder: que se repita entre exámenes es justo lo
+   * que la vuelve prioritaria.
+   */
+  repite?: string;
   /** La misma pregunta en otra versión; el alumno elige cuál ver con un interruptor. */
   variante?: VariantePregunta;
   /**
@@ -1791,6 +1802,17 @@ export default function ExamRunner({
                     />
                   )}
 
+                  {current.repite && (
+                    <span className={styles.repiteBadge}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+                        <path d="M17 2l4 4-4 4" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M21 13v1a4 4 0 0 1-4 4H3" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      {current.repite}
+                    </span>
+                  )}
+
                   {current.reviewNote && (
                     <div className={styles.reviewBadge}>
                       <IconoAviso />
@@ -2016,8 +2038,9 @@ export default function ExamRunner({
         const marcasFinal: MarcaRastro[] = answersAll.map(a => (a.ok ? 'ok' : 'mal'));
         const desglose = desglosarIntento(cursoDe(stageKey), answersAll, deck ?? []);
         // Todos los temas flojos, no un top: la pista de fichas se arrastra en
-        // horizontal, así que cabe un examen fallado de arriba abajo.
-        const aRepasar = desglose.filter(d => d.pct < UMBRAL_FLOJO);
+        // horizontal, así que cabe un examen fallado de arriba abajo. Un tema sin
+        // clase mapeada (curso aún sin recomendación) no tiene ficha que abrir.
+        const aRepasar = desglose.filter(d => d.pct < UMBRAL_FLOJO && d.clases.length > 0);
         const hayCerradas = !!suscripcion && !acceso
           && aRepasar.some(d => !d.clases[0].gratis);
         return (
@@ -2111,6 +2134,11 @@ export default function ExamRunner({
                       />
                     </span>
                     <span className={styles.temaScore}>{d.ok}/{d.total}</span>
+                    {d.falladas.length > 0 && (
+                      <ul className={styles.temaFallos}>
+                        {d.falladas.map(f => <li key={f}>{f}</li>)}
+                      </ul>
+                    )}
                   </div>
                 ))}
               </div>

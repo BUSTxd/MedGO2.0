@@ -28,6 +28,14 @@ const CURSOS = [
     silabo: path.join(RAIZ, 'src', 'lib', 'data', 'inmunologia.ts'),
     prefijoResumen: 'inm-',
   },
+  {
+    // Aún sin recomendación de clases: los temas van con `clases: []`.
+    slug: 'epidemiologia',
+    temas: path.join(RAIZ, 'src', 'lib', 'data', 'temas', 'epidemiologia.ts'),
+    silabo: path.join(RAIZ, 'src', 'lib', 'data', 'epidemiologia.ts'),
+    prefijoResumen: 'epi-',
+    sinClases: true,
+  },
 ];
 
 const errores = [];
@@ -68,6 +76,7 @@ function verificarTabla(curso, tabla, silabo) {
     const donde = `${curso.slug} · tema «${temaId}»`;
 
     if (!tema.label || !tema.label.trim()) err(`${donde}: sin label.`);
+    if (curso.sinClases && Array.isArray(tema.clases) && tema.clases.length === 0) continue;
     if (!Array.isArray(tema.clases) || tema.clases.length === 0) {
       err(`${donde}: no tiene ninguna clase asignada; todo tema debe recomendar al menos una.`);
       continue;

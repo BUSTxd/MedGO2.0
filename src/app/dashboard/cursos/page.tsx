@@ -13,6 +13,7 @@ import QuimicaOrganicaIcon from '@/components/icons/QuimicaOrganicaIcon';
 import ComunicacionIcon from '@/components/icons/ComunicacionIcon';
 import CulturaAmbientalIcon from '@/components/icons/CulturaAmbientalIcon';
 import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
+import HospitalIcon from '@/components/icons/HospitalIcon';
 import ConstruccionIcon from '@/components/icons/ConstruccionIcon';
 import styles from '@/styles/cursos.module.css';
 
@@ -183,6 +184,17 @@ const COURSES = [
     icon: <MicroscopeIcon size={30} style={{ color: '#8b5cf6' }} />,
   },
   {
+    id: 'epidemiologia',
+    nombre: 'Epidemiología | UPCH',
+    badge: 'Epidemiología',
+    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Epidemiología Básica y Salud Comunitaria.',
+    badgeColor: '#8b5cf6',
+    badgeBg: 'rgba(139, 92, 246, 0.12)',
+    activo: true,
+    diff: ['easy'],
+    icon: <HospitalIcon size={30} style={{ color: '#8b5cf6' }} />,
+  },
+  {
     id: 'hematologia',
     nombre: 'Hematología | UPCH',
     badge: 'Hematología',
@@ -351,7 +363,7 @@ type Curso = (typeof COURSES)[number];
 const LISTOS = new Set(PRIORIDAD_LANZAMIENTO);
 
 function CursoCard({ c, bloqueado }: { c: Curso; bloqueado: boolean }) {
-  // Un curso `gratis` (hoy sólo Patología) sí tiene material real detrás,
+  // Un curso `gratis` (hoy Patología y Epidemiología) sí tiene material real detrás,
   // así que no se muestra "en obra" aunque no esté entre los prioritarios.
   const enObra = !LISTOS.has(c.id) && !cursoEsGratis(c.id);
 

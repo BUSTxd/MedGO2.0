@@ -11,7 +11,12 @@ export default function RepasaEsto() {
   useEffect(() => {
     const todo = desgloseAcumulado();
     setCursos(new Set(todo.map(d => d.curso)).size);
-    setItems(todo.filter(d => d.total >= MINIMO_ACUMULADO && d.pct < UMBRAL_FLOJO).slice(0, 3));
+    // Un tema sin clase mapeada no tiene a dónde llevar: queda fuera del panel.
+    setItems(
+      todo
+        .filter(d => d.total >= MINIMO_ACUMULADO && d.pct < UMBRAL_FLOJO && d.clases.length > 0)
+        .slice(0, 3),
+    );
   }, []);
 
   // Sin datos no se pinta nada: un panel vacío prometería algo que sólo se

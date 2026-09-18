@@ -591,6 +591,24 @@
   white-space: pre-line;
 }
 
+/* ── Badge «También en…»: la pregunta salió en otro examen ── */
+.repiteBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(59, 158, 221, 0.1);
+  border: 1px solid rgba(59, 158, 221, 0.3);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #2779b0;
+  white-space: nowrap;
+  margin: 0 8px 14px 0;
+}
+
+:global(.dark-mode) .repiteBadge { color: #6cb8ea; }
+
 /* ── Badge "Pendiente a revisión" ────────────────────────── */
 .reviewBadge {
   position: relative;
@@ -2042,6 +2060,7 @@
 
 .temaRow {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 12px;
   font-size: 13px;
@@ -2076,6 +2095,32 @@
 .temaFillMal   { background: var(--mal); }
 .temaFillMedio { background: var(--ambar); }
 .temaFillOk    { background: var(--ok); }
+
+/* Tipos de pregunta fallados del tema: una línea completa bajo su fila. */
+.temaFallos {
+  flex-basis: 100%;
+  margin: -2px 0 0;
+  padding: 0 0 0 14px;
+  list-style: none;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.temaFallos li {
+  position: relative;
+}
+
+.temaFallos li::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--mal);
+}
 
 .temaScore {
   font-weight: 700;

@@ -10,6 +10,12 @@ export interface Desglose {
   /** Entero 0–100. */
   pct: number;
   clases: ClaseRecomendada[];
+  /**
+   * Tipos de pregunta (`subtema`) que se fallaron dentro del tema, sin repetir
+   * y en el orden del examen. Sólo en el desglose de un intento; el acumulado
+   * no los guarda.
+   */
+  falladas: string[];
 }
 
 /** Por debajo de este porcentaje un tema está flojo. */
@@ -57,23 +63,25 @@ function porFlojedad(a: Desglose, b: Desglose): number {
 export function desglosarIntento(
   curso: string,
   respuestas: { q: string; ok: boolean }[],
-  preguntas: { id: string; tema?: string }[],
+  preguntas: { id: string; tema?: string; subtema?: string }[],
 ): Desglose[] {
   const tabla = tablaDeCurso(curso);
   if (!tabla) return [];
 
-  const temaPorId = new Map(preguntas.map(q => [q.id, q.tema]));
-  const acc = new Map<string, { ok: number; total: number }>();
+  const porId = new Map(preguntas.map(q => [q.id, q]));
+  const acc = new Map<string, { ok: number; total: number; falladas: Set<string> }>();
 
   for (const r of respuestas) {
-    const temaId = temaPorId.get(r.q);
+    const q = porId.get(r.q);
+    const temaId = q?.tema;
     if (!temaId || !tabla[temaId]) continue;
-    const prev = acc.get(temaId) ?? { ok: 0, total: 0 };
-    acc.set(temaId, { ok: prev.ok + (r.ok ? 1 : 0), total: prev.total + 1 });
+    const prev = acc.get(temaId) ?? { ok: 0, total: 0, falladas: new Set<string>() };
+    if (!r.ok && q.subtema) prev.falladas.add(q.subtema);
+    acc.set(temaId, { ok: prev.ok + (r.ok ? 1 : 0), total: prev.total + 1, falladas: prev.falladas });
   }
 
   return [...acc.entries()]
-    .map(([temaId, { ok, total }]) => ({
+    .map(([temaId, { ok, total, falladas }]) => ({
       curso,
       temaId,
       label: tabla[temaId].label,
@@ -81,6 +89,7 @@ export function desglosarIntento(
       total,
       pct: pctDe(ok, total),
       clases: tabla[temaId].clases,
+      falladas: [...falladas],
     }))
     .sort(porFlojedad);
 }
@@ -169,6 +178,7 @@ export function desgloseAcumulado(): Desglose[] {
         total: m.total,
         pct: pctDe(m.ok, m.total),
         clases: tema.clases,
+        falladas: [],
       });
     }
   }
