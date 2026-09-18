@@ -149,6 +149,7 @@ interface Muestra {
   conExplicacion?: number;
   conNota?: number;
   conImagen?: number;
+  conLamina?: number;
 }
 
 interface ExamPayload {
@@ -165,7 +166,11 @@ interface ExamPayload {
   questions: ExamQuestion[];
 }
 
-interface SignedUrlEntry { url: string; expiresAt: number }
+/**
+ * `premiumDesde`: en un banqueo con muestra, quien tiene el plan lo recibe
+ * entero, y las preguntas desde ese índice (orden del JSON) siguen en oro.
+ */
+interface SignedUrlEntry { url: string; expiresAt: number; premiumDesde?: number }
 
 interface Attempt {
   id: string;
@@ -292,7 +297,7 @@ function saveAttempt(k: string, attempt: Attempt) {
   } catch {}
 }
 
-async function fetchExam(key: string): Promise<{ payload: ExamPayload; muestra?: Muestra }> {
+async function fetchExam(key: string): Promise<{ payload: ExamPayload; muestra?: Muestra; premiumDesde?: number }> {
   let entry = readUrlCache(key);
   if (!entry) {
     const r = await fetch(`/api/examen/${key}`);
@@ -311,7 +316,7 @@ async function fetchExam(key: string): Promise<{ payload: ExamPayload; muestra?:
   }
   const jsonRes = await fetch(entry.url);
   if (!jsonRes.ok) throw new Error('No se pudo descargar el contenido.');
-  return { payload: (await jsonRes.json()) as ExamPayload };
+  return { payload: (await jsonRes.json()) as ExamPayload, premiumDesde: entry.premiumDesde };
 }
 
 type Phase = 'running' | 'finished';
@@ -801,6 +806,13 @@ function CortePremium({
               <span className={styles.corteDatoLabel}>con la imagen del examen</span>
             </li>
           )}
+          {!!muestra.conLamina && (
+            <li className={styles.corteDato}>
+              <span className={styles.corteDatoIcono}>{ICONOS_DATO.imagen}</span>
+              <span className={styles.corteDatoNum}>{muestra.conLamina}</span>
+              <span className={styles.corteDatoLabel}>con lámina explicativa</span>
+            </li>
+          )}
         </ul>
 
         {isAuthed ? (
@@ -1284,6 +1296,7 @@ export default function ExamRunner({
   const [stage, setStage] = useState(0);
   const [payload, setPayload] = useState<ExamPayload | null>(null);
   const [muestra, setMuestra] = useState<Muestra | null>(null);
+  const [premiumDesde, setPremiumDesde] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [runId, setRunId] = useState(0);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -1335,14 +1348,16 @@ export default function ExamRunner({
     setError(null);
     setPayload(null);
     setMuestra(null);
+    setPremiumDesde(null);
     if (bloqueada) return;
 
     (async () => {
       try {
-        const { payload: json, muestra: m } = await fetchExam(stageKey);
+        const { payload: json, muestra: m, premiumDesde: pd } = await fetchExam(stageKey);
         if (cancelled) return;
         setPayload(json);
         setMuestra(m ?? null);
+        setPremiumDesde(pd ?? null);
       } catch (err) {
         if (cancelled) return;
         setError(err instanceof Error ? err.message : 'Error desconocido.');
@@ -1355,7 +1370,13 @@ export default function ExamRunner({
   // Shuffle de preguntas + opciones (re-corre al cambiar de etapa o reintentar).
   const deck = useMemo(() => {
     if (!payload) return null;
-    return shuffle(payload.questions).map(q => ({
+    // Lo premium se marca ANTES de barajar: el índice es el del JSON, que es
+    // por donde corta la muestra.
+    const marcadas = payload.questions.map((q, i) => ({
+      ...q,
+      premium: premiumDesde != null && i >= premiumDesde,
+    }));
+    return shuffle(marcadas).map(q => ({
       ...q,
       options: q.ordenFijo ? q.options : shuffle(q.options),
       ...(q.variante
@@ -1363,7 +1384,7 @@ export default function ExamRunner({
         : {}),
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [payload, runId, stage]);
+  }, [payload, premiumDesde, runId, stage]);
 
   // `base` es la pregunta con sus dos versiones; `current`, la que se ve. La
   // corrección va siempre contra `base`: la respuesta puede ser de la otra.
@@ -1389,9 +1410,11 @@ export default function ExamRunner({
         if (aciertoActual === null) return 'actual';
         return aciertoActual ? 'ok' : 'mal';
       }
-      return 'pendiente';
+      // Con el plan, lo premium sigue en oro hasta que se responde.
+      return deck?.[i]?.premium ? 'premium' : 'pendiente';
     });
-  }, [total, totalReal, answersAll, currentIdx, aciertoActual]);
+  }, [deck, total, totalReal, answersAll, currentIdx, aciertoActual]);
+  const conOro = !!muestra || premiumDesde != null;
 
   const progressPct = total > 0
     ? Math.round(((currentIdx + (picked ? 1 : 0)) / total) * 100)
@@ -1680,7 +1703,7 @@ export default function ExamRunner({
               <span className={styles.contadorNum}>
                 {String(currentIdx + 1).padStart(2, '0')}
               </span>
-              <span className={`${styles.contadorTotal} ${muestra ? styles.contadorTotalPremium : ''}`}>
+              <span className={`${styles.contadorTotal} ${conOro ? styles.contadorTotalPremium : ''}`}>
                 /{String(totalReal).padStart(2, '0')}
               </span>
             </div>
@@ -1701,6 +1724,11 @@ export default function ExamRunner({
                 <span className={styles.muestraPie}>
                   Muestra gratuita · <strong>{muestra.mostradas} de {muestra.total}</strong> preguntas.
                   {' '}Las {muestra.total - muestra.mostradas} restantes se abren con el plan {PLANS[muestra.plan].label}.
+                </span>
+              )}
+              {premiumDesde != null && total > premiumDesde && (
+                <span className={styles.premiumPie}>
+                  <strong>Premium</strong> · {total - premiumDesde} de las {total} preguntas son exclusivas de tu plan
                 </span>
               )}
             </div>
@@ -1785,8 +1813,9 @@ export default function ExamRunner({
               {/* Cambiar de versión también remonta el bloque: la entrada se
                   repite y deja claro que lo de abajo es otro juego de alternativas. */}
               <article className={styles.pregunta} key={`${intentoId}-${currentIdx}${enVariante ? '-v' : ''}`}>
-                <div className={styles.preguntaIndice} aria-hidden>
+                <div className={`${styles.preguntaIndice} ${base?.premium ? styles.preguntaIndicePremium : ''}`} aria-hidden>
                   <span className={styles.preguntaNum}>{String(currentIdx + 1).padStart(2, '0')}</span>
+                  {base?.premium && <span className={styles.preguntaPremium}>Premium</span>}
                   <span className={styles.preguntaFilete} />
                 </div>
 

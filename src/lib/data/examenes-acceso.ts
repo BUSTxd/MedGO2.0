@@ -39,9 +39,10 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?
   'inmunologia/extra-pato': {},
   'inmunologia/final-2023': { muestra: 34 },
   // Epidemiología (curso gratis): el 2022 abierto como muestra, con el aviso de
-  // suscripción del runner; el SUSTI, los Kahoots y los PASOS detrás del plan del tramo.
+  // suscripción del runner; el SUSTI y los Kahoots detrás del plan del tramo;
+  // los PASOS, a medias como el 2023 de Inmunología (27 de 54).
   'epidemiologia/parcial-1-2022': { free: true },
   'epidemiologia/parcial-1-susti': {},
   'epidemiologia/parcial-1-kahoot': {},
-  'epidemiologia/parcial-1-pasos': {},
+  'epidemiologia/parcial-1-pasos': { muestra: 27 },
 };

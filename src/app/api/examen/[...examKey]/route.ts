@@ -61,7 +61,7 @@ export async function GET(
       return NextResponse.json({ error: 'not_available' }, { status: 404 });
     }
 
-    type PreguntaCruda = { variante?: unknown; explanation?: string; reviewNote?: string; image?: string };
+    type PreguntaCruda = { variante?: unknown; explanation?: string; reviewNote?: string; image?: string; explanationImage?: string };
     const payload = JSON.parse(await blob.text()) as { questions?: PreguntaCruda[] };
     const todas = Array.isArray(payload.questions) ? payload.questions : [];
     const cuantas = (fn: (q: PreguntaCruda) => unknown) => todas.filter(q => !!fn(q)).length;
@@ -79,6 +79,7 @@ export async function GET(
           conExplicacion: cuantas(q => q.explanation),
           conNota: cuantas(q => q.reviewNote),
           conImagen: cuantas(q => q.image),
+          conLamina: cuantas(q => q.explanationImage),
         },
       },
       { headers: { 'Cache-Control': 'private, no-store' } },
@@ -96,8 +97,10 @@ export async function GET(
 
   const expiresAt = Date.now() + SIGNED_URL_TTL_SECONDS * 1000;
 
+  // Con el plan, un banqueo con muestra llega entero pero dice dónde empezaba
+  // lo premium: esas preguntas siguen pintándose en oro.
   return NextResponse.json(
-    { url: data.signedUrl, expiresAt },
+    { url: data.signedUrl, expiresAt, ...(meta.muestra ? { premiumDesde: meta.muestra } : {}) },
     { headers: { 'Cache-Control': 'private, no-store' } },
   );
 }

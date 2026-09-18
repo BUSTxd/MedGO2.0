@@ -574,6 +574,27 @@
   background: linear-gradient(180deg, rgba(var(--acc-rgb), 0.42), transparent 88%);
 }
 
+/* Pregunta premium ya desbloqueada: el oro de la muestra sigue con el plan. */
+.preguntaIndicePremium .preguntaNum {
+  background: linear-gradient(180deg, var(--oro-2), var(--oro));
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 1;
+}
+
+.preguntaIndicePremium .preguntaFilete {
+  background: linear-gradient(180deg, rgba(var(--oro-rgb), 0.6), transparent 88%);
+}
+
+.preguntaPremium {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin-top: -6px;
+}
+
 .preguntaCuerpo { min-width: 0; }
 
 .stem {
@@ -1626,6 +1647,16 @@
 }
 
 .muestraPie strong { font-weight: 800; }
+
+.premiumPie {
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--oro);
+  text-align: center;
+  max-width: 420px;
+}
+
+.premiumPie strong { font-weight: 800; letter-spacing: 0.04em; }
 
 /* El corte no entra con la nota: la pantalla de resultados se lee primero y,
    pasados un par de segundos, este bloque empuja todo hacia abajo y se abre.

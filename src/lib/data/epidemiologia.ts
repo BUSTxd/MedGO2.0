@@ -256,7 +256,8 @@ export const semanas: Semana[] = [
           key: 'epidemiologia/parcial-1-2022',
           groups: ['epidemiologia/parcial-1-susti', 'epidemiologia/parcial-1-kahoot', 'epidemiologia/parcial-1-pasos'],
           // Sólo pinta el candado; quien lo bloquea es la route (sin `free`).
-          dePago: ['epidemiologia/parcial-1-susti', 'epidemiologia/parcial-1-kahoot', 'epidemiologia/parcial-1-pasos'],
+          // Los PASOS no van aquí: son muestra (se piden y el servidor los recorta).
+          dePago: ['epidemiologia/parcial-1-susti', 'epidemiologia/parcial-1-kahoot'],
           labels: {
             'epidemiologia/parcial-1-2022': '2022',
             'epidemiologia/parcial-1-susti': 'SUSTI',
@@ -267,7 +268,7 @@ export const semanas: Semana[] = [
             'epidemiologia/parcial-1-2022': 'Primer examen 2022-II · 50 preguntas',
             'epidemiologia/parcial-1-susti': 'Sustitutorio I 2022-II · sus 46 preguntas salen también en el 2022',
             'epidemiologia/parcial-1-kahoot': 'Kahoots de clase · 15 preguntas',
-            'epidemiologia/parcial-1-pasos': 'PASOS 1 a 4 del aula virtual · 44 preguntas con lámina explicativa',
+            'epidemiologia/parcial-1-pasos': 'PASOS 1 a 4 del aula virtual · 54 preguntas con lámina explicativa (27 gratis)',
           },
         },
       },
