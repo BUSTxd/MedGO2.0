@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
+
+const bloquear = (e: React.SyntheticEvent) => e.preventDefault();
 import { useDarkMode } from './DarkModeContext';
 import styles from '@/styles/resumenHtml.module.css';
 
@@ -268,6 +270,11 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
   // entero perdería el punto de lectura que el alumno acaba de dejar.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      // Copiar, seleccionar todo, guardar, imprimir, ver código: fuera.
+      if ((e.ctrlKey || e.metaKey) && ['c', 'x', 'a', 's', 'p', 'u'].includes(e.key.toLowerCase())) {
+        e.preventDefault();
+        return;
+      }
       if (e.key !== 'Escape') return;
       if (lightbox) setLightbox(null);
       else onClose();
@@ -571,7 +578,13 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
   if (!portalTarget) return null;
 
   const overlay = (
-    <div className={styles.overlay}>
+    <div
+      className={styles.overlay}
+      onCopy={bloquear}
+      onCut={bloquear}
+      onContextMenu={bloquear}
+      onDragStart={bloquear}
+    >
       <div className={styles.toolbar}>
         <p className={styles.title}>{titulo ?? 'Resumen'}</p>
 

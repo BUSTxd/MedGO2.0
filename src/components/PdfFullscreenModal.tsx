@@ -45,6 +45,11 @@ export default function PdfFullscreenModal({ claseId, onClose }: Props) {
   // ESC closes + lock body scroll + hide sidebar via global body class
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      // Guardar, imprimir, copiar, ver código: fuera mientras el visor está abierto.
+      if ((e.ctrlKey || e.metaKey) && ['c', 'x', 'a', 's', 'p', 'u'].includes(e.key.toLowerCase())) {
+        e.preventDefault();
+        return;
+      }
       if (e.key === 'Escape') onClose();
     };
     document.addEventListener('keydown', onKey);

@@ -3,11 +3,7 @@ import { NextResponse } from 'next/server';
 import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/server';
 import { getUserPlanState } from '@/lib/plans';
-import { requiredPlanDeCurso, tieneAccesoA } from '@/lib/acceso';
-
-// Resúmenes de clases `premium` dentro de un curso gratis: la página lleva el
-// velo, pero el candado de verdad es este. El tramo sale de la carpeta del alias.
-const DE_PAGO = new Set(['epi-t-2', 'epi-t-3', 'epi-t-4']);
+import { puedeVerResumen } from '@/lib/acceso-resumen';
 
 /**
  * Resúmenes en HTML (no PDF).
@@ -183,11 +179,9 @@ export async function GET(
 
   const fileId = FILE_ALIAS[claseId] ?? claseId;
 
-  if (DE_PAGO.has(claseId)) {
-    const estado = await getUserPlanState(await createClient());
-    if (!tieneAccesoA(estado, requiredPlanDeCurso(fileId.split('/')[0]))) {
-      return NextResponse.json({ error: 'plan_required' }, { status: 403 });
-    }
+  // El velo de la página no protege nada: el candado de verdad es este.
+  if (!puedeVerResumen(await getUserPlanState(await createClient()), claseId)) {
+    return NextResponse.json({ error: 'plan_required' }, { status: 403 });
   }
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

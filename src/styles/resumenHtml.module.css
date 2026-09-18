@@ -13,7 +13,20 @@
    globals.css).
    ═══════════════════════════════════════════════════════════════════════ */
 
+/* El resumen se lee, no se copia: sin selección, sin menú largo en iOS y sin
+   arrastrar figuras. Al imprimir, con el visor abierto no sale nada. */
+.overlay :global(img) {
+  -webkit-user-drag: none;
+}
+
+@media print {
+  .overlay { display: none !important; }
+}
+
 .overlay {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   position: fixed;
   inset: 0;
   z-index: 2000;

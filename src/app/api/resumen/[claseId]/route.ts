@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/server';
+import { getUserPlanState } from '@/lib/plans';
+import { puedeVerResumen } from '@/lib/acceso-resumen';
 
 // Only these IDs have an associated PDF in Supabase Storage
 const ALLOWED = new Set([
@@ -98,12 +100,6 @@ const ALLOWED = new Set([
   'dig-histo-1', 'dig-histo-2', 'dig-histo-3',
 ]);
 
-// IDs that require an active paid plan (Interno/Residente). Free-plan users
-// get 403 before any signed URL is generated — zero Supabase egress for them.
-const REQUIRES_PAID_PLAN = new Set([
-  'practica-8', 'practica-9', 'practica-10',
-  'practica-11', 'practica-12', 'practica-13',
-]);
 
 // Some IDs share a single PDF file in storage, or need a path prefix (carpeta/)
 const FILE_ALIAS: Record<string, string> = {
@@ -313,20 +309,10 @@ export async function GET(
     return NextResponse.json({ error: 'not_found' }, { status: 404 });
   }
 
-  if (REQUIRES_PAID_PLAN.has(claseId)) {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
-    }
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('plan')
-      .eq('id', user.id)
-      .maybeSingle<{ plan: string | null }>();
-    if (!profile?.plan || profile.plan === 'free') {
-      return NextResponse.json({ error: 'plan_required' }, { status: 403 });
-    }
+  // Misma regla que la página de la clase: libre para cualquiera, o el plan
+  // del tramo del curso. Sin acceso no se genera la signed URL.
+  if (!puedeVerResumen(await getUserPlanState(await createClient()), claseId)) {
+    return NextResponse.json({ error: 'plan_required' }, { status: 403 });
   }
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
