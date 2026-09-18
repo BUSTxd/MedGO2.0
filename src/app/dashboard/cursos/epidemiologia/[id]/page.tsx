@@ -46,6 +46,7 @@ export default async function EpidemiologiaActividadPage({
         examen={act.examen}
         titulo={act.titulo}
         backHref={`/dashboard/cursos/epidemiologia/${id}`}
+        avisoCada={3}
       />
     );
   }

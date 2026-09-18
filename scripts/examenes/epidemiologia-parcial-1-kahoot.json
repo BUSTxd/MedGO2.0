@@ -2,7 +2,7 @@
   "version": 1,
   "key": "epidemiologia/parcial-1-kahoot",
   "title": "Kahoots — Primer examen de Epidemiología",
-  "duration_min": null,
+  "duration_min": 15,
   "questions": [
     {
       "id": "f1-01",

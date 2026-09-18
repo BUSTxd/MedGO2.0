@@ -267,8 +267,8 @@ export const semanas: Semana[] = [
           hints: {
             'epidemiologia/parcial-1-2022': 'Primer examen 2022-II · 50 preguntas',
             'epidemiologia/parcial-1-susti': 'Sustitutorio I 2022-II · sus 46 preguntas salen también en el 2022',
-            'epidemiologia/parcial-1-kahoot': 'Kahoots de clase · 15 preguntas',
-            'epidemiologia/parcial-1-pasos': 'PASOS 1 a 4 del aula virtual · 54 preguntas con lámina explicativa (27 gratis)',
+            'epidemiologia/parcial-1-kahoot': 'Kahoots de clase',
+            'epidemiologia/parcial-1-pasos': 'PASOS 1 a 4 del aula virtual, con lámina explicativa',
           },
         },
       },
