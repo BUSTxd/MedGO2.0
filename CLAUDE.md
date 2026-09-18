@@ -172,7 +172,7 @@ El plan del usuario vive en `profiles.plan` + `profiles.plan_expires_at` en Supa
 ```ts
 examen: { key: 'neurologia/snc-histologia', free: true, groups: ['neurologia/snc-histologia-a3', 'neurologia/snc-histologia-c'] }
 ```
-`groupKeys={act.examen.groups}` pasa a `<ExamRunner>`. Cada clave en `groups` referencia un JSON independiente en el bucket `examenes` y debe estar en el whitelist `EXAMENES` de `src/app/api/examen/[...examKey]/route.ts` (sin ese paso el cuadro sale en el selector y la route responde 404).
+`groupKeys={act.examen.groups}` pasa a `<ExamRunner>`. Cada clave en `groups` referencia un JSON independiente en el bucket `examenes` y debe estar en el whitelist `EXAMENES` de `src/lib/data/examenes-acceso.ts` (lo lee la route `api/examen/[...examKey]` y la ficha de actividad del admin) (sin ese paso el cuadro sale en el selector y la route responde 404).
 
 **Banqueos de varios años (`labels`)**: `labels: Record<clave, rótulo>` en el `ExamenRef` (`groupLabels` a la página) rotula cada grupo por año («Banqueo 2024») en vez de «Grupo A». El rótulo va **por clave, no por posición**. Cada banqueo guarda su propia nota e historial de intentos por clave.
 
@@ -180,7 +180,7 @@ examen: { key: 'neurologia/snc-histologia', free: true, groups: ['neurologia/snc
 
 **Plantilla común: `ExamenDeCurso` + `ExamenRef` (`src/lib/data/examen.ts`)**. RSC que recibe `curso`, `examen`, `titulo`, `backHref`: lee el plan, saca el requerido del tramo del curso (`requiredPlanDeCurso`), pasa `groups`/`labels`/`dePago` al runner con el aviso cada N preguntas, y pone el velo de `LockedContent` salvo que el curso sea gratis o el banqueo lleve `free`. **Para dar banqueo a un curso nuevo**:
 1. JSON fuente en `scripts/examenes/<curso>-<examen>.json` → `node scripts/upload-examen.mjs <archivo> <curso>/<clave>.json`;
-2. la clave en `EXAMENES` de la route (con `free` o sin él);
+2. la clave en `EXAMENES` (`src/lib/data/examenes-acceso.ts`, con `free` o sin él);
 3. `examen?: ExamenRef` en el `Actividad` del curso;
 4. en su `[id]/page.tsx`: `if (sp?.examen === '1' && act.examen) return <ExamenDeCurso … />` + `examen`/`examenTitle` en `StudyMaterialSection`.
 Patología e Inmunología usan la plantilla. Neurología y Excretor montan el runner a mano **a propósito** (pasarlas activaría el aviso de suscripción en exámenes que hoy no lo tienen).

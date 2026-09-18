@@ -132,7 +132,7 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
-  min-width: 760px;
+  min-width: 900px;
 }
 
 .table th {
@@ -237,3 +237,162 @@
   color: #6b21a8;
 }
 :global(body.dark-mode) .planUfbi { background: #4c1d95; color: #d8b4fe; }
+
+/* ─── CURSOS OBJETIVO ─── */
+.cursosSection {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 26px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+:global(body.dark-mode) .cursosSection { background: #1e293b; border-color: #334155; }
+
+.cursosHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.cursosTitle {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+:global(body.dark-mode) .cursosTitle { color: #f1f5f9; }
+
+.cursosSub {
+  font-size: 13px;
+  color: #64748b;
+  margin: 4px 0 0;
+}
+:global(body.dark-mode) .cursosSub { color: #94a3b8; }
+
+.descargar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.descargar:hover { background: #1d4ed8; }
+:global(body.dark-mode) .descargar { background: #3b82f6; }
+:global(body.dark-mode) .descargar:hover { background: #2563eb; }
+
+.rankList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rankItem {
+  display: grid;
+  grid-template-columns: minmax(150px, 220px) 1fr auto;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+}
+
+.rankName {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #1e293b;
+  min-width: 0;
+}
+:global(body.dark-mode) .rankName { color: #e2e8f0; }
+
+.trackDot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.trackUfbi { background: #3b9edd; }
+.trackMed { background: #8b5cf6; }
+
+.rankBarTrack {
+  height: 10px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  overflow: hidden;
+}
+:global(body.dark-mode) .rankBarTrack { background: #0f172a; }
+
+.rankBar {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  min-width: 4px;
+}
+
+.rankNum {
+  font-size: 13px;
+  color: #475569;
+  white-space: nowrap;
+}
+:global(body.dark-mode) .rankNum { color: #cbd5e1; }
+
+.cursoChip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  background: #f1f5f9;
+  color: #475569;
+  white-space: nowrap;
+}
+:global(body.dark-mode) .cursoChip { background: #334155; color: #cbd5e1; }
+
+@media (max-width: 600px) {
+  .rankItem {
+    grid-template-columns: 1fr auto;
+    row-gap: 6px;
+  }
+  .rankBarTrack { grid-column: 1 / -1; grid-row: 2; }
+}
+
+.cursoChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cursoMas {
+  font-size: 10.5px;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+.userBtn {
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+.userBtn:hover .email { color: #2563eb; text-decoration: underline; text-underline-offset: 3px; }
+:global(body.dark-mode) .userBtn:hover .email { color: #60a5fa; }
+.userBtn:focus-visible { outline: 2px solid #2563eb; outline-offset: 3px; border-radius: 4px; }

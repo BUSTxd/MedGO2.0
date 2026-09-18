@@ -41,6 +41,7 @@ export default function PrivacidadPage() {
             <li>Foto de perfil (solo si te registras con Google).</li>
             <li>Universidad y carrera, cuando las completas en tu perfil (para personalizar el sílabo).</li>
             <li>Progreso académico dentro de la plataforma: lecciones completadas, respuestas a quizzes, racha de estudio y tiempos de uso.</li>
+            <li>Actividad dentro del panel: páginas visitadas y materiales abiertos, con fecha y hora.</li>
             <li>Datos técnicos básicos: dirección IP, tipo de navegador, sistema operativo y zona horaria.</li>
             <li>Identificadores opacos de pago entregados por Mercado Pago (nunca datos de tu tarjeta).</li>
           </ul>
@@ -71,7 +72,7 @@ export default function PrivacidadPage() {
             <li>Personalizar el contenido educativo y tu sílabo.</li>
             <li>Procesar suscripciones y pagos.</li>
             <li>Enviarte correos transaccionales (confirmación de pago, recordatorios de cobro, cambios en los términos).</li>
-            <li>Mejorar la plataforma mediante métricas agregadas y anónimas de uso.</li>
+            <li>Mejorar la plataforma analizando tu actividad dentro del panel: qué secciones, cursos, clases, resúmenes y banqueos abres, y los resultados de tus exámenes. Este registro va asociado a tu cuenta, es solo para uso interno de MedGO y no depende del aviso de cookies.</li>
             <li>Cumplir con obligaciones legales y contables.</li>
           </ul>
           <p className={styles.p}>

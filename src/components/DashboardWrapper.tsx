@@ -6,6 +6,8 @@ import { RecentClassesProvider } from './RecentClassesProvider';
 import { SidebarStateProvider } from './SidebarStateContext';
 import { DarkModeProvider } from './DarkModeContext';
 import ClarityPlanTag from './ClarityPlanTag';
+import PaginaVistaTracker from './PaginaVistaTracker';
+import { pingRacha } from '@/lib/racha';
 import styles from '@/styles/dashboardLayout.module.css';
 
 export default function DashboardWrapper({
@@ -27,6 +29,7 @@ export default function DashboardWrapper({
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
+    pingRacha();
     const saved = localStorage.getItem('medgo-dark');
     if (saved === 'true') {
       setDarkMode(true);
@@ -49,6 +52,7 @@ export default function DashboardWrapper({
   return (
     <PlanProvider value={planState}>
       <ClarityPlanTag />
+      {!isAdmin && <PaginaVistaTracker />}
       <RecentClassesProvider>
         <div className={styles.layout}>
           <DashboardSidebar

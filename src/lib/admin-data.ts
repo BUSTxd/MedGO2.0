@@ -1,5 +1,8 @@
 import { createAdminClient } from '@/lib/supabase/admin';
 import { countActiveDevicesByUser } from '@/lib/sessions';
+import { isAdminEmail } from '@/lib/admin';
+import { CURSOS } from '@/lib/data/aportes';
+import { cargarResumenCursos, type CursoDeUsuario } from '@/lib/actividad-usuario';
 
 export type AdminPlan = 'free' | 'interno' | 'residente' | 'ufbi' | 'ufbi-anual';
 export type AdminSubStatus = 'pending' | 'authorized' | 'paused' | 'cancelled';
@@ -16,6 +19,18 @@ export interface AdminRow {
   nextPaymentDate: string | null;
   subAmount: number | null;
   deviceCount: number;
+  /** Cursos en los que estuvo, el de más días primero (su curso objetivo). */
+  cursos: CursoDeUsuario[];
+}
+
+export interface CursoRank {
+  slug: string;
+  nombre: string;
+  track: 'basico' | 'medicina';
+  /** Alumnos que lo tienen como curso objetivo. */
+  objetivo: number;
+  /** Alumnos que entraron alguna vez. */
+  alumnos: number;
 }
 
 export interface AdminKpis {
@@ -29,6 +44,7 @@ export interface AdminKpis {
 export interface AdminData {
   rows: AdminRow[];
   kpis: AdminKpis;
+  rankingCursos: CursoRank[];
 }
 
 interface ProfileRow {
@@ -81,7 +97,7 @@ function effectiveStreak(streak: number | null, lastVisit: string | null, today:
 export async function loadAdminData(): Promise<AdminData> {
   const admin = createAdminClient();
 
-  const [authRes, profilesRes, subsRes, deviceCounts] = await Promise.all([
+  const [authRes, profilesRes, subsRes, deviceCounts, cursosDe] = await Promise.all([
     admin.auth.admin.listUsers({ perPage: 1000 }),
     admin.from('profiles').select('id, full_name, plan, plan_expires_at, last_visit_date, current_streak'),
     admin
@@ -89,6 +105,7 @@ export async function loadAdminData(): Promise<AdminData> {
       .select('user_id, status, next_payment_date, amount, created_at')
       .order('created_at', { ascending: false }),
     countActiveDevicesByUser(),
+    cargarResumenCursos(),
   ]);
 
   if (authRes.error) throw new Error(`admin.listUsers: ${authRes.error.message}`);
@@ -98,6 +115,8 @@ export async function loadAdminData(): Promise<AdminData> {
   const emails = new Map<string, string>();
   for (const u of authRes.data.users) {
     if (u.email) emails.set(u.id, u.email);
+    // Sus eventos de antes de excluirlo en /api/track siguen en la tabla.
+    if (isAdminEmail(u.email)) cursosDe.delete(u.id);
   }
 
   const profiles = (profilesRes.data ?? []) as ProfileRow[];
@@ -124,6 +143,7 @@ export async function loadAdminData(): Promise<AdminData> {
       nextPaymentDate: sub?.next_payment_date ?? null,
       subAmount: sub?.amount ?? null,
       deviceCount: deviceCounts.get(p.id) ?? 0,
+      cursos: cursosDe.get(p.id) ?? [],
     };
   });
 
@@ -135,8 +155,21 @@ export async function loadAdminData(): Promise<AdminData> {
   }).length;
   const mrrSoles = activos.reduce((sum, r) => sum + (r.subAmount ?? 14), 0);
 
+  const rankingCursos: CursoRank[] = CURSOS.map((c) => {
+    let objetivo = 0;
+    let alumnos = 0;
+    for (const lista of cursosDe.values()) {
+      if (lista[0]?.slug === c.slug) objetivo++;
+      if (lista.some((x) => x.slug === c.slug)) alumnos++;
+    }
+    return { slug: c.slug, nombre: c.nombre, track: c.track, objetivo, alumnos };
+  })
+    .filter((c) => c.alumnos > 0)
+    .sort((a, b) => b.objetivo - a.objetivo || b.alumnos - a.alumnos);
+
   return {
     rows,
+    rankingCursos,
     kpis: {
       totalUsers: rows.length,
       activosTotal: activos.length,

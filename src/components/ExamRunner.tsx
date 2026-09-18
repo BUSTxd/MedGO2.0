@@ -1431,6 +1431,10 @@ export default function ExamRunner({
   // (no sólo hasta el bloque): así el título "Mejora con preguntas premium"
   // no queda pegado al borde superior, sino con aire encima.
   useEffect(() => {
+    if (corteAbierto) trackEvent('contenido_bloqueado', { origen: 'muestra', examKey: stageKey });
+  }, [corteAbierto, stageKey]);
+
+  useEffect(() => {
     if (!corteAbierto) return;
     window.scrollTo({ top: 0, behavior: prefiereQuieto() ? 'auto' : 'smooth' });
   }, [corteAbierto]);
@@ -1755,7 +1759,10 @@ export default function ExamRunner({
                     ...(muestra ? [`${nombreEtapa(stage)} completo (${muestra.total} preguntas)`] : []),
                   ]}
                   onVer={() => {
-                    if (suscripcion.isAuthed) setModalAbierto(true);
+                    if (suscripcion.isAuthed) {
+                      trackEvent('pago_abierto', { plan: suscripcion.plan, origen: 'aviso', examKey: stageKey });
+                      setModalAbierto(true);
+                    }
                     else window.location.href = '/auth/login?next=' + encodeURIComponent(window.location.pathname);
                   }}
                   onCerrar={() => setAvisoCerrado(idAviso)}
@@ -2025,7 +2032,10 @@ export default function ExamRunner({
                   <CortePremium
                     muestra={muestra}
                     isAuthed={!!suscripcion?.isAuthed}
-                    onVer={() => setModalAbierto(true)}
+                    onVer={() => {
+                      if (suscripcion) trackEvent('pago_abierto', { plan: suscripcion.plan, origen: 'muestra', examKey: stageKey });
+                      setModalAbierto(true);
+                    }}
                   />
                 </div>
               </div>

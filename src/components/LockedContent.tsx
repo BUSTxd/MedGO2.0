@@ -1,16 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { createClient } from '@/lib/supabase/client';
 import { PLANS, planUnlocks, type ProfilePlan, type PlanKey } from '@/lib/plans';
 import { usePlan } from './PlanProvider';
+import { trackEvent } from '@/lib/analytics';
 import styles from '@/styles/lockedContent.module.css';
 
 // El SDK de Mercado Pago es pesado: solo se descarga cuando se abre el modal,
 // no al renderizar contenido bloqueado.
 const SubscribeModal = dynamic(() => import('./SubscribeModal'), { ssr: false });
+
+/**
+ * Dice a lo que va dentro si el contenido está tras el candado. Lo que se pinta
+ * sin pasar por aquí es gratis para cualquiera: así el evento registra el
+ * acceso tal como era en ese momento, con las reglas reales de cada página.
+ */
+const CandadoContext = createContext(false);
+
+export function useDetrasDeCandado(): boolean {
+  return useContext(CandadoContext);
+}
 
 interface PlanState {
   plan: ProfilePlan;
@@ -58,10 +70,18 @@ export default function LockedContent({
   const clientOk = clientPlan.isActive && planUnlocks(clientPlan.plan, requiredPlan);
   const meetsRequirement = !!planState.allAccess || serverOk || clientOk;
 
+  // Qué quiso abrir sin tener el plan: la ficha del admin lo lista aparte.
+  const registrado = useRef(false);
+  useEffect(() => {
+    if (meetsRequirement || registrado.current) return;
+    registrado.current = true;
+    trackEvent('contenido_bloqueado', { plan: requiredPlan, origen: 'candado' });
+  }, [meetsRequirement, requiredPlan]);
+
   // No desbloqueamos mientras el SubscribeModal está abierto: si el plan se
   // acaba de actualizar tras pagar, hay que mantener visible el receipt hasta
   // que el usuario lo cierre (clic en "Continuar" o en la X).
-  if (meetsRequirement && !open) return <>{children}</>;
+  if (meetsRequirement && !open) return <CandadoContext.Provider value>{children}</CandadoContext.Provider>;
 
   const plan = PLANS[requiredPlan];
 
@@ -75,12 +95,17 @@ export default function LockedContent({
         return;
       }
     }
+    trackEvent('pago_abierto', { plan: requiredPlan, origen: 'candado' });
     setOpen(true);
   }
 
   return (
     <div className={`${styles.wrap} ${preview ? '' : styles.wrapSolo}`}>
-      {preview && <div className={styles.children} aria-hidden>{children}</div>}
+      {preview && (
+        <div className={styles.children} aria-hidden>
+          <CandadoContext.Provider value>{children}</CandadoContext.Provider>
+        </div>
+      )}
 
       <div className={styles.overlay}>
         <div className={styles.card}>

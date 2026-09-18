@@ -2,6 +2,8 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { getCachedPlanState } from '@/lib/plans-server';
+import { isAdminEmail } from '@/lib/admin';
+import { ACCESO_V, accesoAlRegistrar } from '@/lib/actividad-usuario';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -11,11 +13,14 @@ export const dynamic = 'force-dynamic';
  * Cualquier nombre fuera de aquí se rechaza (evita basura/abuso del endpoint).
  */
 const ALLOWED_EVENTS = new Set([
+  'pagina_vista',
   'clase_abierta',
   'banco_iniciado',
   'examen_completado',
   'resumen_abierto',
   'simulacion_abierta',
+  'contenido_bloqueado',
+  'pago_abierto',
 ]);
 
 interface TrackBody {
@@ -50,6 +55,14 @@ export async function POST(req: NextRequest) {
     supabase.auth.getUser(),
     getCachedPlanState(),
   ]);
+  // El admin recorre la web para revisarla: sus eventos ensuciarían las métricas.
+  if (isAdminEmail(user?.email)) return new NextResponse(null, { status: 204 });
+
+  // El acceso se congela aquí: lo que el cliente mande en props.acceso solo
+  // cuenta si no hay una fuente mejor en el servidor.
+  const acceso = accesoAlRegistrar(event, path, props);
+  const { acceso: _cliente, ...resto } = props;
+  const propsFinal = { ...resto, acceso_v: ACCESO_V, ...(acceso ? { acceso } : {}) };
 
   const admin = createAdminClient();
   const table = admin.from('analytics_events') as unknown as {
@@ -59,7 +72,7 @@ export async function POST(req: NextRequest) {
     user_id: user?.id ?? null,
     plan: planState.plan,
     event,
-    props,
+    props: propsFinal,
     path,
   });
   if (error) console.error('[track] insert error', error);

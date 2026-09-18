@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { trackEvent } from '@/lib/analytics';
+import { trackEvent, type AnalyticsEvent } from '@/lib/analytics';
+import { useDetrasDeCandado } from './LockedContent';
 import type { ExamenRef } from '@/lib/data/examen';
 import styles from '@/styles/cursos.module.css';
 
@@ -140,6 +141,9 @@ const BanqueoIcon = () => (
 );
 
 export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel, abrirResumen }: Props) {
+  const deAcceso = useDetrasDeCandado() ? 'pago' : 'gratis';
+  const track = (ev: AnalyticsEvent, props: Record<string, unknown>) =>
+    trackEvent(ev, { ...props, acceso: deAcceso });
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
   const isPropuestosMulti = propuestosPdf?.opciones && propuestosPdf.opciones.length > 1;
   const pathname = usePathname();
@@ -168,7 +172,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
 
   // Evento curado: el alumno entró a la clase (una vez por montaje).
   useEffect(() => {
-    trackEvent('clase_abierta', { claseId });
+    track('clase_abierta', { claseId });
   }, [claseId]);
 
   // Which PDF the fullscreen modal targets.
@@ -190,13 +194,13 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
     if (isMulti) {
       setPickerOpen(true);
     } else {
-      trackEvent('resumen_abierto', { claseId: activeId });
+      track('resumen_abierto', { claseId: activeId });
       setFullscreenOpen(true);
     }
   };
 
   const handlePick = (id: string) => {
-    trackEvent('resumen_abierto', { claseId: id });
+    track('resumen_abierto', { claseId: id });
     setSelectedId(id);
     setPickerOpen(false);
     setFullscreenOpen(true);
@@ -221,7 +225,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <Link
               href={simulacion.href}
               className={`${styles.studyCard} ${styles.studyCardActive}`}
-              onClick={() => trackEvent('simulacion_abierta', { claseId })}
+              onClick={() => track('simulacion_abierta', { claseId })}
             >
               <div className={styles.studyCardIcon}><BeakerIcon /></div>
               <p className={styles.studyCardTitle}>Simulación</p>
@@ -261,7 +265,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           <Link
             href={banco.href}
             className={`${styles.studyCard} ${styles.studyCardActive}`}
-            onClick={() => trackEvent('banco_iniciado', { claseId, examKey: claseId })}
+            onClick={() => track('banco_iniciado', { claseId, examKey: claseId })}
           >
             <div className={styles.studyCardIcon}>
               <BanqueoIcon />
@@ -276,7 +280,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           <Link
             href={`${pathname}?examen=1`}
             className={`${styles.studyCard} ${styles.studyCardActive}`}
-            onClick={() => trackEvent('banco_iniciado', { claseId, examKey: examen.key })}
+            onClick={() => track('banco_iniciado', { claseId, examKey: examen.key })}
           >
             <div className={styles.studyCardIcon}>
               <BanqueoIcon />
@@ -292,7 +296,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
               if (isPropuestosMulti) {
                 setPropuestosPickerOpen(true);
               } else {
-                trackEvent('banco_iniciado', { claseId, examKey: propuestosPdf.claseId });
+                track('banco_iniciado', { claseId, examKey: propuestosPdf.claseId });
                 setPropuestosOpen(true);
               }
             }}
@@ -310,7 +314,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           <Link
             href={solucionario.href}
             className={`${styles.studyCard} ${styles.studyCardActive}`}
-            onClick={() => trackEvent('banco_iniciado', { claseId, examKey: 'solucionario' })}
+            onClick={() => track('banco_iniciado', { claseId, examKey: 'solucionario' })}
           >
             <div className={styles.studyCardIcon}>
               <BanqueoIcon />
@@ -408,7 +412,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
                   key={opcion.id}
                   className={styles.pickerOption}
                   onClick={() => {
-                    trackEvent('banco_iniciado', { claseId, examKey: opcion.id });
+                    track('banco_iniciado', { claseId, examKey: opcion.id });
                     setSelectedPropuestosId(opcion.id);
                     setPropuestosPickerOpen(false);
                     setPropuestosOpen(true);

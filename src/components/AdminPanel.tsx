@@ -1,6 +1,7 @@
 'use client';
 import { useMemo, useState } from 'react';
-import type { AdminData, AdminRow } from '@/lib/admin-data';
+import type { AdminData, AdminRow, CursoRank } from '@/lib/admin-data';
+import UsuarioFicha from './UsuarioFicha';
 import styles from '@/styles/adminPage.module.css';
 import accountStyles from '@/styles/accountPage.module.css';
 
@@ -88,8 +89,60 @@ function sortRows(rows: AdminRow[], tab: TabKey): AdminRow[] {
   return sorted;
 }
 
+function CursosObjetivo({ ranking }: { ranking: CursoRank[] }) {
+  const max = Math.max(1, ...ranking.map((c) => c.objetivo));
+  return (
+    <section className={styles.cursosSection}>
+      <div className={styles.cursosHead}>
+        <div>
+          <h2 className={styles.cursosTitle}>Cursos objetivo</h2>
+          <p className={styles.cursosSub}>
+            El curso objetivo de un alumno es el que visitó en más días distintos.
+            Pulsa un alumno en la tabla para ver toda su actividad.
+          </p>
+        </div>
+        <a className={styles.descargar} href="/api/admin/actividad?formato=csv" download>
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fillRule="evenodd" d="M10 3a1 1 0 011 1v7.59l2.3-2.3a1 1 0 111.4 1.42l-4 4a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.42l2.3 2.3V4a1 1 0 011-1zM4 15a1 1 0 011 1v1h10v-1a1 1 0 112 0v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2a1 1 0 011-1z" clipRule="evenodd" />
+          </svg>
+          Descargar toda la actividad
+        </a>
+      </div>
+
+      {ranking.length === 0 ? (
+        <div className={styles.empty}>Aún no hay visitas a cursos.</div>
+      ) : (
+        <ol className={styles.rankList}>
+          {ranking.map((c) => (
+            <li key={c.slug} className={styles.rankItem}>
+              <span className={styles.rankName}>
+                <span
+                  className={`${styles.trackDot} ${c.track === 'basico' ? styles.trackUfbi : styles.trackMed}`}
+                  title={c.track === 'basico' ? 'UFBI' : 'Facultad'}
+                />
+                {c.nombre}
+              </span>
+              <span className={styles.rankBarTrack}>
+                <span
+                  className={`${styles.rankBar} ${c.track === 'basico' ? styles.trackUfbi : styles.trackMed}`}
+                  style={{ width: `${(c.objetivo / max) * 100}%` }}
+                />
+              </span>
+              <span className={styles.rankNum}>
+                <strong>{c.objetivo}</strong> de objetivo
+                <span className={styles.muted}> · {c.alumnos} entraron</span>
+              </span>
+            </li>
+          ))}
+        </ol>
+      )}
+    </section>
+  );
+}
+
 export default function AdminPanel({ data }: { data: AdminData }) {
   const [tab, setTab] = useState<TabKey>('activos');
+  const [ficha, setFicha] = useState<AdminRow | null>(null);
 
   const counts = useMemo(() => {
     return {
@@ -139,6 +192,8 @@ export default function AdminPanel({ data }: { data: AdminData }) {
         </div>
       </div>
 
+      <CursosObjetivo ranking={data.rankingCursos} />
+
       {/* ─── Tabs ─── */}
       <div className={styles.tabBar} role="tablist">
         {TABS.map((t) => (
@@ -165,6 +220,7 @@ export default function AdminPanel({ data }: { data: AdminData }) {
               <tr>
                 <th>Usuario</th>
                 <th>Plan</th>
+                <th>Curso objetivo</th>
                 <th>Última visita</th>
                 <th>Próximo pago</th>
                 <th>Racha</th>
@@ -175,11 +231,26 @@ export default function AdminPanel({ data }: { data: AdminData }) {
               {visible.map((r) => (
                 <tr key={r.id}>
                   <td>
-                    <div className={styles.email}>{r.email}</div>
-                    {r.fullName && <div className={styles.name}>{r.fullName}</div>}
+                    <button type="button" className={styles.userBtn} onClick={() => setFicha(r)}>
+                      <span className={styles.email}>{r.email}</span>
+                      {r.fullName && <span className={styles.name}>{r.fullName}</span>}
+                    </button>
                   </td>
                   <td>
                     <span className={planBadgeClass(r.plan)}>{planLabel(r.plan)}</span>
+                  </td>
+                  <td>
+                    {r.cursos[0] ? (
+                      <span
+                        className={styles.cursoChip}
+                        title={r.cursos.map((c) => `${c.nombre}: ${c.dias} ${c.dias === 1 ? 'día' : 'días'}`).join('\n')}
+                      >
+                        {r.cursos[0].nombre}
+                        {r.cursos.length > 1 && <span className={styles.cursoMas}>+{r.cursos.length - 1}</span>}
+                      </span>
+                    ) : (
+                      <span className={styles.muted}>—</span>
+                    )}
                   </td>
                   <td>
                     {r.lastVisitDate
@@ -207,6 +278,15 @@ export default function AdminPanel({ data }: { data: AdminData }) {
           </table>
         )}
       </div>
+
+      {ficha && (
+        <UsuarioFicha
+          userId={ficha.id}
+          email={ficha.email}
+          nombre={ficha.fullName}
+          onClose={() => setFicha(null)}
+        />
+      )}
     </>
   );
 }
