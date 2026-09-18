@@ -102,12 +102,13 @@ function semanaDeClases(
   n: number,
   unidad: Unidad,
   fecha: string,
-  teoria: { titulo: string; subtemas: string[] },
+  teoria: { titulo: string; subtemas: string[]; resumen?: Actividad['resumen'] },
   practica: { titulo: string; subtemas: string[] },
   taller: { titulo: string; subtemas: string[] },
 ): Actividad[] {
   return [
     {
+      ...(teoria.resumen && { resumen: teoria.resumen }),
       id: `epi-t-${n}`,
       tipo: 'TEORIA',
       unidad,
@@ -148,6 +149,10 @@ function semanaDeClases(
 
 const tallerCaso = { titulo: TALLER_CASO_TITULO, subtemas: TALLER_CASO };
 
+function resumenHtml(id: string): Actividad['resumen'] {
+  return { tipo: 'pdf', formato: 'html', opciones: [{ id, label: 'Resumen', formato: 'html' }] };
+}
+
 export const semanas: Semana[] = [
   // ═══ MÓDULO I — Sistema de salud y primer nivel de atención ═══════════════
   {
@@ -178,6 +183,7 @@ export const semanas: Semana[] = [
           'Redes Integradas de Salud',
           'Sistemas de salud en el mundo y comparación con el sistema peruano',
         ],
+        resumen: resumenHtml('epi-t-2'),
       },
       {
         titulo: 'Reconocimiento del Centro de Salud',
@@ -199,6 +205,7 @@ export const semanas: Semana[] = [
           'Categorías de los establecimientos de salud',
           'Proceso de referencia y contrarreferencia',
         ],
+        resumen: resumenHtml('epi-t-3'),
       },
       {
         titulo: 'Ejemplos aplicativos y su relación con el rol de su RIS',
@@ -219,6 +226,7 @@ export const semanas: Semana[] = [
           'Modalidad de oferta de servicios de salud',
           'Prioridades globales en salud: rol de la OMS',
         ],
+        resumen: resumenHtml('epi-t-4'),
       },
       {
         titulo: 'Verificación de la cartera de servicios de salud',

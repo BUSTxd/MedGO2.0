@@ -60,6 +60,7 @@ const ALLOWED = new Set([
   'dig-clase-18',
   'dig-tbl-1',
   'dig-tbl-2',
+  'epi-t-2', 'epi-t-3', 'epi-t-4',
   // Inmunología: con prefijo, a diferencia de sus PDF (`t-10`, `sgp-1`…),
   // porque `t-N` es un nombre que cualquier otro curso podría usar.
   'inm-t-1', 'inm-t-2', 'inm-t-3', 'inm-t-4', 'inm-t-5', 'inm-t-6', 'inm-t-7',
@@ -120,6 +121,9 @@ const FILE_ALIAS: Record<string, string> = {
   'dig-clase-18': 'digestivo/dig-clase-18',
   'dig-tbl-1': 'digestivo/dig-tbl-1',
   'dig-tbl-2': 'digestivo/dig-tbl-2',
+  'epi-t-2': 'epidemiologia/epi-t-2',
+  'epi-t-3': 'epidemiologia/epi-t-3',
+  'epi-t-4': 'epidemiologia/epi-t-4',
   'inm-t-1': 'inmunologia/inm-t-1',
   'inm-t-2': 'inmunologia/inm-t-2',
   'inm-t-3': 'inmunologia/inm-t-3',
