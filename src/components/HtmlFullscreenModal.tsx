@@ -215,8 +215,8 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
       return;
     }
 
-    // El texto de este envase es real y seleccionable: si el alumno acaba de
-    // seleccionar algo, el clic que cierra la selección no debe abrir nada.
+    // El visor bloquea la selección (`user-select: none`), pero si alguna
+    // quedara, el clic que la cierra no debe abrir la figura.
     if (window.getSelection()?.toString()) return;
 
     const figura = document
