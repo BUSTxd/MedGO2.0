@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { desgloseAcumulado, MINIMO_ACUMULADO, UMBRAL_FLOJO, type Desglose } from '@/lib/temas-flojos';
+import { hrefDeClase } from '@/lib/data/temas';
 import styles from '@/styles/dashboardPages.module.css';
 
 export default function RepasaEsto() {
@@ -31,7 +32,8 @@ export default function RepasaEsto() {
         return (
           <Link
             key={`${d.curso}-${d.temaId}`}
-            href={`/dashboard/cursos/${d.curso}/${clase.claseId}${clase.conResumen ? '?resumen=1' : ''}`}
+            // La página decide si lo abre: sin acceso ignora `?resumen=1`.
+            href={hrefDeClase(d.curso, clase, true)}
             className={styles.repasaItem}
           >
             <span className={styles.repasaTema}>{d.label}</span>

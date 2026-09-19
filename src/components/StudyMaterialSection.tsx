@@ -123,6 +123,8 @@ interface Props {
   banqueoLabel?: string;
   /** Abre el resumen al entrar (`?resumen=1`): lo usan las recomendaciones de estudio. */
   abrirResumen?: boolean;
+  /** Con `abrirResumen`: título de la sección donde abrir (`&seccion=`). */
+  resumenSeccion?: string;
 }
 
 const BeakerIcon = () => (
@@ -140,7 +142,7 @@ const BanqueoIcon = () => (
   </svg>
 );
 
-export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel, abrirResumen }: Props) {
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel, abrirResumen, resumenSeccion }: Props) {
   const deAcceso = useDetrasDeCandado() ? 'pago' : 'gratis';
   const track = (ev: AnalyticsEvent, props: Record<string, unknown>) =>
     trackEvent(ev, { ...props, acceso: deAcceso });
@@ -153,6 +155,8 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
   const deepLink = !!abrirResumen && hasResumen;
   const [pickerOpen, setPickerOpen]       = useState(deepLink && !!isMulti);
   const [fullscreenOpen, setFullscreenOpen] = useState(deepLink && !isMulti);
+  // Sólo la primera apertura va a la sección; al reabrir, desde arriba.
+  const [seccion, setSeccion] = useState(deepLink ? resumenSeccion : undefined);
   const [selectedId, setSelectedId]       = useState<string | null>(null);
   const [propuestosOpen, setPropuestosOpen] = useState(false);
   const [propuestosPickerOpen, setPropuestosPickerOpen] = useState(false);
@@ -208,6 +212,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
 
   const handleCloseFullscreen = () => {
     setFullscreenOpen(false);
+    setSeccion(undefined);
     if (isMulti) {
       // Reset selection so next click reopens the picker
       setSelectedId(null);
@@ -390,6 +395,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           <HtmlFullscreenModal
             claseId={activeId}
             titulo={resumenTitulo}
+            seccion={seccion}
             onClose={handleCloseFullscreen}
           />
         ) : (

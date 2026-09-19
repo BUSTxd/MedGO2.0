@@ -9,6 +9,7 @@ import ReactMarkdown from 'react-markdown';
 import { trackEvent } from '@/lib/analytics';
 import { PLANS, planUnlocks, type PlanKey, type ProfilePlan } from '@/lib/plans';
 import { cursoDe, desglosarIntento, registrarIntento, UMBRAL_FLOJO, type Desglose } from '@/lib/temas-flojos';
+import { hrefDeClase } from '@/lib/data/temas';
 import LockedContent from './LockedContent';
 import { usePlan } from './PlanProvider';
 import styles from '@/styles/examRunner.module.css';
@@ -594,7 +595,7 @@ function CarruselResumenes({
               key={`${d.curso}-${d.temaId}`}
               // Sin `?resumen=1` si está cerrada: el visor va por portal y se
               // montaría por delante del velo del paywall.
-              href={`/dashboard/cursos/${d.curso}/${c.claseId}${c.conResumen && !cerrada ? '?resumen=1' : ''}`}
+              href={hrefDeClase(d.curso, c, !cerrada)}
               className={`${styles.ficha} ${cerrada ? styles.fichaCerrada : ''}`}
               // Nativo y no un globo propio: la pista lleva scroll horizontal, y
               // cualquier flotante suyo se recortaría.

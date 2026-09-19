@@ -15,14 +15,14 @@ import TrackRecentClass from '@/components/TrackRecentClass';
 import ExamenDeCurso from '@/components/ExamenDeCurso';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
-import { cursoEsGratis } from '@/lib/acceso';
+import { cursoEsGratis, tieneAccesoA } from '@/lib/acceso';
 
 export default async function EpidemiologiaActividadPage({
   params,
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ examen?: string }>;
+  searchParams: Promise<{ examen?: string; resumen?: string; seccion?: string }>;
 }) {
   const { id } = await params;
   const sp = await searchParams;
@@ -118,6 +118,10 @@ export default async function EpidemiologiaActividadPage({
             resumenTitulo={act.titulo}
             examen={act.examen}
             examenTitle={act.titulo}
+            // Sólo si la clase está abierta: el visor va por portal, por
+            // delante del velo del paywall.
+            abrirResumen={sp?.resumen === '1' && (isFreeAccess || tieneAccesoA(planState, 'interno'))}
+            resumenSeccion={sp?.seccion}
           />
         )}
       </div>

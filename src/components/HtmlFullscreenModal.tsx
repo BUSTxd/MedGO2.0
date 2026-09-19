@@ -99,10 +99,12 @@ const FIGURAS = [
 interface Props {
   claseId: string;
   titulo?: string;
+  /** Comienzo del título (h1-h4) donde abrir; sin él, desde arriba. */
+  seccion?: string;
   onClose: () => void;
 }
 
-export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props) {
+export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose }: Props) {
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
   const [html, setHtml] = useState<string | null>(null);
   const [error, setError] = useState(false);
@@ -265,6 +267,53 @@ export default function HtmlFullscreenModal({ claseId, titulo, onClose }: Props)
       document.body.classList.remove('pdf-fullscreen-active');
     };
   }, []);
+
+  /**
+   * Abrir en la sección del tema (enlace desde el informe de un banqueo).
+   * Las figuras de arriba cargan en diferido y empujan el texto al llegar, así
+   * que se re-ancla a cada cambio de alto hasta que el alumno mueve el scroll
+   * (o pasan 4 s): después el sitio es suyo. Sin estado: nada de re-render.
+   */
+  useEffect(() => {
+    const sheet = sheetRef.current;
+    const scroller = scrollerRef.current;
+    if (!html || !seccion || !sheet || !scroller) return;
+
+    const norm = (s: string) =>
+      s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    const buscado = norm(seccion);
+    const destino = Array.from(sheet.querySelectorAll<HTMLElement>('h1, h2, h3, h4'))
+      .find((h) => norm(h.textContent ?? '').startsWith(buscado));
+    if (!destino) return;
+
+    const anclar = () => {
+      const delta = destino.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
+      scroller.scrollTop += delta - 16;
+    };
+    const raf = requestAnimationFrame(anclar);
+    destino.classList.add(styles.seccionDestino);
+
+    const ro = new ResizeObserver(anclar);
+    ro.observe(sheet);
+    const soltar = () => {
+      ro.disconnect();
+      scroller.removeEventListener('wheel', soltar);
+      scroller.removeEventListener('touchstart', soltar);
+      scroller.removeEventListener('pointerdown', soltar);
+      window.removeEventListener('keydown', soltar);
+    };
+    scroller.addEventListener('wheel', soltar, { passive: true });
+    scroller.addEventListener('touchstart', soltar, { passive: true });
+    scroller.addEventListener('pointerdown', soltar);
+    window.addEventListener('keydown', soltar);
+    const tope = setTimeout(soltar, 4000);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(tope);
+      soltar();
+    };
+  }, [html, seccion]);
 
   // Con el lightbox abierto, Esc cierra sólo la figura: cerrar el resumen
   // entero perdería el punto de lectura que el alumno acaba de dejar.

@@ -1720,3 +1720,19 @@
     transform: none;
   }
 }
+
+/* Sección a la que llega un enlace del informe de un banqueo: un destello que
+   se apaga solo, para que el ojo sepa dónde empezar. */
+.seccionDestino {
+  animation: seccionDestino 2.6s ease-out 0.3s both;
+  border-radius: 6px;
+}
+
+@keyframes seccionDestino {
+  0%, 35% { background: rgba(59, 158, 221, 0.22); box-shadow: 0 0 0 6px rgba(59, 158, 221, 0.22); }
+  100%    { background: transparent; box-shadow: 0 0 0 6px transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seccionDestino { animation: none; }
+}

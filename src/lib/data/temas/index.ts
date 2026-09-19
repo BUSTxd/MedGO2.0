@@ -12,6 +12,18 @@ export interface ClaseRecomendada {
   conResumen: boolean;
   /** La clase está abierta a cualquier cuenta (flag `gratis` del sílabo). */
   gratis?: boolean;
+  /**
+   * Comienzo del título de la sección del resumen que trata el tema: el visor
+   * la busca entre los h1-h4 (sin distinguir mayúsculas ni tildes) y abre ahí.
+   */
+  seccion?: string;
+}
+
+/** Enlace a la clase; con resumen accesible, lo abre (y en su sección). */
+export function hrefDeClase(curso: string, c: ClaseRecomendada, abrir: boolean): string {
+  const base = `/dashboard/cursos/${curso}/${c.claseId}`;
+  if (!abrir || !c.conResumen) return base;
+  return `${base}?resumen=1${c.seccion ? `&seccion=${encodeURIComponent(c.seccion)}` : ''}`;
 }
 
 export interface Tema {
