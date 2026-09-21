@@ -53,7 +53,8 @@ export async function enviarMensaje(userId: string, titulo: string, cuerpo: stri
     .select(COLUMNAS)
     .single();
   if (error || !data) throw new Error(error?.message ?? 'insert vacío');
-  await avisar(canalBuzon(userId));
+  // Al alumno, para que le aparezca; a la bandeja, para que lo liste ya.
+  await Promise.all([avisar(canalBuzon(userId)), avisar(canalBuzonAdmin())]);
   return data as Mensaje;
 }
 
@@ -77,11 +78,13 @@ async function delAlumno(userId: string, mensajeId: string): Promise<boolean> {
 export async function marcarVisto(userId: string, mensajeId: string) {
   await db().from('mensajes').update({ visto_at: new Date().toISOString() })
     .eq('id', mensajeId).eq('user_id', userId).is('visto_at', null);
+  await avisar(canalBuzonAdmin());
 }
 
 export async function cerrar(userId: string, mensajeId: string) {
   await db().from('mensajes').update({ cerrado_at: new Date().toISOString() })
     .eq('id', mensajeId).eq('user_id', userId);
+  await avisar(canalBuzonAdmin());
 }
 
 export async function responder(userId: string, mensajeId: string, cuerpo: string): Promise<Respuesta | null> {
