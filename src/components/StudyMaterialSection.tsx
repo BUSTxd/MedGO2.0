@@ -370,10 +370,11 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
         ) : tarjetas ? (
           /* Última antes del fallback a propósito: así una actividad que ya
              tenga examen o solucionario conserva su destino de siempre. */
+          /* Sin evento al entrar: el runner registra `banco_iniciado` al elegir
+             modo, con el modo. Este clic lo duplicaba sin decir cuál. */
           <Link
             href={`${pathname}?tarjetas=1`}
             className={`${styles.studyCard} ${cardActiva}`}
-            onClick={() => track('banco_iniciado', { claseId, examKey: tarjetas.key })}
           >
             <div className={styles.studyCardIcon}>
               <BanqueoIcon />

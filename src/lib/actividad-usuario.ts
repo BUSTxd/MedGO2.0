@@ -107,10 +107,16 @@ const ACCION: Record<string, string> = {
   pago_abierto: 'Abrió el pago desde',
 };
 
+const MODO_BANQUEO: Record<string, string> = {
+  tarjetas: 'Tarjetas de memoria',
+  quiz: 'Quiz',
+};
+
 const ORIGEN_PAGO: Record<string, string> = {
   candado: 'el candado',
   aviso: 'el aviso del banqueo',
   muestra: 'el final de la muestra',
+  resumen: 'el botón Premium del resumen',
 };
 
 let clases: Map<string, string> | null = null;
@@ -202,11 +208,18 @@ function detalleDe(e: EventoRow): string | null {
     return `${duracion(seg)} a la vista · ${p.motivo === 'navego' ? 'pasó a otra página' : 'ocultó la pestaña o cerró'}`;
   }
   const examKey = typeof p.examKey === 'string' ? p.examKey : null;
+  // Banqueo de tarjetas: dos modos sobre el mismo examKey. Los eventos de antes
+  // de registrar el modo no lo traen y se quedan sin etiqueta.
+  const modo = MODO_BANQUEO[String(p.modo)] ?? null;
+  const conModo = (s: string) => (modo ? `${modo} · ${s}` : s);
   if (e.event === 'examen_completado' && typeof p.score === 'number' && typeof p.total === 'number') {
     const pct = p.total > 0 ? Math.round((p.score / p.total) * 100) : 0;
-    return `${p.score}/${p.total} (${pct} %) · ${examKey ?? ''}`;
+    // En memoria no hay acierto: es lo que el alumno dijo que ya se sabía.
+    const cifra = `${p.modo === 'tarjetas' ? 'se sabía ' : ''}${p.score}/${p.total} (${pct} %)`;
+    return conModo(`${cifra} · ${examKey ?? ''}`);
   }
-  if (e.event === 'banco_iniciado') return examKey;
+  if (e.event === 'banco_iniciado') return examKey ? conModo(examKey) : modo;
+  if (e.event === 'resumen_abierto' && p.origen === 'tarjeta') return 'Desde una tarjeta del banqueo';
   if (e.event === 'contenido_bloqueado') {
     if (p.origen === 'muestra') return `Terminó la parte gratis de ${examKey ?? 'el banqueo'}`;
     const plan = nombrePlan(p.plan);

@@ -203,7 +203,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
     setPaso('jugando');
     setFase('entrando');
     programar(() => setFase('quieto'), ENTRADA_MS);
-    trackEvent('banco_iniciado', { claseId: examKey, examKey });
+    trackEvent('banco_iniciado', { claseId: examKey, examKey, modo: m === 'flash' ? 'tarjetas' : 'quiz' });
   };
 
   const terminar = useCallback((finales: Respuesta[]) => {
@@ -216,6 +216,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
     }
     trackEvent('examen_completado', {
       examKey,
+      modo: modo === 'flash' ? 'tarjetas' : 'quiz',
       score: finales.filter(r => r.ok).length,
       total: finales.length,
     });
