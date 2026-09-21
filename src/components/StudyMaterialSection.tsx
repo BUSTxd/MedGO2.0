@@ -121,6 +121,11 @@ interface Props {
    * vez de abrir el visor, que respondería 403. Lo decide `puedeVerResumen`.
    */
   resumenDePago?: PlanKey;
+  /**
+   * El resumen es material de pago aunque la clase sea libre: con el plan se
+   * abre, pero sigue pintándose en oro como el resto de lo premium.
+   */
+  resumenPremium?: boolean;
   simulacion?: SimulacionRef;
   banco?: BancoRef;
   solucionario?: SolucionarioRef;
@@ -153,8 +158,27 @@ const BanqueoIcon = () => (
   </svg>
 );
 
-export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, tarjetas, resumenDePago, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel, abrirResumen, resumenSeccion }: Props) {
-  const deAcceso = useDetrasDeCandado() ? 'pago' : 'gratis';
+/** La pastilla de acción de una tarjeta: verde si es libre, oro con corona si es premium. */
+function Accion({ premium, children }: { premium: boolean; children: React.ReactNode }) {
+  if (!premium) return <span className={styles.studyAvailable}>{children}</span>;
+  return (
+    <span className={styles.studyPremium}>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5L3 7z" />
+      </svg>
+      {children}
+    </span>
+  );
+}
+
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, tarjetas, resumenDePago, resumenPremium, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel, abrirResumen, resumenSeccion }: Props) {
+  // Dentro de `LockedContent` = clase de pago, se tenga el plan o no: todo su
+  // material va en oro. Fuera, el verde de siempre.
+  const premium = useDetrasDeCandado();
+  const deAcceso = premium ? 'pago' : 'gratis';
+  const cardActiva = premium ? styles.studyCardPremium : styles.studyCardActive;
+  // El resumen puede ser de pago aunque la clase no lo sea (TBL 3 de Inmunología).
+  const resumenEnOro = premium || !!resumenPremium || !!resumenDePago;
   const track = (ev: AnalyticsEvent, props: Record<string, unknown>) =>
     trackEvent(ev, { ...props, acceso: deAcceso });
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
@@ -242,7 +266,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           simulacion.href ? (
             <Link
               href={simulacion.href}
-              className={`${styles.studyCard} ${styles.studyCardActive}`}
+              className={`${styles.studyCard} ${cardActiva}`}
               onClick={() => track('simulacion_abierta', { claseId })}
             >
               <div className={styles.studyCardIcon}><BeakerIcon /></div>
@@ -250,7 +274,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
               <p className={styles.studyCardDesc}>
                 {simulacion.desc ?? 'Práctica interactiva paso a paso en 3D'}
               </p>
-              <span className={styles.studyAvailable}>Comenzar ▸</span>
+              <Accion premium={premium}>Comenzar ▸</Accion>
             </Link>
           ) : (
             <div className={`${styles.studyCard} ${styles.studyCardLocked}`}>
@@ -282,7 +306,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
         {hideBanqueo ? null : banco ? (
           <Link
             href={banco.href}
-            className={`${styles.studyCard} ${styles.studyCardActive}`}
+            className={`${styles.studyCard} ${cardActiva}`}
             onClick={() => track('banco_iniciado', { claseId, examKey: claseId })}
           >
             <div className={styles.studyCardIcon}>
@@ -292,12 +316,12 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <p className={styles.studyCardDesc}>
               {banco.desc ?? 'Una pregunta a la vez, con explicación al responder'}
             </p>
-            <span className={styles.studyAvailable}>Comenzar ▸</span>
+            <Accion premium={premium}>Comenzar ▸</Accion>
           </Link>
         ) : examen ? (
           <Link
             href={`${pathname}?examen=1`}
-            className={`${styles.studyCard} ${styles.studyCardActive}`}
+            className={`${styles.studyCard} ${cardActiva}`}
             onClick={() => track('banco_iniciado', { claseId, examKey: examen.key })}
           >
             <div className={styles.studyCardIcon}>
@@ -305,11 +329,11 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             </div>
             <p className={styles.studyCardTitle}>{banqueoLabel ?? 'Banqueo'}</p>
             <p className={styles.studyCardDesc}>{descExamen(examen)}</p>
-            <span className={styles.studyAvailable}>Comenzar ▸</span>
+            <Accion premium={premium}>Comenzar ▸</Accion>
           </Link>
         ) : propuestosPdf ? (
           <div
-            className={`${styles.studyCard} ${styles.studyCardActive}`}
+            className={`${styles.studyCard} ${cardActiva}`}
             onClick={() => {
               if (isPropuestosMulti) {
                 setPropuestosPickerOpen(true);
@@ -326,12 +350,12 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <p className={styles.studyCardDesc}>
               {propuestosPdf.desc ?? 'Problemas propuestos, con su resolución'}
             </p>
-            <span className={styles.studyAvailable}>Comenzar ▸</span>
+            <Accion premium={premium}>Comenzar ▸</Accion>
           </div>
         ) : solucionario ? (
           <Link
             href={solucionario.href}
-            className={`${styles.studyCard} ${styles.studyCardActive}`}
+            className={`${styles.studyCard} ${cardActiva}`}
             onClick={() => track('banco_iniciado', { claseId, examKey: 'solucionario' })}
           >
             <div className={styles.studyCardIcon}>
@@ -341,14 +365,14 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <p className={styles.studyCardDesc}>
               {solucionario.desc ?? 'Solucionario paso a paso, con el enunciado al lado'}
             </p>
-            <span className={styles.studyAvailable}>Comenzar ▸</span>
+            <Accion premium={premium}>Comenzar ▸</Accion>
           </Link>
         ) : tarjetas ? (
           /* Última antes del fallback a propósito: así una actividad que ya
              tenga examen o solucionario conserva su destino de siempre. */
           <Link
             href={`${pathname}?tarjetas=1`}
-            className={`${styles.studyCard} ${styles.studyCardActive}`}
+            className={`${styles.studyCard} ${cardActiva}`}
             onClick={() => track('banco_iniciado', { claseId, examKey: tarjetas.key })}
           >
             <div className={styles.studyCardIcon}>
@@ -358,7 +382,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <p className={styles.studyCardDesc}>
               {tarjetas.desc ?? 'Tarjetas de repaso: memoriza o responde alternativas'}
             </p>
-            <span className={styles.studyAvailable}>Comenzar ▸</span>
+            <Accion premium={premium}>Comenzar ▸</Accion>
           </Link>
         ) : (
           <div className={`${styles.studyCard} ${styles.studyCardLocked}`}>
@@ -374,8 +398,8 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
         {/* Resumen — abre directo en pantalla completa */}
         <div
           className={`${styles.studyCard} ${
-            resumenDePago ? styles.studyCardPremium
-              : hasResumen ? styles.studyCardActive : styles.studyCardLocked
+            !hasResumen ? styles.studyCardLocked
+              : resumenEnOro ? styles.studyCardPremium : styles.studyCardActive
           }`}
           onClick={resumenDePago ? () => { setSuscribir(true); track('pago_abierto', { claseId, plan: resumenDePago, origen: 'resumen' }); } : handleCardClick}
         >
@@ -387,14 +411,9 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           <p className={styles.studyCardTitle}>Resumen</p>
           <p className={styles.studyCardDesc}>Resumen completo del material visto</p>
           {resumenDePago ? (
-            <span className={styles.studyPremium}>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5L3 7z" />
-              </svg>
-              Premium
-            </span>
+            <Accion premium>Premium</Accion>
           ) : hasResumen ? (
-            <span className={styles.studyAvailable}>Ver resumen ⛶</span>
+            <Accion premium={resumenEnOro}>Ver resumen</Accion>
           ) : (
             <span className={styles.studyComingSoon}>Próximamente</span>
           )}
