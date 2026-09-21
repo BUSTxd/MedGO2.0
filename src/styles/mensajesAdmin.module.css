@@ -185,9 +185,29 @@
 .hiloTitulo { margin: 6px 0 0; font-size: 14px; font-weight: 700; color: #0f172a; }
 :global(body.dark-mode) .hiloTitulo { color: #f1f5f9; }
 
+.desplegable > summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  cursor: pointer;
+  list-style: none;
+}
+.desplegable > summary::-webkit-details-marker { display: none; }
+.desplegable > summary:hover { color: #6c63c9; }
+:global(body.dark-mode) .desplegable > summary:hover { color: #9b8ef8; }
+
+.flecha {
+  display: inline-grid;
+  place-items: center;
+  color: #94a3b8;
+  transition: transform 0.18s ease;
+}
+.desplegable[open] .flecha { transform: rotate(90deg); }
+
 /* Lo que se le envió, tal cual: con sus saltos de línea. */
 .hiloCuerpo {
-  margin: 6px 0 0;
+  margin: 6px 0 0 18px;
   font-size: 13.5px;
   line-height: 1.55;
   color: #475569;

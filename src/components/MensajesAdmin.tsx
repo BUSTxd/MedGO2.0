@@ -253,8 +253,18 @@ export function BandejaMensajes({ emails }: { emails: Map<string, string> }) {
                   <span className={`${s.estado} ${m.visto_at ? s.estadoVisto : ''}`}>{estado}</span>
                   <span className={s.hiloFecha}>{fecha(m.created_at)}</span>
                 </div>
-                <p className={s.hiloTitulo}>{m.titulo}</p>
-                <p className={s.hiloCuerpo}>{m.cuerpo}</p>
+                {/* Plegado: el título basta para ubicar el hilo; el texto se abre al pulsarlo. */}
+                <details className={s.desplegable}>
+                  <summary className={s.hiloTitulo}>
+                    <span className={s.flecha} aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    {m.titulo}
+                  </summary>
+                  <p className={s.hiloCuerpo}>{m.cuerpo}</p>
+                </details>
                 {m.respuestas.length === 0 ? (
                   <p className={s.sinRespuesta}>Sin respuesta todavía.</p>
                 ) : (
