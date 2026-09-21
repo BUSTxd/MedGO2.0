@@ -623,6 +623,11 @@ export const semanas: Semana[] = [
         docentes: [],
         nota: 'Se evalúa por envío de tareas / resolución de problemas (promedio de los 2 labs = 5%).',
         simulacion: { desc: 'Práctica interactiva de gating e interpretación de dot plots' },
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'inm-l-2', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 't-14',
