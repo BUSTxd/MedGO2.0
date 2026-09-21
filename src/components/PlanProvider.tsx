@@ -1,6 +1,7 @@
 'use client';
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { isPlanKey, type ProfilePlan } from '@/lib/plans';
+import { olvidarMuestras } from '@/lib/examen/payload';
 
 export interface ClientPlanState {
   plan: ProfilePlan;
@@ -50,6 +51,10 @@ export function PlanProvider({
   useEffect(() => {
     setState(value);
   }, [value.plan, value.isActive, value.expiresAt]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    olvidarMuestras();
+  }, [state.plan, state.isActive]);
 
   const refreshPlan = useCallback(async () => {
     try {

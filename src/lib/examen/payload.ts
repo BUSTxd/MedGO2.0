@@ -181,7 +181,19 @@ function writeUrlCache(k: string, entry: SignedUrlEntry) {
   try { sessionStorage.setItem(urlCacheKey(k), JSON.stringify(entry)); } catch {}
 }
 
+// Recortes de la muestra, sólo en memoria: se van al recargar la pestaña y
+// `olvidarMuestras()` los tira en cuanto cambia el plan, para que quien acaba
+// de pagar reciba el banqueo entero en la siguiente entrada.
+const muestras = new Map<string, { payload: ExamPayload; muestra: Muestra }>();
+
+export function olvidarMuestras() {
+  muestras.clear();
+}
+
 export async function fetchExam(key: string): Promise<{ payload: ExamPayload; muestra?: Muestra; premiumDesde?: number }> {
+  const recorte = muestras.get(key);
+  // Copia: los runners no deben poder tocar lo guardado.
+  if (recorte) return structuredClone(recorte);
   let entry = readUrlCache(key);
   if (!entry) {
     const r = await fetch(`/api/examen/${key}`);
@@ -193,8 +205,12 @@ export async function fetchExam(key: string): Promise<{ payload: ExamPayload; mu
     }
     const data = (await r.json()) as SignedUrlEntry | { payload: ExamPayload; muestra: Muestra };
     // Recorte del servidor: llega sin URL, con las preguntas que tocan y nada
-    // más. No se cachea: al cambiar el plan la respuesta tiene que cambiar.
-    if ('payload' in data) return { payload: data.payload, muestra: data.muestra };
+    // más. Nunca a `sessionStorage`: sobreviviría a un cambio de plan.
+    if ('payload' in data) {
+      const r = { payload: data.payload, muestra: data.muestra };
+      muestras.set(key, r);
+      return structuredClone(r);
+    }
     writeUrlCache(key, data);
     entry = data;
   }
