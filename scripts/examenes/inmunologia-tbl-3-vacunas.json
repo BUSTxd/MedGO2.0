@@ -5,202 +5,1024 @@
   "duration_min": null,
   "questions": [
     {
-      "id": "t3q1",
-      "stem": "¿Qué tipo de vacuna induce la respuesta inmunitaria más parecida a la de la infección natural, con memoria duradera y activación de linfocitos T citotóxicos?",
+      "id": "t3q01",
+      "stem": "Una mujer de 24 años recibió el diagnóstico de infección por VIH en el tercer trimestre y tuvo adherencia irregular al tratamiento. Durante la gestación presentó candidiasis esofágica y su pareja falleció por neumonía por Pneumocystis. Su hijo, nacido a término, acude al control de las seis semanas con las vacunas al día. Está asintomático y con examen físico normal. Se desea determinar si el lactante adquirió la infección. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
       "options": [
         {
           "id": "a",
-          "text": "Vacuna de microorganismo vivo atenuado",
+          "text": "Detección de ADN proviral del VIH mediante PCR en sangre",
           "correct": true
         },
         {
           "id": "b",
-          "text": "Vacuna inactivada de germen entero",
+          "text": "Detección de anticuerpos anti-VIH mediante prueba rápida en sangre capilar",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Vacuna de subunidades proteicas",
+          "text": "Detección de antígeno p24 y anticuerpos mediante inmunoensayo de cuarta generación",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Vacuna de polisacárido puro",
+          "text": "Detección de anticuerpos anti-VIH mediante Western blot de confirmación",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Toxoide adsorbido en aluminio",
+          "text": "Determinación de linfocitos T CD4 mediante citometría de flujo sanguínea",
           "correct": false
         }
       ],
-      "explanation": "El germen atenuado **se replica** en el huésped sin causar enfermedad, así que su antígeno llega también al citosol y se presenta por **MHC de clase I**: eso recluta linfocitos T CD8+ además de la respuesta de anticuerpos. Por eso una o dos dosis suelen bastar. El precio de esa potencia es que está contraindicada en inmunodeprimidos y embarazadas, y que necesita cadena de frío.",
-      "tema": "vacunas"
+      "explanation": "**Cadena:** a las seis semanas el lactante todavía circula con la **IgG materna** que cruzó la placenta → toda prueba que busque anticuerpos anti-VIH saldrá reactiva aunque no esté infectado → hay que detectar el virus: **ADN proviral (o ARN) por PCR**, la prueba diagnóstica hasta los 18 meses.\n\n- **Prueba rápida:** es el tamizaje habitual, pero detecta la IgG de la madre.\n- **Cuarta generación:** es la de elección en el adulto; su componente de anticuerpos reacciona con la IgG materna y da un único resultado reactivo.\n- **Western blot:** confirmación ya retirada de los algoritmos y también mide IgG.\n- **CD4:** mide el grado de inmunodepresión, no la presencia de infección; en un lactante asintomático no responde la pregunta.",
+      "tema": "vacunas",
+      "subtema": "Inmunidad pasiva materna"
     },
     {
-      "id": "t3q2",
-      "stem": "Las vacunas de polisacárido puro no funcionan en menores de 2 años. ¿Por qué el conjugarlas a una proteína transportadora resuelve el problema?",
+      "id": "t3q10",
+      "stem": "Un niño de siete años convive con su padre, diagnosticado hace una semana de tuberculosis pulmonar con baciloscopía positiva. La madre tuvo tuberculosis ganglionar hace años y la familia comparte un dormitorio sin ventilación. En el brazo derecho tiene la cicatriz de la vacuna aplicada al nacer. Está asintomático, con buen apetito y auscultación normal. Se desea establecer si tiene infección tuberculosa latente. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
       "options": [
         {
           "id": "a",
-          "text": "Porque la proteína permite reclutar linfocitos T colaboradores y generar memoria",
-          "correct": true
-        },
-        {
-          "id": "b",
-          "text": "Porque aumenta la cantidad de antígeno por dosis",
+          "text": "Prueba de tuberculina mediante intradermorreacción de Mantoux con PPD",
           "correct": false
         },
         {
+          "id": "b",
+          "text": "Determinación de interferón gamma mediante ensayo de liberación en sangre",
+          "correct": true
+        },
+        {
           "id": "c",
-          "text": "Porque evita que el polisacárido se degrade en el punto de inyección",
+          "text": "Prueba de tuberculina en dos pasos mediante PPD con efecto refuerzo",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Porque estimula directamente a los macrófagos alveolares",
+          "text": "Prueba de tuberculina mediante multipunción cutánea de tipo Heaf",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Porque prolonga la vida media de la IgM circulante",
+          "text": "Determinación de lesiones pulmonares mediante radiografía de tórax frontal",
           "correct": false
         }
       ],
-      "explanation": "Un polisacárido solo es un antígeno **timo-independiente**: activa al linfocito B sin ayuda de T, y esa vía da IgM de vida corta, sin cambio de isotipo ni células de memoria — y además está inmadura en el lactante. Al conjugarlo con una proteína, el linfocito B procesa esa proteína y se la presenta a un **T colaborador**, que devuelve la ayuda: cambio a IgG, maduración de la afinidad y memoria. Es la diferencia entre la vacuna antineumocócica de polisacárido y la conjugada.",
-      "tema": "vacunas"
+      "explanation": "**Cadena:** la cicatriz es de la **BCG**, y el PPD comparte antígenos con *M. bovis* BCG → una tuberculina positiva no distingue vacuna de infección → se necesita una prueba con antígenos que la BCG no tiene (**ESAT-6 y CFP-10**): el **IGRA**, que mide el interferón gamma liberado frente a ellos.\n\n- **Mantoux:** el tamizaje habitual, con falsos positivos por la BCG.\n- **Tuberculina en dos pasos:** la de elección para una línea de base fiable, pero usa el mismo PPD y el refuerzo incluso amplifica la reacción a la BCG.\n- **Multipunción de Heaf:** técnica histórica con el mismo antígeno.\n- **Radiografía:** busca enfermedad activa (extensión), no infección latente; en un niño asintomático no establece el diagnóstico.",
+      "tema": "vacunas",
+      "subtema": "Vacuna BCG"
     },
     {
-      "id": "t3q3",
-      "stem": "¿Cuál es la función de un adyuvante como las sales de aluminio en una vacuna inactivada?",
+      "id": "t3q13",
+      "stem": "Un odontólogo de 35 años se pinchó hace cuatro meses con una aguja usada en un paciente con hepatitis B crónica. Un colega de la misma clínica se infectó el año pasado y otro desarrolló una hepatitis fulminante. Su carné laboral registra el esquema completo de tres dosis de vacuna recombinante. Está asintomático y sin ictericia. Se desea establecer si alguna vez se infectó con el virus. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
       "options": [
         {
           "id": "a",
-          "text": "Activar la inmunidad innata en el sitio de inyección y retener el antígeno para que se presente más tiempo",
-          "correct": true
+          "text": "Detección de anticuerpos anti-HBs mediante prueba rápida inmunocromatográfica capilar",
+          "correct": false
         },
         {
           "id": "b",
-          "text": "Neutralizar la toxina residual del microorganismo inactivado",
+          "text": "Determinación cuantitativa de anticuerpos anti-HBs mediante quimioluminiscencia automatizada",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Permitir que el antígeno alcance el citosol y se presente por MHC I",
-          "correct": false
+          "text": "Detección de anticuerpos anti-HBc totales mediante inmunoensayo en suero",
+          "correct": true
         },
         {
           "id": "d",
-          "text": "Conservar la vacuna a temperatura ambiente",
+          "text": "Detección de anticuerpos anti-HBs mediante radioinmunoensayo de fase sólida",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Reducir la fiebre posvacunal",
+          "text": "Determinación del grado de fibrosis hepática mediante elastografía de transición",
           "correct": false
         }
       ],
-      "explanation": "Un antígeno purificado es poco inmunogénico porque no trae las señales de peligro que sí trae un germen vivo. El adyuvante suple esa señal: genera un **depósito** que libera antígeno poco a poco y activa la respuesta innata local, con reclutamiento de células presentadoras y su maduración. Sin adyuvante, las vacunas inactivadas y de subunidades necesitarían muchas más dosis.",
-      "tema": "vacunas"
+      "explanation": "**Cadena:** la vacuna recombinante contiene **sólo HBsAg** → el anti-HBs del vacunado sale positivo haya o no habido infección → para saber si hubo contacto con el virus se busca un anticuerpo contra una proteína que la vacuna no tiene: el **anti-HBc**, que sólo produce quien se infectó.\n\n- **Anti-HBs rápido:** el control habitual del personal vacunado, pero refleja la vacuna.\n- **Anti-HBs cuantitativo:** el que se pide por costumbre tras un pinchazo; mide protección, no infección.\n- **Anti-HBs por radioinmunoensayo:** técnica superada con el mismo analito.\n- **Elastografía:** mide fibrosis (daño), no infección pasada; en un paciente asintomático no la establece.",
+      "tema": "vacunas",
+      "subtema": "Vacuna recombinante contra el VHB"
     },
     {
-      "id": "t3q4",
-      "stem": "En una vacuna de ARN mensajero, ¿dónde se produce el antígeno que verá el sistema inmunitario?",
+      "id": "t3q15",
+      "stem": "Una médica de 40 años trabaja en la unidad de cuidados intensivos donde tres colegas se contagiaron de COVID-19 el mes pasado. Uno de ellos sigue en ventilación mecánica y otro presentó miocarditis. Su registro ocupacional muestra tres dosis de vacuna de ARN mensajero, la última hace dos meses. Hoy está asintomática y su examen es normal. Se desea establecer si tuvo infección reciente. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
       "options": [
         {
           "id": "a",
-          "text": "En el citoplasma de las células del propio vacunado, que lo traducen",
-          "correct": true
+          "text": "Detección de anticuerpos anti-espícula mediante prueba rápida en sangre capilar",
+          "correct": false
         },
         {
           "id": "b",
-          "text": "En el laboratorio, y se inyecta ya formado",
+          "text": "Determinación de anticuerpos neutralizantes mediante ensayo de neutralización con pseudovirus",
           "correct": false
         },
         {
           "id": "c",
-          "text": "En el núcleo de la célula, tras integrarse en el genoma",
+          "text": "Detección de anticuerpos anti-RBD mediante ELISA de primera generación",
           "correct": false
         },
         {
           "id": "d",
-          "text": "En los linfocitos B del ganglio de drenaje",
-          "correct": false
+          "text": "Detección de anticuerpos anti-nucleocápside mediante inmunoensayo quimioluminiscente en suero",
+          "correct": true
         },
         {
           "id": "e",
-          "text": "En la superficie de la nanopartícula lipídica",
+          "text": "Determinación de extensión pulmonar mediante tomografía computarizada de tórax",
           "correct": false
         }
       ],
-      "explanation": "La nanopartícula lipídica entrega el ARNm al **citoplasma**, donde los ribosomas de la propia célula traducen la proteína (la espícula, en el caso del SARS-CoV-2). Como el antígeno se sintetiza dentro de la célula, se presenta por MHC I y también por MHC II tras su liberación: hay respuesta celular y humoral. El ARNm **no entra al núcleo ni se integra** en el genoma, y se degrada en días.",
-      "tema": "vacunas"
+      "explanation": "**Cadena:** la vacuna de ARNm sólo codifica la **proteína espícula** → los anticuerpos anti-espícula, anti-RBD y neutralizantes salen positivos por la vacuna → para demostrar infección natural se busca un anticuerpo contra una proteína que la vacuna no produce: la **nucleocápside (anti-N)**.\n\n- **Anti-espícula rápido:** la serología más usada, pero positiva en todo vacunado.\n- **Neutralización con pseudovirus:** la prueba funcional más avanzada; mide anticuerpos contra la espícula, también vacunales.\n- **Anti-RBD de primera generación:** ELISA temprano contra el dominio de unión de la espícula.\n- **Tomografía:** mide la extensión de la neumonía, no la infección pasada; en una persona asintomática no aporta.",
+      "tema": "vacunas",
+      "subtema": "Vacunas COVID-19 dirigidas a la espícula"
     },
     {
-      "id": "t3q5",
-      "stem": "La cobertura vacunal contra el sarampión cae al 80 % en un distrito. ¿Qué explica mejor el brote que aparece semanas después?",
+      "id": "t3q21",
+      "stem": "En una guardería se investiga un brote de diarrea por rotavirus con siete niños afectados. Dos requirieron hidratación intravenosa y uno ingresó a cuidados intensivos por deshidratación grave. Un lactante de tres meses del mismo salón recibió la segunda dosis de vacuna oral hace cinco días, según su carné. Está asintomático y con deposiciones normales. Se desea establecer si porta la cepa del brote. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
       "options": [
         {
           "id": "a",
-          "text": "Se perdió la inmunidad de rebaño: el umbral del sarampión está por encima del 90 %",
-          "correct": true
+          "text": "Detección de antígeno VP6 de rotavirus mediante inmunocromatografía en heces",
+          "correct": false
         },
         {
           "id": "b",
-          "text": "La vacuna perdió eficacia por un cambio antigénico del virus",
+          "text": "Detección de ARN de rotavirus mediante RT-PCR en tiempo real",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Los vacunados transmiten el virus atenuado a los no vacunados",
+          "text": "Detección de partículas de rotavirus mediante microscopía electrónica de heces",
           "correct": false
         },
         {
           "id": "d",
-          "text": "El intervalo entre las dos dosis fue demasiado largo",
+          "text": "Determinación de electrolitos séricos mediante potenciometría con electrodo selectivo",
           "correct": false
         },
         {
           "id": "e",
-          "text": "El brote se debe sólo al azar, la cobertura no influye",
-          "correct": false
+          "text": "Determinación del genotipo de rotavirus mediante RT-PCR y secuenciación",
+          "correct": true
         }
       ],
-      "explanation": "El umbral de inmunidad de rebaño depende del **R₀**: cuanto más contagioso es el agente, mayor proporción de inmunes hace falta para cortar las cadenas de transmisión. El sarampión tiene un R₀ altísimo (12-18), así que su umbral ronda el **93-95 %**. Con un 80 % quedan suficientes susceptibles conectados entre sí para que el brote crezca, y los primeros en enfermar son los que no pueden vacunarse: lactantes pequeños e inmunodeprimidos.",
-      "tema": "vacunas"
+      "explanation": "**Cadena:** la vacuna de rotavirus es **oral y viva**, y el virus vacunal se excreta en heces durante días → cualquier prueba que sólo detecte rotavirus saldrá positiva por la vacuna → hay que distinguir la cepa: **genotipificación por RT-PCR y secuenciación**, que separa la vacunal de la circulante.\n\n- **Antígeno VP6:** el tamizaje de rutina, positivo con la cepa vacunal.\n- **RT-PCR en tiempo real:** la prueba de elección por sensibilidad, que detecta aún mejor el virus vacunal.\n- **Microscopía electrónica:** método histórico que ve partículas sin distinguir cepa.\n- **Electrolitos:** miden deshidratación (gravedad), no infección; en un lactante asintomático no aportan.",
+      "tema": "vacunas",
+      "subtema": "Vacunas vivas atenuadas"
     },
     {
-      "id": "t3q6",
-      "stem": "¿Por qué el esquema nacional da la vacuna contra el sarampión (SPR) recién cerca de los 12 meses y no al nacer?",
+      "id": "t3q17",
+      "stem": "Una mujer de 34 años consulta porque su pareja fue diagnosticada de hepatitis C activa. Él tiene cirrosis y antecedente de transfusiones múltiples, y ella se hizo un tatuaje artesanal hace un año. Por inmunodeficiencia común variable recibe inmunoglobulina intravenosa cada cuatro semanas en el hospital de día. Está asintomática, sin ictericia ni hepatomegalia. Se desea establecer si está infectada. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
       "options": [
         {
           "id": "a",
-          "text": "Porque los anticuerpos maternos transferidos por vía transplacentaria neutralizarían el virus vacunal",
+          "text": "Detección de ARN del VHC mediante RT-PCR en plasma",
           "correct": true
         },
         {
           "id": "b",
-          "text": "Porque el recién nacido carece por completo de linfocitos B",
+          "text": "Detección de anticuerpos anti-VHC mediante prueba rápida en saliva",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Porque el timo aún no ha empezado a producir linfocitos T",
+          "text": "Detección de anticuerpos anti-VHC mediante inmunoensayo quimioluminiscente de tercera generación",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Porque el riesgo de encefalitis posvacunal es mayor en el neonato",
+          "text": "Detección de anticuerpos anti-VHC mediante inmunoblot recombinante de confirmación",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Porque la vía intramuscular no es viable antes del año",
+          "text": "Determinación del grado de fibrosis hepática mediante elastografía de transición",
           "correct": false
         }
       ],
-      "explanation": "La **IgG materna** cruza la placenta en el tercer trimestre y protege al lactante durante los primeros meses, pero también **neutraliza el virus vivo de la vacuna** antes de que consiga replicarse y estimular la respuesta propia. Hay que esperar a que esos anticuerpos caigan —hacia los 9-12 meses— para que la dosis prenda. Es la misma razón por la que el calendario reserva para esa edad las vacunas de virus vivos, mientras que las inactivadas pueden empezar antes.",
-      "tema": "vacunas"
+      "explanation": "**Cadena:** en la inmunodeficiencia común variable los linfocitos B **no producen anticuerpos** de forma eficaz, y la inmunoglobulina infundida es de donantes → la serología puede ser negativa pese a la infección → se busca el virus: **ARN del VHC por RT-PCR**.\n\n- **Prueba rápida en saliva:** tamizaje habitual, falsamente negativa si no hay respuesta humoral.\n- **Tercera generación:** el inmunoensayo de elección, con la misma limitación.\n- **Inmunoblot:** confirmación en desuso y también de anticuerpos.\n- **Elastografía:** mide fibrosis, no infección; en una paciente sin hallazgos no la establece.",
+      "tema": "vacunas",
+      "subtema": "Inmunodeficiencia e inmunoglobulinas"
+    },
+    {
+      "id": "t3q27",
+      "stem": "Un hombre de 70 años acude por fiebre y tos productiva de tres días. Su esposa murió de meningitis neumocócica y a él le extirparon el bazo tras un accidente. En la consulta de geriatría de hace cuatro días recibió la vacuna antineumocócica de polisacárido 23-valente. Está orientado, sin dificultad respiratoria ni hipotensión. Se desea confirmar si el agente es el neumococo. ¿Cuál de las siguientes pruebas es la más apropiada para confirmar el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de antígeno C-polisacárido mediante inmunocromatografía rápida en orina",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de Streptococcus pneumoniae mediante cultivo de esputo",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Detección de antígeno capsular neumocócico mediante inmunoensayo multiplex urinario serotipo-específico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de antígeno neumocócico mediante contrainmunoelectroforesis en orina concentrada",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de hipoxemia mediante gasometría arterial en reposo",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** la PPSV23 son **polisacáridos capsulares** que se eliminan por la orina en los días siguientes → los antígenos neumocócicos urinarios salen positivos por la vacuna → hay que aislar la bacteria: **cultivo de esputo de calidad** (junto con hemocultivos).\n\n- **Antígeno urinario rápido:** la prueba habitual en neumonía, falsamente positiva en los cinco días tras la vacuna.\n- **Multiplex serotipo-específico:** la técnica urinaria más avanzada, que detecta los mismos polisacáridos vacunales.\n- **Contrainmunoelectroforesis:** método histórico para el mismo antígeno.\n- **Gasometría:** mide gravedad, no el agente; sin dificultad respiratoria no confirma nada.",
+      "tema": "vacunas",
+      "subtema": "Vacuna de polisacárido"
+    },
+    {
+      "id": "t3q28",
+      "stem": "Una mujer de 23 años acude a un centro de atención a víctimas de violencia sexual. El agresor, usuario de drogas inyectables, tiene antecedentes de sífilis y otras denuncias por abuso. La agresión ocurrió hace doce días y no recibió profilaxis postexposición porque consultó tarde. Está asintomática, sin fiebre, exantema ni adenopatías. Se desea establecer si adquirió la infección por VIH. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de anticuerpos anti-VIH mediante prueba rápida en sangre capilar",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de antígeno p24 y anticuerpos mediante inmunoensayo de cuarta generación",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de ARN del VIH mediante amplificación de ácidos nucleicos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Detección de anticuerpos anti-VIH mediante Western blot de confirmación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de linfocitos T CD4 mediante citometría de flujo",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** doce días después de la exposición aún **no hay anticuerpos** y el antígeno p24 suele no ser detectable → las pruebas serológicas y de cuarta generación pueden ser negativas aunque haya infección → el primer marcador que aparece es el genoma: **ARN del VIH por amplificación de ácidos nucleicos**, detectable desde unos diez días.\n\n- **Prueba rápida:** el tamizaje habitual, negativo en el periodo de ventana.\n- **Cuarta generación:** la de elección en adultos, que acorta la ventana pero aún puede fallar a los doce días.\n- **Western blot:** confirmación retirada y la última en positivizarse.\n- **CD4:** mide inmunodepresión, no infección; en una persona asintomática no hace el diagnóstico.",
+      "tema": "vacunas",
+      "subtema": "Periodo de ventana"
+    },
+    {
+      "id": "t3q04",
+      "stem": "Una primigesta de 22 años que cría gatos y consume carne poco cocida presentó seroconversión para Toxoplasma en el segundo trimestre. La ecografía mostró placenta engrosada y una prima tuvo un hijo con coriorretinitis por el mismo parásito. El recién nacido tiene cinco días y ya recibió las vacunas del alta. Está asintomático, con fondo de ojo y examen neurológico normales. Se desea establecer si existe infección congénita. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de IgG anti-Toxoplasma mediante ELISA en suero del neonato",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Determinación de avidez de IgG anti-Toxoplasma mediante ELISA en suero",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de anticuerpos anti-Toxoplasma mediante prueba de tinción de Sabin-Feldman",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de IgM anti-Toxoplasma mediante inmunoabsorción ISAGA en suero",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Determinación de calcificaciones intracraneales mediante tomografía computarizada de cráneo",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** a los cinco días de vida toda la **IgG** del neonato es de la madre → la IgG anti-Toxoplasma no distingue infección congénita → hace falta un isotipo que **no cruza la placenta** y que sólo puede haber fabricado el propio niño: la **IgM (ISAGA)**, idealmente junto con la IgA.\n\n- **IgG por ELISA:** la prueba habitual, positiva por la IgG materna.\n- **Avidez de IgG:** la de elección para fechar la infección en la gestante, pero sigue midiendo IgG materna.\n- **Sabin-Feldman:** prueba de referencia histórica que también detecta IgG.\n- **Tomografía:** mide la afectación, no si hay infección; en un neonato con examen normal no establece el diagnóstico.",
+      "tema": "vacunas",
+      "subtema": "Inmunidad pasiva materna"
+    },
+    {
+      "id": "t3q23",
+      "stem": "En un colegio con un brote confirmado de sarampión se evalúa a una niña de cinco años. Dos compañeros fueron hospitalizados por neumonía y uno presentó encefalitis. Como medida de bloqueo, recibió la vacuna SPR hace diez días en la brigada escolar. Hoy tiene un exantema leve, sin tos, coriza ni conjuntivitis, y examen pulmonar normal. Se desea establecer si se trata de sarampión. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de IgM anti-sarampión mediante ELISA de captura en suero",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Determinación de avidez de IgG anti-sarampión mediante inmunoensayo en suero",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de anticuerpos anti-sarampión mediante inhibición de la hemaglutinación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Determinación de infiltrados pulmonares mediante radiografía de tórax frontal",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación del genotipo de sarampión mediante RT-PCR y secuenciación",
+          "correct": true
+        }
+      ],
+      "explanation": "**Cadena:** la **SPR es de virus vivos** y, entre los 6 y 14 días, puede dar fiebre y exantema; además induce IgM → la IgM no distingue sarampión salvaje de reacción vacunal → hay que identificar el virus: **RT-PCR con genotipificación** (el vacunal es genotipo A, los circulantes no).\n\n- **IgM de captura:** la prueba de rutina de la vigilancia, positiva por la vacuna.\n- **Avidez de IgG:** separa infección primaria de reinfección, pero una vacuna reciente también da baja avidez.\n- **Inhibición de la hemaglutinación:** serología histórica, también positiva tras vacunar.\n- **Radiografía:** mide complicaciones (gravedad), no la etiología; sin síntomas respiratorios no aporta.",
+      "tema": "vacunas",
+      "subtema": "Vacunas vivas atenuadas"
+    },
+    {
+      "id": "t3q02",
+      "stem": "Una mujer de 30 años con antecedente de consumo de drogas inyectables tiene hepatitis C crónica sin tratamiento. Su hermano, con quien compartía agujas, desarrolló cirrosis descompensada, y el parto se prolongó con rotura de membranas de muchas horas. Su hija de cuatro meses acude al control de crecimiento programado. La niña está asintomática y sin hepatomegalia. Se desea establecer si la lactante adquirió el virus. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de ARN del VHC mediante PCR en plasma",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Detección de anticuerpos anti-VHC mediante inmunoensayo quimioluminiscente en suero",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de antígeno core y anticuerpos anti-VHC mediante inmunoensayo combinado",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de anticuerpos anti-VHC mediante inmunoblot recombinante tipo RIBA",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación del grado de fibrosis hepática mediante elastografía de transición",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** a los cuatro meses la lactante conserva la **IgG anti-VHC de la madre**, que puede durar hasta los 18 meses → un anticuerpo positivo no distingue infección de transferencia → se busca el virus: **ARN del VHC por PCR**, válido desde los dos meses.\n\n- **Anti-VHC por quimioluminiscencia:** tamizaje de rutina, positivo por la IgG materna.\n- **Antígeno core + anticuerpos:** el ensayo más completo en el adulto, pero su resultado único se hace reactivo por los anticuerpos maternos.\n- **RIBA:** confirmación en desuso y también basada en anticuerpos.\n- **Elastografía:** mide daño hepático, no si hay infección; en una lactante sin hallazgos no aporta al diagnóstico.",
+      "tema": "vacunas",
+      "subtema": "Inmunidad pasiva materna"
+    },
+    {
+      "id": "t3q03",
+      "stem": "Una mujer de 27 años con hepatitis B crónica y HBeAg positivo no recibió antivirales durante el embarazo. Su madre murió de hepatocarcinoma y su hermano espera un trasplante hepático. En la sala de partos su hijo recibió inmunoglobulina y la primera dosis de vacuna, y luego completó el esquema. Hoy, a los diez meses, está asintomático y crece bien. Se desea establecer si se infectó. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de anticuerpos anti-HBc totales mediante inmunoensayo en suero",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de HBsAg mediante inmunoensayo quimioluminiscente en suero",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Determinación cuantitativa de anticuerpos anti-HBs mediante quimioluminiscencia en suero",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de anticuerpos anti-HBc mediante radioinmunoensayo de fase sólida",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de aminotransferasas séricas mediante método cinético enzimático automatizado",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** el niño recibió **anticuerpos ya formados** (IgG anti-HBc de la madre por la placenta y anti-HBs de la inmunoglobulina) y además fue vacunado → ningún anticuerpo sirve para saber si se infectó → se busca el propio virus: el **HBsAg**. A los diez meses, lejos de la última dosis, la vacuna ya no lo da positivo por sí misma.\n\n- **Anti-HBc totales:** marcador habitual de contacto con el virus, pero aquí es la IgG materna.\n- **Anti-HBs cuantitativo:** el que se pide por jerarquía en el control posvacunal; refleja vacuna e inmunoglobulina, no infección.\n- **Anti-HBc por radioinmunoensayo:** técnica superada y con el mismo analito inválido.\n- **Aminotransferasas:** miden daño hepático; en un niño asintomático no establecen infección.",
+      "tema": "vacunas",
+      "subtema": "Inmunidad pasiva materna"
+    },
+    {
+      "id": "t3q05",
+      "stem": "Una madre de 19 años, educadora de una guardería, tuvo en el primer trimestre fiebre con adenopatías y seroconversión para citomegalovirus. Otro niño de la misma guardería nació con microcefalia por este virus. Su recién nacido tiene diez días de vida y ya recibió las vacunas del alta. Está asintomático, sin hepatoesplenomegalia y con tamizaje auditivo normal. Se desea establecer si existe infección congénita. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de IgG anti-citomegalovirus mediante quimioluminiscencia en suero",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Determinación de avidez de IgG anti-citomegalovirus mediante inmunoensayo en suero",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de ADN de citomegalovirus mediante PCR en orina",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Detección de anticuerpos anti-citomegalovirus mediante fijación del complemento clásica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de lesiones periventriculares mediante ecografía transfontanelar del neonato",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** a los diez días la IgG del neonato es **materna** → la serología IgG no distingue infección congénita → se busca el virus: **PCR de CMV en orina (o saliva)** dentro de las tres primeras semanas de vida, cuando todavía separa la infección congénita de la adquirida después.\n\n- **IgG por quimioluminiscencia:** la prueba habitual, positiva por la madre.\n- **Avidez de IgG:** la de elección para fechar la infección materna, pero mide la misma IgG transferida.\n- **Fijación del complemento:** técnica serológica superada y basada en el mismo analito.\n- **Ecografía transfontanelar:** mide la afectación cerebral, no la presencia del virus; con un examen normal no hace el diagnóstico.",
+      "tema": "vacunas",
+      "subtema": "Inmunidad pasiva materna"
+    },
+    {
+      "id": "t3q06",
+      "stem": "Una mujer de 26 años, natural de un valle endémico del sur, tiene serología positiva para Trypanosoma cruzi y nunca recibió tratamiento. Su padre usa marcapasos por miocardiopatía chagásica y en su vivienda rural había triatominos. Su hija de un mes acude a la consulta de niño sano. Está asintomática, sin hepatoesplenomegalia ni edema. Se desea establecer si la niña adquirió la infección. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de anticuerpos anti-Trypanosoma mediante ELISA con antígeno total",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de anticuerpos anti-Trypanosoma mediante ELISA con antígenos recombinantes",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de anticuerpos anti-Trypanosoma mediante fijación de complemento Machado-Guerreiro",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de tripomastigotes circulantes mediante micrométodo en tubos capilares",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Determinación de trastornos de conducción mediante electrocardiograma de doce derivaciones",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** al mes de vida la niña conserva la **IgG materna** contra *T. cruzi*, que dura hasta los 8-10 meses → cualquier serología saldrá positiva sin que eso signifique infección → se busca el parásito: **micrométodo (microhematocrito)**, que es la prueba de elección en el menor de nueve meses.\n\n- **ELISA con antígeno total:** tamizaje serológico habitual, positivo por la madre.\n- **ELISA recombinante:** la serología más específica, pero sigue midiendo IgG transferida.\n- **Machado-Guerreiro:** fijación de complemento histórica, basada en anticuerpos.\n- **Electrocardiograma:** mide el compromiso cardíaco (estadio), no la presencia del parásito; en una lactante sin hallazgos no hace el diagnóstico.",
+      "tema": "vacunas",
+      "subtema": "Inmunidad pasiva materna"
+    },
+    {
+      "id": "t3q07",
+      "stem": "Una mujer de 32 años de ascendencia andina fue diagnosticada de infección por HTLV-1 en el tamizaje prenatal. Su hermana padece paraparesia espástica tropical y un tío murió de leucemia de células T del adulto. Su hijo de seis meses acude hoy al control de crecimiento programado. Está asintomático, con lactancia materna y desarrollo motor normal. Se desea establecer si el lactante se infectó. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de anticuerpos anti-HTLV mediante inmunoensayo quimioluminiscente en suero",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de anticuerpos anti-HTLV mediante inmunoblot de confirmación y tipificación",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de anticuerpos anti-HTLV mediante inmunofluorescencia indirecta en células",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Determinación de linfocitos atípicos en flor mediante frotis de sangre",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Detección de ADN proviral de HTLV-1 mediante PCR sanguínea",
+          "correct": true
+        }
+      ],
+      "explanation": "**Cadena:** a los seis meses el lactante tiene la **IgG anti-HTLV de la madre** → los anticuerpos no distinguen infección de transferencia → hay que detectar el provirus integrado en sus linfocitos: **ADN proviral por PCR**.\n\n- **Quimioluminiscencia:** tamizaje habitual, positivo por la IgG materna.\n- **Inmunoblot:** la confirmación de elección que además tipifica HTLV-1/2, pero mide los mismos anticuerpos.\n- **Inmunofluorescencia indirecta:** confirmación antigua, también serológica.\n- **Células en flor:** son un hallazgo de la leucemia del adulto (estadio de la enfermedad), no de infección; en un lactante sano no aparecen.",
+      "tema": "vacunas",
+      "subtema": "Inmunidad pasiva materna"
+    },
+    {
+      "id": "t3q08",
+      "stem": "Una gestante de 20 años, no vacunada, tuvo exantema y adenopatías retroauriculares en la décima semana, durante un brote en su comunidad. Una vecina perdió un embarazo por la misma infección y otra tuvo un hijo con cataratas congénitas. El recién nacido, de tres días, pasó la evaluación de rutina. Está asintomático, con reflejo rojo presente y sin soplos. Se desea establecer si hay infección congénita. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de ARN de rubéola mediante RT-PCR en orofaringe",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Detección de IgG anti-rubéola mediante inmunoensayo enzimático en suero neonatal",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Determinación de avidez de IgG anti-rubéola mediante inmunoensayo en suero",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de anticuerpos anti-rubéola mediante inhibición de la hemaglutinación clásica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de cardiopatía congénita mediante ecocardiograma transtorácico del neonato",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** a los tres días la IgG del recién nacido es **materna** → la IgG anti-rubéola no separa infección de transferencia → se busca el virus, que el niño con infección congénita excreta durante meses: **ARN por RT-PCR** de orofaringe (la IgM del neonato sería la alternativa serológica).\n\n- **IgG por EIA:** la serología habitual, positiva por la madre.\n- **Avidez de IgG:** útil para fechar la infección materna, pero sigue midiendo IgG transferida.\n- **Inhibición de la hemaglutinación:** técnica histórica, también de anticuerpos.\n- **Ecocardiograma:** mide el daño (estadio), no la infección; con un examen sin soplos no hace el diagnóstico.",
+      "tema": "vacunas",
+      "subtema": "Inmunidad pasiva materna"
+    },
+    {
+      "id": "t3q09",
+      "stem": "Un lactante de cinco semanas es llevado por tos en accesos desde hace diez días. Su hermano escolar tuvo tos con estridor inspiratorio y el abuelo con quien convive fue hospitalizado por neumonía. La madre recibió la vacuna Tdap en el tercer trimestre, según su carné prenatal. El niño no presenta apneas, cianosis ni dificultad respiratoria. Se desea confirmar el diagnóstico de tos ferina. ¿Cuál de las siguientes pruebas es la más apropiada para confirmar el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de IgG anti-toxina pertussis mediante ELISA en suero único",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de ADN de Bordetella pertussis mediante PCR nasofaríngea",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Determinación cuantitativa de IgG anti-toxina pertussis mediante inmunoensayo multiplex",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de anticuerpos anti-Bordetella mediante aglutinación bacteriana en suero",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de linfocitosis absoluta mediante hemograma automatizado en sangre",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** la madre vacunada transfirió **IgG anti-toxina pertussis** por la placenta, y un lactante de cinco semanas apenas produce anticuerpos propios → la serología no puede confirmar la infección → se busca la bacteria: **PCR de *B. pertussis* en aspirado o hisopado nasofaríngeo**.\n\n- **IgG anti-toxina en suero único:** la serología habitual en adolescentes y adultos, aquí contaminada por la IgG materna.\n- **Inmunoensayo multiplex:** más moderno, pero mide la misma IgG.\n- **Aglutinación:** serología histórica, superada y también de anticuerpos.\n- **Linfocitosis:** marca gravedad (la hiperleucocitosis predice mala evolución), no confirma la infección; el niño no tiene signos de gravedad.",
+      "tema": "vacunas",
+      "subtema": "Inmunidad pasiva materna"
+    },
+    {
+      "id": "t3q11",
+      "stem": "Una enfermera de 28 años ingresará a trabajar en un pabellón de tuberculosis multidrogorresistente. En ese servicio dos técnicos enfermaron el último año y uno falleció por tuberculosis extensamente resistente. En su ficha de ingreso consta la BCG al nacer y un refuerzo escolar. Está asintomática y su examen físico es normal. Se desea establecer si ya tiene infección tuberculosa latente. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Prueba de tuberculina mediante Mantoux con cinco unidades de PPD",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Prueba de tuberculina en dos pasos mediante PPD basal y refuerzo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Determinación de interferón gamma mediante QuantiFERON en sangre periférica",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Prueba de tuberculina mediante multipunción cutánea con dispositivo Tine",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de lesiones pulmonares mediante radiografía de tórax posteroanterior",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** dos dosis de **BCG** sensibilizan contra el PPD → la tuberculina puede salir positiva sin infección → se necesita un ensayo con antígenos ausentes en la vacuna: el **IGRA (QuantiFERON)**, que además no tiene efecto refuerzo en los controles seriados del personal.\n\n- **Mantoux:** el tamizaje habitual, con falsos positivos por la BCG.\n- **Tuberculina en dos pasos:** el protocolo de elección para el ingreso del personal de salud, pero con el mismo PPD y el mismo problema.\n- **Multipunción Tine:** método antiguo e impreciso con el mismo antígeno.\n- **Radiografía:** evalúa enfermedad activa, no infección latente; en una persona asintomática no responde la pregunta.",
+      "tema": "vacunas",
+      "subtema": "Vacuna BCG"
+    },
+    {
+      "id": "t3q12",
+      "stem": "Un hombre de 45 años con artritis reumatoide refractaria iniciará infliximab el próximo mes. Su hermano recibió tratamiento para tuberculosis pulmonar hace dos años y él trabajó en un penal con brotes frecuentes. La historia clínica registra la vacunación BCG en la infancia, con cicatriz visible. Aún no recibe corticoides, está asintomático y su examen pulmonar es normal. Se desea descartar infección tuberculosa latente. ¿Cuál de las siguientes pruebas es la más apropiada para descartar el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Prueba de tuberculina mediante intradermorreacción de Mantoux en antebrazo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Prueba de tuberculina en dos pasos mediante PPD con lectura seriada",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Prueba de tuberculina mediante técnica de multipunción de Heaf",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Determinación de interferón gamma mediante ensayo T-SPOT.TB en sangre",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Determinación de lesiones pulmonares mediante radiografía de tórax previa",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** la **BCG** en la infancia da reactividad cruzada con el PPD → un Mantoux positivo no permite decidir si tratar la infección latente antes del anti-TNF → se usa una prueba con antígenos que la vacuna no contiene: el **IGRA (T-SPOT.TB)**, preferido en vacunados.\n\n- **Mantoux:** el tamizaje de rutina antes de un biológico, invalidado por la BCG.\n- **Tuberculina en dos pasos:** la que se elige para no perder respuestas débiles, pero con el mismo PPD.\n- **Heaf:** multipunción histórica con el mismo antígeno.\n- **Radiografía:** se pide para descartar enfermedad activa, no infección latente; en un paciente asintomático no la descarta.",
+      "tema": "vacunas",
+      "subtema": "Vacuna BCG"
+    },
+    {
+      "id": "t3q14",
+      "stem": "Un hombre de 58 años en hemodiálisis crónica comparte sala con dos pacientes que tuvieron hepatitis B aguda este semestre. Uno de ellos requirió hospitalización prolongada y el centro fue observado por fallas en la desinfección de las máquinas. Por protocolo de la unidad, recibió una dosis de vacuna contra hepatitis B hace cuatro días. Está asintomático y sin ictericia. Se desea confirmar si está infectado. ¿Cuál de las siguientes pruebas es la más apropiada para confirmar el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de HBsAg mediante prueba rápida inmunocromatográfica en sangre capilar",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Determinación cuantitativa de HBsAg mediante inmunoensayo quimioluminiscente automatizado en suero",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de HBsAg mediante contrainmunoelectroforesis en gel de agarosa clásica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Determinación de aminotransferasas séricas mediante método cinético enzimático en suero",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Detección de ADN del VHB mediante PCR en plasma",
+          "correct": true
+        }
+      ],
+      "explanation": "**Cadena:** la vacuna es **HBsAg recombinante** y en los días siguientes a una dosis puede circular y detectarse, sobre todo en pacientes en diálisis → un HBsAg positivo ahora no demuestra infección → se busca el genoma viral, que la vacuna no aporta: **ADN del VHB por PCR**.\n\n- **HBsAg rápido:** el tamizaje mensual de la unidad, con falso positivo transitorio tras vacunar.\n- **HBsAg cuantitativo:** la técnica más sensible, que detecta aún mejor el antígeno vacunal.\n- **Contrainmunoelectroforesis:** método histórico para el mismo antígeno.\n- **Aminotransferasas:** miden daño hepático, no presencia del virus; en un paciente asintomático no confirman nada.",
+      "tema": "vacunas",
+      "subtema": "Vacuna recombinante contra el VHB"
+    },
+    {
+      "id": "t3q16",
+      "stem": "Un policía de 45 años participó en el control de una aglomeración donde hace tres semanas se identificó un brote de COVID-19 con doce casos. Dos compañeros fueron hospitalizados y uno falleció. Según su carné, recibió dos dosis de una vacuna de vector adenoviral no replicativo hace cinco meses. Desde entonces no ha presentado síntomas y su examen es normal. Se desea establecer si se infectó en el brote. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de IgG anti-nucleocápside mediante inmunoensayo enzimático en suero",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Detección de IgG anti-espícula mediante prueba rápida de flujo lateral",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Determinación cuantitativa de IgG anti-RBD mediante quimioluminiscencia automatizada sérica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de anticuerpos totales anti-espícula mediante ELISA de primera generación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de linfopenia mediante hemograma automatizado en sangre venosa",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** el vector adenoviral lleva **sólo el gen de la espícula** → todo anticuerpo contra la espícula o su RBD puede ser vacunal → la infección natural se demuestra con anticuerpos contra una proteína ausente de la vacuna: **IgG anti-nucleocápside**, que aparece a las dos o tres semanas.\n\n- **Anti-espícula de flujo lateral:** la prueba rápida habitual, positiva por la vacuna.\n- **Anti-RBD cuantitativo:** el ensayo automatizado más preciso, pero dirigido al mismo antígeno vacunal.\n- **ELISA anti-espícula de primera generación:** técnica temprana con el mismo analito.\n- **Linfopenia:** marca gravedad de la COVID-19, no infección pasada; en una persona sin síntomas no responde la pregunta.",
+      "tema": "vacunas",
+      "subtema": "Vacunas COVID-19 dirigidas a la espícula"
+    },
+    {
+      "id": "t3q18",
+      "stem": "Un hombre de 50 años consulta porque su pareja fue diagnosticada de infección por VIH con carga viral elevada. Ella tuvo meningitis tuberculosa y sarcoma de Kaposi este año, y mantuvieron relaciones sin preservativo. Por un linfoma folicular en remisión, terminó hace dos meses el mantenimiento con rituximab indicado por hematología. Está asintomático y sin adenopatías. Se desea establecer si está infectado. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de anticuerpos anti-VIH mediante prueba rápida en sangre capilar",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de ARN del VIH mediante PCR en plasma",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Detección de anticuerpos anti-VIH mediante inmunoensayo de tercera generación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de anticuerpos anti-VIH mediante inmunofluorescencia indirecta de confirmación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de linfocitos T CD4 mediante citometría de flujo",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** el **rituximab** (anti-CD20) elimina los linfocitos B durante meses → una infección nueva puede no generar anticuerpos detectables → la serología negativa no descarta nada y hay que buscar el virus: **ARN del VIH por PCR**.\n\n- **Prueba rápida:** el tamizaje habitual, depende de anticuerpos.\n- **Tercera generación:** inmunoensayo sensible, pero también sólo de anticuerpos.\n- **Inmunofluorescencia indirecta:** confirmación histórica basada en anticuerpos.\n- **CD4:** mide el grado de inmunodepresión (y el rituximab ya altera los linfocitos), no la presencia del virus; en un paciente asintomático no hace el diagnóstico.",
+      "tema": "vacunas",
+      "subtema": "Inmunodeficiencia e inmunoglobulinas"
+    },
+    {
+      "id": "t3q19",
+      "stem": "Un niño de cuatro años asiste a una guardería donde se confirmó un brote de hepatitis A. Tres compañeros tuvieron ictericia y una cuidadora requirió hospitalización por falla hepática. Por agammaglobulinemia ligada al X recibe inmunoglobulina subcutánea semanal desde la lactancia. Está asintomático, sin coluria ni hepatomegalia. Se desea establecer si adquirió la infección en el brote. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de anticuerpos totales anti-VHA mediante inmunoensayo enzimático en suero",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de IgM anti-VHA mediante inmunoensayo quimioluminiscente en suero",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de ARN del VHA mediante RT-PCR en heces",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Detección de anticuerpos anti-VHA mediante radioinmunoensayo de fase sólida",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de aminotransferasas séricas mediante método cinético enzimático",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** el niño **no fabrica inmunoglobulinas** (sin linfocitos B maduros) y la IgG que tiene es la de la infusión, que trae anti-VHA de los donantes → ni la IgM ni los anticuerpos totales reflejan una infección suya → se busca el virus: **ARN del VHA por RT-PCR** en heces o suero.\n\n- **Anticuerpos totales:** positivos por la inmunoglobulina infundida.\n- **IgM anti-VHA:** la prueba de elección para la hepatitis A aguda, pero el niño no puede producirla.\n- **Radioinmunoensayo:** técnica superada con el mismo analito.\n- **Aminotransferasas:** miden daño hepático, no infección; en un niño asintomático no la establecen.",
+      "tema": "vacunas",
+      "subtema": "Inmunodeficiencia e inmunoglobulinas"
+    },
+    {
+      "id": "t3q20",
+      "stem": "Una mujer de 29 años comparte vivienda con su hermano, diagnosticado de hepatitis A aguda hace cinco semanas. Otros dos familiares tuvieron ictericia y la madre está hospitalizada con encefalopatía. En el centro de salud recibió inmunoglobulina humana intramuscular como profilaxis, poco después del diagnóstico del hermano. Está asintomática y sin coluria. Se desea establecer si se infectó. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de anticuerpos totales anti-VHA mediante inmunoensayo competitivo en suero",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Determinación cuantitativa de IgG anti-VHA mediante quimioluminiscencia automatizada en suero",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de anticuerpos anti-VHA mediante radioinmunoensayo competitivo de fase sólida",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de IgM anti-VHA mediante inmunoensayo de captura",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Determinación de aminotransferasas séricas mediante método cinético enzimático en suero",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** la inmunoglobulina humana es casi toda **IgG** de donantes, con anti-VHA → la IgG y los anticuerpos totales salen positivos sin que ella se haya infectado → la infección propia se demuestra con un isotipo que la profilaxis no aporta: la **IgM anti-VHA**.\n\n- **Anticuerpos totales:** la prueba habitual para saber si alguien es inmune, positiva por la IgG recibida.\n- **IgG cuantitativa:** más precisa, pero mide justo lo que se inyectó.\n- **Radioinmunoensayo:** técnica histórica con el mismo analito.\n- **Aminotransferasas:** miden daño hepático, no infección; en una persona asintomática no la establecen.",
+      "tema": "vacunas",
+      "subtema": "Inmunodeficiencia e inmunoglobulinas"
+    },
+    {
+      "id": "t3q22",
+      "stem": "Durante un brote de poliovirus salvaje tipo 1 en una región fronteriza se estudian los contactos de un niño con parálisis flácida aguda. Otro niño del barrio falleció por insuficiencia respiratoria y dos quedaron con secuelas. Un hermano de dos años recibió la vacuna oral en la campaña de bloqueo hace diez días. Está asintomático, con fuerza y reflejos normales. Se desea establecer si excreta el virus del brote. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de poliovirus mediante cultivo celular de heces en línea L20B",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de ARN de enterovirus mediante RT-PCR panenterovírica en heces",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de anticuerpos neutralizantes antipoliovirus mediante microneutralización en suero",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Determinación de denervación motora mediante electromiografía de miembros inferiores",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación intratípica de poliovirus mediante RT-PCR en tiempo real",
+          "correct": true
+        }
+      ],
+      "explanation": "**Cadena:** la vacuna oral es **Sabin, de virus vivos**, que se replica en el intestino y se excreta semanas → el cultivo y la PCR de enterovirus aislarán el virus vacunal → hay que clasificar el aislado: **diferenciación intratípica por RT-PCR**, que distingue vacunal, derivado de vacuna y salvaje.\n\n- **Cultivo en L20B:** el método estándar de la vigilancia, que también crece con la cepa vacunal.\n- **RT-PCR panenterovírica:** la más sensible, pero no separa cepas.\n- **Anticuerpos neutralizantes:** serología histórica, positiva por la propia vacuna.\n- **Electromiografía:** mide daño neuromuscular, no infección; con fuerza y reflejos normales no aporta.",
+      "tema": "vacunas",
+      "subtema": "Vacunas vivas atenuadas"
+    },
+    {
+      "id": "t3q24",
+      "stem": "Un niño de dos años asiste a una guardería con un brote de varicela de nueve casos. Un compañero tuvo celulitis necrotizante estreptocócica y otro fue hospitalizado por neumonía varicelosa. Su carné registra la primera dosis de vacuna contra varicela, aplicada hace tres semanas. Presenta cinco vesículas en el tronco, sin fiebre ni otros hallazgos. Se desea establecer si las lesiones son por la cepa circulante. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Determinación de la cepa viral mediante PCR con discriminación alélica",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Detección de antígeno de varicela-zóster mediante inmunofluorescencia directa de raspado vesicular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de ADN de varicela-zóster mediante PCR en tiempo real",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de células gigantes multinucleadas mediante citodiagnóstico de Tzanck",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de neumonitis varicelosa mediante radiografía de tórax frontal",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** la vacuna de varicela es la **cepa Oka viva**, que puede dar unas pocas vesículas entre los 5 y 26 días → cualquier prueba que sólo detecte virus varicela-zóster será positiva con la cepa vacunal → hay que distinguir cepas: **PCR con discriminación alélica** (diferencia Oka de la salvaje).\n\n- **Inmunofluorescencia directa:** el método rápido tradicional, positivo con el virus vacunal.\n- **PCR en tiempo real:** la prueba de elección para varicela, pero no separa cepas.\n- **Tzanck:** citodiagnóstico histórico que ni siquiera distingue varicela de herpes simple.\n- **Radiografía:** busca una complicación (gravedad); sin otros hallazgos no aporta al diagnóstico.",
+      "tema": "vacunas",
+      "subtema": "Vacunas vivas atenuadas"
+    },
+    {
+      "id": "t3q25",
+      "stem": "Un biólogo de 30 años regresa de una expedición a la selva sur, donde se notificó un brote de fiebre amarilla selvática con cuatro muertes. Un guía local presentó ictericia y hemorragias. Su certificado internacional muestra la vacuna antiamarílica aplicada tres semanas antes del viaje. Tiene fiebre leve y mialgias, sin ictericia, sangrado ni alteración de conciencia. Se desea confirmar si se infectó. ¿Cuál de las siguientes pruebas es la más apropiada para confirmar el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de IgM antiamarílica mediante ELISA de captura en suero",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de ARN del virus amarílico mediante RT-PCR sérica",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Determinación de anticuerpos neutralizantes antiamarílicos mediante reducción de placas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de anticuerpos antiamarílicos mediante inhibición de la hemaglutinación clásica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de aminotransferasas y protrombina mediante bioquímica sérica automatizada",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** la **vacuna 17D es viva** e induce IgM y anticuerpos neutralizantes que persisten meses o años → la serología no separa vacuna de infección → se busca el virus en la fase febril: **ARN por RT-PCR**; la viremia vacunal dura sólo los primeros días tras la dosis, que fue hace más de tres semanas.\n\n- **IgM de captura:** la prueba habitual de vigilancia, positiva por la vacuna.\n- **Neutralización por reducción de placas:** la serología de referencia, que mide justo lo que la vacuna induce.\n- **Inhibición de la hemaglutinación:** técnica histórica, también de anticuerpos.\n- **Aminotransferasas y protrombina:** miden gravedad; sin ictericia ni sangrado no confirman la infección.",
+      "tema": "vacunas",
+      "subtema": "Vacunas vivas atenuadas"
+    },
+    {
+      "id": "t3q26",
+      "stem": "Una ingeniera de 35 años trabaja en una ciudad amazónica con una epidemia de dengue y varios casos graves en su oficina. Una compañera murió por choque y otra necesitó transfusiones. Antes de su traslado, hace seis semanas, se vacunó contra la fiebre amarilla, según su carné. Presenta fiebre de dos días y cefalea, sin dolor abdominal, sangrado ni vómitos. Se desea confirmar si tiene dengue. ¿Cuál de las siguientes pruebas es la más apropiada para confirmar el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de IgM antidengue mediante ELISA de captura en suero",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de IgM e IgG antidengue mediante prueba rápida combinada",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de antígeno NS1 mediante inmunoensayo enzimático en suero",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Detección de anticuerpos antidengue mediante inhibición de la hemaglutinación clásica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Determinación de hemoconcentración y plaquetas mediante hemograma automatizado seriado",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** la vacuna antiamarílica es un **flavivirus vivo**, y los anticuerpos contra flavivirus reaccionan de forma cruzada → la IgM o IgG antidengue puede salir positiva por la vacuna (y a los dos días de fiebre aún no ha subido) → se busca una proteína del propio virus circulante: el **antígeno NS1**, positivo en los primeros días.\n\n- **IgM de captura:** la serología habitual, con reactividad cruzada y todavía negativa al día dos.\n- **Prueba rápida IgM/IgG:** la más usada en campo, con el mismo problema.\n- **Inhibición de la hemaglutinación:** técnica histórica, la más cruzada de todas.\n- **Hemograma seriado:** vigila gravedad (plaquetas, hematocrito), no confirma la infección; sin signos de alarma no responde la pregunta.",
+      "tema": "vacunas",
+      "subtema": "Vacunas vivas atenuadas"
+    },
+    {
+      "id": "t3q29",
+      "stem": "Un hombre de 38 años fue hospitalizado el mes pasado por hepatitis aguda con ictericia intensa. Su pareja tiene hepatitis B crónica y un amigo cercano murió por hepatitis fulminante. Recibió el alta hace tres semanas, cuando las enzimas ya descendían y sin completar el estudio etiológico. Hoy está asintomático, sin ictericia ni hepatomegalia. Se desea confirmar si el cuadro fue por hepatitis B. ¿Cuál de las siguientes pruebas es la más apropiada para confirmar el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de HBsAg mediante prueba rápida inmunocromatográfica en sangre",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de ADN del VHB mediante PCR cuantitativa en plasma",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de HBsAg mediante hemaglutinación pasiva reversa en suero",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de IgM anti-HBc mediante inmunoensayo quimioluminiscente en suero",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Determinación de aminotransferasas séricas mediante método cinético enzimático",
+          "correct": false
+        }
+      ],
+      "explanation": "**Cadena:** en la convalecencia de una hepatitis B aguda el **HBsAg ya desapareció y el anti-HBs aún no aparece** (periodo de ventana) → las pruebas que buscan antígeno o genoma pueden ser negativas → el único marcador presente es la **IgM anti-HBc**, que confirma la infección reciente.\n\n- **HBsAg rápido:** el tamizaje habitual, ya negativo en esta fase.\n- **ADN por PCR:** la técnica más sensible, pero el virus ya fue aclarado.\n- **Hemaglutinación pasiva reversa:** método histórico para el mismo antígeno.\n- **Aminotransferasas:** miden la inflamación en descenso, no la etiología; en un paciente asintomático no confirman nada.",
+      "tema": "vacunas",
+      "subtema": "Periodo de ventana"
+    },
+    {
+      "id": "t3q30",
+      "stem": "Una enfermera de 31 años se pinchó al recapuchar una aguja usada en un paciente con hepatitis C. Ese paciente tiene cirrosis descompensada y coinfección por VIH, y otra enfermera del servicio se infectó el año pasado. El accidente ocurrió hace tres semanas y hoy acude a su control de salud ocupacional. Está asintomática y sin ictericia. Se desea establecer si adquirió la infección. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Detección de anticuerpos anti-VHC mediante prueba rápida en sangre capilar",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de anticuerpos anti-VHC mediante inmunoensayo quimioluminiscente de tercera generación",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Detección de anticuerpos anti-VHC mediante inmunoblot recombinante tipo RIBA",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Determinación del grado de fibrosis hepática mediante elastografía transitoria",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Detección de ARN del VHC mediante RT-PCR en plasma",
+          "correct": true
+        }
+      ],
+      "explanation": "**Cadena:** a las tres semanas de la exposición todavía **no hay anticuerpos anti-VHC** (tardan de 8 a 12 semanas) → la serología negativa no descarta la infección → se busca el virus, detectable desde la primera o segunda semana: **ARN del VHC por RT-PCR**.\n\n- **Prueba rápida:** el tamizaje habitual, negativo en la ventana.\n- **Tercera generación:** el inmunoensayo de elección, con el mismo límite temporal.\n- **RIBA:** confirmación en desuso, también de anticuerpos.\n- **Elastografía:** mide fibrosis crónica, no infección reciente; en una persona asintomática no aporta.",
+      "tema": "vacunas",
+      "subtema": "Periodo de ventana"
     }
   ],
   "flashcards": [
