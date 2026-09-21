@@ -615,9 +615,11 @@
   /* Se centra la TARJETA, no tarjeta + pie: el pie cuelga debajo (absoluto)
      en la mitad libre. Esta altura deja sitio para él bajo una tarjeta normal. */
   min-height: min(74vh, 660px);
-  /* Margen y no padding: el padding descentraría la tarjeta; esto sólo guarda
-     sitio para el pie de una tarjeta alta. */
-  margin-bottom: 56px;
+  /* El padding de abajo es el sitio del pie (botones + enlace, ~130 px): la
+     tarjeta se centra en lo que queda encima, así sube la mitad de eso y el
+     conjunto no carga peso abajo. Nada se mueve al voltear: el pie ya contaba. */
+  padding-bottom: 130px;
+  margin-bottom: 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
