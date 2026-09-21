@@ -35,6 +35,8 @@ export interface Actividad {
   nota?: string;
   /** Abre la clase entera a cualquier cuenta, como muestra del curso. */
   gratis?: boolean;
+  /** Cierra un LAB (libre por tipo) detrás del plan. */
+  premium?: boolean;
   resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   examen?: ExamenRef;
   /**
@@ -580,6 +582,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
+        tarjetas: { key: 'inmunologia/t-12-regulacion', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -601,6 +604,7 @@ export const semanas: Semana[] = [
           'Inmunofenotipo y marcadores CD',
         ],
         docentes: [],
+        tarjetas: { key: 'inmunologia/t-13-citometria', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -613,6 +617,7 @@ export const semanas: Semana[] = [
         unidad: 'INMUNOPATOLOGIA',
         codigo: 'L2',
         titulo: 'L2 — Citometría de flujo (FlowJo)',
+        premium: true,
         fecha: '23 – 25 set · según subgrupo',
         hora: '—',
         subtemas: [
@@ -623,6 +628,7 @@ export const semanas: Semana[] = [
         docentes: [],
         nota: 'Se evalúa por envío de tareas / resolución de problemas (promedio de los 2 labs = 5%).',
         simulacion: { desc: 'Práctica interactiva de gating e interpretación de dot plots' },
+        tarjetas: { key: 'inmunologia/l-2-citometria', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -645,6 +651,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Paso corto: evaluado durante la sesión (cuenta para pasos cortos, 10%).',
+        tarjetas: { key: 'inmunologia/t-14-cancer', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -667,6 +674,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluado por el tutor facilitador al final de la semana. Promedio de SGP = 30% de la nota final.',
+        tarjetas: { key: 'inmunologia/sgp-4-melanoma', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',

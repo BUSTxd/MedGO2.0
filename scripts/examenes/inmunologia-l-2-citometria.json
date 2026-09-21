@@ -1,0 +1,202 @@
+{
+  "version": 1,
+  "key": "inmunologia/l-2-citometria",
+  "title": "L2 — Citometría de flujo (FlowJo)",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "En el dot plot FSC vs. SSC de leucocitos de sangre periférica, ¿qué tres poblaciones se distinguen?",
+      "respuesta": "Linfocitos, monocitos y granulocitos.",
+      "detalle": "Lo importante del laboratorio es **reconocer cada grupo celular en la gráfica**. Cada nube de puntos es una población: los linfocitos abajo a la izquierda, los monocitos en medio y los granulocitos arriba a la derecha.",
+      "tema": "tecnicas",
+      "seccion": "DOT PLOT"
+    },
+    {
+      "id": "f02",
+      "frente": "En el dot plot FSC vs. SSC, ¿qué población forma la nube más alta (mayor SSC), arriba a la derecha?",
+      "respuesta": "Los granulocitos (neutrófilos, eosinófilos y basófilos).",
+      "detalle": "Es la nube más grande y la que alcanza los valores de **SSC** más altos del gráfico, con un FSC también alto.",
+      "tema": "tecnicas",
+      "seccion": "DOT PLOT"
+    },
+    {
+      "id": "f03",
+      "frente": "En el dot plot FSC vs. SSC, ¿qué población forma la nube compacta de abajo a la izquierda?",
+      "respuesta": "Los linfocitos (B, T y NK).",
+      "detalle": "Tienen los valores **más bajos** de FSC y de SSC de las tres poblaciones: forman una nube alargada y densa pegada al eje inferior.",
+      "tema": "tecnicas",
+      "seccion": "DOT PLOT"
+    },
+    {
+      "id": "f04",
+      "frente": "En el dot plot FSC vs. SSC, ¿dónde caen los monocitos?",
+      "respuesta": "En una posición intermedia: entre los linfocitos y los granulocitos.",
+      "detalle": "Tienen un FSC parecido al de los granulocitos, pero un **SSC intermedio**: su nube queda justo debajo de la de los granulocitos y por encima de la de los linfocitos.",
+      "tema": "tecnicas",
+      "seccion": "DOT PLOT"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué CDs caracterizan a los linfocitos T, a los T cooperadores y a los T citotóxicos?",
+      "respuesta": "Todos los T: CD2 y CD3. Cooperador: CD4. Citotóxico: CD8.",
+      "detalle": "El **CD3** marca a **todos** los linfocitos T; el **CD4** y el **CD8** separan después a cooperadores y citotóxicos.",
+      "tema": "celulas-inmunes",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › T (todos)"
+    },
+    {
+      "id": "f06",
+      "frente": "En el dot plot CD4 vs. CD3, ¿qué células caen en el cuadrante de arriba a la derecha (Q2, CD3+ CD4+)?",
+      "respuesta": "Los linfocitos T cooperadores (75 % en el ejemplo).",
+      "detalle": "Tienen **CD3** (son linfocitos T) y **CD4** (son cooperadores). En el ejemplo son la población dominante de la muestra.",
+      "tema": "tecnicas",
+      "seccion": "¿Por qué los puntos se agrupan en cuatro zonas? › Arriba derecha"
+    },
+    {
+      "id": "f07",
+      "frente": "En el dot plot CD4 vs. CD3, ¿qué células caen arriba a la izquierda (Q1, CD3+ CD4−)?",
+      "respuesta": "Otros linfocitos T, sobre todo T citotóxicos (15 % en el ejemplo).",
+      "detalle": "Tienen **CD3** pero **no CD4**: son linfocitos T que no son cooperadores, principalmente los citotóxicos (CD8).",
+      "tema": "tecnicas",
+      "seccion": "¿Por qué los puntos se agrupan en cuatro zonas? › Arriba izquierda"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Qué marcadores identifican a los linfocitos NK?",
+      "respuesta": "CD16 (FcγRIII) y CD56, sin CD3 (CD3−).",
+      "detalle": "La ausencia de **CD3** es lo que los separa de los linfocitos T.",
+      "tema": "celulas-inmunes",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Linfocitos NK"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué CDs caracterizan a los linfocitos B?",
+      "respuesta": "CD19, CD20 y CD21 (CR2).",
+      "tema": "celulas-inmunes",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Linfocitos B"
+    },
+    {
+      "id": "f10",
+      "frente": "En la citometría de flujo, ¿cómo se llega a saber qué proteína tiene cada célula?",
+      "respuesta": "Con etiquetas luminosas específicas: las células pasan de una en una frente a un láser y brillan según cuánta proteína tienen.",
+      "detalle": "Cada etiqueta se une solo a **una proteína específica**. Cuanta más proteína tiene la célula, **más brilla**; cada **punto** del gráfico es una célula, ubicada según cuánto brilla.",
+      "tema": "tecnicas",
+      "seccion": "¿Cómo se llega a esto?"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Qué marcadores identifican al linfocito T regulador (Treg)?",
+      "respuesta": "CD4, CD25 (receptor de IL-2) y FoxP3.",
+      "detalle": "Comparte el **CD4** con el T cooperador; lo que lo distingue es el **CD25** y el **FoxP3**.",
+      "tema": "celulas-inmunes",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Linfocito T regulador"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Qué CDs caracterizan a los monocitos/macrófagos?",
+      "respuesta": "CD14, CD16, CD68 y CD40.",
+      "tema": "celulas-inmunes",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Monocitos/Macrófagos"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Qué marcadores caracterizan a los basófilos?",
+      "respuesta": "CD123 y FcεRI.",
+      "tema": "celulas-inmunes",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Basófilos"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Qué marcadores caracterizan a las células madre hematopoyéticas?",
+      "respuesta": "CD34 y CD117 (c-Kit).",
+      "tema": "celulas-inmunes",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Células madre hematopoyéticas"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Qué CDs caracterizan a los neutrófilos?",
+      "respuesta": "CD15, CD16 y CD11b/CD18.",
+      "tema": "celulas-inmunes",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Neutrófilos"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Qué tres tipos celulares de la tabla comparten el CD16?",
+      "respuesta": "Linfocitos NK, monocitos/macrófagos y neutrófilos.",
+      "detalle": "Por eso el **CD16** solo no basta para identificar una célula: en los NK se reconoce por la combinación **CD16 + CD56 sin CD3**.",
+      "tema": "celulas-inmunes",
+      "seccion": "RECEPTORES CARACTERÍSTICOS"
+    },
+    {
+      "id": "f17",
+      "frente": "En el ejemplo, ¿qué etiqueta marca al CD3 y cuál al CD4, y en qué eje se lee cada una?",
+      "respuesta": "CD3: etiqueta naranja (PE), eje vertical. CD4: etiqueta verde (FITC), eje horizontal.",
+      "detalle": "**Más arriba** = más CD3 (más naranja). **Más a la derecha** = más CD4 (más verde).",
+      "tema": "tecnicas",
+      "seccion": "¿Cómo se llega a esto?"
+    },
+    {
+      "id": "f18",
+      "frente": "En el dot plot CD4 vs. CD3, ¿qué representan las líneas punteadas?",
+      "respuesta": "El límite entre «tiene la proteína» y «no la tiene».",
+      "detalle": "Una línea para cada marcador: por eso las células quedan repartidas en **cuatro cuadrantes**, y cada tipo celular cae siempre en la misma región según su combinación de proteínas.",
+      "tema": "tecnicas",
+      "seccion": "¿Por qué los puntos se agrupan en cuatro zonas?"
+    },
+    {
+      "id": "f19",
+      "frente": "En el dot plot CD4 vs. CD3, ¿qué células caen abajo a la derecha (Q3, CD3− CD4+)?",
+      "respuesta": "Monocitos u otras células con poco CD4 (3 % en el ejemplo).",
+      "detalle": "Tienen **CD4** pero **no CD3**, así que no son linfocitos T.",
+      "tema": "tecnicas",
+      "seccion": "¿Por qué los puntos se agrupan en cuatro zonas? › Abajo derecha"
+    },
+    {
+      "id": "f20",
+      "frente": "En el dot plot CD4 vs. CD3, ¿qué células caen abajo a la izquierda (Q4, CD3− CD4−)?",
+      "respuesta": "Otras células (B, NK, etc.) o ruido de fondo (7 % en el ejemplo).",
+      "detalle": "No tienen **ninguno** de los dos marcadores teñidos.",
+      "tema": "tecnicas",
+      "seccion": "¿Por qué los puntos se agrupan en cuatro zonas? › Abajo izquierda"
+    },
+    {
+      "id": "f21",
+      "frente": "En el dot plot, ¿qué indican los colores de los puntos (del azul al rojo)?",
+      "respuesta": "Solo dónde hay más células amontonadas (densidad celular).",
+      "detalle": "El **rojo** es donde se concentra la mayoría (en el ejemplo, los T cooperadores) y el **azul**, zonas con pocas células. **No representa ninguna medida extra.**",
+      "tema": "tecnicas",
+      "seccion": "¿Y los colores?"
+    },
+    {
+      "id": "f22",
+      "frente": "En el ejemplo, ¿qué porcentaje de las células son linfocitos T y cómo se calcula?",
+      "respuesta": "90 %: Q2 (75 %) + Q1 (15 %).",
+      "detalle": "Son los dos cuadrantes **CD3+**. Indica una muestra muy rica en linfocitos T.",
+      "tema": "tecnicas",
+      "seccion": "¿Qué significa el resultado?"
+    },
+    {
+      "id": "f23",
+      "frente": "En el ejemplo, ¿cómo está la proporción de T CD4 frente a los otros T, comparada con la sangre normal?",
+      "respuesta": "Alta: 5 a 1 (75 % contra 15 %), cuando lo normal suele ser 1.5 a 2.5 a 1.",
+      "tema": "tecnicas",
+      "seccion": "¿Qué significa el resultado?"
+    },
+    {
+      "id": "f24",
+      "frente": "¿Qué indica que las poblaciones del dot plot salgan bien separadas?",
+      "respuesta": "Que la tinción funcionó bien.",
+      "tema": "tecnicas",
+      "seccion": "¿Qué significa el resultado?"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Cuál es el ejemplo clásico de por qué importa contar los CD4, y qué pasa con la proporción CD4:CD8?",
+      "respuesta": "El VIH: destruye los CD4, así que la proporción CD4:CD8 baja.",
+      "detalle": "Los CD4 son los **«coordinadores»** del sistema inmune. Contarlos también sirve para **evaluar el sistema inmune**, **seguir leucemias y linfomas** o **revisar el efecto de tratamientos**.",
+      "tema": "tecnicas",
+      "seccion": "¿Por qué importa esto?"
+    }
+  ]
+}

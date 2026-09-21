@@ -97,7 +97,7 @@ export default async function InmunologiaPage() {
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
               // Los laboratorios son libres, y las clases marcadas `gratis` son
               // la muestra del curso (misma regla que su `[id]/page.tsx`).
-              const esLibre = act.tipo === 'LAB' || !!act.gratis;
+              const esLibre = (act.tipo === 'LAB' && !act.premium) || !!act.gratis;
               // Si la card redirige a otra sección, no la bloqueamos:
               // el destino maneja su propio acceso.
               const isLocked = !esLibre && !act.linkOverride && !hasAcceso;

@@ -52,7 +52,7 @@ const LIBRE: Record<string, (a: Act) => boolean> = {
   'aparato-locomotor':     esTipo('ANATOMIA', 'HISTOLOGIA'),
   'digestivo':             esTipo('ANATOMIA', 'HISTOLOGIA'),
   'endocrino-reproductor': esTipo('ANATOMIA', 'HISTOLOGIA', 'TALLER'),
-  'inmunologia':           (a) => a.tipo === 'LAB' || !!a.gratis,
+  'inmunologia':           (a) => (a.tipo === 'LAB' && !a.premium) || !!a.gratis,
   'patologia':             (a) => a.tipo === 'LAB' || examenLibre(a),
   'epidemiologia':         examenLibre,
   'fisica-medicina':       () => false,

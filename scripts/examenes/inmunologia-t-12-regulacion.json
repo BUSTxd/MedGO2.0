@@ -1,0 +1,287 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-12-regulacion",
+  "title": "T12 — Regulación de la respuesta inmune",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Qué es la tolerancia inmunológica?",
+      "respuesta": "La falta de respuesta inmunitaria específica frente a un antígeno después de una exposición previa.",
+      "detalle": "Es esencial para **evitar respuestas contra antígenos propios** (prevenir la autoinmunidad) y para **mantener la homeostasis inmunológica**.",
+      "tema": "tolerancia",
+      "seccion": "I. INTRODUCCIÓN"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Qué diferencia a un antígeno inmunogénico de uno tolerogénico?",
+      "respuesta": "El inmunogénico induce una respuesta inmunitaria; el tolerogénico induce tolerancia.",
+      "detalle": "El tolerogénico lo logra por **anergia** (inactivación funcional), **supresión por Treg** o **eliminación/apoptosis** del linfocito. Un antígeno extraño también puede volverse tolerogénico: p. ej., para **evitar el rechazo de un órgano trasplantado**.",
+      "tema": "tolerancia",
+      "seccion": "I. INTRODUCCIÓN"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Dónde ocurre la tolerancia central de los linfocitos T y B, y cuál es su función?",
+      "respuesta": "LT en el timo, LB en la médula ósea: eliminar o inactivar a los que reconocen lo propio con alta afinidad.",
+      "detalle": "Ocurre en los **órganos linfoides primarios**, y así evita que esos linfocitos autorreactivos sean **liberados a la periferia**.",
+      "tema": "tolerancia",
+      "seccion": "II. Tolerancia central"
+    },
+    {
+      "id": "f04",
+      "frente": "Selección positiva de los timocitos: ¿dónde ocurre y qué evalúa?",
+      "respuesta": "En la corteza tímica: que el TCR reconozca MHC propio con afinidad baja-intermedia.",
+      "detalle": "Define el linaje: si reconoce **MHC I → CD8**; si reconoce **MHC II → CD4**. Es la restricción por moléculas de histocompatibilidad propias.",
+      "tema": "tolerancia",
+      "seccion": "Selección positiva"
+    },
+    {
+      "id": "f05",
+      "frente": "Selección negativa: ¿dónde ocurre y qué pasa según la afinidad por lo propio?",
+      "respuesta": "En la médula tímica: alta afinidad → apoptosis; afinidad intermedia → Treg (FoxP3⁺).",
+      "detalle": "Evalúa si el timocito **reconoce antígenos propios con alta afinidad**. Los que no los reconocen de manera fuerte sobreviven y salen del timo como **LT maduros naive**.",
+      "tema": "tolerancia",
+      "seccion": "Selección negativa"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Qué es la edición del receptor?",
+      "respuesta": "Un LB inmaduro (IgM⁺) autorreactivo reestructura los genes de su BCR para generar uno no autorreactivo.",
+      "detalle": "Ocurre en la **médula ósea** cuando el LB reconoce un autoantígeno **con alta afinidad**. Es exclusiva de los **linfocitos B**: se le da la oportunidad de \"editar\" el receptor antes de eliminarlo.",
+      "tema": "tolerancia",
+      "seccion": "Linfocitos B → médula ósea"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Qué es la anergia y qué la provoca?",
+      "respuesta": "Un linfocito funcionalmente inactivo por reconocer el antígeno con el TCR sin coestimulación adecuada.",
+      "detalle": "Falta la señal positiva **CD28 (LT) ↔ CD80/CD86 (CPA)** y en su lugar actúa la inhibitoria **CTLA-4 ↔ CD80/CD86**.",
+      "tema": "tolerancia",
+      "seccion": "III. Tolerancia periférica"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Cómo inhibe CTLA-4 la coestimulación?",
+      "respuesta": "Compite con CD28 por B7 (CD80/CD86) de la CPA, y la une con mayor afinidad.",
+      "detalle": "Al quitarle B7 a CD28 se **↓ la coestimulación CD28–B7**. CTLA-4 está en el LT durante la anergia y se expresa en las **Treg**, donde disminuye la capacidad coestimuladora de las APC.",
+      "tema": "regulacion",
+      "seccion": "III. Tolerancia periférica"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Cuáles son los marcadores de los linfocitos T reguladores?",
+      "respuesta": "CD4⁺, CD25 alto (IL-2Rα), FoxP3⁺ y CTLA-4⁺.",
+      "detalle": "**FoxP3** es el factor de transcripción que los define: gracias a su expresión el CD4⁺ se diferencia hacia Treg.",
+      "tema": "regulacion",
+      "seccion": "IV. LINFOCITOS T REG"
+    },
+    {
+      "id": "f10",
+      "frente": "¿Con qué tres mecanismos suprimen las Treg a los LT efectores?",
+      "respuesta": "IL-10 y TGF-β, CTLA-4, y alto consumo de IL-2 mediante CD25.",
+      "detalle": "**IL-10 y TGF-β** inhiben la activación de CPA y LT efectores; **CTLA-4** ↓ la capacidad coestimuladora de las APC; el **consumo de IL-2** limita la proliferación de los LT.",
+      "tema": "regulacion",
+      "seccion": "III. Tolerancia periférica"
+    },
+    {
+      "id": "f11",
+      "frente": "Si por azar se producen linfocitos que reconocen lo propio, ¿qué tres opciones tiene la tolerancia central?",
+      "respuesta": "Eliminarlos antes de que salgan, editar su receptor o volverlos reguladores.",
+      "detalle": "La **edición del receptor** es solo de **linfocitos B**; el desarrollo de **Treg** es solo de **LT CD4⁺**. La eliminación es por **apoptosis (deleción)**.",
+      "tema": "tolerancia",
+      "seccion": "Mecanismos principales"
+    },
+    {
+      "id": "f12",
+      "frente": "Edición del receptor: ¿qué maquinaria se reactiva y en qué orden se recombina la cadena ligera?",
+      "respuesta": "RAG-1, RAG-2 y TdT; primero el locus κ y, si no funciona, el λ.",
+      "detalle": "La recombinación se hace en los **genes de la cadena ligera**. Se activa cuando el BCR autorreactivo reconoce un autoantígeno en la médula ósea.",
+      "tema": "tolerancia",
+      "seccion": "Linfocitos B → médula ósea"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Cuáles son los dos desenlaces posibles de la edición del receptor?",
+      "respuesta": "BCR no autorreactivo → el LB sobrevive; BCR aún autorreactivo → apoptosis.",
+      "detalle": "Si la edición fracasa, el linfocito sufre **deleción clonal**.",
+      "tema": "tolerancia",
+      "seccion": "Linfocitos B → médula ósea"
+    },
+    {
+      "id": "f14",
+      "frente": "En la médula ósea, ¿qué le pasa al LB autorreactivo según la avidez por lo propio?",
+      "respuesta": "Avidez alta → edición del receptor o apoptosis; avidez baja → anergia.",
+      "detalle": "Con avidez baja hay **expresión reducida del receptor y bloqueo de la señal**, y el LB llega a los tejidos periféricos como **linfocito B anérgico**. Los tres mecanismos de tolerancia central del LB son apoptosis, anergia y edición del receptor.",
+      "tema": "tolerancia",
+      "seccion": "Linfocitos B → médula ósea"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Por dónde entran al timo los LT inmaduros y qué fenotipo tienen?",
+      "respuesta": "Por la unión corticomedular, como dobles positivos CD4⁺CD8⁺.",
+      "detalle": "Durante su maduración son **expuestos a antígenos propios**, que es lo que permite seleccionarlos.",
+      "tema": "tolerancia",
+      "seccion": "Linfocitos T → timo"
+    },
+    {
+      "id": "f16",
+      "frente": "Modelo de afinidad de la selección tímica: ¿qué pasa en cada rango de afinidad del TCR por péptido propio-MHC?",
+      "respuesta": "Nula: no hay selección; baja-intermedia: selección positiva; intermedia-alta: Treg; alta: selección negativa.",
+      "detalle": "El rango de **afinidad intermedia** es la selección \"alternativa\": esos timocitos **suben FoxP3** y se vuelven Treg en vez de morir.",
+      "tema": "tolerancia",
+      "seccion": "Linfocitos T → timo"
+    },
+    {
+      "id": "f17",
+      "frente": "Tolerancia periférica: ¿sobre qué linfocitos actúa y dónde?",
+      "respuesta": "Sobre los autorreactivos que escaparon de la tolerancia central, en ganglios, bazo y tejidos periféricos.",
+      "detalle": "Actúa en **órganos linfoides secundarios y tejidos periféricos**. En el LT sus mecanismos son **anergia, supresión por Treg y apoptosis (deleción periférica)**.",
+      "tema": "tolerancia",
+      "seccion": "III. Tolerancia periférica"
+    },
+    {
+      "id": "f18",
+      "frente": "Deleción periférica por vía extrínseca: ¿qué la desencadena y cómo avanza?",
+      "respuesta": "Estimulación repetida del LT sin condiciones de supervivencia: Fas (CD95) ↔ FasL → caspasas → apoptosis.",
+      "detalle": "Fas–FasL activa **caspasas iniciadoras**, que activan **caspasas ejecutoras**.",
+      "tema": "tolerancia",
+      "seccion": "III. Tolerancia periférica"
+    },
+    {
+      "id": "f19",
+      "frente": "Deleción periférica por vía intrínseca (mitocondrial): ¿cuál es la secuencia?",
+      "respuesta": "Bim → Bax y Bak → citocromo c → caspasa-9 → caspasas ejecutoras.",
+      "detalle": "**Bim** (proapoptótica) se activa ante la **falta de factores de supervivencia**; Bax y Bak **permeabilizan la membrana mitocondrial externa** y se libera el citocromo c.",
+      "tema": "tolerancia",
+      "seccion": "III. Tolerancia periférica"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Cuáles son los mecanismos de tolerancia periférica del linfocito B?",
+      "respuesta": "Anergia, exclusión de nichos foliculares, apoptosis y supresión por Treg y Tfr.",
+      "detalle": "**Tfr** = T foliculares reguladores. La tabla resumen añade la **regulación por receptores inhibitorios** en el LB.",
+      "tema": "tolerancia",
+      "seccion": "Linfocitos B: Tolerancia periférica"
+    },
+    {
+      "id": "f21",
+      "frente": "Exclusión de nichos foliculares: ¿qué señales le faltan al LB y dónde queda retenido?",
+      "respuesta": "Le faltan CD40–CD40L, IL-4/IL-21 de Tfh y BAFF/BLyS de FDC; queda en la zona marginal del bazo.",
+      "detalle": "Sin la señal **CD40–CD40L con el LT CD4⁺**, sin **citoquinas de Tfh** y sin **factores tróficos de las FDC** en cantidad adecuada, el LB **no entra a los folículos**.",
+      "tema": "tolerancia",
+      "seccion": "Linfocitos B: Tolerancia periférica"
+    },
+    {
+      "id": "f22",
+      "frente": "¿Qué es la segregación antigénica como capa de la autotolerancia?",
+      "respuesta": "Una barrera física que impide que el antígeno propio llegue al sistema linfoide.",
+      "detalle": "Actúa en **órganos periféricos** como la **tiroides** o el **páncreas**. Otras capas: tolerancia central, anergia periférica, Treg, desviación funcional y muerte celular inducida por activación.",
+      "tema": "tolerancia",
+      "seccion": "I. INTRODUCCIÓN"
+    },
+    {
+      "id": "f23",
+      "frente": "¿Cómo se originan las Treg en el timo?",
+      "respuesta": "CD4⁺ que reconocen lo propio con afinidad intermedia no son eliminados y expresan FoxP3.",
+      "detalle": "Ocurre **durante la selección negativa en la médula tímica**: en vez de morir, se diferencian hacia Treg gracias al factor de transcripción **FoxP3**.",
+      "tema": "regulacion",
+      "seccion": "Origen en el timo"
+    },
+    {
+      "id": "f24",
+      "frente": "¿De dónde salen las Treg inducibles (iTreg) y qué necesitan?",
+      "respuesta": "De LT CD4⁺ convencionales activados en un ambiente tolerogénico, con TGF-β e IL-2.",
+      "detalle": "Es el **origen periférico** de las Treg, a diferencia del tímico: reconocen antígeno en los **tejidos linfoides secundarios**.",
+      "tema": "regulacion",
+      "seccion": "Origen en la periferia"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Qué efectos tiene la IL-10 producida por las Treg?",
+      "respuesta": "Inhibe macrófagos y células dendríticas: ↓ IL-12, ↓ MHC II y ↓ coestimuladoras en las APC.",
+      "detalle": "Como resultado **disminuye la activación de los linfocitos T efectores**. También baja otras citocinas proinflamatorias.",
+      "tema": "regulacion",
+      "seccion": "Origen en la periferia"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Qué efectos tiene el TGF-β producido por las Treg?",
+      "respuesta": "↓ proliferación y activación de LT y LB, promueve iTreg y favorece el cambio de isotipo a IgA.",
+      "detalle": "El cambio hacia **IgA** se da **especialmente en mucosas**.",
+      "tema": "regulacion",
+      "seccion": "Origen en la periferia"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Qué es la IDO y cómo frena a los linfocitos T?",
+      "respuesta": "Indoleamina-2,3-dioxigenasa: degrada el triptófano y limita la proliferación y función de los LT.",
+      "detalle": "Las Treg **aumentan la expresión de IDO en las células dendríticas** como parte de su modulación de las APC (junto con CTLA-4).",
+      "tema": "regulacion",
+      "seccion": "Origen en la periferia"
+    },
+    {
+      "id": "f28",
+      "frente": "¿Cómo suprime el consumo de IL-2 a los LT efectores?",
+      "respuesta": "Las Treg, con mucho CD25 (IL-2Rα), captan la IL-2 y dejan menos para los efectores.",
+      "detalle": "Con **↓ IL-2 disponible** se reducen la **proliferación y la supervivencia** de los T efectores.",
+      "tema": "regulacion",
+      "seccion": "Origen en la periferia"
+    },
+    {
+      "id": "f29",
+      "frente": "Mujer de 23 años con artralgias migratorias, rash malar, proteinuria y gen Fas defectuoso: ¿qué mecanismo falla?",
+      "respuesta": "La muerte inducida por activación de los linfocitos T.",
+      "detalle": "**Fas (CD95)–FasL** es la **vía extrínseca de la deleción periférica**, la que elimina al LT estimulado repetidamente sin condiciones de supervivencia.",
+      "tema": "autoinmunidad",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f30",
+      "frente": "¿El defecto de qué mecanismo produciría muchos linfocitos T autorreactivos (p. ej., en un paciente con lupus)?",
+      "respuesta": "La selección negativa.",
+      "detalle": "Es la que elimina en la médula tímica a los timocitos que reconocen **antígenos propios con alta afinidad**.",
+      "tema": "autoinmunidad",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f31",
+      "frente": "Niño con diarrea acuosa recurrente, diabetes tipo 1 y mutación en FOXP3: ¿con qué marcadores se reconocen las células afectadas?",
+      "respuesta": "CD3, CD4, CD25high y CD127low.",
+      "detalle": "Son las **Treg**: **FoxP3** es el factor de transcripción que las define y **CD25 alto** (IL-2Rα) uno de sus marcadores.",
+      "tema": "autoinmunidad",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f32",
+      "frente": "Un tumor sobreexpresa una molécula que suprime la activación de LT y es constitutiva de las Treg: ¿qué inmunoterapia la contrarresta?",
+      "respuesta": "La inhibición de CTLA-4.",
+      "detalle": "**CTLA-4** es constitutivo en las Treg y quita a CD28 el acceso a B7, apagando la coestimulación.",
+      "tema": "regulacion",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f33",
+      "frente": "¿Qué receptor del linfocito T bloquea el pembrolizumab (usado en melanoma metastásico)?",
+      "respuesta": "PD-1.",
+      "detalle": "Al bloquearlo, los LT pueden **reconocer los antígenos tumorales y destruir** las células cancerígenas.",
+      "tema": "regulacion",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f34",
+      "frente": "Si las células tumorales expresan mucho PD-L1 frente a LT CD3⁺, ¿qué ocurre en el microambiente tumoral?",
+      "respuesta": "Menor producción de IL-2.",
+      "tema": "regulacion",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f35",
+      "frente": "Trauma en un ojo y meses después inflamación de ambos ojos con células gigantes multinucleadas: ¿qué proceso se rompió?",
+      "respuesta": "El privilegio inmune.",
+      "tema": "autoinmunidad",
+      "seccion": "PREGUNTAS"
+    }
+  ]
+}

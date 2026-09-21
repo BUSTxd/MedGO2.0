@@ -1,0 +1,327 @@
+{
+  "version": 1,
+  "key": "inmunologia/sgp-4-melanoma",
+  "title": "SGP 4 — Inmunidad y cáncer: melanoma y evasión del sistema inmune",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Qué es la inmunovigilancia?",
+      "respuesta": "El proceso por el que el sistema inmune detecta y elimina células transformadas antes de que el cáncer sea clínicamente evidente.",
+      "detalle": "Involucra a la **inmunidad innata** (NK, macrófagos, células dendríticas) y a la **adaptativa** (LT CD8⁺ citotóxicos, LT CD4⁺ colaboradores y anticuerpos).",
+      "tema": "tumoral",
+      "seccion": "4. ¿Qué es la inmunovigilancia?"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Cuáles son las tres fases de la inmunovigilancia (inmunoedición)?",
+      "respuesta": "Eliminación → equilibrio → escape.",
+      "detalle": "**Eliminación:** destrucción de células tumorales. **Equilibrio:** se controla el crecimiento sin erradicarlo. **Escape:** el tumor desarrolla mecanismos para evadir la respuesta inmune.",
+      "tema": "tumoral",
+      "seccion": "4. ¿Qué es la inmunovigilancia?"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Qué son los neoantígenos tumorales?",
+      "respuesta": "Proteínas codificadas por genes mutados que parecen extrañas al sistema inmune y surgen de novo mientras se desarrolla el cáncer.",
+      "detalle": "Son la vía de reconocimiento más «extraña»; se distinguen de los **TAA**, que son antígenos propios sobreexpresados, y de los **antígenos virales** (EBV, HPV, HBV/HCV).",
+      "tema": "tumoral",
+      "seccion": "1º Reconocimiento inmune"
+    },
+    {
+      "id": "f04",
+      "frente": "Si un tumor pierde MHC-I para escapar de los LT CD8⁺, ¿qué célula queda favorecida para atacarlo?",
+      "respuesta": "La célula NK.",
+      "detalle": "La NK se activa por moléculas de estrés (receptores activadores, **KAR**) cuando **falta la señal inhibidora del KIR** con MHC-I. Por eso la pérdida de MHC-I impide el ataque de los CTL pero puede **aumentar la susceptibilidad a NK**.",
+      "tema": "tumoral",
+      "seccion": "1. Selección de variantes menos inmunogénicas"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué son los checkpoints inmunológicos?",
+      "respuesta": "Receptores estimuladores o inhibidores de la superficie de los linfocitos (sobre todo T) que regulan la intensidad y duración de la respuesta.",
+      "detalle": "Funcionan como **aceleradores y frenos**; fisiológicamente previenen la autoinmunidad y limitan el daño tisular. Coestimulatorios: **CD28, ICOS, CD137**. Coinhibitorios: **PD-1, CTLA-4**.",
+      "tema": "regulacion",
+      "seccion": "6. ¿Qué son los checkpoints inmunológicos?"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Cómo explotan los tumores los checkpoints inmunológicos?",
+      "respuesta": "Sobreexpresan ligandos inhibitorios como PD-L1 para apagar a los linfocitos T.",
+      "detalle": "Frente a un patógeno, PD-1 y CTLA-4 **protegen del daño excesivo** al tejido normal; el tumor usa ese mismo freno para escapar de la respuesta antitumoral.",
+      "tema": "tumoral",
+      "seccion": "6. ¿Qué son los checkpoints inmunológicos?"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Qué buscan los inhibidores de checkpoints (ICI)?",
+      "respuesta": "Bloquear PD-1 o CTLA-4 para revertir la inhibición y potenciar la respuesta antitumoral.",
+      "detalle": "Son **anticuerpos monoclonales** (p. ej., anti-PD-1). Que su bloqueo induzca **remisión de tumores** es además una evidencia del papel del sistema inmune frente al cáncer.",
+      "tema": "tumoral",
+      "seccion": "6. ¿Qué son los checkpoints inmunológicos?"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Cómo evade el tumor a los LT CD8⁺ modificando su presentación antigénica?",
+      "respuesta": "Disminuyendo o inhibiendo la expresión de MHC-I.",
+      "detalle": "Así se reduce la **presentación de péptidos tumorales** a los CD8⁺ y se impide el ataque de los linfocitos T citotóxicos.",
+      "tema": "tumoral",
+      "seccion": "1. Selección de variantes menos inmunogénicas"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué es un linfocito CAR-T y qué ventaja tiene para reconocer al tumor?",
+      "respuesta": "Un LT autólogo modificado con un receptor quimérico; reconoce al tumor sin depender del MHC.",
+      "detalle": "El **gen CAR** combina el reconocimiento antigénico de un **anticuerpo** con la **maquinaria citotóxica** del linfocito T. Muy eficaz en tumores hematológicos (ej. **CAR-T anti-CD19** en leucemias y linfomas).",
+      "tema": "tumoral",
+      "seccion": "C) Transferencia adoptiva de linfocitos T modificados con CAR"
+    },
+    {
+      "id": "f10",
+      "frente": "¿En qué consiste la transferencia adoptiva de linfocitos T autólogos y qué ejemplo se da en melanoma?",
+      "respuesta": "Extraer LT del paciente, expandirlos (IL-2) y activarlos ex vivo y reinfundirlos; ej. TILs en melanoma.",
+      "detalle": "Potencia la **inmunidad adaptativa natural** del paciente. **TILs** = linfocitos infiltrantes de tumor.",
+      "tema": "tumoral",
+      "seccion": "B) Transferencia adoptiva de linfocitos T autólogos"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Cuáles son las tres señales para activar un linfocito T?",
+      "respuesta": "Señal 1: TCR + péptido-MHC; señal 2: coestimulación CD28–CD80/CD86; señal 3: citocinas.",
+      "detalle": "Las **citocinas del microambiente** determinan la diferenciación: **IL-12 → Th1**, **IL-4 → Th2**, **TGF-β → Treg**.",
+      "tema": "coestimulacion",
+      "seccion": "1. ¿Cómo se activan y cómo se regula la respuesta de linfocitos T?"
+    },
+    {
+      "id": "f12",
+      "frente": "En la señal 1, ¿qué MHC reconoce un LT CD8⁺ y cuál un LT CD4⁺?",
+      "respuesta": "CD8⁺ → MHC-I; CD4⁺ → MHC-II.",
+      "detalle": "El **TCR** reconoce el péptido presentado por el MHC en la **célula presentadora de antígeno (APC)**.",
+      "tema": "presentacion-mhc",
+      "seccion": "1. ¿Cómo se activan y cómo se regula la respuesta de linfocitos T?"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Cómo frena CTLA-4 la activación del linfocito T?",
+      "respuesta": "Compite con CD28 por CD80/CD86 en la APC y frena la coestimulación.",
+      "detalle": "El **CTLA-4 de los Treg** también puede inhibir la coestimulación en la APC por **contacto celular directo**.",
+      "tema": "coestimulacion",
+      "seccion": "1. ¿Cómo se activan y cómo se regula la respuesta de linfocitos T?"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Qué induce PD-1 al unirse a PD-L1/PD-L2?",
+      "respuesta": "Agotamiento y anergia del linfocito T.",
+      "detalle": "Los ligandos se expresan en **células tumorales o APC**. Otros checkpoints inhibitorios que suprimen funciones efectoras: **LAG-3, TIM-3, TIGIT**.",
+      "tema": "regulacion",
+      "seccion": "1. ¿Cómo se activan y cómo se regula la respuesta de linfocitos T?"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Qué citocinas secretan los Treg para inhibir a los LT efectores?",
+      "respuesta": "IL-10 y TGF-β.",
+      "detalle": "Inhiben la **proliferación y diferenciación** de los LT efectores; además actúan por contacto directo (CTLA-4).",
+      "tema": "regulacion",
+      "seccion": "1. ¿Cómo se activan y cómo se regula la respuesta de linfocitos T?"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Qué es la AICD y por qué vía ocurre?",
+      "respuesta": "Apoptosis del LT por activación repetida, vía Fas/FasL.",
+      "detalle": "La **estimulación crónica del TCR** aumenta Fas/FasL y lleva a la muerte del LT; evita una expansión excesiva y mantiene la **homeostasis** tras la respuesta.",
+      "tema": "regulacion",
+      "seccion": "1. ¿Cómo se activan y cómo se regula la respuesta de linfocitos T?"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Qué es el «inflammaging»?",
+      "respuesta": "La presencia persistente de mediadores inflamatorios sin infección ni enfermedad aguda, típica del envejecimiento.",
+      "detalle": "Se ve **incluso en adultos mayores sanos**. Contribuyen la falla del sistema adaptativo, el **defecto de la barrera epitelial y del MALT** (más LPS circulante que estimula TLR4) y la acumulación de LT efectores proinflamatorios.",
+      "tema": "tumoral",
+      "seccion": "2. ¿Qué es la inmunosenescencia?"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Qué cambios sufren los linfocitos T con la inmunosenescencia?",
+      "respuesta": "Acortamiento de telómeros, menor plasticidad funcional, expresión de PD-1 y pérdida de CD28.",
+      "detalle": "La inmunosenescencia es el **declive progresivo** de la función inmune con la edad: más susceptibilidad a infecciones, **cáncer**, autoinmunidad y **menor eficacia de las vacunas** (relevante en la paciente de 67 años del caso).",
+      "tema": "tumoral",
+      "seccion": "2. ¿Qué es la inmunosenescencia?"
+    },
+    {
+      "id": "f19",
+      "frente": "¿Qué defectos presentan los neutrófilos en la inmunosenescencia?",
+      "respuesta": "Menor quimiotaxis y extravasación, fagocitosis reducida y menor burst respiratorio.",
+      "detalle": "En los **monocitos** disminuye la activación inducida por TLR.",
+      "tema": "tumoral",
+      "seccion": "2. ¿Qué es la inmunosenescencia?"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Cómo logra el tumor la autosuficiencia en señales de crecimiento?",
+      "respuesta": "Mutaciones activadoras en oncogenes (RAS, EGFR), autocrinia y activación constitutiva de receptores tirosina quinasa.",
+      "detalle": "Es el primero de los **hallmarks clásicos**: la célula ya no depende de factores de crecimiento externos.",
+      "tema": "tumoral",
+      "seccion": "Hallmarks clásicos"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Qué genes supresores se inactivan para que el tumor ignore las señales inhibidoras?",
+      "respuesta": "RB y TP53.",
+      "detalle": "Además se pierde la **inhibición por contacto**: proliferan aun con alta densidad celular.",
+      "tema": "tumoral",
+      "seccion": "Hallmarks clásicos"
+    },
+    {
+      "id": "f22",
+      "frente": "¿Cómo logra el tumor un potencial replicativo ilimitado?",
+      "respuesta": "Activando la telomerasa, que evita el acortamiento de los telómeros.",
+      "detalle": "También **evitan la senescencia** inducida por p53 y Rb.",
+      "tema": "tumoral",
+      "seccion": "Hallmarks clásicos"
+    },
+    {
+      "id": "f23",
+      "frente": "¿Qué factor producen los tumores para sostener la angiogénesis?",
+      "respuesta": "VEGF (factor de crecimiento endotelial vascular).",
+      "detalle": "Además **suprimen inhibidores** de la angiogénesis (ej. trombospondina); la vasculatura anómala favorece crecimiento y metástasis.",
+      "tema": "tumoral",
+      "seccion": "Hallmarks clásicos"
+    },
+    {
+      "id": "f24",
+      "frente": "¿Qué es la transición epitelio-mesénquima (EMT) en la metástasis?",
+      "respuesta": "La célula pierde adhesión (↓ E-cadherina) y gana movilidad.",
+      "detalle": "Junto con la **secreción de metaloproteinasas** que degradan la matriz extracelular, permite invadir y colonizar órganos distantes.",
+      "tema": "tumoral",
+      "seccion": "Hallmarks clásicos"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Qué es el efecto Warburg?",
+      "respuesta": "La preferencia del tumor por la glucólisis aerobia, incluso en presencia de oxígeno.",
+      "detalle": "Forma parte de la **reprogramación metabólica**: genera metabolitos útiles para la biosíntesis.",
+      "tema": "tumoral",
+      "seccion": "Hallmarks clásicos"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Qué experimento demuestra que cada tumor tiene antígenos de rechazo (TSTA) únicos?",
+      "respuesta": "El ratón inmunizado con células tumorales irradiadas rechaza el mismo tumor vivo, pero no uno distinto.",
+      "detalle": "El tumor inducido (carcinógenos o radiación) genera **neoantígenos propios**; la memoria contra ellos no protege frente a otro tumor, aunque se haya inducido igual → cada tumor tiene un **«código» antigénico único**.",
+      "tema": "tumoral",
+      "seccion": "4. ¿Qué es la inmunovigilancia?"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Qué evidencia clínica muestra que el sistema inmune protege contra el cáncer?",
+      "respuesta": "Las personas con inmunodeficiencias tienen mayor incidencia de ciertos tumores.",
+      "detalle": "Otra evidencia: el **bloqueo terapéutico de PD-1 y CTLA-4** induce remisión de tumores.",
+      "tema": "tumoral",
+      "seccion": "4. ¿Qué es la inmunovigilancia?"
+    },
+    {
+      "id": "f28",
+      "frente": "¿Qué son los antígenos asociados a tumores (TAA)? Da un ejemplo.",
+      "respuesta": "Antígenos propios no exclusivos del tumor, sobreexpresados o en tejidos donde normalmente no aparecen; ej. AFP, CEA.",
+      "detalle": "**AFP** en carcinoma hepatocelular y **CEA** en adenocarcinomas.",
+      "tema": "tumoral",
+      "seccion": "1º Reconocimiento inmune"
+    },
+    {
+      "id": "f29",
+      "frente": "¿Qué antígenos virales puede reconocer el sistema inmune en tumores?",
+      "respuesta": "EBV (Burkitt, nasofaríngeo), HPV E6/E7 (cervical) y HBV/HCV (hepatocarcinoma).",
+      "tema": "tumoral",
+      "seccion": "1º Reconocimiento inmune"
+    },
+    {
+      "id": "f30",
+      "frente": "¿Cómo destruye el TNF-α de los macrófagos ciertos tumores?",
+      "respuesta": "Destruye los vasos que irrigan el tumor y provoca su necrosis.",
+      "detalle": "De ahí su nombre, «factor de necrosis tumoral». Otro ejemplo: la **BCG intravesical** hiperactiva macrófagos y puede eliminar tumores superficiales de vejiga.",
+      "tema": "tumoral",
+      "seccion": "2º Mecanismos efectores"
+    },
+    {
+      "id": "f31",
+      "frente": "¿Con qué mecanismo lisa el LT CD8⁺ a la célula tumoral?",
+      "respuesta": "Perforinas y granzimas.",
+      "detalle": "El **LT CD4⁺**, activado por presentación en MHC-II de una APC, secreta **IL-2 e IFN-γ**, que activan macrófagos y la fagocitosis.",
+      "tema": "tumoral",
+      "seccion": "2º Mecanismos efectores"
+    },
+    {
+      "id": "f32",
+      "frente": "¿Qué efecto tiene la disminución de B7 en las APC dentro del tumor?",
+      "respuesta": "El LT reconoce el antígeno sin coestimulación por CD28 y CTLA-4 acapara el poco B7 que queda → anergia.",
+      "detalle": "Sin **señal 2** no hay activación completa: se reducen los **linfocitos activados**. Es un mecanismo de evasión junto con el **aumento de PD-L1** en las células tumorales.",
+      "tema": "coestimulacion",
+      "seccion": "2. Expresión de moléculas inhibidoras"
+    },
+    {
+      "id": "f33",
+      "frente": "¿Cómo suprime la IDO de las MDSC a los linfocitos T?",
+      "respuesta": "Degrada triptófano, aminoácido esencial para la proliferación de los LT.",
+      "detalle": "Las **MDSC** también secretan **IL-10** y liberan radicales libres (p. ej., **peroxinitrito**) que dañan células inmunes.",
+      "tema": "tumoral",
+      "seccion": "3. Expansión de poblaciones inmunosupresoras"
+    },
+    {
+      "id": "f34",
+      "frente": "¿Por qué favorecen al tumor los linfocitos Th2?",
+      "respuesta": "Desvían la respuesta hacia un perfil humoral, mucho menos eficaz que la inmunidad celular contra el tumor.",
+      "tema": "tumoral",
+      "seccion": "3. Expansión de poblaciones inmunosupresoras"
+    },
+    {
+      "id": "f35",
+      "frente": "¿Qué hacen los macrófagos M2 en el microambiente tumoral?",
+      "respuesta": "Secretan IL-10 y TGF-β, que inhiben LT y NK, y remodelan el estroma (fibrosis).",
+      "detalle": "La **fibrosis** excluye la infiltración de linfocitos. Los macrófagos asociados a tumor (**TAMs**) también favorecen la angiogénesis.",
+      "tema": "tumoral",
+      "seccion": "3. Expansión de poblaciones inmunosupresoras"
+    },
+    {
+      "id": "f36",
+      "frente": "¿Por qué los antígenos oncofetales (CEA, AFP) generan una respuesta inmune débil?",
+      "respuesta": "Se expresaron en la vida fetal, así que al reaparecer en el tumor se reconocen como «propios».",
+      "detalle": "Es parte del **desafío 1**: muchas células tumorales se parecen a lo propio, no liberan señales de peligro e inducen **tolerancia periférica** en vez de inmunidad.",
+      "tema": "tumoral",
+      "seccion": "2. ¿Qué limitaciones tiene el sistema inmune en la vigilancia del cáncer?"
+    },
+    {
+      "id": "f37",
+      "frente": "¿Qué citocinas inmunosupresoras secreta el tumor para crear su microambiente?",
+      "respuesta": "TGF-β, IL-10 y VEGF.",
+      "detalle": "**Desafío 2**: además expresa moléculas inhibidoras (PD-L1) y recluta Treg, TAMs y MDSC → menos respuesta citotóxica y progresión tumoral.",
+      "tema": "tumoral",
+      "seccion": "2. ¿Qué limitaciones tiene el sistema inmune en la vigilancia del cáncer?"
+    },
+    {
+      "id": "f38",
+      "frente": "¿Por qué mecanismos actúan los anticuerpos específicos contra antígenos tumorales de superficie?",
+      "respuesta": "Complemento (lisis), fagocitosis por macrófagos y ADCC por células NK.",
+      "detalle": "Ejemplo: **rituximab** contra CD20 en linfomas. También pueden **bloquear receptores de factores de crecimiento**.",
+      "tema": "tumoral",
+      "seccion": "A) Desarrollo de anticuerpos específicos"
+    },
+    {
+      "id": "f39",
+      "frente": "¿Qué es un anticuerpo conjugado (ADC)? Da un ejemplo.",
+      "respuesta": "Un anticuerpo unido a quimioterápico, toxina o radioisótopo para llevarlo solo a la célula tumoral; ej. trastuzumab-emtansina.",
+      "detalle": "Trastuzumab-emtansina se usa en **cáncer de mama HER2+**.",
+      "tema": "tumoral",
+      "seccion": "A) Desarrollo de anticuerpos específicos"
+    },
+    {
+      "id": "f40",
+      "frente": "¿Cómo funciona un BiTE como blinatumomab?",
+      "respuesta": "Une a la vez el CD3 del CTL y un antígeno tumoral, dirigiendo al CTL contra el tumor.",
+      "detalle": "**BiTE** = bispecific T cell engager. Blinatumomab se usa en **leucemia linfoblástica aguda**.",
+      "tema": "tumoral",
+      "seccion": "A) Desarrollo de anticuerpos específicos"
+    }
+  ]
+}

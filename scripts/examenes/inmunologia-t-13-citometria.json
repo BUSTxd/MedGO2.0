@@ -1,0 +1,230 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-13-citometria",
+  "title": "T13 — Citometría de flujo (teoría)",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Cuáles son los tres sistemas que componen un citómetro de flujo?",
+      "respuesta": "Fluídico, óptico y electrónico/computacional.",
+      "detalle": "El **fluídico** mueve las células en suspensión, el **óptico** las ilumina con láseres y capta la luz dispersada y la fluorescencia, y el **electrónico** convierte esas señales en datos.",
+      "tema": "tecnicas",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Qué parámetro celular mide el FSC (Forward Scatter)?",
+      "respuesta": "El tamaño celular.",
+      "detalle": "Es la luz dispersada **hacia adelante**, en la misma dirección del láser.",
+      "tema": "tecnicas",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Qué parámetro celular mide el SSC (Side Scatter)?",
+      "respuesta": "La complejidad interna o granularidad.",
+      "detalle": "Es la luz dispersada **hacia el costado**: una célula con más gránulos o estructuras internas dispersa más luz lateral.",
+      "tema": "tecnicas",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Qué registran los detectores de fluorescencia del citómetro?",
+      "respuesta": "La emisión de los fluorocromos conjugados a anticuerpos.",
+      "detalle": "Los anticuerpos van dirigidos contra marcadores (CDs): la fluorescencia dice **qué marcadores expresa** cada célula, mientras que FSC y SSC solo dicen su tamaño y granularidad.",
+      "tema": "tecnicas",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "f05",
+      "frente": "¿En qué principio se basa el sistema fluídico y qué consigue?",
+      "respuesta": "Enfoque hidrodinámico: una célula pasa por el láser a la vez.",
+      "detalle": "Además **mantiene las células en suspensión**. Que pasen de una en una es lo que permite medir cada célula por separado.",
+      "tema": "tecnicas",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "f06",
+      "frente": "En un dot plot FSC vs SSC de sangre periférica, ¿cómo se ubican linfocitos, monocitos y granulocitos?",
+      "respuesta": "Linfocitos: FSC y SSC bajos. Monocitos: intermedios. Granulocitos: SSC alto.",
+      "detalle": "Los **linfocitos** son pequeños y poco granulares (abajo a la izquierda); los **monocitos** son más grandes con poca granularidad; los **granulocitos** (neutrófilos, eosinófilos, basófilos) quedan arriba por su **alta granularidad**.",
+      "tema": "tecnicas",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "f07",
+      "frente": "En un histograma univariado, ¿qué se grafica en cada eje?",
+      "respuesta": "Eje X: intensidad de la señal. Eje Y: número de eventos (células).",
+      "detalle": "Analiza **un solo parámetro**. En el eje Y va el **recuento de células** (# eventos) que tienen cada intensidad.",
+      "tema": "tecnicas",
+      "seccion": "1° Histogramas univariados"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Qué muestra un dot plot (histograma bivariado)?",
+      "respuesta": "La relación entre dos parámetros de cada célula, p. ej. FSC vs SSC.",
+      "detalle": "Cada punto es una célula ubicada según **dos** mediciones a la vez; así se separan poblaciones que en un histograma de un solo parámetro se superpondrían.",
+      "tema": "tecnicas",
+      "seccion": "2° Histogramas bivariados"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué marcadores identifican a todos los linfocitos T?",
+      "respuesta": "CD3 (y CD2).",
+      "detalle": "**CD3** forma parte del **complejo TCR** y participa en la señalización: es el marcador de linaje T por excelencia.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › T (todos)"
+    },
+    {
+      "id": "f10",
+      "frente": "¿Qué CD distingue al T cooperador del T citotóxico, y qué MHC reconoce cada uno?",
+      "respuesta": "Th: CD4, reconoce MHC II. CTL: CD8, reconoce MHC I.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › T cooperador (Th)"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Qué marcadores caracterizan a un linfocito T regulador (Treg)?",
+      "respuesta": "CD4, CD25 y FoxP3, con CD127 bajo.",
+      "detalle": "Su función es la **supresión inmune**. CD25 también aparece en T activados; lo que lo define como Treg es la combinación con **FoxP3**.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › T regulador (Treg)"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Con qué marcadores se identifica una célula NK?",
+      "respuesta": "CD16 y CD56, siendo CD3 negativa.",
+      "detalle": "**CD16 es el FcγRIII**, el receptor que le permite la **ADCC** (citotoxicidad dependiente de anticuerpos). Ser **CD3–** la separa de los linfocitos T.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › NK"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Qué marcadores identifican a todos los linfocitos B?",
+      "respuesta": "CD19, CD20 y CD21 (CR2).",
+      "detalle": "Marcan el **linaje B** y participan en su señalización. **CD19** es el que se usa en el dot plot CD19 vs CD3 para separar B de T.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › B (todos)"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Qué isoforma de CD45 expresa el linfocito T naïve y cuál el T de memoria?",
+      "respuesta": "Naïve: CD45RA. Memoria: CD45RO.",
+      "detalle": "**CD45RA** es la **isoforma larga**, propia del LT que aún no ha visto antígeno; **CD45RO** es la **isoforma corta**, de los LT que ya reconocieron antígenos.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › T naïve"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Qué marcadores indican que un linfocito T está activado?",
+      "respuesta": "CD25 (IL-2Rα), CD69 y HLA-DR.",
+      "detalle": "Se asocian a **proliferación y activación**. **CD69** marca linfocitos activados en general.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › T activados"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Qué marcadores se asocian a los linfocitos B activados?",
+      "respuesta": "CD40, CD23 y CD79a/b.",
+      "detalle": "Su función en la tabla: **coestimulación y BCR**. Ojo: **CD79a/b** forma parte del BCR de **todo** linfocito B, no sólo de los activados; los que marcan activación son **CD40** y **CD23**.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › B activados"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Qué CDs caracterizan a monocitos y macrófagos?",
+      "respuesta": "CD14, CD16, CD68 y CD40.",
+      "detalle": "Función: **fagocitosis y activación**.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › Monocitos/Macrófagos"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Qué CDs caracterizan a los neutrófilos?",
+      "respuesta": "CD15, CD16 y CD11b/CD18.",
+      "detalle": "Función: **migración y fagocitosis**.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › Neutrófilos"
+    },
+    {
+      "id": "f19",
+      "frente": "¿Qué marcadores identifican a los eosinófilos?",
+      "respuesta": "CD9 y CCR3.",
+      "detalle": "Función: **respuesta antiparasitaria**.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › Eosinófilos"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Qué marcadores identifican a los basófilos?",
+      "respuesta": "CD123 y FcεRI.",
+      "detalle": "Función: **respuesta alérgica** (FcεRI es el receptor de IgE). **CD123** lo comparten con las dendríticas plasmocitoides.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › Basófilos"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Cómo se diferencian por marcadores y función las dendríticas mieloides y las plasmocitoides?",
+      "respuesta": "Mieloides: CD11c y CD80/CD86, presentan antígeno. Plasmocitoides: CD123, producen IFN tipo I.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › Dendríticas mieloides"
+    },
+    {
+      "id": "f22",
+      "frente": "¿Qué marcadores identifican a las células madre hematopoyéticas?",
+      "respuesta": "CD34 y CD117 (c-Kit).",
+      "detalle": "Corresponden a los **progenitores**.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › Células madre hematopoyéticas"
+    },
+    {
+      "id": "f23",
+      "frente": "¿Qué indican CD95 y CD71?",
+      "respuesta": "CD95 (Fas): apoptosis. CD71: proliferación.",
+      "detalle": "Aparecen en la tabla como «otros relevantes», ligados a la **regulación celular**.",
+      "tema": "celulas-inmunes",
+      "seccion": "Marcadores › Otros relevantes"
+    },
+    {
+      "id": "f24",
+      "frente": "¿Qué láseres usa el sistema óptico y con qué longitud de onda?",
+      "respuesta": "Azul 488 nm, rojo 633 nm y violeta 405 nm, entre otros.",
+      "tema": "tecnicas",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Qué hace el sistema electrónico/computacional del citómetro?",
+      "respuesta": "Convierte las señales ópticas en datos digitales y genera las gráficas.",
+      "detalle": "Produce **histogramas, dot plots y análisis multiparamétricos**.",
+      "tema": "tecnicas",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "f26",
+      "frente": "En un histograma de CD3 con dos picos, ¿qué representa cada uno?",
+      "respuesta": "El de baja fluorescencia son células CD3–; el de alta, linfocitos T CD3+.",
+      "detalle": "Se trazan **marcadores (rangos)** sobre el eje X y el citómetro da el **porcentaje** de eventos en cada uno (en el ejemplo, 38,0 % y 61,5 %).",
+      "tema": "tecnicas",
+      "seccion": "1° Histogramas univariados"
+    },
+    {
+      "id": "f27",
+      "frente": "¿En qué orden se seleccionan (gating) las subpoblaciones T en el ejemplo del resumen?",
+      "respuesta": "Linfocitos en FSC vs SSC → CD3+ → CD4 vs CD8 → subpoblaciones de cada una.",
+      "detalle": "Cada paso analiza **solo las células de la ventana anterior**. Del mismo modo, en un dot plot **CD19 vs CD3** los B salen CD19+CD3– y los T, CD3+CD19–.",
+      "tema": "tecnicas",
+      "seccion": "2° Histogramas bivariados"
+    },
+    {
+      "id": "f28",
+      "frente": "En el ejercicio del recuento de CD4, ¿para qué se añaden microbeads a la muestra?",
+      "respuesta": "Como referencia de concentración conocida para calcular células/µL.",
+      "detalle": "Tienen una **fluorescencia específica** que el citómetro distingue claramente y se agregan a una **concentración conocida** (995 microbeads/µL): comparar sus eventos con los del gate de linfocitos permite pasar de porcentaje a recuento absoluto.",
+      "tema": "tecnicas",
+      "seccion": "2° Histogramas bivariados"
+    }
+  ]
+}

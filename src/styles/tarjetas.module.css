@@ -180,7 +180,13 @@
               box-shadow 0.25s ease, border-color 0.2s ease;
 }
 
-.modo:hover {
+.modo:disabled {
+  cursor: default;
+  opacity: 0.55;
+  box-shadow: none;
+}
+
+.modo:hover:not(:disabled) {
   transform: translateY(-5px);
   box-shadow: var(--sombra-alta);
   border-color: rgba(var(--acc-rgb), 0.45);

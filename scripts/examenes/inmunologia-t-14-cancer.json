@@ -1,0 +1,239 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-14-cancer",
+  "title": "T14 — Fallas del sistema inmune: inmunidad y cáncer",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Cuáles son los cinco mecanismos que usan los tumores para evitar ser reconocidos por el sistema inmune?",
+      "respuesta": "Baja inmunogenicidad, tumor tratado como antígeno propio, modulación antigénica, inmunosupresión y sitio privilegiado inducidos por el tumor.",
+      "detalle": "Los dos primeros impiden que la célula T **vea** el tumor; la modulación antigénica lo vuelve **invisible** tras perder antígenos; los dos últimos **frenan o bloquean** a la célula T que ya lo reconoce.",
+      "tema": "tumoral",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Qué le falta a un tumor de baja inmunogenicidad para activar a la célula T?",
+      "respuesta": "Ligando péptido:MHC, moléculas de adhesión y moléculas coestimuladoras.",
+      "detalle": "Sin péptido:MHC el **TCR** no tiene qué reconocer, sin adhesión (**LFA-1**) no hay contacto estable y sin coestimulación (**CD28**) no hay segunda señal.",
+      "tema": "tumoral",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "f03",
+      "frente": "Si un tumor disminuye o inhibe la expresión de MHC I, ¿a qué célula escapa y a cuál se vuelve más susceptible?",
+      "respuesta": "Escapa del linfocito T CD8+ citotóxico, pero queda más expuesto a las células NK.",
+      "detalle": "Menos MHC I significa **menos presentación de péptidos tumorales** a los CD8+; esa misma pérdida puede **aumentar la susceptibilidad frente a NK**.",
+      "tema": "tumoral",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Por qué un tumor «tratado como antígeno propio» genera tolerancia en vez de inmunidad?",
+      "respuesta": "Sus antígenos los presentan las APC (células dendríticas) sin coestimulación, y eso tolera a las células T.",
+      "detalle": "La célula T recibe la **señal 1** (péptido:MHC) sin la **señal 2** (coestimulación): el resultado es **tolerancia**, no activación.",
+      "tema": "tumoral",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué factores secretados por el tumor causan la inmunosupresión inducida por el tumor?",
+      "respuesta": "TGF-β, IL-10 e IDO, que inhiben directamente a las células T; además, el tumor expresa PD-L1.",
+      "detalle": "En la figura, esos factores frenan al **CTL** y al **TH1** y a la vez estimulan a los **Treg**, que suman más **TGF-β e IL-10**.",
+      "tema": "tumoral",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Qué dice el Desafío 1 del sistema inmune adaptativo para combatir tumores?",
+      "respuesta": "Los linfocitos T contra antígenos tumorales son escasos.",
+      "detalle": "Porque **la mayoría de los antígenos tumorales son «propios»** y **no todos los tumores generan neoantígenos**.",
+      "tema": "tumoral",
+      "seccion": "Desafíos para el sistema inmune"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Qué dice el Desafío 2 del sistema inmune adaptativo para combatir tumores?",
+      "respuesta": "Los linfocitos T antitumorales no logran respuestas efectoras potentes.",
+      "detalle": "Porque los tumores **regulan activamente a la baja la respuesta inmune**, tanto en el **microambiente tumoral** como de forma **sistémica**.",
+      "tema": "tumoral",
+      "seccion": "Desafíos para el sistema inmune"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Cómo reactivan a los linfocitos antitumorales los anticuerpos anti-PD-1/PD-L1?",
+      "respuesta": "Bloquean PD-1 y la célula T activada se expande y mata al tumor con granzimas y perforina.",
+      "detalle": "Sin el freno de **PD-L1/2** de la APC o de la célula tumoral, la célula T activada **prolifera** y aumenta la muerte de células tumorales (**↑ tumour killing**).",
+      "tema": "tumoral",
+      "seccion": "Reactivar linfocitos antitumorales"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué añade el receptor de antígeno quimérico (CAR) que no tiene el receptor de células T?",
+      "respuesta": "Un dominio de coestimulación (CD28, 4-1BB) entre el reconocimiento y la señalización ζ.",
+      "detalle": "Ambos tienen **reconocimiento** y **señalización (cadena ζ)**; el CAR lleva además en la misma molécula la **coestimulación**, y se genera con **ingeniería genética**.",
+      "tema": "tumoral",
+      "seccion": "Generar nuevos linfocitos con ingeniería genética"
+    },
+    {
+      "id": "f10",
+      "frente": "¿Cómo recluta un anticuerpo biespecífico a la célula T contra el tumor?",
+      "respuesta": "Un brazo se une a CD3 de la célula T y el otro a un antígeno asociado al tumor (TAA).",
+      "detalle": "Combina un **anti-CD3** y un **anti-TAA**: acerca la célula T a la célula cancerosa, que libera **citocinas** y la mata.",
+      "tema": "tumoral",
+      "seccion": "Reclutar nuevos linfocitos con ingeniería de anticuerpos"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Qué es la modulación antigénica (selección de variantes menos inmunogénicas)?",
+      "respuesta": "El tumor pierde o modifica los antígenos no esenciales para su supervivencia y escapa del linfocito T.",
+      "detalle": "Por su **alta tasa de proliferación y mutación**, se eliminan los genes de **antígenos tumorales** que no le son esenciales: la célula T elimina las que los expresan, pero no las que los perdieron.",
+      "tema": "tumoral",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Qué es el sitio privilegiado inducido por el tumor?",
+      "respuesta": "Factores secretados por las células tumorales crean una barrera física para el sistema inmunitario.",
+      "tema": "tumoral",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Qué son las señales 1, 2 y 3 entre la célula dendrítica y la célula T?",
+      "respuesta": "Señal 1: presentación del antígeno; señal 2: coestimulación; señal 3: factores solubles.",
+      "detalle": "Señal 1: **MHC I/II → TCR**. Señal 2: pares como **CD80/CD86–CD28**, **ICOSL–ICOS**, **PDL1/PDL2–PD1**. Señal 3: **IL-12, IFN-I, IL-10** y la vía de la **IDO**.",
+      "tema": "regulacion",
+      "seccion": "Tumores usan “check points” inmunes"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Con qué ligandos de la célula dendrítica se unen los check points CTLA-4 y PD-1?",
+      "respuesta": "CTLA-4 con CD80 y CD86; PD-1 con PD-L1 y PD-L2.",
+      "detalle": "CTLA-4 compite con **CD28** por los mismos ligandos (CD80/CD86). En la figura también aparecen como inhibitorios **VISTA**, **CD31** e **IL-10/IL-10R**.",
+      "tema": "regulacion",
+      "seccion": "Tumores usan “check points” inmunes"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Qué hace la IDO de la célula dendrítica en la señal 3?",
+      "respuesta": "Convierte L-triptófano (L-Trp) en L-quinurenina (L-Kyn).",
+      "detalle": "Es uno de los **factores solubles inhibitorios**; el tumor también la secreta para inhibir a las células T.",
+      "tema": "tumoral",
+      "seccion": "Tumores usan “check points” inmunes"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Qué fosfatasa recluta PD-1 para bloquear la señalización de TCR y CD28?",
+      "respuesta": "SHP2, reclutada por el motivo ITSM fosforilado de PD-1.",
+      "detalle": "SHP2 inhibe **CD28**, **ZAP70/LCK** del TCR y las vías **PI3K-AKT** y **Ras-MEK-ERK**.",
+      "tema": "regulacion",
+      "seccion": "Tumores usan “check points” inmunes"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Cómo bloquea PD-1 la señalización de las citocinas de la familia γc?",
+      "respuesta": "Vía SHP2 → BATF → MARCH5, que lleva la cadena γ común a degradación lisosomal.",
+      "detalle": "**BATF** induce el gen **MARCH5**; la cadena **γc** (asociada a **JAK1/JAK3**) se ubiquitina y se degrada en el **lisosoma**.",
+      "tema": "regulacion",
+      "seccion": "Tumores usan “check points” inmunes"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Cuáles son los cuatro tipos de vacunas contra el cáncer?",
+      "respuesta": "Basadas en células, en virus, en péptidos y en ácidos nucleicos.",
+      "detalle": "Buscan **incrementar el número de linfocitos antitumorales dentro del paciente**.",
+      "tema": "tumoral",
+      "seccion": "Incrementar el número de linfocitos antitumorales en el paciente"
+    },
+    {
+      "id": "f19",
+      "frente": "¿Qué dos variantes tienen las vacunas contra el cáncer basadas en células?",
+      "respuesta": "Vacuna de célula dendrítica y vacuna de célula tumoral.",
+      "detalle": "Usan **antígenos asociados al tumor completos**; en la de célula dendrítica, las DC **se cargan con una variedad de antígenos tumorales**.",
+      "tema": "tumoral",
+      "seccion": "Incrementar el número de linfocitos antitumorales en el paciente"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Qué administran las vacunas contra el cáncer basadas en virus, en péptidos y en ácidos nucleicos?",
+      "respuesta": "Virus modificados como vectores; epítopos como péptidos cortos/largos; ADN o ARNm que codifica antígenos tumorales.",
+      "tema": "tumoral",
+      "seccion": "Incrementar el número de linfocitos antitumorales en el paciente"
+    },
+    {
+      "id": "f21",
+      "frente": "Criterio de «extrañeza» de un antígeno para vacuna: ¿qué pasa si se parece mucho a la secuencia de tipo silvestre?",
+      "respuesta": "Es más probable que las células T que lo reconocen se hayan eliminado en la selección tímica.",
+      "detalle": "Cuanto **mayor la similitud** con la secuencia de aminoácidos de tipo silvestre, **menos útil** el antígeno.",
+      "tema": "tumoral",
+      "seccion": "Antígenos seleccionados para vacunas"
+    },
+    {
+      "id": "f22",
+      "frente": "Criterio de distribución clonal: ¿por qué conviene evitar las mutaciones subclonales como antígeno de vacuna?",
+      "respuesta": "Están en un pequeño porcentaje de células tumorales y es muy probable que pierdan su expresión.",
+      "detalle": "La pérdida puede ser **espontánea o después de la ICI** (inhibidores de check points).",
+      "tema": "tumoral",
+      "seccion": "Antígenos seleccionados para vacunas"
+    },
+    {
+      "id": "f23",
+      "frente": "¿Qué mutación da mejor antígeno para vacuna: la conductora o la pasajera?",
+      "respuesta": "La conductora, porque está más conservada.",
+      "detalle": "Sirve **funciones críticas de supervivencia**; las **pasajeras** pueden perder su expresión por la evolución tumoral o la resistencia inmunitaria.",
+      "tema": "tumoral",
+      "seccion": "Antígenos seleccionados para vacunas"
+    },
+    {
+      "id": "f24",
+      "frente": "Criterio de presentación del MHC: ¿qué favorece la respuesta al neoantígeno?",
+      "respuesta": "Presentarlo en MHC I y/o II y mayor heterocigosidad de HLA en loci HLA clase I.",
+      "detalle": "Aumenta la probabilidad de **infiltración de células T** y la **supervivencia en respuesta a la ICI**.",
+      "tema": "tumoral",
+      "seccion": "Antígenos seleccionados para vacunas"
+    },
+    {
+      "id": "f25",
+      "frente": "Criterio de avidez del TCR: ¿qué aporta una alta avidez por el neoantígeno?",
+      "respuesta": "Una fuerte respuesta impulsada por CTL al tratamiento.",
+      "detalle": "Su limitación: es **difícil de predecir**.",
+      "tema": "tumoral",
+      "seccion": "Antígenos seleccionados para vacunas"
+    },
+    {
+      "id": "f26",
+      "frente": "Al expandir linfocitos infiltradores de tumores (TIL) fuera del paciente, ¿cómo se eligen los que reconocen mutaciones del tumor?",
+      "respuesta": "Se cocultivan con APC autólogas que presentan las mutaciones y se seleccionan por el marcador de activación 41BB u OX40.",
+      "detalle": "Antes se **secuencia el exoma** (ADN tumoral vs normal) y las mutaciones se introducen en la APC como **minigenes en tándem o péptidos sintéticos**.",
+      "tema": "tumoral",
+      "seccion": "Incrementar el número de linfocitos antitumorales fuera del paciente"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Qué efecto tiene el anticuerpo anti-CTLA-4 sobre las células Treg?",
+      "respuesta": "Provoca la muerte de la célula Treg (vía el FcR de la APC).",
+      "detalle": "Además libera a **B7-1/B7-2** para que se unan a **CD28** de la célula T y la activen, quitando el freno del Treg.",
+      "tema": "tumoral",
+      "seccion": "Reactivar linfocitos antitumorales"
+    },
+    {
+      "id": "f28",
+      "frente": "Dé un ejemplo de anticuerpo biespecífico T cell engager y sus dos blancos.",
+      "respuesta": "Blinatumomab: CD19 × CD3.",
+      "detalle": "Otros de la figura: **catumaxomab** (EpCAM × CD3), **teclistamab** y **elranatamab** (BCMA × CD3), **mosunetuzumab/glofitamab/epcoritamab** (CD20 × CD3), **talquetamab** (GPRC5D × CD3).",
+      "tema": "tumoral",
+      "seccion": "Reclutar nuevos linfocitos con ingeniería de anticuerpos"
+    },
+    {
+      "id": "f29",
+      "frente": "¿Cómo se generan linfocitos T resistentes a los check points con CRISPR?",
+      "respuesta": "Knockout de PD-1 (PDCD1) y del TCR endógeno (TRAC/TRBC), más un TCR NY-ESO-1 por vector lentiviral.",
+      "detalle": "La célula T normal del paciente se edita con **Cas9 + ARN guía**, recibe el TCR nuevo y se **reinfunde** al paciente con cáncer.",
+      "tema": "tumoral",
+      "seccion": "Generar linfocitos resistentes"
+    }
+  ]
+}

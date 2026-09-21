@@ -47,6 +47,12 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?
   // entero viajaría al navegador y las tarjetas de pago se leerían en la
   // pestaña Red.
   'inmunologia/tbl-3-vacunas': { muestra: 10, muestraFlash: 10 },
+  // Mismo trato para las tarjetas de T12 → SGP 4 (aún sin quiz: `questions: []`).
+  'inmunologia/t-12-regulacion': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/t-13-citometria': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/l-2-citometria': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/t-14-cancer': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/sgp-4-melanoma': { muestra: 10, muestraFlash: 10 },
   // Epidemiología (curso gratis): el 2022 abierto como muestra, con el aviso de
   // suscripción del runner; el SUSTI y los Kahoots detrás del plan del tramo;
   // los PASOS, a medias como el 2023 de Inmunología (27 de 54).

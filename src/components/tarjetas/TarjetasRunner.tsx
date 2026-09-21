@@ -371,14 +371,21 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
                 </span>
               </button>
             )}
-            <button type="button" className={s.modo} onClick={() => empezar('quiz')}>
+            <button
+              type="button"
+              className={s.modo}
+              onClick={() => empezar('quiz')}
+              disabled={preguntas.length === 0}
+            >
               <span className={s.modoIcono}><IconoQuiz /></span>
               <span className={s.modoTitulo}>Quiz</span>
               <span className={s.modoDesc}>
                 Eliges alternativa y la tarjeta se voltea con la respuesta y el porqué.
               </span>
               <span className={s.modoCuenta}>
-                {cuenta(preguntas.length, muestra?.total, 'pregunta', 'preguntas')}
+                {preguntas.length === 0
+                  ? 'Próximamente'
+                  : cuenta(preguntas.length, muestra?.total, 'pregunta', 'preguntas')}
               </span>
             </button>
           </div>

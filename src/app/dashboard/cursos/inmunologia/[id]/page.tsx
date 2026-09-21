@@ -71,11 +71,11 @@ export default async function ActividadPage({
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
 
-  // Gating: los laboratorios son libres, y además las clases marcadas `gratis`
-  // como muestra del curso. El resto está detrás del plan Interno. Histología
-  // ya NO es libre por tipo: H1 lleva el flag y H2 es de pago.
+  // Gating: los laboratorios son libres salvo los `premium` (L2), y además las
+  // clases marcadas `gratis` como muestra del curso. El resto está detrás del
+  // plan Interno. Histología ya NO es libre por tipo: H1 lleva el flag y H2 es de pago.
   const isLab = act.tipo === 'LAB';
-  const esLibre = isLab || !!act.gratis;
+  const esLibre = (isLab && !act.premium) || !!act.gratis;
 
   // Ids con los que la tarjeta de Resumen pedirá el archivo. Una clase libre
   // puede tener el resumen detrás del plan (TBL 3): ahí hace falta el plan de
@@ -161,7 +161,7 @@ export default async function ActividadPage({
           /* En las prácticas de laboratorio la primera tarjeta es «Simulación». */
           simulacion={isLab ? (act.simulacion ?? {}) : undefined}
           /* Los labs no tienen banco de preguntas: sólo Simulación y Resumen. */
-          hideBanqueo={isLab}
+          hideBanqueo={isLab && !act.tarjetas}
           /* El visor va por portal al body: se montaría por delante del velo de
              LockedContent, así que sólo se abre si el resumen es accesible —la
              misma respuesta que dará `/api/resumen-html`, no una copia suya. */
