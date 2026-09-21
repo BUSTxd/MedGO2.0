@@ -12,3 +12,13 @@ export function tokenDePresencia(userId: string): string {
   const clave = process.env.SUPABASE_SERVICE_ROLE_KEY ?? '';
   return createHmac('sha256', clave).update(`medgo-presencia:${userId}`).digest('hex').slice(0, 32);
 }
+
+/**
+ * Canal por el que el servidor avisa a un alumno de que tiene un mensaje nuevo.
+ * Usa el mismo token opaco: el aviso no lleva contenido (el cliente lo pide
+ * luego a /api/mensajes con su sesión), así que escucharlo no filtra nada.
+ */
+export const canalBuzon = (userId: string) => `buzon-${tokenDePresencia(userId)}`;
+
+/** Canal por el que el panel admin se entera de una respuesta nueva. */
+export const canalBuzonAdmin = () => `buzon-admin-${tokenDePresencia('buzon-admin')}`;

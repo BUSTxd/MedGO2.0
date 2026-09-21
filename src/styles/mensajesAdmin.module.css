@@ -1,0 +1,220 @@
+/* ─── Mensajes en el panel admin: ventana de envío + bandeja ─────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.45);
+  animation: aparecer 0.18s ease;
+}
+@keyframes aparecer { from { opacity: 0; } }
+
+.modal {
+  position: relative;
+  box-sizing: border-box;
+  width: min(520px, 100%);
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  padding: 22px 24px 20px;
+  border-radius: 16px;
+  background: #fff;
+  color: #1e293b;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  box-shadow: 0 24px 60px -20px rgba(15, 23, 42, 0.5);
+}
+:global(body.dark-mode) .modal { background: #1e293b; color: #e2e8f0; }
+
+.cerrar {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  border: none;
+  background: none;
+  color: #94a3b8;
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.kicker {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6c63c9;
+}
+:global(body.dark-mode) .kicker { color: #9b8ef8; }
+
+.para { margin: 2px 0 16px; font-size: 15px; font-weight: 700; }
+
+.etiqueta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+:global(body.dark-mode) .etiqueta { color: #cbd5e1; }
+
+.campo {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.campo:focus { outline: 2px solid rgba(108, 99, 201, 0.45); outline-offset: 1px; }
+:global(body.dark-mode) .campo { background: #0f172a; border-color: #334155; color: #e2e8f0; }
+
+.area { resize: vertical; min-height: 140px; }
+
+.cuenta { align-self: flex-end; font-size: 11.5px; font-weight: 500; color: #94a3b8; }
+
+.error { margin: 0 0 10px; font-size: 13px; color: #d64045; }
+
+.acciones { display: flex; justify-content: flex-end; gap: 8px; }
+
+.primario,
+.secundario {
+  padding: 9px 18px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.primario { border: none; background: #6c63c9; color: #fff; }
+.primario:disabled { opacity: 0.45; cursor: default; }
+.secundario { border: 1px solid #cbd5e1; background: transparent; color: #475569; }
+:global(body.dark-mode) .secundario { border-color: #334155; color: #cbd5e1; }
+
+.hecho { text-align: center; padding: 8px 0 4px; }
+.hechoTitulo { margin: 0 0 6px; font-size: 17px; font-weight: 800; color: #2ea057; }
+.hechoTexto { margin: 0 0 16px; font-size: 13.5px; line-height: 1.55; color: #64748b; }
+:global(body.dark-mode) .hechoTexto { color: #94a3b8; }
+
+/* ─── Bandeja ─── */
+
+.bandeja {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 26px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+:global(body.dark-mode) .bandeja { background: #1e293b; border-color: #334155; }
+
+.bandejaHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.bandejaTitulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+}
+:global(body.dark-mode) .bandejaTitulo { color: #f1f5f9; }
+
+.badge {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: #6c63c9;
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.bandejaSub { margin: 4px 0 0; font-size: 13px; color: #64748b; }
+:global(body.dark-mode) .bandejaSub { color: #94a3b8; }
+
+.vacio { margin: 0; font-size: 13.5px; color: #94a3b8; }
+
+.hilos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+
+.hilo {
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+:global(body.dark-mode) .hilo { border-color: #334155; }
+
+.hiloHead { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 12.5px; }
+.hiloPara { font-weight: 700; color: #0f172a; }
+:global(body.dark-mode) .hiloPara { color: #f1f5f9; }
+.hiloFecha { margin-left: auto; color: #94a3b8; }
+
+.estado {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+}
+.estadoVisto { background: rgba(46, 160, 87, 0.12); color: #2ea057; }
+:global(body.dark-mode) .estado { background: #0f172a; color: #94a3b8; }
+:global(body.dark-mode) .estadoVisto { background: rgba(95, 211, 138, 0.14); color: #5fd38a; }
+
+/* Color explícito: el texto del dashboard hereda el claro global (`--white`),
+   que sobre esta tarjeta blanca no se leía. */
+.hiloTitulo { margin: 6px 0 0; font-size: 14px; font-weight: 700; color: #0f172a; }
+:global(body.dark-mode) .hiloTitulo { color: #f1f5f9; }
+
+.sinRespuesta { margin: 6px 0 0; font-size: 12.5px; color: #94a3b8; }
+
+.respuesta {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-left: 3px solid #cbd5e1;
+  border-radius: 0 8px 8px 0;
+  background: #f8fafc;
+}
+.respuestaNueva { border-left-color: #6c63c9; background: rgba(108, 99, 201, 0.08); }
+:global(body.dark-mode) .respuesta { background: #0f172a; border-left-color: #334155; }
+:global(body.dark-mode) .respuestaNueva { border-left-color: #9b8ef8; background: rgba(155, 142, 248, 0.12); }
+
+.respuestaMeta { font-size: 11.5px; font-weight: 600; color: #64748b; }
+.respuestaTexto { margin: 3px 0 0; font-size: 13.5px; line-height: 1.5; white-space: pre-line; color: #1e293b; }
+:global(body.dark-mode) .respuestaTexto { color: #e2e8f0; }
+
+/* ─── Botón junto al correo ─── */
+
+.boton {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #64748b;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.boton:hover { background: rgba(108, 99, 201, 0.1); border-color: rgba(108, 99, 201, 0.25); color: #6c63c9; }
+:global(body.dark-mode) .boton { color: #94a3b8; }
+:global(body.dark-mode) .boton:hover { color: #9b8ef8; }

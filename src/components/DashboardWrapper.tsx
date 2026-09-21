@@ -8,6 +8,7 @@ import { DarkModeProvider } from './DarkModeContext';
 import ClarityPlanTag from './ClarityPlanTag';
 import PaginaVistaTracker from './PaginaVistaTracker';
 import { AnunciarPresencia } from './Presencia';
+import BuzonUsuario from './BuzonUsuario';
 import { pingRacha } from '@/lib/racha';
 import styles from '@/styles/dashboardLayout.module.css';
 
@@ -18,6 +19,7 @@ export default function DashboardWrapper({
   verAportes = false,
   accesoFacultad = false,
   presencia,
+  buzon,
 }: {
   children: React.ReactNode;
   planState: ClientPlanState;
@@ -28,6 +30,8 @@ export default function DashboardWrapper({
   accesoFacultad?: boolean;
   /** Token opaco con el que se anuncia en línea (ver `src/lib/presencia.ts`). */
   presencia?: string;
+  /** Mismo token, para el canal de mensajes del equipo (`BuzonUsuario`). */
+  buzon?: string;
 }) {
   const [collapsed, setCollapsed] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -59,6 +63,7 @@ export default function DashboardWrapper({
       {/* useSearchParams exige Suspense o el prerender del dashboard cae a cliente */}
       {!isAdmin && <Suspense fallback={null}><PaginaVistaTracker /></Suspense>}
       {presencia && <AnunciarPresencia token={presencia} />}
+      {buzon && <BuzonUsuario token={buzon} />}
       <RecentClassesProvider>
         <div className={styles.layout}>
           <DashboardSidebar

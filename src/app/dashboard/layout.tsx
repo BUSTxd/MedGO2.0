@@ -66,6 +66,8 @@ export default async function DashboardRootLayout({
       accesoFacultad={accesoFacultad}
       // El admin no se anuncia: recorre la web para revisarla, como en /api/track.
       presencia={user && !isAdmin ? tokenDePresencia(user.id) : undefined}
+      // El buzón sí incluye al admin: puede escribirse a sí mismo para probar.
+      buzon={user ? tokenDePresencia(user.id) : undefined}
     >
       {children}
     </DashboardWrapper>

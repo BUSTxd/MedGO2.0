@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import { isAdminEmail } from '@/lib/admin';
 import { loadAdminData } from '@/lib/admin-data';
 import AdminPanel from '@/components/AdminPanel';
+import { canalBuzonAdmin } from '@/lib/presencia';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,5 +14,5 @@ export default async function AdminPage() {
   if (!isAdminEmail(user.email)) notFound();
 
   const data = await loadAdminData();
-  return <AdminPanel data={data} />;
+  return <AdminPanel data={data} canalBuzon={canalBuzonAdmin()} />;
 }

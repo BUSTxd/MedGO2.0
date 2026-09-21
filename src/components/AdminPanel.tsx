@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import type { AdminData, AdminRow, CursoRank } from '@/lib/admin-data';
 import UsuarioFicha from './UsuarioFicha';
 import { useEnLinea } from './Presencia';
+import { BandejaMensajes, BotonMensaje, EnviarMensaje, type Destinatario } from './MensajesAdmin';
 import styles from '@/styles/adminPage.module.css';
 import accountStyles from '@/styles/accountPage.module.css';
 
@@ -141,9 +142,11 @@ function CursosObjetivo({ ranking }: { ranking: CursoRank[] }) {
   );
 }
 
-export default function AdminPanel({ data }: { data: AdminData }) {
+export default function AdminPanel({ data, canalBuzon }: { data: AdminData; canalBuzon: string }) {
   const [tab, setTab] = useState<TabKey>('activos');
   const [ficha, setFicha] = useState<AdminRow | null>(null);
+  const [escribirA, setEscribirA] = useState<Destinatario | null>(null);
+  const emails = useMemo(() => new Map(data.rows.map((r) => [r.id, r.email])), [data.rows]);
   const enLinea = useEnLinea();
   const cuantosEnLinea = data.rows.filter((r) => enLinea.has(r.presencia)).length;
 
@@ -201,6 +204,8 @@ export default function AdminPanel({ data }: { data: AdminData }) {
         </div>
       </div>
 
+      <BandejaMensajes canal={canalBuzon} emails={emails} />
+
       <CursosObjetivo ranking={data.rankingCursos} />
 
       {/* ─── Tabs ─── */}
@@ -240,6 +245,7 @@ export default function AdminPanel({ data }: { data: AdminData }) {
               {visible.map((r) => (
                 <tr key={r.id}>
                   <td>
+                    <div className={styles.userCell}>
                     <button type="button" className={styles.userBtn} onClick={() => setFicha(r)}>
                       <span className={styles.email}>
                         {enLinea.has(r.presencia) && (
@@ -249,6 +255,11 @@ export default function AdminPanel({ data }: { data: AdminData }) {
                       </span>
                       {r.fullName && <span className={styles.name}>{r.fullName}</span>}
                     </button>
+                    <BotonMensaje
+                      email={r.email}
+                      onClick={() => setEscribirA({ id: r.id, email: r.email, nombre: r.fullName })}
+                    />
+                    </div>
                   </td>
                   <td>
                     <span className={planBadgeClass(r.plan)}>{planLabel(r.plan)}</span>
@@ -292,6 +303,8 @@ export default function AdminPanel({ data }: { data: AdminData }) {
           </table>
         )}
       </div>
+
+      {escribirA && <EnviarMensaje a={escribirA} onClose={() => setEscribirA(null)} />}
 
       {ficha && (
         <UsuarioFicha
