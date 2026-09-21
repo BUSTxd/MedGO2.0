@@ -643,6 +643,29 @@
 
 .flash .naipeAgua { width: 190px; height: 190px; top: 50%; }
 
+/* El giro de la tarjeta de memoria: simétrico (acelera y frena), no la curva
+   de salida rápida de los naipes, que hacía casi todo el giro en 150 ms y lo
+   demás lo arrastraba. Más perspectiva: la tarjeta es ancha, y con 1200 px el
+   canto que se acerca se deformaba demasiado. */
+.flash { perspective: 1800px; }
+.flash .cara3d { transition: transform 0.72s cubic-bezier(0.45, 0.05, 0.25, 1); }
+
+/* Pie de la tarjeta (autoevaluación + enlace al resumen). Ocupa su sitio desde
+   el principio y sólo cambia de visibilidad: nada se mueve durante el giro.
+   Aparece cuando el giro ya pasó la mitad; se va sin esperar. */
+.flashPie {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.15s;
+}
+.flashPieVisible {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.3s ease 0.3s, transform 0.3s ease 0.3s, visibility 0s;
+}
+
 :global(.dark-mode) .shell .flash .frente::after { opacity: 0.3; }
 
 /* Entra girando sobre su eje, como una carta que se vuelve hacia ti. El giro
@@ -694,7 +717,6 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  animation: irResumenEntra 0.35s ease-out both;
   transition: background 0.15s, border-color 0.15s;
 }
 button.irResumen:hover {
@@ -708,13 +730,9 @@ button.irResumen:hover {
   background: transparent;
 }
 
-@keyframes irResumenEntra {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: none; }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .irResumen { animation: none; }
+  .flash .cara3d { transition: none; }
+  .flashPie, .flashPieVisible { transition: none; transform: none; }
 }
 
 .autoevalBtn {

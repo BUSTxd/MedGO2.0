@@ -120,8 +120,13 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
   const [fase, setFase] = useState<Fase>('quieto');
   const [elegida, setElegida] = useState<string | null>(null);
   const [volteada, setVolteada] = useState(false);
+  // En memoria la tarjeta va y viene: `vista` recuerda que ya se vio el dorso,
+  // para no esconder la autoevaluación al volver a la pregunta.
+  const [vista, setVista] = useState(false);
+  // Un clic mientras la tarjeta entra no la voltea de golpe: se guarda y se
+  // cumple al terminar la entrada, sin cortarla.
+  const volteoPendiente = useRef(false);
   const [respuestas, setRespuestas] = useState<Respuesta[]>([]);
-  const [ronda, setRonda] = useState(0);
   const [reduce, setReduce] = useState(false);
 
   const timers = useRef<number[]>([]);
@@ -177,7 +182,21 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
   const dorso = useMemo(() => (pregunta ? dorsoDe(pregunta) : null), [pregunta]);
   const naipes = pregunta ? (opciones[pregunta.id] ?? pregunta.options) : [];
   const paloFlash = paloDe(idx);
-  const respondida = modo === 'quiz' ? elegida !== null : volteada;
+  const respondida = modo === 'quiz' ? elegida !== null : vista;
+
+  const voltear = () => {
+    if (fase === 'entrando') { volteoPendiente.current = true; return; }
+    if (fase !== 'quieto') return;
+    setVolteada(v => !v);
+    setVista(true);
+  };
+
+  useEffect(() => {
+    if (fase !== 'quieto' || !volteoPendiente.current) return;
+    volteoPendiente.current = false;
+    setVolteada(true);
+    setVista(true);
+  }, [fase]);
 
   const empezar = (m: Modo) => {
     setModo(m);
@@ -216,6 +235,8 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
       setIdx(i => i + 1);
       setElegida(null);
       setVolteada(false);
+      setVista(false);
+      volteoPendiente.current = false;
       setFase('entrando');
       programar(() => setFase('quieto'), ENTRADA_MS);
     };
@@ -253,8 +274,9 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
     setIdx(0);
     setElegida(null);
     setVolteada(false);
+    setVista(false);
+    volteoPendiente.current = false;
     setRespuestas([]);
-    setRonda(r => r + 1);
     setPaso('jugando');
     setFase('entrando');
     programar(() => setFase('quieto'), ENTRADA_MS);
@@ -268,7 +290,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === 'Enter' && respondida) { e.preventDefault(); siguiente(); return; }
       if (modo === 'flash') {
-        if (e.key === ' ' && !volteada) { e.preventDefault(); setVolteada(true); }
+        if (e.key === ' ') { e.preventDefault(); voltear(); }
         return;
       }
       const i = LETRAS.indexOf(e.key.toUpperCase());
@@ -462,8 +484,8 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
             /* Un palo distinto por tarjeta, para que se note que cambió. */
             tinte={paloFlash.color}
             volteada={volteada}
-            onClick={volteada ? undefined : () => setVolteada(true)}
-            etiqueta="Voltear la tarjeta"
+            onClick={voltear}
+            etiqueta={volteada ? 'Volver a la pregunta' : 'Ver la respuesta'}
             frente={
               <>
                 <span className={s.naipeAgua} aria-hidden="true"><paloFlash.Glifo /></span>
@@ -479,31 +501,34 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
                     <ReactMarkdown>{tarjeta.detalle}</ReactMarkdown>
                   </div>
                 )}
+                <span className={s.flashPista}>Toca para volver a la pregunta</span>
               </>
             }
           />
 
-          {volteada && resumen && tarjeta?.seccion && (
-            resumen.abierto ? (
-              <button
-                type="button"
-                className={s.irResumen}
-                onClick={() => {
-                  setLeyendo(tarjeta.seccion!);
-                  trackEvent('resumen_abierto', { claseId: resumen.id, origen: 'tarjeta' });
-                }}
-              >
-                <IconoLibro /> Ver esto en el resumen
-              </button>
-            ) : (
-              <span className={`${s.irResumen} ${s.irResumenCerrado}`}>
-                <IconoCandado /> El resumen entra con la suscripción
-              </span>
-            )
-          )}
+          {/* Siempre montado, oculto hasta ver el dorso: si apareciera al
+              voltear, la columna centrada subiría la tarjeta en pleno giro. */}
+          <div className={`${s.flashPie} ${vista ? s.flashPieVisible : ''}`}>
+            {resumen && tarjeta?.seccion && (
+              resumen.abierto ? (
+                <button
+                  type="button"
+                  className={s.irResumen}
+                  onClick={() => {
+                    setLeyendo(tarjeta.seccion!);
+                    trackEvent('resumen_abierto', { claseId: resumen.id, origen: 'tarjeta' });
+                  }}
+                >
+                  <IconoLibro /> Ver esto en el resumen
+                </button>
+              ) : (
+                <span className={`${s.irResumen} ${s.irResumenCerrado}`}>
+                  <IconoCandado /> El resumen entra con la suscripción
+                </span>
+              )
+            )}
 
-          {volteada && (
-            <div className={s.autoeval} key={`autoeval-${ronda}-${idx}`}>
+            <div className={s.autoeval}>
               <button type="button" className={`${s.autoevalBtn} ${s.autoevalNo}`} onClick={() => autoevaluar(false)}>
                 No me la sabía
               </button>
@@ -511,7 +536,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
                 Me la sabía
               </button>
             </div>
-          )}
+          </div>
         </div>
       )}
 
