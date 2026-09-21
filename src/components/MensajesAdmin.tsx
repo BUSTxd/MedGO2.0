@@ -254,6 +254,7 @@ export function BandejaMensajes({ emails }: { emails: Map<string, string> }) {
                   <span className={s.hiloFecha}>{fecha(m.created_at)}</span>
                 </div>
                 <p className={s.hiloTitulo}>{m.titulo}</p>
+                <p className={s.hiloCuerpo}>{m.cuerpo}</p>
                 {m.respuestas.length === 0 ? (
                   <p className={s.sinRespuesta}>Sin respuesta todavía.</p>
                 ) : (

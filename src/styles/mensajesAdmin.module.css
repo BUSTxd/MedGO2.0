@@ -185,6 +185,16 @@
 .hiloTitulo { margin: 6px 0 0; font-size: 14px; font-weight: 700; color: #0f172a; }
 :global(body.dark-mode) .hiloTitulo { color: #f1f5f9; }
 
+/* Lo que se le envió, tal cual: con sus saltos de línea. */
+.hiloCuerpo {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #475569;
+  white-space: pre-line;
+}
+:global(body.dark-mode) .hiloCuerpo { color: #cbd5e1; }
+
 .sinRespuesta { margin: 6px 0 0; font-size: 12.5px; color: #94a3b8; }
 
 .respuesta {
