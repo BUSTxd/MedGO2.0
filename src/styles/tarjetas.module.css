@@ -587,6 +587,10 @@
 
 .dorsoRespuesta { font-size: 14.5px; font-weight: 650; line-height: 1.45; }
 
+/* El rótulo va en verde aunque la tarjeta siga en rojo: la roja es la elección
+   del alumno, lo verde es la respuesta buena. */
+.dorsoCorrecta { color: var(--ok); font-weight: 800; }
+
 .dorsoJustificacion {
   font-size: 13px;
   line-height: 1.6;

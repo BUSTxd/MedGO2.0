@@ -74,6 +74,11 @@ export interface ExamQuestion {
   /** Tema del vocabulario del curso. Sin esto la pregunta queda fuera del informe. */
   tema?: string;
   /**
+   * Motor de tarjetas: de dónde sale en el resumen HTML de la clase (mismo
+   * formato que `Flashcard.seccion`, con «›» para acotar).
+   */
+  seccion?: string;
+  /**
    * Tipo de pregunta dentro del tema («Categoría I-4 y UPSS requeridas»). El
    * informe final lo lista bajo su tema cuando se falla.
    */

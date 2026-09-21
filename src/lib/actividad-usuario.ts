@@ -219,7 +219,8 @@ function detalleDe(e: EventoRow): string | null {
     return conModo(`${cifra} · ${examKey ?? ''}`);
   }
   if (e.event === 'banco_iniciado') return examKey ? conModo(examKey) : modo;
-  if (e.event === 'resumen_abierto' && p.origen === 'tarjeta') return 'Desde una tarjeta del banqueo';
+  if (e.event === 'resumen_abierto' && p.origen === 'tarjeta') return 'Desde una tarjeta de memoria del banqueo';
+  if (e.event === 'resumen_abierto' && p.origen === 'quiz') return 'Desde una pregunta del quiz';
   if (e.event === 'contenido_bloqueado') {
     if (p.origen === 'muestra') return `Terminó la parte gratis de ${examKey ?? 'el banqueo'}`;
     const plan = nombrePlan(p.plan);

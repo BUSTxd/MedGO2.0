@@ -184,6 +184,30 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
   const paloFlash = paloDe(idx);
   const respondida = modo === 'quiz' ? elegida !== null : vista;
 
+  /** De qué parte del resumen sale lo que se acaba de ver. Fuera del naipe: el naipe ya es un <button>. */
+  const enlaceResumen = (seccion?: string) => {
+    if (!resumen || !seccion) return null;
+    if (!resumen.abierto) {
+      return (
+        <span className={`${s.irResumen} ${s.irResumenCerrado}`}>
+          <IconoCandado /> El resumen entra con la suscripción
+        </span>
+      );
+    }
+    return (
+      <button
+        type="button"
+        className={s.irResumen}
+        onClick={() => {
+          setLeyendo(seccion);
+          trackEvent('resumen_abierto', { claseId: resumen.id, origen: modo === 'quiz' ? 'quiz' : 'tarjeta' });
+        }}
+      >
+        <IconoLibro /> Ver esto en el resumen
+      </button>
+    );
+  };
+
   const voltear = () => {
     if (fase === 'entrando') { volteoPendiente.current = true; return; }
     if (fase !== 'quieto') return;
@@ -454,7 +478,12 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
                         </span>
                         <span>{ok ? 'Correcta' : 'Incorrecta'}</span>
                       </span>
-                      <span className={s.dorsoRespuesta}>{dorso?.respuesta}</span>
+                      {/* Al fallar, el reverso enseña la buena: sin el rótulo,
+                          leída bajo «Incorrecta» parecía que era la equivocada. */}
+                      <span className={s.dorsoRespuesta}>
+                        {!ok && <span className={s.dorsoCorrecta}>Correcta: </span>}
+                        {dorso?.respuesta}
+                      </span>
                       {dorso?.justificacion && (
                         <div className={s.dorsoJustificacion}>
                           <ReactMarkdown>{dorso.justificacion}</ReactMarkdown>
@@ -466,6 +495,8 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
               );
             })}
           </div>
+
+          {respondida && enlaceResumen(pregunta?.seccion)}
 
           {respondida && (
             <div className={s.pie}>
@@ -511,24 +542,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
           {/* Siempre montado y fuera del flujo: si apareciera al voltear y
               ocupara sitio, la columna centrada subiría la tarjeta en pleno giro. */}
           <div className={`${s.flashPie} ${vista ? s.flashPieVisible : ''}`}>
-            {resumen && tarjeta?.seccion && (
-              resumen.abierto ? (
-                <button
-                  type="button"
-                  className={s.irResumen}
-                  onClick={() => {
-                    setLeyendo(tarjeta.seccion!);
-                    trackEvent('resumen_abierto', { claseId: resumen.id, origen: 'tarjeta' });
-                  }}
-                >
-                  <IconoLibro /> Ver esto en el resumen
-                </button>
-              ) : (
-                <span className={`${s.irResumen} ${s.irResumenCerrado}`}>
-                  <IconoCandado /> El resumen entra con la suscripción
-                </span>
-              )
-            )}
+            {enlaceResumen(tarjeta?.seccion)}
 
             <div className={s.autoeval}>
               <button type="button" className={`${s.autoevalBtn} ${s.autoevalNo}`} onClick={() => autoevaluar(false)}>
