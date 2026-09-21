@@ -5,1024 +5,1024 @@
   "duration_min": null,
   "questions": [
     {
-      "id": "t3q01",
-      "stem": "Una mujer de 24 años recibió el diagnóstico de infección por VIH en el tercer trimestre y tuvo adherencia irregular al tratamiento. Durante la gestación presentó candidiasis esofágica y su pareja falleció por neumonía por Pneumocystis. Su hijo, nacido a término, acude al control de las seis semanas con las vacunas al día. Está asintomático y con examen físico normal. Se desea determinar si el lactante adquirió la infección. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v01",
+      "stem": "Una mujer de 24 años con infección por VIH recibió tratamiento antirretroviral irregular durante el embarazo. Su hijo, nacido a término y alimentado solo con fórmula, acude al control de las seis semanas. La prueba rápida de anticuerpos anti-VIH del lactante resultó reactiva, mientras que la PCR de ADN proviral fue negativa. Está asintomático y con examen físico normal. El pediatra explica el resultado a la madre. ¿Qué tipo de inmunidad explica la reactividad de la prueba rápida del lactante?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de ADN proviral del VIH mediante PCR en sangre",
+          "text": "Inmunidad pasiva natural por IgG que cruzó la placenta",
           "correct": true
         },
         {
           "id": "b",
-          "text": "Detección de anticuerpos anti-VIH mediante prueba rápida en sangre capilar",
+          "text": "Inmunidad activa natural por infección adquirida durante el parto",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Detección de antígeno p24 y anticuerpos mediante inmunoensayo de cuarta generación",
+          "text": "Inmunidad pasiva natural por IgA secretora de la leche materna",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Detección de anticuerpos anti-VIH mediante Western blot de confirmación",
+          "text": "Inmunidad activa artificial inducida por las vacunas del primer mes",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación de linfocitos T CD4 mediante citometría de flujo sanguínea",
+          "text": "Inmunidad pasiva artificial por inmunoglobulina administrada en la sala de partos",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** a las seis semanas el lactante todavía circula con la **IgG materna** que cruzó la placenta → toda prueba que busque anticuerpos anti-VIH saldrá reactiva aunque no esté infectado → hay que detectar el virus: **ADN proviral (o ARN) por PCR**, la prueba diagnóstica hasta los 18 meses.\n\n- **Prueba rápida:** es el tamizaje habitual, pero detecta la IgG de la madre.\n- **Cuarta generación:** es la de elección en el adulto; su componente de anticuerpos reacciona con la IgG materna y da un único resultado reactivo.\n- **Western blot:** confirmación ya retirada de los algoritmos y también mide IgG.\n- **CD4:** mide el grado de inmunodepresión, no la presencia de infección; en un lactante asintomático no responde la pregunta.",
+      "explanation": "La **IgG materna cruza la placenta en el tercer trimestre** (inmunidad pasiva natural) y persiste hasta los 18 meses: por eso la prueba de anticuerpos es reactiva aunque la PCR demuestre que el niño no está infectado.\n\n- **Activa natural por el parto:** la PCR negativa descarta la infección.\n- **IgA de la leche:** el niño toma fórmula, y la IgA actúa en la mucosa, no en la sangre.\n- **Activa artificial:** ninguna vacuna del esquema induce anticuerpos anti-VIH.\n- **Pasiva artificial:** no se administra inmunoglobulina anti-VIH al nacer.",
       "tema": "vacunas",
-      "subtema": "Inmunidad pasiva materna"
+      "subtema": "Inmunidad activa y pasiva"
     },
     {
-      "id": "t3q10",
-      "stem": "Un niño de siete años convive con su padre, diagnosticado hace una semana de tuberculosis pulmonar con baciloscopía positiva. La madre tuvo tuberculosis ganglionar hace años y la familia comparte un dormitorio sin ventilación. En el brazo derecho tiene la cicatriz de la vacuna aplicada al nacer. Está asintomático, con buen apetito y auscultación normal. Se desea establecer si tiene infección tuberculosa latente. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v07",
+      "stem": "Un hombre de 34 años con infección por VIH viajará en un mes a una zona selvática con transmisión de fiebre amarilla. Abandonó el tratamiento antirretroviral hace un año y su último control mostró inmunosupresión grave. En la consulta de viajero revisan su carné de vacunación. Está asintomático y sin infecciones oportunistas activas. Se planifican las vacunas del viaje. ¿Cuál de las siguientes vacunas está contraindicada en este paciente?",
       "options": [
         {
           "id": "a",
-          "text": "Prueba de tuberculina mediante intradermorreacción de Mantoux con PPD",
+          "text": "Vacuna contra hepatitis A de virus entero inactivado",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Determinación de interferón gamma mediante ensayo de liberación en sangre",
+          "text": "Vacuna antiamarílica de virus vivo atenuado",
           "correct": true
         },
         {
           "id": "c",
-          "text": "Prueba de tuberculina en dos pasos mediante PPD con efecto refuerzo",
+          "text": "Vacuna contra influenza de virus fraccionado e inactivado",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Prueba de tuberculina mediante multipunción cutánea de tipo Heaf",
+          "text": "Vacuna contra hepatitis B de antígeno recombinante",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación de lesiones pulmonares mediante radiografía de tórax frontal",
+          "text": "Vacuna antineumocócica conjugada de polisacárido y proteína",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** la cicatriz es de la **BCG**, y el PPD comparte antígenos con *M. bovis* BCG → una tuberculina positiva no distingue vacuna de infección → se necesita una prueba con antígenos que la BCG no tiene (**ESAT-6 y CFP-10**): el **IGRA**, que mide el interferón gamma liberado frente a ellos.\n\n- **Mantoux:** el tamizaje habitual, con falsos positivos por la BCG.\n- **Tuberculina en dos pasos:** la de elección para una línea de base fiable, pero usa el mismo PPD y el refuerzo incluso amplifica la reacción a la BCG.\n- **Multipunción de Heaf:** técnica histórica con el mismo antígeno.\n- **Radiografía:** busca enfermedad activa (extensión), no infección latente; en un niño asintomático no establece el diagnóstico.",
-      "tema": "vacunas",
-      "subtema": "Vacuna BCG"
-    },
-    {
-      "id": "t3q13",
-      "stem": "Un odontólogo de 35 años se pinchó hace cuatro meses con una aguja usada en un paciente con hepatitis B crónica. Un colega de la misma clínica se infectó el año pasado y otro desarrolló una hepatitis fulminante. Su carné laboral registra el esquema completo de tres dosis de vacuna recombinante. Está asintomático y sin ictericia. Se desea establecer si alguna vez se infectó con el virus. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
-      "options": [
-        {
-          "id": "a",
-          "text": "Detección de anticuerpos anti-HBs mediante prueba rápida inmunocromatográfica capilar",
-          "correct": false
-        },
-        {
-          "id": "b",
-          "text": "Determinación cuantitativa de anticuerpos anti-HBs mediante quimioluminiscencia automatizada",
-          "correct": false
-        },
-        {
-          "id": "c",
-          "text": "Detección de anticuerpos anti-HBc totales mediante inmunoensayo en suero",
-          "correct": true
-        },
-        {
-          "id": "d",
-          "text": "Detección de anticuerpos anti-HBs mediante radioinmunoensayo de fase sólida",
-          "correct": false
-        },
-        {
-          "id": "e",
-          "text": "Determinación del grado de fibrosis hepática mediante elastografía de transición",
-          "correct": false
-        }
-      ],
-      "explanation": "**Cadena:** la vacuna recombinante contiene **sólo HBsAg** → el anti-HBs del vacunado sale positivo haya o no habido infección → para saber si hubo contacto con el virus se busca un anticuerpo contra una proteína que la vacuna no tiene: el **anti-HBc**, que sólo produce quien se infectó.\n\n- **Anti-HBs rápido:** el control habitual del personal vacunado, pero refleja la vacuna.\n- **Anti-HBs cuantitativo:** el que se pide por costumbre tras un pinchazo; mide protección, no infección.\n- **Anti-HBs por radioinmunoensayo:** técnica superada con el mismo analito.\n- **Elastografía:** mide fibrosis (daño), no infección pasada; en un paciente asintomático no la establece.",
-      "tema": "vacunas",
-      "subtema": "Vacuna recombinante contra el VHB"
-    },
-    {
-      "id": "t3q15",
-      "stem": "Una médica de 40 años trabaja en la unidad de cuidados intensivos donde tres colegas se contagiaron de COVID-19 el mes pasado. Uno de ellos sigue en ventilación mecánica y otro presentó miocarditis. Su registro ocupacional muestra tres dosis de vacuna de ARN mensajero, la última hace dos meses. Hoy está asintomática y su examen es normal. Se desea establecer si tuvo infección reciente. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
-      "options": [
-        {
-          "id": "a",
-          "text": "Detección de anticuerpos anti-espícula mediante prueba rápida en sangre capilar",
-          "correct": false
-        },
-        {
-          "id": "b",
-          "text": "Determinación de anticuerpos neutralizantes mediante ensayo de neutralización con pseudovirus",
-          "correct": false
-        },
-        {
-          "id": "c",
-          "text": "Detección de anticuerpos anti-RBD mediante ELISA de primera generación",
-          "correct": false
-        },
-        {
-          "id": "d",
-          "text": "Detección de anticuerpos anti-nucleocápside mediante inmunoensayo quimioluminiscente en suero",
-          "correct": true
-        },
-        {
-          "id": "e",
-          "text": "Determinación de extensión pulmonar mediante tomografía computarizada de tórax",
-          "correct": false
-        }
-      ],
-      "explanation": "**Cadena:** la vacuna de ARNm sólo codifica la **proteína espícula** → los anticuerpos anti-espícula, anti-RBD y neutralizantes salen positivos por la vacuna → para demostrar infección natural se busca un anticuerpo contra una proteína que la vacuna no produce: la **nucleocápside (anti-N)**.\n\n- **Anti-espícula rápido:** la serología más usada, pero positiva en todo vacunado.\n- **Neutralización con pseudovirus:** la prueba funcional más avanzada; mide anticuerpos contra la espícula, también vacunales.\n- **Anti-RBD de primera generación:** ELISA temprano contra el dominio de unión de la espícula.\n- **Tomografía:** mide la extensión de la neumonía, no la infección pasada; en una persona asintomática no aporta.",
-      "tema": "vacunas",
-      "subtema": "Vacunas COVID-19 dirigidas a la espícula"
-    },
-    {
-      "id": "t3q21",
-      "stem": "En una guardería se investiga un brote de diarrea por rotavirus con siete niños afectados. Dos requirieron hidratación intravenosa y uno ingresó a cuidados intensivos por deshidratación grave. Un lactante de tres meses del mismo salón recibió la segunda dosis de vacuna oral hace cinco días, según su carné. Está asintomático y con deposiciones normales. Se desea establecer si porta la cepa del brote. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
-      "options": [
-        {
-          "id": "a",
-          "text": "Detección de antígeno VP6 de rotavirus mediante inmunocromatografía en heces",
-          "correct": false
-        },
-        {
-          "id": "b",
-          "text": "Detección de ARN de rotavirus mediante RT-PCR en tiempo real",
-          "correct": false
-        },
-        {
-          "id": "c",
-          "text": "Detección de partículas de rotavirus mediante microscopía electrónica de heces",
-          "correct": false
-        },
-        {
-          "id": "d",
-          "text": "Determinación de electrolitos séricos mediante potenciometría con electrodo selectivo",
-          "correct": false
-        },
-        {
-          "id": "e",
-          "text": "Determinación del genotipo de rotavirus mediante RT-PCR y secuenciación",
-          "correct": true
-        }
-      ],
-      "explanation": "**Cadena:** la vacuna de rotavirus es **oral y viva**, y el virus vacunal se excreta en heces durante días → cualquier prueba que sólo detecte rotavirus saldrá positiva por la vacuna → hay que distinguir la cepa: **genotipificación por RT-PCR y secuenciación**, que separa la vacunal de la circulante.\n\n- **Antígeno VP6:** el tamizaje de rutina, positivo con la cepa vacunal.\n- **RT-PCR en tiempo real:** la prueba de elección por sensibilidad, que detecta aún mejor el virus vacunal.\n- **Microscopía electrónica:** método histórico que ve partículas sin distinguir cepa.\n- **Electrolitos:** miden deshidratación (gravedad), no infección; en un lactante asintomático no aportan.",
+      "explanation": "Las **vacunas vivas atenuadas** se replican en el huésped; con una inmunosupresión grave (VIH con CD4 < 200) el germen vacunal puede causar enfermedad. Por eso la **antiamarílica** está contraindicada, como la SPR, la varicela o la BCG.\n\n- **Hepatitis A inactivada**, **influenza inactivada**, **hepatitis B recombinante** y **neumocócica conjugada:** no contienen microorganismos capaces de replicarse; son seguras, aunque su respuesta sea menor con la inmunosupresión.",
       "tema": "vacunas",
       "subtema": "Vacunas vivas atenuadas"
     },
     {
-      "id": "t3q17",
-      "stem": "Una mujer de 34 años consulta porque su pareja fue diagnosticada de hepatitis C activa. Él tiene cirrosis y antecedente de transfusiones múltiples, y ella se hizo un tatuaje artesanal hace un año. Por inmunodeficiencia común variable recibe inmunoglobulina intravenosa cada cuatro semanas en el hospital de día. Está asintomática, sin ictericia ni hepatomegalia. Se desea establecer si está infectada. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v12",
+      "stem": "Una mujer de 29 años, con veinte semanas de gestación, fue mordida en la pierna por un perro callejero que luego desapareció. En su barrio se confirmaron casos de rabia canina este año. Además de lavar la herida, el médico indica el esquema de vacunación antirrábica. Ella teme que la vacuna dañe al feto. Está estable y sin otros hallazgos. ¿Qué característica de la vacuna antirrábica permite usarla en el embarazo?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de ARN del VHC mediante RT-PCR en plasma",
-          "correct": true
+          "text": "Es de virus vivo atenuado, con replicación limitada a la herida",
+          "correct": false
         },
         {
           "id": "b",
-          "text": "Detección de anticuerpos anti-VHC mediante prueba rápida en saliva",
+          "text": "Es de ARN mensajero que no atraviesa la barrera placentaria",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Detección de anticuerpos anti-VHC mediante inmunoensayo quimioluminiscente de tercera generación",
-          "correct": false
+          "text": "Es de virus entero inactivado, incapaz de replicarse en el huésped",
+          "correct": true
         },
         {
           "id": "d",
-          "text": "Detección de anticuerpos anti-VHC mediante inmunoblot recombinante de confirmación",
+          "text": "Es un vector viral replicante con los genes de rabia",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación del grado de fibrosis hepática mediante elastografía de transición",
+          "text": "Es un toxoide de la toxina rábica que perdió su actividad biológica",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** en la inmunodeficiencia común variable los linfocitos B **no producen anticuerpos** de forma eficaz, y la inmunoglobulina infundida es de donantes → la serología puede ser negativa pese a la infección → se busca el virus: **ARN del VHC por RT-PCR**.\n\n- **Prueba rápida en saliva:** tamizaje habitual, falsamente negativa si no hay respuesta humoral.\n- **Tercera generación:** el inmunoensayo de elección, con la misma limitación.\n- **Inmunoblot:** confirmación en desuso y también de anticuerpos.\n- **Elastografía:** mide fibrosis, no infección; en una paciente sin hallazgos no la establece.",
+      "explanation": "La vacuna antirrábica es de **virus entero muerto (inactivado)**: no se replica, así que no puede infectar a la madre ni al feto. Las inactivadas son seguras en el embarazo y en inmunodeprimidos. Pertenece a la mnemotecnia **«A TRIP could Kill you»** (hepatitis **A**, **T**ifoidea, **R**abia, **I**nfluenza, **P**olio Salk).\n\n- **Viva atenuada:** estaría contraindicada en el embarazo.\n- **ARN mensajero** y **vector viral:** no son las plataformas de la vacuna antirrábica en uso.\n- **Toxoide:** el virus de la rabia no produce una toxina que se pueda inactivar.",
       "tema": "vacunas",
-      "subtema": "Inmunodeficiencia e inmunoglobulinas"
+      "subtema": "Vacunas inactivadas"
     },
     {
-      "id": "t3q27",
-      "stem": "Un hombre de 70 años acude por fiebre y tos productiva de tres días. Su esposa murió de meningitis neumocócica y a él le extirparon el bazo tras un accidente. En la consulta de geriatría de hace cuatro días recibió la vacuna antineumocócica de polisacárido 23-valente. Está orientado, sin dificultad respiratoria ni hipotensión. Se desea confirmar si el agente es el neumococo. ¿Cuál de las siguientes pruebas es la más apropiada para confirmar el diagnóstico?",
+      "id": "t3v17",
+      "stem": "Un lactante de dos meses recibe la vacuna antineumocócica conjugada de trece serotipos según el esquema nacional. Su abuela, de setenta años, recibió en cambio la de polisacárido puro de veintitrés serotipos. Al año, el lactante muestra IgG de alta afinidad y respuesta de memoria tras el refuerzo. No presentó efectos adversos. La madre pregunta por qué las vacunas son distintas. ¿Qué logra la conjugación del polisacárido con una proteína?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de antígeno C-polisacárido mediante inmunocromatografía rápida en orina",
+          "text": "Permite que el polisacárido se presente por MHC de clase I",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Detección de Streptococcus pneumoniae mediante cultivo de esputo",
-          "correct": true
+          "text": "Aumenta la cantidad de antígeno que llega al bazo",
+          "correct": false
         },
         {
           "id": "c",
-          "text": "Detección de antígeno capsular neumocócico mediante inmunoensayo multiplex urinario serotipo-específico",
+          "text": "Estimula directamente a los macrófagos sin intervención de linfocitos",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Detección de antígeno neumocócico mediante contrainmunoelectroforesis en orina concentrada",
-          "correct": false
+          "text": "Convierte la respuesta en dependiente de linfocitos T colaboradores",
+          "correct": true
         },
         {
           "id": "e",
-          "text": "Determinación de hipoxemia mediante gasometría arterial en reposo",
+          "text": "Prolonga la vida media de la IgM producida por el lactante",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** la PPSV23 son **polisacáridos capsulares** que se eliminan por la orina en los días siguientes → los antígenos neumocócicos urinarios salen positivos por la vacuna → hay que aislar la bacteria: **cultivo de esputo de calidad** (junto con hemocultivos).\n\n- **Antígeno urinario rápido:** la prueba habitual en neumonía, falsamente positiva en los cinco días tras la vacuna.\n- **Multiplex serotipo-específico:** la técnica urinaria más avanzada, que detecta los mismos polisacáridos vacunales.\n- **Contrainmunoelectroforesis:** método histórico para el mismo antígeno.\n- **Gasometría:** mide gravedad, no el agente; sin dificultad respiratoria no confirma nada.",
+      "explanation": "El LB que reconoce el polisacárido internaliza también la **proteína transportadora** y se la presenta al **Th por MHC II**. El Th le devuelve la ayuda: **cambio de clase a IgG**, maduración de la afinidad y **memoria**. La respuesta pasa a ser **T-dependiente**, y funciona en menores de 2 años. Es la diferencia entre **PCV13** (conjugada) y **PPSV23** (polisacárido puro).\n\n- **MHC I:** la conjugación usa la vía MHC II.\n- **Más antígeno al bazo:** no es lo que cambia la calidad de la respuesta.\n- **Macrófagos directos:** la clave es el linfocito T colaborador.\n- **IgM más duradera:** al contrario, se pasa de IgM a IgG.",
       "tema": "vacunas",
-      "subtema": "Vacuna de polisacárido"
+      "subtema": "Vacunas de subunidades"
     },
     {
-      "id": "t3q28",
-      "stem": "Una mujer de 23 años acude a un centro de atención a víctimas de violencia sexual. El agresor, usuario de drogas inyectables, tiene antecedentes de sífilis y otras denuncias por abuso. La agresión ocurrió hace doce días y no recibió profilaxis postexposición porque consultó tarde. Está asintomática, sin fiebre, exantema ni adenopatías. Se desea establecer si adquirió la infección por VIH. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v24",
+      "stem": "Una docente de 50 años duda en vacunarse contra COVID-19 con una vacuna de ARN mensajero. Su esposo, no vacunado, estuvo hospitalizado por neumonía grave y un familiar falleció. Leyó en redes sociales que la vacuna modifica el ADN de quien la recibe. Está sana y sin enfermedades crónicas. El médico le explica dónde actúa el ARN mensajero de la vacuna. ¿Dónde actúa el ARN mensajero de la vacuna?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de anticuerpos anti-VIH mediante prueba rápida en sangre capilar",
+          "text": "En el núcleo, donde se retrotranscribe y se integra al genoma",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Detección de antígeno p24 y anticuerpos mediante inmunoensayo de cuarta generación",
+          "text": "En el núcleo, donde se transcribe igual que un plásmido de ADN",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Detección de ARN del VIH mediante amplificación de ácidos nucleicos",
-          "correct": true
+          "text": "En la superficie celular, donde se une directamente al MHC",
+          "correct": false
         },
         {
           "id": "d",
-          "text": "Detección de anticuerpos anti-VIH mediante Western blot de confirmación",
+          "text": "En el ganglio linfático, donde activa directamente a los linfocitos B",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación de linfocitos T CD4 mediante citometría de flujo",
-          "correct": false
+          "text": "En el citoplasma, donde se traduce sin entrar al núcleo",
+          "correct": true
         }
       ],
-      "explanation": "**Cadena:** doce días después de la exposición aún **no hay anticuerpos** y el antígeno p24 suele no ser detectable → las pruebas serológicas y de cuarta generación pueden ser negativas aunque haya infección → el primer marcador que aparece es el genoma: **ARN del VIH por amplificación de ácidos nucleicos**, detectable desde unos diez días.\n\n- **Prueba rápida:** el tamizaje habitual, negativo en el periodo de ventana.\n- **Cuarta generación:** la de elección en adultos, que acorta la ventana pero aún puede fallar a los doce días.\n- **Western blot:** confirmación retirada y la última en positivizarse.\n- **CD4:** mide inmunodepresión, no infección; en una persona asintomática no hace el diagnóstico.",
+      "explanation": "La nanopartícula lipídica entrega el ARNm al **citoplasma**, donde los ribosomas lo **traducen directo a proteína** (la espícula). **No entra al núcleo ni se integra** al genoma, y se degrada en días. Ejemplos: **Pfizer (BNT162b2)** y **Moderna (mRNA-1273)**. Otra ventaja: son **rápidas de desarrollar**.\n\n- **Retrotranscripción e integración:** las células humanas no hacen eso con el ARNm vacunal.\n- **Transcripción como plásmido:** eso describe a las vacunas de **ADN**, que sí necesitan el núcleo.\n- **Unión al MHC** y **activación directa de LB:** el ARNm no es el antígeno; lo es la proteína que codifica.",
       "tema": "vacunas",
-      "subtema": "Periodo de ventana"
+      "subtema": "Vacunas genéticas"
     },
     {
-      "id": "t3q04",
-      "stem": "Una primigesta de 22 años que cría gatos y consume carne poco cocida presentó seroconversión para Toxoplasma en el segundo trimestre. La ecografía mostró placenta engrosada y una prima tuvo un hijo con coriorretinitis por el mismo parásito. El recién nacido tiene cinco días y ya recibió las vacunas del alta. Está asintomático, con fondo de ojo y examen neurológico normales. Se desea establecer si existe infección congénita. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v02",
+      "stem": "Un agricultor de 52 años se hirió la mano con un rastrillo oxidado mientras abonaba con estiércol. Nunca completó la vacunación antitetánica y un vecino murió de tétanos el año pasado. En emergencia le aplican el toxoide en un brazo y la inmunoglobulina antitetánica humana en el otro. La herida es superficial, sin trismo ni rigidez. El residente pregunta por qué se usan ambas. ¿Qué aporta la inmunoglobulina antitetánica que no aporta el toxoide?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de IgG anti-Toxoplasma mediante ELISA en suero del neonato",
-          "correct": false
+          "text": "Protección inmediata con anticuerpos ya formados, aunque transitoria",
+          "correct": true
         },
         {
           "id": "b",
-          "text": "Determinación de avidez de IgG anti-Toxoplasma mediante ELISA en suero",
+          "text": "Memoria inmunológica duradera frente a la toxina tetánica",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Detección de anticuerpos anti-Toxoplasma mediante prueba de tinción de Sabin-Feldman",
+          "text": "Activación de linfocitos T citotóxicos contra el bacilo tetánico",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Detección de IgM anti-Toxoplasma mediante inmunoabsorción ISAGA en suero",
-          "correct": true
+          "text": "Estimulación de la inmunidad innata en la herida",
+          "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación de calcificaciones intracraneales mediante tomografía computarizada de cráneo",
+          "text": "Cambio de clase a IgG por ayuda de linfocitos colaboradores",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** a los cinco días de vida toda la **IgG** del neonato es de la madre → la IgG anti-Toxoplasma no distingue infección congénita → hace falta un isotipo que **no cruza la placenta** y que sólo puede haber fabricado el propio niño: la **IgM (ISAGA)**, idealmente junto con la IgA.\n\n- **IgG por ELISA:** la prueba habitual, positiva por la IgG materna.\n- **Avidez de IgG:** la de elección para fechar la infección en la gestante, pero sigue midiendo IgG materna.\n- **Sabin-Feldman:** prueba de referencia histórica que también detecta IgG.\n- **Tomografía:** mide la afectación, no si hay infección; en un neonato con examen normal no establece el diagnóstico.",
+      "explanation": "La inmunoglobulina es **inmunidad pasiva artificial**: anticuerpos ya formados que neutralizan la toxina desde el primer momento, pero que duran unas semanas y **no dejan memoria**. El toxoide induce **inmunidad activa**, lenta pero duradera. Por eso, en un no vacunado con herida de riesgo, se dan juntos en sitios distintos.\n\n- **Memoria duradera** y **cambio de clase por colaboradores:** es lo que aporta el toxoide, no la inmunoglobulina.\n- **T citotóxicos:** ninguna de las dos los induce; el tétanos se combate neutralizando la toxina.\n- **Inmunidad innata local:** no es la función de la inmunoglobulina.",
       "tema": "vacunas",
-      "subtema": "Inmunidad pasiva materna"
+      "subtema": "Inmunidad activa y pasiva"
     },
     {
-      "id": "t3q23",
-      "stem": "En un colegio con un brote confirmado de sarampión se evalúa a una niña de cinco años. Dos compañeros fueron hospitalizados por neumonía y uno presentó encefalitis. Como medida de bloqueo, recibió la vacuna SPR hace diez días en la brigada escolar. Hoy tiene un exantema leve, sin tos, coriza ni conjuntivitis, y examen pulmonar normal. Se desea establecer si se trata de sarampión. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v09",
+      "stem": "Un estudiante de 20 años recibe una sola dosis de la vacuna antiamarílica antes de viajar a la selva. Su compañero, en cambio, necesitó tres dosis de la vacuna contra hepatitis B para quedar protegido. Diez años después, el estudiante conserva anticuerpos neutralizantes y linfocitos T CD8 específicos. Nunca tuvo efectos adversos. El docente pregunta por qué una dosis bastó. ¿Qué propiedad de la vacuna antiamarílica explica esta respuesta?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de IgM anti-sarampión mediante ELISA de captura en suero",
+          "text": "El adyuvante de aluminio induce B7 en la célula presentadora",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Determinación de avidez de IgG anti-sarampión mediante inmunoensayo en suero",
-          "correct": false
+          "text": "El virus atenuado se replica y se presenta por MHC I",
+          "correct": true
         },
         {
           "id": "c",
-          "text": "Detección de anticuerpos anti-sarampión mediante inhibición de la hemaglutinación",
+          "text": "El antígeno va conjugado a una proteína que recluta colaboradores",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Determinación de infiltrados pulmonares mediante radiografía de tórax frontal",
+          "text": "El virus inactivado se presenta exclusivamente por MHC de clase II",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación del genotipo de sarampión mediante RT-PCR y secuenciación",
-          "correct": true
+          "text": "El polisacárido capsular activa al linfocito B sin ayuda de linfocitos T",
+          "correct": false
         }
       ],
-      "explanation": "**Cadena:** la **SPR es de virus vivos** y, entre los 6 y 14 días, puede dar fiebre y exantema; además induce IgM → la IgM no distingue sarampión salvaje de reacción vacunal → hay que identificar el virus: **RT-PCR con genotipificación** (el vacunal es genotipo A, los circulantes no).\n\n- **IgM de captura:** la prueba de rutina de la vigilancia, positiva por la vacuna.\n- **Avidez de IgG:** separa infección primaria de reinfección, pero una vacuna reciente también da baja avidez.\n- **Inhibición de la hemaglutinación:** serología histórica, también positiva tras vacunar.\n- **Radiografía:** mide complicaciones (gravedad), no la etiología; sin síntomas respiratorios no aporta.",
+      "explanation": "La vacuna viva atenuada **se replica** en las células del vacunado: su antígeno aparece en el citosol y se presenta por **MHC I** (T CD8+ de memoria) además de por **MHC II** (Th y LB de memoria). Es lo más parecido a la infección natural: inmunidad fuerte y duradera, a menudo con una sola dosis.\n\n- **Adyuvante:** es propio de las de subunidades, que necesitan refuerzos.\n- **Conjugación:** es la estrategia de las vacunas de polisacárido.\n- **Inactivada por MHC II:** no induciría T CD8; además la antiamarílica no es inactivada.\n- **Polisacárido T-independiente:** da solo IgM, sin memoria.",
       "tema": "vacunas",
       "subtema": "Vacunas vivas atenuadas"
     },
     {
-      "id": "t3q02",
-      "stem": "Una mujer de 30 años con antecedente de consumo de drogas inyectables tiene hepatitis C crónica sin tratamiento. Su hermano, con quien compartía agujas, desarrolló cirrosis descompensada, y el parto se prolongó con rotura de membranas de muchas horas. Su hija de cuatro meses acude al control de crecimiento programado. La niña está asintomática y sin hepatomegalia. Se desea establecer si la lactante adquirió el virus. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v20",
+      "stem": "Un albañil de 40 años acude por su refuerzo decenal de la vacuna dT. En su pueblo, un vecino no vacunado murió de tétanos generalizado tras pisar un clavo. Pregunta si la vacuna contiene la bacteria y si podría enfermar por ella. Está sano y sin heridas recientes. El personal de salud le explica el tipo de antígeno de la vacuna. ¿Qué contiene el componente antitetánico de la vacuna?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de ARN del VHC mediante PCR en plasma",
-          "correct": true
+          "text": "Bacilos vivos atenuados de Clostridium tetani",
+          "correct": false
         },
         {
           "id": "b",
-          "text": "Detección de anticuerpos anti-VHC mediante inmunoensayo quimioluminiscente en suero",
+          "text": "Bacilos enteros muertos mediante calor y formol concentrado",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Detección de antígeno core y anticuerpos anti-VHC mediante inmunoensayo combinado",
-          "correct": false
+          "text": "Exotoxina inactivada que conserva su capacidad antigénica",
+          "correct": true
         },
         {
           "id": "d",
-          "text": "Detección de anticuerpos anti-VHC mediante inmunoblot recombinante tipo RIBA",
+          "text": "Endotoxina purificada de la pared bacteriana",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación del grado de fibrosis hepática mediante elastografía de transición",
+          "text": "Polisacárido capsular conjugado a una proteína transportadora",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** a los cuatro meses la lactante conserva la **IgG anti-VHC de la madre**, que puede durar hasta los 18 meses → un anticuerpo positivo no distingue infección de transferencia → se busca el virus: **ARN del VHC por PCR**, válido desde los dos meses.\n\n- **Anti-VHC por quimioluminiscencia:** tamizaje de rutina, positivo por la IgG materna.\n- **Antígeno core + anticuerpos:** el ensayo más completo en el adulto, pero su resultado único se hace reactivo por los anticuerpos maternos.\n- **RIBA:** confirmación en desuso y también basada en anticuerpos.\n- **Elastografía:** mide daño hepático, no si hay infección; en una lactante sin hallazgos no aporta al diagnóstico.",
+      "explanation": "El componente antitetánico es un **toxoide**: la **exotoxina** tetánica inactivada (con formol) que ya no es tóxica pero conserva sus epítopos. Al ser una proteína, la activación es **T-dependiente**: memoria B y Th y **cambio de clase**. La inmunidad va contra la toxina, que es la que causa la enfermedad. Pide refuerzos cada diez años.\n\n- **Bacilos vivos** o **muertos:** la vacuna no contiene la bacteria.\n- **Endotoxina:** es el LPS de las gramnegativas; *C. tetani* es grampositivo y lo que enferma es su exotoxina.\n- **Polisacárido conjugado:** es la estrategia contra bacterias encapsuladas.",
       "tema": "vacunas",
-      "subtema": "Inmunidad pasiva materna"
+      "subtema": "Vacunas de subunidades"
     },
     {
-      "id": "t3q03",
-      "stem": "Una mujer de 27 años con hepatitis B crónica y HBeAg positivo no recibió antivirales durante el embarazo. Su madre murió de hepatocarcinoma y su hermano espera un trasplante hepático. En la sala de partos su hijo recibió inmunoglobulina y la primera dosis de vacuna, y luego completó el esquema. Hoy, a los diez meses, está asintomático y crece bien. Se desea establecer si se infectó. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v27",
+      "stem": "En un brote de ébola en África central se aplica una vacuna basada en el virus de la estomatitis vesicular, al que se le insertó el gen de la glicoproteína del ébola. Con una sola dosis, los contactos vacunados quedan protegidos en pocos días. Los trabajadores de salud también la reciben. No se reportan efectos graves. Se analiza esta plataforma vacunal. ¿Qué característica explica que baste una sola dosis?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de anticuerpos anti-HBc totales mediante inmunoensayo en suero",
+          "text": "El vector carece de genes de replicación y persiste durante años",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Detección de HBsAg mediante inmunoensayo quimioluminiscente en suero",
-          "correct": true
+          "text": "La glicoproteína purificada va adsorbida en sales de aluminio",
+          "correct": false
         },
         {
           "id": "c",
-          "text": "Determinación cuantitativa de anticuerpos anti-HBs mediante quimioluminiscencia en suero",
+          "text": "El ARN mensajero de la glicoproteína se integra en el genoma",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Detección de anticuerpos anti-HBc mediante radioinmunoensayo de fase sólida",
-          "correct": false
+          "text": "El vector se replica y amplifica la expresión del antígeno",
+          "correct": true
         },
         {
           "id": "e",
-          "text": "Determinación de aminotransferasas séricas mediante método cinético enzimático automatizado",
+          "text": "El virus del ébola atenuado conserva toda su capacidad antigénica",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** el niño recibió **anticuerpos ya formados** (IgG anti-HBc de la madre por la placenta y anti-HBs de la inmunoglobulina) y además fue vacunado → ningún anticuerpo sirve para saber si se infectó → se busca el propio virus: el **HBsAg**. A los diez meses, lejos de la última dosis, la vacuna ya no lo da positivo por sí misma.\n\n- **Anti-HBc totales:** marcador habitual de contacto con el virus, pero aquí es la IgG materna.\n- **Anti-HBs cuantitativo:** el que se pide por jerarquía en el control posvacunal; refleja vacuna e inmunoglobulina, no infección.\n- **Anti-HBc por radioinmunoensayo:** técnica superada y con el mismo analito inválido.\n- **Aminotransferasas:** miden daño hepático; en un niño asintomático no establecen infección.",
+      "explanation": "La **rVSV-ZEBOV** es un **vector viral replicante**: el virus vector conserva su capacidad de replicarse de forma controlada, y **cada ciclo produce más antígeno**. Eso da una inmunogenicidad altísima (humoral y CD8+), a menudo con **una sola dosis**. El precio: más efectos adversos y no siempre apta en inmunocomprometidos.\n\n- **Vector sin genes de replicación:** eso es un **no replicante**, que suele requerir refuerzos.\n- **Proteína con aluminio:** sería una vacuna de subunidad.\n- **ARNm que se integra:** no es la plataforma, y el ARNm no se integra.\n- **Ébola atenuado:** la vacuna no contiene virus del ébola, solo uno de sus genes.",
       "tema": "vacunas",
-      "subtema": "Inmunidad pasiva materna"
+      "subtema": "Vacunas genéticas"
     },
     {
-      "id": "t3q05",
-      "stem": "Una madre de 19 años, educadora de una guardería, tuvo en el primer trimestre fiebre con adenopatías y seroconversión para citomegalovirus. Otro niño de la misma guardería nació con microcefalia por este virus. Su recién nacido tiene diez días de vida y ya recibió las vacunas del alta. Está asintomático, sin hepatoesplenomegalia y con tamizaje auditivo normal. Se desea establecer si existe infección congénita. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v13",
+      "stem": "Una estudiante de 22 años viajará a una zona rural con agua no potable y le recomiendan vacunarse. En la consulta revisan cinco vacunas que no recibió de niña. Como tiene lupus y toma dosis altas de corticoides, el médico solo quiere indicarle vacunas sin microorganismos vivos. Está asintomática y con la enfermedad controlada. Se selecciona la vacuna para el viaje. ¿Cuál de las siguientes vacunas es de microorganismo inactivado?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de IgG anti-citomegalovirus mediante quimioluminiscencia en suero",
+          "text": "Vacuna contra fiebre amarilla de cepa 17D",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Determinación de avidez de IgG anti-citomegalovirus mediante inmunoensayo en suero",
+          "text": "Vacuna contra varicela de la cepa Oka",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Detección de ADN de citomegalovirus mediante PCR en orina",
-          "correct": true
+          "text": "Vacuna oral contra fiebre tifoidea de cepa Ty21a",
+          "correct": false
         },
         {
           "id": "d",
-          "text": "Detección de anticuerpos anti-citomegalovirus mediante fijación del complemento clásica",
+          "text": "Vacuna SPR contra sarampión, rubéola y paperas",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación de lesiones periventriculares mediante ecografía transfontanelar del neonato",
-          "correct": false
+          "text": "Vacuna contra hepatitis A de virus entero",
+          "correct": true
         }
       ],
-      "explanation": "**Cadena:** a los diez días la IgG del neonato es **materna** → la serología IgG no distingue infección congénita → se busca el virus: **PCR de CMV en orina (o saliva)** dentro de las tres primeras semanas de vida, cuando todavía separa la infección congénita de la adquirida después.\n\n- **IgG por quimioluminiscencia:** la prueba habitual, positiva por la madre.\n- **Avidez de IgG:** la de elección para fechar la infección materna, pero mide la misma IgG transferida.\n- **Fijación del complemento:** técnica serológica superada y basada en el mismo analito.\n- **Ecografía transfontanelar:** mide la afectación cerebral, no la presencia del virus; con un examen normal no hace el diagnóstico.",
+      "explanation": "La **hepatitis A** es de **virus entero inactivado**, segura con corticoides en dosis altas. Es la «A» de **«A TRIP could Kill you»**.\n\n- **Fiebre amarilla 17D**, **varicela Oka**, **tifoidea oral Ty21a** y **SPR:** todas son **vivas atenuadas**, contraindicadas con inmunosupresión. La tifoidea tiene una forma parenteral no viva, pero la oral Ty21a sí es viva.",
       "tema": "vacunas",
-      "subtema": "Inmunidad pasiva materna"
+      "subtema": "Vacunas inactivadas"
     },
     {
-      "id": "t3q06",
-      "stem": "Una mujer de 26 años, natural de un valle endémico del sur, tiene serología positiva para Trypanosoma cruzi y nunca recibió tratamiento. Su padre usa marcapasos por miocardiopatía chagásica y en su vivienda rural había triatominos. Su hija de un mes acude a la consulta de niño sano. Está asintomática, sin hepatoesplenomegalia ni edema. Se desea establecer si la niña adquirió la infección. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v03",
+      "stem": "Un recolector de café de 35 años fue mordido por una serpiente del género Bothrops en la selva central. Hace dos años sufrió otra mordedura y recibió suero antiofídico en la misma posta. Hoy presenta edema local y sangrado leve de encías, y vuelve a recibir el suero. Está consciente y hemodinámicamente estable. Pregunta por qué la primera dosis no lo dejó protegido. ¿Qué característica del suero antiofídico explica que no lo haya protegido?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de anticuerpos anti-Trypanosoma mediante ELISA con antígeno total",
-          "correct": false
+          "text": "Confiere inmunidad pasiva transitoria sin generar memoria inmunológica",
+          "correct": true
         },
         {
           "id": "b",
-          "text": "Detección de anticuerpos anti-Trypanosoma mediante ELISA con antígenos recombinantes",
+          "text": "Induce inmunidad activa que decae sin dosis de refuerzo",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Detección de anticuerpos anti-Trypanosoma mediante fijación de complemento Machado-Guerreiro",
+          "text": "Contiene veneno atenuado que solo estimula respuesta de IgM",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Detección de tripomastigotes circulantes mediante micrométodo en tubos capilares",
-          "correct": true
+          "text": "Genera anticuerpos propios que neutralizan únicamente el primer veneno",
+          "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación de trastornos de conducción mediante electrocardiograma de doce derivaciones",
+          "text": "Estimula linfocitos T citotóxicos que desaparecen en pocas semanas",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** al mes de vida la niña conserva la **IgG materna** contra *T. cruzi*, que dura hasta los 8-10 meses → cualquier serología saldrá positiva sin que eso signifique infección → se busca el parásito: **micrométodo (microhematocrito)**, que es la prueba de elección en el menor de nueve meses.\n\n- **ELISA con antígeno total:** tamizaje serológico habitual, positivo por la madre.\n- **ELISA recombinante:** la serología más específica, pero sigue midiendo IgG transferida.\n- **Machado-Guerreiro:** fijación de complemento histórica, basada en anticuerpos.\n- **Electrocardiograma:** mide el compromiso cardíaco (estadio), no la presencia del parásito; en una lactante sin hallazgos no hace el diagnóstico.",
+      "explanation": "El suero antiofídico contiene **anticuerpos ya formados** (de origen equino) contra el veneno: es **inmunidad pasiva artificial**, inmediata pero temporal (semanas) y **sin memoria**, porque el paciente no fabricó nada. En cada mordedura hay que volver a darlo.\n\n- **Inmunidad activa que decae:** el suero no induce respuesta propia.\n- **Veneno atenuado:** el suero no contiene veneno, sino anticuerpos.\n- **Anticuerpos propios:** no los genera; los recibe.\n- **T citotóxicos:** no participan en la neutralización del veneno.",
       "tema": "vacunas",
-      "subtema": "Inmunidad pasiva materna"
+      "subtema": "Inmunidad activa y pasiva"
     },
     {
-      "id": "t3q07",
-      "stem": "Una mujer de 32 años de ascendencia andina fue diagnosticada de infección por HTLV-1 en el tamizaje prenatal. Su hermana padece paraparesia espástica tropical y un tío murió de leucemia de células T del adulto. Su hijo de seis meses acude hoy al control de crecimiento programado. Está asintomático, con lactancia materna y desarrollo motor normal. Se desea establecer si el lactante se infectó. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v04",
+      "stem": "En una comunidad amazónica se compara la diarrea infantil entre dos grupos de lactantes de cuatro meses. Los que reciben lactancia materna exclusiva tienen muchos menos episodios que los alimentados con fórmula, pese a compartir agua y saneamiento. Ninguno de los dos grupos ha recibido todavía la vacuna contra rotavirus. Todos crecen adecuadamente. El equipo busca el mecanismo inmunológico de la protección. ¿Qué mecanismo explica mejor la protección de los lactantes amamantados?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de anticuerpos anti-HTLV mediante inmunoensayo quimioluminiscente en suero",
+          "text": "Inmunidad pasiva natural por IgG materna transferida durante el tercer trimestre",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Detección de anticuerpos anti-HTLV mediante inmunoblot de confirmación y tipificación",
-          "correct": false
+          "text": "Inmunidad pasiva natural por IgA secretora en la mucosa intestinal",
+          "correct": true
         },
         {
           "id": "c",
-          "text": "Detección de anticuerpos anti-HTLV mediante inmunofluorescencia indirecta en células",
+          "text": "Inmunidad activa natural por exposición repetida a patógenos entéricos",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Determinación de linfocitos atípicos en flor mediante frotis de sangre",
+          "text": "Inmunidad activa artificial inducida por antígenos contenidos en la leche",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Detección de ADN proviral de HTLV-1 mediante PCR sanguínea",
-          "correct": true
+          "text": "Inmunidad innata por linfocitos T citotóxicos transferidos en el calostro",
+          "correct": false
         }
       ],
-      "explanation": "**Cadena:** a los seis meses el lactante tiene la **IgG anti-HTLV de la madre** → los anticuerpos no distinguen infección de transferencia → hay que detectar el provirus integrado en sus linfocitos: **ADN proviral por PCR**.\n\n- **Quimioluminiscencia:** tamizaje habitual, positivo por la IgG materna.\n- **Inmunoblot:** la confirmación de elección que además tipifica HTLV-1/2, pero mide los mismos anticuerpos.\n- **Inmunofluorescencia indirecta:** confirmación antigua, también serológica.\n- **Células en flor:** son un hallazgo de la leucemia del adulto (estadio de la enfermedad), no de infección; en un lactante sano no aparecen.",
+      "explanation": "La leche materna aporta **IgA secretora**, que actúa en la **superficie de la mucosa intestinal** neutralizando patógenos entéricos: es **inmunidad pasiva natural**. Es lo que diferencia a los dos grupos, que comparten todo lo demás.\n\n- **IgG transplacentaria:** la recibieron ambos grupos, así que no explica la diferencia.\n- **Activa natural por exposición:** ambos grupos están igual de expuestos.\n- **Activa artificial por la leche:** la leche no es una vacuna ni induce memoria propia.\n- **T citotóxicos en el calostro:** no son el mecanismo de protección, y no forman parte de la inmunidad innata.",
       "tema": "vacunas",
-      "subtema": "Inmunidad pasiva materna"
+      "subtema": "Inmunidad activa y pasiva"
     },
     {
-      "id": "t3q08",
-      "stem": "Una gestante de 20 años, no vacunada, tuvo exantema y adenopatías retroauriculares en la décima semana, durante un brote en su comunidad. Una vecina perdió un embarazo por la misma infección y otra tuvo un hijo con cataratas congénitas. El recién nacido, de tres días, pasó la evaluación de rutina. Está asintomático, con reflejo rojo presente y sin soplos. Se desea establecer si hay infección congénita. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v05",
+      "stem": "Una profesora de 30 años cuida a su sobrino, que desarrolló varicela hace tres días. Durante la semana compartieron habitación y ella lo bañó varias veces. Recuerda haber tenido varicela a los seis años, con lesiones en todo el cuerpo, y nunca fue vacunada. Hoy, a los veinte días del contacto, no presenta lesiones ni fiebre. Se discute por qué no enfermó. ¿Qué tipo de inmunidad explica que no haya enfermado?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de ARN de rubéola mediante RT-PCR en orofaringe",
-          "correct": true
+          "text": "Inmunidad pasiva natural por anticuerpos recibidos de su madre",
+          "correct": false
         },
         {
           "id": "b",
-          "text": "Detección de IgG anti-rubéola mediante inmunoensayo enzimático en suero neonatal",
+          "text": "Inmunidad activa artificial por una vacunación olvidada en la infancia",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Determinación de avidez de IgG anti-rubéola mediante inmunoensayo en suero",
-          "correct": false
+          "text": "Inmunidad activa natural con memoria por la infección previa",
+          "correct": true
         },
         {
           "id": "d",
-          "text": "Detección de anticuerpos anti-rubéola mediante inhibición de la hemaglutinación clásica",
+          "text": "Inmunidad pasiva artificial adquirida por la exposición repetida al virus",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación de cardiopatía congénita mediante ecocardiograma transtorácico del neonato",
+          "text": "Inmunidad innata inespecífica reforzada durante el contacto con su sobrino",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** a los tres días la IgG del recién nacido es **materna** → la IgG anti-rubéola no separa infección de transferencia → se busca el virus, que el niño con infección congénita excreta durante meses: **ARN por RT-PCR** de orofaringe (la IgM del neonato sería la alternativa serológica).\n\n- **IgG por EIA:** la serología habitual, positiva por la madre.\n- **Avidez de IgG:** útil para fechar la infección materna, pero sigue midiendo IgG transferida.\n- **Inhibición de la hemaglutinación:** técnica histórica, también de anticuerpos.\n- **Ecocardiograma:** mide el daño (estadio), no la infección; con un examen sin soplos no hace el diagnóstico.",
+      "explanation": "La varicela de la infancia generó **inmunidad activa natural**: su propio sistema inmune respondió y dejó **linfocitos B y T de memoria**, que ahora frenan el virus antes de que cause enfermedad. Es la forma más duradera de inmunidad.\n\n- **Pasiva materna:** la IgG de la madre desaparece en el primer año de vida.\n- **Activa artificial:** nunca fue vacunada.\n- **Pasiva artificial por exposición:** la exposición no transfiere anticuerpos; la pasiva artificial es recibir inmunoglobulinas.\n- **Innata reforzada:** la inmunidad innata no tiene memoria específica.",
       "tema": "vacunas",
-      "subtema": "Inmunidad pasiva materna"
+      "subtema": "Inmunidad activa y pasiva"
     },
     {
-      "id": "t3q09",
-      "stem": "Un lactante de cinco semanas es llevado por tos en accesos desde hace diez días. Su hermano escolar tuvo tos con estridor inspiratorio y el abuelo con quien convive fue hospitalizado por neumonía. La madre recibió la vacuna Tdap en el tercer trimestre, según su carné prenatal. El niño no presenta apneas, cianosis ni dificultad respiratoria. Se desea confirmar el diagnóstico de tos ferina. ¿Cuál de las siguientes pruebas es la más apropiada para confirmar el diagnóstico?",
+      "id": "t3v06",
+      "stem": "Una gestante de 26 años con hepatitis B crónica y HBeAg positivo da a luz a término. Su hermano murió por hepatocarcinoma y ella no recibió antivirales durante el embarazo. En las primeras doce horas, el neonato recibe inmunoglobulina contra hepatitis B y la primera dosis de la vacuna, en muslos distintos. Está vigoroso y sin malformaciones. La madre pregunta por qué recibe las dos. ¿Qué combinación de inmunidad se busca con ese esquema?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de IgG anti-toxina pertussis mediante ELISA en suero único",
+          "text": "Activa inmediata con la inmunoglobulina y pasiva duradera con la vacuna",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Detección de ADN de Bordetella pertussis mediante PCR nasofaríngea",
-          "correct": true
+          "text": "Pasiva inmediata con ambas, para reforzar los anticuerpos de la madre",
+          "correct": false
         },
         {
           "id": "c",
-          "text": "Determinación cuantitativa de IgG anti-toxina pertussis mediante inmunoensayo multiplex",
+          "text": "Activa duradera con ambas, al sumar el antígeno y el anticuerpo",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Detección de anticuerpos anti-Bordetella mediante aglutinación bacteriana en suero",
-          "correct": false
+          "text": "Pasiva inmediata con la inmunoglobulina y activa duradera con la vacuna",
+          "correct": true
         },
         {
           "id": "e",
-          "text": "Determinación de linfocitosis absoluta mediante hemograma automatizado en sangre",
+          "text": "Innata inmediata con la inmunoglobulina y adaptativa tardía con la vacuna protectora",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** la madre vacunada transfirió **IgG anti-toxina pertussis** por la placenta, y un lactante de cinco semanas apenas produce anticuerpos propios → la serología no puede confirmar la infección → se busca la bacteria: **PCR de *B. pertussis* en aspirado o hisopado nasofaríngeo**.\n\n- **IgG anti-toxina en suero único:** la serología habitual en adolescentes y adultos, aquí contaminada por la IgG materna.\n- **Inmunoensayo multiplex:** más moderno, pero mide la misma IgG.\n- **Aglutinación:** serología histórica, superada y también de anticuerpos.\n- **Linfocitosis:** marca gravedad (la hiperleucocitosis predice mala evolución), no confirma la infección; el niño no tiene signos de gravedad.",
+      "explanation": "La **inmunoglobulina** da **inmunidad pasiva**: anticuerpos anti-HBs listos para neutralizar el virus recibido en el parto, pero que desaparecen en semanas. La **vacuna** (HBsAg recombinante) induce **inmunidad activa**, lenta pero con memoria. Se combinan porque la primera cubre el tiempo que la segunda tarda en funcionar.\n\n- **Activa con la inmunoglobulina:** los anticuerpos recibidos no generan respuesta propia.\n- **Pasiva con ambas:** la vacuna no aporta anticuerpos, los induce.\n- **Activa con ambas:** la inmunoglobulina no induce memoria.\n- **Innata:** los anticuerpos son un efector adaptativo, aunque se reciban hechos.",
       "tema": "vacunas",
-      "subtema": "Inmunidad pasiva materna"
+      "subtema": "Inmunidad activa y pasiva"
     },
     {
-      "id": "t3q11",
-      "stem": "Una enfermera de 28 años ingresará a trabajar en un pabellón de tuberculosis multidrogorresistente. En ese servicio dos técnicos enfermaron el último año y uno falleció por tuberculosis extensamente resistente. En su ficha de ingreso consta la BCG al nacer y un refuerzo escolar. Está asintomática y su examen físico es normal. Se desea establecer si ya tiene infección tuberculosa latente. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v08",
+      "stem": "Una mujer de 27 años acude a su primer control prenatal a las catorce semanas. Durante un brote de sarampión en su distrito, el personal descubre que nunca recibió la vacuna triple viral. También le corresponde la vacuna contra influenza por la temporada y más adelante la Tdap. Está asintomática y su embarazo evoluciona sin complicaciones. Se revisa qué vacunas puede recibir. ¿Cuál de las siguientes vacunas está contraindicada durante su embarazo?",
       "options": [
         {
           "id": "a",
-          "text": "Prueba de tuberculina mediante Mantoux con cinco unidades de PPD",
+          "text": "Vacuna contra influenza estacional de virus inactivado",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Prueba de tuberculina en dos pasos mediante PPD basal y refuerzo",
+          "text": "Vacuna Tdap con toxoides y tos ferina acelular",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Determinación de interferón gamma mediante QuantiFERON en sangre periférica",
-          "correct": true
-        },
-        {
-          "id": "d",
-          "text": "Prueba de tuberculina mediante multipunción cutánea con dispositivo Tine",
-          "correct": false
-        },
-        {
-          "id": "e",
-          "text": "Determinación de lesiones pulmonares mediante radiografía de tórax posteroanterior",
-          "correct": false
-        }
-      ],
-      "explanation": "**Cadena:** dos dosis de **BCG** sensibilizan contra el PPD → la tuberculina puede salir positiva sin infección → se necesita un ensayo con antígenos ausentes en la vacuna: el **IGRA (QuantiFERON)**, que además no tiene efecto refuerzo en los controles seriados del personal.\n\n- **Mantoux:** el tamizaje habitual, con falsos positivos por la BCG.\n- **Tuberculina en dos pasos:** el protocolo de elección para el ingreso del personal de salud, pero con el mismo PPD y el mismo problema.\n- **Multipunción Tine:** método antiguo e impreciso con el mismo antígeno.\n- **Radiografía:** evalúa enfermedad activa, no infección latente; en una persona asintomática no responde la pregunta.",
-      "tema": "vacunas",
-      "subtema": "Vacuna BCG"
-    },
-    {
-      "id": "t3q12",
-      "stem": "Un hombre de 45 años con artritis reumatoide refractaria iniciará infliximab el próximo mes. Su hermano recibió tratamiento para tuberculosis pulmonar hace dos años y él trabajó en un penal con brotes frecuentes. La historia clínica registra la vacunación BCG en la infancia, con cicatriz visible. Aún no recibe corticoides, está asintomático y su examen pulmonar es normal. Se desea descartar infección tuberculosa latente. ¿Cuál de las siguientes pruebas es la más apropiada para descartar el diagnóstico?",
-      "options": [
-        {
-          "id": "a",
-          "text": "Prueba de tuberculina mediante intradermorreacción de Mantoux en antebrazo",
-          "correct": false
-        },
-        {
-          "id": "b",
-          "text": "Prueba de tuberculina en dos pasos mediante PPD con lectura seriada",
-          "correct": false
-        },
-        {
-          "id": "c",
-          "text": "Prueba de tuberculina mediante técnica de multipunción de Heaf",
+          "text": "Vacuna contra hepatitis B de antígeno recombinante",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Determinación de interferón gamma mediante ensayo T-SPOT.TB en sangre",
-          "correct": true
-        },
-        {
-          "id": "e",
-          "text": "Determinación de lesiones pulmonares mediante radiografía de tórax previa",
-          "correct": false
-        }
-      ],
-      "explanation": "**Cadena:** la **BCG** en la infancia da reactividad cruzada con el PPD → un Mantoux positivo no permite decidir si tratar la infección latente antes del anti-TNF → se usa una prueba con antígenos que la vacuna no contiene: el **IGRA (T-SPOT.TB)**, preferido en vacunados.\n\n- **Mantoux:** el tamizaje de rutina antes de un biológico, invalidado por la BCG.\n- **Tuberculina en dos pasos:** la que se elige para no perder respuestas débiles, pero con el mismo PPD.\n- **Heaf:** multipunción histórica con el mismo antígeno.\n- **Radiografía:** se pide para descartar enfermedad activa, no infección latente; en un paciente asintomático no la descarta.",
-      "tema": "vacunas",
-      "subtema": "Vacuna BCG"
-    },
-    {
-      "id": "t3q14",
-      "stem": "Un hombre de 58 años en hemodiálisis crónica comparte sala con dos pacientes que tuvieron hepatitis B aguda este semestre. Uno de ellos requirió hospitalización prolongada y el centro fue observado por fallas en la desinfección de las máquinas. Por protocolo de la unidad, recibió una dosis de vacuna contra hepatitis B hace cuatro días. Está asintomático y sin ictericia. Se desea confirmar si está infectado. ¿Cuál de las siguientes pruebas es la más apropiada para confirmar el diagnóstico?",
-      "options": [
-        {
-          "id": "a",
-          "text": "Detección de HBsAg mediante prueba rápida inmunocromatográfica en sangre capilar",
-          "correct": false
-        },
-        {
-          "id": "b",
-          "text": "Determinación cuantitativa de HBsAg mediante inmunoensayo quimioluminiscente automatizado en suero",
-          "correct": false
-        },
-        {
-          "id": "c",
-          "text": "Detección de HBsAg mediante contrainmunoelectroforesis en gel de agarosa clásica",
-          "correct": false
-        },
-        {
-          "id": "d",
-          "text": "Determinación de aminotransferasas séricas mediante método cinético enzimático en suero",
+          "text": "Vacuna contra COVID-19 de ARN mensajero sin adyuvante",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Detección de ADN del VHB mediante PCR en plasma",
+          "text": "Vacuna SPR contra sarampión, rubéola y paperas",
           "correct": true
         }
       ],
-      "explanation": "**Cadena:** la vacuna es **HBsAg recombinante** y en los días siguientes a una dosis puede circular y detectarse, sobre todo en pacientes en diálisis → un HBsAg positivo ahora no demuestra infección → se busca el genoma viral, que la vacuna no aporta: **ADN del VHB por PCR**.\n\n- **HBsAg rápido:** el tamizaje mensual de la unidad, con falso positivo transitorio tras vacunar.\n- **HBsAg cuantitativo:** la técnica más sensible, que detecta aún mejor el antígeno vacunal.\n- **Contrainmunoelectroforesis:** método histórico para el mismo antígeno.\n- **Aminotransferasas:** miden daño hepático, no presencia del virus; en un paciente asintomático no confirman nada.",
-      "tema": "vacunas",
-      "subtema": "Vacuna recombinante contra el VHB"
-    },
-    {
-      "id": "t3q16",
-      "stem": "Un policía de 45 años participó en el control de una aglomeración donde hace tres semanas se identificó un brote de COVID-19 con doce casos. Dos compañeros fueron hospitalizados y uno falleció. Según su carné, recibió dos dosis de una vacuna de vector adenoviral no replicativo hace cinco meses. Desde entonces no ha presentado síntomas y su examen es normal. Se desea establecer si se infectó en el brote. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
-      "options": [
-        {
-          "id": "a",
-          "text": "Detección de IgG anti-nucleocápside mediante inmunoensayo enzimático en suero",
-          "correct": true
-        },
-        {
-          "id": "b",
-          "text": "Detección de IgG anti-espícula mediante prueba rápida de flujo lateral",
-          "correct": false
-        },
-        {
-          "id": "c",
-          "text": "Determinación cuantitativa de IgG anti-RBD mediante quimioluminiscencia automatizada sérica",
-          "correct": false
-        },
-        {
-          "id": "d",
-          "text": "Detección de anticuerpos totales anti-espícula mediante ELISA de primera generación",
-          "correct": false
-        },
-        {
-          "id": "e",
-          "text": "Determinación de linfopenia mediante hemograma automatizado en sangre venosa",
-          "correct": false
-        }
-      ],
-      "explanation": "**Cadena:** el vector adenoviral lleva **sólo el gen de la espícula** → todo anticuerpo contra la espícula o su RBD puede ser vacunal → la infección natural se demuestra con anticuerpos contra una proteína ausente de la vacuna: **IgG anti-nucleocápside**, que aparece a las dos o tres semanas.\n\n- **Anti-espícula de flujo lateral:** la prueba rápida habitual, positiva por la vacuna.\n- **Anti-RBD cuantitativo:** el ensayo automatizado más preciso, pero dirigido al mismo antígeno vacunal.\n- **ELISA anti-espícula de primera generación:** técnica temprana con el mismo analito.\n- **Linfopenia:** marca gravedad de la COVID-19, no infección pasada; en una persona sin síntomas no responde la pregunta.",
-      "tema": "vacunas",
-      "subtema": "Vacunas COVID-19 dirigidas a la espícula"
-    },
-    {
-      "id": "t3q18",
-      "stem": "Un hombre de 50 años consulta porque su pareja fue diagnosticada de infección por VIH con carga viral elevada. Ella tuvo meningitis tuberculosa y sarcoma de Kaposi este año, y mantuvieron relaciones sin preservativo. Por un linfoma folicular en remisión, terminó hace dos meses el mantenimiento con rituximab indicado por hematología. Está asintomático y sin adenopatías. Se desea establecer si está infectado. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
-      "options": [
-        {
-          "id": "a",
-          "text": "Detección de anticuerpos anti-VIH mediante prueba rápida en sangre capilar",
-          "correct": false
-        },
-        {
-          "id": "b",
-          "text": "Detección de ARN del VIH mediante PCR en plasma",
-          "correct": true
-        },
-        {
-          "id": "c",
-          "text": "Detección de anticuerpos anti-VIH mediante inmunoensayo de tercera generación",
-          "correct": false
-        },
-        {
-          "id": "d",
-          "text": "Detección de anticuerpos anti-VIH mediante inmunofluorescencia indirecta de confirmación",
-          "correct": false
-        },
-        {
-          "id": "e",
-          "text": "Determinación de linfocitos T CD4 mediante citometría de flujo",
-          "correct": false
-        }
-      ],
-      "explanation": "**Cadena:** el **rituximab** (anti-CD20) elimina los linfocitos B durante meses → una infección nueva puede no generar anticuerpos detectables → la serología negativa no descarta nada y hay que buscar el virus: **ARN del VIH por PCR**.\n\n- **Prueba rápida:** el tamizaje habitual, depende de anticuerpos.\n- **Tercera generación:** inmunoensayo sensible, pero también sólo de anticuerpos.\n- **Inmunofluorescencia indirecta:** confirmación histórica basada en anticuerpos.\n- **CD4:** mide el grado de inmunodepresión (y el rituximab ya altera los linfocitos), no la presencia del virus; en un paciente asintomático no hace el diagnóstico.",
-      "tema": "vacunas",
-      "subtema": "Inmunodeficiencia e inmunoglobulinas"
-    },
-    {
-      "id": "t3q19",
-      "stem": "Un niño de cuatro años asiste a una guardería donde se confirmó un brote de hepatitis A. Tres compañeros tuvieron ictericia y una cuidadora requirió hospitalización por falla hepática. Por agammaglobulinemia ligada al X recibe inmunoglobulina subcutánea semanal desde la lactancia. Está asintomático, sin coluria ni hepatomegalia. Se desea establecer si adquirió la infección en el brote. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
-      "options": [
-        {
-          "id": "a",
-          "text": "Detección de anticuerpos totales anti-VHA mediante inmunoensayo enzimático en suero",
-          "correct": false
-        },
-        {
-          "id": "b",
-          "text": "Detección de IgM anti-VHA mediante inmunoensayo quimioluminiscente en suero",
-          "correct": false
-        },
-        {
-          "id": "c",
-          "text": "Detección de ARN del VHA mediante RT-PCR en heces",
-          "correct": true
-        },
-        {
-          "id": "d",
-          "text": "Detección de anticuerpos anti-VHA mediante radioinmunoensayo de fase sólida",
-          "correct": false
-        },
-        {
-          "id": "e",
-          "text": "Determinación de aminotransferasas séricas mediante método cinético enzimático",
-          "correct": false
-        }
-      ],
-      "explanation": "**Cadena:** el niño **no fabrica inmunoglobulinas** (sin linfocitos B maduros) y la IgG que tiene es la de la infusión, que trae anti-VHA de los donantes → ni la IgM ni los anticuerpos totales reflejan una infección suya → se busca el virus: **ARN del VHA por RT-PCR** en heces o suero.\n\n- **Anticuerpos totales:** positivos por la inmunoglobulina infundida.\n- **IgM anti-VHA:** la prueba de elección para la hepatitis A aguda, pero el niño no puede producirla.\n- **Radioinmunoensayo:** técnica superada con el mismo analito.\n- **Aminotransferasas:** miden daño hepático, no infección; en un niño asintomático no la establecen.",
-      "tema": "vacunas",
-      "subtema": "Inmunodeficiencia e inmunoglobulinas"
-    },
-    {
-      "id": "t3q20",
-      "stem": "Una mujer de 29 años comparte vivienda con su hermano, diagnosticado de hepatitis A aguda hace cinco semanas. Otros dos familiares tuvieron ictericia y la madre está hospitalizada con encefalopatía. En el centro de salud recibió inmunoglobulina humana intramuscular como profilaxis, poco después del diagnóstico del hermano. Está asintomática y sin coluria. Se desea establecer si se infectó. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
-      "options": [
-        {
-          "id": "a",
-          "text": "Detección de anticuerpos totales anti-VHA mediante inmunoensayo competitivo en suero",
-          "correct": false
-        },
-        {
-          "id": "b",
-          "text": "Determinación cuantitativa de IgG anti-VHA mediante quimioluminiscencia automatizada en suero",
-          "correct": false
-        },
-        {
-          "id": "c",
-          "text": "Detección de anticuerpos anti-VHA mediante radioinmunoensayo competitivo de fase sólida",
-          "correct": false
-        },
-        {
-          "id": "d",
-          "text": "Detección de IgM anti-VHA mediante inmunoensayo de captura",
-          "correct": true
-        },
-        {
-          "id": "e",
-          "text": "Determinación de aminotransferasas séricas mediante método cinético enzimático en suero",
-          "correct": false
-        }
-      ],
-      "explanation": "**Cadena:** la inmunoglobulina humana es casi toda **IgG** de donantes, con anti-VHA → la IgG y los anticuerpos totales salen positivos sin que ella se haya infectado → la infección propia se demuestra con un isotipo que la profilaxis no aporta: la **IgM anti-VHA**.\n\n- **Anticuerpos totales:** la prueba habitual para saber si alguien es inmune, positiva por la IgG recibida.\n- **IgG cuantitativa:** más precisa, pero mide justo lo que se inyectó.\n- **Radioinmunoensayo:** técnica histórica con el mismo analito.\n- **Aminotransferasas:** miden daño hepático, no infección; en una persona asintomática no la establecen.",
-      "tema": "vacunas",
-      "subtema": "Inmunodeficiencia e inmunoglobulinas"
-    },
-    {
-      "id": "t3q22",
-      "stem": "Durante un brote de poliovirus salvaje tipo 1 en una región fronteriza se estudian los contactos de un niño con parálisis flácida aguda. Otro niño del barrio falleció por insuficiencia respiratoria y dos quedaron con secuelas. Un hermano de dos años recibió la vacuna oral en la campaña de bloqueo hace diez días. Está asintomático, con fuerza y reflejos normales. Se desea establecer si excreta el virus del brote. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
-      "options": [
-        {
-          "id": "a",
-          "text": "Detección de poliovirus mediante cultivo celular de heces en línea L20B",
-          "correct": false
-        },
-        {
-          "id": "b",
-          "text": "Detección de ARN de enterovirus mediante RT-PCR panenterovírica en heces",
-          "correct": false
-        },
-        {
-          "id": "c",
-          "text": "Detección de anticuerpos neutralizantes antipoliovirus mediante microneutralización en suero",
-          "correct": false
-        },
-        {
-          "id": "d",
-          "text": "Determinación de denervación motora mediante electromiografía de miembros inferiores",
-          "correct": false
-        },
-        {
-          "id": "e",
-          "text": "Determinación intratípica de poliovirus mediante RT-PCR en tiempo real",
-          "correct": true
-        }
-      ],
-      "explanation": "**Cadena:** la vacuna oral es **Sabin, de virus vivos**, que se replica en el intestino y se excreta semanas → el cultivo y la PCR de enterovirus aislarán el virus vacunal → hay que clasificar el aislado: **diferenciación intratípica por RT-PCR**, que distingue vacunal, derivado de vacuna y salvaje.\n\n- **Cultivo en L20B:** el método estándar de la vigilancia, que también crece con la cepa vacunal.\n- **RT-PCR panenterovírica:** la más sensible, pero no separa cepas.\n- **Anticuerpos neutralizantes:** serología histórica, positiva por la propia vacuna.\n- **Electromiografía:** mide daño neuromuscular, no infección; con fuerza y reflejos normales no aporta.",
+      "explanation": "La **SPR es de virus vivos atenuados**: durante el embarazo existe el riesgo teórico de que el virus vacunal (sobre todo el de rubéola) llegue al feto. Se aplica después del parto. Las vivas atenuadas están contraindicadas en **embarazadas e inmunodeprimidos**.\n\n- **Influenza inactivada** y **Tdap:** se recomiendan en la gestación; la Tdap además protege al recién nacido con IgG transplacentaria.\n- **Hepatitis B recombinante:** de subunidad, segura si hay riesgo.\n- **ARN mensajero:** no se replica ni se integra; se usa en el embarazo.",
       "tema": "vacunas",
       "subtema": "Vacunas vivas atenuadas"
     },
     {
-      "id": "t3q24",
-      "stem": "Un niño de dos años asiste a una guardería con un brote de varicela de nueve casos. Un compañero tuvo celulitis necrotizante estreptocócica y otro fue hospitalizado por neumonía varicelosa. Su carné registra la primera dosis de vacuna contra varicela, aplicada hace tres semanas. Presenta cinco vesículas en el tronco, sin fiebre ni otros hallazgos. Se desea establecer si las lesiones son por la cepa circulante. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v10",
+      "stem": "En una comunidad con baja cobertura vacunal, un niño de tres años no vacunado presenta parálisis flácida aguda de una pierna. Semanas antes, sus primos habían recibido la vacuna antipoliomielítica oral en una campaña. El laboratorio identifica en sus heces un poliovirus emparentado con la cepa vacunal. No tiene otros hallazgos. El equipo de vigilancia analiza el origen del caso. ¿Qué característica de la vacuna oral explica este caso?",
       "options": [
         {
           "id": "a",
-          "text": "Determinación de la cepa viral mediante PCR con discriminación alélica",
+          "text": "Es de virus vivo atenuado que se excreta en heces",
           "correct": true
         },
         {
           "id": "b",
-          "text": "Detección de antígeno de varicela-zóster mediante inmunofluorescencia directa de raspado vesicular",
+          "text": "Es de virus inactivado que conserva su capacidad de replicación intestinal",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Detección de ADN de varicela-zóster mediante PCR en tiempo real",
+          "text": "Es de subunidades proteicas que se ensamblan en partículas infecciosas",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Detección de células gigantes multinucleadas mediante citodiagnóstico de Tzanck",
+          "text": "Es de ARN mensajero que se transmite entre los convivientes",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación de neumonitis varicelosa mediante radiografía de tórax frontal",
+          "text": "Es un toxoide que recupera su actividad dentro del intestino",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** la vacuna de varicela es la **cepa Oka viva**, que puede dar unas pocas vesículas entre los 5 y 26 días → cualquier prueba que sólo detecte virus varicela-zóster será positiva con la cepa vacunal → hay que distinguir cepas: **PCR con discriminación alélica** (diferencia Oka de la salvaje).\n\n- **Inmunofluorescencia directa:** el método rápido tradicional, positivo con el virus vacunal.\n- **PCR en tiempo real:** la prueba de elección para varicela, pero no separa cepas.\n- **Tzanck:** citodiagnóstico histórico que ni siquiera distingue varicela de herpes simple.\n- **Radiografía:** busca una complicación (gravedad); sin otros hallazgos no aporta al diagnóstico.",
+      "explanation": "La vacuna oral de **Sabin es de virus vivo atenuado**: se replica en el intestino del vacunado y **se excreta en las heces**, desde donde puede pasar a contactos no vacunados. En comunidades con baja cobertura puede circular y recuperar neurovirulencia (poliovirus derivado de la vacuna). La de **Salk, inactivada**, no tiene ese riesgo.\n\n- **Inactivada que se replica:** una contradicción; lo inactivado no se replica.\n- **Subunidades** y **ARNm:** la vacuna oral no es de esas plataformas, y ninguna produce partículas infecciosas.\n- **Toxoide:** es propio de difteria y tétanos, no de la polio.",
       "tema": "vacunas",
       "subtema": "Vacunas vivas atenuadas"
     },
     {
-      "id": "t3q25",
-      "stem": "Un biólogo de 30 años regresa de una expedición a la selva sur, donde se notificó un brote de fiebre amarilla selvática con cuatro muertes. Un guía local presentó ictericia y hemorragias. Su certificado internacional muestra la vacuna antiamarílica aplicada tres semanas antes del viaje. Tiene fiebre leve y mialgias, sin ictericia, sangrado ni alteración de conciencia. Se desea confirmar si se infectó. ¿Cuál de las siguientes pruebas es la más apropiada para confirmar el diagnóstico?",
+      "id": "t3v11",
+      "stem": "Un lactante de cuatro meses presenta una adenopatía axilar izquierda supurada, hepatoesplenomegalia y diarrea crónica. Su hermano mayor murió en la infancia por infecciones graves. Al nacer, en la maternidad, recibió una vacuna en el hombro izquierdo según el esquema nacional. El estudio inmunológico confirma inmunodeficiencia combinada grave. En la biopsia ganglionar crecen micobacterias del complejo tuberculoso. ¿Qué característica de la vacuna aplicada al nacer explica este cuadro?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de IgM antiamarílica mediante ELISA de captura en suero",
+          "text": "Contiene bacilos muertos que inducen solamente una respuesta humoral",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Detección de ARN del virus amarílico mediante RT-PCR sérica",
+          "text": "Contiene bacilos vivos atenuados capaces de replicarse en el huésped",
           "correct": true
         },
         {
           "id": "c",
-          "text": "Determinación de anticuerpos neutralizantes antiamarílicos mediante reducción de placas",
+          "text": "Contiene un toxoide que se reactiva en ausencia de linfocitos",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Detección de anticuerpos antiamarílicos mediante inhibición de la hemaglutinación clásica",
+          "text": "Contiene un polisacárido capsular que desencadena una inflamación granulomatosa diseminada",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación de aminotransferasas y protrombina mediante bioquímica sérica automatizada",
+          "text": "Contiene ADN bacteriano que se integra en el genoma del lactante",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** la **vacuna 17D es viva** e induce IgM y anticuerpos neutralizantes que persisten meses o años → la serología no separa vacuna de infección → se busca el virus en la fase febril: **ARN por RT-PCR**; la viremia vacunal dura sólo los primeros días tras la dosis, que fue hace más de tres semanas.\n\n- **IgM de captura:** la prueba habitual de vigilancia, positiva por la vacuna.\n- **Neutralización por reducción de placas:** la serología de referencia, que mide justo lo que la vacuna induce.\n- **Inhibición de la hemaglutinación:** técnica histórica, también de anticuerpos.\n- **Aminotransferasas y protrombina:** miden gravedad; sin ictericia ni sangrado no confirman la infección.",
+      "explanation": "La **BCG** es *Mycobacterium bovis* **vivo atenuado**. En un lactante con inmunodeficiencia combinada grave, sin linfocitos T que la contengan, el bacilo vacunal se replica y se disemina (BCGosis) desde el sitio de inyección. Es la razón por la que las vacunas vivas están contraindicadas en inmunodeprimidos.\n\n- **Bacilos muertos:** no podrían crecer en la biopsia.\n- **Toxoide:** la BCG no es un toxoide y un toxoide no se reactiva.\n- **Polisacárido capsular:** las micobacterias no se vacunan con polisacáridos.\n- **ADN que se integra:** la BCG no es una vacuna genética.",
       "tema": "vacunas",
       "subtema": "Vacunas vivas atenuadas"
     },
     {
-      "id": "t3q26",
-      "stem": "Una ingeniera de 35 años trabaja en una ciudad amazónica con una epidemia de dengue y varios casos graves en su oficina. Una compañera murió por choque y otra necesitó transfusiones. Antes de su traslado, hace seis semanas, se vacunó contra la fiebre amarilla, según su carné. Presenta fiebre de dos días y cefalea, sin dolor abdominal, sangrado ni vómitos. Se desea confirmar si tiene dengue. ¿Cuál de las siguientes pruebas es la más apropiada para confirmar el diagnóstico?",
+      "id": "t3v14",
+      "stem": "Un médico de 45 años recibe cada otoño la vacuna contra influenza de virus inactivado fraccionado. En su hospital, varios colegas no vacunados enfermaron y uno requirió ventilación mecánica. Tras la dosis, sus estudios muestran aumento de anticuerpos contra la hemaglutinina, sin expansión significativa de linfocitos T CD8 específicos. No presentó efectos adversos. Se analiza el tipo de respuesta inducida. ¿Qué explica el perfil de respuesta que indujo la vacuna?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de IgM antidengue mediante ELISA de captura en suero",
+          "text": "El virus inactivado se replica y se presenta por MHC I",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Detección de IgM e IgG antidengue mediante prueba rápida combinada",
+          "text": "El antígeno es un polisacárido que no recluta a los linfocitos T",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Detección de antígeno NS1 mediante inmunoensayo enzimático en suero",
+          "text": "El antígeno inactivado se presenta por MHC II a los CD4",
           "correct": true
         },
         {
           "id": "d",
-          "text": "Detección de anticuerpos antidengue mediante inhibición de la hemaglutinación clásica",
+          "text": "El adyuvante bloquea por completo la presentación de antígenos por MHC I",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Determinación de hemoconcentración y plaquetas mediante hemograma automatizado seriado",
+          "text": "La hemaglutinina se traduce en el citoplasma de las células vacunadas",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** la vacuna antiamarílica es un **flavivirus vivo**, y los anticuerpos contra flavivirus reaccionan de forma cruzada → la IgM o IgG antidengue puede salir positiva por la vacuna (y a los dos días de fiebre aún no ha subido) → se busca una proteína del propio virus circulante: el **antígeno NS1**, positivo en los primeros días.\n\n- **IgM de captura:** la serología habitual, con reactividad cruzada y todavía negativa al día dos.\n- **Prueba rápida IgM/IgG:** la más usada en campo, con el mismo problema.\n- **Inhibición de la hemaglutinación:** técnica histórica, la más cruzada de todas.\n- **Hemograma seriado:** vigila gravedad (plaquetas, hematocrito), no confirma la infección; sin signos de alarma no responde la pregunta.",
+      "explanation": "Una vacuna **inactivada** no se replica: la célula presentadora la capta desde fuera y la presenta por **MHC II** a los **LT CD4+**, que ayudan a los **LB** a producir anticuerpos. Resultado: respuesta **humoral**, sin la expansión de T CD8 que da una vacuna viva.\n\n- **Se replica por MHC I:** lo inactivado no se replica.\n- **Polisacárido:** la hemaglutinina es una proteína, y la respuesta sí cambió de clase.\n- **Adyuvante que bloquea MHC I:** el adyuvante potencia, no bloquea.\n- **Traducción citoplasmática:** eso ocurre con el ARN mensajero, no con proteínas inyectadas.",
       "tema": "vacunas",
-      "subtema": "Vacunas vivas atenuadas"
+      "subtema": "Vacunas inactivadas"
     },
     {
-      "id": "t3q29",
-      "stem": "Un hombre de 38 años fue hospitalizado el mes pasado por hepatitis aguda con ictericia intensa. Su pareja tiene hepatitis B crónica y un amigo cercano murió por hepatitis fulminante. Recibió el alta hace tres semanas, cuando las enzimas ya descendían y sin completar el estudio etiológico. Hoy está asintomático, sin ictericia ni hepatomegalia. Se desea confirmar si el cuadro fue por hepatitis B. ¿Cuál de las siguientes pruebas es la más apropiada para confirmar el diagnóstico?",
+      "id": "t3v15",
+      "stem": "Un niño de dos meses debe iniciar su vacunación antipoliomielítica. Su hermana de cinco años tiene agammaglobulinemia ligada al X y recibe inmunoglobulina cada mes. La familia vive en una casa pequeña donde los niños comparten baño y juguetes. El lactante está sano y con desarrollo normal. El pediatra elige la vacuna antipoliomielítica más adecuada para él. ¿Cuál es la vacuna antipoliomielítica más apropiada para el lactante?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de HBsAg mediante prueba rápida inmunocromatográfica en sangre",
+          "text": "Vacuna oral atenuada de Sabin en forma bivalente",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Detección de ADN del VHB mediante PCR cuantitativa en plasma",
+          "text": "Vacuna oral atenuada de Sabin trivalente clásica",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Detección de HBsAg mediante hemaglutinación pasiva reversa en suero",
+          "text": "Vacuna oral atenuada monovalente contra el tipo 2",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Detección de IgM anti-HBc mediante inmunoensayo quimioluminiscente en suero",
+          "text": "Vacuna inactivada de Salk por vía intramuscular",
           "correct": true
         },
         {
           "id": "e",
-          "text": "Determinación de aminotransferasas séricas mediante método cinético enzimático",
+          "text": "Vacuna oral atenuada nOPV2 con genoma estabilizado",
           "correct": false
         }
       ],
-      "explanation": "**Cadena:** en la convalecencia de una hepatitis B aguda el **HBsAg ya desapareció y el anti-HBs aún no aparece** (periodo de ventana) → las pruebas que buscan antígeno o genoma pueden ser negativas → el único marcador presente es la **IgM anti-HBc**, que confirma la infección reciente.\n\n- **HBsAg rápido:** el tamizaje habitual, ya negativo en esta fase.\n- **ADN por PCR:** la técnica más sensible, pero el virus ya fue aclarado.\n- **Hemaglutinación pasiva reversa:** método histórico para el mismo antígeno.\n- **Aminotransferasas:** miden la inflamación en descenso, no la etiología; en un paciente asintomático no confirman nada.",
+      "explanation": "Las vacunas **orales de Sabin son vivas atenuadas** y el virus vacunal **se excreta en las heces** durante semanas. En una casa con una niña **inmunodeficiente**, ese virus podría contagiarla y causarle poliomielitis. La **Salk (IPV) es inactivada**: protege al lactante sin excretar virus.\n\n- **Bivalente, trivalente, monovalente tipo 2 y nOPV2:** todas son orales y vivas; la nOPV2 revierte menos, pero sigue excretándose. Están contraindicadas en convivientes de inmunodeficientes.",
       "tema": "vacunas",
-      "subtema": "Periodo de ventana"
+      "subtema": "Vacunas inactivadas"
     },
     {
-      "id": "t3q30",
-      "stem": "Una enfermera de 31 años se pinchó al recapuchar una aguja usada en un paciente con hepatitis C. Ese paciente tiene cirrosis descompensada y coinfección por VIH, y otra enfermera del servicio se infectó el año pasado. El accidente ocurrió hace tres semanas y hoy acude a su control de salud ocupacional. Está asintomática y sin ictericia. Se desea establecer si adquirió la infección. ¿Cuál de las siguientes pruebas es la más apropiada para establecer el diagnóstico?",
+      "id": "t3v16",
+      "stem": "Un niño de dieciocho meses con anemia drepanocítica y asplenia funcional recibe, por error, solo la vacuna antineumocócica de polisacárido puro. Su primo, con la misma enfermedad, murió por una sepsis neumocócica. Meses después, sus títulos de anticuerpos contra los serotipos vacunales son casi indetectables. No ha tenido infecciones. El inmunólogo explica la mala respuesta. ¿Qué explica la escasa respuesta del niño a esa vacuna?",
       "options": [
         {
           "id": "a",
-          "text": "Detección de anticuerpos anti-VHC mediante prueba rápida en sangre capilar",
+          "text": "El polisacárido se degrada antes de llegar al ganglio regional",
           "correct": false
         },
         {
           "id": "b",
-          "text": "Detección de anticuerpos anti-VHC mediante inmunoensayo quimioluminiscente de tercera generación",
+          "text": "La proteína transportadora compite con el antígeno capsular de la vacuna",
           "correct": false
         },
         {
           "id": "c",
-          "text": "Detección de anticuerpos anti-VHC mediante inmunoblot recombinante tipo RIBA",
+          "text": "El antígeno se presenta por MHC I sin generar anticuerpos",
           "correct": false
         },
         {
           "id": "d",
-          "text": "Determinación del grado de fibrosis hepática mediante elastografía transitoria",
+          "text": "El aluminio de la vacuna es insuficiente para activar la inmunidad innata",
           "correct": false
         },
         {
           "id": "e",
-          "text": "Detección de ARN del VHC mediante RT-PCR en plasma",
+          "text": "El polisacárido activa al linfocito B sin ayuda de colaboradores",
           "correct": true
         }
       ],
-      "explanation": "**Cadena:** a las tres semanas de la exposición todavía **no hay anticuerpos anti-VHC** (tardan de 8 a 12 semanas) → la serología negativa no descarta la infección → se busca el virus, detectable desde la primera o segunda semana: **ARN del VHC por RT-PCR**.\n\n- **Prueba rápida:** el tamizaje habitual, negativo en la ventana.\n- **Tercera generación:** el inmunoensayo de elección, con el mismo límite temporal.\n- **RIBA:** confirmación en desuso, también de anticuerpos.\n- **Elastografía:** mide fibrosis crónica, no infección reciente; en una persona asintomática no aporta.",
+      "explanation": "El **polisacárido puro** es un antígeno **T-independiente**: activa al LB sin pasar por MHC II ni recibir ayuda del **Th**. Da solo **IgM**, sin cambio de clase ni memoria, y esa vía está **inmadura antes de los 2 años**. Por eso a esta edad se usa la **conjugada**.\n\n- **Degradación del polisacárido:** no es la causa; el antígeno llega, pero no recluta ayuda T.\n- **Proteína transportadora:** la vacuna de polisacárido puro no la tiene.\n- **MHC I:** los polisacáridos no se presentan por MHC.\n- **Aluminio:** no es lo que falla en una vacuna de polisacárido.",
       "tema": "vacunas",
-      "subtema": "Periodo de ventana"
+      "subtema": "Vacunas de subunidades"
+    },
+    {
+      "id": "t3v18",
+      "stem": "Una estudiante de enfermería de 19 años inicia el esquema de tres dosis contra hepatitis B antes de sus prácticas. En su grupo, un compañero adquirió la infección el año anterior por un pinchazo. Ella pregunta si la vacuna contiene virus y si podría contagiarla. Está sana y sin antecedentes. El docente explica cómo se obtiene el antígeno de la vacuna. ¿Cómo se obtiene el antígeno de la vacuna contra hepatitis B?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Por ADN recombinante en levaduras que producen el HBsAg",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Por inactivación con formol del virus completo ya purificado",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Por atenuación del virus mediante pases sucesivos en cultivo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Por traducción de un ARN mensajero en las células vacunadas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Por purificación del polisacárido que forma la envoltura viral",
+          "correct": false
+        }
+      ],
+      "explanation": "La vacuna contra hepatitis B es de **subunidad recombinante**: el gen del **HBsAg** se introduce en **levaduras**, que fabrican la proteína; luego se purifica. No contiene virus, así que **no puede contagiar**. Como no hay virus completo, el vacunado solo produce **anti-HBs**, nunca anti-HBc.\n\n- **Virus inactivado con formol** y **virus atenuado:** la vacuna no contiene virus.\n- **ARN mensajero:** es otra plataforma; aquí el antígeno se fabrica fuera del cuerpo.\n- **Polisacárido:** la envoltura del VHB tiene proteínas y lípidos; el HBsAg es una proteína.",
+      "tema": "vacunas",
+      "subtema": "Vacunas de subunidades"
+    },
+    {
+      "id": "t3v19",
+      "stem": "Una niña de diez años recibe en el colegio la vacuna tetravalente contra el virus del papiloma humano. Su madre tuvo una lesión cervical de alto grado y su tía murió de cáncer de cuello uterino. La madre teme que la vacuna pueda infectar a su hija. La niña está sana. El personal de salud le explica de qué está compuesta la vacuna. ¿Qué tipo de vacuna es la tetravalente contra el VPH?",
+      "options": [
+        {
+          "id": "a",
+          "text": "De virus vivo atenuado de los tipos 16 y 18",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "De subunidad proteica con la cápside de cuatro tipos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "De virus entero inactivado de cuatro tipos oncogénicos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "De polisacárido capsular conjugado a toxoide tetánico purificado",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "De ARN mensajero que codifica las oncoproteínas E6 y E7",
+          "correct": false
+        }
+      ],
+      "explanation": "La vacuna contra el VPH es de **subunidad proteica**: contiene las **proteínas de la cápside** de los tipos **6, 11, 16 y 18**, que se ensamblan en partículas vacías sin material genético. No puede infectar. Induce respuesta **T-dependiente** por MHC II, con memoria y cambio de clase.\n\n- **Virus vivo atenuado** y **virus entero inactivado:** la vacuna no contiene virus.\n- **Polisacárido conjugado:** el VPH no tiene cápsula de polisacárido.\n- **ARN mensajero de E6/E7:** es una línea de investigación terapéutica, no la vacuna preventiva.",
+      "tema": "vacunas",
+      "subtema": "Vacunas de subunidades"
+    },
+    {
+      "id": "t3v21",
+      "stem": "Un equipo desarrolla una vacuna con una proteína recombinante altamente purificada. En los ensayos, la proteína sola casi no induce anticuerpos, aunque se administre en varias dosis. Al agregar sales de aluminio, la respuesta aumenta de forma marcada sin cambiar el antígeno. Los voluntarios no presentan efectos adversos graves. Se discute el mecanismo del componente agregado. ¿Qué función cumple el aluminio en esa vacuna?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Permite que la proteína se presente por MHC I",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Convierte la proteína en un antígeno independiente de linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Induce B7 en la célula presentadora y aporta coestimulación",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Conserva la vacuna estable sin necesidad de cadena de frío",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Neutraliza la toxicidad residual de la proteína recombinante",
+          "correct": false
+        }
+      ],
+      "explanation": "Una proteína purificada no trae las **señales de peligro** de un germen, así que la célula presentadora no madura y el linfocito T recibe el antígeno **sin coestimulación**. El **adyuvante** (aluminio) activa la inmunidad innata local e **induce B7** en la CPA: aporta la segunda señal, y la respuesta despega.\n\n- **MHC I:** el aluminio no lleva el antígeno al citosol.\n- **T-independiente:** sería empeorar la respuesta; el adyuvante potencia la T-dependiente.\n- **Estabilidad sin frío:** no es su función inmunológica.\n- **Toxicidad residual:** la proteína recombinante no es tóxica; eso sería un toxoide.",
+      "tema": "vacunas",
+      "subtema": "Vacunas de subunidades"
+    },
+    {
+      "id": "t3v22",
+      "stem": "Una paciente de 40 años con trasplante renal necesita protección contra hepatitis B antes de iniciar hemodiálisis temporal. Por su inmunosupresión solo puede recibir vacunas sin microorganismos vivos, y le indican la de antígeno recombinante. Tras el esquema inicial, el nefrólogo programa dosis adicionales y un control de anticuerpos. Está estable. Se explica la limitación de este tipo de vacuna. ¿Qué desventaja de las vacunas de subunidades explica las dosis adicionales?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Riesgo de reversión a virulencia en pacientes inmunodeprimidos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Integración del antígeno en el genoma de las células",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Transmisión del antígeno vacunal a los convivientes del paciente",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Menor inmunogenicidad que obliga a administrar varios refuerzos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Inducción exclusiva de linfocitos T citotóxicos sin anticuerpos",
+          "correct": false
+        }
+      ],
+      "explanation": "Las vacunas de **subunidades** son **seguras** (no hay replicación, sirven en inmunodeprimidos), pero su precio es una **menor inmunogenicidad**: **requieren refuerzos** y adyuvantes, y además son **costosas**. En una paciente inmunosuprimida la respuesta es aún menor, de ahí las dosis extra y el control de anti-HBs.\n\n- **Reversión a virulencia** y **transmisión a convivientes:** son riesgos de las vivas atenuadas.\n- **Integración al genoma:** una proteína no puede integrarse.\n- **Solo T citotóxicos:** al contrario, inducen sobre todo respuesta humoral.",
+      "tema": "vacunas",
+      "subtema": "Vacunas de subunidades"
+    },
+    {
+      "id": "t3v23",
+      "stem": "Un estudiante de medicina de 23 años presenta su control serológico antes de iniciar el internado. Su hermano tiene hepatitis B crónica y ambos compartieron vivienda durante años. Según su carné, recibió tres dosis de vacuna contra hepatitis B en la infancia. El resultado muestra anti-HBs positivo, con anti-HBc y HBsAg negativos. Está asintomático y con examen físico normal. ¿Qué explica este perfil serológico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inmunidad activa natural por una infección resuelta en la infancia",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Infección crónica con baja replicación y antígeno indetectable",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inmunidad pasiva natural por la convivencia con el hermano",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Periodo de ventana de una infección aguda reciente",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Inmunidad activa artificial por la vacuna de HBsAg recombinante",
+          "correct": true
+        }
+      ],
+      "explanation": "La vacuna solo contiene **HBsAg recombinante**, así que el vacunado fabrica **anti-HBs** y nada más: **inmunidad activa artificial**. Si hubiera tenido contacto con el virus, tendría también **anti-HBc**, porque el core solo existe en el virus completo.\n\n- **Infección resuelta:** tendría anti-HBc positivo.\n- **Infección crónica:** tendría HBsAg y anti-HBc positivos.\n- **Pasiva por convivencia:** convivir no transfiere anticuerpos.\n- **Periodo de ventana:** tendría IgM anti-HBc positiva.",
+      "tema": "vacunas",
+      "subtema": "Vacunas de subunidades"
+    },
+    {
+      "id": "t3v25",
+      "stem": "Un investigador compara dos vacunas contra COVID-19 en voluntarios sanos. Una contiene la proteína espícula purificada con adyuvante y la otra, ARN mensajero que codifica la misma proteína. Solo la de ARN mensajero induce una expansión importante de linfocitos T CD8 específicos, además de anticuerpos. Ningún voluntario tuvo efectos graves. Se busca el mecanismo de la diferencia. ¿Qué explica que la vacuna de ARN mensajero induzca linfocitos T CD8?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El antígeno se sintetiza intracelularmente y entra por MHC I",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "El ARN mensajero se integra en el genoma de los linfocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La nanopartícula lipídica activa directamente a los linfocitos T CD8",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La proteína purificada de la otra vacuna va por MHC I",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El ARN mensajero actúa como adyuvante que induce B7",
+          "correct": false
+        }
+      ],
+      "explanation": "Con la vacuna de ARNm, la **proteína se fabrica dentro de la célula**, como en una infección viral: entra a la vía **MHC I** y activa a los **T CD8+ citotóxicos**. Cuando se libera, la CPA la capta y la presenta por **MHC II** a los CD4+, que ayudan a los LB a producir anticuerpos neutralizantes. La proteína inyectada ya hecha, en cambio, va sobre todo por MHC II.\n\n- **Integración al genoma:** el ARNm no se integra.\n- **Activación directa por la nanopartícula:** los CD8 necesitan antígeno presentado por MHC I.\n- **Proteína purificada por MHC I:** es al revés; va por MHC II.\n- **ARNm como adyuvante:** no explica la vía MHC I.",
+      "tema": "vacunas",
+      "subtema": "Vacunas genéticas"
+    },
+    {
+      "id": "t3v26",
+      "stem": "Durante la pandemia, India aprobó una vacuna de ADN plasmídico contra COVID-19 que se aplica con un inyector sin aguja. Otras vacunas del mismo tipo habían fracasado antes en ensayos por respuestas débiles. Los desarrolladores explican que el plásmido debe llegar al núcleo para expresarse. Los voluntarios no tuvieron efectos graves. Se analiza la limitación de esta plataforma. ¿Cuál es la principal limitación de las vacunas de ADN en humanos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Riesgo de reversión a la virulencia del patógeno original",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Baja inmunogenicidad que exige adyuvantes o una entrega especial",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Inestabilidad que obliga a mantener una cadena de frío ultracongelada",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Replicación descontrolada del vector dentro de las células del vacunado",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Respuesta limitada a IgM sin cambio de clase ni memoria",
+          "correct": false
+        }
+      ],
+      "explanation": "Las vacunas de **ADN** (plásmido con el gen del antígeno, como **ZyCoV-D**) son **fáciles de producir y estables**, pero tienen **baja inmunogenicidad natural en humanos**: el plásmido debe llegar al **núcleo**, y pocas células lo consiguen. Por eso **requieren adyuvantes o métodos de entrega especiales** (el inyector sin aguja). Otra limitación descrita es la **tolerancia al antígeno**.\n\n- **Reversión a virulencia:** es propia de las vivas atenuadas.\n- **Cadena de frío ultracongelada:** era el problema inicial del ARNm; el ADN es estable.\n- **Replicación del vector:** es de los vectores replicantes.\n- **Solo IgM:** es de los polisacáridos puros.",
+      "tema": "vacunas",
+      "subtema": "Vacunas genéticas"
+    },
+    {
+      "id": "t3v28",
+      "stem": "Un paciente de 60 años recibió la vacuna Sputnik V contra COVID-19. Su médico le explica que la primera dosis usa el adenovirus 26 y la segunda, el adenovirus 5, ambos no replicativos y con el gen de la espícula. Otras vacunas de vector usan el mismo adenovirus en las dos dosis. El paciente está sano. Pregunta por qué cambian de vector. ¿Qué problema busca evitar el uso de dos adenovirus distintos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La replicación descontrolada del adenovirus durante la segunda dosis",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La integración del gen de la espícula en el genoma humano",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La inmunidad contra el vector generada por la primera dosis",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "La tolerancia al antígeno inducida por el adenovirus de la vacuna",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La reversión del adenovirus vacunal a una forma virulenta y transmisible",
+          "correct": false
+        }
+      ],
+      "explanation": "En las vacunas de **vector viral no replicativo**, la primera dosis genera anticuerpos **contra el propio adenovirus**. Si la segunda usa el mismo vector, esos anticuerpos lo neutralizan antes de que entregue el gen y la dosis rinde menos. Cambiar de adenovirus esquiva esa **inmunidad preexistente contra el vector**, una desventaja propia de esta plataforma.\n\n- **Replicación descontrolada** y **reversión a virulencia:** los vectores no replicativos no pueden replicarse.\n- **Integración al genoma:** el adenovirus no se integra.\n- **Tolerancia al antígeno:** se describe en las vacunas de ADN, no es lo que se evita aquí.",
+      "tema": "vacunas",
+      "subtema": "Vacunas genéticas"
+    },
+    {
+      "id": "t3v29",
+      "stem": "Una enfermera de 38 años recibió tres dosis de vacuna de ARN mensajero contra COVID-19 y nunca tuvo síntomas. En su servicio, varios colegas enfermaron durante el último brote. Un estudio serológico del hospital muestra que tiene anticuerpos anti-espícula elevados, pero anti-nucleocápside negativos. Está sana y trabaja con normalidad. El epidemiólogo interpreta el resultado. ¿Qué explica que la vacuna no le haya generado anticuerpos anti-nucleocápside?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La vacuna contiene virus entero inactivado sin nucleocápside",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El ARN mensajero bloquea la síntesis de la nucleocápside",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La nucleocápside se presenta exclusivamente por MHC de clase I",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La vacuna solo codifica la proteína espícula del virus",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Los anticuerpos anti-nucleocápside son destruidos por la vacuna",
+          "correct": false
+        }
+      ],
+      "explanation": "Las vacunas de **ARN mensajero** (y las de vector) llevan **solo la información de la espícula**. El vacunado fabrica anticuerpos anti-espícula, pero **nunca ve la nucleocápside**. Por eso el anti-N sirve para detectar la **infección natural** en vacunados: un anti-N negativo indica que ella no se infectó.\n\n- **Virus inactivado:** no es la plataforma de ARNm, y un virus entero sí traería nucleocápside.\n- **Bloqueo de la síntesis:** el ARNm no interfiere con proteínas virales.\n- **Solo MHC I:** no impediría los anticuerpos; y la nucleocápside no está en la vacuna.\n- **Anticuerpos destruidos:** la vacuna no destruye anticuerpos.",
+      "tema": "vacunas",
+      "subtema": "Vacunas genéticas"
+    },
+    {
+      "id": "t3v30",
+      "stem": "Un joven de 22 años será esplenectomizado de forma programada por una esferocitosis hereditaria grave. Su padre, también esplenectomizado, tuvo una sepsis fulminante años atrás. Antes de la cirugía se le indican las vacunas contra neumococo, Haemophilus influenzae tipo b y meningococo. Está compensado y sin infecciones. El cirujano explica qué tienen en común esas vacunas. ¿Qué tienen en común los antígenos de esas tres vacunas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Son exotoxinas bacterianas inactivadas con formol",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Son bacterias vivas atenuadas por pases sucesivos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Son proteínas recombinantes producidas en levaduras",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Son genes bacterianos transportados por un vector viral",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Son polisacáridos capsulares de bacterias encapsuladas",
+          "correct": true
+        }
+      ],
+      "explanation": "Neumococo, *H. influenzae* tipo b y meningococo son **bacterias encapsuladas**, las que más amenazan al paciente sin bazo. Sus vacunas usan el **polisacárido capsular**, que en la práctica se da **conjugado a una proteína** para lograr una respuesta T-dependiente con memoria.\n\n- **Exotoxinas inactivadas:** son toxoides, como tétanos y difteria.\n- **Bacterias vivas atenuadas:** como la BCG o la tifoidea oral.\n- **Proteínas recombinantes en levaduras:** como la de hepatitis B.\n- **Genes en un vector viral:** son vacunas genéticas.",
+      "tema": "vacunas",
+      "subtema": "Vacunas de subunidades"
     }
   ],
   "flashcards": [
