@@ -612,7 +612,12 @@
 .flashWrap {
   max-width: 560px;
   margin: 0 auto;
-  min-height: min(62vh, 480px);
+  /* Se centra la TARJETA, no tarjeta + pie: el pie cuelga debajo (absoluto)
+     en la mitad libre. Esta altura deja sitio para él bajo una tarjeta normal. */
+  min-height: min(74vh, 660px);
+  /* Margen y no padding: el padding descentraría la tarjeta; esto sólo guarda
+     sitio para el pie de una tarjeta alta. */
+  margin-bottom: 56px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -653,7 +658,13 @@
 /* Pie de la tarjeta (autoevaluación + enlace al resumen). Ocupa su sitio desde
    el principio y sólo cambia de visibilidad: nada se mueve durante el giro.
    Aparece cuando el giro ya pasó la mitad; se va sin esperar. */
+.flashCentro { position: relative; }
+
 .flashPie {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   visibility: hidden;
   opacity: 0;
   transform: translateY(6px);

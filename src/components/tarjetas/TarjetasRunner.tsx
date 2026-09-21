@@ -476,6 +476,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
         </>
       ) : (
         <div className={s.flashWrap}>
+          <div className={s.flashCentro}>
           <Tarjeta
             key="flash"
             className={s.flash}
@@ -506,8 +507,8 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
             }
           />
 
-          {/* Siempre montado, oculto hasta ver el dorso: si apareciera al
-              voltear, la columna centrada subiría la tarjeta en pleno giro. */}
+          {/* Siempre montado y fuera del flujo: si apareciera al voltear y
+              ocupara sitio, la columna centrada subiría la tarjeta en pleno giro. */}
           <div className={`${s.flashPie} ${vista ? s.flashPieVisible : ''}`}>
             {resumen && tarjeta?.seccion && (
               resumen.abierto ? (
@@ -536,6 +537,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
                 Me la sabía
               </button>
             </div>
+          </div>
           </div>
         </div>
       )}
