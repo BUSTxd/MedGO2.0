@@ -870,6 +870,27 @@
   color: #5fe0b5;
 }
 
+/* Clase abierta con parte del material de pago: ámbar, entre el verde de
+   «Gratis» y el oro de lo premium. */
+.activitySample {
+  flex-shrink: 0;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(245, 166, 35, 0.14);
+  border: 1px solid rgba(245, 166, 35, 0.45);
+  color: #a86a05;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:global(.dark-mode) .activitySample {
+  background: rgba(245, 166, 35, 0.16);
+  border-color: rgba(245, 166, 35, 0.5);
+  color: #f7c063;
+}
+
 .activityLock {
   display: inline-flex;
   align-items: center;

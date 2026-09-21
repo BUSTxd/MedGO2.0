@@ -18,10 +18,18 @@ const SubscribeModal = dynamic(() => import('./SubscribeModal'), { ssr: false })
  * sin pasar por aquí es gratis para cualquiera: así el evento registra el
  * acceso tal como era en ese momento, con las reglas reales de cada página.
  */
-const CandadoContext = createContext(false);
+const CandadoContext = createContext<false | 'abierto' | 'cerrado'>(false);
 
 export function useDetrasDeCandado(): boolean {
-  return useContext(CandadoContext);
+  return !!useContext(CandadoContext);
+}
+
+/**
+ * Detrás del candado y SIN el plan: lo que se pinta es el aperitivo difuminado.
+ * Con el plan el material es suyo y se ve como cualquier otro (sin corona).
+ */
+export function useCandadoCerrado(): boolean {
+  return useContext(CandadoContext) === 'cerrado';
 }
 
 interface PlanState {
@@ -81,7 +89,7 @@ export default function LockedContent({
   // No desbloqueamos mientras el SubscribeModal está abierto: si el plan se
   // acaba de actualizar tras pagar, hay que mantener visible el receipt hasta
   // que el usuario lo cierre (clic en "Continuar" o en la X).
-  if (meetsRequirement && !open) return <CandadoContext.Provider value>{children}</CandadoContext.Provider>;
+  if (meetsRequirement && !open) return <CandadoContext.Provider value="abierto">{children}</CandadoContext.Provider>;
 
   const plan = PLANS[requiredPlan];
 
@@ -103,7 +111,7 @@ export default function LockedContent({
     <div className={`${styles.wrap} ${preview ? '' : styles.wrapSolo}`}>
       {preview && (
         <div className={styles.children} aria-hidden>
-          <CandadoContext.Provider value>{children}</CandadoContext.Provider>
+          <CandadoContext.Provider value="cerrado">{children}</CandadoContext.Provider>
         </div>
       )}
 

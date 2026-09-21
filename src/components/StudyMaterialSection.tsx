@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import type { PlanKey } from '@/lib/plans';
 import { trackEvent, type AnalyticsEvent } from '@/lib/analytics';
-import { useDetrasDeCandado } from './LockedContent';
+import { useDetrasDeCandado, useCandadoCerrado } from './LockedContent';
 import type { ExamenRef } from '@/lib/data/examen';
 import type { TarjetasRef } from '@/lib/data/tarjetas';
 import styles from '@/styles/cursos.module.css';
@@ -121,11 +121,6 @@ interface Props {
    * vez de abrir el visor, que respondería 403. Lo decide `puedeVerResumen`.
    */
   resumenDePago?: PlanKey;
-  /**
-   * El resumen es material de pago aunque la clase sea libre: con el plan se
-   * abre, pero sigue pintándose en oro como el resto de lo premium.
-   */
-  resumenPremium?: boolean;
   simulacion?: SimulacionRef;
   banco?: BancoRef;
   solucionario?: SolucionarioRef;
@@ -158,7 +153,7 @@ const BanqueoIcon = () => (
   </svg>
 );
 
-/** La pastilla de acción de una tarjeta: verde si es libre, oro con corona si es premium. */
+/** La pastilla de acción de una tarjeta: verde si se puede abrir, oro con corona si falta el plan. */
 function Accion({ premium, children }: { premium: boolean; children: React.ReactNode }) {
   if (!premium) return <span className={styles.studyAvailable}>{children}</span>;
   return (
@@ -171,14 +166,15 @@ function Accion({ premium, children }: { premium: boolean; children: React.React
   );
 }
 
-export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, tarjetas, resumenDePago, resumenPremium, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel, abrirResumen, resumenSeccion }: Props) {
-  // Dentro de `LockedContent` = clase de pago, se tenga el plan o no: todo su
-  // material va en oro. Fuera, el verde de siempre.
-  const premium = useDetrasDeCandado();
-  const deAcceso = premium ? 'pago' : 'gratis';
-  const cardActiva = premium ? styles.studyCardPremium : styles.studyCardActive;
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, tarjetas, resumenDePago, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel, abrirResumen, resumenSeccion }: Props) {
+  // El oro con corona es la invitación a pagar: sólo lo ve quien NO tiene el
+  // plan (el aperitivo difuminado de `LockedContent`). Con el plan, la clase de
+  // pago se ve en el verde de siempre, igual que una libre.
+  const deAcceso = useDetrasDeCandado() ? 'pago' : 'gratis';
+  const bloqueado = useCandadoCerrado();
+  const cardActiva = bloqueado ? styles.studyCardPremium : styles.studyCardActive;
   // El resumen puede ser de pago aunque la clase no lo sea (TBL 3 de Inmunología).
-  const resumenEnOro = premium || !!resumenPremium || !!resumenDePago;
+  const resumenEnOro = bloqueado || !!resumenDePago;
   const track = (ev: AnalyticsEvent, props: Record<string, unknown>) =>
     trackEvent(ev, { ...props, acceso: deAcceso });
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
@@ -274,7 +270,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
               <p className={styles.studyCardDesc}>
                 {simulacion.desc ?? 'Práctica interactiva paso a paso en 3D'}
               </p>
-              <Accion premium={premium}>Comenzar ▸</Accion>
+              <Accion premium={bloqueado}>Comenzar ▸</Accion>
             </Link>
           ) : (
             <div className={`${styles.studyCard} ${styles.studyCardLocked}`}>
@@ -316,7 +312,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <p className={styles.studyCardDesc}>
               {banco.desc ?? 'Una pregunta a la vez, con explicación al responder'}
             </p>
-            <Accion premium={premium}>Comenzar ▸</Accion>
+            <Accion premium={bloqueado}>Comenzar ▸</Accion>
           </Link>
         ) : examen ? (
           <Link
@@ -329,7 +325,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             </div>
             <p className={styles.studyCardTitle}>{banqueoLabel ?? 'Banqueo'}</p>
             <p className={styles.studyCardDesc}>{descExamen(examen)}</p>
-            <Accion premium={premium}>Comenzar ▸</Accion>
+            <Accion premium={bloqueado}>Comenzar ▸</Accion>
           </Link>
         ) : propuestosPdf ? (
           <div
@@ -350,7 +346,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <p className={styles.studyCardDesc}>
               {propuestosPdf.desc ?? 'Problemas propuestos, con su resolución'}
             </p>
-            <Accion premium={premium}>Comenzar ▸</Accion>
+            <Accion premium={bloqueado}>Comenzar ▸</Accion>
           </div>
         ) : solucionario ? (
           <Link
@@ -365,7 +361,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <p className={styles.studyCardDesc}>
               {solucionario.desc ?? 'Solucionario paso a paso, con el enunciado al lado'}
             </p>
-            <Accion premium={premium}>Comenzar ▸</Accion>
+            <Accion premium={bloqueado}>Comenzar ▸</Accion>
           </Link>
         ) : tarjetas ? (
           /* Última antes del fallback a propósito: así una actividad que ya
@@ -383,7 +379,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             <p className={styles.studyCardDesc}>
               {tarjetas.desc ?? 'Tarjetas de repaso: memoriza o responde alternativas'}
             </p>
-            <Accion premium={premium}>Comenzar ▸</Accion>
+            <Accion premium={bloqueado}>Comenzar ▸</Accion>
           </Link>
         ) : (
           <div className={`${styles.studyCard} ${styles.studyCardLocked}`}>
@@ -414,7 +410,7 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           {resumenDePago ? (
             <Accion premium>Premium</Accion>
           ) : hasResumen ? (
-            <Accion premium={resumenEnOro}>Ver resumen</Accion>
+            <Accion premium={resumenEnOro}>{resumenEnOro ? 'Ver resumen' : 'Ver resumen ⛶'}</Accion>
           ) : (
             <span className={styles.studyComingSoon}>Próximamente</span>
           )}

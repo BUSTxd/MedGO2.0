@@ -157,7 +157,6 @@ export default async function ActividadPage({
           examenTitle={act.titulo}
           tarjetas={act.tarjetas}
           resumenDePago={resumenDePago ? requiredPlanDeCurso('inmunologia') : undefined}
-          resumenPremium={resumenSiempreDePago}
           /* En las prácticas de laboratorio la primera tarjeta es «Simulación». */
           simulacion={isLab ? (act.simulacion ?? {}) : undefined}
           /* Los labs no tienen banco de preguntas: sólo Simulación y Resumen. */

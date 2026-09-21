@@ -2,8 +2,24 @@ import Link from 'next/link';
 import { semanas, curso, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/inmunologia';
 import { planUnlocks } from '@/lib/plans';
 import { getCachedPlanState } from '@/lib/plans-server';
+import { destinoDeResumen } from '@/lib/acceso-resumen';
+import { EXAMENES } from '@/lib/data/examenes-acceso';
 import ImmuneIcon from '@/components/icons/ImmuneIcon';
 import styles from '@/styles/cursos.module.css';
+
+type Act = (typeof semanas)[number]['actividades'][number];
+
+/**
+ * Clase abierta con parte de su material de pago (TBL 3: banqueo recortado a
+ * `muestra` preguntas y resumen de pago). «Gratis» prometería más de lo que da.
+ */
+function esMuestra(act: Act): boolean {
+  const claves = [act.examen?.key, ...(act.examen?.groups ?? []), act.tarjetas?.key]
+    .filter((k): k is string => !!k);
+  if (act.examen?.dePago?.length || claves.some(k => EXAMENES[k]?.muestra)) return true;
+  const ids = act.resumen ? (act.resumen.opciones?.map(o => o.id) ?? [act.id]) : [];
+  return ids.some(id => !destinoDeResumen(id).libre);
+}
 
 const UNIDAD_LABEL: Record<string, string> = {
   INNATA:          'Sistema inmune e inflamación',
@@ -87,6 +103,7 @@ export default async function InmunologiaPage() {
               const isLocked = !esLibre && !act.linkOverride && !hasAcceso;
               // La etiqueta sólo informa a quien no tiene el curso abierto.
               const mostrarGratis = !!act.gratis && !hasAcceso;
+              const muestra = mostrarGratis && esMuestra(act);
 
               const href = act.linkOverride ?? `/dashboard/cursos/inmunologia/${act.id}`;
 
@@ -117,7 +134,9 @@ export default async function InmunologiaPage() {
                       {docStr && ` · ${docStr}`}
                     </div>
                   </div>
-                  {mostrarGratis && <span className={styles.activityFree}>Gratis</span>}
+                  {mostrarGratis && (muestra
+                    ? <span className={styles.activitySample} title="Parte del material es gratis; el resto requiere plan">Muestra</span>
+                    : <span className={styles.activityFree}>Gratis</span>)}
                   {isLocked ? (
                     <span className={styles.activityLock} title="Requiere plan Interno" aria-hidden>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
