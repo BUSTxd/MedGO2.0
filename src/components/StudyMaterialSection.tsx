@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import type { PlanKey } from '@/lib/plans';
 import { trackEvent, type AnalyticsEvent } from '@/lib/analytics';
 import { useDetrasDeCandado } from './LockedContent';
 import type { ExamenRef } from '@/lib/data/examen';
@@ -17,6 +18,8 @@ const PdfFullscreenModal = dynamic(() => import('./PdfFullscreenModal'), {
 
 // Visor del resumen en HTML. Va aparte del de PDF a propósito: cargar react-pdf
 // (~2 MB) para un resumen que no lo necesita anularía el ahorro.
+// El SDK de Mercado Pago sólo baja si alguien pulsa «Premium».
+const SubscribeModal = dynamic(() => import('./SubscribeModal'), { ssr: false });
 const HtmlFullscreenModal = dynamic(() => import('./HtmlFullscreenModal'), {
   ssr: false,
 });
@@ -114,10 +117,10 @@ interface Props {
   /** Banqueo de repaso en tarjetas (`?tarjetas=1`) — clases magistrales y TBL. */
   tarjetas?: TarjetasRef;
   /**
-   * El resumen existe pero pide plan: la tarjeta sale con candado en vez de
-   * abrir el visor, que respondería 403. Lo decide `puedeVerResumen`.
+   * El resumen existe pero pide este plan: la tarjeta ofrece la suscripción en
+   * vez de abrir el visor, que respondería 403. Lo decide `puedeVerResumen`.
    */
-  resumenDePago?: boolean;
+  resumenDePago?: PlanKey;
   simulacion?: SimulacionRef;
   banco?: BancoRef;
   solucionario?: SolucionarioRef;
@@ -157,6 +160,8 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
   const isMulti = resumenOpciones && resumenOpciones.length > 1;
   const isPropuestosMulti = propuestosPdf?.opciones && propuestosPdf.opciones.length > 1;
   const pathname = usePathname();
+  const router = useRouter();
+  const [suscribir, setSuscribir] = useState(false);
 
   // Estado inicial, no efecto: al cerrar el visor el alumno se queda en la
   // clase sin que el query param lo vuelva a abrir.
@@ -369,9 +374,10 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
         {/* Resumen — abre directo en pantalla completa */}
         <div
           className={`${styles.studyCard} ${
-            hasResumen && !resumenDePago ? styles.studyCardActive : styles.studyCardLocked
+            resumenDePago ? styles.studyCardPremium
+              : hasResumen ? styles.studyCardActive : styles.studyCardLocked
           }`}
-          onClick={resumenDePago ? undefined : handleCardClick}
+          onClick={resumenDePago ? () => { setSuscribir(true); track('pago_abierto', { claseId, plan: resumenDePago, origen: 'resumen' }); } : handleCardClick}
         >
           <div className={styles.studyCardIcon}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -381,7 +387,12 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           <p className={styles.studyCardTitle}>Resumen</p>
           <p className={styles.studyCardDesc}>Resumen completo del material visto</p>
           {resumenDePago ? (
-            <span className={styles.studyComingSoon}>Con suscripción</span>
+            <span className={styles.studyPremium}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5L3 7z" />
+              </svg>
+              Premium
+            </span>
           ) : hasResumen ? (
             <span className={styles.studyAvailable}>Ver resumen ⛶</span>
           ) : (
@@ -389,6 +400,15 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           )}
         </div>
       </div>
+
+      {resumenDePago && suscribir && (
+        <SubscribeModal
+          open
+          planKey={resumenDePago}
+          // Tras pagar, el acceso al resumen lo recalcula el servidor.
+          onClose={() => { setSuscribir(false); router.refresh(); }}
+        />
+      )}
 
       {/* ── Picker modal (solo clases con opciones múltiples) ── */}
       {pickerOpen && isMulti && (

@@ -1043,6 +1043,46 @@
   cursor: pointer;
 }
 
+/* Material que existe pero pide plan: se ve entero (es el reclamo), con el
+   filete y el botón en oro — el mismo oro que marca lo premium en el runner. */
+.studyCardPremium {
+  --oro: #C2911D;
+  --oro-2: #E9C46A;
+  --oro-rgb: 194, 145, 29;
+  cursor: pointer;
+  border-color: rgba(var(--oro-rgb), 0.35);
+}
+.studyCardPremium:hover {
+  border-color: rgba(var(--oro-rgb), 0.6);
+  box-shadow: 0 10px 28px -16px rgba(var(--oro-rgb), 0.7);
+}
+:global(.dark-mode) .studyCardPremium {
+  --oro: #E3B23C;
+  --oro-2: #F6DC9A;
+  --oro-rgb: 227, 178, 60;
+}
+
+.studyPremium {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 5px 13px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, var(--oro-2), var(--oro));
+  color: #3b2a05;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px -6px rgba(var(--oro-rgb), 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.studyCardPremium:hover .studyPremium {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px -6px rgba(var(--oro-rgb), 1), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
 .studyCardActive:hover {
   border-color: rgba(123, 114, 212, 0.5);
   background: rgba(123, 114, 212, 0.05);

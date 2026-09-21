@@ -10,6 +10,7 @@ import TarjetasRunner from '@/components/tarjetas/TarjetasRunner';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
 import { destinoDeResumen, puedeVerResumen } from '@/lib/acceso-resumen';
+import { requiredPlanDeCurso } from '@/lib/acceso';
 
 const UNIDAD_LABEL: Record<string, string> = {
   INNATA:          'Sistema inmune e inflamación',
@@ -155,7 +156,7 @@ export default async function ActividadPage({
           examen={act.examen}
           examenTitle={act.titulo}
           tarjetas={act.tarjetas}
-          resumenDePago={resumenDePago}
+          resumenDePago={resumenDePago ? requiredPlanDeCurso('inmunologia') : undefined}
           /* En las prácticas de laboratorio la primera tarjeta es «Simulación». */
           simulacion={isLab ? (act.simulacion ?? {}) : undefined}
           /* Los labs no tienen banco de preguntas: sólo Simulación y Resumen. */
