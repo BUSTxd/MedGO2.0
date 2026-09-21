@@ -1,6 +1,7 @@
 import { createAdminClient } from '@/lib/supabase/admin';
 import { countActiveDevicesByUser } from '@/lib/sessions';
 import { isAdminEmail } from '@/lib/admin';
+import { tokenDePresencia } from '@/lib/presencia';
 import { CURSOS } from '@/lib/data/aportes';
 import { cargarResumenCursos, type CursoDeUsuario } from '@/lib/actividad-usuario';
 
@@ -21,6 +22,8 @@ export interface AdminRow {
   deviceCount: number;
   /** Cursos en los que estuvo, el de más días primero (su curso objetivo). */
   cursos: CursoDeUsuario[];
+  /** Con qué token se anuncia en el canal de presencia (bolita de «en línea»). */
+  presencia: string;
 }
 
 export interface CursoRank {
@@ -144,6 +147,7 @@ export async function loadAdminData(): Promise<AdminData> {
       subAmount: sub?.amount ?? null,
       deviceCount: deviceCounts.get(p.id) ?? 0,
       cursos: cursosDe.get(p.id) ?? [],
+      presencia: tokenDePresencia(p.id),
     };
   });
 

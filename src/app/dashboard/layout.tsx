@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/server';
 import { isAdminEmail, canVerAportes } from '@/lib/admin';
 import { tieneAccesoA } from '@/lib/acceso';
 import { checkDevice, getDeviceId, touchSession } from '@/lib/sessions';
+import { tokenDePresencia } from '@/lib/presencia';
 
 export default async function DashboardRootLayout({
   children,
@@ -63,6 +64,8 @@ export default async function DashboardRootLayout({
       isAdmin={isAdmin}
       verAportes={verAportes}
       accesoFacultad={accesoFacultad}
+      // El admin no se anuncia: recorre la web para revisarla, como en /api/track.
+      presencia={user && !isAdmin ? tokenDePresencia(user.id) : undefined}
     >
       {children}
     </DashboardWrapper>

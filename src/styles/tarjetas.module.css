@@ -677,6 +677,46 @@
   margin-top: 24px;
 }
 
+/* El pie de la tarjeta volteada: de qué parte del resumen sale. Va fuera de
+   la tarjeta porque la tarjeta ya es un <button>. */
+.irResumen {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  margin: 16px auto 0;
+  padding: 7px 14px;
+  border: 1px solid rgba(var(--acc-rgb), 0.3);
+  border-radius: 999px;
+  background: rgba(var(--acc-rgb), 0.08);
+  color: var(--acc);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  animation: irResumenEntra 0.35s ease-out both;
+  transition: background 0.15s, border-color 0.15s;
+}
+button.irResumen:hover {
+  background: rgba(var(--acc-rgb), 0.16);
+  border-color: rgba(var(--acc-rgb), 0.5);
+}
+.irResumenCerrado {
+  cursor: default;
+  color: var(--tinta-suave);
+  border-color: rgba(var(--acc-rgb), 0.15);
+  background: transparent;
+}
+
+@keyframes irResumenEntra {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .irResumen { animation: none; }
+}
+
 .autoevalBtn {
   flex: 1;
   max-width: 200px;

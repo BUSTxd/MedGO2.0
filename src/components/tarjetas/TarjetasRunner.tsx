@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { fetchExam, type ExamOption, type ExamQuestion, type Flashcard, type Muestra } from '@/lib/examen/payload';
 import { dorsoDe, esCorrecta, flashcardsDe, prepararRonda } from '@/lib/tarjetas/motor';
 import { shuffle } from '@/lib/utils/shuffle';
@@ -11,6 +12,9 @@ import { trackEvent } from '@/lib/analytics';
 import Tarjeta, { type Fase } from './Tarjeta';
 import { paloDe, type Palo } from './Palos';
 import s from '@/styles/tarjetas.module.css';
+
+// El visor sólo baja si alguien abre el resumen desde una tarjeta.
+const HtmlFullscreenModal = dynamic(() => import('@/components/HtmlFullscreenModal'), { ssr: false });
 
 /** Duraciones espejo de las del CSS. Si cambian allí, cambian aquí. */
 const SALIDA_MS = 260;
@@ -74,7 +78,23 @@ interface Props {
   examKey: string;
   titulo: string;
   backHref: string;
+  /** Resumen HTML de la clase; `abierto` = el usuario puede leerlo. */
+  resumen?: { id: string; abierto: boolean };
 }
+
+const IconoLibro = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+    <path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5A2.5 2.5 0 0 1 4 20.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+  </svg>
+);
+
+const IconoCandado = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.8" />
+    <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+);
 
 /**
  * Banqueo de repaso para clases magistrales y TBL. Dos modos sobre los MISMOS
@@ -84,7 +104,9 @@ interface Props {
  * La tarjeta no se remonta entre preguntas: los naipes llevan `key` de
  * **posición**, así el nodo de cada hueco sobrevive y sólo le cambia el texto.
  */
-export default function TarjetasRunner({ examKey, titulo, backHref }: Props) {
+export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: Props) {
+  // Encima de la baraja, no navegando a la clase: así no se pierde el avance.
+  const [leyendo, setLeyendo] = useState<string | null>(null);
   const [paso, setPaso] = useState<Paso>('cargando');
   const [error, setError] = useState<string | null>(null);
   const [preguntas, setPreguntas] = useState<ExamQuestion[]>([]);
@@ -240,7 +262,8 @@ export default function TarjetasRunner({ examKey, titulo, backHref }: Props) {
 
   // Atajos: A–E eligen, espacio voltea la tarjeta de memoria, Enter avanza.
   useEffect(() => {
-    if (paso !== 'jugando') return;
+    // Con el resumen abierto, las teclas son del visor.
+    if (paso !== 'jugando' || leyendo) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === 'Enter' && respondida) { e.preventDefault(); siguiente(); return; }
@@ -460,6 +483,25 @@ export default function TarjetasRunner({ examKey, titulo, backHref }: Props) {
             }
           />
 
+          {volteada && resumen && tarjeta?.seccion && (
+            resumen.abierto ? (
+              <button
+                type="button"
+                className={s.irResumen}
+                onClick={() => {
+                  setLeyendo(tarjeta.seccion!);
+                  trackEvent('resumen_abierto', { claseId: resumen.id, origen: 'tarjeta' });
+                }}
+              >
+                <IconoLibro /> Ver esto en el resumen
+              </button>
+            ) : (
+              <span className={`${s.irResumen} ${s.irResumenCerrado}`}>
+                <IconoCandado /> El resumen entra con la suscripción
+              </span>
+            )
+          )}
+
           {volteada && (
             <div className={s.autoeval} key={`autoeval-${ronda}-${idx}`}>
               <button type="button" className={`${s.autoevalBtn} ${s.autoevalNo}`} onClick={() => autoevaluar(false)}>
@@ -471,6 +513,15 @@ export default function TarjetasRunner({ examKey, titulo, backHref }: Props) {
             </div>
           )}
         </div>
+      )}
+
+      {leyendo && resumen && (
+        <HtmlFullscreenModal
+          claseId={resumen.id}
+          titulo={tituloBanco}
+          seccion={leyendo}
+          onClose={() => setLeyendo(null)}
+        />
       )}
     </div>
   );

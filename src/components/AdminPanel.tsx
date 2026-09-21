@@ -2,6 +2,7 @@
 import { useMemo, useState } from 'react';
 import type { AdminData, AdminRow, CursoRank } from '@/lib/admin-data';
 import UsuarioFicha from './UsuarioFicha';
+import { useEnLinea } from './Presencia';
 import styles from '@/styles/adminPage.module.css';
 import accountStyles from '@/styles/accountPage.module.css';
 
@@ -143,6 +144,8 @@ function CursosObjetivo({ ranking }: { ranking: CursoRank[] }) {
 export default function AdminPanel({ data }: { data: AdminData }) {
   const [tab, setTab] = useState<TabKey>('activos');
   const [ficha, setFicha] = useState<AdminRow | null>(null);
+  const enLinea = useEnLinea();
+  const cuantosEnLinea = data.rows.filter((r) => enLinea.has(r.presencia)).length;
 
   const counts = useMemo(() => {
     return {
@@ -166,6 +169,12 @@ export default function AdminPanel({ data }: { data: AdminData }) {
       <h1 className={accountStyles.pageTitle}>Panel admin</h1>
       <p className={accountStyles.pageSub}>
         {data.kpis.totalUsers} usuarios registrados
+        {cuantosEnLinea > 0 && (
+          <span className={styles.enLineaResumen}>
+            <span className={styles.enLinea} aria-hidden="true" />
+            {cuantosEnLinea} en línea ahora
+          </span>
+        )}
       </p>
 
       {/* ─── KPIs ─── */}
@@ -232,7 +241,12 @@ export default function AdminPanel({ data }: { data: AdminData }) {
                 <tr key={r.id}>
                   <td>
                     <button type="button" className={styles.userBtn} onClick={() => setFicha(r)}>
-                      <span className={styles.email}>{r.email}</span>
+                      <span className={styles.email}>
+                        {enLinea.has(r.presencia) && (
+                          <span className={styles.enLinea} title="En línea ahora" aria-label="En línea ahora" />
+                        )}
+                        {r.email}
+                      </span>
                       {r.fullName && <span className={styles.name}>{r.fullName}</span>}
                     </button>
                   </td>

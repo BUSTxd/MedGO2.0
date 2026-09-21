@@ -8,11 +8,31 @@
       "id": "t3q1",
       "stem": "¿Qué tipo de vacuna induce la respuesta inmunitaria más parecida a la de la infección natural, con memoria duradera y activación de linfocitos T citotóxicos?",
       "options": [
-        { "id": "a", "text": "Vacuna de microorganismo vivo atenuado", "correct": true },
-        { "id": "b", "text": "Vacuna inactivada de germen entero", "correct": false },
-        { "id": "c", "text": "Vacuna de subunidades proteicas", "correct": false },
-        { "id": "d", "text": "Vacuna de polisacárido puro", "correct": false },
-        { "id": "e", "text": "Toxoide adsorbido en aluminio", "correct": false }
+        {
+          "id": "a",
+          "text": "Vacuna de microorganismo vivo atenuado",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Vacuna inactivada de germen entero",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Vacuna de subunidades proteicas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Vacuna de polisacárido puro",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Toxoide adsorbido en aluminio",
+          "correct": false
+        }
       ],
       "explanation": "El germen atenuado **se replica** en el huésped sin causar enfermedad, así que su antígeno llega también al citosol y se presenta por **MHC de clase I**: eso recluta linfocitos T CD8+ además de la respuesta de anticuerpos. Por eso una o dos dosis suelen bastar. El precio de esa potencia es que está contraindicada en inmunodeprimidos y embarazadas, y que necesita cadena de frío.",
       "tema": "vacunas"
@@ -21,11 +41,31 @@
       "id": "t3q2",
       "stem": "Las vacunas de polisacárido puro no funcionan en menores de 2 años. ¿Por qué el conjugarlas a una proteína transportadora resuelve el problema?",
       "options": [
-        { "id": "a", "text": "Porque la proteína permite reclutar linfocitos T colaboradores y generar memoria", "correct": true },
-        { "id": "b", "text": "Porque aumenta la cantidad de antígeno por dosis", "correct": false },
-        { "id": "c", "text": "Porque evita que el polisacárido se degrade en el punto de inyección", "correct": false },
-        { "id": "d", "text": "Porque estimula directamente a los macrófagos alveolares", "correct": false },
-        { "id": "e", "text": "Porque prolonga la vida media de la IgM circulante", "correct": false }
+        {
+          "id": "a",
+          "text": "Porque la proteína permite reclutar linfocitos T colaboradores y generar memoria",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Porque aumenta la cantidad de antígeno por dosis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Porque evita que el polisacárido se degrade en el punto de inyección",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Porque estimula directamente a los macrófagos alveolares",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Porque prolonga la vida media de la IgM circulante",
+          "correct": false
+        }
       ],
       "explanation": "Un polisacárido solo es un antígeno **timo-independiente**: activa al linfocito B sin ayuda de T, y esa vía da IgM de vida corta, sin cambio de isotipo ni células de memoria — y además está inmadura en el lactante. Al conjugarlo con una proteína, el linfocito B procesa esa proteína y se la presenta a un **T colaborador**, que devuelve la ayuda: cambio a IgG, maduración de la afinidad y memoria. Es la diferencia entre la vacuna antineumocócica de polisacárido y la conjugada.",
       "tema": "vacunas"
@@ -34,11 +74,31 @@
       "id": "t3q3",
       "stem": "¿Cuál es la función de un adyuvante como las sales de aluminio en una vacuna inactivada?",
       "options": [
-        { "id": "a", "text": "Activar la inmunidad innata en el sitio de inyección y retener el antígeno para que se presente más tiempo", "correct": true },
-        { "id": "b", "text": "Neutralizar la toxina residual del microorganismo inactivado", "correct": false },
-        { "id": "c", "text": "Permitir que el antígeno alcance el citosol y se presente por MHC I", "correct": false },
-        { "id": "d", "text": "Conservar la vacuna a temperatura ambiente", "correct": false },
-        { "id": "e", "text": "Reducir la fiebre posvacunal", "correct": false }
+        {
+          "id": "a",
+          "text": "Activar la inmunidad innata en el sitio de inyección y retener el antígeno para que se presente más tiempo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Neutralizar la toxina residual del microorganismo inactivado",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Permitir que el antígeno alcance el citosol y se presente por MHC I",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Conservar la vacuna a temperatura ambiente",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Reducir la fiebre posvacunal",
+          "correct": false
+        }
       ],
       "explanation": "Un antígeno purificado es poco inmunogénico porque no trae las señales de peligro que sí trae un germen vivo. El adyuvante suple esa señal: genera un **depósito** que libera antígeno poco a poco y activa la respuesta innata local, con reclutamiento de células presentadoras y su maduración. Sin adyuvante, las vacunas inactivadas y de subunidades necesitarían muchas más dosis.",
       "tema": "vacunas"
@@ -47,11 +107,31 @@
       "id": "t3q4",
       "stem": "En una vacuna de ARN mensajero, ¿dónde se produce el antígeno que verá el sistema inmunitario?",
       "options": [
-        { "id": "a", "text": "En el citoplasma de las células del propio vacunado, que lo traducen", "correct": true },
-        { "id": "b", "text": "En el laboratorio, y se inyecta ya formado", "correct": false },
-        { "id": "c", "text": "En el núcleo de la célula, tras integrarse en el genoma", "correct": false },
-        { "id": "d", "text": "En los linfocitos B del ganglio de drenaje", "correct": false },
-        { "id": "e", "text": "En la superficie de la nanopartícula lipídica", "correct": false }
+        {
+          "id": "a",
+          "text": "En el citoplasma de las células del propio vacunado, que lo traducen",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "En el laboratorio, y se inyecta ya formado",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "En el núcleo de la célula, tras integrarse en el genoma",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "En los linfocitos B del ganglio de drenaje",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "En la superficie de la nanopartícula lipídica",
+          "correct": false
+        }
       ],
       "explanation": "La nanopartícula lipídica entrega el ARNm al **citoplasma**, donde los ribosomas de la propia célula traducen la proteína (la espícula, en el caso del SARS-CoV-2). Como el antígeno se sintetiza dentro de la célula, se presenta por MHC I y también por MHC II tras su liberación: hay respuesta celular y humoral. El ARNm **no entra al núcleo ni se integra** en el genoma, y se degrada en días.",
       "tema": "vacunas"
@@ -60,11 +140,31 @@
       "id": "t3q5",
       "stem": "La cobertura vacunal contra el sarampión cae al 80 % en un distrito. ¿Qué explica mejor el brote que aparece semanas después?",
       "options": [
-        { "id": "a", "text": "Se perdió la inmunidad de rebaño: el umbral del sarampión está por encima del 90 %", "correct": true },
-        { "id": "b", "text": "La vacuna perdió eficacia por un cambio antigénico del virus", "correct": false },
-        { "id": "c", "text": "Los vacunados transmiten el virus atenuado a los no vacunados", "correct": false },
-        { "id": "d", "text": "El intervalo entre las dos dosis fue demasiado largo", "correct": false },
-        { "id": "e", "text": "El brote se debe sólo al azar, la cobertura no influye", "correct": false }
+        {
+          "id": "a",
+          "text": "Se perdió la inmunidad de rebaño: el umbral del sarampión está por encima del 90 %",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La vacuna perdió eficacia por un cambio antigénico del virus",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los vacunados transmiten el virus atenuado a los no vacunados",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El intervalo entre las dos dosis fue demasiado largo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El brote se debe sólo al azar, la cobertura no influye",
+          "correct": false
+        }
       ],
       "explanation": "El umbral de inmunidad de rebaño depende del **R₀**: cuanto más contagioso es el agente, mayor proporción de inmunes hace falta para cortar las cadenas de transmisión. El sarampión tiene un R₀ altísimo (12-18), así que su umbral ronda el **93-95 %**. Con un 80 % quedan suficientes susceptibles conectados entre sí para que el brote crezca, y los primeros en enfermar son los que no pueden vacunarse: lactantes pequeños e inmunodeprimidos.",
       "tema": "vacunas"
@@ -73,11 +173,31 @@
       "id": "t3q6",
       "stem": "¿Por qué el esquema nacional da la vacuna contra el sarampión (SPR) recién cerca de los 12 meses y no al nacer?",
       "options": [
-        { "id": "a", "text": "Porque los anticuerpos maternos transferidos por vía transplacentaria neutralizarían el virus vacunal", "correct": true },
-        { "id": "b", "text": "Porque el recién nacido carece por completo de linfocitos B", "correct": false },
-        { "id": "c", "text": "Porque el timo aún no ha empezado a producir linfocitos T", "correct": false },
-        { "id": "d", "text": "Porque el riesgo de encefalitis posvacunal es mayor en el neonato", "correct": false },
-        { "id": "e", "text": "Porque la vía intramuscular no es viable antes del año", "correct": false }
+        {
+          "id": "a",
+          "text": "Porque los anticuerpos maternos transferidos por vía transplacentaria neutralizarían el virus vacunal",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Porque el recién nacido carece por completo de linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Porque el timo aún no ha empezado a producir linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Porque el riesgo de encefalitis posvacunal es mayor en el neonato",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Porque la vía intramuscular no es viable antes del año",
+          "correct": false
+        }
       ],
       "explanation": "La **IgG materna** cruza la placenta en el tercer trimestre y protege al lactante durante los primeros meses, pero también **neutraliza el virus vivo de la vacuna** antes de que consiga replicarse y estimular la respuesta propia. Hay que esperar a que esos anticuerpos caigan —hacia los 9-12 meses— para que la dosis prenda. Es la misma razón por la que el calendario reserva para esa edad las vacunas de virus vivos, mientras que las inactivadas pueden empezar antes.",
       "tema": "vacunas"
@@ -89,214 +209,246 @@
       "frente": "¿Qué diferencia a la inmunidad activa de la pasiva?",
       "respuesta": "Activa: el propio organismo genera la respuesta. Pasiva: recibe anticuerpos ya formados.",
       "detalle": "La **activa** es lenta pero deja **memoria inmunológica** (infección natural o vacuna). La **pasiva** protege de inmediato pero es **temporal** y **no deja memoria** (anticuerpos maternos, inmunoglobulinas, sueros).",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "INMUNIDAD"
     },
     {
       "id": "f02",
       "frente": "Vacuna viva atenuada: ¿por qué vías se presenta su antígeno y qué memoria deja?",
       "respuesta": "Por MHC I y MHC II: memoria humoral (Th y LB) y celular (T CD8+).",
       "detalle": "Es el patógeno **entero y vivo** con sus factores de virulencia eliminados. Como se replica, su antígeno llega al citosol y se presenta por **MHC I** (con **presentación cruzada** en la célula dendrítica), además de por MHC II. Es la respuesta más parecida a la infección natural: **fuerte y duradera**.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › VIVA"
     },
     {
       "id": "f03",
       "frente": "¿En quiénes están contraindicadas las vacunas vivas atenuadas?",
       "respuesta": "Inmunodeprimidos (CD4 < 200) y embarazadas.",
       "detalle": "El germen atenuado sigue replicándose: en un huésped sin defensas suficientes (o en el feto) podría causar la enfermedad.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › VIVA"
     },
     {
       "id": "f04",
       "frente": "Vacuna inactivada (muerta): ¿por qué vía se presenta y qué respuesta induce?",
       "respuesta": "Solo MHC II: respuesta humoral (LT CD4+ → LB), sin T CD8+.",
       "detalle": "El patógeno entero está **muerto**: no se replica ni llega al citosol, así que no hay presentación por MHC I. La respuesta es sobre todo de anticuerpos.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › MUERTA"
     },
     {
       "id": "f05",
       "frente": "¿Por qué una vacuna de polisacárido puro solo produce IgM?",
       "respuesta": "Porque el polisacárido es un antígeno T-independiente: no recluta linfocitos T colaboradores.",
       "detalle": "Sin la ayuda del **Th** no hay **cambio de clase** (solo IgM) ni buena memoria. Por eso requiere refuerzos y rinde mal en menores de 2 años.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › Polisacáridos"
     },
     {
       "id": "f06",
       "frente": "¿Qué gana una vacuna de polisacárido al conjugarla con una proteína?",
       "respuesta": "Se vuelve T-dependiente: vía MHC II, memoria de Th y LB y cambio de clase.",
       "detalle": "El LB que reconoce el polisacárido internaliza también la **proteína transportadora** y se la presenta al **Th** por MHC II; el Th le devuelve la ayuda. Es la diferencia entre **PPSV23** (polisacárido puro) y **PCV13** (conjugada).",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › Polisacáridos"
     },
     {
       "id": "f07",
       "frente": "¿Qué hace un adyuvante como el aluminio en la célula presentadora de antígeno?",
       "respuesta": "Induce B7 en la CPA: da la señal coestimuladora que el antígeno purificado no trae.",
       "detalle": "Un antígeno purificado casi no activa la inmunidad innata. El adyuvante suple esa señal de peligro, madura a la CPA (**B7**) y potencia la respuesta. Se usa en vacunas de subunidades y toxoides.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › Polisacáridos"
     },
     {
       "id": "f08",
       "frente": "Vacuna de ARNm: ¿dónde actúa y se integra al genoma?",
       "respuesta": "En el citoplasma, donde se traduce directo a proteína. No se integra al genoma.",
       "detalle": "El ARNm **no entra al núcleo**. La célula del vacunado fabrica la proteína viral (p. ej., la espícula) y el sistema inmune la ve como si viniera de una infección. Ejemplos: **Pfizer (BNT162b2)** y **Moderna (mRNA-1273)**.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "GENÉTICAS › Lugar de acción"
     },
     {
       "id": "f09",
       "frente": "Vector viral replicante vs. no replicante: ¿cuál es la diferencia de base?",
       "respuesta": "El replicante se multiplica de forma controlada; al no replicante le quitaron los genes de replicación.",
       "detalle": "El **replicante** amplifica el antígeno en cada ciclo: inmunogenicidad altísima, a menudo **una sola dosis**. El **no replicante** solo expresa lo que entregó en la primera infección: más **seguro**, pero necesita **refuerzos**.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "Vacuna de vector viral › Definición"
     },
     {
       "id": "f10",
       "frente": "Inmunidad pasiva natural: ¿qué anticuerpo pasa de la madre al hijo, y por dónde?",
       "respuesta": "IgG por la placenta (3.er trimestre) e IgA por la leche materna.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "INMUNIDAD › Pasiva"
     },
     {
       "id": "f11",
       "frente": "¿Cuánto dura la protección de la inmunidad pasiva?",
       "respuesta": "Unas 3 semanas: es inmediata pero temporal y no deja memoria.",
       "detalle": "Los anticuerpos recibidos se catabolizan y no hay linfocitos propios que los repongan.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "INMUNIDAD › Pasiva"
     },
     {
       "id": "f12",
       "frente": "Inmunidad pasiva artificial con Ig humanas: ¿qué tipos hay? Da un ejemplo de cada uno.",
       "respuesta": "Policlonales (IVIG, Ig anti-hepatitis B) y monoclonales (mAbs anti-SARS-CoV-2).",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "INMUNIDAD › Pasiva"
     },
     {
       "id": "f13",
       "frente": "Menciona tres sueros usados como inmunidad pasiva artificial.",
       "respuesta": "Antitetánico, antidiftérico y antiofídico (contra veneno de serpiente).",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "INMUNIDAD › Pasiva"
     },
     {
       "id": "f14",
       "frente": "Ejemplos de vacunas vivas atenuadas.",
       "respuesta": "SRP (sarampión, rubéola, paperas), polio oral (Sabin), fiebre amarilla, varicela, BCG, rotavirus, adenovirus y tifoidea oral.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › VIVA"
     },
     {
       "id": "f15",
       "frente": "Ejemplos de vacunas inactivadas. ¿Qué mnemotecnia las agrupa?",
       "respuesta": "«A TRIP could Kill you»: hepatitis A, Tifoidea, Rabia, Influenza, Polio (Salk).",
       "detalle": "**A** = hepatitis A · **T**yphoid · **R**abies · **I**nfluenza · **P**olio Salk · **Kill** = muertas.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › MUERTA"
     },
     {
       "id": "f16",
       "frente": "Polio Sabin vs. polio Salk: ¿cuál es viva y cuál inactivada?",
       "respuesta": "Sabin: viva atenuada, oral. Salk: inactivada, inyectable.",
       "detalle": "Truco: sa**B**in = **B**oca (oral, viva) · Sal**K** = **K**illed (muerta).",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › VIVA"
     },
     {
       "id": "f17",
       "frente": "¿Por qué la tifoidea aparece a la vez como vacuna viva y como inactivada?",
       "respuesta": "Porque hay dos: la oral es viva atenuada y la parenteral no.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › MUERTA"
     },
     {
       "id": "f18",
       "frente": "Vacunas de subunidades: ¿qué respuesta inducen, cuál es su ventaja y cuáles sus desventajas?",
       "respuesta": "Respuesta humoral. Son seguras (no hay replicación), pero requieren refuerzo y son costosas.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › SUBUNIDAD"
     },
     {
       "id": "f19",
       "frente": "¿Cómo se obtiene el antígeno de la vacuna contra la hepatitis B?",
       "respuesta": "Por ADN recombinante: una levadura produce el HBsAg.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › SUBUNIDAD"
     },
     {
       "id": "f20",
       "frente": "Vacunas de subunidad proteica: ¿cuáles son los dos ejemplos clásicos y qué antígeno llevan?",
       "respuesta": "VHB (HBsAg) y VPH (proteínas de cápside de los tipos 6, 11, 16 y 18).",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › Proteínas"
     },
     {
       "id": "f21",
       "frente": "¿Qué es un toxoide y qué vacuna es el ejemplo típico?",
       "respuesta": "Una exotoxina inactivada que conserva su antigenicidad. Ejemplo: DTaP (difteria, tétanos y tos ferina acelular).",
       "detalle": "Es proteína, así que la activación es **T-dependiente**: memoria B y Th y **cambio de clase**, por vía MHC II.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › Toxoide"
     },
     {
       "id": "f22",
       "frente": "¿Contra qué bacterias hay vacunas de polisacárido capsular?",
       "respuesta": "S. pneumoniae, H. influenzae tipo b y N. meningitidis.",
       "detalle": "Las tres son **encapsuladas**. En lactantes se usan en su forma **conjugada** a una proteína.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › Polisacáridos"
     },
     {
       "id": "f23",
       "frente": "Vacunas de proteína o toxoide frente a las de polisacárido puro: ¿qué cambia en la activación del LB?",
       "respuesta": "Proteína/toxoide: activación T-dependiente, con memoria B y Th y cambio de clase. Polisacárido: T-independiente, solo IgM.",
       "detalle": "Por eso las de proteína y toxoide son **más efectivas**: la vía MHC II trae al Th y, con él, IgG de alta afinidad y memoria.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › Proteínas"
     },
     {
       "id": "f24",
       "frente": "Neumococo: ¿qué diferencia a PPSV23 de PCV13?",
       "respuesta": "PPSV23 es polisacárido puro (T-independiente). PCV13 es polisacárido conjugado a proteína (T-dependiente).",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › Polisacáridos"
     },
     {
       "id": "f25",
       "frente": "Vacuna de ADN: ¿dónde actúa y qué introduce en la célula?",
       "respuesta": "En el núcleo: un plásmido con el gen que codifica un antígeno del patógeno.",
       "detalle": "El plásmido tiene que llegar al **núcleo** para transcribirse; recién entonces se traduce la proteína en el citoplasma. Ejemplo: **ZyCoV-D** (COVID-19, India).",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "GENÉTICAS › Lugar de acción"
     },
     {
       "id": "f26",
       "frente": "Vacunas de ADN: ¿qué ventajas y qué limitaciones tienen?",
       "respuesta": "Son fáciles de producir y estables, pero tienen baja inmunogenicidad natural en humanos.",
       "detalle": "Necesitan **adyuvantes** o métodos de entrega especiales, y su memoria es **moderada** (humoral + celular). Otra limitación: pueden inducir **tolerancia al antígeno**.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "GENÉTICAS › Respuesta inmune"
     },
     {
       "id": "f27",
       "frente": "Vacunas de ARNm: ¿qué ventajas tienen?",
       "respuesta": "Son rápidas de desarrollar, no se integran al genoma y dejan una memoria alta.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "GENÉTICAS › Respuesta inmune"
     },
     {
       "id": "f28",
       "frente": "La proteína traducida del ARNm vacunal, ¿por qué vías se presenta y qué respuesta da cada una?",
       "respuesta": "MHC I → T CD8+ citotóxicos (celular). MHC II → T CD4+ que ayudan al LB a hacer anticuerpos neutralizantes (humoral).",
       "detalle": "El antígeno se fabrica **dentro** de la célula, como en una infección: por eso entra por MHC I. Al liberarse, lo capta la CPA y lo presenta por MHC II.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "GENÉTICAS › Memoria inmunológica"
     },
     {
       "id": "f29",
       "frente": "¿Qué es una vacuna de vector viral?",
       "respuesta": "Un virus inocuo modificado que lleva al núcleo el gen de un antígeno del patógeno.",
       "detalle": "El antígeno suele ser una proteína del patógeno. Se presenta por **MHC I** (→ T CD8+) y por **MHC II** (→ T CD4+ que ayudan al LB): memoria **alta**.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "GENÉTICAS › Lugar de acción"
     },
     {
       "id": "f30",
       "frente": "Ejemplos de vacunas de vector viral no replicante y replicante.",
       "respuesta": "No replicantes: AstraZeneca (ChAdOx1), Sputnik V (Ad26/Ad5), Janssen (Ad26.COV2-S). Replicante: rVSV-ZEBOV (Ébola).",
       "detalle": "Los replicantes están en investigación también para VIH, Zika y malaria.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "Vacuna de vector viral › Ejemplos clínicos"
     },
     {
       "id": "f31",
       "frente": "Vectores virales: ¿qué desventaja tiene cada tipo?",
       "respuesta": "Replicante: efectos adversos más intensos y no siempre apto en inmunocomprometidos. No replicante: menor inmunogenicidad e inmunidad preexistente contra el vector.",
       "detalle": "Si el vacunado ya tenía anticuerpos contra el adenovirus que hace de vector, los neutraliza antes de que entregue el gen.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "Vacuna de vector viral › Desventajas"
     },
     {
       "id": "f32",
       "frente": "¿Qué mecanismo permite que la célula dendrítica presente un antígeno captado de fuera por MHC I?",
       "respuesta": "La presentación cruzada.",
       "detalle": "Es lo que permite que una vacuna viva atenuada active a los T CD8+ incluso cuando el germen no infecta a la propia célula dendrítica.",
-      "tema": "vacunas"
+      "tema": "vacunas",
+      "seccion": "TRADICIONALES › VIVA"
     }
   ]
 }

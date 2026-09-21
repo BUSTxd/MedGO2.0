@@ -7,6 +7,7 @@ import { SidebarStateProvider } from './SidebarStateContext';
 import { DarkModeProvider } from './DarkModeContext';
 import ClarityPlanTag from './ClarityPlanTag';
 import PaginaVistaTracker from './PaginaVistaTracker';
+import { AnunciarPresencia } from './Presencia';
 import { pingRacha } from '@/lib/racha';
 import styles from '@/styles/dashboardLayout.module.css';
 
@@ -16,6 +17,7 @@ export default function DashboardWrapper({
   isAdmin = false,
   verAportes = false,
   accesoFacultad = false,
+  presencia,
 }: {
   children: React.ReactNode;
   planState: ClientPlanState;
@@ -24,6 +26,8 @@ export default function DashboardWrapper({
   verAportes?: boolean;
   /** Plan de la Facultad: decide el candado de Investigación e Histología. */
   accesoFacultad?: boolean;
+  /** Token opaco con el que se anuncia en línea (ver `src/lib/presencia.ts`). */
+  presencia?: string;
 }) {
   const [collapsed, setCollapsed] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -54,6 +58,7 @@ export default function DashboardWrapper({
       <ClarityPlanTag />
       {/* useSearchParams exige Suspense o el prerender del dashboard cae a cliente */}
       {!isAdmin && <Suspense fallback={null}><PaginaVistaTracker /></Suspense>}
+      {presencia && <AnunciarPresencia token={presencia} />}
       <RecentClassesProvider>
         <div className={styles.layout}>
           <DashboardSidebar

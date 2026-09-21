@@ -48,12 +48,19 @@ export default async function ActividadPage({
   // Banqueo en tarjetas. No lleva velo: quien bloquea es la route del bucket,
   // que recorta la muestra en el servidor y devuelve sólo lo que toca.
   if (sp?.tarjetas === '1' && act.tarjetas) {
+    // Cada tarjeta enlaza a su fila del resumen. Sólo el visor HTML sabe abrir
+    // en una sección; y sólo se ofrece si `/api/resumen-html` lo va a entregar.
+    const opcionHtml = act.resumen?.opciones?.find(o => (o.formato ?? act.resumen?.formato) === 'html');
+    const resumen = opcionHtml
+      ? { id: opcionHtml.id, abierto: puedeVerResumen(await getCachedPlanState(), opcionHtml.id) }
+      : undefined;
     return (
       <div className={styles.microPage}>
         <TarjetasRunner
           examKey={act.tarjetas.key}
           titulo={act.titulo}
           backHref={`/dashboard/cursos/inmunologia/${id}`}
+          resumen={resumen}
         />
       </div>
     );

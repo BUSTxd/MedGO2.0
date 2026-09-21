@@ -99,7 +99,10 @@ const FIGURAS = [
 interface Props {
   claseId: string;
   titulo?: string;
-  /** Comienzo del título (h1-h4) donde abrir; sin él, desde arriba. */
+  /**
+   * Dónde abrir: comienzo de un título (h1-h4) o de una celda de tabla. Admite
+   * ruta con «›» (`GENÉTICAS › Ejemplos`). Sin él, desde arriba.
+   */
   seccion?: string;
   onClose: () => void;
 }
@@ -281,17 +284,35 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
 
     const norm = (s: string) =>
       s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
-    const buscado = norm(seccion);
-    const destino = Array.from(sheet.querySelectorAll<HTMLElement>('h1, h2, h3, h4'))
-      .find((h) => norm(h.textContent ?? '').startsWith(buscado));
+
+    // «GENÉTICAS › Lugar de acción»: cada tramo se busca DESPUÉS del anterior,
+    // porque los rótulos de fila («Ejemplos», «Respuesta inmune») se repiten
+    // entre tablas. En cada tramo mandan los títulos; si ninguno calza, una celda.
+    const titulos = Array.from(sheet.querySelectorAll<HTMLElement>('h1, h2, h3, h4'));
+    const celdas = Array.from(sheet.querySelectorAll<HTMLElement>('td, th'));
+    const despues = (a: HTMLElement | null, b: HTMLElement) =>
+      !a || !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+    let destino: HTMLElement | null = null;
+    for (const tramo of seccion.split('›').map(norm).filter(Boolean)) {
+      const calza = (el: HTMLElement) => despues(destino, el) && norm(el.textContent ?? '').startsWith(tramo);
+      const hallado = titulos.find(calza) ?? celdas.find(calza);
+      if (!hallado) break;
+      destino = hallado;
+    }
     if (!destino) return;
 
+    // Una celda se señala con su fila entera: el `box-shadow` de un <tr> no se
+    // pinta en todos los navegadores, así que el destello va en cada celda.
+    const fila = destino.matches('td, th') ? destino.closest('tr') : null;
+    const ancla: HTMLElement = fila ?? destino;
+    const resaltadas: HTMLElement[] = fila ? Array.from(fila.cells) : [destino];
+
     const anclar = () => {
-      const delta = destino.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
+      const delta = ancla.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
       scroller.scrollTop += delta - 16;
     };
     const raf = requestAnimationFrame(anclar);
-    destino.classList.add(styles.seccionDestino);
+    resaltadas.forEach((el) => el.classList.add(styles.seccionDestino));
 
     const ro = new ResizeObserver(anclar);
     ro.observe(sheet);

@@ -112,6 +112,11 @@ export interface Flashcard {
   /** El porqué o el matiz, en markdown. */
   detalle?: string;
   tema?: string;
+  /**
+   * De dónde sale en el resumen HTML de la clase: comienzo de un título o de
+   * una celda, con «›» para acotar (`GENÉTICAS › Lugar de acción`).
+   */
+  seccion?: string;
 }
 
 /** Banqueo recortado por el servidor para quien no tiene el plan. */
