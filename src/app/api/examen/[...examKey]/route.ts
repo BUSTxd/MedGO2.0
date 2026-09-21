@@ -62,18 +62,25 @@ export async function GET(
     }
 
     type PreguntaCruda = { variante?: unknown; explanation?: string; reviewNote?: string; image?: string; explanationImage?: string };
-    const payload = JSON.parse(await blob.text()) as { questions?: PreguntaCruda[] };
+    const payload = JSON.parse(await blob.text()) as { questions?: PreguntaCruda[]; flashcards?: unknown[] };
     const todas = Array.isArray(payload.questions) ? payload.questions : [];
     const cuantas = (fn: (q: PreguntaCruda) => unknown) => todas.filter(q => !!fn(q)).length;
+    const flash = Array.isArray(payload.flashcards) ? payload.flashcards : null;
+    const flashCorte = Math.min(meta.muestraFlash ?? 0, flash?.length ?? 0);
 
     return NextResponse.json(
       {
-        payload: { ...payload, questions: todas.slice(0, meta.muestra) },
+        payload: {
+          ...payload,
+          questions: todas.slice(0, meta.muestra),
+          ...(flash ? { flashcards: flash.slice(0, flashCorte) } : {}),
+        },
         // Lo que hay detrás del corte se cuenta aquí: el cliente sólo recibe la
         // muestra y no podría saber qué trae el resto del banqueo.
         muestra: {
           mostradas: Math.min(meta.muestra, todas.length),
           total: todas.length,
+          ...(flash ? { flashMostradas: flashCorte, flashTotal: flash.length } : {}),
           plan: requerido,
           variantes: cuantas(q => q.variante),
           conExplicacion: cuantas(q => q.explanation),

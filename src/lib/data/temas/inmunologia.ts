@@ -29,7 +29,7 @@ const C = {
   sgp4: { claseId: 'sgp-4', codigo: 'SGP-4', titulo: 'Inmunidad y cáncer: melanoma y evasión inmune',              conResumen: true },
   tbl1: { claseId: 'tbl-1', codigo: 'TBL-1', titulo: 'Hemograma y reactantes de fase aguda',                       conResumen: true },
   tbl2: { claseId: 'tbl-2', codigo: 'TBL-2', titulo: 'Infecciones virales: VIH',                                   conResumen: true },
-  tbl3: { claseId: 'tbl-3', codigo: 'TBL-3', titulo: 'Vacunas',                                                    conResumen: true },
+  tbl3: { claseId: 'tbl-3', codigo: 'TBL-3', titulo: 'Vacunas',                                                    conResumen: true, gratis: true },
 } satisfies Record<string, ClaseRecomendada>;
 
 export const temasInmunologia: TablaTemas = {

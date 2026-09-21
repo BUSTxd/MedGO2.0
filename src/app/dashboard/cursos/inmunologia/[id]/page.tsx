@@ -6,9 +6,10 @@ import StudyMaterialSection from '@/components/StudyMaterialSection';
 import LockedContent from '@/components/LockedContent';
 import TrackRecentClass from '@/components/TrackRecentClass';
 import ExamenDeCurso from '@/components/ExamenDeCurso';
+import TarjetasRunner from '@/components/tarjetas/TarjetasRunner';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
-import { tieneAccesoA } from '@/lib/acceso';
+import { destinoDeResumen, puedeVerResumen } from '@/lib/acceso-resumen';
 
 const UNIDAD_LABEL: Record<string, string> = {
   INNATA:          'Sistema inmune e inflamación',
@@ -22,7 +23,7 @@ export default async function ActividadPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ examen?: string; resumen?: string }>;
+  searchParams: Promise<{ examen?: string; resumen?: string; tarjetas?: string }>;
 }) {
   const { id } = await params;
   const sp = await searchParams;
@@ -44,6 +45,20 @@ export default async function ActividadPage({
     );
   }
 
+  // Banqueo en tarjetas. No lleva velo: quien bloquea es la route del bucket,
+  // que recorta la muestra en el servidor y devuelve sólo lo que toca.
+  if (sp?.tarjetas === '1' && act.tarjetas) {
+    return (
+      <div className={styles.microPage}>
+        <TarjetasRunner
+          examKey={act.tarjetas.key}
+          titulo={act.titulo}
+          backHref={`/dashboard/cursos/inmunologia/${id}`}
+        />
+      </div>
+    );
+  }
+
   const badge = TIPO_BADGE[act.tipo];
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
@@ -53,12 +68,23 @@ export default async function ActividadPage({
   // ya NO es libre por tipo: H1 lleva el flag y H2 es de pago.
   const isLab = act.tipo === 'LAB';
   const esLibre = isLab || !!act.gratis;
+
+  // Ids con los que la tarjeta de Resumen pedirá el archivo. Una clase libre
+  // puede tener el resumen detrás del plan (TBL 3): ahí hace falta el plan de
+  // verdad, o el candado saldría también a quien ya paga.
+  const idsResumen = act.resumen
+    ? (act.resumen.opciones?.map(o => o.id) ?? [act.id])
+    : [];
+  const resumenSiempreDePago = idsResumen.some(id => !destinoDeResumen(id).libre);
+
   const [user, planState] = await Promise.all([
     getUser(),
-    esLibre
+    esLibre && !resumenSiempreDePago
       ? Promise.resolve({ plan: 'free' as const, isActive: true })
       : getCachedPlanState(),
   ]);
+
+  const resumenDePago = idsResumen.length > 0 && !idsResumen.every(id => puedeVerResumen(planState, id));
 
   const detail = (
     <div className={styles.microPage}>
@@ -121,13 +147,16 @@ export default async function ActividadPage({
           resumenTitulo={act.titulo}
           examen={act.examen}
           examenTitle={act.titulo}
+          tarjetas={act.tarjetas}
+          resumenDePago={resumenDePago}
           /* En las prácticas de laboratorio la primera tarjeta es «Simulación». */
           simulacion={isLab ? (act.simulacion ?? {}) : undefined}
           /* Los labs no tienen banco de preguntas: sólo Simulación y Resumen. */
           hideBanqueo={isLab}
           /* El visor va por portal al body: se montaría por delante del velo de
-             LockedContent, así que sólo se abre si la clase está accesible. */
-          abrirResumen={sp?.resumen === '1' && (esLibre || tieneAccesoA(planState, 'interno'))}
+             LockedContent, así que sólo se abre si el resumen es accesible —la
+             misma respuesta que dará `/api/resumen-html`, no una copia suya. */
+          abrirResumen={sp?.resumen === '1' && !resumenDePago}
         />
       </div>
     </div>

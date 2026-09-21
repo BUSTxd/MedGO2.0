@@ -10,104 +10,19 @@ import { trackEvent } from '@/lib/analytics';
 import { PLANS, planUnlocks, type PlanKey, type ProfilePlan } from '@/lib/plans';
 import { cursoDe, desglosarIntento, registrarIntento, UMBRAL_FLOJO, type Desglose } from '@/lib/temas-flojos';
 import { hrefDeClase } from '@/lib/data/temas';
+import {
+  fetchExam,
+  type ExamOption,
+  type ExamPayload,
+  type ExamQuestion,
+  type Muestra,
+} from '@/lib/examen/payload';
 import LockedContent from './LockedContent';
 import { usePlan } from './PlanProvider';
 import styles from '@/styles/examRunner.module.css';
 
 // El SDK de Mercado Pago pesa: el modal sólo se monta cuando alguien lo abre.
 const SubscribeModal = dynamic(() => import('./SubscribeModal'), { ssr: false });
-
-interface ExamOption {
-  id: string;
-  text: string;
-  correct: boolean;
-  /**
-   * Alternativa que ES una imagen (las seis células de la 23 del Final 2023 de
-   * Inmunología). Con que una la lleve, la pregunta pinta sus alternativas como
-   * fichas: la foto se amplía y la barra de abajo marca la respuesta.
-   */
-  image?: { src: string; w: number; h: number; alt?: string };
-}
-
-interface ExamQuestion {
-  id: string;
-  stem: string;
-  /** URL pública de la micrografía/imagen de referencia (opcional). */
-  image?: string;
-  imageAlt?: string;
-  /** Dimensiones intrínsecas de la imagen (para evitar layout shift). */
-  imageW?: number;
-  imageH?: number;
-  /**
-   * Imágenes que acompañan a `image` cuando el enunciado pide ver varias
-   * («ver las 2 imágenes»). Van lado a lado, cada una ampliable por separado.
-   */
-  extraImages?: { src: string; alt?: string; w?: number; h?: number }[];
-  options: ExamOption[];
-  explanation?: string;
-  explanationImage?: string;
-  explanationImageAlt?: string;
-  explanationImageCaption?: string;
-  /**
-   * Láminas que acompañan a `explanationImage` cuando la respuesta del PDF trae
-   * varias (el repaso de Inmunología 2025 muestra dos en algunas). Van lado a
-   * lado como las `extraImages` del enunciado, y el pie es uno para todas.
-   */
-  explanationExtraImages?: { src: string; alt?: string; w?: number; h?: number }[];
-  reviewNote?: string;
-  tags?: string[];
-  /** Tema del vocabulario del curso. Sin esto la pregunta queda fuera del informe. */
-  tema?: string;
-  /**
-   * Tipo de pregunta dentro del tema («Categoría I-4 y UPSS requeridas»). El
-   * informe final lo lista bajo su tema cuando se falla.
-   */
-  subtema?: string;
-  /**
-   * Dónde más salió esta pregunta («También en el SUSTI · P12»). Se pinta sobre
-   * el enunciado antes de responder: que se repita entre exámenes es justo lo
-   * que la vuelve prioritaria.
-   */
-  repite?: string;
-  /** La misma pregunta en otra versión; el alumno elige cuál ver con un interruptor. */
-  variante?: VariantePregunta;
-  /**
-   * No barajar las alternativas: van en el orden del JSON. Sólo para las que
-   * traen su letra dentro de la imagen, o la letra del botón y la de la foto
-   * dejarían de coincidir.
-   */
-  ordenFijo?: boolean;
-  /**
-   * Respuesta múltiple: el alumno marca todas las que crea correctas y pulsa
-   * «Comprobar». Acierta sólo si marca EXACTAMENTE las correctas: sin esto, una
-   * pregunta con dos correctas se daba por buena al tocar cualquiera de ellas.
-   */
-  multiple?: boolean;
-}
-
-/**
- * Otra versión de la MISMA pregunta: en el Final 2023 de Inmunología, la del
- * apunte (alternativas reconstruidas) y la del examen (las originales). No es
- * una pregunta más: comparte número, rastro y nota, y la respuesta vale en la
- * versión en que se dio. Lo que no declara se hereda de la base —la figura y el
- * enunciado suelen ser los mismos—, salvo `reviewNote`, que es de cada versión:
- * heredar «se reconstruyeron las alternativas» sobre las originales mentiría.
- * Los `id` de sus opciones no pueden repetir los de la base.
- */
-interface VariantePregunta {
-  /** Rótulo del interruptor para esta versión y para la base. */
-  rotulo: string;
-  rotuloBase: string;
-  stem?: string;
-  image?: string;
-  imageAlt?: string;
-  imageW?: number;
-  imageH?: number;
-  extraImages?: ExamQuestion['extraImages'];
-  options: ExamOption[];
-  explanation?: string;
-  reviewNote?: string;
-}
 
 /** La pregunta tal como se ve en la versión elegida. Conserva `variante` para el interruptor. */
 function vistaDe(q: ExamQuestion, enVariante: boolean): ExamQuestion {
@@ -139,39 +54,6 @@ function acierta(q: ExamQuestion, ids: string[]): boolean {
   const correctas = version.filter(o => o.correct).map(o => o.id);
   return correctas.length === ids.length && correctas.every(id => ids.includes(id));
 }
-
-/** Banqueo recortado por el servidor para quien no tiene el plan. */
-interface Muestra {
-  mostradas: number;
-  total: number;
-  plan: PlanKey;
-  /** Qué trae el banqueo COMPLETO: lo cuenta la route, que sí lo ve entero. */
-  variantes?: number;
-  conExplicacion?: number;
-  conNota?: number;
-  conImagen?: number;
-  conLamina?: number;
-}
-
-interface ExamPayload {
-  version: number;
-  key: string;
-  title: string;
-  /**
-   * Minutos **recomendados** para el examen, no un límite: el cronómetro cuenta
-   * hacia arriba desde 0 y sólo cambia de color al pasarse. Con `null` el examen
-   * no lleva cronómetro (es el caso de los bancos de histología, que se hacen a
-   * ritmo libre); con un número, aparece.
-   */
-  duration_min: number | null;
-  questions: ExamQuestion[];
-}
-
-/**
- * `premiumDesde`: en un banqueo con muestra, quien tiene el plan lo recibe
- * entero, y las preguntas desde ese índice (orden del JSON) siguen en oro.
- */
-interface SignedUrlEntry { url: string; expiresAt: number; premiumDesde?: number }
 
 interface Attempt {
   id: string;
@@ -224,9 +106,6 @@ interface Props {
   suscripcion?: SuscripcionExamen;
 }
 
-const EXPIRY_BUFFER_MS = 15 * 60 * 1000;
-// v2: la entrada lleva `premiumDesde`; las cacheadas antes no lo traían.
-const urlCacheKey = (k: string) => `examen-url-v2-${k}`;
 const attemptsKey = (k: string) => `medgo:attempts:${k}`;
 
 /** Letras de las alternativas: rotulan los botones y son su atajo de teclado. */
@@ -267,21 +146,6 @@ function shuffle<T>(arr: T[]): T[] {
   return out;
 }
 
-function readUrlCache(k: string): SignedUrlEntry | null {
-  try {
-    const raw = sessionStorage.getItem(urlCacheKey(k));
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as SignedUrlEntry;
-    if (!parsed.url || typeof parsed.expiresAt !== 'number') return null;
-    if (parsed.expiresAt - Date.now() < EXPIRY_BUFFER_MS) return null;
-    return parsed;
-  } catch { return null; }
-}
-
-function writeUrlCache(k: string, entry: SignedUrlEntry) {
-  try { sessionStorage.setItem(urlCacheKey(k), JSON.stringify(entry)); } catch {}
-}
-
 function loadAttempts(k: string): Attempt[] {
   try {
     const raw = localStorage.getItem(attemptsKey(k));
@@ -297,28 +161,6 @@ function saveAttempt(k: string, attempt: Attempt) {
     const next = [attempt, ...prev].slice(0, 20);
     localStorage.setItem(attemptsKey(k), JSON.stringify({ attempts: next }));
   } catch {}
-}
-
-async function fetchExam(key: string): Promise<{ payload: ExamPayload; muestra?: Muestra; premiumDesde?: number }> {
-  let entry = readUrlCache(key);
-  if (!entry) {
-    const r = await fetch(`/api/examen/${key}`);
-    if (!r.ok) {
-      if (r.status === 401) throw new Error('Necesitas iniciar sesión para ver este examen.');
-      if (r.status === 403) throw new Error('Este examen es solo para el plan Interno.');
-      if (r.status === 404) throw new Error('Examen no disponible.');
-      throw new Error('Error cargando el examen.');
-    }
-    const data = (await r.json()) as SignedUrlEntry | { payload: ExamPayload; muestra: Muestra };
-    // Recorte del servidor: llega sin URL, con las preguntas que tocan y nada
-    // más. No se cachea: al cambiar el plan la respuesta tiene que cambiar.
-    if ('payload' in data) return { payload: data.payload, muestra: data.muestra };
-    writeUrlCache(key, data);
-    entry = data;
-  }
-  const jsonRes = await fetch(entry.url);
-  if (!jsonRes.ok) throw new Error('No se pudo descargar el contenido.');
-  return { payload: (await jsonRes.json()) as ExamPayload, premiumDesde: entry.premiumDesde };
 }
 
 type Phase = 'running' | 'finished';

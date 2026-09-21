@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { trackEvent, type AnalyticsEvent } from '@/lib/analytics';
 import { useDetrasDeCandado } from './LockedContent';
 import type { ExamenRef } from '@/lib/data/examen';
+import type { TarjetasRef } from '@/lib/data/tarjetas';
 import styles from '@/styles/cursos.module.css';
 
 // Loaded only when the user opens the resumen
@@ -110,6 +111,13 @@ interface Props {
   resumenTitulo?: string;
   examen?: ExamenRef;
   examenTitle?: string;
+  /** Banqueo de repaso en tarjetas (`?tarjetas=1`) — clases magistrales y TBL. */
+  tarjetas?: TarjetasRef;
+  /**
+   * El resumen existe pero pide plan: la tarjeta sale con candado en vez de
+   * abrir el visor, que respondería 403. Lo decide `puedeVerResumen`.
+   */
+  resumenDePago?: boolean;
   simulacion?: SimulacionRef;
   banco?: BancoRef;
   solucionario?: SolucionarioRef;
@@ -142,7 +150,7 @@ const BanqueoIcon = () => (
   </svg>
 );
 
-export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel, abrirResumen, resumenSeccion }: Props) {
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, tarjetas, resumenDePago, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel, abrirResumen, resumenSeccion }: Props) {
   const deAcceso = useDetrasDeCandado() ? 'pago' : 'gratis';
   const track = (ev: AnalyticsEvent, props: Record<string, unknown>) =>
     trackEvent(ev, { ...props, acceso: deAcceso });
@@ -330,6 +338,23 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
             </p>
             <span className={styles.studyAvailable}>Comenzar ▸</span>
           </Link>
+        ) : tarjetas ? (
+          /* Última antes del fallback a propósito: así una actividad que ya
+             tenga examen o solucionario conserva su destino de siempre. */
+          <Link
+            href={`${pathname}?tarjetas=1`}
+            className={`${styles.studyCard} ${styles.studyCardActive}`}
+            onClick={() => track('banco_iniciado', { claseId, examKey: tarjetas.key })}
+          >
+            <div className={styles.studyCardIcon}>
+              <BanqueoIcon />
+            </div>
+            <p className={styles.studyCardTitle}>{banqueoLabel ?? 'Banqueo'}</p>
+            <p className={styles.studyCardDesc}>
+              {tarjetas.desc ?? 'Tarjetas de repaso: memoriza o responde alternativas'}
+            </p>
+            <span className={styles.studyAvailable}>Comenzar ▸</span>
+          </Link>
         ) : (
           <div className={`${styles.studyCard} ${styles.studyCardLocked}`}>
             <div className={styles.studyCardIcon}>
@@ -344,9 +369,9 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
         {/* Resumen — abre directo en pantalla completa */}
         <div
           className={`${styles.studyCard} ${
-            hasResumen ? styles.studyCardActive : styles.studyCardLocked
+            hasResumen && !resumenDePago ? styles.studyCardActive : styles.studyCardLocked
           }`}
-          onClick={handleCardClick}
+          onClick={resumenDePago ? undefined : handleCardClick}
         >
           <div className={styles.studyCardIcon}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -355,7 +380,9 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
           </div>
           <p className={styles.studyCardTitle}>Resumen</p>
           <p className={styles.studyCardDesc}>Resumen completo del material visto</p>
-          {hasResumen ? (
+          {resumenDePago ? (
+            <span className={styles.studyComingSoon}>Con suscripción</span>
+          ) : hasResumen ? (
             <span className={styles.studyAvailable}>Ver resumen ⛶</span>
           ) : (
             <span className={styles.studyComingSoon}>Próximamente</span>

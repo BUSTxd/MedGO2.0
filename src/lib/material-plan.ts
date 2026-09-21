@@ -42,6 +42,8 @@ export interface ActividadLike {
   resumen?: unknown;
   examen?: unknown;
   qbank?: unknown;
+  /** Banqueo de repaso en tarjetas (`?tarjetas=1`), en clases magistrales y TBL. */
+  tarjetas?: unknown;
   /** PDF de problemas propuestos (Física C1–C4), abre en el mismo visor que Resumen. */
   propuestos?: unknown;
   simulacion?: { href?: string };
@@ -179,9 +181,10 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
   const usaModulo = (reglas.moduloEn?.includes(act.tipo) ?? false) && act.modulo === true;
   const apoyoListo = usaModulo || (usaSimulacion && !!act.simulacion?.href);
 
-  // El banqueo se llena de cinco formas: examen del bucket, qbank, solucionario
-  // paso a paso (Química Orgánica), banco de preguntas (`?banco=1`) o PDF de
-  // práctica. Las dos del medio viven fuera del sílabo y se buscan por id.
+  // El banqueo se llena de seis formas: examen del bucket, qbank, tarjetas de
+  // repaso, solucionario paso a paso (Química Orgánica), banco de preguntas
+  // (`?banco=1`) o PDF de práctica. Dos de ellas viven fuera del sílabo y se
+  // buscan por id.
   //
   // Aquí sólo se decide si está o no está. Si ese material se armó o sólo se
   // consiguió no se puede deducir del sílabo —el mismo PDF puede ser trabajo
@@ -190,6 +193,7 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
   const banqueoListo = !!(
     act.examen ||
     act.qbank ||
+    act.tarjetas ||
     act.propuestos ||
     findSolucionario(act.id) ||
     findBanco(act.id)

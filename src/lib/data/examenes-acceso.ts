@@ -11,7 +11,11 @@ import type { PlanKey } from '@/lib/plans';
  * ocultaran en el cliente, el JSON completo —con sus respuestas correctas— ya
  * estaría en el navegador y bastaría con mirar la pestaña Red.
  */
-export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?: number }> = {
+/**
+ * `muestraFlash` es el corte de las `flashcards` del motor de tarjetas. Si falta,
+ * la muestra no lleva ninguna: el fallo seguro es no regalarlas.
+ */
+export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?: number; muestraFlash?: number }> = {
   'excretor/tbl-3-asa-henle': { free: true },
   'neurologia/snp-histologia': { free: true },
   'neurologia/snp-histologia-b': { free: true },
@@ -38,6 +42,11 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?
   'inmunologia/extra-hemato': {},
   'inmunologia/extra-pato': {},
   'inmunologia/final-2023': { muestra: 34 },
+  // Banqueo de repaso del TBL 3 (motor de tarjetas, no hoja de examen). La
+  // clase está abierta y el recorte lo hace el servidor: sin `muestra` el JSON
+  // entero viajaría al navegador y las tarjetas de pago se leerían en la
+  // pestaña Red.
+  'inmunologia/tbl-3-vacunas': { muestra: 3, muestraFlash: 10 },
   // Epidemiología (curso gratis): el 2022 abierto como muestra, con el aviso de
   // suscripción del runner; el SUSTI y los Kahoots detrás del plan del tramo;
   // los PASOS, a medias como el 2023 de Inmunología (27 de 54).

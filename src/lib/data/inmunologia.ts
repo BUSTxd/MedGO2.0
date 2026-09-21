@@ -1,4 +1,5 @@
 import type { ExamenRef } from './examen';
+import type { TarjetasRef } from './tarjetas';
 
 export type TipoActividad =
   | 'MAGISTRAL'
@@ -36,6 +37,12 @@ export interface Actividad {
   gratis?: boolean;
   resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   examen?: ExamenRef;
+  /**
+   * Banqueo de repaso en tarjetas (`?tarjetas=1`), para clases magistrales y
+   * TBL. Es otro motor, no otro examen: los parciales y finales siguen con
+   * `examen`, que manda si una actividad llevara los dos.
+   */
+  tarjetas?: TarjetasRef;
   /**
    * Módulo interactivo de la práctica. En las actividades LAB la tarjeta
    * «Video» se sustituye por «Simulación»; sin `href` queda como próximamente.
@@ -547,6 +554,10 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluación: 60% examen individual + 40% trabajo grupal. Promedio de TBL = 10% de la nota final.',
+        // Clase abierta como escaparate del banqueo en tarjetas, pero su resumen
+        // sigue siendo de pago (`inm-tbl-3` está en `SIEMPRE_DE_PAGO`).
+        gratis: true,
+        tarjetas: { key: 'inmunologia/tbl-3-vacunas' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',

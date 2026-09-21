@@ -1,0 +1,881 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   Banqueo de tarjetas — clases magistrales y TBL.
+
+   Dark mode por variables, como `examRunner.module.css`: el bloque
+   `:global(.dark-mode) .shell` redefine tokens y NADA más. Nunca en globals.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.shell {
+  --acc: #6C63C9;
+  --acc-rgb: 108, 99, 201;
+  --acc-2: #9B8EF8;
+  --ok: #2EA057;
+  --ok-rgb: 46, 160, 87;
+  --mal: #D64045;
+  --mal-rgb: 214, 64, 69;
+
+  /* Los tres colores de palo de la baraja. No van en el JS porque el modo
+     oscuro los cambia: allí sólo viaja el NOMBRE de la variable. */
+  --palo-tinta: #23204f;
+  --palo-rojo: #bf2f3b;
+  --palo-oro: #b8862c;
+
+  --sup: #ffffff;
+  --sup-2: #f7f6ff;
+  --linea: rgba(20, 18, 60, 0.11);
+  --tinta: #16143c;
+  --tinta-suave: rgba(22, 20, 60, 0.62);
+  --sombra: 0 18px 38px -24px rgba(30, 26, 90, 0.55);
+  --sombra-alta: 0 30px 56px -26px rgba(30, 26, 90, 0.6);
+
+  /* Ancho de MESA, no de lectura: el abanico necesita sitio. Todo lo que se
+     lee de corrido (cabecera, enunciado, resultados) se vuelve a estrechar a
+     `--columna` más abajo, así que la mano es lo único que aprovecha el ancho. */
+  --columna: 820px;
+
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 8px 0 64px;
+  color: var(--tinta);
+}
+
+.barra,
+.rastro,
+.pista,
+.portada,
+.resultado,
+.pared,
+.pie {
+  max-width: var(--columna);
+  margin-inline: auto;
+}
+
+:global(.dark-mode) .shell {
+  --acc: #9B8EF8;
+  --acc-rgb: 155, 142, 248;
+  /* El palo «negro» tiene que aclararse o desaparece sobre el naipe oscuro. */
+  --palo-tinta: #d9d6ff;
+  --palo-rojo: #ff7b85;
+  --palo-oro: #eab863;
+  --sup: #17153a;
+  --sup-2: #1e1b4a;
+  --linea: rgba(255, 255, 255, 0.11);
+  --tinta: #f0eeff;
+  --tinta-suave: rgba(240, 238, 255, 0.6);
+  --sombra: 0 18px 38px -24px rgba(0, 0, 0, 0.7);
+  --sombra-alta: 0 30px 56px -26px rgba(0, 0, 0, 0.75);
+}
+
+/* ─── Cabecera ─── */
+
+.barra {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+
+.volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tinta-suave);
+  cursor: pointer;
+  padding: 8px 4px;
+  transition: color 0.2s ease;
+}
+
+.volver:hover { color: var(--acc); }
+
+.barraTitulo {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tinta-suave);
+}
+
+.contador {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--tinta-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.rastro {
+  display: flex;
+  gap: 3px;
+  width: 100%;
+  margin-top: 2px;
+}
+
+.seg {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--linea);
+  transition: background 0.3s ease;
+}
+
+.segActual { background: var(--acc); }
+.segOk     { background: var(--ok); }
+.segMal    { background: var(--mal); }
+
+/* ─── Portada: elegir modo ─── */
+
+.portada { text-align: center; padding: 18px 0 8px; }
+
+.portadaKicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 10px;
+}
+
+.portadaTitulo {
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+}
+
+.portadaSub {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--tinta-suave);
+  max-width: 480px;
+  margin: 0 auto 34px;
+}
+
+.modos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 260px));
+  gap: 20px;
+  justify-content: center;
+}
+
+.modo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  text-align: left;
+  padding: 24px 22px 22px;
+  border-radius: 20px;
+  border: 1.5px solid var(--linea);
+  background: var(--sup);
+  box-shadow: var(--sombra);
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s ease, border-color 0.2s ease;
+}
+
+.modo:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sombra-alta);
+  border-color: rgba(var(--acc-rgb), 0.45);
+}
+
+.modoIcono {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: rgba(var(--acc-rgb), 0.12);
+  color: var(--acc);
+  margin-bottom: 6px;
+}
+
+.modoTitulo { font-size: 17px; font-weight: 700; }
+.modoDesc   { font-size: 13.5px; line-height: 1.55; color: var(--tinta-suave); }
+.modoCuenta {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--acc);
+}
+
+/* ─── LA TARJETA ───────────────────────────────────────────────────────────
+   Tres capas: el marco entra y sale, la de en medio se sacude al fallar y la
+   interior voltea. Las tres animan `transform`, y una sola no puede con todo.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.marco {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  color: inherit;
+  text-align: left;
+  /* El contexto 3D del volteo cuelga de aquí. */
+  perspective: 1200px;
+}
+
+.marcoPulsable { cursor: pointer; }
+.marcoPulsable:disabled { cursor: default; }
+
+/* `entrando` y `saliendo` usan nombres DISTINTOS a propósito: al cambiar el
+   nombre la animación reinicia sola y la tarjeta se reanima sin remontarse. */
+.marcoEntra {
+  animation: tarjetaEntra 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 0.045s);
+}
+
+.marcoSale {
+  animation: tarjetaSale 0.26s cubic-bezier(0.55, 0, 0.85, 0.35) both;
+}
+
+.marcoAtenuado { opacity: 0.45; }
+
+@keyframes tarjetaEntra {
+  from { opacity: 0; transform: translateX(var(--dx, 64px)) scale(0.94); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes tarjetaSale {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to   { opacity: 0; transform: translateX(calc(var(--dx, 64px) * -1)) scale(0.94); }
+}
+
+.sacude {
+  display: block;
+  /* Deja pasar la perspectiva del marco hasta `.cara3d`. */
+  transform-style: preserve-3d;
+  transform: rotate(var(--giro, 0deg));
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+}
+
+/* Sacudida corta (4 px): marca el fallo sin zarandear un texto de tres líneas. */
+.sacudeMal { animation: falloSacude 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+
+@keyframes falloSacude {
+  0%   { transform: translateX(0) rotate(var(--giro-actual, 0deg)); }
+  18%  { transform: translateX(-4px) rotate(var(--giro-actual, 0deg)); }
+  42%  { transform: translateX(4px) rotate(var(--giro-actual, 0deg)); }
+  68%  { transform: translateX(-2px) rotate(var(--giro-actual, 0deg)); }
+  86%  { transform: translateX(2px) rotate(var(--giro-actual, 0deg)); }
+  100% { transform: translateX(0) rotate(var(--giro-actual, 0deg)); }
+}
+
+.cara3d {
+  /* Rejilla de una celda: las dos caras se apilan y la más alta manda en la
+     altura. Con `position: absolute` habría que fijarla a ojo. */
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 0.58s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cara3dVolteada { transform: rotateY(180deg); }
+
+/* Mientras entra o sale, la tarjeta está invisible: que el volteo vuelva a su
+   sitio de golpe, y no girando a la vista durante la entrada. */
+.marco:not(.marcoQuieto) .cara3d { transition: none; }
+
+.frente,
+.dorso {
+  grid-area: 1 / 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 22px 20px;
+  border-radius: 18px;
+  border: 1.5px solid var(--linea);
+  background: var(--sup);
+  box-shadow: var(--sombra);
+  backface-visibility: hidden;
+  /* Safari sigue necesitando el prefijo para no pintar el reverso. */
+  -webkit-backface-visibility: hidden;
+}
+
+.dorso {
+  transform: rotateY(180deg);
+  background: var(--sup-2);
+}
+
+/* Acierto y fallo tiñen la tarjeta entera, las dos caras. */
+.marcoOk .frente,
+.marcoOk .dorso {
+  border-color: rgba(var(--ok-rgb), 0.5);
+  box-shadow: var(--sombra), 0 0 0 1px rgba(var(--ok-rgb), 0.25) inset;
+}
+
+.marcoMal .frente,
+.marcoMal .dorso {
+  border-color: rgba(var(--mal-rgb), 0.5);
+  box-shadow: var(--sombra), 0 0 0 1px rgba(var(--mal-rgb), 0.25) inset;
+}
+
+/* ─── Quiz ─── */
+
+.pista {
+  position: relative;
+  padding: 26px 26px 24px;
+  border-radius: 20px;
+  border: 1.5px solid var(--linea);
+  background: var(--sup);
+  box-shadow: var(--sombra);
+  margin-bottom: 30px;
+}
+
+.pistaEntra { animation: pistaEntra 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.pistaSale  { animation: pistaSale 0.26s cubic-bezier(0.55, 0, 0.85, 0.35) both; }
+
+@keyframes pistaEntra {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes pistaSale {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(-10px) scale(0.98); }
+}
+
+.pistaNum {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 10px;
+}
+
+.pistaTexto {
+  font-size: clamp(17px, 2.4vw, 20px);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* ─── El abanico de alternativas ────────────────────────────────────────────
+   Cinco naipes en la mano, no una rejilla. El efecto sale de que TODOS giran
+   sobre el mismo punto, muy por debajo de la tarjeta (`transform-origin`): así
+   las cabezas se abren y los pies quedan juntos, como al sostener cartas.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.abanico {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 486px;
+  /* Hueco para que la tarjeta apuntada asome sin meterse en el enunciado. */
+  padding-top: 26px;
+}
+
+.abanico .marco {
+  /* En porcentaje del abanico —no en px— para que la mano quepa siempre: con
+     ancho fijo, cinco naipes se salían del panel en cuanto la ventana bajaba
+     de ~1000 px. El tope en px evita que se hinchen en pantallas grandes. */
+  width: min(240px, 24.5%);
+  flex: none;
+  /* Solape corto: estos naipes llevan texto, y taparse entre ellos más que
+     esto deja media alternativa sin leer. El tope en px impide que en una
+     pantalla ancha el porcentaje se coma un tercio de cada naipe. */
+  margin-inline: max(-31px, -3.1%);
+}
+
+/* `--giro-actual` existe porque `falloSacude` lleva `fill: both`: su último
+   fotograma queda aplicado para siempre y, al venir del origen «animación»,
+   gana a cualquier regla del autor por específica que sea. Si los fotogramas
+   escribieran `--giro` a secas, la tarjeta elegida no habría manera de
+   enderezarla. Cambiando la variable se mueven a la vez el reposo y la
+   sacudida. */
+.naipe .sacude {
+  --giro-actual: var(--giro, 0deg);
+  transform-origin: 50% 172%;
+  transform: rotate(var(--giro-actual));
+}
+
+/* La hermana cede cuando el cursor está en otra. Va con `:has()` y no con
+   `.abanico:hover` porque el contenedor también se considera apuntado cuando
+   el cursor cae en un hueco, y entonces se atenuaban las cinco. */
+.abanico:has(.marcoPulsable:hover) .marcoPulsable:not(:hover):not(:disabled) .sacude {
+  opacity: 0.55;
+  transform: rotate(var(--giro, 0deg)) scale(0.97);
+}
+
+/* «Querer salir»: la apuntada se endereza y asoma por encima de la mano. */
+.naipe.marcoPulsable:hover:not(:disabled) {
+  z-index: 6;
+}
+
+.naipe.marcoPulsable:hover:not(:disabled) .sacude {
+  transform: translateY(-20px) rotate(calc(var(--giro, 0deg) * 0.3)) scale(1.05);
+}
+
+.marcoPulsable:focus-visible { outline: none; }
+
+.marcoPulsable:focus-visible .frente {
+  outline: 2px solid var(--acc);
+  outline-offset: 3px;
+}
+
+/* ─── El naipe como carta de baraja ─────────────────────────────────────────
+   La cara ya no lleva tinte de fondo: es blanca, como una carta. Lo que la
+   identifica es el PALO — esquina arriba, esquina invertida abajo, marca de
+   agua detrás del texto y filete interior, los cuatro del mismo color.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.naipe .frente {
+  min-height: 360px;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 15px 17px 13px;
+  border-radius: 18px;
+  background: var(--sup);
+  /* Recorta la marca de agua contra el borde redondeado. */
+  overflow: hidden;
+  /* Cinco cartas blancas superpuestas necesitan un canto que las separe: el
+     aro de 1 px hace de borde de carta y la sombra las despega del fondo. */
+  box-shadow: 0 0 0 1px rgba(20, 18, 60, 0.06),
+              0 16px 30px -18px rgba(30, 26, 90, 0.55);
+}
+
+/* Filete interior, el marco que toda carta lleva impreso por dentro. */
+.naipe .frente::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid var(--tinte, var(--linea));
+  border-radius: 12px;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+/* ─── Esquinas y marca de agua ─── */
+
+.naipeEsquina {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  width: 22px;
+  color: var(--tinte, var(--tinta));
+  flex: none;
+  position: relative;
+  z-index: 1;
+}
+
+/* La de abajo va del revés y pegada a la derecha, como en la baraja. */
+.naipeEsquinaPie {
+  margin-top: auto;
+  align-self: flex-end;
+  transform: rotate(180deg);
+}
+
+.naipeLetra {
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.naipePalo { display: block; width: 15px; height: 15px; }
+.naipePalo svg { display: block; width: 100%; height: 100%; }
+
+/* El palo grande de fondo. Muy tenue: acompaña, no compite con el texto. */
+.naipeAgua {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  translate: -50% -50%;
+  width: 132px;
+  height: 132px;
+  color: var(--tinte, var(--tinta));
+  opacity: 0.09;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.naipeAgua svg { display: block; width: 100%; height: 100%; }
+
+/* En oscuro el palo es claro sobre fondo oscuro y al 9 % no se ve. */
+:global(.dark-mode) .shell .naipeAgua { opacity: 0.13; }
+:global(.dark-mode) .shell .naipe .frente::after { opacity: 0.3; }
+
+:global(.dark-mode) .shell .naipe .frente {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07),
+              0 16px 30px -18px rgba(0, 0, 0, 0.75);
+}
+
+/* La elegida sale de la mano: se endereza, se pone delante y se ensancha para
+   que quepa la justificación. En absoluto, para que el abanico no dé un salto
+   de maquetación al reordenarse detrás. */
+/* El ancho va con `.abanico .marco.naipeElegido` y no con `.naipeElegido` a
+   secas: `.abanico .marco` fija 176 px y es más específica. */
+.abanico .marco.naipeElegido {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  width: min(100%, 620px);
+  /* El solape del abanico sigue contando aunque esté en absoluto, y la dejaba
+     31 px a la izquierda del centro del enunciado. */
+  margin-inline: 0;
+  z-index: 9;
+}
+
+.naipe.naipeElegido .sacude { --giro-actual: 0deg; }
+
+.naipeElegido .frente,
+.naipeElegido .dorso {
+  min-height: 0;
+  padding: 22px 22px 20px;
+}
+
+.naipe .dorso {
+  max-height: 336px;
+  overflow-y: auto;
+  justify-content: flex-start;
+}
+
+/* Con una elegida delante, el resto de la mano se hunde y se apaga. */
+.abanico:has(.naipeElegido) .marco:not(.naipeElegido) .sacude {
+  opacity: 0.22;
+  transform: translateY(26px) rotate(var(--giro, 0deg)) scale(0.95);
+}
+
+/* Al resolverse, el palo cede: la carta entera pasa a hablar de acierto o
+   fallo, y dejar la esquina de su color daría dos mensajes a la vez. */
+.marcoOk .naipeEsquina,
+.marcoOk .naipeAgua,
+.marcoOk .frente::after { --tinte: var(--ok); }
+
+.marcoMal .naipeEsquina,
+.marcoMal .naipeAgua,
+.marcoMal .frente::after { --tinte: var(--mal); }
+
+.naipeTexto {
+  position: relative;
+  z-index: 1;
+  padding-inline: 3px;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 550;
+}
+
+.naipeElegido .naipeTexto { font-size: 14.5px; }
+
+.dorsoEtiqueta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dorsoOk  { color: var(--ok); }
+.dorsoMal { color: var(--mal); }
+
+.dorsoRespuesta { font-size: 14.5px; font-weight: 650; line-height: 1.45; }
+
+.dorsoJustificacion {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--tinta-suave);
+}
+
+.dorsoJustificacion p { margin: 0 0 8px; }
+.dorsoJustificacion p:last-child { margin-bottom: 0; }
+.dorsoJustificacion strong { color: var(--tinta); font-weight: 650; }
+
+/* La marca de acierto late una vez al aparecer. */
+.marcaLate { animation: marcaLate 0.42s cubic-bezier(0.34, 1.4, 0.64, 1) both; }
+
+@keyframes marcaLate {
+  from { transform: scale(0.4); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ─── Flashcard ─── */
+
+/* La tarjeta de memoria es lo único en pantalla: se centra en el hueco que
+   queda bajo la cabecera, en vez de quedarse pegada arriba. */
+.flashWrap {
+  max-width: 560px;
+  margin: 0 auto;
+  min-height: min(62vh, 480px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.flash .frente,
+.flash .dorso {
+  min-height: 300px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 34px 28px;
+}
+
+/* La tarjeta de memoria es de la misma baraja: mismo filete y misma marca de
+   agua, con el palo que le toca a esta pregunta. */
+.flash .frente { overflow: hidden; }
+
+.flash .frente::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border: 1px solid var(--tinte, var(--linea));
+  border-radius: 13px;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.flash .naipeAgua { width: 190px; height: 190px; top: 50%; }
+
+:global(.dark-mode) .shell .flash .frente::after { opacity: 0.3; }
+
+/* Entra girando sobre su eje, como una carta que se vuelve hacia ti. El giro
+   va en `.sacude` (dentro de la `perspective` del marco) y no en el marco, que
+   es quien la crea: rotarlo a él saldría plano. Arranca en -80° y no en -90°
+   para no cruzar el canto, donde `backface-visibility` la haría desaparecer. */
+.flash.marcoEntra { animation: none; opacity: 1; }
+
+.flash.marcoEntra .sacude {
+  animation: tarjetaGira 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes tarjetaGira {
+  from { opacity: 0; transform: rotateY(-80deg) scale(0.92); }
+  to   { opacity: 1; transform: rotateY(0deg) scale(1); }
+}
+
+.flashPregunta { font-size: clamp(18px, 3vw, 22px); font-weight: 650; line-height: 1.45; }
+
+.flashPista {
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--tinta-suave);
+}
+
+.flashRespuesta { font-size: clamp(17px, 2.8vw, 21px); font-weight: 700; color: var(--acc); }
+
+.autoeval {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.autoevalBtn {
+  flex: 1;
+  max-width: 200px;
+  padding: 13px 18px;
+  border-radius: 13px;
+  border: 1.5px solid var(--linea);
+  background: var(--sup);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--tinta);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  min-height: 46px;
+}
+
+.autoevalSi:hover  { border-color: var(--ok); color: var(--ok); transform: translateY(-2px); }
+.autoevalNo:hover  { border-color: var(--mal); color: var(--mal); transform: translateY(-2px); }
+
+/* ─── Pie de navegación ─── */
+
+.pie {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.siguiente {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: 13px;
+  border: none;
+  background: var(--acc);
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 46px;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, opacity 0.2s ease;
+  box-shadow: 0 10px 26px -14px rgba(var(--acc-rgb), 0.9);
+}
+
+.siguiente:hover { transform: translateY(-2px); box-shadow: 0 16px 32px -14px rgba(var(--acc-rgb), 0.95); }
+
+/* ─── Estados de carga, error y resultado ─── */
+
+.aviso {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--tinta-suave);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.resultado {
+  text-align: center;
+  padding: 30px 20px 10px;
+  animation: pistaEntra 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.resultadoCifra {
+  font-size: clamp(44px, 9vw, 64px);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1;
+  color: var(--acc);
+  font-variant-numeric: tabular-nums;
+}
+
+.resultadoLabel { font-size: 15px; color: var(--tinta-suave); margin-top: 8px; }
+
+.resultadoAcciones {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.secundario {
+  padding: 13px 24px;
+  border-radius: 13px;
+  border: 1.5px solid var(--linea);
+  background: transparent;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--tinta);
+  cursor: pointer;
+  min-height: 46px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.secundario:hover { border-color: var(--acc); color: var(--acc); }
+
+/* ─── Pared de la muestra ─── */
+
+.pared {
+  margin-top: 30px;
+  padding: 28px 26px;
+  border-radius: 20px;
+  border: 1.5px solid rgba(var(--acc-rgb), 0.3);
+  background: rgba(var(--acc-rgb), 0.06);
+  text-align: center;
+}
+
+.paredTitulo { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+
+.paredTexto {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--tinta-suave);
+  max-width: 400px;
+  margin: 0 auto 20px;
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 1024px) {
+  /* Por debajo de esto los naipes quedarían tan estrechos que la alternativa
+     no se lee: el abanico se cierra y se vuelve una lista. En táctil tampoco
+     hay hover con el que sacar una de la mano. */
+  .modos { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
+
+  .abanico {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    min-height: 0;
+  }
+
+  .abanico .marco { width: auto; margin-inline: 0; }
+  .naipe .sacude { transform: none; transform-origin: 50% 50%; }
+  .naipe .frente { min-height: 0; }
+
+  /* Cerrado el abanico, la carta es baja y ancha: el palo de fondo y la
+     esquina invertida se encogen para no quedar apretados contra el texto. */
+  .naipe .naipeAgua { width: 86px; height: 86px; left: auto; right: 10px; translate: 0 -50%; }
+  .naipeEsquinaPie { display: none; }
+
+  .abanico .marco.naipeElegido {
+    position: static;
+    translate: none;
+    width: auto;
+    order: -1;
+  }
+
+  .abanico:has(.naipeElegido) .marco:not(.naipeElegido) .sacude {
+    transform: none;
+    opacity: 0.4;
+  }
+
+  .naipe.marcoPulsable:hover:not(:disabled) .sacude { transform: none; }
+  .flashWrap { min-height: 0; }
+  .autoeval { flex-direction: column; align-items: stretch; }
+  .autoevalBtn { max-width: none; }
+}
+
+/* ─── Movimiento reducido ───────────────────────────────────────────────────
+   Al final del módulo: si fuera antes, no ganaría a las reglas de arriba.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .marcoEntra,
+  .marcoSale,
+  .sacudeMal,
+  .pistaEntra,
+  .pistaSale,
+  .resultado,
+  .marcaLate,
+  .flash.marcoEntra .sacude {
+    animation: none;
+  }
+
+  /* `tarjetaGira` dejaba la tarjeta invisible con `fill: both`. */
+  .flash.marcoEntra .sacude { opacity: 1; transform: none; }
+
+  /* `tarjetaSale` terminaba en opacidad 0 con `fill: both`; sin la animación
+     hay que reponer el estado visible a mano. */
+  .marcoSale,
+  .pistaSale { opacity: 1; }
+  .marcaLate { opacity: 1; transform: none; }
+
+  .sacude,
+  .cara3d,
+  .modo,
+  .siguiente,
+  .autoevalBtn,
+  .seg {
+    transition: none;
+  }
+
+  .naipe.marcoPulsable:hover:not(:disabled) .sacude,
+  .abanico:has(.marcoPulsable:hover) .marcoPulsable:not(:hover):not(:disabled) .sacude {
+    transform: rotate(var(--giro, 0deg));
+  }
+}

@@ -28,10 +28,13 @@ interface Act {
 /**
  * De pago aunque su clase sea libre. Las prácticas de Parasitología/Artrópodos
  * son LAB (página abierta) pero su PDF siempre pidió plan: es lo que se vende.
+ * El TBL 3 de Inmunología es el mismo trato al revés: se abrió la clase para
+ * que se pruebe el banqueo en tarjetas, y el resumen es lo que queda detrás.
  */
 const SIEMPRE_DE_PAGO = new Set([
   'practica-8', 'practica-9', 'practica-10',
   'practica-11', 'practica-12', 'practica-13',
+  'inm-tbl-3',
 ]);
 
 const esTipo = (...tipos: string[]) => (a: Act) => tipos.includes(a.tipo);
