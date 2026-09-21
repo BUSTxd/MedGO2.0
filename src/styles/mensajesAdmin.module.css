@@ -115,6 +115,8 @@
   padding: 18px 20px;
   margin-bottom: 26px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  /* El contador de la barra lateral enlaza a #mensajes: que no quede pegada al borde. */
+  scroll-margin-top: 20px;
 }
 :global(body.dark-mode) .bandeja { background: #1e293b; border-color: #334155; }
 
@@ -199,6 +201,70 @@
 .respuestaMeta { font-size: 11.5px; font-weight: 600; color: #64748b; }
 .respuestaTexto { margin: 3px 0 0; font-size: 13.5px; line-height: 1.5; white-space: pre-line; color: #1e293b; }
 :global(body.dark-mode) .respuestaTexto { color: #e2e8f0; }
+
+/* ─── Aviso flotante de respuestas nuevas (admin) ─── */
+
+.aviso {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 940;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100vw - 40px);
+  padding: 12px 12px 12px 14px;
+  border-radius: 14px;
+  background: #1a2557;
+  color: #f0eeff;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-size: 13.5px;
+  box-shadow: 0 16px 40px -14px rgba(10, 14, 40, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  animation: avisoEntra 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes avisoEntra {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.avisoIcono {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #f5a623;
+  color: #1a2557;
+  flex-shrink: 0;
+}
+
+.avisoTexto strong { color: #f5a623; }
+
+.avisoVer {
+  padding: 6px 12px;
+  border-radius: 9px;
+  background: #f5a623;
+  color: #1a2557;
+  font-weight: 800;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.avisoVer:hover { filter: brightness(1.05); }
+
+.avisoCerrar {
+  border: none;
+  background: none;
+  color: rgba(240, 238, 255, 0.6);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.avisoCerrar:hover { color: #f0eeff; }
+
+@media (prefers-reduced-motion: reduce) {
+  .aviso { animation: none; }
+}
 
 /* ─── Botón junto al correo ─── */
 

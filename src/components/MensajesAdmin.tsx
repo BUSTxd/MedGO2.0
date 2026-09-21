@@ -31,6 +31,80 @@ export const IconoMensaje = () => (
   </svg>
 );
 
+/**
+ * Respuestas sin leer, en vivo: el contador de «Admin» en la barra lateral, para
+ * enterarse desde cualquier página del dashboard sin tener la bandeja abierta.
+ */
+export function useRespuestasNuevas(canal: string | undefined): number | null {
+  // null hasta la primera respuesta del servidor: un 0 de arranque no es un dato.
+  const [nuevas, setNuevas] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!canal) return;
+    const contar = async () => {
+      const r = await fetch('/api/admin/mensajes?cuenta=1', { cache: 'no-store' }).catch(() => null);
+      if (r?.ok) setNuevas(((await r.json()) as { nuevas: number }).nuevas);
+    };
+    contar();
+    // Única suscripción al canal de la bandeja: dos `channel()` con el mismo
+    // nombre en un cliente chocan. La bandeja se entera por este evento.
+    const ch = createClient().channel(canal).on('broadcast', { event: 'nuevo' }, () => {
+      contar();
+      window.dispatchEvent(new Event(EVENTO_BANDEJA));
+    }).subscribe();
+    return () => { void ch.unsubscribe(); };
+  }, [canal]);
+
+  return nuevas;
+}
+
+const EVENTO_BANDEJA = 'medgo:bandeja';
+
+const CLAVE_DESCARTE = 'medgo-aviso-respuestas';
+
+/**
+ * Aviso flotante para el admin: «Tienes N respuestas nuevas». El contador de la
+ * barra lateral puede quedar fuera de vista (la barra hace scroll en pantallas
+ * bajas), así que esto es lo que de verdad avisa. Cerrarlo lo calla hasta que
+ * llegue otra respuesta más.
+ */
+export function AvisoRespuestas({ nuevas, ocultar }: { nuevas: number | null; ocultar: boolean }) {
+  const [descartadas, setDescartadas] = useState(0);
+  const [destino, setDestino] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setDestino(document.body);
+    try { setDescartadas(Number(sessionStorage.getItem(CLAVE_DESCARTE)) || 0); } catch { /* sin storage */ }
+  }, []);
+
+  // Tras leerlas, el contador baja: el descarte baja con él, o la siguiente
+  // respuesta (que vuelve a sumar 1) quedaría callada.
+  useEffect(() => {
+    if (nuevas === null || nuevas >= descartadas) return;
+    setDescartadas(nuevas);
+    try { sessionStorage.setItem(CLAVE_DESCARTE, String(nuevas)); } catch { /* sin storage */ }
+  }, [nuevas, descartadas]);
+
+  if (!destino || ocultar || nuevas === null || nuevas <= descartadas) return null;
+
+  const cerrar = () => {
+    setDescartadas(nuevas);
+    try { sessionStorage.setItem(CLAVE_DESCARTE, String(nuevas)); } catch { /* sin storage */ }
+  };
+
+  return createPortal(
+    <div className={s.aviso} role="status">
+      <span className={s.avisoIcono}><IconoMensaje /></span>
+      <span className={s.avisoTexto}>
+        Tienes <strong>{nuevas}</strong> {nuevas === 1 ? 'respuesta nueva' : 'respuestas nuevas'} en Mensajes
+      </span>
+      <a href="/dashboard/admin#mensajes" className={s.avisoVer} onClick={cerrar}>Ver</a>
+      <button type="button" className={s.avisoCerrar} onClick={cerrar} aria-label="Cerrar aviso">✕</button>
+    </div>,
+    destino,
+  );
+}
+
 export function BotonMensaje({ email, onClick }: { email: string; onClick: () => void }) {
   return (
     <button type="button" className={s.boton} onClick={onClick} title={`Enviar un mensaje a ${email}`} aria-label={`Enviar un mensaje a ${email}`}>
@@ -120,10 +194,10 @@ export function EnviarMensaje({ a, onClose }: { a: Destinatario; onClose: () => 
 }
 
 /**
- * Lo enviado y lo que respondieron. Se refresca solo: el servidor avisa por
- * `canal` cada vez que un alumno responde.
+ * Lo enviado y lo que respondieron. Se refresca solo: el servidor avisa por el
+ * canal de la bandeja, que escucha la barra lateral (`useRespuestasNuevas`).
  */
-export function BandejaMensajes({ canal, emails }: { canal: string; emails: Map<string, string> }) {
+export function BandejaMensajes({ emails }: { emails: Map<string, string> }) {
   const [mensajes, setMensajes] = useState<Mensaje[] | null>(null);
 
   const cargar = useCallback(async () => {
@@ -133,9 +207,9 @@ export function BandejaMensajes({ canal, emails }: { canal: string; emails: Map<
 
   useEffect(() => {
     cargar();
-    const ch = createClient().channel(canal).on('broadcast', { event: 'nuevo' }, () => { cargar(); }).subscribe();
-    return () => { void ch.unsubscribe(); };
-  }, [canal, cargar]);
+    window.addEventListener(EVENTO_BANDEJA, cargar);
+    return () => window.removeEventListener(EVENTO_BANDEJA, cargar);
+  }, [cargar]);
 
   const nuevas = useMemo(
     () => (mensajes ?? []).reduce((n, m) => n + m.respuestas.filter(r => !r.leido_admin_at).length, 0),
@@ -148,7 +222,7 @@ export function BandejaMensajes({ canal, emails }: { canal: string; emails: Map<
   };
 
   return (
-    <section className={s.bandeja}>
+    <section id="mensajes" className={s.bandeja}>
       <div className={s.bandejaHead}>
         <div>
           <h2 className={s.bandejaTitulo}>

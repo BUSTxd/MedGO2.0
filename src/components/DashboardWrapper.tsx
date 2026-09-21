@@ -20,6 +20,7 @@ export default function DashboardWrapper({
   accesoFacultad = false,
   presencia,
   buzon,
+  canalAdmin,
 }: {
   children: React.ReactNode;
   planState: ClientPlanState;
@@ -32,6 +33,8 @@ export default function DashboardWrapper({
   presencia?: string;
   /** Mismo token, para el canal de mensajes del equipo (`BuzonUsuario`). */
   buzon?: string;
+  /** Sólo el admin: canal de la bandeja, para el contador de la barra lateral. */
+  canalAdmin?: string;
 }) {
   const [collapsed, setCollapsed] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -74,6 +77,7 @@ export default function DashboardWrapper({
             isAdmin={isAdmin}
             verAportes={verAportes}
             accesoFacultad={accesoFacultad}
+            canalAdmin={canalAdmin}
           />
           {!collapsed && (
             <div

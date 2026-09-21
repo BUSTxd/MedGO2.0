@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase/server';
 import { isAdminEmail, canVerAportes } from '@/lib/admin';
 import { tieneAccesoA } from '@/lib/acceso';
 import { checkDevice, getDeviceId, touchSession } from '@/lib/sessions';
-import { tokenDePresencia } from '@/lib/presencia';
+import { canalBuzonAdmin, tokenDePresencia } from '@/lib/presencia';
 
 export default async function DashboardRootLayout({
   children,
@@ -68,6 +68,7 @@ export default async function DashboardRootLayout({
       presencia={user && !isAdmin ? tokenDePresencia(user.id) : undefined}
       // El buzón sí incluye al admin: puede escribirse a sí mismo para probar.
       buzon={user ? tokenDePresencia(user.id) : undefined}
+      canalAdmin={isAdmin ? canalBuzonAdmin() : undefined}
     >
       {children}
     </DashboardWrapper>

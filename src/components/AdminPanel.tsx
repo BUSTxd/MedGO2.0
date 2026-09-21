@@ -142,7 +142,7 @@ function CursosObjetivo({ ranking }: { ranking: CursoRank[] }) {
   );
 }
 
-export default function AdminPanel({ data, canalBuzon }: { data: AdminData; canalBuzon: string }) {
+export default function AdminPanel({ data }: { data: AdminData }) {
   const [tab, setTab] = useState<TabKey>('activos');
   const [ficha, setFicha] = useState<AdminRow | null>(null);
   const [escribirA, setEscribirA] = useState<Destinatario | null>(null);
@@ -204,7 +204,7 @@ export default function AdminPanel({ data, canalBuzon }: { data: AdminData; cana
         </div>
       </div>
 
-      <BandejaMensajes canal={canalBuzon} emails={emails} />
+      <BandejaMensajes emails={emails} />
 
       <CursosObjetivo ranking={data.rankingCursos} />
 

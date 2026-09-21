@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { isAdminEmail } from '@/lib/admin';
 import {
-  bandeja, enviarMensaje, marcarRespuestasLeidas, textoValido, MAX_CUERPO, MAX_TITULO,
+  bandeja, contarNuevas, enviarMensaje, marcarRespuestasLeidas, textoValido, MAX_CUERPO, MAX_TITULO,
 } from '@/lib/mensajes-server';
 
 export const runtime = 'nodejs';
@@ -16,10 +16,14 @@ async function esAdmin() {
   return !!user && isAdminEmail(user.email);
 }
 
-/** Bandeja: mensajes enviados con sus respuestas. */
-export async function GET() {
+/** Bandeja: mensajes enviados con sus respuestas. Con `?cuenta=1`, sólo cuántas respuestas faltan leer. */
+export async function GET(req: NextRequest) {
   if (!(await esAdmin())) return NextResponse.json({ error: 'forbidden' }, { status: 403 });
-  return NextResponse.json({ mensajes: await bandeja() }, { headers: { 'Cache-Control': 'no-store' } });
+  const headers = { 'Cache-Control': 'no-store' };
+  if (req.nextUrl.searchParams.get('cuenta') === '1') {
+    return NextResponse.json({ nuevas: await contarNuevas() }, { headers });
+  }
+  return NextResponse.json({ mensajes: await bandeja() }, { headers });
 }
 
 /** Enviar un mensaje a un alumno. */

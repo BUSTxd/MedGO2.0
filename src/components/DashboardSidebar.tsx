@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import MicroscopeIcon from './icons/MicroscopeIcon';
 import { createClient } from '@/lib/supabase/client';
+import { AvisoRespuestas, useRespuestasNuevas } from './MensajesAdmin';
 import styles from '@/styles/dashboardSidebar.module.css';
 
 const NAV = [
@@ -117,6 +118,8 @@ interface Props {
    * quedaría como `free` y vería su propio dashboard con candados.
    */
   accesoFacultad?: boolean;
+  /** Canal de la bandeja de mensajes: enciende el contador de respuestas nuevas. */
+  canalAdmin?: string;
 }
 
 /** Secciones cuyo contenido es íntegramente de la Facultad de Medicina. */
@@ -164,8 +167,9 @@ const ADMIN_ITEM = {
   ),
 };
 
-export default function DashboardSidebar({ collapsed, onToggle, darkMode, onToggleDark, isAdmin = false, verAportes = false, accesoFacultad = false }: Props) {
+export default function DashboardSidebar({ collapsed, onToggle, darkMode, onToggleDark, isAdmin = false, verAportes = false, accesoFacultad = false, canalAdmin }: Props) {
   const pathname = usePathname();
+  const nuevas = useRespuestasNuevas(canalAdmin);
 
   const navItems = [
     ...NAV,
@@ -189,6 +193,8 @@ export default function DashboardSidebar({ collapsed, onToggle, darkMode, onTogg
 
   return (
     <aside className={`${styles.aside} ${collapsed ? styles.collapsed : ''}`}>
+      {/* En el panel admin la bandeja ya está a la vista. */}
+      {canalAdmin && <AvisoRespuestas nuevas={nuevas} ocultar={pathname.startsWith('/dashboard/admin')} />}
       {/* Logo → landing page */}
       <Link href="/" className={styles.sidebarLogo}>
         <Logo size={52} />
@@ -199,17 +205,28 @@ export default function DashboardSidebar({ collapsed, onToggle, darkMode, onTogg
           // El candado es señal, no cerradura: el enlace sigue navegando y es
           // el `layout.tsx` de la sección (servidor) el que muestra el paywall.
           const bloqueado = !accesoFacultad && SOLO_FACULTAD.has(item.href);
+          // Con respuestas sin leer, «Admin» lleva directo a la bandeja.
+          const aviso = item === ADMIN_ITEM && nuevas ? nuevas : 0;
           return (
             <Link
               key={item.href}
-              href={item.href}
+              href={aviso ? `${item.href}#mensajes` : item.href}
               className={`${styles.navItem} ${isActive(item.href) ? styles.active : ''} ${
                 bloqueado ? styles.navItemBloqueado : ''
               }`}
-              title={bloqueado ? `${item.label} — incluido en el plan Interno` : undefined}
+              title={
+                bloqueado ? `${item.label} — incluido en el plan Interno`
+                  : aviso ? `${aviso} ${aviso === 1 ? 'respuesta nueva' : 'respuestas nuevas'} en Mensajes`
+                  : undefined
+              }
             >
               <span className={styles.navIcon}>{item.icon}</span>
               <span className={styles.label}>{item.label}</span>
+              {aviso > 0 && (
+                <span className={styles.navBadge} aria-label={`${aviso} respuestas nuevas`}>
+                  {aviso > 9 ? '9+' : aviso}
+                </span>
+              )}
               {bloqueado && (
                 <span className={styles.navLock} aria-label="Requiere plan Interno">
                   <LockIcon />

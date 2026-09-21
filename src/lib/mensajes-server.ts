@@ -115,6 +115,18 @@ export async function bandeja(): Promise<Mensaje[]> {
 export async function marcarRespuestasLeidas() {
   await db().from('mensajes_respuestas').update({ leido_admin_at: new Date().toISOString() })
     .is('leido_admin_at', null);
+  // El contador de la barra lateral también escucha este canal.
+  await avisar(canalBuzonAdmin());
+}
+
+/** Respuestas que el admin aún no leyó: el contador de la barra lateral. */
+export async function contarNuevas(): Promise<number> {
+  const { count, error } = await db()
+    .from('mensajes_respuestas')
+    .select('id', { count: 'exact', head: true })
+    .is('leido_admin_at', null);
+  if (error) throw new Error(error.message);
+  return count ?? 0;
 }
 
 /** Texto de un formulario: recortado y dentro del límite, o null si no sirve. */
