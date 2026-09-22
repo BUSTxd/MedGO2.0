@@ -353,6 +353,9 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   margin-top: 8px;
+  /* Los paneles son desplegables: sin esto, abrir uno estiraría a su vecino de
+     fila hasta la misma altura. */
+  align-items: start;
 }
 
 @media (max-width: 900px) {
@@ -415,7 +418,45 @@
   gap: 16px;
   padding: 20px 22px;
   background: linear-gradient(135deg, rgba(126,107,255,0.08) 0%, rgba(84,69,216,0.05) 100%);
-  border-bottom: 1px solid rgba(126, 107, 255, 0.12);
+  /* Es el <summary> del desplegable: el filete sólo aparece con la lista abierta. */
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.labPanelHeader::-webkit-details-marker { display: none; }
+
+.labPanel[open] > .labPanelHeader {
+  border-bottom-color: rgba(126, 107, 255, 0.12);
+}
+
+.labPanelHeader:focus-visible {
+  outline: 2px solid #7E6BFF;
+  outline-offset: -2px;
+  border-radius: 18px;
+}
+
+.labChevron {
+  flex-shrink: 0;
+  color: #7E6BFF;
+  transition: transform 0.25s ease;
+}
+
+.labPanel[open] .labChevron { transform: rotate(180deg); }
+
+.labPanel[open] > .labExperiments {
+  animation: labDesplegar 0.25s ease;
+}
+
+@keyframes labDesplegar {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .labChevron { transition: none; }
+  .labPanel[open] > .labExperiments { animation: none; }
 }
 
 .labIconBox {
@@ -805,8 +846,11 @@
 }
 :global(.dark-mode) .labPanelHeader {
   background: rgba(255, 255, 255, 0.04);
+}
+:global(.dark-mode) .labPanel[open] > .labPanelHeader {
   border-bottom-color: rgba(255, 255, 255, 0.07);
 }
+:global(.dark-mode) .labChevron { color: #3b9edd; }
 :global(.dark-mode) .labPanelTitle { color: #f0eeff; }
 :global(.dark-mode) .labBadge {
   background: rgba(59, 158, 221, 0.15);

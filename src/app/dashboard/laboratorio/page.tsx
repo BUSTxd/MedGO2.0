@@ -260,13 +260,16 @@ export default async function LaboratorioPage() {
 
       <div className={styles.labSections}>
         {paneles.map(({ topic, required, abierto, enObra }) => (
-          <div
+          // Desplegable nativo (<details>): en reposo sólo se ve la cabecera del
+          // curso y la lista se abre al pulsarla. Sin estado de cliente, así la
+          // página sigue siendo RSC.
+          <details
             key={topic.id}
             className={`${styles.labPanel} ${abierto ? '' : styles.labPanelBloqueado} ${
               enObra ? styles.labPanelObra : ''
             }`}
           >
-            <div className={styles.labPanelHeader}>
+            <summary className={styles.labPanelHeader}>
               <div className={styles.labIconBox}>{topic.icon}</div>
               <div className={styles.labPanelInfo}>
                 <h3 className={styles.labPanelTitle}>{topic.title}</h3>
@@ -288,7 +291,10 @@ export default async function LaboratorioPage() {
                   ))}
                 </div>
               </div>
-            </div>
+              <svg className={styles.labChevron} width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </summary>
             <div className={styles.labExperiments}>
               {topic.experiments.map((exp) => {
                 // Un laboratorio `gratis` dentro de un panel bloqueado: el panel
@@ -346,7 +352,7 @@ export default async function LaboratorioPage() {
                 <ConstruccionIcon />
               </span>
             )}
-          </div>
+          </details>
         ))}
       </div>
     </>
