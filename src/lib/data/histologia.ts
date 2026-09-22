@@ -37,6 +37,14 @@ export type HistoCurso = {
   /** ícono a color para la tarjeta del listado */
   iconColor: ReactNode;
   clases: HistoClase[];
+  /** Clases de histología del sílabo del curso, enlazadas desde el atlas. */
+  clasesCurso?: HistoClaseCurso[];
+};
+
+export type HistoClaseCurso = {
+  codigo: string;
+  titulo: string;
+  href: string;
 };
 
 export const HISTO_CURSOS: HistoCurso[] = [
@@ -108,6 +116,18 @@ export const HISTO_CURSOS: HistoCurso[] = [
       { slug: 'timo', titulo: 'Timo' },
       { slug: 'ganglio-linfatico', titulo: 'Ganglio linfático' },
       { slug: 'bazo', titulo: 'Bazo' },
+    ],
+    clasesCurso: [
+      {
+        codigo: 'H1',
+        titulo: 'Timo y tejido linfoide asociado a mucosas',
+        href: '/dashboard/cursos/inmunologia/h-1',
+      },
+      {
+        codigo: 'H2',
+        titulo: 'Órganos linfoides secundarios: bazo y ganglios linfáticos',
+        href: '/dashboard/cursos/inmunologia/h-2',
+      },
     ],
   },
   {

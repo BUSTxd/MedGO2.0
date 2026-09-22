@@ -123,6 +123,24 @@ export default function HistoCursoPage() {
         </div>
       </div>
 
+      {cursoData.clasesCurso && cursoData.clasesCurso.length > 0 && (
+        <section className={styles.clasesCurso}>
+          <h3 className={styles.seccionLabel}>Clases del curso</h3>
+          <div className={styles.claseGrid}>
+            {cursoData.clasesCurso.map((cl) => (
+              <Link key={cl.href} href={cl.href} className={styles.claseCard}>
+                <span className={styles.claseNum}>{cl.codigo}</span>
+                <span className={styles.claseInfo}>
+                  <span className={styles.claseTitle}>{cl.titulo}</span>
+                  <span className={styles.claseSub}>Resumen y material de la práctica</span>
+                </span>
+                <span className={styles.claseChevron}>›</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* ─── Barra de filtros ─── */}
       {hayFotos && (
         <div className={styles.filterBar}>
@@ -221,6 +239,7 @@ export default function HistoCursoPage() {
           <p className={styles.emptyTitle}>Sin imágenes aún</p>
           <p className={styles.emptySub}>
             Las preparaciones de este curso se publicarán próximamente.
+            {cursoData.clasesCurso?.length ? ' Mientras tanto, repasa sus clases de arriba.' : ''}
           </p>
         </div>
       )}

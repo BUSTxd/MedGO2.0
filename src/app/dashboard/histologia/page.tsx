@@ -24,7 +24,10 @@ export default function HistologiaPage() {
               <span className={styles.cursoIconWrap}>{c.iconColor}</span>
             </div>
             <h3 className={styles.cursoName}>{c.nombre}</h3>
-            <p className={styles.cursoMeta}>Atlas filtrable · {c.clases.length} clases de preparaciones</p>
+            <p className={styles.cursoMeta}>
+              Atlas filtrable · {c.clases.length} clases de preparaciones
+              {c.clasesCurso?.length ? ` · ${c.clasesCurso.length} clases con resumen` : ''}
+            </p>
             <span className={styles.cursoEnter}>Abrir atlas →</span>
           </Link>
         ))}

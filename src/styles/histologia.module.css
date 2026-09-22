@@ -189,6 +189,20 @@
 }
 
 .claseInfo { flex: 1; min-width: 0; }
+.claseInfo .claseTitle,
+.claseInfo .claseSub { display: block; }
+
+.clasesCurso { margin-bottom: 28px; }
+
+.seccionLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #718096;
+  margin: 0 0 10px;
+}
+:global(.dark-mode) .seccionLabel { color: rgba(240, 238, 255, 0.45); }
 
 .claseTitle {
   font-size: 16px;
