@@ -11,6 +11,7 @@ import { canalBuzon, canalBuzonAdmin } from '@/lib/presencia';
 
 export const MAX_TITULO = 120;
 export const MAX_CUERPO = 2000;
+export const MAX_RESPUESTA = 500;
 
 export interface Respuesta {
   id: string;
@@ -97,17 +98,77 @@ export async function responder(userId: string, mensajeId: string, cuerpo: strin
     .select('id, cuerpo, created_at, leido_admin_at')
     .single();
   if (error || !data) throw new Error(error?.message ?? 'insert vacío');
+  // Responder cierra el hilo. Los mensajes son una cola y la tarjeta sólo
+  // enseña el primero: uno respondido pero abierto tapaba a los que llegaran
+  // después, que parecían no llegar hasta recargar.
+  await db().from('mensajes').update({ cerrado_at: new Date().toISOString() })
+    .eq('id', mensajeId).eq('user_id', userId).is('cerrado_at', null);
   await avisar(canalBuzonAdmin());
   return data as Respuesta;
 }
 
-/** Bandeja del admin: todos los mensajes enviados, con sus respuestas. */
-export async function bandeja(): Promise<Mensaje[]> {
+/**
+ * El mismo mensaje a todo el mundo. Un insert en lote (no uno por usuario) y
+ * los avisos de Realtime en paralelo: si alguno falla, el mensaje ya está
+ * guardado y lo verá al entrar.
+ */
+export async function difundir(titulo: string, cuerpo: string): Promise<number> {
+  // `listUsers` pagina: sin recorrerlo entero, la difusión dejaría fuera a los
+  // alumnos de la segunda página en cuanto pasen de `POR_PAGINA`, y en silencio.
+  const POR_PAGINA = 1000;
+  const auth = createAdminClient().auth.admin;
+  const ids: string[] = [];
+  for (let page = 1; ; page++) {
+    const { data, error } = await auth.listUsers({ page, perPage: POR_PAGINA });
+    if (error) throw new Error(`listUsers: ${error.message}`);
+    ids.push(...data.users.map(u => u.id));
+    if (data.users.length < POR_PAGINA) break;
+  }
+  if (ids.length === 0) return 0;
+
+  const { data: filas, error: errInsert } = await db()
+    .from('mensajes')
+    .insert(ids.map(user_id => ({ user_id, titulo, cuerpo })))
+    .select('user_id');
+  if (errInsert) throw new Error(errInsert.message);
+
+  // En tandas: un `httpSend` por alumno a la vez abriría tantas peticiones como
+  // usuarios haya. El mensaje ya está guardado, así que un aviso perdido sólo
+  // retrasa la tarjeta hasta que el alumno vuelva a cargar el dashboard.
+  const destinos = (filas ?? []).map(f => (f as { user_id: string }).user_id);
+  for (let i = 0; i < destinos.length; i += 25) {
+    await Promise.allSettled(destinos.slice(i, i + 25).map(id => avisar(canalBuzon(id))));
+  }
+  await avisar(canalBuzonAdmin());
+  return destinos.length;
+}
+
+/**
+ * Vacía la bandeja para no acumular filas en Supabase. Las respuestas caen
+ * solas: `mensajes_respuestas.mensaje_id` es `on delete cascade`.
+ */
+export async function borrarMensajes(modo: 'cerrados' | 'todos'): Promise<number> {
+  const q = db().from('mensajes').delete({ count: 'exact' });
+  // `delete` sin filtro no borra nada, así que «todos» necesita uno que se cumpla siempre.
+  const { count, error } = modo === 'cerrados'
+    ? await q.not('cerrado_at', 'is', null)
+    : await q.neq('id', '00000000-0000-0000-0000-000000000000');
+  if (error) throw new Error(error.message);
+  await avisar(canalBuzonAdmin());
+  return count ?? 0;
+}
+
+/**
+ * Bandeja del admin: los mensajes enviados con sus respuestas. La vista se
+ * queda en los 200 últimos, pero la descarga previa a vaciar los pide todos:
+ * exportar de menos antes de un borrado definitivo sería perder respuestas.
+ */
+export async function bandeja(completa = false): Promise<Mensaje[]> {
   const { data, error } = await db()
     .from('mensajes')
     .select(COLUMNAS)
     .order('created_at', { ascending: false })
-    .limit(200);
+    .limit(completa ? 10_000 : 200);
   if (error) throw new Error(error.message);
   return (data ?? []) as Mensaje[];
 }
@@ -129,9 +190,38 @@ export async function contarNuevas(): Promise<number> {
   return count ?? 0;
 }
 
-/** Texto de un formulario: recortado y dentro del límite, o null si no sirve. */
+// Controles (salvo tabulador y salto), C1, zero-width, overrides de dirección
+// bidi y BOM. No hace falta escapar HTML: React escapa el texto al pintarlo y
+// ningún visor de mensajes usa `dangerouslySetInnerHTML`; lo que sí cuela por
+// ahí es texto que se LEE distinto de lo que es (bidi, invisibles).
+const INVISIBLES = /[\u0000-\u0008\u000B-\u001F\u007F-\u009F​-‍‪-‮⁦-⁩﻿]/g;
+
+/** Texto de un formulario: saneado y dentro del límite, o null si no sirve. */
 export function textoValido(v: unknown, max: number): string | null {
   if (typeof v !== 'string') return null;
-  const t = v.trim();
+  const t = v
+    .normalize('NFC')
+    .replace(INVISIBLES, '')
+    .replace(/\r\n?/g, '\n')
+    .replace(/[ \t]+$/gm, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
   return t.length > 0 && t.length <= max ? t : null;
+}
+
+/**
+ * Freno contra la ráfaga: 5 respuestas por minuto y alumno. Vive en la memoria
+ * del proceso, así que en serverless cada instancia lleva su propia cuenta —
+ * no es una cuota exacta, pero corta el bucle accidental sin gastar una tabla.
+ */
+const RAFAGA = new Map<string, number[]>();
+
+export function pasaElFreno(userId: string, limite = 5, ventanaMs = 60_000): boolean {
+  const ahora = Date.now();
+  if (RAFAGA.size > 5_000) RAFAGA.clear(); // techo de memoria: el peor caso es un minuto de gracia
+  const recientes = (RAFAGA.get(userId) ?? []).filter(t => ahora - t < ventanaMs);
+  RAFAGA.set(userId, recientes);
+  if (recientes.length >= limite) return false;
+  recientes.push(ahora);
+  return true;
 }

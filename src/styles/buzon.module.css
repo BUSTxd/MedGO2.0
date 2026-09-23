@@ -78,6 +78,18 @@
   color: var(--b-acc);
 }
 
+/* «1 de 3»: hay más esperando detrás de esta tarjeta. */
+.cola {
+  margin-left: auto;
+  /* Deja libre la X, que flota encima de esta franja. */
+  margin-right: 26px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(var(--b-acc-rgb), 0.14);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+}
+
 .titulo {
   margin: 0 30px 8px 0;
   font-size: 18px;
@@ -138,6 +150,19 @@
 }
 .campo::placeholder { color: var(--b-suave); opacity: 0.8; }
 .campo:focus { outline: 2px solid rgba(var(--b-acc-rgb), 0.5); outline-offset: 1px; }
+
+.campo[readonly] { opacity: 0.6; cursor: default; }
+
+.cuenta {
+  margin: 4px 2px 0;
+  text-align: right;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--b-suave);
+  transition: color 0.15s;
+}
+.cuentaTope { color: #d64045; font-weight: 700; }
+:global(.dark-mode) .cuentaTope { color: #ff8b8f; }
 
 .error { margin: 6px 0 0; font-size: 12.5px; color: #d64045; }
 

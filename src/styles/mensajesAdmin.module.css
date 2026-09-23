@@ -98,13 +98,145 @@
 }
 .primario { border: none; background: #6c63c9; color: #fff; }
 .primario:disabled { opacity: 0.45; cursor: default; }
-.secundario { border: 1px solid #cbd5e1; background: transparent; color: #475569; }
+.secundario {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #cbd5e1;
+  background: transparent;
+  color: #475569;
+}
 :global(body.dark-mode) .secundario { border-color: #334155; color: #cbd5e1; }
+.secundario:disabled { opacity: 0.5; cursor: default; }
+
+/* ─── Descargar la bandeja ───────────────────────────────────────────────
+   El borrado no tiene vuelta atrás, así que la copia va donde se decide
+   borrar (dentro del modal) además de en la cabecera. ─────────────────── */
+
+.iconoBoton {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: transparent;
+  color: #475569;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.iconoBoton:hover:not(:disabled) { background: #f1f5f9; color: #1e293b; border-color: #94a3b8; }
+.iconoBoton:disabled { opacity: 0.5; cursor: default; }
+:global(body.dark-mode) .iconoBoton { border-color: #334155; color: #cbd5e1; }
+:global(body.dark-mode) .iconoBoton:hover:not(:disabled) { background: #1e293b; color: #f1f5f9; border-color: #475569; }
+
+/* La papelera se tiñe de rojo sólo al apuntarla: en reposo no debe gritar más
+   que la descarga, pero al ir a pulsarla tiene que quedar claro cuál es. */
+.iconoPeligro:hover:not(:disabled) { background: rgba(214, 64, 69, 0.08); color: #c0343a; border-color: rgba(214, 64, 69, 0.45); }
+:global(body.dark-mode) .iconoPeligro:hover:not(:disabled) { background: rgba(214, 64, 69, 0.16); color: #f2777c; border-color: rgba(214, 64, 69, 0.5); }
+
+.opcionCopia { border-color: rgba(59, 158, 221, 0.4); background: rgba(59, 158, 221, 0.06); }
+:global(body.dark-mode) .opcionCopia { border-color: rgba(59, 158, 221, 0.35); background: rgba(59, 158, 221, 0.08); }
 
 .hecho { text-align: center; padding: 8px 0 4px; }
 .hechoTitulo { margin: 0 0 6px; font-size: 17px; font-weight: 800; color: #2ea057; }
 .hechoTexto { margin: 0 0 16px; font-size: 13.5px; line-height: 1.55; color: #64748b; }
 :global(body.dark-mode) .hechoTexto { color: #94a3b8; }
+
+/* ─── Difusión: mismo modal, acento naranja para que no se confunda con el envío
+       a una sola persona, que es lo reversible. ─── */
+
+.kickerDifusion { color: #c2740a; }
+:global(body.dark-mode) .kickerDifusion { color: #f5a623; }
+
+.difusion {
+  padding: 9px 18px;
+  border: none;
+  border-radius: 10px;
+  background: #d98307;
+  color: #fff;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.difusion:disabled { opacity: 0.45; cursor: default; }
+.difusion:hover:not(:disabled) { filter: brightness(1.06); }
+
+.confirmar { padding-top: 2px; }
+
+.confirmarAviso {
+  margin: 0 0 14px;
+  padding: 11px 13px;
+  border-radius: 10px;
+  border: 1px solid rgba(217, 131, 7, 0.3);
+  background: rgba(245, 166, 35, 0.1);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #7c4a06;
+}
+.confirmarAviso strong { font-weight: 800; }
+:global(body.dark-mode) .confirmarAviso { color: #fbd58c; border-color: rgba(245, 166, 35, 0.28); }
+
+.previo {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  max-height: 32vh;
+  overflow-y: auto;
+}
+:global(body.dark-mode) .previo { border-color: #334155; }
+
+.previoTitulo { margin: 0 0 6px; font-size: 14.5px; font-weight: 800; color: #0f172a; }
+:global(body.dark-mode) .previoTitulo { color: #f1f5f9; }
+.previoCuerpo { margin: 0; font-size: 13.5px; line-height: 1.55; white-space: pre-line; color: #475569; }
+:global(body.dark-mode) .previoCuerpo { color: #cbd5e1; }
+
+/* ─── Vaciado de la bandeja ─── */
+
+.vaciarTexto { margin: 0 0 14px; font-size: 13.5px; line-height: 1.55; color: #64748b; }
+.vaciarTexto strong { color: #d64045; font-weight: 700; }
+:global(body.dark-mode) .vaciarTexto { color: #94a3b8; }
+:global(body.dark-mode) .vaciarTexto strong { color: #f87171; }
+
+.opcion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 10px;
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+:global(body.dark-mode) .opcion { border-color: #334155; }
+
+.opcionGrave { border-color: rgba(214, 64, 69, 0.35); background: rgba(214, 64, 69, 0.05); }
+:global(body.dark-mode) .opcionGrave { border-color: rgba(248, 113, 113, 0.32); background: rgba(248, 113, 113, 0.07); }
+
+.opcionTitulo { margin: 0 0 3px; font-size: 14px; font-weight: 700; color: #0f172a; }
+:global(body.dark-mode) .opcionTitulo { color: #f1f5f9; }
+.opcionTexto { margin: 0; font-size: 12.5px; line-height: 1.5; color: #64748b; }
+:global(body.dark-mode) .opcionTexto { color: #94a3b8; }
+
+.peligro {
+  flex-shrink: 0;
+  padding: 9px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #d64045;
+  color: #fff;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.peligro:disabled { opacity: 0.45; cursor: default; }
+.peligro:hover:not(:disabled) { filter: brightness(1.06); }
+
+.secundario:disabled { opacity: 0.45; cursor: default; }
 
 /* ─── Bandeja ─── */
 
@@ -154,7 +286,70 @@
 
 .vacio { margin: 0; font-size: 13.5px; color: #94a3b8; }
 
-.hilos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.bandejaBotones { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Confirmación de lo que acaba de borrarse o enviarse. */
+.hechoAviso {
+  margin: 0 0 12px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  border: 1px solid rgba(46, 160, 87, 0.3);
+  background: rgba(46, 160, 87, 0.09);
+  font-size: 13px;
+  font-weight: 600;
+  color: #24713f;
+}
+:global(body.dark-mode) .hechoAviso { color: #5fd38a; border-color: rgba(95, 211, 138, 0.3); }
+
+/* La bandeja guarda hasta 200 hilos: sin tope se lleva la página entera y hay
+   que bajar por todos ellos para llegar a lo que sigue. */
+.hilosCaja { position: relative; }
+
+.hilos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 60vh;
+  overflow-y: auto;
+  /* Sitio para el desvanecido, que si no taparía el último hilo. */
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+:global(body.dark-mode) .hilos { scrollbar-color: #475569 transparent; }
+
+.hilos::-webkit-scrollbar { width: 8px; }
+.hilos::-webkit-scrollbar-track { background: transparent; }
+.hilos::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+.hilos::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+:global(body.dark-mode) .hilos::-webkit-scrollbar-thumb { background: #475569; }
+:global(body.dark-mode) .hilos::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+/* Sólo cuando queda algo por debajo: `.hayMas` lo pone el componente al medir. */
+.hilosCaja::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 8px;
+  bottom: 0;
+  height: 44px;
+  border-radius: 0 0 10px 10px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff 82%);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+}
+.hayMas::after { opacity: 1; }
+:global(body.dark-mode) .hilosCaja::after {
+  background: linear-gradient(to bottom, rgba(30, 41, 59, 0), #1e293b 82%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hilosCaja::after { transition: none; }
+}
 
 .hilo {
   padding: 12px 14px;

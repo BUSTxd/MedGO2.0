@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { abiertosDe, cerrar, marcarVisto, responder, textoValido, MAX_CUERPO } from '@/lib/mensajes-server';
+import { abiertosDe, cerrar, marcarVisto, pasaElFreno, responder, textoValido, MAX_RESPUESTA } from '@/lib/mensajes-server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -40,7 +40,10 @@ export async function POST(req: NextRequest) {
     return new NextResponse(null, { status: 204 });
   }
   if (body.accion === 'responder') {
-    const cuerpo = textoValido(body.cuerpo, MAX_CUERPO);
+    if (!pasaElFreno(user.id)) {
+      return NextResponse.json({ error: 'demasiadas respuestas seguidas' }, { status: 429 });
+    }
+    const cuerpo = textoValido(body.cuerpo, MAX_RESPUESTA);
     if (!cuerpo) return NextResponse.json({ error: 'respuesta vacía o demasiado larga' }, { status: 400 });
     const respuesta = await responder(user.id, id, cuerpo);
     if (!respuesta) return NextResponse.json({ error: 'not_found' }, { status: 404 });
