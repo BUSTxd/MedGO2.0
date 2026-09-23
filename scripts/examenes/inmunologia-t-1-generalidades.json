@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-1-generalidades",
+  "title": "T1 — Generalidades del sistema inmune",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Cuál es la función esencial del sistema inmune?",
+      "respuesta": "Reconocer lo que es propio del cuerpo y eliminar lo que no lo es.",
+      "detalle": "Es el **conjunto de células, tejidos y órganos** que protege contra agentes extraños: **virus, bacterias, parásitos** y también **células dañadas o cancerosas**.",
+      "tema": "generalidades",
+      "seccion": "Clase 1: Generalidades"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Cuáles son los órganos linfoides primarios y qué ocurre en ellos?",
+      "respuesta": "La médula ósea y el timo: allí nacen y maduran las células inmunitarias.",
+      "detalle": "Se diferencian de los **secundarios**, que es donde esas células ya maduras **se activan** frente al antígeno.",
+      "tema": "organos-primarios",
+      "seccion": "¿Dónde se encuentra?"
+    },
+    {
+      "id": "f03",
+      "frente": "Inmunidad innata: ¿cómo es en cuanto a velocidad y especificidad?",
+      "respuesta": "Rápida pero no específica: actúa igual contra cualquier invasor.",
+      "detalle": "Es la **primera línea de defensa**. Incluye la **piel**, glóbulos blancos como **neutrófilos** y **macrófagos**, y las **proteínas inflamatorias**.",
+      "tema": "generalidades",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Qué dos rasgos definen a la inmunidad adaptativa (adquirida)?",
+      "respuesta": "Es específica (reconoce a cada patógeno en particular) y tiene memoria del encuentro.",
+      "detalle": "Por eso quien tuvo **varicela** de niño normalmente no vuelve a enfermar: el cuerpo \"memorizó\" el virus.",
+      "tema": "generalidades",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "f05",
+      "frente": "Inmunidad humoral: ¿qué linfocito responde, contra qué microorganismos y con qué fin?",
+      "respuesta": "El linfocito B; frente a extracelulares, sus anticuerpos bloquean la infección y eliminan al microorganismo.",
+      "detalle": "Su mecanismo efector es el **anticuerpo secretado**, por eso se **transfiere con el suero**.",
+      "tema": "generalidades",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "f06",
+      "frente": "Inmunidad celular frente a microorganismos fagocitados: ¿qué linfocito actúa y qué hace?",
+      "respuesta": "El linfocito T helper: activa a los macrófagos para que eliminen lo que fagocitaron.",
+      "detalle": "Es una de las dos ramas de la **inmunidad mediada por células**; la otra es la del **T citotóxico** frente a microorganismos intracelulares.",
+      "tema": "generalidades",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Qué es una alergia?",
+      "respuesta": "Una respuesta inmune exagerada ante sustancias inofensivas como polen, frutos secos o ácaros.",
+      "detalle": "Ejemplo real: el **estornudo y la picazón de ojos** en primavera por el polen.",
+      "tema": "hipersensibilidad",
+      "seccion": "Hiperinmunidad e inmunodeficiencia"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Qué ocurre en una enfermedad autoinmune? Da el ejemplo del resumen.",
+      "respuesta": "El sistema inmune confunde tejidos propios con extraños; p. ej., diabetes tipo 1.",
+      "detalle": "En la **diabetes tipo 1** el sistema inmune **destruye las células productoras de insulina**.",
+      "tema": "autoinmunidad",
+      "seccion": "Hiperinmunidad e inmunodeficiencia"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Cuáles son los órganos linfoides secundarios y qué ocurre en ellos?",
+      "respuesta": "Ganglios linfáticos, bazo y amígdalas: allí se activan las defensas.",
+      "tema": "organos-secundarios",
+      "seccion": "¿Dónde se encuentra?"
+    },
+    {
+      "id": "f10",
+      "frente": "Inmunodeficiencia: ¿qué es y cuál es el ejemplo clásico?",
+      "respuesta": "Defensas débiles o ausentes; p. ej., VIH/SIDA, que destruye los linfocitos T.",
+      "detalle": "Sin linfocitos T el cuerpo **queda vulnerable a infecciones**.",
+      "tema": "inmunodeficiencias",
+      "seccion": "Hiperinmunidad e inmunodeficiencia"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Qué barreras físicas forman la primera línea de defensa?",
+      "respuesta": "Piel, mucosas, saliva, lágrimas y ácido gástrico.",
+      "tema": "barreras",
+      "seccion": "¿Dónde se encuentra?"
+    },
+    {
+      "id": "f12",
+      "frente": "Te cortas un dedo y la zona se pone roja e hinchada: ¿qué respuesta es y qué logra?",
+      "respuesta": "La inflamación, una respuesta innata que trae células defensivas al sitio del daño.",
+      "tema": "inflamacion",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Quiénes son los protagonistas de la inmunidad adaptativa y qué hace cada uno?",
+      "respuesta": "Linfocitos T: ayudan y destruyen células infectadas; linfocitos B: producen anticuerpos.",
+      "detalle": "Los **anticuerpos** son proteínas que **se fijan a los gérmenes**.",
+      "tema": "generalidades",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "f14",
+      "frente": "Linfocito T citotóxico: ¿frente a qué microorganismos actúa y cuál es su función?",
+      "respuesta": "Frente a intracelulares (p. ej., virus replicándose): mata la célula infectada y elimina el reservorio.",
+      "detalle": "Es la segunda rama de la **inmunidad mediada por células**, junto a la del **T helper** que activa macrófagos.",
+      "tema": "generalidades",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "f15",
+      "frente": "¿A través de qué se transfiere la inmunidad humoral y a través de qué la celular?",
+      "respuesta": "La humoral, con el suero (anticuerpos); la celular, con células (linfocitos T).",
+      "detalle": "El efector humoral es una **molécula soluble**; el celular exige transferir los **propios linfocitos T** (helper o citotóxicos).",
+      "tema": "generalidades",
+      "seccion": "Tipos de inmunidad"
+    }
+  ]
+}

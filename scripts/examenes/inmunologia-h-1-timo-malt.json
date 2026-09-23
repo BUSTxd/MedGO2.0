@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "key": "inmunologia/h-1-timo-malt",
+  "title": "H1 — Timo y tejido linfoide asociado a mucosas",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Qué tipo de órgano linfoide es el timo y qué madura en él?",
+      "respuesta": "Un órgano linfoide primario: ahí maduran los linfocitos T.",
+      "detalle": "Los precursores llegan desde la médula ósea y salen del timo como **LT maduros naive** tras la **selección positiva** (corteza) y la **selección negativa** (médula).",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f02",
+      "frente": "Al H-E, ¿cómo se distinguen la corteza y la médula del lobulillo tímico?",
+      "respuesta": "Corteza oscura (basófila), llena de LT inmaduros; médula clara, con menos LT inmaduros.",
+      "detalle": "La corteza es oscura porque está **densamente poblada de timocitos** (núcleos basófilos); en ella hay además **macrófagos** y los **capilares corticales** de la barrera hematotímica.",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Qué función cumplen las células epitelio-reticulares tipo I?",
+      "respuesta": "Forman parte de la barrera hematotímica en la corteza.",
+      "detalle": "Son células **escamosas (planas)** que **sellan el contacto entre la sangre y los linfocitos inmaduros**. Núcleo más claro con un nucléolo, ovales y más grandes.",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f04",
+      "frente": "Células epitelio-reticulares tipo II: ¿qué función tienen y en qué selección participan?",
+      "respuesta": "Son presentadoras de antígeno (MHC I y MHC II) de la corteza: participan en la selección positiva.",
+      "detalle": "Son **esteladas**, forman **citorretículos** unidos por **desmosomas** donde se alojan timocitos y macrófagos, y secretan **IL-7 → linfopoyesis**.",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué componentes forman la barrera hematotímica?",
+      "respuesta": "Endotelio continuo no fenestrado, pericitos, lámina basal, macrófagos y células epitelio-reticulares tipo I.",
+      "detalle": "Los **macrófagos** fagocitan los antígenos que escapen del endotelio, y la **matriz extracelular** (fibras reticulares + lámina basal conjunta) refuerza la barrera. Protege a los timocitos corticales de antígenos circulantes.",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Qué células epitelio-reticulares hacen la selección negativa y qué gen expresan?",
+      "respuesta": "Las tipo V, células epiteliales tímicas medulares (mTEC), que expresan AIRE.",
+      "detalle": "Forman un **citorretículo** de prolongaciones unidas por **desmosomas** (red más laxa que en la corteza), entre linfocitos T y macrófagos.",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Qué son los corpúsculos de Hassall?",
+      "respuesta": "Células epitelio-reticulares tipo VI de la médula: acidófilas, aplanadas, concéntricas y queratinizadas en el centro.",
+      "detalle": "Tienen **diferenciación escamosa**. Secretan citocinas como **TSLP**, que favorecen la diferenciación de **linfocitos T reguladores (Treg)**: papel clave en la **tolerancia central**.",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Con qué fenotipo ingresan los timocitos a la selección positiva?",
+      "respuesta": "Como dobles positivos (DP): CD4⁺ CD8⁺.",
+      "detalle": "Interactúan con las **cTEC**, que les presentan **péptidos propios en MHC I y MHC II**; al terminar salen como **simples positivos** (CD4⁺ o CD8⁺).",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué hace el factor de transcripción AIRE en las mTEC?",
+      "respuesta": "Hace que expresen genes de múltiples tejidos periféricos: proteínas «de todo el cuerpo».",
+      "detalle": "Así se pueden presentar **antígenos propios de otros órganos** a los timocitos simples positivos y eliminar a los que los reconocen con **alta afinidad**.",
+      "tema": "tolerancia"
+    },
+    {
+      "id": "f10",
+      "frente": "¿Qué función tienen los vasos de la unión corticomedular?",
+      "respuesta": "Son vénulas poscapilares por donde salen los linfocitos T maduros.",
+      "detalle": "Tienen **lumen amplio** y núcleos endoteliales que **sobresalen hacia la luz**. La unión corticomedular marca la transición entre LT **inmaduros y proliferativos** (corteza) y **maduros y seleccionados** (médula).",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Cómo está organizado el timo a partir de su cápsula?",
+      "respuesta": "La cápsula de tejido conectivo emite septos o trabéculas que lo dividen en lobulillos con corteza y médula.",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Qué tipo de vasos linfáticos tiene el timo?",
+      "respuesta": "Solo linfáticos eferentes.",
+      "detalle": "El timo **no recibe linfa aferente**: no filtra antígenos como el ganglio; es un órgano de **maduración**, no de respuesta.",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Qué función tiene la IL-7 secretada por las células epitelio-reticulares tipo II?",
+      "respuesta": "Estimula la linfopoyesis: la proliferación y supervivencia de los timocitos.",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Dónde están las células epitelio-reticulares tipo III y IV y qué marcan?",
+      "respuesta": "Tipo III en la corteza y tipo IV en la médula: marcan la barrera corticomedular.",
+      "detalle": "Separan la zona de LT **inmaduros y proliferativos** (corteza) de la de LT **maduros y seleccionados** (médula).",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f15",
+      "frente": "Selección positiva: ¿qué le pasa al timocito según el MHC que reconoce?",
+      "respuesta": "No reconoce MHC → apoptosis; reconoce MHC I → línea CD8⁺; reconoce MHC II → línea CD4⁺.",
+      "detalle": "Ocurre en la **corteza** con las **cTEC**. Es la **restricción por MHC propio**.",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Qué timocitos reciben señales de supervivencia en la selección positiva y adónde van?",
+      "respuesta": "Los que reconocen débilmente al MHC propio; pasan a la médula.",
+      "detalle": "Se busca una **interacción moderada** con el MHC: ni nula ni fuerte.",
+      "tema": "organos-primarios"
+    },
+    {
+      "id": "f17",
+      "frente": "Selección negativa: ¿qué le pasa al timocito según su afinidad por lo propio?",
+      "respuesta": "Alta afinidad → apoptosis (deleción clonal); afinidad intermedia → Treg; sin reconocimiento fuerte → sale como LT naive.",
+      "detalle": "Ocurre en la **médula** con las **mTEC (AIRE)**, sobre timocitos **simples positivos** (CD4⁺ o CD8⁺).",
+      "tema": "tolerancia"
+    }
+  ]
+}

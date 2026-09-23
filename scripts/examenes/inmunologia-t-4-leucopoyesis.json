@@ -1,0 +1,260 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-4-leucopoyesis",
+  "title": "T4 — Desarrollo de las células del sistema inmune (leucopoyesis)",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿De qué célula derivan todos los elementos formes de la sangre y dónde se encuentra?",
+      "respuesta": "De la célula madre hematopoyética multipotente (HSC), localizada en la médula ósea.",
+      "detalle": "La HSC da la **CFU-LM** (progenitor común linfoide-mieloide) → **CFU-GEMM** → **CFU-GM** → **CFU-G** (neutrófilos, eosinófilos, basófilos).",
+      "tema": "hematologia",
+      "seccion": "PRECURSORES"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Cuánto tarda un mieloblasto en convertirse en granulocito maduro?",
+      "respuesta": "12-14 días.",
+      "detalle": "Es el tiempo **desde que se identifica el mieloblasto** en la médula ósea hasta el **granulocito maduro**.",
+      "tema": "hematologia",
+      "seccion": "Distribución y cinética"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Qué factor de crecimiento dirige la diferenciación hacia neutrófilos?",
+      "respuesta": "El G-CSF.",
+      "detalle": "Es un factor del **estadio avanzado**: actúa sobre progenitores ya comprometidos, igual que **IL-5** (eosinófilos), **M-CSF** (monocitos) o **IL-4** (basófilos y mastocitos).",
+      "tema": "hematologia",
+      "seccion": "G-CSF"
+    },
+    {
+      "id": "f04",
+      "frente": "Mieloblasto: ¿qué relación N/C, cromatina y gránulos tiene?",
+      "respuesta": "N/C 3:1, cromatina fina poco condensada y, en general, sin gránulos.",
+      "detalle": "La cromatina fina indica **alta actividad transcripcional**. Citoplasma con **basofilia moderada** (rico en ARN); pueden verse raros gránulos azurófilos muy pequeños. Es el **2-5 %** de la médula ósea.",
+      "tema": "hematologia",
+      "seccion": "1) Mieloblasto"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué son los gránulos azurófilos del neutrófilo y qué contienen?",
+      "respuesta": "Son lisosomas (primarios), grandes y poco abundantes: mieloperoxidasa, hidrolasas ácidas y defensinas.",
+      "detalle": "Aparecen desde el **promielocito** y están **en todos los granulocitos** (no son específicos de una línea). La **MPO** es su enzima característica.",
+      "tema": "hematologia",
+      "seccion": "Gránulos azurófilos"
+    },
+    {
+      "id": "f06",
+      "frente": "Eosinófilo: ¿qué citocina es clave en su diferenciación y cuánto vive en sangre y en tejidos?",
+      "respuesta": "IL-5; vida media de 18 horas en circulación y 2-5 días en los tejidos.",
+      "detalle": "En tejidos se ubica sobre todo en el **epitelio respiratorio, gastrointestinal y genitourinario**. La vida media circulante **aumenta en la eosinofilia**.",
+      "tema": "hematologia",
+      "seccion": "II. Estadios de Maduración Eosinófilos"
+    },
+    {
+      "id": "f07",
+      "frente": "Basófilo: ¿qué frecuencia y vida media tiene, y qué influye en su desarrollo?",
+      "respuesta": "Es el menos frecuente (<1 %), vive unas 60 horas; influyen IL-3 y TSLP.",
+      "detalle": "**TSLP** = linfopoyetina del estroma tímico. Derivan de progenitores de la médula ósea y el bazo, y **completan su maduración en la médula ósea**.",
+      "tema": "hematologia",
+      "seccion": "III. Estadios de Maduración de Basófilos"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Por qué los monocitos pasan a la sangre en cuanto maduran y cuánto permanecen en ella?",
+      "respuesta": "Porque la médula ósea no tiene reserva de monocitos maduros; circulan unos 3 días.",
+      "detalle": "Es **a diferencia de los neutrófilos**, que **sí tienen una reserva** medular (el compartimento de maduración). La citocina principal de la línea es el **M-CSF**.",
+      "tema": "hematologia",
+      "seccion": "IV. Estadios de Maduración de Monocitos"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué rasgos del citoplasma identifican a la célula plasmática?",
+      "respuesta": "Citoplasma intensamente basófilo con una zona clara perinuclear (halo).",
+      "detalle": "Es el último estadio de la **línea linfoide B**. El halo corresponde al **aparato de Golgi**, muy desarrollado para secretar anticuerpos.",
+      "tema": "hematologia",
+      "seccion": "V. Estadios de Maduración Linfoide"
+    },
+    {
+      "id": "f10",
+      "frente": "¿A partir de qué estadio el granulocito deja de proliferar?",
+      "respuesta": "Desde el metamielocito: ya no se divide y empieza la diferenciación terminal.",
+      "detalle": "El **mielocito** es, por tanto, el **último estadio que prolifera**. El metamielocito se reconoce por su **núcleo en forma de riñón**.",
+      "tema": "hematologia",
+      "seccion": "Tabla comparativa › 4. Metamielocito"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Qué líneas celulares indica cada letra de la CFU-GEMM?",
+      "respuesta": "Granulocitos, Eritrocitos, Monocitos y Megacariocitos.",
+      "detalle": "Deriva de la **CFU-LM**. Su progenie mieloide sigue a **CFU-GM** (granulocitos y monocitos) y luego a **CFU-G**.",
+      "tema": "hematologia",
+      "seccion": "PRECURSORES"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Cuántos neutrófilos se producen al día?",
+      "respuesta": "Alrededor de 1 × 10⁹ células/kg/día.",
+      "tema": "hematologia",
+      "seccion": "Distribución y cinética"
+    },
+    {
+      "id": "f13",
+      "frente": "¿De qué tamaño son los compartimentos proliferativo y de maduración del neutrófilo en la médula?",
+      "respuesta": "Proliferativo ≈ 2 × 10⁹ células/kg; de maduración ≈ 5,6 × 10⁹ células/kg, que permanecen unos 5 días.",
+      "detalle": "El **compartimento de maduración** (postmitótico) es la **reserva medular** de neutrófilos, casi el triple que el proliferativo.",
+      "tema": "hematologia",
+      "seccion": "Distribución y cinética"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Qué factor actúa sobre las células madre hematopoyéticas y cuál es su receptor?",
+      "respuesta": "El SCF (stem cell factor), a través del receptor c-Kit.",
+      "detalle": "Es un factor del **estadio inicial** de la hematopoyesis.",
+      "tema": "hematologia",
+      "seccion": "SCF"
+    },
+    {
+      "id": "f15",
+      "frente": "En el estadio inicial, ¿qué factores actúan sobre los progenitores hematopoyéticos, mieloides y linfoides?",
+      "respuesta": "IL-3/IL-6/IL-11/IL-12 sobre los hematopoyéticos, GM-CSF sobre los mieloides e IL-7 sobre los linfoides.",
+      "tema": "hematologia",
+      "seccion": "IL-3"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Sobre qué células actúan IL-4, M-CSF, EPO y TPO?",
+      "respuesta": "IL-4: basófilos y mastocitos; M-CSF: monocitos/macrófagos; EPO: precursores eritroides; TPO: megacariocitos.",
+      "detalle": "**EPO** → eritrocitos; **TPO** → megacariocitos → **plaquetas**. Todos son factores del **estadio avanzado**.",
+      "tema": "hematologia",
+      "seccion": "IL-4"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Qué efectos tiene el TNF sobre la hematopoyesis?",
+      "respuesta": "Inhibe la expansión de las HSC y la proliferación y diferenciación de los progenitores de granulocitos.",
+      "detalle": "Al mismo tiempo favorece la **supervivencia de los monocitos**.",
+      "tema": "hematologia",
+      "seccion": "Citoquinas y Factores de Crecimiento"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Qué diferencia hay entre la exposición aguda y la crónica de las HSC al IFN?",
+      "respuesta": "Aguda: salen de la quiescencia, ciclan y se diferencian con sesgo mieloide. Crónica: daño del ADN y apoptosis.",
+      "detalle": "La exposición crónica **compromete la autorrenovación** de las HSC.",
+      "tema": "hematologia",
+      "seccion": "Citoquinas y Factores de Crecimiento"
+    },
+    {
+      "id": "f19",
+      "frente": "Promielocito: ¿qué gránulos aparecen y qué marca este estadio?",
+      "respuesta": "Aparecen los gránulos azurófilos (primarios); marca la transición del blasto sin gránulos a célula granulocítica.",
+      "detalle": "Relación **N/C ~2:1**. Es una etapa de **síntesis activa de proteínas y enzimas lisosomales**. Los gránulos azurófilos **no son específicos**: están en las tres líneas granulocíticas.",
+      "tema": "hematologia",
+      "seccion": "2) Promielocito"
+    },
+    {
+      "id": "f20",
+      "frente": "¿En qué estadio aparecen los gránulos secundarios (específicos) del neutrófilo?",
+      "respuesta": "En el mielocito.",
+      "detalle": "Mielocito: **núcleo redondo a ovalado** y **citoplasma ligeramente basófilo**; es el **5-19 %** de la médula ósea.",
+      "tema": "hematologia",
+      "seccion": "3) Mielocito"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Cómo se reconoce la célula en banda y cuánto representa en sangre periférica?",
+      "respuesta": "Núcleo en banda con forma de C; 0-5 % en sangre periférica.",
+      "detalle": "Citoplasma **azul pálido a rosa**.",
+      "tema": "hematologia",
+      "seccion": "5) Célula en banda"
+    },
+    {
+      "id": "f22",
+      "frente": "Neutrófilo segmentado: ¿cómo es su núcleo y qué porcentaje de la sangre periférica ocupa?",
+      "respuesta": "Núcleo con 3-5 lóbulos y cromatina en grumos gruesos; 50-70 % en sangre periférica.",
+      "detalle": "Citoplasma **rosa pálido**.",
+      "tema": "hematologia",
+      "seccion": "Neutrófilo maduro segmentado"
+    },
+    {
+      "id": "f23",
+      "frente": "Gránulos específicos (secundarios) del neutrófilo: ¿cómo son y qué contienen?",
+      "respuesta": "Más pequeños y el doble de abundantes que los azurófilos: lisozima, lactoferrina, colagenasa IV y fosfolipasa.",
+      "detalle": "También llevan **activadores del complemento** y otros **péptidos antimicrobianos**.",
+      "tema": "hematologia",
+      "seccion": "Gránulos específicos"
+    },
+    {
+      "id": "f24",
+      "frente": "¿Qué contienen los gránulos terciarios del neutrófilo y para qué sirven?",
+      "respuesta": "Fosfatasas y metaloproteinasas (colagenasas, gelatinasas), que degradan la matriz extracelular.",
+      "tema": "hematologia",
+      "seccion": "Gránulos terciarios"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Cuánto tarda el eosinófilo desde la última mitosis del mielocito hasta ser maduro en la médula?",
+      "respuesta": "3,5 días.",
+      "tema": "hematologia",
+      "seccion": "II. Estadios de Maduración Eosinófilos"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Qué proteínas llevan los gránulos específicos del eosinófilo y de qué color se tiñen?",
+      "respuesta": "Proteína básica mayor, proteína catiónica eosinofílica y peroxidasa eosinofílica; anaranjados.",
+      "detalle": "Aparecen desde el **mielocito eosinófilo**; con tinción de **Romanowsky** se ven **anaranjado intenso** en el metamielocito.",
+      "tema": "hematologia",
+      "seccion": "II. Estadios de Maduración Eosinófilos"
+    },
+    {
+      "id": "f27",
+      "frente": "Eosinófilo maduro: ¿cuántos lóbulos tiene y cuánto representa en sangre periférica?",
+      "respuesta": "2-3 lóbulos, con gránulos secundarios abundantes; 0-5 % en sangre periférica.",
+      "detalle": "En la médula ósea es el **0-3 %**. En el eosinófilo en banda los gránulos **primarios ya son escasos** y los secundarios, abundantes.",
+      "tema": "hematologia",
+      "seccion": "II. Estadios de Maduración Eosinófilos"
+    },
+    {
+      "id": "f28",
+      "frente": "Basófilo maduro: ¿cómo son su núcleo y sus gránulos?",
+      "respuesta": "Núcleo de 2 lóbulos; gránulos violeta intenso a negros, irregulares, que pueden ocultar el núcleo.",
+      "detalle": "Mide **10-14 μm**, cromatina en **grumos gruesos** y citoplasma **lavanda a incoloro**. Los gránulos se distribuyen de forma **poco uniforme**.",
+      "tema": "hematologia",
+      "seccion": "III. Estadios de Maduración de Basófilos"
+    },
+    {
+      "id": "f29",
+      "frente": "Monocito: ¿qué aspecto tiene y cuánto representa en sangre periférica?",
+      "respuesta": "Citoplasma azul grisáceo, a veces con pseudópodos o vacuolas, y núcleo variable; 3-11 % en sangre.",
+      "detalle": "En la médula ósea es el **2 %**. Su precursor, el **promonocito**, tiene **núcleo irregular** y citoplasma azul a gris.",
+      "tema": "hematologia",
+      "seccion": "IV. Estadios de Maduración de Monocitos"
+    },
+    {
+      "id": "f30",
+      "frente": "¿Cómo se reconoce un macrófago al microscopio?",
+      "respuesta": "Núcleo reniforme u ovoide, citoplasma abundante de bordes irregulares, con gránulos azurófilos y vacuolas.",
+      "tema": "hematologia",
+      "seccion": "IV. Estadios de Maduración de Monocitos"
+    },
+    {
+      "id": "f31",
+      "frente": "¿Cuál es la secuencia de maduración de la línea linfoide?",
+      "respuesta": "Linfoblasto → prolinfocito → linfocito; el LB puede acabar como célula plasmática.",
+      "detalle": "El **linfoblasto** tiene citoplasma basófilo y es el **0 %** en sangre periférica: verlo en sangre es anormal. Los linfocitos maduran en la **médula ósea y órganos linfoides**.",
+      "tema": "hematologia",
+      "seccion": "V. Estadios de Maduración Linfoide"
+    },
+    {
+      "id": "f32",
+      "frente": "Linfocito maduro: ¿cómo es y qué porcentaje ocupa en médula ósea y sangre periférica?",
+      "respuesta": "Núcleo redondo, cromatina condensada y citoplasma escaso; 5-15 % en médula y 20-40 % en sangre.",
+      "detalle": "El citoplasma puede ser **escaso a moderado** y a veces presenta **vacuolas**.",
+      "tema": "hematologia",
+      "seccion": "V. Estadios de Maduración Linfoide"
+    }
+  ]
+}

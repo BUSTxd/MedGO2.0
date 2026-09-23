@@ -1,0 +1,220 @@
+{
+  "version": 1,
+  "key": "inmunologia/h-2-bazo-ganglio",
+  "title": "H2 — Órganos linfoides secundarios: bazo y ganglios linfáticos",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Qué función cumple la pulpa roja del bazo y por qué se ve eosinófila?",
+      "respuesta": "Hemocatéresis: filtra y degrada glóbulos rojos; es eosinófila por su gran cantidad de GR.",
+      "detalle": "Está formada por **sinusoides esplénicos** y **cordones esplénicos (de Billroth)**, atravesados por trabéculas que salen de la cápsula.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Qué es la PALS del bazo y qué células la forman?",
+      "respuesta": "La vaina linfática periarteriolar: masa cilíndrica de LT maduros que rodea la arteriola central.",
+      "detalle": "Es la **zona T** de la pulpa blanca. **Corrección**: una lámina del resumen la sitúa «alrededor de las vénulas»; rodea la **arteriola central**, como dice el resto del resumen.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f03",
+      "frente": "Circulación abierta del bazo: ¿dónde vierte la sangre y cómo vuelve al torrente?",
+      "respuesta": "En los cordones de Billroth; los GR deben deformarse y pasar por las hendiduras de los sinusoides.",
+      "detalle": "La sangre atraviesa una malla de **células reticulares y macrófagos**: es un **filtro físico**. Los GR **flexibles pasan**; los **rígidos son fagocitados**.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Qué región del bazo responde rápido a bacterias encapsuladas y qué células contiene?",
+      "respuesta": "La zona marginal: macrófagos, células dendríticas y LB de zona marginal.",
+      "detalle": "Es la **transición entre pulpa blanca y roja** y el lugar de **entrada de antígenos desde la sangre** (*S. pneumoniae*, *N. meningitidis*, virus). En humanos **no hay un seno marginal definido**.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué funciones cumple el ganglio linfático?",
+      "respuesta": "Filtrar la linfa, permitir el encuentro antígeno-linfocito y generar respuestas adaptativas.",
+      "detalle": "Como el bazo, es un **órgano linfoide secundario encapsulado**; la diferencia es que el ganglio **filtra linfa** y el bazo **filtra sangre**.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Qué recorrido sigue la linfa dentro del ganglio?",
+      "respuesta": "Vasos aferentes (cápsula) → seno subcapsular → senos corticales/trabeculares → senos medulares → vasos eferentes (hilio).",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f07",
+      "frente": "Centro germinal: ¿qué células predominan en la zona oscura y en la clara, y qué ocurre en cada una?",
+      "respuesta": "Oscura: centroblastos (proliferación, hipermutación somática, cambio de isotipo). Clara: centrocitos (selección por afinidad).",
+      "detalle": "En la **zona clara** están además las **FDC**, la interacción con **Tfh** y los **macrófagos de cuerpo tingible**. Rodea al centro germinal la **zona del manto** (LB naive).",
+      "tema": "linfocitos-b"
+    },
+    {
+      "id": "f08",
+      "frente": "Vénulas de endotelio alto (HEV): ¿qué son, dónde están y para qué sirven?",
+      "respuesta": "Vénulas poscapilares de endotelio cúbico en la paracorteza; por ellas entran los linfocitos naïve desde la sangre.",
+      "detalle": "Son la **entrada principal de linfocitos naïve** al ganglio. Al microscopio llaman la atención sus **células endoteliales inusualmente altas**.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué quimiocina lleva a los LB al folículo y cuál a los LT a la paracorteza?",
+      "respuesta": "CXCL13 (de las FDC) → CXCR5 del LB; CCL19/CCL21 (de las FRC) → CCR7 de LT y DC.",
+      "detalle": "**CCL21 + CCR7** recluta LT vírgenes desde la sangre por las HEV y crea el **área de encuentro LT–DC**. **CXCL13** organiza la corteza folicular e inicia la **respuesta humoral**.",
+      "tema": "trafico"
+    },
+    {
+      "id": "f10",
+      "frente": "Senos linfáticos vs conductos de FRC: ¿qué transporta cada uno?",
+      "respuesta": "Senos: lo grande y celular. Conductos FRC: antígenos pequeños solubles (<70 kDa) y quimiocinas hacia la zona T.",
+      "detalle": "Los **senos** son «ríos grandes» (filtración inespecífica, macrófagos). Los **conductos FRC** son «túneles selectivos» en la **paracorteza**, de colágeno I, III y IV, teñibles con **plata**.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Cuál es la secuencia de irrigación arterial del bazo?",
+      "respuesta": "Esplénica → trabeculares → arteriola central (pulpa blanca) → penicilares → capilares envainados (pulpa roja).",
+      "detalle": "La **arteria esplénica** es rama del **tronco celíaco** y entra por el hilio; las **trabeculares** viajan dentro de las trabéculas.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Cómo drena la sangre del bazo desde los sinusoides?",
+      "respuesta": "Sinusoides → venas pulpares → venas trabeculares → vena esplénica → vena porta.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f13",
+      "frente": "Pulpa blanca: ¿cómo se organiza y por qué es basófila?",
+      "respuesta": "Tejido linfático en folículos (zona B) y PALS (zona T) alrededor de arteriolas centrales; basófila por sus abundantes núcleos.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Qué son los nódulos esplénicos?",
+      "respuesta": "Cúmulos de LB junto a las arteriolas centrales; suelen tener un centro germinal de LB activados.",
+      "detalle": "Alrededor tienen el **manto** (LB vírgenes) y, por fuera, la **zona marginal**, más clara.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Qué imagen identifica al bazo en un corte histológico?",
+      "respuesta": "Una arteriola central junto a un folículo linfoide, además de trabéculas gruesas.",
+      "detalle": "Dentro de las **trabéculas** corren **arterias y venas trabeculares**. La cápsula es de tejido conectivo denso.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f16",
+      "frente": "¿En qué se diferencian las arteriolas pulpares de las centrales y qué son los capilares envainados?",
+      "respuesta": "Las pulpares no están rodeadas de linfocitos; los capilares envainados son tramos rodeados de macrófagos.",
+      "detalle": "Las **arteriolas penicilares** (con 2 capas de músculo) se continúan con capilares que **sueltan la sangre en los cordones esplénicos**.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f17",
+      "frente": "Circulación cerrada del bazo: ¿en qué consiste y qué tan frecuente es?",
+      "respuesta": "Es la menos frecuente: capilares penicilares que conectan directamente con los sinusoides.",
+      "detalle": "En la **abierta**, en cambio, la sangre pasa primero por los **cordones de Billroth** antes de reingresar a los sinusoides.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Qué son los cordones esplénicos (de Billroth)?",
+      "respuesta": "Tejido conectivo laxo de la pulpa roja con macrófagos, células plasmáticas, linfocitos y células reticulares.",
+      "detalle": "Por ellos circula la sangre de la **circulación abierta**. Separan sinusoides paralelos y muy próximos, así la sangre tiene **múltiples oportunidades de reingresar** a la circulación venosa.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f19",
+      "frente": "¿Qué rasgos del sinusoide esplénico le permiten filtrar eritrocitos?",
+      "respuesta": "Endotelio fusiforme discontinuo («bastones»), hendiduras de 2-4 μm y lámina basal discontinua en aros.",
+      "detalle": "Las células endoteliales van **longitudinales al vaso**; la lámina basal está reforzada por **fibras reticulares (tipo III)** que forman una **malla de filtración mecánica**.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Cuáles son las tres regiones del ganglio y qué hay en cada una?",
+      "respuesta": "Corteza externa: folículos (zona B). Paracorteza: HEV y zona T. Médula: cordones y senos medulares.",
+      "detalle": "La **cápsula** es de tejido conectivo denso y emite **trabéculas** hacia el interior. La paracorteza también se llama **corteza interna**.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f21",
+      "frente": "Seno subcapsular: ¿dónde está, qué recibe y qué células lo defienden?",
+      "respuesta": "Bajo la cápsula; recibe la linfa de los aferentes; macrófagos CD169⁺ y DC forman la primera barrera.",
+      "detalle": "Las **DC subcapsulares** retienen antígenos y los presentan a los **LB de la corteza folicular**. Los **senos corticales (trabeculares)** siguen a las trabéculas y distribuyen la linfa hacia la médula.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f22",
+      "frente": "¿Cómo son los senos medulares y adónde drenan?",
+      "respuesta": "Más anchos y dilatados, con macrófagos y plasmáticas; convergen en el hilio hacia el vaso eferente.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f23",
+      "frente": "¿Cómo está construida la pared de los senos linfáticos?",
+      "respuesta": "Endotelio aplanado discontinuo, reforzado por células reticulares con fibras reticulares (colágeno III).",
+      "detalle": "Es **más laxo y permeable** que el endotelio vascular: deja pasar linfa y células. Las fibras reticulares y la matriz forman un esqueleto que **evita el colapso** de los senos.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f24",
+      "frente": "Folículo primario vs secundario: ¿qué los distingue?",
+      "respuesta": "Primario: pequeño, denso, de LB vírgenes, sin centro germinal. Secundario: con centro germinal tras estímulo antigénico.",
+      "detalle": "Los **centros germinales** solo aparecen en folículos secundarios, en la respuesta **dependiente de Tfh**.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Cómo se reconocen al microscopio un centroblasto y un centrocito?",
+      "respuesta": "Centroblasto: cromatina pegada a la membrana nuclear. Centrocito: célula pequeña de núcleo hendido.",
+      "tema": "linfocitos-b"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Qué son los macrófagos de cuerpo tingible del centro germinal?",
+      "respuesta": "Macrófagos con restos apoptóticos, que en el corte se ven como manchitas.",
+      "detalle": "Están en la **zona clara** y limpian a los LB que **mueren al no superar la selección por afinidad**.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Qué células componen la paracorteza del ganglio?",
+      "respuesta": "LT CD4⁺ y CD8⁺, células dendríticas migrantes (interdigitantes) y algunas NK.",
+      "detalle": "Tiene alta densidad celular pero **difusa**: **no forma folículos ni centros germinales**. Allí los LT naïve se activan por las DC.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f28",
+      "frente": "¿Qué hacen las células dendríticas foliculares (FDC)?",
+      "respuesta": "Atrapan antígenos con receptores para complemento e Ig, y secretan CXCL13 para atraer a los LB.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f29",
+      "frente": "Cordones medulares del ganglio: ¿qué contienen y cuál es su función?",
+      "respuesta": "Células plasmáticas, LB, LT y macrófagos; sintetizan y secretan anticuerpos que salen con la linfa.",
+      "detalle": "Los LB que se diferencian en **plasmáticas** migran a la médula para producir inmunoglobulinas.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f30",
+      "frente": "Además de formar conductos, ¿qué hacen las células reticulares fibroblásticas (FRC)?",
+      "respuesta": "Secretan CCL19/CCL21, guían la migración de LT y DC y presentan antígenos propios (tolerancia periférica).",
+      "detalle": "Los LT y DC migran **por fuera** de los conductos siguiendo el «cableado de FRC». También forman una **barrera** que limita la diseminación de infecciones en el ganglio.",
+      "tema": "organos-secundarios"
+    },
+    {
+      "id": "f31",
+      "frente": "¿Qué tinción muestra las fibras reticulares del ganglio y de qué color salen?",
+      "respuesta": "La impregnación argéntica (plata): las fibras reticulares se ven negras.",
+      "detalle": "Con **Azan** las fibras de **colágeno** se tiñen de **azul**, lo que permite distinguir el **estroma** del **parénquima**.",
+      "tema": "organos-secundarios"
+    }
+  ]
+}

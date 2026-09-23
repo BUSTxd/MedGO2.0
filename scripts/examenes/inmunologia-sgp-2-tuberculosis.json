@@ -1,0 +1,367 @@
+{
+  "version": 1,
+  "key": "inmunologia/sgp-2-tuberculosis",
+  "title": "SGP 2 — Infección por micobacterias: tuberculosis latente",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Qué es un granuloma?",
+      "respuesta": "Una inflamación crónica nodular de macrófagos activados que aísla un agente persistente que no se logra eliminar.",
+      "detalle": "Es un **mecanismo de contención**. El agente puede ser una bacteria intracelular (**M. tuberculosis**), un hongo (Histoplasma), parásitos, cuerpos extraños o procesos autoinmunes.",
+      "tema": "hipersensibilidad",
+      "seccion": "1. ¿Qué es un granuloma"
+    },
+    {
+      "id": "f02",
+      "frente": "MHC I vs MHC II: ¿qué tipo de antígeno presenta cada uno y a qué linfocito?",
+      "respuesta": "MHC I: antígenos endógenos a LT CD8⁺; MHC II: antígenos exógenos a LT CD4⁺.",
+      "detalle": "MHC I: péptidos de **8–11 aa**, en todas las células nucleadas. MHC II: péptidos de **10–30 aa**, solo en **CPA profesionales** (macrófagos, dendríticas, LB).",
+      "tema": "presentacion-mhc",
+      "seccion": "1. Describir la estructura"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Qué es la presentación cruzada de antígenos?",
+      "respuesta": "Que la célula dendrítica presente antígenos extracelulares en MHC I y active linfocitos T CD8⁺.",
+      "detalle": "Ocurre aunque el antígeno venga **de fuera** (bacterias, virus muertos, células tumorales) y no de una infección intracelular directa de esa célula.",
+      "tema": "presentacion-mhc",
+      "seccion": "3. ¿Qué es la presentación cruzada"
+    },
+    {
+      "id": "f04",
+      "frente": "Activación del LT CD4⁺: ¿qué es la señal 1, la 2 y la 3?",
+      "respuesta": "1: TCR + CD4 reconocen péptido–MHC II; 2: coestimulación (CD28–B7, CD40–CD40L); 3: citocinas que dirigen la diferenciación.",
+      "detalle": "Antes, las CPA y los LT vírgenes **migran al ganglio** (CCR7). La señal 3 define el perfil: **Th1, Th2, Th17, Tfh o Treg**.",
+      "tema": "linfocitos-t",
+      "seccion": "4. ¿Cómo se activan"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué efectos tiene el IFN-γ de los Th1 sobre el macrófago?",
+      "respuesta": "↑ MHC II y coestimuladores, ↑ IL-12, ↑ NO y ROS, y promueve la formación del granuloma.",
+      "detalle": "Es una interacción **bidireccional**: el macrófago produce **IL-12** → diferenciación **Th1** → **IFN-γ** → más activación del macrófago (**ciclo de refuerzo**).",
+      "tema": "innata-celular",
+      "seccion": "5. Describir la interacción"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Qué citocinas inducen la activación clásica (M1) y la alternativa (M2) del macrófago?",
+      "respuesta": "M1: IFN-γ (más TNF-α y PAMPs vía TLR); M2: IL-4 e IL-13.",
+      "detalle": "El IFN-γ lo producen **Th1, LT CD8⁺ y NK**; la IL-4/IL-13, **Th2, mastocitos y eosinófilos**. Algunos suman para M2 la **IL-10, glucocorticoides y TGF-β**.",
+      "tema": "innata-celular",
+      "seccion": "6. ¿Cuáles son las dos vías"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Por qué la terapia anti-TNF (artritis reumatoide, Crohn) puede reactivar una TB latente?",
+      "respuesta": "Sin TNF-α el granuloma se desorganiza y los bacilos contenidos se liberan y diseminan.",
+      "detalle": "El **IFN-γ** de los Th1 activa al macrófago y este secreta **TNF-α**, esencial para **organizar y mantener** el granuloma.",
+      "tema": "citocinas",
+      "seccion": "2. ¿Cuál es el rol"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Qué mide el IGRA?",
+      "respuesta": "El IFN-γ que liberan in vitro los linfocitos T sensibilizados al estimularlos con antígenos de M. tuberculosis.",
+      "detalle": "Es una alternativa al PPD. Hay dos formatos: **QuantiFERON-TB Gold Plus** y **T-SPOT.TB**.",
+      "tema": "tecnicas",
+      "seccion": "IGRA"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Por qué el PPD se lee a las 48–72 horas?",
+      "respuesta": "Es una hipersensibilidad retardada (tipo IV): LT de memoria deben activarse, secretar citocinas y reclutar macrófagos.",
+      "detalle": "No es inmediata como la **tipo I** (histamina, minutos). Sin exposición previa, la respuesta primaria tarda **4–6 días** y a las 48–72 h la prueba sale **negativa**.",
+      "tema": "hipersensibilidad",
+      "seccion": "¿Por qué la lectura es a las 48"
+    },
+    {
+      "id": "f10",
+      "frente": "¿Qué diferencia al complejo de Ghon del complejo de Ranke?",
+      "respuesta": "Ghon: foco pulmonar + adenopatía hiliar (primoinfección activa); Ranke: ambos calcificados (TB antigua y contenida).",
+      "detalle": "En la radiografía de Roberto: la flecha horizontal señala el **foco de Ghon calcificado** y la vertical un **ganglio calcificado** → **complejo de Ranke**.",
+      "tema": "hipersensibilidad",
+      "seccion": "Complejo de Ranke"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Qué genes HLA son de clase I y cuáles de clase II, y en qué cromosoma están?",
+      "respuesta": "Clase I: HLA-A, -B, -C; clase II: HLA-DR, -DP, -DQ; en el cromosoma 6.",
+      "detalle": "La **clase III** codifica complemento y citocinas, sin función directa en la presentación. El MHC es **polimórfico** y de **expresión codominante** (ambos alelos parentales).",
+      "tema": "presentacion-mhc",
+      "seccion": "1. Describir la estructura"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Qué cadenas forman el MHC I y qué dominio se une a CD8?",
+      "respuesta": "Cadena α (α1, α2, α3) + β2-microglobulina; α3 se une a CD8.",
+      "detalle": "**α1 + α2** forman una hendidura **angosta** (péptidos cortos). La **β2-microglobulina** se codifica fuera del cromosoma 6. Lo expresan todas las nucleadas y las plaquetas, **no** los eritrocitos maduros ni las células germinales.",
+      "tema": "presentacion-mhc",
+      "seccion": "A) Complejo Mayor de Histocompatibilidad I"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Cómo está formado el MHC II y por qué admite péptidos más largos?",
+      "respuesta": "Cadenas α y β unidas no covalentemente; α1 + β1 forman una hendidura abierta.",
+      "detalle": "Acomoda péptidos de **10–30 aa** (óptimo 12–16). También lo expresan las **células epiteliales tímicas**, para la selección positiva.",
+      "tema": "presentacion-mhc",
+      "seccion": "B) Complejo Mayor de Histocompatibilidad: MHC II"
+    },
+    {
+      "id": "f14",
+      "frente": "Vía del MHC I: ¿qué hacen TAP, la tapasina y ERAAP?",
+      "respuesta": "TAP transloca péptidos al RE; la tapasina la une al MHC I vacío; ERAAP recorta a 8–10 aa.",
+      "detalle": "**TAP** es de la familia **ABC** y transporta péptidos de **8–16 aa**. Sin péptido, el complejo MHC I–β2-microglobulina es inestable y no sale del RE.",
+      "tema": "presentacion-mhc",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Qué funciones cumple la cadena invariante (Ii) en la vía del MHC II?",
+      "respuesta": "Bloquea la hendidura del MHC II en el RE y lo dirige a endosomas tardíos (MIIC).",
+      "detalle": "Evita que se unan péptidos del RE **destinados al MHC I**. En el endosoma las **catepsinas** la degradan y queda el **CLIP**.",
+      "tema": "presentacion-mhc",
+      "seccion": "B) Procesamiento de MHC-II"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Qué hace HLA-DM en la vía del MHC II?",
+      "respuesta": "Retira el CLIP de la hendidura y permite cargar el péptido antigénico.",
+      "detalle": "Es tipo MHC pero **no polimórfica** y **no se expresa en la membrana**. Estabiliza la unión péptido–MHC II con un cambio conformacional.",
+      "tema": "presentacion-mhc",
+      "seccion": "B) Procesamiento de MHC-II"
+    },
+    {
+      "id": "f17",
+      "frente": "Presentación cruzada: ¿en qué se diferencian la vía citosólica y la vacuolar?",
+      "respuesta": "Citosólica: el antígeno pasa al citosol, proteasoma y TAP; vacuolar: se degrada y carga en el fagosoma, sin proteasoma ni TAP.",
+      "detalle": "La **citosólica** la hacen solo las células dendríticas. La **vacuolar** es menos frecuente, pero funcional en ciertos contextos.",
+      "tema": "presentacion-mhc",
+      "seccion": "3. ¿Qué es la presentación cruzada"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Qué receptor lleva a las CPA activadas y a los LT vírgenes al ganglio, y con qué quimiocinas?",
+      "respuesta": "CCR7, que responde a CCL19 y CCL21.",
+      "detalle": "Al activarse por **PRRs** (TLRs, NLRs), las CPA también ↑ **MHC II** y **B7-1/B7-2**. Juntar ambas células en el ganglio **maximiza el encuentro** antígeno–linfocito.",
+      "tema": "trafico",
+      "seccion": "0. Migración"
+    },
+    {
+      "id": "f19",
+      "frente": "Señal 1: ¿qué hacen CD4, CD3 y el par LFA-1/ICAM-1?",
+      "respuesta": "CD4 estabiliza TCR–MHC II y recluta Lck; CD3 transduce la señal; LFA-1 (T)–ICAM-1 (CPA) da adhesión.",
+      "tema": "linfocitos-t",
+      "seccion": "1. Reconocimiento del antígeno"
+    },
+    {
+      "id": "f20",
+      "frente": "CD40–CD40L: ¿para qué sirve y qué causa su ausencia?",
+      "respuesta": "Para la cooperación T-B (cambio de isotipo) y activar macrófagos; su falta causa el síndrome de hiper-IgM.",
+      "detalle": "**CD40** en la CPA, **CD40L (CD154)** en el LT CD4⁺. La mutación de CD40L altera la activación de **macrófagos y linfocitos B**.",
+      "tema": "coestimulacion",
+      "seccion": "2. Coestimulación"
+    },
+    {
+      "id": "f21",
+      "frente": "CTLA-4 y PD-1: ¿con qué ligando se une cada uno?",
+      "respuesta": "CTLA-4 con B7 (CD80/CD86), compitiendo con CD28; PD-1 con PD-L1/PD-L2 de la CPA o del tumor.",
+      "detalle": "Son **checkpoints**: CTLA-4 ↓ proliferación e IL-2 (supresión por Treg); PD-1 lleva al LT a un estado de **agotamiento**.",
+      "tema": "coestimulacion",
+      "seccion": "2. Coestimulación"
+    },
+    {
+      "id": "f22",
+      "frente": "¿Qué efectos tiene la coestimulación sobre el linfocito T?",
+      "respuesta": "↑ IL-2 y CD25 (proliferación clonal), ↑ supervivencia vía Bcl-XL y diferenciación a efectores y memoria.",
+      "detalle": "Cascada: **Lck** fosforila los ITAMs del CD3 → recluta **ZAP-70** → vías **PI3K, JNK/MAPK** y proteínas antiapoptóticas.",
+      "tema": "linfocitos-t",
+      "seccion": "2. Coestimulación"
+    },
+    {
+      "id": "f23",
+      "frente": "Th1: ¿qué citocinas la inducen, qué produce y para qué sirve?",
+      "respuesta": "IL-12 e IFN-γ; produce IFN-γ, que activa macrófagos contra patógenos intracelulares.",
+      "detalle": "Es el perfil que **contiene a M. tuberculosis** en el granuloma.",
+      "tema": "diferenciacion-t",
+      "seccion": "Th1"
+    },
+    {
+      "id": "f24",
+      "frente": "Th17 y Treg: ¿qué citocinas produce cada una?",
+      "respuesta": "Th17: IL-17 e IL-22 (recluta neutrófilos); Treg: IL-10 y TGF-β (supresión y tolerancia periférica).",
+      "detalle": "Inductores: **Th17 ← IL-6, TGF-β, IL-23**; **Treg ← TGF-β, IL-2**. Los **Tfh** (← IL-6, IL-21) producen **IL-21** y ayudan a los LB en centros germinales.",
+      "tema": "diferenciacion-t",
+      "seccion": "Th17"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Contra qué patógenos es clave el eje IL-12 → NK/Th1 → IFN-γ → macrófago?",
+      "respuesta": "Contra patógenos intracelulares: Mycobacterium, Salmonella y Leishmania.",
+      "detalle": "Defectos en la vía **IL-12/IFN-γ/CD40L** producen inmunodeficiencias.",
+      "tema": "innata-celular",
+      "seccion": "5. Describir la interacción"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Qué susceptibilidad produce un déficit de IL-12 o de su receptor?",
+      "respuesta": "Susceptibilidad a infecciones por micobacterias.",
+      "detalle": "Sin IL-12 no hay buena diferenciación **Th1** ni IFN-γ para activar al macrófago.",
+      "tema": "inmunodeficiencias",
+      "seccion": "5. Describir la interacción"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Con qué productos mata microbios el macrófago M1?",
+      "respuesta": "Especies reactivas de oxígeno (estallido respiratorio), óxido nítrico vía iNOS y enzimas lisosomales.",
+      "detalle": "Se liberan en el fagolisosoma **y al tejido** → **daño colateral**; si la activación persiste, daño tisular crónico (enfermedades autoinmunes o granulomatosas).",
+      "tema": "innata-celular",
+      "seccion": "1. Activación clásica"
+    },
+    {
+      "id": "f28",
+      "frente": "¿Qué citocinas secreta el M1 y qué hace cada una?",
+      "respuesta": "IL-1: fiebre; IL-6: proteínas de fase aguda; TNF-α: activa endotelio y extravasación; IL-12: Th1 y NK.",
+      "detalle": "Además ↑ **MHC II** y **CD80, CD86, CD40** → mejor presentación a LT CD4⁺, perpetuando la respuesta adaptativa.",
+      "tema": "innata-celular",
+      "seccion": "1. Activación clásica"
+    },
+    {
+      "id": "f29",
+      "frente": "¿Por qué el macrófago M2 favorece la fibrosis en lugar de producir NO?",
+      "respuesta": "Su arginasa-1 compite con iNOS y genera ornitina y poliaminas, que favorecen colágeno y proliferación celular.",
+      "detalle": "Además secreta **IL-10 y TGF-β** (antiinflamatorio) y **VEGF, PDGF, TGF-β** (angiogénesis y fibrosis). En exceso: **fibrosis crónica** e **inmunosupresión tumoral**.",
+      "tema": "innata-celular",
+      "seccion": "2. Activación alternativa"
+    },
+    {
+      "id": "f30",
+      "frente": "¿Qué induce a cada subtipo de M2 (M2a, M2b, M2c)?",
+      "respuesta": "M2a: IL-4 e IL-13; M2b: inmunocomplejos + TLR/IL-1R; M2c: IL-10, TGF-β y glucocorticoides.",
+      "detalle": "**M2a** → reparación tisular y fibrosis; **M2b** → perfil mixto antiinflamatorio; **M2c** → inmunorregulación potente.",
+      "tema": "innata-celular",
+      "seccion": "2. Activación alternativa"
+    },
+    {
+      "id": "f31",
+      "frente": "¿Cuál es la célula principal del granuloma y qué la rodea?",
+      "respuesta": "La célula epitelioide (macrófago modificado de citoplasma rosado), rodeada por una corona de LT Th1 y LB.",
+      "detalle": "Los **Th1** secretan **IFN-γ**, que mantiene activados a los macrófagos. Por fuera, **fibroblastos** depositan colágeno y delimitan la lesión.",
+      "tema": "hipersensibilidad",
+      "seccion": "1. ¿Qué es un granuloma"
+    },
+    {
+      "id": "f32",
+      "frente": "Células gigantes de Langhans vs de cuerpo extraño: ¿cómo se distinguen?",
+      "respuesta": "Langhans: núcleos en herradura en la periferia; cuerpo extraño: núcleos distribuidos al azar.",
+      "detalle": "Ambas se forman por **fusión de macrófagos activados**. En la **sarcoidosis** pueden traer **cuerpos de Schaumann** (calcio laminado) y **cuerpos asteroides** (inclusiones eosinófilas en estrella).",
+      "tema": "hipersensibilidad",
+      "seccion": "1. ¿Qué es un granuloma"
+    },
+    {
+      "id": "f33",
+      "frente": "Granuloma caseificante vs no caseificante: ¿con qué enfermedades se asocia cada uno?",
+      "respuesta": "Caseificante: tuberculosis y micosis (histoplasmosis); no caseificante: sarcoidosis, Crohn, beriliosis y algunas vasculitis.",
+      "detalle": "El **caseificante** tiene **necrosis central** granular eosinófila, de aspecto de «queso». Otra micosis caseificante: **paracoccidioidomicosis**.",
+      "tema": "hipersensibilidad",
+      "seccion": "1. ¿Qué es un granuloma"
+    },
+    {
+      "id": "f34",
+      "frente": "¿Cómo organiza el TNF-α al granuloma?",
+      "respuesta": "Induce quimiocinas, moléculas de adhesión endotelial (ICAM-1, VCAM-1, E-selectina) y VEGF para la angiogénesis.",
+      "detalle": "Las **quimiocinas** mantienen el ingreso de linfocitos y monocitos; la **adhesión** es el «pegamento» de epitelioides y gigantes alrededor del patógeno; el **VEGF** asegura aporte vascular y facilita la fibrosis periférica.",
+      "tema": "citocinas",
+      "seccion": "2. ¿Cuál es el rol"
+    },
+    {
+      "id": "f35",
+      "frente": "¿Por qué una enfermedad granulomatosa puede causar hipercalcemia e hipercalciuria?",
+      "respuesta": "Los macrófagos activados del granuloma expresan 1-α-hidroxilasa y activan la vitamina D.",
+      "tema": "hipersensibilidad",
+      "seccion": "2. ¿Cuál es el rol"
+    },
+    {
+      "id": "f36",
+      "frente": "¿Qué antígenos usa el IGRA y por qué es más específico que el PPD?",
+      "respuesta": "ESAT-6 y CFP-10, ausentes en la BCG y en la mayoría de micobacterias ambientales.",
+      "detalle": "El **TB7.7** lo usaba la versión anterior (**QuantiFERON-TB Gold In-Tube**); la **Gold Plus** usa solo ESAT-6 y CFP-10, con un tubo extra que también estimula a los **CD8⁺**.",
+      "tema": "tecnicas",
+      "seccion": "IGRA"
+    },
+    {
+      "id": "f37",
+      "frente": "QuantiFERON vs T-SPOT.TB: ¿qué mide cada uno y con qué técnica?",
+      "respuesta": "QuantiFERON: IFN-γ total en plasma por ELISA (UI/ml); T-SPOT: número de LT productores de IFN-γ por ELISPOT.",
+      "detalle": "**Muestra**: QuantiFERON usa **sangre total**; T-SPOT, **PBMC aisladas** por centrifugación. Enfoque: respuesta **global** vs respuesta **celular individual** (cada spot = una célula).",
+      "tema": "tecnicas",
+      "seccion": "Lectura"
+    },
+    {
+      "id": "f38",
+      "frente": "IGRA: ¿para qué sirven el control negativo y el positivo?",
+      "respuesta": "El negativo (sin antígeno) descarta activación inespecífica; el positivo (mitógeno, p. ej. fitohemaglutinina) confirma que los LT producen IFN-γ.",
+      "detalle": "Solo si ambos controles son correctos se interpreta el resultado.",
+      "tema": "tecnicas",
+      "seccion": "T-SPOT"
+    },
+    {
+      "id": "f39",
+      "frente": "IGRA: ¿qué significa un resultado positivo, uno negativo y uno indeterminado?",
+      "respuesta": "Positivo: LT de memoria específicos; negativo: sin sensibilización; indeterminado: los LT no responden ni al mitógeno.",
+      "detalle": "**Positivo** = infección **latente o activa** (no las distingue). **Negativo**: no exposición, inmunosupresión o infección muy reciente. **Indeterminado**: falla técnica o inmunosupresión severa.",
+      "tema": "tecnicas",
+      "seccion": "T-SPOT"
+    },
+    {
+      "id": "f40",
+      "frente": "PPD: ¿qué se inyecta, por qué vía y qué se mide?",
+      "respuesta": "0,1 ml de derivado proteico purificado intradérmico; a las 48–72 h se mide la induración, no el eritema.",
+      "detalle": "Si hubo contacto con micobacterias, los **LT CD4⁺ sensibilizados** reconocen el PPD, liberan **IFN-γ y TNF-α** y reclutan macrófagos → induración.",
+      "tema": "hipersensibilidad",
+      "seccion": "PPD (Tuberculina)"
+    },
+    {
+      "id": "f41",
+      "frente": "PPD: ¿cuáles son los puntos de corte de positividad según el riesgo?",
+      "respuesta": "≥5 mm: inmunocomprometidos, VIH, contactos estrechos; ≥10 mm: con factores de riesgo; ≥15 mm: sin factores de riesgo.",
+      "detalle": "Factores de riesgo para ≥10 mm: p. ej. **diabetes** o **trabajadores de salud**. Por eso los **10 mm** de Roberto, estudiante de medicina con PPD negativo el año anterior, cuentan como positivo.",
+      "tema": "hipersensibilidad",
+      "seccion": "PPD (Tuberculina)"
+    },
+    {
+      "id": "f42",
+      "frente": "PPD: ¿qué produce falsos negativos y qué produce falsos positivos?",
+      "respuesta": "Falsos negativos: inmunosupresión (VIH, quimioterapia, corticoides); falsos positivos: vacuna BCG o micobacterias no tuberculosas.",
+      "detalle": "La prueba **requiere un sistema inmune funcionante**.",
+      "tema": "hipersensibilidad",
+      "seccion": "PPD (Tuberculina)"
+    },
+    {
+      "id": "f43",
+      "frente": "¿Qué es el foco de Ghon y cómo se forma?",
+      "respuesta": "El granuloma caseificante pulmonar subpleural de la primoinfección, formado por la respuesta Th1 a las 2–4 semanas.",
+      "detalle": "Bacilo inhalado → alveolo subpleural (lóbulo medio o inferiores) → macrófago alveolar → migra al ganglio y presenta a CD4⁺ → **Th1 (IFN-γ, TNF-α)** → epitelioides y células de Langhans → granuloma.",
+      "tema": "hipersensibilidad",
+      "seccion": "Foco de Ghon"
+    },
+    {
+      "id": "f44",
+      "frente": "¿Cómo sobrevive M. tuberculosis dentro del macrófago alveolar?",
+      "respuesta": "Inhibe la fusión del fagosoma con el lisosoma.",
+      "detalle": "Así se multiplica dentro del macrófago → **destrucción celular** → diseminación local, hasta que llega la respuesta adaptativa.",
+      "tema": "innata-celular",
+      "seccion": "Foco de Ghon"
+    },
+    {
+      "id": "f45",
+      "frente": "¿Cómo llega a calcificarse un ganglio hiliar en la tuberculosis?",
+      "respuesta": "Granuloma caseificante en el ganglio → fibrosis → calcificación distrófica: sales de calcio sobre el material necrótico.",
+      "detalle": "Los bacilos llegan al ganglio **transportados por macrófagos**. Si la infección se contiene quedan atrapados; el ganglio se vuelve **duro y radiopaco**.",
+      "tema": "hipersensibilidad",
+      "seccion": "Ganglio linfático calcificado"
+    }
+  ]
+}

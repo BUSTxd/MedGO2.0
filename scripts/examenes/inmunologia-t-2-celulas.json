@@ -1,0 +1,358 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-2-celulas",
+  "title": "T2 — Células del sistema inmune y lámina periférica",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "Granulocitos vs. agranulocitos: ¿qué los distingue y qué células incluye cada grupo?",
+      "respuesta": "Los granulocitos tienen gránulos específicos (neutrófilos, eosinófilos, basófilos); los agranulocitos no (monocitos/macrófagos, linfocitos).",
+      "detalle": "Los granulocitos son **polimorfonucleares**; los agranulocitos, **mononucleares**. Los agranulocitos **sí tienen gránulos azurófilos** (lisosomas), solo carecen de los específicos.",
+      "tema": "celulas-inmunes",
+      "seccion": "Se clasifican"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Qué cifras definen leucopenia y leucocitosis?",
+      "respuesta": "Leucopenia: < 4 000/mm³; leucocitosis: > 10 000–11 000/mm³.",
+      "detalle": "El recuento absoluto normal de leucocitos es **4 500–10 000/µL**.",
+      "tema": "hemograma-rfa",
+      "seccion": "I. Leucocitos"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Cómo se obtiene el diferencial absoluto de leucocitos?",
+      "respuesta": "Multiplicando el porcentaje de cada tipo por el recuento total de leucocitos.",
+      "detalle": "El **diferencial porcentual** (sobre 100 células) solo da la **proporción** entre tipos; el **absoluto** (células/µL) da el **número real**.",
+      "tema": "hemograma-rfa",
+      "seccion": "Recuento Diferencial"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Qué es la desviación a la izquierda?",
+      "respuesta": "El aumento de neutrófilos inmaduros en sangre periférica, sobre todo abastonados (en banda).",
+      "detalle": "En casos **severos** aparecen formas aún más inmaduras: **mielocitos y metamielocitos**.",
+      "tema": "hemograma-rfa",
+      "seccion": "A) Neutrófilos"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Contra qué defienden los eosinófilos y a qué tipo de reacción se asocian?",
+      "respuesta": "Contra parásitos (helmintos); se asocian a reacciones mediadas por IgE (alergias).",
+      "detalle": "También **remueven fibrina** en la inflamación. Morfología: **núcleo bilobulado** y gránulos secundarios **rojos (acidófilos)**.",
+      "tema": "celulas-inmunes",
+      "seccion": "B) Eosinófilos"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Qué contienen los gránulos específicos del basófilo?",
+      "respuesta": "Heparina, histamina, heparán sulfato, leucotrienos e IL-4/IL-13.",
+      "detalle": "**Heparina** = anticoagulante; histamina y heparán sulfato = **vasoactivos**; **leucotrienos** contraen el músculo liso de la vía aérea; **IL-4 e IL-13** promueven la síntesis de **IgE** → hipersensibilidad y anafilaxia.",
+      "tema": "celulas-inmunes",
+      "seccion": "C) Basófilos"
+    },
+    {
+      "id": "f07",
+      "frente": "¿En qué se convierte el monocito al pasar a los tejidos y qué nombres recibe?",
+      "respuesta": "En macrófago: histiocito, osteoclasto, célula de Kupffer, macrófago alveolar, etc.",
+      "detalle": "Circula poco tiempo en sangre (**20–40 horas**) antes de migrar. Funciones: **fagocitosis** y **célula presentadora de antígeno (APC)**.",
+      "tema": "celulas-inmunes",
+      "seccion": "D) Monocitos"
+    },
+    {
+      "id": "f08",
+      "frente": "Th1 vs. Th2: ¿qué citocinas principales secreta cada uno?",
+      "respuesta": "Th1: IL-2, IFN-γ y TNF-α; Th2: IL-4, IL-5, IL-10 e IL-13.",
+      "detalle": "Th1 → **inmunidad celular**; Th2 → **inmunidad humoral**.",
+      "tema": "diferenciacion-t",
+      "seccion": "Citocinas principales"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Cómo matan las células NK a una célula transformada?",
+      "respuesta": "Liberan perforinas y granzimas: abren poros en la membrana y fragmentan el ADN → apoptosis o lisis.",
+      "detalle": "A las granzimas también se las llama **fragmentinas**. Las NK **no maduran en el timo**, así que **no expresan TCR**.",
+      "tema": "innata-celular",
+      "seccion": "⁜ Linfocitos Asesinos"
+    },
+    {
+      "id": "f10",
+      "frente": "Neutrófilos hipersegmentados en la lámina: ¿cuándo se habla de ellos y qué los causa?",
+      "respuesta": "Con 6 o más lóbulos; anemia megaloblástica y síndrome mielodisplásico.",
+      "detalle": "El neutrófilo segmentado normal tiene **2 a 5 lóbulos**.",
+      "tema": "hematologia",
+      "seccion": "¿Qué busco en la lámina"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Cuáles son las causas fisiológicas de leucocitosis?",
+      "respuesta": "Ejercicio intenso, recién nacidos, embarazo y menstruación.",
+      "detalle": "Las de **leucopenia fisiológica** son el **reposo prolongado**, los **ancianos** y el **alcoholismo crónico**.",
+      "tema": "hemograma-rfa",
+      "seccion": "Fisiológica"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Qué fármacos producen leucocitosis y cuáles leucopenia?",
+      "respuesta": "Leucocitosis: corticoides, esteroides, epinefrina, histamina. Leucopenia: quimioterápicos, sulfonamidas, anticonvulsivantes, tranquilizantes.",
+      "detalle": "El corticoide de ejemplo en el resumen es la **hidrocortisona**.",
+      "tema": "hemograma-rfa",
+      "seccion": "Fármacos"
+    },
+    {
+      "id": "f13",
+      "frente": "Neoplasias: ¿cuáles dan leucopenia y cuáles leucocitosis?",
+      "respuesta": "Leucopenia: mieloptisis y leucemias agudas. Leucocitosis: leucemias y síndromes mieloproliferativos.",
+      "detalle": "Otras causas: **insuficiencia medular** → leucopenia; **deshidratación, hemorragias, IAM, convulsiones y taquicardia** → leucocitosis.",
+      "tema": "hemograma-rfa",
+      "seccion": "Neoplasias"
+    },
+    {
+      "id": "f14",
+      "frente": "Porcentaje normal de neutrófilos segmentados y en banda en el diferencial:",
+      "respuesta": "Segmentados 40–70 %; en banda (abastonados) 0–5 %.",
+      "tema": "hemograma-rfa",
+      "seccion": "Recuento Diferencial › Neutrófilos segmentados"
+    },
+    {
+      "id": "f15",
+      "frente": "Porcentaje normal de linfocitos, monocitos, eosinófilos y basófilos:",
+      "respuesta": "Linfocitos 20–45 %, monocitos 2–10 %, eosinófilos 1–6 %, basófilos 0–1 %.",
+      "tema": "hemograma-rfa",
+      "seccion": "Recuento Diferencial › Linfocitos"
+    },
+    {
+      "id": "f16",
+      "frente": "Recuento absoluto normal de neutrófilos totales y de linfocitos (células/µL):",
+      "respuesta": "Neutrófilos 1 800–7 800; linfocitos 1 000–4 800.",
+      "detalle": "Los demás: **monocitos 200–1 000**, **eosinófilos 50–500**, **basófilos 0–200**.",
+      "tema": "hemograma-rfa",
+      "seccion": "Recuento Absoluto Normal"
+    },
+    {
+      "id": "f17",
+      "frente": "Neutrofilia y neutropenia: ¿con qué cifras se definen?",
+      "respuesta": "Neutrofilia > 7 500/mm³; neutropenia < 1 800/mm³, severa < 500/mm³.",
+      "detalle": "La neutropenia **severa** implica **riesgo inminente de infección**. La neutrofilia aparece en **infecciones bacterianas, inflamación, daño tisular, embarazo y neoplasias**.",
+      "tema": "hemograma-rfa",
+      "seccion": "A) Neutrófilos"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Qué citocinas inducen las selectinas que permiten al neutrófilo adherirse al endotelio?",
+      "respuesta": "TNF e IL-1.",
+      "detalle": "Inducen **selectinas P y E en el endotelio** (la **L-selectina** está en el propio leucocito) → **adhesión**, luego **migración** al sitio de infección. Funciones del neutrófilo: **quimiotaxis y fagocitosis**.",
+      "tema": "trafico",
+      "seccion": "A) Neutrófilos"
+    },
+    {
+      "id": "f19",
+      "frente": "Neutrófilo segmentado: ¿cómo es su núcleo y cuánto vive?",
+      "respuesta": "Núcleo de 2 a 5 lóbulos; vive 6–8 horas en sangre y 1–4 días en tejidos.",
+      "detalle": "Citoplasma **rosado pálido**.",
+      "tema": "celulas-inmunes",
+      "seccion": "A) Neutrófilos"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Qué contienen los gránulos primarios (no específicos) del neutrófilo?",
+      "respuesta": "Mieloperoxidasa, lisozima, hidrolasas ácidas y defensinas.",
+      "detalle": "**Secundarios (específicos)**: activadores del complemento y péptidos antimicrobianos. **Terciarios**: fosfatasas y metaloproteinasas.",
+      "tema": "celulas-inmunes",
+      "seccion": "A) Neutrófilos"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Cómo se reconoce un neutrófilo abastonado?",
+      "respuesta": "Forma inmadura con núcleo en C o en S, sin segmentar.",
+      "detalle": "Normalmente es el **0–5 %** del diferencial; su aumento es la **desviación a la izquierda**.",
+      "tema": "hematologia",
+      "seccion": "A) Neutrófilos"
+    },
+    {
+      "id": "f22",
+      "frente": "¿Qué proteínas de los gránulos del eosinófilo actúan contra los helmintos?",
+      "respuesta": "La proteína básica mayor, la proteína catiónica y la peroxidasa eosinofílica.",
+      "detalle": "La **neurotoxina derivada del eosinófilo** es parasiticida; la **histaminasa** neutraliza la histamina secretada por los **basófilos**.",
+      "tema": "celulas-inmunes",
+      "seccion": "B) Eosinófilos"
+    },
+    {
+      "id": "f23",
+      "frente": "Eosinofilia y eosinopenia: ¿qué cifras y qué causas?",
+      "respuesta": "Eosinofilia > 500/mm³: alergias y parasitosis. Eosinopenia < 20/mm³: infecciones agudas y corticoides.",
+      "tema": "hemograma-rfa",
+      "seccion": "B) Eosinófilos"
+    },
+    {
+      "id": "f24",
+      "frente": "¿Cómo se ve un basófilo en la lámina?",
+      "respuesta": "Gránulos abundantes, irregulares y violeta intenso que ocultan el núcleo.",
+      "detalle": "Citoplasma **lavanda a incoloro**. Normalmente **no están en los tejidos**, pero pueden ser **reclutados a zonas inflamatorias**. Son el **0–1 %** del diferencial.",
+      "tema": "celulas-inmunes",
+      "seccion": "C) Basófilos"
+    },
+    {
+      "id": "f25",
+      "frente": "Monocito: ¿cómo es su núcleo y su citoplasma?",
+      "respuesta": "Núcleo redondo, en herradura o arriñonado; citoplasma con gránulos finos azurófilos y vacuolas.",
+      "detalle": "Los **gránulos azurófilos (primarios)** contienen **enzimas lisosómicas**.",
+      "tema": "celulas-inmunes",
+      "seccion": "D) Monocitos"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Cómo se genera la especificidad del receptor antigénico de los linfocitos?",
+      "respuesta": "Por recombinación del ADN; al reconocer su antígeno, el linfocito prolifera (expansión clonal).",
+      "tema": "celulas-inmunes",
+      "seccion": "E) Linfocitos"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Qué factor sostiene la supervivencia de los linfocitos T y cuál la de los B?",
+      "respuesta": "IL-7 para los linfocitos T; BAFF para los linfocitos B.",
+      "detalle": "**BAFF** = *B-cell activating factor*.",
+      "tema": "celulas-inmunes",
+      "seccion": "E) Linfocitos"
+    },
+    {
+      "id": "f28",
+      "frente": "¿Con qué receptor llegan los LT vírgenes a la zona T del ganglio y qué quimiocinas reconoce?",
+      "respuesta": "CCR7, que reconoce CCL19 y CCL21 producidas por células estromales.",
+      "detalle": "Los LT se diferencian en el **timo**, donde adquieren su especificidad; son la base de la **inmunidad celular**.",
+      "tema": "trafico",
+      "seccion": "⁜ Linfocitos T"
+    },
+    {
+      "id": "f29",
+      "frente": "¿Qué es CD25 en el linfocito T CD4⁺?",
+      "respuesta": "El receptor de IL-2 (su cadena α).",
+      "detalle": "Los **CD4⁺ cooperadores** se subdividen según las **citocinas** que son capaces de secretar (Th1, Th2…).",
+      "tema": "linfocitos-t",
+      "seccion": "⁜ Linfocitos T"
+    },
+    {
+      "id": "f30",
+      "frente": "Th1 vs. Th2: ¿qué células activa cada uno?",
+      "respuesta": "Th1: CTL CD8⁺, NK y macrófagos. Th2: linfocitos B, eosinófilos y mastocitos.",
+      "detalle": "Th2 activa **eosinófilos y mastocitos** a través de **IL-5 e IL-4**.",
+      "tema": "diferenciacion-t",
+      "seccion": "Células que activan"
+    },
+    {
+      "id": "f31",
+      "frente": "Th1 vs. Th2: ¿contra qué patógenos actúa cada uno y con qué mecanismo?",
+      "respuesta": "Th1: intracelulares, destruyendo células infectadas y activando macrófagos. Th2: extracelulares y helmintos, con anticuerpos.",
+      "tema": "diferenciacion-t",
+      "seccion": "Patógenos que combaten"
+    },
+    {
+      "id": "f32",
+      "frente": "¿Hacia qué isotipos favorece el cambio cada subtipo Th?",
+      "respuesta": "Th1: IgG opsonizante y fijadora de complemento. Th2: IgE e IgA (por IL-4 e IL-13).",
+      "tema": "diferenciacion-t",
+      "seccion": "Cambio de isotipo"
+    },
+    {
+      "id": "f33",
+      "frente": "¿Qué reconoce el correceptor CD8 del linfocito T citotóxico?",
+      "respuesta": "MHC clase I.",
+      "detalle": "Por eso el CTL ataca **células infectadas por virus o bacterias intracelulares** (y células trasplantadas). El **CD4** del helper se asocia en cambio a **MHC II** de la APC.",
+      "tema": "linfocitos-t",
+      "seccion": "⁜ Linfocitos T"
+    },
+    {
+      "id": "f34",
+      "frente": "¿Con qué dos mecanismos destruye el CTL a su célula diana?",
+      "respuesta": "Gránulos citotóxicos (perforina y granzimas) y FasL del CTL uniéndose a Fas de la diana.",
+      "detalle": "**Perforina** forma poros; **granzimas** inducen apoptosis activando **caspasas**. **FasL–Fas (CD95L–CD95)** activa la **vía extrínseca** de la apoptosis.",
+      "tema": "linfocitos-t",
+      "seccion": "⁜ Linfocitos T"
+    },
+    {
+      "id": "f35",
+      "frente": "¿Cuál es la función de los linfocitos T reguladores?",
+      "respuesta": "Suprimir las respuestas inmunitarias frente a antígenos extraños y propios.",
+      "detalle": "Así previenen **respuestas excesivas o autoinmunes**, influyendo en la actividad de otras células del sistema inmunitario.",
+      "tema": "regulacion",
+      "seccion": "⁜ Linfocitos T"
+    },
+    {
+      "id": "f36",
+      "frente": "Linfocitos T γδ: ¿dónde residen y recirculan?",
+      "respuesta": "En epitelios (piel, mucosa oral, intestino, vagina); una vez allí no recirculan.",
+      "detalle": "Su TCR es **γ + δ**. Se desarrollan en el **timo** y son **primera línea de defensa**: reconocen antígenos en la superficie de células epiteliales, con una respuesta rápida *innata-like*.",
+      "tema": "linfocitos-t",
+      "seccion": "⁜ Linfocitos T"
+    },
+    {
+      "id": "f37",
+      "frente": "¿Qué marcadores CD identifican al linfocito B y cuál es su receptor de antígeno?",
+      "respuesta": "CD19 y CD20; su receptor es el BCR, una inmunoglobulina unida a membrana.",
+      "detalle": "Los LB son la base de la **inmunidad humoral**: producen **anticuerpos (inmunoglobulinas)**.",
+      "tema": "linfocitos-b",
+      "seccion": "⁜ Linfocitos B"
+    },
+    {
+      "id": "f38",
+      "frente": "¿Qué receptor de quimiocina expresa el linfocito B y a qué quimiocina responde?",
+      "respuesta": "CXCR5, que responde a CXCL13.",
+      "tema": "trafico",
+      "seccion": "⁜ Linfocitos B"
+    },
+    {
+      "id": "f39",
+      "frente": "¿Qué isotipo de BCR lleva el linfocito B inmaduro y cuál el maduro virgen?",
+      "respuesta": "Inmaduro: IgM; maduro virgen: IgM e IgD a la vez.",
+      "detalle": "El LB maduro **no cambia IgM por IgD**: **coexpresa** ambas en su membrana (mismo sitio de unión al antígeno).",
+      "tema": "linfocitos-b",
+      "seccion": "⁜ Linfocitos B"
+    },
+    {
+      "id": "f40",
+      "frente": "¿Qué marcadores identifican a las NK y cómo se ven en la lámina?",
+      "respuesta": "CD16a, CD56 y CD94; núcleo redondo, citoplasma celeste con escasos gránulos azurófilos.",
+      "detalle": "Viven de **horas a años**.",
+      "tema": "innata-celular",
+      "seccion": "⁜ Linfocitos Asesinos"
+    },
+    {
+      "id": "f41",
+      "frente": "¿Qué molécula de la célula diana, al unirse al receptor de inhibición, frena a la NK?",
+      "respuesta": "El MHC clase I.",
+      "detalle": "La NK integra dos señales: **MHC I ↔ receptor de inhibición** y **ligando activador ↔ receptor de activación**. Si predomina la activadora, la NK mata.",
+      "tema": "innata-celular",
+      "seccion": "⁜ Linfocitos Asesinos"
+    },
+    {
+      "id": "f42",
+      "frente": "Granulaciones tóxicas en neutrófilos: ¿cómo se ven y qué sugieren?",
+      "respuesta": "Gránulos púrpura oscuro y prominentes; infecciones bacterianas y sepsis.",
+      "tema": "hematologia",
+      "seccion": "¿Qué busco en la lámina"
+    },
+    {
+      "id": "f43",
+      "frente": "¿Qué sugieren las vacuolas citoplasmáticas en los neutrófilos?",
+      "respuesta": "Infecciones bacterianas, envenenamiento o quemaduras.",
+      "tema": "hematologia",
+      "seccion": "¿Qué busco en la lámina"
+    },
+    {
+      "id": "f44",
+      "frente": "¿Qué sugieren los linfocitos reactivos en la lámina?",
+      "respuesta": "Infecciones virales.",
+      "tema": "hematologia",
+      "seccion": "¿Qué busco en la lámina"
+    },
+    {
+      "id": "f45",
+      "frente": "Promielocitos, mielocitos, metamielocitos y bastones en sangre periférica: ¿qué hacen sospechar?",
+      "respuesta": "Leucemia aguda o leucemia mieloide crónica.",
+      "tema": "hematologia",
+      "seccion": "¿Qué busco en la lámina"
+    }
+  ]
+}

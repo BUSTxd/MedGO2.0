@@ -1,0 +1,295 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-7-presentacion",
+  "title": "T7 — El sistema innato transfiere información al sistema adaptativo",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿En qué cromosoma están los genes del MHC humano (HLA) y cuáles son de clase I y de clase II?",
+      "respuesta": "Cromosoma 6; clase I: HLA-A, -B, -C; clase II: HLA-DR, -DP, -DQ.",
+      "detalle": "La **clase III** codifica genes del complemento y citocinas, **sin función directa** en la presentación antigénica. El MHC es **poligénico** y **polimórfico**: cada individuo expresa alelos diferentes.",
+      "tema": "presentacion-mhc",
+      "seccion": "I. Complejo Mayor de Histocompatibilidad"
+    },
+    {
+      "id": "f02",
+      "frente": "MHC I: ¿qué antígenos presenta, de qué tamaño y a qué linfocito?",
+      "respuesta": "Péptidos endógenos (intracelulares) de 8–11 aa, a los linfocitos T CD8⁺ citotóxicos.",
+      "detalle": "Ej.: péptidos derivados de **virus** o **proteínas tumorales mutadas**. Su hendidura (α1 + α2) es **angosta** → solo acomoda péptidos cortos.",
+      "tema": "presentacion-mhc",
+      "seccion": "Complejo Mayor de Histocompatibilidad I"
+    },
+    {
+      "id": "f03",
+      "frente": "MHC II: ¿en qué células se expresa?",
+      "respuesta": "Solo en CPA profesionales: macrófagos, células dendríticas y linfocitos B (además del epitelio tímico).",
+      "detalle": "Las **células epiteliales tímicas** lo usan para la **selección positiva**. Presenta péptidos **exógenos** a los **LT CD4⁺** cooperadores.",
+      "tema": "presentacion-mhc",
+      "seccion": "Complejo Mayor de Histocompatibilidad: MHC II"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Qué hace TAP en la vía del MHC I?",
+      "respuesta": "Transloca péptidos de 8–16 aa desde el citosol al retículo endoplasmático.",
+      "detalle": "Es un transportador de la familia **ABC** (ATP-Binding Cassette). Los péptidos llegan del **proteasoma** y en el RE se cargan en el MHC I.",
+      "tema": "presentacion-mhc",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué dos funciones cumple la cadena invariante (Ii) en la vía del MHC II?",
+      "respuesta": "Bloquea la hendidura del MHC II en el RE y lo dirige a endosomas tardíos (MIIC).",
+      "detalle": "Al bloquear la hendidura **evita que se unan péptidos del RE** destinados al MHC I. **MIIC** = MHC class II compartments.",
+      "tema": "presentacion-mhc",
+      "seccion": "B) Procesamiento de MHC-II"
+    },
+    {
+      "id": "f06",
+      "frente": "Al reconocer el MHC II, ¿qué hacen el correceptor CD4 y el complejo CD3?",
+      "respuesta": "CD4 se une al MHC II, estabiliza la interacción TCR–MHC y recluta Lck; CD3 transduce la señal.",
+      "detalle": "CD4 se une al MHC II de forma **no específica**. Es la **señal 1**: el TCR reconoce el complejo péptido–MHC.",
+      "tema": "linfocitos-t",
+      "seccion": "1. Reconocimiento del antígeno"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Qué receptor del LT se une a B7-1 (CD80) y B7-2 (CD86) de la CPA, y qué señal aporta?",
+      "respuesta": "CD28; aporta la señal 2 (coestimulación activadora).",
+      "detalle": "La expresión de B7 en la CPA la induce el **IFN-γ**. Sin coestimulación el linfocito que reconoce su antígeno cae en **anergia**.",
+      "tema": "coestimulacion",
+      "seccion": "Co-estimuladores Activadores"
+    },
+    {
+      "id": "f08",
+      "frente": "PD-1: ¿con qué ligandos se une y qué efecto tiene sobre el LT?",
+      "respuesta": "Con PD-L1/PD-L2 de la CPA o del tumor; inhibe la activación y funciones efectoras (agotamiento).",
+      "detalle": "Es un **checkpoint inmunológico**: los coestimuladores inhibidores regulan la activación para **evitar la autoinmunidad**.",
+      "tema": "coestimulacion",
+      "seccion": "Co-estimuladores Inhibidoras"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué quinasa se une a los ITAM fosforilados del CD3 y qué fosforila después?",
+      "respuesta": "ZAP-70; fosforila los adaptadores LAT y SLP-76.",
+      "detalle": "Antes, **Lck** (asociada a CD4/CD8) fosforila los **ITAMs** del CD3; así ZAP-70 se une y se activa.",
+      "tema": "linfocitos-t",
+      "seccion": "Traducción de la señal"
+    },
+    {
+      "id": "f10",
+      "frente": "Th1: ¿qué citocinas la inducen, qué produce y para qué sirve?",
+      "respuesta": "La inducen IL-12 e IFN-γ; produce IFN-γ, que activa macrófagos contra patógenos intracelulares.",
+      "detalle": "Es la base de la **inmunidad celular** frente a virus y bacterias intracelulares. Las citocinas que secreta la CPA según el microambiente son la **señal 3**.",
+      "tema": "diferenciacion-t",
+      "seccion": "Th1"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Qué significa que la expresión del MHC sea codominante y qué aporta?",
+      "respuesta": "Se expresan ambos alelos parentales de cada gen MHC; amplía el repertorio de péptidos presentables.",
+      "detalle": "Sumado al **polimorfismo** (alelos distintos entre personas) y al carácter **poligénico**, aumenta los péptidos que pueden mostrarse a los linfocitos T.",
+      "tema": "presentacion-mhc",
+      "seccion": "I. Complejo Mayor de Histocompatibilidad"
+    },
+    {
+      "id": "f12",
+      "frente": "¿En qué consiste la restricción por MHC?",
+      "respuesta": "El LT maduro reconoce a la vez la molécula MHC propia y el péptido extraño unido a ella.",
+      "detalle": "El MHC **no es específico** de cada antígeno (une por cargas) y **no discrimina** un péptido propio de uno ajeno.",
+      "tema": "presentacion-mhc",
+      "seccion": "I. Complejo Mayor de Histocompatibilidad"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Se une el superantígeno al sitio de unión al péptido del MHC?",
+      "respuesta": "No: se une al MHC fuera del sitio de unión al péptido.",
+      "tema": "presentacion-mhc",
+      "seccion": "I. Complejo Mayor de Histocompatibilidad"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Qué cadenas forman el MHC I y qué dominio se une a CD8?",
+      "respuesta": "Cadena α (α1, α2, α3) + β2-microglobulina; el dominio α3 se une a CD8.",
+      "detalle": "**α1 + α2** forman la hendidura. La **β2-microglobulina** está codificada **fuera del cromosoma 6** y estabiliza la estructura. La cadena α (~45 kDa) tiene región transmembrana y cola citoplasmática.",
+      "tema": "presentacion-mhc",
+      "seccion": "Complejo Mayor de Histocompatibilidad I"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Qué células expresan MHC I y cuáles son la excepción?",
+      "respuesta": "Todas las células nucleadas y las plaquetas; no lo expresan los eritrocitos maduros ni las células germinales.",
+      "tema": "presentacion-mhc",
+      "seccion": "Complejo Mayor de Histocompatibilidad I"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Cómo está formado el MHC II y por qué acepta péptidos más largos?",
+      "respuesta": "Cadenas α y β unidas no covalentemente; α1 + β1 forman una hendidura abierta.",
+      "detalle": "La hendidura **abierta** acomoda péptidos de **10–30 aa** (óptimo 12–16). Ambas cadenas tienen región transmembrana (α ≈33 kDa, β ≈29 kDa).",
+      "tema": "presentacion-mhc",
+      "seccion": "Complejo Mayor de Histocompatibilidad: MHC II"
+    },
+    {
+      "id": "f17",
+      "frente": "¿De dónde provienen los antígenos citosólicos que presenta el MHC I?",
+      "respuesta": "De proteínas propias defectuosas o mal plegadas y de proteínas virales sintetizadas en el citosol.",
+      "tema": "presentacion-mhc",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Cómo modifica el IFN-γ al proteasoma y qué gana con ello?",
+      "respuesta": "Cambia subunidades β por isoformas (inmunoproteasoma) y genera péptidos ideales para el surco del MHC I.",
+      "detalle": "Los péptidos quedan con residuos **hidrofóbicos o básicos en el C-terminal**. El **proteasoma 26S** tiene anillos de cadenas **α (estructurales)** y **β (catalíticas)**.",
+      "tema": "presentacion-mhc",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "f19",
+      "frente": "¿Qué función cumplen la tapasina y ERAAP en la vía del MHC I?",
+      "respuesta": "La tapasina une TAP con el MHC I vacío; ERAAP recorta los péptidos a 8–10 aa.",
+      "detalle": "**8–10 aa** es la longitud ideal para encajar en la hendidura del MHC I.",
+      "tema": "presentacion-mhc",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Qué chaperonas acompañan el ensamblaje del MHC I en el RE y en qué orden?",
+      "respuesta": "Calnexina estabiliza la cadena α; al unirse la β2-microglobulina se va, y calreticulina y ERp57 esperan al péptido.",
+      "tema": "presentacion-mhc",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Qué le ocurre al MHC I que no recibe péptido y qué pasa cuando lo recibe?",
+      "respuesta": "Sin péptido es inestable y no sale del RE; con él se estabiliza y viaja por Golgi a la membrana.",
+      "detalle": "En la membrana lo reconoce el **LT CD8⁺** (TCR + correceptor CD8) → **eliminación de células infectadas por virus o tumorales**.",
+      "tema": "presentacion-mhc",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "f22",
+      "frente": "¿Dónde y con qué enzimas se degradan los antígenos exógenos destinados al MHC II?",
+      "respuesta": "En endosomas tardíos/lisosomas acidificados, por catepsinas, tiol-proteasas y aspartil-proteasas.",
+      "detalle": "Los antígenos (bacterias, toxinas, hongos, parásitos, proteínas solubles) entran en **vesículas endocíticas**; se generan péptidos de **10–30 aa**.",
+      "tema": "presentacion-mhc",
+      "seccion": "B) Procesamiento de MHC-II"
+    },
+    {
+      "id": "f23",
+      "frente": "¿Qué es el CLIP?",
+      "respuesta": "El fragmento de ~24 aa de la cadena invariante que queda bloqueando la hendidura del MHC II.",
+      "detalle": "Queda cuando las **catepsinas degradan la Ii** en los endosomas tardíos. CLIP = Class II-associated invariant chain peptide.",
+      "tema": "presentacion-mhc",
+      "seccion": "B) Procesamiento de MHC-II"
+    },
+    {
+      "id": "f24",
+      "frente": "HLA-DM: ¿qué es y qué hace?",
+      "respuesta": "Una molécula tipo MHC no polimórfica que retira el CLIP y permite cargar el péptido antigénico en el MHC II.",
+      "detalle": "**No se expresa en la membrana**. Actúa como **chaperona intercambiadora de péptidos** y estabiliza la unión péptido–MHC II con un cambio conformacional.",
+      "tema": "presentacion-mhc",
+      "seccion": "B) Procesamiento de MHC-II"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Qué par de moléculas de adhesión une al linfocito T con la CPA?",
+      "respuesta": "LFA-1 en el linfocito T con ICAM-1 en la CPA.",
+      "tema": "linfocitos-t",
+      "seccion": "1. Reconocimiento del antígeno"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Qué es la anergia?",
+      "respuesta": "La falta de respuesta del linfocito T/B expuesto a su antígeno sin coestimulación.",
+      "detalle": "Es un **mecanismo de autotolerancia**: permite reconocer los autoantígenos como «propios» y no atacarlos.",
+      "tema": "tolerancia",
+      "seccion": "2. Coestimulación"
+    },
+    {
+      "id": "f27",
+      "frente": "CD40–CD40L: ¿para qué es fundamental y qué causa su ausencia?",
+      "respuesta": "Para la cooperación T-B y el cambio de isotipo; su falta causa el síndrome de hiper-IgM.",
+      "detalle": "**CD40** está en la CPA y **CD40L (CD154)** en el LT CD4⁺. Sin esta señal hay **inmunodeficiencia con infecciones**.",
+      "tema": "coestimulacion",
+      "seccion": "Co-estimuladores Activadores"
+    },
+    {
+      "id": "f28",
+      "frente": "ICOS: ¿en qué célula está, cuál es su ligando y a qué molécula se parece?",
+      "respuesta": "En el Tfh; se une a ICOS-L del linfocito B y es homólogo de CD28.",
+      "tema": "coestimulacion",
+      "seccion": "Co-estimuladores Activadores"
+    },
+    {
+      "id": "f29",
+      "frente": "¿Cómo inhibe CTLA-4 la activación del linfocito T?",
+      "respuesta": "Compite con CD28 por B7-1 (CD80) y B7-2 (CD86): ↓ proliferación y ↓ producción de IL-2.",
+      "detalle": "Mientras **CD28 activa**, **CTLA-4 inhibe**. Participa en la **supresión por Treg**.",
+      "tema": "coestimulacion",
+      "seccion": "Co-estimuladores Inhibidoras"
+    },
+    {
+      "id": "f30",
+      "frente": "¿Qué quinasa se asocia a los correceptores CD4/CD8 y qué fosforila?",
+      "respuesta": "Lck, de la familia Src; fosforila los ITAMs del complejo CD3.",
+      "tema": "linfocitos-t",
+      "seccion": "Traducción de la señal"
+    },
+    {
+      "id": "f31",
+      "frente": "PLC-γ1: ¿qué segundos mensajeros genera y a qué factor de transcripción lleva cada uno?",
+      "respuesta": "IP₃ → ↑Ca²⁺ → calcineurina → NFAT; DAG → PKCθ → NF-κB.",
+      "detalle": "En paralelo, la vía **Ras/MAPK** activa **AP-1**.",
+      "tema": "linfocitos-t",
+      "seccion": "Traducción de la señal"
+    },
+    {
+      "id": "f32",
+      "frente": "¿Qué resultado tiene la activación de NFAT, NF-κB y AP-1 en el linfocito T?",
+      "respuesta": "Transcripción de IL-2 y de CD25 → proliferación clonal, más supervivencia (Bcl-XL) y diferenciación.",
+      "detalle": "La diferenciación es hacia **células efectoras y de memoria**. **CD25** es el receptor de alta afinidad para IL-2; **Bcl-XL** es antiapoptótica.",
+      "tema": "linfocitos-t",
+      "seccion": "Traducción de la señal"
+    },
+    {
+      "id": "f33",
+      "frente": "IL-2: ¿quién la produce principalmente y qué efectos tiene?",
+      "respuesta": "Los LT CD4⁺ activados; estimula proliferación clonal y supervivencia, e induce IL-2Rα (CD25).",
+      "tema": "citocinas",
+      "seccion": "3. Señales de citocinas"
+    },
+    {
+      "id": "f34",
+      "frente": "Th2: ¿qué la induce, qué produce y contra qué defiende?",
+      "respuesta": "IL-4; produce IL-4, IL-5 e IL-13: activa eosinófilos y mastocitos, estimula IgE, contra helmintos.",
+      "tema": "diferenciacion-t",
+      "seccion": "Th2"
+    },
+    {
+      "id": "f35",
+      "frente": "Th17: ¿qué la induce, qué produce y qué función cumple?",
+      "respuesta": "IL-6, TGF-β e IL-23; produce IL-17 e IL-22: recluta neutrófilos contra bacterias extracelulares y hongos.",
+      "tema": "diferenciacion-t",
+      "seccion": "Th17"
+    },
+    {
+      "id": "f36",
+      "frente": "Tfh: ¿qué la induce, qué produce y a quién ayuda?",
+      "respuesta": "IL-6 e IL-21; produce IL-21 y ayuda a los linfocitos B en los centros germinales.",
+      "detalle": "Favorece el **cambio de isotipo** y la **maduración de la afinidad** de los anticuerpos.",
+      "tema": "diferenciacion-t",
+      "seccion": "Tfh"
+    },
+    {
+      "id": "f37",
+      "frente": "Treg: ¿qué la induce, qué produce y qué función cumple?",
+      "respuesta": "TGF-β e IL-2; produce IL-10 y TGF-β: supresión inmune y tolerancia periférica.",
+      "detalle": "Es clave en el **control de la autoinmunidad**.",
+      "tema": "regulacion",
+      "seccion": "Treg"
+    }
+  ]
+}

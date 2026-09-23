@@ -1,0 +1,217 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-10-organos-secundarios",
+  "title": "T10 — Órganos linfoides secundarios",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Qué ocurre en los órganos linfoides secundarios y cuáles son?",
+      "respuesta": "Los linfocitos se encuentran con las APC e inician la respuesta adaptativa; son MALT, ganglios y bazo.",
+      "detalle": "Son el punto de encuentro entre **células inmunes competentes** y **células presentadoras de antígeno**.",
+      "tema": "organos-secundarios",
+      "seccion": "Clase 10"
+    },
+    {
+      "id": "f02",
+      "frente": "MALT: ¿está encapsulado y de dónde le llegan los antígenos?",
+      "respuesta": "No o parcialmente encapsulado; recibe antígenos que atraviesan el epitelio desde el lumen.",
+      "detalle": "Tiene folículos linfáticos, tejido linfoide difuso y **HEV**. Es capaz de **inducir tolerancia a antígenos alimentarios y de la microbiota**.",
+      "tema": "mucosas",
+      "seccion": "Tejido Linfoide Asociado a Mucosas"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Qué diferencia a un folículo linfoide primario de uno secundario?",
+      "respuesta": "El primario tiene LB vírgenes en reposo, sin centro germinal; el secundario forma centro germinal tras el estímulo antigénico.",
+      "detalle": "Los folículos están en la **corteza externa**, la zona B del ganglio.",
+      "tema": "organos-secundarios",
+      "seccion": "2) Corteza externa"
+    },
+    {
+      "id": "f04",
+      "frente": "Paracorteza del ganglio: ¿qué células predominan y qué función cumple?",
+      "respuesta": "LT y células dendríticas interdigitantes: es la zona T, donde se presenta el antígeno a los LT.",
+      "detalle": "Es la corteza **interna**, entre la corteza externa y la médula, **sin folículos**. También hay NK y LB naive de paso.",
+      "tema": "organos-secundarios",
+      "seccion": "3) Paracorteza"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué contienen los cordones medulares del ganglio?",
+      "respuesta": "Células plasmáticas productoras de anticuerpos, linfocitos B y T, y macrófagos.",
+      "detalle": "A la **médula** migran los LB diferenciados en plasmocitos. Entre los cordones están los **senos medulares**, por donde circula la linfa antes de salir.",
+      "tema": "organos-secundarios",
+      "seccion": "4) Médula"
+    },
+    {
+      "id": "f06",
+      "frente": "Ganglio linfático: ¿qué destino tienen los antígenos grandes y los pequeños?",
+      "respuesta": "Grandes: los macrófagos subcapsulares los pasan intactos a LB y FDC; pequeños (<70 kD): entran a conductos FRC.",
+      "detalle": "Los macrófagos del seno subcapsular **no los presentan por MHC** a los LB. Los conductos de las **FRC** dan contacto rápido con las células dendríticas → **respuesta T inicial**.",
+      "tema": "organos-secundarios",
+      "seccion": "Manejo de Antígenos"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Cuál es la función principal del bazo?",
+      "respuesta": "Filtrar la sangre: elimina patógenos, eritrocitos dañados o senescentes y células anormales.",
+      "detalle": "Es el **órgano linfoide secundario más grande**. A diferencia del ganglio, **no tiene linfáticos aferentes**: los antígenos le llegan por la sangre.",
+      "tema": "organos-secundarios",
+      "seccion": "Bazo"
+    },
+    {
+      "id": "f08",
+      "frente": "Pulpa blanca: ¿qué es la PALS y qué linfocitos contiene?",
+      "respuesta": "La vaina linfoide periarteriolar alrededor de la arteria central; es zona T (respuesta celular).",
+      "tema": "organos-secundarios",
+      "seccion": "2) Pulpa Blanca"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué función cumplen los cordones esplénicos (de Billroth)?",
+      "respuesta": "Retienen los eritrocitos viejos, rígidos o dañados para que los fagociten los macrófagos (hemocateresis).",
+      "detalle": "Son tejido conectivo laxo con **macrófagos, plasmocitos y linfocitos**. Los eritrocitos deben cruzarlos y pasar a los **sinusoides** para volver a la circulación.",
+      "tema": "organos-secundarios",
+      "seccion": "3) Pulpa Roja"
+    },
+    {
+      "id": "f10",
+      "frente": "Circulación abierta vs cerrada del bazo: ¿en qué se diferencian?",
+      "respuesta": "Abierta: los capilares vierten a los cordones de Billroth; cerrada (menos frecuente): conectan directo con los sinusoides.",
+      "detalle": "En la abierta la sangre atraviesa la **malla de células reticulares y macrófagos** y se deforma para pasar por las hendiduras de los sinusoides → **filtro**.",
+      "tema": "organos-secundarios",
+      "seccion": "Irrigación arterial"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Dónde se ubica el GALT?",
+      "respuesta": "En las placas de Peyer del íleon terminal y en el apéndice cecal.",
+      "detalle": "Otros subtipos de MALT: **BALT** (bronquios) y las **amígdalas**.",
+      "tema": "mucosas",
+      "seccion": "Tejido Linfoide Asociado a Mucosas"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Qué amígdalas forman el anillo de Waldeyer?",
+      "respuesta": "Las palatinas, las linguales y las faríngeas.",
+      "tema": "mucosas",
+      "seccion": "Tejido Linfoide Asociado a Mucosas"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Qué recibe el seno subcapsular (marginal) del ganglio?",
+      "respuesta": "La linfa que llega por los vasos linfáticos aferentes.",
+      "detalle": "Está debajo de la **cápsula** de tejido conectivo denso, de la que parten las **trabéculas** hacia el interior.",
+      "tema": "organos-secundarios",
+      "seccion": "1) Capsula"
+    },
+    {
+      "id": "f14",
+      "frente": "Centro germinal del ganglio: ¿qué predomina en la zona oscura y en la clara?",
+      "respuesta": "Oscura: centroblastos e hipermutación somática; clara: centrocitos y selección por afinidad con FDC y Tfh.",
+      "tema": "organos-secundarios",
+      "seccion": "2) Corteza externa"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Qué contiene la zona del manto del folículo secundario?",
+      "respuesta": "LB vírgenes y algunos LB de memoria, rodeando al centro germinal.",
+      "tema": "organos-secundarios",
+      "seccion": "2) Corteza externa"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Por dónde entran al ganglio los linfocitos naive que vienen de la sangre?",
+      "respuesta": "Por las vénulas de endotelio alto (HEV) de la paracorteza.",
+      "tema": "trafico",
+      "seccion": "3) Paracorteza"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Qué recorrido sigue la linfa dentro del ganglio?",
+      "respuesta": "Linfático aferente → seno subcapsular → senos trabeculares → senos medulares → linfático eferente.",
+      "tema": "organos-secundarios",
+      "seccion": "4) Médula"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Qué linfocitos de memoria permanecen en los ganglios linfáticos?",
+      "respuesta": "Los linfocitos T de memoria central.",
+      "detalle": "Los ganglios además completan la **maduración de los LB** que salen de la médula ósea y albergan la respuesta **humoral (folículos)** y la **celular (paracorteza)**.",
+      "tema": "organos-secundarios",
+      "seccion": "Función en la Respuesta Inmune"
+    },
+    {
+      "id": "f19",
+      "frente": "Además de filtrar la sangre, ¿qué reservas guarda el bazo?",
+      "respuesta": "Plaquetas, monocitos y glóbulos rojos.",
+      "detalle": "El resumen añade una **cápsula contráctil** que expulsaría sangre ante hipovolemia: rasgo marcado en animales, escaso en el bazo humano.",
+      "tema": "organos-secundarios",
+      "seccion": "Bazo"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Qué ingresa al bazo por sus trabéculas?",
+      "respuesta": "Los vasos sanguíneos.",
+      "detalle": "Las **trabéculas** son prolongaciones internas de la **cápsula** de tejido conectivo denso; por ellas viajan las **arterias trabeculares**.",
+      "tema": "organos-secundarios",
+      "seccion": "Bazo › 1) Cápsula"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Por qué la pulpa blanca se ve basófila y la roja eosinófila?",
+      "respuesta": "La blanca por los abundantes núcleos de linfocitos; la roja por su contenido de eritrocitos.",
+      "detalle": "Pulpa blanca = función **inmunológica**; pulpa roja = función **hematológica** (hemocateresis).",
+      "tema": "organos-secundarios",
+      "seccion": "2) Pulpa Blanca"
+    },
+    {
+      "id": "f22",
+      "frente": "Folículos esplénicos: ¿qué linfocitos contienen y a qué respuesta aportan?",
+      "respuesta": "Linfocitos B (zona B); aportan a la respuesta humoral y forman centro germinal al activarse.",
+      "detalle": "Se encuentran **asociados a la PALS**.",
+      "tema": "organos-secundarios",
+      "seccion": "2) Pulpa Blanca"
+    },
+    {
+      "id": "f23",
+      "frente": "¿Qué contiene la zona marginal del bazo y frente a qué es clave?",
+      "respuesta": "Macrófagos, células dendríticas y LB de zona marginal; clave frente a bacterias encapsuladas de la sangre.",
+      "detalle": "Es la **transición entre pulpa blanca y roja** y recibe antígenos y células de la sangre. Ejemplos: **Streptococcus pneumoniae** y **Neisseria meningitidis**.",
+      "tema": "organos-secundarios",
+      "seccion": "2) Pulpa Blanca"
+    },
+    {
+      "id": "f24",
+      "frente": "¿Cómo son las células endoteliales de los sinusoides esplénicos?",
+      "respuesta": "Alargadas, dispuestas como duelas de barril y con hendiduras entre ellas: funcionan como filtro físico.",
+      "tema": "organos-secundarios",
+      "seccion": "3) Pulpa Roja"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Qué son las arteriolas envainadas (elipsoides) de la pulpa roja?",
+      "respuesta": "Arteriolas rodeadas por una vaina de macrófagos y células reticulares que capturan partículas y antígenos sanguíneos.",
+      "detalle": "Las **arteriolas pulpares**, en cambio, **no están rodeadas de linfocitos**.",
+      "tema": "organos-secundarios",
+      "seccion": "3) Pulpa Roja"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Qué ramas sigue la arteria esplénica dentro del bazo?",
+      "respuesta": "Trabeculares → centrales (rodeadas por la PALS) → penicilares → capilares envainados en la pulpa roja.",
+      "detalle": "La **arteria esplénica** es rama del **tronco celíaco** y entra por el **hilio**.",
+      "tema": "organos-secundarios",
+      "seccion": "Irrigación arterial"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Por dónde drena la sangre de los sinusoides esplénicos?",
+      "respuesta": "Venas pulpares → venas trabeculares → vena esplénica → vena porta.",
+      "tema": "organos-secundarios",
+      "seccion": "Irrigación arterial"
+    }
+  ]
+}

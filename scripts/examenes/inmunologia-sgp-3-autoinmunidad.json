@@ -1,0 +1,360 @@
+{
+  "version": 1,
+  "key": "inmunologia/sgp-3-autoinmunidad",
+  "title": "SGP 3 — Autoinmunidad: artritis reumatoide y autoanticuerpos",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Cómo está formado un anticuerpo?",
+      "respuesta": "Cuatro cadenas unidas por puentes disulfuro: 2 pesadas idénticas y 2 ligeras idénticas (ambas κ o ambas λ).",
+      "detalle": "Forma de **Y**. La **cadena pesada** tiene **1 dominio V y 3 C** (el número de dominios C varía según el isotipo); la **ligera**, **1 V y 1 C**. Lo producen las **células plasmáticas** y es el efector de la inmunidad humoral.",
+      "tema": "anticuerpos",
+      "seccion": "1. ¿Qué es un anticuerpo"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Qué dos mecanismos generan la diversidad del repertorio de anticuerpos?",
+      "respuesta": "La diversidad combinatoria (recombinación V(D)J por RAG1/2) y la diversidad de unión.",
+      "detalle": "La pesada usa segmentos **V, D y J**; la ligera, solo **V y J**. En las uniones, las **exonucleasas** quitan y la **TdT** añade nucleótidos N → hipervariabilidad de la **CDR3**, que define la especificidad.",
+      "tema": "linfocitos-b",
+      "seccion": "2. ¿Cómo hace el cuerpo"
+    },
+    {
+      "id": "f03",
+      "frente": "Primer punto de control del LB: ¿en qué estadio ocurre y de qué enzima depende su señal?",
+      "respuesta": "En el pre-B grande, al expresar el pre-BCR; la señal depende de la tirosina cinasa de Bruton (BTK).",
+      "detalle": "Da supervivencia, proliferación, **exclusión alélica** (se detiene la recombinación de la pesada) e inicio de la ligera (**κ y luego λ**). Mutaciones en **BTK o λ5** → **agammaglobulinemia ligada al X (Bruton)**.",
+      "tema": "linfocitos-b",
+      "seccion": "2. PRE-LINFOCITO B"
+    },
+    {
+      "id": "f04",
+      "frente": "Activación T-independiente vs T-dependiente del LB: ¿qué cambia en isotipo, afinidad y memoria?",
+      "respuesta": "La T-independiente da solo IgM de baja afinidad y sin memoria; la T-dependiente, isotipos variados, alta afinidad y memoria.",
+      "detalle": "La T-dependiente tiene **cambio de isotipo, hipermutación somática y maduración de la afinidad**, y dura meses-años; la T-independiente, días-semanas.",
+      "tema": "linfocitos-b",
+      "seccion": "Independiente de LT"
+    },
+    {
+      "id": "f05",
+      "frente": "Tolerancia central y periférica: ¿dónde ocurre cada una?",
+      "respuesta": "Central: timo (LT) y médula ósea (LB). Periférica: órganos linfoides secundarios y tejidos.",
+      "detalle": "La **central** impide que los autorreactivos lleguen a la periferia; la **periférica** controla a los que **escaparon**: anergia, supresión por Treg y apoptosis.",
+      "tema": "tolerancia",
+      "seccion": "5. ¿Qué es la tolerancia"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Qué papel tiene AIRE en la selección negativa del timo?",
+      "respuesta": "Hace que las células epiteliales medulares (mTEC) expresen genes de tejidos periféricos.",
+      "detalle": "Así el timocito ve **antígenos propios de otros órganos**: si los reconoce con **alta afinidad** sufre deleción clonal; algunos, en vez de morir, se vuelven **Treg FoxP3⁺**.",
+      "tema": "tolerancia",
+      "seccion": "6. ¿Cómo se desarrolla › Linfocitos T"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Qué produce una mutación de FOXP3?",
+      "respuesta": "Síndrome IPEX: desregulación inmune, poliendocrinopatía y enteropatía ligada al X, por falta de Treg.",
+      "detalle": "Las Treg son **CD4⁺ CD25 alto FoxP3⁺ CTLA-4⁺**. En lupus, AR y diabetes tipo 1 hay alteraciones **cuantitativas o funcionales** de las Treg.",
+      "tema": "regulacion",
+      "seccion": "Funciones de Treg"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Qué proceso crea los neoantígenos de la artritis reumatoide?",
+      "respuesta": "La citrulinación de proteínas (vimentina, filagrina, colágeno II) por las enzimas PAD.",
+      "detalle": "**PAD** = peptidilarginina deiminasa. Al cambiar su estructura, esas proteínas se vuelven **neoantígenos** que las DC y macrófagos presentan a los LT CD4⁺.",
+      "tema": "autoinmunidad",
+      "seccion": "INTRODUCCIÓN: Artritis"
+    },
+    {
+      "id": "f09",
+      "frente": "PCR y VSG: ¿cuál sirve mejor para la inflamación aguda y cuál para la crónica?",
+      "respuesta": "PCR: inflamación aguda y respuesta al tratamiento. VSG: inflamación crónica y enfermedades autoinmunes.",
+      "detalle": "Ambas son **reactantes de fase aguda** y se piden juntas porque son **complementarias**. María: **PCR 40 mg/L** (normal <10) y **VSG 80 mm/h** (normal <20).",
+      "tema": "hemograma-rfa",
+      "seccion": "1. De acuerdo"
+    },
+    {
+      "id": "f10",
+      "frente": "¿Qué es el factor reumatoide?",
+      "respuesta": "Un autoanticuerpo, generalmente IgM, dirigido contra la porción Fc de la IgG propia.",
+      "detalle": "**No es exclusivo** de la AR (hay AR «seronegativas»): aparece en Sjögren, lupus, esclerodermia, linfoma, TB, endocarditis, hepatitis virales y en **adultos mayores sanos**.",
+      "tema": "autoinmunidad",
+      "seccion": "2. ¿Que son los Factores"
+    },
+    {
+      "id": "f11",
+      "frente": "Fab y Fc: ¿qué función cumple cada fragmento del anticuerpo?",
+      "respuesta": "Fab (2 brazos, con la región variable) une el antígeno; Fc (la cola) interactúa con el sistema inmune.",
+      "detalle": "La **Fc** determina el complemento, la **opsonización** y la **citotoxicidad dependiente de anticuerpo**.",
+      "tema": "anticuerpos",
+      "seccion": "Fragmentos funcionales"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Dónde está el parátopo y qué segmentos definen la especificidad del anticuerpo?",
+      "respuesta": "En la región variable; las 3 regiones hipervariables CDR1, CDR2 y CDR3.",
+      "detalle": "La **región constante** (tronco de la Y) define el **isotipo**. La **bisagra** (entre CH1 y CH2 en IgG, IgA e IgD) da flexibilidad y aumenta la avidez.",
+      "tema": "anticuerpos",
+      "seccion": "Regiones principales"
+    },
+    {
+      "id": "f13",
+      "frente": "IgG: ¿cuánto dura, dónde predomina y qué funciones la distinguen?",
+      "respuesta": "Vida media de 23 días; la más abundante en sangre; opsoniza, activa complemento y cruza la placenta.",
+      "detalle": "Las subclases más eficaces para **opsonizar y activar complemento** son **IgG1 e IgG3**. Es monómero.",
+      "tema": "anticuerpos",
+      "seccion": "TABLA: ISOTIPOS DE INMUNOGLOBULINAS › Plasma"
+    },
+    {
+      "id": "f14",
+      "frente": "IgA: ¿qué forma tiene en las secreciones y dónde es la más abundante?",
+      "respuesta": "Dímero unido por la cadena J, secretado por transcitosis; es la Ig más abundante del cuerpo, en mucosas.",
+      "detalle": "En sangre circula como **monómero**. Pasa al recién nacido por la **leche materna**. Vida media: 6 días.",
+      "tema": "anticuerpos",
+      "seccion": "TABLA: ISOTIPOS DE INMUNOGLOBULINAS › Secreciones mucosas"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Dónde se encuentra la IgD?",
+      "respuesta": "En la membrana del LB maduro naive, junto con la IgM; en suero hay muy poca.",
+      "detalle": "**Corrección**: la tabla del resumen la sitúa en «LB inmaduros», pero el **LB inmaduro solo expresa IgM**; la IgD aparece al madurar (**T2** y **folicular IgM⁺ IgD⁺**), como dice el propio resumen más adelante.",
+      "tema": "anticuerpos",
+      "seccion": "TABLA: ISOTIPOS DE INMUNOGLOBULINAS › Superficie de linfocitos B"
+    },
+    {
+      "id": "f16",
+      "frente": "IgM: ¿qué estructura tiene y cuáles son sus funciones?",
+      "respuesta": "Pentámero con cadena J; primer anticuerpo de la respuesta, activa el complemento y aglutina.",
+      "detalle": "Predomina en la **respuesta primaria**. No atraviesa la placenta.",
+      "tema": "anticuerpos",
+      "seccion": "TABLA: ISOTIPOS DE INMUNOGLOBULINAS › Pentámero"
+    },
+    {
+      "id": "f17",
+      "frente": "IgE: ¿dónde se localiza y qué funciones cumple?",
+      "respuesta": "En tejidos submucosos, unida a mastocitos y basófilos; defensa contra helmintos y alergia inmediata.",
+      "detalle": "Es la de **menor vida media** (2-3 días).",
+      "tema": "anticuerpos",
+      "seccion": "TABLA: ISOTIPOS DE INMUNOGLOBULINAS › Tejidos submucosos"
+    },
+    {
+      "id": "f18",
+      "frente": "Prolinfocito B: ¿qué marcadores expresa y qué empieza a reordenar?",
+      "respuesta": "CD19, CD10 y CD34; empieza el reordenamiento de la cadena pesada.",
+      "detalle": "**Pro-B temprano**: D–J en ambos cromosomas. **Pro-B tardío**: V–DJ en el primero; si no es productivo, en el segundo; si también falla → **apoptosis** (~50 % de las células).",
+      "tema": "linfocitos-b",
+      "seccion": "1. PROLINFOCITO"
+    },
+    {
+      "id": "f19",
+      "frente": "¿De qué está formado el receptor del pre-linfocito B (pre-BCR)?",
+      "respuesta": "Cadena pesada μ, cadena ligera sustituta (λ5 y V pre-B) e Igα/Igβ (CD79a/CD79b).",
+      "detalle": "**Igα/Igβ** son las moléculas de **señalización**. Tras este punto de control se reordena la ligera: **κ** en ambos cromosomas y luego **λ**.",
+      "tema": "linfocitos-b",
+      "seccion": "2. PRE-LINFOCITO B"
+    },
+    {
+      "id": "f20",
+      "frente": "LB inmaduro que reconoce un autoantígeno con alta afinidad en la médula ósea: ¿qué puede pasarle?",
+      "respuesta": "Edición del receptor, anergia o apoptosis (deleción clonal).",
+      "detalle": "En la **edición** se reactivan **RAG-1, RAG-2 y TdT** y se recombina la **cadena ligera** (κ, luego λ). El LB inmaduro expresa **IgM de membrana**, CD19, CD20 y MHC II, e inhibe RAG si no es autorreactivo.",
+      "tema": "tolerancia",
+      "seccion": "3. LINFOCITO B INMADURO"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Qué diferencia a los LB transicionales T1 y T2?",
+      "respuesta": "T1: IgM alta, IgD muy baja, muy sensible a apoptosis. T2: recibe BAFF, sube IgD y sigue madurando.",
+      "detalle": "Son LB inmaduros que **salieron de la médula** hacia los órganos linfoides secundarios. El **T2** se diferencia en **LB folicular (B-2)** o **de zona marginal**.",
+      "tema": "linfocitos-b",
+      "seccion": "4. LINFOCITOS TRANSICIONALES"
+    },
+    {
+      "id": "f22",
+      "frente": "LB folicular vs LB de zona marginal: ¿a qué antígenos responde cada uno?",
+      "respuesta": "Folicular: T-dependientes, con centros germinales. Zona marginal del bazo: T-independientes, como polisacáridos de bacterias encapsuladas.",
+      "detalle": "El **folicular** (IgM⁺ IgD⁺) llega al folículo por **CXCL13** de las FDC y depende de **BAFF**. El **marginal** (IgM alta, poca IgD) da **IgM de baja afinidad** rápida (Neisseria, Haemophilus, neumococo).",
+      "tema": "linfocitos-b",
+      "seccion": "LINFOCITO MADURO"
+    },
+    {
+      "id": "f23",
+      "frente": "¿Cuál es la segunda señal del LB en la activación T-dependiente?",
+      "respuesta": "CD40 del LB con CD40L del LT helper, más las citocinas del LT CD4⁺.",
+      "detalle": "Sin segunda señal, el LB que reconoció el antígeno con el BCR entra en **anergia o apoptosis**.",
+      "tema": "linfocitos-b",
+      "seccion": "4. ¿Cómo se activa"
+    },
+    {
+      "id": "f24",
+      "frente": "Respuesta extrafolicular vs folicular del LB: ¿qué produce cada una?",
+      "respuesta": "Extrafolicular: plasmáticas de vida corta y anticuerpos de baja afinidad. Folicular: centro germinal, alta afinidad y memoria.",
+      "detalle": "La **extrafolicular** es rápida (primeros días); la **folicular** tarda días-semanas y añade **cambio de isotipo** e **hipermutación somática**.",
+      "tema": "linfocitos-b",
+      "seccion": "Dependiente de LT"
+    },
+    {
+      "id": "f25",
+      "frente": "Zona oscura del centro germinal: ¿qué células hay y qué ocurre?",
+      "respuesta": "Centroblastos que proliferan intensamente y, con la enzima AID, hacen hipermutación somática.",
+      "detalle": "La **AID** introduce mutaciones en las regiones variables de las Ig → **variantes del BCR** con distinta afinidad.",
+      "tema": "linfocitos-b",
+      "seccion": "Dependiente de LT › Zona oscura"
+    },
+    {
+      "id": "f26",
+      "frente": "Zona clara del centro germinal: ¿cómo se seleccionan los centrocitos?",
+      "respuesta": "Compiten por el antígeno de las FDC y lo presentan al Tfh; los de alta afinidad sobreviven, el resto muere.",
+      "detalle": "El Tfh da supervivencia por **CD40–CD40L, ICOS–ICOSL, IL-21 e IL-4**. Los elegidos se vuelven **plasmáticas de larga vida** (van a la médula ósea) o **LB de memoria**.",
+      "tema": "linfocitos-b",
+      "seccion": "Dependiente de LT › Zona clara"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Qué antígenos activan al LB sin ayuda T y por qué pueden hacerlo?",
+      "respuesta": "Polisacáridos, LPS, lípidos y ácidos nucleicos: sus epítopos repetidos entrecruzan masivamente el BCR.",
+      "detalle": "No se presentan en MHC II, pero necesitan **señales innatas** (TLR, BAFF, APRIL, complemento). Ejemplos: **S. pneumoniae, N. meningitidis, H. influenzae tipo b**.",
+      "tema": "linfocitos-b",
+      "seccion": "Independiente de LT"
+    },
+    {
+      "id": "f28",
+      "frente": "¿Cómo amplifica el complemento la activación del linfocito B?",
+      "respuesta": "El LB une el C3d del microbio con CR2 (CD21) mientras el BCR reconoce el antígeno.",
+      "detalle": "Otras señales innatas: **PAMPs** vía PRR y las citocinas **BAFF y APRIL** (receptores BAFF-R, TACI y BCMA), que promueven supervivencia y diferenciación.",
+      "tema": "linfocitos-b",
+      "seccion": "¿Qué rol tiene el sistema inmune innato"
+    },
+    {
+      "id": "f29",
+      "frente": "Cambio de isotipo: ¿qué enzima lo hace y qué citocina lleva a cada isotipo?",
+      "respuesta": "La AID. IL-4 → IgE e IgG4; IFN-γ → IgG1 e IgG3; TGF-β → IgA.",
+      "detalle": "La **AID** corta el ADN en las **regiones switch (S)** de la cadena pesada y permite saltar de **μ** a γ, α o ε.",
+      "tema": "anticuerpos",
+      "seccion": "Rol de los linfocitos T CD4"
+    },
+    {
+      "id": "f30",
+      "frente": "¿Por qué un exceso de BAFF favorece el lupus?",
+      "respuesta": "Los LB autorreactivos dependen más de BAFF: con exceso sobreviven y producen autoanticuerpos.",
+      "detalle": "Normalmente el BAFF es **limitado** y esos LB, excluidos de los **nichos foliculares**, mueren por apoptosis (**Bim, caspasas**).",
+      "tema": "tolerancia",
+      "seccion": "6. ¿Cómo se desarrolla › Linfocitos B"
+    },
+    {
+      "id": "f31",
+      "frente": "¿Qué factores genéticos y ambientales predisponen a la artritis reumatoide?",
+      "respuesta": "HLA-DR4 y HLA-DR1; tabaco, microbiota oral/intestinal e infecciones.",
+      "detalle": "Favorecen la **disregulación de la tolerancia** central y periférica y la **citrulinación** de proteínas.",
+      "tema": "autoinmunidad",
+      "seccion": "INTRODUCCIÓN: Artritis"
+    },
+    {
+      "id": "f32",
+      "frente": "En la artritis reumatoide, ¿qué hacen los Th1 y los Th17?",
+      "respuesta": "Th1: IFN-γ activa macrófagos. Th17: IL-17 recluta neutrófilos y activa fibroblastos sinoviales.",
+      "detalle": "En la sinovial se forma un «cóctel» de **TNF-α, IL-1β e IL-6** → inflamación sostenida, fiebre y manifestaciones sistémicas.",
+      "tema": "autoinmunidad",
+      "seccion": "INTRODUCCIÓN: Artritis"
+    },
+    {
+      "id": "f33",
+      "frente": "¿Qué autoanticuerpo es el más específico de la artritis reumatoide?",
+      "respuesta": "Los ACPA: anticuerpos contra péptidos citrulinados cíclicos.",
+      "detalle": "ACPA y FR forman **complejos inmunes** → **hipersensibilidad tipo III** en sinovio y otros tejidos. María: **ACPA 50 UI** (normal <19) y **FR 1:80**.",
+      "tema": "autoinmunidad",
+      "seccion": "INTRODUCCIÓN: Artritis"
+    },
+    {
+      "id": "f34",
+      "frente": "¿Qué es el pannus y por qué es clave en la artritis reumatoide?",
+      "respuesta": "Sinovial hiperplásica (fibroblastos, linfocitos, macrófagos, vasos) que invade y destruye cartílago y hueso subcondral.",
+      "detalle": "Los **fibroblastos sinoviales** secretan **MMPs** (degradan cartílago) y **RANKL** (activa osteoclastos → erosión ósea). **VEGF y FGF** sostienen la angiogénesis.",
+      "tema": "autoinmunidad",
+      "seccion": "INTRODUCCIÓN: Artritis"
+    },
+    {
+      "id": "f35",
+      "frente": "¿Qué manifestaciones extraarticulares causan los complejos inmunes en la AR?",
+      "respuesta": "Vasculitis, fibrosis intersticial y nódulos pulmonares, epiescleritis y Sjögren secundario, y pericarditis.",
+      "detalle": "Son más frecuentes en pacientes **FR⁺** o con **ACPA altos**. También aumenta el riesgo de **aterosclerosis**.",
+      "tema": "autoinmunidad",
+      "seccion": "INTRODUCCIÓN: Artritis"
+    },
+    {
+      "id": "f36",
+      "frente": "¿Qué rigidez y qué articulaciones son típicas de la artritis reumatoide?",
+      "respuesta": "Rigidez matutina de más de 1 hora que mejora con la actividad; MCF, IFP, carpos y MTF.",
+      "detalle": "Predomina en **manos y pies**. María tiene dolor en **IFP, MCF y muñecas** con rigidez matinal que mejora durante el día.",
+      "tema": "autoinmunidad",
+      "seccion": "INTRODUCCIÓN: Artritis"
+    },
+    {
+      "id": "f37",
+      "frente": "¿Qué estimula la síntesis de PCR y con qué rapidez cambia?",
+      "respuesta": "IL-6, IL-1 y TNF-α sobre el hígado; sube en 6-8 h y baja rápido cuando cede la inflamación.",
+      "tema": "hemograma-rfa",
+      "seccion": "1. De acuerdo"
+    },
+    {
+      "id": "f38",
+      "frente": "¿Por qué se acelera la VSG en la inflamación?",
+      "respuesta": "El fibrinógeno y las inmunoglobulinas favorecen los rouleaux, que sedimentan más rápido.",
+      "detalle": "Es **más inespecífica** que la PCR, permanece elevada más tiempo y la alteran la **anemia, el embarazo y la edad**.",
+      "tema": "hemograma-rfa",
+      "seccion": "1. De acuerdo"
+    },
+    {
+      "id": "f39",
+      "frente": "¿Cómo daña los tejidos el factor reumatoide?",
+      "respuesta": "Forma complejos con IgG que activan el complemento clásico: C3a y C5a reclutan neutrófilos y macrófagos.",
+      "detalle": "**C5b-9** contribuye al daño celular; neutrófilos (proteasas, ROS) y macrófagos (**TNF-α, IL-1, IL-6**) perpetúan la lesión. FR⁺ → enfermedad más agresiva y sistémica.",
+      "tema": "autoinmunidad",
+      "seccion": "2. ¿Que son los Factores"
+    },
+    {
+      "id": "f40",
+      "frente": "¿Cómo actúa el ibuprofeno y qué limitación tiene en la artritis reumatoide?",
+      "respuesta": "Inhibe reversiblemente COX-1 y COX-2 (↓ PGE₂): alivia dolor e inflamación, pero no frena la progresión.",
+      "detalle": "**No bloquea las citocinas proinflamatorias** ni previene erosiones. Es **coadyuvante** mientras los FARME (metotrexato) o biológicos hacen efecto.",
+      "tema": "inflamacion",
+      "seccion": "3. Aplicando"
+    },
+    {
+      "id": "f41",
+      "frente": "¿Qué es el infliximab y cuál es su blanco?",
+      "respuesta": "Un anticuerpo monoclonal quimérico (murino-humano) que neutraliza el TNF-α soluble y de membrana.",
+      "detalle": "Impide que el **TNF-α** se una a sus receptores en células inmunes y endoteliales.",
+      "tema": "autoinmunidad",
+      "seccion": "4. El médico indica"
+    },
+    {
+      "id": "f42",
+      "frente": "¿Qué efectos tiene bloquear el TNF-α con infliximab?",
+      "respuesta": "↓ NF-κB/AP-1: menos IL-1, IL-6, MMPs y adhesión endotelial; apoptosis de células con TNF-α de membrana.",
+      "detalle": "En la articulación: **↓ inflamación sinovial y pannus**, **↓ osteoclastos** (protege del daño óseo) y **↓ angiogénesis** por VEGF.",
+      "tema": "autoinmunidad",
+      "seccion": "4. El médico indica"
+    },
+    {
+      "id": "f43",
+      "frente": "PPD en un paciente con anti-TNF: ¿desde cuántos milímetros es positiva?",
+      "respuesta": "Desde 5 mm de induración.",
+      "detalle": "**≥ 5 mm**: inmunosuprimidos, VIH⁺, contactos de TB activa, trasplantados. **≥ 10 mm**: inmigrantes de zonas endémicas, personal de salud, UDVP, <4 años, crónicos. **≥ 15 mm**: sanos sin riesgo.",
+      "tema": "hipersensibilidad",
+      "seccion": "5. ¿Cómo interpretaría"
+    },
+    {
+      "id": "f44",
+      "frente": "¿Descarta tuberculosis latente la PPD de 2 mm de María?",
+      "respuesta": "No: es negativa, pero el anti-TNF da falsos negativos; hay que usar IGRA, imagen y juicio clínico.",
+      "detalle": "El **infliximab reduce la actividad de los LT**, que son los que producen la induración de la PPD.",
+      "tema": "hipersensibilidad",
+      "seccion": "5. ¿Cómo interpretaría"
+    }
+  ]
+}

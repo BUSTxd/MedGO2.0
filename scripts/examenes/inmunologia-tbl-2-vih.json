@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "key": "inmunologia/tbl-2-vih",
+  "title": "TBL 2 — Infecciones virales: VIH",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Cuál es el receptor principal del VIH y en qué células se concentra su tropismo?",
+      "respuesta": "CD4: linfocitos T CD4⁺, macrófagos y células dendríticas.",
+      "detalle": "El VIH es un **retrovirus (Lentivirus)**. El **tejido linfoide** es su principal reservorio y la **infección primaria ocurre en mucosas**.",
+      "tema": "vih",
+      "seccion": "GENERALIDADES - VIH"
+    },
+    {
+      "id": "f02",
+      "frente": "CCR5 vs CXCR4: ¿en qué fase de la infección predomina cada correceptor?",
+      "respuesta": "CCR5 en la infección inicial (transmisión); CXCR4 en la fase tardía, con progresión a SIDA.",
+      "detalle": "Tropismo **R5** vs **X4**. CCR5 se asocia a la **transmisión persona a persona**; CXCR4, a la **depleción masiva de CD4⁺** y al SIDA.",
+      "tema": "vih",
+      "seccion": "Correceptores"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Qué es la transinfección del VIH por células dendríticas?",
+      "respuesta": "DC inmaduras de mucosa capturan el virus por DC-SIGN sin infectarse y lo pasan al LT CD4⁺ del ganglio.",
+      "detalle": "**DC-SIGN (CD209)**. Retienen las partículas en compartimentos intracelulares, migran al ganglio y en la **sinapsis inmunológica** transfieren el virus → el LT CD4⁺ sí se infecta productivamente.",
+      "tema": "vih",
+      "seccion": "Transfección"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Qué enzima convierte el ARN del VIH en ADN y qué fármacos la bloquean?",
+      "respuesta": "La retrotranscriptasa, que genera cADN de doble cadena; la bloquean los NRTIs y NNRTIs.",
+      "detalle": "Ocurre en el **citoplasma**, tras la fusión mediada por gp41. Luego el cADN entra al núcleo para integrarse.",
+      "tema": "vih",
+      "seccion": "Entrada y Replicación Celular"
+    },
+    {
+      "id": "f05",
+      "frente": "Fase aguda del VIH (2-4 semanas): ¿cómo están la carga viral, el p24 y los CD4⁺?",
+      "respuesta": "Viremia muy alta (pico), antígeno p24 positivo y caída brusca de CD4⁺.",
+      "detalle": "Aún **no hay anticuerpos**: actúan CD8⁺ e inmunidad innata (IFN, NK). Clínica: **síndrome retroviral agudo** (fiebre, fatiga, linfadenopatía, rash, úlceras), parecido a una mononucleosis.",
+      "tema": "vih",
+      "seccion": "CICLO DE LA ENFERMEDAD › AGUDA"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Con qué recuento de CD4⁺ se define el SIDA?",
+      "respuesta": "CD4⁺ < 200/µL, o la aparición de infecciones oportunistas.",
+      "detalle": "Valor normal: 500-1500/µL. Hay **agotamiento de LT (↑ PD-1, CTLA-4)**, activación inmune crónica y fracaso de CD8⁺ y anticuerpos → Pneumocystis, Candida, linfoma, sarcoma de Kaposi.",
+      "tema": "vih",
+      "seccion": "CICLO DE LA ENFERMEDAD › SIDA"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Qué detecta la prueba de tamizaje de 4.ª generación para VIH?",
+      "respuesta": "Anticuerpos anti-VIH (IgG, IgM) y antígeno p24 en un mismo ensayo.",
+      "detalle": "Permite la **detección temprana**, pero **no diferencia VIH-1 de VIH-2**: eso lo hace el inmunoensayo de confirmación.",
+      "tema": "vih",
+      "seccion": "Diagnóstico"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Qué virus causan la mononucleosis infecciosa y en qué proporción?",
+      "respuesta": "Virus de Epstein-Barr (HHV-4) en ~90% y citomegalovirus (HHV-5) en ~10%.",
+      "detalle": "«**Enfermedad del beso**»: se transmite por secreciones. Incubación de ~6 semanas; ~90-95% de la población está infectada.",
+      "tema": "vih",
+      "seccion": "Mononucleosis"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué son los linfocitos atípicos (células de Downey) de la mononucleosis?",
+      "respuesta": "Linfocitos T CD8⁺ citotóxicos activados que destruyen a los linfocitos B infectados por EBV.",
+      "detalle": "Además hay **respuesta humoral** contra el virus. En el frotis de sangre periférica se ven como linfocitos atípicos.",
+      "tema": "vih",
+      "seccion": "FISIOPATOLOGÍA"
+    },
+    {
+      "id": "f10",
+      "frente": "Serología de EBV: ¿qué patrón indica una infección pasada?",
+      "respuesta": "IgM anti-VCA negativa, IgG anti-VCA positiva e IgG anti-EBNA positiva.",
+      "detalle": "**IgM anti-VCA** sale en las primeras semanas y desaparece a los ~3 meses; **IgG anti-VCA** (desde 2-4 semanas) y **anti-EBNA-1** (desde 6-12 semanas) persisten de por vida.",
+      "tema": "vih",
+      "seccion": "Mononucleosis › DIAGNÓSTICO"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Cuáles son los reservorios del VIH, desde donde puede reactivarse?",
+      "respuesta": "Tejido linfoide, LT CD4⁺ de memoria, macrófagos, DC y virus atrapado en inmunocomplejos.",
+      "detalle": "En el EBV, en cambio, el reservorio son los **linfocitos B de memoria**.",
+      "tema": "vih",
+      "seccion": "Reservorios"
+    },
+    {
+      "id": "f12",
+      "frente": "Mononucleosis vs VIH: ¿qué curso sigue cada enfermedad?",
+      "respuesta": "Mononucleosis: autolimitada (2-4 semanas). VIH: progresiva, aguda → crónica asintomática → SIDA.",
+      "detalle": "En la mononucleosis la infección de LB causa **proliferación policlonal** con respuesta inmune fuerte; en el VIH, la infección de LT CD4⁺ lleva a su **destrucción progresiva**.",
+      "tema": "vih",
+      "seccion": "Curso de la enfermedad"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Qué diferencia al VIH-1 del VIH-2?",
+      "respuesta": "VIH-1: global, más transmisible y de progresión rápida; VIH-2: menor carga viral, endémico de África Occidental.",
+      "detalle": "VIH-1 tiene **alta replicación** y causa ~99% de los casos en el mundo; su mayor transmisibilidad incluye la **vía vertical** (madre → hijo).",
+      "tema": "vih",
+      "seccion": "GENERALIDADES - VIH"
+    },
+    {
+      "id": "f14",
+      "frente": "gp120 y gp41: ¿qué función cumple cada una en la entrada del VIH?",
+      "respuesta": "gp120 se une a CD4 y al correceptor (adhesión); gp41 induce la fusión de membranas.",
+      "detalle": "gp120 se une **primero a CD4 y luego a CCR5/CXCR4**. Ambas las codifica el gen **env**.",
+      "tema": "vih",
+      "seccion": "GENERALIDADES - VIH"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Qué proteína del VIH le permite escapar de los anticuerpos y dificulta crear una vacuna?",
+      "respuesta": "La gp120, por la variabilidad de sus bucles variables V1-V5.",
+      "detalle": "Esos bucles son **blanco de anticuerpos**, pero **mutan rápido** → el virus escapa de la inmunidad humoral.",
+      "tema": "vih",
+      "seccion": "GENERALIDADES - VIH"
+    },
+    {
+      "id": "f16",
+      "frente": "Mutación de CCR5: ¿qué efecto tiene en homocigosis y en heterocigosis?",
+      "respuesta": "Homocigosis: resistencia a la infección; heterocigosis: progresión más lenta.",
+      "detalle": "Sin CCR5 funcional las cepas **R5**, responsables de la transmisión, no pueden entrar.",
+      "tema": "vih",
+      "seccion": "Correceptores › Mutaciones"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Qué células infectan las cepas R5 (CCR5) del VIH?",
+      "respuesta": "LT CD4⁺ de memoria/efectores en mucosas, macrófagos y células dendríticas.",
+      "tema": "vih",
+      "seccion": "Correceptores › Células infectadas principales"
+    },
+    {
+      "id": "f18",
+      "frente": "Fase tardía: ¿qué linfocitos infecta el VIH X4 y qué receptores expresan?",
+      "respuesta": "LT CD4⁺ vírgenes (naive), CXCR4⁺ y CCR7⁺, este último para migrar a ganglios.",
+      "detalle": "Es lo que se ve en el **paciente con SIDA** (p. ej., CD4⁺ 70/µL y carga viral alta).",
+      "tema": "vih",
+      "seccion": "Correceptores › Fenotipo de célula blanco"
+    },
+    {
+      "id": "f19",
+      "frente": "¿Qué hace la integrasa del VIH?",
+      "respuesta": "Inserta el cADN viral en el genoma de la célula y forma el provirus.",
+      "detalle": "Es **diana terapéutica** (inhibidores de la integrasa). El provirus empieza a expresarse cuando la célula infectada **se activa**.",
+      "tema": "vih",
+      "seccion": "Entrada y Replicación Celular"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Qué función tienen los genes reguladores Tat y Rev del VIH?",
+      "respuesta": "Tat aumenta la transcripción del ARN viral; Rev lo transporta del núcleo al citoplasma.",
+      "tema": "vih",
+      "seccion": "Entrada y Replicación Celular"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Qué codifican los genes gag, pol y env del VIH?",
+      "respuesta": "gag: cápside y matriz (p24); pol: retrotranscriptasa, integrasa y proteasa; env: gp120 y gp41.",
+      "tema": "vih",
+      "seccion": "Entrada y Replicación Celular"
+    },
+    {
+      "id": "f22",
+      "frente": "¿Qué hace la proteasa del VIH?",
+      "respuesta": "Escinde las poliproteínas Gag y Pol tras la gemación, dando un virión maduro e infectante.",
+      "detalle": "Sin ella el virión queda inmaduro: por eso los **inhibidores de la proteasa** son parte del tratamiento.",
+      "tema": "vih",
+      "seccion": "Entrada y Replicación Celular"
+    },
+    {
+      "id": "f23",
+      "frente": "Fase crónica asintomática: ¿cómo están la carga viral, el p24 y los anticuerpos?",
+      "respuesta": "Carga viral estable (set point), p24 negativo y seroconversión con anticuerpos anti-gp120/gp41.",
+      "detalle": "Los anticuerpos bloquean la entrada, pero **el virus muta rápido**. Los **CD8⁺** mantienen un control parcial, el virus se replica en ganglios y los **CD4⁺ caen lenta y progresivamente**.",
+      "tema": "vih",
+      "seccion": "CICLO DE LA ENFERMEDAD › CRÓNICA"
+    },
+    {
+      "id": "f24",
+      "frente": "¿Qué prueba detecta el VIH en la etapa aguda, antes que los anticuerpos?",
+      "respuesta": "La detección de ARN viral: NAAT (cualitativa) o RT-PCR (cuantitativa), desde los 10-14 días.",
+      "tema": "vih",
+      "seccion": "Diagnóstico"
+    },
+    {
+      "id": "f25",
+      "frente": "Tamizaje de VIH reactivo: ¿qué hace el inmunoensayo que sigue?",
+      "respuesta": "Confirma la infección y diferencia VIH-1 de VIH-2 (IgG anti-VIH-1/2).",
+      "detalle": "Si sale **no reactivo o indeterminado** → **prueba de ácido nucleico de VIH-1**: si es reactiva, es una infección aguda por VIH-1.",
+      "tema": "vih",
+      "seccion": "Diagnóstico"
+    },
+    {
+      "id": "f26",
+      "frente": "Seguimiento del VIH: ¿qué se mide y con qué técnica?",
+      "respuesta": "Carga viral por PCR (ARN viral) y subpoblaciones CD4⁺/CD8⁺ por citometría de flujo.",
+      "detalle": "El **diagnóstico** confirma la infección (ELISA; Western blot, hoy en desuso); el **seguimiento** evalúa la progresión, junto con la clínica.",
+      "tema": "vih",
+      "seccion": "Diagnóstico"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Qué glicoproteína usa el EBV para infectar al linfocito B y a qué receptor se une?",
+      "respuesta": "La gp350, que se une a CD21 (CR2) del linfocito B.",
+      "detalle": "Mnemotecnia: «**You must be 21 to drink in a Bar(r)**». El EBV también infecta el **epitelio orofaríngeo**.",
+      "tema": "vih",
+      "seccion": "FISIOPATOLOGÍA"
+    },
+    {
+      "id": "f28",
+      "frente": "Serología de EBV en infección aguda (0-6 semanas): ¿cómo está cada anticuerpo?",
+      "respuesta": "IgM anti-VCA ↑, IgG anti-VCA ↑ (pico a las 2 semanas) e IgG anti-EBNA indetectable.",
+      "tema": "vih",
+      "seccion": "Mononucleosis › DIAGNÓSTICO"
+    },
+    {
+      "id": "f29",
+      "frente": "Una semana después de exponerse al VIH: ¿cómo están la viremia y los CD4⁺ en mucosas y en sangre?",
+      "respuesta": "Viremia alta, CD4⁺ bajos en mucosas y normales en sangre.",
+      "detalle": "Es el **periodo de eclipse**: la infección sigue confinada a las mucosas (**MALT**), donde caen primero los CD4⁺; todavía no se ha diseminado.",
+      "tema": "vih",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f30",
+      "frente": "¿Qué célula es responsable del periodo de latencia entre la infección aguda por VIH y los síntomas tardíos?",
+      "respuesta": "El linfocito T CD8⁺.",
+      "detalle": "«Los CD8 combaten la infección y dan paso a la latencia»: controlan parcialmente la replicación hasta que fracasan.",
+      "tema": "vih",
+      "seccion": "PREGUNTAS"
+    }
+  ]
+}

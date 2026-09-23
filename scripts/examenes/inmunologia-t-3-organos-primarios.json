@@ -1,0 +1,235 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-3-organos-primarios",
+  "title": "T3 — Órganos linfoides primarios",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Cuáles son los órganos linfoides primarios y qué linfocito madura en cada uno?",
+      "respuesta": "Médula ósea: linfocitos B. Timo: linfocitos T.",
+      "detalle": "Son los órganos del **desarrollo y la maduración** de las células inmunitarias.",
+      "tema": "organos-primarios",
+      "seccion": "Clase 3 - Órganos"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Qué forma el estroma de la médula ósea?",
+      "respuesta": "Células reticulares (adventiciales), macrófagos, colágeno I y III, proteoglicanos, fibronectina y laminina.",
+      "detalle": "La médula está **confinada por el hueso cortical y atravesada por el esponjoso**; además del estroma tiene **células hematopoyéticas** y **capilares sinusoides**.",
+      "tema": "organos-primarios",
+      "seccion": "Componentes"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Qué le falta al timo que sí tienen los órganos linfoides secundarios?",
+      "respuesta": "Folículos linfoides y vasos linfáticos aferentes.",
+      "detalle": "Solo tiene **linfáticos eferentes**, que viajan por las **trabéculas** junto con vasos sanguíneos y nervios.",
+      "tema": "organos-primarios",
+      "seccion": "A) Cápsula"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Por qué la corteza tímica se ve muy basófila en H&E?",
+      "respuesta": "Por la gran cantidad de timocitos (linfocitos T inmaduros).",
+      "detalle": "La **médula**, con menos linfocitos, se ve **más clara**. En la corteza ocurre la **selección positiva**.",
+      "tema": "organos-primarios",
+      "seccion": "B) Corteza tímica"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué función cumple la barrera hematotímica?",
+      "respuesta": "Impide que los timocitos en desarrollo contacten con antígenos que llegan por la sangre.",
+      "detalle": "Capas: **endotelio continuo con uniones estrechas** + lámina basal + **pericitos** → tejido conjuntivo perivascular con **macrófagos** → **células epiteliorreticulares tipo I** con su lámina basal.",
+      "tema": "organos-primarios",
+      "seccion": "Barrera hemato-tímica"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Qué ocurre en la unión corticomedular del timo?",
+      "respuesta": "Se originan los linfáticos eferentes y salen los linfocitos T maduros a la circulación.",
+      "detalle": "Es también la zona por la que **ingresan los timocitos inmaduros** (dobles negativos) camino a la corteza.",
+      "tema": "organos-primarios",
+      "seccion": "En la unión córtico-medular"
+    },
+    {
+      "id": "f07",
+      "frente": "Corpúsculos de Hassall: ¿qué son y qué función tienen?",
+      "respuesta": "Células epiteliorreticulares tipo VI, acidófilas y concéntricas, con diferenciación escamosa; favorecen la selección negativa.",
+      "detalle": "Secretan **TSLP**, que actúa sobre las **células dendríticas** para inducir **Treg**.",
+      "tema": "organos-primarios",
+      "seccion": "Médula tímica"
+    },
+    {
+      "id": "f08",
+      "frente": "Selección positiva: ¿dónde ocurre, quién presenta y qué pasa con el timocito?",
+      "respuesta": "En la corteza; las cTEC presentan MHC propio: si lo reconoce sobrevive, si no, apoptosis.",
+      "detalle": "Asegura la **restricción por MHC propio**: el timocito **doble positivo** (CD4⁺CD8⁺) que reconoce MHC pasa a **simple positivo** CD4⁺ o CD8⁺.",
+      "tema": "organos-primarios",
+      "seccion": "Selección Tímica"
+    },
+    {
+      "id": "f09",
+      "frente": "Centro germinal: ¿qué ocurre en la zona oscura y qué células la pueblan?",
+      "respuesta": "Hipermutación somática, a cargo de los centroblastos en proliferación.",
+      "detalle": "Los **centroblastos** son grandes, con **núcleo redondo no hendido** (vesicular, con nucléolos). Luego pasan a la **zona clara** como centrocitos.",
+      "tema": "organos-secundarios",
+      "seccion": "Folículos Germinales"
+    },
+    {
+      "id": "f10",
+      "frente": "Células dendríticas foliculares (FDC): ¿de dónde se originan y por qué no presentan antígeno a los LT?",
+      "respuesta": "Son de origen estromal (mesenquimatoso) y no expresan MHC II.",
+      "detalle": "Viven en la **zona clara** del centro germinal y su blanco son los **linfocitos B** de ese centro. Se tiñen con **CR1** en inmunohistoquímica.",
+      "tema": "organos-secundarios",
+      "seccion": "Células dendríticas foliculares"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Qué células marca CD271 en la médula ósea?",
+      "respuesta": "Las células madre mesenquimales.",
+      "tema": "organos-primarios",
+      "seccion": "Componentes"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Por dónde salen a la sangre los leucocitos y las proplaquetas de la médula ósea?",
+      "respuesta": "A través de poros transcelulares de los capilares sinusoides.",
+      "tema": "organos-primarios",
+      "seccion": "Componentes"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Cómo cambia la celularidad hematopoyética de la médula ósea con la edad?",
+      "respuesta": "Disminuye: ~90 % a los 4 años, ~50 % a los 52 y ~20 % a los 72.",
+      "detalle": "Rangos de la figura: **86–100 %**, **38–58 %** y **18–38 %**. El espacio que se pierde lo ocupa **tejido adiposo**.",
+      "tema": "organos-primarios",
+      "seccion": "Componentes"
+    },
+    {
+      "id": "f14",
+      "frente": "Trabéculas del timo: ¿qué llevan y cómo organizan el parénquima?",
+      "respuesta": "Vasos sanguíneos, linfáticos eferentes y nervios; lo dividen en lobulillos incompletos con corteza y médula.",
+      "detalle": "Son prolongaciones de la **cápsula** de tejido conjuntivo (colágeno).",
+      "tema": "organos-primarios",
+      "seccion": "A) Cápsula"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Qué hacen los macrófagos de la corteza tímica?",
+      "respuesta": "Eliminan los linfocitos no viables (los que mueren durante la selección).",
+      "tema": "organos-primarios",
+      "seccion": "B) Corteza tímica"
+    },
+    {
+      "id": "f16",
+      "frente": "Células epiteliorreticulares tipo II de la corteza: ¿qué función cumplen y cómo se organizan?",
+      "respuesta": "Presentan antígeno con MHC I y MHC II; forman el citorretículo, unidas por desmosomas.",
+      "detalle": "Son **estrelladas**; en las mallas de su citorretículo se alojan **timocitos y macrófagos**.",
+      "tema": "organos-primarios",
+      "seccion": "B) Corteza tímica"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Qué tipos de células epiteliorreticulares hay en la corteza tímica según el resumen?",
+      "respuesta": "Tipo I (cTEC ovales, núcleo claro), tipo II (estrelladas, presentadoras) y tipo III (escamosas, planas).",
+      "detalle": "En la **médula** están las **tipo V** (mTEC, con AIRE) y las **tipo VI** (corpúsculos de Hassall).",
+      "tema": "organos-primarios",
+      "seccion": "B) Corteza tímica"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Cómo es el endotelio de la barrera hematotímica?",
+      "respuesta": "Continuo, con uniones estrechas, rodeado de lámina basal y pericitos.",
+      "tema": "organos-primarios",
+      "seccion": "Barrera hemato-tímica"
+    },
+    {
+      "id": "f19",
+      "frente": "mTEC (epiteliorreticulares tipo V): ¿qué gen expresan y para qué sirve?",
+      "respuesta": "AIRE: les hace expresar autoantígenos tisulares para la selección negativa.",
+      "detalle": "Forman un citorretículo **más laxo** que el cortical, con prolongaciones unidas por **desmosomas**.",
+      "tema": "organos-primarios",
+      "seccion": "Médula tímica"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Qué secuencia de fenotipos CD4/CD8 recorre el timocito?",
+      "respuesta": "Doble negativo (CD4⁻CD8⁻) → doble positivo (CD4⁺CD8⁺) → simple positivo CD4⁺ o CD8⁺.",
+      "detalle": "Se generan a partir de **protimocitos** que ingresan al timo.",
+      "tema": "organos-primarios",
+      "seccion": "Selección Tímica"
+    },
+    {
+      "id": "f21",
+      "frente": "Selección negativa: ¿dónde ocurre, quién presenta y qué timocitos mueren?",
+      "respuesta": "En la médula; mTEC y células dendríticas presentan autoantígenos: los de alta afinidad mueren por apoptosis.",
+      "detalle": "Los que **no reaccionan fuertemente** sobreviven y salen como LT maduros tolerantes → **tolerancia central**.",
+      "tema": "organos-primarios",
+      "seccion": "Selección Tímica"
+    },
+    {
+      "id": "f22",
+      "frente": "Síndrome de DiGeorge: ¿cuál es el defecto genético y qué le pasa al timo?",
+      "respuesta": "Deleción de un segmento del cromosoma 22 (22q11); timo ausente o hipoplásico.",
+      "detalle": "Sin timo funcional hay **déficit de maduración de linfocitos T**.",
+      "tema": "inmunodeficiencias",
+      "seccion": "Selección Tímica"
+    },
+    {
+      "id": "f23",
+      "frente": "¿Qué diferencia a un folículo linfoide primario de uno secundario?",
+      "respuesta": "El primario no está activado; el secundario tiene centro germinal porque está activado.",
+      "detalle": "El centro germinal contiene **LB activados y en proliferación**, **células dendríticas foliculares** y **macrófagos**.",
+      "tema": "organos-secundarios",
+      "seccion": "Folículos Germinales"
+    },
+    {
+      "id": "f24",
+      "frente": "Centro germinal: ¿qué ocurre en la zona clara?",
+      "respuesta": "Selección clonal: solo sobreviven los linfocitos B con receptores de alta afinidad.",
+      "detalle": "Contiene **centrocitos**, **macrófagos de cuerpos tingibles** (fagocitan a los B que mueren) y **FDC**.",
+      "tema": "organos-secundarios",
+      "seccion": "Folículos Germinales"
+    },
+    {
+      "id": "f25",
+      "frente": "Centroblasto vs. centrocito: ¿cómo se distinguen al microscopio?",
+      "respuesta": "Centroblasto: grande, núcleo redondo no hendido. Centrocito: más pequeño, núcleo hendido e irregular.",
+      "detalle": "Los **centroblastos** están en la **zona oscura**; los **centrocitos**, en la **zona clara**.",
+      "tema": "organos-secundarios",
+      "seccion": "Folículos Germinales"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Qué células ocupan la zona del manto del folículo?",
+      "respuesta": "Linfocitos B vírgenes y de memoria.",
+      "tema": "organos-secundarios",
+      "seccion": "Folículos Germinales"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Qué función cumplen las FDC en el centro germinal?",
+      "respuesta": "Mantener los antígenos intactos en la zona clara para seleccionar a los LB de alta afinidad.",
+      "tema": "organos-secundarios",
+      "seccion": "Células dendríticas › Funciones principales"
+    },
+    {
+      "id": "f28",
+      "frente": "Células dendríticas convencionales (cDC): ¿qué MHC expresan y a quién activan?",
+      "respuesta": "MHC I y II; activan a los linfocitos T vírgenes CD4⁺ y CD8⁺.",
+      "detalle": "Derivan de **precursores mieloides**; capturan, procesan y presentan antígeno → diferenciación de CD4⁺ a **Th1, Th2, Th17**. Están en órganos linfoides secundarios y tejidos periféricos.",
+      "tema": "presentacion-mhc",
+      "seccion": "Células dendríticas convencionales"
+    },
+    {
+      "id": "f29",
+      "frente": "Células dendríticas plasmacitoides (pDC): ¿cuál es su función principal?",
+      "respuesta": "Son sensores antivirales: producen interferones tipo I (α/β) en infecciones virales.",
+      "detalle": "Actúan sobre los **linfocitos T de forma indirecta**, vía esos interferones. Expresan **MHC II**; se localizan en sangre, médula ósea y órganos linfoides secundarios (IHQ: **CD123**).",
+      "tema": "innata-celular",
+      "seccion": "Células dendríticas plasmacitoides"
+    }
+  ]
+}

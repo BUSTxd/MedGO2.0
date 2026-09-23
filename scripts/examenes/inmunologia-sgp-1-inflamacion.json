@@ -1,0 +1,424 @@
+{
+  "version": 1,
+  "key": "inmunologia/sgp-1-inflamacion",
+  "title": "SGP 1 — Inflamación",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "Innata vs adaptativa: ¿qué reconoce cada una y con qué receptores?",
+      "respuesta": "Innata: patrones comunes (PAMPs, DAMPs) con PRRs; adaptativa: antígenos específicos con TCR y BCR.",
+      "detalle": "La innata usa **receptores germinales fijos** (diversidad limitada) y **no genera memoria**; la adaptativa genera receptores por **recombinación genética** y sí tiene memoria (respuesta secundaria más rápida e intensa).",
+      "tema": "generalidades",
+      "seccion": "1. ¿Qué es sistema inmune innato"
+    },
+    {
+      "id": "f02",
+      "frente": "MHC I vs MHC II: ¿qué antígenos presentan y a qué linfocito?",
+      "respuesta": "MHC I: antígenos endógenos a los LT CD8⁺; MHC II: exógenos a los LT CD4⁺.",
+      "detalle": "**MHC I** está en todas las células nucleadas y plaquetas (no en eritrocitos); **MHC II**, solo en CPA profesionales: macrófagos, dendríticas y LB. La hendidura de MHC I aloja **8-10 aa**; la de MHC II, **18-20 aa**.",
+      "tema": "presentacion-mhc",
+      "seccion": "Antígenos"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Qué hacen la lisozima, las defensinas y la lactoferrina?",
+      "respuesta": "Lisozima rompe el peptidoglicano; defensinas forman poros en membranas bacterianas; lactoferrina secuestra hierro.",
+      "detalle": "La lisozima (saliva, lágrimas) actúa sobre todo en **grampositivas**. La **transferrina** también secuestra hierro; las **histatinas** de la saliva son antifúngicas (contra *Candida*).",
+      "tema": "barreras",
+      "seccion": "2. ¿Cuáles son las barreras"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Qué es el reconocimiento «missing self» de las NK?",
+      "respuesta": "La NK se activa ante células con MHC I bajo o ausente, al faltar la señal de sus receptores inhibidores.",
+      "detalle": "Típico de **células infectadas por virus y tumorales**, que bajan MHC I para evadir a los **LT CD8⁺**. La NK mata con **perforinas** (poros) y **granzimas** (apoptosis por caspasas).",
+      "tema": "innata-celular",
+      "seccion": "3. ¿Cuáles son los componentes"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué PAMP caracteriza a los virus, a las gramnegativas y a las grampositivas?",
+      "respuesta": "Virus: ARN bicatenario; gramnegativas: LPS; grampositivas: peptidoglucano y ácido lipoteicoico.",
+      "detalle": "La **N-formilmetionina** es otro PAMP bacteriano. Los **DAMPs** son moléculas endógenas de células dañadas: ATP extracelular, ácido úrico, ADN mitocondrial. Ambos los reconocen los **PRRs**.",
+      "tema": "innata-celular",
+      "seccion": "4. ¿Cómo reconocen"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Cómo producen fiebre los pirógenos endógenos?",
+      "respuesta": "IL-1β, TNF-α e IL-6 inducen COX-2 en el endotelio hipotalámico → PGE₂ → ↑ set point termorregulador.",
+      "detalle": "La PGE₂ actúa en receptores **EP3** del área preóptica. El cuerpo «se siente frío»: **vasoconstricción cutánea y escalofríos** para generar calor. Al ceder el estímulo, vasodilatación y sudoración.",
+      "tema": "inflamacion",
+      "seccion": "Caso Clínico"
+    },
+    {
+      "id": "f07",
+      "frente": "En el hemograma, ¿qué significa la desviación a la izquierda?",
+      "respuesta": "Que la médula ósea libera neutrófilos inmaduros (abastonados) para cubrir una demanda aumentada.",
+      "detalle": "Ocurre en **infección aguda, inflamación intensa y necrosis tisular**. En el caso: leucocitosis 14 800 + neutrofilia 73 % + bandas 5 % → orienta a **infección bacteriana aguda** (celulitis).",
+      "tema": "hemograma-rfa",
+      "seccion": "HEMOGRAMA"
+    },
+    {
+      "id": "f08",
+      "frente": "Enfermedad granulomatosa crónica: ¿qué enzima falla y qué infecciones da?",
+      "respuesta": "La NADPH oxidasa (no hay ROS): infecciones recurrentes por bacterias y hongos catalasa-positivos.",
+      "detalle": "P. ej., ***S. aureus*, *Serratia*, *Aspergillus***. Los macrófagos que no logran destruir al microbio se acumulan en **granulomas** para aislarlo.",
+      "tema": "inmunodeficiencias",
+      "seccion": "1. Explique"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué citocina es la principal inductora de los reactantes de fase aguda y dónde se sintetizan estos?",
+      "respuesta": "La IL-6; se sintetizan en el hígado.",
+      "detalle": "**IL-1 y TNF-α** son coestimuladores que potencian a la IL-6. Los RFA son proteínas plasmáticas que suben (**positivos**) o bajan (**negativos**) en la inflamación aguda o crónica.",
+      "tema": "hemograma-rfa",
+      "seccion": "2. ¿Qué son los reactantes"
+    },
+    {
+      "id": "f10",
+      "frente": "Deficiencia de C5-C9: ¿qué no se forma y a qué infecciones predispone?",
+      "respuesta": "El complejo de ataque a membrana (C5b-9): infecciones recurrentes por Neisseria.",
+      "detalle": "*N. meningitidis* y *N. gonorrhoeae*, en general sin otras infecciones graves. El MAC causa **lisis osmótica** y es muy eficaz contra **gramnegativas**, menos contra grampositivas (pared gruesa).",
+      "tema": "complemento",
+      "seccion": "COMPLEMENTO"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Cuáles son las tres características definitorias de la inmunidad innata?",
+      "respuesta": "Rápida (minutos-horas), sin memoria y no específica: reconoce patrones comunes.",
+      "detalle": "Es la **primera línea de defensa** frente a patógenos y agresiones no específicas (daño tisular, toxinas). Responde **siempre igual** aunque se repita la exposición.",
+      "tema": "generalidades",
+      "seccion": "Sistema inmune innato"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Qué marcadores identifican a las NK y por qué no tienen TCR?",
+      "respuesta": "CD16a, CD56 y CD94; no tienen TCR porque no maduran en el timo.",
+      "detalle": "Son el **5-10 %** de los linfocitos circulantes y tampoco tienen Ig de membrana. Su actividad la regulan **receptores activadores e inhibidores**.",
+      "tema": "innata-celular",
+      "seccion": "Sistema inmune innato"
+    },
+    {
+      "id": "f13",
+      "frente": "ADCC: ¿con qué receptor reconoce la NK a la célula diana?",
+      "respuesta": "Con CD16 (FcγRIII), que une la IgG que recubre la célula.",
+      "detalle": "Libera **perforina y granzimas** → apoptosis. Permite matar células marcadas por anticuerpos **sin necesidad de MHC**.",
+      "tema": "innata-celular",
+      "seccion": "Sistema inmune innato"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Qué es la selección clonal?",
+      "respuesta": "Solo el linfocito cuyo receptor reconoce el antígeno se activa, prolifera y forma clones efectores y de memoria.",
+      "detalle": "Los receptores se generan **antes** de ver el antígeno, por recombinación **V(D)J**. El **BCR** reconoce antígeno nativo; el **TCR**, antígeno procesado y presentado en **MHC**.",
+      "tema": "generalidades",
+      "seccion": "Sistema inmune adaptativo"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Qué pares de moléculas dan la señal 2 (coestimulación) al LT CD4⁺?",
+      "respuesta": "CD28 ↔ B7 (CD80/CD86) y CD40L ↔ CD40.",
+      "detalle": "La **señal 1** es TCR + CD4 → MHC II con péptido. En la tabla, el LT CD8⁺ recibe la coestimulación por **CD28 ↔ B7**.",
+      "tema": "coestimulacion",
+      "seccion": "1. Linfocitos T › Señal 2"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Qué citocinas producen los Th1 y qué respuesta promueven?",
+      "respuesta": "IL-2, IFN-γ y TNF-α: inmunidad celular contra patógenos intracelulares.",
+      "detalle": "Activan a los **LT CD8⁺ citotóxicos, las NK y los macrófagos**.",
+      "tema": "diferenciacion-t",
+      "seccion": "1. Linfocitos T"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Qué citocinas producen los Th2 y los Th17?",
+      "respuesta": "Th2: IL-4, IL-5, IL-10 e IL-13; Th17: IL-17, IL-21 e IL-22.",
+      "detalle": "Los **Th2** activan a los LB (inmunidad **humoral**) contra patógenos extracelulares y parásitos; los **Th17** son **proinflamatorios**.",
+      "tema": "diferenciacion-t",
+      "seccion": "1. Linfocitos T"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Con qué dos mecanismos mata el LT CD8⁺ a su célula diana?",
+      "respuesta": "Gránulos de perforina y granzimas, y FasL que se une a Fas (CD95) de la diana.",
+      "detalle": "La perforina forma poros; las granzimas activan **caspasas**. Fas–FasL activa la **vía extrínseca** de la apoptosis. Tras matar, la mayoría de CTL mueren por apoptosis y algunos quedan como **memoria**.",
+      "tema": "linfocitos-t",
+      "seccion": "1. Linfocitos T"
+    },
+    {
+      "id": "f19",
+      "frente": "¿Dónde residen los LT γδ y qué los distingue?",
+      "respuesta": "En epitelios (piel, mucosa oral, intestino, vagina); su TCR es γδ en vez de αβ y no recirculan.",
+      "detalle": "Se desarrollan en el **timo** y, situados en la interfaz con el medio externo, actúan como **primera línea de defensa**.",
+      "tema": "linfocitos-t",
+      "seccion": "1. Linfocitos T"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Qué forma el sitio de unión al antígeno de una inmunoglobulina?",
+      "respuesta": "El Fab: las porciones variables de las cadenas pesada y ligera, en los extremos de la «Y».",
+      "detalle": "Cada Ig tiene **2 cadenas H y 2 L** unidas por puentes disulfuro y **dos sitios** de unión. Las regiones variables están en el extremo **amino-terminal**.",
+      "tema": "anticuerpos",
+      "seccion": "4. Sitios de unión"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Qué funciones efectoras dependen del fragmento Fc?",
+      "respuesta": "Activar el complemento y unirse a receptores Fc de macrófagos, neutrófilos y NK (fagocitosis y ADCC).",
+      "detalle": "El Fc lo forman **segmentos constantes de las cadenas pesadas**.",
+      "tema": "anticuerpos",
+      "seccion": "5. Fragmento Fc"
+    },
+    {
+      "id": "f22",
+      "frente": "¿Qué determina el isotipo de una inmunoglobulina?",
+      "respuesta": "El tipo de cadena pesada: IgG, IgA, IgM, IgE o IgD.",
+      "tema": "anticuerpos",
+      "seccion": "6. Tipos de inmunoglobulinas"
+    },
+    {
+      "id": "f23",
+      "frente": "¿Cómo ayuda el LT CD4⁺ a activar al linfocito B?",
+      "respuesta": "Reconoce el péptido que el LB presenta en MHC II y secreta citocinas que inducen proliferación y diferenciación a plasmática.",
+      "detalle": "El LB internaliza el antígeno unido al **BCR**, lo digiere y lo presenta. Con las citocinas (IL-4, IL-5, IL-13…) surgen **células plasmáticas** y **LB de memoria**.",
+      "tema": "linfocitos-b",
+      "seccion": "6. Tipos de inmunoglobulinas"
+    },
+    {
+      "id": "f24",
+      "frente": "¿Qué cadenas forman MHC I y MHC II?",
+      "respuesta": "MHC I: cadena α + β2-microglobulina; MHC II: una cadena α y una β.",
+      "detalle": "La **β2-microglobulina** (~12 kDa) se asocia **no covalentemente** a la α (~45 kDa, dominios α1-α3). En MHC II ambas cadenas están **glucosiladas**.",
+      "tema": "presentacion-mhc",
+      "seccion": "Estructura"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Qué mecanismos de limpieza mecánica tienen las mucosas?",
+      "respuesta": "Moco + cilios (aclaramiento mucociliar), tos y estornudo, flujo urinario, lágrimas y saliva.",
+      "detalle": "Los epitelios con **uniones estrechas** impiden el paso de patógenos; en la piel, la **queratina** y la **descamación** eliminan microbios adheridos.",
+      "tema": "barreras",
+      "seccion": "2. ¿Cuáles son las barreras"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Qué barreras de pH ácido protegen el estómago, la vagina y la piel?",
+      "respuesta": "Estómago: pH 1-3; vagina: ácido láctico de los lactobacilos; piel: sudor y sebo ácidos.",
+      "detalle": "La **microbiota normal** completa la barrera: compite por nutrientes y espacio y produce sustancias antimicrobianas.",
+      "tema": "barreras",
+      "seccion": "2. ¿Cuáles son las barreras"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Qué señales atraen a los neutrófilos al foco infeccioso?",
+      "respuesta": "IL-8, C5a, LTB4 y quimiocinas bacterianas.",
+      "detalle": "Son las **primeras células en llegar**. Matan con **ROS**, **NO** (iNOS) y enzimas lisosomales como la mieloperoxidasa.",
+      "tema": "innata-celular",
+      "seccion": "3. ¿Cuáles son los componentes"
+    },
+    {
+      "id": "f28",
+      "frente": "¿Qué son las NETs?",
+      "respuesta": "Redes extracelulares de cromatina y proteínas antimicrobianas que liberan los neutrófilos para atrapar y matar microbios.",
+      "detalle": "Útiles contra **bacterias grandes** y **biofilms**.",
+      "tema": "innata-celular",
+      "seccion": "3. ¿Cuáles son los componentes"
+    },
+    {
+      "id": "f29",
+      "frente": "¿Qué citocinas producen los macrófagos y para qué?",
+      "respuesta": "IL-1, IL-6 y TNF-α (fiebre, inflamación, activación endotelial) e IL-12, que polariza a Th1 y activa NK.",
+      "detalle": "Además son **CPA** (MHC II → CD4⁺) y reparan tejido con **TGF-β, VEGF y PDGF**. Nombres por tejido: Kupffer (hígado), microglía (SNC), osteoclastos (hueso).",
+      "tema": "innata-celular",
+      "seccion": "3. ¿Cuáles son los componentes"
+    },
+    {
+      "id": "f30",
+      "frente": "¿En qué defensa y en qué hipersensibilidad participan mastocitos, basófilos y eosinófilos?",
+      "respuesta": "Defensa contra helmintos (parásitos no fagocitables) e hipersensibilidad tipo I mediada por IgE.",
+      "detalle": "Liberan **histamina, leucotrienos y prostaglandinas** → vasodilatación, permeabilidad, quimiotaxis y broncoconstricción. Clínica: alergias, asma, anafilaxia; **eosinofilia** en parasitosis.",
+      "tema": "innata-celular",
+      "seccion": "3. ¿Cuáles son los componentes"
+    },
+    {
+      "id": "f31",
+      "frente": "¿Qué citocinas de la célula dendrítica polarizan hacia Th1, Th17 y Treg?",
+      "respuesta": "IL-12 → Th1; IL-6 e IL-23 → Th17; IL-10 y TGF-β → Treg.",
+      "detalle": "Tras capturar el antígeno migra al **ganglio** y expresa **CD80/CD86 y CD40** para activar LT vírgenes: presenta en MHC I a CD8⁺ y en MHC II a CD4⁺.",
+      "tema": "diferenciacion-t",
+      "seccion": "3. ¿Cuáles son los componentes"
+    },
+    {
+      "id": "f32",
+      "frente": "¿Qué células dendríticas se especializan en la defensa antiviral?",
+      "respuesta": "Las plasmocitoides (pDC): secretan grandes cantidades de IFN tipo I (IFN-α, IFN-β).",
+      "detalle": "Las **clásicas (cDC1, cDC2)** son las eficientes presentando antígeno; las **de Langerhans** están en la piel.",
+      "tema": "innata-celular",
+      "seccion": "🧩 Tipos de células dendríticas"
+    },
+    {
+      "id": "f33",
+      "frente": "¿Qué PRR citoplasmáticos detectan derivados del peptidoglucano y ARN viral?",
+      "respuesta": "Los NLR (NOD-like) el peptidoglucano; los RLR (RIG-like) el ARN viral.",
+      "detalle": "Los **TLR** y los **receptores de lectina tipo C** están en la membrana. Los NLR activan la **caspasa-1**, que madura **IL-1β e IL-18**. Los PRR señalizan por **NF-κB** → citocinas.",
+      "tema": "innata-celular",
+      "seccion": "4. ¿Cómo reconocen"
+    },
+    {
+      "id": "f34",
+      "frente": "¿Qué receptor Fcγ tiene alta afinidad por IgG?",
+      "respuesta": "FcγRI (CD64); FcγRII (CD32) y FcγRIII (CD16) tienen afinidad intermedia o baja.",
+      "detalle": "Al reconocer la IgG que opsoniza al microbio, el fagocito activa la **fagocitosis** y el **estallido respiratorio**. El **C3b** se reconoce por **CR1/CR3**.",
+      "tema": "innata-celular",
+      "seccion": "4. ¿Cómo reconocen"
+    },
+    {
+      "id": "f35",
+      "frente": "¿Qué mediadores explican el eritema y el edema de la inflamación?",
+      "respuesta": "Eritema: vasodilatación (histamina, NO, prostaglandinas); edema: ↑ permeabilidad (histamina, bradicinina, leucotrienos, VEGF).",
+      "detalle": "Corresponden al **rubor** y al **tumor** de Celso. El edema es la salida de proteínas plasmáticas (**exudado**) y líquido al intersticio.",
+      "tema": "inflamacion",
+      "seccion": "Caso Clínico"
+    },
+    {
+      "id": "f36",
+      "frente": "¿Qué mediadores sensibilizan a los nociceptores en la inflamación?",
+      "respuesta": "Bradicinina, PGE₂, serotonina y sustancia P.",
+      "detalle": "La **presión del edema** también contribuye. Vía: fibras **Aδ y C** → asta dorsal → vía espinotalámica → tálamo → corteza somatosensorial.",
+      "tema": "inflamacion",
+      "seccion": "Caso Clínico"
+    },
+    {
+      "id": "f37",
+      "frente": "¿Por qué el fibrinógeno aumenta la VSG?",
+      "respuesta": "Reduce la repulsión de cargas negativas entre eritrocitos, que forman pilas (rouleaux) y sedimentan más rápido.",
+      "detalle": "**↑ VSG**: inflamación, infección, cáncer, embarazo, anemia, ERC, vejez. Es una prueba **inespecífica**: mm que descienden los eritrocitos en 1 h.",
+      "tema": "hemograma-rfa",
+      "seccion": "HEMOGRAMA"
+    },
+    {
+      "id": "f38",
+      "frente": "¿Qué situaciones disminuyen la VSG?",
+      "respuesta": "Policitemia, eritrocitos anómalos (falciformes, esferocitos, microcitos), leucocitosis extrema e hipofibrinogenemia.",
+      "detalle": "También la **hipogammaglobulinemia** y la insuficiencia cardíaca congestiva.",
+      "tema": "hemograma-rfa",
+      "seccion": "HEMOGRAMA"
+    },
+    {
+      "id": "f39",
+      "frente": "Kartagener y fibrosis quística: ¿qué barrera alteran y cómo?",
+      "respuesta": "El aclaramiento mucociliar: cilios inmóviles (dineína) en Kartagener; moco espeso (CFTR) en fibrosis quística.",
+      "detalle": "El tabaquismo también daña los cilios. En piel, heridas o **quemaduras** rompen la barrera (*Pseudomonas*, *S. aureus*); en intestino, la **disbiosis** por antibióticos favorece *C. difficile*.",
+      "tema": "barreras",
+      "seccion": "1. Explique"
+    },
+    {
+      "id": "f40",
+      "frente": "¿Qué produce la mieloperoxidasa del neutrófilo?",
+      "respuesta": "Ácido hipocloroso (HOCl) a partir de H₂O₂ y Cl⁻.",
+      "detalle": "Es el agente más potente contra bacterias y hongos. Antes, la **NADPH oxidasa** genera **superóxido**, que se dismuta a H₂O₂ (estallido respiratorio).",
+      "tema": "innata-celular",
+      "seccion": "1. Explique"
+    },
+    {
+      "id": "f41",
+      "frente": "Déficit de C1q, C2 o C4: ¿a qué predispone?",
+      "respuesta": "A enfermedad por inmunocomplejos, como el lupus eritematoso sistémico.",
+      "detalle": "Sin vía clásica no se eliminan los inmunocomplejos (vía **iC3b**), que se depositan en tejidos → **hipersensibilidad tipo III**.",
+      "tema": "complemento",
+      "seccion": "1. Explique"
+    },
+    {
+      "id": "f42",
+      "frente": "¿Qué causa el déficit de C1 inhibidor y el de CD55/CD59?",
+      "respuesta": "C1 inhibidor: angioedema hereditario; CD55/CD59: hemoglobinuria paroxística nocturna.",
+      "detalle": "El déficit de **factores H e I** se asocia a infecciones bacterianas y **glomerulonefritis**.",
+      "tema": "complemento",
+      "seccion": "1. Explique"
+    },
+    {
+      "id": "f43",
+      "frente": "¿Qué reactantes de fase aguda suben de forma rápida y marcada?",
+      "respuesta": "La PCR y el amiloide sérico A (SAA).",
+      "detalle": "El SAA, en inflamación crónica, puede depositarse como **amiloidosis secundaria**. Suben más lento: fibrinógeno, haptoglobina, α1-antitripsina, ceruloplasmina, ferritina, complemento y **hepcidina** (anemia de la inflamación).",
+      "tema": "hemograma-rfa",
+      "seccion": "2. ¿Qué son los reactantes"
+    },
+    {
+      "id": "f44",
+      "frente": "¿Qué reactantes de fase aguda disminuyen y por qué?",
+      "respuesta": "Albúmina, transferrina y transtiretina: el hígado prioriza la síntesis de proteínas de defensa.",
+      "detalle": "La caída de **albúmina** puede producir **edema** por ↓ presión oncótica.",
+      "tema": "hemograma-rfa",
+      "seccion": "2. ¿Qué son los reactantes"
+    },
+    {
+      "id": "f45",
+      "frente": "¿Qué es la PCR y qué funciones defensivas tiene?",
+      "respuesta": "Una pentraxina hepática que une fosfocolina microbiana (opsonina) y activa la vía clásica al unir C1q.",
+      "detalle": "Sube a las **6-8 h** con pico a las **48 h**; su nivel depende de la síntesis. Normal **< 5 mg/L** (estándar); > 500 mg/L en sepsis. Su nombre: reacciona con el **polisacárido C** del neumococo.",
+      "tema": "hemograma-rfa",
+      "seccion": "3. ¿Qué es la proteína C"
+    },
+    {
+      "id": "f46",
+      "frente": "¿Qué bacterias causan con más frecuencia la celulitis?",
+      "respuesta": "Streptococcus pyogenes (grupo A), la más común, y Staphylococcus aureus (incluido SARM).",
+      "detalle": "*S. pyogenes* puede complicarse con **fascitis necrosante**; *S. aureus* tiende a formar **abscesos** y se asocia a lesiones cutáneas previas o inyecciones.",
+      "tema": "inflamacion",
+      "seccion": "4. ¿Qué bacterias"
+    },
+    {
+      "id": "f47",
+      "frente": "¿Cómo actúan los superantígenos de S. pyogenes?",
+      "respuesta": "Unen el MHC II de la CPA directamente al TCR y desatan una liberación masiva de IL-1, IL-2, IFN-γ y TNF-α.",
+      "detalle": "Son las **exotoxinas pirogénicas estreptocócicas**. La **proteína M** inhibe la opsonización por **C3b** y la **cápsula de ácido hialurónico** dificulta la fagocitosis.",
+      "tema": "linfocitos-t",
+      "seccion": "4. ¿Qué bacterias"
+    },
+    {
+      "id": "f48",
+      "frente": "Vía clásica del complemento: ¿qué la inicia y qué forma la C3 convertasa?",
+      "respuesta": "C1q unido al Fc de IgM/IgG fijadas al antígeno (o a la PCR); la C3 convertasa es C4b2a.",
+      "detalle": "C1r y C1s son proteasas: C1s corta **C4** y **C2**. La C5 convertasa es **C4b2a3b**. IgM e IgG son las más eficientes.",
+      "tema": "complemento",
+      "seccion": "COMPLEMENTO"
+    },
+    {
+      "id": "f49",
+      "frente": "¿En qué se diferencia la vía de las lectinas de la clásica?",
+      "respuesta": "Detecta azúcares microbianos (manosa) con MBL o ficolinas y activa MASP, sin anticuerpos; después usa la misma C4b2a.",
+      "detalle": "**MASP-2** corta C4 y C2. Es parte de la inmunidad **innata**.",
+      "tema": "complemento",
+      "seccion": "COMPLEMENTO"
+    },
+    {
+      "id": "f50",
+      "frente": "Vía alternativa: ¿cómo se activa y qué estabiliza su C3 convertasa?",
+      "respuesta": "Por hidrólisis espontánea de C3; la convertasa C3bBb se forma en superficies microbianas y la estabiliza la properdina.",
+      "detalle": "El **factor D** corta al factor B. En células propias, **factor H, I, DAF y MCP** inactivan el C3b. La C5 convertasa es **C3bBb3b**.",
+      "tema": "complemento",
+      "seccion": "COMPLEMENTO"
+    },
+    {
+      "id": "f51",
+      "frente": "¿Qué hacen C3a, C3b y C5a?",
+      "respuesta": "C3a y C5a son anafilotoxinas (inflamación, quimiotaxis); C3b es opsonina.",
+      "detalle": "**C5a** es la anafilotoxina más potente: quimiotaxis, ↑ permeabilidad vascular, activación de neutrófilos y macrófagos. **C5b** nuclea el MAC.",
+      "tema": "complemento",
+      "seccion": "COMPLEMENTO"
+    },
+    {
+      "id": "f52",
+      "frente": "¿Cómo se ensambla el complejo de ataque a membrana?",
+      "respuesta": "C5b + C6 + C7 se inserta en la membrana, C8 la perfora y 10-16 C9 polimerizan un poro.",
+      "detalle": "El poro deja entrar **agua e iones** → **lisis osmótica** de la célula blanco.",
+      "tema": "complemento",
+      "seccion": "COMPLEMENTO"
+    }
+  ]
+}

@@ -47,7 +47,25 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?
   // entero viajaría al navegador y las tarjetas de pago se leerían en la
   // pestaña Red.
   'inmunologia/tbl-3-vacunas': { muestra: 10, muestraFlash: 10 },
-  // Mismo trato para las tarjetas de T12 → SGP 4 (aún sin quiz: `questions: []`).
+  // Mismo trato para las tarjetas del resto de clases, T1 → SGP 4 (aún sin quiz: `questions: []`).
+  'inmunologia/t-1-generalidades': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/t-2-celulas': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/t-3-organos-primarios': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/h-1-timo-malt': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/t-4-leucopoyesis': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/t-5-innata-molecular': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/sgp-1-inflamacion': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/tbl-1-hemograma': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/t-6-innata-celular': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/t-7-presentacion': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/t-8-linfocitos-t': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/sgp-2-tuberculosis': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/tbl-2-vih': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/t-9-humoral': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/t-10-organos-secundarios': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/h-2-bazo-ganglio': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/t-11-diferenciacion-t': { muestra: 10, muestraFlash: 10 },
+  'inmunologia/sgp-3-autoinmunidad': { muestra: 10, muestraFlash: 10 },
   'inmunologia/t-12-regulacion': { muestra: 10, muestraFlash: 10 },
   'inmunologia/t-13-citometria': { muestra: 10, muestraFlash: 10 },
   'inmunologia/l-2-citometria': { muestra: 10, muestraFlash: 10 },

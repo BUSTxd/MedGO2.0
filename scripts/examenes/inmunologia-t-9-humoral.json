@@ -1,0 +1,362 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-9-humoral",
+  "title": "T9 — Respuesta humoral y linfocitos B",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "Afinidad vs avidez de un anticuerpo: ¿qué mide cada una?",
+      "respuesta": "Afinidad: fuerza de un parátopo con un epítopo; avidez: fuerza total de todos sus sitios de unión.",
+      "detalle": "La avidez depende de la **afinidad de cada sitio** y de la **valencia** (número de sitios). **Kd baja → unión fuerte → alta afinidad**.",
+      "tema": "anticuerpos",
+      "seccion": "I. Introducción"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Qué cadenas forman un anticuerpo y cómo se unen entre sí?",
+      "respuesta": "Dos cadenas pesadas idénticas y dos ligeras idénticas (ambas κ o ambas λ), unidas por puentes disulfuro.",
+      "detalle": "Forman la típica **forma de Y**. Cada cadena tiene región **variable** (unión al antígeno) y **constante** (isotipo).",
+      "tema": "anticuerpos",
+      "seccion": "II. Estructura de un anticuerpo"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Qué isotipo es el más abundante en sangre y cuál en todo el cuerpo?",
+      "respuesta": "IgG en sangre; IgA en el cuerpo, por las secreciones mucosas.",
+      "detalle": "La **IgG** tiene la vida media más larga (**23 días**). La **IgA** se secreta por **transcitosis** como dímero unido por la cadena J; en sangre es monómero.",
+      "tema": "anticuerpos",
+      "seccion": "TABLA: ISOTIPOS"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Qué componentes forman el complejo BCR?",
+      "respuesta": "Ig de membrana (IgM o IgD) y el heterodímero de señalización Igα (CD79a)/Igβ (CD79b) con ITAM.",
+      "detalle": "La Ig de membrana **reconoce el antígeno nativo**, sin necesidad de MHC; **Igα/Igβ** transmiten la señal. No forman parte del BCR ni CD3 ni CD21 (este es correceptor).",
+      "tema": "linfocitos-b",
+      "seccion": "Receptor de células B"
+    },
+    {
+      "id": "f05",
+      "frente": "Primer punto de control del desarrollo B: ¿qué se evalúa y de qué enzima depende la señal?",
+      "respuesta": "La expresión del pre-BCR en el pre-B grande; su señal depende de la tirosina cinasa de Bruton (BTK).",
+      "detalle": "Da supervivencia y expansión clonal, detiene la recombinación de la cadena pesada (**exclusión alélica**: un solo BCR por clon) e inicia la de la ligera. Mutaciones en **BTK o λ5** → **agammaglobulinemia ligada al X**.",
+      "tema": "linfocitos-b",
+      "seccion": "PRIMER PUNTO DE CONTROL"
+    },
+    {
+      "id": "f06",
+      "frente": "LB foliculares vs LB de la zona marginal: ¿a qué antígenos responde cada uno?",
+      "respuesta": "Foliculares: T-dependientes; zona marginal: T-independientes, rápido y con IgM de baja afinidad.",
+      "detalle": "Los de **zona marginal** (IgM alta, poca IgD) están en el bazo y responden a **Neisseria, Haemophilus y S. pneumoniae**; su IgM sirve para opsonizar y activar complemento.",
+      "tema": "linfocitos-b",
+      "seccion": "5. LINFOCITO MADURO"
+    },
+    {
+      "id": "f07",
+      "frente": "Activación T-dependiente: ¿qué segunda señal necesita el linfocito B?",
+      "respuesta": "CD40 del LB unido a CD40L del LT CD4⁺, más las citocinas del LT.",
+      "detalle": "Sin segunda señal el LB entra en **anergia o apoptosis**. En la vía T-independiente la segunda señal es el **entrecruzamiento fuerte del BCR + señales innatas** (TLR, BAFF, APRIL, complemento).",
+      "tema": "linfocitos-b",
+      "seccion": "IV. Activación del linfocito B"
+    },
+    {
+      "id": "f08",
+      "frente": "Centro germinal: ¿qué ocurre en la zona oscura y qué en la zona clara?",
+      "respuesta": "Oscura: los centroblastos proliferan e hipermutan (AID); clara: los centrocitos se seleccionan por afinidad.",
+      "detalle": "En la zona clara los centrocitos **no proliferan** e interactúan con **FDC y Tfh**; sobreviven los clones de **mayor afinidad**.",
+      "tema": "linfocitos-b",
+      "seccion": "Etapas de la respuesta folicular"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué antígenos activan al LB sin ayuda T y qué anticuerpo se produce?",
+      "respuesta": "Polisacáridos, LPS, lípidos y ácidos nucleicos; se produce sobre todo IgM de baja afinidad.",
+      "detalle": "Son **multivalentes**: entrecruzan masivamente el BCR. No hay cambio de isotipo, hipermutación ni memoria. Típico de **bacterias encapsuladas** (S. pneumoniae, N. meningitidis, H. influenzae b).",
+      "tema": "linfocitos-b",
+      "seccion": "Independiente de LT"
+    },
+    {
+      "id": "f10",
+      "frente": "Cambio de isotipo: ¿qué cambia en el anticuerpo y qué se mantiene?",
+      "respuesta": "Cambia la región constante (y con ella la función efectora); se mantiene la especificidad por el mismo epítopo.",
+      "detalle": "Enzima clave: **AID**, que corta el ADN en las **regiones switch** para saltar de μ (IgM) a γ, α o ε.",
+      "tema": "anticuerpos",
+      "seccion": "V. Respuestas funcionales"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Qué es la reacción cruzada de un anticuerpo?",
+      "respuesta": "Que un anticuerpo contra un antígeno se una también a otro antígeno similar.",
+      "tema": "anticuerpos",
+      "seccion": "I. Introducción"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Qué es una respuesta policlonal?",
+      "respuesta": "La activación de muchos clones de LB, cada uno contra un epítopo distinto del mismo antígeno.",
+      "tema": "anticuerpos",
+      "seccion": "I. Introducción"
+    },
+    {
+      "id": "f13",
+      "frente": "Isotipo vs idiotipo: ¿qué determina cada uno?",
+      "respuesta": "Isotipo: región constante, clase y función efectora; idiotipo: región variable (CDR), especificidad.",
+      "detalle": "El idiotipo es el conjunto de **idiotopos**, determinantes antigénicos del sitio de unión específico del anticuerpo.",
+      "tema": "anticuerpos",
+      "seccion": "I. Introducción"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Qué función tienen los fragmentos Fab y Fc?",
+      "respuesta": "Fab: une el antígeno con su región variable; Fc: interactúa con el sistema inmune.",
+      "detalle": "Cada anticuerpo tiene **2 brazos Fab**. El **Fc** media **complemento, opsonización y ADCC**.",
+      "tema": "anticuerpos",
+      "seccion": "Fragmentos funcionales"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Qué son las CDR y qué determinan?",
+      "respuesta": "Tres segmentos hipervariables (CDR1-3) de la región variable; determinan especificidad y afinidad.",
+      "detalle": "Forman el **parátopo**. La diversidad de la región variable proviene de la **recombinación V(D)J**.",
+      "tema": "anticuerpos",
+      "seccion": "Regiones principales de cada cadena"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Qué isotipos tienen región bisagra y qué aporta?",
+      "respuesta": "IgG, IgA e IgD; da flexibilidad para unir antígenos de distinto tamaño y aumenta la avidez.",
+      "detalle": "Está entre **CH1 y CH2** (10-60 aa) y es **susceptible a la proteólisis** por enzimas bacterianas y proteasas.",
+      "tema": "anticuerpos",
+      "seccion": "Regiones principales de cada cadena"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Qué isotipo aparece primero en la respuesta y en qué forma se secreta?",
+      "respuesta": "La IgM, secretada como pentámero unido por la cadena J.",
+      "detalle": "Es el gran **activador de la vía clásica del complemento** y buena **aglutinante**; predomina en la respuesta primaria.",
+      "tema": "anticuerpos",
+      "seccion": "TABLA: ISOTIPOS"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Qué subclases de IgG son las mejores para opsonizar y activar el complemento?",
+      "respuesta": "IgG1 e IgG3.",
+      "detalle": "Su producción la dirige el **IFN-γ** del LT durante el cambio de isotipo.",
+      "tema": "anticuerpos",
+      "seccion": "TABLA: ISOTIPOS"
+    },
+    {
+      "id": "f19",
+      "frente": "¿Qué isotipos pasan de la madre al hijo y por qué vía?",
+      "respuesta": "IgG por la placenta; IgA por la leche materna.",
+      "tema": "anticuerpos",
+      "seccion": "TABLA: ISOTIPOS › Transferencia"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Dónde se ubica la IgE y en qué defensa participa?",
+      "respuesta": "En tejidos submucosos, unida a mastocitos y basófilos; defensa contra helmintos y reacciones alérgicas.",
+      "detalle": "Su vida media es la más corta (**2-3 días**). El cambio a IgE lo dirige la **IL-4**.",
+      "tema": "anticuerpos",
+      "seccion": "TABLA: ISOTIPOS"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Dónde se encuentra la IgD?",
+      "respuesta": "En la superficie de los linfocitos B maduros vírgenes, junto a la IgM, como parte del BCR.",
+      "detalle": "**Corrección**: la tabla del resumen dice LB *inmaduros*, pero el LB inmaduro expresa solo **IgM**; la IgD aparece al madurar (por eso indica LB maduro, pregunta 10). Vida media: ~3 días.",
+      "tema": "anticuerpos",
+      "seccion": "TABLA: ISOTIPOS"
+    },
+    {
+      "id": "f22",
+      "frente": "Prueba de COVID con IgG e IgM positivas en alguien sin síntomas: ¿qué se puede concluir?",
+      "respuesta": "Es una infección de hace algunas semanas, pero no se puede saber si está activa.",
+      "detalle": "Solo la **presencia de antígeno** (del patógeno) indica infección activa. Solo IgM → muy reciente; solo IgG → antigua.",
+      "tema": "anticuerpos",
+      "seccion": "🚩CASO CLÍNICO"
+    },
+    {
+      "id": "f23",
+      "frente": "TCR vs BCR: ¿qué tipo de epítopos reconoce cada uno?",
+      "respuesta": "TCR: péptidos lineales presentados en MHC; BCR: epítopos conformacionales y lineales de macromoléculas.",
+      "detalle": "El BCR reconoce **proteínas, polisacáridos, lípidos, ácidos nucleicos y moléculas pequeñas**. Solo el BCR tiene **forma secretada**: el anticuerpo.",
+      "tema": "linfocitos-b",
+      "seccion": "Familia de la inmunoglobulinas"
+    },
+    {
+      "id": "f24",
+      "frente": "¿Cómo actúa el correceptor CD21-CD19 del BCR?",
+      "respuesta": "CD21 (CR2) une el C3d del microbio mientras el BCR une el antígeno; CD19 amplifica la señal.",
+      "tema": "linfocitos-b",
+      "seccion": "Receptor de células B"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Qué se reordena en el pro-B temprano y qué en el pro-B tardío?",
+      "respuesta": "Temprano: D-J de la cadena pesada; tardío: V-DJ, primero en un cromosoma.",
+      "detalle": "Si el reordenamiento V-DJ no es productivo se intenta en el **segundo cromosoma**; si también falla → **apoptosis** (~50% de las células).",
+      "tema": "linfocitos-b",
+      "seccion": "1. PROLINFOCITO"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Qué componentes forman el pre-BCR?",
+      "respuesta": "Cadena pesada μ, cadena ligera sustituta (λ5 y V pre-B) e Igα/Igβ.",
+      "tema": "linfocitos-b",
+      "seccion": "2. PRE-LINFOCITO B"
+    },
+    {
+      "id": "f27",
+      "frente": "¿En qué orden se reordenan los genes de la cadena ligera?",
+      "respuesta": "Primero κ (un cromosoma y luego el otro); si no es productivo, λ.",
+      "detalle": "Siempre **después** de la cadena pesada: la ligera se reordena en el estadio **pre-B**.",
+      "tema": "linfocitos-b",
+      "seccion": "2. PRE-LINFOCITO B"
+    },
+    {
+      "id": "f28",
+      "frente": "¿Qué marcadores expresa el linfocito B inmaduro?",
+      "respuesta": "IgM de membrana completa, Igα/Igβ, CD19, CD20 y MHC II.",
+      "detalle": "Ya **inhibe RAG** (no más reordenamientos) y su BCR da **señales tónicas** independientes del ligando para sobrevivir.",
+      "tema": "linfocitos-b",
+      "seccion": "3. LINFOCITO B INMADURO"
+    },
+    {
+      "id": "f29",
+      "frente": "LB inmaduro que reconoce autoantígenos con alta afinidad en la médula: ¿qué tres destinos puede tener?",
+      "respuesta": "Edición del receptor, anergia o apoptosis (deleción clonal).",
+      "detalle": "Es la **selección negativa (tolerancia central)**. En la edición del receptor intenta recombinar **otra cadena ligera**.",
+      "tema": "tolerancia",
+      "seccion": "3. LINFOCITO B INMADURO"
+    },
+    {
+      "id": "f30",
+      "frente": "Linfocitos B transicionales T1 vs T2: ¿en qué se diferencian?",
+      "respuesta": "T1: recién llegado, muy sensible a apoptosis, IgM alta e IgD baja; T2: recibe BAFF y sobrevive.",
+      "detalle": "Son LB inmaduros que salieron de la médula hacia los órganos linfoides secundarios. El T2 se diferencia en **LB folicular (B-2)** o **de zona marginal**.",
+      "tema": "linfocitos-b",
+      "seccion": "4. LINFOCITOS TRANSICIONALES"
+    },
+    {
+      "id": "f31",
+      "frente": "¿Qué quimiocina guía a los LB foliculares y quién la secreta?",
+      "respuesta": "CXCL13, secretada por las células dendríticas foliculares (FDC).",
+      "detalle": "Los foliculares expresan **IgM + IgD**, dependen de **BAFF** para sobrevivir y dan **plasmocitos de vida larga y memoria**. Maduros: **CD19⁺, CD20⁺, CD21⁺**.",
+      "tema": "linfocitos-b",
+      "seccion": "5. LINFOCITO MADURO"
+    },
+    {
+      "id": "f32",
+      "frente": "¿Por qué los antígenos proteicos globulares necesitan ayuda de LT?",
+      "respuesta": "Tienen una sola copia de cada epítopo: no entrecruzan el BCR ni generan señal suficiente.",
+      "detalle": "Es la vía más importante: da **isotipos variados, alta afinidad y memoria**.",
+      "tema": "linfocitos-b",
+      "seccion": "Dependiente de LT"
+    },
+    {
+      "id": "f33",
+      "frente": "Respuesta T-dependiente: ¿cómo consigue el LB la ayuda del LT CD4⁺?",
+      "respuesta": "Internaliza y procesa el antígeno, presenta péptidos en MHC II y recibe CD40L más citocinas.",
+      "tema": "linfocitos-b",
+      "seccion": "Dependiente de LT"
+    },
+    {
+      "id": "f34",
+      "frente": "Respuesta extrafolicular vs folicular: ¿qué produce cada una?",
+      "respuesta": "Extrafolicular: rápida, IgM de baja afinidad, plasmocitos de vida corta. Folicular: alta afinidad, cambio de isotipo y memoria.",
+      "detalle": "La folicular (centro germinal) es **más lenta** (días-semanas) pero da **plasmocitos de vida larga** y **maduración de afinidad**.",
+      "tema": "linfocitos-b",
+      "seccion": "Dependiente de LT › Extrafolicular"
+    },
+    {
+      "id": "f35",
+      "frente": "¿Qué es la maduración de la afinidad?",
+      "respuesta": "Hipermutación somática de la región variable en el centro germinal y selección de los clones de mayor afinidad.",
+      "detalle": "La hace la enzima **AID** en la zona oscura. **No cambia la función efectora**, a diferencia del cambio de isotipo.",
+      "tema": "linfocitos-b",
+      "seccion": "Zona oscura: Centroblastos"
+    },
+    {
+      "id": "f36",
+      "frente": "¿Qué señales de supervivencia recibe el centrocito del Tfh?",
+      "respuesta": "CD40-CD40L, ICOS-ICOSL y las citocinas IL-21 e IL-4.",
+      "detalle": "Los centrocitos compiten por el antígeno de las **FDC**; el que capta más lo presenta en **MHC II al Tfh** y sobrevive. Los de baja afinidad mueren por **apoptosis**. El Tfh depende de **ICOS (CD278)**.",
+      "tema": "linfocitos-b",
+      "seccion": "Zona clara: Centrocitos"
+    },
+    {
+      "id": "f37",
+      "frente": "Tras activarse, ¿qué moléculas aumenta el LB para estimular al LT y cuál para sobrevivir?",
+      "respuesta": "↑ MHC II y CD80/CD86 (B7) para retroalimentar al LT; Bcl-2 como antiapoptótica.",
+      "tema": "linfocitos-b",
+      "seccion": "V. Respuestas funcionales"
+    },
+    {
+      "id": "f38",
+      "frente": "¿En qué dos tipos celulares se diferencia el LB activado?",
+      "respuesta": "Células plasmáticas, que secretan anticuerpos, y LB de memoria, para una respuesta secundaria rápida y potente.",
+      "detalle": "Los plasmocitos de **vida larga** migran a la **médula ósea o a mucosas** y siguen produciendo anticuerpos de alta afinidad aun eliminada la infección.",
+      "tema": "linfocitos-b",
+      "seccion": "V. Respuestas funcionales"
+    },
+    {
+      "id": "f39",
+      "frente": "¿Qué citocina dirige el cambio de isotipo a IgE, a IgG1/IgG3 y a IgA?",
+      "respuesta": "IL-4 → IgE (e IgG4); IFN-γ → IgG1 e IgG3; TGF-β → IgA.",
+      "detalle": "IgG1/IgG3 **opsonizan** (bacterias intracelulares); IgE va contra **helmintos** y en alergias; IgA protege **mucosas**. Un defecto en esta regulación (↑ IL-4) favorece alergias y asma.",
+      "tema": "anticuerpos",
+      "seccion": "V. Respuestas funcionales"
+    },
+    {
+      "id": "f40",
+      "frente": "¿Cuáles son las funciones efectoras de los anticuerpos?",
+      "respuesta": "Neutralización, opsonización, activación del complemento y ADCC.",
+      "detalle": "La **neutralización** es la que impide la entrada de un virus a la célula.",
+      "tema": "anticuerpos",
+      "seccion": "V. Respuestas funcionales"
+    },
+    {
+      "id": "f41",
+      "frente": "¿Cómo protege el componente secretor a la IgA?",
+      "respuesta": "Es un resto del receptor poli-Ig que el dímero de IgA retiene al secretarse y lo protege de proteasas luminales.",
+      "detalle": "La IgA cruza el epitelio por **transcitosis** unida al **receptor poli-Ig**.",
+      "tema": "anticuerpos",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f42",
+      "frente": "¿Qué isotipo es esencial para que las células NK hagan ADCC?",
+      "respuesta": "La IgG.",
+      "detalle": "La NK reconoce el Fc de la IgG unida a la célula infectada y la destruye. Los **eosinófilos**, en cambio, se activan y degranulan vía **FcεRI** (IgE).",
+      "tema": "anticuerpos",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f43",
+      "frente": "Lactante con infecciones recurrentes (otitis, neumonía por H. influenzae) y sin células CD19⁺ CD20⁺: ¿qué proteína falla?",
+      "respuesta": "BTK (tirosina cinasa de Bruton): agammaglobulinemia ligada al X.",
+      "detalle": "Sin señal del pre-BCR la maduración se **bloquea en la médula ósea** → no hay LB maduros ni anticuerpos (los LT CD3⁺ son normales).",
+      "tema": "inmunodeficiencias",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f44",
+      "frente": "¿Qué proceso NO genera diversidad antes de la exposición al antígeno?",
+      "respuesta": "La hipermutación somática.",
+      "detalle": "Ocurre **después** de la activación, en el centro germinal. Antes del antígeno la diversidad viene de la **combinatoria V(D)J**, la **diversidad de unión** y los nucleótidos **N (TdT)** y **P**.",
+      "tema": "linfocitos-b",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f45",
+      "frente": "Embarazada expuesta a parvovirus B19 con IgG e IgM dentro de valores normales: ¿qué se le indica?",
+      "respuesta": "Que no tiene inmunidad previa y está en riesgo de contagio tras la exposición reciente.",
+      "detalle": "IgG 4 UI/mL (VN 0-10) e IgM 0,8 UI/mL (VN 0-1) son **negativas**: no hay infección previa ni activa, y ni ella ni el feto están protegidos.",
+      "tema": "anticuerpos",
+      "seccion": "PREGUNTAS"
+    }
+  ]
+}

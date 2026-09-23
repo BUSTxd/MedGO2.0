@@ -1,0 +1,177 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-6-innata-celular",
+  "title": "T6 — Respuestas innatas celulares",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Qué enlace del peptidoglicano hidroliza la lisozima de las lágrimas?",
+      "respuesta": "El enlace β(1→4) entre N-acetilglucosamina (NAG) y ácido N-acetilmurámico (NAM).",
+      "detalle": "Es una **barrera química** de ojos, nariz y cavidad oral: **enzima de lágrimas y saliva**. No confundir con la defensina (forma poros) ni con la lactoferrina (secuestra hierro).",
+      "tema": "barreras"
+    },
+    {
+      "id": "f02",
+      "frente": "Candidiasis vulvovaginal tras un curso de antibióticos de amplio espectro: ¿qué barrera se perdió?",
+      "respuesta": "La microbiológica: los antibióticos eliminaron la flora normal que competía con Candida.",
+      "detalle": "La **microbiota normal** es la barrera microbiológica común a piel, intestino, pulmones y mucosas. Al eliminarla, la levadura coloniza sin competencia (flujo grumoso, **levaduras y seudohifas** con KOH).",
+      "tema": "barreras"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Qué células son las principales productoras de interferón tipo I en una infección viral?",
+      "respuesta": "Las células dendríticas plasmocitoides (pDC).",
+      "detalle": "Detectan ácidos nucleicos virales con **TLR7 y TLR9** y producen IFN-α/β masivamente. El IFN tipo I **limita la replicación viral**, **activa a las NK** y potencia la respuesta adaptativa.",
+      "tema": "innata-celular"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Qué complejo receptor reconoce el LPS de las bacterias gramnegativas?",
+      "respuesta": "TLR4 asociado a MD-2 (junto con CD14).",
+      "detalle": "**MD-2 es esencial**: sin ella TLR4 no detecta el LPS y no se producen citocinas proinflamatorias como el **TNF-α**. TLR2, en cambio, reconoce otros PAMP; ambos señalizan por su dominio intracelular **TIR**.",
+      "tema": "innata-celular"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué sensor citosólico detecta el ADN viral (p. ej., del VHB) y activa STING?",
+      "respuesta": "cGAS, que al unir ADN bicatenario sintetiza cGAMP a partir de ATP y GTP.",
+      "detalle": "El **cGAMP** se une al dímero de **STING** en la membrana del retículo endoplásmico. No es RIG-I (ARN), NOD2 (peptidoglicano) ni TLR9 (endosomal).",
+      "tema": "innata-celular"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Qué célula es la principal fuente de óxido nítrico microbicida y qué la induce?",
+      "respuesta": "El macrófago activado por IFN-γ, que expresa altos niveles de iNOS.",
+      "detalle": "Es un mecanismo **fundamental para controlar la leishmaniasis visceral** (*Leishmania donovani*). Los neutrófilos producen poco NO: su arma principal es el **estallido respiratorio** (ROS) por NADPH oxidasa.",
+      "tema": "innata-celular"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Qué hacen los receptores KIR inhibitorios de las NK al reconocer HLA clase I?",
+      "respuesta": "Bloquean la activación de la NK y evitan la lisis de esa célula.",
+      "detalle": "La NK integra un **balance entre señales activadoras e inhibitorias**. Si la célula conserva **HLA I propio**, domina la inhibición. Si lo pierde (infección, tumor), el KIR ya no inhibe y la NK puede matar.",
+      "tema": "innata-celular"
+    },
+    {
+      "id": "f08",
+      "frente": "Neumonía: neutrófilos las primeras 24 h y luego monocitos. ¿Qué quimiocina recluta a cada uno?",
+      "respuesta": "CXCL8 (IL-8) a los neutrófilos; CCL2 (MCP-1) a los monocitos.",
+      "detalle": "**CXCL8** es la quimiocina prototípica de neutrófilos (macrófagos, endotelio, epitelio; primeras horas). **CCL2** llega más tarde y recluta monocitos que se vuelven macrófagos en la **fase subaguda**.",
+      "tema": "trafico"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Por qué el TNF-α crónico (p. ej., en artritis reumatoide) aumenta el riesgo de infarto?",
+      "respuesta": "Induce factor tisular en monocitos y endotelio, activando la vía extrínseca: hipercoagulabilidad crónica.",
+      "detalle": "El **factor tisular** es el iniciador principal de la **vía extrínseca** de la coagulación. Este estado protrombótico explica el ↑ de eventos coronarios en enfermedades inflamatorias crónicas.",
+      "tema": "citocinas"
+    },
+    {
+      "id": "f10",
+      "frente": "Gota (cristales de urato monosódico): ¿qué inflamasoma se activa en los macrófagos sinoviales?",
+      "respuesta": "NLRP3, que activa la caspasa-1 y libera IL-1β.",
+      "detalle": "Los **cristales** son uno de los activadores de NLRP3, junto con productos bacterianos, **eflujo de K⁺** y ROS. La IL-1β secretada causa la **inflamación aguda** de la articulación.",
+      "tema": "inflamacion"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Cuáles son los tres tipos de barreras epiteliales de la inmunidad innata?",
+      "respuesta": "Mecánicas, químicas y microbiológicas.",
+      "detalle": "**Mecánicas**: uniones estrechas, flujo de aire o fluido, cilios, lágrimas. **Químicas**: ácidos grasos, pH bajo, enzimas, péptidos antimicrobianos, surfactante. **Microbiológicas**: microbiota normal.",
+      "tema": "barreras"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Qué péptidos antimicrobianos caracterizan a la piel y cuáles al intestino?",
+      "respuesta": "Piel: β-defensinas y catelicidina; intestino: α-defensinas (criptidinas), RegIII y catelicidina.",
+      "detalle": "En pulmón: **α-defensinas y catelicidina**; en ojos, nariz y boca: **histatinas y β-defensinas**. Otras químicas por sitio: **ácidos grasos** (piel), **pH bajo y pepsina** (intestino), **surfactante** (pulmón).",
+      "tema": "barreras"
+    },
+    {
+      "id": "f13",
+      "frente": "Cuando el patógeno ya infecta el tejido, ¿qué defensas innatas actúan antes de la adaptativa?",
+      "respuesta": "Complemento, citocinas, quimiocinas, fagocitos, NK y activación de macrófagos.",
+      "detalle": "Además, las **células dendríticas migran a los ganglios** para iniciar la inmunidad adaptativa y la **coagulación** ayuda a limitar la propagación. Luego, anticuerpos, macrófagos activados por LT y LT citotóxicos eliminan la infección.",
+      "tema": "innata-celular"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Qué son las células de Langerhans y por qué no son las productoras de IFN tipo I?",
+      "respuesta": "Dendríticas residentes de la epidermis, especializadas en capturar y presentar antígenos.",
+      "detalle": "La producción masiva de IFN-α/β es de las **pDC**. Los **macrófagos alveolares** tampoco: son fagocitos del alvéolo que producen citocinas, pero no IFN tipo I en gran cantidad.",
+      "tema": "innata-celular"
+    },
+    {
+      "id": "f15",
+      "frente": "Niño con infecciones recurrentes solo por gramnegativas y cuyas células no producen TNF-α con LPS: ¿qué falta?",
+      "respuesta": "MD-2, necesaria para que TLR4 reconozca el LPS.",
+      "detalle": "Complemento, inmunoglobulinas y neutrófilos son normales, y responde bien a grampositivas y virus: el defecto está **solo en la vía del LPS** (TLR4/MD-2).",
+      "tema": "inmunodeficiencias"
+    },
+    {
+      "id": "f16",
+      "frente": "Vía cGAS-STING: ¿qué ocurre después de que STING se activa?",
+      "respuesta": "STING activa la cinasa TBK1, que fosforila IRF3; IRF3 entra al núcleo e induce genes de IFN tipo I.",
+      "detalle": "STING también se activa con **dinucleótidos cíclicos bacterianos** (c-di-GMP, c-di-AMP), sin pasar por cGAS.",
+      "tema": "innata-celular"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Cuáles son los pasos de la fagocitosis hasta la muerte del microbio?",
+      "respuesta": "Unión a receptores, la membrana lo envuelve, fagosoma, fusión con lisosoma y muerte en el fagolisosoma.",
+      "detalle": "Receptores: p. ej., **de lectina** y **de C3**. En el fagolisosoma lo matan **ROS** (oxidasa del fagocito), **NO** (iNOS) y **enzimas lisosomales**.",
+      "tema": "innata-celular"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Qué reacción cataliza la iNOS?",
+      "respuesta": "Arginina → citrulina + óxido nítrico (NO).",
+      "detalle": "Es la **óxido nítrico sintasa inducible**: se expresa al activarse el macrófago (IFN-γ). El NO actúa dentro del **fagolisosoma** junto con las ROS.",
+      "tema": "innata-celular"
+    },
+    {
+      "id": "f19",
+      "frente": "¿Cuál es el principal mecanismo microbicida del neutrófilo?",
+      "respuesta": "El estallido respiratorio: especies reactivas de oxígeno generadas por la NADPH oxidasa.",
+      "detalle": "Puede producir algo de NO, pero **no es la principal fuente**; esa es el macrófago activado. Tampoco genera NO a partir de la NADPH oxidasa.",
+      "tema": "innata-celular"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Qué quimiocinas CC compiten con el VIH-1 por su correceptor?",
+      "respuesta": "CCL3 (MIP-1α) y CCL4 (MIP-1β).",
+      "detalle": "Usan los receptores **CCR1, 3 y 5**; al ocupar CCR5 compiten con el virus. CCL3 además participa en la **defensa antiviral** y promueve la inmunidad **Th1**.",
+      "tema": "trafico"
+    },
+    {
+      "id": "f21",
+      "frente": "Fractalquina (CX3CL1): ¿a qué células atrae y qué efecto principal tiene?",
+      "respuesta": "Monocitos y LT, vía CX3CR1; media la adhesión leucocito-endotelio.",
+      "detalle": "La producen monocitos, endotelio y **microglía**, y participa en la **inflamación cerebral**. No explica el cambio neutrófilos → monocitos de una neumonía.",
+      "tema": "trafico"
+    },
+    {
+      "id": "f22",
+      "frente": "Además del factor tisular, ¿qué otros efectos protrombóticos tiene el TNF-α?",
+      "respuesta": "↑ ICAM-1, VCAM-1 y E-selectina, ↓ fibrinólisis y activación plaquetaria.",
+      "detalle": "Juntos mantienen un **estado de hipercoagulabilidad crónica** en la inflamación persistente.",
+      "tema": "citocinas"
+    },
+    {
+      "id": "f23",
+      "frente": "Vía extrínseca de la coagulación: ¿qué la inicia y a qué factor activa?",
+      "respuesta": "Daño tisular: el complejo factor tisular–VIIa activa el factor X.",
+      "detalle": "El **Xa** (con V, fosfolípido y Ca²⁺) convierte **protrombina → trombina**, que transforma **fibrinógeno → fibrina**; el **XIIIa** la estabiliza. La vía intrínseca empieza por contacto de superficie (XII).",
+      "tema": "hematologia"
+    },
+    {
+      "id": "f24",
+      "frente": "¿Cuáles son las dos señales necesarias para secretar IL-1β por el inflamasoma NLRP3?",
+      "respuesta": "Señal innata (p. ej., TLR) que transcribe pro-IL-1β, y NLRP3 activado que activa caspasa-1 para cortarla.",
+      "detalle": "El inflamasoma se ensambla con **NLRP3 (sensor) + adaptador + pro-caspasa-1**. No es NOD2 ni AIM2, y sí involucra caspasas.",
+      "tema": "inflamacion"
+    }
+  ]
+}

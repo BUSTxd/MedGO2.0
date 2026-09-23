@@ -119,6 +119,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
+        tarjetas: { key: 'inmunologia/t-1-generalidades', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -141,6 +142,7 @@ export const semanas: Semana[] = [
           'Reconocimiento en lámina periférica',
         ],
         docentes: [],
+        tarjetas: { key: 'inmunologia/t-2-celulas', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -161,6 +163,7 @@ export const semanas: Semana[] = [
           'Educación y selección linfocitaria',
         ],
         docentes: [],
+        tarjetas: { key: 'inmunologia/t-3-organos-primarios', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -185,6 +188,7 @@ export const semanas: Semana[] = [
         nota: 'Evaluación: 60% individual (Kahoot) + 40% grupal (rúbrica). Promedio de las 2 prácticas = 5% de la nota final.',
         // Sin `linkOverride` al atlas: la tarjeta tiene que abrir la clase,
         // que es donde está el Resumen. El atlas sigue en Histología.
+        tarjetas: { key: 'inmunologia/h-1-timo-malt', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -207,6 +211,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
+        tarjetas: { key: 'inmunologia/t-4-leucopoyesis', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -230,6 +235,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Paso corto: evaluado durante la sesión (cuenta para pasos cortos, 10%).',
+        tarjetas: { key: 'inmunologia/t-5-innata-molecular', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -252,6 +258,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluado por el tutor facilitador al final de la semana. Promedio de SGP = 30% de la nota final.',
+        tarjetas: { key: 'inmunologia/sgp-1-inflamacion', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -282,6 +289,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluación: 60% examen individual + 40% trabajo grupal. Promedio de TBL = 10% de la nota final.',
+        tarjetas: { key: 'inmunologia/tbl-1-hemograma', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -303,6 +311,7 @@ export const semanas: Semana[] = [
           'Células NK e inflamasoma',
         ],
         docentes: [],
+        tarjetas: { key: 'inmunologia/t-6-innata-celular', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -342,6 +351,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Paso corto: evaluado durante la sesión (cuenta para pasos cortos, 10%).',
+        tarjetas: { key: 'inmunologia/t-7-presentacion', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -364,6 +374,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
+        tarjetas: { key: 'inmunologia/t-8-linfocitos-t', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -386,6 +397,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluado por el tutor facilitador al final de la semana. Promedio de SGP = 30% de la nota final.',
+        tarjetas: { key: 'inmunologia/sgp-2-tuberculosis', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -417,6 +429,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluación: 60% examen individual + 40% trabajo grupal. Promedio de TBL = 10% de la nota final.',
+        tarjetas: { key: 'inmunologia/tbl-2-vih', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -440,6 +453,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
+        tarjetas: { key: 'inmunologia/t-9-humoral', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -461,6 +475,7 @@ export const semanas: Semana[] = [
           'Recirculación linfocitaria',
         ],
         docentes: [],
+        tarjetas: { key: 'inmunologia/t-10-organos-secundarios', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -481,6 +496,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluación: 60% individual (Kahoot) + 40% grupal (rúbrica). Promedio de las 2 prácticas = 5% de la nota final.',
+        tarjetas: { key: 'inmunologia/h-2-bazo-ganglio', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -502,6 +518,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Clase invertida: se evalúa en sesión con clickers (cuenta para pasos cortos, 10%).',
+        tarjetas: { key: 'inmunologia/t-11-diferenciacion-t', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -525,6 +542,7 @@ export const semanas: Semana[] = [
         ],
         docentes: [],
         nota: 'Evaluado por el tutor facilitador al final de la semana. Promedio de SGP = 30% de la nota final.',
+        tarjetas: { key: 'inmunologia/sgp-3-autoinmunidad', desc: 'Tarjetas de repaso: pregunta delante, respuesta detrás' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',

@@ -1,0 +1,262 @@
+{
+  "version": 1,
+  "key": "inmunologia/tbl-1-hemograma",
+  "title": "TBL 1 — Hemograma y reactantes de fase aguda",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Qué contienen los gránulos azurófilos y los específicos del neutrófilo?",
+      "respuesta": "Azurófilos: proteinasa, fosfatasa ácida, mieloperoxidasa, β-glucuronidasa; específicos: LAP, colagenasa, lisozima, lactoferrina.",
+      "detalle": "Los **azurófilos** son lisosomas primarios. La **LAP** (fosfatasa alcalina leucocitaria) de los gránulos específicos es la que se mide para distinguir reacción leucemoide de LMC.",
+      "tema": "hematologia",
+      "seccion": "3) Neutrófilos"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Qué mediador es el principal marcador de activación mastocitaria?",
+      "respuesta": "La triptasa.",
+      "detalle": "En la degranulación también salen **histamina** (vasodilatación, ↑ permeabilidad, broncoconstricción), **heparina** (anticoagulante) y factores quimiotácticos para eosinófilos. En la **mastocitosis** la triptasa sérica está ↑.",
+      "tema": "celulas-inmunes",
+      "seccion": "7) Mastocitos"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Cuáles son las causas de eosinofilia (regla PACMAN)?",
+      "respuesta": "Parásitos, asma, insuficiencia suprarrenal crónica, mieloproliferativos, alergias, neoplasias y granulomatosis eosinofílica con poliangitis.",
+      "detalle": "Las más frecuentes: **parásitos (helmintos), asma y procesos alérgicos**. Entre las neoplasias: **linfoma de Hodgkin** y **LMC**.",
+      "tema": "hemograma-rfa",
+      "seccion": "5) Eosinófilos"
+    },
+    {
+      "id": "f04",
+      "frente": "¿De dónde vienen los macrófagos, qué los activa y qué molécula suya une el LPS?",
+      "respuesta": "De monocitos circulantes; se activan por IFN-γ; CD14 une el lípido A del LPS.",
+      "detalle": "La unión del **lípido A a CD14** puede desencadenar **choque séptico**. Son componente importante de los **granulomas** y cambian de nombre por tejido: Kupffer, histiocitos, osteoclastos, microglía.",
+      "tema": "celulas-inmunes",
+      "seccion": "6) Macrófagos"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Cuál es el rango normal del recuento total de leucocitos?",
+      "respuesta": "4 000–11 000/mm³.",
+      "detalle": "**Leucopenia** < 4 000/mm³ (SMD, leucemia, VIH, anemia aplásica). **Leucocitosis** > 11 000/mm³ (infecciones, leucemias, autoinmunidad, fármacos como el **litio**).",
+      "tema": "hemograma-rfa",
+      "seccion": "Recuento total de leucocitos"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Para qué sirve la procalcitonina?",
+      "respuesta": "Es marcador de infección bacteriana sistémica: se eleva en sepsis y neumonía bacteriana.",
+      "detalle": "Referencia: **< 0,5 ng/mL** → infección sistémica improbable; **2-10** → sepsis probable; **> 10** → casi exclusivamente sepsis bacteriana severa. Otras causas de ↑: neonatos < 48 h, trauma, cirugía, quemaduras.",
+      "tema": "hemograma-rfa",
+      "seccion": "Procalcitonina"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Por qué la VSG tarda más que la PCR en normalizarse tras un cuadro inflamatorio?",
+      "respuesta": "La VSG depende del fibrinógeno, de vida media de días; la PCR dura horas y sigue a la inflamación.",
+      "detalle": "Por eso la **PCR** es más sensible y responde más rápido que la eritrosedimentación, y sirve para seguir la **progresión o remisión**.",
+      "tema": "hemograma-rfa",
+      "seccion": "Tasa de sedimentación globular"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Desde qué recuento se habla de neutropenia y de neutropenia grave?",
+      "respuesta": "Neutropenia < 1 500/mm³; grave < 500/mm³.",
+      "detalle": "Causas: **sepsis**, infecciones postoperatorias, **fármacos** (quimioterapia, cloranfenicol), **anemia aplásica** y radiación.",
+      "tema": "hemograma-rfa",
+      "seccion": "Neutropenia"
+    },
+    {
+      "id": "f09",
+      "frente": "¿Qué es la reacción leucemoide y cómo está su LAP?",
+      "respuesta": "Leucocitosis reactiva benigna > 50 000/mm³ de neutrófilos maduros, con LAP alta.",
+      "detalle": "Es **transitoria** y **sin basofilia**. Los neutrófilos muestran **granulación tóxica, cuerpos de Döhle y vacuolas**. Causas: infecciones bacterianas severas (tos ferina, TB, apendicitis perforada), glucocorticoides, estrés.",
+      "tema": "hematologia",
+      "seccion": "2. Reacción leucemoide"
+    },
+    {
+      "id": "f10",
+      "frente": "¿Qué alteración genética define a la leucemia mieloide crónica?",
+      "respuesta": "t(9;22)(q34;q11), cromosoma Filadelfia, que forma BCR-ABL1: tirosina cinasa constitutivamente activa.",
+      "detalle": "Resultado: **proliferación incontrolada + ↓ apoptosis** de granulocitos. Se confirma detectando **BCR-ABL1** por PCR, FISH o citogenética.",
+      "tema": "hematologia",
+      "seccion": "Leucemia mieloide crónica"
+    },
+    {
+      "id": "f11",
+      "frente": "Neutrófilos hipersegmentados (≥ 6 lóbulos): ¿qué sugieren?",
+      "respuesta": "Déficit de vitamina B₁₂ o de ácido fólico.",
+      "tema": "hematologia",
+      "seccion": "3) Neutrófilos"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Qué mediadores libera el mastocito en la fase temprana y cuáles en la tardía?",
+      "respuesta": "Temprana: gránulos preformados (histamina, triptasa, heparina, quimasa); tardía: leucotrienos, PGD₂ y PAF sintetizados de novo.",
+      "detalle": "La fase temprana ocurre en **segundos-minutos**; la tardía en **minutos-horas**, a partir del **ácido araquidónico**. Los **LTC₄, LTD₄, LTE₄** son broncoconstrictores muy potentes.",
+      "tema": "celulas-inmunes",
+      "seccion": "4) Basófilos"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Qué mediadores contienen los gránulos de los basófilos?",
+      "respuesta": "Heparina (anticoagulante), histamina (vasodilatadora) y leucotrienos.",
+      "detalle": "Comparten precursor con los mastocitos, pero son **células diferentes**: el basófilo circula y el mastocito reside en los tejidos.",
+      "tema": "celulas-inmunes",
+      "seccion": "4) Basófilos"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Qué receptor tienen los mastocitos y qué los activa?",
+      "respuesta": "FcεRI (une IgE); se activan por entrecruzamiento de IgE, anafilotoxinas C3a y C5a, y trauma tisular.",
+      "detalle": "El entrecruzamiento de **IgE por el antígeno** es el mecanismo principal de las alergias (hipersensibilidad **tipo I**). Algunos fármacos (**vancomicina, opioides, contraste**) los degranulan sin IgE.",
+      "tema": "celulas-inmunes",
+      "seccion": "7) Mastocitos"
+    },
+    {
+      "id": "f15",
+      "frente": "Mastocitosis: ¿qué mutación se asocia y qué manifestaciones da?",
+      "respuesta": "Mutación en c-KIT; flushing, prurito, hipotensión, dolor abdominal, diarrea y úlcera péptica por exceso de histamina.",
+      "detalle": "Cursa con **↑ triptasa sérica**. El **cromoglicato sódico** previene la degranulación (profilaxis en asma).",
+      "tema": "celulas-inmunes",
+      "seccion": "7) Mastocitos"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Qué rango normal tienen los neutrófilos segmentados y qué los eleva?",
+      "respuesta": "54–62 %; los elevan infecciones bacterianas, estrés físico y glucocorticoides.",
+      "tema": "hemograma-rfa",
+      "seccion": "Neutrófilos segmentados"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Qué causas elevan los linfocitos?",
+      "respuesta": "Infecciones virales e infecciones crónicas (TB, brucelosis, sífilis, toxoplasmosis).",
+      "detalle": "Rango normal **25–33 %**. Bajan en inmunosupresión, inmunodeficiencias y con **glucocorticoides**.",
+      "tema": "hemograma-rfa",
+      "seccion": "Linfocitos"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Qué causas elevan los monocitos?",
+      "respuesta": "Infecciones bacterianas crónicas (TB, rickettsias, sífilis), protozoarios y malignidad (LMC, Hodgkin).",
+      "detalle": "Rango normal **3–7 %**. Bajan en anemia aplásica y en algunas malignidades (**leucemia de células pilosas**, LMA).",
+      "tema": "hemograma-rfa",
+      "seccion": "Monocitos"
+    },
+    {
+      "id": "f19",
+      "frente": "¿Qué efecto tienen los glucocorticoides sobre el recuento leucocitario?",
+      "respuesta": "Neutrofilia, eosinopenia y linfopenia.",
+      "detalle": "Lo mismo en el **síndrome de Cushing** (hipercortisolismo), causa típica de **eosinopenia** (< 30/mm³).",
+      "tema": "hemograma-rfa",
+      "seccion": "Notas adicionales"
+    },
+    {
+      "id": "f20",
+      "frente": "¿Qué es la respuesta de fase aguda y quién sintetiza sus proteínas?",
+      "respuesta": "Respuesta sistémica y local a una lesión (infección, trauma, cirugía, malignidad); las proteínas las sintetiza el hígado.",
+      "detalle": "Depende de la **inmunidad innata** (primeras 24-48 h) y se acompaña de **leucocitosis** (> 11 000/mm³). En la electroforesis sube la zona **α1 y α2**.",
+      "tema": "hemograma-rfa",
+      "seccion": "Fase aguda"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Cuánto tarda en elevarse la PCR y cuál es su función?",
+      "respuesta": "Se eleva a las 6-12 h de la inflamación o infección; actúa como opsonina.",
+      "detalle": "Es **poco específica**, pero útil para monitorear. Referencia **0-5 mg/L**; se induce por **IL-6** y sirve como prueba rápida: alta en infección bacteriana, baja en la viral.",
+      "tema": "hemograma-rfa",
+      "seccion": "Proteína C reactiva (PCR)"
+    },
+    {
+      "id": "f22",
+      "frente": "¿Por qué sube la ferritina en la inflamación?",
+      "respuesta": "Secuestra hierro y reduce su disponibilidad para patógenos y tumores.",
+      "detalle": "También se eleva en **malignidad**. La **hepcidina** es otro reactante positivo ligado al hierro.",
+      "tema": "hemograma-rfa",
+      "seccion": "Ferritina"
+    },
+    {
+      "id": "f23",
+      "frente": "Haptoglobina, amiloide sérico A y ceruloplasmina: ¿qué hace cada una?",
+      "respuesta": "Haptoglobina une hemoglobina libre; SAA recluta células inmunes e induce enzimas degradativas; ceruloplasmina une cobre.",
+      "tema": "hemograma-rfa",
+      "seccion": "Haptoglobina"
+    },
+    {
+      "id": "f24",
+      "frente": "¿Qué funciones tiene el fibrinógeno como reactante de fase aguda?",
+      "respuesta": "Coagulación, cicatrización y reparación endotelial; además aumenta la VSG.",
+      "detalle": "También está ↑ en el **embarazo** y la **edad avanzada**.",
+      "tema": "hemograma-rfa",
+      "seccion": "Fibrinógeno"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Cuáles son los reactantes de fase aguda negativos?",
+      "respuesta": "Albúmina, transferrina y antitrombina: disminuyen durante la inflamación.",
+      "detalle": "La **albúmina** cae por **ahorro de aminoácidos** para las proteínas de defensa. La **transferrina** baja y deja menos hierro disponible para las bacterias.",
+      "tema": "hemograma-rfa",
+      "seccion": "Albúmina"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Qué mide la VSG y qué la aumenta?",
+      "respuesta": "Los mm que descienden los eritrocitos en 1 h; aumenta en inflamación, infección, cáncer, embarazo, anemia y ERC.",
+      "detalle": "Es una prueba **inespecífica**. La anemia la sube porque, con menos hematocrito, los eritrocitos **sedimentan más rápido**; también la vejez y la macrocitosis.",
+      "tema": "hemograma-rfa",
+      "seccion": "Tasa de sedimentación globular"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Qué disminuye la VSG?",
+      "respuesta": "Policitemia, eritrocitos anómalos (drepanocitos, esferocitos, microcitos), leucocitosis extrema e hipofibrinogenemia.",
+      "detalle": "Con más eritrocitos se **dificulta la agregación**. La **hipogammaglobulinemia** también la baja. Ejemplo de leucocitosis extrema: **leucemia linfocítica crónica**.",
+      "tema": "hemograma-rfa",
+      "seccion": "Tasa de sedimentación globular"
+    },
+    {
+      "id": "f28",
+      "frente": "¿Qué recuento define linfopenia y qué la causa?",
+      "respuesta": "< 1 500/mm³ en adultos (< 3 000 en niños); VIH, DiGeorge, SCID, LES y glucocorticoides.",
+      "detalle": "En el **VIH** se debe a la destrucción de los **LT CD4⁺**.",
+      "tema": "hemograma-rfa",
+      "seccion": "Linfopenia"
+    },
+    {
+      "id": "f29",
+      "frente": "¿Qué es el desplazamiento a la izquierda y por qué ocurre?",
+      "respuesta": "Aumento de neutrófilos inmaduros (bandas, metamielocitos) en sangre: la médula libera células jóvenes ante alta demanda.",
+      "detalle": "Causas: **infección bacteriana aguda**, inflamación aguda, **necrosis** (infarto, quemaduras), anemia grave, infiltración medular. En infecciones graves: **granulación tóxica, vacuolas y cuerpos de Döhle**.",
+      "tema": "hemograma-rfa",
+      "seccion": "1. Desplazamiento a la izquierda"
+    },
+    {
+      "id": "f30",
+      "frente": "¿Qué es la reacción leucoeritroblástica y qué indica?",
+      "respuesta": "Mieloides inmaduros + eritrocitos nucleados en sangre periférica: indica daño o infiltración de la médula ósea.",
+      "detalle": "Se acompaña de **dacrocitos** (lágrima) y **plaquetas gigantes**. Causas: **metástasis** de tumores sólidos, **mielofibrosis**, hemólisis masiva o sangrado agudo.",
+      "tema": "hematologia",
+      "seccion": "3. Reacción leucoeritroblástica"
+    },
+    {
+      "id": "f31",
+      "frente": "¿Qué hallazgos del hemograma y la clínica orientan a LMC?",
+      "respuesta": "Leucocitosis marcada con granulocitos en todas las etapas, basofilia + eosinofilia y esplenomegalia.",
+      "detalle": "La leucocitosis puede superar **100 000/μL**, con predominio de células maduras y **anemia normocítica normocrómica**. También fatiga, saciedad precoz e **hiperuricemia/gota**.",
+      "tema": "hematologia",
+      "seccion": "Leucemia mieloide crónica"
+    },
+    {
+      "id": "f32",
+      "frente": "Reacción leucemoide vs LMC: ¿cómo están la LAP y la morfología del neutrófilo?",
+      "respuesta": "Leucemoide: LAP alta, granulación tóxica y cuerpos de Döhle; LMC: LAP baja y anomalía pseudo-Pelger-Huët.",
+      "detalle": "En la LMC la LAP es baja porque los **neutrófilos malignos (clonales)** tienen poca enzima; los granulocitos maduros normales, en cambio, la captan intensamente.",
+      "tema": "hematologia",
+      "seccion": "LAP (fosfatasa alcalina"
+    }
+  ]
+}

@@ -1,0 +1,296 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-8-linfocitos-t",
+  "title": "T8 — Desarrollo, selección y activación de linfocitos T",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Qué mecanismo genera el repertorio de más de 10⁸ especificidades de los linfocitos?",
+      "respuesta": "La recombinación somática V(D)J, durante el desarrollo de los linfocitos.",
+      "detalle": "Genera la diversidad de **BCR y TCR** a partir de un **número limitado de segmentos génicos**, de modo que cada linfocito expresa un receptor con especificidad única.",
+      "tema": "linfocitos-t",
+      "seccion": "Introducción"
+    },
+    {
+      "id": "f02",
+      "frente": "¿Por qué el TCR necesita al complejo CD3 y a las cadenas ζ para señalizar?",
+      "respuesta": "Su cola citoplasmática es muy corta; CD3 (γε y δε) y el homodímero ζζ aportan los ITAMs.",
+      "detalle": "El **complejo TCR** = TCR αβ + **CD3** (γε, δε) + **ζζ**. El TCR reconoce; CD3 y ζ transmiten la señal al interior.",
+      "tema": "linfocitos-t",
+      "seccion": "RECEPTOR TCR"
+    },
+    {
+      "id": "f03",
+      "frente": "Regla básica: ¿qué cadenas usan recombinación VDJ y cuáles solo VJ?",
+      "respuesta": "VDJ: cadena pesada de Ig, TCR β y TCR δ; VJ: cadenas ligeras de Ig, TCR α y TCR γ.",
+      "detalle": "El **segmento D** solo participa en las cadenas que usan recombinación V-D-J (p. ej., **región variable de la cadena pesada** y **TCR β**).",
+      "tema": "linfocitos-t",
+      "seccion": "I. Recombinación V(D)J"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Qué partes tiene una secuencia señal de recombinación (RSS)?",
+      "respuesta": "Un heptámero conservado (CACAGTG), un espaciador de 12 o 23 pb y un nonámero rico en A/T.",
+      "detalle": "Las RSS flanquean los segmentos V, D y J. **RAG1/RAG2** las reconocen y cortan en el **heptámero**.",
+      "tema": "linfocitos-t",
+      "seccion": "1. Reconocimiento de las RSS"
+    },
+    {
+      "id": "f05",
+      "frente": "¿Qué dice la regla 12/23?",
+      "respuesta": "Una RSS con espaciador de 12 pb solo puede recombinarse con una RSS de 23 pb.",
+      "detalle": "Por eso las cadenas ligeras κ/λ unen **V–J**, y la pesada ensambla **V–D–J** sin combinaciones incorrectas.",
+      "tema": "linfocitos-t",
+      "seccion": "2. Regla 12/23"
+    },
+    {
+      "id": "f06",
+      "frente": "¿Qué hace la TdT en la recombinación V(D)J?",
+      "respuesta": "Añade nucleótidos N al azar en las uniones entre segmentos.",
+      "detalle": "Es una de las fuentes de **diversidad juncional**, que se concentra en el **CDR3**, una de las regiones más variables del receptor.",
+      "tema": "linfocitos-t",
+      "seccion": "4. Procesamiento de los extremos"
+    },
+    {
+      "id": "f07",
+      "frente": "¿Qué marcadores CD25/CD44 tiene cada etapa doble negativa (DN1–DN4)?",
+      "respuesta": "DN1 CD25⁻CD44⁺; DN2 CD25⁺CD44⁺; DN3 CD25⁺CD44⁻; DN4 CD25⁻CD44⁻.",
+      "detalle": "Todas son **CD4⁻CD8⁻**. **DN1** está en la corteza subcapsular: células que acaban de entrar al timo, aún multipotenciales.",
+      "tema": "linfocitos-t",
+      "seccion": "1) Etapa doble negativa"
+    },
+    {
+      "id": "f08",
+      "frente": "¿Cómo está formado el pre-TCR y cómo se llama el precursor que lo expresa?",
+      "respuesta": "TCRβ + cadena sustituta pre-Tα (pTα) + CD3; lo expresa el linfocito pre-T.",
+      "detalle": "Aparece en **DN3**, tras el **reordenamiento exitoso de TCRβ** (selección β). Su señal desencadena la expansión clonal de **DN4**.",
+      "tema": "linfocitos-t",
+      "seccion": "PRE-TCR"
+    },
+    {
+      "id": "f09",
+      "frente": "Selección positiva: ¿dónde ocurre, qué células la median y qué evalúa?",
+      "respuesta": "En la corteza tímica, por las cTEC: que el TCR reconozca MHC propio con afinidad baja-intermedia.",
+      "detalle": "Las **cTEC** (células epiteliales tímicas corticales) presentan péptidos propios en **MHC I y MHC II**.",
+      "tema": "linfocitos-t",
+      "seccion": "A) Selección positiva"
+    },
+    {
+      "id": "f10",
+      "frente": "¿Qué hace AIRE en la selección negativa?",
+      "respuesta": "Hace que las mTEC expresen antígenos tejido-específicos (periféricos) para eliminar a los timocitos que los reconocen fuerte.",
+      "detalle": "Reconocer esos autoantígenos con **alta afinidad → apoptosis**; así se **evita la autoinmunidad**. Con **afinidad intermedia → Treg**.",
+      "tema": "tolerancia",
+      "seccion": "B) Selección negativa"
+    },
+    {
+      "id": "f11",
+      "frente": "¿Qué señales de las células epiteliales tímicas guían la diferenciación inicial de los precursores T?",
+      "respuesta": "IL-7 y Notch1.",
+      "detalle": "Los **precursores linfoides comunes** salen de la **médula ósea** y llegan al timo. La **IL-7** es además esencial para la proliferación y el desarrollo de los **progenitores linfoides en la médula ósea**.",
+      "tema": "linfocitos-t",
+      "seccion": "Introducción"
+    },
+    {
+      "id": "f12",
+      "frente": "¿Qué segmentos forman la cadena α y la cadena β del TCR?",
+      "respuesta": "α: V + J + C (sin D); β: V + D + J + C.",
+      "detalle": "Cada una tiene un **dominio variable (V)** y uno **constante (C)**. Igual que α es la **γ** (V + J + C) y que β es la **δ** (V + D + J + C).",
+      "tema": "linfocitos-t",
+      "seccion": "RECEPTOR TCR"
+    },
+    {
+      "id": "f13",
+      "frente": "¿En qué orden se unen los segmentos en la recombinación VDJ?",
+      "respuesta": "Primero D–J y luego V–DJ.",
+      "tema": "linfocitos-t",
+      "seccion": "I. Recombinación V(D)J"
+    },
+    {
+      "id": "f14",
+      "frente": "¿Qué codifica el loop CDR3?",
+      "respuesta": "Los segmentos D y J más las secuencias de unión entre ellos.",
+      "detalle": "Concentra **la mayor parte de la variabilidad** del receptor, porque ahí caen las **uniones imprecisas** (diversidad juncional).",
+      "tema": "linfocitos-t",
+      "seccion": "I. Recombinación V(D)J"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Por qué los segmentos D están flanqueados por una RSS de 12 pb a un lado y de 23 pb al otro?",
+      "respuesta": "Para impedir recombinaciones incorrectas y asegurar el orden de ensamblaje: D–J y luego V–DJ.",
+      "tema": "linfocitos-t",
+      "seccion": "2. Regla 12/23"
+    },
+    {
+      "id": "f16",
+      "frente": "Tras el corte por RAG1/RAG2, ¿qué dos productos se generan?",
+      "respuesta": "El signal joint (unión de las RSS, ADN sobrante) y los coding ends en horquilla (hairpin).",
+      "detalle": "RAG1/RAG2 reconoce las RSS de 12 y 23 → **aproxima los segmentos** → corta el ADN. Los **coding ends** son los extremos de V, D o J: los segmentos de interés.",
+      "tema": "linfocitos-t",
+      "seccion": "3. Corte por RAG1/RAG2"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Qué enzima abre las horquillas de los coding ends y qué nucleótidos pueden aparecer al hacerlo?",
+      "respuesta": "Artemis (con DNA-PK); pueden generarse nucleótidos P, de secuencia palindrómica.",
+      "detalle": "Forma parte del sistema **NHEJ** (Non-Homologous End Joining).",
+      "tema": "linfocitos-t",
+      "seccion": "4. Procesamiento de los extremos"
+    },
+    {
+      "id": "f18",
+      "frente": "En el NHEJ, ¿qué papel tienen Ku70/Ku80, las exonucleasas y la ADN ligasa?",
+      "respuesta": "Ku70/Ku80 estabilizan los extremos, las exonucleasas eliminan nucleótidos y la ligasa sella la unión.",
+      "detalle": "La unión es **imprecisa** → **diversidad juncional**.",
+      "tema": "linfocitos-t",
+      "seccion": "4. Procesamiento de los extremos"
+    },
+    {
+      "id": "f19",
+      "frente": "¿Cuáles son las tres fuentes de diversidad de los receptores TCR y BCR?",
+      "respuesta": "Combinatoria (segmentos V, D, J), juncional (nucleótidos P y N, exonucleasas) y asociación de cadenas.",
+      "detalle": "La **asociación** combina cadena pesada + ligera (Ig) o **α + β** (TCR).",
+      "tema": "linfocitos-t",
+      "seccion": "4. Procesamiento de los extremos"
+    },
+    {
+      "id": "f20",
+      "frente": "DN2 (pro-T): ¿qué se activa y qué loci empiezan a reordenarse?",
+      "respuesta": "Se activan RAG1/2 y comienza el reordenamiento de los loci TCRβ y δ.",
+      "tema": "linfocitos-t",
+      "seccion": "DN2"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Qué decide la selección β en DN3?",
+      "respuesta": "Si el reordenamiento de TCRβ fue exitoso (pre-TCR), y define si será TCRαβ o TCRγδ.",
+      "tema": "linfocitos-t",
+      "seccion": "DN3"
+    },
+    {
+      "id": "f22",
+      "frente": "¿Qué ocurre en DN4 tras la señal del pre-TCR?",
+      "respuesta": "Expansión clonal y comienza la expresión de CD4 y CD8: transición a doble positivo.",
+      "tema": "linfocitos-t",
+      "seccion": "DN4"
+    },
+    {
+      "id": "f23",
+      "frente": "¿Qué locus se reordena en la etapa doble positiva (CD4⁺CD8⁺)?",
+      "respuesta": "El TCRα, con lo que se forma el TCRαβ completo asociado a CD3.",
+      "tema": "linfocitos-t",
+      "seccion": "2) Etapa doble positiva"
+    },
+    {
+      "id": "f24",
+      "frente": "En la selección positiva, ¿qué pasa si el timocito reconoce MHC I, MHC II o ninguno?",
+      "respuesta": "MHC I → vía CD8; MHC II → vía CD4; ninguno → apoptosis por falta de señal.",
+      "tema": "linfocitos-t",
+      "seccion": "A) Selección positiva"
+    },
+    {
+      "id": "f25",
+      "frente": "¿Qué molécula del timocito es esencial en la selección positiva y qué propiedad establece?",
+      "respuesta": "El TCR; establece la restricción por moléculas de histocompatibilidad (MHC) propias.",
+      "detalle": "No lo es el MHC (lo aportan las **cTEC**), ni CD28 ni el receptor de IL-2.",
+      "tema": "linfocitos-t",
+      "seccion": "A) Selección positiva"
+    },
+    {
+      "id": "f26",
+      "frente": "Selección negativa: ¿dónde ocurre y qué células la median?",
+      "respuesta": "En la médula tímica, por células epiteliales medulares (mTEC) y células dendríticas tímicas.",
+      "detalle": "Ocurre cuando el timocito ya es **DP pero en transición a SP**. Los que reconocen **fuertemente** péptidos propios en el MHC mueren por **apoptosis**.",
+      "tema": "tolerancia",
+      "seccion": "B) Selección negativa"
+    },
+    {
+      "id": "f27",
+      "frente": "Etapa simple positiva: ¿de qué depende que el timocito sea CD4⁺ o CD8⁺?",
+      "respuesta": "De qué reconoce su TCR: MHC I → CD8⁺ citotóxico; MHC II → CD4⁺ colaborador.",
+      "tema": "linfocitos-t",
+      "seccion": "3) Etapa simple positiva"
+    },
+    {
+      "id": "f28",
+      "frente": "¿Con qué fenotipo salen los linfocitos T del timo?",
+      "respuesta": "Simples positivos (CD4⁺ o CD8⁺), maduros y naive.",
+      "detalle": "Secuencia: **DN** (recombinación TCRβ → pre-TCR) → **DP** (recombinación TCRα, selección positiva en corteza y negativa en médula) → **SP**.",
+      "tema": "linfocitos-t",
+      "seccion": "RESUMEN INTEGRADOR"
+    },
+    {
+      "id": "f29",
+      "frente": "En una lámina de corteza tímica, ¿con qué marcadores identificaría a sus timocitos y qué proceso ocurre allí?",
+      "respuesta": "CD4⁺CD8⁺ (doble positivos) y CD4⁻CD8⁻ (doble negativos); ocurre la selección positiva.",
+      "detalle": "La corteza es la zona **más oscura y densamente celular** del lobulillo tímico. Ahí no ocurren el cambio de isotipo, la maduración de la afinidad ni la hipermutación somática (son del centro germinal).",
+      "tema": "organos-primarios",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    },
+    {
+      "id": "f30",
+      "frente": "¿Cuál es un sinónimo de determinante antigénico?",
+      "respuesta": "Epítope.",
+      "detalle": "Es la **porción concreta** del antígeno que reconoce el receptor; no es sinónimo de antígeno, péptido ni alérgeno.",
+      "tema": "generalidades",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    },
+    {
+      "id": "f31",
+      "frente": "¿Cómo está compuesta la unidad básica de una inmunoglobulina?",
+      "respuesta": "Por dos cadenas pesadas idénticas y dos cadenas ligeras idénticas.",
+      "tema": "anticuerpos",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    },
+    {
+      "id": "f32",
+      "frente": "¿Qué cadenas forman el TCR convencional?",
+      "respuesta": "Una cadena alfa y una cadena beta (TCR αβ).",
+      "detalle": "No tiene cadena pesada ni ligera, ni Fab, ni **β2-microglobulina**: esas son propias de las **Ig** y del **MHC I**. Existe además el **TCR γδ**.",
+      "tema": "linfocitos-t",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    },
+    {
+      "id": "f33",
+      "frente": "¿En qué órgano sufren los linfocitos T la recombinación V(D)J?",
+      "respuesta": "En el timo.",
+      "detalle": "**TCRβ** en las etapas doble negativas (DN2–DN3) y **TCRα** en la doble positiva.",
+      "tema": "organos-primarios",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    },
+    {
+      "id": "f34",
+      "frente": "¿Qué afirmación es correcta sobre el reconocimiento de antígenos por los linfocitos T?",
+      "respuesta": "Reconocen antígenos peptídicos procesados, asociados a moléculas HLA propias.",
+      "detalle": "No reconocen antígenos **solubles nativos** ni determinantes **conformacionales**. **CD4⁺ → péptidos exógenos en MHC II**; **CD8⁺ → péptidos endógenos en MHC I** (no al revés).",
+      "tema": "presentacion-mhc",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    },
+    {
+      "id": "f35",
+      "frente": "¿Qué proteína quinasa está unida a las colas citoplasmáticas de CD4 y CD8?",
+      "respuesta": "Lck.",
+      "detalle": "Distractores típicos: la **cadena ζ**, el **CD3** y los **ITAM** no son quinasas; **Btk** es la quinasa del linfocito B.",
+      "tema": "linfocitos-t",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    },
+    {
+      "id": "f36",
+      "frente": "Según la invertida, ¿qué cadenas forman el receptor de IL-2 (IL-2R) de baja afinidad?",
+      "respuesta": "Las cadenas β y γ, sin la cadena α (CD25).",
+      "detalle": "Al sumarse **IL-2Rα (CD25)** se forma el receptor **αβγ de alta afinidad**, que el LT expresa al activarse. Ojo: muchos textos llaman a βγ de afinidad **«intermedia»** y reservan «baja» para la cadena α sola.",
+      "tema": "citocinas",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    },
+    {
+      "id": "f37",
+      "frente": "El tacrolimus inhibe la calcineurina: ¿la proliferación de qué células bloquea y por qué?",
+      "respuesta": "La de los linfocitos T: sin calcineurina no se activa NFAT ni se transcribe IL-2.",
+      "detalle": "Se une a la **proteína de unión FK506** e inhibe procesos **calcio-dependientes**: IP₃ → ↑Ca²⁺ → **calcineurina → NFAT**.",
+      "tema": "linfocitos-t",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    }
+  ]
+}

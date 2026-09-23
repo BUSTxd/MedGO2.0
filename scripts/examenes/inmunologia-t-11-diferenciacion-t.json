@@ -1,0 +1,263 @@
+{
+  "version": 1,
+  "key": "inmunologia/t-11-diferenciacion-t",
+  "title": "T11 — Respuesta inmune específica y diferenciación de linfocitos T",
+  "duration_min": null,
+  "questions": [],
+  "flashcards": [
+    {
+      "id": "f01",
+      "frente": "¿Por dónde entran los linfocitos T vírgenes al ganglio y en qué zona se quedan?",
+      "respuesta": "Por las vénulas de endotelio alto (HEV), y se quedan en la paracorteza (zona T).",
+      "detalle": "Para entrar usan **L-selectina**, **CCR7** (atraído por **CCL19/CCL21**) y la integrina **LFA-1**, que se une a **ICAM-1** del endotelio y permite la diapédesis.",
+      "tema": "trafico",
+      "seccion": "1. Linfocitos T vírgenes"
+    },
+    {
+      "id": "f02",
+      "frente": "Tras reconocer el antígeno, ¿qué cambio de receptores hace el LT que se vuelve precursor Tfh y adónde va?",
+      "respuesta": "↓ CCR7 ↑ CXCR5: sigue a CXCL13 desde la paracorteza al límite T-B y luego al folículo.",
+      "detalle": "Va a **encontrarse con el LB activado** y colaborar en su activación. Regla corta: **T busca a B** → el Tfh ↑ CXCR5 → va al folículo B.",
+      "tema": "trafico",
+      "seccion": "2. Recorrido interno"
+    },
+    {
+      "id": "f03",
+      "frente": "¿Qué guía la salida del linfocito T fuera del ganglio linfático?",
+      "respuesta": "El gradiente de S1P (esfingosina-1-fosfato), captado por su receptor S1PR1.",
+      "detalle": "**S1PR1** en la superficie del LT lo guía por los **vasos linfáticos eferentes** hacia la circulación sanguínea.",
+      "tema": "trafico",
+      "seccion": "3. Salida del ganglio"
+    },
+    {
+      "id": "f04",
+      "frente": "¿Qué moléculas usa el LT efector para extravasarse al tejido inflamado?",
+      "respuesta": "Ligandos de E- y P-selectina, CXCR3 e integrinas LFA-1 y VLA-4.",
+      "detalle": "**CXCR3** reconoce quimiocinas inflamatorias (**CXCL10**); **LFA-1 → ICAM-1** y **VLA-4 → VCAM-1** dan la adhesión estable y la migración al tejido.",
+      "tema": "trafico",
+      "seccion": "4. Linfocitos T activados"
+    },
+    {
+      "id": "f05",
+      "frente": "Th1: ¿qué citocinas lo inducen, cuál produce y contra qué defiende?",
+      "respuesta": "Lo inducen IL-12 e IFN-γ; produce IFN-γ; activa macrófagos contra patógenos intracelulares.",
+      "detalle": "Es la **inmunidad celular**: defensa contra virus y bacterias intracelulares (micobacterias, *Listeria*, *Leishmania*).",
+      "tema": "diferenciacion-t",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Th1"
+    },
+    {
+      "id": "f06",
+      "frente": "Th2: ¿qué citocina lo induce, cuáles produce y cuál es su función?",
+      "respuesta": "Lo induce IL-4; produce IL-4, IL-5 e IL-13; activa eosinófilos y mastocitos, estimula IgE, antihelmintos.",
+      "detalle": "**IL-5** activa eosinófilos; **IL-4 e IL-13** inducen el cambio de isotipo a **IgE** y la activación alternativa del macrófago.",
+      "tema": "diferenciacion-t",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Th2"
+    },
+    {
+      "id": "f07",
+      "frente": "Th17: ¿qué citocinas lo inducen, cuáles produce y contra qué defiende?",
+      "respuesta": "IL-6, TGF-β e IL-23 lo inducen; produce IL-17 e IL-22; recluta neutrófilos contra bacterias extracelulares y hongos.",
+      "detalle": "Ejemplos de blanco: ***Klebsiella pneumoniae*** y ***Candida albicans***.",
+      "tema": "diferenciacion-t",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Th17"
+    },
+    {
+      "id": "f08",
+      "frente": "Tfh: ¿qué citocinas lo inducen, cuál produce y a quién ayuda?",
+      "respuesta": "Lo inducen IL-6 e IL-21; produce IL-21; ayuda al LB en el centro germinal.",
+      "detalle": "Permite el **cambio de isotipo** y la **maduración de afinidad** de los anticuerpos.",
+      "tema": "diferenciacion-t",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Tfh"
+    },
+    {
+      "id": "f09",
+      "frente": "Treg: ¿qué citocinas lo inducen, cuáles produce y qué función cumple?",
+      "respuesta": "Lo inducen TGF-β e IL-2; produce IL-10 y TGF-β; suprime y mantiene la tolerancia periférica.",
+      "detalle": "Controla la **autoinmunidad**. El resumen lo marca: **«OJO CON T-REG»**, tema preferido de examen.",
+      "tema": "diferenciacion-t",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Treg"
+    },
+    {
+      "id": "f10",
+      "frente": "En estado basal, ¿qué célula es la más sensible a la IL-2?",
+      "respuesta": "El linfocito T regulador (Treg).",
+      "detalle": "Expresa **CD25 (IL-2Rα)** de forma constitutiva, así que ya tiene el receptor **IL-2Rαβγ de alta afinidad**; el LT naive en reposo solo tiene el βγ de baja afinidad.",
+      "tema": "regulacion",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f11",
+      "frente": "Linfocito T virgen en la HEV: ¿qué hace cada una de sus tres moléculas de entrada?",
+      "respuesta": "L-selectina: rodamiento; CCR7: responde a CCL19/CCL21; LFA-1: se une a ICAM-1 para la diapédesis.",
+      "detalle": "Secuencia típica de extravasación: **rodamiento → activación por quimiocina → adhesión firme por integrina → diapédesis**.",
+      "tema": "trafico",
+      "seccion": "1. Linfocitos T vírgenes"
+    },
+    {
+      "id": "f12",
+      "frente": "Antes de la activación, ¿qué receptor retiene al LB en el folículo y al LT en la paracorteza?",
+      "respuesta": "LB: CXCR5, que responde a CXCL13. LT: CCR7, que responde a CCL19/CCL21.",
+      "tema": "trafico",
+      "seccion": "2. Recorrido interno"
+    },
+    {
+      "id": "f13",
+      "frente": "¿Qué cambio de receptores hace el LB activado y para qué?",
+      "respuesta": "↓ CXCR5 ↑ CCR7: sigue a CCL19/CCL21 hacia el límite T-B para encontrarse con el LT activado.",
+      "detalle": "Es la imagen en espejo del Tfh: **B busca a T** (↑ CCR7, va hacia la zona T) y **T busca a B** (↑ CXCR5, va al folículo).",
+      "tema": "trafico",
+      "seccion": "2. Recorrido interno › Linfocito B activado"
+    },
+    {
+      "id": "f14",
+      "frente": "CXCR3 del LT efector: ¿qué quimiocina reconoce y dónde se produce?",
+      "respuesta": "CXCL10, una quimiocina inflamatoria producida en el foco infeccioso.",
+      "detalle": "Así el efector deja de buscar el ganglio (CCR7) y pasa a buscar **tejidos periféricos inflamados**.",
+      "tema": "trafico",
+      "seccion": "4. Linfocitos T activados"
+    },
+    {
+      "id": "f15",
+      "frente": "¿Cómo activa el Th1 al macrófago y qué gana este?",
+      "respuesta": "Por CD40L–CD40 e IFN-γ: produce ROS y NO, secreta TNF, IL-1 e IL-12, y sube MHC y B7.",
+      "detalle": "**ROS/NO** matan lo fagocitado; **TNF, IL-1 y quimiocinas** reclutan leucocitos; **IL-12** refuerza la diferenciación Th1; más **MHC y B7** amplifican la activación T.",
+      "tema": "diferenciacion-t",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Th1"
+    },
+    {
+      "id": "f16",
+      "frente": "¿Qué hacen la IL-4 y la IL-13 del Th2?",
+      "respuesta": "Inducen el cambio de isotipo del LB a IgE y la activación alternativa del macrófago.",
+      "detalle": "La **IL-5** activa eosinófilos y la **IL-13** también estimula moco en las células caliciformes.",
+      "tema": "diferenciacion-t",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Th2"
+    },
+    {
+      "id": "f17",
+      "frente": "¿Cómo recluta la IL-17 a los neutrófilos?",
+      "respuesta": "Actúa sobre células epiteliales, endoteliales y fibroblastos, que liberan quimiocinas y G-CSF.",
+      "detalle": "La **IL-22**, la otra citocina Th17, mantiene la **barrera epitelial** y la producción de **péptidos antimicrobianos**.",
+      "tema": "diferenciacion-t",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Th17"
+    },
+    {
+      "id": "f18",
+      "frente": "¿Contra qué tipos de patógenos participan los Tfh?",
+      "respuesta": "Contra todos: helmintos, hongos y bacterias, a través de los anticuerpos.",
+      "detalle": "A diferencia de Th1, Th2 o Th17, el Tfh **no se especializa en un tipo de microbio**: su producto es la ayuda al LB.",
+      "tema": "diferenciacion-t",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Tfh"
+    },
+    {
+      "id": "f19",
+      "frente": "Treg: ¿qué efecto tiene cada uno de sus mediadores IL-10, TGF-β y CTLA-4?",
+      "respuesta": "IL-10 ↓ MHC II de la APC; TGF-β ↑ FoxP3 y ↓ proliferación B; CTLA-4 bloquea CD28–CD80/86.",
+      "detalle": "Resultado: **↓ actividad de la APC**, **↑ producción de Treg**, **↓ proliferación de LB** y **↓ activación de LT**.",
+      "tema": "regulacion",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Treg"
+    },
+    {
+      "id": "f20",
+      "frente": "Ganglio linfático: ¿qué hay en la corteza, la paracorteza y la médula?",
+      "respuesta": "Corteza: folículos con LB; paracorteza: LT; médula: cordones medulares y senos.",
+      "detalle": "Los **vasos linfáticos aferentes** entran por la **cápsula**. Los folículos forman **centros germinales** cuando se activan.",
+      "tema": "organos-secundarios",
+      "seccion": "PREGUNTAS › Corteza"
+    },
+    {
+      "id": "f21",
+      "frente": "¿Qué receptor sube la célula dendrítica activada por TLR y para qué le sirve?",
+      "respuesta": "CCR7: la lleva al ganglio linfático por los linfáticos aferentes.",
+      "detalle": "Llega a la **zona T**, atraída por **CCL19/CCL21**, donde presenta el antígeno a los LT vírgenes.",
+      "tema": "trafico",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f22",
+      "frente": "Entre CCR7, L-selectina y VLA-4, ¿cuál aumenta en el linfocito T activado?",
+      "respuesta": "VLA-4.",
+      "detalle": "El efector debe ir a **tejidos inflamados**: sube integrinas (**VLA-4 → VCAM-1**) y receptores de quimiocinas inflamatorias; **CCR7 y L-selectina** son del homing al ganglio del LT virgen.",
+      "tema": "trafico",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f23",
+      "frente": "Prueba de tuberculina positiva: ¿qué interacción es esencial para la reacción cutánea?",
+      "respuesta": "CD28 del linfocito T con CD80 de las células dendríticas epidérmicas.",
+      "detalle": "Sin esta **coestimulación** el LT no se activa. **CTLA-4–CD80** daría la señal contraria (inhibición).",
+      "tema": "coestimulacion",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f24",
+      "frente": "¿Qué ligando de la familia B7 se une a CD28/CTLA-4, a ICOS y a PD-1?",
+      "respuesta": "CD80 y CD86 a CD28 y CTLA-4; ICOS-L a ICOS; PD-L1 y PD-L2 a PD-1.",
+      "detalle": "**B7-1 = CD80**, **B7-2 = CD86**. Los ligandos están en las **APC y otras células**; los receptores, en el LT.",
+      "tema": "coestimulacion",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f25",
+      "frente": "CD28, CTLA-4, ICOS y PD-1: ¿cuáles activan y cuáles inhiben al LT?",
+      "respuesta": "Activan CD28 (LT naive) e ICOS (Tfh); inhiben CTLA-4 y PD-1.",
+      "detalle": "**CTLA-4** media la función supresora de las **Treg**; **ICOS** actúa en los Tfh durante la respuesta de anticuerpos.",
+      "tema": "coestimulacion",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f26",
+      "frente": "¿Qué citocina participa en el priming de los linfocitos T vírgenes?",
+      "respuesta": "La IL-2.",
+      "detalle": "Tras reconocer antígeno + coestimulador, el LT **secreta IL-2**, que actúa sobre él mismo e induce su **proliferación** (expansión clonal).",
+      "tema": "linfocitos-t",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f27",
+      "frente": "¿Qué es CD25 y qué cambia cuando el linfocito T lo expresa?",
+      "respuesta": "La cadena α del receptor de IL-2: forma el IL-2Rαβγ de alta afinidad.",
+      "detalle": "El LT en reposo tiene **IL-2Rβγ** de baja afinidad (**Kd ~10⁻⁹ M**); con CD25 pasa a **Kd ~10⁻¹¹ M** y la IL-2 induce la proliferación.",
+      "tema": "citocinas",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f28",
+      "frente": "IL-2: ¿quién la produce y cuáles son sus acciones principales?",
+      "respuesta": "Los LT activados; induce la proliferación de LT y la supervivencia de las Treg.",
+      "tema": "citocinas",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f29",
+      "frente": "¿Cómo reduce el fingolimod (bloqueador de S1PR1) la actividad de la esclerosis múltiple?",
+      "respuesta": "Bloquea la migración de los LT al sistema nervioso: quedan retenidos en el ganglio.",
+      "detalle": "Sin señal **S1P → S1PR1**, el LT no sale por los **linfáticos eferentes** a la sangre.",
+      "tema": "trafico",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f30",
+      "frente": "Un fármaco con receptor intracelular que inhibe NF-κB (corticoide): ¿a qué respuesta inmune se parece?",
+      "respuesta": "A la de las Treg: inmunosupresora y antiinflamatoria.",
+      "detalle": "La **IL-10 y el TGF-β** de las Treg también **inhiben NF-κB** y con ello la activación de las células efectoras.",
+      "tema": "regulacion",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f31",
+      "frente": "¿Qué aumenta en la respuesta inmune frente a helmintos?",
+      "respuesta": "La IL-4 y la IL-5 (Th2) y la activación alterna del macrófago.",
+      "detalle": "La activación **clásica** del macrófago (IFN-γ) y los **neutrófilos** son de las respuestas Th1 y Th17, no de la antihelmíntica.",
+      "tema": "diferenciacion-t",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "f32",
+      "frente": "En neutropenia febril, ¿qué agrava una alteración de la respuesta Th17?",
+      "respuesta": "Menos IL-17 → menor reclutamiento y activación de neutrófilos: más susceptibilidad a infecciones.",
+      "detalle": "Se pierde a la vez la **cantidad** (neutropenia) y la **calidad** (reclutamiento/activación) de la respuesta neutrofílica.",
+      "tema": "diferenciacion-t",
+      "seccion": "PREGUNTAS"
+    }
+  ]
+}
