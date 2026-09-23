@@ -7,6 +7,7 @@ import type { Escenario } from '@/lib/data/ciclo-celular/tipos';
 import type { EfectoSt, EscenarioCompilado } from '@/lib/ciclo-celular/motor';
 import { posAbs } from '@/lib/ciclo-celular/motor';
 import Escena from './Escena';
+import BarraTiempo from './BarraTiempo';
 import { FichaProteina, GraficaCiclinas, Leyenda, VistaLista, type Destino } from './Paneles';
 import { useMovimientoReducido, useReproductor, VELOCIDADES } from './useReproductor';
 import s from '@/styles/cicloCelular.module.css';
@@ -26,7 +27,7 @@ type Props = {
 };
 
 export function Controles({ rep, total }: { rep: ReturnType<typeof useReproductor>; total: number }) {
-  const reproduciendo = rep.auto && !rep.pausado;
+  const reproduciendo = rep.reproduciendo;
   return (
     <div className={s.controles}>
       <button type="button" className={s.btnIcono} onClick={rep.anterior} disabled={rep.paso === 0 && rep.t < 400} aria-label="Paso anterior" title="Anterior (←)">
@@ -54,31 +55,66 @@ export function Controles({ rep, total }: { rep: ReturnType<typeof useReproducto
   );
 }
 
+/** Narración compacta del pie: «Paso N de M · título» en una línea, el texto
+ *  debajo y «Profundizar» como enlace al final del texto. Lo desplegado va en
+ *  una caja de alto acotado con scroll propio: nunca le come alto a la escena. */
 export function Narracion({ escenario, indice, oculta }: { escenario: Escenario; indice: number; oculta?: boolean }) {
+  // Guarda el id del paso abierto: al cambiar de paso se pliega solo.
+  const [abierto, setAbierto] = useState<string | null>(null);
   const p = escenario.pasos[indice];
   const max = Math.max(...escenario.pasos.map((x) => x.orden));
-  if (oculta) return <div className={s.narracion} aria-live="polite"><p className={s.pasoTexto}>La narración aparece al completar la vía.</p></div>;
+  if (oculta) return <div className={s.narracion} aria-live="polite"><p className={s.narracionTexto}>La narración aparece al completar la vía.</p></div>;
+  const abiertoAqui = abierto === p.id;
+  const hayMas = !!(p.profundiza || p.clinica);
+  const idMas = `profundiza-${p.id}`;
   return (
     <div className={s.narracion} aria-live="polite">
-      <p className={s.pasoNum}>
-        {p.orden === 0 ? 'Contexto' : `Paso ${String(p.orden).replace('.', ',')} de ${max}`}
-        {p.secuencia && <span className={s.pasoSecuencia}> · {p.secuencia}</span>}
-        {p.lateral && <span className={s.pasoLateral}> · {p.lateral}</span>}
-      </p>
-      <h3 className={s.pasoTitulo}>{p.titulo}</h3>
-      <p className={s.pasoTexto}>{p.texto}</p>
-      <details className={s.profundiza} key={p.id}>
-        <summary>Profundizar</summary>
-        <p>{p.profundiza}</p>
-        {p.clinica && (
-          <div className={s.clinica}>
-            <p className={s.fichaRotulo}>Correlación clínica</p>
-            <p>{p.clinica}</p>
-          </div>
+      <h3 className={s.narracionCab}>
+        <span className={s.narracionNum}>
+          {p.orden === 0 ? 'Contexto' : `Paso ${String(p.orden).replace('.', ',')} de ${max}`}
+          {p.secuencia && <span className={s.pasoSecuencia}> · {p.secuencia}</span>}
+          {p.lateral && <span className={s.pasoLateral}> · {p.lateral}</span>}
+        </span>
+        <span className={s.narracionSep} aria-hidden> · </span>
+        <span className={s.narracionTitulo}>{p.titulo}</span>
+      </h3>
+      <p className={s.narracionTexto}>
+        {p.texto}
+        {hayMas && (
+          <>
+            {' '}
+            <button
+              type="button"
+              className={`${s.profundizaBtn} ${abiertoAqui ? s.profundizaAbierto : ''}`}
+              aria-expanded={abiertoAqui}
+              aria-controls={idMas}
+              onClick={() => setAbierto(abiertoAqui ? null : p.id)}
+            >
+              Profundizar
+              <svg viewBox="0 0 12 12" aria-hidden><path d="M3 4.5L6 7.5l3-3" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+          </>
         )}
-      </details>
+      </p>
+      {hayMas && abiertoAqui && (
+        <div id={idMas} className={s.profundiza}>
+          {p.profundiza && <p>{p.profundiza}</p>}
+          {p.clinica && (
+            <div className={s.clinica}>
+              <p className={s.fichaRotulo}>Correlación clínica</p>
+              <p>{p.clinica}</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
+}
+
+// Leyenda plegada por defecto; se recuerda si el estudiante la deja abierta.
+const CLAVE_LEYENDA = 'medgo-ciclo-leyenda';
+function leerLeyenda(): boolean {
+  try { return window.localStorage.getItem(CLAVE_LEYENDA) === '1'; } catch { return false; }
 }
 
 export default function Explorar({
@@ -89,19 +125,26 @@ export default function Explorar({
   const [visto, setVisto] = useState<Set<number>>(() => new Set([pasoInicial]));
   const [ficha, setFicha] = useState<string | null>(actorInicial);
   const [lista, setLista] = useState(false);
-  const [leyenda, setLeyenda] = useState(true);
+  const [leyenda, setLeyenda] = useState(leerLeyenda);
   const [reset, setReset] = useState(0);
   const [repaso, setRepaso] = useState(-1);
   const total = compilado.pasos.length;
   const paso = escenario.pasos[rep.paso];
   const ultimo = rep.paso === total - 1 && rep.terminado;
 
+  // Pasar por encima de un paso arrastrando la barra no cuenta como verlo:
+  // se marca el paso donde se suelta.
   useEffect(() => {
     onPaso?.(rep.paso);
+    if (rep.arrastrando) return;
     setVisto((v) => (v.has(rep.paso) ? v : new Set(v).add(rep.paso)));
-  }, [rep.paso, onPaso]);
+  }, [rep.paso, rep.arrastrando, onPaso]);
 
   useEffect(() => { if (ultimo) onFinal?.(); }, [ultimo, onFinal]);
+
+  useEffect(() => {
+    try { window.localStorage.setItem(CLAVE_LEYENDA, leyenda ? '1' : '0'); } catch { /* sin almacenamiento: se queda en memoria */ }
+  }, [leyenda]);
 
   // Cierre: un punto recorre, uno tras otro, los conectores de la vía entera.
   const nConectores = rep.escena.conectores.length;
@@ -137,6 +180,8 @@ export default function Explorar({
     const onKey = (e: KeyboardEvent) => {
       const el = e.target as HTMLElement;
       if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return;
+      // La barra de tiempo maneja sus propias flechas.
+      if (el?.getAttribute?.('role') === 'slider') return;
       if (e.key === 'ArrowRight') { e.preventDefault(); rep.siguiente(); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); rep.anterior(); }
       else if (e.key === ' ' && el?.tagName !== 'BUTTON' && el?.tagName !== 'SUMMARY') { e.preventDefault(); rep.alternar(); }
@@ -150,7 +195,9 @@ export default function Explorar({
   const siguienteCp = onSiguiente ?? null;
 
   return (
-    <div className={s.vista}>
+    <div className={`${s.vista} ${s.vistaAncha}`}>
+      {/* La escena ocupa todo el ancho; leyenda y ficha flotan encima sin
+          robarle columnas a la rejilla. */}
       <div className={s.escenaZona}>
         <Escena
           escenario={escenario}
@@ -158,7 +205,7 @@ export default function Explorar({
           resaltar={ficha ? [ficha] : null}
           seleccionado={ficha}
           onActor={(k) => setFicha((f) => (f === k ? null : k))}
-          onInteraccion={() => { if (rep.auto && !rep.pausado) rep.pausar(); }}
+          onInteraccion={() => { if (rep.reproduciendo) rep.pausar(); }}
           vistaReset={reset}
         >
           {paso.grafica === 'ciclinas' && <GraficaCiclinas />}
@@ -166,8 +213,44 @@ export default function Explorar({
         <div className={s.escenaBotones}>
           <button type="button" className={s.btnFlot} onClick={() => setReset((r) => r + 1)}>Encuadrar todo</button>
           <button type="button" className={s.btnFlot} onClick={() => setLista(true)}>Ver como lista</button>
-          <button type="button" className={`${s.btnFlot} ${s.soloTablet}`} onClick={() => setLeyenda((v) => !v)} aria-pressed={leyenda}>Leyenda</button>
         </div>
+
+        {/* Leyenda retráctil: plegada es un chip; la misma cabecera la pliega. */}
+        <div className={`${s.leyendaCaja} ${leyenda ? s.leyendaAbierta : ''}`}>
+          <button
+            type="button"
+            className={s.leyendaCab}
+            onClick={() => setLeyenda((v) => !v)}
+            aria-expanded={leyenda}
+            aria-controls="ciclo-leyenda"
+            title={leyenda ? 'Plegar leyenda (L)' : 'Mostrar leyenda (L)'}
+          >
+            <svg viewBox="0 0 16 16" aria-hidden className={s.leyendaIcono}>
+              <path d="M2 4.5h3M2 8h3M2 11.5h3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <path d="M7.5 4.5h6.5M7.5 8h6.5M7.5 11.5h6.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" opacity="0.6" />
+            </svg>
+            Leyenda
+            <svg viewBox="0 0 12 12" aria-hidden className={s.leyendaChevron}><path d="M3 4.5L6 7.5l3-3" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+          {leyenda && (
+            <div id="ciclo-leyenda" className={s.leyendaCuerpo}>
+              <Leyenda />
+              <p className={s.leyendaAyuda}>Toca cualquier proteína para ver su ficha.</p>
+            </div>
+          )}
+        </div>
+
+        {ficha && (
+          <div className={s.fichaPanel}>
+            <FichaProteina
+              escenario={escenario}
+              actor={ficha}
+              onCerrar={() => setFicha(null)}
+              onIr={(d) => { setFicha(null); onDestino?.(d); }}
+            />
+          </div>
+        )}
+
         {ultimo && (
           <div className={s.cierre} role="region" aria-label="Fin de la vía">
             {onAprender && <button type="button" className={s.btnPrim} onClick={onAprender}>Ponerme a prueba</button>}
@@ -177,40 +260,13 @@ export default function Explorar({
         )}
       </div>
 
-      <div className={`${s.lateral} ${leyenda ? '' : s.lateralOculto}`}>
-        {ficha ? (
-          <FichaProteina
-            escenario={escenario}
-            actor={ficha}
-            onCerrar={() => setFicha(null)}
-            onIr={(d) => { setFicha(null); onDestino?.(d); }}
-          />
-        ) : (
-          <>
-            <Leyenda />
-            <p className={s.lateralAyuda}>Toca cualquier proteína para ver su ficha.</p>
-          </>
-        )}
-      </div>
-
+      {/* Pie tipo reproductor: la barra de tiempo a todo el ancho y, debajo,
+          los controles a la izquierda y la narración a la derecha. */}
       <div className={s.pie}>
-        <Narracion escenario={escenario} indice={rep.paso} />
-        <div className={s.pieDer}>
+        <BarraTiempo rep={rep} escenario={escenario} visto={visto} />
+        <div className={s.pieFila}>
           <Controles rep={rep} total={total} />
-          <ol className={s.linea} aria-label="Pasos">
-            {escenario.pasos.map((p, i) => (
-              <li key={p.id}>
-                <button
-                  type="button"
-                  className={`${s.puntoLinea} ${visto.has(i) ? s.puntoVisto : ''} ${i === rep.paso ? s.puntoActual : ''} ${p.lateral ? s.puntoLateral : ''}`}
-                  onClick={() => rep.irA(i)}
-                  aria-label={`${p.orden === 0 ? 'Contexto' : `Paso ${p.orden}`}: ${p.titulo}`}
-                  aria-current={i === rep.paso ? 'step' : undefined}
-                  title={p.titulo}
-                />
-              </li>
-            ))}
-          </ol>
+          <Narracion escenario={escenario} indice={rep.paso} />
         </div>
       </div>
 

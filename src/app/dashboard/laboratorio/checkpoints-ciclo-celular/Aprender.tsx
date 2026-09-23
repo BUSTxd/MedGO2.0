@@ -257,17 +257,16 @@ function Partida({ checkpoint: cp, compilado, nivel, onVerPaso, onExplorar, onSi
         </div>
       </div>
 
+      {/* Mismo pie compacto que Explorar: el progreso arriba, la narración debajo. */}
       <div className={s.pie}>
+        <ol className={s.linea} aria-label="Pasos colocados">
+          {secs.flatMap((x) => x.pasos).map((p) => (
+            <li key={p.id}>
+              <span className={`${s.puntoLinea} ${colocados.includes(p.id) ? s.puntoVisto : ''}`} title={colocados.includes(p.id) ? p.titulo : 'Pendiente'} />
+            </li>
+          ))}
+        </ol>
         <Narracion escenario={cp} indice={ultimoColocado} oculta={nivel === 'examen' && !fin && colocados.length > 0} />
-        <div className={s.pieDer}>
-          <ol className={s.linea} aria-label="Pasos colocados">
-            {secs.flatMap((x) => x.pasos).map((p) => (
-              <li key={p.id}>
-                <span className={`${s.puntoLinea} ${colocados.includes(p.id) ? s.puntoVisto : ''}`} title={colocados.includes(p.id) ? p.titulo : 'Pendiente'} />
-              </li>
-            ))}
-          </ol>
-        </div>
       </div>
     </div>
   );

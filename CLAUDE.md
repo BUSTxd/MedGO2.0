@@ -499,7 +499,9 @@ Anillo del ciclo (G1/S/G2/M + G0) con 5 marcadores; cada uno abre su vía molecu
 
 **Imágenes**: bucket público `laboratorio-img/ciclo-celular/<id>.avif`. `node scripts/ciclo-celular/recortar.mjs` (con `--dry` no sube) corta las 8 hojas de `scripts/ciclo-celular/hojas/` —ya llegan sin fondo— por **manchas conectadas de alfa, no por rejilla** (FAS, la horquilla y MRN invaden la celda vecina), descarta las letras del rótulo por oscuras, sube en AVIF sin pérdida y regenera `imagenes.ts`. `orc` no tiene imagen (la celda llegó vacía): se pinta el marcador de posición.
 
-Gate por `LABORATORIOS` (tramo medicina, no gratis). Tema claro = lámina H&E, oscuro = campo de fluorescencia; narración en Newsreader (cargada solo en esta página).
+Gate por `LABORATORIOS` (tramo medicina, no gratis). Tema claro = lámina H&E, oscuro = campo de fluorescencia; todo en Outfit, como el resto de la app.
+
+**Explorar como reproductor de vídeo**: la escena ocupa todo el ancho; leyenda (plegada por defecto, `medgo-ciclo-leyenda`) y ficha flotan encima. Pie = `BarraTiempo` (capítulos por paso, arrastre con la escena siguiendo al puntero; al soltar retoma reproducir/pausa) + controles + narración compacta. `useReproductor` expone `tGlobal`/`buscar`/`empezarArrastre`/`terminarArrastre`/`reproduciendo`; cada paso mide al menos `LARGO_MIN` en la línea global.
 
 ---
 

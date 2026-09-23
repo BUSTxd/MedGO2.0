@@ -35,7 +35,7 @@
   --dur-rapida: 180ms;
   --dur-media: 420ms;
   --ease-salida: cubic-bezier(0.16, 1, 0.3, 1);
-  --serif: var(--font-newsreader), Georgia, 'Times New Roman', serif;
+  --serif: var(--sans); /* toda la página en Outfit, como el resto de la app */
   --sans: var(--font-outfit), system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   position: relative;
@@ -357,17 +357,25 @@
 
 /* ─── Vista con escenario ──────────────────────────────────────────────────── */
 
+/* Aprender: el mazo es la columna lateral y baja hasta el suelo; el pie solo
+   ocupa el ancho de la escena. Explorar (.vistaAncha) no tiene columna: la
+   leyenda y la ficha flotan encima de la escena. El SVG encaja la rejilla
+   16×10 con xMidYMid meet, así que la vía queda centrada en lo que sobre. */
 .vista {
   position: relative;
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
+  grid-template-columns: minmax(0, 1fr) 304px;
   grid-template-rows: minmax(0, 1fr) auto;
-  grid-template-areas: 'escena lateral' 'pie pie';
+  grid-template-areas: 'escena lateral' 'pie lateral';
+}
+.vistaAncha {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'escena' 'pie';
 }
 
-.escenaZona { grid-area: escena; position: relative; min-height: 0; overflow: hidden; }
+.escenaZona { grid-area: escena; position: relative; min-height: 0; min-width: 0; overflow: hidden; }
 
 .escena {
   width: 100%;
@@ -385,8 +393,78 @@
   gap: 6px;
   flex-wrap: wrap;
   justify-content: flex-end;
+  z-index: 2;
 }
-.soloTablet { display: none; }
+
+/* ─── Paneles flotantes sobre la escena (leyenda y ficha) ─────────────────── */
+/* Fondo opaco, nada de backdrop-filter (dejaba fondos en blanco al cerrar). */
+
+.leyendaCaja {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  max-width: calc(100% - 20px);
+  max-height: calc(100% - 20px);
+  display: flex;
+  flex-direction: column;
+  background: var(--campo-2);
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  color: var(--texto-2);
+}
+.leyendaAbierta {
+  background: var(--campo-3);
+  color: var(--texto);
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(20, 10, 40, 0.14);
+  animation: aparecer 160ms;
+}
+.leyendaCab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0 10px;
+  min-height: 34px;
+  border-radius: 10px;
+  cursor: pointer;
+  flex: none;
+  align-self: flex-start;
+}
+.leyendaCab:hover { color: var(--texto); }
+.leyendaIcono { width: 15px; height: 15px; }
+.leyendaChevron { width: 12px; height: 12px; transition: transform var(--dur-rapida); }
+.leyendaAbierta .leyendaChevron { transform: rotate(180deg); }
+.leyendaCuerpo {
+  overflow-y: auto;
+  min-height: 0;
+  padding: 2px 12px 10px;
+}
+.leyendaAyuda { font-size: 12px; color: var(--texto-2); margin: 8px 0 0; line-height: 1.4; }
+
+.fichaPanel {
+  position: absolute;
+  top: 54px;
+  right: 10px;
+  z-index: 3;
+  width: 300px;
+  max-width: calc(100% - 20px);
+  max-height: calc(100% - 64px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px 14px 14px;
+  background: var(--campo-3);
+  border: 1px solid var(--linea);
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(20, 10, 40, 0.14);
+}
+:global(.dark-mode) .wrapper .leyendaAbierta,
+:global(.dark-mode) .wrapper .fichaPanel { box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4); }
 
 .cierre {
   position: absolute;
@@ -408,7 +486,7 @@
   grid-area: lateral;
   border-left: 1px solid var(--linea);
   overflow-y: auto;
-  padding: 16px;
+  padding: 14px;
   min-height: 0;
 }
 .lateralRotulo {
@@ -418,27 +496,68 @@
   color: var(--texto-2);
   letter-spacing: 0.02em;
 }
-.lateralAyuda { font-size: 13px; color: var(--texto-2); margin: 14px 0 0; line-height: 1.45; }
 
+/* Pie compacto, estilo reproductor: fila 1 = barra de tiempo (o puntos en
+   Aprender) a todo el ancho; fila 2 = controles | narración. Plegado ronda
+   130-160 px; «Profundizar» crece dentro de su propia caja con scroll.
+   Sin overflow propio a propósito: el tooltip de la barra asoma por encima
+   del pie, sobre la escena, y un overflow lo recortaría. */
 .pie {
   grid-area: pie;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 16px 24px;
-  align-items: start;
-  padding: 14px 18px 16px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 16px 10px;
   border-top: 1px solid var(--linea);
-  max-height: 40vh;
-  overflow-y: auto;
 }
-.pieDer { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+.pieFila {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 6px 20px;
+  align-items: start;
+}
 
 /* ─── Narración ────────────────────────────────────────────────────────────── */
 
-.narracion { max-width: 68ch; }
-.pasoNum { margin: 0; font-size: 13px; font-weight: 600; color: var(--texto-2); }
+.narracion { max-width: 100ch; min-width: 0; }
+.narracionCab {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.narracionNum { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--texto-2); }
+.narracionSep { color: var(--texto-2); }
+.narracionTitulo { color: var(--texto); }
+.narracionTexto {
+  margin: 2px 0 0;
+  font-family: var(--serif);
+  font-size: 15.5px;
+  line-height: 1.45;
+}
+.profundizaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  border: none;
+  background: none;
+  padding: 0 2px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--dapi);
+  cursor: pointer;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+.profundizaBtn svg { width: 12px; height: 12px; transition: transform var(--dur-rapida); }
+.profundizaAbierto svg { transform: rotate(180deg); }
+.profundizaBtn:hover { text-decoration: underline; text-underline-offset: 3px; }
 .pasoSecuencia { color: var(--dapi); }
 .pasoLateral { color: var(--cy3); }
+/* Títulos y texto de pantallas sueltas (selector de nivel, resultado, prueba
+   integrada); la narración del pie tiene su propia escala, más pequeña. */
 .pasoTitulo {
   margin: 2px 0 4px;
   font-family: var(--serif);
@@ -452,16 +571,14 @@
   font-size: 19px;
   line-height: 1.55;
 }
-.profundiza { margin-top: 8px; }
-.profundiza summary {
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--dapi);
-  padding: 4px 0;
-  width: max-content;
+.profundiza {
+  margin-top: 6px;
+  max-height: clamp(90px, 20vh, 190px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 6px;
 }
-.profundiza > p { font-family: var(--serif); font-size: 17px; line-height: 1.6; margin: 6px 0 0; }
+.profundiza > p { font-family: var(--serif); font-size: 14.5px; line-height: 1.55; margin: 0; }
 .clinica {
   margin-top: 10px;
   padding: 8px 12px;
@@ -469,18 +586,21 @@
   background: color-mix(in srgb, var(--cy3) 8%, transparent);
   border-radius: 0 8px 8px 0;
 }
-.clinica p { margin: 4px 0; font-size: 15px; line-height: 1.5; }
+.clinica p { margin: 4px 0; font-size: 14px; line-height: 1.5; }
 .clinica .fichaRotulo { margin: 0; }
 
 /* ─── Controles y línea de tiempo ─────────────────────────────────────────── */
 
-.controles { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+/* Compactos: viven a la izquierda del pie, junto a la narración. */
+.controles { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+.controles .btnIcono { width: 34px; height: 34px; border-radius: 9px; }
+.controles .btnIcono svg { width: 16px; height: 16px; }
 .velocidad {
   display: flex;
   border: 1px solid var(--linea);
-  border-radius: 10px;
+  border-radius: 9px;
   overflow: hidden;
-  margin-left: 6px;
+  margin-left: 4px;
 }
 .velocidad button {
   border: none;
@@ -488,8 +608,8 @@
   color: var(--texto-2);
   font-size: 12px;
   font-weight: 600;
-  padding: 0 9px;
-  height: 38px;
+  padding: 0 7px;
+  height: 32px;
   cursor: pointer;
 }
 .velocidad .velActiva { background: var(--campo-3); color: var(--texto); }
@@ -501,8 +621,8 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  justify-content: flex-end;
-  max-width: 420px;
+  row-gap: 6px;
+  padding: 3px 0;
 }
 .linea li { display: flex; align-items: center; }
 .linea li + li::before {
@@ -525,14 +645,19 @@
 .puntoLinea::after { content: ''; position: absolute; inset: -12px; }
 span.puntoLinea { cursor: default; }
 .puntoVisto { background: var(--dapi); border-color: var(--dapi); }
-.puntoActual { box-shadow: 0 0 0 3px color-mix(in srgb, var(--dapi) 35%, transparent); transform: scale(1.15); }
-.puntoLateral { border-style: dashed; }
 
 /* ─── Leyenda y ficha ──────────────────────────────────────────────────────── */
 
-.leyenda ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-.leyenda li { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--texto); }
-.leyendaMuestra { width: 54px; height: 16px; flex: none; overflow: visible; }
+.leyenda ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  gap: 5px 16px;
+}
+.leyenda li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--texto); line-height: 1.25; }
+.leyendaMuestra { width: 44px; height: 14px; flex: none; overflow: visible; }
 
 .ficha { position: relative; animation: aparecer 200ms; }
 .fichaCerrar {
@@ -549,21 +674,30 @@ span.puntoLinea { cursor: default; }
 }
 .fichaCerrar svg { width: 16px; height: 16px; }
 .fichaCerrar:hover { background: var(--campo-2); color: var(--texto); }
-.fichaImg {
-  height: 150px;
+.fichaCab {
   display: grid;
-  place-items: center;
-  border-radius: 14px;
-  background: radial-gradient(circle, color-mix(in srgb, var(--fam) 22%, transparent), transparent 70%);
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding-right: 26px; /* deja libre la X de cerrar */
   margin-bottom: 10px;
 }
-.fichaImg img { max-width: 80%; max-height: 136px; object-fit: contain; }
-.fichaSinImg { font-size: 13px; color: var(--texto-2); border: 2px dashed var(--linea); border-radius: 10px; padding: 18px; }
-.fichaNombre { margin: 0; font-family: var(--serif); font-size: 22px; font-weight: 500; line-height: 1.2; }
-.fichaMeta { margin: 4px 0 10px; font-size: 13px; color: var(--texto-2); }
+.fichaCabTxt { min-width: 0; }
+.fichaImg {
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--fam) 22%, transparent), transparent 70%);
+}
+.fichaImg img { max-width: 92%; max-height: 70px; object-fit: contain; }
+.fichaSinImg { font-size: 11px; color: var(--texto-2); border: 2px dashed var(--linea); border-radius: 10px; padding: 8px 4px; text-align: center; word-break: break-word; }
+.fichaNombre { margin: 0; font-family: var(--serif); font-size: 18px; font-weight: 500; line-height: 1.2; }
+.fichaMeta { margin: 3px 0 0; font-size: 12.5px; color: var(--texto-2); }
 .fichaMeta em { font-style: italic; }
-.fichaTexto { margin: 0; font-size: 15px; line-height: 1.55; }
-.fichaBloque { margin-top: 14px; }
+.fichaTexto { margin: 0; font-size: 14px; line-height: 1.5; }
+.fichaBloque { margin-top: 10px; }
 .fichaRotulo { margin: 0 0 4px; font-size: 12px; font-weight: 700; color: var(--texto-2); }
 .fichaOtros { display: flex; flex-wrap: wrap; gap: 6px; }
 
@@ -877,9 +1011,10 @@ span.puntoLinea { cursor: default; }
 
 @media (max-width: 1099px) {
   .vista { grid-template-columns: minmax(0, 1fr) 260px; }
-  .soloTablet { display: inline-block; }
-  .lateralOculto { display: none; }
-  .vista:has(.lateralOculto) { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'escena' 'pie'; }
+  .vistaAncha { grid-template-columns: minmax(0, 1fr); }
+  .fichaPanel { width: 280px; }
+  .pieFila { gap: 6px 14px; }
+  .narracionTexto { font-size: 15px; }
   .nivelOpciones { grid-template-columns: 1fr; width: min(100%, 420px); }
 }
 
@@ -904,12 +1039,18 @@ span.puntoLinea { cursor: default; }
   }
   .escenaZona { height: 62vh; flex: none; }
   .lateral { border-left: none; border-top: 1px solid var(--linea); max-height: none; }
-  .lateralOculto { display: block; }
-  .soloTablet { display: none; }
-  .pie { grid-template-columns: 1fr; max-height: none; order: 2; }
-  .pieDer { align-items: stretch; }
-  .controles, .linea { justify-content: flex-start; }
+  .pie { order: 2; padding: 6px 12px 12px; }
+  .pieFila { grid-template-columns: 1fr; gap: 8px; }
   .pasoTexto { font-size: 18px; }
+  .narracionCab { font-size: 17px; }
+  /* Leyenda y ficha: hoja inferior sobre la escena, a todo el ancho. */
+  .leyendaAbierta { right: 8px; left: 8px; top: auto; bottom: 8px; max-height: 70%; }
+  .leyendaAbierta .leyendaCab { align-self: stretch; justify-content: flex-start; }
+  .leyenda ul { gap: 4px 10px; }
+  .leyenda li { font-size: 12px; gap: 6px; }
+  .leyendaMuestra { width: 34px; }
+  .fichaPanel { top: auto; left: 8px; right: 8px; bottom: 8px; width: auto; max-width: none; max-height: 75%; }
+  .escenaZona:has(.fichaPanel) .leyendaCaja { display: none; }
   .anilloCaja { width: min(100%, 520px); }
   .anilloVista { padding: 56px 12px 16px; }
   .escenaBotones .btnFlot:first-child { display: none; }
@@ -927,4 +1068,123 @@ span.puntoLinea { cursor: default; }
   .entrada { animation: aparecer 250ms; }
   .sacudir { animation: none; }
   .marcadorCuerpo, .arcoFase, .carta { transition: none; }
+}
+
+/* ─── Barra de tiempo (estilo YouTube) ───────────────────────────────────────
+   La vía entera como una pista partida en capítulos (un segmento por paso,
+   ancho ∝ duración). La zona de toque mide 28 px aunque la pista mida 4; al
+   pasar o agarrar engorda y asoma el tirador. El tirador se coloca con las
+   mismas cuentas que el flex: (ancho − huecos) · fracción + huecos previos. */
+
+.barraTiempo {
+  position: relative;
+  width: 100%;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: var(--radio-s);
+}
+.btPista {
+  position: relative;
+  flex: 1;
+  display: flex;
+  gap: var(--bt-hueco);
+  height: 4px;
+  transition: height var(--dur-rapida) var(--ease-salida);
+}
+.btSegmento {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  border-radius: 2px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--texto-2) 20%, transparent);
+  transition: background-color var(--dur-rapida), transform var(--dur-rapida) var(--ease-salida);
+}
+/* Visto: como el «cargado» de YouTube, un punto más presente que lo nuevo. */
+.btVisto { background: color-mix(in srgb, var(--texto-2) 36%, transparent); }
+/* Rama lateral (p. ej. 5,5): segmento punteado, como el punto discontinuo. */
+.btLateral {
+  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px);
+  mask-image: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px);
+}
+.btRelleno {
+  position: absolute;
+  inset: 0;
+  background: var(--dapi);
+  transform-origin: left center;
+}
+.btTirador {
+  position: absolute;
+  top: 50%;
+  left: calc((100% - var(--bt-hueco) * var(--bt-huecos)) * var(--bt-a) + var(--bt-hueco) * var(--bt-i));
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: var(--dapi);
+  box-shadow: 0 0 0 2px var(--campo-3);
+  transform: scale(0);
+  transition: transform var(--dur-rapida) var(--ease-salida);
+  pointer-events: none;
+}
+.btTooltip {
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 0;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: min(300px, 100%);
+  padding: 6px 10px;
+  border-radius: var(--radio-s);
+  background: var(--campo-3);
+  border: 1px solid var(--linea);
+  color: var(--texto);
+  font-size: 13px;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  z-index: 5;
+  animation: aparecer 120ms var(--ease-salida);
+}
+.btTooltip strong { font-weight: 700; }
+.btTooltip span { color: var(--texto-2); }
+
+/* Agarrada: pista gruesa, tirador un poco mayor y el capítulo bajo el dedo
+   destacado (como los capítulos de YouTube). */
+.btActiva .btPista { height: 7px; }
+.btActiva .btTirador { transform: scale(1.15); }
+.btActiva .btBajo { transform: scaleY(1.3); }
+.barraTiempo:focus-visible .btTirador { transform: scale(1); }
+
+@media (hover: hover) {
+  .barraTiempo:hover .btPista { height: 7px; }
+  .barraTiempo:hover .btTirador { transform: scale(1); }
+  .barraTiempo:hover .btBajo { transform: scaleY(1.3); }
+  .btActiva:hover .btTirador { transform: scale(1.15); }
+}
+
+/* Táctil: sin «hover» que la delate, la pista es algo más gruesa y el tirador
+   se ve siempre (pequeño) para que se entienda que se arrastra. */
+@media (hover: none) {
+  .btPista { height: 5px; }
+  .btTirador { transform: scale(0.8); }
+}
+
+@media (max-width: 700px) {
+  .barraTiempo { height: 32px; }
+  .btTooltip { font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btPista, .btSegmento, .btTirador { transition: none; }
+  .btTooltip { animation: none; }
 }

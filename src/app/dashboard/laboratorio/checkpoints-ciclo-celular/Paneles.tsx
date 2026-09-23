@@ -1,5 +1,5 @@
 'use client';
-// Piezas de apoyo del escenario: ficha de proteína (cajón), leyenda de
+// Piezas de apoyo del escenario: ficha de proteína (panel flotante), leyenda de
 // conectores, vista en lista (alternativa textual de la vía) y la gráfica de
 // ciclinas de la intro.
 
@@ -46,14 +46,20 @@ export function FichaProteina({ escenario, actor, onCerrar, onIr }: {
       <button type="button" className={s.fichaCerrar} onClick={onCerrar} aria-label="Cerrar ficha">
         <svg viewBox="0 0 16 16" aria-hidden><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
       </button>
-      <div className={s.fichaImg} style={{ ['--fam' as string]: img.color }}>
-        {img.src ? <img src={img.src} alt="" /> : <span className={s.fichaSinImg}>{id}</span>}
+      {/* Imagen y nombre lado a lado: la ficha flota sobre la escena y cada
+          línea de alto cuenta. */}
+      <div className={s.fichaCab}>
+        <div className={s.fichaImg} style={{ ['--fam' as string]: img.color }}>
+          {img.src ? <img src={img.src} alt="" /> : <span className={s.fichaSinImg}>{id}</span>}
+        </div>
+        <div className={s.fichaCabTxt}>
+          <h3 className={s.fichaNombre}>{info?.nombre ?? etiquetaTexto(decl.label)}</h3>
+          <p className={s.fichaMeta}>
+            {info?.gen && <><span>gen <em>{info.gen}</em></span> · </>}
+            <span>{info?.familia}</span>
+          </p>
+        </div>
       </div>
-      <h3 className={s.fichaNombre}>{info?.nombre ?? etiquetaTexto(decl.label)}</h3>
-      <p className={s.fichaMeta}>
-        {info?.gen && <><span>gen <em>{info.gen}</em></span> · </>}
-        <span>{info?.familia}</span>
-      </p>
       {info && <p className={s.fichaTexto}>{info.funcionGeneral}</p>}
       {aqui && (
         <div className={s.fichaBloque}>
@@ -120,10 +126,10 @@ function MuestraConector({ tipo }: { tipo: string }) {
   );
 }
 
+/** Solo la lista (dos columnas): la cabecera plegable la pone quien la monta. */
 export function Leyenda() {
   return (
     <div className={s.leyenda}>
-      <p className={s.lateralRotulo}>Leyenda</p>
       <ul>
         {LEYENDA.map((l) => (
           <li key={l.tipo}><MuestraConector tipo={l.tipo} /><span>{l.nombre}</span></li>

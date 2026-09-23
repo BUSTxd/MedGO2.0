@@ -5,13 +5,8 @@
 // directo al anillo, y la vuelta al laboratorio vive en su esquina.
 
 import dynamic from 'next/dynamic';
-import { Newsreader } from 'next/font/google';
 import TrackLabVisit from '@/components/TrackLabVisit';
 import s from '@/styles/cicloCelular.module.css';
-
-// Serif de lectura solo para narración y títulos (recuerda a un libro de
-// texto); la interfaz sigue en Outfit como el resto de la app.
-const newsreader = Newsreader({ subsets: ['latin'], weight: ['400', '500', '600'], style: ['normal', 'italic'], variable: '--font-newsreader', display: 'swap' });
 
 // Solo en cliente: progreso en localStorage, URL leída al montar y escena
 // animada con requestAnimationFrame.
@@ -22,7 +17,7 @@ const CicloLab = dynamic(() => import('./CicloLab'), {
 
 export default function CheckpointsCicloCelularPage() {
   return (
-    <div className={`${s.wrapper} ${newsreader.variable}`}>
+    <div className={s.wrapper}>
       <TrackLabVisit labId="checkpoints-ciclo-celular" />
       <CicloLab />
     </div>
