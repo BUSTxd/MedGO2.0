@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "verificar:banco": "node --experimental-strip-types --no-warnings scripts/verificar-banco.mjs",
-    "verificar:temas": "node --experimental-strip-types --no-warnings scripts/verificar-temas.mjs"
+    "verificar:temas": "node --experimental-strip-types --no-warnings scripts/verificar-temas.mjs",
+    "verificar:ciclo": "node --experimental-strip-types --no-warnings scripts/ciclo-celular/verificar.mjs"
   },
   "dependencies": {
     "@mercadopago/sdk-react": "^1.0.7",

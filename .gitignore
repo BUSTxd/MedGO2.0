@@ -22,3 +22,6 @@ npm-debug.log*
 
 # Private content (PDFs, etc.) — not in public, not in git
 private/
+
+# Recortes locales del laboratorio de ciclo celular (se sirven desde el bucket)
+scripts/ciclo-celular/salida/

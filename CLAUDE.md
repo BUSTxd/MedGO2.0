@@ -82,6 +82,7 @@ src/app/
     │   ├── atlas-parasitologia/
     │   ├── atlas-micologia/          # Selector modo alternativas/escribir
     │   ├── cascada-coagulacion/      # Lienzo de la cascada: explorar + aprender (ver sección propia)
+    │   ├── checkpoints-ciclo-celular/ # Patología: anillo del ciclo + 5 vías animadas (ver sección propia)
     │   └── microscopio/
     ├── investigacion/
     │   ├── page.tsx                  # Mapa serpenteante de 14 niveles (NivelMap)
@@ -481,6 +482,24 @@ Lámina de la Clase 9 hecha lienzo. **Gratis para cualquier cuenta** (`gratis` e
 **Explorar**: arrastrar estira hilos; hover resalta la cadena aguas abajo; balizas «i» laten hasta abrirse una vez. **Aprender**: selector de 6 vías, dificultad Fichas o Escribir (`normalizar` pasa arábigos a romanos). Al tercer fallo se revela resuelto.
 
 **Para añadir una vía**: entrada en `VIAS` con `semilla` y `pasos` (cada uno con `pista`). Comprobar en Node que cada paso tiene 3 distractores válidos y el sesgo de longitud de la ficha correcta.
+
+---
+
+## Checkpoints del ciclo celular (Patología · `laboratorio/checkpoints-ciclo-celular`)
+
+Anillo del ciclo (G1/S/G2/M + G0) con 5 marcadores; cada uno abre su vía molecular en tres modos: **Explorar** (paso a paso con narración, «Profundizar», clínica, ficha de proteína, vista en lista), **Aprender** (mazo mezclado con distractores, 3 niveles, pistas, estrellas) y **Prueba** (ordenar · ¿quién hace esto? · tipo de interacción · caso clínico, con revisión «Ver en la vía»). Más `?vista=intro` y `?vista=integrada`. Una sola ruta: el estado va en la URL con `history.replaceState` (`?cp=g2m&modo=aprender`, `?cp=huso&paso=4`).
+
+**Contenido = datos tipados** en `src/lib/data/ciclo-celular/`: `tipos.ts` (contrato), `checkpoints/<id>.ts`, `intro.ts`, `proteinas.ts` (87 fichas), `integrada.ts`, `familias.ts` (colores/tamaños; `imagen(id)` es la única puerta a una imagen), `imagenes.ts` (GENERADO). `npm run verificar:ciclo` caza lo que no rompe la compilación: actor usado antes de aparecer, >3 acciones simultáneas, fuera de la rejilla 16×10, sesgo de longitud de la correcta.
+
+**Motor (`src/lib/ciclo-celular/motor.ts`): la escena es función pura del tiempo** — `evaluar(paso, t)` parte del final del paso anterior (o de su `base`, para ramas como G2/M «con daño») y aplica cada acción con su progreso. Retroceder, saltar, cancelar, velocidad y movimiento reducido salen gratis. Compilar recorre cada paso una vez al 100 % para llenar el `memo` de cada acción (de dónde parte un `move`, qué imagen tenía el ADN) y la evaluación por fotograma solo interpola. Un paso sin acción de cámara que hereda un zoom vuelve solo al plano general.
+
+- Recortes ajustados al contenido (sin lienzo cuadrado): no hay anclajes nombrados; `bind` usa `lado` + `offset` relativos al objetivo.
+- `tira: <celdas>` en un actor = ADN/microtúbulo largo que se repite a lo ancho; si cambia de imagen (rotura, horquilla, gen activo) la pieza va al centro y la tira se abre.
+- Rótulos en capa propia encima de todo, colocados abajo → derecha → izquierda → arriba según choques. `swap_image` acepta `label` para cambiar el rótulo.
+
+**Imágenes**: bucket público `laboratorio-img/ciclo-celular/<id>.avif`. `node scripts/ciclo-celular/recortar.mjs` (con `--dry` no sube) corta las 8 hojas de `scripts/ciclo-celular/hojas/` —ya llegan sin fondo— por **manchas conectadas de alfa, no por rejilla** (FAS, la horquilla y MRN invaden la celda vecina), descarta las letras del rótulo por oscuras, sube en AVIF sin pérdida y regenera `imagenes.ts`. `orc` no tiene imagen (la celda llegó vacía): se pinta el marcador de posición.
+
+Gate por `LABORATORIOS` (tramo medicina, no gratis). Tema claro = lámina H&E, oscuro = campo de fluorescencia; narración en Newsreader (cargada solo en esta página).
 
 ---
 
