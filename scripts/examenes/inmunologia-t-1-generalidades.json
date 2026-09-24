@@ -3,7 +3,533 @@
   "key": "inmunologia/t-1-generalidades",
   "title": "T1 — Generalidades del sistema inmune",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Un hombre de 64 años consulta por sangrado rectal y pérdida de 8 kg en tres meses. La colonoscopia muestra una masa que la biopsia confirma como adenocarcinoma. El oncólogo explica que su sistema inmune no logró frenar el crecimiento de estas células transformadas. ¿Qué tipo de blanco no logró eliminar el sistema inmune en este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células propias infectadas por virus",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Células propias infectadas por bacterias",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células propias dañadas o cancerosas",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Bacterias extracelulares en el intestino",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Parásitos extracelulares en el intestino",
+          "correct": false
+        }
+      ],
+      "explanation": "Además de virus, bacterias y parásitos, el sistema inmune elimina células dañadas o cancerosas. Aquí las células transformadas escaparon a esa vigilancia.",
+      "tema": "generalidades",
+      "subtema": "Blancos del sistema inmune",
+      "seccion": "Clase 1: Generalidades"
+    },
+    {
+      "id": "q02",
+      "stem": "Una niña de 4 años es evaluada por infecciones respiratorias repetidas desde el primer año de vida. El estudio inmunológico concluye que sus células inmunitarias no maduran bien en los órganos donde nacen y se desarrollan. ¿Cuáles son esos órganos linfoides primarios?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Médula ósea roja y el timo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Ganglios linfáticos y el bazo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Médula ósea roja y las amígdalas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Médula ósea roja y los ganglios",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Timo y las amígdalas palatinas",
+          "correct": false
+        }
+      ],
+      "explanation": "Los órganos linfoides primarios son la médula ósea y el timo, donde nacen y maduran las células inmunitarias.",
+      "tema": "organos-primarios",
+      "subtema": "Órganos linfoides primarios",
+      "seccion": "¿Dónde se encuentra?"
+    },
+    {
+      "id": "q03",
+      "stem": "Un cocinero de 30 años se corta el dedo con un cuchillo sucio. A los pocos minutos la zona se pone roja y caliente. La respuesta aparece rápido y es igual sea cual sea el agente que ingresó. ¿Qué rasgos definen a esta inmunidad innata?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lenta y con alta especificidad por el invasor",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Rápida y con memoria específica del invasor",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Lenta y sin especificidad por el invasor",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Rápida y sin especificidad por el invasor",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Rápida y con especificidad por el invasor",
+          "correct": false
+        }
+      ],
+      "explanation": "La inmunidad innata es la primera línea de defensa, rápida pero no específica, y actúa igual contra cualquier invasor.",
+      "tema": "generalidades",
+      "subtema": "Rasgos de la inmunidad innata",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "q04",
+      "stem": "Una mujer de 32 años que tuvo varicela a los 6 años cuida a su hijo con varicela activa. Ella no se contagia. Su médico explica que su respuesta reconoce al virus particular y recuerda el encuentro previo. ¿Qué dos rasgos de la inmunidad adaptativa explican esta protección?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Especificidad sin memoria frente al encuentro previo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Especificidad y memoria frente al encuentro previo",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Rapidez y ausencia de memoria del encuentro previo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Memoria sin especificidad frente al virus previo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Rapidez y ausencia de especificidad frente al virus",
+          "correct": false
+        }
+      ],
+      "explanation": "La inmunidad adaptativa es específica, reconoce al patógeno particular, y guarda memoria, por eso normalmente no se enferma dos veces.",
+      "tema": "generalidades",
+      "subtema": "Rasgos de la inmunidad adaptativa",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "q05",
+      "stem": "Un niño de 5 años con faringitis por Streptococcus pyogenes, una bacteria extracelular, evoluciona bien. En su suero aparecen anticuerpos que bloquean la infección y eliminan al microorganismo. ¿Qué linfocito y qué rama de la inmunidad adaptativa participan en esta respuesta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocito B en la inmunidad celular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocito T helper en la inmunidad celular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocito T citotóxico en inmunidad celular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocito T citotóxico en inmunidad humoral",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocito B en la inmunidad humoral",
+          "correct": true
+        }
+      ],
+      "explanation": "Los linfocitos B producen los anticuerpos que caracterizan a la inmunidad humoral frente a microorganismos extracelulares.",
+      "tema": "linfocitos-b",
+      "subtema": "Inmunidad humoral",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "q06",
+      "stem": "Un minero de 50 años presenta tos crónica, sudoración nocturna y pérdida de peso. Las radiografías muestran cavernas en los vértices pulmonares. Sus macrófagos alveolares han fagocitado micobacterias pero no logran eliminarlas. ¿Qué linfocito y qué acción permiten que los macrófagos destruyan lo que fagocitaron?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocito T helper que activa al macrófago infectado",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfocito T helper que produce anticuerpos específicos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocito B que activa al macrófago mediante anticuerpos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocito T citotóxico que produce anticuerpos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocito B que produce anticuerpos específicos",
+          "correct": false
+        }
+      ],
+      "explanation": "En la inmunidad celular, el linfocito T helper activa a los macrófagos para que eliminen los microorganismos que fagocitaron.",
+      "tema": "linfocitos-t",
+      "subtema": "T helper y macrófagos",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "q07",
+      "stem": "Una mujer de 26 años tiene hepatitis viral aguda con transaminasas muy elevadas. Las serologías confirman infección aguda. El virus se replica dentro de los hepatocitos, donde los anticuerpos no llegan. ¿Qué linfocito y qué acción eliminan el reservorio del virus en esta paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocito T citotóxico que produce anticuerpos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocito T citotóxico que mata la célula infectada",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Linfocito T helper que mata la célula infectada",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocito B que mata a la célula infectada por el virus",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocito T helper que produce anticuerpos contra el virus",
+          "correct": false
+        }
+      ],
+      "explanation": "Frente a microorganismos intracelulares, el linfocito T citotóxico mata la célula infectada y así elimina el reservorio del virus.",
+      "tema": "linfocitos-t",
+      "subtema": "Linfocito T citotóxico",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "q08",
+      "stem": "Una joven de 19 años presenta estornudos, rinorrea y picazón de ojos cada primavera cuando florecen los árboles del parque. No tiene fiebre ni signos de infección, y sus familiares refieren síntomas parecidos en la misma época del año. ¿Cómo se define la alteración inmunológica que explica sus síntomas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Respuesta inmune dirigida contra tejidos propios",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Respuesta inmune ausente ante sustancias peligrosas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Respuesta inmune debilitada ante infecciones frecuentes",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Respuesta inmune exagerada ante microorganismos dañinos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Respuesta inmune exagerada ante sustancias inofensivas",
+          "correct": true
+        }
+      ],
+      "explanation": "La alergia es una respuesta inmune exagerada ante sustancias inofensivas, como el polen, los frutos secos o los ácaros.",
+      "tema": "hipersensibilidad",
+      "subtema": "Alergia",
+      "seccion": "Hiperinmunidad e inmunodeficiencia"
+    },
+    {
+      "id": "q09",
+      "stem": "Un adolescente de 14 años consulta por sed intensa, poliuria y pérdida de peso. La glucemia es de 460 mg/dL y se detectan autoanticuerpos contra las células de los islotes pancreáticos. ¿Qué ocurre en su sistema inmune para explicar la destrucción de las células productoras de insulina?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reacciona con exageración ante sustancias inofensivas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Tolera tejidos propios y ataca tejidos extraños",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Confunde los tejidos propios con tejidos extraños",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Está debilitado y no controla las infecciones",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Confunde antígenos inofensivos con tejidos extraños",
+          "correct": false
+        }
+      ],
+      "explanation": "En una enfermedad autoinmune el sistema inmune confunde tejidos propios con extraños. En la diabetes tipo 1 destruye las células productoras de insulina.",
+      "tema": "autoinmunidad",
+      "subtema": "Diabetes tipo 1",
+      "seccion": "Hiperinmunidad e inmunodeficiencia"
+    },
+    {
+      "id": "q10",
+      "stem": "Un hombre de 35 años con VIH sin tratamiento presenta neumonía por Pneumocystis, candidiasis oral y pérdida de peso. Su cuerpo queda vulnerable a infecciones que otras personas controlan sin problema. ¿Qué células destruye el virus para producir esta inmunodeficiencia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los linfocitos B de memoria",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Las células NK maduras",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los neutrófilos maduros",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los linfocitos T maduros",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Los mastocitos de la mucosa",
+          "correct": false
+        }
+      ],
+      "explanation": "En el VIH el virus destruye los linfocitos T y el cuerpo queda vulnerable a infecciones.",
+      "tema": "inmunodeficiencias",
+      "subtema": "Infección por VIH",
+      "seccion": "Hiperinmunidad e inmunodeficiencia"
+    },
+    {
+      "id": "q11",
+      "stem": "Un niño de 7 años con fiebre y dolor de garganta presenta amígdalas aumentadas de tamaño y ganglios cervicales dolorosos. Su médico explica que en estos tejidos los linfocitos ya maduros se activan frente al antígeno. ¿Qué conjunto de órganos comparte esta función de activación de las defensas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ganglios linfáticos, timo y las amígdalas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Ganglios linfáticos, bazo y la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Médula ósea, bazo y las amígdalas palatinas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Timo, médula ósea y ganglios linfáticos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Ganglios linfáticos, bazo y las amígdalas",
+          "correct": true
+        }
+      ],
+      "explanation": "Los ganglios linfáticos, el bazo y las amígdalas son órganos linfoides secundarios, donde se activan las defensas.",
+      "tema": "organos-secundarios",
+      "subtema": "Órganos linfoides secundarios",
+      "seccion": "¿Dónde se encuentra?"
+    },
+    {
+      "id": "q12",
+      "stem": "Un hombre de 45 años sufre quemaduras extensas de segundo grado en el tronco y desarrolla una infección de la herida a los pocos días. Perdió parte de la primera línea de defensa del organismo. ¿Qué barreras físicas forman esa primera línea de defensa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Piel, mucosas, saliva, lágrimas y neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Piel, mucosas, saliva, lágrimas y ácido gástrico",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Piel, mucosas, saliva, linfocitos T y ácido gástrico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Piel, macrófagos, saliva, lágrimas y ácido gástrico",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Piel, mucosas, saliva, lágrimas y anticuerpos IgG",
+          "correct": false
+        }
+      ],
+      "explanation": "Piel, mucosas, saliva, lágrimas y ácido gástrico son las barreras físicas que forman la primera línea de defensa.",
+      "tema": "barreras",
+      "subtema": "Barreras físicas",
+      "seccion": "¿Dónde se encuentra?"
+    },
+    {
+      "id": "q13",
+      "stem": "Un lactante de 8 meses con impétigo es evaluado por su pediatra. Se le explica a la madre que la primera línea de defensa incluye la piel, ciertos glóbulos blancos fagocíticos y proteínas que participan en la inflamación. ¿Qué componentes forman la inmunidad innata?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Piel, neutrófilos, linfocitos B y anticuerpos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Piel, linfocitos T, macrófagos y proteínas inflamatorias",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Piel, neutrófilos, macrófagos y proteínas inflamatorias",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Mucosas, linfocitos B, macrófagos y anticuerpos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Piel, neutrófilos, linfocitos T y proteínas inflamatorias",
+          "correct": false
+        }
+      ],
+      "explanation": "La inmunidad innata incluye la piel, neutrófilos, macrófagos y proteínas inflamatorias, todos disponibles sin exposición previa.",
+      "tema": "generalidades",
+      "subtema": "Componentes de la inmunidad innata",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "q14",
+      "stem": "Un carpintero de 28 años se corta el índice con una sierra. A las pocas horas la zona está roja e hinchada. No hay fiebre y la herida no supura. ¿Qué respuesta explica estos signos y qué logra en el sitio del daño?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inflamación innata que trae las células defensivas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Inflamación adaptativa que trae las células defensivas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inflamación innata que produce anticuerpos específicos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Respuesta humoral que trae anticuerpos específicos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Respuesta adaptativa que trae células de memoria",
+          "correct": false
+        }
+      ],
+      "explanation": "La inflamación es una respuesta innata que trae células defensivas al sitio del daño, y produce enrojecimiento e hinchazón.",
+      "tema": "inflamacion",
+      "subtema": "Inflamación tras una herida",
+      "seccion": "Tipos de inmunidad"
+    },
+    {
+      "id": "q15",
+      "stem": "Un niño de 3 años con inmunodeficiencia recibe suero de un donante convaleciente para protegerlo de un virus. En otro caso, un investigador transfiere linfocitos T de un ratón inmunizado a otro. ¿Con qué se transfiere la inmunidad humoral y con qué la celular?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Humoral con linfocitos T y celular con el suero",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Humoral y celular con suero de convaleciente",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Humoral con el suero y celular con anticuerpos libres",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Humoral con el suero y celular con linfocitos T",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Humoral con macrófagos y celular con el suero de donante",
+          "correct": false
+        }
+      ],
+      "explanation": "La inmunidad humoral se transfiere con el suero, que contiene los anticuerpos, y la celular con linfocitos T.",
+      "tema": "generalidades",
+      "subtema": "Transferencia de inmunidad",
+      "seccion": "Tipos de inmunidad"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

@@ -3,7 +3,1408 @@
   "key": "inmunologia/t-9-humoral",
   "title": "T9 — Respuesta humoral y linfocitos B",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Una mujer de 34 años con neumonía neumocócica participa en un ensayo que compara dos anticuerpos dirigidos contra el mismo epítopo del polisacárido capsular, con idéntica constante de disociación por cada sitio de unión. Uno es una IgG con pocos sitios y el otro una IgM pentamérica con muchos más. ¿Qué propiedad explica que la IgM se una con más fuerza total al antígeno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mayor afinidad, por su mayor número de sitios de unión",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Mayor avidez, por su menor constante de disociación por sitio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mayor avidez, por su mayor número de sitios de unión",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Mayor afinidad, por su mayor complementariedad con el epítopo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Mayor avidez, por su mayor complementariedad con el epítopo",
+          "correct": false
+        }
+      ],
+      "explanation": "La avidez es la fuerza total de unión y depende de la afinidad de cada sitio y del número de sitios. Con igual afinidad, más sitios dan mayor avidez.",
+      "tema": "anticuerpos",
+      "subtema": "Afinidad frente a avidez",
+      "seccion": "I. Introducción"
+    },
+    {
+      "id": "q02",
+      "stem": "Un recién nacido a término de 10 días, sano, es evaluado porque su madre tuvo varicela varias semanas antes del parto. En su sangre se detectan anticuerpos específicos contra el virus, aunque su propia respuesta B aún es inmadura. ¿Qué isotipo de origen materno cruzó hacia el feto y lo protege?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgG monomérica, transferida por la placenta hacia el feto",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IgM pentamérica, transferida por la placenta hacia el feto",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgA dimérica, transferida por la placenta hacia el feto",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgD monomérica, transferida por la placenta al feto",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IgM pentamérica, transferida por la leche materna al lactante",
+          "correct": false
+        }
+      ],
+      "explanation": "La IgG es el único isotipo que atraviesa la placenta y protege al recién nacido. La IgA pasa al lactante por la leche materna.",
+      "tema": "anticuerpos",
+      "subtema": "Transferencia materno-fetal",
+      "seccion": "TABLA: ISOTIPOS"
+    },
+    {
+      "id": "q03",
+      "stem": "Un niño de 3 años presenta neumonías y otitis a repetición desde el primer año. Tiene IgM sérica normal con IgG, IgA e IgE muy bajas, y su ganglio no muestra centros germinales, aunque sus linfocitos B reconocen bien el antígeno. Se sospecha una falla de la segunda señal que el linfocito B recibe del linfocito T cooperador. ¿Qué interacción está alterada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD40L del linfocito B con CD40 del linfocito T CD4⁺ activado",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD40 del linfocito B con CD40L del linfocito T CD8⁺ efector",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD28 del linfocito B con B7 del linfocito T CD4⁺",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD40 del linfocito B con CD40L del linfocito T CD4⁺",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "ICOS del linfocito B con ICOSL del linfocito T CD4⁺ folicular",
+          "correct": false
+        }
+      ],
+      "explanation": "La segunda señal T-dependiente es la unión de CD40 del linfocito B con CD40L del linfocito T CD4⁺, más sus citocinas. Sin ella hay anergia o apoptosis.",
+      "tema": "linfocitos-b",
+      "subtema": "Segunda señal CD40 y CD40L",
+      "seccion": "IV. Activación del linfocito B"
+    },
+    {
+      "id": "q04",
+      "stem": "Un varón de 30 años recibe la primera dosis de una vacuna proteica. A los cuatro días su suero muestra IgM de baja afinidad producida por plasmocitos de vida corta, sin cambio de isotipo ni maduración de la afinidad. Semanas después aparecen IgG de alta afinidad y células de memoria. ¿Qué vía explica la respuesta de los primeros días?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Respuesta folicular, lenta y de alta afinidad con memoria",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Respuesta extrafolicular, rápida y de baja afinidad",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Respuesta extrafolicular, lenta y de alta afinidad",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Respuesta folicular, rápida y de baja afinidad",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Respuesta extrafolicular, lenta y con afinidad madurada",
+          "correct": false
+        }
+      ],
+      "explanation": "La vía extrafolicular es rápida y produce IgM de baja afinidad con plasmocitos de vida corta. La folicular es más lenta y da alta afinidad y memoria.",
+      "tema": "linfocitos-b",
+      "subtema": "Extrafolicular frente a folicular",
+      "seccion": "Dependiente de LT"
+    },
+    {
+      "id": "q05",
+      "stem": "Una niña de 15 meses recibe una vacuna de polisacárido capsular puro contra Streptococcus pneumoniae, sin conjugar a proteína. Semanas después muestra una respuesta débil, con IgM de baja afinidad, sin cambio a IgG y sin células B de memoria que respondan a una segunda dosis. ¿Qué tipo de respuesta explica este patrón?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dependiente de LT, por presentación del péptido en MHC II",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Independiente de LT, por interacción entre CD40 y CD40L",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Dependiente de LT, por entrecruzamiento masivo del BCR",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Independiente de LT, por presentación del péptido en MHC II",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Independiente de LT, por entrecruzamiento masivo del BCR",
+          "correct": true
+        }
+      ],
+      "explanation": "Los polisacáridos son multivalentes y entrecruzan el BCR sin ayuda T. La respuesta produce IgM de baja afinidad, sin hipermutación, sin cambio de isotipo y sin memoria.",
+      "tema": "linfocitos-b",
+      "subtema": "Antígenos T-independientes",
+      "seccion": "Independiente de LT"
+    },
+    {
+      "id": "q06",
+      "stem": "Un varón de 8 años con infecciones sinopulmonares recurrentes tiene IgM elevada e IgG, IgA e IgE muy bajas. Se descubre una mutación en la enzima que introduce roturas en el ADN de las regiones switch de los genes de la cadena pesada. ¿Qué proceso del linfocito B está alterado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Recombinación VDJ, con unión de segmentos V, D y J",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Cambio de isotipo, con salto de la región μ a γ, α o ε",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Edición del receptor, con nueva recombinación de la cadena ligera",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Exclusión alélica, con detención del reordenamiento de la pesada",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Reordenamiento κ y luego λ, con recombinación de la cadena ligera",
+          "correct": false
+        }
+      ],
+      "explanation": "La enzima AID corta el ADN en las regiones switch y permite saltar de μ a γ, α o ε. Sin ella el linfocito B queda produciendo IgM.",
+      "tema": "anticuerpos",
+      "subtema": "Cambio de isotipo y AID",
+      "seccion": "V. Respuestas funcionales"
+    },
+    {
+      "id": "q07",
+      "stem": "Un lactante varón de 9 meses presenta otitis media y neumonías por Haemophilus influenzae desde los 6 meses. No tiene linfocitos B CD19⁺ ni CD20⁺ en sangre, sus linfocitos T son normales y su médula ósea muestra un bloqueo del desarrollo B tras sintetizar la cadena pesada μ. ¿Qué señal del desarrollo está bloqueada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Señal del BCR completo en el B inmaduro, dependiente de BTK",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Señal del pre-BCR en el pre-B grande, dependiente de ZAP-70",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Señal del pre-TCR en el timocito DN3, dependiente de BTK",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Señal del pre-BCR en el pre-B grande, dependiente de BTK",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Señal del pre-BCR en el pro-B tardío, dependiente de BTK",
+          "correct": false
+        }
+      ],
+      "explanation": "En el pre-B grande el pre-BCR da señales de supervivencia y expansión clonal que dependen de la tirosina cinasa de Bruton. Su falla causa agammaglobulinemia ligada al X.",
+      "tema": "linfocitos-b",
+      "subtema": "Pre-BCR y BTK",
+      "seccion": "PRIMER PUNTO DE CONTROL"
+    },
+    {
+      "id": "q08",
+      "stem": "En la médula ósea de una mujer de 27 años con lupus se estudia un linfocito B inmaduro con IgM de membrana que reconoce con alta afinidad un autoantígeno local. Entre los destinos posibles de esta célula, uno consiste en intentar recombinar otra cadena ligera. ¿Cuál es ese destino?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Edición del receptor, con recombinación de otra cadena ligera",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Anergia, con pérdida funcional del linfocito B inmaduro",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Deleción clonal, con eliminación del linfocito por apoptosis",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Edición del receptor, con recombinación de otra cadena pesada por RAG",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Hipermutación somática, con nuevas mutaciones en el receptor B",
+          "correct": false
+        }
+      ],
+      "explanation": "Ante un autoantígeno de alta afinidad en la médula, el linfocito B inmaduro puede editar el receptor, volverse anérgico o morir por deleción clonal.",
+      "tema": "tolerancia",
+      "subtema": "Tolerancia central B",
+      "seccion": "3. LINFOCITO B INMADURO"
+    },
+    {
+      "id": "q09",
+      "stem": "En el ganglio de un hombre de 24 años con infección faríngea se estudia la zona clara de un centro germinal. Los centrocitos compiten por el antígeno retenido en las células dendríticas foliculares, y varios de ellos captaron muy poco antígeno. ¿Qué ocurre con estos centrocitos de baja afinidad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mueren por apoptosis y los neutrófilos los eliminan",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Sobreviven y se diferencian en plasmocitos de vida corta",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mueren por apoptosis y los macrófagos los eliminan",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Sobreviven con ayuda de los Tfh y pasan a células de memoria",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Sobreviven y proliferan intensamente en la zona oscura",
+          "correct": false
+        }
+      ],
+      "explanation": "Los centrocitos de baja afinidad captan poco antígeno, no reciben ayuda de los Tfh y mueren por apoptosis. Los macrófagos los eliminan.",
+      "tema": "linfocitos-b",
+      "subtema": "Selección por afinidad",
+      "seccion": "Zona clara: Centrocitos"
+    },
+    {
+      "id": "q10",
+      "stem": "Un laboratorio trata con un agente reductor la IgG purificada de un hombre de 46 años con mieloma múltiple y rompe sus puentes disulfuro. Se obtienen cuatro cadenas polipeptídicas de la molécula original en forma de Y. ¿Cómo se distribuyen estas cadenas en un anticuerpo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dos cadenas pesadas idénticas y dos ligeras distintas, una κ y una λ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Dos cadenas pesadas distintas y dos ligeras idénticas, ambas κ o ambas λ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cuatro cadenas pesadas idénticas unidas por puentes disulfuro",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Dos pesadas idénticas y dos ligeras, todas de isotipo μ o δ",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Dos pesadas idénticas y dos ligeras idénticas, ambas κ o ambas λ",
+          "correct": true
+        }
+      ],
+      "explanation": "Cada anticuerpo tiene dos cadenas pesadas idénticas y dos ligeras idénticas, ambas κ o ambas λ, unidas por puentes disulfuro en forma de Y.",
+      "tema": "anticuerpos",
+      "subtema": "Cadenas pesadas y ligeras",
+      "seccion": "II. Estructura de un anticuerpo"
+    },
+    {
+      "id": "q11",
+      "stem": "Un varón de 25 años que regresó de una zona tropical presenta fiebre y exantema. El laboratorio informa IgM positiva para dengue, pero luego se aclara que estuvo expuesto también a Zika, y el mismo anticuerpo reconoce ambos virus por la similitud de un epítopo. ¿Cómo se denomina este fenómeno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Respuesta policlonal, por varios epítopos de un mismo antígeno",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Avidez, por la suma de los sitios de unión del anticuerpo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Reacción cruzada, por varios epítopos de un mismo antígeno",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Reacción cruzada, por un epítopo similar en dos antígenos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Respuesta policlonal, por un epítopo similar en dos antígenos",
+          "correct": false
+        }
+      ],
+      "explanation": "En la reacción cruzada un anticuerpo dirigido contra un antígeno se une también a otro antígeno similar. La respuesta policlonal activa clones contra epítopos distintos de un mismo antígeno.",
+      "tema": "anticuerpos",
+      "subtema": "Reacción cruzada",
+      "seccion": "I. Introducción"
+    },
+    {
+      "id": "q12",
+      "stem": "Una mujer de 50 años con linfoma B recibe un anticuerpo terapéutico. El farmacólogo explica que dos anticuerpos pueden pertenecer a la misma clase IgG1 y, sin embargo, unirse a epítopos distintos. ¿Qué región determina la especificidad de cada uno y cómo se llama el conjunto de sus determinantes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La región constante del Fc, cuyo conjunto es el isotipo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La región de las CDR, cuyo conjunto es el idiotipo",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "La región variable de las CDR, cuyo conjunto es el isotipo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La región constante del Fc, cuyo conjunto es el idiotipo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La región bisagra, cuyo conjunto es el idiotipo",
+          "correct": false
+        }
+      ],
+      "explanation": "El idiotipo agrupa los idiotopos de la región variable en las CDR y determina la especificidad. El isotipo depende de la región constante y determina clase y función.",
+      "tema": "anticuerpos",
+      "subtema": "Isotipo e idiotipo",
+      "seccion": "I. Introducción"
+    },
+    {
+      "id": "q13",
+      "stem": "En un ensayo, un anticuerpo del suero de un hombre de 38 años con neutropenia conserva sus brazos de unión, que reconocen el antígeno de una bacteria, pero pierde su fragmento cristalizable y la bacteria ya no es fagocitada. ¿Qué función perdió y qué fragmento la cumple?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Opsonización y complemento, mediadas por el Fc",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Opsonización y complemento, mediadas por el Fab",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Reconocimiento del epítopo, mediado por el Fc",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Reconocimiento del epítopo, mediado por el Fab",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Opsonización y citotoxicidad celular, mediadas por el Fab",
+          "correct": false
+        }
+      ],
+      "explanation": "El Fc es la cola del anticuerpo y determina la interacción con el sistema inmune, como complemento, opsonización y citotoxicidad dependiente de anticuerpos. Los Fab reconocen el antígeno.",
+      "tema": "anticuerpos",
+      "subtema": "Fragmentos Fab y Fc",
+      "seccion": "Fragmentos funcionales"
+    },
+    {
+      "id": "q14",
+      "stem": "Un investigador secuencia la región variable de un anticuerpo neutralizante de una mujer de 33 años recuperada de una infección viral. Halla tres segmentos hipervariables en cada cadena que forman el sitio de unión al antígeno. ¿Qué son estos segmentos y qué determinan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las CDR, que determinan clase y función efectora",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Las FR, que determinan especificidad y afinidad",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Las CDR, que determinan especificidad y afinidad",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Las CDR, que determinan flexibilidad y avidez funcional",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Los dominios CH, que determinan especificidad y afinidad",
+          "correct": false
+        }
+      ],
+      "explanation": "Los tres segmentos hipervariables CDR1, CDR2 y CDR3 forman el parátopo y determinan la especificidad y la afinidad del anticuerpo hacia un epítopo.",
+      "tema": "anticuerpos",
+      "subtema": "Regiones CDR",
+      "seccion": "Regiones principales de cada cadena"
+    },
+    {
+      "id": "q15",
+      "stem": "Un hombre de 45 años con sinusitis crónica presenta una bacteria que secreta una proteasa capaz de cortar inmunoglobulinas en una región flexible ubicada entre los dominios CH1 y CH2. ¿Qué región es susceptible a esta proteólisis y en qué isotipos existe?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La región bisagra, presente en IgM, IgG e IgE",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La región variable, presente en IgG, IgA e IgD",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La región bisagra, presente en IgM, IgA e IgE",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La región constante, presente en IgM, IgG e IgE",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La región bisagra, presente en IgG, IgA e IgD",
+          "correct": true
+        }
+      ],
+      "explanation": "La región bisagra está entre CH1 y CH2 en IgG, IgA e IgD. Da flexibilidad, aumenta la avidez y es susceptible a la proteólisis.",
+      "tema": "anticuerpos",
+      "subtema": "Región bisagra",
+      "seccion": "Regiones principales de cada cadena"
+    },
+    {
+      "id": "q16",
+      "stem": "Un hombre de 22 años consulta por fiebre y odinofagia. La serología a los 5 días del inicio detecta el anticuerpo que predomina en la sangre durante la respuesta primaria, activa la vía clásica del complemento y aglutina antígenos. ¿Qué isotipo es y cómo se secreta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgG, secretada como monómero y buena opsonizante",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IgA, secretada como dímero y protectora de mucosas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgM, secretada como pentámero y buena aglutinante",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "IgM, secretada como monómero y buena aglutinante",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IgE, secretada como monómero y activadora de mastocitos",
+          "correct": false
+        }
+      ],
+      "explanation": "La IgM es el primer anticuerpo de la respuesta, se secreta como pentámero unido por la cadena J y es un gran activador de la vía clásica del complemento.",
+      "tema": "anticuerpos",
+      "subtema": "IgM y respuesta primaria",
+      "seccion": "TABLA: ISOTIPOS"
+    },
+    {
+      "id": "q17",
+      "stem": "Una niña de 7 años con conjuntivitis alérgica y eosinofilia tiene aumentado un isotipo de vida media muy corta, de unos 2 a 3 días, que se une a mastocitos y basófilos de los tejidos submucosos. ¿Qué isotipo es y en qué defensa participa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgE, en la defensa contra helmintos y en la alergia",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IgG, en la defensa contra helmintos y en la alergia tisular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgD, en la defensa contra helmintos y en la alergia tisular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgE, en la defensa contra bacterias encapsuladas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IgA, en la defensa contra helmintos y en la mucosa",
+          "correct": false
+        }
+      ],
+      "explanation": "La IgE se une a mastocitos y basófilos en los tejidos submucosos, tiene la vida media más corta y participa en la defensa contra helmintos y en las reacciones alérgicas.",
+      "tema": "anticuerpos",
+      "subtema": "IgE y helmintos",
+      "seccion": "TABLA: ISOTIPOS"
+    },
+    {
+      "id": "q18",
+      "stem": "Una mujer de 40 años sin síntomas característicos se realiza una prueba serológica antes de visitar a su madre y resulta con IgG positiva e IgM positiva para SARS-CoV-2. Su hija pregunta qué se puede concluir de estos resultados, pues no se midió la presencia del virus. ¿Cuál es la conclusión más adecuada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Infección muy reciente y activa, porque la IgM es positiva",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Infección muy antigua y resuelta, porque la IgG es positiva",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Infección activa confirmada, porque ambos anticuerpos son positivos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Infección de hace algunas semanas, sin poder saber si está activa",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Infección de hace algunas semanas y ya resuelta, sin riesgo de contagio",
+          "correct": false
+        }
+      ],
+      "explanation": "Solo la presencia del antígeno del patógeno demuestra una infección activa. Con ambas inmunoglobulinas positivas la infección no es muy reciente ni muy antigua.",
+      "tema": "anticuerpos",
+      "subtema": "Interpretación de IgG e IgM",
+      "seccion": "🚩CASO CLÍNICO"
+    },
+    {
+      "id": "q19",
+      "stem": "Un estudio con una mujer de 28 años con alergia a la penicilina compara qué reconocen los linfocitos T y los linfocitos B frente a un mismo antígeno. Uno de los receptores solo reconoce péptidos presentados por moléculas MHC, mientras que el otro reconoce macromoléculas nativas. ¿Qué afirmación describe correctamente ambos receptores?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El BCR reconoce péptidos lineales en MHC y el TCR epítopos conformacionales",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El TCR reconoce péptidos en MHC y el BCR epítopos conformacionales",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "El TCR reconoce péptidos en MHC y el BCR solo péptidos lineales",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El TCR reconoce polisacáridos nativos sin MHC y el BCR péptidos en MHC",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El TCR reconoce epítopos conformacionales y el BCR péptidos lineales en MHC",
+          "correct": false
+        }
+      ],
+      "explanation": "El TCR reconoce péptidos lineales presentados por MHC en las células presentadoras. El BCR reconoce epítopos conformacionales y lineales de macromoléculas nativas, sin presentación por MHC.",
+      "tema": "linfocitos-b",
+      "subtema": "TCR frente a BCR",
+      "seccion": "Familia de la inmunoglobulinas"
+    },
+    {
+      "id": "q20",
+      "stem": "Un varón de 12 años con infecciones recurrentes tiene linfocitos B con IgM de membrana normal, pero incapaces de transmitir señal tras unirse al antígeno. Se demuestra la ausencia del heterodímero asociado al BCR que contiene dos ITAM. ¿Qué componentes faltan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD21 y CD19, que también se llaman CR2 y correceptor",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD3 y ζ, que forman el complejo de señalización del TCR",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Igα e Igβ, que también se llaman CD19 y CD21",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD79a y CD79b, que también se llaman λ5 y V pre-B",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Igα e Igβ, que también se llaman CD79a y CD79b",
+          "correct": true
+        }
+      ],
+      "explanation": "El complejo de señalización del BCR es el heterodímero Igα-Igβ, o CD79a-CD79b, con dos ITAM. La Ig de membrana solo reconoce el antígeno nativo.",
+      "tema": "linfocitos-b",
+      "subtema": "Igα e Igβ en el BCR",
+      "seccion": "Receptor de células B"
+    },
+    {
+      "id": "q21",
+      "stem": "Una bacteria recubierta de C3d en una mujer de 55 años con neumonía se une al mismo tiempo al BCR de un linfocito B y a un receptor del complemento que reduce el umbral de activación. ¿Qué receptor une el C3d y qué molécula amplifica la señal del BCR?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD19 une el C3d y CD21, o CR2, amplifica la señal del BCR",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD21, o CR2, une el C3d y CD19 amplifica la señal",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CD21, o CR2, une el C3d e Igβ amplifica la señal del BCR",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD40 une el C3d y CD19 amplifica la señal del BCR",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD21, o CR2, une el C3d y CD40 amplifica la señal del BCR",
+          "correct": false
+        }
+      ],
+      "explanation": "El correceptor del BCR es CD21 o CR2, receptor del fragmento C3d, mientras que CD19 es la principal molécula amplificadora de la señal del BCR.",
+      "tema": "linfocitos-b",
+      "subtema": "Correceptor CD21 y CD19",
+      "seccion": "Receptor de células B"
+    },
+    {
+      "id": "q22",
+      "stem": "En la médula ósea de una mujer de 22 años se estudia un pro-B tardío cuyo reordenamiento V-DJ de la cadena pesada en el primer cromosoma no fue productivo. El hematólogo quiere saber qué sucede a continuación con esta célula. ¿Cuál es la secuencia esperada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reordena D-J en el segundo cromosoma y sobrevive si es productivo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Reordena V-DJ en el otro cromosoma y muere si es productivo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Reordena la cadena ligera κ en el primer cromosoma y sobrevive",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Muere de inmediato por apoptosis sin intentar el segundo cromosoma",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Reordena V-DJ en el otro cromosoma y sobrevive si es productivo",
+          "correct": true
+        }
+      ],
+      "explanation": "Si el reordenamiento V-DJ del primer cromosoma no es productivo se intenta en el segundo. Si tampoco es productivo, la célula muere por apoptosis.",
+      "tema": "linfocitos-b",
+      "subtema": "Reordenamiento de la cadena pesada",
+      "seccion": "1. PROLINFOCITO"
+    },
+    {
+      "id": "q23",
+      "stem": "Un lactante varón con agammaglobulinemia tiene una mutación en el gen λ5. En sus pre-B grandes de la médula ósea, el receptor característico de esta etapa del desarrollo no se forma de manera correcta y la célula no recibe la señal de supervivencia. ¿Qué componentes forman normalmente el pre-BCR?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cadena μ, cadena ligera κ ya madura, e Igα e Igβ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Cadena δ, cadena sustituta λ5 y V pre-B, e Igα e Igβ del BCR",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cadena μ, cadena sustituta λ5 y V pre-B, e Igα e Igβ",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Cadena μ, cadena sustituta λ5 y V pre-B, y CD3 y ζζ del TCR",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Cadena γ, cadena ligera λ ya madura, e Igα e Igβ",
+          "correct": false
+        }
+      ],
+      "explanation": "El pre-BCR reúne la cadena pesada μ, la cadena ligera sustituta invariante formada por λ5 y V pre-B, y las moléculas de señalización Igα e Igβ.",
+      "tema": "linfocitos-b",
+      "subtema": "Composición del pre-BCR",
+      "seccion": "2. PRE-LINFOCITO B"
+    },
+    {
+      "id": "q24",
+      "stem": "En un pre-B de una mujer de 31 años ya se recombinó con éxito la cadena pesada μ. El inmunólogo estudia cómo se reordenan ahora sus genes de la cadena ligera en los dos cromosomas de la célula. ¿Qué orden sigue este reordenamiento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Primero κ en ambos cromosomas y, si no es productivo, λ",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Primero λ en ambos cromosomas y, si no es productivo, luego κ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Primero κ y λ a la vez en un solo cromosoma del pre-B",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Primero κ en ambos cromosomas y, si falla, muere por apoptosis",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Primero κ en un solo cromosoma y, si no es productivo, λ",
+          "correct": false
+        }
+      ],
+      "explanation": "La cadena ligera se reordena después de la pesada. Primero se reordena κ en el primer y el segundo cromosoma y, si no es productivo, se reordena λ.",
+      "tema": "linfocitos-b",
+      "subtema": "Orden κ y λ",
+      "seccion": "2. PRE-LINFOCITO B"
+    },
+    {
+      "id": "q25",
+      "stem": "Un citometrista analiza linfocitos B de la médula ósea de un adulto de 35 años y encuentra células con IgM completa de membrana que ya no reordenan sus genes de inmunoglobulinas y cuyo BCR emite señales tónicas independientes del ligando. ¿Qué proteína está inhibida y qué marcadores se esperan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "RAG activa, con IgM de membrana, CD19, CD20 y MHC II",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "RAG inhibida, con IgD de membrana, CD19, CD20, CD21 y MHC II",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "AID inhibida, con IgM de membrana, CD19, CD20, CD21 y MHC II",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "RAG inhibida, con IgM de membrana, CD19, CD20 y MHC II",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "RAG inhibida, con pre-BCR, CD19, CD20, CD10 y MHC II",
+          "correct": false
+        }
+      ],
+      "explanation": "El linfocito B inmaduro inhibe RAG y ya no reordena. Expresa IgM de membrana completa, Igα e Igβ, CD19, CD20 y MHC II.",
+      "tema": "linfocitos-b",
+      "subtema": "Fenotipo del B inmaduro",
+      "seccion": "3. LINFOCITO B INMADURO"
+    },
+    {
+      "id": "q26",
+      "stem": "En el bazo de un hombre de 40 años operado por traumatismo se encuentran linfocitos B recién salidos de la médula ósea. Un subgrupo es muy sensible a la apoptosis si reconoce autoantígenos y tiene IgM alta con IgD muy baja. Otro subgrupo recibe BAFF y sobrevive. ¿Cómo se llaman, respectivamente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Transicional T2 y transicional T1, respectivamente",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocito folicular y de la zona marginal, en ese orden",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Transicional T1 y transicional T2, en ese orden",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Transicional T1 y de la zona marginal, en ese orden",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Pre-B grande y transicional T2, en ese orden",
+          "correct": false
+        }
+      ],
+      "explanation": "El transicional T1 es el recién llegado y muy sensible a apoptosis, con IgM alta e IgD muy baja. El T2 recibe BAFF y puede volverse folicular o marginal.",
+      "tema": "linfocitos-b",
+      "subtema": "Transicionales T1 y T2",
+      "seccion": "4. LINFOCITOS TRANSICIONALES"
+    },
+    {
+      "id": "q27",
+      "stem": "En un ganglio linfático de una mujer de 20 años con mononucleosis, los linfocitos B foliculares vírgenes migran hacia el folículo y dependen de BAFF para sobrevivir. Expresan IgM e IgD. ¿Qué quimiocina guía su migración y qué células la secretan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CXCL13, secretada por las células dendríticas convencionales",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CXCL12, secretada por células dendríticas foliculares",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CCL21, secretada por las células dendríticas foliculares",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CXCL13, secretada por los macrófagos del seno subcapsular ganglionar",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CXCL13, secretada por las células dendríticas foliculares",
+          "correct": true
+        }
+      ],
+      "explanation": "Los linfocitos B foliculares son guiados por la quimiocina CXCL13, que secretan las células dendríticas foliculares, y dependen de BAFF para sobrevivir.",
+      "tema": "linfocitos-b",
+      "subtema": "Foliculares y CXCL13",
+      "seccion": "5. LINFOCITO MADURO"
+    },
+    {
+      "id": "q28",
+      "stem": "Un varón de 8 años esplenectomizado por un traumatismo desarrolla una sepsis fulminante por Streptococcus pneumoniae. El bazo alberga linfocitos B con IgM alta e IgD baja que responden rápido a antígenos T-independientes. ¿Qué linfocitos faltan y qué anticuerpo producen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "B foliculares vírgenes, que producen IgM de baja afinidad",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "B de la zona marginal, que producen IgM de baja afinidad",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "B de la zona marginal, que producen IgG de muy alta afinidad",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "B foliculares, que producen IgG de alta afinidad",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "B transicionales T2, que producen IgM de baja afinidad",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos B de la zona marginal del bazo responden rápido a bacterias encapsuladas y producen IgM de baja afinidad, útil para opsonizar y activar el complemento.",
+      "tema": "linfocitos-b",
+      "subtema": "Linfocito B de la zona marginal",
+      "seccion": "5. LINFOCITO MADURO"
+    },
+    {
+      "id": "q29",
+      "stem": "Una niña de 6 años recibe la vacuna contra el tétanos, cuyo antígeno es una proteína globular con una sola copia de cada epítopo por molécula. Se explica que este tipo de antígeno no puede unirse a varias moléculas de Ig a la vez. ¿Qué consecuencia tiene y qué necesita el linfocito B para activarse?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No entrecruza el BCR y necesita ayuda del linfocito T",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Entrecruza masivamente el BCR y necesita ayuda del linfocito T",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "No entrecruza el BCR y necesita solo señales innatas como TLR",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Entrecruza masivamente el BCR y basta con señales innatas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "No entrecruza el BCR y necesita ayuda de las células NK",
+          "correct": false
+        }
+      ],
+      "explanation": "Una sola copia de epítopo por molécula impide el entrecruzamiento del BCR y no genera señal suficiente, por eso el linfocito B necesita la ayuda del linfocito T.",
+      "tema": "linfocitos-b",
+      "subtema": "Antígenos proteicos globulares",
+      "seccion": "Dependiente de LT"
+    },
+    {
+      "id": "q30",
+      "stem": "En la biopsia de un ganglio de un adolescente de 16 años con faringitis se observa un centro germinal con una zona de células muy proliferativas y alta actividad de AID, y otra zona con poca proliferación y contacto con células dendríticas foliculares y Tfh. ¿Qué células predominan en cada zona, respectivamente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Centrocitos en la zona oscura y centroblastos en la zona clara",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Centroblastos en la zona clara y plasmocitos en la zona oscura",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Centroblastos en la zona oscura y plasmocitos en la zona clara",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Centroblastos en la zona oscura y centrocitos en la clara",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Células de memoria en la zona oscura y centrocitos en la zona clara",
+          "correct": false
+        }
+      ],
+      "explanation": "En la zona oscura predominan los centroblastos, con intensa proliferación e hipermutación por AID. En la zona clara predominan los centrocitos, que se seleccionan por afinidad.",
+      "tema": "linfocitos-b",
+      "subtema": "Zonas del centro germinal",
+      "seccion": "Etapas de la respuesta folicular"
+    },
+    {
+      "id": "q31",
+      "stem": "En un ganglio de un hombre de 36 años inmunizado hace dos semanas se estudian los centroblastos de la zona oscura del centro germinal, que proliferan de forma intensa y acumulan mutaciones puntuales en la región variable de su BCR. ¿Qué enzima produce estas mutaciones y qué proceso constituyen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "AID, que produce la recombinación VDJ del receptor",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "RAG1, que produce la hipermutación somática",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "AID, que produce la edición del receptor",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TdT, que produce la hipermutación somática",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "AID, que produce la hipermutación somática",
+          "correct": true
+        }
+      ],
+      "explanation": "La enzima AID produce la hipermutación somática en la región variable de los centroblastos, lo que aumenta la diversidad en la afinidad del BCR.",
+      "tema": "linfocitos-b",
+      "subtema": "Hipermutación somática",
+      "seccion": "Zona oscura: Centroblastos"
+    },
+    {
+      "id": "q32",
+      "stem": "Un centrocito de la zona clara de un ganglio de una mujer de 29 años captó gran cantidad de antígeno de las células dendríticas foliculares y lo presentó en MHC II a un linfocito Tfh. Este centrocito sobrevive gracias a las señales del Tfh. ¿Qué señales de supervivencia recibe?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD40 con CD40L, ICOS con ICOSL, e IFN-γ e IL-12",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD40 con CD40L, ICOS con ICOSL, e IL-21 e IL-4",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CD40 con CD40L, CTLA-4 con B7, e IL-21 e IL-4",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD40 con CD40L, ICOS con ICOSL, e IL-2 e IL-7",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD40 con CD40L, ICOS con ICOSL, e IL-10 e IL-13",
+          "correct": false
+        }
+      ],
+      "explanation": "El Tfh entrega al centrocito de alta afinidad las señales CD40-CD40L e ICOS-ICOSL, además de las citocinas IL-21 e IL-4, que favorecen su supervivencia.",
+      "tema": "linfocitos-b",
+      "subtema": "Señales del Tfh",
+      "seccion": "Zona clara: Centrocitos"
+    },
+    {
+      "id": "q33",
+      "stem": "Un niño de 5 años con dermatitis atópica y asma tiene la IgE sérica muy elevada. Sus centros germinales muestran predominio de linfocitos T que secretan IL-4. Se repasa qué citocina dirige el cambio de isotipo a IgE, cuál a IgG1 e IgG3 y cuál a IgA. ¿Cuál es la correspondencia correcta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-4 a IgG1 e IgG3, IFN-γ a IgE e IgG4 y TGF-β a IgA",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-4 a IgE, IFN-γ a IgA y TGF-β a IgG1 e IgG3",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IFN-γ a IgE, IL-4 a IgG1 e IgG3 y TGF-β a IgA",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-4 a IgE, IFN-γ a IgG1 e IgG3 y TGF-β a IgA",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "IL-12 a IgE, IFN-γ a IgG1 e IgG3 y TGF-β a IgA",
+          "correct": false
+        }
+      ],
+      "explanation": "La IL-4 dirige el cambio a IgE, el IFN-γ a IgG1 e IgG3 y el TGF-β a IgA. Las citocinas del linfocito T determinan el isotipo final.",
+      "tema": "anticuerpos",
+      "subtema": "Citocinas y cambio de isotipo",
+      "seccion": "V. Respuestas funcionales"
+    },
+    {
+      "id": "q34",
+      "stem": "Una mujer de 32 años se recupera de una hepatitis A. Meses después, una nueva exposición al mismo virus no le causa enfermedad. Sus linfocitos B activados se diferenciaron en un tipo celular que secreta anticuerpos y en otro que persiste a largo plazo. ¿En qué dos tipos celulares se diferenciaron?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células B de memoria que secretan anticuerpos y plasmocitos de vida corta",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Plasmocitos que secretan anticuerpos y linfocitos T de memoria",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Plasmocitos que secretan anticuerpos y células B de memoria",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Plasmocitos que presentan antígeno y células B de memoria",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Centroblastos que secretan anticuerpos y células B de memoria",
+          "correct": false
+        }
+      ],
+      "explanation": "El linfocito B activado se diferencia en plasmocitos, que secretan grandes cantidades de anticuerpos, y en linfocitos B de memoria, que permiten una respuesta secundaria más rápida y potente.",
+      "tema": "linfocitos-b",
+      "subtema": "Plasmocitos y memoria",
+      "seccion": "V. Respuestas funcionales"
+    },
+    {
+      "id": "q35",
+      "stem": "Dos meses después de una infección respiratoria, un varón de 50 años muestra anticuerpos IgG contra el patógeno con una afinidad mucho mayor que los de la primera semana, aunque con las mismas funciones efectoras. ¿Qué proceso explica este aumento de afinidad sin cambio de función efectora?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hipermutación somática de la región variable y selección clonal",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Cambio de isotipo de la región constante y selección clonal",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hipermutación somática de la región constante y selección clonal",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Recombinación VDJ de la región variable y selección clonal",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Hipermutación somática de la región variable sin selección clonal",
+          "correct": false
+        }
+      ],
+      "explanation": "La maduración de la afinidad ocurre por hipermutación somática de la región variable en el centro germinal, con selección de los clones de mayor afinidad y sin cambiar la función efectora.",
+      "tema": "linfocitos-b",
+      "subtema": "Maduración de la afinidad",
+      "seccion": "V. Respuestas funcionales"
+    },
+    {
+      "id": "q36",
+      "stem": "Un niño de 7 años con sarampión desarrolla anticuerpos que impiden que el virus penetre en las células del epitelio respiratorio. Este efecto se observa incluso en un ensayo sin complemento ni fagocitos. ¿Qué función efectora de los anticuerpos describe este hallazgo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Opsonización, al facilitar la fagocitosis del virus por macrófagos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Activación del complemento, al formar el complejo de ataque",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Neutralización, al impedir la entrada del virus a la célula",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Citotoxicidad dependiente de anticuerpos, al activar células NK",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Aglutinación, al agrupar los viriones en grandes agregados",
+          "correct": false
+        }
+      ],
+      "explanation": "La neutralización es la función efectora que impide la entrada de un virus a la célula, sin requerir complemento, fagocitos ni células citotóxicas.",
+      "tema": "anticuerpos",
+      "subtema": "Neutralización",
+      "seccion": "V. Respuestas funcionales"
+    },
+    {
+      "id": "q37",
+      "stem": "Una mujer de 26 años con diarrea por rotavirus presenta IgA secretoria en las heces, resistente a las proteasas del intestino. Se explica que la IgA cruza el epitelio por transcitosis unida a un receptor y retiene un fragmento de este. ¿Qué es el componente secretor y cómo protege a la IgA?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un resto de la cadena J que protege al dímero de las proteasas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Un resto del receptor poli-Ig que protege al dímero de proteasas",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Un resto del receptor poli-Ig que une los dos monómeros de IgA",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Un resto de la región bisagra que protege al dímero de las proteasas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Un resto del receptor FcRn que protege al dímero de las proteasas",
+          "correct": false
+        }
+      ],
+      "explanation": "El componente secretor es un resto del receptor poli-Ig que el dímero de IgA retiene al secretarse y que lo protege de las proteasas luminales.",
+      "tema": "anticuerpos",
+      "subtema": "Componente secretor de la IgA",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q38",
+      "stem": "Un varón de 34 años con infección por citomegalovirus tiene células infectadas recubiertas de anticuerpos. Una célula NK reconoce la región Fc de estos anticuerpos y destruye la célula infectada. ¿Qué isotipo es esencial para esta citotoxicidad celular dependiente de anticuerpos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgM pentamérica, cuya región Fc reconoce a la célula NK",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IgA dimérica, cuya región Fc reconoce la célula NK",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgE monomérica, cuya región Fc reconoce a la célula NK",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgG monomérica, cuya región Fc reconoce la célula NK",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "IgD monomérica, cuya región Fc reconoce la célula NK",
+          "correct": false
+        }
+      ],
+      "explanation": "La célula NK reconoce el Fc de la IgG unida a la célula infectada y la destruye por citotoxicidad dependiente de anticuerpos. Los eosinófilos, en cambio, usan la IgE.",
+      "tema": "anticuerpos",
+      "subtema": "ADCC e IgG",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q39",
+      "stem": "Un lactante de 8 meses con inmunodeficiencia es evaluado para valorar su repertorio de linfocitos B antes de cualquier exposición al antígeno. El inmunólogo enumera los mecanismos que generan diversidad en esa etapa y pide identificar el que no pertenece a la lista. ¿Cuál mecanismo no genera diversidad antes de la exposición al antígeno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Combinatoria de segmentos V, D y J, que ocurre en la médula",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Diversidad de unión, por adición y pérdida de nucleótidos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Nucleótidos N añadidos al azar por la TdT en las uniones",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Asociación de cadenas pesada y ligera en el BCR",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Hipermutación somática, que ocurre tras la activación",
+          "correct": true
+        }
+      ],
+      "explanation": "La hipermutación somática ocurre después de la activación, en el centro germinal. Antes del antígeno la diversidad viene de la combinatoria VDJ, la unión juncional y la asociación de cadenas.",
+      "tema": "linfocitos-b",
+      "subtema": "Diversidad previa al antígeno",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q40",
+      "stem": "Una gestante de 28 años, educadora de un jardín infantil, tuvo contacto hace 5 días con un niño con eritema infeccioso por parvovirus B19. Su serología muestra IgG de 4 UI/mL, con valores negativos menores de 10, e IgM de 0,8 UI/mL, con valores negativos menores de 1. ¿Qué interpretación corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sin infección previa ni activa, y expuesta a riesgo de contagio",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Con inmunidad previa por la IgG, y sin riesgo de contagio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Con infección activa por la IgM, y con riesgo de transmisión fetal",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Con infección antigua ya resuelta, y sin riesgo de contagio",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Con infección reciente, con IgG e IgM que apenas empiezan a subir",
+          "correct": false
+        }
+      ],
+      "explanation": "Ambos valores son negativos, así que no hay infección previa ni activa. Ni la madre ni el feto están protegidos y hay riesgo de contagio tras la exposición reciente.",
+      "tema": "anticuerpos",
+      "subtema": "Interpretación de serología",
+      "seccion": "PREGUNTAS"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

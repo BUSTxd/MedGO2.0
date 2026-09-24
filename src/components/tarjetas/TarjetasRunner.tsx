@@ -10,6 +10,8 @@ import { shuffle } from '@/lib/utils/shuffle';
 import { cursoDe, desglosarIntento, registrarIntento } from '@/lib/temas-flojos';
 import { trackEvent } from '@/lib/analytics';
 import Tarjeta, { type Fase } from './Tarjeta';
+import ValoracionPregunta from './ValoracionPregunta';
+import type { Valoracion } from '@/lib/valoraciones';
 import { paloDe, type Palo } from './Palos';
 import s from '@/styles/tarjetas.module.css';
 
@@ -128,6 +130,10 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
   const volteoPendiente = useRef(false);
   const [respuestas, setRespuestas] = useState<Respuesta[]>([]);
   const [reduce, setReduce] = useState(false);
+
+  // Qué tal está armada cada pregunta, según el alumno. Sin valorarla no se avanza.
+  const [valoraciones, setValoraciones] = useState<Record<string, Valoracion>>({});
+  const [intentosSinValorar, setIntentosSinValorar] = useState(0);
 
   const timers = useRef<number[]>([]);
 
@@ -261,6 +267,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
       setElegida(null);
       setVolteada(false);
       setVista(false);
+      setIntentosSinValorar(0);
       volteoPendiente.current = false;
       setFase('entrando');
       programar(() => setFase('quieto'), ENTRADA_MS);
@@ -288,7 +295,27 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
     avanzar(finales);
   };
 
-  const siguiente = () => avanzar(respuestas);
+  const valorar = (v: Valoracion) => {
+    if (!pregunta) return;
+    setValoraciones(prev => ({ ...prev, [pregunta.id]: v }));
+    setIntentosSinValorar(0);
+    // Sin red no se le retiene: la marca ya está puesta y el envío se reintenta una vez.
+    const cuerpo = JSON.stringify({ examKey, questionId: pregunta.id, rating: v });
+    const enviar = () => fetch('/api/valoracion-pregunta', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: cuerpo,
+      keepalive: true,
+    }).then(r => { if (!r.ok && r.status >= 500) throw new Error('reintenta'); });
+    enviar().catch(() => window.setTimeout(() => { enviar().catch(() => {}); }, 2500));
+  };
+
+  const sinValorar = modo === 'quiz' && !!pregunta && !valoraciones[pregunta.id];
+
+  const siguiente = () => {
+    if (sinValorar) { setIntentosSinValorar(n => n + 1); return; }
+    avanzar(respuestas);
+  };
 
   const reiniciar = () => {
     limpiarTimers();
@@ -302,6 +329,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
     setVista(false);
     volteoPendiente.current = false;
     setRespuestas([]);
+    setIntentosSinValorar(0);
     setPaso('jugando');
     setFase('entrando');
     programar(() => setFase('quieto'), ENTRADA_MS);
@@ -313,7 +341,14 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
     if (paso !== 'jugando' || leyendo) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
-      if (e.key === 'Enter' && respondida) { e.preventDefault(); siguiente(); return; }
+      // Enter sobre un color de la valoración lo elige el propio botón: no cuenta como «seguir».
+      const enValoracion = e.target instanceof Element && !!e.target.closest('[data-valora]');
+      if (e.key === 'Enter' && respondida && !enValoracion) { e.preventDefault(); siguiente(); return; }
+      if (modo === 'quiz' && elegida && ['1', '2', '3'].includes(e.key)) {
+        e.preventDefault();
+        valorar((['rojo', 'amarillo', 'verde'] as const)[Number(e.key) - 1]);
+        return;
+      }
       if (modo === 'flash') {
         if (e.key === ' ') { e.preventDefault(); voltear(); }
         return;
@@ -506,8 +541,18 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
           {respondida && enlaceResumen(pregunta?.seccion)}
 
           {respondida && (
-            <div className={s.pie}>
-              <button type="button" className={s.siguiente} onClick={siguiente}>
+            <div className={`${s.pie} ${s.pieQuiz}`}>
+              <ValoracionPregunta
+                valor={pregunta ? (valoraciones[pregunta.id] ?? null) : null}
+                onElegir={valorar}
+                intentos={intentosSinValorar}
+              />
+              <button
+                type="button"
+                className={`${s.siguiente} ${sinValorar ? s.siguienteBloqueado : ''}`}
+                aria-disabled={sinValorar}
+                onClick={siguiente}
+              >
                 {idx + 1 >= total ? 'Ver resultado' : 'Siguiente'} →
               </button>
             </div>

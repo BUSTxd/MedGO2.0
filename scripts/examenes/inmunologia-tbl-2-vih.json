@@ -3,7 +3,1023 @@
   "key": "inmunologia/tbl-2-vih",
   "title": "TBL 2 — Infecciones virales: VIH",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Una mujer de 29 años consulta por fiebre baja, fatiga y adenopatías cervicales dos semanas después de una relación sexual sin protección con una pareja recién diagnosticada con VIH. Una biopsia de mucosa vaginal muestra virus dentro de linfocitos, macrófagos y células dendríticas. El laboratorio investiga la molécula de superficie a la que se une primero la glucoproteína gp120 del virus. ¿Cuál es el receptor principal del VIH y en qué células se expresa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD8 en linfocitos T citotóxicos, macrófagos y células dendríticas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD4 en linfocitos T, macrófagos y células dendríticas",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CD21 en linfocitos B, macrófagos y células dendríticas foliculares",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD3 en linfocitos T, monocitos y células dendríticas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD16 en linfocitos NK, monocitos y células dendríticas cutáneas",
+          "correct": false
+        }
+      ],
+      "explanation": "El VIH se une por gp120 al receptor CD4, que expresan los linfocitos T, los macrófagos y las células dendríticas, sus principales dianas.",
+      "tema": "vih",
+      "subtema": "Receptor CD4 y células diana",
+      "seccion": "GENERALIDADES - VIH"
+    },
+    {
+      "id": "q02",
+      "stem": "Un hombre de 34 años recibe el diagnóstico de VIH tres semanas después de una relación sexual sin preservativo. Su médico explica que el virus que inició la infección en la mucosa genital usa un correceptor distinto del que predomina años después, cuando aparece la inmunodeficiencia avanzada. ¿Qué correceptor y qué células explican la transmisión inicial de persona a persona?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CXCR4 en linfocitos T CD4⁺ de memoria y macrófagos de mucosa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CCR5 en linfocitos T CD4⁺ vírgenes que migran hacia los ganglios",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CXCR4 en linfocitos T CD4⁺ vírgenes que migran hacia los ganglios",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CCR5 en linfocitos T CD4⁺ de memoria y macrófagos de mucosa",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "CCR7 en linfocitos T CD4⁺ de memoria y macrófagos mucosos",
+          "correct": false
+        }
+      ],
+      "explanation": "Las cepas R5 usan CCR5 e infectan linfocitos T CD4⁺ de memoria y efectores en las mucosas, además de macrófagos y células dendríticas, lo que explica la transmisión inicial.",
+      "tema": "vih",
+      "subtema": "CCR5 y transmisión inicial",
+      "seccion": "Correceptores"
+    },
+    {
+      "id": "q03",
+      "stem": "Una mujer de 31 años acude a control tras una exposición sexual de riesgo hace diez días. Se sabe que las células dendríticas inmaduras de su mucosa vaginal capturan partículas del VIH casi sin infectarse y las llevan a los ganglios linfáticos, donde las entregan a los linfocitos T CD4⁺. ¿Qué receptor de las células dendríticas permite esta captura del virus?",
+      "options": [
+        {
+          "id": "a",
+          "text": "DC-SIGN o CD209, lectina tipo C de las células dendríticas inmaduras",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Langerina o CD207, lectina tipo C de las células de Langerhans cutáneas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Dectina 1, lectina tipo C que reconoce β glucanos de los hongos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "DEC-205 o CD205, lectina tipo C de las células dendríticas foliculares",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Selectina E o CD62E, lectina tipo C de las células endoteliales activadas",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células dendríticas inmaduras capturan el VIH mediante DC-SIGN, no se infectan de forma productiva y lo transfieren a los linfocitos T CD4⁺ en la sinapsis inmunológica del ganglio.",
+      "tema": "vih",
+      "subtema": "Captura por DC-SIGN",
+      "seccion": "Transfección"
+    },
+    {
+      "id": "q04",
+      "stem": "Un hombre de 27 años con VIH inicia un tratamiento antirretroviral que incluye inhibidores nucleósidos y no nucleósidos. El médico le explica que el fármaco actúa en el citoplasma, poco después de que el virus entra a la célula, y evita que el ARN viral pase a ADN de doble cadena. ¿Qué enzima o proteína viral bloquean estos fármacos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Retrotranscriptasa, que inserta el cADN en el genoma",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Integrasa, que convierte el ARN viral en cADN de doble cadena",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Integrasa, que inserta el cADN viral en el genoma celular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Proteasa, que corta las poliproteínas Gag y Pol tras la gemación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Retrotranscriptasa, que convierte el ARN viral en cADN",
+          "correct": true
+        }
+      ],
+      "explanation": "La retrotranscriptasa convierte el ARN viral en cADN de doble cadena en el citoplasma, y es la diana de los inhibidores nucleósidos y no nucleósidos.",
+      "tema": "vih",
+      "subtema": "Diana de la retrotranscriptasa",
+      "seccion": "Entrada y Replicación Celular"
+    },
+    {
+      "id": "q05",
+      "stem": "Una mujer de 26 años consulta por fiebre, fatiga, ganglios cervicales inflamados, erupción cutánea y úlceras orales tres semanas después de una exposición de riesgo. Las pruebas de anticuerpos anti-VIH aún son negativas, pero el laboratorio informa valores muy alterados en otras determinaciones de sangre. ¿Qué perfil corresponde a la fase aguda de la infección por VIH?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Carga viral estable, antígeno p24 negativo y descenso lento de CD4⁺",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Carga viral muy alta, antígeno p24 negativo y caída brusca de CD4⁺",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Carga viral muy alta, antígeno p24 positivo y caída brusca de CD4⁺",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Carga viral alta, antígeno p24 variable y CD4⁺ menores de 200/µL",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Carga viral baja, antígeno p24 positivo y aumento progresivo de CD4⁺",
+          "correct": false
+        }
+      ],
+      "explanation": "En la fase aguda hay pico de viremia y antígeno p24 positivo con caída brusca de CD4⁺, antes de que aparezcan los anticuerpos.",
+      "tema": "vih",
+      "subtema": "Perfil de la fase aguda",
+      "seccion": "CICLO DE LA ENFERMEDAD › AGUDA"
+    },
+    {
+      "id": "q06",
+      "stem": "Un hombre de 22 años se realiza una prueba de tamizaje para VIH tras una exposición sexual reciente. El laboratorio procesa su muestra con un ELISA de cuarta generación, que permite una detección más temprana que las pruebas anteriores. ¿Qué detecta esta prueba de tamizaje?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Anticuerpos anti-VIH IgG e IgM más el antígeno p24",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Anticuerpos anti-VIH IgG e IgM sin el antígeno p24 viral",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Anticuerpos anti-VIH IgG e IgA más antígeno p24",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Anticuerpos anti-VIH IgG e IgM más el ARN viral cuantitativo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Anticuerpos anti-gp41 IgG e IgM más el antígeno gp120",
+          "correct": false
+        }
+      ],
+      "explanation": "La prueba de cuarta generación detecta en un mismo ensayo los anticuerpos anti-VIH IgG e IgM y el antígeno p24, lo que permite una detección más temprana.",
+      "tema": "vih",
+      "subtema": "Tamizaje de cuarta generación",
+      "seccion": "Diagnóstico"
+    },
+    {
+      "id": "q07",
+      "stem": "Un estudiante de 19 años consulta por fiebre, odinofagia intensa, fatiga y adenopatías cervicales dos semanas después de una fiesta en la que besó a varias personas. El médico sospecha mononucleosis infecciosa y recuerda que un solo agente causa cerca del 90 % de los casos. ¿Qué virus es el principal causante de esta enfermedad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Citomegalovirus, herpesvirus humano tipo 5",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Virus varicela zóster, herpesvirus humano tipo 3",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Virus del herpes simple, herpesvirus humano tipo 1",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Virus del herpes simple 2, herpesvirus humano tipo 2",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Virus de Epstein-Barr, herpesvirus humano tipo 4",
+          "correct": true
+        }
+      ],
+      "explanation": "El virus de Epstein-Barr, herpesvirus humano tipo 4, causa cerca del 90 % de las mononucleosis y el citomegalovirus el 10 % restante.",
+      "tema": "vih",
+      "subtema": "Agente causal principal",
+      "seccion": "Mononucleosis"
+    },
+    {
+      "id": "q08",
+      "stem": "Una joven de 18 años con mononucleosis infecciosa confirmada pregunta cómo el virus logró infectar sus linfocitos B. El equipo médico explica que una glicoproteína de la envoltura viral reconoce un receptor del complemento presente en estas células. ¿Qué par molecular permite la infección de los linfocitos B por el virus de Epstein-Barr?",
+      "options": [
+        {
+          "id": "a",
+          "text": "gp350 del virus y CD19 o CD81 del linfocito B",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "gp120 del virus y CD21 o CR2 del linfocito B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "gp350 del virus y CD21 o CR2 del linfocito B",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "gp41 del virus y CD21 o CR2 del linfocito B",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "gp350 del virus y CD20 o MS4A1 del linfocito B",
+          "correct": false
+        }
+      ],
+      "explanation": "La glicoproteína gp350 del virus de Epstein-Barr se une al receptor CD21, también llamado CR2, del linfocito B, y así el virus entra a estas células.",
+      "tema": "vih",
+      "subtema": "gp350 y CD21",
+      "seccion": "FISIOPATOLOGÍA"
+    },
+    {
+      "id": "q09",
+      "stem": "Una mujer de 40 años tuvo mononucleosis en la adolescencia. Tras un periodo de estrés intenso presenta un cuadro febril leve y los estudios muestran reactivación del virus de Epstein-Barr. Se pregunta qué células albergaban el virus en forma latente durante todos estos años. ¿Cuál es el reservorio del EBV desde el cual puede reactivarse?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T CD4⁺ de memoria del tejido linfoide",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos B de memoria del tejido linfoide",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos B vírgenes del tejido linfoide y mucosa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Macrófagos y células dendríticas del tejido linfoide",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos T CD8⁺ de memoria del tejido linfoide",
+          "correct": false
+        }
+      ],
+      "explanation": "El EBV persiste de forma latente en los linfocitos B de memoria, desde donde puede reactivarse, a diferencia del VIH, cuyos reservorios son linfocitos T CD4⁺ de memoria, macrófagos y células dendríticas.",
+      "tema": "vih",
+      "subtema": "Reservorio del EBV",
+      "seccion": "Reservorios"
+    },
+    {
+      "id": "q10",
+      "stem": "Un joven de 20 años con fiebre, faringitis y linfocitos atípicos en el frotis mejora por completo a las tres semanas sin tratamiento específico. Un hombre de 35 años con síndrome retroviral agudo, en cambio, sigue infectado años después y desarrolla inmunodeficiencia. ¿Qué curso siguen respectivamente la mononucleosis y la infección por VIH?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Progresiva al SIDA y autolimitada en semanas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Autolimitada en semanas y crónica sin progresión al SIDA",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Crónica con reactivaciones y progresiva hacia el SIDA",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Autolimitada en semanas y progresiva hacia el SIDA",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Progresiva hacia el SIDA y crónica con reactivaciones",
+          "correct": false
+        }
+      ],
+      "explanation": "La mononucleosis se resuelve sola en 2 a 4 semanas, mientras que el VIH avanza de la fase aguda a la crónica asintomática y luego al SIDA.",
+      "tema": "vih",
+      "subtema": "Curso comparado",
+      "seccion": "Curso de la enfermedad"
+    },
+    {
+      "id": "q11",
+      "stem": "Un residente de infectología atiende a una mujer de 33 años de Lima, con carga viral muy alta y progresión rápida, y a un hombre de 45 años de Guinea-Bisáu, con carga viral baja y progresión lenta. Al presentar el caso compara los dos tipos virales que causan estas infecciones. ¿Qué afirmación sobre ellos es correcta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "VIH-2 tiene mayor transmisibilidad y progresa más rápido hacia el SIDA",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "VIH-1 tiene mayor transmisibilidad y progresa más lento hacia el SIDA",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "VIH-1 tiene mayor transmisibilidad y progresa más rápido al SIDA",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "VIH-2 tiene mayor carga viral y causa el 99 % de casos en el mundo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "VIH-1 es endémico de África Occidental y de menor carga viral",
+          "correct": false
+        }
+      ],
+      "explanation": "El VIH-1 causa cerca del 99 % de los casos, con alta replicación, mayor transmisibilidad y progresión más rápida. El VIH-2 tiene menor carga viral y es endémico de África Occidental.",
+      "tema": "vih",
+      "subtema": "VIH-1 frente a VIH-2",
+      "seccion": "GENERALIDADES - VIH"
+    },
+    {
+      "id": "q12",
+      "stem": "Un equipo de investigación estudia a una mujer de 35 años con VIH cuyos anticuerpos reconocen al virus, pero este cambia continuamente y escapa de la respuesta humoral. Explican que esta variabilidad dificulta el desarrollo de una vacuna y que los anticuerpos se dirigen a bucles variables de una glucoproteína de la envoltura. ¿Qué proteína viral es responsable de la variabilidad antigénica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "gp41, por la variabilidad de sus bucles V1 a V5",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "p24, por la variabilidad de su cápside viral externa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "gp120, por la fusión con la membrana de la célula",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "gp41, por la unión al receptor CD4 y al correceptor",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "gp120, por la variabilidad de sus bucles V1 a V5",
+          "correct": true
+        }
+      ],
+      "explanation": "Los bucles variables V1 a V5 de gp120 son blanco de anticuerpos pero mutan con rapidez, y por eso el virus escapa de la inmunidad y dificulta la vacuna.",
+      "tema": "vih",
+      "subtema": "gp120 y variabilidad antigénica",
+      "seccion": "GENERALIDADES - VIH"
+    },
+    {
+      "id": "q13",
+      "stem": "Un hombre de 41 años con VIH sin tratamiento desde hace ocho años presenta candidiasis esofágica y CD4⁺ de 70 por µL. El estudio de tropismo viral muestra que ahora predominan cepas que usan un correceptor distinto del que se usó al inicio de la infección. ¿Qué correceptor y qué células caracterizan esta fase tardía?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CCR5 sobre linfocitos T CD4⁺ vírgenes que expresan también CCR7",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CXCR4 sobre linfocitos T CD4⁺ vírgenes que expresan CCR7",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CXCR4 sobre linfocitos T CD4⁺ de memoria y macrófagos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CCR5 sobre linfocitos T CD4⁺ de memoria y macrófagos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CCR7 sobre linfocitos T CD4⁺ vírgenes que expresan también CXCR4",
+          "correct": false
+        }
+      ],
+      "explanation": "En la fase tardía predominan las cepas X4, que usan CXCR4 e infectan linfocitos T CD4⁺ vírgenes que expresan CCR7, lo que se asocia con la depleción masiva de CD4⁺.",
+      "tema": "vih",
+      "subtema": "CXCR4 en fase tardía",
+      "seccion": "Correceptores"
+    },
+    {
+      "id": "q14",
+      "stem": "Una pareja serodiscordante consulta porque la mujer de 28 años, tras años de exposiciones sin protección con su pareja con VIH, sigue sin infectarse. Su estudio genético revela una mutación en el gen del correceptor CCR5. El médico explica que el efecto depende de si la mutación está en uno o en ambos alelos. ¿Qué efecto tiene la mutación de CCR5 en homocigosis y en heterocigosis?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Homocigosis retrasa la progresión y heterocigosis da resistencia",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Homocigosis da resistencia y heterocigosis acelera la progresión clínica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Homocigosis y heterocigosis dan resistencia a la infección",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Homocigosis da resistencia y heterocigosis retrasa la progresión",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Homocigosis acelera la progresión y heterocigosis retrasa la infección",
+          "correct": false
+        }
+      ],
+      "explanation": "Sin CCR5 funcional las cepas R5 de la transmisión no entran. La mutación homocigota da resistencia y la heterocigota solo un curso más lento.",
+      "tema": "vih",
+      "subtema": "Mutación de CCR5",
+      "seccion": "Correceptores"
+    },
+    {
+      "id": "q15",
+      "stem": "Una mujer de 38 años con VIH recibe un esquema que incluye un inhibidor de la integrasa. Su médico le explica que el fármaco actúa en un paso posterior a la retrotranscripción, cuando el ADN viral ya ha entrado al núcleo de las células infectadas. ¿Qué proceso impide este fármaco?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Bloqueo de la inserción del cADN viral en el genoma celular",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Bloqueo de la copia del ARN viral en cADN de doble cadena",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Bloqueo de la escisión de las poliproteínas Gag y Pol",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Bloqueo de la fusión de la membrana viral con la membrana celular",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Bloqueo del transporte del ARN viral del núcleo al citoplasma",
+          "correct": false
+        }
+      ],
+      "explanation": "La integrasa inserta el cADN viral en el genoma de la célula y forma el provirus, por lo que sus inhibidores impiden que el virus se integre.",
+      "tema": "vih",
+      "subtema": "Diana de la integrasa",
+      "seccion": "Entrada y Replicación Celular"
+    },
+    {
+      "id": "q16",
+      "stem": "En una biopsia ganglionar de un hombre de 36 años con VIH se observa provirus integrado en linfocitos T CD4⁺ en reposo, con muy poca producción de ARN viral. Cuando la célula se activa, el virus aumenta de pronto la transcripción de su ARN mediante un gen regulador. ¿Qué gen viral cumple esta función?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Rev, gen regulador que transporta el ARN viral al citoplasma",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Rev, gen regulador que aumenta la transcripción del ARN viral",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Pol, gen enzimático que codifica la retrotranscriptasa y la proteasa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tat, gen regulador que aumenta la transcripción del ARN viral",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Env, gen de envoltura que codifica las glucoproteínas gp120 y gp41",
+          "correct": false
+        }
+      ],
+      "explanation": "Cuando la célula infectada se activa, el gen regulador Tat aumenta la transcripción del ARN viral desde el provirus, mientras que Rev lo exporta al citoplasma.",
+      "tema": "vih",
+      "subtema": "Genes reguladores Tat y Rev",
+      "seccion": "Entrada y Replicación Celular"
+    },
+    {
+      "id": "q17",
+      "stem": "Un investigador estudia cómo el VIH entra a los linfocitos T CD4⁺ de un paciente de 32 años. Observa que, una vez unido el virus al receptor CD4 y a su correceptor, otra proteína de la envoltura cambia de forma y acerca ambas membranas hasta que se unen. ¿Qué proteína viral induce esta fusión y cuál es su función?",
+      "options": [
+        {
+          "id": "a",
+          "text": "gp120, que fusiona la membrana viral con la celular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "gp41, que fusiona la membrana viral con la celular",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "gp41, que se une al receptor CD4 y al correceptor celular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "gp120, que se une al receptor CD4 y al correceptor celular",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "p24, que forma la cápside y protege el ARN viral",
+          "correct": false
+        }
+      ],
+      "explanation": "Tras la unión de gp120 a CD4 y al correceptor, gp41 induce la fusión de la membrana viral con la celular y permite la entrada del virus.",
+      "tema": "vih",
+      "subtema": "gp41 y fusión de membranas",
+      "seccion": "Entrada y Replicación Celular"
+    },
+    {
+      "id": "q18",
+      "stem": "Un hombre de 44 años con VIH recibe un inhibidor de la proteasa. Al analizar los viriones que produce su carga viral residual se observan partículas inmaduras que no son infectantes, porque no se completa la última etapa del ciclo tras la gemación. ¿Qué acción de la proteasa se ve bloqueada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Corte de las poliproteínas Gag y Env para formar un virión maduro",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Unión de las poliproteínas Gag y Pol durante el ensamblaje viral",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Corte de las poliproteínas Gag y Pol antes de integrarse",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Copia de las poliproteínas Gag y Pol en el citoplasma celular",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Corte de las poliproteínas Gag y Pol y maduración del virión",
+          "correct": true
+        }
+      ],
+      "explanation": "Tras la gemación, la proteasa viral escinde las poliproteínas Gag y Pol y produce un virión maduro e infectante, por eso su bloqueo deja partículas inmaduras.",
+      "tema": "vih",
+      "subtema": "Maduración por la proteasa",
+      "seccion": "Entrada y Replicación Celular"
+    },
+    {
+      "id": "q19",
+      "stem": "Un hombre de 37 años con VIH diagnosticado hace cuatro años acude a control sin síntomas y con ganglios normales. Su carga viral se mantiene en un nivel estable desde hace meses y sus linfocitos CD4⁺ descienden lentamente. El infectólogo revisa el perfil de laboratorio de esta fase. ¿Qué combinación corresponde a la fase crónica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Carga viral estable, antígeno p24 negativo y seroconversión",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Carga viral muy alta, antígeno p24 positivo y sin anticuerpos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Carga viral estable, antígeno p24 positivo sin anticuerpos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Carga viral en rebrote, antígeno p24 variable y seroconversión",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Carga viral estable, antígeno p24 negativo y sin seroconversión",
+          "correct": false
+        }
+      ],
+      "explanation": "En la fase crónica la carga viral se mantiene en el set point, el p24 es negativo y hay seroconversión con anticuerpos anti-gp120 y anti-gp41.",
+      "tema": "vih",
+      "subtema": "Perfil de la fase crónica",
+      "seccion": "CICLO DE LA ENFERMEDAD › CRÓNICA"
+    },
+    {
+      "id": "q20",
+      "stem": "Una mujer de 39 años con VIH sin tratamiento consulta por tos seca, disnea y fiebre. Su recuento de CD4⁺ es de 90 por µL, la carga viral vuelve a estar elevada y sus linfocitos T muestran mayor expresión de moléculas inhibidoras. Se diagnostica neumonía por Pneumocystis. ¿Qué explica la pérdida del control inmunitario en esta fase?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Agotamiento de linfocitos B con aumento de PD-1 y de CTLA-4",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Agotamiento de linfocitos T con aumento de CD28 y CD40L",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Agotamiento de linfocitos T con aumento de PD-1 y CTLA-4",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Expansión de linfocitos T con aumento de PD-1 y de CTLA-4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Agotamiento de células NK con aumento de KIR y NKG2A",
+          "correct": false
+        }
+      ],
+      "explanation": "En el SIDA los linfocitos T se agotan con aumento de PD-1 y CTLA-4, hay activación inmune crónica y fracasan las respuestas CD8⁺ y de anticuerpos.",
+      "tema": "vih",
+      "subtema": "Agotamiento en el SIDA",
+      "seccion": "CICLO DE LA ENFERMEDAD › SIDA"
+    },
+    {
+      "id": "q21",
+      "stem": "Un varón de 25 años con fiebre, faringitis y erupción, doce días después de una relación sexual sin protección, tiene un ELISA de anticuerpos negativo. Persiste la sospecha clínica de infección aguda por VIH. ¿Qué prueba permite detectar el virus en esta etapa, antes de la aparición de anticuerpos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Western blot de anticuerpos contra gp120 y gp41",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Detección de CD4⁺ y CD8⁺ por citometría de flujo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inmunoensayo de confirmación de IgG anti-VIH-1/2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Detección de anticuerpos anti-VIH por ELISA",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Detección de ARN viral por NAAT o por RT-PCR",
+          "correct": true
+        }
+      ],
+      "explanation": "La detección de ARN viral por NAAT o RT-PCR identifica el VIH desde los 10 a 14 días, cuando todavía no hay anticuerpos.",
+      "tema": "vih",
+      "subtema": "ARN viral en infección aguda",
+      "seccion": "Diagnóstico"
+    },
+    {
+      "id": "q22",
+      "stem": "Una mujer de 28 años tiene un tamizaje reactivo para VIH con un ELISA de cuarta generación. Como este ensayo no diferencia entre tipos virales, el laboratorio realiza una segunda prueba. ¿Qué hace el inmunoensayo de confirmación que sigue a un tamizaje reactivo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Confirma la infección y mide la carga viral por PCR",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Descarta la infección y cuenta los CD4⁺ por citometría de flujo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Confirma la infección y diferencia VIH-1 de VIH-2 por IgG",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Confirma la infección y detecta el antígeno p24 sin tipificar",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Descarta la infección y diferencia VIH-1 de VIH-2 con ARN viral",
+          "correct": false
+        }
+      ],
+      "explanation": "El inmunoensayo de confirmación verifica la infección y diferencia VIH-1 de VIH-2, algo que el tamizaje de cuarta generación no puede hacer.",
+      "tema": "vih",
+      "subtema": "Inmunoensayo de confirmación",
+      "seccion": "Diagnóstico"
+    },
+    {
+      "id": "q23",
+      "stem": "Un hombre de 46 años con VIH en tratamiento acude cada seis meses a control. Su médico solicita dos exámenes para evaluar la progresión y la respuesta terapéutica, uno que cuantifica el ARN viral en sangre y otro que mide las subpoblaciones linfocitarias. ¿Con qué técnica se mide cada una?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Citometría de flujo para la carga viral y PCR para CD4⁺ y CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "ELISA para la carga viral y citometría de flujo para CD4⁺ y CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "PCR para la carga viral y ELISA de cuarta generación para CD4⁺ y CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "PCR para la carga viral y citometría de flujo para los CD4⁺ y CD8⁺",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Western blot para la carga viral y citometría de flujo para CD4⁺ y CD8⁺",
+          "correct": false
+        }
+      ],
+      "explanation": "La carga viral se mide por PCR del ARN viral y las subpoblaciones CD4⁺ y CD8⁺ por citometría de flujo, para seguir la progresión de la infección.",
+      "tema": "vih",
+      "subtema": "Pruebas de seguimiento",
+      "seccion": "Diagnóstico"
+    },
+    {
+      "id": "q24",
+      "stem": "Una joven de 17 años presenta fiebre alta, dolor de garganta y linfadenopatía cervical. Recuerda haber compartido vasos con un amigo que tuvo mononucleosis. Su médico le explica que el tiempo entre el contagio y el inicio de los síntomas es prolongado en esta enfermedad transmitida por secreciones. ¿Cuánto dura el periodo de incubación de la mononucleosis infecciosa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Alrededor de 2 semanas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Alrededor de 6 semanas",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Alrededor de 10 semanas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Alrededor de 6 meses",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Alrededor de 12 semanas",
+          "correct": false
+        }
+      ],
+      "explanation": "El periodo de incubación de la mononucleosis infecciosa es de unas 6 semanas, y la transmisión ocurre por secreciones como la saliva.",
+      "tema": "vih",
+      "subtema": "Periodo de incubación",
+      "seccion": "Mononucleosis"
+    },
+    {
+      "id": "q25",
+      "stem": "Un joven de 20 años con fiebre, faringitis y esplenomegalia tiene un frotis de sangre periférica con abundantes linfocitos grandes de citoplasma amplio, llamados células de Downey. El monospot es positivo y el hemograma muestra linfocitosis marcada con neutropenia leve. ¿Qué células son estos linfocitos atípicos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T CD8⁺ citotóxicos activados contra linfocitos B infectados",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos T CD8⁺ de memoria activados contra linfocitos B infectados",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos T CD4⁺ cooperadores activados contra linfocitos B infectados",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células NK activadas contra linfocitos B infectados por EBV",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Plasmablastos secretores de anticuerpos contra el virus de Epstein-Barr",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos atípicos son linfocitos T CD8⁺ citotóxicos activados, que destruyen a los linfocitos B infectados por el EBV.",
+      "tema": "vih",
+      "subtema": "Linfocitos atípicos",
+      "seccion": "FISIOPATOLOGÍA"
+    },
+    {
+      "id": "q26",
+      "stem": "Una paciente de 24 años presenta fiebre repentina de 40 ºC desde hace un día. Su serología para el virus de Epstein-Barr muestra IgM anti-VCA negativa, IgG anti-VCA positiva e IgG anti-EBNA-1 positiva. ¿Cómo se interpretan estos resultados serológicos en esta paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Infección aguda por EBV con anticuerpos que desaparecen en 3 meses",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Infección reciente por EBV de hace un mes con IgM anti-VCA elevada",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Infección reciente por CMV con anticuerpos que persisten de por vida",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Reactivación aguda de EBV con IgM anti-VCA persistente",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Infección pasada por EBV con anticuerpos persistentes de por vida",
+          "correct": true
+        }
+      ],
+      "explanation": "La IgM anti-VCA desaparece a los 3 meses y está negativa, mientras que la IgG anti-VCA y anti-EBNA-1 persisten de por vida, lo que indica infección pasada.",
+      "tema": "vih",
+      "subtema": "Serología de infección pasada",
+      "seccion": "Mononucleosis › DIAGNÓSTICO"
+    },
+    {
+      "id": "q27",
+      "stem": "Una adolescente de 16 años con fiebre, fatiga y linfadenopatía de tres semanas de evolución tiene una serología para el virus de Epstein-Barr. El médico sospecha mononucleosis infecciosa en fase aguda, dentro de las primeras seis semanas. ¿Qué patrón serológico se espera en esta infección aguda?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgM anti-VCA elevada, IgG anti-VCA en ascenso e IgG anti-EBNA indetectable",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IgM anti-VCA negativa, IgG anti-VCA elevada e IgG anti-EBNA también elevada",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgM anti-VCA elevada, IgG anti-VCA indetectable e IgG anti-EBNA elevada",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgM anti-VCA negativa, IgG anti-VCA indetectable e IgG anti-EBNA indetectable",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IgM anti-VCA elevada, IgG anti-VCA en ascenso e IgG anti-EBNA elevada",
+          "correct": false
+        }
+      ],
+      "explanation": "En la infección aguda la IgM anti-VCA aparece primero y la IgG anti-VCA sube desde la segunda semana, mientras que la IgG anti-EBNA surge recién entre las semanas 6 y 12.",
+      "tema": "vih",
+      "subtema": "Serología de infección aguda",
+      "seccion": "Mononucleosis › DIAGNÓSTICO"
+    },
+    {
+      "id": "q28",
+      "stem": "Un hombre de 30 años acude a urgencias una semana después de una exposición de alto riesgo al VIH. Está asintomático y su recuento de CD4⁺ en sangre es normal, pero una biopsia de mucosa intestinal muestra viremia alta y caída de los CD4⁺ locales. ¿Cómo se explica que los CD4⁺ de la sangre aún sean normales?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La infección ya llegó a los ganglios durante el periodo de eclipse",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La infección sigue atrapada en las mucosas durante la fase crónica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La infección ya llegó a la sangre en el periodo de latencia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La infección sigue en las mucosas durante el periodo de eclipse",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "La infección sigue atrapada en los ganglios durante el periodo de latencia",
+          "correct": false
+        }
+      ],
+      "explanation": "A la semana el virus está en el periodo de eclipse, todavía atrapado en las mucosas y el MALT, por eso los CD4⁺ caen allí y en sangre siguen normales.",
+      "tema": "vih",
+      "subtema": "Periodo de eclipse",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q29",
+      "stem": "Un paciente de 32 años con VIH tuvo un síndrome retroviral agudo hace dos meses y hoy está asintomático con carga viral baja pero detectable. Su médico explica que una población celular controla parcialmente la replicación viral y da paso a la latencia, hasta que finalmente fracasa. ¿Qué célula es responsable de este periodo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocito T CD4⁺ que controla parcialmente la replicación",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocito T CD8⁺ que controla parcialmente la replicación",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Linfocito B que controla parcialmente la replicación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Célula NK que controla parcialmente la replicación del virus",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Macrófago que controla parcialmente la replicación del virus",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T CD8⁺ combaten la infección y controlan de forma parcial la replicación viral, lo que da paso a la latencia hasta que finalmente fracasan.",
+      "tema": "vih",
+      "subtema": "Control por CD8 y latencia",
+      "seccion": "PREGUNTAS"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

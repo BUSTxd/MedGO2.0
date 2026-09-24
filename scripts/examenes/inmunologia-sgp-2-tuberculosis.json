@@ -3,7 +3,1408 @@
   "key": "inmunologia/sgp-2-tuberculosis",
   "title": "SGP 2 — Infección por micobacterias: tuberculosis latente",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Una mujer de 52 años con artritis reumatoide recibe infliximab desde hace ocho meses. Consulta por fiebre vespertina, pérdida de peso y tos persistente. La radiografía muestra infiltrados en ambos ápices y un ganglio hiliar aumentado de tamaño. Hace diez años tuvo una prueba de tuberculina positiva que nunca recibió tratamiento. ¿Qué efecto del fármaco explica que la infección latente se haya reactivado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Pérdida del TNF-α que mantiene organizado el granuloma activo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Pérdida del IFN-γ que mantiene activado al macrófago del granuloma",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Pérdida de la IL-12 que induce la diferenciación hacia Th1",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Pérdida del TGF-β que sostiene la fibrosis periférica del granuloma",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Pérdida de la IL-4 que activa al macrófago alternativo del granuloma",
+          "correct": false
+        }
+      ],
+      "explanation": "El TNF-α de los macrófagos activados organiza y mantiene el granuloma. Al neutralizarlo la estructura se desorganiza y los bacilos latentes se liberan y se diseminan.",
+      "tema": "citocinas",
+      "subtema": "Anti-TNF y reactivación de tuberculosis",
+      "seccion": "2. ¿Cuál es el rol"
+    },
+    {
+      "id": "q02",
+      "stem": "Un estudiante de medicina de 23 años recibe una inyección intradérmica de derivado proteico purificado en el antebrazo. A los 30 minutos no presenta induración y pregunta si la prueba salió negativa. El tutor le indica que debe volver entre 48 y 72 horas para medir el diámetro. ¿Qué tipo de reacción y qué eventos justifican este tiempo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tipo I, porque los mastocitos con IgE degranulan y reclutan eosinófilos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Tipo III, porque los complejos inmunes activan el complemento",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tipo IV, porque los T de memoria deben activarse y reclutar macrófagos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Tipo IV, porque los mastocitos liberan histamina y reclutan neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Tipo IV, porque las células plasmáticas producen IgG específica en la dermis",
+          "correct": false
+        }
+      ],
+      "explanation": "Es una hipersensibilidad retardada tipo IV. Los linfocitos T de memoria deben reconocer el antígeno, secretar citocinas y reclutar macrófagos, lo que alcanza su máximo en dos a tres días.",
+      "tema": "hipersensibilidad",
+      "subtema": "Lectura del PPD a las 48 a 72 horas",
+      "seccion": "¿Por qué la lectura es a las 48"
+    },
+    {
+      "id": "q03",
+      "stem": "Se biopsia un ganglio hiliar de un hombre de 41 años con tos crónica y sudoración nocturna. El patólogo describe un nódulo con centro de necrosis granular eosinófila rodeado por células grandes de citoplasma abundante y rosado, células gigantes multinucleadas, una corona de linfocitos y fibrosis periférica. ¿Cuál es la célula principal de esta lesión?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Macrófagos fusionados, llamados células gigantes de Langhans",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Macrófagos fusionados, llamados células de cuerpo extraño",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos Th1 activados, que forman la corona periférica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Fibroblastos activados, de la fibrosis periférica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Macrófagos modificados, llamados células epitelioides",
+          "correct": true
+        }
+      ],
+      "explanation": "La célula principal del granuloma es la epitelioide, un macrófago modificado de citoplasma rosado y abundante. Las gigantes, los linfocitos y los fibroblastos la acompañan.",
+      "tema": "hipersensibilidad",
+      "subtema": "Célula principal del granuloma",
+      "seccion": "1. ¿Qué es un granuloma"
+    },
+    {
+      "id": "q04",
+      "stem": "Una enfermera de 34 años del servicio de emergencias tiene una prueba de tuberculina de 12 mm y fue vacunada con BCG en la infancia. Para aclarar si tiene infección tuberculosa se solicita un ensayo in vitro en el que su sangre se estimula con antígenos de Mycobacterium tuberculosis. ¿Qué producto de las células sensibilizadas se cuantifica en esta prueba?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IFN-γ liberado por los linfocitos B de memoria específicos y activados",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IFN-γ liberado por los linfocitos T de memoria específicos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "IL-12 liberada por los linfocitos T de memoria específicos y activados",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TNF-α liberado por los linfocitos T de memoria específicos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-4 liberada por los linfocitos T de memoria específicos",
+          "correct": false
+        }
+      ],
+      "explanation": "El IGRA mide el IFN-γ que liberan in vitro los linfocitos T de memoria sensibilizados cuando se estimulan con antígenos específicos de Mycobacterium tuberculosis.",
+      "tema": "tecnicas",
+      "subtema": "Qué mide el IGRA",
+      "seccion": "IGRA"
+    },
+    {
+      "id": "q05",
+      "stem": "En una radiografía de tórax de rutina de un hombre de 55 años asintomático se observa una pequeña opacidad calcificada subpleural en el lóbulo medio, junto a un ganglio hiliar también calcificado. Tiene el antecedente de una prueba de tuberculina positiva hace muchos años, sin haber tenido enfermedad. ¿Qué diagnóstico describe mejor estos hallazgos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Complejo de Ghon de una primoinfección tuberculosa activa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Foco de Ghon aislado de una primoinfección tuberculosa reciente",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Complejo de Ranke de una tuberculosis miliar en actividad",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Complejo de Ranke de una tuberculosis antigua, ya contenida",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Granuloma no caseificante de una sarcoidosis pulmonar crónica",
+          "correct": false
+        }
+      ],
+      "explanation": "El complejo de Ranke es la evolución cicatricial del complejo de Ghon, con el foco pulmonar y el ganglio hiliar calcificados, propio de una tuberculosis antigua y contenida.",
+      "tema": "hipersensibilidad",
+      "subtema": "Complejo de Ranke",
+      "seccion": "Complejo de Ranke"
+    },
+    {
+      "id": "q06",
+      "stem": "Un niño de 6 años presenta infecciones respiratorias virales recurrentes. Sus células nucleadas expresan muy pocas moléculas MHC I en la superficie, aunque la cadena α y la β2-microglobulina se sintetizan con normalidad. El estudio molecular revela una mutación en el transportador TAP. ¿Qué paso de la vía de presentación falla en este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El transporte de péptidos desde el retículo hasta el Golgi",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La degradación de las proteínas virales en el proteasoma del citosol",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El ensamblaje de la cadena α con la β2-microglobulina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El transporte de péptidos desde el citosol hasta el retículo",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "El transporte del MHC I cargado desde el Golgi hacia la membrana",
+          "correct": false
+        }
+      ],
+      "explanation": "TAP es un transportador ABC que lleva péptidos de 8 a 16 aminoácidos del citosol al retículo. Sin péptido el MHC I es inestable y no sale del retículo.",
+      "tema": "presentacion-mhc",
+      "subtema": "Función de TAP",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "q07",
+      "stem": "Se estudia a un lactante con infecciones bacterianas recurrentes y respuestas T CD4⁺ deficientes. En sus células presentadoras de antígeno, los complejos MHC II que llegan a la membrana llevan un fragmento de 24 aminoácidos derivado de la cadena invariante en lugar de péptidos antigénicos. ¿Qué molécula del compartimento endosomal tardío estaría defectuosa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "HLA-DM, que actúa en el endosoma tardío sobre el péptido CLIP",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Catepsina, que actúa en el endosoma sobre la cadena invariante",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tapasina, que actúa en el retículo sobre el MHC I aún sin péptido",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ERAAP, que actúa en el retículo sobre los péptidos largos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Calnexina, que actúa en el retículo sobre la cadena α",
+          "correct": false
+        }
+      ],
+      "explanation": "HLA-DM es una chaperona no polimórfica que retira el CLIP de la hendidura del MHC II y permite cargar el péptido antigénico, estabilizando el complejo.",
+      "tema": "presentacion-mhc",
+      "subtema": "Función de HLA-DM",
+      "seccion": "B) Procesamiento de MHC-II"
+    },
+    {
+      "id": "q08",
+      "stem": "Un niño de 4 años recibe la vacuna BCG y desarrolla una infección diseminada con ganglios supurados y lesiones óseas. No presenta otras infecciones virales ni bacterianas graves y su recuento de linfocitos es normal. Se sospecha un defecto en el eje que conecta al macrófago con el linfocito Th1. ¿Qué defecto explicaría la susceptibilidad selectiva a micobacterias?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Déficit de IL-17 o de su receptor en los linfocitos Th17",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Déficit de IL-4 o de su receptor en los linfocitos Th2",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Déficit de IL-12 o de su receptor en las NK y los Th1",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Déficit de IL-10 o de su receptor en los linfocitos Treg",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Déficit de IL-13 o de su receptor en los macrófagos M2",
+          "correct": false
+        }
+      ],
+      "explanation": "El macrófago produce IL-12, que induce Th1 e IFN-γ para activarlo. Sin IL-12 o su receptor este eje falla y hay susceptibilidad a micobacterias.",
+      "tema": "inmunodeficiencias",
+      "subtema": "Déficit del eje IL-12 e IFN-γ",
+      "seccion": "5. Describir la interacción"
+    },
+    {
+      "id": "q09",
+      "stem": "Un hombre de 46 años con tuberculosis pulmonar tiene macrófagos alveolares que logran destruir a los bacilos mediante estallido respiratorio, óxido nítrico y enzimas lisosomales. Se quiere identificar la citocina liberada por los linfocitos Th1 que induce esta activación clásica del macrófago. ¿Cuál es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IFN-γ secretado por los linfocitos Th2 y los mastocitos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-4 secretada por los linfocitos Th2 y los mastocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-10 secretada por los linfocitos Treg y por los macrófagos M2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-12 secretada por los macrófagos y las células dendríticas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IFN-γ secretado por los linfocitos Th1 y por las células NK",
+          "correct": true
+        }
+      ],
+      "explanation": "El IFN-γ de los Th1, junto con TNF-α y los PAMPs, induce la activación clásica M1, con estallido respiratorio, iNOS y enzimas lisosomales.",
+      "tema": "innata-celular",
+      "subtema": "Inductor de la activación M1",
+      "seccion": "1. Activación clásica"
+    },
+    {
+      "id": "q10",
+      "stem": "Una mujer de 30 años recibe una vacuna proteica. En el ganglio, sus linfocitos T CD4⁺ vírgenes reconocen el péptido con el TCR y reciben la unión de CD28 con B7. Días después, las citocinas liberadas por las células presentadoras hacen que se diferencien hacia un perfil efector particular. ¿Cómo se denomina esta última etapa y qué define?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Señal 2, que dirige la diferenciación hacia el perfil Th efector",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Señal 3, que dirige la diferenciación hacia el perfil Th",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Señal 1, que dirige la diferenciación hacia el perfil Th",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Señal 3, que otorga la especificidad por el péptido presentado",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Señal 2, que induce la supervivencia mediante Bcl-XL",
+          "correct": false
+        }
+      ],
+      "explanation": "La señal 3 corresponde a las citocinas del microambiente, que dirigen la diferenciación del linfocito T CD4⁺ hacia Th1, Th2, Th17, Tfh o Treg.",
+      "tema": "linfocitos-t",
+      "subtema": "Señales de activación del T CD4",
+      "seccion": "4. ¿Cómo se activan"
+    },
+    {
+      "id": "q11",
+      "stem": "Un hombre de 30 años con hepatitis viral aguda tiene hepatocitos infectados que sintetizan proteínas virales en su citosol. Un investigador quiere saber qué molécula HLA exhibe esos péptidos virales en la superficie del hepatocito y qué linfocito los reconoce para destruir a la célula infectada. ¿Cuál es la combinación correcta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "HLA-A, B o C, reconocida por linfocitos T CD4⁺ colaboradores",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "HLA-A, B o C, reconocida por linfocitos T CD8⁺ citotóxicos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "HLA-DR, DP o DQ, reconocida por linfocitos T CD8⁺ citotóxicos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "HLA-DR, DP o DQ, reconocida por linfocitos T CD4⁺ colaboradores",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "HLA-DR, DP o DQ, reconocida por linfocitos B maduros",
+          "correct": false
+        }
+      ],
+      "explanation": "Los antígenos endógenos como las proteínas virales se presentan en MHC I, codificado por HLA-A, B y C, a los linfocitos T CD8⁺ citotóxicos.",
+      "tema": "presentacion-mhc",
+      "subtema": "Genes HLA de clase I y II",
+      "seccion": "1. Describir la estructura"
+    },
+    {
+      "id": "q12",
+      "stem": "Un varón de 19 años con infecciones virales recurrentes tiene células que presentan bien los péptidos virales en la hendidura de su molécula MHC I, pero sus linfocitos T CD8⁺ no se activan porque el correceptor no se une a la molécula. El estudio genético encuentra una mutación en un dominio extracelular de la cadena α. ¿Qué dominio está mutado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dominio α1, que forma la hendidura de unión al péptido",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Dominio α3, que se une al correceptor CD4 colaborador",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Dominio β1, que se une al correceptor CD4 colaborador",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Microglobulina β2, que estabiliza la cadena α",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Dominio α3, que se une al correceptor CD8 citotóxico",
+          "correct": true
+        }
+      ],
+      "explanation": "El dominio α3 de la cadena α del MHC I se une al correceptor CD8 del linfocito T citotóxico. Los dominios α1 y α2 forman la hendidura del péptido.",
+      "tema": "presentacion-mhc",
+      "subtema": "Dominio α3 y CD8",
+      "seccion": "A) Complejo Mayor de Histocompatibilidad I"
+    },
+    {
+      "id": "q13",
+      "stem": "Se analiza por citometría de flujo una muestra de sangre y ganglio de un varón de 27 años sano. Se busca identificar qué poblaciones expresan MHC II de forma constitutiva y pueden presentar péptidos exógenos a los linfocitos T CD4⁺. ¿Qué grupo de células cumple esta condición?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Macrófagos, células dendríticas y linfocitos T CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Macrófagos, células dendríticas y plaquetas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Macrófagos, células dendríticas y eritrocitos maduros",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Macrófagos, células dendríticas y linfocitos B",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Macrófagos, neutrófilos y linfocitos T citotóxicos",
+          "correct": false
+        }
+      ],
+      "explanation": "El MHC II se expresa solo en las CPA profesionales, es decir macrófagos, células dendríticas y linfocitos B, además de las células epiteliales tímicas.",
+      "tema": "presentacion-mhc",
+      "subtema": "Distribución del MHC II",
+      "seccion": "B) Complejo Mayor de Histocompatibilidad: MHC II"
+    },
+    {
+      "id": "q14",
+      "stem": "Una mujer de 38 años cursa una infección viral y presenta niveles séricos altos de interferón gamma. En sus células infectadas, el proteasoma cambia algunas de sus subunidades y genera péptidos con residuos hidrofóbicos o básicos en el extremo C-terminal, ideales para encajar en el surco del MHC I. ¿Qué cambio induce el IFN-γ en el proteasoma?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sustituye subunidades β catalíticas por isoformas del inmunoproteasoma",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Sustituye subunidades α estructurales por isoformas del inmunoproteasoma",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Sustituye subunidades β catalíticas por catepsinas de los endosomas tardíos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Sustituye el proteasoma 26S por un complejo con más anillos α",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Bloquea el proteasoma y acumula péptidos largos en el citosol",
+          "correct": false
+        }
+      ],
+      "explanation": "El IFN-γ cambia las subunidades β catalíticas por isoformas y forma el inmunoproteasoma, que produce péptidos con extremos C-terminales ideales para el surco del MHC I.",
+      "tema": "presentacion-mhc",
+      "subtema": "IFN-γ e inmunoproteasoma",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "q15",
+      "stem": "Un lactante de 8 meses con infecciones recurrentes es estudiado por un defecto de la cadena invariante en sus células presentadoras de antígeno. En el laboratorio se observa que péptidos del retículo endoplasmático se unen a las moléculas MHC II recién sintetizadas y que estas no llegan a los endosomas tardíos. ¿Qué funciones cumple normalmente la cadena invariante?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Bloquea la hendidura y retiene el MHC II en el retículo endoplasmático",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Bloquea la hendidura del MHC I y lleva péptidos a los endosomas tardíos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Bloquea la hendidura y lleva el MHC II a los endosomas tardíos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Traslada péptidos del citosol al retículo y los une al MHC II",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Reemplaza el CLIP por péptidos antigénicos dentro del endosoma tardío",
+          "correct": false
+        }
+      ],
+      "explanation": "La cadena invariante bloquea la hendidura del MHC II en el retículo, evitando péptidos destinados al MHC I, y dirige el complejo a los endosomas tardíos.",
+      "tema": "presentacion-mhc",
+      "subtema": "Cadena invariante",
+      "seccion": "B) Procesamiento de MHC-II"
+    },
+    {
+      "id": "q16",
+      "stem": "Un hombre de 62 años con melanoma recibe una vacuna con células tumorales muertas. Las células dendríticas captan restos de estas células desde el exterior y activan linfocitos T CD8⁺ citotóxicos contra el tumor, aunque las dendríticas no estén infectadas ni transformadas. ¿Qué proceso permite esta activación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Presentación cruzada de antígenos intracelulares en MHC II",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Presentación directa de antígenos endógenos en MHC I",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Presentación cruzada de antígenos extracelulares en MHC I",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Presentación clásica de antígenos exógenos en MHC II",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Presentación de superantígenos fuera de la hendidura del MHC II",
+          "correct": false
+        }
+      ],
+      "explanation": "En la presentación cruzada las células dendríticas procesan antígenos extracelulares y los cargan en MHC I, lo que activa linfocitos T CD8⁺ citotóxicos.",
+      "tema": "presentacion-mhc",
+      "subtema": "Presentación cruzada",
+      "seccion": "3. ¿Qué es la presentación cruzada"
+    },
+    {
+      "id": "q17",
+      "stem": "Se estudian dos células dendríticas de una mujer de 33 años vacunada. En la primera, el antígeno fagocitado pasa al citosol, se degrada en el proteasoma y sus péptidos entran al retículo por TAP. En la segunda, el antígeno se degrada dentro del fagosoma y los péptidos se cargan allí mismo. ¿Cómo se llaman, respectivamente, estas dos vías de presentación cruzada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vacuolar en la primera y citosólica en la segunda vía",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Citosólica en la primera y vacuolar en la segunda vía",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Citosólica en ambas, con participación de TAP en las dos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Vacuolar en ambas, con participación del proteasoma y TAP",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Endógena en la primera y exógena en la segunda, respectivamente",
+          "correct": false
+        }
+      ],
+      "explanation": "La vía citosólica usa proteasoma y TAP, mientras que la vacuolar degrada y carga los péptidos en el mismo fagosoma, sin proteasoma ni TAP.",
+      "tema": "presentacion-mhc",
+      "subtema": "Vías citosólica y vacuolar",
+      "seccion": "3. ¿Qué es la presentación cruzada"
+    },
+    {
+      "id": "q18",
+      "stem": "Una mujer de 26 años recibe una vacuna en el deltoides. Las células dendríticas del sitio captan el antígeno, se activan y migran hacia el ganglio axilar, donde se encuentran con linfocitos T vírgenes. La migración de ambas poblaciones depende de un receptor de quimiocinas. ¿Cuál es ese receptor y cuáles son sus ligandos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CCR7, que responde a CCL19 y CCL21 de la zona T",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CCR7, que responde a CXCL13 y CCL2 del folículo linfoide",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CXCR5, que responde a CXCL13 de los folículos linfoides",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CXCR4, que responde a CXCL12 de la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CCR7, que responde a CCL3 y CCL5 de los tejidos inflamados",
+          "correct": false
+        }
+      ],
+      "explanation": "Al activarse, las CPA suben CCR7 y los T vírgenes ya lo expresan, por lo que ambos migran al ganglio siguiendo CCL19 y CCL21 y aumenta el encuentro con el antígeno.",
+      "tema": "trafico",
+      "subtema": "CCR7 y migración al ganglio",
+      "seccion": "0. Migración"
+    },
+    {
+      "id": "q19",
+      "stem": "Se estudia in vitro un linfocito T cooperador de una mujer de 28 años que reconoce un péptido unido a MHC II en una célula presentadora. El TCR interactúa con el complejo péptido MHC y el correceptor CD4 participa en esta primera señal junto con el CD3. ¿Qué función cumple el CD4 en esta señal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se une al MHC I, estabiliza el TCR y recluta a Lck",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se une al MHC II y transduce la señal con sus ITAM",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se une a B7 y aporta la segunda señal de coestimulación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se une al MHC II, estabiliza el TCR y recluta a Lck",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Se une a ICAM-1 y refuerza la adhesión del T con la CPA",
+          "correct": false
+        }
+      ],
+      "explanation": "El CD4 se une de forma no específica al MHC II, estabiliza la interacción entre el TCR y el MHC II y recluta la cinasa Lck. El CD3 transduce la señal.",
+      "tema": "linfocitos-t",
+      "subtema": "Función del correceptor CD4",
+      "seccion": "1. Reconocimiento del antígeno"
+    },
+    {
+      "id": "q20",
+      "stem": "Un hombre de 60 años con melanoma metastásico recibe un tratamiento que bloquea un receptor inhibidor del linfocito T. Este receptor compite con CD28 por los ligandos B7-1 y B7-2 de las células presentadoras y, al bloquearlo, aumentan la proliferación de linfocitos T y la producción de IL-2. ¿Qué receptor es el bloqueado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "PD-1, que se une a PD-L1 y PD-L2 de la CPA activada",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD28, que se une a CD80 y CD86 de la CPA en la sinapsis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ICOS, que se une a ICOS-L del linfocito B folicular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD40L, que se une a CD40 de la célula presentadora activada",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CTLA-4, que se une a CD80 y CD86 de la CPA activada",
+          "correct": true
+        }
+      ],
+      "explanation": "CTLA-4 es un checkpoint que compite con CD28 por CD80 y CD86, reduce la proliferación y la producción de IL-2 y participa en la supresión por Treg.",
+      "tema": "coestimulacion",
+      "subtema": "CTLA-4 como checkpoint",
+      "seccion": "2. Coestimulación"
+    },
+    {
+      "id": "q21",
+      "stem": "Un niño de 3 años presenta neumonías bacterianas recurrentes desde los 8 meses. Su IgM sérica está elevada, mientras que la IgG, la IgA y la IgE están muy disminuidas. Sus linfocitos B son normales en número, pero no logran cambiar de isotipo. ¿Qué interacción de coestimulación está alterada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD28 del linfocito T con CD80 y CD86 de la CPA",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CTLA-4 del linfocito T con CD80 y CD86 de la CPA",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ICOS del linfocito Tfh con ICOS-L del linfocito B",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "LFA-1 del linfocito T con ICAM-1 de la CPA",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD40 de la CPA con CD40L del linfocito T CD4⁺",
+          "correct": true
+        }
+      ],
+      "explanation": "CD40 con CD40L es esencial para la cooperación T-B y el cambio de isotipo. Su ausencia causa el síndrome de hiper-IgM con infecciones recurrentes.",
+      "tema": "coestimulacion",
+      "subtema": "CD40L y síndrome hiper-IgM",
+      "seccion": "2. Coestimulación"
+    },
+    {
+      "id": "q22",
+      "stem": "Un varón de 50 años con tuberculosis pulmonar contenida en granulomas tiene linfocitos T cooperadores que activan a sus macrófagos para destruir a los bacilos. Se desea saber qué citocinas inducen la diferenciación de esta subpoblación de linfocitos T CD4⁺ y qué producen. ¿Cuáles son?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-12 e IFN-γ, que inducen Th17 productores de IL-17",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-6, TGF-β e IL-23, que inducen Th17 productores de IL-17",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-4 e IFN-γ, que inducen Th1 productores de IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-12 e IFN-γ, que inducen Th1 productores de IFN-γ",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "TGF-β e IL-2, que inducen Treg productores de IL-10",
+          "correct": false
+        }
+      ],
+      "explanation": "La IL-12 y el IFN-γ inducen el perfil Th1, que produce IFN-γ y activa macrófagos contra patógenos intracelulares como Mycobacterium tuberculosis.",
+      "tema": "diferenciacion-t",
+      "subtema": "Inductores del perfil Th1",
+      "seccion": "Th1"
+    },
+    {
+      "id": "q23",
+      "stem": "Un varón de 28 años tiene abscesos cutáneos estafilocócicos y candidiasis mucocutánea de repetición. Se comprueba una respuesta deficiente de neutrófilos en la piel y las mucosas. Se sospecha un defecto en la subpoblación de linfocitos T CD4⁺ que recluta neutrófilos. ¿Qué citocinas produce normalmente esa subpoblación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IFN-γ, producido por los linfocitos Th1 y las NK",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-17 e IL-22, producidas por los linfocitos Th17",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "IL-4, IL-5 e IL-13, producidas por los linfocitos Th2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-17 e IL-22, producidas por los linfocitos Tfh",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-21, producida por los linfocitos Tfh del centro germinal",
+          "correct": false
+        }
+      ],
+      "explanation": "Los Th17 producen IL-17 e IL-22, que reclutan neutrófilos y sostienen la inflamación contra bacterias extracelulares y hongos.",
+      "tema": "diferenciacion-t",
+      "subtema": "Citocinas de los Th17",
+      "seccion": "Th17"
+    },
+    {
+      "id": "q24",
+      "stem": "Una mujer de 45 años con sarcoidosis tiene granulomas pulmonares con abundantes macrófagos activados. Al estudiar el granuloma se observa que los linfocitos Th1 liberan IFN-γ, que actúa sobre el macrófago, y que este responde produciendo IL-12, lo que refuerza el ciclo. ¿Qué efectos tiene el IFN-γ sobre el macrófago?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Disminuye MHC II y coestimuladores, pero aumenta la IL-12 y el ROS",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Aumenta MHC II y IL-10, pero reduce el óxido nítrico y el ROS",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Aumenta MHC II, coestimuladores, IL-12, óxido nítrico y ROS",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Aumenta la arginasa-1, la fibrosis y la síntesis de poliaminas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Aumenta MHC I, la IL-4 y la diferenciación hacia Th2",
+          "correct": false
+        }
+      ],
+      "explanation": "El IFN-γ aumenta MHC II, CD40 y B7, la IL-12 y la producción de óxido nítrico y ROS, y promueve el granuloma en un ciclo de refuerzo.",
+      "tema": "innata-celular",
+      "subtema": "Efectos del IFN-γ en el macrófago",
+      "seccion": "5. Describir la interacción"
+    },
+    {
+      "id": "q25",
+      "stem": "Un niño de 9 años de una zona rural presenta eosinofilia marcada y una parasitosis por helmintos. Sus linfocitos Th2 liberan citocinas que inducen en los macrófagos un fenotipo de reparación tisular y antiinflamatorio. ¿Qué citocinas estimulan esta activación alternativa M2?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-4 e IL-13, liberadas por los linfocitos Th2",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-17 e IL-22, liberadas por los linfocitos Th17",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IFN-γ y TNF-α, liberados por los linfocitos Th1",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-12 e IL-1, liberadas por los macrófagos M1",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-2 e IL-6, liberadas por los linfocitos T activados",
+          "correct": false
+        }
+      ],
+      "explanation": "La activación alternativa M2 la inducen IL-4 e IL-13 de los Th2, mastocitos y eosinófilos, y da respuesta antiinflamatoria y reparación tisular.",
+      "tema": "innata-celular",
+      "subtema": "Inductores de la activación M2",
+      "seccion": "6. ¿Cuáles son las dos vías"
+    },
+    {
+      "id": "q26",
+      "stem": "Un hombre de 50 años con una infección intracelular crónica y fiebre persistente tiene macrófagos M1 muy activos. Se busca identificar la citocina secretada por estos macrófagos que estimula la diferenciación de los linfocitos Th1 y activa a las células NK. ¿Cuál es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-12, que estimula la respuesta Th1 y activa a las NK",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-1, que produce fiebre y fomenta la inflamación local",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-6, que estimula las proteínas de fase aguda en el hígado",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TNF-α, que activa el endotelio y facilita la extravasación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-2, que estimula la proliferación clonal de los linfocitos T",
+          "correct": false
+        }
+      ],
+      "explanation": "El macrófago M1 secreta IL-12, que estimula la diferenciación de Th1 y activa a las NK. IL-1 produce fiebre, IL-6 fase aguda y TNF-α activa el endotelio.",
+      "tema": "citocinas",
+      "subtema": "IL-12 del macrófago M1",
+      "seccion": "1. Activación clásica"
+    },
+    {
+      "id": "q27",
+      "stem": "Una mujer de 57 años con fibrosis pulmonar crónica tiene una biopsia con abundantes macrófagos de activación alternativa. Estos macrófagos liberan una enzima que compite con iNOS por el sustrato y, en lugar de óxido nítrico, produce compuestos que favorecen la síntesis de colágeno. ¿Qué enzima es y qué productos genera?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Arginasa-1, que produce óxido nítrico y citrulina",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "iNOS, que produce ornitina y poliaminas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "iNOS, que produce óxido nítrico y citrulina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Arginasa-1, que produce ROS y enzimas lisosomales",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Arginasa-1, que produce ornitina y poliaminas",
+          "correct": true
+        }
+      ],
+      "explanation": "La arginasa-1 de los macrófagos M2 compite con iNOS y genera ornitina y poliaminas, que favorecen la síntesis de colágeno, la proliferación celular y la fibrosis.",
+      "tema": "innata-celular",
+      "subtema": "Arginasa-1 y fibrosis",
+      "seccion": "2. Activación alternativa"
+    },
+    {
+      "id": "q28",
+      "stem": "Una mujer de 40 años con artritis recibe glucocorticoides en dosis altas y sus macrófagos muestran una potente inmunorregulación, con secreción de IL-10 y TGF-β. Se quiere clasificar el subtipo de macrófago M2 y su inductor en esta paciente. ¿Cuál es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "M2a, inducido por IL-4 e IL-13 en la reparación tisular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "M2b, inducido por inmunocomplejos junto con TLR o IL-1R",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "M2c, inducido por IL-10, TGF-β y glucocorticoides",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "M2a, inducido por IL-10, TGF-β y glucocorticoides",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "M2b, inducido por IL-10, TGF-β y glucocorticoides",
+          "correct": false
+        }
+      ],
+      "explanation": "El subtipo M2c lo inducen IL-10, TGF-β y glucocorticoides y ejerce una inmunorregulación potente. M2a lo inducen IL-4 e IL-13 y M2b, los inmunocomplejos.",
+      "tema": "innata-celular",
+      "subtema": "Subtipos M2a, M2b y M2c",
+      "seccion": "2. Activación alternativa"
+    },
+    {
+      "id": "q29",
+      "stem": "Se biopsia una lesión pulmonar nodular de una mujer de 39 años con tos y adenopatías hiliares. En un granuloma el patólogo observa dos tipos de células gigantes multinucleadas, unas con los núcleos en herradura en la periferia y otras, junto a un cuerpo extraño, con los núcleos distribuidos al azar. ¿Cómo se llaman, respectivamente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "De cuerpo extraño las primeras y de Langhans las segundas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "De Langhans las primeras y de cuerpo extraño las segundas",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "De Langhans en ambas, sin distinción por el cuerpo extraño",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Epitelioides las primeras y de cuerpo extraño las segundas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "De Langhans las primeras y epitelioides las segundas",
+          "correct": false
+        }
+      ],
+      "explanation": "Las gigantes de Langhans, formadas por fusión de macrófagos activados, tienen núcleos en herradura periféricos. En las de cuerpo extraño los núcleos se distribuyen al azar.",
+      "tema": "hipersensibilidad",
+      "subtema": "Células gigantes de Langhans",
+      "seccion": "1. ¿Qué es un granuloma"
+    },
+    {
+      "id": "q30",
+      "stem": "Un hombre de 27 años con diarrea crónica y dolor abdominal es sometido a colonoscopia. La biopsia del íleon terminal muestra granulomas de macrófagos epitelioides con células gigantes multinucleadas. La tinción para bacilos ácido alcohol resistentes y las serologías fúngicas son negativas. ¿Qué enfermedad y qué tipo de granuloma corresponden?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tuberculosis intestinal, con granuloma y necrosis central",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Histoplasmosis diseminada, con granuloma y necrosis central",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Paracoccidioidomicosis, con granuloma y necrosis central",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Enfermedad de Crohn, con granuloma sin necrosis central",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Lepra lepromatosa avanzada, con granuloma y necrosis central",
+          "correct": false
+        }
+      ],
+      "explanation": "Los granulomas no caseificantes carecen de necrosis central y se ven en enfermedades inmunomediadas como Crohn, sarcoidosis y beriliosis. Los caseificantes se asocian a infecciones.",
+      "tema": "hipersensibilidad",
+      "subtema": "Granuloma no caseificante",
+      "seccion": "1. ¿Qué es un granuloma"
+    },
+    {
+      "id": "q31",
+      "stem": "Un hombre de 35 años con tuberculosis pulmonar tiene una biopsia con un granuloma bien organizado. Un investigador neutraliza el TNF-α en cultivos de este tejido y observa que el granuloma se desorganiza, con menor ingreso de linfocitos y monocitos y menor aporte vascular. ¿Qué mediadores induce normalmente el TNF-α para sostener esa estructura?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Quimiocinas, ICAM-1, VCAM-1, IL-10 y TGF-β",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Quimiocinas, CD40, CD80, CD86 y moléculas MHC II",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Quimiocinas, E-selectina, VEGF, iNOS y ROS",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Quimiocinas, ICAM-1, VCAM-1, E-selectina y VEGF",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Quimiocinas, IL-12, IFN-γ, iNOS y ROS del macrófago",
+          "correct": false
+        }
+      ],
+      "explanation": "El TNF-α induce quimiocinas para el ingreso de linfocitos y monocitos, moléculas de adhesión endotelial que pegan las células y VEGF para el aporte vascular.",
+      "tema": "citocinas",
+      "subtema": "Mediadores inducidos por TNF-α",
+      "seccion": "2. ¿Cuál es el rol"
+    },
+    {
+      "id": "q32",
+      "stem": "Una mujer de 36 años con sarcoidosis presenta hipercalcemia e hipercalciuria sin tomar suplementos de calcio ni de vitamina D. Sus niveles de hormona paratiroidea están suprimidos. En sus granulomas, los macrófagos activados sobreexpresan una enzima que actúa sobre la vitamina D. ¿Qué enzima es y qué efecto tiene?",
+      "options": [
+        {
+          "id": "a",
+          "text": "1-α-hidroxilasa, que activa la vitamina D y reduce la absorción de calcio",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "24-hidroxilasa, que inactiva la vitamina D y reduce el calcio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "1-α-hidroxilasa, que activa la vitamina D y eleva el calcio",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "25-hidroxilasa, que convierte la vitamina D en calcidiol hepático",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "1-α-hidroxilasa, que inactiva la vitamina D y reduce el calcio",
+          "correct": false
+        }
+      ],
+      "explanation": "Los macrófagos activados del granuloma expresan 1-α-hidroxilasa, que activa la vitamina D y aumenta la absorción de calcio, con hipercalcemia e hipercalciuria.",
+      "tema": "hipersensibilidad",
+      "subtema": "Hipercalcemia en granulomas",
+      "seccion": "2. ¿Cuál es el rol"
+    },
+    {
+      "id": "q33",
+      "stem": "Un estudiante de 22 años vacunado con BCG en la infancia tiene una prueba cutánea positiva de 11 mm y no refiere contacto con pacientes tuberculosos. Para reducir la posibilidad de un falso positivo se solicita una prueba que emplea antígenos ausentes en la BCG y en la mayoría de micobacterias ambientales. ¿Qué antígenos usa esa prueba?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ESAT-6 y CFP-10, específicos de Mycobacterium tuberculosis",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "ESAT-6 y CFP-10, presentes también en la BCG y en las ambientales",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ESAT-6 y proteínas de la BCG, comunes a varias micobacterias",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Antígeno 85 y lipoarabinomanano, comunes a varias micobacterias",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Proteína 65 de choque térmico, común a varias micobacterias",
+          "correct": false
+        }
+      ],
+      "explanation": "El IGRA usa ESAT-6 y CFP-10, ausentes en la BCG y en la mayoría de micobacterias ambientales, y por eso es más específico que el PPD.",
+      "tema": "tecnicas",
+      "subtema": "Antígenos del IGRA",
+      "seccion": "IGRA"
+    },
+    {
+      "id": "q34",
+      "stem": "En el laboratorio se procesan dos muestras de una mujer de 48 años con sospecha de infección tuberculosa. En la primera se mide la concentración total de IFN-γ en el plasma mediante ELISA. En la segunda se aíslan las células mononucleares y se cuentan puntos oscuros, cada uno correspondiente a una célula productora. ¿Qué pruebas son, respectivamente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "T-SPOT.TB en la primera y QuantiFERON en la segunda",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "QuantiFERON en las dos muestras, con distinta lectura",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "T-SPOT.TB en las dos muestras, con distinta lectura",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "PPD intradérmico en la primera y T-SPOT.TB en la segunda",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "QuantiFERON en la primera y T-SPOT.TB en la segunda",
+          "correct": true
+        }
+      ],
+      "explanation": "QuantiFERON usa sangre total y mide el IFN-γ total del plasma por ELISA. T-SPOT usa células mononucleares y cuenta con ELISPOT los linfocitos productores.",
+      "tema": "tecnicas",
+      "subtema": "QuantiFERON frente a T-SPOT",
+      "seccion": "Lectura"
+    },
+    {
+      "id": "q35",
+      "stem": "Un hombre de 41 años en quimioterapia por un linfoma se somete a una prueba de liberación de interferón gamma. El tubo sin antígeno tiene valores mínimos, pero sus linfocitos no producen IFN-γ ni siquiera frente al mitógeno usado como control positivo. ¿Cómo se interpreta el resultado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Negativo, por ausencia de sensibilización a la tuberculosis",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Indeterminado, por falla técnica o inmunosupresión severa",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Positivo, por falla técnica o inmunosupresión severa del paciente",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Negativo, por falla técnica o inmunosupresión severa del paciente",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Positivo, por activación inespecífica de los linfocitos",
+          "correct": false
+        }
+      ],
+      "explanation": "Si los linfocitos no responden ni al mitógeno, el resultado es indeterminado, por falla técnica o inmunosupresión severa, y no puede interpretarse.",
+      "tema": "tecnicas",
+      "subtema": "Controles e interpretación del IGRA",
+      "seccion": "T-SPOT"
+    },
+    {
+      "id": "q36",
+      "stem": "Un varón de 33 años con infección por VIH y recuento de CD4 bajo es evaluado antes de iniciar su seguimiento. Se le administra PPD intradérmico y a las 72 horas se mide una induración de 6 mm sin eritema significativo. ¿Cómo se interpreta este resultado según el riesgo del paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Negativo, porque en inmunocomprometidos el corte es de 10 mm",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Negativo, porque en inmunocomprometidos el corte es de 15 mm",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Positivo, porque en inmunocomprometidos el corte es de 5 mm",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Positivo, porque en toda persona el corte es de 5 mm",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Indeterminado, porque el corte depende de la vacuna BCG",
+          "correct": false
+        }
+      ],
+      "explanation": "En inmunocomprometidos, VIH y contactos estrechos el punto de corte es de 5 mm, por lo que una induración de 6 mm es positiva.",
+      "tema": "hipersensibilidad",
+      "subtema": "Puntos de corte del PPD",
+      "seccion": "PPD (Tuberculina)"
+    },
+    {
+      "id": "q37",
+      "stem": "Un estudiante de medicina de 21 años, vacunado con BCG al nacer y sin contacto conocido con enfermos, tiene un PPD de 11 mm. Como trabajador de salud esa induración se considera positiva. Se realiza un IGRA con ESAT-6 y CFP-10, con controles válidos, y el resultado es negativo. ¿Qué explica más probablemente el PPD positivo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Falso negativo por la vacuna BCG o por micobacterias ambientales",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Falso positivo por la vacuna BCG o micobacterias ambientales",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Falso positivo por infección avanzada por VIH o uso de corticoides",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Falso negativo por quimioterapia o uso crónico de corticoides",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Falso positivo por una infección aguda por hongos endémicos",
+          "correct": false
+        }
+      ],
+      "explanation": "La vacuna BCG y las micobacterias no tuberculosas comparten antígenos con el PPD y dan falsos positivos. El IGRA usa antígenos ausentes en ellas, por eso sale negativo.",
+      "tema": "hipersensibilidad",
+      "subtema": "Falsos positivos del PPD",
+      "seccion": "PPD (Tuberculina)"
+    },
+    {
+      "id": "q38",
+      "stem": "Un joven de 20 años tiene una primoinfección por Mycobacterium tuberculosis. A las 3 semanas de inhalar los bacilos, la radiografía muestra un nódulo pulmonar subpleural en el lóbulo medio con adenopatía hiliar homolateral. ¿Qué respuesta inmune explica la formación de este nódulo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos Th1 con IFN-γ y TNF-α, que forman un granuloma no caseificante",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos Th2 con IL-4 e IL-13, que forman un granuloma caseificante",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos Th17 con IL-17 e IL-22, que forman un absceso de neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos B con IgE, que forman un granuloma de cuerpo extraño",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos Th1 con IFN-γ y TNF-α, que forman un granuloma caseificante",
+          "correct": true
+        }
+      ],
+      "explanation": "Entre 2 y 4 semanas los Th1 secretan IFN-γ y TNF-α, activan macrófagos y forman un granuloma caseificante alrededor de los bacilos, el foco de Ghon.",
+      "tema": "hipersensibilidad",
+      "subtema": "Formación del foco de Ghon",
+      "seccion": "Foco de Ghon"
+    },
+    {
+      "id": "q39",
+      "stem": "Una mujer de 31 años, enfermera, inhala aerosoles de un paciente con tuberculosis. Los bacilos llegan a los alvéolos y son fagocitados por macrófagos alveolares, pero sobreviven y se multiplican dentro de ellos durante las primeras semanas, hasta que llega la respuesta adaptativa. ¿Qué mecanismo de evasión explica esta supervivencia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inhibe la fusión del fagosoma con el aparato de Golgi",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Inhibe la fusión del fagosoma con la membrana plasmática",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Aumenta la fusión del fagosoma con el lisosoma ácido",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Inhibe la fusión del fagosoma con el lisosoma celular",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Bloquea la fagocitosis mediante una cápsula de polisacárido",
+          "correct": false
+        }
+      ],
+      "explanation": "Mycobacterium tuberculosis inhibe la fusión entre el fagosoma y el lisosoma, sobrevive y se multiplica en el macrófago hasta que llega la respuesta adaptativa.",
+      "tema": "innata-celular",
+      "subtema": "Evasión del macrófago alveolar",
+      "seccion": "Foco de Ghon"
+    },
+    {
+      "id": "q40",
+      "stem": "Una tomografía de tórax de un hombre de 60 años muestra ganglios hiliares densos y radiopacos. Fue tratado por tuberculosis en su juventud. El patólogo observa en un ganglio resecado tejido granulomatoso necrótico y fibrosado con depósito de sales de calcio. ¿Qué tipo de calcificación presenta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Calcificación distrófica, con calcio sobre el tejido necrótico",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Calcificación distrófica, con calcio sobre tejido sano y viable",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Calcificación metastásica, por hipercalcemia sistémica sostenida",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Calcificación metastásica, con calcio sobre el tejido necrótico",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Osificación heterotópica, por activación de osteoclastos",
+          "correct": false
+        }
+      ],
+      "explanation": "Tras la necrosis caseosa y la fibrosis, el calcio precipita sobre el material necrótico como calcificación distrófica, y el ganglio se vuelve duro y radiopaco.",
+      "tema": "hipersensibilidad",
+      "subtema": "Calcificación del ganglio",
+      "seccion": "Ganglio linfático calcificado"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

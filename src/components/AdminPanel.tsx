@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import type { AdminData, AdminRow, CursoRank } from '@/lib/admin-data';
 import UsuarioFicha from './UsuarioFicha';
 import { useEnLinea } from './Presencia';
+import ValoracionesAdmin from './ValoracionesAdmin';
 import { BandejaMensajes, BotonMensaje, EnviarMensaje, type Destinatario } from './MensajesAdmin';
 import styles from '@/styles/adminPage.module.css';
 import accountStyles from '@/styles/accountPage.module.css';
@@ -207,6 +208,8 @@ export default function AdminPanel({ data }: { data: AdminData }) {
       <BandejaMensajes emails={emails} />
 
       <CursosObjetivo ranking={data.rankingCursos} />
+
+      <ValoracionesAdmin />
 
       {/* ─── Tabs ─── */}
       <div className={styles.tabBar} role="tablist">

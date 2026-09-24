@@ -3,7 +3,1233 @@
   "key": "inmunologia/t-7-presentacion",
   "title": "T7 — El sistema innato transfiere información al sistema adaptativo",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Un hombre de 47 años con melanoma metastásico recibe una inmunoterapia dirigida contra proteínas tumorales mutadas que se sintetizan dentro de sus propias células. Los linfocitos T citotóxicos del paciente reconocen péptidos cortos de esas proteínas, presentados en la membrana de las células tumorales. ¿Qué molécula presenta este tipo de antígeno y a qué linfocito lo presenta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "MHC II, con péptidos endógenos de 8 a 11 aminoácidos, a LT CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "MHC I, con péptidos endógenos de 8 a 11 aminoácidos, a LT CD8⁺",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "MHC I, con péptidos exógenos de 8 a 11 aminoácidos, a LT CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "MHC I, con péptidos endógenos de 10 a 30 aminoácidos, a LT CD4⁺",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "MHC II, con péptidos exógenos de 10 a 30 aminoácidos, a LT CD4⁺",
+          "correct": false
+        }
+      ],
+      "explanation": "El MHC I presenta péptidos endógenos de 8 a 11 aminoácidos a los linfocitos T CD8⁺ citotóxicos, que eliminan células infectadas por virus o tumorales.",
+      "tema": "presentacion-mhc",
+      "subtema": "Antígenos que presenta el MHC I",
+      "seccion": "Complejo Mayor de Histocompatibilidad I"
+    },
+    {
+      "id": "q02",
+      "stem": "Una mujer de 30 años con trasplante renal presenta rechazo agudo. En la biopsia se estudian las células que presentan péptidos exógenos a los linfocitos T CD4⁺ mediante moléculas MHC II, una función exclusiva de las presentadoras de antígeno profesionales. ¿Qué grupo de células expresa MHC II de forma constitutiva?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Macrófagos, células dendríticas y linfocitos T CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Neutrófilos, células dendríticas y linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Macrófagos, células dendríticas y eosinófilos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Macrófagos, células dendríticas y linfocitos B",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Macrófagos, células dendríticas y plaquetas",
+          "correct": false
+        }
+      ],
+      "explanation": "Solo las presentadoras profesionales, macrófagos, células dendríticas y linfocitos B, expresan MHC II, además del epitelio tímico para la selección positiva.",
+      "tema": "presentacion-mhc",
+      "subtema": "Células que expresan MHC II",
+      "seccion": "Complejo Mayor de Histocompatibilidad: MHC II"
+    },
+    {
+      "id": "q03",
+      "stem": "En un laboratorio se estudian los linfocitos T CD8⁺ de un niño de 9 años convaleciente de infección por citomegalovirus. Al cultivarlos con células infectadas de un donante con distinto HLA no se activan, pero sí lo hacen frente a células infectadas que portan su propio HLA. ¿Qué principio explica este hallazgo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Restricción por MHC, pues el LT reconoce MHC propio y péptido extraño",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Restricción por MHC, pues el LT reconoce el péptido extraño libre de MHC",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Codominancia del MHC, pues el LT reconoce ambos alelos parentales",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Polimorfismo del MHC, pues el LT discrimina péptidos propios de extraños",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Anergia clonal, pues el LT no recibe coestimulación del donante",
+          "correct": false
+        }
+      ],
+      "explanation": "El linfocito T maduro reconoce a la vez la molécula MHC propia y el péptido extraño unido a ella, por eso no responde ante un HLA distinto.",
+      "tema": "presentacion-mhc",
+      "subtema": "Restricción por MHC",
+      "seccion": "I. Complejo Mayor de Histocompatibilidad"
+    },
+    {
+      "id": "q04",
+      "stem": "Un niño de 8 años presenta infecciones respiratorias virales recurrentes y lesiones necrotizantes en la vía aérea. El estudio muestra muy poca expresión de MHC I en la superficie celular, y las cadenas MHC I se acumulan vacías en el retículo endoplásmico. Se sospecha un defecto del transportador TAP. ¿Qué función está alterada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Translocación de péptidos del endosoma al retículo endoplásmico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Translocación de péptidos del citosol al aparato de Golgi",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Translocación de péptidos del retículo endoplásmico al citosol",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Translocación de péptidos del lisosoma al retículo endoplásmico",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Translocación de péptidos del citosol al retículo endoplásmico",
+          "correct": true
+        }
+      ],
+      "explanation": "TAP es un transportador ABC que transloca péptidos de 8 a 16 aminoácidos desde el citosol al retículo endoplásmico para que se carguen en el MHC I.",
+      "tema": "presentacion-mhc",
+      "subtema": "Función de TAP",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "q05",
+      "stem": "Una mujer de 33 años con lupus eritematoso sistémico participa en un estudio de linfocitos B presentadores. En el retículo endoplásmico de estas células, las moléculas MHC II recién sintetizadas se asocian con una proteína que evita que se unan péptidos destinados al MHC I y las guía hacia compartimentos especializados. ¿Qué funciones cumple la cadena invariante?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Bloquea la hendidura del MHC II y lo dirige a la membrana plasmática",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Bloquea la hendidura del MHC I y lo dirige a los endosomas tardíos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Bloquea la hendidura del MHC II y lo dirige a endosomas tardíos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Abre la hendidura del MHC II y lo dirige a endosomas tardíos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Bloquea la hendidura del MHC II y lo retiene en el retículo",
+          "correct": false
+        }
+      ],
+      "explanation": "La cadena invariante ocupa la hendidura del MHC II para evitar la unión de péptidos del retículo y lo dirige a los endosomas tardíos o compartimentos MIIC.",
+      "tema": "presentacion-mhc",
+      "subtema": "Funciones de la cadena invariante",
+      "seccion": "B) Procesamiento de MHC-II"
+    },
+    {
+      "id": "q06",
+      "stem": "Una mujer de 26 años con artritis reumatoide participa en un estudio sobre activación de linfocitos T. Un linfocito T reconoce el péptido en el MHC II de la célula presentadora, pero no recibe la segunda señal que completa su activación. ¿Qué receptor del linfocito T se une a B7-1 y B7-2 de la presentadora y aporta esa señal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CTLA-4, que aporta la señal 2 de coestimulación activadora",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD28, que aporta la señal 2 de coestimulación inhibidora",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD40L, que aporta la señal 2 de coestimulación activadora",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD28, que aporta la señal 2 de coestimulación activadora",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "PD-1, que aporta la señal 2 de coestimulación activadora",
+          "correct": false
+        }
+      ],
+      "explanation": "CD28 se une a B7-1 y B7-2 de la célula presentadora y aporta la señal 2, la coestimulación activadora que completa la activación del linfocito T.",
+      "tema": "coestimulacion",
+      "subtema": "Receptor CD28 y señal 2",
+      "seccion": "Co-estimuladores Activadores"
+    },
+    {
+      "id": "q07",
+      "stem": "Un hombre de 61 años con melanoma metastásico recibe un anticuerpo que bloquea CTLA-4, un punto de control inmunológico de los linfocitos T. Tras el tratamiento, sus linfocitos T infiltrantes proliferan más y producen más IL-2. ¿Cómo inhibe CTLA-4 la activación del linfocito T en condiciones normales?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Compite con CD28 por CD40 y B7-2, con menor producción de IL-2",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Compite con CD28 por B7-1 y B7-2, con menor producción de IL-2",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Compite con CD28 por B7-1 y B7-2, con mayor producción de IL-2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Compite con PD-1 por PD-L1 y PD-L2, con menor producción de IL-2",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Se une a ICOS-L de la presentadora, con menor producción de IL-2",
+          "correct": false
+        }
+      ],
+      "explanation": "CTLA-4 compite con CD28 por B7-1 y B7-2 de la presentadora. Mientras CD28 activa, CTLA-4 inhibe y disminuye la proliferación y la producción de IL-2.",
+      "tema": "coestimulacion",
+      "subtema": "Mecanismo de CTLA-4",
+      "seccion": "Co-estimuladores Inhibidoras"
+    },
+    {
+      "id": "q08",
+      "stem": "Un lactante de 8 meses presenta neumonías y diarrea crónica. Sus linfocitos T tienen TCR y CD3 normales, y la quinasa Lck fosforila los ITAM del CD3 tras la unión al antígeno, pero la señal no continúa. Se sospecha déficit de la quinasa que se une a los ITAM fosforilados. ¿Qué quinasa falta y qué fosforila después?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ZAP-70, que fosforila los ITAM de las cadenas del CD3",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Lck, que fosforila los adaptadores LAT y SLP-76",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Lck, que fosforila los ITAM de las cadenas del CD3",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "PLC-γ1, que fosforila a los adaptadores LAT y SLP-76",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "ZAP-70, que fosforila los adaptadores LAT y SLP-76",
+          "correct": true
+        }
+      ],
+      "explanation": "ZAP-70 se une a los ITAM fosforilados por Lck y se activa. Luego fosforila los adaptadores LAT y SLP-76, que continúan la señal del TCR.",
+      "tema": "linfocitos-t",
+      "subtema": "ZAP-70 y adaptadores",
+      "seccion": "Traducción de la señal"
+    },
+    {
+      "id": "q09",
+      "stem": "Una mujer de 30 años con tuberculosis pulmonar tiene abundantes macrófagos activados en los granulomas de su pulmón. En el laboratorio se identifica una subpoblación de linfocitos T CD4⁺ que activa a esos macrófagos contra el patógeno intracelular mediante una citocina característica. ¿Qué subpoblación es, qué citocinas la inducen y qué produce?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Th1, inducida por IL-12 e IFN-γ, que produce IFN-γ",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Th2, inducida por IL-12 e IFN-γ, que produce IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Th1, inducida por IL-4 y por IFN-γ, que produce IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Th1, inducida por IL-12 e IFN-γ, que produce IL-4 e IL-5",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Th17, inducida por IL-12 e IFN-γ, que produce IL-17",
+          "correct": false
+        }
+      ],
+      "explanation": "La Th1 se induce con IL-12 e IFN-γ y produce IFN-γ, que activa a los macrófagos e impulsa la inmunidad celular contra patógenos intracelulares.",
+      "tema": "diferenciacion-t",
+      "subtema": "Subpoblación Th1",
+      "seccion": "Th1"
+    },
+    {
+      "id": "q10",
+      "stem": "Una mujer de 27 años con una mutación poco frecuente presenta linfocitos T CD4⁺ cuyo correceptor CD4 no se une al MHC II de la célula presentadora. Aunque el TCR reconoce el péptido, la interacción es inestable y la señal intracelular es débil. ¿Qué funciones cumple normalmente el correceptor CD4 en el reconocimiento del antígeno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Estabiliza la interacción TCR y MHC I y recluta la quinasa Lck",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Estabiliza la interacción TCR y MHC II y recluta la quinasa ZAP-70",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Estabiliza la interacción TCR y MHC II y recluta la quinasa Lck",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Reconoce el péptido de forma específica y recluta la quinasa Lck",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Transduce la señal por medio de los ITAM y recluta la quinasa Lck",
+          "correct": false
+        }
+      ],
+      "explanation": "CD4 se une de forma no específica al MHC II, estabiliza la interacción TCR y MHC II y recluta a Lck. El complejo CD3 es el que transduce la señal.",
+      "tema": "linfocitos-t",
+      "subtema": "Correceptor CD4 y Lck",
+      "seccion": "1. Reconocimiento del antígeno"
+    },
+    {
+      "id": "q11",
+      "stem": "Un hombre de 45 años con insuficiencia renal terminal se tipifica para trasplante. El informe describe genes ubicados en el cromosoma 6 que codifican las moléculas de clase I y de clase II del complejo mayor de histocompatibilidad. ¿Qué genes codifican las moléculas de clase I?",
+      "options": [
+        {
+          "id": "a",
+          "text": "HLA-DR, HLA-DP y HLA-DQ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "HLA-A, HLA-B y HLA-DR",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "HLA-A, HLA-DP y HLA-C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "HLA-DR, HLA-B y HLA-C",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "HLA-A, HLA-B y HLA-C",
+          "correct": true
+        }
+      ],
+      "explanation": "Las moléculas de clase I están codificadas por HLA-A, HLA-B y HLA-C, y las de clase II por HLA-DR, HLA-DP y HLA-DQ, todos en el cromosoma 6.",
+      "tema": "presentacion-mhc",
+      "subtema": "Genes HLA de clase I",
+      "seccion": "I. Complejo Mayor de Histocompatibilidad"
+    },
+    {
+      "id": "q12",
+      "stem": "Un niño de 8 años, hijo de padres con distintos alelos HLA-B, será donante de médula ósea para su hermano. En su tipificación se detectan ambos alelos HLA-B, el heredado del padre y el heredado de la madre. ¿Qué característica del MHC explica este hallazgo y qué aporta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Codominancia, pues reduce el repertorio de péptidos que se presentan a los LT",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Codominancia, pues amplía el repertorio de péptidos que se presentan",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Dominancia, pues solo se expresa uno de los alelos parentales",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Poligenia, pues amplía el repertorio de péptidos que se presentan",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Polimorfismo, pues cada individuo expresa alelos distintos a los demás",
+          "correct": false
+        }
+      ],
+      "explanation": "La expresión codominante significa que se expresan ambos alelos parentales de cada gen MHC, lo que amplía el repertorio de péptidos presentables a los linfocitos T.",
+      "tema": "presentacion-mhc",
+      "subtema": "Expresión codominante",
+      "seccion": "I. Complejo Mayor de Histocompatibilidad"
+    },
+    {
+      "id": "q13",
+      "stem": "Una mujer de 22 años usa un tampón durante tres días y presenta fiebre de 39,8 grados, exantema difuso, hipotensión y falla multiorgánica. Se aísla Staphylococcus aureus productor de la toxina del síndrome de shock tóxico, un superantígeno que activa a muchos linfocitos T a la vez. ¿Cómo se une el superantígeno al MHC?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se une al MHC dentro del sitio de unión al péptido",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se une al péptido procesado dentro del sitio del MHC",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se une a la β2-microglobulina fuera del sitio del péptido",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se une al MHC fuera del sitio de unión al péptido",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Se une al MHC tras ser procesado en el fagolisosoma",
+          "correct": false
+        }
+      ],
+      "explanation": "El superantígeno no ocupa la hendidura del péptido, se une al MHC por fuera de ella y por eso activa a muchos linfocitos T a la vez.",
+      "tema": "presentacion-mhc",
+      "subtema": "Unión del superantígeno",
+      "seccion": "I. Complejo Mayor de Histocompatibilidad"
+    },
+    {
+      "id": "q14",
+      "stem": "Una mujer de 40 años con leucemia recibe transfusiones repetidas y desarrolla anticuerpos anti-HLA clase I tras las transfusiones de plaquetas, pero no tras las de eritrocitos lavados. El equipo se pregunta si todas las células de la sangre expresan estas moléculas. ¿Cuál es la explicación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las plaquetas expresan MHC I y los eritrocitos maduros no lo expresan",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Las plaquetas expresan MHC II y los eritrocitos maduros no lo expresan",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los eritrocitos maduros expresan MHC I y las plaquetas no lo expresan",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los eritrocitos maduros expresan MHC II y las plaquetas no lo expresan",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Las plaquetas expresan MHC I y los linfocitos maduros no lo expresan",
+          "correct": false
+        }
+      ],
+      "explanation": "El MHC I se expresa en todas las células nucleadas y en las plaquetas, pero no en los eritrocitos maduros ni en las células germinales.",
+      "tema": "presentacion-mhc",
+      "subtema": "Distribución del MHC I",
+      "seccion": "Complejo Mayor de Histocompatibilidad I"
+    },
+    {
+      "id": "q15",
+      "stem": "En un ensayo con linfocitos T CD8⁺ de un paciente de 38 años con infección por VIH, se modifica un dominio de la cadena α del MHC I y el linfocito deja de unir su correceptor CD8 a la célula presentadora, aunque el péptido sigue unido en la hendidura. ¿Qué dominio se alteró?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El dominio α1 de la cadena α",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El dominio α2 de la cadena α",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El dominio α3 de la cadena α",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Los dominios α1 y α2 de la cadena α",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La β2-microglobulina de la cadena α",
+          "correct": false
+        }
+      ],
+      "explanation": "La cadena α del MHC I tiene tres dominios. El α1 y el α2 forman la hendidura del péptido, y el α3 se une al correceptor CD8.",
+      "tema": "presentacion-mhc",
+      "subtema": "Dominio α3 y CD8",
+      "seccion": "Complejo Mayor de Histocompatibilidad I"
+    },
+    {
+      "id": "q16",
+      "stem": "Un investigador compara el tamaño de los péptidos que presentan las moléculas MHC en una biopsia de amígdala de un niño de 7 años con amigdalitis. Encuentra péptidos de 10 a 30 aminoácidos en las moléculas MHC II, más largos que los del MHC I. ¿Qué característica estructural explica este hallazgo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La hendidura de α1 y α2 es abierta en sus extremos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La hendidura formada por α1 y β1 es abierta en sus extremos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "La hendidura formada por α1 y β1 es angosta en ambos extremos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La hendidura formada por α2 y β2 es abierta en sus extremos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La hendidura formada por α1 y α2 es angosta en ambos extremos",
+          "correct": false
+        }
+      ],
+      "explanation": "El MHC II tiene cadenas α y β unidas sin enlace covalente, y α1 con β1 forman una hendidura abierta que acomoda péptidos más largos.",
+      "tema": "presentacion-mhc",
+      "subtema": "Hendidura del MHC II",
+      "seccion": "Complejo Mayor de Histocompatibilidad: MHC II"
+    },
+    {
+      "id": "q17",
+      "stem": "Una mujer de 36 años con infección crónica por el virus de la hepatitis C recibe IFN-γ en un ensayo clínico. En sus hepatocitos infectados, el interferón induce el cambio de las subunidades β catalíticas del proteasoma 26S por isoformas específicas. ¿Qué ventaja aporta este inmunoproteasoma a la presentación antigénica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Genera péptidos con residuos hidrofílicos o ácidos en el extremo C-terminal",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Genera péptidos con residuos hidrofóbicos o básicos en el extremo amino-terminal",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Genera péptidos con residuos hidrofóbicos o básicos de 10 a 30 aminoácidos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Genera péptidos con residuos hidrofóbicos o ácidos en la hendidura del MHC II",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Genera péptidos con residuos hidrofóbicos o básicos en el extremo C-terminal",
+          "correct": true
+        }
+      ],
+      "explanation": "El IFN-γ cambia las subunidades β del proteasoma y forma el inmunoproteasoma, que produce péptidos con residuos hidrofóbicos o básicos en el extremo C-terminal, ideales para el surco del MHC I.",
+      "tema": "presentacion-mhc",
+      "subtema": "Inmunoproteasoma",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "q18",
+      "stem": "Un hombre de 52 años con carcinoma de células renales muestra en su tumor una pérdida de ERAAP, la aminopeptidasa del retículo endoplásmico. Sus células presentan péptidos con longitud anormal en las moléculas MHC I y el reconocimiento por los linfocitos T CD8⁺ cambia. ¿Qué función cumple normalmente ERAAP?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Conecta a TAP con el MHC I vacío en el retículo endoplásmico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Recorta los péptidos a 10 a 30 aminoácidos en el endosoma tardío",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Recorta los péptidos a 8 a 10 aminoácidos en el retículo",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Corta las proteínas citosólicas en péptidos de 8 a 10 aminoácidos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Estabiliza la cadena α del MHC I antes de la β2-microglobulina",
+          "correct": false
+        }
+      ],
+      "explanation": "ERAAP es la aminopeptidasa del retículo que ajusta la longitud de los péptidos a 8 a 10 aminoácidos, la ideal para el surco del MHC I.",
+      "tema": "presentacion-mhc",
+      "subtema": "Función de ERAAP",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "q19",
+      "stem": "Un varón de 25 años con infecciones virales recurrentes participa en un estudio del ensamblaje del MHC I. En el retículo endoplásmico, la cadena α se estabiliza primero con una chaperona que se disocia al unirse la β2-microglobulina. El complejo incompleto espera el péptido acompañado de otras chaperonas. ¿Cuáles son estas últimas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Calreticulina y ERp57 del retículo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Calnexina y calreticulina del retículo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Calreticulina y la cadena invariante",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Calnexina y ERp57 del retículo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Calnexina y la cadena invariante",
+          "correct": false
+        }
+      ],
+      "explanation": "La calnexina estabiliza la cadena α y se va al unirse la β2-microglobulina. Luego la calreticulina y ERp57 mantienen estable el complejo incompleto hasta que llega el péptido.",
+      "tema": "presentacion-mhc",
+      "subtema": "Chaperonas del MHC I",
+      "seccion": "A) Procesamiento por MHC clase I"
+    },
+    {
+      "id": "q20",
+      "stem": "Un niño de 5 años con otitis media recurrente por Streptococcus pneumoniae tiene macrófagos que captan bacterias por fagocitosis. Los antígenos exógenos deben degradarse en un compartimento con pH bajo para generar péptidos de 10 a 30 aminoácidos que se unirán al MHC II. ¿Dónde y con qué enzimas ocurre esta degradación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "En endosomas tardíos alcalinos, mediante catepsinas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "En endosomas tardíos ácidos, mediante caspasas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "En el citosol de la célula, mediante el proteasoma 26S",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "En endosomas tardíos ácidos, mediante catepsinas",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "En el retículo endoplásmico, mediante la ERAAP",
+          "correct": false
+        }
+      ],
+      "explanation": "Los antígenos exógenos se degradan en endosomas tardíos y lisosomas acidificados por catepsinas, tiol-proteasas y aspartil-proteasas, y se generan péptidos de 10 a 30 aminoácidos.",
+      "tema": "presentacion-mhc",
+      "subtema": "Degradación de antígenos exógenos",
+      "seccion": "B) Procesamiento de MHC-II"
+    },
+    {
+      "id": "q21",
+      "stem": "En un ensayo con macrófagos de un hombre de 41 años con tuberculosis, se detecta en los endosomas tardíos un fragmento que queda tras degradar la cadena invariante con catepsinas y que aún bloquea la hendidura del MHC II. ¿Qué es este fragmento, llamado CLIP?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fragmento de 24 aminoácidos de la β2-microglobulina",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Fragmento de 24 aminoácidos de la cadena α del MHC II",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Fragmento de 44 aminoácidos de la cadena invariante",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Fragmento de 24 aminoácidos de la cadena invariante",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Fragmento de 24 aminoácidos del péptido antigénico exógeno",
+          "correct": false
+        }
+      ],
+      "explanation": "Las catepsinas degradan la cadena invariante y dejan un fragmento de 24 aminoácidos llamado CLIP, que sigue bloqueando la hendidura hasta que HLA-DM lo retira.",
+      "tema": "presentacion-mhc",
+      "subtema": "El fragmento CLIP",
+      "seccion": "B) Procesamiento de MHC-II"
+    },
+    {
+      "id": "q22",
+      "stem": "Un niño de 6 años con inmunodeficiencia primaria tiene linfocitos B con MHC II cargado de CLIP en su superficie y muy pocos péptidos antigénicos. Se sospecha déficit de una molécula parecida al MHC, no polimórfica y ausente de la membrana plasmática. ¿Qué función está alterada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Retira el CLIP y permite la carga del péptido antigénico",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Retira el CLIP y permite la unión de la β2-microglobulina",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Degrada la cadena invariante y libera el CLIP",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Retira el péptido antigénico y permite la carga del CLIP",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Retira el CLIP y permite la salida del MHC II del retículo",
+          "correct": false
+        }
+      ],
+      "explanation": "HLA-DM es una chaperona intercambiadora de péptidos que remueve el CLIP y permite la carga del péptido antigénico, y estabiliza la unión con un cambio conformacional.",
+      "tema": "presentacion-mhc",
+      "subtema": "Función de HLA-DM",
+      "seccion": "B) Procesamiento de MHC-II"
+    },
+    {
+      "id": "q23",
+      "stem": "Una niña de 4 años con infecciones bacterianas graves y retraso en la caída del cordón umbilical presenta un defecto de la cadena β2 de las integrinas. Sus linfocitos T se unen mal a las células presentadoras de antígeno. ¿Qué par de moléculas de adhesión une al linfocito T con la presentadora?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ICAM-1 en el LT con LFA-1 en la presentadora",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "LFA-1 en el LT con B7 en la presentadora",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "LFA-1 en el LT con CD40 y B7 en la presentadora",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD28 en el LT con B7 e ICAM-1 en la presentadora",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "LFA-1 en el LT con ICAM-1 en la presentadora",
+          "correct": true
+        }
+      ],
+      "explanation": "La adhesión LFA-1 del linfocito T con ICAM-1 de la célula presentadora produce la activación inicial del linfocito y estabiliza el contacto.",
+      "tema": "linfocitos-t",
+      "subtema": "Adhesión LFA-1 e ICAM-1",
+      "seccion": "1. Reconocimiento del antígeno"
+    },
+    {
+      "id": "q24",
+      "stem": "En un experimento con linfocitos T de un hombre de 30 años, los linfocitos se exponen a su antígeno presentado por células que no expresan B7. Se observa que no proliferan ni producen IL-2 aunque el antígeno se reconoce. ¿Qué fenómeno ocurre y por qué?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Agotamiento, por la ausencia de coestimulación",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Anergia, por la ausencia de coestimulación",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Anergia, por el exceso de coestimulación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Activación, por la ausencia de coestimulación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Anergia, por la ausencia de la señal 1",
+          "correct": false
+        }
+      ],
+      "explanation": "La anergia es la falta de respuesta del linfocito expuesto a su antígeno sin coestimulación, y es un mecanismo de autotolerancia.",
+      "tema": "tolerancia",
+      "subtema": "Anergia por falta de coestimulación",
+      "seccion": "2. Coestimulación"
+    },
+    {
+      "id": "q25",
+      "stem": "Un niño de 3 años con neumonías por Pneumocystis jirovecii y sinusitis recurrentes tiene IgG, IgA e IgE muy bajas con IgM elevada. Sus linfocitos T no logran ayudar a los linfocitos B a cambiar de isotipo. ¿Qué interacción molecular está alterada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD40L de la presentadora con CD40 del LT CD4⁺ efector",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "ICOS de la presentadora con ICOS-L del LT CD4⁺ efector",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD40 de la presentadora con CD40L del LT CD4⁺",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "B7 de la presentadora con CD28 del LT CD4⁺",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "PD-L1 de la presentadora con PD-1 del LT CD4⁺ efector",
+          "correct": false
+        }
+      ],
+      "explanation": "CD40 con CD40L es fundamental para la cooperación entre linfocitos T y B y el cambio de isotipo, y su ausencia causa el síndrome de hiper-IgM.",
+      "tema": "coestimulacion",
+      "subtema": "Interacción CD40 y CD40L",
+      "seccion": "Co-estimuladores Activadores"
+    },
+    {
+      "id": "q26",
+      "stem": "Una mujer de 31 años con infecciones sinopulmonares recurrentes e hipogammaglobulinemia tiene centros germinales pequeños y anticuerpos de baja afinidad. Se detecta una mutación en un correceptor de los linfocitos T cooperadores foliculares que interactúa con un ligando del linfocito B. ¿Qué describe mejor a esta molécula?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tfh, se une a ICOS-L del linfocito B y es homóloga de CD40L",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Th1, se une a ICOS-L del linfocito B y es homóloga de CD28",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tfh, se une a CD40 del linfocito B y es homóloga de CD28",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tfh, se une a ICOS-L del linfocito B y es homóloga de LFA-1",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Tfh, se une a ICOS-L del linfocito B y es homóloga de CD28",
+          "correct": true
+        }
+      ],
+      "explanation": "ICOS se expresa en el Tfh, se une a ICOS-L del linfocito B y es homóloga de CD28, por lo que participa en la ayuda a los linfocitos B.",
+      "tema": "coestimulacion",
+      "subtema": "Molécula ICOS",
+      "seccion": "Co-estimuladores Activadores"
+    },
+    {
+      "id": "q27",
+      "stem": "Un hombre de 66 años con cáncer de pulmón tiene un tumor que expresa PD-L1 y linfocitos T infiltrantes con función deficiente. Se le administra un anticuerpo que bloquea PD-1 y sus linfocitos recuperan la actividad. ¿Con qué ligandos se une PD-1 y qué efecto tiene sobre el linfocito T?",
+      "options": [
+        {
+          "id": "a",
+          "text": "B7-1 y B7-2, con inhibición y agotamiento del linfocito",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "PD-L1 y PD-L2, con activación y proliferación del linfocito",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "PD-L1 y PD-L2, con inhibición y agotamiento del linfocito",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CD40 y CD40L, con inhibición y agotamiento de los linfocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "PD-L1 y PD-L2, con inhibición y expansión del linfocito",
+          "correct": false
+        }
+      ],
+      "explanation": "PD-1 se une a PD-L1 y PD-L2 de la presentadora o del tumor y transmite señales que inhiben la activación y las funciones efectoras, con agotamiento del linfocito.",
+      "tema": "coestimulacion",
+      "subtema": "Eje PD-1 y PD-L1",
+      "seccion": "Co-estimuladores Inhibidoras"
+    },
+    {
+      "id": "q28",
+      "stem": "En los linfocitos T activados de un hombre de 50 años, el receptor recluta adaptadores y se activan varios factores de transcripción por ramas distintas de la señal. Una mutación bloquea la vía Ras y MAPK. ¿Qué factor de transcripción se pierde y por qué vía normalmente se activa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "AP-1, que se activa por la vía Ras y MAPK",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "NFAT, que se activa por la vía PLC-γ1 y calcineurina",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "NF-κB, que se activa por la vía DAG y PKCθ",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "NFAT, que se activa por la vía Ras y MAPK",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "AP-1, que se activa por la vía DAG y PKCθ",
+          "correct": false
+        }
+      ],
+      "explanation": "La vía Ras y MAPK activa AP-1. NFAT depende de PLC-γ1, IP₃ y calcineurina, y NF-κB depende de DAG y PKCθ.",
+      "tema": "linfocitos-t",
+      "subtema": "Vía Ras y MAPK, AP-1",
+      "seccion": "Traducción de la señal"
+    },
+    {
+      "id": "q29",
+      "stem": "Un hombre de 52 años recibe un trasplante hepático y comienza tacrolimus, un inhibidor de la calcineurina, para prevenir el rechazo. Tras la unión del TCR, la fosfolipasa C gamma 1 genera dos segundos mensajeros que activan ramas distintas de la señal. ¿Qué rama bloquea el fármaco?",
+      "options": [
+        {
+          "id": "a",
+          "text": "DAG activa PKCθ, la cual libera al factor NF-κB",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IP₃ eleva el Ca²⁺, activa calcineurina y libera NFAT",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "IP₃ eleva el Ca²⁺, activa PKCθ y libera NF-κB",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "DAG eleva el Ca²⁺, activa la calcineurina y libera NFAT",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IP₃ eleva el Ca²⁺, activa la calcineurina y libera AP-1",
+          "correct": false
+        }
+      ],
+      "explanation": "PLC-γ1 produce IP₃ y DAG. El IP₃ eleva el Ca²⁺ y activa la calcineurina, que activa NFAT, y el DAG activa PKCθ, que activa NF-κB.",
+      "tema": "linfocitos-t",
+      "subtema": "Vía PLC-γ1, IP₃ y calcineurina",
+      "seccion": "Traducción de la señal"
+    },
+    {
+      "id": "q30",
+      "stem": "Linfocitos T CD4⁺ de una mujer de 28 años se estimulan in vitro con su péptido presentado por células con coestimulación. Se activan los factores de transcripción NFAT, NF-κB y AP-1 y se evalúan sus células a las 72 horas de cultivo. ¿Qué resultado se espera en estos linfocitos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Transcripción de IL-2 y CD25, con proliferación clonal y menor supervivencia celular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Transcripción de IL-2 y CD25, con anergia clonal y mayor supervivencia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Transcripción de IL-4 y CD25, con proliferación clonal y mayor supervivencia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Transcripción de IL-2 y CD25, con proliferación clonal y mayor supervivencia",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Transcripción de IL-10 y CTLA-4, con proliferación clonal y mayor supervivencia",
+          "correct": false
+        }
+      ],
+      "explanation": "NFAT, NF-κB y AP-1 inducen la transcripción de IL-2 y CD25, con proliferación clonal, mayor supervivencia por Bcl-XL y diferenciación a células efectoras y de memoria.",
+      "tema": "linfocitos-t",
+      "subtema": "Resultado de la activación",
+      "seccion": "Traducción de la señal"
+    },
+    {
+      "id": "q31",
+      "stem": "En cultivo, los linfocitos T CD4⁺ de una mujer de 40 años se activan con su antígeno y producen una citocina que aumenta la expresión de un receptor de alta afinidad en su propia superficie. ¿Qué citocina es y qué efecto principal tiene?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-2, que estimula la proliferación clonal e induce CD25",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-2, que inhibe la proliferación clonal e induce CD25",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-2, que estimula la proliferación clonal e induce CTLA-4",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-21, que estimula la proliferación clonal e induce CD25",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-4, que estimula la proliferación clonal e induce CD25",
+          "correct": false
+        }
+      ],
+      "explanation": "La IL-2 la producen los LT CD4⁺ activados, estimula la proliferación clonal y la supervivencia, e induce el receptor de alta afinidad IL-2Rα o CD25.",
+      "tema": "citocinas",
+      "subtema": "Efectos de la IL-2",
+      "seccion": "3. Señales de citocinas"
+    },
+    {
+      "id": "q32",
+      "stem": "Un niño de 9 años con anemia y eosinofilia marcada tiene infección intestinal por Ascaris lumbricoides y niveles altos de IgE. Se identifica una subpoblación de linfocitos T CD4⁺ que activa eosinófilos y mastocitos y estimula la síntesis de IgE. ¿Qué subpoblación es, qué la induce y qué citocinas produce?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Th1, inducida por IL-4, que produce IL-4, IL-5 e IL-13",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Th2, inducida por IL-12, que produce IL-4, IL-5 e IL-13",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Th2, inducida por IL-4, que produce IL-4, IL-5 e IL-13",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Th2, inducida por IL-4, que produce IL-17, IL-22 e IL-13",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Th2, inducida por IL-4, que produce IL-5, IL-13 e IFN-γ",
+          "correct": false
+        }
+      ],
+      "explanation": "La Th2 se induce con IL-4 y produce IL-4, IL-5 e IL-13, que activan eosinófilos y mastocitos y estimulan la IgE contra los helmintos.",
+      "tema": "diferenciacion-t",
+      "subtema": "Subpoblación Th2",
+      "seccion": "Th2"
+    },
+    {
+      "id": "q33",
+      "stem": "Un joven de 19 años presenta abscesos cutáneos por Staphylococcus aureus y candidiasis mucocutánea recurrentes, con una respuesta deficiente de neutrófilos. Se sospecha un defecto en la subpoblación de linfocitos T CD4⁺ que recluta neutrófilos contra bacterias extracelulares y hongos. ¿Qué subpoblación es, qué la induce y qué produce?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Th17, inducida por IL-12, TGF-β e IL-23, que produce IL-17 e IL-22",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Th2, inducida por IL-6, TGF-β e IL-23, que produce IL-17 e IL-22",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Th17, inducida por IL-6, TGF-β e IL-23, que produce IL-4, IL-5 e IL-13",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Th1, inducida por IL-6, TGF-β e IL-23, que produce IL-17, IL-22 e IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Th17, inducida por IL-6, TGF-β e IL-23, que produce IL-17 e IL-22",
+          "correct": true
+        }
+      ],
+      "explanation": "La Th17 se induce con IL-6, TGF-β e IL-23 y produce IL-17 e IL-22, que reclutan neutrófilos e inducen inflamación contra bacterias extracelulares y hongos.",
+      "tema": "diferenciacion-t",
+      "subtema": "Subpoblación Th17",
+      "seccion": "Th17"
+    },
+    {
+      "id": "q34",
+      "stem": "Una mujer de 35 años con infecciones recurrentes tiene centros germinales pequeños y anticuerpos de baja afinidad tras vacunarse. Se sospecha una falla en la subpoblación de linfocitos T CD4⁺ que ayuda a los linfocitos B en los centros germinales. ¿Qué subpoblación es, qué la induce y qué produce?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Th1, inducida por IL-6 e IL-21, que produce IL-21",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Tfh, inducida por IL-6 e IL-21, que produce IL-21",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Tfh, inducida por IL-12 e IL-21, que produce IL-21",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tfh, inducida por IL-6 e IL-21, que produce IL-4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Treg, inducida por IL-6 e IL-21, que produce IL-10",
+          "correct": false
+        }
+      ],
+      "explanation": "La Tfh se induce con IL-6 e IL-21 y produce IL-21. Ayuda a los linfocitos B en los centros germinales, con cambio de isotipo y maduración de la afinidad.",
+      "tema": "diferenciacion-t",
+      "subtema": "Subpoblación Tfh",
+      "seccion": "Tfh"
+    },
+    {
+      "id": "q35",
+      "stem": "Un lactante varón de 4 meses presenta diarrea grave, dermatitis y diabetes de inicio neonatal, con una mutación que altera los linfocitos T reguladores. La pérdida de esta subpoblación produce autoinmunidad por fallo de la tolerancia periférica. ¿Qué subpoblación es, qué la induce y qué citocinas produce?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Th17, inducida por TGF-β e IL-2, que produce IL-10 y TGF-β",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Treg, inducida por IL-6 e IL-2, que produce IL-10 y TGF-β",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Treg, inducida por TGF-β e IL-2, que produce IL-17, IL-22 y TGF-β",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Treg, inducida por TGF-β e IL-2, que produce IL-10 y TGF-β",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Treg, inducida por TGF-β e IL-2, que produce IL-10, IL-4 e IFN-γ",
+          "correct": false
+        }
+      ],
+      "explanation": "La Treg se induce con TGF-β e IL-2 y produce IL-10 y TGF-β, que median la supresión inmune, la tolerancia periférica y el control de la autoinmunidad.",
+      "tema": "regulacion",
+      "subtema": "Subpoblación Treg",
+      "seccion": "Treg"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

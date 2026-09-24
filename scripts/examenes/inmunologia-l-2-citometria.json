@@ -3,7 +3,883 @@
   "key": "inmunologia/l-2-citometria",
   "title": "L2 — Citometría de flujo (FlowJo)",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Un hombre de 34 años con sospecha de infección por VIH acude para una evaluación inmunológica. Su sangre se marca con un anticuerpo anti-CD3 unido a PE y otro anti-CD4 unido a FITC, y se corre en un citómetro. En el dot plot, con CD3 en el eje vertical y CD4 en el horizontal, la nube más densa ocupa el cuadrante superior derecho con 75 % de las células. ¿Qué población forma esa nube?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T citotóxicos, con CD3 y sin CD4",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Monocitos u otras células, con CD4 sin CD3",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos B, sin CD3 y sin CD4 en superficie",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos T cooperadores, con CD3 y CD4",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos NK, sin CD3 y sin CD4 en superficie",
+          "correct": false
+        }
+      ],
+      "explanation": "El cuadrante superior derecho reúne las células con CD3 y con CD4, es decir los linfocitos T cooperadores, que dominan la muestra con 75 %.",
+      "tema": "tecnicas",
+      "subtema": "Cuadrante CD3 y CD4",
+      "seccion": "¿Por qué los puntos se agrupan en cuatro zonas? › Arriba derecha"
+    },
+    {
+      "id": "q02",
+      "stem": "Una mujer de 41 años con fiebre alta y leucocitosis neutrofílica tiene una muestra de sangre que se envía al laboratorio de citometría. En el dot plot de FSC frente a SSC de los leucocitos, el analista observa la nube más alta, con mayor SSC y FSC elevado, y debe rotularla. ¿Qué población forma esa nube?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos, con tamaño y complejidad bajos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Monocitos, con complejidad interna intermedia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Granulocitos, con complejidad interna alta",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Monocitos, con complejidad interna alta",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos, con complejidad interna intermedia",
+          "correct": false
+        }
+      ],
+      "explanation": "Los granulocitos tienen abundantes gránulos, así que dispersan mucha luz lateral y forman la nube de mayor SSC del gráfico.",
+      "tema": "tecnicas",
+      "subtema": "Nube de granulocitos",
+      "seccion": "DOT PLOT"
+    },
+    {
+      "id": "q03",
+      "stem": "Un lactante de 9 meses con infecciones recurrentes y linfopenia es evaluado por sospecha de inmunodeficiencia combinada. El laboratorio quiere contar todos sus linfocitos T, sin distinguir subtipos, con un solo anticuerpo. ¿Qué marcador debe usar y qué población detecta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD4, presente en todos los linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD8, presente en todos los linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD3, presente solo en los T cooperadores",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD19, presente en todos los linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD3, presente en todos los linfocitos T",
+          "correct": true
+        }
+      ],
+      "explanation": "El CD3 forma parte del complejo TCR y está en todos los linfocitos T, mientras que CD4 y CD8 solo separan después a cooperadores y citotóxicos.",
+      "tema": "celulas-inmunes",
+      "subtema": "Marcador pan T",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › T (todos)"
+    },
+    {
+      "id": "q04",
+      "stem": "Un varón de 47 años con leucopenia es estudiado por citometría de flujo. Sus linfocitos se marcan con un anticuerpo anti-CD3 naranja y otro anti-CD4 verde, y cada célula pasa frente al láser. El analista ve un punto ubicado muy arriba y muy a la derecha, con CD3 en el eje vertical y CD4 en el horizontal. ¿Qué indica esa posición?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mucho CD3 y poco CD4, porque brilla solo con la etiqueta naranja",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Poco CD3 y mucho CD4, porque brilla solo con la etiqueta verde",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Poco CD3 y poco CD4, porque casi no brilla con etiqueta alguna",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mucho CD3 y mucho CD4, porque brilla con ambas etiquetas",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Mucho CD3 y mucho CD4, porque la célula es más grande",
+          "correct": false
+        }
+      ],
+      "explanation": "Cada punto es una célula y su posición depende de cuánto brilla cada etiqueta. Más arriba es más CD3 y más a la derecha es más CD4.",
+      "tema": "tecnicas",
+      "subtema": "Lectura de los ejes",
+      "seccion": "¿Cómo se llega a esto?"
+    },
+    {
+      "id": "q05",
+      "stem": "Un hombre de 29 años con adenopatías cervicales se estudia por citometría. El dot plot de CD3 frente a CD4 muestra 75 % de las células arriba a la derecha, 15 % arriba a la izquierda, 3 % abajo a la derecha y 7 % abajo a la izquierda. El laboratorio debe informar qué porcentaje de las células son linfocitos T. ¿Cuál es y cómo se obtiene?",
+      "options": [
+        {
+          "id": "a",
+          "text": "90 %, al sumar los dos cuadrantes CD3 positivos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "78 %, al sumar los dos cuadrantes CD4 positivos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "75 %, con solo el cuadrante de los cooperadores CD4",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "93 %, al sumar los tres cuadrantes con alguna etiqueta",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "22 %, al sumar los cuadrantes CD4 negativos",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T son las células CD3 positivas, es decir los dos cuadrantes superiores, que suman 75 % y 15 %, o sea 90 % de la muestra.",
+      "tema": "tecnicas",
+      "subtema": "Porcentaje de linfocitos T",
+      "seccion": "¿Qué significa el resultado?"
+    },
+    {
+      "id": "q06",
+      "stem": "Un hombre de 31 años con pérdida de peso y candidiasis oral tiene una prueba de VIH positiva. Su médico pide una citometría de flujo para evaluar su estado inmunológico y compara sus linfocitos CD4 con los CD8. ¿Qué ocurre con la proporción CD4 a CD8 y por qué?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Disminuye, porque el virus destruye los CD4",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Aumenta, porque el virus destruye los linfocitos CD8",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Disminuye, porque el virus destruye los CD8",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Aumenta, porque el virus multiplica los linfocitos CD4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Se mantiene, porque el virus no afecta a los CD4",
+          "correct": false
+        }
+      ],
+      "explanation": "El VIH destruye los linfocitos CD4, que son los coordinadores del sistema inmune, y por eso la proporción CD4 a CD8 baja en estos pacientes.",
+      "tema": "vih",
+      "subtema": "Proporción CD4 a CD8",
+      "seccion": "¿Por qué importa esto?"
+    },
+    {
+      "id": "q07",
+      "stem": "Una mujer de 43 años con sospecha de linfoma T se estudia por citometría de flujo con anti-CD3 y anti-CD4. En el dot plot, un grupo de 15 % de las células queda arriba a la izquierda, con CD3 positivo y CD4 negativo. ¿Qué células forman ese grupo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T cooperadores, con CD3 y también CD4",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Monocitos y otras células, con poco CD4",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Otras células, como B y NK, o ruido de fondo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Otros linfocitos T, sobre todo citotóxicos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos T reguladores, con CD3 y CD4",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células con CD3 y sin CD4 son linfocitos T que no son cooperadores, principalmente los citotóxicos, que expresan CD8.",
+      "tema": "tecnicas",
+      "subtema": "Cuadrante CD3 sin CD4",
+      "seccion": "¿Por qué los puntos se agrupan en cuatro zonas? › Arriba izquierda"
+    },
+    {
+      "id": "q08",
+      "stem": "Un residente revisa el dot plot de CD3 frente a CD4 de la muestra de una mujer de 36 años. Los puntos van del azul al rojo y su tutor le pregunta qué representa el color. ¿Cuál es la respuesta correcta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La cantidad de CD4 de cada célula, con rojo donde hay más",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El tamaño de cada célula, con rojo para las más grandes",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La viabilidad celular, con azul para las muertas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La cantidad de CD3 de cada célula, con azul donde hay más",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La densidad de células, con rojo donde se amontonan más",
+          "correct": true
+        }
+      ],
+      "explanation": "El color solo muestra dónde hay más células amontonadas, con rojo en la zona más densa y azul en la de pocas células. No añade ninguna medida.",
+      "tema": "tecnicas",
+      "subtema": "Colores del dot plot",
+      "seccion": "¿Y los colores?"
+    },
+    {
+      "id": "q09",
+      "stem": "Una lactante de 14 meses con infecciones virales graves recurrentes es evaluada por sospecha de déficit de células NK. Se envía su sangre al laboratorio de citometría de flujo, donde se preparará un panel de anticuerpos fluorescentes. ¿Qué marcadores permiten reconocer a estas células en el citómetro?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD16 y CD56, con CD3 positivo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD16 y CD56, con CD3 negativo",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CD16 y CD19, con CD3 negativo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD16, CD56 y CD19, con CD3 negativo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD16 y CD56, con CD3 y CD4 positivos",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos NK expresan CD16, o FcγRIII, y CD56, y no tienen CD3, lo que los separa de los linfocitos T.",
+      "tema": "celulas-inmunes",
+      "subtema": "Marcadores de NK",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Linfocitos NK"
+    },
+    {
+      "id": "q10",
+      "stem": "Un varón de 25 años sano dona sangre para un control de rutina y el laboratorio analiza sus leucocitos por citometría de flujo. En el dot plot de FSC frente a SSC, el técnico debe explicar a un estudiante qué mide cada eje. ¿Qué mide cada uno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "FSC mide el tamaño y SSC la complejidad interna",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "FSC mide la complejidad interna y SSC el tamaño celular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "FSC mide la fluorescencia y SSC el tamaño celular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "FSC mide el tamaño celular y SSC la fluorescencia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "FSC mide la complejidad y SSC la fluorescencia",
+          "correct": false
+        }
+      ],
+      "explanation": "El FSC refleja el tamaño o volumen de la célula y el SSC su complejidad interna o granularidad.",
+      "tema": "tecnicas",
+      "subtema": "Ejes FSC y SSC",
+      "seccion": "DOT PLOT"
+    },
+    {
+      "id": "q11",
+      "stem": "Un hombre de 55 años con fiebre prolongada y sospecha de endocarditis tiene sangre enviada al laboratorio. En el dot plot de FSC frente a SSC aparece una nube pequeña por debajo de la de granulocitos y por encima de la de linfocitos, con un SSC intermedio. ¿Qué población forma esa nube?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Monocitos, con SSC alto y FSC alto",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Monocitos, con SSC intermedio y FSC alto",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos, con SSC intermedio y FSC bajo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Granulocitos, con SSC intermedio y FSC alto",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos, con SSC bajo y FSC bajo",
+          "correct": false
+        }
+      ],
+      "explanation": "Los monocitos tienen un tamaño parecido al de los granulocitos pero menos gránulos, así que su nube queda entre los linfocitos y los granulocitos.",
+      "tema": "tecnicas",
+      "subtema": "Nube de monocitos",
+      "seccion": "DOT PLOT"
+    },
+    {
+      "id": "q12",
+      "stem": "Un niño de 7 años con faringitis recurrente tiene un hemograma con linfocitosis relativa y se envía sangre a citometría. En el dot plot de FSC frente a SSC destaca una nube compacta y alargada pegada abajo a la izquierda, con los valores más bajos de ambos ejes. ¿Qué población forma esa nube?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos B y T sin NK, con FSC y SSC bajos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Monocitos, con FSC alto y SSC intermedio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos B, T y NK, con FSC y SSC bajos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Granulocitos, con FSC alto y SSC muy alto",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Neutrófilos y eosinófilos, con FSC y SSC bajos",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos, sean B, T o NK, son pequeños y poco granulares, por eso quedan abajo a la izquierda con los valores más bajos de FSC y SSC.",
+      "tema": "tecnicas",
+      "subtema": "Nube de linfocitos",
+      "seccion": "DOT PLOT"
+    },
+    {
+      "id": "q13",
+      "stem": "Una mujer de 39 años con artritis reumatoide participa en un estudio que mide sus linfocitos T que suprimen la respuesta inmune. El laboratorio prepara un panel de anticuerpos para identificarlos por citometría de flujo. ¿Qué combinación de marcadores caracteriza a los linfocitos T reguladores?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD4, CD25 y FoxP3",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD8, CD25 y FoxP3",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD4, CD123 y FoxP3",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD4, CD117 y FoxP3",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD4, CD25 y CD56",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T reguladores expresan CD4, CD25 que es el receptor de IL-2, y el factor de transcripción FoxP3.",
+      "tema": "celulas-inmunes",
+      "subtema": "Marcadores de Treg",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Linfocito T regulador"
+    },
+    {
+      "id": "q14",
+      "stem": "Un varón de 12 años con anemia, fiebre y adenopatías es estudiado por una leucemia aguda. El laboratorio de citometría, con anticuerpos fluorescentes, debe definir si los blastos de su sangre pertenecen al linaje de los linfocitos B. ¿Qué marcadores caracterizan a los linfocitos B?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD3, CD20 y CD21",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD19, CD20 y CD117",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD19, CD20 y CD123",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD19, CD68 y CD21",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD19, CD20 y CD21",
+          "correct": true
+        }
+      ],
+      "explanation": "Los linfocitos B se caracterizan por CD19, CD20 y CD21, este último también llamado CR2.",
+      "tema": "celulas-inmunes",
+      "subtema": "Marcadores de linfocitos B",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Linfocitos B"
+    },
+    {
+      "id": "q15",
+      "stem": "Una mujer de 68 años con neumonía grave y sospecha de sepsis tiene la sangre enviada al laboratorio para un panel de citometría. El equipo debe identificar sus monocitos circulantes y separarlos de los linfocitos. ¿Qué marcadores caracterizan a los monocitos y macrófagos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD14, CD16, CD68 y CD117",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD14, CD16, CD68 y CD40",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CD14, CD16, CD68 y CD123",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD19, CD16, CD68 y CD40",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD14, CD3, CD68 y CD40",
+          "correct": false
+        }
+      ],
+      "explanation": "Los monocitos y macrófagos se caracterizan por CD14, CD16, CD68 y CD40.",
+      "tema": "celulas-inmunes",
+      "subtema": "Marcadores de monocitos",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Monocitos/Macrófagos"
+    },
+    {
+      "id": "q16",
+      "stem": "Una mujer de 26 años con urticaria recurrente y sospecha de alergia alimentaria tiene una muestra de sangre que se estudia en el laboratorio. El equipo quiere identificar por citometría de flujo a los basófilos, célula clave de la respuesta alérgica. ¿Qué marcadores los caracterizan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD123 y FcγRIII",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD123 y FcεRII",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD15 y FcεRI",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD34 y CD123",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD123 y FcεRI",
+          "correct": true
+        }
+      ],
+      "explanation": "Los basófilos se caracterizan por CD123 y por FcεRI, el receptor de IgE, que explica su papel en la respuesta alérgica.",
+      "tema": "celulas-inmunes",
+      "subtema": "Marcadores de basófilos",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Basófilos"
+    },
+    {
+      "id": "q17",
+      "stem": "Un hombre de 33 años con leucemia mieloide será sometido a un trasplante y su hermano dona células madre por aféresis. El laboratorio de citometría debe contar en la colecta las células madre hematopoyéticas para calcular la dosis. ¿Qué marcadores las caracterizan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD34 y CD123, o IL-3Rα",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD34 y CD16, o FcγRIII",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD34 y CD117, o c-Kit",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CD117 y CD19, o c-Kit",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD3 y CD117, o c-Kit",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células madre hematopoyéticas se caracterizan por CD34 y CD117, este último también llamado c-Kit.",
+      "tema": "celulas-inmunes",
+      "subtema": "Marcadores de células madre",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Células madre hematopoyéticas"
+    },
+    {
+      "id": "q18",
+      "stem": "Un varón de 60 años con neumonía lobar y leucocitosis de 18 000 por microlitro tiene la sangre enviada a citometría. El laboratorio debe identificar entre los leucocitos a los neutrófilos, células de migración y fagocitosis. ¿Qué marcadores los caracterizan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD15, CD16 y CD11b/CD18",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD9, CD16 y CD11b/CD18",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD15, CD123 y CD11b/CD18",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD117, CD16 y CD11b/CD18",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD15, CD3 y CD11b/CD18",
+          "correct": false
+        }
+      ],
+      "explanation": "Los neutrófilos se caracterizan por CD15, CD16 y CD11b/CD18, este último ligado a la migración y a la fagocitosis.",
+      "tema": "celulas-inmunes",
+      "subtema": "Marcadores de neutrófilos",
+      "seccion": "RECEPTORES CARACTERÍSTICOS › Neutrófilos"
+    },
+    {
+      "id": "q19",
+      "stem": "Un hombre de 57 años con linfoma es estudiado por citometría de flujo y el analista nota una nube que marca CD16. Recuerda que este marcador no basta para identificar una sola población, porque lo comparten varios tipos celulares de la sangre. ¿Qué tres poblaciones expresan CD16?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos NK, eosinófilos y neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos B y T, monocitos y neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos NK, monocitos y eosinófilos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos NK, monocitos y neutrófilos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos NK, monocitos y basófilos",
+          "correct": false
+        }
+      ],
+      "explanation": "El CD16 aparece en los linfocitos NK, en los monocitos y macrófagos, y en los neutrófilos, por eso los NK se reconocen por CD16 más CD56 sin CD3.",
+      "tema": "celulas-inmunes",
+      "subtema": "CD16 compartido",
+      "seccion": "RECEPTORES CARACTERÍSTICOS"
+    },
+    {
+      "id": "q20",
+      "stem": "Una mujer de 60 años con leucocitosis persistente tiene su sangre marcada con anticuerpos fluorescentes para un estudio de citometría. La residente pregunta cómo el equipo sabe qué proteína tiene cada célula cuando todas se ven parecidas. ¿Cuál es el fundamento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cada etiqueta se une a cualquier proteína de la membrana y brilla igual en todas las células",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Cada etiqueta se une a una proteína específica y brilla menos cuanta más proteína hay",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cada etiqueta se une al ADN de la célula y brilla más cuanto más ADN hay",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Cada etiqueta se une a una proteína específica y brilla más cuanta más proteína hay",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Cada etiqueta se une a una proteína específica y mide el tamaño celular",
+          "correct": false
+        }
+      ],
+      "explanation": "Cada etiqueta luminosa se une a una proteína específica y, al pasar frente al láser, brilla más cuanta más proteína tenga la célula.",
+      "tema": "tecnicas",
+      "subtema": "Principio de la tinción",
+      "seccion": "¿Cómo se llega a esto?"
+    },
+    {
+      "id": "q21",
+      "stem": "Un hombre de 50 años con sarcoidosis se estudia por citometría de flujo con anti-CD3 y anti-CD4. En el dot plot, un pequeño grupo de 3 % de las células queda abajo a la derecha, con CD3 negativo y CD4 positivo. ¿Qué células forman ese grupo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T cooperadores, con CD3 y CD4",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos T citotóxicos, con CD3 y sin CD4",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Monocitos u otras células con poco CD4",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos B y NK, sin CD3 y sin CD4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos T reguladores, con CD3 y CD4",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células con CD4 pero sin CD3 no son linfocitos T, y corresponden a monocitos u otras células con poco CD4.",
+      "tema": "tecnicas",
+      "subtema": "Cuadrante CD4 sin CD3",
+      "seccion": "¿Por qué los puntos se agrupan en cuatro zonas? › Abajo derecha"
+    },
+    {
+      "id": "q22",
+      "stem": "Una mujer de 48 años con fatiga crónica se estudia por citometría de flujo con anti-CD3 y anti-CD4. En el dot plot, un grupo de 7 % de las células queda abajo a la izquierda, sin ninguna de las dos etiquetas. ¿Qué células forman ese grupo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T cooperadores, con CD3 y también CD4",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Otras células, como B y NK, o ruido de fondo",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos T citotóxicos, con CD3 y sin CD4",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Monocitos u otras células con poco CD4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos T reguladores, con CD3 y también CD4",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células sin CD3 ni CD4 no son linfocitos T y corresponden a otras células, como los B y los NK, o a ruido de fondo.",
+      "tema": "tecnicas",
+      "subtema": "Cuadrante sin CD3 ni CD4",
+      "seccion": "¿Por qué los puntos se agrupan en cuatro zonas? › Abajo izquierda"
+    },
+    {
+      "id": "q23",
+      "stem": "Un varón de 38 años con linfadenopatía es estudiado por citometría. Su dot plot muestra 75 % de linfocitos T cooperadores y 15 % de otros linfocitos T, una proporción de 5 a 1. El informe recuerda que en sangre normal esa proporción suele ser de 1,5 a 2,5 a 1. ¿Cómo se interpreta la proporción de esta muestra?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Baja, porque 5 veces queda bajo el rango de 1,5 a 2,5 veces",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Normal, porque 5 veces cae dentro del rango de 1,5 a 2,5 veces",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Alta, porque 15 sobre 75 supera el rango de 1,5 a 2,5 veces",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Baja, porque 1 sobre 5 queda bajo el rango de 1,5 a 2,5 veces",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Alta, porque 5 veces supera el rango de 1,5 a 2,5 veces",
+          "correct": true
+        }
+      ],
+      "explanation": "Una proporción de 5 a 1 supera el rango normal de 1,5 a 2,5 a 1, por lo que hay muchos más CD4 que otros linfocitos T.",
+      "tema": "tecnicas",
+      "subtema": "Proporción CD4 frente a otros T",
+      "seccion": "¿Qué significa el resultado?"
+    },
+    {
+      "id": "q24",
+      "stem": "Una tecnóloga médica revisa el dot plot de CD3 frente a CD4 de un paciente de 44 años. Las nubes de cada cuadrante aparecen bien separadas entre sí, sin puntos mezclados en el centro. El jefe del laboratorio le pregunta qué indica que las poblaciones salgan tan separadas. ¿Cuál es la respuesta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Que la tinción falló y mezcló las poblaciones",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Que la muestra solo contiene linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Que la tinción funcionó bien en la muestra",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Que los cuadrantes se trazaron sin criterio alguno",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Que el láser estaba mal alineado con la muestra",
+          "correct": false
+        }
+      ],
+      "explanation": "Cuando las poblaciones salen bien separadas, las etiquetas se unieron a su proteína y quedó clara la diferencia entre células con y sin cada marcador.",
+      "tema": "tecnicas",
+      "subtema": "Separación de las poblaciones",
+      "seccion": "¿Qué significa el resultado?"
+    },
+    {
+      "id": "q25",
+      "stem": "Una residente de 29 años pregunta a su tutora por qué el informe de citometría de un paciente con inmunodeficiencia da tanta importancia al recuento de linfocitos CD4. La tutora explica que estas células cumplen una función central dentro del sistema inmune. ¿Cuál es esa función?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fagocitan y destruyen a los microorganismos que invaden",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Coordinan cuándo y cómo actúan las demás células inmunes",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Producen anticuerpos contra el antígeno reconocido",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Destruyen directamente a las células infectadas por virus",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Presentan antígeno a los linfocitos T citotóxicos de la sangre",
+          "correct": false
+        }
+      ],
+      "explanation": "Los CD4 son los coordinadores del sistema inmune, pues indican a otras células cuándo y cómo actuar. Por eso contarlos ayuda a diagnosticar y monitorear enfermedades.",
+      "tema": "tecnicas",
+      "subtema": "Papel de los CD4",
+      "seccion": "¿Por qué importa esto?"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

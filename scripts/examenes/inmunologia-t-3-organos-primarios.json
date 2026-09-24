@@ -3,7 +3,953 @@
   "key": "inmunologia/t-3-organos-primarios",
   "title": "T3 — Órganos linfoides primarios",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Un lactante de 4 meses ingresa por infecciones virales y micóticas recurrentes. El estudio genético muestra una deleción en el cromosoma 22 y la ecografía no logra visualizar la sombra tímica. En sangre periférica el recuento de linfocitos T es muy bajo y el de linfocitos B es normal. ¿Qué proceso explica el déficit de linfocitos T en este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Falla de maduración de los linfocitos B por médula ósea ausente",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Falla de la selección negativa por ausencia del gen AIRE en el timo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Falla de maduración de los protimocitos por timo ausente",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Falla de la salida de linfocitos T por linfáticos eferentes ausentes",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Falla de la selección positiva por ausencia de MHC propio en el timo",
+          "correct": false
+        }
+      ],
+      "explanation": "El timo es el órgano donde maduran los linfocitos T a partir de protimocitos. En el síndrome de DiGeorge está ausente o hipoplásico y por eso faltan linfocitos T.",
+      "tema": "inmunodeficiencias",
+      "subtema": "Síndrome de DiGeorge",
+      "seccion": "Selección Tímica"
+    },
+    {
+      "id": "q02",
+      "stem": "Una mujer de 26 años consulta por candidiasis mucocutánea recurrente, insuficiencia suprarrenal y anticuerpos contra tejido tiroideo y pancreático. Se documenta una mutación que inactiva el gen AIRE, de modo que ciertas células epiteliorreticulares de la médula tímica no expresan autoantígenos tisulares. ¿Qué proceso central queda alterado y explica su autoinmunidad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Selección positiva en la corteza, con escape de linfocitos T sin restricción por MHC",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Selección negativa en la corteza, con escape de linfocitos T por falta de cTEC",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Selección negativa en la médula, con muerte de todos los linfocitos T maduros del timo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Salida de linfocitos T maduros por los linfáticos eferentes hacia la sangre",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Selección negativa en la médula, con escape de los linfocitos T autorreactivos",
+          "correct": true
+        }
+      ],
+      "explanation": "Las células epiteliorreticulares medulares con AIRE presentan autoantígenos tisulares para eliminar timocitos autorreactivos. Sin AIRE falla la selección negativa y escapan linfocitos T autorreactivos.",
+      "tema": "tolerancia",
+      "subtema": "Gen AIRE y autoinmunidad",
+      "seccion": "Médula tímica"
+    },
+    {
+      "id": "q03",
+      "stem": "Un niño de 3 años es operado de una cardiopatía congénita y se envía a patología una muestra del timo, teñida con hematoxilina y eosina. El patólogo describe una corteza intensamente basofílica y una médula más clara, con estructuras acidófilas. ¿Qué componente celular explica la marcada basofilia de la corteza tímica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Abundancia de linfocitos B maduros organizados en folículos linfoides",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Abundancia de timocitos, linfocitos T inmaduros de la corteza",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Abundancia de corpúsculos de Hassall, de aspecto acidófilo y concéntrico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Abundancia de células plasmáticas secretoras de anticuerpos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Abundancia de mastocitos con gránulos citoplasmáticos de color rojizo",
+          "correct": false
+        }
+      ],
+      "explanation": "La corteza contiene abundantes timocitos, linfocitos T inmaduros, y por eso se ve muy basófila. La médula tiene menos linfocitos y se ve más clara.",
+      "tema": "organos-primarios",
+      "subtema": "Basofilia de la corteza",
+      "seccion": "B) Corteza tímica"
+    },
+    {
+      "id": "q04",
+      "stem": "Una niña de 5 años fallece en un accidente doméstico y en la autopsia se estudia su timo. Al microscopio, los vasos de la corteza presentan una pared que impide el paso de antígenos de la sangre hacia los timocitos en desarrollo. ¿Qué tipo de endotelio forma la primera capa de esta barrera hematotímica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fenestrado, con diafragmas delgados entre las células y sin lámina basal",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Discontinuo, con hendiduras amplias entre las células y sin pericitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Continuo, con poros transcelulares entre las células y sin uniones",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Continuo, con uniones estrechas entre las células y con pericitos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Fenestrado, con uniones estrechas entre las células y sin pericitos",
+          "correct": false
+        }
+      ],
+      "explanation": "El endotelio de la barrera hematotímica es continuo y con uniones estrechas, rodeado de lámina basal y pericitos. Impide que los timocitos contacten con antígenos de la sangre.",
+      "tema": "organos-primarios",
+      "subtema": "Endotelio de la barrera",
+      "seccion": "Barrera hemato-tímica"
+    },
+    {
+      "id": "q05",
+      "stem": "Un hombre de 61 años con anemia inexplicada se somete a una biopsia de médula ósea para evaluar su estroma. La inmunohistoquímica se dirige a las células que dan soporte a la hematopoyesis y muestra positividad para CD271 en una parte de ellas, ubicadas cerca de los capilares sinusoides. ¿Qué tipo celular identifica el marcador CD271 en la médula ósea?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células madre mesenquimales del estroma medular óseo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Células madre hematopoyéticas de los nichos medulares",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células endoteliales de los capilares sinusoides medulares",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Macrófagos del estroma con fagocitosis de células viejas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Células madre linfoides del estroma medular óseo",
+          "correct": false
+        }
+      ],
+      "explanation": "CD271 marca a las células madre mesenquimales del estroma de la médula ósea, que da soporte a la hematopoyesis junto con macrófagos y matriz extracelular.",
+      "tema": "organos-primarios",
+      "subtema": "Marcador CD271",
+      "seccion": "Componentes"
+    },
+    {
+      "id": "q06",
+      "stem": "Una lactante de 9 meses con una cardiopatía congénita es operada y se estudia su timo. Mediante marcaje se siguen los linfocitos T maduros para conocer por dónde abandonan el órgano y llegan a la circulación. ¿En qué zona se originan los vasos por los que salen estos linfocitos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "En la cápsula fibrosa del timo, donde nacen los linfáticos aferentes",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "En la corteza subcapsular, donde se originan los linfáticos eferentes",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "En la unión corticomedular, donde nacen los vasos linfáticos aferentes",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "En la médula central, donde nacen los linfáticos aferentes",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "En la unión corticomedular, donde nacen los linfáticos eferentes",
+          "correct": true
+        }
+      ],
+      "explanation": "Los linfocitos T maduros salen del timo por vasos linfáticos eferentes, que se originan en la unión corticomedular. El timo carece de linfáticos aferentes.",
+      "tema": "organos-primarios",
+      "subtema": "Salida de linfocitos T",
+      "seccion": "En la unión córtico-medular"
+    },
+    {
+      "id": "q07",
+      "stem": "Un niño de 2 años operado por otra causa aporta un fragmento de tejido linfoide que un patólogo debe clasificar como timo o ganglio. Observa lobulillos incompletos con corteza y médula, separados por trabéculas de una cápsula colagenosa. ¿Qué par de estructuras, presentes en un ganglio, faltarán en este fragmento por tratarse de timo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Folículos linfoides y vasos linfáticos eferentes del órgano",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Trabéculas de la cápsula y vasos linfáticos aferentes",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Folículos linfoides y vasos linfáticos aferentes al órgano",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Cápsula de colágeno y vasos linfáticos aferentes del órgano",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Folículos linfoides y vasos sanguíneos de las trabéculas",
+          "correct": false
+        }
+      ],
+      "explanation": "El timo carece de folículos linfoides y de vasos linfáticos aferentes, a diferencia de los órganos linfoides secundarios. Solo posee linfáticos eferentes.",
+      "tema": "organos-primarios",
+      "subtema": "Diferencias con el ganglio",
+      "seccion": "A) Cápsula"
+    },
+    {
+      "id": "q08",
+      "stem": "Una joven de 19 años con faringoamigdalitis tiene un ganglio cervical aumentado de tamaño. En la biopsia se observa un folículo con centro germinal cuya zona oscura está llena de células grandes, con núcleo redondo no hendido, en franca proliferación. ¿Qué célula y qué proceso predominan en esta zona?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Centrocitos, con hipermutación somática en sus receptores",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Centroblastos, con selección clonal por afinidad frente a FDC",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Centrocitos, con selección clonal de alta afinidad por FDC",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Centroblastos, con hipermutación somática en sus receptores",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Centroblastos, con cambio de isotipo dependiente de citocinas",
+          "correct": false
+        }
+      ],
+      "explanation": "En la zona oscura los centroblastos proliferan y sufren hipermutación somática. Luego pasan a la zona clara como centrocitos para la selección por afinidad.",
+      "tema": "linfocitos-b",
+      "subtema": "Zona oscura del centro germinal",
+      "seccion": "Folículos Germinales"
+    },
+    {
+      "id": "q09",
+      "stem": "Una mujer de 45 años con adenopatía cervical se somete a biopsia ganglionar. En la zona clara del centro germinal se identifican células que marcan con CR1, no expresan MHC II y no logran activar a los linfocitos T. ¿Cuál es el origen de estas células dendríticas foliculares?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mieloide, de origen hematopoyético y sin origen mesenquimatoso",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Estromal, de origen mesenquimatoso, no hematopoyético",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Linfoide, de origen hematopoyético y no mesenquimatoso",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Epitelial, de origen endodérmico y no mesenquimatoso",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Estromal, de origen epitelial y no hematopoyético",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células dendríticas foliculares son de origen estromal mesenquimatoso y no expresan MHC II. Por eso no presentan antígeno a los linfocitos T y sí a los linfocitos B.",
+      "tema": "organos-secundarios",
+      "subtema": "Origen de las FDC",
+      "seccion": "Células dendríticas foliculares"
+    },
+    {
+      "id": "q10",
+      "stem": "Un varón de 30 años con influenza aguda tiene fiebre y mialgias. En su sangre aumentan unas células dendríticas de aspecto plasmocitoide, que expresan MHC II y CD123. ¿Cuál es la función principal de estas células durante la infección viral?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sensores antivirales que producen interferones tipo I α y β",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Sensores antivirales que producen interferón γ, o de tipo II",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Presentadoras que activan linfocitos T vírgenes CD4⁺ y CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Retenedoras de antígeno intacto para linfocitos B foliculares",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Sensores antivirales que producen interleucina 12 y activan NK",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células dendríticas plasmacitoides son sensores antivirales que producen interferones tipo I α y β en las infecciones virales y actúan sobre los linfocitos T de forma indirecta.",
+      "tema": "innata-celular",
+      "subtema": "Función de las pDC",
+      "seccion": "Células dendríticas plasmacitoides"
+    },
+    {
+      "id": "q11",
+      "stem": "Un adolescente de 15 años con infecciones recurrentes es evaluado por inmunodeficiencia. No tiene linfocitos B circulantes, pero sus linfocitos T son normales y el timo tiene tamaño y estructura normales. Se sospecha alteración de un órgano linfoide primario. ¿Qué órgano está afectado y qué célula madura en él?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Timo, donde maduran los linfocitos B en la corteza tímica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Médula ósea roja, donde maduran los linfocitos T del adulto sano",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Bazo, donde maduran los linfocitos B en la pulpa blanca esplénica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ganglio linfático, donde maduran los linfocitos B foliculares",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Médula ósea roja, donde maduran los linfocitos B del adulto",
+          "correct": true
+        }
+      ],
+      "explanation": "Los órganos linfoides primarios son la médula ósea, donde maduran los linfocitos B, y el timo, donde maduran los linfocitos T.",
+      "tema": "organos-primarios",
+      "subtema": "Sitios de maduración",
+      "seccion": "Clase 3 - Órganos"
+    },
+    {
+      "id": "q12",
+      "stem": "Una mujer de 40 años con trombocitopenia se somete a un estudio de médula ósea. La microscopía electrónica evalúa cómo las proplaquetas y los leucocitos maduros pasan del tejido hematopoyético a la circulación. ¿Por dónde atraviesan la pared de los capilares sinusoides?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Por uniones estrechas entre las células endoteliales continuas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Por fenestras con diafragma en la lámina basal de los sinusoides",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Por hendiduras entre las células de los cordones de la médula",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Por poros transcelulares en el endotelio de los sinusoides",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Por vasos linfáticos eferentes del estroma del hueso esponjoso",
+          "correct": false
+        }
+      ],
+      "explanation": "Los leucocitos y las proplaquetas salen de la médula ósea a través de poros transcelulares de los capilares sinusoides.",
+      "tema": "organos-primarios",
+      "subtema": "Salida desde la médula ósea",
+      "seccion": "Componentes"
+    },
+    {
+      "id": "q13",
+      "stem": "Una mujer de 72 años con anemia leve se somete a una biopsia de cresta ilíaca. El hematólogo debe decidir si la celularidad hematopoyética hallada es normal para su edad. ¿Qué celularidad se espera a esa edad y qué tejido ocupa el espacio perdido?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cerca de 50 %, con reemplazo por tejido adiposo maduro",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Cerca de 90 %, con reemplazo por tejido adiposo escaso",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cerca de 20 %, con reemplazo por tejido adiposo",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Cerca de 20 %, con reemplazo por tejido fibroso denso",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Cerca de 70 %, con reemplazo por tejido adiposo difuso",
+          "correct": false
+        }
+      ],
+      "explanation": "La celularidad hematopoyética baja con la edad, cerca de 90 % a los 4 años, 50 % a los 52 y 20 % a los 72. El tejido adiposo ocupa el espacio.",
+      "tema": "organos-primarios",
+      "subtema": "Celularidad según la edad",
+      "seccion": "Componentes"
+    },
+    {
+      "id": "q14",
+      "stem": "En la autopsia de un niño de 4 años fallecido en un accidente de tránsito, el patólogo examina el timo y nota que el parénquima está dividido en lobulillos incompletos por tabiques que se prolongan desde la cápsula. ¿Qué estructuras transportan estos tabiques hacia el interior del órgano?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vasos sanguíneos, linfáticos aferentes y nervios del parénquima tímico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Vasos sanguíneos, linfáticos eferentes y nervios del parénquima",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Vasos sanguíneos, linfáticos eferentes y folículos linfoides",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Vasos sanguíneos y linfáticos aferentes, pero sin nervios",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfáticos aferentes, linfáticos eferentes y folículos linfoides",
+          "correct": false
+        }
+      ],
+      "explanation": "Las trabéculas, prolongaciones de la cápsula, transportan vasos sanguíneos, linfáticos eferentes y nervios, y dividen el parénquima en lobulillos incompletos con corteza y médula.",
+      "tema": "organos-primarios",
+      "subtema": "Trabéculas del timo",
+      "seccion": "A) Cápsula"
+    },
+    {
+      "id": "q15",
+      "stem": "Una lactante de 8 meses con cardiopatía congénita es operada y se estudia su timo. En la corteza hay numerosos timocitos en apoptosis que no superaron la selección y que se encuentran rodeados por otras células que los eliminan. ¿Qué célula de la corteza retira los linfocitos no viables?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Macrófagos de la corteza, que fagocitan a los timocitos muertos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Mastocitos de la corteza, que fagocitan los timocitos apoptóticos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células epiteliorreticulares tipo II, que fagocitan los timocitos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células epiteliorreticulares tipo VI, que fagocitan los timocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Células epiteliorreticulares tipo III, que fagocitan a los timocitos",
+          "correct": false
+        }
+      ],
+      "explanation": "Los macrófagos de la corteza tímica eliminan los linfocitos no viables, que mueren durante la selección positiva.",
+      "tema": "organos-primarios",
+      "subtema": "Macrófagos corticales",
+      "seccion": "B) Corteza tímica"
+    },
+    {
+      "id": "q16",
+      "stem": "Un patólogo revisa con inmunohistoquímica el timo de una niña de 6 años fallecida en un accidente. En la corteza, unas células epiteliorreticulares forman un citorretículo unido por desmosomas, dentro del cual se alojan timocitos y macrófagos, y presentan antígeno con MHC I y MHC II. ¿Qué tipo de célula epiteliorreticular es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tipo I, ovales y de núcleo claro con un nucléolo muy visible",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Tipo III, escamosas y planas, de la corteza tímica más externa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tipo V, de la médula, con expresión del gen AIRE",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tipo VI, de la médula, con diferenciación escamosa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Tipo II, estrelladas, con función presentadora de antígeno",
+          "correct": true
+        }
+      ],
+      "explanation": "Las células epiteliorreticulares tipo II de la corteza son estrelladas, presentan antígeno con MHC I y MHC II y forman el citorretículo unido por desmosomas.",
+      "tema": "organos-primarios",
+      "subtema": "Células epiteliorreticulares tipo II",
+      "seccion": "B) Corteza tímica"
+    },
+    {
+      "id": "q17",
+      "stem": "En el estudio microscópico del timo de un joven de 19 años fallecido en un accidente, se observa entre el endotelio con su lámina basal y las células epiteliorreticulares de la barrera hematotímica un tejido conjuntivo perivascular con células que capturan antígenos. ¿Qué célula es la responsable de esta captura?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mastocitos del tejido conjuntivo del espacio perivascular cortical",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Pericitos del tejido conjuntivo adosados al endotelio vascular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Macrófagos del tejido conjuntivo del espacio perivascular",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Células dendríticas foliculares del espacio perivascular cortical",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Células plasmáticas del tejido conjuntivo perivascular",
+          "correct": false
+        }
+      ],
+      "explanation": "En la barrera hematotímica, los macrófagos del tejido conjuntivo perivascular capturan los antígenos que logran atravesar el endotelio continuo con uniones estrechas.",
+      "tema": "organos-primarios",
+      "subtema": "Macrófagos de la barrera",
+      "seccion": "Barrera hemato-tímica"
+    },
+    {
+      "id": "q18",
+      "stem": "Una mujer de 30 años con miastenia gravis es sometida a timectomía. En la médula tímica el patólogo observa estructuras acidófilas, concéntricas, de células con diferenciación escamosa, que secretan TSLP. ¿Qué efecto tiene este factor sobre las células dendríticas del timo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Induce la selección positiva de linfocitos T CD4⁺ de la corteza",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Induce la apoptosis de timocitos que no reconocen el MHC propio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Induce la diferenciación de linfocitos T CD8⁺ citotóxicos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Induce la generación de linfocitos T reguladores tímicos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Induce la salida de linfocitos T maduros hacia la sangre periférica",
+          "correct": false
+        }
+      ],
+      "explanation": "Los corpúsculos de Hassall secretan TSLP, que actúa sobre las células dendríticas para inducir linfocitos T reguladores y favorece la selección negativa.",
+      "tema": "tolerancia",
+      "subtema": "Corpúsculos de Hassall y TSLP",
+      "seccion": "Médula tímica"
+    },
+    {
+      "id": "q19",
+      "stem": "Una lactante de 7 meses es intervenida por una cardiopatía y se le extirpa el timo. Al analizarlo, se estudia un timocito doble positivo CD4⁺CD8⁺ de la corteza cuyo receptor T no reconoce ninguna molécula del MHC propio presentada por las células epiteliorreticulares corticales. ¿Qué destino tiene este timocito?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Supervivencia y paso a la médula como linfocito T CD4⁺",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Apoptosis en la corteza, por no reconocer el MHC propio",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Apoptosis en la médula, por alta afinidad por autoantígenos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Supervivencia y salida a la circulación como linfocito T CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Apoptosis en la corteza, por alta afinidad por autoantígenos",
+          "correct": false
+        }
+      ],
+      "explanation": "En la selección positiva de la corteza sobreviven los timocitos que reconocen el MHC propio presentado por las cTEC. Los que no lo reconocen mueren por apoptosis.",
+      "tema": "linfocitos-t",
+      "subtema": "Selección positiva",
+      "seccion": "Selección Tímica"
+    },
+    {
+      "id": "q20",
+      "stem": "Durante la timectomía de un niño de 8 años se analiza el timo y se comprueba que en la médula tímica se elimina a los timocitos que reconocen con alta afinidad los antígenos propios. ¿Qué células presentan los autoantígenos en esta selección negativa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células epiteliorreticulares medulares y células dendríticas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Células epiteliorreticulares corticales y macrófagos de la corteza",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células epiteliorreticulares medulares y linfocitos B maduros",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células epiteliorreticulares corticales y células dendríticas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Macrófagos corticales y células dendríticas foliculares",
+          "correct": false
+        }
+      ],
+      "explanation": "En la médula, las células epiteliorreticulares mTEC, con expresión de AIRE, y las células dendríticas presentan autoantígenos. Los timocitos de alta afinidad mueren y se logra la tolerancia central.",
+      "tema": "tolerancia",
+      "subtema": "Selección negativa",
+      "seccion": "Selección Tímica"
+    },
+    {
+      "id": "q21",
+      "stem": "Un lactante de 10 meses con cardiopatía congénita es operado y se analizan por citometría los timocitos de su timo. Se identifican tres poblaciones sucesivas de maduración según la expresión de CD4 y CD8. ¿Cuál es la secuencia normal de estos fenotipos durante la selección tímica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD4⁺CD8⁺, luego CD4⁻CD8⁻ y luego CD4⁺ o CD8⁺ en la médula tímica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD4⁻CD8⁻, luego CD4⁺ o CD8⁺ y luego CD4⁺CD8⁺ en la médula tímica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD4⁻CD8⁻, luego CD4⁺CD8⁺ y luego CD8⁺ en todos los casos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD4⁺CD8⁻, luego CD4⁺CD8⁺ y luego CD4⁻CD8⁺ en la médula",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD4⁻CD8⁻, luego CD4⁺CD8⁺ y luego CD4⁺ o CD8⁺ en la médula",
+          "correct": true
+        }
+      ],
+      "explanation": "Los protimocitos ingresan como dobles negativos, pasan a dobles positivos en la corteza y finalmente se convierten en simples positivos CD4⁺ o CD8⁺.",
+      "tema": "linfocitos-t",
+      "subtema": "Fenotipos del timocito",
+      "seccion": "Selección Tímica"
+    },
+    {
+      "id": "q22",
+      "stem": "Un niño de 10 años con adenitis cervical se somete a biopsia ganglionar. En la zona clara de un centro germinal se observan centrocitos y macrófagos con restos celulares en su citoplasma, mientras que muchas células B desaparecen. ¿Qué proceso ocurre en esta zona?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Selección clonal de linfocitos B con receptores de muy baja afinidad",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Selección clonal de linfocitos T con receptores de alta afinidad",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hipermutación somática de linfocitos B con receptores de alta afinidad",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Selección clonal de linfocitos B con receptores de alta afinidad",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Hipermutación somática de linfocitos B con receptores de baja afinidad",
+          "correct": false
+        }
+      ],
+      "explanation": "En la zona clara ocurre la selección clonal, y solo sobreviven los linfocitos B con receptores de alta afinidad. Los macrófagos de cuerpos tingibles fagocitan a los que mueren.",
+      "tema": "linfocitos-b",
+      "subtema": "Zona clara del centro germinal",
+      "seccion": "Folículos Germinales"
+    },
+    {
+      "id": "q23",
+      "stem": "Una mujer de 33 años sin infección reciente se somete a la extirpación de un ganglio. En la biopsia se observan nódulos esféricos de linfocitos B sin centro germinal, junto a otros nódulos con centro germinal claramente diferenciado. ¿Qué diferencia a los nódulos sin centro germinal de los otros?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Son folículos secundarios, sin activación antigénica previa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Son folículos primarios, con activación antigénica reciente",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Son folículos primarios, sin activación antigénica previa",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Son folículos secundarios, con activación antigénica reciente",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Son folículos primarios, con un centro germinal pequeño",
+          "correct": false
+        }
+      ],
+      "explanation": "El folículo primario no está activado y no tiene centro germinal. El secundario se forma tras el estímulo antigénico y contiene un centro germinal.",
+      "tema": "organos-secundarios",
+      "subtema": "Folículo primario y secundario",
+      "seccion": "Folículos Germinales"
+    },
+    {
+      "id": "q24",
+      "stem": "Un joven de 18 años con amigdalitis recurrente tiene una biopsia de amígdala en la que un centro germinal está rodeado por un anillo de células pequeñas, de núcleo oscuro. ¿Qué células forman esta zona del manto que rodea al centro germinal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T vírgenes y algunas células T de memoria central",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos B vírgenes y algunas células B de memoria",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos B activados y en proliferación con centroblastos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células plasmáticas y algunas células B de memoria",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos B vírgenes y células dendríticas foliculares",
+          "correct": false
+        }
+      ],
+      "explanation": "La zona del manto está formada por linfocitos B vírgenes y de memoria, mientras que el centro germinal contiene linfocitos B activados y en proliferación.",
+      "tema": "organos-secundarios",
+      "subtema": "Zona del manto",
+      "seccion": "Folículos Germinales"
+    },
+    {
+      "id": "q25",
+      "stem": "Una mujer de 27 años con linfadenitis se somete a biopsia. En un centro germinal se distinguen dos tipos de células B. Unas son más pequeñas y tienen núcleo hendido e irregular, y otras son grandes con núcleo redondo no hendido. ¿Cómo se denominan las células B pequeñas de núcleo hendido?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Centroblastos, células grandes y con núcleo hendido e irregular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Centroblastos, células grandes y con núcleo redondo no hendido",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Centrocitos, células grandes y con núcleo redondo no hendido",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos B vírgenes, pequeños y con núcleo redondo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Centrocitos, células más pequeñas y con núcleo hendido",
+          "correct": true
+        }
+      ],
+      "explanation": "Los centrocitos son más pequeños y de núcleo hendido, y se hallan en la zona clara. Los centroblastos son grandes, de núcleo redondo no hendido, y se hallan en la zona oscura.",
+      "tema": "organos-secundarios",
+      "subtema": "Centroblasto y centrocito",
+      "seccion": "Folículos Germinales"
+    },
+    {
+      "id": "q26",
+      "stem": "Un joven de 21 años con una infección cutánea tiene un ganglio axilar aumentado. En el análisis de la muestra se identifica una célula presentadora de antígeno derivada de precursores mieloides, con expresión de MHC I y MHC II, que activa linfocitos T vírgenes. ¿Qué célula es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Célula dendrítica folicular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Célula dendrítica plasmacitoide",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Célula dendrítica convencional",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Célula reticular fibroblástica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Célula epiteliorreticular medular",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células dendríticas convencionales derivan de precursores mieloides, expresan MHC I y II y activan a los linfocitos T vírgenes CD4⁺ y CD8⁺.",
+      "tema": "presentacion-mhc",
+      "subtema": "Células dendríticas convencionales",
+      "seccion": "Células dendríticas convencionales"
+    },
+    {
+      "id": "q27",
+      "stem": "Una mujer de 38 años con linfadenopatía cervical se somete a biopsia. En la zona clara de un centro germinal, unas células de origen estromal forman una red densa alrededor de los centroblastos y no expresan MHC II. ¿Qué función cumplen estas células dendríticas foliculares en el centro germinal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mantener antígenos intactos y seleccionar linfocitos B de alta afinidad",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Capturar antígenos para presentarlos a los linfocitos T vírgenes por MHC II",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Producir interferones tipo I durante infecciones virales agudas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mantener antígenos intactos para seleccionar linfocitos T de alta afinidad",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Capturar antígenos para presentarlos a linfocitos B por MHC II",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células dendríticas foliculares mantienen los antígenos intactos en la zona clara y facilitan así la selección de los linfocitos B de alta afinidad.",
+      "tema": "organos-secundarios",
+      "subtema": "Función de las FDC",
+      "seccion": "Células dendríticas › Funciones principales"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

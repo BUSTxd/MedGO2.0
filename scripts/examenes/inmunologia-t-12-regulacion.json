@@ -3,7 +3,1058 @@
   "key": "inmunologia/t-12-regulacion",
   "title": "T12 — Regulación de la respuesta inmune",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Un hombre de 34 años con rinitis alérgica recibe inmunoterapia con dosis crecientes de un alérgeno. Tras varios meses, su respuesta inmune específica contra ese alérgeno desaparece, mientras que responde con normalidad frente a los demás antígenos. Se concluye que el alérgeno se comportó como tolerogénico. ¿Qué mecanismos puede inducir un antígeno tolerogénico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Anergia, activación por Th1 y apoptosis de linfocitos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Anergia, supresión por Treg y expansión clonal de linfocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Anergia, supresión por Treg y apoptosis de los linfocitos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Coestimulación, supresión por Treg y apoptosis de linfocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Anergia, supresión por Treg y proliferación de plasmocitos",
+          "correct": false
+        }
+      ],
+      "explanation": "Un antígeno tolerogénico induce tolerancia por anergia, por supresión mediada por Treg o por eliminación de los linfocitos mediante apoptosis.",
+      "tema": "tolerancia",
+      "subtema": "Antígeno tolerogénico",
+      "seccion": "I. INTRODUCCIÓN"
+    },
+    {
+      "id": "q02",
+      "stem": "Una mujer de 26 años con lupus eritematoso sistémico presenta linfocitos T circulantes que reconocen con alta afinidad antígenos propios. El estudio de su timo muestra que los timocitos con TCR de alta afinidad por lo propio no mueren. ¿Qué proceso de la tolerancia central falla y dónde ocurre normalmente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Selección positiva, que ocurre en la corteza tímica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Selección negativa, que ocurre en la corteza tímica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Selección positiva, que ocurre en la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Edición del receptor, que ocurre en la médula tímica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Selección negativa, que ocurre en la médula tímica",
+          "correct": true
+        }
+      ],
+      "explanation": "La selección negativa elimina por apoptosis, en la médula tímica, a los timocitos que reconocen antígenos propios con alta afinidad.",
+      "tema": "tolerancia",
+      "subtema": "Fallo de selección negativa",
+      "seccion": "Selección negativa"
+    },
+    {
+      "id": "q03",
+      "stem": "Una biopsia de timo de un niño de 3 años, obtenida durante una cirugía cardíaca, permite seguir a un timocito doble positivo CD4⁺CD8⁺ ubicado en la corteza. Su TCR reconoce moléculas MHC II propias con afinidad baja-intermedia. ¿Cuál será el destino de este timocito?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se diferencia en linfocito T CD4⁺ tras la selección positiva",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Se diferencia en linfocito T CD8⁺ maduro tras la selección positiva",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se diferencia en linfocito T CD4⁺ tras la selección negativa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se diferencia en linfocito Treg FoxP3⁺ tras la selección negativa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Muere por apoptosis tras la selección negativa del timo",
+          "correct": false
+        }
+      ],
+      "explanation": "Un TCR que reconoce MHC II propio con afinidad baja-intermedia supera la selección positiva en la corteza y origina un linfocito T CD4⁺.",
+      "tema": "tolerancia",
+      "subtema": "Selección positiva y CD4",
+      "seccion": "Selección positiva"
+    },
+    {
+      "id": "q04",
+      "stem": "Un adolescente de 15 años sano dona médula ósea para un estudio. Entre sus linfocitos B inmaduros IgM⁺ hay uno cuyo BCR reconoce un autoantígeno de la médula con alta afinidad. La célula no muere, sino que reorganiza sus genes y produce un nuevo BCR no autorreactivo. ¿Qué mecanismo describe este hallazgo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Edición del receptor, con recombinación de la cadena pesada",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Hipermutación somática, con mutación de genes de cadena ligera",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cambio de isotipo, con recombinación de genes de cadena pesada",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Edición del receptor, con recombinación de la cadena ligera",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Selección positiva, con recombinación de genes de cadena ligera",
+          "correct": false
+        }
+      ],
+      "explanation": "El linfocito B autorreactivo reactiva RAG-1, RAG-2 y TdT para recombinar los genes de la cadena ligera y generar un BCR que ya no reconoce lo propio.",
+      "tema": "tolerancia",
+      "subtema": "Edición del receptor",
+      "seccion": "Linfocitos B → médula ósea"
+    },
+    {
+      "id": "q05",
+      "stem": "Un hombre de 50 años con dermatitis crónica tiene un linfocito T autorreactivo que escapó del timo. En la piel, su TCR reconoce el autoantígeno presentado por una célula presentadora que no expresa CD80 ni CD86. ¿Qué ocurre con este linfocito en la tolerancia periférica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Queda anérgico, por reconocer el antígeno con exceso de coestimulación",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Queda anérgico, por reconocer el antígeno sin coestimulación",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Muere por apoptosis, por reconocer el antígeno sin coestimulación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se activa, por reconocer el antígeno sin coestimulación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Se activa, por reconocer el antígeno con exceso de coestimulación",
+          "correct": false
+        }
+      ],
+      "explanation": "Reconocer el antígeno con el TCR sin coestimulación adecuada, es decir sin CD28 unido a CD80 o CD86, deja al linfocito funcionalmente inactivo.",
+      "tema": "tolerancia",
+      "subtema": "Anergia por falta de coestimulación",
+      "seccion": "III. Tolerancia periférica"
+    },
+    {
+      "id": "q06",
+      "stem": "Una mujer de 33 años, voluntaria sana, dona sangre para un estudio de tolerancia inmunológica. En el laboratorio se aíslan de su sangre los linfocitos que limitan la activación de los linfocitos T efectores y previenen la autoinmunidad. ¿Qué combinación de marcadores los identifica por citometría de flujo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD8⁺, CD25 alto, FoxP3⁺ y CTLA-4⁺",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD4⁺, CD25 alto, FoxP3⁺ y CTLA-4⁺",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CD4⁺, CD25 débil, FoxP3⁺ y CTLA-4⁺",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD4⁺, CD25 alto, FoxP3⁻ y CD127 alto",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD4⁺, CD25 alto, FoxP3⁺ y CD127 alto",
+          "correct": false
+        }
+      ],
+      "explanation": "Las Treg son linfocitos CD4⁺ con alta expresión de CD25, o IL-2Rα, y expresan FoxP3, el factor de transcripción que las define, y CTLA-4.",
+      "tema": "regulacion",
+      "subtema": "Marcadores de las Treg",
+      "seccion": "IV. LINFOCITOS T REG"
+    },
+    {
+      "id": "q07",
+      "stem": "Un hombre de 45 años con enfermedad inflamatoria intestinal tiene en su mucosa linfocitos T CD4⁺ convencionales que se activan en un ambiente rico en TGF-β e IL-2. Estas células cambian su programa de diferenciación y modifican su función. ¿En qué tipo celular se diferencian?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Treg naturales, que expresan FoxP3 en el timo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Treg inducibles, que expresan FoxP3 en el timo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Th17 inducidos, que expresan RORγt en la mucosa intestinal",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Treg inducibles, que expresan FoxP3 en la periferia",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Th2 inducidos, que expresan GATA3 en la mucosa intestinal",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T CD4⁺ activados en un ambiente tolerogénico, con TGF-β e IL-2, se diferencian en la periferia a Treg inducibles.",
+      "tema": "regulacion",
+      "subtema": "Treg inducibles",
+      "seccion": "Origen en la periferia"
+    },
+    {
+      "id": "q08",
+      "stem": "Una mujer de 52 años con enfermedad autoinmune tiene en el bazo linfocitos B autorreactivos que quedan retenidos en la zona marginal y no logran entrar a los folículos linfoides. Estos linfocitos B no sobreviven por falta de ciertas señales. ¿Qué señales de supervivencia les faltan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD40L, IL-4 e IL-21 de Tfh y BAFF de las FDC",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD40L, IL-2 e IFN-γ de Th1 y BAFF de las FDC",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD28, IL-4 e IL-21 de Tfh y BAFF de los macrófagos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD40L, IL-4 e IL-21 de Tfr y BAFF de las FDC",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD40L, IL-10 y TGF-β de Treg y BAFF de las FDC",
+          "correct": false
+        }
+      ],
+      "explanation": "Sin CD40 con CD40L de los T CD4⁺, sin IL-4 e IL-21 de las Tfh y sin BAFF de las FDC, el linfocito B queda excluido del folículo.",
+      "tema": "tolerancia",
+      "subtema": "Exclusión de nichos foliculares",
+      "seccion": "Linfocitos B: Tolerancia periférica"
+    },
+    {
+      "id": "q09",
+      "stem": "En una biopsia de timo de un niño de 4 años, un timocito doble positivo CD4⁺CD8⁺ llegó a la médula. Su TCR no reconoce con fuerza antígenos propios y, por eso, no recibió ninguna señal de apoptosis durante su paso por la médula. ¿Cuál es su destino final?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sale del timo como linfocito T de memoria",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Permanece en el timo como linfocito T maduro naive",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Sale del timo como linfocito T inmaduro CD4⁺CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Sale del timo como linfocito Treg FoxP3⁺ maduro",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Sale del timo como linfocito T maduro naive",
+          "correct": true
+        }
+      ],
+      "explanation": "Los timocitos que no reconocen antígenos propios de manera fuerte sobreviven y salen del timo como linfocitos T maduros naive.",
+      "tema": "tolerancia",
+      "subtema": "Timocitos que sobreviven",
+      "seccion": "Linfocitos T → timo"
+    },
+    {
+      "id": "q10",
+      "stem": "Una mujer de 23 años consulta por artralgias migratorias, exantema malar y proteinuria de dos meses de evolución, con anticuerpos antinucleares positivos. El estudio genético detecta una mutación en el gen Fas y sus linfocitos T estimulados repetidamente no mueren. ¿Qué mecanismo de tolerancia periférica está alterado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Apoptosis por vía intrínseca, mediada por Bim, Bax y Bak",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Apoptosis por vía extrínseca, mediada por Bim, Bax y Bak",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Apoptosis por vía extrínseca, mediada por Fas y FasL",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Apoptosis por vía intrínseca, mediada por Fas y FasL",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Anergia por competencia de CTLA-4 con CD28 por B7",
+          "correct": false
+        }
+      ],
+      "explanation": "Fas se une a FasL y activa caspasas iniciadoras y ejecutoras. Es la vía extrínseca de la deleción periférica del linfocito T estimulado repetidamente.",
+      "tema": "autoinmunidad",
+      "subtema": "Defecto de Fas",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q11",
+      "stem": "Un niño de 7 años con leucemia recibirá un trasplante de médula ósea de su hermana. Su hematólogo explica que los nuevos linfocitos aprenderán a no reaccionar contra lo propio en los órganos linfoides primarios. ¿Dónde se establece la tolerancia central de los linfocitos T y de los B, respectivamente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los T en la médula ósea roja y los B en el timo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los T en el timo y los B en los ganglios",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los T en el bazo y los B en la médula ósea roja",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los T en el timo y los B en la médula ósea",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Los T en los ganglios y los B en el bazo",
+          "correct": false
+        }
+      ],
+      "explanation": "La tolerancia central ocurre en los órganos linfoides primarios, ya que los linfocitos T se educan en el timo y los B en la médula ósea.",
+      "tema": "tolerancia",
+      "subtema": "Sitios de tolerancia central",
+      "seccion": "II. Tolerancia central"
+    },
+    {
+      "id": "q12",
+      "stem": "Una residente revisa cómo los órganos linfoides primarios de un paciente de 30 años impiden que los linfocitos autorreactivos lleguen a la periferia. Los autorreactivos pueden ser eliminados, modificados en su receptor o convertidos en otra población. ¿Qué mecanismos principales actúan sobre ellos en estos órganos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Apoptosis, edición del receptor y diferenciación a Treg",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Apoptosis, exclusión de nichos foliculares y diferenciación a Treg",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Apoptosis, edición del receptor y diferenciación a plasmocitos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Anergia periférica, edición del receptor y diferenciación a Treg",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Apoptosis, edición del receptor y diferenciación a Th17",
+          "correct": false
+        }
+      ],
+      "explanation": "En la tolerancia central los autorreactivos se eliminan por apoptosis, editan su receptor en el caso de los B o se diferencian a Treg en el caso de los T.",
+      "tema": "tolerancia",
+      "subtema": "Destinos del autorreactivo",
+      "seccion": "Mecanismos principales"
+    },
+    {
+      "id": "q13",
+      "stem": "Un lactante de 8 meses con inmunodeficiencia combinada grave por mutación de RAG carece de linfocitos maduros. En un individuo sano, un linfocito B inmaduro autorreactivo edita su receptor reactivando las enzimas de recombinación, y reordena un locus de la cadena ligera antes que el otro. ¿Cuál es el orden y qué enzimas participan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Primero el locus λ y luego el κ, con RAG-1, RAG-2 y TdT",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Primero el locus κ y luego el λ, con RAG-1, RAG-2 y la enzima AID",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Primero el locus κ y luego el λ, con RAG-1, RAG-2 y TdT",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Primero el locus λ y luego el κ, con RAG-1, RAG-2 y la enzima AID",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Primero el locus μ y luego el λ, con RAG-1 y RAG-2",
+          "correct": false
+        }
+      ],
+      "explanation": "Se activan RAG-1, RAG-2 y TdT, que recombinan primero el locus κ y, si el BCR sigue siendo autorreactivo, después el locus λ.",
+      "tema": "tolerancia",
+      "subtema": "Recombinación κ y λ",
+      "seccion": "Linfocitos B → médula ósea"
+    },
+    {
+      "id": "q14",
+      "stem": "Una joven de 17 años con lupus incipiente presenta linfocitos B inmaduros autorreactivos en la médula ósea. En uno de ellos, tras agotar la recombinación de los loci κ y λ, el nuevo BCR continúa reconociendo un autoantígeno con alta afinidad. ¿Cuál es el destino de este linfocito B?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Anergia sin deleción clonal en la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Apoptosis por deleción clonal en la zona marginal del bazo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Nueva edición del receptor con genes de cadena pesada",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Exclusión de los folículos linfoides del bazo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Apoptosis por deleción clonal en la médula ósea",
+          "correct": true
+        }
+      ],
+      "explanation": "Si tras la edición el BCR sigue siendo autorreactivo, el resultado es adverso y el linfocito B muere por apoptosis, es decir por deleción clonal.",
+      "tema": "tolerancia",
+      "subtema": "Deleción clonal del B",
+      "seccion": "Linfocitos B → médula ósea"
+    },
+    {
+      "id": "q15",
+      "stem": "Un investigador estudia timocitos dobles positivos de la corteza tímica de un niño de 6 años operado de una cardiopatía congénita. Solo sobreviven los timocitos cuyo TCR cumple una condición inicial de reconocimiento. ¿Qué evalúa la selección positiva en estas células?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Que el TCR reconozca MHC propio con afinidad alta y sostenida",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Que el TCR reconozca MHC propio con afinidad baja-intermedia",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Que el TCR reconozca MHC de otro individuo con afinidad baja-intermedia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Que el TCR reconozca antígenos propios con afinidad alta y sostenida",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Que el TCR no reconozca MHC propio con ninguna afinidad",
+          "correct": false
+        }
+      ],
+      "explanation": "La selección positiva, en la corteza tímica, comprueba que el TCR reconozca MHC propio con afinidad baja-intermedia. Si es MHC I resulta CD8 y si es MHC II resulta CD4.",
+      "tema": "tolerancia",
+      "subtema": "Qué evalúa la positiva",
+      "seccion": "Selección positiva"
+    },
+    {
+      "id": "q16",
+      "stem": "En la médula tímica de un niño de 4 años, un timocito CD4⁺ reconoce un antígeno propio con afinidad intermedia. Este timocito no es eliminado por la selección negativa y se diferencia en otra población celular. ¿Qué célula se forma y por qué?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Treg FoxP3⁺, por afinidad baja por antígenos propios",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocito T naive, por afinidad intermedia por antígenos propios",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocito T CD8⁺, por afinidad intermedia por antígenos propios",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Timocito apoptótico, por afinidad alta por antígenos propios",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Treg FoxP3⁺, por afinidad intermedia por antígenos propios",
+          "correct": true
+        }
+      ],
+      "explanation": "En la selección negativa, la alta afinidad por lo propio causa apoptosis, mientras que la afinidad intermedia diferencia al timocito CD4⁺ en Treg FoxP3⁺.",
+      "tema": "tolerancia",
+      "subtema": "Afinidad intermedia y Treg",
+      "seccion": "Selección negativa"
+    },
+    {
+      "id": "q17",
+      "stem": "Una mujer de 38 años con melanoma recibe ipilimumab, un anticuerpo que bloquea una molécula inhibitoria de los linfocitos T, y desarrolla colitis autoinmune como efecto adverso. En condiciones normales, esa molécula limita la coestimulación del linfocito T. ¿Cómo lo logra?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se une a CD80 y CD86 con menor afinidad que CD28",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se une a CD80 y CD86 con mayor afinidad que CD28",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Se une a CD40 y CD40L con mayor afinidad que CD28",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se une a CD28 en la célula presentadora con mayor afinidad",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Se une a PD-L1 y PD-L2 con mayor afinidad que CD28",
+          "correct": false
+        }
+      ],
+      "explanation": "CTLA-4 compite con CD28 por CD80 y CD86 de la célula presentadora y los une con mayor afinidad, con lo que disminuye la coestimulación.",
+      "tema": "regulacion",
+      "subtema": "CTLA-4 frente a CD28",
+      "seccion": "III. Tolerancia periférica"
+    },
+    {
+      "id": "q18",
+      "stem": "Un hombre de 44 años con una alteración de Bim presenta linfocitos T autorreactivos que persisten en la periferia pese a la falta de factores de supervivencia. ¿Qué vía de deleción periférica está alterada y cuál es su secuencia molecular?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vía intrínseca, con Bim, Bax y Bak, citocromo c y caspasa-8",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Vía extrínseca, con Bim, Bax y Bak, citocromo c y la caspasa-9",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Vía intrínseca, con Fas, FasL, citocromo c y caspasa-9",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Vía intrínseca, con Bim, Bax y Bak, citocromo c y caspasa-9",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Vía extrínseca, con Fas, FasL, caspasas iniciadoras y ejecutoras",
+          "correct": false
+        }
+      ],
+      "explanation": "Ante la falta de factores de supervivencia, Bim activa Bax y Bak, que permeabilizan la mitocondria y liberan citocromo c, lo que activa la caspasa-9.",
+      "tema": "tolerancia",
+      "subtema": "Vía intrínseca con Bim",
+      "seccion": "III. Tolerancia periférica"
+    },
+    {
+      "id": "q19",
+      "stem": "Una mujer de 41 años con tiroiditis de Hashimoto tiene linfocitos T autorreactivos en un ganglio cervical inflamado. Se sabe que estos linfocitos superaron un primer nivel de control. ¿Sobre qué linfocitos actúa la tolerancia periférica y dónde ocurre principalmente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Autorreactivos que escaparon de la tolerancia central, en ganglios y bazo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Autorreactivos que escaparon de la tolerancia central, en timo y médula ósea",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Autorreactivos ya eliminados por la tolerancia central, en ganglios y bazo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Timocitos dobles positivos inmaduros de la corteza, en ganglios y bazo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Progenitores linfoides comunes de la médula, en timo y médula ósea",
+          "correct": false
+        }
+      ],
+      "explanation": "La tolerancia periférica actúa sobre los autorreactivos que escaparon de la tolerancia central, sobre todo en ganglios linfáticos, bazo y tejidos periféricos.",
+      "tema": "tolerancia",
+      "subtema": "Sitio de la tolerancia periférica",
+      "seccion": "III. Tolerancia periférica"
+    },
+    {
+      "id": "q20",
+      "stem": "Un hombre de 35 años con lupus tiene en un folículo linfoide del ganglio linfocitos B autorreactivos que reciben señales inhibitorias de células T. Estas células controlan a los linfocitos B en el centro germinal y en su entorno. ¿Qué linfocitos T median la supresión de los linfocitos B autorreactivos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los Treg y los Tfh, linfocitos T foliculares cooperadores",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los Th1 y los Tfr, linfocitos T foliculares reguladores",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los Treg y los Tfr, linfocitos T foliculares reguladores",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Los Th17 y los Tfh, linfocitos T foliculares cooperadores",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Los Th2 y los Tfr, linfocitos T foliculares reguladores",
+          "correct": false
+        }
+      ],
+      "explanation": "La supresión de los linfocitos B autorreactivos en la periferia está mediada por Treg y por Tfr, los linfocitos T foliculares reguladores.",
+      "tema": "tolerancia",
+      "subtema": "Supresión por Treg y Tfr",
+      "seccion": "Linfocitos B: Tolerancia periférica"
+    },
+    {
+      "id": "q21",
+      "stem": "Un varón de 50 años con cáncer de pulmón tiene un infiltrado tumoral con abundantes linfocitos CD4⁺ que expresan CD25 en grandes cantidades. En el microambiente, los linfocitos T efectores tienen poca IL-2 disponible y proliferan poco. ¿Cuál es la explicación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las Treg captan IL-2 mediante CD25 y dejan menos para los efectores",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Las Treg captan IL-2 mediante CD28 y dejan menos para los efectores",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Las Treg degradan IL-2 mediante IDO y dejan menos para los efectores",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Las Treg captan IL-10 mediante CD25 y dejan menos para los efectores",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Las Tfh captan IL-2 mediante CD25 y dejan menos para los efectores",
+          "correct": false
+        }
+      ],
+      "explanation": "Las Treg expresan mucho CD25, o IL-2Rα, y captan grandes cantidades de IL-2, con lo que limitan la proliferación y supervivencia de los linfocitos T efectores.",
+      "tema": "regulacion",
+      "subtema": "Consumo de IL-2 por Treg",
+      "seccion": "IV. LINFOCITOS T REG"
+    },
+    {
+      "id": "q22",
+      "stem": "En el estudio del timo de un niño de 3 años se observa que, en la médula, algunos linfocitos T CD4⁺ con TCR de afinidad intermedia por antígenos propios escapan de la eliminación y se diferencian en una población supresora. ¿Qué factor de transcripción expresan estas células?",
+      "options": [
+        {
+          "id": "a",
+          "text": "T-bet, propio de los linfocitos T reguladores Treg",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "FoxP3, propio de los linfocitos T colaboradores Th1",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "FoxP3, propio de los linfocitos T reguladores Treg",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "GATA3, propio de los linfocitos T colaboradores Th2",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Bcl-6, propio de los linfocitos T foliculares Tfh",
+          "correct": false
+        }
+      ],
+      "explanation": "Los timocitos CD4⁺ de afinidad intermedia por lo propio no se eliminan y se diferencian en Treg gracias al factor de transcripción FoxP3.",
+      "tema": "regulacion",
+      "subtema": "FoxP3 en el timo",
+      "seccion": "Origen en el timo"
+    },
+    {
+      "id": "q23",
+      "stem": "Una mujer de 36 años con colitis autoinmune tiene abundantes Treg en su mucosa intestinal. Se estudia el efecto de la IL-10 que secretan sobre los macrófagos y las células dendríticas de la lámina propia. ¿Qué cambios produce la IL-10 en estas células presentadoras?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Aumenta IL-12, MHC II y las moléculas coestimuladoras",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Disminuye IL-12, MHC I y las moléculas coestimuladoras",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Disminuye IL-12 y MHC II, pero aumenta las coestimuladoras",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Disminuye IL-4, MHC II y moléculas coestimuladoras",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Disminuye IL-12, MHC II y moléculas coestimuladoras",
+          "correct": true
+        }
+      ],
+      "explanation": "La IL-10 inhibe macrófagos y células dendríticas, con menor producción de IL-12 y menor expresión de MHC II y de moléculas coestimuladoras.",
+      "tema": "regulacion",
+      "subtema": "Efectos de la IL-10",
+      "seccion": "Origen en la periferia"
+    },
+    {
+      "id": "q24",
+      "stem": "En la mucosa intestinal de un hombre de 47 años con dispepsia, los linfocitos B cambian de isotipo hacia una inmunoglobulina secretora propia de mucosas, bajo una citocina de las Treg que además reduce la proliferación de linfocitos T y B. ¿Qué isotipo se favorece y por qué citocina?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgE, por acción de TGF-β sobre los linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IgA, por acción de TGF-β en las mucosas",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "IgG, por acción de TGF-β sobre los linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgA, por acción de IFN-γ en las mucosas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IgM, por acción de IL-2 en las mucosas",
+          "correct": false
+        }
+      ],
+      "explanation": "El TGF-β de las Treg reduce la proliferación de linfocitos T y B, promueve Treg inducibles y favorece el cambio de isotipo hacia IgA en las mucosas.",
+      "tema": "regulacion",
+      "subtema": "TGF-β e IgA",
+      "seccion": "Origen en la periferia"
+    },
+    {
+      "id": "q25",
+      "stem": "Un hombre de 55 años con cáncer de pulmón tiene un infiltrado con células dendríticas que aumentan la expresión de una enzima cuando las Treg se unen a ellas mediante CTLA-4. Los linfocitos T vecinos proliferan poco. ¿Qué enzima se induce y qué sustrato agota?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IDO, que degrada la arginina disponible",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Arginasa 1, que degrada la arginina disponible",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Arginasa 1, que degrada el triptófano disponible",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IDO, que degrada el triptófano disponible",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "iNOS, que degrada la arginina disponible",
+          "correct": false
+        }
+      ],
+      "explanation": "CTLA-4 de las Treg induce indoleamina-2,3-dioxigenasa en las células dendríticas. Esta enzima degrada el triptófano y limita la proliferación y función de los linfocitos T.",
+      "tema": "regulacion",
+      "subtema": "IDO y triptófano",
+      "seccion": "Origen en la periferia"
+    },
+    {
+      "id": "q26",
+      "stem": "Un niño de 2 años consulta por diarrea acuosa recurrente y diabetes mellitus tipo 1 de inicio temprano. Se detecta una mutación del gen FOXP3 y se realiza citometría de flujo para reconocer las células afectadas. ¿Qué marcadores presentan estas células?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD3, CD4, CD25 débil y CD127 alto",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD3, CD8, CD25 alto y CD127 bajo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD3, CD4, CD25 alto y CD127 bajo",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CD3, CD4, CD25 alto y CD127 elevado",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD3, CD4, CD25 y CD127 bajos",
+          "correct": false
+        }
+      ],
+      "explanation": "FoxP3 define a las Treg, que expresan CD3, CD4, CD25 alto y CD127 bajo. Su ausencia impide la supresión y produce autoinmunidad multiorgánica.",
+      "tema": "autoinmunidad",
+      "subtema": "Treg y mutación de FOXP3",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q27",
+      "stem": "Un hombre de 58 años con melanoma metastásico tiene un tumor que sobreexpresa una molécula que suprime la activación de los linfocitos T y que es constitutiva de las Treg. Se planea una inmunoterapia dirigida. ¿Qué tratamiento contrarresta esta molécula?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un anticuerpo que bloquea CTLA-4 del linfocito T",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Un anticuerpo que bloquea PD-1 de los linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Un anticuerpo que bloquea PD-L1 del tumor",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Un anticuerpo que bloquea CD28 de los linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Un anticuerpo que bloquea CD25 de las Treg",
+          "correct": false
+        }
+      ],
+      "explanation": "CTLA-4 es constitutivo de las Treg y quita a CD28 el acceso a B7, con lo que apaga la coestimulación. Su bloqueo restablece la activación del linfocito T.",
+      "tema": "regulacion",
+      "subtema": "Inhibición de CTLA-4",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q28",
+      "stem": "Una mujer de 64 años con melanoma metastásico inicia pembrolizumab. Este anticuerpo bloquea un receptor inhibitorio de la superficie del linfocito T, lo que permite a estas células reconocer los antígenos tumorales y destruir las células cancerígenas. ¿Qué receptor bloquea y qué ligando une normalmente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "PD-L1, que une PD-1 del linfocito T",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CTLA-4, que une CD80 y CD86",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "PD-1, que une CD80 y CD86 de la APC",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "PD-1, que une PD-L1 del tumor",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "CTLA-4, que une PD-L1 del tumor",
+          "correct": false
+        }
+      ],
+      "explanation": "El pembrolizumab bloquea PD-1 del linfocito T, receptor inhibitorio que une PD-L1 del tumor, y así los linfocitos reconocen y destruyen a las células tumorales.",
+      "tema": "regulacion",
+      "subtema": "Bloqueo de PD-1",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q29",
+      "stem": "En la biopsia de un carcinoma de pulmón de 3 cm en un hombre de 71 años, las células tumorales expresan abundante PD-L1 y se encuentran junto a linfocitos T CD3⁺. El paciente fuma desde hace 40 años y presenta pérdida de peso. ¿Qué ocurre en este microambiente tumoral?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mayor producción de IL-2 por los linfocitos T CD3⁺",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Menor producción de IL-2 por los linfocitos T",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Menor producción de IL-12 por los linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Menor producción de IL-2 por los linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Mayor producción de IFN-γ por los linfocitos T",
+          "correct": false
+        }
+      ],
+      "explanation": "PD-L1 del tumor se une a PD-1 del linfocito T, frena su activación y disminuye la producción de IL-2.",
+      "tema": "regulacion",
+      "subtema": "PD-L1 tumoral e IL-2",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q30",
+      "stem": "Un hombre de 30 años sufre un traumatismo penetrante en el ojo derecho. Meses después consulta por dolor intenso, fotofobia y visión borrosa, con inflamación en ambos ojos e infiltrado de células gigantes multinucleadas. ¿Qué mecanismo de tolerancia se rompió?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La anergia clonal, por falta de coestimulación del antígeno propio",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La selección negativa, por eliminación tímica del antígeno propio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La deleción periférica, por Fas y FasL del antígeno propio",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La supresión por Treg, por consumo de IL-2 del antígeno propio",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El privilegio inmune, por barrera que aísla el antígeno propio",
+          "correct": true
+        }
+      ],
+      "explanation": "El ojo es un sitio de privilegio inmune, con una barrera que impide que el antígeno llegue al sistema linfoide. El trauma la rompió y expuso el antígeno.",
+      "tema": "autoinmunidad",
+      "subtema": "Privilegio inmune",
+      "seccion": "PREGUNTAS"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

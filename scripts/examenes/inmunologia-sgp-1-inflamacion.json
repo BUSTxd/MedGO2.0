@@ -3,7 +3,1408 @@
   "key": "inmunologia/sgp-1-inflamacion",
   "title": "SGP 1 — Inflamación",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Una mujer de 38 años consulta por dolor y enrojecimiento de la pierna derecha de siete días de evolución. Refiere escalofríos y tiene una temperatura de 38 grados. Sus macrófagos liberan IL-1β, TNF-α e IL-6, que actúan sobre el endotelio del hipotálamo anterior e inducen la ciclooxigenasa 2. ¿Qué mediador eleva el punto de ajuste termorregulador y en qué receptor actúa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "PGE₂ que actúa sobre receptores EP3 de las fibras C periféricas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "PGE₂ que actúa sobre receptores EP3 del área preóptica",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Leucotrieno B₄ que actúa sobre receptores BLT del área preóptica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Bradicinina que actúa sobre receptores B2 del área preóptica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Serotonina que actúa sobre receptores 5-HT del área preóptica",
+          "correct": false
+        }
+      ],
+      "explanation": "Las citocinas pirogénicas inducen COX-2 en el endotelio hipotalámico y aumentan la PGE₂, que se une a receptores EP3 del área preóptica y eleva el set point.",
+      "tema": "inflamacion",
+      "subtema": "Mecanismo de la fiebre",
+      "seccion": "Caso Clínico"
+    },
+    {
+      "id": "q02",
+      "stem": "Un hombre de 45 años con celulitis del antebrazo tiene fiebre de 38,5 grados. El hemograma muestra leucocitos de 15 000 por mm³, neutrófilos segmentados de 72 % y abastonados de 12 %. La PCR está elevada. ¿Qué indica el aumento de los neutrófilos abastonados en este hemograma?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Salida medular de linfocitos inmaduros ante mayor demanda",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Salida esplénica de neutrófilos inmaduros ante mayor demanda",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Salida medular de monocitos inmaduros ante mayor demanda",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Salida medular de neutrófilos inmaduros ante mayor demanda",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Salida ganglionar de eosinófilos inmaduros ante mayor demanda",
+          "correct": false
+        }
+      ],
+      "explanation": "La desviación a la izquierda indica que la médula ósea libera neutrófilos inmaduros para cubrir una demanda aumentada, como ocurre en la infección bacteriana aguda.",
+      "tema": "hemograma-rfa",
+      "subtema": "Desviación a la izquierda",
+      "seccion": "HEMOGRAMA"
+    },
+    {
+      "id": "q03",
+      "stem": "Un hombre de 52 años con neumonía lobar tiene fiebre y una PCR de 120 mg/L. Su médico explica que un mediador liberado por macrófagos, células dendríticas y endotelio dirige la producción de casi todos los reactantes de fase aguda positivos. ¿Qué citocina es la principal inductora y dónde se sintetizan estos reactantes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-6, con síntesis de los reactantes en el hígado",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-6, con síntesis de los reactantes en el bazo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-1, con síntesis de los reactantes en el hígado",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TNF-α, con síntesis de los reactantes en el hígado",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-6, con síntesis de los reactantes en la médula ósea",
+          "correct": false
+        }
+      ],
+      "explanation": "La IL-6 es la principal inductora de los reactantes de fase aguda, que se sintetizan en el hígado. IL-1 y TNF-α actúan como coestimuladores.",
+      "tema": "hemograma-rfa",
+      "subtema": "Inductor de los reactantes",
+      "seccion": "2. ¿Qué son los reactantes"
+    },
+    {
+      "id": "q04",
+      "stem": "Un adolescente de 15 años ingresa por meningitis meningocócica, la segunda que presenta en dos años. No tiene otras infecciones graves. El estudio del complemento demuestra ausencia de los componentes C5 a C9. ¿Qué estructura no puede formarse en este paciente y le impide lisar a Neisseria?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El complejo C4b2a, convertasa de C3 de la vía clásica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El complejo C3bBb, convertasa de C3 de la vía alternativa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El complejo C4b2a3b, convertasa de C5 de la vía clásica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El complejo C3bBb3b, convertasa de C5 de la vía alternativa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El complejo C5b-9, de ataque a membrana de la bacteria",
+          "correct": true
+        }
+      ],
+      "explanation": "La deficiencia de C5 a C9 impide ensamblar el complejo de ataque a membrana C5b-9, que causa lisis osmótica y es muy eficaz contra Neisseria.",
+      "tema": "complemento",
+      "subtema": "Complejo de ataque a membrana",
+      "seccion": "COMPLEMENTO"
+    },
+    {
+      "id": "q05",
+      "stem": "Un hombre de 60 años con carcinoma renal tiene células tumorales que disminuyeron la expresión de MHC clase I para evadir a los linfocitos T CD8⁺. Aun así, sus células NK destruyen a estas células tumorales mediante perforinas y granzimas. ¿Qué mecanismo de reconocimiento explica la actividad de las NK?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Exceso de MHC I, que libera a la NK de la inhibición",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Falta de MHC II, que libera a la NK de la inhibición",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Falta de MHC I, que libera a la NK de la inhibición",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Falta de MHC I, que activa a la NK por medio de su TCR",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Falta de MHC I, que impide a la NK reconocer a la célula",
+          "correct": false
+        }
+      ],
+      "explanation": "En el reconocimiento de lo propio ausente, la NK detecta células con MHC I bajo o nulo porque sus receptores inhibidores dejan de recibir señal, y se activa.",
+      "tema": "innata-celular",
+      "subtema": "Reconocimiento del propio ausente",
+      "seccion": "3. ¿Cuáles son los componentes"
+    },
+    {
+      "id": "q06",
+      "stem": "Una mujer de 30 años consulta por fiebre y disuria y en el urocultivo crece Escherichia coli. Sus macrófagos detectan un componente de la bacteria mediante receptores de reconocimiento de patrones y liberan citocinas. ¿Qué patrón molecular caracteriza a las bacterias gramnegativas como esta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lipopolisacárido, propio de las bacterias grampositivas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Ácido lipoteicoico, propio de las bacterias gramnegativas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Peptidoglucano, propio de las bacterias grampositivas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Lipopolisacárido, propio de las bacterias gramnegativas",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Ácido lipoteicoico, propio de las bacterias grampositivas",
+          "correct": false
+        }
+      ],
+      "explanation": "El lipopolisacárido es el patrón molecular de las bacterias gramnegativas, y lo reconocen los receptores de reconocimiento de patrones del fagocito.",
+      "tema": "innata-celular",
+      "subtema": "PAMP de las gramnegativas",
+      "seccion": "4. ¿Cómo reconocen"
+    },
+    {
+      "id": "q07",
+      "stem": "Un niño de 4 años tiene abscesos hepáticos, adenitis por Staphylococcus aureus y una neumonía por Aspergillus, todos recurrentes. Las biopsias muestran granulomas y la prueba del estallido respiratorio de sus neutrófilos es negativa. ¿Qué enzima está defectuosa en este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "NADPH oxidasa, que genera ácido hipocloroso en el fagolisosoma",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "NADPH oxidasa, que genera anión superóxido en el fagolisosoma",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Mieloperoxidasa, que genera ácido hipocloroso en el fagolisosoma",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Superóxido dismutasa, que genera H₂O₂ en el fagolisosoma",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Óxido nítrico sintasa inducible, que genera NO en el fagolisosoma",
+          "correct": false
+        }
+      ],
+      "explanation": "En la enfermedad granulomatosa crónica falla la NADPH oxidasa y no se forman especies reactivas de oxígeno, con infecciones por microorganismos catalasa positivos y granulomas.",
+      "tema": "inmunodeficiencias",
+      "subtema": "Enfermedad granulomatosa crónica",
+      "seccion": "1. Explique"
+    },
+    {
+      "id": "q08",
+      "stem": "Una mujer de 26 años con hepatitis viral aguda tiene hepatocitos infectados que son destruidos por linfocitos T CD8⁺ activados. Estos linfocitos usan gránulos con moléculas que forman poros y activan caspasas, y además una vía de señal de muerte extrínseca. ¿Qué mecanismos emplea el linfocito para matar a la célula diana?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Perforina con granzimas y Fas que se une al FasL de la diana",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Perforina con caspasas y FasL que se une a Fas de la diana",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Perforina con granzimas y TNF-α que se une a Fas de la diana",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Granzimas con lisozima y FasL que se une a Fas de la diana",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Perforina con granzimas y FasL que se une a Fas de la diana",
+          "correct": true
+        }
+      ],
+      "explanation": "El linfocito T CD8⁺ libera gránulos de perforina, que forma poros, y granzimas, que activan caspasas, y además expresa FasL, que se une a Fas de la diana.",
+      "tema": "linfocitos-t",
+      "subtema": "Mecanismos del linfocito T CD8⁺",
+      "seccion": "1. Linfocitos T"
+    },
+    {
+      "id": "q09",
+      "stem": "Un lactante de 8 meses ingresa con neumonía por Streptococcus pneumoniae. En las primeras horas se observan neutrófilos y macrófagos en el alvéolo, pero los anticuerpos específicos recién aparecen varios días después. ¿Qué característica distingue a la respuesta inicial inmediata de la respuesta adaptativa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inicio en minutos u horas sin generar memoria inmunológica",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Inicio en días con generación de memoria inmunológica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inicio en minutos u horas con generación de memoria inmunológica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Inicio en días sin generación de memoria inmunológica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Inicio en minutos u horas con receptores por recombinación génica",
+          "correct": false
+        }
+      ],
+      "explanation": "La inmunidad innata actúa en minutos u horas con receptores germinales fijos y no genera memoria. La adaptativa tarda días y sí genera memoria.",
+      "tema": "generalidades",
+      "subtema": "Innata frente a adaptativa",
+      "seccion": "1. ¿Qué es sistema inmune innato"
+    },
+    {
+      "id": "q10",
+      "stem": "Un hombre de 47 años con linfedema crónico consulta por eritema difuso, dolor y fiebre en la pierna izquierda. El cultivo revela cocos grampositivos en cadena, betahemolíticos del grupo A. Esta bacteria resiste la opsonización por C3b y así evita ser fagocitada. ¿Qué factor de virulencia explica esta resistencia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Proteína F de unión a la fibronectina epitelial",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Estreptolisina O secretada al espacio extracelular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Proteína M de la pared celular bacteriana",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Hialuronidasa secretada por la bacteria",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Estreptoquinasa secretada por la bacteria",
+          "correct": false
+        }
+      ],
+      "explanation": "La proteína M de Streptococcus pyogenes inhibe la opsonización por C3b, por lo que la bacteria escapa de la fagocitosis.",
+      "tema": "inflamacion",
+      "subtema": "Proteína M de Streptococcus pyogenes",
+      "seccion": "4. ¿Qué bacterias"
+    },
+    {
+      "id": "q11",
+      "stem": "En la citometría de flujo de un joven de 20 años se identifica una población de linfocitos grandes granulares que representa el 8 % de los linfocitos circulantes. Estas células no maduraron en el timo, no expresan TCR ni inmunoglobulina de membrana y lisan células diana. ¿Qué marcadores identifican a esta población?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD16a, CD56 y CD117",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD16a, CD56 y CD138",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD19, CD56 y CD94",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD16a, CD3 y CD94",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD16a, CD56 y CD94",
+          "correct": true
+        }
+      ],
+      "explanation": "Las células NK se identifican por CD16a, CD56 y CD94. No expresan TCR porque no maduran en el timo, y por eso carecen de CD3.",
+      "tema": "innata-celular",
+      "subtema": "Marcadores de las células NK",
+      "seccion": "Sistema inmune innato"
+    },
+    {
+      "id": "q12",
+      "stem": "Una mujer de 35 años recibe por primera vez la vacuna contra el tétanos. Entre millones de linfocitos, solo los que tienen un receptor específico proliferan y forman clones efectores y de memoria. Esos receptores ya existían antes de que ella se expusiera al antígeno. ¿Mediante qué proceso se generaron los receptores del linfocito?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Recombinación de cambio de clase de la región constante",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Recombinación somática de los segmentos génicos V, D y J",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Hipermutación somática de los segmentos génicos V, D y J del BCR",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Recombinación somática de los genes de las moléculas MHC de clase I",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Selección negativa de los segmentos génicos V, D y J",
+          "correct": false
+        }
+      ],
+      "explanation": "Los receptores TCR y BCR se generan antes del contacto con el antígeno por recombinación de segmentos génicos V, D y J. La selección clonal solo amplifica al linfocito específico.",
+      "tema": "generalidades",
+      "subtema": "Recombinación de los receptores",
+      "seccion": "Sistema inmune adaptativo"
+    },
+    {
+      "id": "q13",
+      "stem": "Un hombre de 34 años tiene infestación por Ascaris lumbricoides con eosinofilia y aumento de IgE. La respuesta contra este helminto depende de un subtipo de linfocito T cooperador que activa a los linfocitos B para producir anticuerpos. ¿Qué subtipo es y qué citocinas secreta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Th2, con IL-2, IFN-γ y TNF-α",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Th1, con IL-4, IL-5, IL-10 e IL-13",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Th1, con IL-2, IFN-γ y TNF-α",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Th2, con IL-4, IL-5 e IL-13",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Th17, con IL-17, IL-21 e IL-22",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos Th2 secretan IL-4, IL-5 e IL-13, entre otras citocinas, activan a los linfocitos B y controlan a los patógenos extracelulares, como los parásitos.",
+      "tema": "diferenciacion-t",
+      "subtema": "Citocinas de Th2",
+      "seccion": "1. Linfocitos T"
+    },
+    {
+      "id": "q14",
+      "stem": "Un linfocito T CD4⁺ virgen de un joven de 19 años reconoce un péptido en MHC II sobre una célula dendrítica en el ganglio, pero no prolifera por falta de la segunda señal. ¿Qué pares de moléculas aportan la coestimulación al linfocito T CD4⁺?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD28 con B7 y CD40L con CD40",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD28 con MHC II y CD40L con CD40",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD4 con MHC II y CD28 con B7",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TCR con MHC II y CD40L con CD40",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD8 con MHC I y CD28 con B7",
+          "correct": false
+        }
+      ],
+      "explanation": "La señal 2 del linfocito T CD4⁺ la dan CD28 al unirse a B7, que es CD80 o CD86, y CD40L al unirse a CD40 de la célula presentadora.",
+      "tema": "coestimulacion",
+      "subtema": "Pares de coestimulación del CD4⁺",
+      "seccion": "1. Linfocitos T › Señal 2"
+    },
+    {
+      "id": "q15",
+      "stem": "Una mujer de 40 años con enfermedad inflamatoria intestinal tiene, en la biopsia de su epitelio intestinal, linfocitos T cuyo receptor está formado por una cadena γ y una cadena δ, en lugar de las cadenas α y β habituales. ¿Qué característica distingue a estos linfocitos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Residen en epitelios y recirculan entre la sangre y los ganglios",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se desarrollan en la médula ósea y no recirculan entre la sangre y los ganglios",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Residen en epitelios y no recirculan entre la sangre y los ganglios",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Se desarrollan en el timo y recirculan entre la sangre y los ganglios",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Residen en los ganglios y recirculan entre la sangre y el bazo",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T γδ se desarrollan en el timo y migran a epitelios como piel, mucosa oral e intestino, donde permanecen sin recircular como primera línea de defensa.",
+      "tema": "linfocitos-t",
+      "subtema": "Linfocitos T γδ",
+      "seccion": "1. Linfocitos T"
+    },
+    {
+      "id": "q16",
+      "stem": "Una investigadora estudia el anticuerpo antitetánico de una mujer de 33 años vacunada y necesita saber qué parte de la molécula reconoce y fija al antígeno. Cada anticuerpo tiene dos de estos sitios en los extremos de la Y. ¿Qué región forma el sitio de unión al antígeno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fab, formado por las porciones constantes de las cadenas H y L",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Fab, formado por las porciones variables de las cadenas H y L",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Fc, formado por las porciones variables de las cadenas H y L",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Fc, formado por los segmentos constantes de las cadenas H",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Fab, formado por las porciones variables de las cadenas H solamente",
+          "correct": false
+        }
+      ],
+      "explanation": "El fragmento Fab une las porciones variables de las cadenas pesada y ligera, que determinan la especificidad frente al antígeno, en los extremos de la Y.",
+      "tema": "anticuerpos",
+      "subtema": "Sitio de unión al antígeno",
+      "seccion": "4. Sitios de unión"
+    },
+    {
+      "id": "q17",
+      "stem": "Un hombre de 50 años con neumonía tiene bacterias recubiertas de IgG que son fagocitadas por macrófagos y neutrófilos, y esa IgG unida a la bacteria también activa el complemento. ¿Qué fragmento del anticuerpo es responsable de estas funciones efectoras?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El Fc, formado por porciones variables de las cadenas pesadas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El Fab, formado por segmentos constantes de las cadenas pesadas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El Fab, formado por porciones variables de las cadenas ligeras",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La región bisagra, formada por porciones variables de cadena ligera",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El Fc, formado por segmentos constantes de las cadenas pesadas",
+          "correct": true
+        }
+      ],
+      "explanation": "El Fc, formado por segmentos constantes de las cadenas pesadas, activa el complemento y se une a receptores Fc de fagocitos y NK, lo que permite fagocitosis y ADCC.",
+      "tema": "anticuerpos",
+      "subtema": "Funciones del fragmento Fc",
+      "seccion": "5. Fragmento Fc"
+    },
+    {
+      "id": "q18",
+      "stem": "Una mujer de 29 años recibe una vacuna proteica. Un linfocito B internaliza el antígeno unido a su BCR, lo digiere parcialmente y lo exhibe en su superficie. Luego recibe ayuda de un linfocito T CD4⁺ y se diferencia. ¿Cómo el linfocito T CD4⁺ activa al linfocito B?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reconoce péptido en MHC I del B y secreta citocinas de diferenciación",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Reconoce péptido en MHC II del B y lo destruye con perforina y granzimas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Reconoce péptido en MHC II del B y secreta citocinas de diferenciación",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Reconoce el antígeno nativo con su BCR y secreta citocinas de diferenciación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Reconoce péptido en MHC II del B y secreta IFN-γ que frena su diferenciación",
+          "correct": false
+        }
+      ],
+      "explanation": "El TCR del linfocito Th reconoce el péptido en MHC II del linfocito B, y las citocinas inducen su proliferación y su diferenciación a plasmática o memoria.",
+      "tema": "linfocitos-b",
+      "subtema": "Cooperación del Th en la activación del B",
+      "seccion": "6. Tipos de inmunoglobulinas"
+    },
+    {
+      "id": "q19",
+      "stem": "Un estudiante analiza una molécula de superficie presente en todas las células nucleadas de un paciente de 22 años, que presenta péptidos endógenos a los linfocitos T CD8⁺. Observa una cadena pesada asociada de forma no covalente con una cadena ligera pequeña. ¿Cómo se compone esta molécula?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cadena α con tres dominios y β2-microglobulina",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Cadena α con dos dominios y la β2-microglobulina",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cadena α con tres dominios y cadena β glucosilada",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Cadena α y cadena β, ambas glucosiladas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Cadena β con tres dominios y β2-microglobulina",
+          "correct": false
+        }
+      ],
+      "explanation": "El MHC I está formado por una cadena pesada α con tres dominios asociada de forma no covalente a la β2-microglobulina, de unos 12 kDa.",
+      "tema": "presentacion-mhc",
+      "subtema": "Cadenas del MHC I",
+      "seccion": "Estructura"
+    },
+    {
+      "id": "q20",
+      "stem": "Un hombre de 32 años tiene una infección por citomegalovirus. Sus células infectadas presentan péptidos virales sintetizados dentro de la célula, mientras que un macrófago presenta péptidos de una bacteria que fagocitó. ¿A qué linfocitos se presentan los péptidos endógenos y los exógenos, respectivamente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Endógenos a linfocitos T cooperadores y exógenos a linfocitos T citotóxicos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Endógenos a linfocitos T citotóxicos y exógenos a linfocitos T citotóxicos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Endógenos a linfocitos T cooperadores y exógenos a linfocitos T cooperadores",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Endógenos a linfocitos T citotóxicos y exógenos a linfocitos T cooperadores",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Endógenos a linfocitos NK citotóxicos y exógenos a linfocitos T cooperadores",
+          "correct": false
+        }
+      ],
+      "explanation": "El MHC I presenta antígenos endógenos a los linfocitos T CD8⁺ y el MHC II presenta antígenos exógenos a los linfocitos T CD4⁺.",
+      "tema": "presentacion-mhc",
+      "subtema": "Antígenos endógenos y exógenos",
+      "seccion": "Antígenos"
+    },
+    {
+      "id": "q21",
+      "stem": "Una niña de 5 años consulta por fiebre y tos por infección respiratoria viral. En su respuesta inicial, un subtipo de célula dendrítica especializado en la defensa antiviral secreta grandes cantidades de IFN-α e IFN-β. ¿Qué célula es la responsable?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Célula dendrítica clásica de tipo cDC1",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Célula dendrítica clásica de tipo cDC2",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Célula dendrítica de Langerhans cutánea",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Célula dendrítica plasmocitoide o pDC",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Célula dendrítica folicular ganglionar",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células dendríticas plasmocitoides se especializan en la defensa antiviral y secretan grandes cantidades de IFN de tipo I, es decir IFN-α e IFN-β.",
+      "tema": "innata-celular",
+      "subtema": "Células dendríticas plasmocitoides",
+      "seccion": "🧩 Tipos de células dendríticas"
+    },
+    {
+      "id": "q22",
+      "stem": "Una mujer de 44 años con síndrome de Sjögren tiene sequedad de ojos y boca por falta de lágrimas y saliva, y sufre infecciones oculares y orales frecuentes. Estas secreciones contienen tres moléculas antimicrobianas. Una rompe el peptidoglucano, otra forma poros en las membranas bacterianas y otra secuestra hierro. ¿Cuáles son, respectivamente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lisozima, defensinas y lactoferrina",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Defensinas, lisozima y lactoferrina",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Histatinas, defensinas y lactoferrina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Catelicidinas, defensinas y lactoferrina",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Lisozima, defensinas e histatinas",
+          "correct": false
+        }
+      ],
+      "explanation": "La lisozima rompe el peptidoglucano, las defensinas forman poros en las membranas bacterianas y la lactoferrina secuestra hierro y limita el crecimiento microbiano.",
+      "tema": "barreras",
+      "subtema": "Moléculas antimicrobianas de las secreciones",
+      "seccion": "2. ¿Cuáles son las barreras"
+    },
+    {
+      "id": "q23",
+      "stem": "Una mujer de 28 años recibió antibióticos de amplio espectro y luego presenta flujo vaginal con sobrecrecimiento de bacterias patógenas. Se comprueba que perdió los lactobacilos de su microbiota vaginal. ¿Qué mecanismo de barrera bioquímica se pierde en este caso?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Acidificación con ácido clorhídrico producido por células parietales",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Acidificación con ácidos grasos producidos por el sebo cutáneo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Secuestro de hierro por lactoferrina de las secreciones",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Lisis del peptidoglucano por lisozima de las secreciones",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Acidificación con ácido láctico producido por lactobacilos",
+          "correct": true
+        }
+      ],
+      "explanation": "Los lactobacilos producen ácido láctico, que acidifica la vagina e inhibe el crecimiento de bacterias patógenas. Al perderlos falla esta barrera.",
+      "tema": "barreras",
+      "subtema": "Barreras de pH ácido",
+      "seccion": "2. ¿Cuáles son las barreras"
+    },
+    {
+      "id": "q24",
+      "stem": "Un hombre de 60 años con una infección de biofilm en un catéter venoso central tiene neutrófilos que, al llegar al foco, liberan una red que atrapa y mata bacterias fuera de la célula. ¿De qué está formada esta estructura que emplea el neutrófilo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fibronectina con proteínas antimicrobianas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Cromatina con proteínas antimicrobianas",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Fibrina con proteínas antimicrobianas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ácido hialurónico con proteínas antimicrobianas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Colágeno con proteínas antimicrobianas",
+          "correct": false
+        }
+      ],
+      "explanation": "Las trampas extracelulares del neutrófilo son redes de cromatina con proteínas antimicrobianas, útiles contra bacterias grandes y biofilms.",
+      "tema": "innata-celular",
+      "subtema": "Trampas extracelulares del neutrófilo",
+      "seccion": "3. ¿Cuáles son los componentes"
+    },
+    {
+      "id": "q25",
+      "stem": "Una mujer de 36 años con lesiones nodulares en el muslo por una bacteria intracelular tiene macrófagos activados que secretan una citocina clave para dirigir a los linfocitos T cooperadores y estimular a un linfocito citotóxico innato contra este microorganismo. ¿Qué citocina es y cuál es su función?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-4, que polariza a los linfocitos Th2 y activa a los linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-10, que polariza a los linfocitos Treg y favorece la tolerancia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-12, que polariza a los linfocitos Th1 y activa a las NK",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "IL-6, que induce fiebre y activa las respuestas hepáticas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "TNF-α, que induce fiebre y activa el endotelio vascular",
+          "correct": false
+        }
+      ],
+      "explanation": "El macrófago secreta IL-12, que polariza a los linfocitos T hacia Th1 y activa a las NK. IL-1, IL-6 y TNF-α causan fiebre e inflamación.",
+      "tema": "innata-celular",
+      "subtema": "Citocinas del macrófago",
+      "seccion": "3. ¿Cuáles son los componentes"
+    },
+    {
+      "id": "q26",
+      "stem": "Un hombre de 27 años con influenza y fiebre alta tiene células del epitelio respiratorio infectadas por el virus, cuyos receptores citoplasmáticos detectan ARN viral y activan la respuesta antivírica, mientras que otros receptores ubicados en la membrana reconocen patrones microbianos. ¿Qué tipo de receptor detecta el ARN viral en el citoplasma de estas células?",
+      "options": [
+        {
+          "id": "a",
+          "text": "NLR, receptores tipo NOD del citoplasma celular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "TLR, receptores tipo Toll de la membrana celular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CLR, receptores de lectina tipo C de la membrana",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "RLR, receptores tipo RIG del citoplasma celular",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "RLR, receptores tipo RIG de la membrana celular",
+          "correct": false
+        }
+      ],
+      "explanation": "Los RLR, receptores tipo RIG, detectan ARN viral en el citoplasma. Los NLR detectan derivados del peptidoglucano y los TLR y los CLR se ubican en la membrana.",
+      "tema": "innata-celular",
+      "subtema": "Receptores citoplasmáticos",
+      "seccion": "4. ¿Cómo reconocen"
+    },
+    {
+      "id": "q27",
+      "stem": "Una mujer de 50 años con linfoma recibe un anticuerpo IgG contra las células tumorales, que quedan recubiertas por él. Sus células NK las destruyen liberando perforina y granzimas sin necesidad de MHC. ¿Qué receptor de la NK reconoce la IgG que recubre a la célula tumoral?",
+      "options": [
+        {
+          "id": "a",
+          "text": "FcγRI o CD64, de afinidad alta por el Fc de la IgG",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "FcγRII o CD32, de afinidad intermedia por el Fc de la IgG",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "FcγRIII o CD16, de afinidad baja por el Fc de la IgG",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CR1 o CD35, receptor del fragmento C3b de la superficie",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CR3 o CD11b, receptor del fragmento C3b de la superficie",
+          "correct": false
+        }
+      ],
+      "explanation": "La NK reconoce la IgG que recubre la célula con FcγRIII o CD16, lo que desencadena la citotoxicidad dependiente de anticuerpos con perforina y granzimas.",
+      "tema": "innata-celular",
+      "subtema": "Receptores Fcγ y ADCC",
+      "seccion": "4. ¿Cómo reconocen"
+    },
+    {
+      "id": "q28",
+      "stem": "Un hombre de 41 años presenta la pierna derecha aumentada de volumen, caliente y enrojecida tras una picadura infectada. El aumento de volumen se debe a la salida de líquido y de proteínas plasmáticas hacia el intersticio. ¿Qué mediadores aumentan la permeabilidad vascular y causan este edema?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Histamina, bradicinina, leucotrienos y VEGF",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Histamina, óxido nítrico y prostaglandinas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Bradicinina, PGE₂, serotonina y sustancia P",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Histamina, bradicinina, leucotrienos y TGF-β",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Histamina, prostaglandinas, leucotrienos y VEGF",
+          "correct": false
+        }
+      ],
+      "explanation": "El edema resulta del aumento de la permeabilidad vascular por histamina, bradicinina, leucotrienos y VEGF, que dejan salir proteínas plasmáticas y líquido.",
+      "tema": "inflamacion",
+      "subtema": "Mediadores del edema",
+      "seccion": "Caso Clínico"
+    },
+    {
+      "id": "q29",
+      "stem": "Una mujer de 38 años con celulitis de la pierna derecha refiere dolor intenso. Los mediadores inflamatorios sensibilizan a los nociceptores de la zona y el estímulo viaja hasta la corteza, donde se percibe conscientemente. ¿Qué vía sigue el estímulo doloroso?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fibras Aβ y C, asta dorsal, vía espinotalámica, tálamo y corteza somatosensorial",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Fibras Aδ y C, asta dorsal, vía espinotalámica, tálamo y corteza somatosensorial",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Fibras Aδ y C, asta dorsal, vía corticoespinal, tálamo y corteza somatosensorial",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Fibras Aδ y C, asta ventral, vía espinotalámica, tálamo y corteza somatosensorial",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Fibras Aδ y C, asta dorsal, vía espinotalámica, cerebelo y corteza somatosensorial",
+          "correct": false
+        }
+      ],
+      "explanation": "Los nociceptores con fibras Aδ y C llegan al asta dorsal, ascienden por la vía espinotalámica hasta el tálamo y el estímulo se percibe en la corteza somatosensorial.",
+      "tema": "inflamacion",
+      "subtema": "Vía del dolor inflamatorio",
+      "seccion": "Caso Clínico"
+    },
+    {
+      "id": "q30",
+      "stem": "Un hombre de 56 años con fiebre e infección de partes blandas tiene una velocidad de sedimentación globular de 80 mm/h y una PCR elevada. Su fibrinógeno plasmático también está aumentado, y el frotis no muestra alteraciones morfológicas de los eritrocitos. ¿Por qué el aumento de fibrinógeno acelera la sedimentación de los eritrocitos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Aumenta la repulsión de cargas negativas y los eritrocitos forman pilas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Reduce la repulsión de cargas negativas y los eritrocitos se separan",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Reduce las cargas positivas y los eritrocitos forman pilas más livianas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Reduce la repulsión de cargas negativas y los eritrocitos forman pilas",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Aumenta el hematocrito y los eritrocitos forman pilas más pesadas",
+          "correct": false
+        }
+      ],
+      "explanation": "El fibrinógeno reduce la repulsión entre las cargas negativas de los eritrocitos, que se agregan en pilas más pesadas y sedimentan más rápido.",
+      "tema": "hemograma-rfa",
+      "subtema": "Fibrinógeno y velocidad de sedimentación",
+      "seccion": "HEMOGRAMA"
+    },
+    {
+      "id": "q31",
+      "stem": "Un niño de 8 años tiene infecciones respiratorias y sinusitis recurrentes desde lactante, además de situs inversus. La tomografía muestra bronquiectasias y el estudio de la mucosa nasal demuestra ausencia de aclaramiento mucociliar. ¿Qué alteración genética explica el defecto de esta barrera?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mutación de la dineína, con cilios inmóviles",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Mutación del gen CFTR, con moco muy espeso",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mutación de NADPH oxidasa, sin estallido respiratorio",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mutación del C1 inhibidor, con angioedema recurrente",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Mutación de la mieloperoxidasa, sin ácido hipocloroso",
+          "correct": false
+        }
+      ],
+      "explanation": "Una mutación de la dineína deja cilios inmóviles en el síndrome de Kartagener y anula el aclaramiento mucociliar de la vía respiratoria.",
+      "tema": "barreras",
+      "subtema": "Aclaramiento mucociliar",
+      "seccion": "1. Explique"
+    },
+    {
+      "id": "q32",
+      "stem": "Una mujer de 30 años presenta episodios recurrentes de edema de labios y laringe, sin urticaria ni prurito, que se repiten desde la adolescencia. Su hermano tiene el mismo cuadro. El complemento muestra un C4 bajo. ¿Qué deficiencia explica este cuadro?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deficiencia de C1q, componente inicial de la vía clásica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Deficiencia de factor I, regulador de C3b en la vía alternativa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Deficiencia de C1 inhibidor, regulador de la vía clásica",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Deficiencia de properdina, estabilizadora de la vía alternativa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Deficiencia de CD59, regulador del complejo de ataque",
+          "correct": false
+        }
+      ],
+      "explanation": "La deficiencia de C1 inhibidor produce angioedema hereditario, porque falla el control de la activación de la vía clásica del complemento.",
+      "tema": "complemento",
+      "subtema": "Déficit de C1 inhibidor",
+      "seccion": "1. Explique"
+    },
+    {
+      "id": "q33",
+      "stem": "Una mujer de 24 años con artritis, eritema malar y glomerulonefritis tiene un déficit hereditario de C1q. Sus estudios muestran depósito de complejos inmunes en el riñón y una actividad hemolítica de la vía clásica ausente. ¿Por qué la deficiencia de la vía clásica predispone a esta enfermedad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No se forma el complejo de ataque a membrana y se pierde la lisis de Neisseria",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "No se estabiliza la C3 convertasa de la vía alternativa en las bacterias",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "No se regula la activación del complemento sobre las células propias",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "No se produce la anafilotoxina C5a y se pierde la quimiotaxis",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "No se eliminan los inmunocomplejos y se depositan en los tejidos",
+          "correct": true
+        }
+      ],
+      "explanation": "Sin la vía clásica no se eliminan los inmunocomplejos mediante iC3b, que se depositan en los tejidos y causan hipersensibilidad tipo III, como el lupus.",
+      "tema": "complemento",
+      "subtema": "Déficit de C1q y lupus",
+      "seccion": "1. Explique"
+    },
+    {
+      "id": "q34",
+      "stem": "Un hombre de 45 años con neumonía neumocócica y fiebre alta tiene anticuerpos IgM e IgG fijados sobre la superficie de la bacteria, lo que activa una vía del complemento. ¿Qué molécula inicia esta vía y qué complejo forma su convertasa de C3?",
+      "options": [
+        {
+          "id": "a",
+          "text": "C1q unido al Fc de IgM o IgG, con la convertasa C3bBb",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "C1q unido al Fc de IgM o IgG, con la convertasa C4b2a",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "MBL unido a manosa de la bacteria, con la convertasa C4b2a",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "C1q unido a manosa de la bacteria, con la convertasa C4b2a",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Properdina unida a la bacteria, con la convertasa C3bBb",
+          "correct": false
+        }
+      ],
+      "explanation": "La vía clásica la inicia C1q al unirse al Fc de IgM o IgG fijadas al antígeno. C1s corta C4 y C2 y forma la convertasa de C3 C4b2a.",
+      "tema": "complemento",
+      "subtema": "Vía clásica",
+      "seccion": "COMPLEMENTO"
+    },
+    {
+      "id": "q35",
+      "stem": "Un niño de 3 años con infecciones recurrentes tiene un suero que activa el complemento al detectar manosa en la superficie de una levadura, sin necesidad de anticuerpos. ¿Qué molécula detecta el azúcar y qué proteasa corta C4 y C2 en esta vía?",
+      "options": [
+        {
+          "id": "a",
+          "text": "MBL, con C1s que corta a C4 y C2",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "C1q, con MASP-2 que corta a C4 y C2",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "MBL, con factor D que corta al factor B",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "MBL, con MASP-2 que corta a C4 y C2",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Factor B, con MASP-2 que corta a C4 y C2",
+          "correct": false
+        }
+      ],
+      "explanation": "La lectina de unión a manosa detecta azúcares microbianos sin anticuerpos y activa a MASP, cuya proteasa MASP-2 corta C4 y C2 para formar C4b2a.",
+      "tema": "complemento",
+      "subtema": "Vía de las lectinas",
+      "seccion": "COMPLEMENTO"
+    },
+    {
+      "id": "q36",
+      "stem": "Una mujer de 56 años con infección por una bacteria sin reguladores del complemento tiene C3 que se hidroliza de forma espontánea y continua en el plasma. El C3b cae sobre la bacteria y forma la convertasa C3bBb, que se degrada muy rápido sin la ayuda de otra proteína. ¿Qué proteína necesita esta convertasa para mantenerse activa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Factor D, que escinde al factor B unido a C3b",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Factor H, que inactiva al C3b sobre las células propias",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Factor I, que inactiva al C3b sobre las células propias",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Properdina, que se une al complejo y lo estabiliza",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "DAF, que acelera la disociación de la convertasa",
+          "correct": false
+        }
+      ],
+      "explanation": "La properdina se une a la convertasa C3bBb y la estabiliza, porque sin ella se degrada muy rápido. Los factores H, I y DAF inactivan al C3b.",
+      "tema": "complemento",
+      "subtema": "Vía alternativa",
+      "seccion": "COMPLEMENTO"
+    },
+    {
+      "id": "q37",
+      "stem": "Un hombre de 60 años con neumonía tiene en el lavado alveolar abundantes neutrófilos atraídos por un fragmento del complemento que además aumenta la permeabilidad vascular y activa neutrófilos y macrófagos. Se sabe que es la anafilotoxina más potente. ¿Qué fragmento es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "C3a, que se libera por acción de la C3 convertasa clásica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "C4a, que se libera por acción de C1s en la vía clásica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "C3b, que se libera por acción de la C3 convertasa clásica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "C5a, que se libera por acción de la C5 convertasa",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "C5b, que se libera por acción de la convertasa de C5",
+          "correct": false
+        }
+      ],
+      "explanation": "El C5a es la anafilotoxina más potente, con quimiotaxis, aumento de la permeabilidad vascular y activación de neutrófilos y macrófagos. Lo produce la C5 convertasa.",
+      "tema": "complemento",
+      "subtema": "Anafilotoxinas del complemento",
+      "seccion": "COMPLEMENTO"
+    },
+    {
+      "id": "q38",
+      "stem": "Un hombre de 65 años con sepsis abdominal tiene una PCR muy elevada, fiebre persistente, edema periférico y una hipoalbuminemia marcada. El hígado prioriza la síntesis de proteínas de defensa a expensas de otras proteínas plasmáticas. ¿Qué reactantes de fase aguda disminuyen durante la inflamación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Albúmina, transferrina y transtiretina",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Albúmina, transferrina y ferritina",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Albúmina, haptoglobina y transtiretina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Albúmina, transferrina y ceruloplasmina",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Fibrinógeno, transferrina y transtiretina",
+          "correct": false
+        }
+      ],
+      "explanation": "La albúmina, la transferrina y la transtiretina son reactantes negativos, porque el hígado prioriza las proteínas de defensa. La caída de albúmina puede causar edema.",
+      "tema": "hemograma-rfa",
+      "subtema": "Reactantes negativos",
+      "seccion": "2. ¿Qué son los reactantes"
+    },
+    {
+      "id": "q39",
+      "stem": "Una mujer de 64 años con sepsis de origen abdominal tiene una PCR de 350 mg/L, que subió a las pocas horas del inicio del cuadro. Esta pentraxina hepática reacciona con el polisacárido C del neumococo. ¿Qué funciones defensivas cumple la PCR?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se une a fosfocolina como opsonina y activa la vía alternativa al unir factor B",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se une a manosa como opsonina y activa la vía de las lectinas al unir MBL",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se une a fosfocolina como opsonina y activa la vía clásica al unir C3b",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se une al Fc como opsonina y activa la vía clásica al unir C1q",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Se une a fosfocolina como opsonina y activa la vía clásica al unir C1q",
+          "correct": true
+        }
+      ],
+      "explanation": "La PCR se une a la fosfocolina de microbios y células dañadas como opsonina, y activa la vía clásica del complemento al unir C1q.",
+      "tema": "hemograma-rfa",
+      "subtema": "Funciones de la PCR",
+      "seccion": "3. ¿Qué es la proteína C"
+    },
+    {
+      "id": "q40",
+      "stem": "Un hombre de 40 años usuario de drogas inyectables tiene un absceso en el antebrazo, con pus abundante. El cultivo desarrolla Staphylococcus aureus, que sobrevive dentro del neutrófilo tras ser fagocitado pese al estallido respiratorio. ¿Qué enzima de esta bacteria le da esa protección?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Coagulasa, que protege a la bacteria contra la fagocitosis",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Hialuronidasa, que facilita la diseminación tisular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Catalasa, que inactiva las especies reactivas de oxígeno",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Penicilinasa, que inactiva los antibióticos betalactámicos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Lipasa, que degrada los lípidos de la superficie",
+          "correct": false
+        }
+      ],
+      "explanation": "La catalasa de Staphylococcus aureus inactiva las especies reactivas de oxígeno del neutrófilo, lo que protege a la bacteria dentro del fagocito.",
+      "tema": "inflamacion",
+      "subtema": "Enzimas de Staphylococcus aureus",
+      "seccion": "4. ¿Qué bacterias"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

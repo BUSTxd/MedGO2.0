@@ -3,7 +3,1303 @@
   "key": "inmunologia/sgp-3-autoinmunidad",
   "title": "SGP 3 — Autoinmunidad: artritis reumatoide y autoanticuerpos",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Una mujer de 52 años, fumadora desde la juventud y portadora de HLA-DR4, consulta por dolor e hinchazón en las articulaciones de ambas manos desde hace ocho meses. Sus autoanticuerpos más específicos reconocen proteínas propias como la vimentina y la filagrina, que actúan como neoantígenos. El reumatólogo le explica que el proceso empezó con una modificación de esas proteínas. ¿Qué modificación las convirtió en neoantígenos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Conversión de arginina en citrulina por las enzimas PAD",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Conversión de citrulina en arginina por la enzima PAD activada",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Conversión de arginina en citrulina por la enzima AID activada",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Desaminación de citosina en uracilo por la enzima AID",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Fosforilación de tirosina en la vía de señalización de BTK",
+          "correct": false
+        }
+      ],
+      "explanation": "Las enzimas PAD convierten arginina en citrulina en proteínas como vimentina, filagrina y colágeno tipo II, y el sistema inmune las reconoce como neoantígenos contra los que produce ACPA.",
+      "tema": "autoinmunidad",
+      "subtema": "Citrulinación de proteínas",
+      "seccion": "INTRODUCCIÓN: Artritis"
+    },
+    {
+      "id": "q02",
+      "stem": "Un hombre de 61 años con artritis de manos desde hace dos años presenta nódulos subcutáneos en los codos y tos seca persistente. Su laboratorio muestra un título elevado de un autoanticuerpo que se une a inmunoglobulinas propias, forma complejos inmunes circulantes y activa el complemento. ¿Cuál es la clase y el blanco de este autoanticuerpo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgG dirigida contra la porción Fab de la IgM propia",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IgM dirigida contra la región variable de la IgG propia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgM dirigida contra la porción Fc de las IgG propias",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "IgA dirigida contra la porción Fc de la IgE circulante",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IgG dirigida contra la región constante de la IgM propia",
+          "correct": false
+        }
+      ],
+      "explanation": "El factor reumatoide suele ser una IgM que reconoce el Fc de la IgG propia y forma complejos inmunes que activan el complemento por la vía clásica.",
+      "tema": "autoinmunidad",
+      "subtema": "Factor reumatoide",
+      "seccion": "2. ¿Que son los Factores"
+    },
+    {
+      "id": "q03",
+      "stem": "Una mujer de 49 años con artritis reumatoide activa persiste con dolor y edema articular tras cuatro semanas de metotrexato e ibuprofeno. Su médico añade un anticuerpo monoclonal quimérico murino-humano dirigido contra una citocina proinflamatoria, después de descartar una tuberculosis activa. ¿Qué mecanismo explica el efecto de este fármaco?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Neutraliza el TNF-α solo soluble y no se une al TNF-α de membrana",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Neutraliza la IL-6 soluble y de membrana e impide su unión a IL-6R",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Neutraliza la IL-1β soluble y de membrana e impide su unión a IL-1R",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Neutraliza el TNF-α soluble y de membrana e impide su unión a TNFR",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Bloquea el receptor TNFR1 de la célula diana sin unirse al TNF-α circulante",
+          "correct": false
+        }
+      ],
+      "explanation": "Infliximab es un anticuerpo quimérico anti-TNF-α que neutraliza el TNF-α soluble y de membrana, bloquea NF-κB y AP-1, y provoca apoptosis de linfocitos T y macrófagos activados.",
+      "tema": "autoinmunidad",
+      "subtema": "Mecanismo del infliximab",
+      "seccion": "4. El médico indica"
+    },
+    {
+      "id": "q04",
+      "stem": "Una mujer de 58 años con artritis reumatoide va a iniciar infliximab. Antes del tratamiento se realiza una prueba de tuberculina y a las 72 horas la induración mide 2 mm. No refiere contacto con enfermos y su radiografía de tórax es normal. ¿Cómo debe interpretarse este resultado en su situación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Negativo, y descarta infección latente porque la radiografía de tórax es normal",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Positivo, porque con anti-TNF cualquier induración medible es diagnóstica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Positivo, porque en pacientes inmunosuprimidos el corte es de 2 mm",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Negativo, y descarta infección latente porque la induración es menor de 5 mm",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Negativo, pero no descarta infección latente porque hay inmunosupresión",
+          "correct": true
+        }
+      ],
+      "explanation": "En pacientes con anti-TNF el corte es 5 mm, así que 2 mm es negativo, pero la inmunosupresión causa falsos negativos y obliga a usar IGRA, imagen y juicio clínico.",
+      "tema": "hipersensibilidad",
+      "subtema": "PPD con anti-TNF",
+      "seccion": "5. ¿Cómo interpretaría"
+    },
+    {
+      "id": "q05",
+      "stem": "Un hombre de 55 años con artritis reumatoide consulta por dolor articular. El laboratorio muestra PCR de 40 mg/L y VSG de 80 mm/h. El médico explica que ambas pruebas reflejan inflamación sistémica mediada por citocinas, pero que una de ellas sube y baja con mayor rapidez. ¿Qué mecanismo hace de la PCR la mejor prueba para seguir la respuesta al tratamiento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La sintetiza el hígado por IL-6, IL-1 y TNF-α, y baja lento al ceder la inflamación",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La sintetiza el hígado por IL-6, IL-1 y TNF-α, y baja rápido al ceder la inflamación",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "La sintetiza el bazo por IFN-γ e IL-12, y baja rápido al ceder la inflamación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Depende del fibrinógeno que favorece los rouleaux, y baja rápido al ceder la inflamación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Depende de las inmunoglobulinas que favorecen los rouleaux, y baja lento al ceder la inflamación",
+          "correct": false
+        }
+      ],
+      "explanation": "La PCR la produce el hígado por acción de IL-6, IL-1 y TNF-α, sube en pocas horas y cae rápido cuando cede la inflamación, a diferencia de la VSG.",
+      "tema": "hemograma-rfa",
+      "subtema": "PCR frente a VSG",
+      "seccion": "1. De acuerdo"
+    },
+    {
+      "id": "q06",
+      "stem": "Una mujer de 58 años con artritis reumatoide recibe ibuprofeno junto con metotrexato desde hace dos semanas. Refiere menos dolor y menos calor en las articulaciones, pero su radiografía de manos mantiene erosiones y la VSG sigue elevada. ¿Qué explica el efecto solo parcial del ibuprofeno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inhibe COX-1 y COX-2 y reduce PGE₂, pero no frena la progresión autoinmune",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Inhibe COX-2 y reduce PGE₂, y además bloquea la síntesis de TNF-α e IL-1",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inhibe la 5-lipooxigenasa y reduce los leucotrienos, pero no frena la progresión",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Inhibe COX-1 y COX-2 y reduce PGE₂, y además detiene la formación del pannus",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Inhibe la fosfolipasa A2 y reduce el ácido araquidónico, pero no frena la progresión",
+          "correct": false
+        }
+      ],
+      "explanation": "El ibuprofeno inhibe COX-1 y COX-2 y baja la PGE₂, aliviando dolor e inflamación, pero no bloquea las citocinas ni modifica la progresión, algo propio de los FARME.",
+      "tema": "inflamacion",
+      "subtema": "Efecto del ibuprofeno",
+      "seccion": "3. Aplicando"
+    },
+    {
+      "id": "q07",
+      "stem": "Un hombre de 30 años recibe un refuerzo de la vacuna antitetánica. Un linfocito B folicular reconoce el toxoide con su BCR, pero para no caer en anergia o apoptosis necesita una segunda señal aportada por un linfocito T cooperador. ¿Cuál es esa segunda señal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Unión de CD40L del linfocito B con CD40 del linfocito T cooperador activado",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Unión de CD28 del linfocito B con CD80 del linfocito T cooperador activado",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Unión de CD40 del linfocito B con CD40L del linfocito T CD4⁺ cooperador",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Unión de CD40 del linfocito B con CD40L del linfocito T citotóxico",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Unión de ICOS del linfocito B con ICOSL del linfocito T cooperador",
+          "correct": false
+        }
+      ],
+      "explanation": "La segunda señal es CD40 del linfocito B con CD40L del linfocito T CD4⁺, junto con las citocinas de este, que permite proliferación, cambio de isotipo y memoria.",
+      "tema": "linfocitos-b",
+      "subtema": "Segunda señal CD40",
+      "seccion": "4. ¿Cómo se activa"
+    },
+    {
+      "id": "q08",
+      "stem": "Una mujer de 26 años con lupus eritematoso sistémico presenta artralgias, eritema malar y autoanticuerpos en título alto. Se documenta un exceso de BAFF en suero. En condiciones normales, sus linfocitos B autorreactivos morirían en la periferia porque casi no reciben este factor. ¿Qué ocurre con esos linfocitos en esta paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sobreviven por el exceso de BAFF y se diferencian en Treg",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Sobreviven por el exceso de BAFF pero quedan anérgicos y sin secreción",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mueren por apoptosis mediada por Bim pese al exceso de BAFF",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Sobreviven por el exceso de BAFF y producen autoanticuerpos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Sufren edición del receptor tras reactivar RAG1 y RAG2 en la periferia",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos B autorreactivos dependen mucho de BAFF. Normalmente su escasez los elimina, pero el exceso, como en el lupus, les permite sobrevivir y producir autoanticuerpos.",
+      "tema": "tolerancia",
+      "subtema": "BAFF y tolerancia B",
+      "seccion": "6. ¿Cómo se desarrolla"
+    },
+    {
+      "id": "q09",
+      "stem": "Un lactante varón de 4 meses presenta diarrea crónica con mala absorción, dermatitis exfoliativa y diabetes mellitus de inicio neonatal. Un hermano murió en la infancia con un cuadro similar. Se sospecha una mutación en el factor de transcripción que define a los linfocitos T CD4⁺ con CD25 alto. ¿Cuál es el diagnóstico más probable?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Síndrome APECED por mutación del gen AIRE del cromosoma 21",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Síndrome de hiper IgM por mutación del gen CD40L ligado al X",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Agammaglobulinemia por mutación del gen BTK ligado al X",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Síndrome de DiGeorge por deleción del cromosoma 22",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Síndrome IPEX por mutación del gen FOXP3 ligado al X",
+          "correct": true
+        }
+      ],
+      "explanation": "La mutación de FOXP3 impide el desarrollo de linfocitos Treg y causa IPEX, con desregulación inmune, poliendocrinopatía y enteropatía ligada al X.",
+      "tema": "regulacion",
+      "subtema": "Síndrome IPEX",
+      "seccion": "Funciones de Treg"
+    },
+    {
+      "id": "q10",
+      "stem": "Un niño de 6 años con faringitis desarrolla un ganglio cervical grande. En un centro germinal de ese ganglio, los linfocitos B de la zona oscura proliferan intensamente y expresan una enzima que introduce mutaciones puntuales en las regiones variables de las inmunoglobulinas. ¿Qué enzima y qué proceso caracterizan a esta zona?",
+      "options": [
+        {
+          "id": "a",
+          "text": "AID, que produce hipermutación somática en los centrocitos foliculares",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "AID, que produce hipermutación somática en los centroblastos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "AID, que produce selección por afinidad en centroblastos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "RAG1 y RAG2, que producen hipermutación somática en los centroblastos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "TdT, que produce hipermutación somática en los centroblastos",
+          "correct": false
+        }
+      ],
+      "explanation": "En la zona oscura los centroblastos proliferan y usan la enzima AID para la hipermutación somática, que diversifica la afinidad. La selección ocurre después en la zona clara.",
+      "tema": "linfocitos-b",
+      "subtema": "Zona oscura del centro germinal",
+      "seccion": "Dependiente de LT"
+    },
+    {
+      "id": "q11",
+      "stem": "Un recién nacido de 2 días, hijo de una madre vacunada contra el tétanos durante el embarazo, tiene anticuerpos antitoxina tetánica en el suero. No fue vacunado ni recibió leche materna. El pediatra explica que estos anticuerpos pasaron de la madre al feto. ¿Qué isotipo es y por qué vía llegó?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgA, transferida por la placenta y la más abundante en el cuerpo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IgG, transferida por la leche materna y la más abundante en el cuerpo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgM, transferida por la placenta y la más abundante en respuesta primaria",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgG, transferida por la placenta y la más abundante en la sangre",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "IgA, transferida por la leche materna y la más abundante en sangre",
+          "correct": false
+        }
+      ],
+      "explanation": "La IgG es el isotipo más abundante en sangre y el único que cruza la placenta, con vida media de 23 días. Por eso protege al recién nacido.",
+      "tema": "anticuerpos",
+      "subtema": "IgG y transferencia placentaria",
+      "seccion": "TABLA: ISOTIPOS DE INMUNOGLOBULINAS"
+    },
+    {
+      "id": "q12",
+      "stem": "Un recién nacido de 3 días es evaluado por sospecha de infección intrauterina por citomegalovirus. La madre tiene IgG anti-CMV por una infección antigua. El neonatólogo busca el isotipo específico que el propio feto habría producido, pues no atraviesa la placenta. ¿Cuál es y cuál es su forma?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgM, pentámero con cadena J que activa el complemento",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IgM, dímero con cadena J que se secreta a las mucosas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgG, monómero que atraviesa la placenta y activa el complemento",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgA, dímero con cadena J que se secreta en mucosas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IgE, monómero que se une a mastocitos y basófilos de tejidos",
+          "correct": false
+        }
+      ],
+      "explanation": "La IgM es un pentámero con cadena J, es el primer anticuerpo de la respuesta primaria, activa el complemento, aglutina y no cruza la placenta.",
+      "tema": "anticuerpos",
+      "subtema": "IgM pentamérica",
+      "seccion": "TABLA: ISOTIPOS DE INMUNOGLOBULINAS"
+    },
+    {
+      "id": "q13",
+      "stem": "Una madre de 28 años amamanta a su lactante de 4 meses. La leche materna aporta un anticuerpo que protege la mucosa intestinal del niño y que se transporta a través del epitelio de la glándula mamaria unido a una cadena de unión. ¿Qué isotipo es y cómo llega a la secreción?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgA monomérica sin cadena J que cruza el epitelio por transcitosis",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IgA dimérica con cadena J que cruza el epitelio por difusión",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgA dimérica con cadena J que cruza el epitelio por transcitosis",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "IgG monomérica sin cadena J que cruza el epitelio por difusión pasiva",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IgE monomérica sin cadena J que cruza el epitelio por transcitosis",
+          "correct": false
+        }
+      ],
+      "explanation": "La IgA secretora es un dímero unido por cadena J que atraviesa el epitelio por transcitosis, es la más abundante del cuerpo y protege las mucosas.",
+      "tema": "anticuerpos",
+      "subtema": "IgA secretora",
+      "seccion": "TABLA: ISOTIPOS DE INMUNOGLOBULINAS"
+    },
+    {
+      "id": "q14",
+      "stem": "Un niño de 8 años de una zona rural presenta prurito anal, dolor abdominal y eosinofilia de 18 por ciento. Se halla infestación por helmintos. En una segunda visita, su madre refiere que también tiene rinitis alérgica. ¿Qué isotipo participa en ambas condiciones y dónde se localiza?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgE libre y abundante en el plasma con una vida media de 23 días",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IgD unida a mastocitos y basófilos en el plasma y los tejidos submucosos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgG unida a mastocitos y basófilos en los tejidos submucosos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgA secretora unida al epitelio de los tejidos submucosos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IgE unida a mastocitos y basófilos en los tejidos submucosos",
+          "correct": true
+        }
+      ],
+      "explanation": "La IgE es un monómero de vida media de 2 a 3 días que se une a mastocitos y basófilos y defiende contra helmintos y causa alergias inmediatas.",
+      "tema": "anticuerpos",
+      "subtema": "IgE y helmintos",
+      "seccion": "TABLA: ISOTIPOS DE INMUNOGLOBULINAS"
+    },
+    {
+      "id": "q15",
+      "stem": "Un residente analiza la estructura de una inmunoglobulina G purificada del suero de un hombre de 40 años con neumonía. Al reducir los puentes disulfuro obtiene dos tipos de cadenas polipeptídicas, y desea confirmar su composición completa. ¿Cuál es la composición correcta de esta molécula?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dos cadenas pesadas idénticas y dos ligeras distintas, una kappa y una lambda",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Dos cadenas pesadas idénticas y dos ligeras idénticas, ambas kappa o ambas lambda",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Dos cadenas pesadas distintas y dos ligeras idénticas, ambas kappa o ambas lambda",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Dos cadenas pesadas idénticas y dos ligeras idénticas, con tres dominios C en cada ligera",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Dos cadenas pesadas idénticas y dos ligeras idénticas, con dos dominios C en cada pesada",
+          "correct": false
+        }
+      ],
+      "explanation": "La inmunoglobulina tiene dos cadenas pesadas idénticas y dos ligeras idénticas, ambas kappa o ambas lambda, unidas por puentes disulfuro. La pesada tiene un dominio V y tres C.",
+      "tema": "anticuerpos",
+      "subtema": "Estructura de la inmunoglobulina",
+      "seccion": "1. ¿Qué es un anticuerpo"
+    },
+    {
+      "id": "q16",
+      "stem": "Un niño de 5 años con una infección bacteriana recibe inmunoglobulinas. Para que el neutrófilo fagocite las bacterias recubiertas, el anticuerpo debe unirse a los receptores del fagocito y al complemento por una parte de la molécula, mientras la otra reconoce el antígeno. ¿Qué fragmento interactúa con los fagocitos y el complemento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El fragmento Fc, formado por las regiones constantes de la cadena pesada",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "El fragmento Fab, formado por las regiones variables de ambas cadenas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El fragmento Fab, formado por las regiones constantes de la cadena ligera",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La región bisagra, formada por las regiones constantes de la cadena pesada",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El fragmento Fc, formado por las regiones variables de la cadena pesada",
+          "correct": false
+        }
+      ],
+      "explanation": "El fragmento Fc es la cola del anticuerpo y determina la interacción con el sistema inmune, como complemento, opsonización y citotoxicidad dependiente de anticuerpo. Los brazos Fab unen el antígeno.",
+      "tema": "anticuerpos",
+      "subtema": "Fragmentos Fab y Fc",
+      "seccion": "Fragmentos funcionales"
+    },
+    {
+      "id": "q17",
+      "stem": "Una bacteria produce proteasas que cortan la IgG de un paciente de 66 años con sinusitis crónica. El corte ocurre en una región flexible de 10 a 60 aminoácidos que permite al anticuerpo unirse a antígenos separados a distintas distancias y aumenta su avidez funcional. ¿Cuál es esta región y dónde se ubica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Región bisagra, ubicada entre VH y CH1 de la cadena pesada del Fab",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Región variable, ubicada en los extremos de los dos brazos Fab",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Región bisagra, ubicada entre CH1 y CH2 de la cadena pesada",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Región constante, ubicada en el tronco de la Y o fragmento Fc",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Región bisagra, ubicada entre VL y CL de la cadena ligera",
+          "correct": false
+        }
+      ],
+      "explanation": "La región bisagra, situada entre CH1 y CH2 en IgG, IgA e IgD, da flexibilidad a los brazos Fab y por eso las proteasas bacterianas la atacan con facilidad.",
+      "tema": "anticuerpos",
+      "subtema": "Región bisagra",
+      "seccion": "Regiones principales"
+    },
+    {
+      "id": "q18",
+      "stem": "Un investigador estudia linfocitos B de un niño de 3 años con médula ósea normal. La región CDR3 de la cadena pesada es la más hipervariable, porque en las uniones de los segmentos V, D y J se pierden nucleótidos al azar y se añaden otros no codificados en el ADN germinal. ¿Qué enzima añade esos nucleótidos N?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Exonucleasas, que eliminan nucleótidos al azar en las uniones",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "RAG1 y RAG2, que cortan y reacomodan los segmentos génicos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "TdT, que elimina nucleótidos al azar en las uniones",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TdT, que añade nucleótidos N sin molde en las uniones",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "ADN ligasa, que sella los extremos cortados en las uniones",
+          "correct": false
+        }
+      ],
+      "explanation": "La transferasa terminal desoxinucleotidil TdT añade nucleótidos N no codificados en las uniones V D J, lo que crea la diversidad de unión y la hipervariabilidad de CDR3.",
+      "tema": "linfocitos-b",
+      "subtema": "Diversidad de unión",
+      "seccion": "2. ¿Cómo hace el cuerpo"
+    },
+    {
+      "id": "q19",
+      "stem": "Una mujer de 22 años es donante de médula ósea. En la muestra, un prolinfocito B tardío que expresa CD19, CD10 y CD34 reordena V con DJ de la cadena pesada en el primer cromosoma, y el reordenamiento resulta no productivo. ¿Qué ocurre a continuación con esta célula?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reordena V con J de la cadena ligera kappa en el primer cromosoma",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Reordena V con DJ en el segundo cromosoma de la cadena pesada",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Muere por apoptosis sin más intentos de reordenar la cadena pesada",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Reordena D con J en el segundo cromosoma de la cadena pesada",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Expresa una IgM de membrana con cadena ligera sustituta",
+          "correct": false
+        }
+      ],
+      "explanation": "Si el primer reordenamiento no resulta productivo, se intenta en el segundo cromosoma. Si tampoco lo es, la célula muere por apoptosis, como ocurre en la mitad.",
+      "tema": "linfocitos-b",
+      "subtema": "Reordenamiento de cadena pesada",
+      "seccion": "1. PROLINFOCITO"
+    },
+    {
+      "id": "q20",
+      "stem": "Un lactante varón de 9 meses presenta otitis y neumonías bacterianas recurrentes desde los 6 meses. No tiene amígdalas visibles, casi no hay linfocitos B en sangre y las inmunoglobulinas IgG, IgA e IgM están muy bajas. Sus linfocitos T son normales y la médula muestra células pre-B. ¿Qué proceso falla en este niño?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La señal de supervivencia del BCR maduro que depende de BAFF",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La señal de supervivencia del pre-BCR que depende de CD40L",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El cambio de isotipo del linfocito B que depende de CD40L",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La selección negativa del linfocito B inmaduro que depende de AIRE",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La señal de supervivencia del pre-BCR que depende de la BTK",
+          "correct": true
+        }
+      ],
+      "explanation": "La tirosina cinasa de Bruton transmite la señal del pre-BCR que da supervivencia, proliferación y recombinación de la cadena ligera. Su mutación bloquea la maduración y causa agammaglobulinemia ligada al X.",
+      "tema": "inmunodeficiencias",
+      "subtema": "Pre-BCR y BTK",
+      "seccion": "2. PRE-LINFOCITO B"
+    },
+    {
+      "id": "q21",
+      "stem": "En la médula ósea de un varón de 25 años, un linfocito B inmaduro con IgM de membrana reconoce con alta afinidad un autoantígeno propio. En lugar de morir de inmediato, la célula reactiva RAG y TdT e intenta recombinar otra vez sus genes. ¿Qué mecanismo de tolerancia central utiliza?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Edición del receptor con nueva recombinación de la cadena pesada",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Anergia con inactivación funcional de la célula y sin muerte celular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Edición del receptor con nueva recombinación de la cadena ligera",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Deleción clonal con apoptosis inmediata sin nuevo intento",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Exclusión alélica con detención de la recombinación de la cadena ligera",
+          "correct": false
+        }
+      ],
+      "explanation": "La edición del receptor reactiva RAG y TdT para reordenar la cadena ligera, primero kappa y luego lambda. Si persiste la autorreactividad, la célula muere por deleción clonal.",
+      "tema": "tolerancia",
+      "subtema": "Edición del receptor",
+      "seccion": "3. LINFOCITO B INMADURO"
+    },
+    {
+      "id": "q22",
+      "stem": "En el bazo de un joven de 20 años, un linfocito B transicional recién llegado de la médula expresa IgM alta con IgD muy baja y es muy sensible a la apoptosis si reconoce autoantígenos. Al pasar al estadio siguiente recibe señales de supervivencia de una citocina y aumenta su IgD. ¿Qué citocina y qué estadio son?",
+      "options": [
+        {
+          "id": "a",
+          "text": "BAFF, que actúa sobre el linfocito transicional de tipo 1",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "BAFF, que actúa sobre el linfocito transicional tipo 2",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "APRIL, que actúa sobre el linfocito transicional tipo 2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-7, que actúa sobre el transicional tipo 2",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CXCL13, que actúa sobre el linfocito transicional tipo 2",
+          "correct": false
+        }
+      ],
+      "explanation": "El transicional T2 recibe señales de supervivencia por BAFF, sube la IgD y puede diferenciarse en linfocito B folicular o de la zona marginal.",
+      "tema": "linfocitos-b",
+      "subtema": "Linfocitos transicionales",
+      "seccion": "4. LINFOCITOS TRANSICIONALES"
+    },
+    {
+      "id": "q23",
+      "stem": "Un hombre de 34 años sometido a esplenectomía por un trauma presenta a los seis meses una sepsis fulminante por Streptococcus pneumoniae, bacteria con cápsula polisacárida. La respuesta rápida contra estos antígenos depende de una población de linfocitos B ubicada en el bazo. ¿Cuál es y qué produce?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos B de la zona marginal, que producen IgM de baja afinidad",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos B foliculares del bazo, que producen IgM de baja afinidad",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos B de la zona marginal, que producen IgG de alta afinidad y memoria",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos B-1 de origen fetal, que producen IgG de alta afinidad",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos B foliculares, que producen IgG de alta afinidad y memoria",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos B de la zona marginal del bazo responden rápido a antígenos T-independientes, como polisacáridos capsulares, y producen IgM de baja afinidad útil para opsonizar y activar complemento.",
+      "tema": "linfocitos-b",
+      "subtema": "Linfocitos B de zona marginal",
+      "seccion": "LINFOCITO MADURO"
+    },
+    {
+      "id": "q24",
+      "stem": "Un niño de 7 años con una herida infectada en el brazo presenta un ganglio axilar aumentado. Los antígenos bacterianos llegan por la linfa y se exhiben en el folículo para que los linfocitos B los reconozcan con su BCR. ¿Qué células capturan y muestran el antígeno en el folículo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Macrófagos del seno subcapsular y células dendríticas de la zona T",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Células dendríticas foliculares y linfocitos T foliculares cooperadores",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Macrófagos de la zona marginal y células plasmáticas de vida corta",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células dendríticas plasmocitoides y mastocitos del seno medular",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Macrófagos del seno subcapsular y células dendríticas foliculares",
+          "correct": true
+        }
+      ],
+      "explanation": "Los macrófagos del seno subcapsular y las células dendríticas foliculares atrapan los antígenos que llegan por la linfa y los muestran en el folículo a los linfocitos B.",
+      "tema": "linfocitos-b",
+      "subtema": "Captura del antígeno en el folículo",
+      "seccion": "4. ¿Cómo se activa"
+    },
+    {
+      "id": "q25",
+      "stem": "En un ganglio axilar de una mujer de 29 años con mastitis, centrocitos de la zona clara compiten por el antígeno retenido en la superficie de las células dendríticas foliculares. Los que capturan más antígeno lo presentan en MHC II a los Tfh. ¿Qué ocurre con los centrocitos de baja afinidad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mueren por apoptosis y son eliminados por los neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Mueren por necrosis y son eliminados por los macrófagos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Regresan a la zona oscura y proliferan con más hipermutación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mueren por apoptosis y son eliminados por los macrófagos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Se diferencian en células plasmáticas de vida larga en la médula",
+          "correct": false
+        }
+      ],
+      "explanation": "En la zona clara ocurre la selección por afinidad. Los centrocitos de baja afinidad captan poco antígeno, no reciben ayuda de Tfh y mueren por apoptosis.",
+      "tema": "linfocitos-b",
+      "subtema": "Selección por afinidad",
+      "seccion": "Dependiente de LT"
+    },
+    {
+      "id": "q26",
+      "stem": "Un joven de 22 años recibe la primera dosis de una vacuna proteica. A los cinco días se detectan anticuerpos de baja afinidad y células plasmáticas de vida corta. Semanas después aparecen anticuerpos de alta afinidad con cambio de isotipo y células de memoria. ¿A qué fases corresponden estos hallazgos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Primero la respuesta folicular con centros germinales y después la extrafolicular rápida",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Primero la respuesta T-independiente y después la respuesta T-dependiente",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Primero la respuesta extrafolicular y luego la folicular con centros germinales",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Solo la respuesta extrafolicular, que también genera memoria y cambio de isotipo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Primero la zona clara y después la zona oscura del centro germinal folicular",
+          "correct": false
+        }
+      ],
+      "explanation": "La respuesta extrafolicular es rápida y da baja afinidad y plasmáticas cortas. La folicular, con centros germinales, aporta cambio de isotipo, hipermutación somática, alta afinidad y memoria.",
+      "tema": "linfocitos-b",
+      "subtema": "Respuesta extrafolicular y folicular",
+      "seccion": "Dependiente de LT"
+    },
+    {
+      "id": "q27",
+      "stem": "Un niño de 3 años recibe una vacuna de polisacárido capsular puro contra el neumococo. Un mes después su respuesta fue solo de IgM, de corta duración y sin memoria inmunológica. ¿Qué característica del antígeno explica este tipo de respuesta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Epítopos escasos que entrecruzan débilmente el BCR y requieren ayuda T",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Péptidos procesados y presentados en MHC II a linfocitos T CD4⁺",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Epítopos repetidos que entrecruzan masivamente el BCR con ayuda de CD40L",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Epítopos repetidos que entrecruzan masivamente el BCR sin ayuda T",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Péptidos procesados y presentados en MHC I a linfocitos T CD8⁺",
+          "correct": false
+        }
+      ],
+      "explanation": "Los polisacáridos tienen epítopos repetidos que entrecruzan el BCR y activan al linfocito B sin ayuda T, pero solo dan IgM de baja afinidad, sin memoria.",
+      "tema": "linfocitos-b",
+      "subtema": "Activación T-independiente",
+      "seccion": "Independiente de LT"
+    },
+    {
+      "id": "q28",
+      "stem": "Un hombre de 45 años con meningitis por Neisseria meningitidis tiene el microbio recubierto de C3d por el complemento. Un linfocito B reconoce el antígeno con su BCR y a la vez el C3d con otro receptor de membrana, lo que amplifica su activación. ¿Qué receptor une el C3d en el linfocito B?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CR1, también llamado CD35, presente en eritrocitos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CR3, también llamado CD11b, propio de fagocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CR4, también llamado CD11c, presente en células dendríticas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "C5aR, también llamado CD88, presente en neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CR2, también llamado CD21, asociado a CD19 y CD81",
+          "correct": true
+        }
+      ],
+      "explanation": "Los linfocitos B expresan CR2 o CD21, receptor para C3d. Su unión simultánea con el reconocimiento del antígeno por el BCR amplifica la señal de activación.",
+      "tema": "complemento",
+      "subtema": "CR2 y C3d en el linfocito B",
+      "seccion": "¿Qué rol tiene el sistema inmune innato"
+    },
+    {
+      "id": "q29",
+      "stem": "Un niño de 10 años con faringitis estreptocócica tiene un ganglio cervical aumentado. Un linfocito T cooperador activado por una célula dendrítica migra hacia el borde del folículo B, donde dará la segunda señal a un linfocito B. ¿Qué cambio de receptores de quimiocinas permite esta migración?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Baja CCR7 y sube CXCR5 en la membrana del linfocito T",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Sube CCR7 y baja CXCR5 en la membrana del linfocito T activado",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Baja CCR7 y sube CXCR3 en la membrana del linfocito T",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Sube CCR7 y sube CXCR5 en la membrana del linfocito T activado",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Baja CXCR5 y sube CCR9 en la membrana del linfocito",
+          "correct": false
+        }
+      ],
+      "explanation": "El linfocito T cooperador baja CCR7 y sube CXCR5, lo que lo lleva al folículo, mientras el linfocito B sube CCR7 y se mueve hacia la zona T.",
+      "tema": "trafico",
+      "subtema": "Migración del linfocito Tfh",
+      "seccion": "Rol de los linfocitos T CD4"
+    },
+    {
+      "id": "q30",
+      "stem": "Un hombre de 38 años con infestación por Ascaris presenta eosinofilia y concentraciones elevadas de un isotipo específico de inmunoglobulina. Un Tfh secreta una citocina que dirige a su linfocito B hacia ese isotipo mediante una enzima que causa roturas en las regiones switch. ¿Cuál es la citocina y la enzima?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IFN-γ, que dirige el cambio a IgE mediante la AID",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-4, que dirige el cambio a IgE mediante la AID",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "IL-4, que dirige el cambio a IgE mediante RAG",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TGF-β, que dirige el cambio a IgE mediante la AID",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-4, que dirige el cambio a IgA mediante AID",
+          "correct": false
+        }
+      ],
+      "explanation": "La IL-4 del Tfh dirige el cambio de isotipo hacia IgE e IgG4, y la enzima AID introduce las roturas en las regiones switch de la cadena pesada.",
+      "tema": "anticuerpos",
+      "subtema": "Cambio de isotipo",
+      "seccion": "Rol de los linfocitos T CD4"
+    },
+    {
+      "id": "q31",
+      "stem": "Un investigador estudia dónde se eliminan los linfocitos autorreactivos en un paciente de 30 años sano. Quiere distinguir la tolerancia central de la periférica para los linfocitos B y T. ¿Qué afirmación describe correctamente los sitios donde ocurre cada una?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Central en médula ósea para B y timo para T, periférica en ganglios, bazo y tejidos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Central en timo para B y médula ósea para T, periférica en ganglios, bazo y tejidos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Central en médula ósea para B y timo para T, periférica en órganos linfoides primarios",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Central en ganglio para B y bazo para T, periférica en médula ósea y timo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Central en órganos linfoides secundarios para ambos, periférica en médula ósea y timo",
+          "correct": false
+        }
+      ],
+      "explanation": "La tolerancia central ocurre en órganos linfoides primarios, médula ósea para B y timo para T. La periférica ocurre en bazo, ganglios y tejidos, sobre los linfocitos que escaparon.",
+      "tema": "tolerancia",
+      "subtema": "Tolerancia central y periférica",
+      "seccion": "5. ¿Qué es la tolerancia"
+    },
+    {
+      "id": "q32",
+      "stem": "Una niña de 6 años presenta candidiasis mucocutánea crónica, hipoparatiroidismo e insuficiencia suprarrenal autoinmune. Se detecta una mutación en el factor de transcripción que permite a las células epiteliales medulares tímicas expresar genes de tejidos periféricos. ¿Qué proceso de tolerancia está alterado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Selección positiva en la corteza tímica por falta de presentación en MHC",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Selección negativa en la médula tímica por falta de autoantígenos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Selección negativa en la corteza tímica por falta de autoantígenos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Edición del receptor en la médula ósea por falta de RAG y TdT",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Anergia periférica en el ganglio linfático por falta de coestimulación",
+          "correct": false
+        }
+      ],
+      "explanation": "AIRE hace que las células epiteliales medulares tímicas expresen antígenos periféricos, que permiten eliminar a los linfocitos T autorreactivos. Sin AIRE escapan a la periferia y causan autoinmunidad.",
+      "tema": "tolerancia",
+      "subtema": "AIRE y selección negativa",
+      "seccion": "6. ¿Cómo se desarrolla"
+    },
+    {
+      "id": "q33",
+      "stem": "Un hombre de 60 años con melanoma metastásico muestra abundantes linfocitos T reguladores dentro del tumor. Estas células se caracterizan por una alta expresión de un receptor que absorbe una citocina del microambiente y priva de señales proliferativas a los linfocitos T efectores. ¿Qué receptor y qué citocina?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD25, cadena alfa del receptor de IL-2, que consume IL-10",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CTLA-4, que consume las moléculas B7 de la célula dendrítica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD25, cadena alfa del receptor de IL-2, que consume IL-2",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CD25, cadena alfa del receptor de IL-2, que consume IL-15",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "TGF-βR, que consume TGF-β del microambiente tumoral",
+          "correct": false
+        }
+      ],
+      "explanation": "Las Treg expresan mucho CD25 y absorben la IL-2 del microambiente, lo que priva a los linfocitos T efectores de señales de proliferación y supervivencia.",
+      "tema": "regulacion",
+      "subtema": "Consumo de IL-2 por Treg",
+      "seccion": "Funciones de Treg"
+    },
+    {
+      "id": "q34",
+      "stem": "Una mujer de 45 años con artritis reumatoide tiene el líquido sinovial con abundantes linfocitos T CD4⁺ activados. Una de estas poblaciones produce una citocina que recluta neutrófilos y activa a los fibroblastos sinoviales, potenciando la inflamación crónica. ¿Qué citocina y qué población son?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IFN-γ producido por los linfocitos Th1 de la sinovial",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-4 producida por los linfocitos Th2 de la sinovial",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-21 producida por los linfocitos Tfh foliculares de la sinovial",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-17 producida por los linfocitos Th17 de la sinovial",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "TGF-β producido por los linfocitos Treg presentes en la sinovial",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos Th17 producen IL-17, que recluta neutrófilos y activa fibroblastos sinoviales, mientras el IFN-γ de los Th1 activa macrófagos.",
+      "tema": "autoinmunidad",
+      "subtema": "Th17 en la artritis",
+      "seccion": "INTRODUCCIÓN: Artritis"
+    },
+    {
+      "id": "q35",
+      "stem": "Un hombre de 56 años con artritis reumatoide de seis años de evolución muestra erosiones óseas marginales en la radiografía. La biopsia sinovial revela un tejido hiperplásico con fibroblastos activados. Estas células secretan una molécula que estimula la osteoclastogénesis y explica las erosiones. ¿Cuál es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Metaloproteinasas, que degradan la matriz extracelular y el cartílago",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "VEGF, que estimula la angiogénesis y la vascularización",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "MCP-1, que amplifica la infiltración de células inflamatorias",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "RANK, que estimula la osteoclastogénesis y la erosión ósea",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "RANKL, que estimula la osteoclastogénesis y la erosión ósea",
+          "correct": true
+        }
+      ],
+      "explanation": "Los fibroblastos sinoviales activados secretan RANKL, que estimula la osteoclastogénesis y erosiona el hueso, y metaloproteinasas que degradan el cartílago, en el pannus.",
+      "tema": "autoinmunidad",
+      "subtema": "RANKL y erosión ósea",
+      "seccion": "INTRODUCCIÓN: Artritis"
+    },
+    {
+      "id": "q36",
+      "stem": "Una mujer de 63 años con artritis reumatoide seropositiva, con títulos altos de factor reumatoide y ACPA, desarrolla nódulos subcutáneos, tos seca, ojos secos y dolor torácico pleurítico. No tiene antecedentes de infecciones recientes ni de tabaquismo. ¿Qué mecanismo explica estas manifestaciones fuera de las articulaciones?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hipersensibilidad tipo I por IgE unida a mastocitos en varios tejidos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Hipersensibilidad tipo III por depósito de complejos inmunes en varios tejidos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Hipersensibilidad tipo II por anticuerpos contra células propias en varios tejidos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hipersensibilidad tipo IV por linfocitos T sensibilizados en varios tejidos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Hipersensibilidad tipo III por depósito de complejos inmunes solo en la sinovial",
+          "correct": false
+        }
+      ],
+      "explanation": "Los complejos de factor reumatoide y ACPA circulan y se depositan en vasos, pulmón, ojo y corazón, con hipersensibilidad tipo III que causa vasculitis, nódulos y pleuropericarditis.",
+      "tema": "autoinmunidad",
+      "subtema": "Manifestaciones extraarticulares",
+      "seccion": "INTRODUCCIÓN: Artritis"
+    },
+    {
+      "id": "q37",
+      "stem": "Una mujer de 50 años consulta por dolor y tumefacción en ambas manos desde hace un año, con rigidez al despertar que mejora en el transcurso del día. Se sospecha artritis reumatoide. ¿Qué articulaciones y qué patrón de rigidez matutina son los típicos de esta enfermedad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Interfalángicas distales y primera carpometacarpiana, con rigidez de media hora",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Metacarpofalángicas, interfalángicas proximales y carpos, con rigidez que empeora con la actividad",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Interfalángicas distales y carpos, con rigidez de más de una hora que mejora con la actividad",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Metacarpofalángicas y rodillas, con rigidez de menos de treinta minutos que empeora al reposo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Metacarpofalángicas, interfalángicas proximales y carpos, con rigidez de más de una hora",
+          "correct": true
+        }
+      ],
+      "explanation": "La artritis reumatoide afecta manos y pies, con metacarpofalángicas, interfalángicas proximales y carpos, y rigidez matutina mayor de una hora que mejora con la actividad.",
+      "tema": "autoinmunidad",
+      "subtema": "Clínica de la artritis reumatoide",
+      "seccion": "INTRODUCCIÓN: Artritis"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

@@ -3,7 +3,1163 @@
   "key": "inmunologia/t-8-linfocitos-t",
   "title": "T8 — Desarrollo, selección y activación de linfocitos T",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Un lactante de 7 meses ingresa por neumonía grave, diarrea crónica y candidiasis oral persistente. El hemograma muestra linfopenia y la citometría de flujo no detecta linfocitos T ni B maduros, con neutrófilos y plaquetas normales. Se sospecha una falla del mecanismo que genera más de 100 millones de especificidades antigénicas distintas durante el desarrollo de los linfocitos. ¿Qué proceso está alterado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Recombinación somática VDJ durante la respuesta a un antígeno extraño",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Recombinación somática VDJ durante el desarrollo de los linfocitos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Hipermutación somática de la región variable durante la respuesta inmune",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Cambio de isotipo de la región constante durante la respuesta inmune",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Edición del receptor de la cadena ligera durante el desarrollo B",
+          "correct": false
+        }
+      ],
+      "explanation": "La recombinación somática VDJ ensambla un número limitado de segmentos génicos durante el desarrollo de cada linfocito y genera un repertorio de más de 10⁸ especificidades.",
+      "tema": "linfocitos-t",
+      "subtema": "Diversidad del repertorio",
+      "seccion": "Introducción"
+    },
+    {
+      "id": "q02",
+      "stem": "Una mujer de 35 años con leucemia linfoblástica de células T se somete a secuenciación de los genes del receptor de sus blastos para vigilar la enfermedad residual. El informe indica que una de las cadenas analizadas se formó por unión de segmentos V, D y J, mientras que otra se formó solo con segmentos V y J. ¿Cuál de las siguientes cadenas se ensambla con un segmento D?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cadena α del receptor de los linfocitos T maduros",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Cadena γ del receptor de los linfocitos T maduros",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cadena ligera κ de las inmunoglobulinas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Cadena β del receptor de los linfocitos T",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Cadena ligera λ de las inmunoglobulinas",
+          "correct": false
+        }
+      ],
+      "explanation": "Las cadenas β y δ del TCR y la cadena pesada de las inmunoglobulinas usan V, D y J. Las cadenas α, γ y las ligeras usan solo V y J.",
+      "tema": "linfocitos-t",
+      "subtema": "Segmentos VDJ y VJ",
+      "seccion": "I. Recombinación V(D)J"
+    },
+    {
+      "id": "q03",
+      "stem": "Un niño de 3 años con infecciones bacterianas recurrentes se estudia en un laboratorio de referencia. Sus genes RAG1 y RAG2 son normales, pero en una construcción de su locus de cadena pesada un segmento V no se une directamente a un segmento J, porque ambos están flanqueados por secuencias señal con el mismo tipo de espaciador. ¿Qué regla explica que estos dos segmentos no se recombinen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un espaciador de 12 pb solo se recombina con uno de 23 pb",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Un espaciador de 23 pb solo se recombina con otro de 23 pb",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Un espaciador de 12 pb solo se recombina con otro de 12 pb",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Un heptámero solo se recombina con otro heptámero",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Un nonámero rico en A/T solo se recombina con otro nonámero",
+          "correct": false
+        }
+      ],
+      "explanation": "La regla 12/23 permite recombinar una secuencia señal con espaciador de 12 pb solo con una de 23 pb, lo que impide uniones incorrectas y asegura el orden de ensamblaje.",
+      "tema": "linfocitos-t",
+      "subtema": "Regla 12/23",
+      "seccion": "2. Regla 12/23"
+    },
+    {
+      "id": "q04",
+      "stem": "Una recién nacida de 2 meses presenta neumonía por Pneumocystis jirovecii y candidiasis oral persistente. No tiene linfocitos T ni B circulantes y sus fibroblastos son muy sensibles a la radiación ionizante. Se documenta una mutación de la enzima que, junto con DNA-PK, abre las horquillas de los extremos codificantes. ¿Qué enzima está mutada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ku70, proteína que estabiliza los extremos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "TdT, polimerasa que añade nucleótidos N al azar",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Artemis, nucleasa asociada a DNA-PK en el NHEJ",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "RAG1, endonucleasa que corta en la secuencia señal",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "ADN ligasa, enzima que sella la unión de los extremos",
+          "correct": false
+        }
+      ],
+      "explanation": "Artemis, junto con DNA-PK, abre las horquillas de los extremos codificantes durante el NHEJ. Al abrirlas pueden generarse nucleótidos P de secuencia palindrómica.",
+      "tema": "linfocitos-t",
+      "subtema": "Apertura de horquillas",
+      "seccion": "4. Procesamiento de los extremos"
+    },
+    {
+      "id": "q05",
+      "stem": "Durante una cirugía cardíaca a un varón de 2 años se extirpa parte del timo y se analizan por citometría los timocitos recién llegados a la corteza subcapsular desde la médula ósea. Son aún multipotenciales, CD4⁻ CD8⁻ y todavía no reordenan ningún locus del receptor. ¿Qué fenotipo de CD25 y CD44 se espera en estas células?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD25⁺ y CD44⁺, propio de la etapa DN2 con RAG activo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD25⁺ y CD44⁻, propio de la etapa DN3 con pre-TCR",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD25⁻ y CD44⁻, propio de la etapa de expansión DN4",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD25⁻ y CD44⁻, propio de la etapa inicial DN1",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD25⁻ y CD44⁺, propio de la etapa inicial de DN1",
+          "correct": true
+        }
+      ],
+      "explanation": "Las células DN1 recién llegadas al timo son CD25⁻ CD44⁺ y aún multipotenciales. Después pasan por DN2, DN3 y DN4.",
+      "tema": "linfocitos-t",
+      "subtema": "Fenotipo de DN1",
+      "seccion": "1) Etapa doble negativa"
+    },
+    {
+      "id": "q06",
+      "stem": "Un niño de 4 años con inmunodeficiencia combinada grave tiene casi ausentes los linfocitos T en sangre. Su estudio molecular muestra timocitos CD25⁺ CD44⁻ que reordenan bien el locus TCRβ, pero no expresan la cadena que se une a la cadena β recién formada. Sin ella no hay señal de expansión y los timocitos mueren. ¿Qué cadena falta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cadena sustituta λ5, que se une a TCRβ y CD3",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Cadena sustituta V pre-B, que se une a TCRβ y CD3",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cadena sustituta pTα, que se une a TCRβ y CD3",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Cadena α reordenada, que se une a TCRβ y CD3",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Cadena ζ del complejo, que se une a TCRβ y CD3",
+          "correct": false
+        }
+      ],
+      "explanation": "El pre-TCR está formado por TCRβ, la cadena sustituta pTα y CD3. Su señal en DN3 permite la expansión clonal posterior.",
+      "tema": "linfocitos-t",
+      "subtema": "Composición del pre-TCR",
+      "seccion": "PRE-TCR"
+    },
+    {
+      "id": "q07",
+      "stem": "En la biopsia tímica de un lactante de 10 meses operado por una cardiopatía congénita, el patólogo estudia timocitos CD4⁺ CD8⁺ que acaban de expresar un TCRαβ completo y que contactan con células epiteliales de la corteza cargadas de péptidos propios. ¿Qué se comprueba en ese contacto?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Que el TCR reconozca MHC propio con afinidad alta o muy alta",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Que el TCR reconozca MHC propio con afinidad baja o intermedia",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Que el TCR reconozca MHC ajeno con afinidad baja o intermedia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Que el TCR reconozca antígenos periféricos con afinidad alta o muy alta",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Que el TCR no reconozca MHC propio con afinidad baja o intermedia",
+          "correct": false
+        }
+      ],
+      "explanation": "En la selección positiva las cTEC comprueban que el TCR reconozca MHC propio con afinidad baja o intermedia. Los timocitos que no lo reconocen mueren por falta de señal.",
+      "tema": "linfocitos-t",
+      "subtema": "Qué evalúa la selección positiva",
+      "seccion": "A) Selección positiva"
+    },
+    {
+      "id": "q08",
+      "stem": "Una joven de 17 años presenta candidiasis mucocutánea crónica, hipoparatiroidismo e insuficiencia suprarrenal autoinmune. Sus padres son primos y el estudio genético identifica una mutación con pérdida de función del gen AIRE. ¿Qué proceso del desarrollo T está alterado y por qué?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Selección negativa, por falta de péptidos propios en las cTEC del timo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Selección positiva, por falta de péptidos propios en las cTEC del timo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Selección positiva, por falta de autoantígenos periféricos en las mTEC",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Selección negativa, por falta de antígenos periféricos en las mTEC",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Selección β, por falta de antígenos periféricos en las mTEC",
+          "correct": false
+        }
+      ],
+      "explanation": "AIRE hace que las mTEC expresen antígenos tejido-específicos en la médula tímica. Sin ella no se eliminan los timocitos autorreactivos y aparece autoinmunidad.",
+      "tema": "tolerancia",
+      "subtema": "AIRE y autoinmunidad",
+      "seccion": "B) Selección negativa"
+    },
+    {
+      "id": "q09",
+      "stem": "Una lactante de 6 meses con infecciones virales recurrentes tiene linfocitos T con TCRαβ normal en la membrana, pero que no responden al antígeno. Se demuestra que carece de las cadenas ζ del complejo TCR. ¿Por qué el TCR por sí solo no puede transmitir señales al interior de la célula?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Su cola citoplasmática es muy corta y los ITAM los aportan CD3 y ζζ",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Su cola citoplasmática es muy larga y los ITAM los aportan CD3",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Su cola citoplasmática es muy corta y los ITAM los aportan CD4 y CD8",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Su cola citoplasmática es muy corta y los ITAM los aportan Igα e Igβ",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Su cola citoplasmática es muy corta y los ITAM los aportan CD28 y CTLA-4",
+          "correct": false
+        }
+      ],
+      "explanation": "La cola citoplasmática del TCR es muy corta. La señal la transmiten el complejo CD3 y el homodímero ζζ, que aportan los ITAM.",
+      "tema": "linfocitos-t",
+      "subtema": "CD3, ζ e ITAM",
+      "seccion": "RECEPTOR TCR"
+    },
+    {
+      "id": "q10",
+      "stem": "Un adolescente sano de 15 años dona sangre para un estudio. Uno de sus timocitos doble positivos reconoció con afinidad baja un péptido presentado por moléculas MHC II de la corteza tímica, y al madurar conservó un solo correceptor y salió del timo. ¿En qué célula se convirtió?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocito T CD8⁺ citotóxico naive",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocito T CD4⁺ colaborador de memoria",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocito T CD4⁺ colaborador efector",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocito T CD8⁺ citotóxico de memoria",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocito T CD4⁺ colaborador naive",
+          "correct": true
+        }
+      ],
+      "explanation": "El reconocimiento de MHC II en la selección positiva conserva la vía CD4 y origina un linfocito T colaborador naive. Reconocer MHC I daría un citotóxico CD8⁺.",
+      "tema": "linfocitos-t",
+      "subtema": "Destino CD4 o CD8",
+      "seccion": "3) Etapa simple positiva"
+    },
+    {
+      "id": "q11",
+      "stem": "Un niño de 18 meses con inmunodeficiencia combinada grave no tiene linfocitos T circulantes. Sus precursores linfoides comunes salen de la médula ósea y llegan al timo, pero allí no se diferencian porque no reciben las señales que normalmente aporta el epitelio tímico. ¿Qué par de señales guía la diferenciación inicial de estos precursores?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-2 y el receptor Notch1 del precursor linfoide",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-7 y el receptor CD28 del precursor tímico",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-7 y el receptor Notch1 del precursor",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "IL-15 y el receptor Notch1 del precursor linfoide",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-7 y el ligando CD40L del precursor tímico",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células epiteliales tímicas aportan IL-7 y Notch1, que guían la diferenciación de los precursores linfoides comunes llegados de la médula ósea.",
+      "tema": "linfocitos-t",
+      "subtema": "Señales tímicas iniciales",
+      "seccion": "Introducción"
+    },
+    {
+      "id": "q12",
+      "stem": "Un varón de 61 años con linfoma T periférico se somete a secuenciación del receptor de sus células tumorales. El clon expresa un TCRαβ y el informe pide describir cómo se ensambló la cadena α de este receptor. ¿Qué segmentos génicos forman la cadena α del TCR?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Segmentos V, D, J y C, con segmento D",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Segmentos V, J y C, sin segmento D",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Segmentos V, D y C, sin segmento J alguno",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Segmentos V, J y C, con dos segmentos D",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Segmentos D, J y C, sin segmento V alguno",
+          "correct": false
+        }
+      ],
+      "explanation": "La cadena α se genera por recombinación V-J y no tiene segmento D. La cadena β se forma por recombinación V-D-J.",
+      "tema": "linfocitos-t",
+      "subtema": "Cadena α del TCR",
+      "seccion": "RECEPTOR TCR"
+    },
+    {
+      "id": "q13",
+      "stem": "En la secuenciación del receptor T de una paciente de 52 años con linfoma cutáneo de células T se identifica el asa CDR3, la región de mayor variabilidad del receptor. El hematólogo quiere saber qué regiones del genoma la originan. ¿Qué codifica el asa CDR3?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los segmentos C y J más las secuencias de unión entre ambos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los segmentos C y D más las secuencias de unión entre estos dos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los segmentos D y J sin las secuencias de unión entre ellos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los segmentos D y J más las secuencias de unión entre ellos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Los segmentos V y C más las secuencias de unión que los separan",
+          "correct": false
+        }
+      ],
+      "explanation": "El asa CDR3 se codifica por los segmentos D y J y por las secuencias de unión, donde se concentra la mayor variabilidad del receptor.",
+      "tema": "linfocitos-t",
+      "subtema": "Asa CDR3",
+      "seccion": "I. Recombinación V(D)J"
+    },
+    {
+      "id": "q14",
+      "stem": "En timocitos DN2 de un niño de 2 años con sospecha de inmunodeficiencia se observa, en una biopsia tímica, un reordenamiento parcial del locus TCRβ. El segmento D ya está unido a un segmento J y el segmento V continúa sin recombinar. ¿Qué evento ocurre a continuación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El segmento V se une al segmento DJ ya formado",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "El segmento D se une al segmento VJ ya formado por RAG",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El segmento J se une al segmento VD ya formado por RAG",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El segmento C se une al segmento DJ ya formado",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El segmento V se une al segmento C ya formado",
+          "correct": false
+        }
+      ],
+      "explanation": "El orden de ensamblaje es primero D con J y después V con el segmento DJ. La regla 12/23 asegura este orden.",
+      "tema": "linfocitos-t",
+      "subtema": "Orden de ensamblaje",
+      "seccion": "I. Recombinación V(D)J"
+    },
+    {
+      "id": "q15",
+      "stem": "Una niña de 5 meses con inmunodeficiencia combinada grave tiene proteínas RAG1 y RAG2 normales que reconocen sus secuencias señal, pero no logran cortar el ADN. Se identifica una mutación en el elemento de la secuencia señal donde RAG realiza el corte. ¿Qué componente está alterado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El nonámero conservado rico en A/T de la secuencia señal",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El espaciador de 12 pb de la secuencia señal",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El espaciador de 23 pb de la secuencia señal",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El heptámero del segmento codificante adyacente",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El heptámero conservado de la secuencia señal",
+          "correct": true
+        }
+      ],
+      "explanation": "Cada secuencia señal tiene heptámero, espaciador de 12 o 23 pb y nonámero. El heptámero conservado CACAGTG es el sitio donde cortan RAG1 y RAG2.",
+      "tema": "linfocitos-t",
+      "subtema": "Componentes de la RSS",
+      "seccion": "1. Reconocimiento de las RSS"
+    },
+    {
+      "id": "q16",
+      "stem": "En el análisis molecular de timocitos de un lactante de 4 meses se aíslan, tras la acción de RAG1 y RAG2, dos productos. Uno es un ADN circular con las secuencias señal unidas entre sí y el otro son los extremos de los segmentos génicos cerrados en horquilla. ¿Cómo se denominan, respectivamente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Coding joint circular y signal end en horquilla",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Signal joint circular y coding ends en horquilla",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Signal joint circular y coding joints en horquilla",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Signal ends circulares y coding joint en horquilla",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Coding ends circulares y signal joints en horquilla",
+          "correct": false
+        }
+      ],
+      "explanation": "Tras el corte se forman el signal joint, con las secuencias señal unidas, y los coding ends en horquilla, que corresponden a los segmentos V, D o J.",
+      "tema": "linfocitos-t",
+      "subtema": "Productos del corte RAG",
+      "seccion": "3. Corte por RAG1/RAG2"
+    },
+    {
+      "id": "q17",
+      "stem": "Un varón de 19 años con leucemia linfoblástica aguda de células T tiene blastos cuyos receptores muestran nucleótidos añadidos al azar, sin plantilla, en las uniones entre los segmentos V, D y J. Esta variabilidad se concentra en el CDR3. ¿Qué enzima añade estos nucleótidos N?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Artemis, nucleasa que abre las horquillas de los extremos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Ku70, proteína que estabiliza los extremos rotos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "TdT, polimerasa que añade nucleótidos N sin plantilla",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "RAG1, endonucleasa que corta en la secuencia señal",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "ADN ligasa, enzima que sella la unión final de los extremos",
+          "correct": false
+        }
+      ],
+      "explanation": "La TdT añade nucleótidos N al azar en las uniones entre segmentos. Es una fuente de diversidad juncional concentrada en el CDR3.",
+      "tema": "linfocitos-t",
+      "subtema": "TdT y nucleótidos N",
+      "seccion": "4. Procesamiento de los extremos"
+    },
+    {
+      "id": "q18",
+      "stem": "Una mujer de 26 años, donante de células madre, participa en un estudio que busca explicar por qué sus linfocitos tienen receptores distintos aun compartiendo los mismos segmentos génicos de origen. ¿Qué tres fuentes de diversidad intervienen en los receptores TCR y BCR?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Combinatoria de segmentos, diversidad juncional e hipermutación somática",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Combinatoria de segmentos, cambio de isotipo y asociación de las cadenas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Diversidad juncional, hipermutación somática y asociación de cadenas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Combinatoria de segmentos, diversidad juncional y asociación de cadenas",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Combinatoria de segmentos, edición del receptor y asociación de cadenas",
+          "correct": false
+        }
+      ],
+      "explanation": "La diversidad combina el reparto de segmentos V, D y J, la adición y pérdida de nucleótidos en las uniones y la asociación de cadenas pesada y ligera o α y β.",
+      "tema": "linfocitos-t",
+      "subtema": "Fuentes de diversidad",
+      "seccion": "4. Procesamiento de los extremos"
+    },
+    {
+      "id": "q19",
+      "stem": "Un niño de 3 años con inmunodeficiencia combinada se estudia con una biopsia tímica. En timocitos CD25⁺ CD44⁺ que acaban de activar RAG1 y RAG2 se busca el primer reordenamiento génico del receptor. ¿Qué loci comienzan a reordenarse en esta etapa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los loci TCRβ y TCRδ del timocito pro-T",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Los loci TCRα y TCRβ del timocito pro-T tardío",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los loci TCRα y TCRδ del timocito pro-T tardío",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los loci TCRα y TCRγ del timocito DN2",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Solo el locus TCRα del timocito pro-T inicial",
+          "correct": false
+        }
+      ],
+      "explanation": "En DN2, el timocito pro-T activa RAG1 y RAG2 y comienza el reordenamiento de los loci TCRβ y TCRδ.",
+      "tema": "linfocitos-t",
+      "subtema": "Loci reordenados en DN2",
+      "seccion": "DN2"
+    },
+    {
+      "id": "q20",
+      "stem": "Un timocito CD25⁺ CD44⁻ de una niña de 5 años, obtenido de una biopsia tímica, logró reordenar con éxito el locus TCRβ. El patólogo que estudia la muestra se pregunta qué sucede a continuación en esta etapa doble negativa. ¿Qué evento se produce?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Forma el pre-TCR y supera la selección positiva",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Forma el TCRαβ y supera la selección β",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Forma el pre-TCR y supera la selección negativa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Forma el pre-BCR y supera la selección β",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Forma el pre-TCR y supera la selección β",
+          "correct": true
+        }
+      ],
+      "explanation": "En DN3 el reordenamiento exitoso de TCRβ forma el pre-TCR con pTα y CD3. La selección β define si la célula será TCRαβ o TCRγδ.",
+      "tema": "linfocitos-t",
+      "subtema": "Selección β",
+      "seccion": "DN3"
+    },
+    {
+      "id": "q21",
+      "stem": "Los timocitos CD25⁻ CD44⁻ de un lactante de 9 meses acaban de recibir la señal del pre-TCR. En la muestra se observa que aumentan de número y que están por pasar a la etapa doble positiva. ¿Qué ocurre en estas células?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Expansión clonal e inicio del reordenamiento del locus TCRβ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Expansión clonal e inicio de la selección negativa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Expansión clonal e inicio de la expresión de CD4 y CD8",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Apoptosis e inicio de la expresión de CD4 y CD8",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Expansión clonal e inicio de la expresión de CD25 y CD44",
+          "correct": false
+        }
+      ],
+      "explanation": "La señal del pre-TCR causa expansión clonal en DN4. Luego comienza la expresión de CD4 y CD8 y la transición a la etapa doble positiva.",
+      "tema": "linfocitos-t",
+      "subtema": "Expansión tras pre-TCR",
+      "seccion": "DN4"
+    },
+    {
+      "id": "q22",
+      "stem": "Un patólogo estudia la corteza tímica de un lactante de 14 meses y aísla timocitos CD4⁺ CD8⁺ que ya portan una cadena β reordenada con éxito. Busca el evento génico propio de esta etapa. ¿Qué locus se reordena en los timocitos doble positivos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El locus TCRβ, que forma el pre-TCR asociado a CD3 y pTα",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El locus TCRδ, que forma el TCRγδ asociado a CD3",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El locus TCRα, que forma el pre-TCR asociado a CD3 y pTα",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El locus TCRα, que completa el TCRαβ asociado a CD3",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "El locus TCRγ, que forma el TCRγδ asociado a CD3",
+          "correct": false
+        }
+      ],
+      "explanation": "En la etapa doble positiva se reordena el locus TCRα, con lo que se forma el TCRαβ completo asociado a CD3.",
+      "tema": "linfocitos-t",
+      "subtema": "Locus TCRα en DP",
+      "seccion": "2) Etapa doble positiva"
+    },
+    {
+      "id": "q23",
+      "stem": "Un timocito doble positivo de una niña de 9 años reconoce con afinidad intermedia un péptido propio presentado por moléculas MHC I de una célula epitelial cortical. El inmunólogo pregunta cuál será su destino. ¿Qué le ocurrirá a este timocito?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se preserva la vía CD4 y madura a linfocito T colaborador",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se preserva la vía CD8 y madura a linfocito T citotóxico",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Se preserva la vía CD8 y madura a linfocito T colaborador",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se preserva la vía CD4 y madura a célula T citotóxica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Muere por apoptosis por falta de señal en la corteza tímica",
+          "correct": false
+        }
+      ],
+      "explanation": "Reconocer MHC I en la selección positiva preserva la vía CD8 y origina un linfocito T citotóxico. Reconocer MHC II preserva la vía CD4.",
+      "tema": "linfocitos-t",
+      "subtema": "Reconocimiento de MHC I",
+      "seccion": "A) Selección positiva"
+    },
+    {
+      "id": "q24",
+      "stem": "Un lactante de 11 meses con inmunodeficiencia se estudia en un modelo de timocitos. En la corteza, las cTEC aportan MHC propio con péptidos, pero los timocitos doble positivos no sobreviven. ¿Qué molécula del timocito es esencial en la selección positiva y qué propiedad establece?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El TCR, que establece la restricción por MHC propio",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "El MHC, que establece la restricción por el TCR propio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El CD28, que establece la restricción por el MHC",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El receptor de IL-2, que establece la restricción por MHC",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El TCR, que establece la tolerancia a antígenos periféricos",
+          "correct": false
+        }
+      ],
+      "explanation": "El TCR del timocito es la molécula esencial y establece la restricción por MHC propio. El MHC lo aportan las cTEC y no el timocito.",
+      "tema": "linfocitos-t",
+      "subtema": "Restricción por MHC",
+      "seccion": "A) Selección positiva"
+    },
+    {
+      "id": "q25",
+      "stem": "En la médula tímica de un lactante de 8 meses se observan timocitos que reconocen con alta afinidad autoantígenos periféricos presentados en moléculas MHC y que mueren por apoptosis. El patólogo desea identificar a las células que participan en este proceso. ¿Qué células median esta selección negativa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células epiteliales corticales y dendríticas tímicas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Células epiteliales medulares y macrófagos del seno subcapsular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células dendríticas foliculares y células epiteliales medulares",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células epiteliales corticales y macrófagos de la médula tímica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Células epiteliales medulares y células dendríticas tímicas",
+          "correct": true
+        }
+      ],
+      "explanation": "La selección negativa ocurre en la médula tímica y la median las mTEC y las células dendríticas tímicas, que eliminan a los timocitos de alta afinidad.",
+      "tema": "tolerancia",
+      "subtema": "Células de la selección negativa",
+      "seccion": "B) Selección negativa"
+    },
+    {
+      "id": "q26",
+      "stem": "Un timocito de un varón de 20 años reconoce con afinidad intermedia un autoantígeno periférico expresado por las mTEC bajo control de AIRE. Con afinidad alta, este mismo timocito habría muerto. El inmunólogo se pregunta cuál es el destino de esta célula. ¿Qué le ocurre?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Muere por apoptosis mediante deleción clonal",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Muere por apoptosis por falta de señal tímica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se diferencia en un linfocito T de memoria",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se diferencia en un linfocito T regulador",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Se diferencia en un linfocito T citotóxico",
+          "correct": false
+        }
+      ],
+      "explanation": "Con afinidad alta por el autoantígeno el timocito muere por apoptosis, mientras que con afinidad intermedia se diferencia en un linfocito T regulador.",
+      "tema": "tolerancia",
+      "subtema": "Afinidad intermedia y Treg",
+      "seccion": "B) Selección negativa"
+    },
+    {
+      "id": "q27",
+      "stem": "A un varón de 16 años se le extrae sangre para caracterizar a los emigrantes tímicos recientes, es decir, los linfocitos T que acaban de salir del timo tras completar su desarrollo. El laboratorio pide describir su fenotipo. ¿Con qué fenotipo salen los linfocitos T del timo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Doble positivos CD4⁺ CD8⁺, maduros y naive",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Simples positivos CD4⁺ o CD8⁺, maduros y de memoria",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Simples positivos CD4⁺ o CD8⁺, maduros y naive",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Doble negativos CD4⁻ CD8⁻, maduros y naive",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Simples positivos CD4⁺ o CD8⁺, inmaduros y naive",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T salen del timo como células simples positivas CD4⁺ o CD8⁺, maduras y naive, tras superar las selecciones positiva y negativa.",
+      "tema": "linfocitos-t",
+      "subtema": "Fenotipo al salir del timo",
+      "seccion": "RESUMEN INTEGRADOR"
+    },
+    {
+      "id": "q28",
+      "stem": "Una mujer de 40 años con un timoma, tumor derivado del epitelio tímico, consulta por debilidad muscular. Un patólogo revisa con estudiantes las etapas normales por las que pasa un linfocito T dentro del timo. ¿Cuál es la secuencia correcta de su desarrollo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "DP con recombinación TCRβ, DN con recombinación TCRα y selección, SP naive",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "DN con recombinación TCRβ, DP con recombinación TCRα y selección, SP naive",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "DN con recombinación TCRα, DP con recombinación TCRβ y selección, SP naive",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "DN con recombinación TCRβ, DP con selección negativa y luego positiva, SP naive",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "DN con recombinación TCRβ, DP con recombinación TCRα y selección, SP memoria",
+          "correct": false
+        }
+      ],
+      "explanation": "Primero, en DN, se recombina TCRβ y se forma el pre-TCR. Luego, en DP, se recombina TCRα y ocurren las selecciones, y finalmente salen los SP naive.",
+      "tema": "linfocitos-t",
+      "subtema": "Secuencia del desarrollo T",
+      "seccion": "RESUMEN INTEGRADOR"
+    },
+    {
+      "id": "q29",
+      "stem": "En la lámina de un timo de un lactante de 6 meses, el patólogo describe la corteza como la zona más oscura y densamente celular del lobulillo. Los estudiantes deben identificar qué timocitos hay allí y qué proceso ocurre. ¿Con qué marcadores se identifican los timocitos de la corteza y qué proceso ocurre en ella?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD4⁺ CD8⁺ y CD4⁻ CD8⁻, con selección positiva",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD4⁺ o CD8⁺ maduros, con selección positiva",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD4⁺ CD8⁺ y CD4⁻ CD8⁻, con selección negativa tímica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD4⁺ o CD8⁺ maduros, con selección negativa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD4⁺ CD8⁺ y CD4⁻ CD8⁻, con hipermutación somática",
+          "correct": false
+        }
+      ],
+      "explanation": "La corteza tímica contiene timocitos doble positivos y doble negativos, y allí ocurre la selección positiva. La hipermutación somática es propia del centro germinal.",
+      "tema": "organos-primarios",
+      "subtema": "Corteza tímica",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    },
+    {
+      "id": "q30",
+      "stem": "Un varón de 6 años con inmunodeficiencia combinada tiene linfocitos T con TCR y CD3 normales, pero que no responden al antígeno. Se comprueba que falta la proteína quinasa unida a las colas citoplasmáticas de los correceptores CD4 y CD8. ¿Qué quinasa está ausente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ZAP-70, quinasa asociada a las cadenas ζ del complejo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Fyn, quinasa asociada a la cola del complejo CD3",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Btk, quinasa asociada al receptor del linfocito B",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Syk, quinasa homóloga de ZAP-70 en el linfocito B",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Lck, quinasa asociada a las colas de CD4 y CD8",
+          "correct": true
+        }
+      ],
+      "explanation": "La quinasa Lck se une a las colas citoplasmáticas de CD4 y CD8 y fosforila los ITAM del complejo CD3 y de las cadenas ζ.",
+      "tema": "linfocitos-t",
+      "subtema": "Quinasa de CD4 y CD8",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    },
+    {
+      "id": "q31",
+      "stem": "Un hombre de 45 años recibe un trasplante renal y se inicia tacrolimus para prevenir el rechazo. Este fármaco se une a la proteína de unión FK506 e inhibe la calcineurina, enzima que depende del calcio. ¿La proliferación de qué células se bloquea y por qué?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos B, porque no se activa NFAT ni se transcribe la IL-2",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos T, porque no se activa NFAT ni se transcribe IL-2",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos T, porque no se activa NF-κB ni se transcribe IL-2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos T, porque no se activa NFAT ni se transcribe la IL-4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Macrófagos, porque no se activa NFAT ni se transcribe IL-1",
+          "correct": false
+        }
+      ],
+      "explanation": "Sin calcineurina no se activa NFAT y no se transcribe IL-2, por lo que se bloquea la proliferación de los linfocitos T.",
+      "tema": "linfocitos-t",
+      "subtema": "Tacrolimus y calcineurina",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    },
+    {
+      "id": "q32",
+      "stem": "Una mujer de 30 años con rechazo agudo de un trasplante hepático recibe un anticuerpo monoclonal contra la cadena del receptor de IL-2 que el linfocito T expresa solo al activarse y que le otorga alta afinidad por la citocina. El receptor basal ya tiene las cadenas β y γ. ¿Qué cadena bloquea el fármaco?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La cadena β, CD122, que se suma a la α y a la γ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La cadena γ, CD132, que se suma a las cadenas α y β",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La cadena α, CD25, que se suma a las cadenas β y γ",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "La cadena α, CD127, que se suma a las cadenas β y γ",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La cadena α, CD25, que sustituye a las cadenas β y γ",
+          "correct": false
+        }
+      ],
+      "explanation": "La cadena α, CD25, se suma a las cadenas β y γ y forma el receptor αβγ de alta afinidad que el linfocito T expresa al activarse.",
+      "tema": "citocinas",
+      "subtema": "Cadenas del receptor de IL-2",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    },
+    {
+      "id": "q33",
+      "stem": "Un niño de 5 años se somete a un estudio de linfocitos T de sangre periférica. La mayoría de sus células porta el receptor convencional del linfocito T, que no tiene región Fab ni β2-microglobulina. ¿Qué cadenas forman este receptor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Una cadena γ y una cadena δ unidas entre sí",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Una cadena pesada y una cadena ligera unidas entre sí",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Una cadena β y una β2-microglobulina unidas entre sí",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Una cadena α y una cadena β unidas entre sí",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Dos cadenas pesadas y dos ligeras unidas entre sí",
+          "correct": false
+        }
+      ],
+      "explanation": "El TCR convencional está formado por una cadena α y una cadena β. Las cadenas pesada y ligera son de las inmunoglobulinas.",
+      "tema": "linfocitos-t",
+      "subtema": "Cadenas del TCR convencional",
+      "seccion": "PREGUNTAS DE LA INVERTIDA"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

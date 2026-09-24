@@ -3,7 +3,1023 @@
   "key": "inmunologia/t-14-cancer",
   "title": "T14 — Fallas del sistema inmune: inmunidad y cáncer",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Una mujer de 62 años con carcinoma de colon avanzado tiene linfocitos T circulantes normales, pero no responde contra su tumor. En la biopsia, las células tumorales carecen de ligando péptido MHC, de moléculas de adhesión y de moléculas coestimuladoras en su superficie. ¿Qué mecanismo de escape tumoral explica que el linfocito T no llegue a activarse?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Modulación antigénica, con ausencia de MHC y coestimuladores",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Baja inmunogenicidad, con ausencia de MHC y coestimuladores",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Baja inmunogenicidad, con pérdida de antígenos no esenciales",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tolerancia al antígeno propio, con ausencia de MHC y coestimuladores",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Inmunosupresión, con ausencia de MHC y coestimuladores",
+          "correct": false
+        }
+      ],
+      "explanation": "Un tumor sin ligando péptido MHC, sin adhesión y sin coestimulación no ofrece a la célula T las señales necesarias para activarse.",
+      "tema": "tumoral",
+      "subtema": "Baja inmunogenicidad",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "q02",
+      "stem": "Un hombre de 67 años con melanoma metastásico tiene linfocitos T infiltrantes que expresan PD-1 unido a PD-L1 del tumor. Estos linfocitos dejan de responder a IL-2 e IL-7 porque su cadena γ común se ubiquitina y desaparece de la superficie celular. ¿Qué eje molecular conecta a PD-1 con esta pérdida?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vía SHP2, STAT5 y MARCH5, con degradación lisosomal",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Vía ZAP70, BATF y MARCH5, con degradación lisosomal",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Vía SHP2, NFAT y MARCH5, con degradación lisosomal",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Vía SHP2, BATF y MARCH5, con degradación lisosomal",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Vía SHP2, BATF y JAK3, con degradación lisosomal",
+          "correct": false
+        }
+      ],
+      "explanation": "PD-1 recluta a SHP2, que activa BATF, y este induce MARCH5. Esa ligasa ubiquitina la cadena γ común y la lleva al lisosoma.",
+      "tema": "regulacion",
+      "subtema": "PD-1 y cadena γ común",
+      "seccion": "Tumores usan “check points” inmunes"
+    },
+    {
+      "id": "q03",
+      "stem": "Una mujer de 45 años con cáncer de mama tiene muy pocos linfocitos T dirigidos contra su tumor, y ninguno logra controlarlo. La secuenciación tumoral detecta una carga mutacional baja. ¿Qué característica de los antígenos tumorales explica la escasez de estos linfocitos T?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Son en su mayoría propios y no todos los tumores generan neoantígenos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Son en su mayoría extraños y todos los tumores generan neoantígenos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Son en su mayoría propios y todos los tumores generan neoantígenos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Son en su mayoría extraños y no todos los tumores generan neoantígenos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Son en su mayoría propios y no todos los tumores expresan antígenos virales",
+          "correct": false
+        }
+      ],
+      "explanation": "La mayoría de los antígenos tumorales son propios y no todos los tumores generan neoantígenos, así que hay pocos linfocitos T contra ellos.",
+      "tema": "tumoral",
+      "subtema": "Escasez de linfocitos T antitumorales",
+      "seccion": "Desafíos para el sistema inmune"
+    },
+    {
+      "id": "q04",
+      "stem": "Un hombre de 55 años con carcinoma de pulmón participa en un ensayo. Recibe una vacuna con ARN mensajero encapsulado en nanopartículas lipídicas, que codifica antígenos de su propio tumor, para aumentar dentro de su cuerpo el número de linfocitos antitumorales. ¿A qué tipo de vacuna contra el cáncer corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vacuna de virus con vector viral modificado que codifica antígenos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Vacuna de péptidos con epítopos cortos o largos del tumor",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Vacuna de células con células dendríticas cargadas de antígeno",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Vacuna de células con células tumorales completas del enfermo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Vacuna de ácidos nucleicos con ARNm que codifica antígenos",
+          "correct": true
+        }
+      ],
+      "explanation": "El ADN o el ARN que codifica antígenos tumorales define a las vacunas de ácidos nucleicos, que aumentan los linfocitos antitumorales dentro del paciente.",
+      "tema": "tumoral",
+      "subtema": "Vacuna de ácidos nucleicos",
+      "seccion": "Incrementar el número de linfocitos antitumorales en el paciente"
+    },
+    {
+      "id": "q05",
+      "stem": "Una mujer de 51 años con adenocarcinoma de páncreas entra a un ensayo de vacuna personalizada. Su tumor tiene dos mutaciones candidatas a antígeno vacunal, una en un gen que impulsa la proliferación del tumor y otra en un gen sin efecto sobre su crecimiento. ¿Cuál conviene elegir y por qué?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La pasajera, porque está más conservada en el tumor",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La conductora, porque pierde su expresión con la evolución tumoral",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La conductora, porque está más conservada en el tumor",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "La pasajera, porque sirve funciones críticas de supervivencia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La subclonal, porque está presente en todas las células del tumor",
+          "correct": false
+        }
+      ],
+      "explanation": "La mutación conductora sirve funciones críticas de supervivencia y por eso se conserva, mientras la pasajera puede perder su expresión con la evolución tumoral.",
+      "tema": "tumoral",
+      "subtema": "Mutación conductora",
+      "seccion": "Antígenos seleccionados para vacunas"
+    },
+    {
+      "id": "q06",
+      "stem": "Una mujer de 48 años con melanoma metastásico recibe linfocitos infiltradores de tumor expandidos fuera del organismo. Para elegir los que reconocen las mutaciones de su tumor, se secuenció el exoma tumoral y se cocultivaron los linfocitos con células presentadoras autólogas que exhiben esas mutaciones. ¿Qué marcadores de activación permiten seleccionar los linfocitos reactivos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "41BB u OX40, marcadores de los linfocitos vírgenes",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD45RA o CCR7, marcadores de los linfocitos activados",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD62L o CD127, marcadores de los linfocitos de memoria",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "41BB u OX40, marcadores de los linfocitos activados",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "CD3 o CD8, marcadores de los linfocitos citotóxicos",
+          "correct": false
+        }
+      ],
+      "explanation": "Tras el cocultivo con células presentadoras que exhiben las mutaciones, los linfocitos que las reconocen se seleccionan por el marcador de activación 41BB u OX40.",
+      "tema": "tumoral",
+      "subtema": "Selección por marcadores 41BB y OX40",
+      "seccion": "Incrementar el número de linfocitos antitumorales fuera del paciente"
+    },
+    {
+      "id": "q07",
+      "stem": "Un hombre de 60 años con melanoma metastásico recibe un anticuerpo anti-CTLA-4 dentro de un esquema de inmunoterapia. En el infiltrado tumoral de la biopsia de control disminuyen las células Treg y los linfocitos T efectores vuelven a activarse. ¿Qué efecto del anticuerpo explica ambos hallazgos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Expansión de la Treg y liberación de B7-1 y B7-2 para CD28",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Muerte de la Treg y liberación de B7-1 y B7-2 para CD28",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Muerte de la Treg y bloqueo de B7-1 y B7-2 sobre CD28",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Muerte del linfocito T efector y liberación de PD-L1 y PD-L2",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Muerte de la Treg y liberación de PD-L1 y PD-L2 para PD-1",
+          "correct": false
+        }
+      ],
+      "explanation": "El anticuerpo anti-CTLA-4 provoca la muerte de la Treg por el FcR de la APC y libera B7-1 y B7-2 para que se unan a CD28.",
+      "tema": "tumoral",
+      "subtema": "Anticuerpo anti-CTLA-4",
+      "seccion": "Reactivar linfocitos antitumorales"
+    },
+    {
+      "id": "q08",
+      "stem": "Un niño de 9 años con leucemia linfoblástica B refractaria recibe linfocitos T propios modificados con ingeniería genética para expresar un receptor con un dominio extracelular de reconocimiento, un dominio de señalización ζ y un tercer dominio intermedio. ¿Qué dominio distingue a este receptor del receptor de células T normal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dominio de coestimulación con CTLA-4 o PD-1",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Dominio de señalización con CD3ε o CD3δ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Dominio de reconocimiento con cadenas α y β",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Dominio de coestimulación con cadenas γ y δ",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Dominio de coestimulación con CD28 o 4-1BB",
+          "correct": true
+        }
+      ],
+      "explanation": "El receptor de antígeno quimérico añade un dominio de coestimulación, con CD28 o 4-1BB, entre el reconocimiento y la señalización por la cadena ζ.",
+      "tema": "tumoral",
+      "subtema": "Dominio de coestimulación del CAR",
+      "seccion": "Generar nuevos linfocitos con ingeniería genética"
+    },
+    {
+      "id": "q09",
+      "stem": "Un hombre de 64 años con linfoma B recibe un anticuerpo con dos brazos distintos. Un brazo se une a una molécula de la superficie de la célula T y el otro a un antígeno de la célula cancerosa, acercándolas hasta que la célula T libera citocinas y destruye al tumor. ¿A qué molécula de la célula T se une el primer brazo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD3, molécula del complejo del receptor T",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD28, molécula de coestimulación del receptor T",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD4, molécula correceptora del MHC clase II",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD8, molécula correceptora del MHC clase I",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "PD-1, molécula inhibidora del receptor T",
+          "correct": false
+        }
+      ],
+      "explanation": "El anticuerpo biespecífico combina un brazo anti-CD3 y otro anti-antígeno asociado al tumor, lo que acerca la célula T a la célula cancerosa.",
+      "tema": "tumoral",
+      "subtema": "Anticuerpo biespecífico anti-CD3",
+      "seccion": "Reclutar nuevos linfocitos con ingeniería de anticuerpos"
+    },
+    {
+      "id": "q10",
+      "stem": "Una mujer de 39 años con sarcoma sinovial recibe linfocitos T propios editados con Cas9 y ARN guía. Se les introdujo con un vector lentiviral un TCR contra NY-ESO-1 y se inactivó el TCR endógeno, para que no compita con el nuevo receptor. ¿Qué genes se inactivaron para eliminar el TCR endógeno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "TRGC y TRDC, que codifican las regiones constantes de las cadenas γ y δ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "TRAV y TRBV, que codifican las regiones variables de las cadenas α y β",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "TRAC y TRBC, que codifican regiones constantes de las cadenas α y β",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "PDCD1 y CTLA4, que codifican los receptores inhibidores PD-1 y CTLA-4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "B2M y CIITA, que regulan la expresión del MHC clase I y clase II",
+          "correct": false
+        }
+      ],
+      "explanation": "Los genes TRAC y TRBC codifican las regiones constantes de las cadenas α y β del TCR endógeno, y su inactivación deja libre al TCR nuevo.",
+      "tema": "tumoral",
+      "subtema": "Edición con CRISPR",
+      "seccion": "Generar linfocitos resistentes"
+    },
+    {
+      "id": "q11",
+      "stem": "Un hombre de 70 años con carcinoma renal tiene un tumor cuyas células casi no expresan MHC clase I. Sus linfocitos T CD8⁺ no lo atacan, pero otra célula del sistema inmune sí podría reconocerlo. ¿Qué célula es y por qué reconoce este tumor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La célula NK, porque necesita el MHC I para activarse",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La célula T CD4⁺, porque reconoce péptidos presentados en MHC II",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La célula T CD8⁺, porque detecta la ausencia total del MHC I",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La célula B, porque reconoce péptidos presentados en el MHC I",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La célula NK, porque pierde la señal inhibidora del MHC I",
+          "correct": true
+        }
+      ],
+      "explanation": "Al disminuir el MHC I, el tumor escapa de los linfocitos T CD8⁺, pero la NK pierde su señal inhibidora y queda más expuesta a atacarlo.",
+      "tema": "tumoral",
+      "subtema": "Pérdida de MHC I y células NK",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "q12",
+      "stem": "Una mujer de 57 años con carcinoma de ovario tiene células dendríticas que captan antígenos del tumor y los presentan a linfocitos T sin expresar CD80 ni CD86. Los linfocitos T reconocen el péptido en MHC, pero no se activan. ¿Qué resultado produce esta presentación sobre el linfocito T?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tolerancia, por recibir la señal 2 sin la señal 1",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Tolerancia, por recibir la señal 1 sin la señal 2",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Activación plena, por recibir la señal 1 sin la señal 2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Activación parcial, por recibir la señal 1 y la señal 3",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Muerte celular, por recibir la señal 3 sin la señal 1",
+          "correct": false
+        }
+      ],
+      "explanation": "Cuando la célula dendrítica presenta el antígeno sin coestimulación, el linfocito T recibe la señal 1 sin la señal 2 y se tolera en vez de activarse.",
+      "tema": "tumoral",
+      "subtema": "Tumor tratado como antígeno propio",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "q13",
+      "stem": "Un hombre de 66 años con glioblastoma tiene en su tumor abundantes células Treg, mientras que los linfocitos CTL y TH1 permanecen inhibidos y sin capacidad citotóxica. Las células tumorales secretan factores solubles que frenan directamente a las células T. ¿Cuáles son estos factores?",
+      "options": [
+        {
+          "id": "a",
+          "text": "TGF-β, IL-12 e IDO secretados por el tumor",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "TGF-β, IL-10 e interferón γ secretados por el tumor",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-2, IL-10 e IDO secretados por el tumor",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TGF-β, IL-10 e IDO secretados por el tumor",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "TGF-β, IL-4 e IL-13 secretados por el tumor",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células tumorales secretan TGF-β, IL-10 e IDO, que inhiben a las células T y estimulan a las Treg, las cuales aportan más TGF-β e IL-10.",
+      "tema": "tumoral",
+      "subtema": "Inmunosupresión por factores solubles",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "q14",
+      "stem": "Una mujer de 59 años con melanoma tuvo una respuesta inicial a linfocitos T, pero el tumor recidivó. La biopsia de la recaída muestra células que perdieron genes de antígenos tumorales no esenciales para su supervivencia, mientras las células que aún los expresaban fueron eliminadas. ¿Qué mecanismo de escape ocurrió?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Modulación antigénica, con pérdida de antígenos no esenciales",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Modulación antigénica, con pérdida de antígenos esenciales",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Baja inmunogenicidad, con pérdida de antígenos no esenciales",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tolerancia al antígeno propio, con presentación sin coestimulación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Sitio privilegiado, con barrera física secretada por las células tumorales",
+          "correct": false
+        }
+      ],
+      "explanation": "Por su alta tasa de proliferación y mutación, el tumor pierde antígenos no esenciales y las variantes menos inmunogénicas escapan del linfocito T.",
+      "tema": "tumoral",
+      "subtema": "Modulación antigénica",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "q15",
+      "stem": "Una mujer de 55 años con cáncer de páncreas tiene linfocitos T activados en la sangre, pero no penetran en su tumor. La biopsia revela que factores secretados por las células tumorales forman una barrera física que aísla al tumor del sistema inmunitario. ¿Qué mecanismo de escape describe este hallazgo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Modulación antigénica inducida por la barrera física del tumor",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Baja inmunogenicidad inducida por la barrera física del tumor",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Sitio privilegiado inducido por la barrera física del tumor",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Inmunosupresión inducida por TGF-β e IL-10 de las células tumorales",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Tolerancia inducida por presentación del antígeno sin coestimulación",
+          "correct": false
+        }
+      ],
+      "explanation": "Los factores secretados por las células tumorales crean una barrera física para el sistema inmunitario, lo que se llama sitio privilegiado inducido por el tumor.",
+      "tema": "tumoral",
+      "subtema": "Sitio privilegiado inducido",
+      "seccion": "Mecanismos utilizados por tumores"
+    },
+    {
+      "id": "q16",
+      "stem": "Una mujer de 63 años con adenocarcinoma de pulmón tiene linfocitos T infiltrantes cuyo PD-1 se une a PD-L1 del tumor y queda con el motivo ITSM fosforilado. Esa fosforilación recluta una fosfatasa que frena la señal del TCR y de CD28 e inhibe las vías PI3K-AKT y Ras-MEK-ERK. ¿Qué fosfatasa recluta PD-1?",
+      "options": [
+        {
+          "id": "a",
+          "text": "PTPN22, unida al motivo ITSM fosforilado de PD-1",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "SHP2, unida al motivo ITSM fosforilado de PD-1",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "PTEN, unida al motivo ITSM fosforilado de PD-1",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD45, unida al motivo ITSM fosforilado de PD-1",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Calcineurina, unida al motivo ITSM fosforilado de PD-1",
+          "correct": false
+        }
+      ],
+      "explanation": "El motivo ITSM fosforilado de PD-1 recluta a SHP2, que inhibe CD28, ZAP70 y LCK del TCR y las vías PI3K-AKT y Ras-MEK-ERK.",
+      "tema": "regulacion",
+      "subtema": "Fosfatasa reclutada por PD-1",
+      "seccion": "Tumores usan “check points” inmunes"
+    },
+    {
+      "id": "q17",
+      "stem": "Un hombre de 53 años con cáncer de vejiga tiene células tumorales y dendríticas que expresan una enzima que convierte L-triptófano en L-quinurenina y así inhibe a los linfocitos T. ¿Qué enzima es y en cuál de las tres señales entre la célula dendrítica y el linfocito T actúa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IDO, enzima de la señal 2 de la coestimulación",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IDO, enzima de la señal 1 de la presentación antigénica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Arginasa, enzima de la señal 3 de los factores solubles",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Glutaminasa, enzima de la señal 3 de los factores solubles",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IDO, enzima de la señal 3 de los factores solubles",
+          "correct": true
+        }
+      ],
+      "explanation": "La IDO convierte L-triptófano en L-quinurenina y es uno de los factores solubles inhibitorios de la señal 3 entre la célula dendrítica y el linfocito T.",
+      "tema": "tumoral",
+      "subtema": "Enzima IDO",
+      "seccion": "Tumores usan “check points” inmunes"
+    },
+    {
+      "id": "q18",
+      "stem": "Un hombre de 58 años con melanoma metastásico recibe un anticuerpo que bloquea CTLA-4 en los linfocitos T con el fin de reactivar su respuesta. Este receptor inhibitorio compite con CD28 por los mismos ligandos de la célula dendrítica. ¿Qué ligandos comparten ambos receptores?",
+      "options": [
+        {
+          "id": "a",
+          "text": "PD-L1 y PD-L2, moléculas de la señal 2 en la célula dendrítica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "ICOSL y CD40, moléculas de la señal 2 en la célula dendrítica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD80 y CD86, moléculas de la señal 2 en la célula dendrítica",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CD137L y OX40L, moléculas de la señal 2 en la célula dendrítica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "VISTA y CD70, moléculas de la señal 2 en la célula dendrítica",
+          "correct": false
+        }
+      ],
+      "explanation": "CTLA-4 compite con CD28 por CD80 y CD86, mientras PD-1 se une a PD-L1 y PD-L2.",
+      "tema": "regulacion",
+      "subtema": "Ligandos de CTLA-4 y CD28",
+      "seccion": "Tumores usan “check points” inmunes"
+    },
+    {
+      "id": "q19",
+      "stem": "Una mujer de 48 años con cáncer de cuello uterino tiene células dendríticas que liberan IL-12, interferón tipo I e IL-10 sobre un linfocito T que ya recibió señal de presentación y de coestimulación. ¿A qué señal entre la célula dendrítica y el linfocito T corresponden estas moléculas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Señal 3, mediada por los factores solubles",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Señal 2, mediada por las moléculas de coestimulación",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Señal 1, mediada por la presentación del antígeno",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Señal 3, mediada por las moléculas de adhesión celular",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Señal 2, mediada por los factores solubles inhibidores",
+          "correct": false
+        }
+      ],
+      "explanation": "IL-12, interferón tipo I e IL-10 son factores solubles y constituyen la señal 3, después de la presentación del antígeno y de la coestimulación.",
+      "tema": "coestimulacion",
+      "subtema": "Señal 3 de factores solubles",
+      "seccion": "Tumores usan “check points” inmunes"
+    },
+    {
+      "id": "q20",
+      "stem": "Un hombre de 61 años con cáncer de pulmón tiene abundantes linfocitos T infiltrando su tumor, pero estos no logran destruir a las células tumorales. El tumor reduce activamente la respuesta inmune en su microambiente y en todo el organismo. ¿Qué desafío del sistema inmune adaptativo ilustra este caso?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los linfocitos T contra antígenos tumorales son escasos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los linfocitos B antitumorales no logran respuestas potentes",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los linfocitos NK antitumorales no logran respuestas potentes",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los linfocitos T antitumorales no logran respuestas potentes",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Los linfocitos T antitumorales no reconocen antígenos propios",
+          "correct": false
+        }
+      ],
+      "explanation": "Como los tumores regulan a la baja la respuesta inmune, en el microambiente y de forma sistémica, los linfocitos T antitumorales no logran respuestas efectoras potentes.",
+      "tema": "tumoral",
+      "subtema": "Respuesta efectora débil",
+      "seccion": "Desafíos para el sistema inmune"
+    },
+    {
+      "id": "q21",
+      "stem": "Una mujer de 49 años con glioma recibe una vacuna elaborada con sus propias células dendríticas, obtenidas de su sangre y cargadas con una variedad de antígenos tumorales, con el fin de aumentar sus linfocitos antitumorales. ¿A qué tipo de vacuna contra el cáncer corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Basada en células, variante de célula tumoral completa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Basada en virus, con vectores virales modificados",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Basada en péptidos, con epítopos cortos o largos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Basada en células, variante de célula dendrítica",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Basada en ácidos nucleicos, con ADN o ARNm",
+          "correct": false
+        }
+      ],
+      "explanation": "En las vacunas basadas en células, las células dendríticas se cargan con una variedad de antígenos tumorales para activar a los linfocitos antitumorales.",
+      "tema": "tumoral",
+      "subtema": "Vacuna de célula dendrítica",
+      "seccion": "Incrementar el número de linfocitos antitumorales en el paciente"
+    },
+    {
+      "id": "q22",
+      "stem": "Una mujer de 47 años con melanoma participa en un ensayo clínico. Recibe una vacuna con epítopos de interés de su tumor, sintetizados como fragmentos cortos y largos, sin células ni material genético, para inducir una respuesta inmunitaria. ¿Qué se administra al sistema inmunitario en esta vacuna?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Epítopos tumorales como péptidos cortos o largos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Epítopos tumorales en virus modificados como vectores",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Epítopos tumorales codificados por ADN o ARNm",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Epítopos tumorales cargados en células dendríticas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Epítopos tumorales dentro de células tumorales completas",
+          "correct": false
+        }
+      ],
+      "explanation": "Las vacunas basadas en péptidos administran los epítopos de interés del cáncer como péptidos cortos o largos para inducir una respuesta inmunitaria.",
+      "tema": "tumoral",
+      "subtema": "Vacuna de péptidos",
+      "seccion": "Incrementar el número de linfocitos antitumorales en el paciente"
+    },
+    {
+      "id": "q23",
+      "stem": "Un hombre de 66 años con carcinoma de próstata recibe una vacuna que usa un virus modificado genéticamente. El virus no causa enfermedad y sirve para llevar antígenos tumorales al sistema inmunitario del paciente. ¿A qué tipo de vacuna contra el cáncer corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Basada en células, variante de célula dendrítica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Basada en células, variante de célula tumoral completa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Basada en péptidos, con epítopos cortos o largos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Basada en ácidos nucleicos, con plataformas de administración",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Basada en virus, con vectores virales modificados",
+          "correct": true
+        }
+      ],
+      "explanation": "Las vacunas basadas en virus usan virus modificados genéticamente como vectores para administrar antígenos tumorales al sistema inmunitario.",
+      "tema": "tumoral",
+      "subtema": "Vacuna basada en virus",
+      "seccion": "Incrementar el número de linfocitos antitumorales en el paciente"
+    },
+    {
+      "id": "q24",
+      "stem": "Un equipo diseña una vacuna para una mujer de 44 años con cáncer de ovario. Un neoantígeno candidato difiere en un solo aminoácido de la proteína normal y es casi idéntico a la secuencia de tipo silvestre. ¿Por qué es probable que provoque una respuesta débil?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sus linfocitos T se eliminaron por selección negativa en el bazo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Sus linfocitos T se eliminaron por selección negativa tímica",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Sus linfocitos T se eliminaron por selección positiva en la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Sus linfocitos T escaparon de la selección negativa en el timo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Sus linfocitos T se activaron por selección clonal en el bazo",
+          "correct": false
+        }
+      ],
+      "explanation": "Cuanto más se parece el antígeno a la secuencia de tipo silvestre, más probable es que los linfocitos T que lo reconocen hayan sido eliminados en la selección tímica.",
+      "tema": "tumoral",
+      "subtema": "Criterio de extrañeza",
+      "seccion": "Antígenos seleccionados para vacunas"
+    },
+    {
+      "id": "q25",
+      "stem": "Un hombre de 63 años con cáncer de colon es candidato a una vacuna personalizada. El análisis genómico detecta una mutación que está presente solo en un pequeño porcentaje de las células de su tumor. ¿Qué riesgo tiene usar esa mutación como antígeno de la vacuna?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tiene baja probabilidad de perder su expresión",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Tiene alta probabilidad de aumentar su expresión",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tiene alta probabilidad de perder su expresión",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Tiene alta probabilidad de activar a los linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Tiene alta probabilidad de inducir tolerancia central",
+          "correct": false
+        }
+      ],
+      "explanation": "Las mutaciones subclonales están en pocas células tumorales y tienen alta probabilidad de perder su expresión, de forma espontánea o tras los inhibidores de check points.",
+      "tema": "tumoral",
+      "subtema": "Mutación subclonal",
+      "seccion": "Antígenos seleccionados para vacunas"
+    },
+    {
+      "id": "q26",
+      "stem": "Una mujer de 52 años con melanoma responde bien a un inhibidor de check points y su biopsia muestra abundante infiltración de células T. El análisis revela que su tumor presenta neoantígenos y que ella tiene alta variedad de alelos HLA. ¿Qué característica de presentación se asocia a esta buena respuesta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Presentación solo en MHC clase II con menor heterocigosidad de HLA clase I",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Presentación en MHC I y/o II con mayor homocigosidad de los HLA clase I",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Presentación en MHC I y/o II con mayor heterocigosidad de HLA clase III",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Presentación solo en MHC I con mayor homocigosidad de HLA clase II",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Presentación en MHC I y/o II con mayor heterocigosidad de HLA clase I",
+          "correct": true
+        }
+      ],
+      "explanation": "Presentar el neoantígeno en MHC I y/o II y tener mayor heterocigosidad de HLA clase I aumenta la infiltración de células T y la supervivencia con inhibidores.",
+      "tema": "tumoral",
+      "subtema": "Presentación del MHC",
+      "seccion": "Antígenos seleccionados para vacunas"
+    },
+    {
+      "id": "q27",
+      "stem": "Se estudian los linfocitos T de un hombre de 46 años con melanoma metastásico tratado con inmunoterapia. Algunos de ellos reconocen un neoantígeno tumoral con alta avidez de su TCR. ¿Qué respuesta induce esa alta avidez y qué limitación tiene como criterio de selección?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Una fuerte respuesta de los CTL, y es fácil de predecir",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Una débil respuesta de los CTL, y es difícil de predecir",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Una fuerte respuesta de los CTL, pero es difícil de predecir",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Una fuerte respuesta de las células NK, pero es difícil de predecir",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Una fuerte respuesta de los linfocitos B, y es fácil de predecir",
+          "correct": false
+        }
+      ],
+      "explanation": "La alta avidez del TCR por el neoantígeno induce una fuerte respuesta impulsada por los CTL, aunque es difícil de predecir.",
+      "tema": "tumoral",
+      "subtema": "Avidez del TCR",
+      "seccion": "Antígenos seleccionados para vacunas"
+    },
+    {
+      "id": "q28",
+      "stem": "Una mujer de 56 años con cáncer de pulmón avanzado recibe un anticuerpo anti-PD-1. Sus linfocitos T activados, que estaban frenados por PD-L1 de la célula tumoral, recuperan su función. ¿Qué ocurre con estos linfocitos T tras el bloqueo de PD-1?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se expanden y aumentan la muerte tumoral con granzimas y perforina",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Se expanden y aumentan la muerte tumoral con Fas y FasL sin perforina",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mueren por apoptosis y disminuyen la muerte tumoral con granzimas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se expanden y disminuyen la muerte tumoral por acción de las células Treg",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Se contraen y aumentan la muerte tumoral con granzimas y perforina",
+          "correct": false
+        }
+      ],
+      "explanation": "Sin el freno de PD-L1, el linfocito T activado se expande y aumenta la muerte de células tumorales mediante granzimas y perforina.",
+      "tema": "tumoral",
+      "subtema": "Anticuerpo anti-PD-1",
+      "seccion": "Reactivar linfocitos antitumorales"
+    },
+    {
+      "id": "q29",
+      "stem": "Una mujer de 30 años con leucemia linfoblástica B refractaria recibe blinatumomab, un anticuerpo biespecífico que acerca a las células T a las células malignas y les permite destruirlas. Se desea conocer el mecanismo del fármaco. ¿Cuáles son los dos blancos de este anticuerpo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD20 en la célula tumoral y CD3 en el linfocito T",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD19 en la célula tumoral y CD3 en el linfocito T",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "BCMA en la célula tumoral y CD3 en el linfocito T",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD19 en la célula tumoral y CD28 en el linfocito T",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "EpCAM en la célula tumoral y CD3 en el linfocito T",
+          "correct": false
+        }
+      ],
+      "explanation": "Blinatumomab combina un brazo anti-CD19 contra la célula tumoral y un brazo anti-CD3 contra el linfocito T.",
+      "tema": "tumoral",
+      "subtema": "Blinatumomab",
+      "seccion": "Reclutar nuevos linfocitos con ingeniería de anticuerpos"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

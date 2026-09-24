@@ -3,7 +3,988 @@
   "key": "inmunologia/t-13-citometria",
   "title": "T13 — Citometría de flujo (teoría)",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Un hombre de 29 años con fiebre y leucocitosis tiene una muestra de sangre periférica analizada por citometría de flujo. En el dot plot de FSC frente a SSC de los leucocitos se distinguen tres nubes bien separadas y el analista debe rotular cada una. ¿Cómo se ubican los linfocitos, los monocitos y los granulocitos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos con FSC y SSC altos, monocitos intermedios y granulocitos con SSC bajo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos con FSC y SSC bajos, monocitos con SSC alto y granulocitos intermedios",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos con FSC bajo y SSC alto, monocitos con FSC alto y granulocitos intermedios",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos con FSC y SSC bajos, monocitos con FSC bajo y granulocitos con SSC alto",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos con FSC y SSC bajos, monocitos intermedios y granulocitos con SSC alto",
+          "correct": true
+        }
+      ],
+      "explanation": "Los linfocitos son pequeños y poco granulares, los monocitos ocupan una posición intermedia y los granulocitos tienen el SSC más alto por su granularidad.",
+      "tema": "tecnicas",
+      "subtema": "Nubes de leucocitos",
+      "seccion": "2° Histogramas bivariados"
+    },
+    {
+      "id": "q02",
+      "stem": "Una niña de 4 años con fiebre y adenopatías cervicales es estudiada con citometría de flujo de sangre periférica. En el análisis se separa una población de leucocitos que, frente a los linfocitos, muestra una señal SSC claramente mayor. ¿Qué propiedad celular mide el SSC y cómo se detecta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tamaño celular, por la luz que se dispersa hacia el costado",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Granularidad, por la luz que se dispersa hacia el costado",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Granularidad, por la luz que se dispersa hacia adelante",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tamaño celular, por la luz que se dispersa hacia adelante",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Complejidad interna, por la luz que se dispersa hacia adelante",
+          "correct": false
+        }
+      ],
+      "explanation": "El SSC es la luz dispersada hacia el costado y refleja la granularidad o complejidad interna, como la de los granulocitos con abundantes gránulos.",
+      "tema": "tecnicas",
+      "subtema": "Qué mide el SSC",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "q03",
+      "stem": "Un hombre de 32 años con infección por VIH acude a control. El médico solicita citometría de flujo para contar sus linfocitos T cooperadores, que son los principales afectados por el virus. ¿Qué marcadores permiten identificar a estas células y qué molécula reconocen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD3 y CD8, que reconoce MHC II",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD3 y CD4, que reconoce MHC II",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CD3 y CD4, que reconoce MHC I",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD19 y CD4, que reconoce MHC II",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD56 y CD4, que reconoce MHC II",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T cooperadores expresan CD3, como todos los T, y CD4, la molécula que reconoce el MHC II de las células presentadoras.",
+      "tema": "celulas-inmunes",
+      "subtema": "Linfocito T cooperador",
+      "seccion": "Marcadores › T cooperador (Th)"
+    },
+    {
+      "id": "q04",
+      "stem": "En el análisis de linfocitos T de un varón de 42 años con VIH, el técnico aplica compuertas sucesivas, de modo que cada paso analiza solo las células de la ventana anterior. ¿En qué orden se seleccionan las subpoblaciones T en este tipo de análisis?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Granulocitos en FSC frente a SSC, luego CD3⁺ y luego CD4 frente a CD8",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos en FSC frente a SSC, luego CD19⁺ y luego CD4 frente a CD8",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos en FSC frente a SSC, luego CD4 frente a CD8 y luego CD3⁺",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos en FSC frente a SSC, luego CD3⁺ y luego CD4 frente a CD8",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "CD3⁺, luego linfocitos en FSC y SSC y luego CD4 frente a CD8",
+          "correct": false
+        }
+      ],
+      "explanation": "Primero se elige la nube de linfocitos por tamaño y granularidad, luego las células CD3⁺ y por último se separan CD4 y CD8 en un dot plot.",
+      "tema": "tecnicas",
+      "subtema": "Orden de las compuertas",
+      "seccion": "2° Histogramas bivariados"
+    },
+    {
+      "id": "q05",
+      "stem": "Un técnico de laboratorio prepara la sangre de un paciente de 60 años con leucemia linfocítica crónica y la introduce en el citómetro. Para medir cada célula por separado, el sistema fluídico las mantiene en suspensión y las alinea con un principio físico. ¿Cuál es este principio y qué consigue?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Enfoque hidrodinámico, que hace pasar varias células por el láser a la vez",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Enfoque hidrodinámico, que hace pasar una célula por el láser a la vez",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Enfoque hidrodinámico, que separa las células según su fluorescencia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Enfoque electrostático, que hace pasar una célula por el láser a la vez",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Enfoque óptico, que hace pasar una célula por el láser a la vez",
+          "correct": false
+        }
+      ],
+      "explanation": "El enfoque hidrodinámico alinea las células en suspensión para que crucen el láser de una en una, lo que permite medir cada célula por separado.",
+      "tema": "tecnicas",
+      "subtema": "Sistema fluídico",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "q06",
+      "stem": "Un hombre de 40 años con infecciones recurrentes se estudia con citometría de flujo y un anticuerpo anti-CD3 marcado con fluorocromo. El histograma muestra dos picos, uno de baja y otro de alta fluorescencia, con marcadores que indican 38,0 % y 61,5 % de los eventos. ¿Qué representa cada pico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El pico bajo son linfocitos T CD3⁺ y el pico alto, células CD3⁻",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El pico bajo son linfocitos B CD19⁺ y el pico alto, linfocitos T CD3⁺",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El pico bajo son linfocitos T CD3⁺ y el pico alto, linfocitos B CD19⁺",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El pico bajo son células CD3⁻ y el alto, linfocitos B CD19⁺",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El pico bajo son células CD3⁻ y el pico alto, linfocitos T CD3⁺",
+          "correct": true
+        }
+      ],
+      "explanation": "Los eventos de baja fluorescencia no expresan CD3 y los de alta fluorescencia son linfocitos T CD3⁺. Los marcadores dan el porcentaje de cada grupo.",
+      "tema": "tecnicas",
+      "subtema": "Picos de un histograma",
+      "seccion": "1° Histogramas univariados"
+    },
+    {
+      "id": "q07",
+      "stem": "Una mujer de 27 años con lupus eritematoso sistémico participa en un estudio que cuantifica sus linfocitos T reguladores en sangre periférica. El laboratorio usa un panel de anticuerpos para identificarlos, junto con la expresión baja de un receptor de citocina. ¿Qué perfil de marcadores los define?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD4⁺, CD25⁺, FoxP3⁺ y CD127 bajo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD8⁺, CD25⁺, FoxP3⁺ y CD127 bajo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD4⁺, CD25⁺, FoxP3 ausente y CD127 bajo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD4⁺, CD25⁺, FoxP3⁺ y CD127 elevado",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD4⁺, CD69⁺, FoxP3⁺ y CD127 elevado",
+          "correct": false
+        }
+      ],
+      "explanation": "Las Treg son CD4⁺ y expresan CD25 y FoxP3, con CD127 bajo. Ese CD127, o IL-7Rα, ayuda a separarlas de los linfocitos T activados.",
+      "tema": "celulas-inmunes",
+      "subtema": "Perfil de las Treg",
+      "seccion": "Marcadores › T regulador (Treg)"
+    },
+    {
+      "id": "q08",
+      "stem": "Un niño de 5 años con infecciones virales recurrentes por herpesvirus es evaluado por sospecha de una deficiencia de linfocitos citotóxicos naturales. La citometría de flujo debe identificar a estas células en su sangre. ¿Qué combinación de marcadores las reconoce?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD16 y CD56, con CD3 negativo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD16 y CD56, con CD3 positivo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD16, CD56 y CD19, con CD3 negativo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD14 y CD56, con CD3 negativo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD16 y CD56, con CD3 y CD4 positivos",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células NK expresan CD16, o FcγRIII, y CD56, y son CD3 negativas, lo que las separa de los linfocitos T.",
+      "tema": "celulas-inmunes",
+      "subtema": "Células NK",
+      "seccion": "Marcadores › NK"
+    },
+    {
+      "id": "q09",
+      "stem": "Una mujer de 58 años con hipogammaglobulinemia recurrente se evalúa por citometría con anticuerpos anti-CD19 y anti-CD3 sobre los linfocitos de su sangre periférica. En el dot plot con CD19 en el eje vertical y CD3 en el horizontal, el analista examina el cuadrante superior izquierdo, con CD19 positivo y CD3 negativo. ¿Qué población ocupa ese cuadrante?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Monocitos, definidos por CD14 y CD68",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos B, definidos por CD3",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos B, definidos por CD19",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos T, definidos por CD3",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos NK, definidos por CD56",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos B expresan CD19 y no CD3, mientras que los T expresan CD3 y no CD19. Así cada población cae en un cuadrante distinto.",
+      "tema": "tecnicas",
+      "subtema": "CD19 frente a CD3",
+      "seccion": "2° Histogramas bivariados"
+    },
+    {
+      "id": "q10",
+      "stem": "Una mujer de 50 años con pancitopenia se somete a inmunofenotipo de médula ósea. Sus células se incuban con anticuerpos anti-CD34 unidos a un fluorocromo y luego pasan una a una frente al láser del citómetro. El técnico revisa las señales que registra cada detector. ¿Qué captan los detectores de fluorescencia del citómetro?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La luz emitida por los fluorocromos unidos a los anticuerpos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La luz dispersada por la célula en la misma dirección del láser",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La luz dispersada por la célula hacia el costado del láser",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La luz absorbida por los fluorocromos unidos a los anticuerpos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La luz emitida por el láser al atravesar la suspensión celular",
+          "correct": false
+        }
+      ],
+      "explanation": "Los detectores de fluorescencia captan la luz que emiten los fluorocromos conjugados a anticuerpos, lo que revela qué marcadores expresa cada célula.",
+      "tema": "tecnicas",
+      "subtema": "Detectores de fluorescencia",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "q11",
+      "stem": "Un laboratorio de referencia configura el citómetro para el inmunofenotipo de una leucemia aguda en un niño de 6 años. El ingeniero revisa los láseres del sistema óptico y sus longitudes de onda antes de correr la muestra. ¿Cuál es la combinación correcta de láseres?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Láser azul de 405 nm, rojo de 488 nm y violeta de 633 nm",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Azul de 488 nm, rojo de 405 nm y violeta de 633 nm",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Azul de 488 nm, rojo de 633 nm y violeta de 405 nm",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Láser azul de 633 nm, rojo de 488 nm y violeta de 405 nm",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Azul de 488 nm, rojo de 633 nm y verde de 405 nm",
+          "correct": false
+        }
+      ],
+      "explanation": "El sistema óptico usa láseres azul de 488 nm, rojo de 633 nm y violeta de 405 nm, entre otros, para excitar a los fluorocromos.",
+      "tema": "tecnicas",
+      "subtema": "Láseres del sistema óptico",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "q12",
+      "stem": "Al terminar la adquisición de la muestra de un hombre de 45 años con sospecha de linfoma, el operador obtiene histogramas, dot plots y análisis multiparamétricos en la pantalla del equipo. ¿Qué sistema del citómetro los genera y qué función cumple?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Óptico, que convierte las señales ópticas en datos digitales",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Fluídico, que convierte las señales ópticas en datos digitales",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Electrónico, que mantiene las células en suspensión mediante flujo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Electrónico, que emite el láser azul, rojo o violeta sobre cada célula",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Electrónico, que convierte las señales ópticas en datos digitales",
+          "correct": true
+        }
+      ],
+      "explanation": "El sistema electrónico y computacional convierte las señales ópticas en datos digitales y con ellos genera histogramas, dot plots y análisis multiparamétricos.",
+      "tema": "tecnicas",
+      "subtema": "Sistema electrónico",
+      "seccion": "COMPONENTES"
+    },
+    {
+      "id": "q13",
+      "stem": "Una mujer de 52 años con hepatitis B crónica y transaminasas elevadas es evaluada para cuantificar por citometría de flujo los linfocitos T citotóxicos de su sangre, células encargadas de eliminar hepatocitos infectados. ¿Qué marcadores permiten identificar a estas células y qué molécula reconocen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD3 y CD4, que reconoce MHC I",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD3 y CD8, que reconoce MHC I",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CD3 y CD8, que reconoce MHC II",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD19 y CD8, que reconoce MHC I",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD20 y CD8, que reconoce MHC I",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T citotóxicos expresan CD3, como todos los T, y CD8, la molécula que reconoce el MHC I presente en las células infectadas.",
+      "tema": "celulas-inmunes",
+      "subtema": "Linfocito T citotóxico",
+      "seccion": "Marcadores › T citotóxico (CTL)"
+    },
+    {
+      "id": "q14",
+      "stem": "Una mujer de 45 años con sospecha de leucemia linfocítica crónica de células B se somete a inmunofenotipo por citometría de flujo. El laboratorio quiere confirmar que las células anormales pertenecen al linaje B. ¿Qué marcadores identifican a todos los linfocitos B?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD3, CD20 y CD21",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD19, CD20 y CD21",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CD19, CD68 y CD21",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD19, CD20 y CD117",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD19, CD20 y CD123",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos B expresan CD19, CD20 y CD21, o CR2, marcadores del linaje B que participan en su señalización.",
+      "tema": "celulas-inmunes",
+      "subtema": "Linaje B",
+      "seccion": "Marcadores › B (todos)"
+    },
+    {
+      "id": "q15",
+      "stem": "Un paciente de 38 años con rechazo agudo de un trasplante renal es evaluado por citometría de flujo. En su sangre se buscan linfocitos T activados, que están en plena proliferación tras reconocer el injerto. ¿Qué marcadores se asocian a estas células?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD25, CD127 y HLA-DR",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD25, CD69 y CD45RA",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD25, CD69 y HLA-DR",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CD25, CD127 y CD45RA",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD2, CD69 y CD45RA",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T activados expresan CD25, o IL-2Rα, CD69 y HLA-DR, marcadores asociados a la proliferación y a la activación.",
+      "tema": "celulas-inmunes",
+      "subtema": "Linfocito T activado",
+      "seccion": "Marcadores › T activados"
+    },
+    {
+      "id": "q16",
+      "stem": "Una mujer de 30 años recibió una vacuna y semanas después se estudian por citometría sus linfocitos T que ya reconocieron el antígeno y forman la memoria inmunológica. Se busca una isoforma de CD45 propia de estas células. ¿Qué marcador expresan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD45RA, isoforma larga de CD45",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD45RO, la isoforma larga de CD45",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD45RO, la isoforma corta de CD45",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CD127, la cadena α del receptor de IL-7",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD25, la cadena α del receptor de IL-2",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T de memoria expresan CD45RO, la isoforma corta de CD45, mientras que los T naïve, que aún no vieron antígeno, expresan CD45RA.",
+      "tema": "celulas-inmunes",
+      "subtema": "T naïve y de memoria",
+      "seccion": "Marcadores › T memoria"
+    },
+    {
+      "id": "q17",
+      "stem": "Una mujer de 55 años con sepsis de origen urinario es evaluada en cuidados intensivos. Se pide una citometría de flujo para identificar sus monocitos y macrófagos, células que participan en la fagocitosis y en la activación de la respuesta inmune. ¿Qué marcadores caracterizan a estas células?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD14, CD16, CD68 y CD40",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD14, CD16, CD68 y CD117",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD14, CD16, CD68 y CD123",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD19, CD16, CD68 y CD40",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD14, CD3, CD68 y CD40",
+          "correct": false
+        }
+      ],
+      "explanation": "Los monocitos y macrófagos se reconocen por CD14, CD16, CD68 y CD40, marcadores ligados a la fagocitosis y a la activación.",
+      "tema": "celulas-inmunes",
+      "subtema": "Monocitos y macrófagos",
+      "seccion": "Marcadores › Monocitos/Macrófagos"
+    },
+    {
+      "id": "q18",
+      "stem": "Un hombre de 62 años con neumonía lobar presenta neutrofilia marcada. Para confirmar por citometría de flujo el origen de esta población de granulocitos, el laboratorio emplea marcadores de migración y de fagocitosis en la superficie celular. ¿Cuáles caracterizan a los neutrófilos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD9, CD16 y CD11b/CD18",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD15, CD123 y CD11b/CD18",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD117, CD16 y CD11b/CD18",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD15, CD16 y CD11b/CD18",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "CD15, CD3 y CD11b/CD18",
+          "correct": false
+        }
+      ],
+      "explanation": "Los neutrófilos expresan CD15, CD16 y CD11b/CD18, este último ligado a la migración y a la fagocitosis.",
+      "tema": "celulas-inmunes",
+      "subtema": "Neutrófilos",
+      "seccion": "Marcadores › Neutrófilos"
+    },
+    {
+      "id": "q19",
+      "stem": "Un niño de 8 años con asma, eccema y eosinofilia periférica es evaluado por citometría de flujo. Se quiere reconocer a los granulocitos que participan en la respuesta antiparasitaria y que están aumentados en su sangre. ¿Qué marcadores identifican a los eosinófilos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD9 y CD34",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD9 y CD3",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD9 y CCR3",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CD15 y CCR3",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD14 y CCR3",
+          "correct": false
+        }
+      ],
+      "explanation": "Los eosinófilos se identifican por CD9 y CCR3, marcadores de los granulocitos que intervienen en la respuesta antiparasitaria.",
+      "tema": "celulas-inmunes",
+      "subtema": "Eosinófilos",
+      "seccion": "Marcadores › Eosinófilos"
+    },
+    {
+      "id": "q20",
+      "stem": "Un joven de 17 años presenta anafilaxia después de comer maní. Para estudiar por citometría de flujo las células circulantes con gránulos basófilos que liberan mediadores de la respuesta alérgica, el laboratorio prepara un panel de anticuerpos. ¿Qué marcadores identifican a los basófilos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD123 y FcγRIII",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD123 y FcεRII",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD15 y FcεRI",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD34 y CD123",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD123 y FcεRI",
+          "correct": true
+        }
+      ],
+      "explanation": "Los basófilos expresan CD123 y FcεRI, el receptor de IgE, que explica su papel en la respuesta alérgica.",
+      "tema": "celulas-inmunes",
+      "subtema": "Basófilos",
+      "seccion": "Marcadores › Basófilos"
+    },
+    {
+      "id": "q21",
+      "stem": "Un hombre de 48 años con lupus tiene niveles elevados de interferón tipo I en sangre. Se busca por citometría de flujo la subpoblación de células dendríticas que produce esta citocina antiviral. ¿Qué subtipo es y qué marcador la caracteriza?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dendríticas mieloides, con CD123",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Dendríticas plasmocitoides, con CD11c",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Dendríticas plasmocitoides, con CD123",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Dendríticas plasmocitoides, con CD80/CD86",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Dendríticas mieloides, con CD11c y CD80",
+          "correct": false
+        }
+      ],
+      "explanation": "Las dendríticas plasmocitoides expresan CD123 y producen interferón tipo I, mientras que las mieloides expresan CD11c y CD80/CD86.",
+      "tema": "celulas-inmunes",
+      "subtema": "Dendríticas plasmocitoides",
+      "seccion": "Marcadores › Dendríticas plasmocitoides"
+    },
+    {
+      "id": "q22",
+      "stem": "Un donante de 27 años se prepara para donar células madre hematopoyéticas de sangre periférica a su hermano con leucemia. El laboratorio cuenta por citometría de flujo los progenitores de la colecta para calcular la dosis. ¿Qué marcadores identifican a estas células?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD34 y CD123, también llamado IL-3Rα",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD34 y CD16, también llamado FcγRIII",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD117 y CD19, también llamado c-Kit",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD34 y CD117, también llamado c-Kit",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "CD34 y CD3, que forma parte del TCR",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células madre hematopoyéticas son los progenitores y se identifican por CD34 y CD117, también llamado c-Kit.",
+      "tema": "celulas-inmunes",
+      "subtema": "Progenitores hematopoyéticos",
+      "seccion": "Marcadores › Células madre hematopoyéticas"
+    },
+    {
+      "id": "q23",
+      "stem": "Una mujer de 39 años con linfadenopatías y esplenomegalia por un síndrome linfoproliferativo autoinmune tiene linfocitos que no mueren como deberían. El inmunólogo pide a citometría evaluar el marcador de superficie asociado a la apoptosis. ¿Qué marcador estudia el laboratorio?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD95, también llamado Fas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD71, también llamado Fas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD127, también llamado IL-7Rα",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD117, también llamado c-Kit",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD25, también llamado IL-2Rα",
+          "correct": false
+        }
+      ],
+      "explanation": "CD95, también llamado Fas, es el marcador de superficie que se asocia con la apoptosis, es decir, con la muerte celular programada.",
+      "tema": "celulas-inmunes",
+      "subtema": "CD95 y CD71",
+      "seccion": "Marcadores › Otros relevantes"
+    },
+    {
+      "id": "q24",
+      "stem": "Un joven de 22 años con mononucleosis infecciosa tiene linfocitos B activados en sangre periférica. El laboratorio arma un panel de citometría con marcadores de coestimulación y del receptor del linfocito B para reconocer esta activación. ¿Qué marcadores se asocian a los linfocitos B activados?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD40, CD23 y CD79a/b",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CD40, CD3 y CD79a/b",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD40, CD123 y CD79a/b",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD40, CD23 y CD11b/CD18",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD68, CD23 y CD79a/b",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos B activados se asocian a CD40 y CD23, que intervienen en la coestimulación, y a CD79a/b, parte del BCR.",
+      "tema": "celulas-inmunes",
+      "subtema": "Linfocitos B activados",
+      "seccion": "Marcadores › B activados"
+    },
+    {
+      "id": "q25",
+      "stem": "En el laboratorio clínico, una tecnóloga interpreta el histograma de un paciente de 33 años con sospecha de inmunodeficiencia. La muestra se marcó con un anticuerpo fluorescente y el gráfico analiza un solo parámetro de las células. ¿Qué se grafica en cada eje de un histograma univariado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "En el eje X el número de eventos y en el eje Y la intensidad de la señal",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "En el eje X el tamaño celular y en el eje Y la granularidad celular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "En el eje X la intensidad de la señal y en el eje Y otra señal distinta",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "En el eje X el tiempo de adquisición y en el eje Y el número de eventos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "En el eje X la intensidad de señal y en el eje Y el número de eventos",
+          "correct": true
+        }
+      ],
+      "explanation": "En un histograma univariado el eje X muestra la intensidad de la señal de un parámetro y el eje Y el recuento de eventos, o células.",
+      "tema": "tecnicas",
+      "subtema": "Ejes del histograma",
+      "seccion": "1° Histogramas univariados"
+    },
+    {
+      "id": "q26",
+      "stem": "Al analizar un histograma de CD3 de un hombre de 52 años con linfoma, el técnico traza dos marcadores o rangos sobre el eje X para separar los eventos de baja y de alta fluorescencia. ¿Qué informa el citómetro para cada rango?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El porcentaje de eventos dentro de cada rango de tamaño celular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El porcentaje de eventos dentro de cada rango de intensidad",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "El número de fluorocromos en cada rango de intensidad",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La proporción de eventos que expresa dos marcadores a la vez",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El porcentaje de eventos dentro de cada rango de granularidad",
+          "correct": false
+        }
+      ],
+      "explanation": "Los rangos trazados sobre el eje X permiten al citómetro informar el porcentaje de eventos con la intensidad de fluorescencia de cada rango.",
+      "tema": "tecnicas",
+      "subtema": "Marcadores de rango",
+      "seccion": "1° Histogramas univariados"
+    },
+    {
+      "id": "q27",
+      "stem": "Un residente revisa el informe de citometría de una mujer de 35 años con sospecha de leucemia y observa un gráfico en que cada punto es una célula, ubicada según dos mediciones a la vez, por ejemplo FSC y SSC. ¿Qué muestra un dot plot o histograma bivariado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La relación entre un solo parámetro y el número de eventos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La relación entre dos células distintas medidas a la vez",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La suma de los dos parámetros medidos en cada célula",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La relación entre dos parámetros medidos en cada célula",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "La relación entre dos láseres usados sobre cada célula",
+          "correct": false
+        }
+      ],
+      "explanation": "Un dot plot muestra la relación entre dos parámetros de cada célula, por ejemplo FSC frente a SSC, y así separa poblaciones que un histograma superpondría.",
+      "tema": "tecnicas",
+      "subtema": "Qué es un dot plot",
+      "seccion": "2° Histogramas bivariados"
+    },
+    {
+      "id": "q28",
+      "stem": "Para calcular el recuento absoluto de CD4 de un hombre de 37 años con VIH, se toman 50 µL de sangre total y se marcan con anticuerpos anti-CD3, CD4 y CD45RA. Luego se lisan los eritrocitos y se agrega un volumen de microbeads a una concentración de 995 microbeads/µL. ¿Para qué se usan estas microbeads?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Como referencia de tamaño conocido para calibrar el FSC y el SSC de las células",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Como referencia de concentración conocida para estimar la viabilidad de las células",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Como marcadores del linaje T para identificar los linfocitos CD4⁺ de la muestra",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Como referencia de concentración conocida para calcular células por microlitro",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Como fluorocromos para teñir el CD4 en la superficie de las células",
+          "correct": false
+        }
+      ],
+      "explanation": "Las microbeads tienen una concentración conocida y una fluorescencia distinguible, así que comparar sus eventos con los del gate de linfocitos T permite calcular células por microlitro.",
+      "tema": "tecnicas",
+      "subtema": "Microbeads y recuento absoluto",
+      "seccion": "2° Histogramas bivariados"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

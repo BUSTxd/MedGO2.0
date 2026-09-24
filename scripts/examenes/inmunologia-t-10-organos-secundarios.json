@@ -3,7 +3,918 @@
   "key": "inmunologia/t-10-organos-secundarios",
   "title": "T10 — Órganos linfoides secundarios",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Una mujer de 33 años con fiebre alta y escalofríos tiene hemocultivos positivos para una bacteria. Se discute por qué el bazo, a diferencia de un ganglio linfático, responde a los antígenos que circulan por la sangre. ¿Qué rasgo estructural del bazo explica esta diferencia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Posee linfáticos aferentes y filtra los antígenos de la linfa local",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Posee linfáticos aferentes y filtra los antígenos de la sangre",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "No posee linfáticos aferentes y filtra los antígenos de la sangre",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "No posee linfáticos aferentes y filtra los antígenos de la linfa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Posee vénulas de endotelio alto y filtra los antígenos de la linfa",
+          "correct": false
+        }
+      ],
+      "explanation": "El bazo no tiene linfáticos aferentes y filtra la sangre. Elimina patógenos, eritrocitos dañados o senescentes y células anormales, y aumenta el contacto entre antígenos, células presentadoras y linfocitos.",
+      "tema": "organos-secundarios",
+      "subtema": "Bazo sin linfáticos aferentes",
+      "seccion": "Bazo"
+    },
+    {
+      "id": "q02",
+      "stem": "Un hombre de 24 años esplenectomizado por un trauma abdominal consulta 2 años después por fiebre, cefalea y rigidez de nuca. El hemocultivo desarrolla Neisseria meningitidis, una bacteria encapsulada. ¿Qué región del bazo, clave para responder rápido a estas bacterias de la sangre, ya no puede cumplir su función?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La zona marginal, con macrófagos, células dendríticas y linfocitos B",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La zona marginal, con macrófagos, células dendríticas y linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La vaina periarteriolar, con linfocitos T alrededor de la arteria central",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los cordones esplénicos, con macrófagos, plasmocitos y linfocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Los sinusoides esplénicos, con células endoteliales en duelas de barril",
+          "correct": false
+        }
+      ],
+      "explanation": "La zona marginal, transición entre pulpa blanca y roja, recibe antígenos y células de la sangre. Es clave para respuestas rápidas frente a bacterias encapsuladas como el neumococo y el meningococo.",
+      "tema": "organos-secundarios",
+      "subtema": "Zona marginal y bacterias encapsuladas",
+      "seccion": "2) Pulpa Blanca"
+    },
+    {
+      "id": "q03",
+      "stem": "Una joven de 19 años con anemia y esplenomegalia tiene eritrocitos rígidos y de forma anormal en el frotis. El hematólogo explica que estos eritrocitos no logran deformarse y quedan atrapados en la pulpa roja del bazo. ¿Dónde son retenidos y quién los elimina?",
+      "options": [
+        {
+          "id": "a",
+          "text": "En los sinusoides esplénicos, donde los fagocitan los macrófagos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "En los cordones esplénicos, donde los fagocitan las células plasmáticas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "En la zona marginal, donde los fagocitan los macrófagos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "En los cordones esplénicos, donde los fagocitan los macrófagos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "En la vaina periarteriolar, donde los fagocitan los linfocitos T",
+          "correct": false
+        }
+      ],
+      "explanation": "Los cordones esplénicos, o de Billroth, son tejido laxo con macrófagos. Los eritrocitos viejos, rígidos o dañados quedan atrapados y son fagocitados, lo que se llama hemocateresis.",
+      "tema": "organos-secundarios",
+      "subtema": "Cordones de Billroth y hemocateresis",
+      "seccion": "3) Pulpa Roja"
+    },
+    {
+      "id": "q04",
+      "stem": "Una mujer de 22 años con faringitis estreptocócica tiene un ganglio cervical doloroso y aumentado. La biopsia muestra en la corteza externa folículos con centro germinal bien desarrollado. ¿Qué tipo de folículo es y qué célula predomina en su zona clara?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Folículo primario, con centrocitos en la zona clara del folículo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Folículo secundario, con centroblastos en la zona clara del folículo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Folículo secundario, con linfocitos B vírgenes en la zona clara",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Folículo primario, con centroblastos en la zona clara del folículo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Folículo secundario, con centrocitos en la zona clara",
+          "correct": true
+        }
+      ],
+      "explanation": "Los folículos secundarios se forman tras el estímulo antigénico y tienen centro germinal. En su zona clara predominan los centrocitos, que se seleccionan por afinidad.",
+      "tema": "linfocitos-b",
+      "subtema": "Folículo secundario y zona clara",
+      "seccion": "2) Corteza externa"
+    },
+    {
+      "id": "q05",
+      "stem": "Un lactante de 8 meses con deleción del cromosoma 22 y ausencia de timo se somete a biopsia de un ganglio. Los folículos están conservados, pero la región entre la corteza externa y la médula, libre de nódulos, está casi vacía. ¿Qué región es y qué células le faltan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La paracorteza, con linfocitos B vírgenes y células plasmáticas maduras",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La paracorteza, con linfocitos T y células dendríticas interdigitantes",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "La corteza externa, con linfocitos T y células dendríticas interdigitantes",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La médula, con linfocitos T y células dendríticas interdigitantes",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La paracorteza, con linfocitos B foliculares y células dendríticas foliculares",
+          "correct": false
+        }
+      ],
+      "explanation": "La paracorteza es la principal zona T del ganglio y carece de folículos. Contiene linfocitos T y células dendríticas interdigitantes, que presentan antígenos.",
+      "tema": "organos-secundarios",
+      "subtema": "Paracorteza, la zona T",
+      "seccion": "3) Paracorteza"
+    },
+    {
+      "id": "q06",
+      "stem": "Un hombre de 50 años con una infección crónica de la pierna tiene un ganglio inguinal aumentado. En la médula del ganglio se observan abundantes células de núcleo excéntrico dispuestas entre los senos, que secretan proteínas de defensa. ¿Qué células son y qué producen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Macrófagos de los cordones medulares, que producen inmunoglobulinas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Plasmocitos de los senos medulares linfáticos, que producen inmunoglobulinas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Plasmocitos de los cordones medulares, que producen interleucinas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos T de los cordones medulares, que producen inmunoglobulinas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Plasmocitos de los cordones medulares, que producen inmunoglobulinas",
+          "correct": true
+        }
+      ],
+      "explanation": "En la médula, los linfocitos B diferenciados en células plasmáticas migran a los cordones medulares y producen inmunoglobulinas. Los senos medulares son canales de la linfa.",
+      "tema": "organos-secundarios",
+      "subtema": "Células plasmáticas de la médula",
+      "seccion": "4) Médula"
+    },
+    {
+      "id": "q07",
+      "stem": "Un niño de 6 años con una celulitis en la pierna presenta un ganglio inguinal doloroso. Una bacteria de alto peso molecular llega por la linfa aferente y es capturada en el seno subcapsular. ¿Qué célula la captura y a quién la transfiere?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Macrófagos subcapsulares, que la transfieren intacta a linfocitos B y FDC",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Macrófagos subcapsulares, que la presentan por MHC a los linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células dendríticas paracorticales, que la transfieren intacta a linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Macrófagos de los senos medulares, que la transfieren intacta a linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Macrófagos subcapsulares, que la transfieren intacta a linfocitos T y FDC",
+          "correct": false
+        }
+      ],
+      "explanation": "Los macrófagos del seno subcapsular capturan antígenos de alto peso molecular y bacterias, y los transfieren intactos a los linfocitos B foliculares y a las FDC, sin presentarlos por MHC.",
+      "tema": "organos-secundarios",
+      "subtema": "Antígenos grandes en el ganglio",
+      "seccion": "Manejo de Antígenos"
+    },
+    {
+      "id": "q08",
+      "stem": "Un joven de 17 años con dolor en la fosa ilíaca derecha es sometido a apendicectomía. La histología del apéndice cecal muestra abundante tejido linfoide organizado en folículos, sin cápsula completa. ¿A qué subtipo de MALT corresponde este tejido y qué función tolerogénica cumple?",
+      "options": [
+        {
+          "id": "a",
+          "text": "BALT, que induce tolerancia a antígenos alimentarios y de la microbiota intestinal",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "GALT, que recibe antígenos por linfáticos aferentes desde los tejidos periféricos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "GALT, que induce tolerancia a antígenos alimentarios y de la microbiota",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "GALT, que induce tolerancia a antígenos que llegan por la sangre",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "BALT, que recibe antígenos por linfáticos aferentes desde los tejidos",
+          "correct": false
+        }
+      ],
+      "explanation": "El GALT incluye placas de Peyer, íleon terminal y apéndice cecal. El MALT recibe antígenos desde el lumen a través del epitelio e induce tolerancia a antígenos alimentarios y de la microbiota.",
+      "tema": "mucosas",
+      "subtema": "GALT y tolerancia",
+      "seccion": "Tejido Linfoide Asociado a Mucosas"
+    },
+    {
+      "id": "q09",
+      "stem": "Un hombre de 55 años con cirrosis hepática e hipertensión portal presenta esplenomegalia congestiva y varices esofágicas. El radiólogo describe el drenaje venoso del bazo para explicar el aumento de presión. ¿Qué recorrido sigue la sangre que sale de los sinusoides esplénicos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Venas trabeculares, venas pulpares, vena esplénica y vena porta",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Venas pulpares, venas trabeculares, vena esplénica y vena cava inferior",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Venas pulpares, venas centrales, vena esplénica y vena porta hepática",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Venas pulpares, venas trabeculares, vena esplénica y vena porta",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Venas pulpares, venas trabeculares, vena mesentérica y vena porta",
+          "correct": false
+        }
+      ],
+      "explanation": "La sangre de los sinusoides pasa a las venas pulpares, luego a las trabeculares y drena en la vena esplénica, que se une a la vena porta.",
+      "tema": "organos-secundarios",
+      "subtema": "Drenaje venoso del bazo",
+      "seccion": "Irrigación arterial"
+    },
+    {
+      "id": "q10",
+      "stem": "Un niño de 5 años con una herida infectada en la mano tiene un ganglio axilar aumentado. La linfa de la herida llega al ganglio por vasos que perforan su cápsula de tejido conectivo denso. ¿A qué espacio llega primero esta linfa y por qué vasos ingresa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Al seno medular, por los linfáticos aferentes del ganglio",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Al seno subcapsular, por los vasos linfáticos aferentes",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Al seno subcapsular, por los linfáticos eferentes del ganglio",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Al seno trabecular, por los linfáticos aferentes del ganglio",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "A los cordones medulares, por los linfáticos aferentes del ganglio",
+          "correct": false
+        }
+      ],
+      "explanation": "El seno subcapsular, o marginal, está debajo de la cápsula y recibe la linfa proveniente de los vasos linfáticos aferentes.",
+      "tema": "organos-secundarios",
+      "subtema": "Seno subcapsular",
+      "seccion": "1) Capsula"
+    },
+    {
+      "id": "q11",
+      "stem": "Un joven de 20 años recibe una vacuna y una semana después se palpa un ganglio axilar aumentado. Los linfocitos competentes se encuentran allí con las células presentadoras de antígeno para iniciar la respuesta adaptativa. ¿Qué tipo de órganos son el sitio de este encuentro?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Órganos linfoides primarios, como la médula ósea y el timo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Órganos linfoides secundarios, como el timo y la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Órganos linfoides primarios, como los ganglios, el bazo y el MALT",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Órganos linfoides secundarios, como el timo, el bazo y el MALT",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Órganos linfoides secundarios, como ganglios, bazo y el MALT",
+          "correct": true
+        }
+      ],
+      "explanation": "En los órganos linfoides secundarios, que son el MALT, los ganglios y el bazo, los linfocitos competentes encuentran a las células presentadoras de antígeno.",
+      "tema": "organos-secundarios",
+      "subtema": "Sitio de la respuesta adaptativa",
+      "seccion": "Clase 10"
+    },
+    {
+      "id": "q12",
+      "stem": "Un niño de 6 años con amigdalitis recurrente es evaluado por un otorrinolaringólogo, que le explica que su garganta tiene un anillo de tejido linfoide asociado a mucosas, ubicado alrededor de la entrada de las vías respiratoria y digestiva. ¿Qué amígdalas forman este anillo de Waldeyer?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las amígdalas palatinas, linguales y las placas de Peyer",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Las amígdalas palatinas, faríngeas y el apéndice cecal",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Las amígdalas palatinas, las linguales y las faríngeas",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Las placas de Peyer, el apéndice cecal y las palatinas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Las amígdalas linguales, faríngeas y el tejido de los bronquios",
+          "correct": false
+        }
+      ],
+      "explanation": "Las amígdalas palatinas, linguales y faríngeas forman el anillo de Waldeyer, ejemplo de tejido linfoide asociado a mucosas.",
+      "tema": "mucosas",
+      "subtema": "Anillo de Waldeyer",
+      "seccion": "Tejido Linfoide Asociado a Mucosas"
+    },
+    {
+      "id": "q13",
+      "stem": "Una mujer de 31 años con linfadenitis se somete a biopsia de un ganglio. Un folículo secundario muestra un centro germinal rodeado por un anillo de células pequeñas de núcleo oscuro y escaso citoplasma, ubicado en la corteza externa. ¿Qué células forman esta zona del manto?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos B vírgenes y algunas células B de memoria en reposo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos T vírgenes y algunas células T de memoria central en reposo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos B activados y algunas células plasmáticas maduras",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos B vírgenes y algunas células dendríticas foliculares",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Centroblastos y algunas células B de memoria de vida larga",
+          "correct": false
+        }
+      ],
+      "explanation": "La zona del manto rodea al centro germinal y contiene linfocitos B vírgenes y algunas células B de memoria.",
+      "tema": "organos-secundarios",
+      "subtema": "Zona del manto",
+      "seccion": "2) Corteza externa"
+    },
+    {
+      "id": "q14",
+      "stem": "Un hombre de 40 años con linfadenopatía cervical se somete a biopsia. En la zona clara de un centro germinal, los centrocitos se someten a selección por afinidad y solo sobreviven algunos de ellos. ¿Con qué células interactúan para esta selección?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células dendríticas foliculares y linfocitos T CD8⁺ citotóxicos efectores",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Células dendríticas interdigitantes y linfocitos T foliculares cooperadores",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células dendríticas foliculares y células reticulares fibroblásticas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células dendríticas foliculares y linfocitos T foliculares cooperadores",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Macrófagos del seno subcapsular y linfocitos T foliculares cooperadores",
+          "correct": false
+        }
+      ],
+      "explanation": "En la zona clara los centrocitos se seleccionan por afinidad mediante su interacción con las células dendríticas foliculares y con los linfocitos T foliculares cooperadores.",
+      "tema": "linfocitos-b",
+      "subtema": "Selección por afinidad",
+      "seccion": "2) Corteza externa"
+    },
+    {
+      "id": "q15",
+      "stem": "Un joven de 19 años con mononucleosis infecciosa tiene ganglios cervicales aumentados de tamaño y dolorosos. Los linfocitos T vírgenes que circulan por la sangre entran al ganglio para encontrar antígeno. ¿Por dónde ingresan a la región de la paracorteza?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Por las vénulas de endotelio alto de la corteza externa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Por las vénulas de endotelio alto de la paracorteza",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Por los linfáticos aferentes, hacia el seno subcapsular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Por las vénulas de endotelio alto de la médula",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Por los capilares sinusoides de la paracorteza",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos naive entran desde la sangre al ganglio por las vénulas de endotelio alto de la paracorteza.",
+      "tema": "trafico",
+      "subtema": "Vénulas de endotelio alto",
+      "seccion": "3) Paracorteza"
+    },
+    {
+      "id": "q16",
+      "stem": "Una mujer de 60 años con una infección crónica de la mama tiene un ganglio axilar aumentado de tamaño. Se quiere describir cómo circula la linfa dentro del ganglio hasta salir de él, pasando por sus distintos senos. ¿Cuál es el recorrido correcto de la linfa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Aferente, seno subcapsular, senos medulares, senos trabeculares y luego eferente",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Aferente, senos trabeculares, seno subcapsular, senos medulares y luego eferente",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Eferente, seno subcapsular, senos trabeculares, medulares y aferente",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Aferente, seno subcapsular, senos trabeculares, cordones medulares y eferente",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Aferente, seno subcapsular, senos trabeculares, senos medulares y eferente",
+          "correct": true
+        }
+      ],
+      "explanation": "La linfa entra por el linfático aferente, pasa por el seno subcapsular, los senos trabeculares y los senos medulares, y sale por el linfático eferente.",
+      "tema": "organos-secundarios",
+      "subtema": "Recorrido de la linfa",
+      "seccion": "4) Médula"
+    },
+    {
+      "id": "q17",
+      "stem": "Un niño de 9 años con una infección viral en la piel tiene un ganglio inguinal reactivo. Un antígeno soluble menor de 70 kD llega por la linfa y contacta rápidamente con las células dendríticas para iniciar la respuesta T. ¿Por dónde accede a ellas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Por los conductos de las FRC, con contacto rápido con células dendríticas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Por los conductos de las FRC, con captura previa por macrófagos subcapsulares",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Por los senos medulares, con contacto rápido con células dendríticas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Por los macrófagos subcapsulares, con transferencia intacta a linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Por las vénulas de endotelio alto, con contacto rápido con células dendríticas",
+          "correct": false
+        }
+      ],
+      "explanation": "Los antígenos pequeños, menores de 70 kD, ingresan a los conductos de las FRC. Así contactan rápido con las células dendríticas y facilitan una respuesta T inicial.",
+      "tema": "organos-secundarios",
+      "subtema": "Antígenos pequeños en el ganglio",
+      "seccion": "Manejo de Antígenos"
+    },
+    {
+      "id": "q18",
+      "stem": "Una mujer de 46 años recibe una segunda dosis de una vacuna y presenta una respuesta muy rápida. Su ganglio axilar alberga linfocitos que permanecen en el órgano tras el primer contacto con el antígeno. ¿Qué células de memoria se mantienen en los ganglios linfáticos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T de memoria efectora",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos T CD8⁺ de memoria residente",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos T de memoria central",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos B de memoria de vida corta",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Células plasmáticas de memoria",
+          "correct": false
+        }
+      ],
+      "explanation": "Los ganglios linfáticos albergan linfocitos T de memoria central, que permanecen en estos órganos, además de sostener la respuesta humoral en los folículos y la celular en la paracorteza.",
+      "tema": "linfocitos-t",
+      "subtema": "Memoria central",
+      "seccion": "Función en la Respuesta Inmune"
+    },
+    {
+      "id": "q19",
+      "stem": "Un hombre de 34 años sufre un accidente de tránsito con hemorragia importante y lesión del bazo. El cirujano recuerda que el bazo, además de filtrar la sangre, funciona como reserva de ciertos elementos sanguíneos. ¿Qué elementos almacena el bazo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Plaquetas, neutrófilos y glóbulos rojos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Plaquetas, monocitos y linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Eosinófilos, monocitos y glóbulos rojos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Plaquetas, monocitos y glóbulos rojos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Plaquetas, monocitos y células plasmáticas",
+          "correct": false
+        }
+      ],
+      "explanation": "El bazo actúa como reserva de plaquetas, monocitos y glóbulos rojos, además de filtrar la sangre.",
+      "tema": "organos-secundarios",
+      "subtema": "Reserva del bazo",
+      "seccion": "Bazo"
+    },
+    {
+      "id": "q20",
+      "stem": "Un hombre de 45 años con una laceración esplénica tras un trauma se estudia con tomografía. Se quiere entender por dónde penetran los vasos sanguíneos al parénquima del bazo, un órgano recubierto por una cápsula de tejido conectivo denso. ¿Por dónde ingresan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Por las trabéculas, prolongaciones internas de la pulpa blanca",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Por las trabéculas, prolongaciones internas de la cápsula",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Por las trabéculas, prolongaciones internas de la zona marginal",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Por los senos subcapsulares, bajo la cápsula del bazo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Por los cordones esplénicos, dentro de la pulpa roja",
+          "correct": false
+        }
+      ],
+      "explanation": "Las trabéculas son prolongaciones internas de la cápsula de tejido conectivo denso, y por ellas ingresan los vasos sanguíneos al bazo.",
+      "tema": "organos-secundarios",
+      "subtema": "Trabéculas del bazo",
+      "seccion": "Bazo › 1) Cápsula"
+    },
+    {
+      "id": "q21",
+      "stem": "Un hombre de 27 años con una inmunodeficiencia de linfocitos T se somete a esplenectomía tras un traumatismo. En el estudio del bazo, la región de linfocitos que rodea a la arteria central está muy disminuida. ¿Qué región es y qué respuesta sustenta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La PALS, zona B que participa en la respuesta humoral",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El folículo esplénico, zona T que participa en la respuesta celular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La zona marginal, zona T que participa en la respuesta celular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El folículo esplénico, zona B que participa en la respuesta humoral",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La PALS, zona T que participa en la respuesta celular",
+          "correct": true
+        }
+      ],
+      "explanation": "La vaina linfoide periarteriolar rodea a la arteria central, es rica en linfocitos T y participa sobre todo en la respuesta inmunitaria celular.",
+      "tema": "linfocitos-t",
+      "subtema": "PALS",
+      "seccion": "2) Pulpa Blanca"
+    },
+    {
+      "id": "q22",
+      "stem": "Un hombre de 29 años con neumonía neumocócica fallece y se analiza su bazo. En la pulpa blanca hay nódulos asociados a la PALS, algunos con centro germinal por activación reciente. ¿Qué linfocitos predominan en estos nódulos y a qué respuesta contribuyen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T de los folículos esplénicos, que participan en la respuesta humoral",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos B de los folículos esplénicos, que participan en la respuesta celular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos B de la PALS, que participan en la respuesta humoral",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos B de los folículos, que participan en la respuesta humoral",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos T de la PALS, que participan en la respuesta celular",
+          "correct": false
+        }
+      ],
+      "explanation": "Los folículos linfoides esplénicos son zona B, están asociados a la PALS, pueden tener centro germinal cuando hay activación y participan en la respuesta humoral.",
+      "tema": "linfocitos-b",
+      "subtema": "Folículos esplénicos",
+      "seccion": "2) Pulpa Blanca"
+    },
+    {
+      "id": "q23",
+      "stem": "Un corte de bazo de una mujer de 32 años, fallecida por un accidente, se tiñe con hematoxilina y eosina. Se observan zonas basófilas y zonas eosinófilas bien diferenciadas. ¿Qué explica la basofilia de la pulpa blanca y la eosinofilia de la pulpa roja?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los eritrocitos en la blanca y los núcleos de los linfocitos en la pulpa roja",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los núcleos de los linfocitos en la blanca y los macrófagos en la pulpa roja",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los núcleos de los linfocitos en la blanca y los eritrocitos en la roja",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Los núcleos de los linfocitos en la blanca y las células plasmáticas en la roja",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Los núcleos de los macrófagos en la blanca y los eritrocitos en la roja del bazo",
+          "correct": false
+        }
+      ],
+      "explanation": "La pulpa blanca es basófila por la alta concentración de núcleos de linfocitos, y la pulpa roja es eosinófila por su gran contenido de eritrocitos.",
+      "tema": "organos-secundarios",
+      "subtema": "Basofilia de la pulpa blanca",
+      "seccion": "2) Pulpa Blanca"
+    },
+    {
+      "id": "q24",
+      "stem": "Una mujer de 36 años con anemia hemolítica y esplenomegalia se somete a estudio del bazo. Los eritrocitos deben cruzar la pared de los sinusoides esplénicos para regresar a la circulación. ¿Cómo son las células endoteliales de estos sinusoides que actúan como filtro físico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Alargadas, en duelas de barril, con hendiduras entre ellas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Aplanadas y fenestradas, con diafragmas y sin hendiduras entre ellas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Alargadas, en duelas de barril, con uniones estrechas entre ellas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Cúbicas y altas, como en las vénulas de endotelio alto, con hendiduras",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Aplanadas y continuas, con lámina basal completa y sin hendiduras",
+          "correct": false
+        }
+      ],
+      "explanation": "Los sinusoides esplénicos tienen células endoteliales alargadas, dispuestas como duelas de barril, con hendiduras entre ellas, y funcionan como filtro físico.",
+      "tema": "hematologia",
+      "subtema": "Endotelio sinusoidal",
+      "seccion": "3) Pulpa Roja"
+    },
+    {
+      "id": "q25",
+      "stem": "Un hombre de 40 años con bacteriemia tiene un bazo aumentado de tamaño. En la pulpa roja, el patólogo observa arteriolas rodeadas por una vaina de macrófagos y células reticulares, que vigilan las partículas de la sangre. ¿Cómo se denominan estas arteriolas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Arteriolas centrales, que capturan partículas y antígenos de la sangre circulante",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Arteriolas pulpares, que capturan partículas y antígenos de la sangre circulante",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Arteriolas envainadas, que producen anticuerpos contra los antígenos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Arteriolas trabeculares, que capturan partículas y antígenos de la sangre",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Arteriolas envainadas, que capturan partículas y antígenos de la sangre",
+          "correct": true
+        }
+      ],
+      "explanation": "Las arteriolas envainadas o elipsoides están rodeadas de macrófagos y células reticulares, y participan en la vigilancia y captura de partículas y antígenos de la sangre.",
+      "tema": "organos-secundarios",
+      "subtema": "Arteriolas envainadas",
+      "seccion": "3) Pulpa Roja"
+    },
+    {
+      "id": "q26",
+      "stem": "Un hombre de 52 años se somete a una angiografía esplénica antes de una embolización por una lesión del bazo. El radiólogo debe describir las ramas sucesivas de la arteria esplénica dentro del órgano. ¿Cuál es la secuencia correcta de estas ramas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Centrales, trabeculares, penicilares y luego capilares envainados",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Trabeculares, centrales, penicilares y capilares envainados",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Trabeculares, penicilares, centrales y luego capilares envainados",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Trabeculares, centrales, penicilares y venas pulpares",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Trabeculares, centrales, foliculares y luego capilares envainados",
+          "correct": false
+        }
+      ],
+      "explanation": "La arteria esplénica da ramas trabeculares, luego centrales rodeadas por la PALS, después penicilares y por último capilares envainados en la pulpa roja.",
+      "tema": "organos-secundarios",
+      "subtema": "Ramas de la arteria esplénica",
+      "seccion": "Irrigación arterial"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

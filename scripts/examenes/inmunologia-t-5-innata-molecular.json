@@ -3,7 +3,1478 @@
   "key": "inmunologia/t-5-innata-molecular",
   "title": "T5 — Respuestas innatas moleculares",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Un hombre de 34 años ingresa por celulitis de la pierna con fiebre y escalofríos. El cultivo de la secreción muestra cocos grampositivos. Sus macrófagos y neutrófilos reconocen de inmediato al microorganismo, sin haberlo encontrado antes, mediante receptores que detectan patrones comunes a clases de microbios. ¿Qué patrones moleculares de la pared de esta bacteria son reconocidos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Peptidoglucano y ácido lipoteicoico",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Peptidoglucano y lipopolisacárido",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Lipopolisacárido y N-formilmetionina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ARN bicatenario y ácido lipoteicoico",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "ATP extracelular y ácido úrico",
+          "correct": false
+        }
+      ],
+      "explanation": "El peptidoglucano y el ácido lipoteicoico son los PAMPs de las bacterias grampositivas y los detectan los PRR de las células innatas.",
+      "tema": "innata-celular",
+      "subtema": "PAMPs de grampositivas",
+      "seccion": "Sistema inmune innato"
+    },
+    {
+      "id": "q02",
+      "stem": "Un niño de 4 años con abscesos cutáneos recurrentes por Staphylococcus aureus tiene neutrófilos que fagocitan con normalidad, pero no logran el aumento del consumo de oxígeno del estallido respiratorio. Se estudia la reacción que transfiere electrones del NADPH al oxígeno. ¿Qué producto se forma primero y qué enzima cataliza la reacción?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Radical hidroxilo, por la NADPH oxidasa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Anión superóxido, por la mieloperoxidasa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Ácido hipocloroso, por la mieloperoxidasa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Óxido nítrico, por la iNOS inducible",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Anión superóxido, por la NADPH oxidasa",
+          "correct": true
+        }
+      ],
+      "explanation": "La NADPH oxidasa transfiere electrones del NADPH al oxígeno y forma anión superóxido, que luego se dismuta a peróxido de hidrógeno.",
+      "tema": "innata-celular",
+      "subtema": "Estallido respiratorio",
+      "seccion": "A) Fagocitos"
+    },
+    {
+      "id": "q03",
+      "stem": "Un hombre de 60 años con infección por citomegalovirus tiene células infectadas que han reducido casi por completo la expresión de MHC I para evadir a los linfocitos T CD8⁺. Aun así, otro linfocito citotóxico las destruye sin necesidad de anticuerpos. ¿Qué mecanismo permite esta destrucción?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Exceso de la inhibición por KIR en la célula NK",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Activación de CD16 por IgG unida a la célula diana",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Reconocimiento de lípidos por CD1d en la célula NKT",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Pérdida de la inhibición por KIR en la célula NK",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Pérdida de la activación por KIR en la célula NK",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células NK detectan la baja expresión de MHC I porque dejan de recibir la señal inhibidora de los KIR, y liberan perforina y granzimas.",
+      "tema": "innata-celular",
+      "subtema": "Reconocimiento de missing self",
+      "seccion": "B) Linfocitos Asesinos Naturales"
+    },
+    {
+      "id": "q04",
+      "stem": "Una mujer de 50 años con tuberculosis pulmonar tiene granulomas con macrófagos que destruyen micobacterias en su interior y secretan grandes cantidades de IL-12 y TNF-α, con aumento de MHC II y de CD80. ¿Qué estímulos polarizan al macrófago hacia este perfil?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-4, IL-13, LPS y señales de TLR",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IFN-γ, TNF-α, LPS y señales de TLR",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "IFN-γ, TNF-α, IL-10 y señales de TLR",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IFN-γ, IL-13, IL-10 y señales de TLR",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-4, IL-13, IL-10, TGF-β y LPS",
+          "correct": false
+        }
+      ],
+      "explanation": "El perfil M1 se polariza con IFN-γ, TNF-α, LPS y TLR, y es microbicida y proinflamatorio, como en la defensa contra Mycobacterium tuberculosis.",
+      "tema": "innata-celular",
+      "subtema": "Polarización M1",
+      "seccion": "M1 (clásicos)"
+    },
+    {
+      "id": "q05",
+      "stem": "Una mujer de 28 años con lupus eritematoso sistémico tiene complejos inmunes con IgG depositados en el glomérulo. El complemento se activa cuando C1q se une a estos complejos y sus proteasas C1r y C1s cortan C4 y C2. ¿Cuál es la C3 convertasa que se forma en esta vía?",
+      "options": [
+        {
+          "id": "a",
+          "text": "C3bBb, que rompe C3 en C3a y C3b",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "C4b2a, que rompe C5 en C5a y C5b",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "C4b2a, que rompe C3 en C3a y C3b",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "C3bBb3b, que rompe C5 en C5a y C5b",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "C5b67, que se inserta en la membrana",
+          "correct": false
+        }
+      ],
+      "explanation": "En la vía clásica C4b se une a C2a y forma la C3 convertasa C4b2a, que genera C3a, anafilotoxina, y C3b, opsonina.",
+      "tema": "complemento",
+      "subtema": "C3 convertasa clásica",
+      "seccion": "Vía clásica del complemento"
+    },
+    {
+      "id": "q06",
+      "stem": "Un lactante de 10 meses ingresa por sepsis meningocócica. En su suero el complemento se activa sobre la superficie bacteriana por hidrólisis espontánea de C3, sin anticuerpos ni lectinas, porque la superficie de la bacteria no tiene reguladores que inactiven al C3b. ¿Cuál es la C3 convertasa de esta vía y quién corta el factor B?",
+      "options": [
+        {
+          "id": "a",
+          "text": "C3bBb, con factor B cortado por el factor D",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "C3bBb, con factor B cortado por el factor H",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "C4b2a, con C2 cortado por MASP-1 y MASP-2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "C3bBb, con factor B cortado por la properdina",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "C4b2a, con C2 cortado por las proteasas C1r y C1s",
+          "correct": false
+        }
+      ],
+      "explanation": "En la vía alternativa el factor D corta al factor B unido a C3b y forma la C3 convertasa C3bBb, que la properdina estabiliza.",
+      "tema": "complemento",
+      "subtema": "C3 convertasa alternativa",
+      "seccion": "Vía alternativa"
+    },
+    {
+      "id": "q07",
+      "stem": "Un joven de 19 años consulta por fiebre, petequias y rigidez de nuca, y en el líquido cefalorraquídeo se identifica Neisseria meningitidis. Es su segundo episodio meningocócico y se sospecha un defecto de la vía terminal del complemento que forma el poro lítico en la membrana bacteriana. ¿Cuál es la composición del complejo de ataque a membrana?",
+      "options": [
+        {
+          "id": "a",
+          "text": "C3b, C6, C7, C8 y de 10 a 16 moléculas de C9",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "C5b, C6, C7, C8 y 10 a 16 moléculas de C9",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "C5a, C6, C7, C8 y de 10 a 16 moléculas de C9",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "C5b, C6, C7, C8 y 1 a 2 moléculas de C9",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "C5b, C6, C7 y 10 a 16 moléculas de C9",
+          "correct": false
+        }
+      ],
+      "explanation": "El MAC se forma con C5b, C6, C7 y C8 y la polimerización de 10 a 16 moléculas de C9, que crean un poro y causan lisis osmótica.",
+      "tema": "complemento",
+      "subtema": "Complejo de ataque a membrana",
+      "seccion": "Vía común terminal"
+    },
+    {
+      "id": "q08",
+      "stem": "Un hombre de 58 años ingresa a emergencia con fiebre de 39,5 grados, hipotensión y taquicardia dos días después de una infección urinaria. En los hemocultivos crece Escherichia coli y sus macrófagos liberan grandes cantidades de TNF-α e IL-1. ¿Qué receptor reconoce el lipopolisacárido bacteriano y con qué moléculas forma el complejo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "TLR2 y TLR6, con CD14 y MD-2 como cofactores",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "TLR4 y TLR5, con CD14 y MD-2 como cofactores",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "TLR5, con CD14 y MD-2 como cofactores",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TLR4, con CD16 y MD-2 como cofactores",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "TLR4, con CD14 y MD-2 como cofactores",
+          "correct": true
+        }
+      ],
+      "explanation": "El LPS de las gramnegativas es transportado por CD14 y presentado con MD-2 a TLR4, lo que activa NF-κB y libera TNF-α e IL-1.",
+      "tema": "innata-celular",
+      "subtema": "Reconocimiento del LPS por TLR4",
+      "seccion": "Presente en Membranas"
+    },
+    {
+      "id": "q09",
+      "stem": "Un hombre de 55 años con obesidad e hiperuricemia despierta con dolor intenso, calor y edema en la primera articulación metatarsofalángica. El líquido sinovial muestra cristales de urato y neutrófilos. En sus macrófagos se ensambla un complejo citosólico con ASC y procaspasa-1. ¿Qué receptor lo forma y qué citocinas libera?",
+      "options": [
+        {
+          "id": "a",
+          "text": "NLRP3, que libera IL-12, IL-15 e IL-18",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "NOD2, que libera IL-1β, IL-6 y TNF-α",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "NLRP3, que libera IL-1β e IL-18",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "NOD2, que libera IL-1β e IL-18",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "cGAS, que libera IFN-α e IFN-β",
+          "correct": false
+        }
+      ],
+      "explanation": "Los cristales de urato activan el inflamasoma NLRP3, que con ASC y procaspasa-1 genera caspasa-1 y libera IL-1β e IL-18.",
+      "tema": "innata-celular",
+      "subtema": "Inflamasoma NLRP3",
+      "seccion": "Receptores tipo NOD"
+    },
+    {
+      "id": "q10",
+      "stem": "Un hombre de 65 años con neumonía neumocócica tiene fiebre de 39 grados y elevación de proteínas plasmáticas sintetizadas por el hígado, como la proteína C reactiva. Los macrófagos, las células dendríticas y el endotelio activados secretan citocinas que inducen esta respuesta y la síntesis de prostaglandinas. ¿Cuál es la principal citocina inductora de las proteínas de fase aguda?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-12, principal inductora de la fase aguda",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-2, principal inductora de fase aguda",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IFN-α, principal inductor de la fase aguda",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-6, principal inductora de la fase aguda",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "TGF-β, principal inductora de la fase aguda",
+          "correct": false
+        }
+      ],
+      "explanation": "La IL-6 es la principal inductora de las proteínas de fase aguda hepáticas, junto con IL-1 y TNF-α, y participa en la fiebre.",
+      "tema": "inflamacion",
+      "subtema": "IL-6 y proteínas de fase aguda",
+      "seccion": "1) Moléculas solubles"
+    },
+    {
+      "id": "q11",
+      "stem": "Un joven de 20 años sufre un politraumatismo en un accidente de tránsito, con lesión muscular extensa y sin evidencia de infección. A las pocas horas presenta fiebre y aumento de citocinas inflamatorias. Sus células dañadas liberan moléculas propias que activan receptores del sistema innato. ¿Qué moléculas actúan como DAMPs?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ATP extracelular, peptidoglucano y ADN mitocondrial",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "ATP extracelular, ácido úrico y ADN mitocondrial",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "ATP extracelular, N-formilmetionina y ADN mitocondrial",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ATP extracelular, ácido úrico y ARN bicatenario",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Lipopolisacárido, ácido úrico y ADN mitocondrial",
+          "correct": false
+        }
+      ],
+      "explanation": "Los DAMPs son señales de daño propio, como el ATP extracelular, el ácido úrico y el ADN mitocondrial, reconocidos por los PRR.",
+      "tema": "generalidades",
+      "subtema": "DAMPs",
+      "seccion": "Sistema inmune innato"
+    },
+    {
+      "id": "q12",
+      "stem": "Un hombre de 46 años, fumador desde hace 30 años, consulta por tos productiva y neumonías a repetición. La biopsia de su epitelio respiratorio muestra pérdida de cilios, con mala eliminación del moco cargado de partículas y microorganismos. ¿Qué barrera física innata está alterada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Uniones estrechas del epitelio respiratorio",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Descamación continua del epitelio queratinizado",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mecanismo mucociliar del epitelio respiratorio",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Lágrimas y saliva sobre las mucosas oral y ocular",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Mecanismo mucociliar del epitelio genitourinario",
+          "correct": false
+        }
+      ],
+      "explanation": "El moco con mucina y los cilios respiratorios atrapan y expulsan partículas y microorganismos mediante el mecanismo mucociliar.",
+      "tema": "barreras",
+      "subtema": "Mecanismo mucociliar",
+      "seccion": "A) Barreras físicas"
+    },
+    {
+      "id": "q13",
+      "stem": "Una mujer de 30 años con síndrome de Sjögren tiene ojo seco y conjuntivitis repetidas por Staphylococcus aureus, una bacteria grampositiva. Sus lágrimas carecen de una enzima que hidroliza los enlaces del peptidoglucano de la pared bacteriana. ¿Qué secreción antimicrobiana está disminuida?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Defensinas, que forman poros en la membrana",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Lisozima, que forma poros en la membrana",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Lactoferrina, que hidroliza el peptidoglucano",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Catelicidinas, que neutralizan endotoxinas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Lisozima, que hidroliza el peptidoglucano",
+          "correct": true
+        }
+      ],
+      "explanation": "La lisozima rompe los enlaces del peptidoglucano de la pared de las bacterias grampositivas y forma parte de las secreciones antimicrobianas.",
+      "tema": "barreras",
+      "subtema": "Lisozima",
+      "seccion": "B) Barreras químicas"
+    },
+    {
+      "id": "q14",
+      "stem": "Un hombre de 38 años con leishmaniasis cutánea tiene macrófagos activados por IFN-γ que destruyen a los parásitos intracelulares. Estas células generan especies reactivas de nitrógeno a partir de un aminoácido mediante una enzima inducible. ¿Qué reacción produce óxido nítrico en el macrófago?",
+      "options": [
+        {
+          "id": "a",
+          "text": "iNOS, que convierte superóxido en peroxinitrito",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "NADPH oxidasa, que convierte O₂ en superóxido",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mieloperoxidasa, que convierte H₂O₂ y Cl⁻ en HOCl",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "iNOS, que convierte arginina en óxido nítrico",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Arginasa-1, que convierte arginina en óxido nítrico",
+          "correct": false
+        }
+      ],
+      "explanation": "La óxido nítrico sintasa inducible convierte arginina en óxido nítrico, que con el superóxido forma dióxido de nitrógeno y peroxinitrito.",
+      "tema": "innata-celular",
+      "subtema": "Especies reactivas de nitrógeno",
+      "seccion": "※MACRÓFAGOS"
+    },
+    {
+      "id": "q15",
+      "stem": "Una mujer de 44 años con sarcoidosis tiene granulomas en el hígado y en los pulmones. El patólogo describe la participación de los macrófagos residentes del hígado y de los alvéolos pulmonares, distintos de los macrófagos del bazo y de la piel. ¿Cómo se llaman estos dos tipos de macrófagos residentes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células de Kupffer y macrófagos alveolares",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Células de Kupffer y las células de Langerhans",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células de Kupffer y microglía cerebral",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Macrófagos esplénicos y macrófagos alveolares",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Microglía y macrófagos alveolares del pulmón",
+          "correct": false
+        }
+      ],
+      "explanation": "Los macrófagos del hígado son las células de Kupffer, y los del pulmón, en los alvéolos, son los macrófagos alveolares.",
+      "tema": "innata-celular",
+      "subtema": "Macrófagos residentes",
+      "seccion": "Tejido / Órgano"
+    },
+    {
+      "id": "q16",
+      "stem": "Una mujer de 60 años con una herida crónica en cicatrización y una parasitosis por helmintos tiene macrófagos que producen IL-10, TGF-β, VEGF y PDGF, expresan arginasa-1 y estimulan la síntesis de colágeno y la proliferación celular. ¿Qué subpoblación de macrófagos es y cuál es su función?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Macrófagos M1, dedicados a la reparación de los tejidos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Macrófagos M2, dedicados a la presentación antigénica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Macrófagos M2, dedicados a la reparación de tejidos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Macrófagos M1, dedicados a la acción microbicida",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Macrófagos M2, dedicados a la acción microbicida",
+          "correct": false
+        }
+      ],
+      "explanation": "El perfil M2 produce IL-10, TGF-β y factores de crecimiento, expresa arginasa-1 y favorece la síntesis de colágeno para la reparación tisular.",
+      "tema": "innata-celular",
+      "subtema": "Productos del macrófago M2",
+      "seccion": "Productos"
+    },
+    {
+      "id": "q17",
+      "stem": "Un hombre de 40 años con un absceso cutáneo por Staphylococcus aureus tiene neutrófilos circulantes que comienzan a rodar sobre el endotelio inflamado, que expresa E-selectina, mediante uniones débiles y transitorias. ¿Qué moléculas del leucocito reconocen a la E-selectina en esta etapa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "PECAM-1, molécula de la transmigración",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Sialil-Lewis X y PSGL-1 en el endotelio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Sialil-Lewis X e ICAM-1 en el leucocito activado",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Sialil-Lewis X y PSGL-1 en el leucocito",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "GlyCAM-1 y CD34, ligandos de la L-selectina",
+          "correct": false
+        }
+      ],
+      "explanation": "El rodamiento depende de selectinas, y los ligandos leucocitarios sialil-Lewis X y PSGL-1 se unen a la E-selectina y a la P-selectina.",
+      "tema": "trafico",
+      "subtema": "Rodamiento por selectinas",
+      "seccion": "2. Rodamiento"
+    },
+    {
+      "id": "q18",
+      "stem": "Un lactante de 8 meses con caída tardía del cordón umbilical, leucocitosis marcada e infecciones cutáneas sin formación de pus tiene neutrófilos que ruedan sobre el endotelio, pero no se adhieren firmemente a él. ¿Qué par de moléculas media normalmente la adhesión firme?",
+      "options": [
+        {
+          "id": "a",
+          "text": "LFA-1 del leucocito con VCAM-1 del endotelio",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "LFA-1 del leucocito con ICAM-1 del endotelio",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "VLA-4 del leucocito con ICAM-1 del endotelio",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "PECAM-1 del leucocito con LFA-1 del endotelio",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "PSGL-1 del leucocito con P-selectina del endotelio",
+          "correct": false
+        }
+      ],
+      "explanation": "En la adhesión firme la integrina LFA-1, o CD18, del leucocito se une a ICAM-1 del endotelio, y VLA-4 se une a VCAM-1.",
+      "tema": "trafico",
+      "subtema": "Adhesión firme por integrinas",
+      "seccion": "3. Adhesión firme"
+    },
+    {
+      "id": "q19",
+      "stem": "Un hombre de 25 años con apendicitis aguda tiene abundantes neutrófilos en la pared apendicular. Estas células migraron hacia la lesión atraídas por una quimiocina liberada por macrófagos y células endoteliales activadas. ¿Qué quimiocina y a qué célula atrae normalmente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CXCL8, atractora de neutrófilos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CXCL8, atractora de monocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CXCL10, atractora de linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CXCL8, atractora de linfocitos B",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CCL2, atractora de neutrófilos",
+          "correct": false
+        }
+      ],
+      "explanation": "La IL-8, o CXCL8, es un factor quimiotáctico que atrae a los neutrófilos hacia los sitios de inflamación o lesión.",
+      "tema": "inflamacion",
+      "subtema": "Quimiotaxis de neutrófilos",
+      "seccion": "※ NEUTRÓFILOS"
+    },
+    {
+      "id": "q20",
+      "stem": "Una mujer de 52 años con linfoma de células B recibe un anticuerpo IgG que recubre a las células tumorales. Sus linfocitos NK las destruyen liberando perforina y granzimas, aunque las células tumorales expresan MHC I normal. ¿Qué receptor de la célula NK reconoce el fragmento Fc de la IgG en este mecanismo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "FcγRI, o CD64, presente en macrófagos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "FcγRII, o CD32, presente en neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "FcεRI, presente en mastocitos y basófilos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "FcεRII, o CD23, regulador de los niveles de IgE",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "FcγRIII, o CD16, presente en células NK",
+          "correct": true
+        }
+      ],
+      "explanation": "Las NK reconocen la IgG unida a la diana mediante FcγRIII, o CD16, y liberan perforina y granzimas que inducen apoptosis, sin necesidad de MHC.",
+      "tema": "anticuerpos",
+      "subtema": "Citotoxicidad dependiente de anticuerpos",
+      "seccion": "B) Linfocitos Asesinos Naturales"
+    },
+    {
+      "id": "q21",
+      "stem": "Un niño de 5 años presenta una infección diseminada por Mycobacterium avium con formación deficiente de granulomas. Se detecta una mutación en el receptor de la citocina que producen los macrófagos para activar a las células NK y a los linfocitos Th1, con lo que disminuye el IFN-γ que activa al macrófago. ¿Qué receptor está alterado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Receptor de IL-10, que inhibe a los macrófagos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Receptor de IL-12, que activa NK y los Th1",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Receptor de IL-4, que polariza hacia M2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Receptor de IL-13, que polariza al macrófago a M2",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Receptor de TGF-β, que polariza hacia M2",
+          "correct": false
+        }
+      ],
+      "explanation": "Los macrófagos producen IL-12, que activa a NK y Th1 para secretar IFN-γ, y su defecto causa susceptibilidad a las micobacterias.",
+      "tema": "citocinas",
+      "subtema": "Eje IL-12 e IFN-γ",
+      "seccion": "B) Linfocitos Asesinos Naturales"
+    },
+    {
+      "id": "q22",
+      "stem": "Un hombre de 30 años con lepra lepromatosa desarrolla una respuesta rápida frente a los lípidos de la pared de las micobacterias. Un linfocito que combina rasgos innatos y adaptativos y madura en el timo reconoce estos antígenos lipídicos presentados por una molécula no convencional asociada al MHC. ¿Qué célula y qué molécula participan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocito NK, con la molécula CD1d",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocito NKT, con la molécula MHC II",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocito MAIT, con la molécula CD1d",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocito MAIT, con la molécula MR1",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocito NKT, con la molécula CD1d",
+          "correct": true
+        }
+      ],
+      "explanation": "Las células NKT reconocen antígenos lipídicos presentados por CD1d, una molécula no convencional asociada al MHC, y maduran en el timo.",
+      "tema": "innata-celular",
+      "subtema": "Células NKT y CD1d",
+      "seccion": "C) Linfocitos NKT"
+    },
+    {
+      "id": "q23",
+      "stem": "Una mujer de 26 años con una infección viral respiratoria presenta un aumento marcado de interferón tipo I en sangre. Una célula dendrítica hematopoyética que circula por la sangre y los tejidos detecta el ARN y el ADN virales con receptores endosómicos y es su principal fuente. ¿Qué células y qué receptores participan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Convencionales, con los TLR4, TLR5 y TLR8",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Plasmocitoides, con los TLR4, TLR5 y TLR8",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Foliculares, con los TLR7 y TLR9",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Plasmocitoides, con los TLR7 y TLR9",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Convencionales, con los TLR7, TLR8 y TLR9",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células dendríticas plasmocitoides usan TLR7 y TLR9 y producen IFN-α e IFN-β, con función de defensa antiviral.",
+      "tema": "innata-celular",
+      "subtema": "Células dendríticas plasmocitoides",
+      "seccion": "Plasmocitoides (pDC)"
+    },
+    {
+      "id": "q24",
+      "stem": "Un hombre de 22 años con amigdalitis presenta un ganglio cervical aumentado. En la biopsia, dentro de los centros germinales de los folículos linfoides se observan células de origen estromal que no expresan MHC II y que producen IL-6, BAFF y CXCL13. ¿Cuál es la función de estas células?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Activar y seleccionar los linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Presentar antígeno a los linfocitos T con MHC II",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Activar y seleccionar a los linfocitos B",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Activar a los linfocitos T mediante IL-12",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Producir interferón tipo I frente a los virus",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células dendríticas foliculares son de origen estromal, no presentan antígeno a los linfocitos T y activan y seleccionan linfocitos B.",
+      "tema": "innata-celular",
+      "subtema": "Células dendríticas foliculares",
+      "seccion": "Foliculares (FDC)"
+    },
+    {
+      "id": "q25",
+      "stem": "La biopsia hepática de un hombre de 45 años con una infección bacteriana muestra abundantes linfocitos innatos con un TCR de diversidad limitada. Estas células, que abundan en el hígado, se activan frente a un antígeno derivado de la síntesis microbiana. ¿Qué reconocen las células MAIT?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Metabolitos bacterianos de la vitamina B",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Metabolitos bacterianos de la vitamina K",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Péptidos bacterianos presentados por MHC II",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Péptidos bacterianos presentados por MHC I",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Metabolitos bacterianos de la vitamina A",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células MAIT expresan un TCR de diversidad limitada y reconocen metabolitos de la vitamina B, y abundan sobre todo en el hígado.",
+      "tema": "innata-celular",
+      "subtema": "Células MAIT",
+      "seccion": "E) Células MAIT"
+    },
+    {
+      "id": "q26",
+      "stem": "Un lactante de 10 meses con dermatitis atópica y eosinofilia presenta un aumento de células linfoides innatas que carecen de TCR y de BCR y producen IL-5 e IL-13. ¿Qué célula linfoide innata es, a qué perfil de linfocito T colaborador equivale y qué factor de transcripción la define?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ILC1, equivalente a Th1, con T-bet",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "ILC3, equivalente a Th17, con RORγt y IL-22",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ILC2, equivalente a Th2, con GATA-3",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "ILC2, equivalente a Th1, con GATA-3 e IL-5",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "ILC2, equivalente a Th2, con RORγt",
+          "correct": false
+        }
+      ],
+      "explanation": "Las ILC2 equivalen a los Th2, expresan GATA-3 y producen IL-4, IL-5, IL-9 e IL-13 frente a helmintos y en las alergias.",
+      "tema": "innata-celular",
+      "subtema": "ILC2 y Th2",
+      "seccion": "F) Células Linfoides Innata"
+    },
+    {
+      "id": "q27",
+      "stem": "Un hombre de 34 años con enfermedad de Crohn y candidiasis mucosa recurrente tiene una alteración de células linfoides innatas de la mucosa intestinal, dependientes del factor de transcripción RORγt, que producen IL-17 e IL-22. ¿Qué células son y contra qué microorganismos actúan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ILC1, contra virus y microorganismos intracelulares",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "ILC2, contra helmintos y reparación tisular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ILC3, contra virus y microorganismos intracelulares",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ILC1, contra bacterias extracelulares y hongos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "ILC3, contra bacterias extracelulares y hongos",
+          "correct": true
+        }
+      ],
+      "explanation": "Las ILC3 dependen de RORγt, producen IL-17, IL-22 y GM-CSF, y actúan en las mucosas contra bacterias extracelulares y hongos.",
+      "tema": "innata-celular",
+      "subtema": "ILC3 y mucosas",
+      "seccion": "F) Células Linfoides Innata"
+    },
+    {
+      "id": "q28",
+      "stem": "Un hombre de 47 años ingresa por fiebre y dolor torácico pleurítico, y la radiografía muestra una consolidación lobar. A las 8 horas se detecta la elevación de una proteína de fase aguda muy sensible que hará su pico cerca de las 48 horas. ¿Qué proteína es y cómo se comporta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Proteína C reactiva, reactante positivo lento",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Proteína C reactiva, reactante positivo rápido",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Fibrinógeno, reactante positivo de ascenso rápido",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Haptoglobina, reactante positivo de ascenso lento",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Proteína C reactiva, reactante negativo rápido",
+          "correct": false
+        }
+      ],
+      "explanation": "La proteína C reactiva aparece a las 6 a 8 horas y alcanza su pico hacia las 48 horas, y es un reactante positivo rápido y muy sensible.",
+      "tema": "inflamacion",
+      "subtema": "Cinética de la proteína C reactiva",
+      "seccion": "Proteína C reactiva"
+    },
+    {
+      "id": "q29",
+      "stem": "Una mujer de 58 años con artritis reumatoide activa tiene una velocidad de sedimentación globular de 85 mm/h. El laboratorio lo atribuye a una proteína de fase aguda que favorece la agregación de los eritrocitos y que además participa en la coagulación. ¿Qué proteína es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fibrinógeno, de ascenso lento",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Haptoglobina, de ascenso lento",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Ceruloplasmina, de ascenso lento",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "α1-antitripsina, de ascenso lento",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Ferritina, de ascenso lento",
+          "correct": false
+        }
+      ],
+      "explanation": "El fibrinógeno favorece la agregación de los eritrocitos, lo que aumenta la VSG, y además participa en la coagulación.",
+      "tema": "inflamacion",
+      "subtema": "Fibrinógeno y VSG",
+      "seccion": "Fibrinógeno"
+    },
+    {
+      "id": "q30",
+      "stem": "Un hombre de 42 años con anemia hemolítica por una válvula cardíaca mecánica tiene hemoglobina libre en el plasma. Una proteína de fase aguda se une a esta hemoglobina y evita que se pierda el hierro que contiene. ¿Qué proteína es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ferritina, que une hemoglobina libre",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Hepcidina, que reduce el hierro disponible",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Ceruloplasmina, que une hemoglobina libre",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Haptoglobina, que une hemoglobina libre",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Transferrina, que transporta el hierro",
+          "correct": false
+        }
+      ],
+      "explanation": "La haptoglobina se une a la hemoglobina libre y evita la pérdida de hierro, y es un reactante de fase aguda positivo.",
+      "tema": "inflamacion",
+      "subtema": "Haptoglobina",
+      "seccion": "Haptoglobina"
+    },
+    {
+      "id": "q31",
+      "stem": "Un hombre de 68 años con neumonía grave y edema de miembros inferiores tiene albúmina sérica de 2,4 g/dL, sin enfermedad hepática crónica ni pérdida renal. Su médico explica que en la inflamación aguda disminuye la síntesis hepática de ciertas proteínas. ¿Cuáles son reactantes de fase aguda negativos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Albúmina, haptoglobina y transtiretina",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Albúmina, transferrina y ferritina",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Albúmina, transferrina y transtiretina",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Fibrinógeno, transferrina y transtiretina",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Albúmina, ceruloplasmina y transtiretina",
+          "correct": false
+        }
+      ],
+      "explanation": "La albúmina, la transferrina y la transtiretina disminuyen en la inflamación por menor síntesis hepática, y la caída de albúmina reduce la presión oncótica y causa edema.",
+      "tema": "inflamacion",
+      "subtema": "Reactantes negativos",
+      "seccion": "Reactantes negativos"
+    },
+    {
+      "id": "q32",
+      "stem": "Un lactante de 12 meses con infecciones recurrentes por bacterias encapsuladas tiene un defecto de la opsonización mediada por complemento. Los fagocitos deben reconocer un fragmento del complemento depositado sobre la bacteria mediante receptores de superficie. ¿Qué fragmento actúa como opsonina y qué receptores lo reconocen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "C3a, reconocido por CR1, CR3 y CR4",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "C5a, reconocido por CR1, CR3 y CR4",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "C3b, reconocido por FcγRI, FcγRII y FcγRIII",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "C3b, reconocido por FcεRI, FcεRII y CR1",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "C3b, reconocido por CR1, CR3 y CR4",
+          "correct": true
+        }
+      ],
+      "explanation": "El C3b opsoniza a los microbios y es reconocido por los receptores de complemento CR1, CR3 y CR4 de los fagocitos.",
+      "tema": "complemento",
+      "subtema": "Opsonización por C3b",
+      "seccion": "2) Complemento"
+    },
+    {
+      "id": "q33",
+      "stem": "Una mujer de 24 años con lupus eritematoso sistémico y glomerulonefritis tiene un CH50 muy bajo con un AH50 normal. El médico indica que los complejos inmunes consumieron de forma masiva componentes del complemento. ¿Qué actividad mide el CH50 y por qué está disminuido?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vía clásica, por consumo masivo de C1q, C2 y C4",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Vía alternativa, por consumo masivo de factores B y D",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Vía de las lectinas, por consumo masivo de MBL y MASP",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Vía clásica, por producción aumentada de C1q, C2 y C4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Vía alternativa, por consumo masivo de C1q, C2 y C4",
+          "correct": false
+        }
+      ],
+      "explanation": "El CH50 mide la actividad de la vía clásica y disminuye por consumo masivo del complemento, como en el lupus y en la glomerulonefritis.",
+      "tema": "complemento",
+      "subtema": "CH50 y vía clásica",
+      "seccion": "III. VÍAS DEL COMPLEMENTO"
+    },
+    {
+      "id": "q34",
+      "stem": "Un niño de 2 años con infecciones respiratorias recurrentes tiene niveles bajos de una proteína plasmática que reconoce manosa y fucosa en la superficie de los microorganismos, sin participación de anticuerpos. ¿Qué proteínas reconocen los azúcares y qué proteasas activan a esta vía?",
+      "options": [
+        {
+          "id": "a",
+          "text": "MBL o ficolinas, con las proteasas C1r y C1s",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "C1q, con las proteasas MASP-1 y MASP-2",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "C1q, con las serina proteasas C1r y C1s",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "MBL o ficolinas, con las MASP-1 y MASP-2",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Factor B, con el factor D y la properdina",
+          "correct": false
+        }
+      ],
+      "explanation": "En la vía de las lectinas, MBL o las ficolinas reconocen manosa y fucosa y activan MASP-1 y MASP-2, que cortan C4 y C2.",
+      "tema": "complemento",
+      "subtema": "Vía de las lectinas",
+      "seccion": "Vía de las lectinas"
+    },
+    {
+      "id": "q35",
+      "stem": "Un lactante de 9 meses con infecciones piógenas graves y recurrentes tiene una mutación que impide la señalización de casi todos los receptores tipo Toll, por falta de la proteína adaptadora que usan los TLR 1, 2, 4, 5, 6, 7, 8 y 9. ¿Cuál es esa proteína y cuál TLR no la necesita?",
+      "options": [
+        {
+          "id": "a",
+          "text": "TRIF, y el TLR3 usa MyD88 en su lugar",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "MyD88, y el TLR3 usa TRIF en su lugar",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "MyD88, y el TLR9 usa el adaptador TRIF",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "MyD88, y el TLR5 usa el adaptador TRIF",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "MyD88, y el TLR7 usa el adaptador TRIF",
+          "correct": false
+        }
+      ],
+      "explanation": "MyD88 es el adaptador de casi todos los TLR, salvo TLR3, que usa TRIF, y TLR4 utiliza ambos adaptadores.",
+      "tema": "innata-celular",
+      "subtema": "Adaptadores MyD88 y TRIF",
+      "seccion": "Presente en Membranas"
+    },
+    {
+      "id": "q36",
+      "stem": "Un hombre de 29 años con neumonía por Streptococcus pneumoniae tiene fagocitos que han internalizado bacterias. En el endosoma de sus células dendríticas se detecta ADN bacteriano rico en dinucleótidos CpG no metilados. ¿Qué receptor tipo Toll reconoce este ligando y dónde se ubica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "TLR3, ubicado en la membrana del endosoma",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "TLR7, ubicado en la membrana del endosoma tardío",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "TLR5, ubicado en la membrana plasmática",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TLR9, ubicado en la membrana del endosoma",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "TLR4, ubicado en la membrana plasmática celular",
+          "correct": false
+        }
+      ],
+      "explanation": "El TLR9 se ubica en el endosoma y reconoce ADN bacteriano rico en CpG no metilados, con señalización por MyD88.",
+      "tema": "innata-celular",
+      "subtema": "Ligandos de los TLR",
+      "seccion": "Presente en Membranas"
+    },
+    {
+      "id": "q37",
+      "stem": "Un hombre de 50 años con neutropenia por quimioterapia desarrolla candidiasis invasiva por Candida albicans. Sus macrófagos reconocen carbohidratos de la pared fúngica mediante un receptor de membrana de la familia de las lectinas tipo C que favorece la fagocitosis. ¿Qué receptor es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "NOD2, receptor citosólico del peptidoglucano",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "TLR4, receptor de lectina tipo C de membrana",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "RIG-I, receptor de lectina tipo C citosólico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Dectina-1, receptor de lectina tipo C",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "cGAS, sensor citosólico del ADN bicatenario",
+          "correct": false
+        }
+      ],
+      "explanation": "Dectina-1 y el receptor de manosa son receptores de lectina tipo C que reconocen carbohidratos de hongos, micobacterias y parásitos.",
+      "tema": "innata-celular",
+      "subtema": "Receptores de lectina tipo C",
+      "seccion": "B) Receptores de Lectina"
+    },
+    {
+      "id": "q38",
+      "stem": "Una mujer de 32 años con rinitis alérgica y asma tiene IgE específica contra ácaros unida a la superficie de sus mastocitos. Al inhalar el alérgeno, estas células se degranulan y liberan histamina. ¿Qué receptor de alta afinidad para IgE, presente en mastocitos, basófilos y eosinófilos, media esta respuesta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "FcεRII, de baja afinidad en mastocitos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "FcγRI, de alta afinidad en fagocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "FcεRI, de alta afinidad en mastocitos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "FcγRII, o CD32, que une IgG en fagocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "FcγRIII, de baja afinidad en las NK",
+          "correct": false
+        }
+      ],
+      "explanation": "El FcεRI es el receptor de alta afinidad para IgE, y la unión de IgE y antígeno sobre él provoca la degranulación de histamina y otros mediadores.",
+      "tema": "hipersensibilidad",
+      "subtema": "Receptor FcεRI",
+      "seccion": "C) Receptores para opsoninas"
+    },
+    {
+      "id": "q39",
+      "stem": "Un joven de 24 años con diarrea crónica, dolor abdominal y fístulas perianales es diagnosticado de enfermedad de Crohn. El estudio genético muestra una mutación en un receptor citosólico que detecta el peptidoglucano de bacterias grampositivas y gramnegativas y activa NF-κB. ¿Qué receptor está alterado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "NOD1, que detecta grampositivas y gramnegativas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "NOD2, que detecta cristales de ácido úrico y ATP",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "NLRP3, que detecta cristales de ácido úrico y ATP",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "RIG-I, que detecta ARN viral bicatenario",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "NOD2, que detecta grampositivas y gramnegativas",
+          "correct": true
+        }
+      ],
+      "explanation": "NOD2 reconoce peptidoglucano de bacterias grampositivas y gramnegativas y activa NF-κB y MAPK, y sus mutaciones se asocian a la enfermedad de Crohn.",
+      "tema": "innata-celular",
+      "subtema": "NOD2 y enfermedad de Crohn",
+      "seccion": "Receptores tipo NOD"
+    },
+    {
+      "id": "q40",
+      "stem": "Un hombre de 40 años con infección por virus del herpes simple tiene ADN bicatenario viral en el citosol de sus células. Un sensor produce un segundo mensajero que activa a STING y luego a TBK1 e IRF3, con producción de interferones tipo I. ¿Qué sensor y qué segundo mensajero participan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "cGAS, que sintetiza cGAMP",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "RIG-I, que sintetiza cGAMP",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "NLRP3, que sintetiza cGAMP",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "MAVS, que sintetiza cGAMP",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "cGAS, que sintetiza IL-6",
+          "correct": false
+        }
+      ],
+      "explanation": "La cGAS detecta ADN bicatenario citosólico y sintetiza cGAMP, que activa STING, TBK1 e IRF3 y produce interferones tipo I.",
+      "tema": "innata-celular",
+      "subtema": "Vía cGAS y STING",
+      "seccion": "CDS (Cytosolic"
+    },
+    {
+      "id": "q41",
+      "stem": "Un niño de 6 años con bronquiolitis por virus sincitial respiratorio, un virus de ARN, presenta una respuesta antiviral rápida. Un receptor citoplasmático detecta el ARN viral y señaliza por la proteína MAVS. ¿Qué receptor es y qué producción desencadena?",
+      "options": [
+        {
+          "id": "a",
+          "text": "TLR7, con producción de IFN tipo I",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "RIG-I, con producción de IFN tipo I",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "NLRP3, con producción de IL-1β e IL-18",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "NOD2, con producción de IL-1β e IL-18",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "cGAS, con producción de IFN tipo I",
+          "correct": false
+        }
+      ],
+      "explanation": "RIG-I reconoce ARN viral en el citoplasma y señaliza por MAVS hacia IRF3, IRF7 y NF-κB, con producción de IFN tipo I.",
+      "tema": "innata-celular",
+      "subtema": "RIG-I y MAVS",
+      "seccion": "RLR: RIG"
+    },
+    {
+      "id": "q42",
+      "stem": "Una mujer de 40 años con fiebre, mialgias y una infección viral aguda presenta un aumento de la actividad de sus células NK y de sus macrófagos. El inmunólogo explica que este efecto depende de citocinas activadoras producidas al inicio de la respuesta innata. ¿Qué citocinas activan a las células NK y a los macrófagos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-12, IL-15 e IL-18",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-10, IL-15 e IL-18",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-12, IL-10, IL-4 y TGF-β",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TNF-α, IL-1, IL-6 y IL-8",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-12, IL-15 e TGF-β",
+          "correct": false
+        }
+      ],
+      "explanation": "Las citocinas activadoras de las células NK y de los macrófagos son IL-12, IL-15 e IL-18.",
+      "tema": "citocinas",
+      "subtema": "Citocinas activadoras de NK",
+      "seccion": "V. Citoquinas"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

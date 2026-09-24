@@ -3,7 +3,1268 @@
   "key": "inmunologia/sgp-4-melanoma",
   "title": "SGP 4 — Inmunidad y cáncer: melanoma y evasión del sistema inmune",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Una mujer de 67 años, agricultora de Junín, tiene un melanoma del cuero cabelludo con metástasis en ganglios y pulmón. Su oncólogo indica pembrolizumab. La biopsia mostró linfocitos T CD8⁺ dentro del tumor con PD-1 elevado y células tumorales con abundante PD-L1. ¿Qué efecto busca este fármaco sobre los linfocitos T intratumorales?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Bloquea la unión de PD-1 con PD-L1 y restablece la citotoxicidad del linfocito",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Bloquea la unión de CTLA-4 con CD80 y CD86 y restablece la coestimulación por CD28",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Bloquea la unión de CD28 con CD80 y CD86 y reduce su capacidad citotóxica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Bloquea la unión de TIM-3 con su ligando y devuelve su capacidad coestimuladora",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Bloquea la unión de Fas con FasL y evita la apoptosis por activación repetida",
+          "correct": false
+        }
+      ],
+      "explanation": "El pembrolizumab es anti-PD-1. Al impedir su unión a PD-L1, el linfocito T CD8⁺ agotado dentro del tumor recupera su capacidad citotóxica.",
+      "tema": "tumoral",
+      "subtema": "Bloqueo de PD-1",
+      "seccion": "6. ¿Qué son los checkpoints inmunológicos?"
+    },
+    {
+      "id": "q02",
+      "stem": "Una mujer de 71 años con melanoma respondió al inicio a la inmunoterapia, pero a los ocho meses la lesión vuelve a crecer. La biopsia muestra células tumorales casi sin moléculas de presentación de péptidos en la membrana, rodeadas de abundantes linfocitos T CD8⁺ que no las reconocen. ¿Qué alteración de las células tumorales explica la recaída?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Menor expresión de MHC II y menor presentación a linfocitos T CD4⁺ colaboradores",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Mayor expresión de PD-L1 y mayor agotamiento de los linfocitos T CD8⁺ infiltrantes",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Menor expresión de MHC I y menor presentación a linfocitos T CD8⁺ citotóxicos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Menor expresión de B7 y menor coestimulación de los linfocitos T CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Mayor expresión de MHC I y mayor presentación a linfocitos T CD8⁺ infiltrantes",
+          "correct": false
+        }
+      ],
+      "explanation": "Sin MHC I el tumor no presenta péptidos y los linfocitos T CD8⁺ no lo reconocen, aunque pueda quedar más expuesto a las células NK.",
+      "tema": "tumoral",
+      "subtema": "Pérdida de MHC I",
+      "seccion": "1. Selección de variantes menos inmunogénicas"
+    },
+    {
+      "id": "q03",
+      "stem": "Un hombre de 45 años con un tumor sólido participa en un ensayo clínico. En el ganglio, sus células presentadoras exponen péptidos tumorales en MHC I, pero expresan muy poco B7. Los linfocitos T CD8⁺ reconocen el péptido con su TCR y aun así quedan anérgicos. ¿Qué señal necesaria para la activación del linfocito T falta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Señal 1, el reconocimiento del péptido por el TCR del linfocito T CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Señal 3, las citocinas del microambiente que orientan la diferenciación del linfocito",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Señal 2, la coestimulación de CTLA-4 con CD80 y CD86 en la célula presentadora",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Señal 2, la coestimulación de CD40L con CD40 en la célula presentadora",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Señal 2, la coestimulación de CD28 con CD80 y CD86 en la célula presentadora",
+          "correct": true
+        }
+      ],
+      "explanation": "La señal 2 es la coestimulación por CD28 con CD80 o CD86. Sin ella, aunque exista señal 1, el linfocito T queda anérgico.",
+      "tema": "coestimulacion",
+      "subtema": "Señal 2 de coestimulación",
+      "seccion": "1. ¿Cómo se activan y cómo se regula la respuesta de linfocitos T?"
+    },
+    {
+      "id": "q04",
+      "stem": "Una mujer de 52 años con melanoma extirpado hace cinco años se controla con biopsias seriadas de un ganglio sospechoso. Se observan células tumorales latentes rodeadas de linfocitos T CD8⁺ y células NK, sin crecimiento neto, pero tampoco desaparecen. ¿En qué fase de la inmunovigilancia se encuentra?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Eliminación, con control del crecimiento sin erradicar el tumor",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Equilibrio, con destrucción completa de las células tumorales",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Escape, con crecimiento tumoral que evade la respuesta inmune",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Equilibrio, con control del crecimiento sin erradicar el tumor",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Eliminación, con destrucción completa de todas las células tumorales",
+          "correct": false
+        }
+      ],
+      "explanation": "En la fase de equilibrio el sistema inmune controla el crecimiento del tumor sin erradicarlo. Después el tumor puede pasar a la fase de escape.",
+      "tema": "tumoral",
+      "subtema": "Fases de la inmunovigilancia",
+      "seccion": "4. ¿Qué es la inmunovigilancia?"
+    },
+    {
+      "id": "q05",
+      "stem": "Un agricultor de 55 años con exposición solar crónica tiene un melanoma con carga mutacional muy alta. En el tumor se detectan proteínas mutadas ausentes en sus células normales, y los linfocitos T CD8⁺ reconocen péptidos derivados de ellas. ¿Cómo se denominan estos antígenos que surgen de novo por mutación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Neoantígenos, que surgen de genes normales del tumor",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Neoantígenos, que surgen de genes mutados del propio tumor",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Antígenos asociados a tumores, que surgen de genes mutados",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Antígenos oncofetales, que surgen de genes fetales reexpresados",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Antígenos virales, que surgen de genes de un virus del tumor",
+          "correct": false
+        }
+      ],
+      "explanation": "Los neoantígenos son proteínas codificadas por genes mutados que parecen extrañas al sistema inmune y surgen de novo durante el desarrollo del cáncer.",
+      "tema": "tumoral",
+      "subtema": "Neoantígenos tumorales",
+      "seccion": "1º Reconocimiento inmune"
+    },
+    {
+      "id": "q06",
+      "stem": "Una mujer de 58 años con melanoma tiene un tumor con expresión muy reducida de MHC I y abundantes moléculas de estrés en la superficie. En un cocultivo, sus células NK lisan con eficiencia a las células tumorales. ¿Qué combinación de señales activa a las células NK?",
+      "options": [
+        {
+          "id": "a",
+          "text": "KAR activado por moléculas de estrés y KIR activado por el MHC I",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "KAR inactivo por falta de moléculas de estrés y KIR activado por MHC I",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "KAR activado por moléculas de estrés y KIR sin activar por falta de MHC I",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "KIR activado por moléculas de estrés y KAR sin activar por falta de MHC I tumoral",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "KAR activado por MHC I y KIR sin activar por falta de moléculas de estrés tumorales",
+          "correct": false
+        }
+      ],
+      "explanation": "Las moléculas de estrés activan KAR y, al faltar MHC I, no se activa KIR. Sin ese freno inhibidor, la célula NK lisa al tumor.",
+      "tema": "innata-celular",
+      "subtema": "Activación de células NK",
+      "seccion": "2º Mecanismos efectores"
+    },
+    {
+      "id": "q07",
+      "stem": "Una mujer de 72 años con melanoma tiene en la biopsia abundantes linfocitos T CD8⁺ que secretan IFN-γ. Las células tumorales cercanas a ellos expresan mucho PD-L1, mientras que las zonas sin linfocitos casi no lo expresan. ¿Qué mecanismo explica esta distribución?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El IFN-γ de los linfocitos T induce PD-1 en las células tumorales",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El IFN-γ de los linfocitos T reduce PD-L1 en las células tumorales",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La IL-10 de los linfocitos T reguladores induce PD-L1 en las células tumorales",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La IL-2 de los linfocitos T efectores induce PD-L1 en las células tumorales",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El IFN-γ de los linfocitos T induce PD-L1 en las células tumorales",
+          "correct": true
+        }
+      ],
+      "explanation": "El IFN-γ liberado por los linfocitos T induce PD-L1 en el tumor, que frena a esos mismos linfocitos. Cuanto más atacan, más se frenan.",
+      "tema": "tumoral",
+      "subtema": "PD-L1 inducido por IFN-γ",
+      "seccion": "2. Expresión de moléculas inhibidoras"
+    },
+    {
+      "id": "q08",
+      "stem": "Una mujer de 69 años con melanoma avanzado tiene abundantes linfocitos T CD4⁺ con alta expresión de CD25 y FOXP3 en la biopsia tumoral. Los linfocitos T CD8⁺ vecinos reconocen el antígeno, pero proliferan poco porque queda escasa la citocina que necesitan. ¿Qué citocina consumen los linfocitos T reguladores y por qué molécula?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-2, mediante CD28, receptor de coestimulación",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-2, mediante CD25, cadena α del receptor de IL-2",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "IL-7, mediante CD127, cadena α del receptor de IL-7",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-4, mediante CD124, cadena α del receptor de IL-4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-15, mediante CD215, cadena α del receptor de IL-15",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T reguladores consumen IL-2 con su CD25, por lo que queda menos IL-2 para que proliferen los linfocitos T efectores.",
+      "tema": "regulacion",
+      "subtema": "Consumo de IL-2 por Treg",
+      "seccion": "3. Expansión de poblaciones inmunosupresoras"
+    },
+    {
+      "id": "q09",
+      "stem": "Una mujer de 34 años con linfoma B difuso de células grandes, refractario a dos líneas de quimioterapia, recibe una infusión de sus propios linfocitos T modificados con un vector lentiviral. Al reconocer CD19 en el linfoma, estas células se activan sin necesitar presentación por MHC. ¿Qué característica del receptor quimérico permite esa activación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Combina el reconocimiento de un anticuerpo con la maquinaria fagocítica del macrófago tisular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Combina el reconocimiento de un MHC I con la maquinaria citotóxica del linfocito T",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Combina el reconocimiento de un TCR con la maquinaria citotóxica de la célula NK",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Combina el reconocimiento de un anticuerpo con la maquinaria citotóxica del linfocito T",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Combina el reconocimiento de un TCR restringido por MHC con la citotoxicidad del linfocito T",
+          "correct": false
+        }
+      ],
+      "explanation": "El CAR une el reconocimiento de antígeno de un anticuerpo con la maquinaria citotóxica del linfocito T, por eso no depende del MHC.",
+      "tema": "tumoral",
+      "subtema": "Estructura del receptor CAR",
+      "seccion": "C) Transferencia adoptiva de linfocitos T modificados con CAR"
+    },
+    {
+      "id": "q10",
+      "stem": "Un hombre de 66 años con carcinoma de colon desarrolla metástasis hepáticas. En la biopsia, las células del borde invasor perdieron la adhesión entre ellas, ganaron movilidad y secretan enzimas que degradan la matriz extracelular. ¿Qué cambio de expresión se asocia con esta pérdida de adhesión?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Menor expresión de E-cadherina, con mayor movilidad celular",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Mayor expresión de E-cadherina, con mayor movilidad celular",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Menor expresión de metaloproteinasas, con mayor movilidad celular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mayor expresión de trombospondina, con mayor movilidad celular",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Menor expresión de VEGF, con mayor movilidad celular",
+          "correct": false
+        }
+      ],
+      "explanation": "En la transición epitelio-mesénquima cae la E-cadherina, la célula pierde adhesión y gana movilidad, mientras las metaloproteinasas degradan la matriz para invadir.",
+      "tema": "tumoral",
+      "subtema": "Transición epitelio-mesénquima",
+      "seccion": "Hallmarks clásicos"
+    },
+    {
+      "id": "q11",
+      "stem": "Un hombre de 60 años con melanoma metastásico recibe ipilimumab. Su oncólogo explica que, sin el fármaco, el receptor CTLA-4 de los linfocitos T frena su activación en el ganglio porque interfiere con la señal 2. ¿Cómo logra CTLA-4 este freno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Compite con CD28 por MHC II en la célula presentadora de antígeno",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Compite con PD-1 por PD-L1 en la célula tumoral que expresa el ligando inhibidor",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Compite con el TCR por el péptido en el MHC I de la célula presentadora",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Compite con CD40L por CD40 en la célula presentadora de antígeno",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Compite con CD28 por CD80 y CD86 en la célula presentadora de antígeno",
+          "correct": true
+        }
+      ],
+      "explanation": "CTLA-4 compite con CD28 por CD80 y CD86 en la célula presentadora, así que reduce la coestimulación y frena la activación del linfocito T.",
+      "tema": "coestimulacion",
+      "subtema": "Competencia de CTLA-4",
+      "seccion": "1. ¿Cómo se activan y cómo se regula la respuesta de linfocitos T?"
+    },
+    {
+      "id": "q12",
+      "stem": "Un hombre de 41 años con hepatitis viral crónica tiene activación persistente de linfocitos T. Se detecta estimulación repetida del TCR con aumento de Fas y de su ligando, y luego una reducción de los clones activados que evita la expansión excesiva. ¿Qué mecanismo explica esta contracción de los linfocitos T?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Apoptosis por citotoxicidad mediada por perforinas y granzimas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Apoptosis por activación repetida mediada por Fas y FasL",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Apoptosis por daño del ADN mediada por p53 y BAX",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Agotamiento por inhibición mediada por PD-1 y PD-L1",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Anergia por bloqueo de la coestimulación mediado por CTLA-4",
+          "correct": false
+        }
+      ],
+      "explanation": "La estimulación crónica del TCR aumenta Fas y FasL, y su interacción induce apoptosis del linfocito, lo que evita la expansión excesiva.",
+      "tema": "regulacion",
+      "subtema": "Apoptosis por activación repetida",
+      "seccion": "1. ¿Cómo se activan y cómo se regula la respuesta de linfocitos T?"
+    },
+    {
+      "id": "q13",
+      "stem": "Una mujer de 63 años con melanoma participa en un ensayo en el que sus linfocitos T CD4⁺ vírgenes reciben señal 1 y señal 2 de una célula presentadora dentro de un microambiente rico en TGF-β. Los investigadores preguntan hacia qué población se diferenciarán bajo esa señal 3. ¿Cuál es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos T cooperadores tipo 1, con secreción de IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos T cooperadores tipo 2, con secreción de IL-4 e IL-5 y humoral",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos T reguladores, con secreción de IL-10 y de TGF-β",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Linfocitos T cooperadores tipo 17, con secreción de IL-17",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos T foliculares, con secreción de IL-21 y ayuda a B",
+          "correct": false
+        }
+      ],
+      "explanation": "El TGF-β orienta la diferenciación hacia linfocitos T reguladores, que secretan IL-10 y TGF-β. La IL-12 orienta hacia Th1 y la IL-4 hacia Th2.",
+      "tema": "diferenciacion-t",
+      "subtema": "Señal 3 y diferenciación",
+      "seccion": "1. ¿Cómo se activan y cómo se regula la respuesta de linfocitos T?"
+    },
+    {
+      "id": "q14",
+      "stem": "Un hombre de 79 años sano, sin infección ni enfermedad aguda, presenta valores persistentemente elevados de IL-6 y TNF-α en un chequeo. Se documenta además lipopolisacárido circulante aumentado por un defecto de la barrera epitelial y del tejido linfoide de la mucosa intestinal. ¿Qué mecanismo mantiene esta inflamación de bajo grado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Traslocación de LPS con estimulación aguda de TLR3",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Traslocación de LPS con estimulación sostenida de TLR5",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Traslocación de flagelina con estimulación crónica de TLR5",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Traslocación de LPS con estimulación crónica de TLR4",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Traslocación de ADN bacteriano con estimulación crónica de TLR9",
+          "correct": false
+        }
+      ],
+      "explanation": "El defecto de la barrera y del MALT permite la traslocación de LPS, que estimula de forma crónica TLR4 y mantiene activo el sistema innato.",
+      "tema": "innata-celular",
+      "subtema": "Inflammaging y LPS",
+      "seccion": "2. ¿Qué es la inmunosenescencia?"
+    },
+    {
+      "id": "q15",
+      "stem": "Un hombre de 82 años ingresa con neumonía neumocócica y bacteriemia. Su hemograma muestra un recuento normal de neutrófilos, pero los estudios funcionales in vitro revelan alteraciones de estas células coherentes con el envejecimiento inmunológico. ¿Qué conjunto de cambios presentan sus neutrófilos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Menor quimiotaxis, menor fagocitosis y menor burst respiratorio",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Menor migración, menor fagocitosis y mayor burst respiratorio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mayor quimiotaxis, menor fagocitosis y menor burst respiratorio en el tejido",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Menor quimiotaxis, mayor fagocitosis y menor burst respiratorio en el tejido",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Mayor quimiotaxis, mayor fagocitosis y mayor burst respiratorio",
+          "correct": false
+        }
+      ],
+      "explanation": "Con la edad los neutrófilos migran y atraviesan menos el endotelio, fagocitan menos y generan menos burst respiratorio, lo que favorece las infecciones bacterianas.",
+      "tema": "innata-celular",
+      "subtema": "Neutrófilos en el envejecimiento",
+      "seccion": "2. ¿Qué es la inmunosenescencia?"
+    },
+    {
+      "id": "q16",
+      "stem": "Una mujer de 57 años no fumadora con adenocarcinoma de pulmón tiene una mutación activadora de EGFR. Al cultivar sus células tumorales, estas proliferan aun sin factores de crecimiento en el medio, porque el receptor tirosina cinasa está activado de forma constitutiva. ¿Qué característica del cáncer ilustra este hallazgo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Autosuficiencia en señales de crecimiento por genes supresores inactivados",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Insensibilidad a señales de crecimiento por oncogenes activados",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Evasión de la apoptosis por sobreexpresión de genes antiapoptóticos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Autosuficiencia en señales de crecimiento por oncogenes activados",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Potencial replicativo ilimitado por activación de la telomerasa",
+          "correct": false
+        }
+      ],
+      "explanation": "Las mutaciones activadoras de oncogenes como EGFR o RAS mantienen activa la señal de crecimiento, así que la célula ya no depende de factores externos.",
+      "tema": "tumoral",
+      "subtema": "Autosuficiencia de crecimiento",
+      "seccion": "Hallmarks clásicos"
+    },
+    {
+      "id": "q17",
+      "stem": "Un hombre de 64 años con carcinoma de colon recibe quimioterapia que daña el ADN de las células tumorales, pero estas sobreviven. El estudio molecular muestra pérdida de la proteína que normalmente induce apoptosis frente al daño del ADN. ¿Qué proteína falta en este tumor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "TP53, que induce la apoptosis frente al daño del ADN",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "RB, que induce la apoptosis frente al daño del ADN",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "BCL-2, que bloquea la apoptosis frente al daño del ADN",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "BRCA1, que repara el ADN dañado por recombinación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "MMR, que corrige los errores de apareamiento del ADN replicado",
+          "correct": false
+        }
+      ],
+      "explanation": "La pérdida de p53, que normalmente induce apoptosis frente al daño del ADN, permite que la célula tumoral sobreviva pese al daño genético.",
+      "tema": "tumoral",
+      "subtema": "Evasión de la apoptosis",
+      "seccion": "Hallmarks clásicos"
+    },
+    {
+      "id": "q18",
+      "stem": "Un hombre de 60 años con un carcinoma renal de 6 cm tiene una angiografía con una red de vasos tortuosos y anómalos alrededor de la masa. El patólogo explica que las células tumorales secretan un factor que estimula al endotelio vecino y suprimen inhibidores como la trombospondina. ¿Qué factor secreta el tumor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Trombospondina, que estimula la formación de vasos nuevos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "VEGF, que estimula el crecimiento de vasos sanguíneos nuevos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "VEGF, que inhibe el crecimiento de vasos sanguíneos nuevos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IGF-1, que estimula el crecimiento de los tejidos periféricos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "NGF, que estimula la supervivencia de las neuronas sensitivas",
+          "correct": false
+        }
+      ],
+      "explanation": "El tumor produce VEGF y suprime inhibidores como la trombospondina. Así forma vasos propios que le dan oxígeno y nutrientes y favorecen la metástasis.",
+      "tema": "tumoral",
+      "subtema": "Angiogénesis sostenida",
+      "seccion": "Hallmarks clásicos"
+    },
+    {
+      "id": "q19",
+      "stem": "Una mujer de 49 años con un tumor de mama se estudia con PET con fluorodesoxiglucosa, que muestra una captación muy alta de glucosa en la masa. El análisis metabólico del tumor revela producción de lactato aun con oxígeno abundante y numerosos metabolitos para biosíntesis. ¿Qué nombre recibe este fenómeno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Efecto Warburg, con glucólisis anaerobia por falta de oxígeno",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Efecto Pasteur, con glucólisis aerobia y metabolitos para la biosíntesis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Efecto Crabtree, con inhibición de la respiración mitocondrial por la glucosa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Efecto Randle, con competencia entre ácidos grasos y glucosa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Efecto Warburg, con glucólisis aerobia y metabolitos para biosíntesis",
+          "correct": true
+        }
+      ],
+      "explanation": "El efecto Warburg es la preferencia del tumor por la glucólisis aerobia, incluso con oxígeno, que genera metabolitos útiles para la biosíntesis.",
+      "tema": "tumoral",
+      "subtema": "Efecto Warburg",
+      "seccion": "Hallmarks clásicos"
+    },
+    {
+      "id": "q20",
+      "stem": "Un hombre de 34 años con trasplante renal desde hace seis años recibe inmunosupresores. Consulta por una lesión violácea en la piel y la biopsia confirma sarcoma de Kaposi. Su nefrólogo señala que este caso ilustra una de las evidencias del papel del sistema inmune frente al cáncer. ¿A cuál evidencia se refiere?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mayor incidencia de tumores en ratones inmunizados con células irradiadas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Menor incidencia de ciertos tumores en personas con deficiencias inmunológicas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mayor incidencia de ciertos tumores en personas con deficiencias inmunológicas",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Mayor remisión de tumores en pacientes que reciben bloqueo terapéutico de PD-1 o CTLA-4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Mayor escape de tumores que activan receptores inhibidores de los linfocitos T CD8⁺",
+          "correct": false
+        }
+      ],
+      "explanation": "Las personas con deficiencias inmunológicas tienen mayor incidencia de ciertos tumores, lo que muestra que el sistema inmune protege al prevenir su desarrollo.",
+      "tema": "tumoral",
+      "subtema": "Inmunodeficiencia y tumores",
+      "seccion": "4. ¿Qué es la inmunovigilancia?"
+    },
+    {
+      "id": "q21",
+      "stem": "Un hombre de 47 años tiene dos melanomas primarios independientes, uno en el hombro y otro en el muslo. En el laboratorio, sus linfocitos T expandidos frente a células irradiadas del tumor del hombro lisan esas células, pero no las del tumor del muslo. ¿Qué explica esta especificidad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cada tumor expresa un conjunto único de antígenos tumorales de rechazo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Ambos tumores comparten los mismos antígenos tumorales de rechazo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cada tumor expresa un antígeno propio normal distinto del tejido de origen",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ambos tumores comparten un mismo antígeno oncofetal reexpresado en el adulto",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Cada tumor expresa un antígeno viral distinto codificado por un virus oncogénico",
+          "correct": false
+        }
+      ],
+      "explanation": "Cada tumor genera mutaciones propias y expresa un conjunto único de antígenos de rechazo, por eso la memoria solo protege contra el mismo tumor.",
+      "tema": "tumoral",
+      "subtema": "Antígenos únicos de cada tumor",
+      "seccion": "4. ¿Qué es la inmunovigilancia?"
+    },
+    {
+      "id": "q22",
+      "stem": "Un hombre de 65 años con adenocarcinoma de colon tiene un CEA sérico muy elevado. En la discusión del caso se aclara que este antígeno no es exclusivo del tumor, sino que se encuentra en cantidad anormalmente alta. ¿Cómo se clasifica el CEA como antígeno tumoral?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Antígeno asociado a tumor, exclusivo y mutado en el tejido tumoral",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Antígeno asociado a virus, codificado por un virus presente en el tejido tumoral",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Antígeno asociado a tumor, propio y sobreexpresado en el tejido tumoral",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Antígeno de rechazo, único de cada tumor e inducido por mutaciones propias",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Antígeno propio normal, con expresión idéntica a la del tejido sano",
+          "correct": false
+        }
+      ],
+      "explanation": "El CEA no es exclusivo del tumor, sino un antígeno propio expresado en cantidad anormalmente alta, por eso es un antígeno asociado a tumor.",
+      "tema": "tumoral",
+      "subtema": "Antígenos asociados a tumores",
+      "seccion": "1º Reconocimiento inmune"
+    },
+    {
+      "id": "q23",
+      "stem": "Una mujer de 38 años con Papanicolaou anormal y lesión de alto grado en el cuello uterino tiene infección por HPV de alto riesgo. La biopsia confirma un carcinoma cuyas células expresan proteínas virales que el sistema inmune puede reconocer como extrañas. ¿Qué antígenos virales expresa este tumor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Proteínas E6 y E7 del virus de Epstein-Barr en el linfoma de Burkitt",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Proteínas E6 y E7 del virus de la hepatitis B en el hepatocito",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Proteína Tax del virus linfotrópico T humano de tipo 1",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Proteínas LMP1 y EBNA1 del virus de Epstein-Barr en el linfocito B",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Proteínas E6 y E7 del virus del papiloma humano de alto riesgo",
+          "correct": true
+        }
+      ],
+      "explanation": "El carcinoma de cuello uterino expresa E6 y E7 del HPV, antígenos virales que el sistema inmune reconoce como extraños.",
+      "tema": "tumoral",
+      "subtema": "Antígenos virales tumorales",
+      "seccion": "1º Reconocimiento inmune"
+    },
+    {
+      "id": "q24",
+      "stem": "Un hombre de 68 años con carcinoma vesical superficial recibe instilaciones intravesicales de BCG y el tumor remite. Su urólogo atribuye el efecto a macrófagos hiperactivados que secretan una citocina capaz de destruir los vasos que irrigan ciertos tumores y causar su necrosis. ¿Qué citocina es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-6, que destruye los vasos que irrigan el tumor",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "TNF-α, que destruye los vasos que irrigan el tumor",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "IL-1, que destruye los vasos que irrigan el tumor",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-12, que induce la diferenciación de los linfocitos hacia Th1",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-10, que inhibe la función de las células NK del tumor",
+          "correct": false
+        }
+      ],
+      "explanation": "Los macrófagos hiperactivados secretan TNF-α, que destruye los vasos que irrigan el tumor y causa su necrosis, de ahí el nombre de factor de necrosis tumoral.",
+      "tema": "citocinas",
+      "subtema": "TNF-α y BCG",
+      "seccion": "2º Mecanismos efectores"
+    },
+    {
+      "id": "q25",
+      "stem": "Una mujer de 62 años con melanoma tiene en la biopsia linfocitos T CD8⁺ adheridos a las células tumorales. Al microscopio electrónico se observan gránulos que se vacían hacia la célula blanco, forman poros en su membrana y activan proteasas que inducen su apoptosis. ¿Qué moléculas liberan estos linfocitos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Perforinas y granzimas de los macrófagos activados",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Perforinas y granzimas de los eosinófilos activados",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mieloperoxidasa y lisozima de los neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Perforinas y granzimas de los linfocitos T CD8⁺",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Histamina y triptasa de los mastocitos activados",
+          "correct": false
+        }
+      ],
+      "explanation": "El linfocito T CD8⁺ lisa a la célula tumoral con perforinas, que forman poros, y granzimas, que activan la apoptosis.",
+      "tema": "linfocitos-t",
+      "subtema": "Citotoxicidad del CD8⁺",
+      "seccion": "2º Mecanismos efectores"
+    },
+    {
+      "id": "q26",
+      "stem": "Un hombre de 59 años con melanoma metastásico inicia ipilimumab. Su oncólogo lo compara con nivolumab y explica que los dos anticuerpos actúan en momentos y en sitios distintos de la respuesta antitumoral, algo que el equipo esquematiza en el comité de tumores. ¿En qué fase y en qué sitio actúa el ipilimumab?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fase de activación, en el tumor infiltrado",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Fase efectora, en el tumor infiltrado",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Fase de activación, en el ganglio linfático",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Fase efectora, en el ganglio linfático regional",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Fase de memoria, en la médula ósea del paciente",
+          "correct": false
+        }
+      ],
+      "explanation": "El anti-CTLA-4 impide que CTLA-4 acapare CD80 y CD86, así se restablece la coestimulación por CD28 y se activan más linfocitos en el ganglio.",
+      "tema": "tumoral",
+      "subtema": "Anti-CTLA-4 en el ganglio",
+      "seccion": "6. ¿Qué son los checkpoints inmunológicos?"
+    },
+    {
+      "id": "q27",
+      "stem": "Una mujer de 61 años con melanoma avanzado recibe nivolumab con ipilimumab. A las seis semanas presenta diarrea con colitis, tiroiditis y dermatitis, sin datos de infección. Su oncólogo indica que los tres cuadros comparten un mismo mecanismo de fondo. ¿Cuál es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Pérdida del freno inhibidor con inmunosupresión frente a tejidos propios",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Exceso del freno inhibidor con autoinmunidad contra tejidos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hipersensibilidad tipo I mediada por IgE contra el anticuerpo infundido",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Pérdida del freno inhibidor con autoinmunidad contra tejidos propios",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Agotamiento de los linfocitos T CD8⁺ por estimulación crónica del tumor",
+          "correct": false
+        }
+      ],
+      "explanation": "Al bloquear PD-1 y CTLA-4 se quita el freno también frente a lo propio, y aparecen reacciones autoinmunes como colitis, tiroiditis y dermatitis.",
+      "tema": "autoinmunidad",
+      "subtema": "Efectos adversos de los inhibidores",
+      "seccion": "6. ¿Qué son los checkpoints inmunológicos?"
+    },
+    {
+      "id": "q28",
+      "stem": "Una mujer de 63 años con melanoma recibe una vacuna dirigida a un antígeno tumoral y responde. A los seis meses recae, y las células de la recaída ya no expresan ese antígeno, aunque siguen proliferando con normalidad. ¿Qué mecanismo de escape explica que las nuevas células no expresen el antígeno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Pérdida de antígenos no esenciales para la supervivencia del tumor",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Pérdida de antígenos esenciales para la supervivencia del tumor",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Ganancia de antígenos no esenciales para la supervivencia del tumor",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Inducción de anergia por falta de coestimulación en las células presentadoras",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Agotamiento de los linfocitos T por la unión de PD-1 con PD-L1 tumoral",
+          "correct": false
+        }
+      ],
+      "explanation": "Por su alta tasa de mutación, el tumor pierde antígenos que no necesita para sobrevivir, y las células que los perdieron escapan al reconocimiento inmune.",
+      "tema": "tumoral",
+      "subtema": "Pérdida de antígenos no esenciales",
+      "seccion": "1. Selección de variantes menos inmunogénicas"
+    },
+    {
+      "id": "q29",
+      "stem": "Un hombre de 66 años con melanoma tiene en el ganglio centinela células presentadoras con muy baja expresión de B7. Los linfocitos T CD8⁺ reconocen el antígeno, pero no proliferan, porque una molécula del linfocito acapara el poco B7 que queda. ¿Qué molécula lo acapara y qué consecuencia produce?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD28, que acapara el B7 restante y lleva a anergia del linfocito",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CTLA-4, que acapara el B7 restante y lleva a activación del linfocito",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD28, que acapara el B7 restante y lleva a activación del linfocito",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "PD-1, que acapara el B7 restante y lleva a agotamiento del linfocito",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CTLA-4, que acapara el B7 restante y lleva a anergia del linfocito",
+          "correct": true
+        }
+      ],
+      "explanation": "Con poco B7, CTLA-4 acapara el que queda, el linfocito no recibe la señal de CD28 y queda anérgico.",
+      "tema": "coestimulacion",
+      "subtema": "Menos B7 y CTLA-4",
+      "seccion": "2. Expresión de moléculas inhibidoras"
+    },
+    {
+      "id": "q30",
+      "stem": "Un hombre de 64 años con melanoma tiene en el microambiente tumoral abundantes células mieloides inmaduras que liberan radicales libres. Los linfocitos T vecinos proliferan poco porque falta un aminoácido esencial, degradado por una enzima de estas células. ¿Qué enzima expresan estas células supresoras?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Indolamina-2,3-dioxigenasa, que sintetiza el triptófano local",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Indolamina-2,3-dioxigenasa, que degrada el triptófano local",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Óxido nítrico sintasa inducible, que degrada el triptófano local",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "NADPH oxidasa, que produce radicales libres de oxígeno",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Mieloperoxidasa, que produce ácido hipocloroso en el fagosoma",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células supresoras derivadas de la médula ósea expresan IDO, que degrada el triptófano, un aminoácido esencial para la proliferación de los linfocitos T.",
+      "tema": "tumoral",
+      "subtema": "Células mieloides supresoras e IDO",
+      "seccion": "3. Expansión de poblaciones inmunosupresoras"
+    },
+    {
+      "id": "q31",
+      "stem": "Una mujer de 70 años con melanoma tiene un tumor rodeado de fibrosis, con abundantes macrófagos M2 y muy pocos linfocitos T dentro de la masa. Los linfocitos quedan atrapados en el estroma periférico. ¿Qué mecanismo de estos macrófagos explica la exclusión de los linfocitos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Remodelación del estroma con fibrosis que atrae linfocitos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Remodelación del estroma con angiogénesis que excluye linfocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Remodelación del estroma con fibrosis que excluye linfocitos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Degradación del triptófano por las células supresoras mieloides",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Consumo de IL-2 mediante CD25 por los linfocitos T reguladores",
+          "correct": false
+        }
+      ],
+      "explanation": "Los macrófagos M2 secretan IL-10 y TGF-β y remodelan el estroma con fibrosis, lo que excluye la infiltración de linfocitos.",
+      "tema": "tumoral",
+      "subtema": "Macrófagos M2 y fibrosis",
+      "seccion": "3. Expansión de poblaciones inmunosupresoras"
+    },
+    {
+      "id": "q32",
+      "stem": "Un hombre de 58 años con cirrosis desarrolla un carcinoma hepatocelular y tiene alfa-fetoproteína muy elevada en sangre. Sin embargo, su sistema inmune no monta una respuesta fuerte contra esta proteína, aunque el tumor la expresa en abundancia. ¿Por qué responde tan poco frente a este antígeno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se expresó en la vida fetal y se ve como extraña",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se expresa en la vida adulta y se reconoce como propia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Surge de una mutación reciente y se degrada sin presentarse",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se expresó en la vida fetal y se reconoce como propia",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Se codifica en un virus oncogénico y no se presenta en MHC I",
+          "correct": false
+        }
+      ],
+      "explanation": "La alfa-fetoproteína se expresó en la vida fetal y reaparece en el tumor, por lo que se reconoce como propia y no genera una respuesta fuerte.",
+      "tema": "tumoral",
+      "subtema": "Antígenos oncofetales",
+      "seccion": "2. ¿Qué limitaciones tiene el sistema inmune en la vigilancia del cáncer?"
+    },
+    {
+      "id": "q33",
+      "stem": "Un hombre de 61 años con linfoma B CD20 positivo recibe rituximab. El hematólogo explica que uno de los mecanismos de destrucción requiere que una célula del sistema innato reconozca el anticuerpo unido al linfoma y lo lise con sus gránulos citotóxicos. ¿Qué mecanismo describe?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ADCC, con perforinas y granzimas liberadas por células NK",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "ADCC, con perforinas y granzimas liberadas por linfocitos T CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ADCC, con perforinas y granzimas liberadas por neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Fagocitosis, con opsonización por C3b en los macrófagos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Lisis, con formación del complejo de ataque a la membrana celular",
+          "correct": false
+        }
+      ],
+      "explanation": "En la ADCC la célula NK reconoce el anticuerpo unido al tumor y libera perforinas y granzimas que lisan a la célula tumoral.",
+      "tema": "anticuerpos",
+      "subtema": "Rituximab y ADCC",
+      "seccion": "A) Desarrollo de anticuerpos específicos"
+    },
+    {
+      "id": "q34",
+      "stem": "Una mujer de 50 años con cáncer de mama HER2 positivo recibe trastuzumab emtansina. Su oncóloga explica que este fármaco lleva un quimioterápico unido al anticuerpo y produce menos toxicidad sistémica que la quimioterapia sola. ¿Qué ventaja ofrece este tipo de fármaco?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Entrega el quimioterápico a todas las células que se dividen rápido",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Entrega el quimioterápico solo a las células con el antígeno tumoral",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Entrega el anticuerpo solo a las células con el antígeno tumoral",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Restablece la coestimulación por CD28 al bloquear CTLA-4 en el ganglio linfático",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Revierte el agotamiento del linfocito T al bloquear PD-1 en el tumor infiltrado",
+          "correct": false
+        }
+      ],
+      "explanation": "En un conjugado anticuerpo-fármaco, el anticuerpo reconoce el antígeno tumoral y entrega el quimioterápico solo a la célula tumoral.",
+      "tema": "tumoral",
+      "subtema": "Conjugados anticuerpo-fármaco",
+      "seccion": "A) Desarrollo de anticuerpos específicos"
+    },
+    {
+      "id": "q35",
+      "stem": "Un joven de 19 años con leucemia linfoblástica aguda de precursores B en recaída recibe blinatumomab en infusión continua. Un brazo del anticuerpo biespecífico reconoce CD19 de los linfoblastos y el otro se une a una molécula de los linfocitos T del propio paciente. ¿A qué molécula se une el segundo brazo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD3, componente del complejo del receptor del linfocito B",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD79, componente del complejo del receptor del linfocito B",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD28, receptor de coestimulación del linfocito T que reconoce a B7",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD8, correceptor del linfocito T que reconoce al MHC I",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD3, componente del complejo del receptor del linfocito T",
+          "correct": true
+        }
+      ],
+      "explanation": "Los BiTEs unen el CD3 del linfocito T citotóxico con un antígeno de la célula tumoral, por lo que activan y dirigen al linfocito contra el tumor.",
+      "tema": "tumoral",
+      "subtema": "Anticuerpo biespecífico BiTE",
+      "seccion": "A) Desarrollo de anticuerpos específicos"
+    },
+    {
+      "id": "q36",
+      "stem": "Un hombre de 56 años con melanoma metastásico refractario se somete a una cirugía en la que se extraen linfocitos T del propio tumor. Se los expande in vitro con IL-2, se los activa fuera del organismo y se los reinfunde al paciente. ¿Qué estrategia terapéutica se aplicó?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Transferencia adoptiva de linfocitos T modificados con receptor quimérico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Transferencia adoptiva de linfocitos T alogénicos de un donante sano compatible",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Transferencia adoptiva de linfocitos T autólogos infiltrantes del tumor",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Transferencia adoptiva de células NK autólogas activadas con citocinas ex vivo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Vacunación con células tumorales irradiadas del propio paciente",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos infiltrantes de tumor son linfocitos T autólogos que se expanden con IL-2 y se activan ex vivo, lo que potencia la inmunidad adaptativa del paciente.",
+      "tema": "tumoral",
+      "subtema": "Linfocitos infiltrantes de tumor",
+      "seccion": "B) Transferencia adoptiva de linfocitos T autólogos"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

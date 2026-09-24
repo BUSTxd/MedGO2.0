@@ -3,7 +3,1058 @@
   "key": "inmunologia/t-4-leucopoyesis",
   "title": "T4 — Desarrollo de las células del sistema inmune (leucopoyesis)",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Una mujer de 41 años con pancitopenia se somete a un cultivo de progenitores de su médula ósea. Se identifica un progenitor comprometido que forma colonias de neutrófilos y de monocitos, pero que ya no origina eritrocitos, megacariocitos ni linfocitos. ¿A cuál de los siguientes progenitores corresponde esta descripción?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CFU-G, que origina solo los tres granulocitos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CFU-GEMM, que origina cuatro líneas mieloides",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CFU-GM, que origina granulocitos y monocitos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CFU-GM, que origina eritrocitos y megacariocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "HSC, que origina las líneas de la sangre",
+          "correct": false
+        }
+      ],
+      "explanation": "La CFU-GM, descendiente de la CFU-GEMM, origina granulocitos y monocitos, pero no eritrocitos ni megacariocitos.",
+      "tema": "hematologia",
+      "subtema": "Progenitor de granulocitos y monocitos",
+      "seccion": "PRECURSORES"
+    },
+    {
+      "id": "q02",
+      "stem": "Un hombre de 52 años con leucemia mieloide aguda recibe quimioterapia y el hematólogo vigila la recuperación de sus neutrófilos. Le explica que la médula ósea repone los granulocitos con una cinética fija, desde que se identifica el mieloblasto hasta que sale el granulocito maduro. ¿Cuánto dura ese periodo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "De 3,5 días hasta el granulocito maduro",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "De 60 horas hasta el granulocito maduro",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Entre 21 y 28 días hasta el granulocito maduro",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "De 12 a 14 días hasta el granulocito maduro",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Entre 5 y 6 días hasta el granulocito maduro",
+          "correct": false
+        }
+      ],
+      "explanation": "Desde la identificación del mieloblasto hasta el granulocito maduro transcurren de 12 a 14 días, por eso la reposición medular tras la quimioterapia es lenta.",
+      "tema": "hematologia",
+      "subtema": "Tiempo de maduración granulocítica",
+      "seccion": "Distribución y cinética"
+    },
+    {
+      "id": "q03",
+      "stem": "Una mujer de 39 años con artritis reumatoide activa y niveles séricos elevados de TNF presenta una neutropenia leve sin infecciones. El reumatólogo recuerda que esta citocina modifica la formación de las células sanguíneas en la médula ósea. ¿Cuál es el efecto del TNF sobre la hematopoyesis?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Estimula la proliferación de los progenitores de granulocitos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Inhibe la proliferación de los progenitores de granulocitos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Estimula la expansión de las células madre hematopoyéticas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Inhibe la supervivencia de los monocitos en la circulación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Induce la salida de las células madre hacia el ciclo celular",
+          "correct": false
+        }
+      ],
+      "explanation": "El TNF inhibe la expansión de las células madre y la proliferación y diferenciación de los progenitores de granulocitos, y favorece la supervivencia de los monocitos.",
+      "tema": "hematologia",
+      "subtema": "Efecto del TNF",
+      "seccion": "Citoquinas y Factores de Crecimiento"
+    },
+    {
+      "id": "q04",
+      "stem": "En el mielograma de un joven de 19 años con sospecha de leucemia aguda se observa una célula inmadura de la línea granulocítica con núcleo grande, cromatina fina y poco condensada, relación núcleo citoplasma de 3 a 1 y citoplasma moderadamente basófilo sin gránulos. ¿Qué célula es y qué proporción de la médula ósea ocupa normalmente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Promielocito, que ocupa 1% de la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Mieloblasto, que ocupa 2 a 5% de la médula ósea",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Mieloblasto, que ocupa 13 a 22% de la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mielocito, que ocupa 5 a 19% de la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Metamielocito, que ocupa 13 a 22% de la médula ósea",
+          "correct": false
+        }
+      ],
+      "explanation": "El mieloblasto tiene relación N/C de 3 a 1, cromatina fina y citoplasma basófilo sin gránulos, y ocupa entre 2 y 5% de la médula ósea.",
+      "tema": "hematologia",
+      "subtema": "Mieloblasto",
+      "seccion": "1) Mieloblasto"
+    },
+    {
+      "id": "q05",
+      "stem": "Un niño de 6 años con infecciones bacterianas recurrentes es evaluado con microscopía electrónica de sus neutrófilos. Se analiza un tipo de gránulo grande y poco abundante, de naturaleza lisosómica, que aparece desde el promielocito y que también está presente en eosinófilos y basófilos. ¿Qué gránulos son y qué contienen principalmente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Específicos, con lisozima y lactoferrina",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Terciarios, con fosfatasas y metaloproteinasas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Azurófilos, con lisozima y lactoferrina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Específicos, con mieloperoxidasa y defensinas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Azurófilos, con mieloperoxidasa y defensinas",
+          "correct": true
+        }
+      ],
+      "explanation": "Los gránulos azurófilos son lisosomas presentes en todos los granulocitos y contienen mieloperoxidasa, hidrolasas ácidas, defensinas y catelicidina.",
+      "tema": "hematologia",
+      "subtema": "Gránulos azurófilos",
+      "seccion": "Gránulos azurófilos"
+    },
+    {
+      "id": "q06",
+      "stem": "Un hombre de 35 años con asma alérgica y parasitosis intestinal tiene 1500 eosinófilos por microlitro. Su médico le explica cuánto tiempo permanecen estas células en la sangre y luego en los tejidos, como el epitelio respiratorio, gastrointestinal y genitourinario. ¿Cuál es la vida media de los eosinófilos en la circulación y en los tejidos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "3 días en sangre y de 2 a 5 días en tejidos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "60 horas en sangre y de 2 a 5 días en tejidos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "18 horas en sangre y 2 a 5 días en tejidos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "18 horas en sangre y 3,5 días en tejidos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "3,5 días en sangre y 18 horas en tejidos",
+          "correct": false
+        }
+      ],
+      "explanation": "El eosinófilo circula unas 18 horas y sobrevive de 2 a 5 días en los tejidos, como el epitelio respiratorio, gastrointestinal y genitourinario.",
+      "tema": "hematologia",
+      "subtema": "Vida media del eosinófilo",
+      "seccion": "II. Estadios de Maduración Eosinófilos"
+    },
+    {
+      "id": "q07",
+      "stem": "Un hombre de 48 años con leucemia mieloide crónica presenta basofilia. En el frotis, las células miden entre 10 y 14 micras, tienen núcleo de dos lóbulos y gránulos violeta intenso a negros que ocultan parcialmente el núcleo. ¿Qué factores pueden influir en el desarrollo de estas células?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-3 y linfopoyetina del estroma tímico",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-5 y la linfopoyetina del estroma tímico",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-3 y factor estimulante de granulocitos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-4 y factor estimulante de macrófagos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-7 y factor de las células madre",
+          "correct": false
+        }
+      ],
+      "explanation": "El desarrollo del basófilo puede ser influido por IL-3 y por la linfopoyetina del estroma tímico, y es la población menos frecuente.",
+      "tema": "hematologia",
+      "subtema": "Factores del basófilo",
+      "seccion": "III. Estadios de Maduración de Basófilos"
+    },
+    {
+      "id": "q08",
+      "stem": "Un hombre de 62 años con neumonía neumocócica tiene neutrofilia con desviación a la izquierda. El hematólogo señala que, a diferencia de los neutrófilos, los monocitos pasan a la circulación apenas maduran en la médula ósea. ¿Cuál es la razón de esta diferencia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La médula ósea no tiene reserva de neutrófilos maduros",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La médula ósea guarda los monocitos por unos 3 días",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El bazo mantiene la reserva de monocitos maduros",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La médula ósea conserva una reserva mínima de monocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La médula ósea no tiene reserva de monocitos maduros",
+          "correct": true
+        }
+      ],
+      "explanation": "La médula ósea no almacena monocitos maduros, así que salen a la circulación al madurar y permanecen allí unos 3 días.",
+      "tema": "hematologia",
+      "subtema": "Reserva medular de monocitos",
+      "seccion": "IV. Estadios de Maduración de Monocitos"
+    },
+    {
+      "id": "q09",
+      "stem": "Una mujer de 68 años con dolor lumbar, anemia y una banda monoclonal en la electroforesis de proteínas tiene una biopsia de médula ósea con células de citoplasma intensamente basófilo y una zona clara junto al núcleo. ¿Qué célula de la línea linfoide se observa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Célula plasmática, con citoplasma basófilo y halo claro",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Prolinfocito, con citoplasma basófilo y sin halo claro",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfoblasto, con citoplasma intensamente basófilo y sin halo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfocito maduro, con citoplasma escaso y sin halo claro",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocito maduro, con citoplasma basófilo y vacuolas",
+          "correct": false
+        }
+      ],
+      "explanation": "La célula plasmática es el estadio final de la línea B, con citoplasma intensamente basófilo y una zona clara perinuclear.",
+      "tema": "hematologia",
+      "subtema": "Célula plasmática",
+      "seccion": "V. Estadios de Maduración Linfoide"
+    },
+    {
+      "id": "q10",
+      "stem": "En el mielograma de una mujer de 30 años con infección bacteriana se identifica una célula granulocítica con núcleo en forma de riñón y abundantes gránulos secundarios. El patólogo pide al residente que identifique el estadio y que indique qué ocurre con su capacidad de división. ¿Qué responde el residente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mielocito, que ya no prolifera",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Metamielocito, que todavía prolifera",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Célula en banda, que todavía prolifera",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Célula en banda, que ya no prolifera",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Metamielocito, que ya no prolifera",
+          "correct": true
+        }
+      ],
+      "explanation": "El metamielocito tiene núcleo en forma de riñón y ya no prolifera, lo que marca el inicio de la diferenciación terminal.",
+      "tema": "hematologia",
+      "subtema": "Metamielocito",
+      "seccion": "Tabla comparativa › 4. Metamielocito"
+    },
+    {
+      "id": "q11",
+      "stem": "En el cultivo de médula ósea de un paciente de 25 años se forman colonias del tipo CFU-GEMM, derivadas de la unidad formadora de colonias linfomieloide. El técnico de laboratorio debe informar qué líneas celulares representan las cuatro letras de esta sigla. ¿Cuáles son?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Granulocitos, eritrocitos, macrófagos y megacariocitos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Granulocitos, eosinófilos, monocitos y megacariocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Granulocitos, eritrocitos, monocitos y megacariocitos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Granulocitos, eritrocitos, monocitos y mastocitos tisulares",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Granulocitos, linfocitos, monocitos y megacariocitos",
+          "correct": false
+        }
+      ],
+      "explanation": "La sigla CFU-GEMM significa unidad formadora de colonias de granulocitos, eritrocitos, monocitos y megacariocitos.",
+      "tema": "hematologia",
+      "subtema": "Líneas de la CFU-GEMM",
+      "seccion": "PRECURSORES"
+    },
+    {
+      "id": "q12",
+      "stem": "Un hombre de 60 años con neutropenia posquimioterapia es evaluado por su capacidad de respuesta ante una infección. El hematólogo explica que la médula posee un compartimento de reserva, de células que ya no se dividen y maduran durante unos 5 días, casi el triple que el conjunto que sí prolifera. ¿Cuál es ese compartimento y cuánto mide?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El conjunto proliferativo, con 2 × 10⁹ células/kg",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El grupo de maduración, con 2 × 10⁹ células/kg",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El conjunto proliferativo, con 5,6 × 10⁹ células/kg",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El grupo de maduración, con 5,6 × 10⁹ células/kg",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "El grupo de maduración, con 1 × 10⁹ células/kg/día",
+          "correct": false
+        }
+      ],
+      "explanation": "El grupo de maduración es la reserva medular de neutrófilos, con 5,6 × 10⁹ células/kg que permanecen unos 5 días.",
+      "tema": "hematologia",
+      "subtema": "Grupo de maduración",
+      "seccion": "Distribución y cinética"
+    },
+    {
+      "id": "q13",
+      "stem": "Una niña de 10 años con leucemia se prepara para un trasplante de médula ósea. Se explica a la familia que las células madre hematopoyéticas del donante dependen de un factor del estadio inicial de la hematopoyesis, que actúa a través del receptor c-Kit. ¿Cuál es ese factor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "SCF, con acción sobre células madre hematopoyéticas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-3, con acción sobre los progenitores hematopoyéticos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "GM-CSF, con acción sobre progenitores mieloides",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-7, con acción sobre los progenitores linfoides",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-6, con acción sobre los progenitores hematopoyéticos",
+          "correct": false
+        }
+      ],
+      "explanation": "El SCF, o stem cell factor, actúa sobre las células madre hematopoyéticas mediante el receptor c-Kit en el estadio inicial.",
+      "tema": "hematologia",
+      "subtema": "Stem cell factor y c-Kit",
+      "seccion": "SCF"
+    },
+    {
+      "id": "q14",
+      "stem": "Un lactante de 9 meses con infecciones graves y linfopenia marcada es evaluado por una inmunodeficiencia combinada. El estudio de su médula ósea muestra una alteración en el desarrollo de los precursores de linfocitos. Se revisa qué citocina del estadio inicial de la hematopoyesis actúa sobre los progenitores linfoides y permite su desarrollo. ¿Cuál es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "GM-CSF, con acción sobre progenitores mieloides",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-3, con acción sobre los progenitores hematopoyéticos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-12, con acción sobre los progenitores hematopoyéticos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-4, con acción sobre los basófilos y mastocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-7, con acción sobre los progenitores linfoides",
+          "correct": true
+        }
+      ],
+      "explanation": "La IL-7 actúa sobre los progenitores linfoides en el estadio inicial, mientras que el GM-CSF actúa sobre los progenitores mieloides.",
+      "tema": "hematologia",
+      "subtema": "Citocinas del estadio inicial",
+      "seccion": "IL-3"
+    },
+    {
+      "id": "q15",
+      "stem": "Una mujer de 68 años con insuficiencia renal crónica tiene hemoglobina de 8 g/dL, reticulocitos bajos y el resto de las líneas celulares normales. El nefrólogo explica que falta el factor del estadio avanzado que actúa sobre las células de la línea roja. ¿Cuál es ese factor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "TPO, con acción sobre los megacariocitos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "EPO, con acción sobre los precursores eritroides",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "M-CSF, con acción sobre los monocitos y macrófagos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-4, con acción sobre los basófilos y mastocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "G-CSF, con acción sobre los neutrófilos",
+          "correct": false
+        }
+      ],
+      "explanation": "La eritropoyetina actúa sobre los precursores eritroides del estadio avanzado y da lugar a los eritrocitos.",
+      "tema": "hematologia",
+      "subtema": "Eritropoyetina",
+      "seccion": "IL-4"
+    },
+    {
+      "id": "q16",
+      "stem": "Una mujer de 36 años con trombocitopenia por baja producción medular recibe un agonista del factor que estimula a los megacariocitos en el estadio avanzado de la hematopoyesis, con el fin de aumentar las plaquetas circulantes. ¿Qué factor imita este fármaco?",
+      "options": [
+        {
+          "id": "a",
+          "text": "EPO, con acción sobre precursores eritroides",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-4, con acción sobre basófilos y mastocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "M-CSF, con acción sobre monocitos y macrófagos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TPO, con acción sobre los megacariocitos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "IL-5, con acción sobre los eosinófilos",
+          "correct": false
+        }
+      ],
+      "explanation": "La trombopoyetina actúa sobre los megacariocitos, que dan origen a las plaquetas.",
+      "tema": "hematologia",
+      "subtema": "Trombopoyetina",
+      "seccion": "IL-4"
+    },
+    {
+      "id": "q17",
+      "stem": "Una mujer de 47 años con cáncer de mama recibe quimioterapia y al noveno día presenta fiebre de 38,9 grados con solo 300 neutrófilos por microlitro. Su oncólogo indica un factor de crecimiento del estadio avanzado que dirige la diferenciación de la línea neutrófila. ¿Qué factor indicó?",
+      "options": [
+        {
+          "id": "a",
+          "text": "M-CSF, con acción sobre los neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "G-CSF, con acción sobre los monocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "G-CSF, con acción sobre los neutrófilos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "IL-4, con acción sobre basófilos y mastocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "GM-CSF, con acción sobre progenitores mieloides",
+          "correct": false
+        }
+      ],
+      "explanation": "El G-CSF es el factor del estadio avanzado que dirige la diferenciación hacia neutrófilos, la línea que la quimioterapia dejó deplecionada.",
+      "tema": "hematologia",
+      "subtema": "G-CSF y neutrófilos",
+      "seccion": "G-CSF"
+    },
+    {
+      "id": "q18",
+      "stem": "Un hombre de 44 años con hepatitis crónica recibe interferón durante muchos meses y desarrolla pancitopenia progresiva, con médula ósea hipocelular en la biopsia. El hematólogo sospecha que la exposición prolongada al interferón afecta a las células madre hematopoyéticas. ¿Qué efecto explica la pancitopenia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Daño del ADN y apoptosis con pérdida de autorrenovación",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Salida de la quiescencia y diferenciación con sesgo mieloide",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inhibición de la expansión de las células madre hematopoyéticas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Daño del ADN y apoptosis con mayor autorrenovación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Proliferación excesiva de los progenitores mieloides",
+          "correct": false
+        }
+      ],
+      "explanation": "La exposición crónica al interferón causa daño del ADN, activa vías apoptóticas y compromete la autorrenovación de las células madre hematopoyéticas.",
+      "tema": "hematologia",
+      "subtema": "Efecto crónico del IFN",
+      "seccion": "Citoquinas y Factores de Crecimiento"
+    },
+    {
+      "id": "q19",
+      "stem": "Una mujer de 33 años consulta por sangrado gingival, petequias y equimosis. En el mielograma predominan células con relación núcleo citoplasma de 2 a 1, citoplasma basófilo y numerosos gránulos azurófilos, con síntesis activa de enzimas lisosomales. ¿Qué estadio de la línea granulocítica predomina?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Promielocito, por sus gránulos primarios",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Mieloblasto, por su cromatina fina sin gránulos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mielocito, por sus gránulos primarios",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Metamielocito, por su núcleo en forma de riñón",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Célula en banda, por su núcleo en forma de C",
+          "correct": false
+        }
+      ],
+      "explanation": "El promielocito tiene relación N/C de 2 a 1 y gránulos azurófilos primarios, y sintetiza proteínas y enzimas lisosomales de forma activa.",
+      "tema": "hematologia",
+      "subtema": "Promielocito",
+      "seccion": "2) Promielocito"
+    },
+    {
+      "id": "q20",
+      "stem": "Un hombre de 27 años con infección bacteriana tiene en su mielograma una población de células granulocíticas inmaduras con núcleo redondo a ovalado, citoplasma ligeramente basófilo y gránulos secundarios, y que todavía conservan capacidad de dividirse. ¿Qué porcentaje de la médula ósea ocupa normalmente este estadio?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Entre 13 y 22% de la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Alrededor de 1% de la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Entre 2 y 5% de la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Entre 5 y 19% de la médula ósea",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Entre 0 y 5% de la sangre periférica",
+          "correct": false
+        }
+      ],
+      "explanation": "El mielocito, con núcleo redondo a ovalado y citoplasma ligeramente basófilo, ocupa entre 5 y 19% de la médula ósea.",
+      "tema": "hematologia",
+      "subtema": "Mielocito",
+      "seccion": "3) Mielocito"
+    },
+    {
+      "id": "q21",
+      "stem": "Un niño de 8 años con apendicitis aguda tiene fiebre y leucocitosis. En el frotis de sangre periférica se observan células granulocíticas con núcleo en forma de C y citoplasma azul pálido a rosa. ¿Qué porcentaje de la sangre periférica ocupa normalmente esta célula?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Entre 50 y 70% en sangre periférica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Entre 3 y 11% en sangre periférica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Entre 20 y 40% en sangre periférica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Entre 5 y 19% en sangre periférica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Entre 0 y 5% en sangre periférica",
+          "correct": true
+        }
+      ],
+      "explanation": "La célula en banda tiene núcleo en forma de C y representa entre 0 y 5% de los leucocitos de la sangre periférica.",
+      "tema": "hematologia",
+      "subtema": "Célula en banda",
+      "seccion": "5) Célula en banda"
+    },
+    {
+      "id": "q22",
+      "stem": "Una mujer de 55 años con neumonía lobar tiene en su frotis de sangre periférica una población predominante de leucocitos con núcleo lobulado, cromatina en grumos gruesos y citoplasma rosa pálido. ¿Cuántos lóbulos tiene su núcleo y qué porcentaje de la sangre periférica ocupa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "De 2 a 3 lóbulos y de 50 a 70% de la sangre periférica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "De 3 a 5 lóbulos y de 20 a 40% de la sangre periférica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "De 3 a 5 lóbulos y 50 a 70% de la sangre periférica",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "De 2 a 3 lóbulos y 0 a 5% de la sangre periférica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "De 3 a 5 lóbulos y de 3 a 11% de la sangre periférica",
+          "correct": false
+        }
+      ],
+      "explanation": "El neutrófilo segmentado tiene núcleo de 3 a 5 lóbulos y es la población leucocitaria predominante, entre 50 y 70% de la sangre periférica.",
+      "tema": "hematologia",
+      "subtema": "Neutrófilo segmentado",
+      "seccion": "Neutrófilo maduro segmentado"
+    },
+    {
+      "id": "q23",
+      "stem": "Un niño de 5 años con infecciones cutáneas recurrentes tiene neutrófilos que carecen de un tipo de gránulo pequeño, el doble de abundante que los azurófilos, que aporta péptidos antimicrobianos y activadores del complemento. ¿Qué proteínas contienen principalmente estos gránulos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lisozima, lactoferrina y hidrolasas ácidas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Lisozima, lactoferrina y colagenasa IV",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Mieloperoxidasa, defensinas y catelicidina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Lactoferrina, colagenasa IV y mieloperoxidasa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Proteína básica mayor y peroxidasa eosinofílica",
+          "correct": false
+        }
+      ],
+      "explanation": "Los gránulos específicos o secundarios contienen lisozima, lactoferrina, colagenasa IV y fosfolipasa, además de activadores del complemento.",
+      "tema": "hematologia",
+      "subtema": "Gránulos específicos",
+      "seccion": "Gránulos específicos"
+    },
+    {
+      "id": "q24",
+      "stem": "En un estudio de neutrófilos de un hombre de 55 años con enfermedad inflamatoria se busca el gránulo que contiene fosfatasas y metaloproteinasas capaces de degradar la matriz extracelular durante la migración al tejido. ¿A qué gránulos corresponde este contenido?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Gránulos secundarios del neutrófilo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Gránulos azurófilos del neutrófilo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Gránulos terciarios del neutrófilo",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Gránulos secundarios del eosinófilo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Gránulos secundarios del basófilo",
+          "correct": false
+        }
+      ],
+      "explanation": "Los gránulos terciarios contienen fosfatasas y metaloproteinasas, enzimas que degradan la matriz extracelular.",
+      "tema": "hematologia",
+      "subtema": "Gránulos terciarios",
+      "seccion": "Gránulos terciarios"
+    },
+    {
+      "id": "q25",
+      "stem": "Un niño de 7 años con asma grave y eosinofilia persistente en sangre periférica, resistente al tratamiento habitual, recibe un anticuerpo monoclonal que bloquea la citocina fundamental para la diferenciación de los eosinófilos en la médula ósea. ¿Qué citocina bloquea este tratamiento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-4, con acción sobre los basófilos y mastocitos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-3, con acción sobre los progenitores hematopoyéticos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "GM-CSF, con acción sobre los progenitores mieloides",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-5, con acción sobre los precursores de eosinófilos",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "IL-6, con acción sobre los progenitores hematopoyéticos",
+          "correct": false
+        }
+      ],
+      "explanation": "La IL-5 es fundamental para la diferenciación de los eosinófilos, cuyo tránsito desde el último mielocito hasta la madurez tarda 3,5 días.",
+      "tema": "hematologia",
+      "subtema": "IL-5 y eosinófilos",
+      "seccion": "II. Estadios de Maduración Eosinófilos"
+    },
+    {
+      "id": "q26",
+      "stem": "Un niño de 7 años con asma alérgica y eosinofilia tiene en la biopsia bronquial eosinófilos con gránulos secundarios de color anaranjado con la tinción de Romanowsky. El patólogo comenta que esos gránulos son específicos de esta línea. ¿Qué contienen principalmente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Proteína básica mayor, lisozima y mieloperoxidasa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Mieloperoxidasa, hidrolasas ácidas y proteína catiónica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Fosfatasas, metaloproteinasas y proteína básica mayor",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Lisozima, lactoferrina y proteína catiónica eosinofílica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Proteína básica mayor, proteína catiónica y peroxidasa",
+          "correct": true
+        }
+      ],
+      "explanation": "Los gránulos secundarios del eosinófilo contienen proteína básica mayor, proteína catiónica eosinofílica y peroxidasa eosinofílica, y se tiñen de anaranjado.",
+      "tema": "hematologia",
+      "subtema": "Gránulos del eosinófilo",
+      "seccion": "II. Estadios de Maduración Eosinófilos"
+    },
+    {
+      "id": "q27",
+      "stem": "Una mujer de 29 años con hipotiroidismo se realiza un hemograma con fórmula leucocitaria. Al revisar el informe, el residente recuerda que una de las poblaciones de leucocitos es la menos frecuente de todas y con una vida media corta. ¿Qué proporción y qué vida media tiene el basófilo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Menos de 1% y una vida media de 60 horas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Entre 0 y 5% y una vida media de 60 horas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Entre 3 y 11% y una vida media de 60 horas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Menos de 1% y una vida media de 3 días",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Menos de 1% y una vida media de 2 a 5 días",
+          "correct": false
+        }
+      ],
+      "explanation": "El basófilo es la población menos frecuente, menor de 1%, y su vida media es de 60 horas.",
+      "tema": "hematologia",
+      "subtema": "Frecuencia y vida del basófilo",
+      "seccion": "III. Estadios de Maduración de Basófilos"
+    },
+    {
+      "id": "q28",
+      "stem": "Un hombre de 31 años con fiebre y odinofagia tiene un frotis con células de citoplasma azul grisáceo, núcleo variable y pseudópodos. El patólogo pregunta qué proporción de la sangre periférica ocupa normalmente esta célula y cuánto tiempo permanece en ella. ¿Cuál es la respuesta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "3 a 11% de la sangre y unas 18 horas en circulación",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "20 a 40% de la sangre y unos 3 días en circulación",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "2% de la sangre y unos 3 días en circulación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "3 a 11% de la sangre y unos 5 días en circulación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "3 a 11% de la sangre y unos 3 días en circulación",
+          "correct": true
+        }
+      ],
+      "explanation": "El monocito ocupa entre 3 y 11% de la sangre periférica y permanece en la circulación unos 3 días antes de pasar a los tejidos.",
+      "tema": "hematologia",
+      "subtema": "Monocito en sangre",
+      "seccion": "IV. Estadios de Maduración de Monocitos"
+    },
+    {
+      "id": "q29",
+      "stem": "En la biopsia hepática de un hombre de 50 años con hepatitis se observan células fagocíticas grandes con núcleo reniforme, citoplasma abundante de bordes irregulares, gránulos azurófilos y vacuolas. Estas células provienen de la línea monocítica y se localizan en el tejido, fuera de la circulación. ¿Qué célula se observa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Monocito, con citoplasma azul grisáceo y pseudópodos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Macrófago, con núcleo reniforme y vacuolas",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Promonocito, con núcleo irregular y vacuolas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Monoblasto, con uno o dos nucléolos prominentes",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Metamielocito, con núcleo reniforme y gránulos",
+          "correct": false
+        }
+      ],
+      "explanation": "El macrófago es el estadio tisular final de la línea monocítica, con núcleo reniforme, citoplasma abundante, gránulos azurófilos y vacuolas.",
+      "tema": "hematologia",
+      "subtema": "Macrófago",
+      "seccion": "IV. Estadios de Maduración de Monocitos"
+    },
+    {
+      "id": "q30",
+      "stem": "Un joven de 22 años con mononucleosis infecciosa tiene linfocitosis en el hemograma. El patólogo revisa un linfocito maduro de núcleo redondo, cromatina condensada y citoplasma escaso, y compara su proporción en la médula ósea y en la sangre. ¿Qué porcentajes ocupa normalmente en cada compartimento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "De 5 a 15% en médula y de 20 a 40% en sangre",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "De 20 a 40% en médula y de 5 a 15% en sangre",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "De 5 a 15% en médula y de 3 a 11% en sangre",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "De 13 a 22% en médula y de 50 a 70% en sangre",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "De 13 a 22% en médula y de 20 a 40% en sangre",
+          "correct": false
+        }
+      ],
+      "explanation": "El linfocito maduro ocupa entre 5 y 15% de la médula ósea y entre 20 y 40% de los leucocitos de la sangre periférica.",
+      "tema": "hematologia",
+      "subtema": "Linfocito maduro",
+      "seccion": "V. Estadios de Maduración Linfoide"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

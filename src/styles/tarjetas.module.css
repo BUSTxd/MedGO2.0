@@ -807,6 +807,108 @@ button.irResumen:hover {
 
 .siguiente:hover { transform: translateY(-2px); box-shadow: 0 16px 32px -14px rgba(var(--acc-rgb), 0.95); }
 
+/* ─── Valoración de la pregunta: el semáforo del pie del quiz ───
+   Rojo, amarillo y verde: qué tan bien armada está. Late mientras falta y se
+   sacude si se intenta seguir sin pulsarla. */
+
+.pieQuiz { flex-direction: column; gap: 18px; }
+
+.valora {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 16px;
+  border-radius: 18px;
+  border: 1.5px solid rgba(var(--acc-rgb), 0.28);
+  background: rgba(var(--acc-rgb), 0.06);
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.valoraPide { animation: valoraLate 2.4s ease-in-out infinite; }
+
+.valoraAviso {
+  border-color: var(--acc);
+  background: rgba(var(--acc-rgb), 0.14);
+  animation: valoraSacude 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both, valoraLate 2.4s ease-in-out 0.55s infinite;
+}
+.valoraAviso .valoraTitulo { color: var(--acc); }
+
+.valoraHecha { border-style: solid; border-color: rgba(var(--ok-rgb), 0.35); background: rgba(var(--ok-rgb), 0.06); }
+
+.valoraTitulo {
+  margin: 0;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--tinta-suave);
+}
+
+.valoraOpciones { display: flex; gap: 10px; justify-content: center; }
+
+.valoraBtn {
+  --c: var(--acc);
+  --c-rgb: var(--acc-rgb);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 104px;
+  padding: 8px 6px 9px;
+  border: 1.5px solid rgba(var(--c-rgb), 0.4);
+  border-radius: 14px;
+  background: var(--sup);
+  color: var(--c);
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease, opacity 0.18s ease, box-shadow 0.18s ease;
+}
+.valoraBtn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -14px rgba(var(--c-rgb), 0.9); }
+.valoraBtn:focus-visible { outline: 2px solid var(--c); outline-offset: 2px; }
+
+.valoraRojo { --c: var(--mal); --c-rgb: var(--mal-rgb); }
+.valoraAmarillo { --c: #c88a0a; --c-rgb: 200, 138, 10; }
+.valoraVerde { --c: var(--ok); --c-rgb: var(--ok-rgb); }
+:global(.dark-mode) .shell .valoraAmarillo { --c: #f0be45; --c-rgb: 240, 190, 69; }
+:global(.dark-mode) .shell .valoraRojo { --c: #ff7b85; --c-rgb: 255, 123, 133; }
+:global(.dark-mode) .shell .valoraVerde { --c: #4cc77b; --c-rgb: 76, 199, 123; }
+
+.valoraCara { display: flex; }
+.valoraEtiqueta { font-size: 12px; font-weight: 700; letter-spacing: 0.1px; color: var(--tinta); }
+
+.valoraElegida { background: var(--c); color: #fff; box-shadow: 0 10px 22px -12px rgba(var(--c-rgb), 0.95); }
+.valoraElegida .valoraEtiqueta { color: #fff; }
+.valoraApagada { opacity: 0.5; }
+.valoraApagada:hover { opacity: 0.9; }
+
+/* «Siguiente» sigue clicable (así sacude el semáforo), pero se ve apagado. */
+.siguienteBloqueado,
+.siguienteBloqueado:hover {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+@keyframes valoraLate {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--acc-rgb), 0); }
+  50% { box-shadow: 0 0 0 7px rgba(var(--acc-rgb), 0.16); }
+}
+
+@keyframes valoraSacude {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-7px); }
+  40%, 60% { transform: translateX(7px); }
+}
+
+@media (max-width: 480px) {
+  .valoraOpciones { gap: 6px; }
+  .valoraBtn { width: 92px; }
+}
+
 /* ─── Estados de carga, error y resultado ─── */
 
 .aviso {
@@ -945,13 +1047,15 @@ button.irResumen:hover {
   .marcoSale,
   .pistaSale { opacity: 1; }
   .marcaLate { opacity: 1; transform: none; }
+  .valoraPide, .valoraAviso { animation: none; }
 
   .sacude,
   .cara3d,
   .modo,
   .siguiente,
   .autoevalBtn,
-  .seg {
+  .seg,
+  .valoraBtn {
     transition: none;
   }
 

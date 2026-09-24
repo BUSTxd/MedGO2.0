@@ -3,7 +3,1058 @@
   "key": "inmunologia/t-11-diferenciacion-t",
   "title": "T11 — Respuesta inmune específica y diferenciación de linfocitos T",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Un lactante de 9 meses con infecciones respiratorias recurrentes tiene un recuento normal de linfocitos T vírgenes en sangre, pero la biopsia de un ganglio muestra la paracorteza casi vacía. Se demuestra un defecto del receptor de quimiocinas que guía al linfocito T virgen hacia la zona T del ganglio. ¿Qué receptor y qué quimiocinas explican el hallazgo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CXCR5 que responde a CCL19 y CCL21",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CXCR3 que responde a CXCL10 y a CXCL9",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CXCR5 que responde a CXCL13 y CXCL12",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CCR7 que responde a CCL19 y a CCL21",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "CCR7 que responde a CXCL13 y CXCL10",
+          "correct": false
+        }
+      ],
+      "explanation": "El linfocito T virgen entra por las HEV con CCR7, que responde a CCL19 y CCL21 y lo mantiene en la paracorteza.",
+      "tema": "trafico",
+      "subtema": "Homing del linfocito virgen",
+      "seccion": "1. Linfocitos T vírgenes"
+    },
+    {
+      "id": "q02",
+      "stem": "Una mujer de 30 años con tos de tres semanas, sudoración nocturna y pérdida de peso tiene una biopsia ganglionar con granulomas y bacilos ácido alcohol resistentes. La respuesta protectora depende de linfocitos T CD4⁺ que activan macrófagos. ¿Qué citocinas inducen la diferenciación de estos linfocitos desde su estado virgen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-12 e IFN-γ del microambiente inflamatorio",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-12 e IL-4 del microambiente inflamatorio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-12 y TGF-β del microambiente inflamatorio",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-6, TGF-β e IL-23 del microambiente inflamatorio",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-4, IL-5 e IL-13 del microambiente inflamatorio",
+          "correct": false
+        }
+      ],
+      "explanation": "El Th1 se induce con IL-12 e IFN-γ y produce IFN-γ, que activa macrófagos frente a patógenos intracelulares como las micobacterias.",
+      "tema": "diferenciacion-t",
+      "subtema": "Inducción del Th1",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Th1"
+    },
+    {
+      "id": "q03",
+      "stem": "Un hombre de 58 años con neumonía por Klebsiella pneumoniae y candidiasis oral recurrente presenta escasa producción de IL-17 por sus linfocitos T CD4⁺. Se estudia qué señales necesita el linfocito virgen para diferenciarse hacia ese subtipo, que recluta neutrófilos frente a bacterias extracelulares y hongos. ¿Qué citocinas inducen esta diferenciación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-12, TGF-β e IL-23",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-6, TGF-β e IL-4",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-12, IL-21 e IL-23",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-1β, IL-21 e IL-23",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-6, TGF-β e IL-23",
+          "correct": true
+        }
+      ],
+      "explanation": "La diferenciación Th17 requiere IL-6, TGF-β e IL-23. Estas células producen IL-17 e IL-22 y reclutan neutrófilos contra bacterias extracelulares y hongos.",
+      "tema": "diferenciacion-t",
+      "subtema": "Inducción del Th17",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Th17"
+    },
+    {
+      "id": "q04",
+      "stem": "Una mujer de 36 años con colitis ulcerosa leve mantiene la mucosa intestinal sin inflamación intensa gracias a linfocitos T CD4⁺ supresores que sostienen la tolerancia periférica y controlan la autoinmunidad. Se aíslan estas células de una biopsia colónica. ¿Qué citocinas producen de forma característica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-2 y TGF-β producidas por estas células",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-10, IL-21 e IL-17 producidas por estas células",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-10 y TGF-β producidas por estas células",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "IL-10, IL-4 e IL-13 producidas por estas células",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-4 y TGF-β producidas por estas células",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T reguladores producen IL-10 y TGF-β, con los que suprimen la respuesta inmune y sostienen la tolerancia periférica.",
+      "tema": "diferenciacion-t",
+      "subtema": "Citocinas del Treg",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Treg"
+    },
+    {
+      "id": "q05",
+      "stem": "En el ganglio axilar de una adolescente de 16 años vacunada contra el tétanos, un linfocito T CD4⁺ activado por una célula dendrítica en la paracorteza se convierte en precursor de linfocito T folicular colaborador. Necesita encontrar al linfocito B que reconoció el mismo antígeno. ¿Qué cambio de receptores ocurre y qué quimiocina lo guía?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sube CCR7 y baja CXCR5 que sigue a CCL19 y CCL21",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Baja CCR7 y sube CXCR5 que sigue a CXCL13",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Baja CCR7 y sube CXCR5 que sigue a CCL19 y CCL21",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Sube CCR7 y baja CXCR5 que sigue a CXCL13",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Baja CCR7 y sube CXCR3 que sigue a CXCL9",
+          "correct": false
+        }
+      ],
+      "explanation": "El precursor Tfh baja CCR7 y sube CXCR5, por lo que sigue CXCL13 hacia el límite T-B y el folículo para colaborar con el linfocito B.",
+      "tema": "trafico",
+      "subtema": "Precursor Tfh hacia el folículo",
+      "seccion": "2. Recorrido interno"
+    },
+    {
+      "id": "q06",
+      "stem": "Una mujer de 33 años con esclerosis múltiple recurrente recibe fingolimod y presenta linfopenia en sangre periférica, con linfocitos retenidos dentro de los ganglios. El fármaco impide que los linfocitos respondan al gradiente que normalmente los conduce hacia los vasos linfáticos eferentes. ¿Qué gradiente y qué receptor intervienen en esa salida?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Gradiente de S1P captado por CCR7 del linfocito",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Gradiente de CCL21 captado por S1PR1 del linfocito",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Gradiente de S1P captado por S1PR1 del linfocito",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Gradiente de CXCL13 captado por CXCR5 del linfocito",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Gradiente de CXCL10 captado por CXCR3 del linfocito",
+          "correct": false
+        }
+      ],
+      "explanation": "La esfingosina-1-fosfato forma un gradiente que S1PR1 detecta, guiando al linfocito fuera del ganglio por los linfáticos eferentes hacia la sangre.",
+      "tema": "trafico",
+      "subtema": "Salida por S1P",
+      "seccion": "3. Salida del ganglio"
+    },
+    {
+      "id": "q07",
+      "stem": "Un hombre de 45 años con celulitis extensa en la pierna izquierda presenta abundantes linfocitos T efectores CD4⁺ en la dermis inflamada, que llegaron desde la sangre tras activarse en un ganglio. Estas células dejaron de buscar el ganglio y ahora buscan tejidos inflamados. ¿Qué receptor de quimiocinas y qué quimiocina guían esa migración?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CXCR3 que reconoce CXCL13 producida en el folículo linfoide",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CXCR3 que reconoce CXCL10 producida en el foco local",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CXCR5 que reconoce CXCL10 producida en el foco infeccioso",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CCR7 que reconoce CCL21 producida en el endotelio",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CXCR5 que reconoce CXCL13 producida en el folículo",
+          "correct": false
+        }
+      ],
+      "explanation": "El linfocito efector sube CXCR3, que reconoce CXCL10 producida en el foco infeccioso, y así migra al tejido inflamado en vez de buscar el ganglio.",
+      "tema": "trafico",
+      "subtema": "Migración del efector",
+      "seccion": "4. Linfocitos T activados"
+    },
+    {
+      "id": "q08",
+      "stem": "Una mujer de 34 años con infección viral reciente tiene linfocitos T activados que expresan CD25 y proliferan con concentraciones muy bajas de IL-2, mientras que los linfocitos T vírgenes en reposo casi no responden a esas concentraciones. ¿Qué receptor explica esta diferencia de sensibilidad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-2Rαβγ de alta afinidad al expresar CD25",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-2Rβγ de alta afinidad al expresar CD25",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-2Rαβγ de baja afinidad al expresar CD25",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-2Rβγ de baja afinidad sin necesidad de CD25",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-2Rαγ de alta afinidad sin necesidad de CD25",
+          "correct": false
+        }
+      ],
+      "explanation": "Al expresar CD25, o cadena α, el receptor pasa a IL-2Rαβγ de alta afinidad y el linfocito responde a concentraciones muy bajas de IL-2.",
+      "tema": "citocinas",
+      "subtema": "Receptor de IL-2 de alta afinidad",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q09",
+      "stem": "Un niño de 7 años de una zona rural presenta dolor abdominal y eosinofilia de 25 % con IgE total elevada. En las heces se observan huevos de Ascaris lumbricoides. La defensa frente a este helminto depende de un subtipo de linfocito T CD4⁺ que produce varias citocinas. ¿Cuál de ellas activa directamente a los eosinófilos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-5 producida por linfocitos Th1",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-4 producida por el linfocito Th2",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-17 producida por el linfocito Th17",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-21 producida por el linfocito Tfh",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-5 producida por el linfocito Th2",
+          "correct": true
+        }
+      ],
+      "explanation": "La IL-5 producida por el Th2 activa a los eosinófilos, y junto con IL-4 e IL-13 dirige la defensa contra helmintos.",
+      "tema": "diferenciacion-t",
+      "subtema": "IL-5 y eosinófilos",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Th2"
+    },
+    {
+      "id": "q10",
+      "stem": "Una mujer de 30 años, trabajadora de salud, recibe una prueba de tuberculina y a las 48 horas presenta una induración de 15 mm en el antebrazo. La reacción exige que el linfocito T reciba una segunda señal de activación de las células dendríticas de la epidermis. ¿Qué interacción es esencial para esa señal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CTLA-4 del linfocito T con CD80 de la célula dendrítica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD28 del linfocito T con PD-L1 de la célula dendrítica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "PD-1 del linfocito con CD80 de la célula dendrítica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD28 del linfocito T con CD80 de la célula dendrítica",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "ICOS del linfocito T con CD80 de la célula dendrítica",
+          "correct": false
+        }
+      ],
+      "explanation": "El linfocito T necesita la señal de coestimulación de CD28 con CD80 de la célula presentadora para activarse y generar la reacción cutánea.",
+      "tema": "coestimulacion",
+      "subtema": "Señal CD28 con CD80",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q11",
+      "stem": "Un niño de 5 años con infecciones bacterianas recurrentes tiene IgG sérica muy baja y una biopsia ganglionar sin centros germinales. Sus linfocitos B son normales, pero no recibe ayuda de los linfocitos T foliculares colaboradores. ¿Qué citocinas inducen la diferenciación de este subtipo de linfocito T?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-6 e IL-23 sobre el linfocito virgen",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-4 e IL-21 sobre el linfocito T virgen",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-12 e IL-21 sobre el linfocito T virgen",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-6, TGF-β e IL-21 sobre el linfocito T virgen",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-6 e IL-21 sobre el linfocito T virgen",
+          "correct": true
+        }
+      ],
+      "explanation": "El precursor Tfh se induce con IL-6 e IL-21 y produce IL-21, con la que ayuda al linfocito B en el centro germinal.",
+      "tema": "diferenciacion-t",
+      "subtema": "Inducción del Tfh",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Tfh"
+    },
+    {
+      "id": "q12",
+      "stem": "En el ganglio de una mujer de 27 años con faringitis estreptocócica, un linfocito B del folículo reconoció el antígeno con su BCR. Para recibir colaboración debe encontrarse con el linfocito T activado. ¿Hacia dónde migra y qué quimiocinas lo atraen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hacia el límite T-B por CXCL13 y CXCL10",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Hacia el centro del folículo por CXCL13",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hacia el límite T-B por CXCL10",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hacia el límite T-B por CCL19 y CCL21",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Hacia la médula por gradientes de S1P",
+          "correct": false
+        }
+      ],
+      "explanation": "Tras reconocer el antígeno el linfocito B baja CXCR5 y sube CCR7, así que sigue CCL19 y CCL21 hacia el límite T-B para encontrar al linfocito T.",
+      "tema": "trafico",
+      "subtema": "Migración del linfocito B activado",
+      "seccion": "2. Recorrido interno › Linfocito B activado"
+    },
+    {
+      "id": "q13",
+      "stem": "Un lactante de 6 meses con infecciones bacterianas graves y leucocitosis persistente tiene un defecto de la integrina que permite al linfocito T virgen adherirse firmemente a la vénula de endotelio alto y atravesarla. Se estudia el par integrina y ligando endotelial de ese paso. ¿Cuál es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "L-selectina que se une a ICAM-1 del endotelio alto",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "LFA-1 que se une a ICAM-1 del endotelio alto",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "VLA-4 que se une a VCAM-1 del endotelio alto",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "L-selectina que se une a VCAM-1 del endotelio alto",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "LFA-1 que se une a CCL21 del endotelio alto",
+          "correct": false
+        }
+      ],
+      "explanation": "LFA-1 se une a ICAM-1 del endotelio y permite la diapédesis del linfocito T virgen a través de las HEV.",
+      "tema": "trafico",
+      "subtema": "Diapédesis con LFA-1",
+      "seccion": "1. Linfocitos T vírgenes"
+    },
+    {
+      "id": "q14",
+      "stem": "Una mujer de 50 años con adenopatía axilar por una infección viral se somete a una biopsia. El patólogo describe expansión de la zona situada entre la corteza y la médula, con folículos y médula conservados. ¿Qué zona del ganglio linfático corresponde a esa descripción?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Corteza externa rica en linfocitos B del ganglio",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Médula central rica en cordones y senos del ganglio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Paracorteza rica en linfocitos T del ganglio",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Cápsula fibrosa que rodea a todo el ganglio",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Corteza rica en centros germinales del ganglio",
+          "correct": false
+        }
+      ],
+      "explanation": "La paracorteza está entre la corteza y la médula y es rica en linfocitos T, mientras que los folículos de la corteza contienen linfocitos B.",
+      "tema": "organos-secundarios",
+      "subtema": "Zonas del ganglio linfático",
+      "seccion": "PREGUNTAS › Corteza"
+    },
+    {
+      "id": "q15",
+      "stem": "Una célula dendrítica de la piel de un hombre de 25 años con una herida contaminada reconoce bacterias mediante receptores tipo Toll y se activa. Debe llevar el antígeno al ganglio para presentarlo a los linfocitos T vírgenes. ¿Qué receptor de quimiocinas aumenta y por qué vía llega al ganglio?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CCR7 y llega por los linfáticos aferentes hasta la zona T",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CCR7 y llega por los linfáticos eferentes hasta la sangre",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CXCR5 y llega por los linfáticos aferentes hasta el folículo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CXCR3 y llega por los vasos sanguíneos hasta la médula",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "S1PR1 y llega por los linfáticos eferentes hasta la sangre",
+          "correct": false
+        }
+      ],
+      "explanation": "Tras activarse por TLR la célula dendrítica sube CCR7 y llega por los linfáticos aferentes a la zona T, guiada por CCL19 y CCL21.",
+      "tema": "trafico",
+      "subtema": "Célula dendrítica hacia el ganglio",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q16",
+      "stem": "Un joven de 19 años con una infección cutánea por estafilococo tiene linfocitos T CD4⁺ activados hace una semana. Al compararlos con sus linfocitos T vírgenes, los efectores dejan de buscar el ganglio y migran a los tejidos inflamados. ¿Qué molécula aumenta en los linfocitos T activados?",
+      "options": [
+        {
+          "id": "a",
+          "text": "L-selectina que se une a VCAM-1 del endotelio inflamado",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "VLA-4 que se une a VCAM-1 del endotelio inflamado",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CCR7 que se une a VCAM-1 del endotelio inflamado",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "VLA-4 que se une a CCL21 del endotelio inflamado",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "L-selectina que se une a CCL21 del endotelio inflamado",
+          "correct": false
+        }
+      ],
+      "explanation": "El linfocito T efector sube VLA-4, que se une a VCAM-1 del endotelio inflamado, mientras CCR7 y L-selectina son propios del homing al ganglio.",
+      "tema": "trafico",
+      "subtema": "Molécula que sube en el efector",
+      "seccion": "4. Linfocitos T activados"
+    },
+    {
+      "id": "q17",
+      "stem": "En la biopsia de un ganglio de un varón de 38 años con linfoma se detecta que las células tumorales expresan moléculas de la familia B7 que se unen al receptor PD-1 de los linfocitos T. ¿Cuáles son esos ligandos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD80 y CD86 de la familia B7 en el tumor",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "ICOS-L y PD-L1 de la familia B7 en el tumor",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD80 y PD-L2 de la familia B7 en el tumor",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "PD-L2 e ICOS-L de la familia B7 en el tumor",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "PD-L1 y PD-L2 de la familia B7 en el tumor",
+          "correct": true
+        }
+      ],
+      "explanation": "PD-L1 y PD-L2 son los ligandos de la familia B7 que se unen a PD-1, receptor inhibidor del linfocito T.",
+      "tema": "coestimulacion",
+      "subtema": "Ligandos de PD-1",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q18",
+      "stem": "Una mujer de 55 años con melanoma metastásico tiene linfocitos T infiltrantes que perdieron actividad por señales de freno. Se desea saber qué receptores del linfocito T transmiten señales inhibidoras al unirse a sus ligandos de la familia B7. ¿Cuáles son?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD28, ICOS y CTLA-4 del linfocito T activado",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD28, ICOS y PD-1 del linfocito T activado",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CTLA-4 y PD-1 del linfocito T activado",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CD28 y ICOS del linfocito T activado",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CTLA-4 e ICOS del linfocito T activado",
+          "correct": false
+        }
+      ],
+      "explanation": "CTLA-4 y PD-1 inhiben al linfocito T, mientras CD28 e ICOS lo activan.",
+      "tema": "coestimulacion",
+      "subtema": "Receptores activadores e inhibidores",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q19",
+      "stem": "Un joven de 19 años con sospecha de defecto en la expansión clonal de linfocitos T presenta reconocimiento antigénico normal pero escasa proliferación. Tras recibir antígeno más coestimulador, el linfocito T virgen secreta una citocina que actúa sobre sí mismo. ¿Cuál es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-2 que induce su proliferación",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IL-4 que induce proliferación",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-12 que induce su proliferación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-10 que induce su proliferación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-17 que induce su proliferación",
+          "correct": false
+        }
+      ],
+      "explanation": "Tras el antígeno y el coestimulador el linfocito T virgen secreta IL-2, que actúa sobre él mismo e induce su proliferación y expansión clonal.",
+      "tema": "linfocitos-t",
+      "subtema": "IL-2 en el priming",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q20",
+      "stem": "Un hombre de 44 años con una enfermedad autoinmune recibe IL-2 a dosis muy bajas en un ensayo clínico. En estado basal, antes de cualquier activación, una población de linfocitos T es la más sensible a esta citocina. ¿Cuál es esa población y por qué?",
+      "options": [
+        {
+          "id": "a",
+          "text": "LT virgen, con receptor de alta afinidad ya presente",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "LT virgen, con receptor de baja afinidad presente en reposo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "LT regulador, con receptor de baja afinidad en reposo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "LT regulador, con receptor de alta afinidad ya presente",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "LT citotóxico, con receptor de alta afinidad ya presente",
+          "correct": false
+        }
+      ],
+      "explanation": "El Treg expresa CD25 de forma constitutiva y ya tiene el receptor de alta afinidad, mientras el linfocito virgen en reposo solo tiene el receptor βγ de baja afinidad.",
+      "tema": "citocinas",
+      "subtema": "Sensibilidad basal a IL-2",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q21",
+      "stem": "Una mujer de 40 años con lupus recibe en un ensayo clínico dosis bajas de IL-2 para aumentar la población de linfocitos T reguladores. Los investigadores quieren entender qué acción de esta citocina sostiene a esas células, además de inducir la proliferación de los linfocitos T. ¿Cuál es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Favorece la diferenciación de los Th17",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Favorece la maduración de los Tfh",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Favorece la activación de los eosinófilos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Favorece la supervivencia de los Treg",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Favorece la supervivencia de los Th1",
+          "correct": false
+        }
+      ],
+      "explanation": "La IL-2 producida por los linfocitos T activados induce la proliferación de estos y mantiene la supervivencia de los linfocitos T reguladores.",
+      "tema": "citocinas",
+      "subtema": "Acciones de la IL-2",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q22",
+      "stem": "En un ganglio de un paciente de 21 años con mononucleosis se observa un centro germinal muy activo. Los linfocitos T foliculares colaboradores reciben una señal coestimuladora adicional a la de CD28 durante la respuesta de anticuerpos. ¿Qué receptor y qué ligando participan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ICOS que se une a ICOS-L",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "PD-1 que se une a ICOS-L",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ICOS que se une a PD-L1",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CTLA-4 que se une a ICOS-L",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CTLA-4 que se une a PD-L1",
+          "correct": false
+        }
+      ],
+      "explanation": "ICOS actúa en los Tfh durante la respuesta de anticuerpos y se une a su ligando ICOS-L, además de la señal de CD28.",
+      "tema": "coestimulacion",
+      "subtema": "ICOS en el Tfh",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q23",
+      "stem": "Una mujer de 40 años con artritis reumatoide recibe prednisona, un fármaco cuyo receptor es intracelular y que inhibe NF-κB en las células efectoras. El reumatólogo explica que su efecto inmunitario se parece al de un subtipo de linfocito T. ¿A cuál se parece?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Treg, con efecto activador de macrófagos y proinflamatorio",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Th17, con efecto reclutador de neutrófilos y proinflamatorio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Th2, con efecto activador de eosinófilos y proinflamatorio",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Th1, con efecto inmunosupresor y antiinflamatorio",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Treg, con efecto inmunosupresor y antiinflamatorio",
+          "correct": true
+        }
+      ],
+      "explanation": "Los Treg producen IL-10 y TGF-β, que inhiben NF-κB y con ello la activación de las células efectoras, igual que el corticoide.",
+      "tema": "regulacion",
+      "subtema": "Corticoide y respuesta Treg",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q24",
+      "stem": "Un niño de 8 años con infestación por Ascaris tiene macrófagos pulmonares que participan en la reparación tisular más que en la destrucción microbiana. ¿Qué tipo de activación del macrófago predomina en la respuesta antihelmíntica y qué citocinas la inducen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Activación clásica inducida por IFN-γ e IL-12",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Activación clásica inducida por IL-4 e IL-13",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Activación alternativa inducida por IL-4 e IL-13",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Activación alternativa inducida por IFN-γ e IL-12",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Activación alternativa inducida por IL-17 e IL-22",
+          "correct": false
+        }
+      ],
+      "explanation": "La activación alternativa del macrófago la inducen IL-4 e IL-13 del Th2, y predomina en la respuesta frente a helmintos.",
+      "tema": "diferenciacion-t",
+      "subtema": "Activación alternativa del macrófago",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q25",
+      "stem": "Un hombre de 61 años con leucemia recibe quimioterapia y desarrolla neutropenia febril con neumonía por Klebsiella. En el estudio inmunológico se documenta una alteración de la respuesta Th17, subtipo de linfocito T CD4⁺ que produce IL-17 e IL-22. ¿Cómo agrava esta alteración el cuadro clínico del paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Menos IL-17 aumenta el reclutamiento y la activación de neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Menos IL-17 reduce el reclutamiento y la activación de neutrófilos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Menos IFN-γ e IL-12 reduce el reclutamiento y la activación de neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Menos IL-13 reduce el reclutamiento y la activación de neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Más IL-17 reduce el reclutamiento y la activación de neutrófilos",
+          "correct": false
+        }
+      ],
+      "explanation": "Con menos IL-17 se recluta y se activa menos a los neutrófilos, y se agrava la falta de neutrófilos por cantidad y por calidad de respuesta.",
+      "tema": "diferenciacion-t",
+      "subtema": "Th17 en neutropenia febril",
+      "seccion": "PREGUNTAS"
+    },
+    {
+      "id": "q26",
+      "stem": "Una niña de 6 años con rinitis alérgica y antecedente de asma tiene IgE sérica muy elevada y eosinofilia leve. Se investiga qué citocinas producidas por el subtipo Th2 del linfocito T CD4⁺ inducen el cambio de isotipo del linfocito B hacia esa inmunoglobulina. ¿Cuáles son?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-5 e IL-13 que inducen el cambio a IgE",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-4 e IL-5 que inducen el cambio a IgE",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-4 e IL-13 que inducen el cambio a IgE",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "IL-12 e IL-21 que inducen el cambio a IgE",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-12 e IFN-γ que inducen el cambio a IgE",
+          "correct": false
+        }
+      ],
+      "explanation": "IL-4 e IL-13 del Th2 inducen el cambio de isotipo del linfocito B a IgE, mientras la IL-5 activa a los eosinófilos.",
+      "tema": "diferenciacion-t",
+      "subtema": "Cambio de isotipo a IgE",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Th2"
+    },
+    {
+      "id": "q27",
+      "stem": "Un hombre de 47 años con tuberculosis pulmonar tiene granulomas cuyos macrófagos producen especies reactivas de oxígeno y óxido nítrico, y destruyen con eficacia las micobacterias fagocitadas. Esta activación depende del linfocito Th1 mediante dos señales, una de contacto celular y otra soluble. ¿Cuáles son?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD40L con CD40 e IL-4 e IL-13 entre el Th1 y el macrófago",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD40L con CD40 e IFN-γ entre el Th1 y el macrófago",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CD28 con CD80 e IFN-γ entre el Th1 y el macrófago",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CD40L con CD40 e IL-17 y TNF entre el Th1 y el macrófago",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD40 con CD40L e IFN-γ entre el Th1 y el macrófago",
+          "correct": false
+        }
+      ],
+      "explanation": "El Th1 activa al macrófago por CD40L con CD40 e IFN-γ, y este produce especies reactivas de oxígeno y óxido nítrico que matan lo fagocitado.",
+      "tema": "diferenciacion-t",
+      "subtema": "Activación del macrófago por Th1",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Th1"
+    },
+    {
+      "id": "q28",
+      "stem": "Una mujer de 52 años con candidiasis esofágica recurrente y neumonías bacterianas tiene neutrófilos normales pero escaso reclutamiento de ellos a los tejidos. Se investiga qué células responden a la IL-17 para liberar mediadores que reclutan neutrófilos. ¿Cuáles son y qué liberan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Epiteliales, endoteliales y fibroblastos que liberan quimiocinas y G-CSF",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Macrófagos, neutrófilos y linfocitos B activados que liberan quimiocinas y G-CSF",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Epiteliales, endoteliales y fibroblastos que liberan IL-12, IFN-γ y TNF-α",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Epiteliales, endoteliales y fibroblastos que liberan IL-4 e IL-5",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Eosinófilos, mastocitos y basófilos que liberan quimiocinas y G-CSF",
+          "correct": false
+        }
+      ],
+      "explanation": "La IL-17 actúa sobre células epiteliales, endoteliales y fibroblastos, que liberan quimiocinas y G-CSF para reclutar y activar neutrófilos.",
+      "tema": "diferenciacion-t",
+      "subtema": "Blancos de la IL-17",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Th17"
+    },
+    {
+      "id": "q29",
+      "stem": "Una mujer de 26 años con enfermedad de Crohn recibe una terapia experimental que aumenta la actividad de sus linfocitos T reguladores. Uno de sus mediadores, la IL-10, actúa sobre las células presentadoras de antígeno, o APC, de la mucosa intestinal. ¿Qué efecto tiene sobre ellas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Aumenta la expresión de MHC II en la APC",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Disminuye la expresión de MHC I en la APC",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Aumenta la expresión de CD80 y CD86 en la APC",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Aumenta la producción de IL-12 e IFN-γ en la APC",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Disminuye la expresión de MHC II en la APC",
+          "correct": true
+        }
+      ],
+      "explanation": "La IL-10 de los Treg disminuye la expresión de MHC II en la célula presentadora, con lo que se reduce la activación de los linfocitos T.",
+      "tema": "regulacion",
+      "subtema": "IL-10 y MHC II",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Treg"
+    },
+    {
+      "id": "q30",
+      "stem": "Una niña de 4 años con hipogammaglobulinemia y otitis a repetición no logra cambiar de IgM a IgG tras vacunarse y su ganglio no muestra maduración de afinidad. Se sospecha una alteración funcional del linfocito T folicular colaborador. ¿Qué función ejerce este subtipo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ayuda al macrófago contra patógenos intracelulares",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Ayuda al neutrófilo contra bacterias extracelulares",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Ayuda al eosinófilo contra parásitos helmintos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ayuda al linfocito B dentro del centro germinal",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Ayuda al linfocito T citotóxico contra virus",
+          "correct": false
+        }
+      ],
+      "explanation": "El Tfh produce IL-21 y ayuda al linfocito B en el centro germinal, permitiendo el cambio de isotipo y la maduración de afinidad de los anticuerpos.",
+      "tema": "diferenciacion-t",
+      "subtema": "Función del Tfh",
+      "seccion": "II. DIFERENCIACION DE LINFOCITOS T › Tfh"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

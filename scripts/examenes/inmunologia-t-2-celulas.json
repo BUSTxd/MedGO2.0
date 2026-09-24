@@ -3,7 +3,1408 @@
   "key": "inmunologia/t-2-celulas",
   "title": "T2 — Células del sistema inmune y lámina periférica",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Un hombre de 34 años consulta por fiebre y dolor de garganta de dos días. El hemograma con lámina periférica muestra leucocitos aumentados y el hematólogo los agrupa según posean o no gránulos específicos en el citoplasma. ¿Qué par de células circulantes carece de gránulos específicos, aunque conserva gránulos azurofílicos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Monocitos y eosinófilos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Neutrófilos y linfocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Monocitos y linfocitos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Basófilos y linfocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Monocitos y basófilos",
+          "correct": false
+        }
+      ],
+      "explanation": "Los agranulocitos, monocitos y linfocitos, no tienen gránulos específicos pero sí gránulos azurofílicos. Los granulocitos son neutrófilos, eosinófilos y basófilos.",
+      "tema": "celulas-inmunes",
+      "subtema": "Granulocitos y agranulocitos",
+      "seccion": "Se clasifican"
+    },
+    {
+      "id": "q02",
+      "stem": "Una mujer de 41 años acude por fiebre, malestar general y dolor de garganta de tres días. El hemograma informa 3 200 leucocitos por mm³ y el médico sospecha una infección viral aguda. ¿Qué hallazgo describe este recuento y con qué cifra se define?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Leucopenia, con menos de 4 000 por mm³",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Leucopenia, con menos de 1 800 por mm³",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Leucopenia, con menos de 500 por mm³",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Leucocitosis, con más de 10 000 por mm³",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Leucocitosis, con más de 11 000 por mm³",
+          "correct": false
+        }
+      ],
+      "explanation": "La leucopenia se define por menos de 4 000 leucocitos por mm³ y aparece en infecciones bacterianas agudas y virales. Esta paciente tiene 3 200.",
+      "tema": "hemograma-rfa",
+      "subtema": "Leucopenia y leucocitosis",
+      "seccion": "I. Leucocitos"
+    },
+    {
+      "id": "q03",
+      "stem": "Un hombre de 68 años con neumonía adquirida en la comunidad tiene fiebre de 39 grados y 18 000 leucocitos por mm³. En el frotis predominan los neutrófilos, el 14 % son abastonados y se observan algunos metamielocitos. ¿Cómo se denomina este hallazgo de la lámina periférica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Desviación a la derecha por neutrófilos hipersegmentados",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Desviación a la izquierda por linfocitos reactivos atípicos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hipersegmentación por neutrófilos envejecidos circulantes",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Desviación a la izquierda por eosinófilos inmaduros",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Desviación a la izquierda por neutrófilos inmaduros",
+          "correct": true
+        }
+      ],
+      "explanation": "La desviación a la izquierda es el aumento de neutrófilos inmaduros en sangre, con abastonados y en casos severos mielocitos y metamielocitos.",
+      "tema": "hemograma-rfa",
+      "subtema": "Desviación a la izquierda",
+      "seccion": "A) Neutrófilos"
+    },
+    {
+      "id": "q04",
+      "stem": "Una niña de 8 años de zona rural, sin agua potable, consulta por dolor abdominal y diarrea. El hemograma muestra 1 200 eosinófilos por mm³ y en las heces se hallan huevos de Ascaris. ¿Qué célula defiende contra estos helmintos y con qué tipo de reacción se asocia además?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Eosinófilo, con reacciones mediadas por IgM e IgD",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Eosinófilo, con reacciones mediadas por IgE",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Eosinófilo, con reacciones mediadas por IgD",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Neutrófilo maduro, con reacciones mediadas por IgE",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Monocito, con reacciones mediadas por IgE",
+          "correct": false
+        }
+      ],
+      "explanation": "Los eosinófilos defienden contra helmintos con proteína básica mayor y neurotoxina, y se asocian a las reacciones alérgicas mediadas por IgE.",
+      "tema": "celulas-inmunes",
+      "subtema": "Eosinófilo y helmintos",
+      "seccion": "B) Eosinófilos"
+    },
+    {
+      "id": "q05",
+      "stem": "Un joven de 22 años con rinitis alérgica y asma tiene IgE sérica muy elevada. El hematólogo revisa su lámina y encuentra células con gránulos violeta intenso que ocultan el núcleo. Estas células liberan mediadores que promueven la síntesis de IgE. ¿Cuáles son esos mediadores?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-1, IL-6 y TNF-α de los gránulos secundarios",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-5, IL-10 e IFN-γ de los gránulos secundarios",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IL-2 y TNF de los gránulos secundarios",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-4 e IL-13 de los gránulos secundarios",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "IL-12 e IL-18 de los gránulos secundarios",
+          "correct": false
+        }
+      ],
+      "explanation": "El basófilo secreta IL-4 e IL-13 desde sus gránulos secundarios. Ambas citocinas promueven la síntesis de IgE y con ello la hipersensibilidad y la anafilaxia.",
+      "tema": "celulas-inmunes",
+      "subtema": "Citocinas del basófilo",
+      "seccion": "C) Basófilos"
+    },
+    {
+      "id": "q06",
+      "stem": "En la biopsia hepática de un varón de 45 años con cirrosis alcohólica se observan macrófagos residentes en los sinusoides, las células de Kupffer. Un residente pregunta de qué célula circulante derivan y cuánto tiempo permanece esta en la sangre antes de migrar. ¿Cuál es la respuesta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Monocitos, que circulan entre 2 y 4 semanas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Neutrófilos, que circulan de 20 a 40 horas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Neutrófilos, que circulan de 6 a 8 horas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Monocitos, que circulan de 1 a 4 días",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Monocitos, que circulan de 20 a 40 horas",
+          "correct": true
+        }
+      ],
+      "explanation": "Los macrófagos tisulares derivan de los monocitos, que circulan solo de 20 a 40 horas antes de migrar a los tejidos y madurar.",
+      "tema": "celulas-inmunes",
+      "subtema": "Origen del macrófago",
+      "seccion": "D) Monocitos"
+    },
+    {
+      "id": "q07",
+      "stem": "Una niña de 9 años con asma y rinitis alérgica tiene eosinófilos elevados e IgE alta. Su respuesta inmunitaria depende de linfocitos T CD4⁺ cooperadores que dirigen la inmunidad humoral y antiparasitaria. ¿Qué grupo de citocinas secreta principalmente este subtipo de linfocitos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IL-2, IFN-γ, TNF-α e IL-12",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IL-4, IL-5, IL-10 e IL-13",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "IL-4, IL-5, IL-10 e IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IL-2, IL-4, IL-5 y TNF-α",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IL-5, IL-10, IL-12 e IL-13",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos Th2 secretan IL-4, IL-5, IL-10 e IL-13 y dirigen la inmunidad humoral. Los Th1 secretan IL-2, IFN-γ y TNF-α.",
+      "tema": "diferenciacion-t",
+      "subtema": "Citocinas de Th2",
+      "seccion": "Citocinas principales"
+    },
+    {
+      "id": "q08",
+      "stem": "Un hombre de 29 años con hepatitis viral aguda se somete a citometría de flujo. Se detecta una población linfoide de núcleo redondo y cromatina condensada, con citoplasma celeste y escasos gránulos azurófilos, que expresa CD16a, CD56 y CD94. Se busca identificar su naturaleza. ¿A qué población corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células asesinas naturales, sin TCR",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Células T asesinas citotóxicas, con TCR",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos T γδ epiteliales, con TCR",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células asesinas naturales, con TCR",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitos B de memoria, con BCR",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células NK no maduran en el timo, no expresan TCR y se identifican por CD16a, CD56 y CD94. Destruyen a la diana con perforinas y granzimas.",
+      "tema": "innata-celular",
+      "subtema": "Identidad de la célula NK",
+      "seccion": "⁜ Linfocitos Asesinos"
+    },
+    {
+      "id": "q09",
+      "stem": "Un hombre de 52 años recibió un trasplante renal y presenta rechazo agudo. La biopsia del injerto muestra un infiltrado de linfocitos T citotóxicos que expresan CD8 en la membrana. ¿Qué molécula de la célula diana reconoce el correceptor CD8 de estos linfocitos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "MHC clase II de la célula diana",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD80 y CD86 de la célula diana",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "MHC clase I del linfocito citotóxico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "MHC clase I de la célula diana",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Fas y FasL de la célula diana",
+          "correct": false
+        }
+      ],
+      "explanation": "El correceptor CD8 del linfocito T citotóxico se une al MHC clase I de la célula diana. El CD4 del cooperador se une al MHC clase II.",
+      "tema": "linfocitos-t",
+      "subtema": "Correceptor CD8 y MHC I",
+      "seccion": "⁜ Linfocitos T"
+    },
+    {
+      "id": "q10",
+      "stem": "Una mujer de 62 años, vegetariana estricta, consulta por cansancio y glositis. El hemograma muestra macrocitosis y en la lámina periférica los neutrófilos tienen núcleos con más de seis lóbulos. ¿Con qué diagnóstico se relaciona con más frecuencia este hallazgo en el frotis?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Infección bacteriana aguda",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Leucemia mieloide crónica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Anemia megaloblástica",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Quemaduras extensas graves",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Infección viral aguda",
+          "correct": false
+        }
+      ],
+      "explanation": "La hipersegmentación de los neutrófilos, con más de seis lóbulos, se asocia a anemia megaloblástica y a síndrome mielodisplásico.",
+      "tema": "hematologia",
+      "subtema": "Hipersegmentación neutrofílica",
+      "seccion": "¿Qué busco en la lámina"
+    },
+    {
+      "id": "q11",
+      "stem": "Durante una práctica de hematología se clasifican las células de un paciente de 27 años con faringitis según la presencia de gránulos específicos. Se sabe que los granulocitos son también llamados polimorfonucleares. ¿Qué tres tipos celulares forman este grupo de la clasificación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Neutrófilos, eosinófilos y macrófagos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Neutrófilos, basófilos y linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Neutrófilos, eosinófilos y basófilos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Eosinófilos, basófilos y monocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Neutrófilos, monocitos y linfocitos",
+          "correct": false
+        }
+      ],
+      "explanation": "Los granulocitos tienen gránulos específicos y son neutrófilos, eosinófilos y basófilos. Los agranulocitos, monocitos y linfocitos, son mononucleares.",
+      "tema": "celulas-inmunes",
+      "subtema": "Granulocitos polimorfonucleares",
+      "seccion": "Se clasifican"
+    },
+    {
+      "id": "q12",
+      "stem": "Un varón de 30 años que dona sangre por primera vez se realiza un hemograma de control y está completamente sano. El técnico del laboratorio revisa los valores de referencia que aparecen en el informe. ¿Cuál es el intervalo normal del recuento absoluto de leucocitos totales?",
+      "options": [
+        {
+          "id": "a",
+          "text": "4 500 a 10 000 por µL",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "1 800 a 7 800 por µL",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "10 000 a 20 000 por µL",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "15 000 a 25 000 por µL",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "7 500 a 15 000 por µL",
+          "correct": false
+        }
+      ],
+      "explanation": "El recuento absoluto normal de leucocitos totales está entre 4 500 y 10 000 por µL. Por debajo de 4 000 se habla de leucopenia.",
+      "tema": "hemograma-rfa",
+      "subtema": "Recuento normal de leucocitos",
+      "seccion": "I. Leucocitos"
+    },
+    {
+      "id": "q13",
+      "stem": "Una atleta de 24 años corre una maratón y a las dos horas de terminar acude a un control. Está afebril, sin foco infeccioso, y su hemograma informa 14 000 leucocitos por mm³ con recuento diferencial normal. ¿Qué causa fisiológica explica esta leucocitosis?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reposo prolongado en cama",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Alcoholismo crónico de años",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Edad avanzada del paciente",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Insuficiencia medular grave",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Ejercicio intenso reciente",
+          "correct": true
+        }
+      ],
+      "explanation": "El ejercicio intenso es una causa fisiológica de leucocitosis, igual que el embarazo, la menstruación y el período de recién nacido.",
+      "tema": "hemograma-rfa",
+      "subtema": "Causa fisiológica de leucocitosis",
+      "seccion": "Fisiológica"
+    },
+    {
+      "id": "q14",
+      "stem": "Un hombre de 50 años con artritis reumatoide recibe prednisona a diario desde hace tres meses. Está afebril, sin ninguna infección y sin síntomas nuevos, pero su hemograma muestra 13 500 leucocitos por mm³. ¿Qué grupo de fármacos explica esta leucocitosis?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Quimioterápicos, como la ciclofosfamida",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Corticoides, como la hidrocortisona",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Sulfonamidas, como el cotrimoxazol",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tranquilizantes, como el diazepam",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Anticonvulsivantes, como la fenitoína",
+          "correct": false
+        }
+      ],
+      "explanation": "Los corticoides, como la hidrocortisona, producen leucocitosis. Los quimioterápicos, las sulfonamidas, los anticonvulsivantes y los tranquilizantes producen leucopenia.",
+      "tema": "hemograma-rfa",
+      "subtema": "Fármacos y leucocitosis",
+      "seccion": "Fármacos"
+    },
+    {
+      "id": "q15",
+      "stem": "Un varón de 60 años con cáncer de próstata metastásico consulta por astenia y fiebre. Su hemograma muestra 2 800 leucocitos por mm³ y en la biopsia de médula ósea las células tumorales han reemplazado el tejido hematopoyético. ¿Qué proceso neoplásico explica la leucopenia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Leucemia mieloide crónica establecida",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Síndrome mieloproliferativo crónico",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Policitemia vera en fase inicial",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mieloptisis por infiltración medular",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Trombocitemia esencial en fase inicial",
+          "correct": false
+        }
+      ],
+      "explanation": "En la mieloptisis las células tumorales infiltran y desplazan la médula ósea, y esto produce leucopenia. Las leucemias crónicas y los síndromes mieloproliferativos producen leucocitosis.",
+      "tema": "hemograma-rfa",
+      "subtema": "Neoplasias y leucopenia",
+      "seccion": "Neoplasias"
+    },
+    {
+      "id": "q16",
+      "stem": "Un varón de 35 años sano se realiza un hemograma de rutina. El diferencial informa 3 % de neutrófilos abastonados y el médico verifica que este valor esté en el rango normal. ¿Qué afirmación sobre el diferencial normal de leucocitos es la correcta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los segmentados maduros normales son 0 a 5 %",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los abastonados normales son 40 a 70 %",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los linfocitos normales son 0 a 5 %",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los monocitos normales son 20 a 45 %",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Los abastonados normales son 0 a 5 %",
+          "correct": true
+        }
+      ],
+      "explanation": "Los neutrófilos abastonados normales son 0 a 5 % del diferencial, mientras que los segmentados ocupan de 40 a 70 %.",
+      "tema": "hemograma-rfa",
+      "subtema": "Porcentaje de abastonados",
+      "seccion": "Recuento Diferencial › Neutrófilos en banda"
+    },
+    {
+      "id": "q17",
+      "stem": "Un varón de 52 años tiene un recuento de 12 000 leucocitos por µL y un diferencial porcentual que informa 20 % de linfocitos. El médico necesita el número real de linfocitos y no solo su proporción. ¿Cuál es el recuento absoluto de linfocitos de este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "24 000 linfocitos por µL",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "2 400 linfocitos por µL",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "12 000 linfocitos por µL",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "240 linfocitos por µL",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "600 linfocitos por µL",
+          "correct": false
+        }
+      ],
+      "explanation": "El diferencial absoluto resulta de multiplicar el porcentaje de cada tipo por el recuento total. Aquí el 20 % de 12 000 da 2 400.",
+      "tema": "hemograma-rfa",
+      "subtema": "Diferencial absoluto",
+      "seccion": "Recuento Diferencial"
+    },
+    {
+      "id": "q18",
+      "stem": "Una mujer de 45 años recibe quimioterapia por cáncer de mama y consulta por fiebre y escalofríos de un día de evolución. Su recuento absoluto de neutrófilos es de 400 por µL. ¿Cómo se clasifica este hallazgo y qué riesgo implica para la paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Neutropenia severa, con alto riesgo de infección",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Neutropenia leve, con bajo riesgo de infección",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Neutrofilia moderada, con alto riesgo de infección",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfopenia moderada, con alto riesgo de infección",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Eosinopenia severa, con alto riesgo de infección",
+          "correct": false
+        }
+      ],
+      "explanation": "Un recuento de neutrófilos menor de 1 800 por µL es neutropenia, y por debajo de 500 es severa, con riesgo inminente de infección.",
+      "tema": "hemograma-rfa",
+      "subtema": "Neutropenia severa",
+      "seccion": "Recuento Absoluto Normal"
+    },
+    {
+      "id": "q19",
+      "stem": "Un varón de 30 años consulta por una celulitis en la pierna derecha. En el sitio de infección los macrófagos liberan TNF e IL-1, y los neutrófilos circulantes comienzan a adherirse al endotelio. ¿Qué moléculas de adhesión expresa el endotelio por acción de estas citocinas para el rodamiento inicial?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Selectinas P y E de los neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Selectinas E y L del endotelio",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Integrinas β2 y VLA-4 del endotelio",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Selectinas P y E del endotelio",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "ICAM-1 y VCAM-1 del endotelio",
+          "correct": false
+        }
+      ],
+      "explanation": "El TNF y la IL-1 inducen selectinas P y E en el endotelio, lo que permite la adhesión del neutrófilo y su migración al sitio de infección.",
+      "tema": "trafico",
+      "subtema": "Selectinas endoteliales",
+      "seccion": "A) Neutrófilos"
+    },
+    {
+      "id": "q20",
+      "stem": "Un varón de 25 años consulta por un absceso cutáneo y el frotis muestra neutrófilos con gránulos azurófilos abundantes. El patólogo explica que los gránulos primarios, o no específicos, contienen un conjunto de proteínas antimicrobianas. ¿Cuál es el contenido de estos gránulos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lisozima, hidrolasas, fosfatasas y defensinas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Activadores del complemento y péptidos antimicrobianos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mieloperoxidasa, lisozima, hidrolasas y defensinas",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Proteína básica mayor y proteína catiónica eosinofílica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Mieloperoxidasa, lisozima, defensinas y metaloproteinasas",
+          "correct": false
+        }
+      ],
+      "explanation": "Los gránulos primarios del neutrófilo contienen mieloperoxidasa, lisozima, hidrolasas ácidas y defensinas. Los secundarios contienen activadores del complemento y los terciarios fosfatasas y metaloproteinasas.",
+      "tema": "celulas-inmunes",
+      "subtema": "Gránulos primarios del neutrófilo",
+      "seccion": "A) Neutrófilos"
+    },
+    {
+      "id": "q21",
+      "stem": "Una mujer de 40 años ingresa por una sepsis de origen urinario con marcada neutrofilia. Un interno quiere saber cuánto tiempo sobrevive el neutrófilo segmentado maduro en la sangre y luego una vez que migra a los tejidos. ¿Cuál es la respuesta correcta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "1 a 4 días en sangre y 6 a 8 horas en tejidos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "20 a 40 horas en sangre y 1 a 4 días en tejidos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "6 a 8 horas en sangre y 1 a 4 días en tejidos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "6 a 8 horas en sangre y varios meses en tejidos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "6 a 8 días en sangre y 1 a 4 días en tejidos",
+          "correct": false
+        }
+      ],
+      "explanation": "El neutrófilo segmentado vive de 6 a 8 horas en la sangre y de 1 a 4 días en los tejidos, por eso la médula lo repone constantemente.",
+      "tema": "celulas-inmunes",
+      "subtema": "Vida media del neutrófilo",
+      "seccion": "A) Neutrófilos"
+    },
+    {
+      "id": "q22",
+      "stem": "Un varón de 55 años con neumonía bacteriana aguda recibe corticoides intravenosos desde hace dos días. Su hemograma informa 10 eosinófilos por mm³ y ningún otro tipo de leucocito está alterado. ¿Cómo se denomina este hallazgo y cuáles son sus causas típicas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Eosinopenia, por infección aguda y corticoides",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Eosinofilia, por alergias y parasitosis intestinales",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Eosinopenia, por alergias y parasitosis intestinales",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Eosinofilia, por infección y corticoides",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Neutropenia, por infección aguda y corticoides",
+          "correct": false
+        }
+      ],
+      "explanation": "La eosinopenia, menos de 20 eosinófilos por mm³, aparece en las infecciones agudas y con el uso de corticoides. La eosinofilia es mayor de 500 y aparece en alergias y parasitosis.",
+      "tema": "hemograma-rfa",
+      "subtema": "Eosinopenia",
+      "seccion": "B) Eosinófilos"
+    },
+    {
+      "id": "q23",
+      "stem": "Un joven de 19 años sufre broncoespasmo y urticaria pocos minutos después de una picadura de abeja. Se explica que un tipo de granulocito de sangre libera un mediador de sus gránulos que contrae el músculo liso de la vía aérea. ¿Qué mediador es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Heparina liberada por el basófilo activado",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Heparán sulfato liberado por el basófilo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Histaminasa liberada por el basófilo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Proteína catiónica liberada por el basófilo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Leucotrienos liberados por el basófilo",
+          "correct": true
+        }
+      ],
+      "explanation": "Los gránulos secundarios del basófilo liberan leucotrienos, que contraen el músculo liso de la vía aérea. La heparina, en cambio, actúa como anticoagulante.",
+      "tema": "celulas-inmunes",
+      "subtema": "Leucotrienos del basófilo",
+      "seccion": "C) Basófilos"
+    },
+    {
+      "id": "q24",
+      "stem": "Un varón de 20 años con una infección bacteriana pulmonar tiene una lámina con células grandes de núcleo en herradura y citoplasma con gránulos finos y vacuolas. Estas células fagocitan y también participan en la respuesta de los linfocitos T. ¿Qué par de funciones cumple esta célula?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fagocitosis y secreción de anticuerpos como plasmocito",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Fagocitosis y presentación de antígeno como APC",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Quimiotaxis y producción de heparina como basófilo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Citotoxicidad con perforina como célula NK",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Fagocitosis y liberación de histamina como mastocito",
+          "correct": false
+        }
+      ],
+      "explanation": "El monocito y su forma tisular, el macrófago, fagocitan y actúan como células presentadoras de antígeno, o APC, hacia los linfocitos T.",
+      "tema": "celulas-inmunes",
+      "subtema": "Funciones del monocito",
+      "seccion": "D) Monocitos"
+    },
+    {
+      "id": "q25",
+      "stem": "Una mujer de 30 años con lupus eritematoso sistémico y nefritis activa recibe un anticuerpo monoclonal que bloquea un factor de supervivencia de los linfocitos B, con el fin de disminuir la producción de sus autoanticuerpos. ¿Qué factor bloquea este tratamiento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La citocina IL-7",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La citocina IL-2",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La citocina IL-15",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La citocina BAFF",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "La citocina IL-12",
+          "correct": false
+        }
+      ],
+      "explanation": "El factor BAFF sostiene la supervivencia de los linfocitos B, mientras que la IL-7 sostiene la de los linfocitos T.",
+      "tema": "celulas-inmunes",
+      "subtema": "Factor BAFF de supervivencia",
+      "seccion": "E) Linfocitos"
+    },
+    {
+      "id": "q26",
+      "stem": "Un lactante de 5 meses con infecciones graves y recurrentes no tiene linfocitos maduros circulantes. Los inmunólogos sospechan un defecto en el proceso que genera receptores antigénicos específicos en cada linfocito antes de cualquier contacto con el antígeno. ¿Qué proceso falla?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La hipermutación somática del receptor",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El cambio de isotipo en el receptor",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La conversión génica en el receptor",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El empalme alternativo del ARN del receptor",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La recombinación del ADN del receptor",
+          "correct": true
+        }
+      ],
+      "explanation": "Los linfocitos generan receptores específicos por recombinación del ADN. Después, al reconocer su antígeno, proliferan por expansión clonal.",
+      "tema": "celulas-inmunes",
+      "subtema": "Recombinación del receptor",
+      "seccion": "E) Linfocitos"
+    },
+    {
+      "id": "q27",
+      "stem": "Un varón de 45 años con linfadenopatía inguinal es estudiado para entender cómo llegan los linfocitos T vírgenes al ganglio. Estas células siguen quimiocinas producidas por células estromales en la zona T. ¿Qué receptor usan y a qué quimiocinas responde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CXCR5, que reconoce CCL19 y CCL21",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CCR7, que reconoce CCL19 y CCL21",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CCR7, que reconoce CXCL13 y CXCL12",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CCR5, que reconoce CCL3 y CCL4",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CXCR3, que reconoce CXCL9 y CXCL10",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T vírgenes expresan CCR7, que reconoce CCL19 y CCL21 producidas por células estromales de la zona T del ganglio.",
+      "tema": "trafico",
+      "subtema": "Receptor CCR7 del linfocito T",
+      "seccion": "⁜ Linfocitos T"
+    },
+    {
+      "id": "q28",
+      "stem": "Un varón de 35 años con hepatitis B crónica tiene hepatocitos apoptóticos en contacto con linfocitos T CD8⁺, que expresan FasL en su membrana. Al unirse a Fas de la célula diana se activa una vía de muerte celular. ¿Qué vía es?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La vía extrínseca de la apoptosis",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La vía intrínseca de la apoptosis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La lisis por el complejo de ataque",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La vía de la perforina y las granzimas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La fagocitosis por los macrófagos",
+          "correct": false
+        }
+      ],
+      "explanation": "La unión de FasL con Fas activa la vía extrínseca de la apoptosis y con ello las caspasas de la célula diana.",
+      "tema": "linfocitos-t",
+      "subtema": "Vía Fas y FasL",
+      "seccion": "⁜ Linfocitos T"
+    },
+    {
+      "id": "q29",
+      "stem": "Un varón de 38 años con hepatitis A aguda tiene hepatocitos infectados destruidos por linfocitos T citotóxicos, y su biopsia muestra células diana con poros en la membrana. Un estudiante debe explicar el papel de las moléculas de los gránulos citotóxicos. ¿Qué hacen la perforina y las granzimas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La perforina induce apoptosis y las granzimas forman poros",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La perforina activa complemento y las granzimas forman poros",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La perforina forma poros y las granzimas activan complemento",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La perforina forma poros y las granzimas inducen apoptosis",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "La perforina fagocita y las granzimas inducen apoptosis",
+          "correct": false
+        }
+      ],
+      "explanation": "La perforina forma poros en la membrana de la célula diana y las granzimas entran por ellos e inducen apoptosis al activar caspasas.",
+      "tema": "linfocitos-t",
+      "subtema": "Perforina y granzimas",
+      "seccion": "⁜ Linfocitos T"
+    },
+    {
+      "id": "q30",
+      "stem": "Un niño de 8 meses con diarrea crónica, eccema y diabetes de inicio precoz tiene ausencia congénita de una población de linfocitos T. Se explica que esa población controla las respuestas excesivas y autoinmunes. ¿Qué función se pierde en este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Destruir directamente células infectadas por virus",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Activar macrófagos contra bacterias intracelulares",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Suprimir respuestas contra lo propio y lo extraño",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Vigilar epitelios como primera línea de defensa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Producir anticuerpos contra antígenos extraños",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T reguladores suprimen las respuestas frente a antígenos propios y extraños, por lo que su ausencia produce respuestas excesivas y autoinmunes.",
+      "tema": "regulacion",
+      "subtema": "Función del linfocito T regulador",
+      "seccion": "⁜ Linfocitos T"
+    },
+    {
+      "id": "q31",
+      "stem": "Una biopsia de la mucosa intestinal de un varón de 40 años con enfermedad celíaca muestra linfocitos T con receptor formado por cadenas γ y δ. Estas células se desarrollan en el timo y migran al epitelio. ¿Qué comportamiento las caracteriza una vez en el tejido?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Residen en el epitelio y recirculan por la sangre",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Maduran en el epitelio y no recirculan",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Residen en el epitelio y ya no recirculan",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Residen en el ganglio y recirculan por la linfa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Residen en el bazo y no recirculan por la sangre",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos T γδ se desarrollan en el timo y, una vez en la piel o las mucosas, no recirculan y actúan como primera línea de defensa.",
+      "tema": "linfocitos-t",
+      "subtema": "Linfocitos T gamma delta",
+      "seccion": "⁜ Linfocitos T"
+    },
+    {
+      "id": "q32",
+      "stem": "Una mujer de 50 años con artritis reumatoide grave y activa recibe un anticuerpo dirigido contra CD20 para depletar una población linfocitaria de su sangre. Esta población expresa además CD19 y es la encargada de producir anticuerpos. ¿A qué población identifican CD19 y CD20?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfocitos B de sangre periférica",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfocitos T CD4⁺ de sangre periférica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfocitos T CD8⁺ de sangre periférica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células NK de sangre periférica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Monocitos de sangre periférica",
+          "correct": false
+        }
+      ],
+      "explanation": "CD19 y CD20 son marcadores del linfocito B, que participa en la inmunidad humoral y produce inmunoglobulinas.",
+      "tema": "linfocitos-b",
+      "subtema": "Marcadores CD19 y CD20",
+      "seccion": "⁜ Linfocitos B"
+    },
+    {
+      "id": "q33",
+      "stem": "Un varón de 26 años con amigdalitis y fiebre tiene un ganglio cervical aumentado de tamaño. En la citometría de flujo se identifican linfocitos B maduros vírgenes. ¿Qué isotipos de inmunoglobulina expresa en la membrana este linfocito como receptor de antígeno?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgG, IgA e IgE a la vez",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IgM, IgG e IgA a la vez",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgM e IgG a la vez",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgD e IgE a la vez",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IgM e IgD a la vez",
+          "correct": true
+        }
+      ],
+      "explanation": "El linfocito B maduro virgen expresa IgM e IgD juntas en su membrana como receptor BCR, con el mismo sitio de unión al antígeno.",
+      "tema": "linfocitos-b",
+      "subtema": "BCR del linfocito B maduro",
+      "seccion": "⁜ Linfocitos B"
+    },
+    {
+      "id": "q34",
+      "stem": "Un niño de 10 años con amigdalitis tiene linfocitos B que deben migrar hacia los folículos del ganglio cervical. Estas células expresan un receptor de quimiocinas que las guía hacia una quimiocina producida en el folículo. ¿Qué receptor y qué quimiocina participan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CCR7, que reconoce CCL19 y CCL21",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CXCR5, que reconoce CXCL13",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CCR9, que reconoce CCL25 y CCL28",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CCR7, que reconoce CXCL13",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CXCR5, que reconoce CCL19",
+          "correct": false
+        }
+      ],
+      "explanation": "El linfocito B expresa CXCR5, receptor de la quimiocina CXCL13, que lo guía hacia los folículos linfoides.",
+      "tema": "trafico",
+      "subtema": "Receptor CXCR5 del linfocito B",
+      "seccion": "⁜ Linfocitos B"
+    },
+    {
+      "id": "q35",
+      "stem": "Una mujer de 60 años con un carcinoma de colon tiene células tumorales que perdieron la expresión de MHC clase I. Una célula NK las reconoce y las destruye sin necesidad de sensibilización previa. ¿Por qué la NK activa su función citotóxica contra estas células?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deja de recibir la señal activadora del MHC clase I",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Empieza a recibir la señal inhibidora del MHC clase II",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Deja de recibir la señal inhibidora del MHC clase II",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Deja de recibir la señal inhibidora del MHC clase I",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Empieza a recibir la señal activadora del MHC clase II",
+          "correct": false
+        }
+      ],
+      "explanation": "La NK integra señales inhibidoras del MHC clase I y señales activadoras. Sin MHC clase I predomina la activación y la NK mata.",
+      "tema": "innata-celular",
+      "subtema": "Reconocimiento de MHC I por NK",
+      "seccion": "⁜ Linfocitos Asesinos"
+    },
+    {
+      "id": "q36",
+      "stem": "Un varón de 47 años con hepatitis C crónica tiene una biopsia hepática con linfocitos T CD4⁺ que activan a los linfocitos T citotóxicos, a las células NK y a los macrófagos. ¿Qué subtipo de linfocito cooperador dirige este tipo de respuesta y qué células activa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Th2, que activa CTL CD8⁺, NK y macrófagos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Th1, que activa linfocitos B y eosinófilos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Th2, que activa eosinófilos, mastocitos y NK",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Th1, que activa neutrófilos y mastocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Th1, que activa CTL CD8⁺, NK y macrófagos",
+          "correct": true
+        }
+      ],
+      "explanation": "Los linfocitos Th1 activan a los CTL CD8⁺, a las NK y a los macrófagos, y dirigen la inmunidad celular.",
+      "tema": "diferenciacion-t",
+      "subtema": "Células activadas por Th1",
+      "seccion": "Células que activan"
+    },
+    {
+      "id": "q37",
+      "stem": "Un varón de 30 años con eosinofilia y una infección por Strongyloides consulta por diarrea persistente y dolor abdominal. Se explica que su respuesta CD4⁺ predominante combate a los patógenos extracelulares. ¿Qué subtipo domina y cuál es su mecanismo principal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Th1, con producción de anticuerpos y respuesta antiparasitaria",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Th2, con producción de anticuerpos y respuesta antiparasitaria",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Th2, con destrucción de células infectadas y activación de macrófagos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Th1, con destrucción de células infectadas y activación de macrófagos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Treg, con producción de anticuerpos y respuesta antiparasitaria",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos Th2 combaten patógenos extracelulares, como helmintos y bacterias extracelulares, mediante la producción de anticuerpos y la respuesta antiparasitaria.",
+      "tema": "diferenciacion-t",
+      "subtema": "Patógenos combatidos por Th2",
+      "seccion": "Patógenos que combaten"
+    },
+    {
+      "id": "q38",
+      "stem": "Un joven de 24 años con dermatitis atópica y asma tiene IgE muy elevada. En su ganglio, los linfocitos T cooperadores estimulan el cambio de isotipo de los linfocitos B. ¿Qué isotipos favorece el cambio y qué citocinas lo inducen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgE e IgA por IL-4 e IL-13",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "IgE e IgA por IL-12 e IFN-γ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgG, IgM e IgD por IL-4 e IL-13",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgG opsonizante por IL-4 e IL-13",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "IgE e IgD por IL-4 e IL-5",
+          "correct": false
+        }
+      ],
+      "explanation": "Las citocinas IL-4 e IL-13 de los linfocitos Th2 favorecen el cambio de isotipo hacia IgE e IgA.",
+      "tema": "diferenciacion-t",
+      "subtema": "Cambio de isotipo por Th2",
+      "seccion": "Cambio de isotipo"
+    },
+    {
+      "id": "q39",
+      "stem": "Una mujer de 32 años con una infección bacteriana intracelular tiene una respuesta CD4⁺ de tipo Th1. Su ganglio muestra linfocitos B que cambian a un isotipo que opsoniza bacterias y fija complemento. ¿Qué isotipo favorece el cambio y qué subtipo lo estimula?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IgG opsonizante, inducida por Th2",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "IgE anafiláctica, inducida por Th1",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "IgA secretora, inducida por Th1",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "IgG opsonizante, inducida por Th1",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "IgE anafiláctica, inducida por Th2",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos Th1 favorecen el cambio a subclases de IgG opsonizantes y fijadoras de complemento. Los Th2 favorecen IgE e IgA.",
+      "tema": "diferenciacion-t",
+      "subtema": "Cambio de isotipo por Th1",
+      "seccion": "Cambio de isotipo"
+    },
+    {
+      "id": "q40",
+      "stem": "Una mujer de 35 años con fatiga y esplenomegalia, sin fiebre ni foco infeccioso, tiene una lámina periférica con promielocitos, mielocitos, metamielocitos y bastones. ¿Qué diagnóstico debe sospecharse ante la presencia de estas células inmaduras en su sangre periférica actual?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Anemia megaloblástica o síndrome mielodisplásico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Infección viral aguda o mononucleosis infecciosa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Leucemia aguda o leucemia mieloide crónica",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Sepsis bacteriana o quemadura extensa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Alergia grave o parasitosis intestinal",
+          "correct": false
+        }
+      ],
+      "explanation": "La presencia de promielocitos, mielocitos, metamielocitos y bastones en sangre hace sospechar una leucemia aguda o una leucemia mieloide crónica.",
+      "tema": "hematologia",
+      "subtema": "Células inmaduras en sangre",
+      "seccion": "¿Qué busco en la lámina"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

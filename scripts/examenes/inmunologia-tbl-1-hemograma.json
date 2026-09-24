@@ -3,7 +3,1058 @@
   "key": "inmunologia/tbl-1-hemograma",
   "title": "TBL 1 — Hemograma y reactantes de fase aguda",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Un hombre de 46 años con apendicitis perforada y fiebre de 39 grados tiene 62 000 leucocitos por mm³, casi todos neutrófilos maduros con granulación tóxica y cuerpos de Döhle, sin basofilia ni eosinofilia. El hematólogo duda entre una reacción leucemoide y una leucemia mieloide crónica. ¿Qué resultado esperas en la fosfatasa alcalina leucocitaria y en la citogenética?",
+      "options": [
+        {
+          "id": "a",
+          "text": "LAP baja y presencia del cromosoma Filadelfia en la citogenética",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "LAP alta y presencia del cromosoma Filadelfia en la citogenética",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "LAP baja y ausencia del cromosoma Filadelfia en citogenética",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "LAP alta y ausencia del cromosoma Filadelfia en la citogenética",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "LAP normal y ausencia del cromosoma Filadelfia en la citogenética",
+          "correct": false
+        }
+      ],
+      "explanation": "La reacción leucemoide tiene neutrófilos maduros con LAP alta y sin cromosoma Filadelfia. En la LMC la LAP es baja y se detecta BCR-ABL1.",
+      "tema": "hematologia",
+      "subtema": "Leucemoide frente a LMC",
+      "seccion": "2. Reacción leucemoide"
+    },
+    {
+      "id": "q02",
+      "stem": "Un hombre de 48 años consulta por fatiga, saciedad precoz y dolor en el hipocondrio izquierdo. Tiene esplenomegalia y el hemograma muestra 180 000 leucocitos por mm³ con mielocitos, metamielocitos y bandas, además de basofilia, eosinofilia y anemia normocítica. La LAP está baja. ¿Qué alteración molecular esperas encontrar?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fusión BCR-ABL1 por translocación entre los cromosomas 9 y 22",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Fusión BCR-ABL1 por translocación de los cromosomas 9 y 15",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Fusión PML-RARA por translocación entre los cromosomas 9 y 22",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Fusión IGH-MYC por translocación recíproca entre los cromosomas 8 y 14",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Fusión IGH-BCL2 por translocación recíproca entre los cromosomas 14 y 18",
+          "correct": false
+        }
+      ],
+      "explanation": "La LMC se define por la translocación entre los cromosomas 9 y 22, cromosoma Filadelfia, que forma BCR-ABL1, una tirosina cinasa constitutivamente activa que impulsa la proliferación.",
+      "tema": "hematologia",
+      "subtema": "Cromosoma Filadelfia",
+      "seccion": "Leucemia mieloide crónica"
+    },
+    {
+      "id": "q03",
+      "stem": "Un hombre de 68 años con fiebre, tos y esputo purulento tiene una neumonía adquirida en la comunidad. El hemograma muestra 19 000 leucocitos por mm³, con 85 por ciento de neutrófilos, entre los cuales 15 por ciento son bandas y metamielocitos. ¿Qué mecanismo explica este desplazamiento a la izquierda?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Liberación medular de neutrófilos maduros por estrés físico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Proliferación clonal de precursores granulocíticos con BCR-ABL1",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Infiltración de la médula ósea por células metastásicas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Retraso de la apoptosis neutrofílica por acción de glucocorticoides",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Liberación medular de neutrófilos inmaduros por alta demanda",
+          "correct": true
+        }
+      ],
+      "explanation": "Ante la alta demanda de neutrófilos, la médula libera células jóvenes, como bandas y metamielocitos, a la sangre periférica, algo típico de las infecciones bacterianas agudas.",
+      "tema": "hemograma-rfa",
+      "subtema": "Desplazamiento a la izquierda",
+      "seccion": "1. Desplazamiento a la izquierda"
+    },
+    {
+      "id": "q04",
+      "stem": "Un hombre de 72 años ingresa con fiebre, taquipnea y una consolidación lobar en la radiografía. Tiene PCR de 60 mg/L. El médico desea un marcador que ayude a confirmar una infección bacteriana sistémica frente a una causa viral. ¿Cuál solicita y por qué?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ferritina, que secuestra hierro y sube en la inflamación",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Haptoglobina, que une hemoglobina libre y sube en la inflamación",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Procalcitonina, que se eleva en sepsis y neumonía bacteriana",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Fibrinógeno, que interviene en la coagulación y sube en la inflamación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Procalcitonina, que desciende en sepsis y neumonía bacteriana",
+          "correct": false
+        }
+      ],
+      "explanation": "La procalcitonina es un marcador de infección bacteriana sistémica, elevado en sepsis y neumonía bacteriana, útil para distinguir estas causas de una infección viral.",
+      "tema": "hemograma-rfa",
+      "subtema": "Procalcitonina",
+      "seccion": "Procalcitonina"
+    },
+    {
+      "id": "q05",
+      "stem": "Una mujer de 39 años es operada de una colecistitis aguda. Doce horas después de la cirugía su PCR es de 90 mg/L, cuando antes era normal. El residente pregunta qué órgano la sintetiza, por acción de qué citocina y qué función cumple. ¿Cuál es la respuesta correcta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El hígado, por acción de IL-6, y actúa como anticoagulante",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El hígado, por acción de IL-6, y actúa como opsonina",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "El hígado, por acción de IFN-γ, y actúa como opsonina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El bazo, por acción de IL-6, y actúa como opsonina",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El hígado, por acción de IL-6, y actúa como quelante de hierro",
+          "correct": false
+        }
+      ],
+      "explanation": "La PCR la sintetiza el hígado por acción de IL-6 y actúa como opsonina. Se eleva a las 6 a 12 horas de la inflamación o infección.",
+      "tema": "hemograma-rfa",
+      "subtema": "Proteína C reactiva",
+      "seccion": "Proteína C reactiva (PCR)"
+    },
+    {
+      "id": "q06",
+      "stem": "Un hombre de 64 años con cáncer de próstata metastásico consulta por dolor óseo y astenia. No tiene fiebre ni signos de infección y su hemoglobina es de 8 g/dL. El frotis muestra mieloblastos y metamielocitos, eritroblastos, dacrocitos y plaquetas gigantes. ¿Cuál es la interpretación del hallazgo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reacción leucoeritroblástica por infiltración de la médula",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Reacción leucemoide por infiltración de la médula ósea",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Reacción leucoeritroblástica por déficit de vitamina B₁₂",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Leucemia mieloide crónica con cromosoma Filadelfia y basofilia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Desplazamiento a la izquierda por una inflamación aguda muy grave",
+          "correct": false
+        }
+      ],
+      "explanation": "Mieloides inmaduros con eritrocitos nucleados y dacrocitos forman una reacción leucoeritroblástica, que indica daño o infiltración de la médula, aquí por metástasis de un tumor sólido.",
+      "tema": "hematologia",
+      "subtema": "Reacción leucoeritroblástica",
+      "seccion": "3. Reacción leucoeritroblástica"
+    },
+    {
+      "id": "q07",
+      "stem": "Una mujer de 28 años cursa un embarazo de 30 semanas sin síntomas. En un control de rutina su VSG es de 45 mm/h, con PCR y hemograma normales. Su médico le explica que la VSG depende de la agregación de los eritrocitos y que en el embarazo suele estar elevada. ¿Cuál es la razón?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Aumenta el hematocrito, que favorece la agregación de los eritrocitos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Aumenta el fibrinógeno, que favorece la agregación de los eritrocitos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Disminuye el fibrinógeno, que favorece la agregación de los eritrocitos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Aumenta el fibrinógeno, que dificulta la agregación de los eritrocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Aumenta la albúmina, que favorece la agregación de los eritrocitos",
+          "correct": false
+        }
+      ],
+      "explanation": "En el embarazo sube el fibrinógeno, que favorece la agregación de los eritrocitos y acelera su sedimentación, por lo que la VSG aumenta sin enfermedad.",
+      "tema": "hemograma-rfa",
+      "subtema": "VSG en el embarazo",
+      "seccion": "Tasa de sedimentación globular"
+    },
+    {
+      "id": "q08",
+      "stem": "Un hombre de 35 años presenta episodios de enrojecimiento facial, prurito, diarrea e hipotensión tras el ejercicio, además de dolor abdominal con úlcera péptica. Tiene lesiones cutáneas pigmentadas y una triptasa sérica elevada. Se diagnostica una proliferación anormal de mastocitos. ¿Qué mutación se asocia a esta enfermedad?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mutación activadora de c-KIT en los basófilos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Mutación activadora de FcεRI en los mastocitos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mutación activadora de BCR-ABL1 en los granulocitos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mutación inactivadora de FOXP3 en los linfocitos Treg",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Mutación activadora de c-KIT en los mastocitos",
+          "correct": true
+        }
+      ],
+      "explanation": "La mastocitosis se asocia a mutaciones de c-KIT que expanden los mastocitos, con triptasa sérica elevada y síntomas por exceso de histamina.",
+      "tema": "celulas-inmunes",
+      "subtema": "Mastocitosis y c-KIT",
+      "seccion": "7) Mastocitos"
+    },
+    {
+      "id": "q09",
+      "stem": "Un hombre de 70 años lleva siete días hospitalizado por una neumonía grave. Su albúmina es de 2,6 g/dL sin desnutrición previa, su transferrina está baja y su ferritina está alta. El residente pregunta cómo clasificar y explicar la albúmina y la transferrina en este contexto. ¿Cuál es la interpretación correcta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reactantes positivos, que suben para ahorrar aminoácidos y limitar el hierro libre",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Reactantes negativos, que suben para ahorrar aminoácidos y limitar el hierro libre",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Reactantes negativos, que bajan para ahorrar aminoácidos y limitar el hierro",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Reactantes positivos, que bajan para ahorrar aminoácidos y limitar el hierro",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Reactantes negativos, que bajan por pérdida renal de proteínas y de hierro",
+          "correct": false
+        }
+      ],
+      "explanation": "La albúmina y la transferrina son reactantes negativos. La albúmina cae para ahorrar aminoácidos y la transferrina baja para dejar menos hierro disponible a las bacterias.",
+      "tema": "hemograma-rfa",
+      "subtema": "Reactantes negativos",
+      "seccion": "Albúmina"
+    },
+    {
+      "id": "q10",
+      "stem": "Una mujer de 62 años, vegetariana estricta desde hace veinte años, consulta por fatiga, glositis y parestesias en los pies. Su hemograma muestra anemia con VCM de 112 fL y el frotis revela neutrófilos con seis o más lóbulos nucleares. ¿Qué déficit explica el hallazgo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Déficit dietético de hierro, de cobre o de vitamina B₆",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Déficit dietético de vitamina C, de riboflavina o de zinc",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Exceso dietético de vitamina B₁₂ o de ácido fólico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Déficit dietético de vitamina B₁₂ o de ácido fólico",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Déficit dietético de vitamina K, de vitamina E o de hierro",
+          "correct": false
+        }
+      ],
+      "explanation": "Los neutrófilos hipersegmentados, con seis o más lóbulos, indican déficit de vitamina B₁₂ o de ácido fólico, que además produce anemia macrocítica.",
+      "tema": "hematologia",
+      "subtema": "Neutrófilos hipersegmentados",
+      "seccion": "3) Neutrófilos"
+    },
+    {
+      "id": "q11",
+      "stem": "Un hombre de 50 años tiene 70 000 leucocitos por mm³ y el hematólogo pide medir la fosfatasa alcalina leucocitaria en el frotis para orientar el diagnóstico. Esta enzima se localiza en un tipo de gránulo del neutrófilo maduro. ¿Cuál es ese gránulo y con qué otras proteínas se acompaña?",
+      "options": [
+        {
+          "id": "a",
+          "text": "En los gránulos azurófilos, con colagenasa, lisozima y lactoferrina",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "En los gránulos específicos, con colagenasa, lisozima y lactoferrina",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "En los gránulos específicos, con mieloperoxidasa, proteinasa y fosfatasa ácida",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "En los gránulos azurófilos, con mieloperoxidasa, proteinasa y fosfatasa ácida",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "En los gránulos específicos, con mieloperoxidasa y β-glucuronidasa",
+          "correct": false
+        }
+      ],
+      "explanation": "La LAP está en los gránulos específicos del neutrófilo, junto con colagenasa, lisozima y lactoferrina, mientras que los azurófilos son lisosomas primarios.",
+      "tema": "hematologia",
+      "subtema": "Gránulos del neutrófilo",
+      "seccion": "3) Neutrófilos"
+    },
+    {
+      "id": "q12",
+      "stem": "En el hemograma de un hombre de 55 años con esplenomegalia y eosinofilia se observa una basofilia persistente en tres controles consecutivos. Al degranularse, el basófilo libera una sustancia con efecto anticoagulante y otra con efecto vasodilatador, además de leucotrienos. ¿Cuáles son esas dos sustancias?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Histamina como anticoagulante y heparina vasodilatadora",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Triptasa como anticoagulante e histamina como vasodilatador",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Heparina como anticoagulante y bradicinina como vasodilatador",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Antitrombina como anticoagulante e histamina como vasodilatador",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Heparina como anticoagulante e histamina como vasodilatador",
+          "correct": true
+        }
+      ],
+      "explanation": "Los basófilos contienen heparina, que es anticoagulante, histamina, que es vasodilatadora, y leucotrienos. Comparten precursor con los mastocitos, pero son células distintas.",
+      "tema": "celulas-inmunes",
+      "subtema": "Mediadores del basófilo",
+      "seccion": "4) Basófilos"
+    },
+    {
+      "id": "q13",
+      "stem": "Un niño de 8 años con asma alérgica tiene eosinofilia de 12 por ciento. Su médico recuerda que la eosinofilia tiene causas frecuentes, como parásitos, asma y alergias, y otras causas endocrinas. ¿Cuál de las siguientes condiciones endocrinas se asocia a eosinofilia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Insuficiencia suprarrenal crónica con hipocortisolismo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Síndrome de Cushing por un adenoma hipofisario secretor de ACTH",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tratamiento prolongado con glucocorticoides orales",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hipercortisolismo por un adenoma suprarrenal secretor de cortisol",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Estrés físico intenso con liberación aguda de cortisol",
+          "correct": false
+        }
+      ],
+      "explanation": "La insuficiencia suprarrenal crónica figura entre las causas de eosinofilia, mientras que el exceso de cortisol, como en el Cushing o con glucocorticoides, produce eosinopenia.",
+      "tema": "hemograma-rfa",
+      "subtema": "Causas de eosinofilia",
+      "seccion": "5) Eosinófilos"
+    },
+    {
+      "id": "q14",
+      "stem": "Un hombre de 60 años con urosepsis por Escherichia coli presenta fiebre alta e hipotensión con choque séptico. En la fisiopatología participan macrófagos activados por IFN-γ, derivados de monocitos circulantes, que reconocen un componente de la pared bacteriana. ¿Qué molécula del macrófago une el lípido A del LPS?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CD14, que une la porción Fc de la IgG y activa la fagocitosis celular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CD64, que une el lípido A del LPS y provoca el choque séptico grave",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CD14, que une el lípido A del LPS y provoca el choque séptico",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "CD40, que une CD40L del linfocito T y activa al macrófago",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CD80, que une CD28 del linfocito T y coestimula su activación plena",
+          "correct": false
+        }
+      ],
+      "explanation": "El lípido A del LPS bacteriano se une a CD14 en el macrófago y desencadena una liberación de citocinas que puede producir choque séptico.",
+      "tema": "celulas-inmunes",
+      "subtema": "CD14 y lípido A",
+      "seccion": "6) Macrófagos"
+    },
+    {
+      "id": "q15",
+      "stem": "Una niña de 6 años sufre una picadura de abeja y a los pocos minutos presenta urticaria generalizada, sibilancias e hipotensión. Tiene antecedentes de reacciones locales previas y una prueba cutánea positiva al veneno. Sus mastocitos se degranulan. ¿Cuál es el mecanismo principal de activación del mastocito en este cuadro?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Unión de las anafilotoxinas C3a y C5a a sus receptores",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Degranulación directa por vancomicina, opioides o contraste",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Entrecruzamiento de IgE unida a FcγRIII por el antígeno",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Entrecruzamiento de IgE unida a FcεRI por el antígeno",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Entrecruzamiento de IgG unida a FcγRIII por el antígeno",
+          "correct": false
+        }
+      ],
+      "explanation": "En las alergias, el antígeno entrecruza la IgE unida a FcεRI del mastocito y desencadena su degranulación, con liberación de histamina, heparina y triptasa.",
+      "tema": "celulas-inmunes",
+      "subtema": "Activación del mastocito",
+      "seccion": "7) Mastocitos"
+    },
+    {
+      "id": "q16",
+      "stem": "Un hombre de 58 años en tratamiento con litio por trastorno bipolar acude a control. No tiene fiebre ni síntomas de infección y su hemograma muestra 13 500 leucocitos por mm³. ¿Cómo se clasifica este recuento y qué relación puede tener con el fármaco?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Leucopenia, menor de 4 000/mm³, con el litio como posible causa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Leucocitosis, mayor de 11 000/mm³, con la quimioterapia como posible causa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Leucocitosis, mayor de 11 000/mm³, con el litio como posible causa",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Leucopenia, menor de 4 000/mm³, con la quimioterapia como posible causa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Leucocitosis, mayor de 15 000/mm³, con el litio como posible causa",
+          "correct": false
+        }
+      ],
+      "explanation": "El recuento supera los 11 000/mm³, por lo que es una leucocitosis, y fármacos como el litio pueden elevarlo aunque no exista infección.",
+      "tema": "hemograma-rfa",
+      "subtema": "Recuento total de leucocitos",
+      "seccion": "Recuento total de leucocitos"
+    },
+    {
+      "id": "q17",
+      "stem": "Un corredor de 32 años se hace un hemograma una hora después de terminar una maratón. Está asintomático, afebril y sin infección. Los neutrófilos segmentados son 72 por ciento, cuando el rango normal es de 54 a 62 por ciento. ¿Qué explica la elevación de los neutrófilos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Infección viral aguda, que eleva los neutrófilos segmentados",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Déficit de vitamina B₁₂, que eleva los neutrófilos segmentados",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Anemia aplásica, que eleva los neutrófilos segmentados",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Estrés físico intenso, que eleva los neutrófilos segmentados",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Infección por helmintos, que eleva los neutrófilos segmentados",
+          "correct": false
+        }
+      ],
+      "explanation": "El estrés físico eleva los neutrófilos segmentados, igual que las infecciones bacterianas y los glucocorticoides. El rango normal es de 54 a 62 por ciento.",
+      "tema": "hemograma-rfa",
+      "subtema": "Neutrofilia por estrés",
+      "seccion": "Neutrófilos segmentados"
+    },
+    {
+      "id": "q18",
+      "stem": "Un hombre de 50 años consulta por fiebre vespertina, sudoración nocturna y pérdida de peso durante tres semanas, después de convivir con un familiar con tos crónica. El hemograma muestra 48 por ciento de linfocitos, cuando el rango normal es de 25 a 33 por ciento. ¿Qué tipo de procesos suelen elevar los linfocitos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Infecciones virales e infecciones crónicas como tuberculosis y brucelosis",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Infecciones bacterianas agudas y estrés físico como el ejercicio intenso prolongado",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Infecciones por helmintos y reacciones alérgicas de hipersensibilidad inmediata",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Infecciones por rickettsias y por protozoarios, además de neoplasias",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Uso de glucocorticoides y estados de inmunosupresión o inmunodeficiencia",
+          "correct": false
+        }
+      ],
+      "explanation": "Los linfocitos se elevan en infecciones virales y en infecciones crónicas como tuberculosis, brucelosis, sífilis y toxoplasmosis. Bajan con glucocorticoides e inmunodeficiencias.",
+      "tema": "hemograma-rfa",
+      "subtema": "Causas de linfocitosis",
+      "seccion": "Linfocitos"
+    },
+    {
+      "id": "q19",
+      "stem": "Un hombre de 33 años regresa de una zona rural con fiebre, cefalea y exantema tras una picadura de garrapata. Se sospecha una rickettsiosis. Su hemograma muestra alteración de una población leucocitaria que suele elevarse en las infecciones bacterianas crónicas como esta. ¿Qué alteración esperas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Eosinofilia, con eosinófilos mayores de 5 % del total",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Monocitosis, con monocitos mayores de 7 % del total",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Linfocitosis, con linfocitos mayores de 33 % del total",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Neutrofilia, con neutrófilos mayores de 62 % del total",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Basofilia, con basófilos mayores de 0,75 % del total",
+          "correct": false
+        }
+      ],
+      "explanation": "Los monocitos, con rango normal de 3 a 7 por ciento, se elevan en infecciones bacterianas crónicas como rickettsiosis, tuberculosis y sífilis, en protozoosis y en algunas neoplasias.",
+      "tema": "hemograma-rfa",
+      "subtema": "Monocitosis",
+      "seccion": "Monocitos"
+    },
+    {
+      "id": "q20",
+      "stem": "Un hombre de 25 años es operado de urgencia por una apendicitis. A las 24 horas se le miden PCR, fibrinógeno y ferritina, todos elevados, y el residente explica que se trata de la respuesta de fase aguda. ¿Qué rama inmune interviene, en qué ventana temporal y qué órgano sintetiza estas proteínas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inmunidad adaptativa, primeras 24 a 48 horas, con síntesis hepática",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Inmunidad innata, primeras 24 a 48 horas, con síntesis renal",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inmunidad innata, primera a segunda semana, con síntesis hepática",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Inmunidad adaptativa, primera a segunda semana, con síntesis medular",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Inmunidad innata, primeras 24 a 48 horas, con síntesis hepática",
+          "correct": true
+        }
+      ],
+      "explanation": "La fase aguda es una respuesta sistémica de la inmunidad innata en las primeras 24 a 48 horas, y el hígado sintetiza la mayoría de sus proteínas.",
+      "tema": "hemograma-rfa",
+      "subtema": "Respuesta de fase aguda",
+      "seccion": "Fase aguda"
+    },
+    {
+      "id": "q21",
+      "stem": "Un hombre de 66 años ingresa por una neumonía grave. Sus análisis muestran ferritina de 900 ng/mL con hierro sérico bajo. El médico explica que la ferritina, como reactante de fase aguda, cumple un papel de defensa frente a los patógenos. ¿Cuál es esa función?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Secuestra hierro y reduce su disponibilidad para los patógenos",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Libera hierro y aumenta su disponibilidad para los patógenos invasores",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Transporta hierro y lo entrega a las células del huésped",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Secuestra cobre y reduce su disponibilidad para los patógenos invasores",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Une hemoglobina libre y reduce su disponibilidad para los patógenos",
+          "correct": false
+        }
+      ],
+      "explanation": "La ferritina secuestra hierro y limita su disponibilidad para patógenos y tumores, por eso sube en la inflamación y en la malignidad.",
+      "tema": "hemograma-rfa",
+      "subtema": "Ferritina",
+      "seccion": "Ferritina"
+    },
+    {
+      "id": "q22",
+      "stem": "Una mujer de 30 años presenta ictericia y orina oscura tras una infección. Sus análisis muestran hemólisis con hemoglobina libre en el plasma. El médico recuerda que una proteína de fase aguda se une a la hemoglobina libre y otra se une a un metal. ¿Cuál une la hemoglobina libre y cuál une el cobre?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ceruloplasmina une la hemoglobina y haptoglobina une el cobre",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Haptoglobina une la hemoglobina y amiloide sérico A une el cobre",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Amiloide sérico A une la hemoglobina y ceruloplasmina une el cobre",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ferritina une la hemoglobina y ceruloplasmina une el cobre",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Haptoglobina une la hemoglobina y ceruloplasmina une el cobre",
+          "correct": true
+        }
+      ],
+      "explanation": "La haptoglobina se une a la hemoglobina libre y la ceruloplasmina se une al cobre. Ambas son reactantes de fase aguda positivos.",
+      "tema": "hemograma-rfa",
+      "subtema": "Haptoglobina y ceruloplasmina",
+      "seccion": "Haptoglobina"
+    },
+    {
+      "id": "q23",
+      "stem": "Un hombre de 50 años con una herida quirúrgica infectada tiene fibrinógeno de 650 mg/dL y VSG elevada. Su fiebre cedió con antibióticos, pero persiste el edema local. El residente recuerda que el fibrinógeno es un reactante de fase aguda positivo con varias funciones. ¿Qué funciones cumple?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Actúa como opsonina y facilita la fagocitosis de las bacterias invasoras",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Interviene en coagulación, opsonización y reparación endotelial",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Transporta hierro y limita su disponibilidad para bacterias",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Interviene en coagulación, cicatrización y reparación endotelial",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Une hemoglobina libre y previene el daño oxidativo causado por el hierro",
+          "correct": false
+        }
+      ],
+      "explanation": "El fibrinógeno interviene en la coagulación, la cicatrización y la reparación endotelial, y además aumenta la VSG al favorecer la agregación de los eritrocitos.",
+      "tema": "hemograma-rfa",
+      "subtema": "Fibrinógeno",
+      "seccion": "Fibrinógeno"
+    },
+    {
+      "id": "q24",
+      "stem": "Un hombre de 47 años con policitemia vera tiene una VSG de 2 mm/h, a pesar de una infección respiratoria reciente. El hematólogo explica que la VSG depende de la agregación de los eritrocitos. ¿Por qué está baja en este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Más eritrocitos favorecen su agregación y sedimentan rápido",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Más eritrocitos dificultan su agregación y sedimentan más lento",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Menos eritrocitos dificultan su agregación y sedimentan más lento",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Más fibrinógeno dificulta su agregación y los hace sedimentar más lento",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Menos leucocitos favorecen su agregación y sedimentan más rápido",
+          "correct": false
+        }
+      ],
+      "explanation": "En la policitemia hay más eritrocitos, lo que dificulta su agregación, y por eso sedimentan más lento y la VSG baja.",
+      "tema": "hemograma-rfa",
+      "subtema": "VSG disminuida",
+      "seccion": "Tasa de sedimentación globular"
+    },
+    {
+      "id": "q25",
+      "stem": "Una mujer de 50 años en quimioterapia por cáncer de mama consulta por fiebre. Su hemograma muestra 400 neutrófilos por mm³ y no hay signos de foco infeccioso evidente. La hematóloga la clasifica como neutropenia grave. ¿Cuál es el umbral de neutrófilos que define una neutropenia grave?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Menor de 1 500 neutrófilos/mm³",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Menor de 1 000 neutrófilos/mm³",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Menor de 500 neutrófilos/mm³",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Menor de 3 000 neutrófilos/mm³",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Menor de 50 neutrófilos/mm³",
+          "correct": false
+        }
+      ],
+      "explanation": "La neutropenia se define por menos de 1 500 neutrófilos por mm³ y es grave cuando baja de 500, como ocurre con la quimioterapia.",
+      "tema": "hemograma-rfa",
+      "subtema": "Neutropenia grave",
+      "seccion": "Neutropenia"
+    },
+    {
+      "id": "q26",
+      "stem": "Un lactante de 8 meses ingresa por neumonía por Pneumocystis, candidiasis oral persistente y diarrea crónica. Tiene retraso del crecimiento y su hemograma muestra 2 200 linfocitos por mm³. Se sospecha una inmunodeficiencia combinada grave. ¿Cómo se interpreta este recuento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfopenia, porque en niños se define por menos de 1 500 linfocitos/mm³",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfopenia, porque en niños se define por menos de 3 000 linfocitos/mm³",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Normal, porque en niños la linfopenia se define por menos de 1 500 linfocitos/mm³",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Normal, porque en niños la linfopenia se define por menos de 500 linfocitos/mm³",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Linfocitosis, porque en niños se define por más de 3 000 linfocitos",
+          "correct": false
+        }
+      ],
+      "explanation": "En niños la linfopenia se define por menos de 3 000 linfocitos por mm³, frente a 1 500 en adultos, y aparece en el SCID, el DiGeorge y el VIH.",
+      "tema": "hemograma-rfa",
+      "subtema": "Linfopenia en niños",
+      "seccion": "Linfopenia"
+    },
+    {
+      "id": "q27",
+      "stem": "Un hombre de 41 años con artritis reumatoide recibe prednisona 40 mg diarios desde hace una semana. Su hemograma muestra 14 000 leucocitos por mm³, con neutrófilos 78 por ciento, linfocitos 8 por ciento y eosinófilos 0 por ciento. ¿Qué patrón producen los glucocorticoides en el recuento leucocitario?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Neutrofilia, linfopenia y eosinopenia marcadas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Neutrofilia, linfocitosis y eosinofilia marcadas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Neutropenia, linfopenia y eosinopenia relativas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Neutrofilia, linfopenia y eosinofilia leve",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Neutropenia, linfocitosis y eosinofilia",
+          "correct": false
+        }
+      ],
+      "explanation": "Los glucocorticoides producen neutrofilia, eosinopenia y linfopenia, el mismo patrón del síndrome de Cushing por hipercortisolismo.",
+      "tema": "hemograma-rfa",
+      "subtema": "Efecto de los glucocorticoides",
+      "seccion": "Notas adicionales"
+    },
+    {
+      "id": "q28",
+      "stem": "Un lactante de 3 meses ingresa con fiebre, taquicardia y mala perfusión por una sepsis bacteriana. Tiene 24 000 leucocitos por mm³ y el frotis muestra desplazamiento a la izquierda con abundantes bandas. ¿Qué hallazgos morfológicos esperas en los neutrófilos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Granulación gruesa, vacuolas citoplasmáticas y cuerpos de Auer abundantes",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Granulación tóxica, hipersegmentación nuclear y cuerpos de Howell-Jolly",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Núcleo bilobulado, vacuolas citoplasmáticas y cuerpos de Döhle",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Granulación tóxica, vacuolas citoplasmáticas y cuerpos de Döhle",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Hipersegmentación nuclear con seis o más lóbulos y macrocitosis",
+          "correct": false
+        }
+      ],
+      "explanation": "En las infecciones graves los neutrófilos jóvenes muestran granulación tóxica, vacuolas citoplasmáticas y cuerpos de Döhle junto con el desplazamiento a la izquierda.",
+      "tema": "hemograma-rfa",
+      "subtema": "Morfología en la sepsis",
+      "seccion": "1. Desplazamiento a la izquierda"
+    },
+    {
+      "id": "q29",
+      "stem": "Un hombre de 52 años con 150 000 leucocitos por mm³, esplenomegalia y cromosoma Filadelfia positivo se estudia con un aspirado de médula ósea. Su hemoglobina es de 10 g/dL con VCM normal. ¿Qué hallazgos esperas en la médula ósea y en la serie roja?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hipoplasia granulocítica con megacariocitos disminuidos y anemia macrocítica intensa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Hiperplasia granulocítica con megacariocitos disminuidos y anemia microcítica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hiperplasia eritroide con megacariocitos aumentados y anemia normocítica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hiperplasia linfoide con megacariocitos normales y anemia hemolítica",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Hiperplasia granulocítica con megacariocitos aumentados y anemia normocítica",
+          "correct": true
+        }
+      ],
+      "explanation": "En la LMC la médula muestra hiperplasia granulocítica en todas sus etapas y megacariocitos aumentados, y el hemograma tiene anemia normocítica normocrómica.",
+      "tema": "hematologia",
+      "subtema": "Médula ósea en la LMC",
+      "seccion": "Leucemia mieloide crónica"
+    },
+    {
+      "id": "q30",
+      "stem": "Dos pacientes tienen más de 50 000 leucocitos por mm³. El primero, de 44 años, cursa con apendicitis perforada. El segundo, de 51 años, tiene esplenomegalia, basofilia y cromosoma Filadelfia. En el frotis del segundo muchos neutrófilos tienen núcleo de dos lóbulos. ¿Qué hallazgos corresponden al segundo paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "LAP alta con anomalía pseudo-Pelger-Huët en los neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "LAP baja con granulación tóxica y cuerpos de Döhle en los neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "LAP baja con anomalía pseudo-Pelger-Huët en los neutrófilos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "LAP alta con granulación tóxica y cuerpos de Döhle en los neutrófilos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "LAP normal con hipersegmentación nuclear en los neutrófilos",
+          "correct": false
+        }
+      ],
+      "explanation": "En la LMC la LAP es baja y hay anomalía pseudo-Pelger-Huët. En la reacción leucemoide la LAP es alta, con granulación tóxica y cuerpos de Döhle.",
+      "tema": "hematologia",
+      "subtema": "LAP y morfología en la LMC",
+      "seccion": "LAP (fosfatasa alcalina"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",

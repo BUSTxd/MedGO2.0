@@ -3,7 +3,848 @@
   "key": "inmunologia/t-6-innata-celular",
   "title": "T6 — Respuestas innatas celulares",
   "duration_min": null,
-  "questions": [],
+  "questions": [
+    {
+      "id": "q01",
+      "stem": "Un hombre de 58 años ingresa a emergencia con fiebre de 39,5 grados, hipotensión y taquicardia dos días después de una infección urinaria. En los hemocultivos crece Escherichia coli. En el laboratorio, las células mononucleares del paciente estimuladas con lipopolisacárido producen grandes cantidades de TNF-α. ¿Qué complejo receptor reconoce el lipopolisacárido bacteriano en estas células y desencadena esa respuesta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "TLR2 asociado a TLR6 y CD14 en la membrana celular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "TLR4 con MD-2 y CD14 en la membrana celular",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "TLR2 asociado a MD-2 y CD14 en la membrana celular",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "TLR4 unido a la flagelina en la membrana celular",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "TLR9 en el endosoma unido a ADN con motivos CpG",
+          "correct": false
+        }
+      ],
+      "explanation": "El lipopolisacárido de las gramnegativas se une a CD14 y MD-2, que lo presentan a TLR4. Sin MD-2 no se producen citocinas proinflamatorias como el TNF-α.",
+      "tema": "innata-celular",
+      "subtema": "Receptor del lipopolisacárido",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q02",
+      "stem": "Una mujer de 25 años consulta por fiebre, cefalea y mialgias de 3 días de evolución. El hisopado nasofaríngeo es positivo para virus influenza A. En la respuesta inmune inicial, un subtipo celular especializado produce de forma masiva interferón tipo I, que limita la replicación viral y activa a las células NK. ¿Qué célula cumple esta función?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células dendríticas interdigitantes de la paracorteza",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Células de Langerhans residentes de la epidermis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Macrófagos alveolares residentes del pulmón",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células dendríticas plasmocitoides circulantes",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Células dendríticas foliculares de los ganglios",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células dendríticas plasmocitoides detectan ácidos nucleicos virales con TLR7 y TLR9 y producen IFN-α y β de forma masiva, lo que limita la replicación viral.",
+      "tema": "innata-celular",
+      "subtema": "Productoras de interferón tipo I",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q03",
+      "stem": "Un lactante de 3 meses presenta conjuntivitis purulenta con secreción ocular abundante. En el frotis de la secreción se observan cocos grampositivos agrupados. Durante la defensa natural de la superficie ocular, una enzima presente en las lágrimas hidroliza el enlace β 1-4 entre N-acetilglucosamina y ácido N-acetilmurámico del peptidoglicano bacteriano. ¿Qué molécula cumple esta función?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La lisozima presente en lágrimas y saliva",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La defensina presente en lágrimas y saliva",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La lactoferrina presente en lágrimas y saliva",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La IgA presente en lágrimas y saliva",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La catelicidina presente en lágrimas y saliva",
+          "correct": false
+        }
+      ],
+      "explanation": "La lisozima de lágrimas y saliva hidroliza el enlace β 1-4 entre NAG y NAM del peptidoglicano. Es una barrera química de ojos, nariz y cavidad oral.",
+      "tema": "barreras",
+      "subtema": "Lisozima lagrimal",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q04",
+      "stem": "Un paciente de 32 años con infección crónica por el virus de la hepatitis B se estudia en un laboratorio de inmunología. Se observa que sus células detectan ADN viral bicatenario en el citosol y producen interferón tipo I mediante la activación de STING en la membrana del retículo endoplásmico. ¿Qué sensor citosólico es el principal responsable de esta detección?",
+      "options": [
+        {
+          "id": "a",
+          "text": "MDA5, que reconoce ARN bicatenario largo en el citosol",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "cGAS, que reconoce ARN bicatenario en el citosol",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "TLR9, que reconoce ADN bicatenario en el endosoma tardío",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "NOD2, que reconoce peptidoglicano en el citosol",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "cGAS, que reconoce ADN bicatenario en el citosol",
+          "correct": true
+        }
+      ],
+      "explanation": "cGAS une ADN bicatenario en el citosol y sintetiza cGAMP a partir de ATP y GTP. El cGAMP se une al dímero de STING en el retículo endoplásmico.",
+      "tema": "innata-celular",
+      "subtema": "Sensor del ADN viral",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q05",
+      "stem": "Un niño de 7 años con fiebre prolongada, esplenomegalia y pancitopenia tiene amastigotes de Leishmania donovani en el aspirado de médula ósea. En el laboratorio se compara cómo macrófagos y neutrófilos controlan al parásito y se observa que la eliminación depende del óxido nítrico producido por la óxido nítrico sintasa inducible. ¿Qué célula es la principal fuente de este mediador y qué la induce?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El neutrófilo activado por IFN-γ con alta expresión de iNOS",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El macrófago activado por IL-4 con alta expresión de iNOS",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El macrófago activado por IFN-γ con alta expresión de iNOS",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "El neutrófilo activado por IL-8 con alta expresión de NADPH oxidasa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La célula NK activada por IL-12 con alta expresión de iNOS",
+          "correct": false
+        }
+      ],
+      "explanation": "Al activarse con IFN-γ, el macrófago expresa altos niveles de iNOS y produce óxido nítrico microbicida, clave para controlar la leishmaniasis visceral.",
+      "tema": "innata-celular",
+      "subtema": "Óxido nítrico macrofágico",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q06",
+      "stem": "Un hombre de 28 años con infección crónica por VIH participa en un estudio de inmunogenética. Se analiza cómo las células NK reconocen a las células infectadas mediante un balance entre señales activadoras e inhibitorias. Una célula infectada del paciente perdió la expresión de HLA clase I en su membrana. ¿Qué ocurre con la célula NK que la encuentra?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El KIR inhibitorio sigue estimulado y la NK evita lisar la célula",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El KIR activador deja de ser estimulado y la NK evita lisar la célula",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El KIR inhibitorio deja de ser estimulado y la NK presenta péptidos al CD8⁺",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El KIR inhibitorio deja de ser estimulado y la NK puede lisar la célula",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "El KIR inhibitorio deja de ser estimulado y la NK bloquea la lisis de la célula",
+          "correct": false
+        }
+      ],
+      "explanation": "Cuando el KIR inhibitorio reconoce HLA clase I propio, domina la inhibición. Si la célula pierde HLA clase I, ese freno desaparece y la NK puede matarla.",
+      "tema": "innata-celular",
+      "subtema": "Receptores KIR de las NK",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q07",
+      "stem": "Un paciente de 48 años desarrolla neumonía bacteriana aguda con fiebre, tos purulenta y consolidación lobar en la radiografía. Durante las primeras 24 horas el infiltrado alveolar está compuesto casi exclusivamente por neutrófilos, mientras que en los días siguientes predominan monocitos y macrófagos. ¿Qué par de quimiocina y célula blanco explica este cambio del infiltrado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CCL2 recluta neutrófilos y CXCL8 monocitos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CXCL8 recluta neutrófilos y CCL2 monocitos",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "CXCL8 recluta neutrófilos y CXCL10 monocitos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CXCL12 recluta neutrófilos y CCL2 monocitos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CCL5 recluta neutrófilos y CCL3 monocitos",
+          "correct": false
+        }
+      ],
+      "explanation": "CXCL8 es la quimiocina prototípica de los neutrófilos y actúa en las primeras horas. CCL2 llega más tarde y recluta monocitos que se vuelven macrófagos.",
+      "tema": "trafico",
+      "subtema": "Quimiocinas de neutrófilos y monocitos",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q08",
+      "stem": "Un hombre de 58 años con hipertensión y obesidad consulta por dolor intenso, eritema e inflamación de la primera articulación metatarsofalángica del pie derecho. El líquido sinovial muestra abundantes cristales de urato monosódico con birrefringencia negativa. La respuesta inflamatoria depende de un inflamasoma activado en los macrófagos sinoviales. ¿Qué inflamasoma y qué enzima participan?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El inflamasoma AIM2 con activación de caspasa-1",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El inflamasoma NLRC4 con activación de la caspasa-1",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El inflamasoma NLRP3 con activación de la caspasa-3",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El inflamasoma NLRP1 con activación de caspasa-8",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El inflamasoma NLRP3 con activación de caspasa-1",
+          "correct": true
+        }
+      ],
+      "explanation": "Los cristales de urato activan NLRP3, que ensambla el inflamasoma y activa caspasa-1. Esta libera IL-1β, responsable de la inflamación aguda de la articulación.",
+      "tema": "inflamacion",
+      "subtema": "Inflamasoma NLRP3 en gota",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q09",
+      "stem": "Una mujer de 27 años consulta por prurito vulvovaginal intenso, flujo blanco grumoso y eritema de la mucosa vaginal. Recibió recientemente un curso de antibióticos de amplio espectro por una faringitis bacteriana. El examen en fresco con KOH revela levaduras y seudohifas. ¿Qué componente de la defensa epitelial se perdió y explica este cuadro?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Pérdida de la barrera microbiológica por depleción de la flora",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Pérdida de la barrera mecánica por rotura de las uniones estrechas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Pérdida de la barrera química por déficit de surfactante pulmonar",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Pérdida de la barrera mecánica por falta de movimiento ciliar",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Pérdida de la barrera química por déficit de ácidos grasos cutáneos",
+          "correct": false
+        }
+      ],
+      "explanation": "Los antibióticos eliminaron la microbiota normal, que compite con Candida por espacio y nutrientes. Sin esa barrera microbiológica, la levadura coloniza la mucosa.",
+      "tema": "barreras",
+      "subtema": "Barrera microbiológica",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q10",
+      "stem": "Una mujer de 54 años con artritis reumatoide en tratamiento irregular consulta por dolor torácico opresivo de 45 minutos. El ECG muestra elevación del ST en cara anterior y la troponina I está elevada, con diagnóstico de infarto agudo de miocardio. Los pacientes con enfermedades inflamatorias crónicas tienen mayor riesgo coronario. ¿Qué mecanismo del TNF-α explica mejor esta asociación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Induce factor XII, iniciador de la vía intrínseca de contacto",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Induce factor tisular, iniciador de la vía intrínseca",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Induce factor tisular, iniciador de la vía extrínseca",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Induce factor VIII, iniciador de la vía intrínseca",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Induce trombomodulina, iniciadora de la vía extrínseca",
+          "correct": false
+        }
+      ],
+      "explanation": "El TNF-α induce factor tisular en monocitos y endotelio. El factor tisular inicia la vía extrínseca y mantiene una hipercoagulabilidad crónica que aumenta el riesgo coronario.",
+      "tema": "citocinas",
+      "subtema": "TNF-α y factor tisular",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q11",
+      "stem": "Un hombre de 45 años fumador de larga data consulta por tos productiva y bronquitis recurrentes. El estudio muestra daño de los cilios del epitelio respiratorio, con moco espeso que no se moviliza hacia la faringe. Las barreras epiteliales de la inmunidad innata se clasifican en tres tipos. ¿Qué barrera está alterada en este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Barrera química, por el surfactante del epitelio pulmonar",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Barrera microbiológica, por la microbiota normal",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Barrera mecánica, por las uniones estrechas epiteliales",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Barrera mecánica, por el flujo longitudinal de aire",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Barrera mecánica, por el movimiento ciliar del moco",
+          "correct": true
+        }
+      ],
+      "explanation": "Los cilios que movilizan el moco son una barrera mecánica del pulmón. Su daño impide arrastrar los microbios, aunque el surfactante y las defensinas sigan presentes.",
+      "tema": "barreras",
+      "subtema": "Tipos de barrera epitelial",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q12",
+      "stem": "Un hombre de 22 años con enfermedad de Crohn ileal presenta diarrea crónica y disminución de los péptidos antimicrobianos secretados en su íleon. Las barreras químicas de los epitelios varían según el sitio anatómico, con péptidos característicos en piel, intestino, pulmón y mucosas oculares y orales. ¿Qué péptidos caracterizan la barrera química del intestino?",
+      "options": [
+        {
+          "id": "a",
+          "text": "α-defensinas, cuerpos lamelares y catelicidina",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "α-defensinas, lectinas RegIII y catelicidina",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "α-defensinas, lectinas RegIII y surfactante",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "β-defensinas, lectinas RegIII y catelicidina LL-37",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Histatinas y β-defensinas con catelicidina",
+          "correct": false
+        }
+      ],
+      "explanation": "El intestino usa α-defensinas o criptidinas, RegIII y catelicidina. La piel usa β-defensinas y catelicidina, y ojos, nariz y boca usan histatinas y β-defensinas.",
+      "tema": "barreras",
+      "subtema": "Péptidos antimicrobianos por sitio",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q13",
+      "stem": "Un hombre de 35 años sufre una herida en la mano y desarrolla celulitis con eritema, calor y edema. Las bacterias ya atravesaron el epitelio e infectan el tejido local. Mientras actúan el complemento, las citocinas, los fagocitos y las células NK, otro evento innato prepara la respuesta adaptativa en los ganglios. ¿Cuál es ese evento?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los macrófagos tisulares migran al ganglio linfático regional",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Los neutrófilos circulantes migran al ganglio linfático regional",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Las células NK migran al ganglio linfático regional",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Las células dendríticas migran al ganglio linfático regional",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Los eosinófilos tisulares migran al ganglio linfático regional",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células dendríticas migran a los ganglios linfáticos para iniciar la inmunidad adaptativa, mientras el resto de defensas innatas contiene la infección local.",
+      "tema": "innata-celular",
+      "subtema": "Defensas antes de la adaptativa",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q14",
+      "stem": "Una niña de 6 años presenta eccema por contacto tras usar una pulsera de níquel. El alérgeno atraviesa el estrato córneo y es capturado en la piel por una célula dendrítica residente, especializada en capturar y presentar antígenos, que no es la principal productora de interferón tipo I. ¿Qué célula cumple este papel?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Células de Langerhans de la epidermis",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Células de Kupffer de los sinusoides hepáticos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células de la microglía del sistema nervioso",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células dendríticas plasmocitoides circulantes",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Células dendríticas foliculares del ganglio",
+          "correct": false
+        }
+      ],
+      "explanation": "Las células de Langerhans son dendríticas residentes de la epidermis, especializadas en capturar y presentar antígenos. La producción masiva de interferón tipo I corresponde a las plasmocitoides.",
+      "tema": "innata-celular",
+      "subtema": "Células de Langerhans",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q15",
+      "stem": "Un varón de 40 años con hepatitis B crónica participa en un estudio de la vía de detección del ADN viral. Sus hepatocitos infectados activan cGAS y el cGAMP se une al dímero de STING en el retículo endoplásmico. ¿Qué ocurre después de la activación de STING para inducir los genes de interferón tipo I?",
+      "options": [
+        {
+          "id": "a",
+          "text": "TBK1 fosforila STAT1, que entra al núcleo e induce interferón tipo I",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "JAK1 fosforila IRF3, que entra al núcleo e induce interferón tipo I",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "TBK1 fosforila IRF3, que entra al núcleo e induce interferón tipo I",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "TBK1 fosforila IRF3, que entra al núcleo e induce IL-1β",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Syk fosforila IRF3, que entra al núcleo e induce el interferón tipo I",
+          "correct": false
+        }
+      ],
+      "explanation": "STING activa la cinasa TBK1, que fosforila IRF3. Este factor entra al núcleo e induce la expresión de los genes de interferón tipo I.",
+      "tema": "innata-celular",
+      "subtema": "Señalización posterior a STING",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q16",
+      "stem": "Un niño de 4 años con neumonía bacteriana tiene macrófagos alveolares que ingieren bacterias opsonizadas con C3. Un microbiólogo describe las etapas de la fagocitosis en estos macrófagos hasta la muerte del microbio. ¿Cuál es la secuencia correcta de eventos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Unión a receptores, envoltura, fusión con lisosoma, formación del fagosoma y muerte",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Unión a receptores, envoltura, fagosoma, fusión con lisosoma y muerte",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Envoltura, unión a receptores, formación del fagosoma, fusión con lisosoma y muerte",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Unión a receptores, formación del fagosoma, envoltura, fusión con lisosoma y muerte",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Unión a receptores, envoltura, fagosoma, muerte y fusión con lisosoma posterior",
+          "correct": false
+        }
+      ],
+      "explanation": "El microbio se une a receptores como los de lectina y C3, la membrana lo envuelve y forma el fagosoma, que se fusiona con el lisosoma y lo mata.",
+      "tema": "innata-celular",
+      "subtema": "Etapas de la fagocitosis",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q17",
+      "stem": "Un hombre de 32 años con sida y tuberculosis pulmonar tiene macrófagos activados por IFN-γ en los granulomas. Estos macrófagos expresan la enzima óxido nítrico sintasa inducible, cuyo producto actúa dentro del fagolisosoma junto con las especies reactivas de oxígeno. ¿Qué reacción cataliza esta enzima?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Convierte arginina en ornitina y urea, con arginasa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Convierte oxígeno en superóxido con NADPH",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Convierte citrulina en arginina y óxido nítrico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Convierte peróxido de hidrógeno en agua y oxígeno",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Convierte arginina en citrulina y óxido nítrico",
+          "correct": true
+        }
+      ],
+      "explanation": "La iNOS convierte arginina en citrulina y óxido nítrico. Se expresa cuando el macrófago se activa con IFN-γ y el NO actúa dentro del fagolisosoma.",
+      "tema": "innata-celular",
+      "subtema": "Reacción de la iNOS",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q18",
+      "stem": "Un hombre de 60 años con absceso cutáneo por Staphylococcus aureus muestra abundantes neutrófilos en el pus. Se estudia el principal mecanismo con el que estas células destruyen a las bacterias ingeridas, distinto del óxido nítrico, que producen en pequeña cantidad. ¿Cuál es ese mecanismo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Producción de especies reactivas de nitrógeno por la enzima iNOS",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Producción de especies reactivas de oxígeno por la enzima iNOS",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Producción de especies reactivas de oxígeno por NADPH oxidasa",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Liberación de perforina y granzimas de sus gránulos citotóxicos",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Secreción de IL-1β por activación del inflamasoma NLRP3",
+          "correct": false
+        }
+      ],
+      "explanation": "El principal mecanismo microbicida del neutrófilo es el estallido respiratorio, con especies reactivas de oxígeno generadas por la NADPH oxidasa del fagocito.",
+      "tema": "innata-celular",
+      "subtema": "Estallido respiratorio del neutrófilo",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q19",
+      "stem": "Un hombre de 34 años con infección por VIH-1 participa en un estudio sobre resistencia natural al virus. Se observa que ciertas quimiocinas ocupan el correceptor CCR5 y compiten con el virus por su entrada a las células. ¿Qué quimiocinas cumplen este papel?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CCL3 y CCL4, que usan CCR1, CCR3 y CCR5",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "CCL2 y CXCL8, que usan CCR2B, CXCR1 y CXCR2",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CCL3 y CXCL7, que usan CCR1, CCR3 y CXCR2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CX3CL1 y CCL2, que usan CX3CR1 y CCR2B",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "CCL4 y CXCL8, que usan CCR1, CCR3 y CXCR1",
+          "correct": false
+        }
+      ],
+      "explanation": "CCL3 o MIP-1α y CCL4 o MIP-1β usan los receptores CCR1, CCR3 y CCR5. Al ocupar CCR5 compiten con el VIH-1 por la entrada a la célula.",
+      "tema": "trafico",
+      "subtema": "Quimiocinas CC frente al VIH",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q20",
+      "stem": "Una mujer de 52 años con esclerosis múltiple activa presenta neuroinflamación en la resonancia magnética. En el estudio se identifica una quimiocina producida por monocitos, endotelio y microglía que media la adhesión entre leucocitos y endotelio y participa en la inflamación cerebral. ¿Qué quimiocina es y qué células atrae?",
+      "options": [
+        {
+          "id": "a",
+          "text": "CXCL8, que atrae neutrófilos y linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "CCL2, que atrae monocitos, NK y basófilos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "CCL5, que atrae eosinófilos y linfocitos T",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "CX3CL1, que atrae monocitos y linfocitos T",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "CXCL1, que atrae neutrófilos y fibroblastos",
+          "correct": false
+        }
+      ],
+      "explanation": "La fractalquina CX3CL1 actúa por CX3CR1 sobre monocitos y linfocitos T. Media la adhesión leucocito-endotelio y participa en la inflamación cerebral.",
+      "tema": "trafico",
+      "subtema": "Fractalquina",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q21",
+      "stem": "Un varón de 61 años con artritis reumatoide de larga evolución y TNF-α elevado presenta una trombosis venosa profunda. Además de inducir factor tisular, el TNF-α produce otros cambios en el endotelio, en las plaquetas y en la fibrinólisis que mantienen el estado protrombótico. ¿Cuáles son esos efectos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Menos ICAM-1, VCAM-1 y E-selectina, menos fibrinólisis y plaquetas activadas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Más ICAM-1, VCAM-1 y E-selectina, más fibrinólisis y plaquetas activadas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Más ICAM-1, VCAM-1 y E-selectina, menos fibrinólisis y menos plaquetas activadas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Más ICAM-1, VCAM-1 y E-selectina, menos fibrinólisis y plaquetas activadas",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Más trombomodulina y proteína C, menos fibrinólisis y más plaquetas activadas",
+          "correct": false
+        }
+      ],
+      "explanation": "El TNF-α aumenta las moléculas de adhesión ICAM-1, VCAM-1 y E-selectina, disminuye la fibrinólisis y activa las plaquetas. Así mantiene una hipercoagulabilidad crónica.",
+      "tema": "citocinas",
+      "subtema": "Otros efectos protrombóticos del TNF-α",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q22",
+      "stem": "Un hombre de 48 años sufre un accidente de tránsito con herida penetrante, daño tisular extenso y sangrado activo. En la fisiopatología de su coagulación, la vía iniciada por el daño tisular se activa por el complejo factor tisular-VIIa. ¿Qué factor activa este complejo y a qué vía conduce?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Factor X, que forma Xa y sigue la vía común",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Factor XI, que forma XIa en la vía intrínseca",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Factor XII, que forma XIIa en la vía intrínseca",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Factor XIII, que forma XIIIa y sigue la vía común",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Factor V, que forma Va en la vía común",
+          "correct": false
+        }
+      ],
+      "explanation": "El daño tisular expone factor tisular, que con VIIa activa al factor X. El Xa convierte protrombina en trombina en la vía común.",
+      "tema": "hematologia",
+      "subtema": "Vía extrínseca de la coagulación",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q23",
+      "stem": "Un hombre de 63 años con gota crónica tiene macrófagos sinoviales que primero reciben una señal innata por receptores tipo Toll y luego se exponen a cristales de urato. Se mide la secreción de IL-1β en cada paso. ¿Qué papel cumplen los cristales de urato en la secreción de IL-1β?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Activan NF-κB, que activa caspasa-1 y transcribe la pro-IL-1β",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Activan NLRP3, que activa NF-κB y transcribe la pro-IL-1β",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Activan NLRP3, que activa caspasa-3 y corta la pro-IL-1β",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Activan AIM2, que activa caspasa-1 y corta la pro-IL-1β",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Activan NLRP3, que activa caspasa-1 y corta la pro-IL-1β",
+          "correct": true
+        }
+      ],
+      "explanation": "La señal por receptores tipo Toll transcribe pro-IL-1β. Los cristales activan NLRP3, que activa caspasa-1, la cual corta la pro-IL-1β y libera IL-1β.",
+      "tema": "inflamacion",
+      "subtema": "Dos señales del inflamasoma",
+      "seccion": "Clase 6"
+    },
+    {
+      "id": "q24",
+      "stem": "Un joven de 19 años sufre una herida punzante en el antebrazo con una espina contaminada de tierra. Las bacterias ya atravesaron el epitelio y penetran el tejido subyacente, pero todavía no hay una infección local establecida ni respuesta adaptativa. Se induce la cicatrización de la herida. ¿Qué defensas destruyen a los microorganismos invasores en esta etapa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Péptidos antimicrobianos, fagocitos y linfocitos T citotóxicos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Péptidos antimicrobianos, fagocitos y el complemento",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Péptidos antimicrobianos, anticuerpos y complemento",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Flora normal, factores químicos locales y descamación epitelial",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Citocinas, quimiocinas, células NK y macrófagos activados",
+          "correct": false
+        }
+      ],
+      "explanation": "Al penetrar el epitelio, las proteínas y péptidos antimicrobianos, los fagocitos y el complemento destruyen a los invasores mientras se induce la cicatrización de la herida.",
+      "tema": "innata-celular",
+      "subtema": "Defensas tras penetrar el epitelio",
+      "seccion": "Clase 6"
+    }
+  ],
   "flashcards": [
     {
       "id": "f01",
