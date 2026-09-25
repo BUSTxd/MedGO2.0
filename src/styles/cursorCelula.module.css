@@ -1,0 +1,47 @@
+/* Puntero animado de la célula madre (src/components/CursorCelula.tsx).
+   32×32 a tamaño real: 16 fotogramas en una tira de 512 px.
+
+   Dos capas: .puntero solo se desplaza (transform desde JS) y .sprite solo
+   escala. Nunca juntar el `scale` con ese transform en un mismo elemento: se
+   aplicaría después del desplazamiento y alejaría la célula del click real. */
+.puntero {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483647;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.puntero[data-visible='false'] { visibility: hidden; }
+
+.sprite {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 512px 32px;
+  image-rendering: pixelated;
+  /* Crece y encoge alrededor del punto activo (HX, HY en el componente). */
+  transform-origin: 16px 14px;
+  transition: scale 0.12s ease, filter 0.12s ease;
+  animation: levitar 1.6s steps(16) infinite;
+}
+
+/* Sobre algo pulsable: la célula crece un poco (sustituye a la mano). */
+.puntero[data-sobre='true'] .sprite {
+  scale: 1.2;
+  filter: drop-shadow(0 0 3px rgba(242, 191, 78, 0.9));
+}
+
+.puntero[data-pulsado='true'] .sprite { scale: 0.9; }
+
+@keyframes levitar {
+  from { background-position: 0 0; }
+  to   { background-position: -512px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sprite { animation: none; transition: none; }
+}

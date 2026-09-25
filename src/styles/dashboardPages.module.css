@@ -150,31 +150,6 @@
   transition: color 0.3s ease;
 }
 
-/* Exam dates */
-.examDateItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(126, 107, 255, 0.1);
-}
-
-.examDateItem:last-child { border-bottom: none; }
-
-.examDateName {
-  font-weight: 600;
-  color: #1e1e60;
-  font-size: 14px;
-  transition: color 0.3s ease;
-}
-
-.examDateDate {
-  font-size: 13px;
-  color: #718096;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
 /* Recent exams */
 .recentExamItem {
   padding: 8px 0;
@@ -812,8 +787,6 @@
   box-shadow: 0 4px 24px rgba(59, 158, 221, 0.08);
 }
 :global(.dark-mode) .dashboardPanelTitle { color: #f0eeff; }
-:global(.dark-mode) .examDateName        { color: #f0eeff; }
-:global(.dark-mode) .examDateDate        { color: rgba(240, 238, 255, 0.5); }
 :global(.dark-mode) .recentExamName      { color: #f0eeff; }
 :global(.dark-mode) .recentExamScore     { color: rgba(240, 238, 255, 0.5); }
 

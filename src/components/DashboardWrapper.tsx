@@ -5,6 +5,8 @@ import { PlanProvider, type ClientPlanState } from './PlanProvider';
 import { RecentClassesProvider } from './RecentClassesProvider';
 import { SidebarStateProvider } from './SidebarStateContext';
 import { DarkModeProvider } from './DarkModeContext';
+import { EsAdminProvider } from './EsAdminContext';
+import CursorCelula from './CursorCelula';
 import ClarityPlanTag from './ClarityPlanTag';
 import PaginaVistaTracker from './PaginaVistaTracker';
 import { AnunciarPresencia } from './Presencia';
@@ -67,8 +69,11 @@ export default function DashboardWrapper({
       {!isAdmin && <Suspense fallback={null}><PaginaVistaTracker /></Suspense>}
       {presencia && <AnunciarPresencia token={presencia} />}
       {buzon && <BuzonUsuario token={buzon} />}
+      <CursorCelula />
       <RecentClassesProvider>
-        <div className={styles.layout}>
+        {/* data-shell: lo desenfoca la tarjeta de «Tu esfuerzo» (hijo a hijo,
+            porque un filter aquí movería la sidebar fija al hacer scroll). */}
+        <div className={styles.layout} data-shell>
           <DashboardSidebar
             collapsed={collapsed}
             onToggle={() => setCollapsed((c) => !c)}
@@ -92,7 +97,7 @@ export default function DashboardWrapper({
                 {/* Las vistas a pantalla completa tapan la sidebar: sin esto
                     su botón de tema queda inalcanzable mientras se lee. */}
                 <DarkModeProvider darkMode={darkMode} toggleDark={toggleDark}>
-                  {children}
+                  <EsAdminProvider value={isAdmin}>{children}</EsAdminProvider>
                 </DarkModeProvider>
               </SidebarStateProvider>
             </div>

@@ -3,19 +3,10 @@ import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { useRecentClasses } from '@/components/RecentClassesProvider';
-import type { RecentClass } from '@/components/RecentClassesProvider';
-import { getUpcomingExams, shortExamLabel } from '@/lib/data/microbiologia';
 import RepasaEsto from '@/components/RepasaEsto';
+import TuEsfuerzo from '@/components/TuEsfuerzo';
 import styles from '@/styles/dashboardPages.module.css';
 import { pingRacha } from '@/lib/racha';
-
-const MONTH_ABBR = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
-
-function formatExamDate(iso: string): string {
-  // Parseo manual para evitar timezone shift (interpretar como local, no UTC).
-  const [y, m, d] = iso.split('-').map(Number);
-  return `${d} ${MONTH_ABBR[m - 1]} ${y}`;
-}
 
 const BacteriaIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" className={styles.welcomeSvg}>
@@ -109,6 +100,8 @@ export default function HomePage() {
   const [streak, setStreak] = useState<number | null>(null);
   const [seconds, setSeconds] = useState(0);
   const [examenes, setExamenes] = useState(0);
+  // null hasta leer el perfil: TuEsfuerzo no pinta sprite hasta saberlo.
+  const [invocado, setInvocado] = useState<boolean | null>(null);
   const { recent } = useRecentClasses();
 
   useEffect(() => {
@@ -124,14 +117,15 @@ export default function HomePage() {
     const supabase = createClient();
     // getSession reads from the local cookie — no network call
     supabase.auth.getSession().then(async ({ data: { session } }) => {
-      if (!session?.user) return;
+      if (!session?.user) { setInvocado(false); return; }
       const { data: profile } = await supabase
         .from('profiles')
-        .select('full_name')
+        .select('full_name, esfuerzo_invocado_at')
         .eq('id', session.user.id)
         .single();
       const nombre = profile?.full_name ?? session.user.email ?? 'Estudiante';
       setFirstName(nombre.split(' ')[0]);
+      setInvocado(!!profile?.esfuerzo_invocado_at);
     });
   }, []);
 
@@ -187,8 +181,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Exam Dates — solo si el usuario ya entró a Microbiología */}
-        <ProximosExamenes recent={recent} />
+        <TuEsfuerzo streak={streak} invocado={invocado} onInvocado={() => setInvocado(true)} />
 
         {/* Temas flojos acumulados; no se pinta si no hay banqueos etiquetados. */}
         <RepasaEsto />
@@ -306,42 +299,3 @@ function Estadisticas({
     </div>
   );
 }
-
-function ProximosExamenes({ recent }: { recent: RecentClass[] }) {
-  // Habilitamos el panel cuando el usuario ya entró a alguna clase de Microbiología.
-  const hasEnteredMicro = useMemo(
-    () => recent.some((c) => c.courseSlug === 'microbiologia'),
-    [recent]
-  );
-  // Recomputamos los exámenes próximos al montar y al cambiar el slug en recent.
-  const upcoming = useMemo(() => (hasEnteredMicro ? getUpcomingExams(new Date(), 4) : []), [hasEnteredMicro]);
-
-  return (
-    <div className={styles.dashboardPanel}>
-      <h3 className={styles.dashboardPanelTitle}>Próximos Exámenes</h3>
-      {!hasEnteredMicro ? (
-        <p className={styles.recentExamScore}>
-          Cuando entres a un curso, verás aquí los exámenes más próximos.
-        </p>
-      ) : upcoming.length === 0 ? (
-        <p className={styles.recentExamScore}>No hay exámenes pendientes.</p>
-      ) : (
-        upcoming.map((e) => {
-          const href = e.linkOverride ?? `/dashboard/cursos/microbiologia/${e.id}`;
-          return (
-            <Link
-              key={e.id}
-              href={href}
-              className={styles.examDateItem}
-              style={{ display: 'flex', textDecoration: 'none' }}
-            >
-              <span className={styles.examDateName}>{shortExamLabel(e)}</span>
-              <span className={styles.examDateDate}>{formatExamDate(e.fechaISO!)}</span>
-            </Link>
-          );
-        })
-      )}
-    </div>
-  );
-}
-

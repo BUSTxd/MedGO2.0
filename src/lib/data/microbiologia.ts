@@ -861,23 +861,3 @@ export function findActividad(id: string): { actividad: Actividad; semana: Seman
   }
   return null;
 }
-
-const EXAM_TIPOS: TipoActividad[] = ['EXAMEN-T', 'EXAMEN-L', 'SUSTIT'];
-
-/**
- * Devuelve los exámenes futuros (incluido hoy) ordenados por fecha ascendente.
- * Para el panel "Próximos Exámenes" del home dashboard.
- */
-export function getUpcomingExams(now: Date = new Date(), limit = 4): Actividad[] {
-  const today = now.toISOString().slice(0, 10); // YYYY-MM-DD UTC, suficiente para comparar.
-  return semanas
-    .flatMap((s) => s.actividades)
-    .filter((a) => EXAM_TIPOS.includes(a.tipo) && a.fechaISO && a.fechaISO >= today)
-    .sort((a, b) => (a.fechaISO ?? '').localeCompare(b.fechaISO ?? ''))
-    .slice(0, limit);
-}
-
-/** Etiqueta compacta para el panel del home (sin sufijos largos). */
-export function shortExamLabel(a: Actividad): string {
-  return a.titulo.split('—')[0].trim();
-}

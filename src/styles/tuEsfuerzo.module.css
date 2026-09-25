@@ -1,0 +1,283 @@
+/* Panel «Tu esfuerzo» del home (src/components/TuEsfuerzo.tsx).
+   El fondo y el título salen de .dashboardPanel/.dashboardPanelTitle; aquí va
+   solo lo propio: la línea con la pista, la escena de sprites y la invocación. */
+
+/* La escena absorbe el alto sobrante de la fila del grid: el panel mide lo
+   mismo que sus vecinos y el sprite queda centrado en el hueco. */
+.panel {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Solo admin: arranca/sale del modo prueba. Discreto, en la esquina del título. */
+.probar {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  z-index: 4;
+  padding: 3px 10px;
+  border: 1px dashed rgba(126, 107, 255, 0.5);
+  border-radius: 999px;
+  background: transparent;
+  color: #7e6bff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.probar:hover { background: rgba(126, 107, 255, 0.1); }
+
+.probar:focus-visible {
+  outline: 2px solid #7e6bff;
+  outline-offset: 2px;
+}
+
+.linea {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.texto {
+  margin: 0;
+  font-size: 12px;
+  color: #718096;
+  transition: color 0.3s ease;
+}
+
+.ayuda {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(126, 107, 255, 0.35);
+  color: #7e6bff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: help;
+  outline: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.ayuda:hover,
+.ayuda:focus-visible {
+  background: #7e6bff;
+  color: #fff;
+}
+
+/* El panel lleva overflow: hidden: la pista cae dentro, sobre la escena. */
+.pista {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 3;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #1e1e60;
+  color: #f0eeff;
+  font-size: 12px;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.ayuda:hover + .pista,
+.ayuda:focus-visible + .pista {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.escena {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 192px;
+  margin-top: 4px;
+}
+
+/* Los dos sprites miden 192 px en escala entera: el círculo son 64 fotogramas
+   de 64×64 a ×3, la célula 16 fotogramas de 32×32 a ×6. */
+.spriteCirculo,
+.spriteCelula {
+  width: 192px;
+  height: 192px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+
+.spriteCirculo {
+  background-size: 12288px 192px;
+  animation: girarCirculo 3.2s steps(64) infinite;
+}
+
+.spriteCelula {
+  background-size: 3072px 192px;
+  animation: levitarCelula 1.6s steps(16) infinite;
+}
+
+@keyframes girarCirculo {
+  from { background-position: 0 0; }
+  to   { background-position: -12288px 0; }
+}
+
+@keyframes levitarCelula {
+  from { background-position: 0 0; }
+  to   { background-position: -3072px 0; }
+}
+
+
+/* ── Invocación ───────────────────────────────────────────────────────── */
+
+.invocar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  padding: 9px 22px;
+  border: 1px solid rgba(255, 230, 154, 0.9);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f2bf4e 0%, #c98a2a 100%);
+  color: #1b1030;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  animation: llamar 1.8s ease-in-out infinite;
+  transition: filter 0.2s ease;
+}
+
+.invocar:hover { filter: brightness(1.1); }
+
+.invocar:focus-visible {
+  outline: 2px solid #7e6bff;
+  outline-offset: 3px;
+}
+
+@keyframes llamar {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(242, 191, 78, 0.55), 0 4px 14px rgba(201, 138, 42, 0.35); }
+  50%      { box-shadow: 0 0 0 10px rgba(242, 191, 78, 0), 0 4px 22px rgba(242, 191, 78, 0.6); }
+}
+
+/* El círculo se carga de luz mientras sigue girando. */
+.escena[data-fase='iluminando'] .spriteCirculo {
+  animation:
+    girarCirculo 3.2s steps(64) infinite,
+    cargarLuz 1.6s ease-in forwards;
+}
+
+@keyframes cargarLuz {
+  from { filter: brightness(1) saturate(1); }
+  to   { filter: brightness(2.4) saturate(1.5) drop-shadow(0 0 14px #ffe69a); }
+}
+
+/* Resplandor dorado: crece hasta tapar el círculo y se apaga sobre la célula. */
+.luz {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 220px;
+  height: 220px;
+  margin: -110px 0 0 -110px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(255, 251, 232, 1) 0%,
+    rgba(255, 230, 154, 0.9) 35%,
+    rgba(242, 191, 78, 0) 70%);
+  pointer-events: none;
+}
+
+.escena[data-fase='iluminando'] .luz { animation: crecerLuz 1.6s ease-in forwards; }
+.escena[data-fase='revelando'] .luz  { animation: apagarLuz 0.9s ease-out forwards; }
+
+@keyframes crecerLuz {
+  from { opacity: 0; transform: scale(0.15); }
+  to   { opacity: 1; transform: scale(1.5); }
+}
+
+@keyframes apagarLuz {
+  from { opacity: 1; transform: scale(1.5); }
+  to   { opacity: 0; transform: scale(2); }
+}
+
+.escena[data-fase='revelando'] .spriteCelula {
+  animation:
+    levitarCelula 1.6s steps(16) infinite,
+    aparecerCelula 0.9s ease-out;
+}
+
+@keyframes aparecerCelula {
+  from { transform: scale(0.7); }
+  to   { transform: scale(1); }
+}
+
+.error {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: #d9534f;
+  text-align: center;
+}
+
+/* Chip del panel para poner/quitar el puntero después de invocar. */
+.punteroChip {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 3px 10px;
+  border: 1px solid rgba(201, 138, 42, 0.5);
+  border-radius: 999px;
+  background: transparent;
+  color: #8a5a14;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.punteroChip:hover { background: rgba(242, 191, 78, 0.15); }
+
+.punteroChip[aria-pressed='true'] {
+  background: rgba(242, 191, 78, 0.22);
+}
+
+.punteroChip:focus-visible {
+  outline: 2px solid #7e6bff;
+  outline-offset: 2px;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .spriteCirculo,
+  .spriteCelula,
+  .invocar,
+  .luz { animation: none !important; }
+}
+
+/* ── Modo oscuro ─────────────────────────────────────────────────────── */
+
+:global(.dark-mode) .texto { color: rgba(240, 238, 255, 0.5); }
+:global(.dark-mode) .ayuda { border-color: rgba(155, 142, 248, 0.45); color: #9b8ef8; }
+:global(.dark-mode) .ayuda:hover,
+:global(.dark-mode) .ayuda:focus-visible { background: #9b8ef8; color: #0d0b28; }
+:global(.dark-mode) .pista { background: #f0eeff; color: #1e1e60; }
+:global(.dark-mode) .error { color: #ff8a80; }
+:global(.dark-mode) .probar { border-color: rgba(155, 142, 248, 0.5); color: #9b8ef8; }
+:global(.dark-mode) .probar:hover { background: rgba(155, 142, 248, 0.12); }
+
+:global(.dark-mode) .punteroChip { color: #f2bf4e; border-color: rgba(242, 191, 78, 0.45); }

@@ -1,0 +1,201 @@
+/* Tarjeta «¡Felicidades!» del panel «Tu esfuerzo» (FelicidadesEsfuerzo.tsx).
+   Módulo aparte: se descarga con la tarjeta, solo para quien ya puede invocar. */
+
+/* Sin backdrop-filter a propósito: en esta app ya dejó fondos en blanco al cerrar. */
+.fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  /* Más claro que un velo normal: el desenfoque del shell ya separa la tarjeta. */
+  background: rgba(8, 6, 26, 0.45);
+  animation: fundir 0.25s ease-out;
+}
+
+.tarjeta {
+  width: min(360px, 100%);
+  padding: 28px 24px 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(242, 191, 78, 0.45);
+  background: linear-gradient(180deg, #fffdf6 0%, #f4f1ff 100%);
+  box-shadow: 0 0 40px rgba(242, 191, 78, 0.35), 0 16px 40px rgba(8, 6, 26, 0.35);
+  text-align: center;
+  font-family: var(--font-outfit), sans-serif;
+  animation: entrarTarjeta 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+/* Carrusel de dos imágenes: la animación y el sprite individual. */
+.carrusel {
+  overflow: hidden;
+  margin: -8px -24px 0;
+}
+
+.carruselPista {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 232px;
+  margin: 0;
+}
+
+.slideRotulo {
+  font-size: 12px;
+  font-weight: 600;
+  color: #8a7a4a;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tarjetaSprite {
+  width: 192px;
+  height: 192px;
+  background-repeat: no-repeat;
+  background-size: 3072px 192px;
+  image-rendering: pixelated;
+  animation: levitarCelula 1.6s steps(16) infinite;
+}
+
+/* El sprite del puntero (sin sombra) a ×3 y animado. */
+.spriteIndividual {
+  width: 96px;
+  height: 96px;
+  background-repeat: no-repeat;
+  background-size: 1536px 96px;
+  animation: levitarPuntero 1.6s steps(16) infinite;
+  image-rendering: pixelated;
+}
+
+.usarPuntero {
+  margin-top: 10px;
+  padding: 7px 16px;
+  border: 1px solid rgba(201, 138, 42, 0.6);
+  border-radius: 999px;
+  background: transparent;
+  color: #8a5a14;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.usarPuntero:hover { background: rgba(242, 191, 78, 0.15); }
+
+.usarPuntero[aria-pressed='true'] {
+  background: linear-gradient(180deg, #f2bf4e 0%, #c98a2a 100%);
+  border-color: transparent;
+  color: #1b1030;
+}
+
+.usarPuntero:focus-visible,
+.punto:focus-visible {
+  outline: 2px solid #7e6bff;
+  outline-offset: 2px;
+}
+
+.puntos {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 4px 0 14px;
+}
+
+.punto {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(126, 107, 255, 0.25);
+  cursor: pointer;
+  transition: width 0.25s ease, background 0.25s ease;
+}
+
+.punto[aria-current='true'] {
+  width: 22px;
+  background: #c98a2a;
+}
+
+.tarjetaTitulo {
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #1e1e60;
+}
+
+.tarjetaTexto {
+  margin: 0 0 20px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #4a4a6a;
+}
+
+.tarjetaBoton {
+  padding: 10px 28px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f2bf4e 0%, #c98a2a 100%);
+  color: #1b1030;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tarjetaBoton:focus-visible {
+  outline: 2px solid #7e6bff;
+  outline-offset: 3px;
+}
+
+@keyframes fundir {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes entrarTarjeta {
+  from { opacity: 0; transform: scale(0.85) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes levitarCelula {
+  from { background-position: 0 0; }
+  to   { background-position: -3072px 0; }
+}
+
+@keyframes levitarPuntero {
+  from { background-position: 0 0; }
+  to   { background-position: -1536px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarjetaSprite,
+  .spriteIndividual,
+  .fondo,
+  .tarjeta { animation: none !important; }
+  .carruselPista { transition: none; }
+}
+
+/* ── Modo oscuro ─────────────────────────────────────────────────────── */
+
+:global(.dark-mode) .tarjeta {
+  background: linear-gradient(180deg, #1a1440 0%, #0d0b28 100%);
+  border-color: rgba(242, 191, 78, 0.35);
+}
+:global(.dark-mode) .tarjetaTitulo { color: #f0eeff; }
+:global(.dark-mode) .tarjetaTexto  { color: rgba(240, 238, 255, 0.7); }
+:global(.dark-mode) .slideRotulo   { color: #e8c877; }
+:global(.dark-mode) .usarPuntero   { color: #f2bf4e; border-color: rgba(242, 191, 78, 0.45); }
+:global(.dark-mode) .usarPuntero[aria-pressed='true'] { color: #1b1030; }
+:global(.dark-mode) .punto         { background: rgba(240, 238, 255, 0.2); }
+:global(.dark-mode) .punto[aria-current='true'] { background: #f2bf4e; }

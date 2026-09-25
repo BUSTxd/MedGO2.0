@@ -402,6 +402,19 @@ Panel que mide cuánto material real hay publicado por curso, **leyendo los síl
 
 ---
 
+## Panel «Tu esfuerzo» del home (invocación por racha)
+
+`src/components/TuEsfuerzo.tsx` + `tuEsfuerzo.module.css`. Círculo de invocación en pixel art que, con racha ≥ `RACHA_INVOCAR` (20, en `src/lib/esfuerzo.ts`), muestra el botón **Invocar**: el círculo se carga de luz, un destello dorado lo tapa y se apaga sobre la célula madre, y sale la tarjeta de felicitación (portal a `<body>`).
+
+- **La cerradura es `POST /api/esfuerzo/invocar`**: relee `current_streak` en la DB (y exige última visita hoy/ayer, porque la racha solo se mueve con el ping) y escribe `profiles.esfuerzo_invocado_at`. El botón es solo la señal. El home lee la columna junto a `full_name`.
+- **Modo prueba (solo admin)**: chip «Probar» en la esquina del panel; simula racha lista y sin invocar, recorre toda la animación **sin llamar a la API ni tocar la DB**, y al cerrar la tarjeta vuelve al estado real. El admin llega al cliente por `useEsAdmin()` (`EsAdminContext`, lo provee `DashboardWrapper` con el `isAdmin` del servidor) — no importar `lib/admin` en cliente: metería los correos en el bundle.
+- **Tarjeta de felicitación** (`FelicidadesEsfuerzo.tsx` + su propio `.module.css`, vía `next/dynamic`: solo la baja quien ya puede invocar): carrusel de 2 cada 2,5 s (célula con sombra · sprite del puntero con «Usar como puntero») y el dashboard desenfocado con `filter: blur` **hijo a hijo de `[data-shell]`** — no `backdrop-filter` (regla de la app), y no en el contenedor: un `filter` ahí hace que la sidebar `position: fixed` se ubique respecto a él y se vaya con el scroll.
+- **Puntero de la célula** (`CursorCelula.tsx`, montado en `DashboardWrapper`): **no es un `cursor: url()`** — eso no se anima y el navegador lo cambia por la mano en enlaces. Es una capa fija (portal a `<body>`, fuera del desenfoque) que sigue al mouse con rAF, con `* { cursor: none !important }` inyectado solo mientras está activo; sobre algo pulsable la célula crece (sustituye a la mano). **Dos capas: la de fuera solo se desplaza, la de dentro solo escala** — con `scale` y el `transform: translate` en el mismo elemento, el scale se aplica después y multiplica la distancia a la esquina (la célula salía disparada lejos del click al pasar por un botón). Solo con `(pointer: fine)`. **Iframes del mismo origen** (frotis, microscopio): sus eventos no llegan a la página, así que se engancha también a su `contentDocument` (en cada `load`, con un `MutationObserver` porque aparecen al navegar) traduciendo coordenadas con su `getBoundingClientRect`; un iframe de otro origen conserva su propio cursor. Sin la preferencia (`localStorage('medgo-cursor-celula')`) no se monta ni se baja nada; las otras pestañas se sincronizan por el evento `storage`.
+- **Nada se baja de más**: con `invocado === null` no se pinta sprite; el círculo solo si no se invocó (tras invocar no vuelve a pedirse); la célula y la tarjeta solo con racha ≥ 20 (precarga), prueba del admin o ya invocada.
+- **Sprites en `public/assets/esfuerzo/`, con versión en el nombre (`_v1`) y servidos `immutable` un año** (`headers()` en `next.config.mjs`): ni un 304 al cambiar de página o pestaña. **Cambiar un dibujo obliga a subir la versión** en el script y en `src/lib/esfuerzo.ts`. Generadores: `generar_circulo_64.py` (64 fotogramas de 64×64, ×3) y `generar_celula.mjs` (dos tiras de 16 de 32×32 del mismo dibujo: con sombra lossless a ×6 para el home; sin sombra con paleta de 24 colores para el puntero, a 32 px). Home a 192 px: escala entera siempre, o los píxeles salen desiguales.
+
+---
+
 ## Flujo de autenticación
 
 1. Login en `/auth/login` → Supabase Auth

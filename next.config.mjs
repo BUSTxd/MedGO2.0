@@ -21,6 +21,17 @@ const nextConfig = {
     minimumCacheTTL: 31536000,
     qualities: [50, 75],
   },
+  // Sprites del panel «Tu esfuerzo»: llevan versión en el nombre (_v1), así que
+  // se cachean un año sin revalidar — ni un 304 al cambiar de página o pestaña.
+  // Cambiar un dibujo obliga a subir la versión (scripts/esfuerzo/*).
+  async headers() {
+    return [
+      {
+        source: '/assets/esfuerzo/:archivo*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+    ];
+  },
   // Needed so pdfjs-dist doesn't try to load the native `canvas` bindings
   turbopack: {
     // Raíz explícita del workspace. Sin esto Turbopack la *infiere* buscando
