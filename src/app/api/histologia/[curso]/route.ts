@@ -2,8 +2,11 @@ import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { getPublicUrl } from '@/lib/supabase/storage';
 import { getHistoCurso } from '@/lib/data/histologia';
+import { createClient } from '@/lib/supabase/server';
+import { getCachedPlanState } from '@/lib/plans-server';
+import { tieneAccesoA } from '@/lib/acceso';
 
-export const revalidate = 86400;
+export const dynamic = 'force-dynamic';
 
 const IMG_RE = /\.(jpe?g|png|webp)$/i;
 
@@ -71,6 +74,15 @@ export async function GET(
   { params }: { params: Promise<{ curso: string }> },
 ) {
   const { curso } = await params;
+  // Lista las fotos de un laboratorio de pago: sólo para quien tiene el plan.
+  // Sin esto cualquiera, sin cuenta, se bajaba el atlas entero (y con caché
+  // pública, la CDN lo servía a todo el mundo).
+  const auth = await createClient();
+  const { data: { user } } = await auth.auth.getUser();
+  if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  if (!tieneAccesoA(await getCachedPlanState(), 'interno')) {
+    return NextResponse.json({ error: 'forbidden' }, { status: 403 });
+  }
 
   const cursoData = getHistoCurso(curso);
   if (!cursoData) {
@@ -106,8 +118,8 @@ export async function GET(
 
   return NextResponse.json(items, {
     headers: {
-      // 1 día en browser y CDN; refresco en background tras 1 hora.
-      'Cache-Control': 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=3600',
+      // Sólo en el navegador de quien tiene el plan: nunca en la CDN compartida.
+      'Cache-Control': 'private, max-age=3600',
     },
   });
 }

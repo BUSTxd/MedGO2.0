@@ -30,7 +30,24 @@ const nextConfig = {
         source: '/assets/esfuerzo/:archivo*',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       },
+      {
+        // Ninguna web ajena puede enmarcar las páginas (clickjacking sobre Mi
+        // cuenta o el modal de pago). Los iframes propios (simulaciones) son del
+        // mismo origen y siguen funcionando.
+        source: '/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Content-Security-Policy', value: "frame-ancestors 'self'" },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        ],
+      },
     ];
+  },
+  // Las simulaciones se leen del disco en su route handler (fuera de public/,
+  // para que pasen por el candado): hay que meterlas en la función desplegada.
+  outputFileTracingIncludes: {
+    '/simulaciones/[archivo]': ['./src/simulaciones/**'],
   },
   // Needed so pdfjs-dist doesn't try to load the native `canvas` bindings
   turbopack: {

@@ -465,7 +465,7 @@ Tarjeta «Simulación» → `/cursos/fisica-medicina/modulo/{id}`. El sílabo so
 
 ## Simulación del frotis sanguíneo (Hematología · Práctica 1)
 
-Único módulo del proyecto que **no es React**: HTML autocontenido con Three.js (importmap CDN) en `public/simulaciones/frotis-sanguineo.html`, embebido vía `FrotisSimFrame.tsx` (client component), estilos en `frotisSim.module.css`.
+Único módulo del proyecto que **no es React**: HTML autocontenido con Three.js (importmap CDN) en `src/simulaciones/frotis-sanguineo.html`, embebido vía `FrotisSimFrame.tsx` (client component), estilos en `frotisSim.module.css`. **No va en `public/`**: lo sirve `app/simulaciones/[archivo]/route.ts` en la misma URL `/simulaciones/<archivo>.html`, con el candado del laboratorio (en `public/` lo abría cualquiera sin cuenta). Sus imágenes sí siguen en `public/simulaciones/` y resuelven por ruta relativa. Una simulación nueva se registra en `SIMULACIONES` de esa ruta y en `outputFileTracingIncludes`.
 
 **Modo «flow»**: el documento del iframe crece con su contenido real; un `ResizeObserver` reporta altura por `postMessage` y el dashboard redimensiona el iframe (scroll en la página, no dentro del panel). Navegación Anterior/Siguiente vive en el dashboard (`.navBar` sticky), no en el `<footer>` del iframe — protocolo `postMessage` bidireccional (`nav`/`sync`/`prev`/`next`).
 
@@ -523,7 +523,7 @@ Gate por `LABORATORIOS` (tramo medicina, no gratis). Tema claro = lámina H&E, o
 
 **Falta terminar**: estructura e interacción construidas, pero **faltan las 2 imágenes panorámicas reales y las coordenadas de las células** que debe proveer BUST. El ocular muestra un placeholder gris mientras tanto.
 
-HTML autocontenido en `public/simulaciones/microscopio-hematologia.html` (mismo criterio que el frotis), vía `MicroscopioHematologiaFrame.tsx`. Pan/zoom con `background-position`/`background-size` en porcentaje (no necesita las dimensiones reales en px de la imagen). Enfoque simulado a 40X/100X vía perilla manual contra un target aleatorio; a 10X siempre enfocado. Identificación: clic en ocular a 100X enfocado → coordenada relativa → célula más cercana dentro de tolerancia; panel con pestañas Identificación/Teoría o Modo Quiz (9 opciones fijas).
+HTML autocontenido en `src/simulaciones/microscopio-hematologia.html` (mismo criterio que el frotis, servido por la misma ruta con candado), vía `MicroscopioHematologiaFrame.tsx`. Pan/zoom con `background-position`/`background-size` en porcentaje (no necesita las dimensiones reales en px de la imagen). Enfoque simulado a 40X/100X vía perilla manual contra un target aleatorio; a 10X siempre enfocado. Identificación: clic en ocular a 100X enfocado → coordenada relativa → célula más cercana dentro de tolerancia; panel con pestañas Identificación/Teoría o Modo Quiz (9 opciones fijas).
 
 **Pendiente**: las 2 imágenes panorámicas reales en `public/simulaciones/microscopio-hematologia-img/` y recalibrar coordenadas `x`/`y` (0–1) de cada célula y de `idealZones10x` contra las imágenes reales.
 

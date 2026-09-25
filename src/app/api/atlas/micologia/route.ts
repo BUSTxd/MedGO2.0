@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { getPublicUrl } from '@/lib/supabase/storage';
+import { createClient } from '@/lib/supabase/server';
+import { getCachedPlanState } from '@/lib/plans-server';
+import { requiredPlanDeLab, tieneAccesoA } from '@/lib/acceso';
 
-export const revalidate = 86400;
+export const dynamic = 'force-dynamic';
 
 const DISPLAY: Record<string, string> = {
   'alternaria-spp': 'Alternaria spp.',
@@ -23,6 +26,15 @@ const DISPLAY: Record<string, string> = {
 };
 
 export async function GET() {
+  // Lista las fotos de un laboratorio de pago: sólo para quien tiene el plan.
+  // Sin esto cualquiera, sin cuenta, se bajaba el atlas entero (y con caché
+  // pública, la CDN lo servía a todo el mundo).
+  const auth = await createClient();
+  const { data: { user } } = await auth.auth.getUser();
+  if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  if (!tieneAccesoA(await getCachedPlanState(), requiredPlanDeLab('atlas-micologia'))) {
+    return NextResponse.json({ error: 'forbidden' }, { status: 403 });
+  }
   const supabase = createAdminClient();
   const items: { url: string; hongo: string }[] = [];
 
@@ -37,9 +49,8 @@ export async function GET() {
 
   return NextResponse.json(items, {
     headers: {
-      // 1 dia en browser y CDN. Pueden refrescar en background tras 1 hora
-      // (stale-while-revalidate) sin bloquear la primera respuesta.
-      'Cache-Control': 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=3600',
+      // Sólo en el navegador de quien tiene el plan: nunca en la CDN compartida.
+      'Cache-Control': 'private, max-age=3600',
     },
   });
 }
