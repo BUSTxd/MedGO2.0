@@ -134,7 +134,7 @@ Definido en `src/lib/plans.ts`. Los planes se agrupan en **dos tramos** (`Track`
 
 **Regla crítica de acceso**: usar `planUnlocks(plan, required)`, **nunca** comparar `planRank()` a secas. Un plan de un tramo jamás abre cursos del otro; `planRank` solo ordena *dentro* de un mismo tramo (residente ≥ interno, ufbi-anual ≥ ufbi). Cada `[id]/page.tsx` de curso declara su tramo vía `requiredPlan` en `<LockedContent>` (`"ufbi"` en los 6 del ciclo básico, `"interno"` en el resto). Y también en el índice del curso (`cursos/<slug>/page.tsx`): `!!plan.allAccess || (plan.isActive && planUnlocks(plan.plan, '<tramo>'))`, variable `hasAcceso` — al añadir un curso hay que copiar esa línea.
 
-El admin lleva `allAccess: true` en `PlanState` (`getUserPlanState`) — sin ese flag su plan `residente` pertenece al tramo `medicina` y le bloquearía los cursos de UFBI.
+El admin lleva `allAccess: true` en `PlanState` (`getUserPlanState`, en `plans-server.ts`: consulta `lib/admin`, que es `server-only` y no puede llegar al cliente vía `plans.ts`) — sin ese flag su plan `residente` pertenece al tramo `medicina` y le bloquearía los cursos de UFBI.
 
 El plan del usuario vive en `profiles.plan` + `profiles.plan_expires_at` en Supabase (CHECK constraints que hay que ampliar al añadir un plan nuevo). Para verificar plan en servidor usar `getCachedPlanState()` de `src/lib/plans-server.ts`.
 
@@ -150,7 +150,7 @@ El plan del usuario vive en `profiles.plan` + `profiles.plan_expires_at` en Supa
 
 **Acceso por sección** — `src/lib/acceso.ts` traduce «¿de qué tramo es este contenido?» a «¿puede entrar?», leyendo `CURSOS`/`LABORATORIOS` de `src/lib/data/aportes.ts`. Expone `requiredPlanDeCurso(slug)`, `requiredPlanDeLab(slug)`, `planDeTrack(track)`, `tieneAccesoA(planState, required)`, `trackDelUsuario(planState)` (decide qué sección va primero). Slug sin registrar cae en `medicina` (bloquear de más es el fallo seguro).
 
-**Laboratorios gratis**: `gratis: true` en `LABORATORIOS` + `labEsGratis(slug)`. Su `layout.tsx` no monta `SeccionGate`; el índice le pone etiqueta «Gratis» solo si sale bloqueado. Hoy sólo `cascada-coagulacion`.
+**Laboratorios gratis**: `gratis: true` en `LABORATORIOS` + `labEsGratis(slug)`. `LabGate` lo deja pasar sin candado; el índice le pone etiqueta «Gratis» solo si sale bloqueado. Hoy sólo `cascada-coagulacion`.
 
 | Sección | UFBI | Facultad | free |
 |---|---|---|---|
@@ -159,10 +159,10 @@ El plan del usuario vive en `profiles.plan` + `profiles.plan_expires_at` en Supa
 | Histología · Investigación | candado | todo | candado |
 
 - **Rejillas partidas en dos** (`cursos/page.tsx`, `laboratorio/page.tsx`, RSC): tramo del alumno arriba; sin plan, orden de la carrera. Tarjetas del otro tramo atenuadas pero clicables (el índice del curso invita a pagar).
-- **Secciones completas: el gate va en `layout.tsx`**, no en la página — `SeccionGate` (RSC) envuelve en `LockedContent`, cubre índice + rutas hijas sin tocar páginas de cliente grandes. Cada laboratorio lleva el suyo con `requiredPlanDeLab('<slug>')`.
+- **Secciones completas: el gate va en el `page.tsx`, NUNCA en `layout.tsx`** — un layout no impide que la página se renderice: su segmento viaja en el payload y el navegador se baja el JS de la página de cliente (preguntas y respuestas incluidas). Cada ruta tiene un `page.tsx` de servidor mínimo que envuelve su `Pagina.tsx` (la página de cliente) en `<LabGate slug="…">` o `<SeccionGate required="interno">`; sin acceso, `SeccionGate` no pasa los `children`. Una ruta hija nueva (p. ej. `histologia/<x>`) necesita su propio gate.
 - **`LockedContent` acepta `preview`** (default `true`): en una clase el velo difuminado es aperitivo; en una sección entera (montaría una escena 3D completa) va en `false`.
 - **Lo que va como `children` de `LockedContent` viaja al navegador aunque no se pinte** (es componente cliente: sus props se serializan en el payload RSC, `preview={false}` incluido). Material de pago real (solucionarios, datos de un runner) → el servidor decide con `tieneAccesoA` y sin acceso pasa `null`; tras pagar, `SubscribeModal` hace `router.refresh()`.
-- **El candado del sidebar es señal, no cerradura** — `accesoFacultad` se calcula en el servidor (`dashboard/layout.tsx`); con `usePlan()` el admin (sin suscripción) vería candados tras un `refreshPlan()`. Quien bloquea de verdad es el layout de la sección.
+- **El candado del sidebar es señal, no cerradura** — `accesoFacultad` se calcula en el servidor (`dashboard/layout.tsx`); con `usePlan()` el admin (sin suscripción) vería candados tras un `refreshPlan()`. Quien bloquea de verdad es el `page.tsx` de la sección.
 
 ---
 
@@ -281,7 +281,7 @@ Motor compartido en **`src/components/AnatExam.tsx`**. Cada EVA es un wrapper de
 
 **Imágenes**: bucket público `examenes-img`, path `neurologia/eva<N>/`. Precarga de las próximas 4 preguntas. Shuffle pseudoaleatorio que nunca repite `region` consecutiva.
 
-**Para crear un EVA nuevo**: copiar carpeta `eva-3/` (page + wrapper + questions.ts), setear `examId`, añadir tarjeta en `LAB_TOPICS`. No se toca el motor.
+**Para crear un EVA nuevo**: copiar carpeta `eva-3/` (page con `LabGate` + `Pagina` + wrapper + questions.ts), setear `examId`, añadir tarjeta en `LAB_TOPICS`. No se toca el motor.
 
 ---
 
@@ -393,7 +393,7 @@ Panel que mide cuánto material real hay publicado por curso, **leyendo los síl
 
 **`AportesPanel.tsx`**: hero con los 7 prioritarios primero. **El banqueo es la métrica protagonista** (barra verde + % grande; escrito debajo con acento del tramo; video no se mide). KPIs: exámenes sin banqueo, clases sin banqueo, sin material escrito, cursos completos. Cada curso es `<details>` con pendientes agrupados en 3 grados (rojo exámenes / naranja escrito / ámbar clases). Debajo, cobertura completa del resto de cursos.
 
-**Registro de personas** — `src/lib/data/aportes.ts`: `COLABORADORES` (nombre, rol, color único, `email?`) y `CURSOS` (slug, track, `materialDe`). El color es identidad visual; el correo permite marcar aportes propios (`colaboradorDeEmail`). El banqueo y los labs nunca se declaran a mano ahí: se cuentan directo de los sílabos/`LABORATORIOS`.
+**Registro de personas** — `src/lib/data/aportes.ts`: `COLABORADORES` (nombre, rol, color único) y `CURSOS` (slug, track, `materialDe`). El color es identidad visual. Los correos van aparte en `aportes-correos.ts` (`server-only`: `aportes.ts` llega al cliente vía `acceso.ts`) y permiten marcar aportes propios (`colaboradorDeEmail`). El banqueo y los labs nunca se declaran a mano ahí: se cuentan directo de los sílabos/`LABORATORIOS`.
 
 **Quién subió qué — marcas de autoría** (`src/components/RegistroAportes.tsx`): cada persona pinta el círculo del material que subió, **solo lo publicado** (`estado === 'listo'`). Granularidad por actividad × slot (cursos) o por pieza (labs/histología, `slot: 'material'`). Selector en dos columnas (UFBI/Facultad), orden por `PRIORIDAD_LANZAMIENTO`.
 

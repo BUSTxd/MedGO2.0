@@ -1,37 +1,11 @@
-'use client';
-import Link from 'next/link';
-import { HISTO_CURSOS } from '@/lib/data/histologia';
-import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
-import styles from '@/styles/histologia.module.css';
+import SeccionGate from '@/components/SeccionGate';
+import Pagina from './Pagina';
 
-export default function HistologiaPage() {
+// Server: decide el acceso ANTES de montar la página de cliente (ver SeccionGate).
+export default function Page() {
   return (
-    <>
-      <div className={styles.panelIcon}>
-        <MicroscopeIcon size={26} />
-      </div>
-
-      <h2 className={styles.title}>Histología</h2>
-      <p className={styles.sub}>Atlas de preparaciones de laboratorio. Elige un curso para ver sus clases.</p>
-
-      <div className={styles.cursoGrid}>
-        {HISTO_CURSOS.map((c) => (
-          <Link key={c.id} href={`/dashboard/histologia/${c.id}`} className={styles.cursoCard}>
-            <div className={styles.cursoCardTop}>
-              <span className={styles.badge} style={{ color: c.badgeColor, background: c.badgeBg }}>
-                {c.badge}
-              </span>
-              <span className={styles.cursoIconWrap}>{c.iconColor}</span>
-            </div>
-            <h3 className={styles.cursoName}>{c.nombre}</h3>
-            <p className={styles.cursoMeta}>
-              Atlas filtrable · {c.clases.length} clases de preparaciones
-              {c.clasesCurso?.length ? ` · ${c.clasesCurso.length} clases con resumen` : ''}
-            </p>
-            <span className={styles.cursoEnter}>Abrir atlas →</span>
-          </Link>
-        ))}
-      </div>
-    </>
+    <SeccionGate required="interno">
+      <Pagina />
+    </SeccionGate>
   );
 }

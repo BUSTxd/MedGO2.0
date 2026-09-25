@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { LabGate } from '@/components/SeccionGate';
 import TrackLabVisit from '@/components/TrackLabVisit';
 import MorfologiaQuiz from './MorfologiaQuiz';
 import base from '@/styles/laboratorio.module.css';
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
     'Reconoce las 19 morfologías eritrocitarias del frotis a partir de microfotografías reales, con la lámina de referencia siempre a la vista.',
 };
 
-export default function MorfologiaGlobulosRojosPage() {
+function Contenido() {
   return (
     <div className={base.examPage}>
       <TrackLabVisit labId="morfologia-globulos-rojos" />
@@ -32,5 +33,14 @@ export default function MorfologiaGlobulosRojosPage() {
 
       <MorfologiaQuiz />
     </div>
+  );
+}
+
+// Server: decide el acceso ANTES de montar el contenido (ver SeccionGate).
+export default function MorfologiaGlobulosRojosPage() {
+  return (
+    <LabGate slug="morfologia-globulos-rojos">
+      <Contenido />
+    </LabGate>
   );
 }

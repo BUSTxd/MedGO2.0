@@ -1,15 +1,11 @@
-'use client';
-// Página de la EVA 3: examen interactivo de identificación anatómica.
-// Reutiliza el layout estándar del laboratorio; toda la lógica vive en Eva3Exam.
+import { LabGate } from '@/components/SeccionGate';
+import Pagina from './Pagina';
 
-import TrackLabVisit from '@/components/TrackLabVisit';
-import Eva3Exam from './Eva3Exam';
-
-export default function Eva3Page() {
+// Server: decide el acceso ANTES de montar la página de cliente (ver SeccionGate).
+export default function Page() {
   return (
-    <>
-      <TrackLabVisit labId="eva-3" />
-      <Eva3Exam />
-    </>
+    <LabGate slug="eva-3">
+      <Pagina />
+    </LabGate>
   );
 }

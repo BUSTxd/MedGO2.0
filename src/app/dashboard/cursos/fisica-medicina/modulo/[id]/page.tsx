@@ -7,6 +7,7 @@ import LabRunner from '@/components/fisica/LabRunner';
 import LockedContent from '@/components/LockedContent';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
+import { tieneAccesoA } from '@/lib/acceso';
 
 /**
  * Material interactivo de una clase de Física.
@@ -65,6 +66,9 @@ export default async function ModuloPage({
 
   const [user, planState] = await Promise.all([getUser(), getCachedPlanState()]);
   const volverHref = `/dashboard/cursos/fisica-medicina/${claseId}`;
+  // Sin acceso los runners ni se crean: sus props (teoría, problemas con su
+  // respuesta) viajarían enteras en el payload aunque el velo no las pinte.
+  const acceso = tieneAccesoA(planState, 'ufbi');
 
   return (
     <LockedContent
@@ -73,7 +77,7 @@ export default async function ModuloPage({
       isAuthed={!!user}
       preview={false}
     >
-      {modulo ? (
+      {!acceso ? null : modulo ? (
         <ModuloTeoriaRunner modulo={modulo} volverHref={volverHref} />
       ) : (
         <LabRunner lab={lab!} volverHref={volverHref} />

@@ -1,15 +1,11 @@
-'use client';
-// Página de la EVA 2: examen interactivo de identificación anatómica.
-// Reutiliza el layout estándar del laboratorio; toda la lógica vive en Eva2Exam.
+import { LabGate } from '@/components/SeccionGate';
+import Pagina from './Pagina';
 
-import TrackLabVisit from '@/components/TrackLabVisit';
-import Eva2Exam from './Eva2Exam';
-
-export default function Eva2Page() {
+// Server: decide el acceso ANTES de montar la página de cliente (ver SeccionGate).
+export default function Page() {
   return (
-    <>
-      <TrackLabVisit labId="eva-2" />
-      <Eva2Exam />
-    </>
+    <LabGate slug="eva-2">
+      <Pagina />
+    </LabGate>
   );
 }
