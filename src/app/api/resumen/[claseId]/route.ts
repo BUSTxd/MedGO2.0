@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/server';
-import { getUserPlanState } from '@/lib/plans-server';
+import { getPlanStateDeContenido } from '@/lib/plans-server';
 import { puedeVerResumen } from '@/lib/acceso-resumen';
 
 // Only these IDs have an associated PDF in Supabase Storage
@@ -293,11 +293,12 @@ const FILE_ALIAS: Record<string, string> = {
   'dig-histo-3': 'digestivo/dig-histo-3',
 };
 
-// Las signed URLs viven 1 semana. Suficiente para una sesion de estudio larga
-// (incluso varios dias) y el cliente las cachea en sessionStorage. Cuando la
-// URL caduca el cliente vuelve a pedir una nueva — un fetch JSON, sin descargar
-// el PDF entero por Vercel.
-const SIGNED_URL_TTL_SECONDS = 60 * 60 * 24 * 7;
+// Las signed URLs viven 6 h: cubren una sesión de estudio larga con el visor
+// pidiendo trozos del PDF, sin que una URL compartida siga sirviendo días
+// después de que venza el plan de quien la pidió. El cliente las cachea en
+// sessionStorage y, al caducar, pide otra — un fetch JSON, sin descargar el PDF
+// entero por Vercel.
+const SIGNED_URL_TTL_SECONDS = 60 * 60 * 6;
 
 export async function GET(
   _req: Request,
@@ -311,7 +312,7 @@ export async function GET(
 
   // Misma regla que la página de la clase: libre para cualquiera, o el plan
   // del tramo del curso. Sin acceso no se genera la signed URL.
-  if (!puedeVerResumen(await getUserPlanState(await createClient()), claseId)) {
+  if (!puedeVerResumen(await getPlanStateDeContenido(await createClient()), claseId)) {
     return NextResponse.json({ error: 'plan_required' }, { status: 403 });
   }
 

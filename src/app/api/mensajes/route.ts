@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { abiertosDe, cerrar, marcarVisto, pasaElFreno, responder, textoValido, MAX_RESPUESTA } from '@/lib/mensajes-server';
+import { pasaElFreno as frenoGeneral } from '@/lib/freno';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -30,6 +31,12 @@ export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
   const id = typeof body.id === 'string' && UUID.test(body.id) ? body.id : null;
   if (!id) return NextResponse.json({ error: 'id inválido' }, { status: 400 });
+
+  // `visto` y `cerrar` avisan al admin por Realtime en cada llamada: sin freno,
+  // un bucle gastaba la cuota del canal.
+  if ((body.accion === 'visto' || body.accion === 'cerrar') && !frenoGeneral(`msj:${user.id}`, 30)) {
+    return new NextResponse(null, { status: 429 });
+  }
 
   if (body.accion === 'visto') {
     await marcarVisto(user.id, id);

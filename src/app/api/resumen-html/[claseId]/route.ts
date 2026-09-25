@@ -2,7 +2,7 @@ import { createHash } from 'crypto';
 import { NextResponse } from 'next/server';
 import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/server';
-import { getUserPlanState } from '@/lib/plans-server';
+import { getPlanStateDeContenido } from '@/lib/plans-server';
 import { puedeVerResumen } from '@/lib/acceso-resumen';
 
 /**
@@ -181,7 +181,7 @@ export async function GET(
   const fileId = FILE_ALIAS[claseId] ?? claseId;
 
   // El velo de la página no protege nada: el candado de verdad es este.
-  if (!puedeVerResumen(await getUserPlanState(await createClient()), claseId)) {
+  if (!puedeVerResumen(await getPlanStateDeContenido(await createClient()), claseId)) {
     return NextResponse.json({ error: 'plan_required' }, { status: 403 });
   }
 

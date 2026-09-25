@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { getCachedPlanState } from '@/lib/plans-server';
 import { isAdminEmail } from '@/lib/admin';
+import { pasaElFreno } from '@/lib/freno';
 import { ACCESO_V, accesoAlRegistrar } from '@/lib/actividad-usuario';
 
 export const runtime = 'nodejs';
@@ -32,30 +33,10 @@ const MAX_BODY_BYTES = 4 * 1024;
 const MAX_PROPS = 12;
 const MAX_TEXTO = 200;
 
-/**
- * Freno por usuario (o por IP sin sesión), en memoria de la instancia. No es un
- * límite global (cada instancia lleva su cuenta), pero con Fluid Compute las
- * instancias se reutilizan y basta para que un bucle desde un solo origen no
- * llene `analytics_events`, que no se purga. El límite duro, si hiciera falta,
- * va en el Firewall de Vercel.
- */
-const VENTANA_MS = 60_000;
+/** Freno por usuario (o por IP sin sesión) para que un bucle no llene `analytics_events`, que no se purga. */
 const MAX_POR_USUARIO = 90;
 /** Sin sesión se cuenta por IP, y detrás del NAT de un campus hay muchos alumnos. */
 const MAX_POR_IP = 400;
-const contadores = new Map<string, { n: number; desde: number }>();
-
-function pasaElFreno(clave: string, max: number): boolean {
-  const ahora = Date.now();
-  const r = contadores.get(clave);
-  if (!r || ahora - r.desde > VENTANA_MS) {
-    if (contadores.size > 5_000) contadores.clear();
-    contadores.set(clave, { n: 1, desde: ahora });
-    return true;
-  }
-  r.n += 1;
-  return r.n <= max;
-}
 
 /** Sólo claves cortas con valores primitivos acotados: nada de objetos anidados ni textos largos. */
 function sanearProps(raw: unknown): Record<string, unknown> {

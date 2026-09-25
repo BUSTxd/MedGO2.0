@@ -1,14 +1,17 @@
 import { NextResponse } from 'next/server';
 import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/server';
-import { getUserPlanState } from '@/lib/plans-server';
+import { getPlanStateDeContenido } from '@/lib/plans-server';
 import { requiredPlanDeCurso, tieneAccesoA } from '@/lib/acceso';
 import { EXAMENES } from '@/lib/data/examenes-acceso';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const SIGNED_URL_TTL_SECONDS = 60 * 60 * 24 * 7;
+// Corto a propósito: una URL firmada compartida sirve a cualquiera hasta que
+// caduca, también después de que venza el plan de quien la pidió. El JSON se
+// baja de una vez; el margen sobre la caché de 1 h del cliente evita la carrera.
+const SIGNED_URL_TTL_SECONDS = 60 * 60 * 2;
 
 export async function GET(
   _req: Request,
@@ -17,7 +20,8 @@ export async function GET(
   const { examKey } = await params;
   const key = examKey.join('/');
 
-  const meta = EXAMENES[key];
+  // hasOwn y no `EXAMENES[key]`: claves heredadas como `constructor` pasaban.
+  const meta = Object.hasOwn(EXAMENES, key) ? EXAMENES[key] : undefined;
   if (!meta) {
     return NextResponse.json({ error: 'not_found' }, { status: 404 });
   }
@@ -29,7 +33,7 @@ export async function GET(
   // Sólo se resuelve si hace falta: un banqueo `free` sin muestra no consulta el plan.
   let conAcceso = true;
   if (!meta.free || meta.muestra) {
-    conAcceso = user ? tieneAccesoA(await getUserPlanState(supabase), requerido) : false;
+    conAcceso = user ? tieneAccesoA(await getPlanStateDeContenido(supabase), requerido) : false;
   }
 
   // Antes bastaba con que `profiles.plan` no fuera 'free': una suscripción

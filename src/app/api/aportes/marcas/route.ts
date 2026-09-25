@@ -47,7 +47,7 @@ function parseMarca(body: unknown): Marca | null {
   if (typeof itemId !== 'string' || !itemId) return null;
   if (!AMBITOS.includes(ambito as AmbitoMarca)) return null;
   if (!SLOTS.includes(slot as SlotMarca)) return null;
-  if (typeof colaborador !== 'string' || !(colaborador in COLABORADORES)) return null;
+  if (typeof colaborador !== 'string' || !Object.hasOwn(COLABORADORES, colaborador)) return null;
   // El tipo de aporte es opcional y sólo significa algo en el banqueo; si viene
   // con un valor que no existe, se descarta la petición entera en vez de
   // guardar una marca a medias.
