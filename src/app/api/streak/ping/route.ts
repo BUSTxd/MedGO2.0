@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { getDeviceId, touchSession } from '@/lib/sessions';
+import { getCachedPlanState } from '@/lib/plans-server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -37,9 +38,11 @@ export async function POST(req: NextRequest) {
   // bloquear la respuesta — pero await aquí porque la tabla es pequeña y rápida.
   const deviceId = await getDeviceId();
   if (deviceId) {
+    const { plan } = await getCachedPlanState();
     await touchSession({
       userId:    user.id,
       deviceId,
+      plan,
       userAgent: req.headers.get('user-agent'),
       ip:        req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null,
     });

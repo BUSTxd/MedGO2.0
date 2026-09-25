@@ -161,6 +161,7 @@ El plan del usuario vive en `profiles.plan` + `profiles.plan_expires_at` en Supa
 - **Rejillas partidas en dos** (`cursos/page.tsx`, `laboratorio/page.tsx`, RSC): tramo del alumno arriba; sin plan, orden de la carrera. Tarjetas del otro tramo atenuadas pero clicables (el índice del curso invita a pagar).
 - **Secciones completas: el gate va en `layout.tsx`**, no en la página — `SeccionGate` (RSC) envuelve en `LockedContent`, cubre índice + rutas hijas sin tocar páginas de cliente grandes. Cada laboratorio lleva el suyo con `requiredPlanDeLab('<slug>')`.
 - **`LockedContent` acepta `preview`** (default `true`): en una clase el velo difuminado es aperitivo; en una sección entera (montaría una escena 3D completa) va en `false`.
+- **Lo que va como `children` de `LockedContent` viaja al navegador aunque no se pinte** (es componente cliente: sus props se serializan en el payload RSC, `preview={false}` incluido). Material de pago real (solucionarios, datos de un runner) → el servidor decide con `tieneAccesoA` y sin acceso pasa `null`; tras pagar, `SubscribeModal` hace `router.refresh()`.
 - **El candado del sidebar es señal, no cerradura** — `accesoFacultad` se calcula en el servidor (`dashboard/layout.tsx`); con `usePlan()` el admin (sin suscripción) vería candados tras un `refreshPlan()`. Quien bloquea de verdad es el layout de la sección.
 
 ---

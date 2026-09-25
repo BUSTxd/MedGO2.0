@@ -147,17 +147,29 @@ export async function checkDevice(
   return { kind: 'limit_exceeded' };
 }
 
-export type TouchResult = 'registered' | 'refreshed' | 'noop' | 'revoked';
+/**
+ * Tope de filas para `free`, que no tiene límite de dispositivos: sin él, cada
+ * ping con una cookie `device_id` inventada insertaba una sesión nueva.
+ */
+const TOPE_REGISTRO_FREE = 10;
+
+export type TouchResult = 'registered' | 'refreshed' | 'noop' | 'revoked' | 'limit_exceeded';
 
 /**
  * Registra/actualiza la sesión del dispositivo respetando revoked_at.
  * - Si la fila existe y está revocada: devuelve 'revoked' y NO la resucita.
- * - Si no existe: hace INSERT.
+ * - Si no existe: hace INSERT, sólo si el plan tiene sitio (conteo fresco).
  * - Si existe y está activa: hace UPDATE solo si last_seen > 5min (debounce).
+ *
+ * El límite se comprueba AQUÍ y no sólo en `checkDevice`: `/api/streak/ping`
+ * también llama a esta función, y sin el conteo cualquiera registraba un 4.º
+ * dispositivo con un POST y la cookie `device_id` que quisiera — en la
+ * siguiente carga el layout ya lo veía como `allowed`.
  */
 export async function touchSession(params: {
   userId:    string;
   deviceId:  string;
+  plan:      ProfilePlan;
   userAgent: string | null;
   ip:        string | null;
 }): Promise<TouchResult> {
@@ -182,6 +194,11 @@ export async function touchSession(params: {
   const nowIso = new Date().toISOString();
 
   if (!existing) {
+    const limite = PLAN_DEVICE_LIMIT[params.plan];
+    const tope = Number.isFinite(limite) ? limite : TOPE_REGISTRO_FREE;
+    const activas = await listActiveSessions(params.userId);
+    if (activas.length >= tope) return 'limit_exceeded';
+
     const insertable = admin.from('user_sessions') as unknown as {
       insert: (row: Record<string, unknown>) => Promise<{ error: unknown }>;
     };

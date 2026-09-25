@@ -45,12 +45,16 @@ export default async function DashboardRootLayout({
     }
     if (check.kind === 'allowed_new' && deviceId) {
       const h = await headers();
-      await touchSession({
+      const touch = await touchSession({
         userId:    user.id,
         deviceId,
+        plan:      planState.plan,
         userAgent: h.get('user-agent'),
         ip:        h.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null,
       });
+      // `checkDevice` lee una lista cacheada hasta 1 h; el conteo fresco de
+      // touchSession es el que manda si en ese rato ya se llenó el cupo.
+      if (touch === 'limit_exceeded') redirect('/auth/device-limit');
     }
   }
 
