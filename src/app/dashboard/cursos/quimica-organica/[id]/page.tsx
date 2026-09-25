@@ -10,6 +10,7 @@ import SolucionarioRunner from '@/components/SolucionarioRunner';
 import { findSolucionario } from '@/lib/data/solucionarios';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
+import { tieneAccesoA } from '@/lib/acceso';
 
 const UNIDAD_LABEL: Record<string, string> = {
   CARBONO:       'El átomo de carbono',
@@ -50,11 +51,15 @@ export default async function ActividadPage({
   const backHref = `/dashboard/cursos/quimica-organica/${id}`;
 
   if (sp?.solucionario === '1' && solucionario) {
-    const runner = <SolucionarioRunner solucionario={solucionario} backHref={backHref} />;
-    if (isLab) return runner;
+    if (isLab) return <SolucionarioRunner solucionario={solucionario} backHref={backHref} />;
+    // El velo de LockedContent NO protege: todo lo que va como `children` de un
+    // componente cliente viaja entero en el payload RSC, se pinte o no. Sin
+    // acceso, el solucionario ni se crea. Tras pagar, SubscribeModal hace
+    // router.refresh() y el servidor lo manda ya con el plan nuevo.
+    const acceso = tieneAccesoA(planState, 'ufbi');
     return (
-      <LockedContent requiredPlan="ufbi" planState={planState} isAuthed={!!user}>
-        {runner}
+      <LockedContent requiredPlan="ufbi" planState={planState} isAuthed={!!user} preview={false}>
+        {acceso ? <SolucionarioRunner solucionario={solucionario} backHref={backHref} /> : null}
       </LockedContent>
     );
   }
