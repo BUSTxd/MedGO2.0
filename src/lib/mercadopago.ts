@@ -52,6 +52,12 @@ export interface PreapprovalResponse {
   status: 'pending' | 'authorized' | 'paused' | 'cancelled';
   payer_email?: string;
   next_payment_date?: string;
+  date_created?: string;
+  /** Resumen de cobros. `charged_quantity` = cuotas cobradas con éxito. */
+  summarized?: {
+    charged_quantity?: number | null;
+    last_charged_date?: string | null;
+  };
   auto_recurring?: {
     transaction_amount: number;
     currency_id: string;
@@ -86,7 +92,23 @@ export function cancelPreapproval(id: string): Promise<PreapprovalResponse> {
 export interface AuthorizedPaymentResponse {
   id: number;
   preapproval_id: string;
+  /** Estado de la cuota: scheduled | processed | recycling | cancelled. */
   status: string;
+  /** El cobro real detrás de la cuota; `approved` es lo único que da acceso. */
+  payment?: { id?: number; status?: string; status_detail?: string } | null;
+  debit_date?: string | null;
+  date_created?: string | null;
+}
+
+/**
+ * ¿Esta cuota se cobró de verdad? Una suscripción `authorized` sólo dice que la
+ * tarjeta se validó: con una prepago sin saldo MP la autoriza igual, el cobro
+ * se rechaza y la cuota queda en `recycling` hasta que MP se rinde. Dar el plan
+ * por la autorización regalaba el periodo entero (un año en los anuales).
+ */
+export function cuotaCobrada(ap: AuthorizedPaymentResponse): boolean {
+  if (ap.payment?.status) return ap.payment.status === 'approved';
+  return ap.status === 'processed';
 }
 
 export function getAuthorizedPayment(paymentId: string): Promise<AuthorizedPaymentResponse> {

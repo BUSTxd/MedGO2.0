@@ -3,10 +3,29 @@ import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { getPlan } from '@/lib/plans';
-import { createPreapproval } from '@/lib/mercadopago';
+import { createPreapproval, getPreapproval, type PreapprovalResponse } from '@/lib/mercadopago';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+
+/**
+ * Cuánto acceso da una suscripción recién autorizada mientras llega el primer
+ * cobro. MP suele cobrar en minutos; 72 h cubren un webhook atrasado o un
+ * reintento del banco sin regalar más que eso a una tarjeta sin fondos.
+ */
+const ACCESO_PROVISIONAL_MS = 72 * 60 * 60 * 1000;
+
+/** ¿Se cobró ya la primera cuota? Si la respuesta de creación no lo dice, se relee una vez. */
+async function primeraCuotaCobrada(p: PreapprovalResponse): Promise<boolean> {
+  if ((p.summarized?.charged_quantity ?? 0) > 0) return true;
+  try {
+    const fresca = await getPreapproval(p.id);
+    return (fresca.summarized?.charged_quantity ?? 0) > 0;
+  } catch (err) {
+    console.error('[subs/create] no se pudo releer el preapproval', err);
+    return false;
+  }
+}
 
 export async function POST(req: Request) {
   let body: { cardTokenId?: string; planKey?: string; payerEmail?: string };
@@ -114,8 +133,17 @@ export async function POST(req: Request) {
         eq: (col: string, val: string) => Promise<{ error: unknown }>;
       };
     };
+    // `authorized` sólo dice que la tarjeta se validó, no que se cobró: con una
+    // prepago sin saldo MP la autoriza igual. El periodo entero va sólo si la
+    // primera cuota ya entró (MP suele cobrar en el mismo segundo); si no, un
+    // acceso PROVISIONAL que el webhook alarga al llegar el pago `approved`, y
+    // que se apaga solo si el cobro nunca entra.
+    const cobrada = await primeraCuotaCobrada(preapproval);
+    const vence = cobrada
+      ? expiresAt
+      : new Date(Math.min(expiresAt.getTime(), nowMs + ACCESO_PROVISIONAL_MS));
     const { error: profErr } = await profilesTable
-      .update({ plan: plan.key, plan_expires_at: expiresAt.toISOString() })
+      .update({ plan: plan.key, plan_expires_at: vence.toISOString() })
       .eq('id', user.id);
     if (profErr) console.error('[subs/create] profile update', profErr);
     // Invalida cualquier cache de Server Components del árbol /dashboard
