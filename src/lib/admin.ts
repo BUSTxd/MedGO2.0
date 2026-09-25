@@ -1,4 +1,5 @@
-import { EMAILS_COLABORADORES } from '@/lib/data/aportes';
+import 'server-only';
+import { EMAILS_COLABORADORES } from '@/lib/data/aportes-correos';
 
 export const ADMIN_EMAIL = 'fernandnoob062.0@gmail.com';
 

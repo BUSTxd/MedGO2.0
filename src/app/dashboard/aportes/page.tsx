@@ -8,7 +8,8 @@ import {
   getRegistroHistologia,
 } from '@/lib/aportes-registro';
 import { leerMarcas } from '@/lib/aportes-marcas-server';
-import { COLABORADORES, COLABORADOR_KEYS, colaboradorDeEmail } from '@/lib/data/aportes';
+import { COLABORADORES, COLABORADOR_KEYS } from '@/lib/data/aportes';
+import { colaboradorDeEmail, tieneCuenta } from '@/lib/data/aportes-correos';
 import AportesPanel from '@/components/AportesPanel';
 import RegistroAportes from '@/components/RegistroAportes';
 
@@ -31,7 +32,7 @@ export default async function AportesPage() {
     key,
     nombre: COLABORADORES[key].nombre,
     color: COLABORADORES[key].color,
-    sinCuenta: !COLABORADORES[key].email,
+    sinCuenta: !tieneCuenta(key),
   }));
 
   return (

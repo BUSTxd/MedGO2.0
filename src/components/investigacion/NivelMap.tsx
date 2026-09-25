@@ -3,9 +3,8 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import { NIVELES } from '@/lib/investigacion/niveles';
 import { INSIGNIAS } from '@/lib/investigacion/badges';
-import { hasFullAccess } from '@/lib/investigacion/progress';
 import { useInvestigacionProgress } from '@/hooks/useInvestigacionProgress';
-import { useAuth } from '@/components/AuthProvider';
+import { useEsAdmin } from '@/components/EsAdminContext';
 import SavePointNode, { type EstadoNodo } from './SavePointNode';
 import Icono from './Icono';
 import styles from '@/styles/investigacion.module.css';
@@ -20,12 +19,11 @@ function xPct(i: number): number {
 
 export default function NivelMap() {
   const { state, hydrated, unlockAll } = useInvestigacionProgress();
-  const { user } = useAuth();
-
-  // Acceso total: desbloquea todos los niveles para el/los email(s) autorizados.
+  // Acceso total para el admin (calculado en el servidor: los correos no viajan al navegador).
+  const esAdmin = useEsAdmin();
   useEffect(() => {
-    if (hydrated && hasFullAccess(user?.email)) unlockAll();
-  }, [hydrated, user?.email, unlockAll]);
+    if (hydrated && esAdmin) unlockAll();
+  }, [hydrated, esAdmin, unlockAll]);
 
   const nodos = NIVELES.map((meta, i) => {
     const p = state.niveles[meta.id];

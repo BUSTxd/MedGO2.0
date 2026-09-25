@@ -4,9 +4,8 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { getMeta, getContenido } from '@/lib/investigacion/niveles';
-import { hasFullAccess } from '@/lib/investigacion/progress';
 import { useInvestigacionProgress } from '@/hooks/useInvestigacionProgress';
-import { useAuth } from '@/components/AuthProvider';
+import { useEsAdmin } from '@/components/EsAdminContext';
 import styles from '@/styles/investigacionGame.module.css';
 
 const NivelRunner = dynamic(() => import('@/components/investigacion/NivelRunner'), {
@@ -33,8 +32,7 @@ export default function NivelPage() {
   const meta = getMeta(nivelId);
   const contenido = getContenido(nivelId);
   const { hydrated, isUnlocked, unlockAll } = useInvestigacionProgress();
-  const { user } = useAuth();
-  const fullAccess = hasFullAccess(user?.email);
+  const fullAccess = useEsAdmin();
 
   // Acceso total: persiste el desbloqueo de todos los niveles.
   useEffect(() => {

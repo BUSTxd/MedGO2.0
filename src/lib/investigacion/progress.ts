@@ -5,16 +5,6 @@ import { XP } from './xp';
 const STORAGE_KEY = 'medgo-investigacion-progress';
 const VERSION = 1;
 
-/**
- * Emails con acceso total a Investigación (todos los niveles desbloqueados de
- * entrada, sin tener que completar los anteriores). Comparación case-insensitive.
- */
-const FULL_ACCESS_EMAILS = new Set(['fernandnoob062.0@gmail.com']);
-
-export function hasFullAccess(email?: string | null): boolean {
-  return !!email && FULL_ACCESS_EMAILS.has(email.trim().toLowerCase());
-}
-
 /** Estado inicial: el primer nivel desbloqueado, el resto bloqueado. */
 export function defaultState(): ProgressState {
   const niveles: Record<string, NivelProgreso> = {};

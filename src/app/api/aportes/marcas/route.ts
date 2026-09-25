@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { canVerAportes, isAdminEmail } from '@/lib/admin';
-import { COLABORADORES, colaboradorDeEmail, type Colaborador } from '@/lib/data/aportes';
+import { COLABORADORES, type Colaborador } from '@/lib/data/aportes';
+import { colaboradorDeEmail } from '@/lib/data/aportes-correos';
 import type { AmbitoMarca, Marca, OrigenMarca, SlotMarca } from '@/lib/aportes-marcas';
 import { agregarMarca, leerMarcas, quitarMarca } from '@/lib/aportes-marcas-server';
 

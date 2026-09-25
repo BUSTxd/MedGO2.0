@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { getUserPlanState } from '@/lib/plans';
+import { getUserPlanState } from '@/lib/plans-server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';

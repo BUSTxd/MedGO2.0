@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/server';
-import { getUserPlanState } from '@/lib/plans';
+import { getUserPlanState } from '@/lib/plans-server';
 import { requiredPlanDeCurso, tieneAccesoA } from '@/lib/acceso';
 import { EXAMENES } from '@/lib/data/examenes-acceso';
 
