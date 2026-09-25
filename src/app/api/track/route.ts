@@ -24,6 +24,53 @@ const ALLOWED_EVENTS = new Set([
   'pago_abierto',
 ]);
 
+/** Eventos que se aceptan sin sesión (la landing pública). El resto exige usuario. */
+const EVENTOS_ANONIMOS = new Set(['pagina_vista', 'pagina_salida']);
+
+/** Un evento real pesa unos cientos de bytes; esto corta cuerpos inflados a propósito. */
+const MAX_BODY_BYTES = 4 * 1024;
+const MAX_PROPS = 12;
+const MAX_TEXTO = 200;
+
+/**
+ * Freno por usuario (o por IP sin sesión), en memoria de la instancia. No es un
+ * límite global (cada instancia lleva su cuenta), pero con Fluid Compute las
+ * instancias se reutilizan y basta para que un bucle desde un solo origen no
+ * llene `analytics_events`, que no se purga. El límite duro, si hiciera falta,
+ * va en el Firewall de Vercel.
+ */
+const VENTANA_MS = 60_000;
+const MAX_POR_USUARIO = 90;
+/** Sin sesión se cuenta por IP, y detrás del NAT de un campus hay muchos alumnos. */
+const MAX_POR_IP = 400;
+const contadores = new Map<string, { n: number; desde: number }>();
+
+function pasaElFreno(clave: string, max: number): boolean {
+  const ahora = Date.now();
+  const r = contadores.get(clave);
+  if (!r || ahora - r.desde > VENTANA_MS) {
+    if (contadores.size > 5_000) contadores.clear();
+    contadores.set(clave, { n: 1, desde: ahora });
+    return true;
+  }
+  r.n += 1;
+  return r.n <= max;
+}
+
+/** Sólo claves cortas con valores primitivos acotados: nada de objetos anidados ni textos largos. */
+function sanearProps(raw: unknown): Record<string, unknown> {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return {};
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(raw as Record<string, unknown>)) {
+    if (Object.keys(out).length >= MAX_PROPS) break;
+    if (!/^[A-Za-z_]{1,32}$/.test(k)) continue;
+    if (typeof v === 'string') out[k] = v.slice(0, MAX_TEXTO);
+    else if (typeof v === 'number' && Number.isFinite(v)) out[k] = v;
+    else if (typeof v === 'boolean') out[k] = v;
+  }
+  return out;
+}
+
 interface TrackBody {
   event?: unknown;
   props?: unknown;
@@ -33,7 +80,11 @@ interface TrackBody {
 export async function POST(req: NextRequest) {
   let body: TrackBody;
   try {
-    body = (await req.json()) as TrackBody;
+    const texto = await req.text();
+    if (texto.length > MAX_BODY_BYTES) {
+      return NextResponse.json({ error: 'too large' }, { status: 413 });
+    }
+    body = JSON.parse(texto) as TrackBody;
   } catch {
     return NextResponse.json({ error: 'bad json' }, { status: 400 });
   }
@@ -43,10 +94,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'invalid event' }, { status: 400 });
   }
 
-  let props =
-    body.props && typeof body.props === 'object' && !Array.isArray(body.props)
-      ? (body.props as Record<string, unknown>)
-      : {};
+  let props = sanearProps(body.props);
   if (event === 'pagina_salida') {
     // Lo único que la ficha suma: un número fuera de rango descuadraría los tiempos.
     const s = Number(props.segundos);
@@ -67,6 +115,13 @@ export async function POST(req: NextRequest) {
   ]);
   // El admin recorre la web para revisarla: sus eventos ensuciarían las métricas.
   if (isAdminEmail(user?.email)) return new NextResponse(null, { status: 204 });
+  // Sin sesión sólo se registra la navegación de la landing.
+  if (!user && !EVENTOS_ANONIMOS.has(event)) return new NextResponse(null, { status: 204 });
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'sin-ip';
+  const pasa = user
+    ? pasaElFreno(`u:${user.id}`, MAX_POR_USUARIO)
+    : pasaElFreno(`ip:${ip}`, MAX_POR_IP);
+  if (!pasa) return new NextResponse(null, { status: 429 });
 
   // El acceso se congela aquí: lo que el cliente mande en props.acceso solo
   // cuenta si no hay una fuente mejor en el servidor.
