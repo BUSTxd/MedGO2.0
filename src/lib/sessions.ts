@@ -245,6 +245,19 @@ export async function touchSession(params: {
   return 'refreshed';
 }
 
+/** ¿Este dispositivo está revocado? Consulta fresca, sin la caché de `checkDevice`. */
+export async function dispositivoRevocado(userId: string, deviceId: string | null): Promise<boolean> {
+  if (!deviceId) return false;
+  const admin = createAdminClient();
+  const { data } = await admin
+    .from('user_sessions')
+    .select('revoked_at')
+    .eq('user_id', userId)
+    .eq('device_id', deviceId)
+    .maybeSingle<{ revoked_at: string | null }>();
+  return !!data?.revoked_at;
+}
+
 export async function revokeSession(userId: string, sessionId: string): Promise<boolean> {
   const admin = createAdminClient();
   const { error } = await (admin.from('user_sessions') as unknown as {

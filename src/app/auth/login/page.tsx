@@ -43,10 +43,12 @@ function AuthPageInner() {
   useEffect(() => {
     const urlError = searchParams.get('error');
     if (!urlError) return;
+    // Nunca se pinta el texto de la URL tal cual: cualquiera podría mandar un
+    // enlace con `?error=Llama al 9…` y hacerlo pasar por un aviso de MedGO.
     const mapped =
       urlError === 'device_revoked'
         ? 'Tu sesión en este dispositivo fue cerrada desde otro equipo. Inicia sesión nuevamente.'
-        : urlError;
+        : 'No se pudo completar el inicio de sesión. Inténtalo de nuevo.';
     setError(mapped);
   }, [searchParams]);
 
