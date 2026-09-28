@@ -5,7 +5,6 @@ export type TipoActividad =
   | 'SGP'
   | 'HISTOLOGIA'
   | 'ANATOMIA'
-  | 'REPASO'
   | 'EXAMEN-P'
   | 'EXAMEN-T';
 
@@ -66,7 +65,6 @@ export const TIPO_BADGE: Record<TipoActividad, { bg: string; color: string; labe
   SGP:        { bg: 'rgba(155,142,248,0.15)',  color: '#9B8EF8', label: 'SGP'        },
   HISTOLOGIA: { bg: 'rgba(232,121,166,0.15)',  color: '#E879A6', label: 'Histología' },
   ANATOMIA:   { bg: 'rgba(52,199,120,0.13)',   color: '#34C778', label: 'Anatomía'   },
-  REPASO:     { bg: 'rgba(148,163,184,0.16)',  color: '#94A3B8', label: 'Repaso'     },
   'EXAMEN-P': { bg: 'rgba(239,68,68,0.12)',    color: '#F87171', label: 'Examen P'   },
   'EXAMEN-T': { bg: 'rgba(239,68,68,0.15)',    color: '#F87171', label: 'Examen T'   },
 };
@@ -167,16 +165,6 @@ export const semanas: Semana[] = [
         ],
         docentes: ['Profesores de Anatomía'],
         nota: 'La misma práctica se repite por mesas (A1–A18 / B1–B18). Revisa tu grupo en el cronograma oficial.',
-      },
-      {
-        id: 'laminas-1',
-        tipo: 'HISTOLOGIA',
-        unidad: 'TEJIDOS',
-        titulo: 'Revisión de láminas de Histología 1',
-        fecha: '29 sep',
-        hora: '21:00–22:00',
-        subtemas: ['Repaso guiado de las láminas de la semana'],
-        docentes: ['Dra. Shirley Alva', 'Dra. Mery Revilla'],
       },
       {
         id: 'embrio-2',
@@ -331,16 +319,6 @@ export const semanas: Semana[] = [
         docentes: ['Profesores de Anatomía'],
       },
       {
-        id: 'laminas-2',
-        tipo: 'HISTOLOGIA',
-        unidad: 'TEJIDOS',
-        titulo: 'Revisión de láminas de Histología 2',
-        fecha: '6 oct',
-        hora: '21:00–22:00',
-        subtemas: ['Repaso guiado de las láminas de la semana'],
-        docentes: ['Dra. Mery Revilla', 'Dra. Shirley Alva'],
-      },
-      {
         id: 'histo-2',
         tipo: 'HISTOLOGIA',
         unidad: 'TEJIDOS',
@@ -460,16 +438,6 @@ export const semanas: Semana[] = [
         docentes: ['Profesores de Anatomía'],
       },
       {
-        id: 'laminas-3',
-        tipo: 'HISTOLOGIA',
-        unidad: 'TEJIDOS',
-        titulo: 'Revisión de láminas de Histología 3',
-        fecha: '13 oct',
-        hora: '21:00–22:00',
-        subtemas: ['Repaso guiado de las láminas de la semana'],
-        docentes: ['Dra. Mery Revilla', 'Dra. Shirley Alva'],
-      },
-      {
         id: 'histo-3',
         tipo: 'HISTOLOGIA',
         unidad: 'TEJIDOS',
@@ -572,10 +540,10 @@ export const semanas: Semana[] = [
     ],
   },
 
-  // ─── SEMANA 4 — SINOVIAL, OSTEOINMUNOLOGÍA Y REPASO ────────────────────────
+  // ─── SEMANA 4 — SINOVIAL Y OSTEOINMUNOLOGÍA ──────────────────────────────────
   {
     id: 'sem-4',
-    titulo: 'Semana 4 — Sinovial, osteoinmunología y repaso',
+    titulo: 'Semana 4 — Sinovial y osteoinmunología',
     fechas: '20 – 25 oct',
     actividades: [
       {
@@ -600,16 +568,6 @@ export const semanas: Semana[] = [
         },
       },
       {
-        id: 'repaso-anat',
-        tipo: 'REPASO',
-        unidad: 'ANATOMIA',
-        titulo: 'Repaso teórico de Anatomía',
-        fecha: '20 oct',
-        hora: '11:00–13:00',
-        subtemas: ['Integración del miembro superior e inferior'],
-        docentes: ['Dr. Marcos De La Cruz'],
-      },
-      {
         id: 'anat-7',
         tipo: 'ANATOMIA',
         unidad: 'ANATOMIA',
@@ -621,16 +579,6 @@ export const semanas: Semana[] = [
           'Aula virtual: muslo, pierna y pie',
         ],
         docentes: ['Profesores de Anatomía'],
-      },
-      {
-        id: 'laminas-4',
-        tipo: 'HISTOLOGIA',
-        unidad: 'TEJIDOS',
-        titulo: 'Revisión de láminas de Histología 4',
-        fecha: '20 oct',
-        hora: '21:00–22:00',
-        subtemas: ['Repaso guiado de todas las láminas del curso'],
-        docentes: ['Dra. Mery Revilla', 'Dra. Shirley Alva'],
       },
       {
         id: 'histo-4',
@@ -662,26 +610,6 @@ export const semanas: Semana[] = [
           formato: 'html',
           opciones: [{ id: 'loc-clase-15', label: 'Resumen', formato: 'html' }],
         },
-      },
-      {
-        id: 'repaso-anat-p',
-        tipo: 'REPASO',
-        unidad: 'ANATOMIA',
-        titulo: 'Repaso de Anatomía en anfiteatro y aula virtual',
-        fecha: '23 oct',
-        hora: '14:00–18:00',
-        subtemas: ['Repaso práctico sobre cadáver', 'Repaso en aula virtual'],
-        docentes: ['Profesores de Anatomía'],
-      },
-      {
-        id: 'repaso-fisio',
-        tipo: 'REPASO',
-        unidad: 'FISIOLOGIA',
-        titulo: 'Repaso de Fisiología',
-        fecha: '24 oct',
-        hora: '07:00–09:00',
-        subtemas: ['Repaso integrador de fisiología ósea y muscular'],
-        docentes: ['Dra. Yanett Mendoza'],
       },
       {
         id: 'examen-p2',
@@ -748,4 +676,37 @@ export function findActividad(id: string): { actividad: Actividad; semana: Seman
     }
   }
   return null;
+}
+
+/**
+ * Cada práctica de Anatomía comparte el resumen de la magistral de su región:
+ * es el mismo contenido visto sobre el cadáver. Se toma de la magistral en vez
+ * de copiarlo para que una opción nueva (otro documento) llegue a las dos.
+ *
+ * Con resumen, la práctica deja de ser libre (`esLibre`): si no, el resumen de
+ * la magistral se descargaría gratis desde la práctica.
+ */
+const RESUMEN_DE_MAGISTRAL: Record<string, string> = {
+  'anat-1': 'clase-2',
+  'anat-2': 'clase-3',
+  'anat-3': 'clase-5',
+  'anat-4': 'clase-7',
+  'anat-5': 'clase-9',
+  'anat-6': 'clase-11',
+  'anat-7': 'clase-13',
+};
+
+for (const [practica, magistral] of Object.entries(RESUMEN_DE_MAGISTRAL)) {
+  const destino = findActividad(practica)?.actividad;
+  const origen = findActividad(magistral)?.actividad;
+  if (destino && origen?.resumen) destino.resumen = origen.resumen;
+}
+
+/**
+ * Se abre sin plan: las prácticas (anatomía e histología), salvo las que llevan
+ * resumen, que es material de pago. Lo leen el índice, la página de la clase y
+ * `acceso-resumen.ts`.
+ */
+export function esLibre(act: Pick<Actividad, 'tipo' | 'resumen'>): boolean {
+  return (act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA') && !act.resumen;
 }

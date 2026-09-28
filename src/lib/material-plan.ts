@@ -167,6 +167,15 @@ export function banqueoLabelDe(slug: string, tipo: string): string {
   return regla && regla.tipos.includes(tipo) ? regla.label : 'Banqueo';
 }
 
+/**
+ * Alguna de las tres tarjetas tiene material publicado. Una clase vacía no
+ * tiene nada que proteger, así que no lleva candado (Aparato Locomotor).
+ */
+export function tieneMaterial(slug: string, act: ActividadLike): boolean {
+  const p = planDeActividad(slug, act);
+  return [p.apoyo, p.banqueo, p.resumen].some((s) => s.estado === 'listo');
+}
+
 export function planDeActividad(slug: string, act: ActividadLike): PlanActividad {
   const reglas = REGLAS[slug] ?? {};
   const invitacion = act.sinMaterial === true;

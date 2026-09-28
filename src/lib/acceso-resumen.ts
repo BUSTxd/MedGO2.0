@@ -49,7 +49,9 @@ const LIBRE: Record<string, (a: Act) => boolean> = {
   'cardiovascular':        esTipo('LAB-HISTO', 'LAB-ANAT'),
   'excretor':              (a) => esTipo('LAB-HISTO', 'LAB-ANAT')(a) || examenLibre(a),
   'neurologia':            (a) => esTipo('LAB-ANAT', 'LAB-HISTO', 'TALLER-FIS', 'AULA-VIRTUAL', 'ICONOGRAFIA', 'REV-VIRTUAL')(a) || examenLibre(a),
-  'aparato-locomotor':     esTipo('ANATOMIA', 'HISTOLOGIA'),
+  // Una práctica con resumen (el de su magistral) es de pago: si no, ese
+  // resumen se descargaría gratis desde la práctica. Ver `esLibre` del sílabo.
+  'aparato-locomotor':     (a) => esTipo('ANATOMIA', 'HISTOLOGIA')(a) && !a.resumen,
   'digestivo':             esTipo('ANATOMIA', 'HISTOLOGIA'),
   'endocrino-reproductor': esTipo('ANATOMIA', 'HISTOLOGIA', 'TALLER'),
   'inmunologia':           (a) => (a.tipo === 'LAB' && !a.premium) || !!a.gratis,

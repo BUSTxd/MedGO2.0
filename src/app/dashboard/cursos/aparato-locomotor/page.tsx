@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { semanas, curso, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/locomotor';
+import { semanas, curso, esLibre, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/locomotor';
 import { planUnlocks } from '@/lib/plans';
+import { tieneMaterial } from '@/lib/material-plan';
 import { getCachedPlanState } from '@/lib/plans-server';
 import LocomotorIcon from '@/components/icons/LocomotorIcon';
 import styles from '@/styles/cursos.module.css';
@@ -80,11 +81,11 @@ export default async function LocomotorPage() {
               const badge = TIPO_BADGE[act.tipo];
               const borderColor = UNIDAD_COLOR[act.unidad];
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
-              // Las prácticas (anatomía e histología) son libres.
-              const isPractica = act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA';
               // Si la card redirige a otra sección, no la bloqueamos:
-              // el destino maneja su propio acceso.
-              const isLocked = !isPractica && !act.linkOverride && !hasAcceso;
+              // el destino maneja su propio acceso. Y una clase sin material
+              // publicado tampoco: no hay nada detrás del candado.
+              const isLocked =
+                !esLibre(act) && !act.linkOverride && !hasAcceso && tieneMaterial('aparato-locomotor', act);
 
               const href = act.linkOverride ?? `/dashboard/cursos/aparato-locomotor/${act.id}`;
 

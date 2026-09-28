@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { findActividad, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/locomotor';
+import { findActividad, esLibre, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/locomotor';
 import styles from '@/styles/cursos.module.css';
 import StudyMaterialSection from '@/components/StudyMaterialSection';
 import LockedContent from '@/components/LockedContent';
+import { tieneMaterial } from '@/lib/material-plan';
 import TrackRecentClass from '@/components/TrackRecentClass';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
@@ -30,13 +31,14 @@ export default async function ActividadPage({
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
 
-  // Gating: las prácticas (anatomía e histología) son libres; las clases
-  // magistrales / invertidas / TBL / SGP / repasos / exámenes están detrás del
-  // plan Interno.
+  // Gating: las prácticas (anatomía e histología) son libres salvo que lleven
+  // resumen (`esLibre`); magistrales / invertidas / TBL / SGP / exámenes están
+  // detrás del plan Interno.
   const isPractica = act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA';
+  const libre = esLibre(act);
   const [user, planState] = await Promise.all([
     getUser(),
-    isPractica
+    libre
       ? Promise.resolve({ plan: 'free' as const, isActive: true })
       : getCachedPlanState(),
   ]);
@@ -107,7 +109,9 @@ export default async function ActividadPage({
     </div>
   );
 
-  if (isPractica) return detail;
+  // Sin material publicado no hay nada que proteger: se ve igual que en el
+  // índice, sin candado.
+  if (libre || !tieneMaterial('aparato-locomotor', act)) return detail;
 
   return (
     <LockedContent requiredPlan="interno" planState={planState} isAuthed={!!user}>
