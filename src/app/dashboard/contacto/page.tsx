@@ -3,7 +3,7 @@ import styles from '@/styles/dashboardPages.module.css';
 
 /** Un único buzón para todo el sitio: las seis tarjetas de abajo se diferencian
  *  por el motivo de la consulta, no por la dirección a la que escribes. */
-const CORREO = 'contacto@medgo.pe';
+const CORREO = 'contacto@medgoplus.com';
 
 /** Número de atención. `WHATSAPP_TEL` es el que se muestra y `WHATSAPP_URL` el
  *  que se abre — se derivan del mismo dato para que no puedan discrepar. */
