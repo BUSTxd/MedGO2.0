@@ -14,6 +14,7 @@ import BossChallenge, { type BossResult } from './minijuegos/BossChallenge';
 import Celebracion from './Celebracion';
 import XPFloat, { type XPToast } from './XPFloat';
 import BadgeUnlock from './BadgeUnlock';
+import CargandoBolitas from '@/components/CargandoBolitas';
 import styles from '@/styles/investigacionGame.module.css';
 
 const SECCION_LABEL: Record<FlowStep, string> = {
@@ -190,7 +191,7 @@ export default function NivelRunner({
     setStep('completado');
   };
 
-  if (!hydrated) return <div className={styles.cargando}>Cargando nivel…</div>;
+  if (!hydrated) return <CargandoBolitas color="#2CA9BC" etiqueta="Cargando nivel" />;
 
   const nivelXP = state.niveles[meta.id]?.xp ?? 0;
   // Una vez superado el nivel, se permite navegar libremente por sus secciones

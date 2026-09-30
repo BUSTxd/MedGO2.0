@@ -1,0 +1,109 @@
+/* ─── ESQUELETOS DE CARGA ───
+   La silueta de una página mientras llega su contenido. Las cajas (rejilla,
+   tarjeta, panel) son las clases REALES de cada página, para que la silueta
+   mida lo mismo que lo que la sustituye; aquí sólo vive el «hueso» que ocupa
+   el sitio de cada texto, badge o ícono. */
+
+/* Las cajas reales traen `:hover` y `cursor: pointer`: un esqueleto no se toca. */
+.raiz {
+  pointer-events: none;
+  user-select: none;
+}
+
+.hueso {
+  display: block;
+  flex-shrink: 0;
+  max-width: 100%;
+  border-radius: 8px;
+  background-color: rgba(30, 30, 96, 0.075);
+  background-image: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  /* Fuera de la caja por la izquierda: sin animación (movimiento reducido) no
+     queda la franja clara parada en medio. */
+  background-position: 200% 0;
+  animation: barrido 1.5s ease-in-out infinite;
+}
+
+:global(.dark-mode) .hueso {
+  background-color: rgba(255, 255, 255, 0.07);
+  background-image: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.09) 50%,
+    transparent 70%
+  );
+}
+
+@keyframes barrido {
+  from { background-position: 200% 0; }
+  to   { background-position: -100% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hueso { animation: none; }
+}
+
+/* ─── Home: el panel de bienvenida (foto a todo el ancho) ─── */
+.bienvenida {
+  grid-column: 1 / -1;
+  min-height: 280px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 32px;
+}
+
+/* Las líneas de dentro no barren: dos barridos superpuestos marean. */
+.linea {
+  display: block;
+  max-width: 100%;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+:global(.dark-mode) .linea {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.centro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fila {
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ─── Sílabo: la tarjeta de una actividad (franja + dos líneas) ─── */
+.actividad {
+  flex: 1;
+  min-width: 0;
+  padding: 13px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+/* ─── Genérico (rutas sin silueta propia) ─── */
+.genericoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 700px) {
+  .genericoGrid { grid-template-columns: 1fr; }
+}

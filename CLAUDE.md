@@ -83,6 +83,7 @@ src/app/
     │   ├── atlas-micologia/          # Selector modo alternativas/escribir
     │   ├── cascada-coagulacion/      # Lienzo de la cascada: explorar + aprender (ver sección propia)
     │   ├── checkpoints-ciclo-celular/ # Patología: anillo del ciclo + 5 vías animadas (ver sección propia)
+    │   ├── atlas-3d/                 # Locomotor: regiones de BodyParts3D, ?region=a,b (ver sección propia)
     │   └── microscopio/
     ├── investigacion/
     │   ├── page.tsx                  # Mapa serpenteante de 14 niveles (NivelMap)
@@ -111,6 +112,18 @@ src/app/
 | `src/components/AuthProvider.tsx` | Singleton del cliente Supabase, compartido para evitar múltiples instancias |
 | `src/components/LockedContent.tsx` | Paywall reutilizable para contenido premium |
 | `src/components/AportesPanel.tsx` | Panel de avance y aportes (`dashboard/aportes`). Lee `src/lib/aportes-stats.ts` y `src/lib/material-plan.ts`; ver **Sistema de Avance y Aportes** |
+
+---
+
+## Esqueletos de carga (`loading.tsx`)
+
+Mientras llega una página se pinta su silueta (`src/components/esqueletos/`, estilos en `esqueletos.module.css`). **Las cajas son las clases reales de la página** (`qgrid`/`qCard`, `labPanel`, `homeDashboard`…) y dentro van `<Hueso>`: así la silueta mide lo mismo que lo que sustituye y hereda su modo oscuro.
+
+- **Un `loading.tsx` cubre todo lo que cuelga de su carpeta**, así que los de `cursos/`, `histologia/` y `laboratorio/` son de cliente y eligen la silueta por la profundidad de `usePathname()` (rejilla → sílabo → clase; lo demás, `EsqueletoGenerico`).
+- **Pero sólo se enseña si su frontera es nueva en ese salto.** Del sílabo a una clase el tramo `cursos/<curso>` no cambia: el `<Suspense>` de `cursos/loading.tsx` ya está pintado y React deja la página vieja quieta hasta que llega la nueva (el clic parece no hacer nada). Por eso **cada carpeta de curso lleva su `loading.tsx`** (una línea que reexporta `CargandoCursos`): un curso nuevo necesita el suyo. Sigue sin silueta el salto clase → `?examen=1` (sólo cambia la query; haría falta un `loading` en `[id]/`).
+- En local la silueta tarda lo que el `proxy` en responder: Next sólo precarga los enlaces (y con ellos el `loading`) en producción.
+- **Investigación no lleva silueta sino la rueda** (`CargandoBolitas`, teal): `investigacion/Pagina.tsx` espera a que baje `jardin.svg` y sólo entonces monta título y mapa, para que entren juntos. La ruta del fondo está repetida en ese archivo y en `.mapaCamino`.
+- Los conteos de tarjetas van a mano (7 cursos de Histología, 10 paneles de laboratorio) para no meter los datos en el esqueleto: al añadir uno, subirlos.
 
 ---
 
@@ -518,6 +531,20 @@ Anillo del ciclo (G1/S/G2/M + G0) con 5 marcadores; cada uno abre su vía molecu
 Gate por `LABORATORIOS` (tramo medicina, no gratis). Tema claro = lámina H&E, oscuro = campo de fluorescencia; todo en Outfit, como el resto de la app.
 
 **Explorar como reproductor de vídeo**: la escena ocupa todo el ancho; leyenda (plegada por defecto, `medgo-ciclo-leyenda`) y ficha flotan encima. Pie = `BarraTiempo` (capítulos por paso, arrastre con la escena siguiendo al puntero; al soltar retoma reproducir/pausa) + controles + narración compacta. `useReproductor` expone `tGlobal`/`buscar`/`empezarArrastre`/`terminarArrastre`/`reproduciendo`; cada paso mide al menos `LARGO_MIN` en la línea global.
+
+---
+
+## Atlas 3D (Aparato Locomotor · `laboratorio/atlas-3d`)
+
+Visor de regiones del cuerpo sacadas de **BodyParts3D 4.0** (vía el repo `human-atlas` de BUST, en `Desktop/human-atlas`; solo se toman sus datos, no su interfaz de Vite/Tailwind). **Licencia CC BY 4.0: el crédito del pie del panel es obligatorio.** Publicado: `miembro-superior-derecho` v3 (191 piezas: huesos —con las costillas 1.ª-6.ª y sus cartílagos, las de la región pectoral—, músculos, arterias, venas; 1,8 MB gzip frente a 33 MB del cuerpo entero). La v1 (sin costillas) se borró del bucket; la v2 también, tras confirmar BUST que la v3 está bien. **El modelo no trae nervios periféricos** ni piel por región, ni dorsal ancho ni ligamentos del miembro.
+
+- **Una región = un paquete** en el bucket público `laboratorio-img/atlas-3d/<region>/<version>/` (`manifiesto.json` + `geometria.bin.gz`, caché de un año). Todas conservan las coordenadas del mismo cuerpo (metros, +Y arriba, **+X = izquierda del cuerpo**), así que `?region=a,b` las carga juntas y encajan solas; una pieza en dos regiones se pinta una vez (dedup por `id`).
+- **Para publicar una región**: definirla en `scripts/atlas-3d/regiones.mjs` (rango espacial + ids a mano para lo pegado al tronco), traducir sus nombres en `traducciones.mjs` (sin traducción la extracción falla), `node scripts/atlas-3d/extraer-region.mjs --region <id>`, `subir-region.mjs --region <id> --version vN` (se niega a pisar una versión publicada), `verificar.mjs` (relee lo que sirve el bucket contra el original) y añadirla en `REGIONES` de `src/lib/data/atlas-3d/regiones.ts`. No se toca el visor.
+- **Formato 1**: posiciones Uint16 cuantizadas a la caja de la región (`min` + `q·paso`), normales Int16 normalizadas, índices Uint16 (Uint32 si la pieza pasa de 65 536 vértices), alineado a 4 bytes. El nombre va sin lado; el lado va en `lado` y el visor lo añade solo si hay piezas de los dos.
+- **Errores de BodyParts3D corregidos al extraer** (`CORRECCIONES`): FJ1469 rotulado «Left» estando en la mano derecha; elevador de la escápula y subescapular clasificados como hueso; retináculo flexor como órgano de los sentidos; FJ2292, rotulada «posterior circumflex humeral artery», es la vena (se une a la vena circunfleja anterior y a la axilar). **Vasos metidos en el hueso** (`DESPEGAR` + `despegar.mjs`): la arteria y la vena supraescapulares quedaban 55-64 % dentro de la escápula; se empujan fuera por la normal del hueso, con el empujón repartido por vecindad para mover la sección entera y desvanecido en 15 mm para no quebrar el tubo. `verificar.mjs` no compara sus posiciones con el original.
+- **Visor**: una malla por pieza (clic = selecciona la estructura entera, doble clic = aislar), filtros por sistema y zona, buscador (español o inglés), translúcido Nada/Músculos/Todo (lo seleccionado queda opaco). El nombre sale **solo** de lo seleccionado. `node` del script de verificación fuerza IPv4: por IPv6 el fetch de Node al CDN de Supabase se corta en la máquina de BUST.
+- Slug `atlas-3d` en `LABORATORIOS` (tramo medicina). El índice de laboratorios ignora la query al sacar el slug del `href`.
+- El modelo procedural anterior de la mano (`muneca-mano-3d`) vive **solo** en la rama local `lab-muneca-mano-3d`, sin publicar.
 
 ---
 

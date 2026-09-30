@@ -1,0 +1,50 @@
+/* Rueda de carga: ocho bolitas en círculo que se encienden una tras otra. */
+.caja {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: min(60vh, 520px);
+}
+
+.rueda {
+  --bolita: #3b9edd;
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+/* Cada bolita gira a su sitio con `--i` y late desfasada de la anterior. El
+   `scale` va al final del mismo `transform`: con la propiedad `scale` suelta
+   se aplicaría antes del giro y encogería también el radio de la rueda. */
+.bolita {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  margin: -5.5px 0 0 -5.5px;
+  border-radius: 50%;
+  background: var(--bolita);
+  transform: rotate(calc(var(--i) * 45deg)) translateY(-24px);
+  animation: latido 0.96s linear infinite;
+  animation-delay: calc(var(--i) * 0.12s - 0.96s);
+}
+
+@keyframes latido {
+  from {
+    opacity: 1;
+    transform: rotate(calc(var(--i) * 45deg)) translateY(-24px) scale(1);
+  }
+  to {
+    opacity: 0.18;
+    transform: rotate(calc(var(--i) * 45deg)) translateY(-24px) scale(0.5);
+  }
+}
+
+/* Sin movimiento: la rueda queda quieta, con la cola atenuada. */
+@media (prefers-reduced-motion: reduce) {
+  .bolita {
+    animation: none;
+    opacity: calc(1 - var(--i) * 0.1);
+  }
+}

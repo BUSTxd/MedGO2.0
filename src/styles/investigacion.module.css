@@ -77,6 +77,21 @@
   margin-top: 8px;
 }
 
+/* Título y mapa entran juntos cuando el fondo ya está bajado (ver Pagina.tsx).
+   Sólo opacidad y sin `fill-mode`: al terminar no queda nada aplicado. */
+.mapaEntrada {
+  animation: mapaEntrada 0.35s ease;
+}
+
+@keyframes mapaEntrada {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mapaEntrada { animation: none; }
+}
+
 .mapaResumen {
   display: flex;
   align-items: center;

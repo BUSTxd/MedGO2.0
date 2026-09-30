@@ -6,11 +6,12 @@ import dynamic from 'next/dynamic';
 import { getMeta, getContenido } from '@/lib/investigacion/niveles';
 import { useInvestigacionProgress } from '@/hooks/useInvestigacionProgress';
 import { useEsAdmin } from '@/components/EsAdminContext';
+import CargandoBolitas from '@/components/CargandoBolitas';
 import styles from '@/styles/investigacionGame.module.css';
 
 const NivelRunner = dynamic(() => import('@/components/investigacion/NivelRunner'), {
   ssr: false,
-  loading: () => <div className={styles.cargando}>Cargando nivel…</div>,
+  loading: () => <CargandoBolitas color="#2CA9BC" etiqueta="Cargando nivel" />,
 });
 
 function Gate({ titulo, texto }: { titulo: string; texto: string }) {

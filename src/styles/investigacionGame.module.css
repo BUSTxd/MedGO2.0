@@ -100,13 +100,6 @@
   right: max(6px, calc(50% - 650px));
 }
 
-.cargando {
-  padding: 60px 0;
-  text-align: center;
-  color: #718096;
-  font-weight: 600;
-}
-
 /* ─── HUD ─── */
 .hud {
   position: sticky;
