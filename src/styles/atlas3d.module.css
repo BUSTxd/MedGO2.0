@@ -1,0 +1,530 @@
+/* Laboratorio «Atlas 3D» (BodyParts3D por regiones).
+   Claro por defecto; el oscuro se redefine en :global(.dark-mode) .wrapper.
+   Los colores anatómicos del modelo no dependen del tema (regiones.ts). */
+
+.wrapper {
+  --fondo: #eef2f8;
+  --fondo-2: #dce4f0;
+  --panel: #ffffff;
+  --panel-2: #f4f6fb;
+  --borde: #dde2ec;
+  --texto: #1b2233;
+  --texto-2: #5b6478;
+  --acento: #3b9edd;
+  --acento-suave: rgba(59, 158, 221, 0.12);
+  --sombra: 0 6px 22px rgba(20, 30, 60, 0.12);
+  --radio: 12px;
+  --sans: var(--font-outfit), system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  position: relative;
+  margin: -28px -28px -36px;
+  height: calc(100dvh - 48px);
+  min-height: 520px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--sans);
+  display: flex;
+  flex-direction: column;
+}
+
+:global(.dark-mode) .wrapper {
+  --fondo: #0b0f1d;
+  --fondo-2: #141b31;
+  --panel: #151b30;
+  --panel-2: #1b2340;
+  --borde: #28324f;
+  --texto: #eef1fa;
+  --texto-2: #9aa6c2;
+  --acento: #5bb4ec;
+  --acento-suave: rgba(91, 180, 236, 0.14);
+  --sombra: 0 8px 26px rgba(0, 0, 0, 0.45);
+}
+
+.wrapper button,
+.wrapper input {
+  font-family: inherit;
+}
+
+.wrapper :focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+/* ─── Carga ────────────────────────────────────────────────────────────────── */
+
+.cargando {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+  color: var(--texto-2);
+  font-size: 15px;
+}
+
+.cargando p {
+  margin: 0;
+}
+
+.barra {
+  width: min(280px, 70vw);
+  height: 6px;
+  border-radius: 99px;
+  background: var(--borde);
+  overflow: hidden;
+}
+
+.barra span {
+  display: block;
+  height: 100%;
+  background: var(--acento);
+  border-radius: inherit;
+  transition: width 0.2s ease;
+}
+
+/* ─── Distribución ─────────────────────────────────────────────────────────── */
+
+.lab {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.escenario {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  background: radial-gradient(ellipse at 50% 38%, var(--fondo) 0%, var(--fondo-2) 100%);
+}
+
+.lienzo {
+  position: absolute !important;
+  inset: 0;
+  touch-action: none;
+}
+
+/* Vistas: arriba a la izquierda, sobre la escena. */
+.vistas {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra);
+}
+
+.vista,
+.vistaActiva {
+  border: 0;
+  border-radius: 8px;
+  padding: 7px 11px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: var(--texto-2);
+}
+
+.vista:hover {
+  color: var(--texto);
+  background: var(--panel-2);
+}
+
+.vistaActiva {
+  background: var(--acento-suave);
+  color: var(--acento);
+  font-weight: 600;
+}
+
+.salirAislado {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border: 0;
+  border-radius: 10px;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--acento);
+  color: #fff;
+  box-shadow: var(--sombra);
+}
+
+.ayuda {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  margin: 0;
+  font-size: 12px;
+  color: var(--texto-2);
+  pointer-events: none;
+}
+
+/* Nombre de lo seleccionado: tamaño fijo en pantalla. */
+.rotulo {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(20, 28, 48, 0.86);
+  border: 1px solid #3b9edd;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transform: translateY(-22px);
+}
+
+/* ─── Panel ────────────────────────────────────────────────────────────────── */
+
+.panel {
+  width: 320px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  background: var(--panel);
+  border-left: 1px solid var(--borde);
+  padding: 20px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kicker {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--acento);
+}
+
+.titulo {
+  margin: 2px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.meta {
+  margin: 0;
+  font-size: 13px;
+  color: var(--texto-2);
+}
+
+/* Buscador */
+.buscador {
+  position: relative;
+}
+
+.buscador input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--borde);
+  background: var(--panel-2);
+  color: var(--texto);
+  font-size: 14px;
+}
+
+.buscador input::placeholder {
+  color: var(--texto-2);
+}
+
+.resultados {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 4px;
+  max-height: 260px;
+  overflow-y: auto;
+  border-radius: 10px;
+  border: 1px solid var(--borde);
+  background: var(--panel);
+}
+
+.resultados button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--texto);
+  padding: 7px 8px;
+  border-radius: 7px;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.resultados button:hover {
+  background: var(--panel-2);
+}
+
+.resultados span {
+  flex: 1;
+}
+
+.resultados small {
+  color: var(--texto-2);
+  font-size: 11px;
+}
+
+.resultados i,
+.sistema i,
+.sistemaOn i,
+.fichaSistema i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.vacio {
+  margin: 6px 2px 0;
+  font-size: 13px;
+  color: var(--texto-2);
+}
+
+/* Ficha de lo seleccionado: filete a la izquierda, no tarjeta. */
+.ficha {
+  border-left: 3px solid var(--acento);
+  padding: 2px 0 2px 12px;
+}
+
+.fichaSistema {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.ficha h2 {
+  margin: 4px 0 2px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.ficha p {
+  margin: 0;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--texto-2);
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.boton,
+.botonSec {
+  border-radius: 9px;
+  padding: 8px 13px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.boton {
+  border: 0;
+  background: var(--acento);
+  color: #fff;
+}
+
+.botonSec {
+  border: 1px solid var(--borde);
+  background: transparent;
+  color: var(--texto);
+}
+
+.botonSec:hover {
+  background: var(--panel-2);
+}
+
+/* Secciones */
+.seccion {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seccion h3 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+}
+
+.sistemas {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sistema,
+.sistemaOn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  padding: 7px 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sistema {
+  color: var(--texto-2);
+}
+
+.sistema i {
+  opacity: 0.3;
+}
+
+.sistemaOn {
+  color: var(--texto);
+}
+
+.sistema:hover,
+.sistemaOn:hover {
+  background: var(--panel-2);
+}
+
+.sistema small,
+.sistemaOn small {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.nota {
+  margin: 0;
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.zonas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.zona,
+.zonaActiva {
+  border-radius: 99px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.zona {
+  border: 1px solid var(--borde);
+  background: transparent;
+  color: var(--texto-2);
+}
+
+.zona:hover {
+  color: var(--texto);
+}
+
+.zonaActiva {
+  border: 1px solid var(--acento);
+  background: var(--acento-suave);
+  color: var(--acento);
+  font-weight: 600;
+}
+
+.credito {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--borde);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--texto-2);
+}
+
+.credito a {
+  color: var(--acento);
+}
+
+/* ─── Móvil: escena arriba, panel debajo ──────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .wrapper {
+    height: auto;
+    min-height: 0;
+  }
+
+  .lab {
+    flex-direction: column;
+  }
+
+  .escenario {
+    flex: none;
+    height: 62dvh;
+    min-height: 360px;
+  }
+
+  .panel {
+    width: auto;
+    border-left: 0;
+    border-top: 1px solid var(--borde);
+    overflow: visible;
+  }
+
+  .ayuda {
+    display: none;
+  }
+}
+
+/* Mismo margen que el padding de .panel del dashboard en teléfono. */
+@media (max-width: 600px) {
+  .wrapper {
+    margin: -18px -16px -28px;
+    border-radius: 14px;
+  }
+
+  .vistas {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+  }
+
+  .vista,
+  .vistaActiva {
+    padding: 7px 9px;
+  }
+
+  .salirAislado {
+    top: auto;
+    bottom: 12px;
+    right: 12px;
+  }
+}

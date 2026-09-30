@@ -7,6 +7,7 @@ import KidneyIcon from '@/components/icons/KidneyIcon';
 import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
 import ConstruccionIcon from '@/components/icons/ConstruccionIcon';
 import FisicaIcon from '@/components/icons/FisicaIcon';
+import LocomotorIcon from '@/components/icons/LocomotorIcon';
 import styles from '@/styles/dashboardPages.module.css';
 
 type Exp = { name: string; desc: string; color: string; href?: string };
@@ -169,6 +170,18 @@ const LAB_TOPICS: Topic[] = [
     ],
   },
   {
+    id: 'aparato-locomotor',
+    title: 'Aparato Locomotor | UPCH',
+    badge: 'Anatomía',
+    diff: ['medium'],
+    // Mismo ícono que la tarjeta del curso en cursos/page.tsx, en blanco.
+    icon: <LocomotorIcon size={26} color="#ffffff" colorDark="rgba(255,255,255,0.7)" />,
+    experiments: [
+      // Un solo visor para todo el atlas 3D: cada región es un paquete aparte (?region=).
+      { name: 'Miembro superior 3D', desc: 'Hombro, brazo, antebrazo y mano derechos: huesos, músculos, arterias y venas por sistema y por zona', color: '#c9a227', href: '/dashboard/laboratorio/atlas-3d?region=miembro-superior-derecho' },
+    ],
+  },
+  {
     // Curso de UFBI: 'fisica-medicina' ya está en CURSOS (track 'basico'), así
     // que `requiredPlanDeCurso` lo abre con el plan UFBI sin tocar nada más.
     //
@@ -301,7 +314,7 @@ export default async function LaboratorioPage() {
                 // Un laboratorio `gratis` dentro de un panel bloqueado: el panel
                 // sigue con su candado, pero esta fila avisa de que sí abre. Con
                 // acceso al panel la etiqueta no dice nada y no se pinta.
-                const slug = exp.href?.startsWith('/dashboard/laboratorio/') ? exp.href.split('/').pop()! : null;
+                const slug = exp.href?.startsWith('/dashboard/laboratorio/') ? exp.href.split('?')[0].split('/').pop()! : null;
                 const gratis = !abierto && slug !== null && labEsGratis(slug);
                 const cuerpo = (
                   <>

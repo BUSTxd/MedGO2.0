@@ -25,3 +25,4 @@ private/
 
 # Recortes locales del laboratorio de ciclo celular (se sirven desde el bucket)
 scripts/ciclo-celular/salida/
+scripts/atlas-3d/salida/
