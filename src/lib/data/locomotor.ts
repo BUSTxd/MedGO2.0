@@ -194,6 +194,12 @@ export const semanas: Semana[] = [
         subtemas: ['Epitelios de revestimiento', 'Epitelios glandulares', 'Especializaciones apicales'],
         docentes: ['Dr. Sabino Portugal', 'Dra. Mery Revilla', 'Dra. Shirley Alva'],
         nota: 'Cada práctica se evalúa con 70% paso corto (Kahoot) + 30% presentación grupal. El promedio vale 30% del desempeño.',
+        // Resumen en HTML: las diapositivas de la práctica (22 láminas, 39 figuras), ver /pptx-a-html.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-histo-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-4',
