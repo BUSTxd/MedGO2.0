@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "key": "patologia/tbl-3-cancer-mama",
+  "title": "TBL3 — Cáncer de mama",
+  "duration_min": 16,
+  "questions": [
+    {
+      "id": "p1",
+      "stem": "Una paciente de 64 años acude a consulta por una masa en el seno detectada en el autoexamen. La mamografía revela agrupaciones de microcalcificaciones. La biopsia excisional muestra células de alto grado con necrosis central y calcificación distrófica en el centro de los conductos, pero sin invasión de la membrana basal.\n\nSi esta paciente fuera tratada mediante cirugía conservadora y la patología posterior confirmara un resultado positivo para receptores de estrógeno (ER+), ¿cuál de las siguientes opciones terapéuticas sistémicas sería apropiada para reducir el riesgo de recurrencia, basándose en la biología del tumor?",
+      "options": [
+        { "id": "a", "text": "Quimioterapia neoadyuvante con platinos.", "correct": false },
+        { "id": "b", "text": "Trastuzumab.", "correct": false },
+        { "id": "c", "text": "Un inhibidor de la aromatasa (ej. Anastrozol) o Tamoxifeno.", "correct": true },
+        { "id": "d", "text": "El tratamiento se limita a la cirugía y la radioterapia.", "correct": false }
+      ],
+      "explanation": "Células de alto grado con **necrosis central** y calcificación dentro de los conductos, **sin romper la membrana basal**: es un **carcinoma ductal in situ (DCIS) tipo comedo**. Las microcalcificaciones agrupadas de la mamografía son justamente esa necrosis calcificada.\n\nSi el DCIS es **ER+**, su crecimiento depende del estrógeno, y bloquearlo con **tamoxifeno** (antagonista del receptor) o con un **inhibidor de la aromatasa** (corta la síntesis periférica de estrógeno, de elección en la posmenopáusica) **reduce las recurrencias** en la mama tratada y los tumores nuevos en la contralateral.\n\n- **Quimioterapia con platinos**: un DCIS no invade ni metastatiza, así que no hay enfermedad sistémica que tratar; los platinos se reservan para tumores invasores triple negativo / BRCA.\n- **Trastuzumab**: actúa contra HER2, que aquí no se informa, y no es tratamiento estándar del DCIS.\n- **Solo cirugía y radioterapia**: es lo local, pero con ER+ se deja sin usar la única terapia sistémica que la biología del tumor permite aprovechar.",
+      "tags": ["Cáncer de mama", "DCIS", "Terapia endocrina"]
+    },
+    {
+      "id": "p2",
+      "stem": "Una mujer de 70 años con un Carcinoma Ductal Invasivo de 1.2 cm es diagnosticada con un tumor Grado 1, fuertemente ER positivo y PR positivo, HER2 negativo, y un índice Ki-67 bajo (<10%). No hay compromiso de ganglios.\n\n¿Cuál es el subtipo molecular, el pronóstico asociado y la base de la terapia sistémica preferida para esta paciente?",
+      "options": [
+        { "id": "a", "text": "Luminal B, pronóstico intermedio; requiere quimioterapia debido al bajo Ki-67.", "correct": false },
+        { "id": "b", "text": "HER2-positivo, pronóstico agresivo; requiere Trastuzumab.", "correct": false },
+        { "id": "c", "text": "Luminal A, pronóstico favorable; responde bien a la terapia endocrina (inhibidores de la aromatasa) y es poco probable que se beneficie de la quimioterapia.", "correct": true },
+        { "id": "d", "text": "Basal-like, mal pronóstico; la quimioterapia es obligatoria.", "correct": false }
+      ],
+      "explanation": "**ER+ / PR+ fuertes, HER2−, Ki-67 bajo y grado 1** es el retrato del **Luminal A**: el subtipo más frecuente, el de mejor pronóstico y el más **hormonodependiente**. Como prolifera poco, la quimioterapia (que ataca células en división) aporta poco; la base es la **terapia endocrina**, con inhibidor de la aromatasa por ser posmenopáusica.\n\n- **Luminal B**: también es ER+, pero se distingue por **Ki-67 alto** (o PR bajo, o HER2+). La opción se contradice sola: un Ki-67 bajo es razón para *no* dar quimioterapia.\n- **HER2-positivo**: el tumor es HER2 negativo.\n- **Basal-like**: es el triple negativo (ER−, PR−, HER2−), lo opuesto a esta paciente.",
+      "tags": ["Cáncer de mama", "Subtipos moleculares"]
+    },
+    {
+      "id": "p3",
+      "stem": "Una paciente con un Carcinoma Ductal Invasivo (IDC) de 2.5 cm (pT2) es sometida a una biopsia de ganglio centinela que revela metástasis en dos de los tres ganglios examinados. El tumor primario es Luminal A (ER+/PR+, HER2-, Ki-67 bajo).\n\nConsiderando los factores pronósticos clásicos, ¿qué dato, extraído del informe patológico, indicaría un mal pronóstico para la paciente en ausencia de metástasis a distancia?",
+      "options": [
+        { "id": "a", "text": "La positividad de los receptores hormonales (ER+).", "correct": false },
+        { "id": "b", "text": "El tamaño del tumor primario (2.5 cm).", "correct": false },
+        { "id": "c", "text": "El estado de los ganglios linfáticos axilares.", "correct": true },
+        { "id": "d", "text": "El alto grado histológico del tumor primario.", "correct": false }
+      ],
+      "explanation": "Sin metástasis a distancia, el **compromiso de los ganglios axilares** es el **factor pronóstico más importante** del carcinoma invasor de mama: la supervivencia cae a medida que aumenta el número de ganglios positivos. Aquí son **2 de 3** ganglios centinela con metástasis.\n\n- **ER+**: es un factor **favorable** (tumor más diferenciado y con terapia endocrina disponible).\n- **2.5 cm (T2)**: el tamaño también pesa, pero menos que los ganglios, y un T2 es intermedio.\n- **Alto grado**: el informe no lo dice; un Luminal A con Ki-67 bajo suele ser de **bajo grado**.",
+      "tags": ["Cáncer de mama", "Factores pronósticos"]
+    },
+    {
+      "id": "p4",
+      "stem": "Una mujer de 36 años con historia familiar de cáncer de mama premenopáusico es diagnosticada con un Carcinoma Mamario Invasivo de Grado 3. Las pruebas genéticas resultan positivas para una mutación deletérea en BRCA1. El estudio de receptores revela: ER Negativo, PR Negativo, HER2 Negativo.\n\n¿Cuál de las siguientes es una característica clínica y biológica clave de este tumor y su implicación en el manejo sistémico, según su asociación con BRCA1 y su fenotipo?",
+      "options": [
+        { "id": "a", "text": "Es un tumor con bajo riesgo de recurrencia, por lo que la cirugía conservadora seguida de radioterapia es suficiente.", "correct": false },
+        { "id": "b", "text": "Es un tumor con perfil molecular basal-like, asociado a una biología agresiva, y la quimioterapia (idealmente neoadyuvante con platinos) es la terapia sistémica estándar.", "correct": true },
+        { "id": "c", "text": "El tumor responde primariamente a la terapia endocrina debido a la mutación BRCA1, que activa la vía del receptor de estrógeno.", "correct": false },
+        { "id": "d", "text": "Es probable que sea un carcinoma lobulillar invasivo (ILC) de bajo grado con tendencia a metástasis óseas tardías.", "correct": false }
+      ],
+      "explanation": "Los tumores por **BRCA1** son típicamente **triple negativo** y de **perfil basal-like**: alto grado, mucha proliferación, mujeres jóvenes y recurrencia temprana. Sin receptores ni HER2 no hay diana hormonal ni anti-HER2, así que la **quimioterapia** es la terapia sistémica. Los **platinos** funcionan especialmente bien porque el tumor **no puede reparar** por recombinación homóloga los enlaces cruzados que provocan en el ADN (por lo mismo responden a los inhibidores de PARP).\n\n- **Bajo riesgo de recurrencia**: es al revés, grado 3 y basal-like es de los de peor pronóstico.\n- **Terapia endocrina**: el tumor es ER− y PR−; BRCA1 no activa la vía del estrógeno.\n- **Lobulillar invasivo**: se asocia a pérdida de **E-cadherina (CDH1)**, suele ser ER+ y de bajo grado; nada de eso calza aquí.",
+      "tags": ["Cáncer de mama", "BRCA1", "Subtipos moleculares"]
+    },
+    {
+      "id": "p5",
+      "stem": "Mujer de 55 años con masa palpable en mama izquierda. La biopsia muestra Carcinoma Invasivo Tipo No Especial (NST). En cortes seriados adyacentes hay lesión Ductal In Situ (DCIS).\n\n¿Qué hallazgo o alteración histopatológica es característica distintiva de la transformación neoplásica de “In Situ” a “Invasor”?",
+      "options": [
+        { "id": "a", "text": "Calcificaciones lineales intraductales malignas.", "correct": false },
+        { "id": "b", "text": "Presencia de las células de Paget.", "correct": false },
+        { "id": "c", "text": "Ruptura de membrana basal e infiltrado estromal.", "correct": true },
+        { "id": "d", "text": "Comedonecrosis intraductal mamaria.", "correct": false }
+      ],
+      "explanation": "Lo que separa un carcinoma **in situ** de uno **invasor** es una sola cosa: que las células **atraviesen la membrana basal** (y la capa de células mioepiteliales que la acompaña) e **infiltren el estroma**. Recién ahí tienen acceso a vasos linfáticos y sanguíneos, y con eso a metastatizar.\n\n- **Calcificaciones intraductales** y **comedonecrosis**: son rasgos del propio **DCIS** (sobre todo el de alto grado); ocurren *dentro* del conducto.\n- **Células de Paget**: son células del DCIS que se extienden por los conductos hasta la **epidermis del pezón** sin cruzar la membrana basal; no definen invasión.",
+      "tags": ["Cáncer de mama", "DCIS", "Invasión"]
+    },
+    {
+      "id": "p6",
+      "stem": "Paciente mujer de 46 años se presenta a consulta por aumento de tamaño, eritema y piel de naranja en la mama izquierda. Refiere haber recibido 2 veces terapia con antibióticos sin mejoría. Elija la mejor respuesta:",
+      "options": [
+        { "id": "a", "text": "La probabilidad de metástasis ganglionar es baja.", "correct": false },
+        { "id": "b", "text": "De confirmarse un cáncer de mama, será de buen pronóstico.", "correct": false },
+        { "id": "c", "text": "Los cambios observados son netamente inflamatorios.", "correct": false },
+        { "id": "d", "text": "Una biopsia de piel mostrará émbolos tumorales en vasos linfáticos de la dermis.", "correct": true },
+        { "id": "e", "text": "En la biopsia se encontraron múltiples focos de carcinoma ductal in situ (DCIS).", "correct": false }
+      ],
+      "explanation": "Mama aumentada de tamaño, eritematosa, con **piel de naranja** y que **no mejora con antibióticos**: es un **carcinoma inflamatorio**. No es un tipo histológico sino una presentación clínica: las células tumorales **embolizan los linfáticos de la dermis**, los obstruyen, y el linfedema produce el eritema y la piel de naranja (los folículos pilosos quedan hundidos en la piel edematosa).\n\n- **Metástasis ganglionar baja** y **buen pronóstico**: al contrario, casi siempre hay ganglios comprometidos y muchas pacientes ya tienen metástasis a distancia; es de las formas de **peor pronóstico**.\n- **Netamente inflamatorios**: el aspecto imita una mastitis, pero no hay infección ni inflamación verdadera; por eso falla el antibiótico.\n- **Focos de DCIS**: el in situ no invade los linfáticos y no explica el cuadro.",
+      "tags": ["Cáncer de mama", "Carcinoma inflamatorio"]
+    },
+    {
+      "id": "p7",
+      "stem": "Paciente mujer de 38 años con antecedente familiar de neoplasia maligna de mama. Se le realiza una prueba genética y se confirma BRCA1 patogénico. A los 41 años presenta tumor de alto grado mamario.\n\n¿Cuál mecanismo conecta mejor su predisposición con la transformación neoplásica presentada?",
+      "options": [
+        { "id": "a", "text": "Aumento de colágeno aberrante en matriz extracelular estromal.", "correct": false },
+        { "id": "b", "text": "Activación de células mioepiteliales periductales.", "correct": false },
+        { "id": "c", "text": "Acumulación de defecto en el ADN por falla en reparación homóloga.", "correct": true },
+        { "id": "d", "text": "Sobreexpresión del Receptor de Estrógeno (ER) inducida por BRCA1.", "correct": false }
+      ],
+      "explanation": "**BRCA1** es un **gen supresor de tumores** que participa en la **reparación del ADN por recombinación homóloga**, la que corrige las roturas de doble cadena sin errores. La paciente hereda una copia mutada; cuando la segunda se pierde en una célula (segundo golpe de Knudson), esa célula ya no repara bien, acumula mutaciones e **inestabilidad genómica**, y termina transformándose: por eso el tumor aparece joven y es de alto grado.\n\n- **Colágeno aberrante** y **células mioepiteliales**: no tienen relación con la función de BRCA1.\n- **Sobreexpresión del ER**: es lo contrario; los tumores por BRCA1 son típicamente **ER negativos** (triple negativo, basal-like).",
+      "tags": ["Cáncer de mama", "BRCA1"]
+    },
+    {
+      "id": "p8",
+      "stem": "Mujer de 58 años, presenta una lesión cutánea que simula una dermatitis eczematosa crónica en el pezón y la zona areolar durante 24 meses, que no mejoró con esteroides tópicos, lo que resultó en la inversión progresiva del pezón. Se sospecha Enfermedad de Paget de la Mama.\n\n¿Cuál es el mecanismo patológico subyacente y la acción diagnóstica recomendada?",
+      "options": [
+        { "id": "a", "text": "Obstrucción linfática dérmica, que causa linfedema, requiriendo un punch de piel para confirmar células tumorales en la dermis.", "correct": false },
+        { "id": "b", "text": "Extensión de un Carcinoma Ductal (in situ o invasivo) hacia el pezón y la areola, lo que requiere una biopsia para identificar células de Paget y una mamografía para detectar un cáncer subyacente.", "correct": true },
+        { "id": "c", "text": "Una lesión benigna inflamatoria que se maneja con el uso prolongado de antibióticos y observación, ya que la inversión del pezón es un hallazgo inespecífico.", "correct": false },
+        { "id": "d", "text": "Propagación de un carcinoma lobulillar in situ (LCIS) a través del estroma, lo que exige una biopsia del pezón.", "correct": false }
+      ],
+      "explanation": "La **enfermedad de Paget del pezón** es un **carcinoma ductal** (casi siempre DCIS, a veces con invasor) cuyas células avanzan **por los conductos galactóforos** hasta la **epidermis del pezón y la areola**, sin cruzar la membrana basal de la piel. Allí rompen la barrera epidérmica y dan la lesión eccematosa, costrosa, que no cede con corticoides.\n\nLa **biopsia** muestra las **células de Paget**: grandes, de citoplasma claro, solas o en grupos dentro de la epidermis. Y como casi siempre hay un carcinoma por debajo (a veces palpable, a veces no), se pide **mamografía** para buscarlo.\n\n- **Obstrucción linfática dérmica**: es el mecanismo del **carcinoma inflamatorio**, no del Paget.\n- **Lesión benigna con antibióticos**: dos años sin mejoría e inversión del pezón obligan a biopsiar, no a observar.\n- **LCIS**: el lobulillar in situ no produce enfermedad de Paget, y \"a través del estroma\" ya sería invasión.",
+      "tags": ["Cáncer de mama", "Enfermedad de Paget"]
+    }
+  ]
+}

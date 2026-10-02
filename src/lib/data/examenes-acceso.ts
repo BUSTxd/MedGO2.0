@@ -32,6 +32,9 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?
   'patologia/parcial-1-2022': {},
   'patologia/parcial-1-2020': {},
   'patologia/parcial-1-2020-b': { free: true },
+  // TBL 3 (cáncer de mama): las 8 del individual 2025. El grupal repetía las
+  // mismas con las alternativas en otro orden, y el runner ya las baraja.
+  'patologia/tbl-3-cancer-mama': { free: true },
   // Inmunología: dos banqueos abiertos como muestra del curso (2025 y 2024-II),
   // con el aviso de suscripción del runner cada pocas preguntas. El 2022 y los
   // dos Extra están detrás del plan del tramo; el 2023 —el más elaborado— se

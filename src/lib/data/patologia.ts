@@ -620,6 +620,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        examen: { key: 'patologia/tbl-3-cancer-mama', free: true },
       },
     ],
   },
