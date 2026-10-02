@@ -380,6 +380,21 @@ Para un PowerPoint exportado a PDF: se reconstruye **desde el PDF** con PyMuPDF 
 
 ---
 
+## PowerPoint → resumen (skill local `pptx-a-html`, envase `doc-hojas`)
+
+Un `.pptx` (casi siempre de Histología) se convierte con `.claude/skills/pptx-a-html/` (**la carpeta `.claude` está en `.gitignore`: la skill y sus scripts viven sólo en la máquina de BUST**, no en git). Dos salidas distintas:
+
+- **Para revisar en local** (carpeta en Descargas, nada se sube): `index.html` + `assets/` con **sólo las imágenes histológicas ya recortadas** (`sNN_imageM`), sin capturas completas; las imágenes que son sólo texto se reconstruyen en HTML y lo que no es histología se excluye. BUST las pasa a AVIF él mismo (mismo nombre, otra extensión) y `reescribir_a_avif.py` apunta el HTML a los `.avif`.
+- **Para publicar** (`--resumen`): `resumen.html` en el envase **«hojas de tamaño fijo»** (`.doc-hojas`): una hoja 1280×720 por diapositiva, figuras como `<img class="pdf-image">` (así heredan hover, clic con velo oscuro y zoom del visor) y `scripts/upload-resumen-doc.mjs --dir … --curso … --id … --slug …` (`--force` para pisar). Luego `ALLOWED` + `FILE_ALIAS` de `api/resumen-html/[claseId]/route.ts` y `resumen:` en la actividad del sílabo. Primer caso: `loc-histo-3` (Locomotor, Práctica de Histología 3).
+
+**Lo no obvio:**
+- Una práctica de Anatomía/Histología **con** resumen deja de ser libre (`esLibre`): el resumen pasa a ser de pago. El 403 sin plan lo da `acceso-resumen.ts` solo (lee el sílabo); el visor ya trae las protecciones anticopia.
+- **Zoom con rueda del lightbox** (`HtmlFullscreenModal`): de 1× a 6× hacia el cursor, arrastrar para moverla, escrito directo en el `<img>` (refs, sin estado: un `useState` re-renderizaría el HTML inyectado). Afecta a todos los envases.
+- **Sin barras por hoja:** el CSS del módulo pone `overflow:auto` al `.page-shell` y un redondeo de medio píxel pintaba barras. El visor deja `overflow:hidden` salvo con A+ (`SIZES > 1`).
+- **Las tablas del PPTX son dibujo, no tablas de lectura:** el CSS genérico `.sheet table` (`display:block; overflow:auto`, zebra) las vuelve contenedores con scroll y se comen la rueda; el fragmento las fuerza a `display:table; overflow:visible` con prefijo doble.
+- **Fuente de reemplazo:** Aptos no existe fuera de Office; Outfit es más ancha. Cajas con «ajustar al texto» salen con `min-height`, `wrap="none"` se respeta (`white-space:pre`) y un cuadro con `rot=180`+`flipV` se pinta derecho. Lo que ya se solapa en el PPTX original se separa con `--ajustes` (posición en %, `text`, `size_pt`).
+- **Las imágenes de texto** (fondo transparente, `pointer-events:none`) no deben tapar cuadros vecinos.
+
 ## Actividades sin material propio (invitación a colaborar)
 
 Componente **`src/components/SinMaterialSection.tsx`** — sustituye las 3 tarjetas de `StudyMaterialSection` cuando una actividad no tendrá material propio en el corto plazo (talleres científicos de Química Orgánica). Invita a colaborar: mascota + logos Gmail/Instagram como único CTA, sin panel ni tarjeta.

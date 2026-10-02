@@ -691,6 +691,11 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
         pagina.style.transform = `scale(${s})`;
         shell.style.width = `${Math.min(W * s, disponible)}px`;
         shell.style.height = `${H * s}px`;
+        /* Sin zoom la hoja mide exactamente el hueco, y un redondeo de medio
+           píxel bastaba para que el `overflow:auto` del CSS pintara barras en
+           cada hoja. Se desplaza sólo cuando el alumno agranda (A+): ahí la
+           hoja sí se pasa del ancho y necesita su propio scroll. */
+        shell.style.overflow = SIZES[sizeIndex] > 1 ? 'auto' : 'hidden';
       }
     };
 
