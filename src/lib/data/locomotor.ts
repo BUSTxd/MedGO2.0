@@ -104,6 +104,12 @@ export const semanas: Semana[] = [
           'Uniones intercelulares',
         ],
         docentes: ['Dr. José Velásquez'],
+        // Mismo resumen que la Práctica de Histología 1 (histo-1).
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-histo-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-2',
