@@ -157,6 +157,12 @@ export const semanas: Semana[] = [
         subtemas: ['Generalidades del desarrollo embrionario'],
         docentes: ['Dra. Alicia Díaz'],
         nota: 'Clase asincrónica en Blackboard.',
+        // Resumen en HTML: apuntes muy visuales (24 figuras), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-embrio-1', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'anat-1',
@@ -189,6 +195,12 @@ export const semanas: Semana[] = [
         ],
         docentes: ['Dra. Alicia Díaz'],
         nota: 'Clase asincrónica en Blackboard.',
+        // Resumen en HTML: apuntes muy visuales (20 figuras), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-embrio-2', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'histo-1',
