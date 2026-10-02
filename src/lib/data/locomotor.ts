@@ -450,6 +450,12 @@ export const semanas: Semana[] = [
           'Osificación intramembranosa y endocondral',
         ],
         docentes: ['Dr. Sabino Portugal', 'Dra. Mery Revilla', 'Dra. Shirley Alva'],
+        // Resumen en HTML: las diapositivas de la práctica (15 láminas, 32 figuras), ver /pptx-a-html.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-histo-3', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-12',

@@ -118,6 +118,11 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
   const scrollerRef = useRef<HTMLDivElement>(null);
   // Última escala realmente escrita en el DOM (ver `fit()`).
   const aplicado = useRef<number | null>(null);
+  // Zoom de la figura ampliada. Va en refs y se escribe directo en el <img>:
+  // un estado nuevo re-renderizaría el visor entero (ver `contenido`).
+  const lbRef = useRef<HTMLDivElement>(null);
+  const lbImgRef = useRef<HTMLImageElement>(null);
+  const lbArrastro = useRef(false);
 
   /**
    * Un resumen puede venir en dos envases (ver CLAUDE.md): el flujo de un
@@ -335,6 +340,70 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
       soltar();
     };
   }, [html, seccion]);
+
+  /* Zoom con la rueda sobre la figura ampliada (de 1× a 6×, hacia donde apunta
+     el cursor) y arrastre para moverla cuando está ampliada. El listener va
+     nativo y no pasivo: React registra `onWheel` como pasivo, y entonces no se
+     puede impedir que la rueda desplace el documento de detrás. Sin estado:
+     se escribe `transform` directo en el <img>. */
+  useEffect(() => {
+    const caja = lbRef.current;
+    const img = lbImgRef.current;
+    if (!lightbox || !caja || !img) return;
+
+    let escala = 1, x = 0, y = 0;
+    const pintar = () => {
+      img.style.transform = escala === 1 && !x && !y ? '' : `translate(${x}px, ${y}px) scale(${escala})`;
+      caja.style.cursor = escala > 1 ? 'grab' : 'zoom-out';
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const r = img.getBoundingClientRect();
+      // Punto bajo el cursor, relativo al centro actual de la imagen.
+      const px = e.clientX - (r.left + r.width / 2);
+      const py = e.clientY - (r.top + r.height / 2);
+      const nueva = Math.max(1, Math.min(6, escala * Math.exp(-e.deltaY * 0.0015)));
+      const k = nueva / escala;
+      x -= px * (k - 1);
+      y -= py * (k - 1);
+      escala = nueva;
+      if (escala === 1) { x = 0; y = 0; }
+      pintar();
+    };
+
+    let ancla: { cx: number; cy: number; x: number; y: number } | null = null;
+    const onDown = (e: PointerEvent) => {
+      if (escala <= 1 || e.button !== 0) return;
+      ancla = { cx: e.clientX, cy: e.clientY, x, y };
+      lbArrastro.current = false;
+      caja.setPointerCapture(e.pointerId);
+      caja.style.cursor = 'grabbing';
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!ancla) return;
+      const dx = e.clientX - ancla.cx, dy = e.clientY - ancla.cy;
+      if (Math.abs(dx) + Math.abs(dy) > 4) lbArrastro.current = true;
+      x = ancla.x + dx;
+      y = ancla.y + dy;
+      pintar();
+    };
+    const onUp = () => { ancla = null; pintar(); };
+
+    lbArrastro.current = false;
+    caja.addEventListener('wheel', onWheel, { passive: false });
+    caja.addEventListener('pointerdown', onDown);
+    caja.addEventListener('pointermove', onMove);
+    caja.addEventListener('pointerup', onUp);
+    caja.addEventListener('pointercancel', onUp);
+    return () => {
+      caja.removeEventListener('wheel', onWheel);
+      caja.removeEventListener('pointerdown', onDown);
+      caja.removeEventListener('pointermove', onMove);
+      caja.removeEventListener('pointerup', onUp);
+      caja.removeEventListener('pointercancel', onUp);
+    };
+  }, [lightbox]);
 
   // Con el lightbox abierto, Esc cierra sólo la figura: cerrar el resumen
   // entero perdería el punto de lectura que el alumno acaba de dejar.
@@ -722,8 +791,13 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
       {/* ── Figura ampliada ── */}
       {lightbox && (
         <div
+          ref={lbRef}
           className={styles.lightbox}
-          onClick={() => setLightbox(null)}
+          onClick={() => {
+            // Soltar un arrastre sobre la figura no debe cerrarla.
+            if (lbArrastro.current) { lbArrastro.current = false; return; }
+            setLightbox(null);
+          }}
           role="dialog"
           aria-modal="true"
           aria-label="Figura ampliada"
@@ -739,8 +813,8 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
               navegador (immutable), así que se pinta sin volver a descargarla.
               next/image no aplica: el HTML es contenido remoto inyectado. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className={styles.lightboxImg} src={lightbox} alt="" />
-          <span className={styles.lightboxHint}>Haz clic fuera o pulsa Esc para cerrar</span>
+          <img ref={lbImgRef} className={styles.lightboxImg} src={lightbox} alt="" draggable={false} />
+          <span className={styles.lightboxHint}>Rueda para ampliar · clic fuera o Esc para cerrar</span>
         </div>
       )}
     </div>
