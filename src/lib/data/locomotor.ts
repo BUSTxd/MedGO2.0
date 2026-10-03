@@ -312,6 +312,12 @@ export const semanas: Semana[] = [
           'Osificación',
         ],
         docentes: ['Dra. Shirley Alva'],
+        // Mismo resumen que la Práctica de Histología 2 (histo-2).
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-histo-2', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-7',
@@ -351,6 +357,12 @@ export const semanas: Semana[] = [
         hora: '08:00–12:00',
         subtemas: ['Fibras y matriz extracelular', 'Células del tejido conectivo', 'Tipos de tejido conectivo'],
         docentes: ['Dr. Sabino Portugal', 'Dra. Mery Revilla', 'Dra. Shirley Alva'],
+        // Diapositivas de la práctica en hojas 1280×720 (PPTX → doc-hojas).
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-histo-2', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'anat-4',
