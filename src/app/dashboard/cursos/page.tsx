@@ -14,6 +14,7 @@ import ComunicacionIcon from '@/components/icons/ComunicacionIcon';
 import CulturaAmbientalIcon from '@/components/icons/CulturaAmbientalIcon';
 import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
 import HospitalIcon from '@/components/icons/HospitalIcon';
+import PsicologiaIcon from '@/components/icons/PsicologiaIcon';
 import ConstruccionIcon from '@/components/icons/ConstruccionIcon';
 import styles from '@/styles/cursos.module.css';
 
@@ -195,6 +196,17 @@ const COURSES = [
     icon: <HospitalIcon size={30} style={{ color: '#8b5cf6' }} />,
   },
   {
+    id: 'psicologia-medica',
+    nombre: 'Psicología Médica | UPCH',
+    badge: 'Psicología Médica',
+    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Entrevista clínica, examen mental y relación médico-paciente.',
+    badgeColor: '#8b5cf6',
+    badgeBg: 'rgba(139, 92, 246, 0.12)',
+    activo: true,
+    diff: ['easy'],
+    icon: <PsicologiaIcon size={30} style={{ color: '#8b5cf6' }} />,
+  },
+  {
     id: 'hematologia',
     nombre: 'Hematología | UPCH',
     badge: 'Hematología',
@@ -362,10 +374,16 @@ type Curso = (typeof COURSES)[number];
  */
 const LISTOS = new Set(PRIORIDAD_LANZAMIENTO);
 
+/**
+ * Cursos fuera de los prioritarios que ya tienen algo real que abrir: Psicología
+ * Médica llega sin sílabo, sólo con el banqueo del parcial.
+ */
+const CON_BANQUEO = new Set(['psicologia-medica']);
+
 function CursoCard({ c, bloqueado }: { c: Curso; bloqueado: boolean }) {
   // Un curso `gratis` (hoy Patología y Epidemiología) sí tiene material real detrás,
   // así que no se muestra "en obra" aunque no esté entre los prioritarios.
-  const enObra = !LISTOS.has(c.id) && !cursoEsGratis(c.id);
+  const enObra = !LISTOS.has(c.id) && !cursoEsGratis(c.id) && !CON_BANQUEO.has(c.id);
 
   const cuerpo = (
     <>

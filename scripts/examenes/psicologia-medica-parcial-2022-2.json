@@ -1,0 +1,1128 @@
+{
+  "version": 1,
+  "key": "psicologia-medica/parcial-2022-2",
+  "title": "Examen Parcial 2022-II — Psicología Médica",
+  "duration_min": 40,
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "En el desarrollo de la entrevista con el paciente, es necesario:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Restringirse a aplicar listas de verificación de síntomas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Usar los silencios y preguntas abiertas",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Evitar el contacto visual",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Reducir el tiempo de la entrevista al mínimo posible para no aburrir al paciente",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **silencios** bien usados y las **preguntas abiertas** dejan que el paciente cuente su historia con sus palabras: aparecen datos y emociones que una lista cerrada no recoge.\n\n- Limitarse a una **lista de verificación** convierte la entrevista en un interrogatorio.\n- El **contacto visual** adecuado transmite interés; evitarlo lo contrario.\n- La entrevista necesita el tiempo suficiente; acortarla al mínimo hace perder información.",
+      "tema": "entrevista"
+    },
+    {
+      "id": "q2",
+      "stem": "Luego que el médico nota que la paciente está triste al discutir la enfermedad de su madre, refiere: \"Veo que esto la entristece\". El comentario del médico corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reflexión",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Resumir",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Transitivismo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Aclaración",
+          "correct": false
+        }
+      ],
+      "explanation": "Es una **reflexión**: el médico le devuelve a la paciente lo que percibe en ella (la tristeza al hablar de su madre). Indica que se le está escuchando y la invita a seguir. En los apuntes, nombrar así la emoción observada también aparece como *reconocer emociones*, que no está entre las opciones.\n\n- **Resumir** recapitula varios datos del relato.\n- **Aclaración** pide precisar lo que no se entendió.\n- **Transitivismo** no es una intervención facilitadora.",
+      "tema": "intervenciones"
+    },
+    {
+      "id": "q3",
+      "stem": "El ejemplo siguiente \"Paciente: Y le dije, no quiero ir (pausa). Entrevistador: ¿y qué sucedió después?\". De los siguientes corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Redireccionar",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Resumir",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Transición",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Guiar",
+          "correct": true
+        }
+      ],
+      "explanation": "**Guiar** es facilitar que el paciente **continúe su historia** con preguntas cortas como «¿qué?», «¿cuándo?», «¿dónde?», «¿quién?» o «¿y qué sucedió después?». (Las preguntas «¿por qué?» no son útiles al comienzo de la entrevista.)\n\n- **Redireccionar:** volver a un tema distinto del que el paciente está relatando, cuando se dispersa o cambia de tema sin cubrir lo importante.\n- **Transición:** pasar de un área de la entrevista a otra.\n- **Resumir:** recapitular lo dicho.",
+      "tema": "intervenciones"
+    },
+    {
+      "id": "q4",
+      "stem": "La etapa de la entrevista \"Iniciando la sesión\":",
+      "options": [
+        {
+          "id": "a",
+          "text": "Identifica los problemas con preguntas abiertas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Estimula al paciente a formular preguntas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Resume periódicamente para verificar",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Utiliza preguntas abiertas y cerradas en forma equilibrada",
+          "correct": false
+        }
+      ],
+      "explanation": "En **A) Iniciando la entrevista** (guías Calgary-Cambridge) el médico: establece el contacto inicial, saluda y obtiene el nombre del paciente, se presenta y aclara su rol, identifica el o los motivos de consulta, **identifica los problemas del paciente con preguntas abiertas** y escucha atentamente sin interrumpir.\n\n- Estimular al paciente a formular preguntas es de **C) Explicación y planificación**.\n- Resumir periódicamente y combinar preguntas abiertas y cerradas son de **B) Recogiendo información**.",
+      "tema": "entrevista"
+    },
+    {
+      "id": "q5",
+      "stem": "Respecto a la entrevista a un paciente que bebe alcohol de manera riesgosa, MARQUE LO CORRECTO:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Es más difícil entablar una relación terapéutica con un bebedor social que con un paciente con trastorno por consumo de alcohol.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se debe indagar si el paciente bebe alcohol de manera riesgosa aun si menciona que no consume alcohol.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Las premisas deben ser empáticas, válidas para el paciente, mostrar conocimiento y seguridad durante la entrevista.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Los pacientes en consumo riesgoso de alcohol tienden a maximizar los problemas que les produce el beber alcohol",
+          "correct": false
+        }
+      ],
+      "explanation": "Con un paciente que bebe de forma riesgosa, el médico plantea **premisas empáticas** y **válidas para el paciente**, y transmite **conocimiento y seguridad**: así el paciente no se pone a la defensiva y es más fácil que reconozca el problema.\n\n- Estos pacientes suelen **minimizar** (no maximizar) los problemas que les causa el alcohol.\n- La relación terapéutica suele ser **más difícil** con quien ya tiene un trastorno por consumo, no con un bebedor social.\n- Si el paciente refiere que no bebe, no hay consumo riesgoso que indagar.",
+      "tema": "salud-mental"
+    },
+    {
+      "id": "q6",
+      "stem": "Según el protocolo SPIKES de entrega de malas noticias, la etapa: \"Sus conocimientos y sentimientos pueden ser evaluados usando preguntas abiertas como: ¿qué le han dicho hasta ahora?\". ¿A cuál de las etapas de SPIKES corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Invitación a la información",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Percepción o comprensión",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Configuración de la entrevista",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Empatía",
+          "correct": false
+        }
+      ],
+      "explanation": "Preguntar «¿qué le han dicho hasta ahora?» sirve para saber **qué sabe y qué siente** el paciente sobre su situación: es el paso **P** de SPIKES, **percepción** (o comprensión). Con eso se corrigen ideas equivocadas y se ajusta la noticia a lo que ya entiende.\n\n- **Configuración** (Setting): preparar el entorno.\n- **Invitación**: averiguar cuánto quiere saber.\n- **Empatía**: responder a sus emociones una vez dada la noticia.",
+      "tema": "malas-noticias"
+    },
+    {
+      "id": "q7",
+      "stem": "¿Cuál de las siguientes definiciones corresponde a la de Orientación Sexual?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El grado en que cada persona se identifica como masculino o femenina o combinación de ambos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La suma de características culturales, valores, actitudes y prácticas basadas en el sexo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El vínculo emocional en relación al género de la pareja involucrada en la actividad sexual",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "El conjunto de características biológicas que definen como mujer u hombre",
+          "correct": false
+        }
+      ],
+      "explanation": "La **orientación sexual** es el **vínculo emocional** en relación con el **género de la pareja** involucrada en la actividad sexual.\n\n- El grado en que alguien se identifica como masculino, femenino o ambos: **identidad de género**.\n- Las características culturales, valores y prácticas basadas en el sexo: **género**.\n- Las características biológicas: **sexo**.",
+      "tema": "sexualidad"
+    },
+    {
+      "id": "q8",
+      "stem": "En relación a los tipos de muerte, la distanasia se refiere a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Muerte digna",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Muerte inducida",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Ensañamiento terapéutico",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Muerte por error médico",
+          "correct": false
+        }
+      ],
+      "explanation": "Los tres **tipos de muerte** del curso:\n\n- **Ortotanasia:** «muerte digna», a su tiempo, sin acortarla ni prolongarla artificialmente.\n- **Eutanasia:** «muerte inducida», acción u omisión que acelera la muerte de un paciente desahuciado.\n- **Distanasia** (del griego *dis*, mal): **obstinación o ensañamiento terapéutico**. Retrasar la muerte todo lo posible con todos los medios disponibles aunque no haya esperanza de curación, añadiendo sufrimiento al moribundo.",
+      "tema": "muerte"
+    },
+    {
+      "id": "q9",
+      "stem": "Luego que el médico escucha al paciente comentar su reacción emocional, refiere: \"Cualquiera encontraría eso muy difícil\". De los siguientes, el comentario del médico corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Transitivismo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Validar",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Reflexión",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Aclaración",
+          "correct": false
+        }
+      ],
+      "explanation": "**Validar** es reconocer que la reacción emocional del paciente es **comprensible y legítima** en su situación: «cualquiera lo encontraría difícil». Le quita la sensación de estar exagerando y lo anima a seguir hablando.\n\n- **Reflexión** devuelve lo que el paciente dijo o la emoción que muestra («veo que esto la entristece»), sin juzgar si es razonable.\n- **Aclaración** pide precisar algo que no se entendió.",
+      "tema": "intervenciones"
+    },
+    {
+      "id": "q10",
+      "stem": "En relación a las estrategias para combatir el sesgo implícito \"hacer introspección\" corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Demostrar",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Enfocar",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Educar",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Guiar",
+          "correct": false
+        }
+      ],
+      "explanation": "Según la clave del examen, **hacer introspección** pertenece a la estrategia **Educar**: aprender sobre los sesgos implícitos y examinar los propios (por ejemplo, con el Test de Asociación Implícita) es el primer paso para poder contrarrestarlos. Sin reconocer el sesgo no hay forma de corregirlo.",
+      "tema": "sesgos"
+    },
+    {
+      "id": "q11",
+      "stem": "En relación a los tipos de muerte, la Ortotanasia se refiere a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Obstinación o ensañamiento terapéutico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Muerte digna",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Muerte inducida",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Muerte por error médico",
+          "correct": false
+        }
+      ],
+      "explanation": "La **ortotanasia** (del griego *orthos*, recto) es la **muerte digna**: a su tiempo, sin adelantarla ni prolongarla artificialmente, con cuidados paliativos.\n\n- **Ensañamiento terapéutico:** distanasia.\n- **Muerte inducida:** eutanasia.",
+      "tema": "muerte"
+    },
+    {
+      "id": "q12",
+      "stem": "El ejemplo siguiente \"Paciente: Estoy deprimida. Entrevistador: ¿A qué se refiere con deprimida?\". De los siguientes corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Aclarar",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Asociar",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Transición",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Resumir",
+          "correct": false
+        }
+      ],
+      "explanation": "**Aclarar** es pedirle al paciente que precise un término que puede significar cosas distintas. «Deprimida» puede ser tristeza, cansancio o desgano; al aclarar («cansada, sin ganas») se descubre la sintomatología real.\n\n- **Asociar:** explorar síntomas u otras áreas relacionadas con lo que el paciente va describiendo.\n- **Transición:** pasar de un tema a otro de la entrevista.\n- **Resumir:** recapitular lo dicho para que el paciente confirme o corrija.",
+      "tema": "intervenciones"
+    },
+    {
+      "id": "q13",
+      "stem": "El modelo Interpretativo de la relación médico-paciente corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El médico actúa como consejero, asumiendo un papel consultivo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "El médico actúa como el tutor del paciente, sin que sea necesaria la participación de este",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El médico y paciente trabajan conjuntamente. La decisión final es el resultado de un diálogo auténtico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El médico suministra la información veraz por ser técnicamente competente en su especialidad",
+          "correct": false
+        }
+      ],
+      "explanation": "En el modelo **interpretativo** el médico actúa como **consejero**, con un **papel consultivo**: además de informar, ayuda al paciente a interpretar sus valores para que decida.\n\n- **Tutor** sin participación del paciente: paternalista.\n- **Trabajan juntos** y deciden tras un diálogo auténtico: deliberativo.\n- **Suministra información veraz**: informativo.",
+      "tema": "relacion-medico-paciente"
+    },
+    {
+      "id": "q14",
+      "stem": "De los siguientes enunciados, la definición de Rapport corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Una relación caracterizada por acuerdo, comprensión mutua y empatía",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Una relación entre personas que no están en sintonía",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Una relación entre personas diferentes",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Una relación caracterizada por falta de empatía",
+          "correct": false
+        }
+      ],
+      "explanation": "El **rapport** es la **sintonía** que se establece entre médico y paciente: una relación de **acuerdo, comprensión mutua y empatía** que permite que el paciente se sienta cómodo y confíe. Es la base de una buena entrevista.\n\nLas otras opciones describen justo lo contrario (falta de sintonía o de empatía) o algo que no la define.",
+      "tema": "relacion-medico-paciente"
+    },
+    {
+      "id": "q15",
+      "stem": "Las siguientes son recomendaciones de higiene de sueño, EXCEPTO:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Evitar los alimentos pesados en la noche",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Evitar la cafeína 2 horas antes de acostarse",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Establecer un horario regular para ir a dormir",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hacer ejercicio regular pero no justo antes de acostarse",
+          "correct": false
+        }
+      ],
+      "explanation": "La cafeína se evita **6 horas** antes de acostarse (incluye café, té, muchos refrescos y el chocolate): dos horas no bastan, así que esa es la que **no** es una recomendación correcta.\n\nLas demás sí lo son:\n- Horario regular para acostarse y despertarse.\n- Ejercicio regular, pero **no** justo antes de dormir.\n- Evitar comidas pesadas, picantes o azucaradas **4 horas** antes (un refrigerio ligero está bien).\n- Evitar el alcohol 4 horas antes y no fumar; siestas de no más de 45 minutos; cama sólo para dormir y el sexo.",
+      "tema": "salud-mental"
+    },
+    {
+      "id": "q16",
+      "stem": "En relación a los Principios FAIR para un aprendizaje efectivo. FAIR corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Feddback, Autoaprendizaje, Individualización, Relevancia",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Feedback, Autoaprendizaje, Individualización, Respeto",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Feedback, Actividad, Interés, Respeto",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Feedback, Actividad, Individualización, Relevancia",
+          "correct": true
+        }
+      ],
+      "explanation": "Los principios **FAIR** (Harden y Laidlaw) para un aprendizaje efectivo:\n\n- **F**eedback: retroalimentación.\n- **A**ctividad: el estudiante aprende haciendo, no escuchando pasivamente.\n- **I**ndividualización: adaptar el aprendizaje a cada uno.\n- **R**elevancia: que lo aprendido tenga sentido para su práctica.",
+      "tema": "aprendizaje"
+    },
+    {
+      "id": "q17",
+      "stem": "Durante una entrevista, el espacio vertical entre el médico y el paciente debe:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ser considerable",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "No ser planeado",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Ser minimizado",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Ser incrementado",
+          "correct": false
+        }
+      ],
+      "explanation": "El **espacio vertical** es la diferencia de altura entre los dos: un médico de pie frente a un paciente sentado o echado transmite jerarquía y dominio. Se **minimiza** poniéndose a la misma altura de los ojos (ambos sentados), lo que favorece una relación horizontal.\n\n- Lo que se **planea cuidadosamente** es el espacio **horizontal** (la distancia física entre ambos).",
+      "tema": "entrevista"
+    },
+    {
+      "id": "q18",
+      "stem": "Javier es descrito como alguien muy rígido y poco flexible para cambiar hacia conductas saludables. De acuerdo al modelo de los 5 factores de la personalidad, esta característica correspondería a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Apertura baja",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Conciencia alta",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Extraversión baja",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Neuroticismo alto",
+          "correct": false
+        }
+      ],
+      "explanation": "La **apertura a la experiencia** mide la disposición a lo nuevo y al cambio. En su polo **bajo** aparecen la **inflexibilidad** y la **mente cerrada**: la rigidez de Javier para cambiar de hábitos.\n\n- **Conciencia (responsabilidad) alta:** perfeccionismo, adicción al trabajo.\n- **Extraversión baja:** frialdad, aislamiento social, anhedonia.\n- **Neuroticismo alto:** inseguridad, labilidad emocional, preocupación.",
+      "tema": "personalidad"
+    },
+    {
+      "id": "q19",
+      "stem": "El modelo informativo de la relación médico-paciente corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El médico y el paciente trabajan conjuntamente. La decisión final es el resultado de un diálogo auténtico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El médico suministra la información veraz por ser técnicamente competente en su especialidad",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "El médico actúa como el tutor del paciente, sin que sea necesaria la participación de este",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El médico actúa como consejero, asumiendo un papel consultivo",
+          "correct": false
+        }
+      ],
+      "explanation": "Los cuatro **modelos de la relación médico-paciente** (Emanuel y Emanuel):\n\n- **Paternalista:** el médico actúa como **tutor** y decide sin que participe el paciente (relación vertical).\n- **Informativo:** el médico **suministra información veraz** por ser técnicamente competente; el paciente decide.\n- **Interpretativo:** el médico es **consejero**, con un papel consultivo: ayuda a que el paciente aclare sus valores.\n- **Deliberativo:** médico y paciente **trabajan juntos**; la decisión final sale de un **diálogo auténtico**.",
+      "tema": "relacion-medico-paciente"
+    },
+    {
+      "id": "q20",
+      "stem": "En la entrevista a un paciente hostil, en relación al escenario, se debe considerar:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se debe tener al paciente en sujeción mecánica.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se debe aplicar una medicación sedante antes de iniciar la entrevista",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se pueden obviar consideraciones como tener un timbre de ayuda o un acceso telefónico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El paciente no puede colocarse en un lugar que obstruya la puerta",
+          "correct": true
+        }
+      ],
+      "explanation": "Con un paciente hostil, el escenario se prepara pensando en la **seguridad**: el médico debe tener la **salida libre**, así que el paciente **no se coloca entre él y la puerta**. También se cuenta con un timbre de ayuda o un teléfono a mano.\n\n- La **sujeción mecánica** y la **sedación** no son pasos previos de rutina: se reservan para situaciones concretas.\n- El timbre o el teléfono **no** se pueden obviar.",
+      "tema": "entrevista"
+    },
+    {
+      "id": "q21",
+      "stem": "Respecto al consumo riesgoso de alcohol, es correcto:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Es frecuente ver estos casos en la práctica médica.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Una bebida estándar contiene 100 gramos de alcohol absoluto.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Son identificados con facilidad y por ende tratados.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Beber moderado para un hombre representa más de 14 bebidas estándar por semana.",
+          "correct": false
+        }
+      ],
+      "explanation": "El **consumo riesgoso de alcohol es frecuente** en la práctica médica, aunque a menudo pasa desapercibido.\n\n- Una **bebida estándar** contiene unos **10-14 g** de alcohol puro, no 100 g.\n- Estos pacientes **no** suelen identificarse con facilidad: hay que preguntar de forma activa (con el CAGE, por ejemplo).\n- **Más de 14** bebidas estándar por semana en un hombre ya es consumo **de riesgo**, no moderado.",
+      "tema": "salud-mental"
+    },
+    {
+      "id": "q22",
+      "stem": "El cuestionario CAGE consta de 4 preguntas. ¿Cuál de las siguientes preguntas corresponde al cuestionario CAGE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "¿Se siente molesto cuando lo critican por beber?",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "¿Toma alcohol por la noches para dormir mejor?",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "¿Ha pensado que su consumo de alcohol no implica un problema?",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "¿Siente que el resto de las personas son las culpables por su consumo?",
+          "correct": false
+        }
+      ],
+      "explanation": "**CAGE** son las iniciales de sus cuatro preguntas:\n\n- **C**ut down: ¿ha sentido que **debería reducir** su consumo?\n- **A**nnoyed: ¿le ha **molestado que lo critiquen** por beber?\n- **G**uilty: ¿se ha sentido **culpable** por beber?\n- **E**ye-opener: ¿ha bebido **por la mañana** para calmar los nervios o la resaca?\n\nDos o más respuestas positivas sugieren un problema con el alcohol. Las otras opciones invierten la pregunta («no es necesario reducir»), culpan a otros o hablan de beber de noche, no por la mañana.",
+      "tema": "salud-mental"
+    },
+    {
+      "id": "q23",
+      "stem": "La medicina centrada en la persona tiene diversos objetivos, el objetivo \"medicina con la persona\" corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "La alianza empoderada activa de la persona, el sistema de salud, la familia y su comunidad",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "No solo considera la enfermedad, sino la totalidad de la persona",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El médico como ser humano",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Promueve su proyecto de vida",
+          "correct": false
+        }
+      ],
+      "explanation": "**Medicina con la persona** es la **alianza empoderada y activa** de la persona, el sistema de salud, la familia y su comunidad.\n\n- La totalidad de la persona: medicina **de** la persona.\n- El médico como ser humano: medicina **por** la persona.\n- Su proyecto de vida: medicina **para** la persona.",
+      "tema": "relacion-medico-paciente"
+    },
+    {
+      "id": "q24",
+      "stem": "Según el DSM-5, para realizar el diagnóstico de un episodio depresivo mayor se requiere de cinco (o más) síntomas que estén presentes durante el mismo período de dos semanas y representen un cambio del funcionamiento anterior; al menos uno de los síntomas debe ser:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Pérdida o aumento de peso",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Disminución importante del interés o de placer",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Disminución de la capacidad para concentrarse",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Insomnio o hipersomnia",
+          "correct": false
+        }
+      ],
+      "explanation": "El episodio depresivo mayor exige **5 o más de 9 síntomas** durante **2 semanas**, y al menos uno tiene que ser uno de los dos nucleares:\n\n1. **Estado de ánimo deprimido** la mayor parte del día.\n2. **Disminución importante del interés o del placer** por las actividades (anhedonia).\n\nLos otros siete (cambio de peso o apetito, insomnio o hipersomnia, agitación o retraso psicomotor, fatiga, culpa excesiva, dificultad para concentrarse e ideas de muerte) suman al recuento, pero sin un síntoma nuclear no hay diagnóstico.",
+      "tema": "salud-mental"
+    },
+    {
+      "id": "q25",
+      "stem": "En relación al sesgo implícito:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Son actitudes inconscientes, automáticas que influyen sobre nuestras acciones",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Necesariamente se alinean con las intenciones explícitas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Son actitudes automáticas que no pueden influir sobre nuestras acciones por ser inconscientes",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "No generan conductas discriminatorias por ser inconscientes",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **sesgos implícitos** son actitudes y estereotipos **inconscientes y automáticos** que **sí influyen** en lo que hacemos y decidimos, a menudo **en contra** de nuestras intenciones explícitas. Por eso pueden producir conductas discriminatorias en la atención (por ejemplo, tratar de forma distinta el dolor según el grupo del paciente) aunque el médico no lo pretenda.",
+      "tema": "sesgos"
+    },
+    {
+      "id": "q26",
+      "stem": "En relación al aprendizaje del adulto. Marque lo que corresponde:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El respeto en la enseñanza del adulto no es relevante para su aprendizaje",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El aprendizaje en el adulto se basa en su experiencia, motivación y en el autoaprendizaje",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "El adulto aprende para aplicarlo en el futuro",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "En el aprendizaje del adulto la motivación externa es fundamental para adquirir competencias",
+          "correct": false
+        }
+      ],
+      "explanation": "El adulto aprende a partir de su **experiencia**, por **motivación interna** y de forma **autodirigida** (autoaprendizaje).\n\n- Aprende para **aplicarlo de inmediato** a problemas reales, no para un futuro lejano.\n- El **respeto** es central en la enseñanza del adulto.\n- La motivación que pesa es la **interna**, no la externa.",
+      "tema": "aprendizaje"
+    },
+    {
+      "id": "q27",
+      "stem": "Según la Pirámide de Maslow sobre motivación para el aprendizaje, en el ápice se encuentra:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Autoestima",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Sentido de pertenencia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Necesidades físicas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Auto-actualización",
+          "correct": true
+        }
+      ],
+      "explanation": "La **pirámide de Maslow**, de la base al ápice:\n\n1. **Fisiología** (necesidades físicas: respiración, alimentación, descanso).\n2. **Seguridad**.\n3. **Afiliación** (sentido de pertenencia: amistad, afecto).\n4. **Reconocimiento** (autoestima, confianza, respeto).\n5. **Autorrealización o auto-actualización** (creatividad, resolución de problemas), en el **ápice**.\n\nPara aprender, primero deben estar cubiertas las necesidades de los niveles inferiores.",
+      "tema": "aprendizaje"
+    },
+    {
+      "id": "q28",
+      "stem": "De las siguientes definiciones, la de \"identidad de género\" corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El conjunto de características biológicas que definen como mujer u hombre",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El vínculo emocional en relación al género de la pareja involucrada en la actividad sexual",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La suma de características culturales, valores, actitudes y prácticas basadas en el sexo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El grado en que cada persona se identifica como masculino o femenina o la combinación de ambos",
+          "correct": true
+        }
+      ],
+      "explanation": "Cuatro conceptos que suelen preguntarse juntos:\n\n- **Sexo:** conjunto de características **biológicas** que definen a una persona como mujer u hombre.\n- **Género:** suma de características **culturales**, valores, actitudes y prácticas basadas en el sexo.\n- **Identidad de género:** **grado en que cada persona se identifica** como masculina, femenina o una combinación de ambos.\n- **Orientación sexual:** **vínculo emocional** en relación con el género de la pareja involucrada en la actividad sexual.",
+      "tema": "sexualidad"
+    },
+    {
+      "id": "q29",
+      "stem": "Entre los tipos de placebo, uno de los placebos intangibles corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tabletas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Soluciones inyectables",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Trato empático",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Procedimientos",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **placebos tangibles** son objetos o actos físicos sin efecto farmacológico propio: **tabletas**, **soluciones inyectables** o **procedimientos**. Los **intangibles** no son objetos: el **trato empático**, la palabra del médico, la confianza y las expectativas que genera la relación también producen efecto.",
+      "tema": "adherencia"
+    },
+    {
+      "id": "q30",
+      "stem": "De los siguientes enunciados, la comunicación de una mala noticia de una forma adecuada:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Permite la adaptación",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Afecta negativamente su vida",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Aumenta el impacto emocional",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Dificulta la relación con el médico",
+          "correct": false
+        }
+      ],
+      "explanation": "Comunicar bien una mala noticia **facilita que el paciente se adapte** a su nueva situación: entiende lo que pasa, participa en las decisiones y se reduce el impacto emocional. Hacerlo mal produce justo lo contrario: más angustia, peor relación con el médico y peor adherencia.",
+      "tema": "malas-noticias"
+    },
+    {
+      "id": "q31",
+      "stem": "Su compañera Fiorela suele ser sugestionable, se alarma rápido, se preocupa cuando recibe noticias y es muy sensible a las opiniones que otras personas tengan de ella. ¿A qué dominio del modelo de los 5 factores de la personalidad correspondería la conducta de Fiorela?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Conciencia",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Apertura a la experiencia",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Neuroticismo",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Agradabilidad",
+          "correct": false
+        }
+      ],
+      "explanation": "Alarmarse rápido, preocuparse en exceso y ser muy sensible a la opinión ajena son rasgos de **neuroticismo** alto: **inestabilidad emocional**, preocupación excesiva y altos grados de ansiedad. En el polo opuesto está la estabilidad emocional (calmado, relajado, seguro).",
+      "tema": "personalidad"
+    },
+    {
+      "id": "q32",
+      "stem": "¿Cuál de las siguientes áreas del examen mental se evalúa por observación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Percepción",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Afecto",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Ánimo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Funciones superiores",
+          "correct": false
+        }
+      ],
+      "explanation": "El examen mental tiene dos bloques:\n\n- **Se observa y describe:** apariencia, conducta/actividad motora, nivel de conciencia, actitud durante la entrevista, lenguaje, curso del pensamiento y **afecto**.\n- **Se explora entrevistando:** ánimo, contenido del pensamiento, percepción, funciones superiores, componente cultural y conciencia de enfermedad.\n\nEl **afecto** es la expresión **objetiva** del estado de ánimo (lo que el médico ve). El **ánimo** es lo **subjetivo**: cómo el paciente refiere sentirse, y por eso se pregunta.",
+      "tema": "examen-mental"
+    },
+    {
+      "id": "q33",
+      "stem": "En relación al autoaprendizaje, de los enunciados siguientes marque el correcto:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Autoaprendizaje es poder identificar un \"gap\" (brecha) que cubrir, plantearse objetivos, implementar recursos y evaluar el resultado",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La motivación externa es el principal motor del autoaprendizaje",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La mayor cantidad de conocimiento que tiene un médico lo adquiere en la escuela de medicina",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El autoaprendizaje es una competencia que deba adquirir un médico luego de graduado",
+          "correct": false
+        }
+      ],
+      "explanation": "El **autoaprendizaje** es un ciclo: **identificar la brecha** entre lo que se sabe y lo que se necesita, **plantearse objetivos**, **usar recursos** y **evaluar el resultado**.\n\n- Su motor principal es la **motivación interna**, no la externa.\n- La mayor parte del conocimiento de un médico se adquiere **a lo largo de su vida profesional**, no sólo en la facultad.\n- Es una competencia que se desarrolla **desde la formación**, no después de graduarse.",
+      "tema": "aprendizaje"
+    },
+    {
+      "id": "q34",
+      "stem": "Los siguientes son factores de riesgo suicida, EXCEPTO:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Abuso de sustancias",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Tener soporte familiar y social",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Intentos suicidas previos",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tener un plan suicida",
+          "correct": false
+        }
+      ],
+      "explanation": "Tener **soporte familiar y social** es un **factor protector**, no de riesgo.\n\nSon factores de riesgo el **abuso de sustancias**, los **intentos suicidas previos** (el predictor más fuerte) y tener un **plan suicida** (indica riesgo alto). En la evaluación completa del riesgo se identifican los factores de riesgo y los protectores para determinar el nivel de riesgo.",
+      "tema": "salud-mental"
+    },
+    {
+      "id": "q35",
+      "stem": "En relación a la confidencialidad entre el médico y el paciente, de los siguientes enunciados marque el CORRECTO:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El estudiante de medicina debe asegurarle confidencialidad absoluta al paciente que entrevista.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La confidencialidad entre el médico y el paciente no es absoluta, si hay riesgo suicida u homicida es ética y legalmente posible romperla.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Si el paciente refiere que solo dará información relevante al estudiante de medicina si mantiene la confidencialidad, el estudiante debe aceptar esa condición.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La confidencialidad entre el médico y el paciente es absoluta, por razones éticas y legales nunca debe romperse.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **confidencialidad no es absoluta**: cuando hay **riesgo suicida u homicida**, romperla para proteger al paciente o a terceros es ética y legalmente posible.\n\n- Por eso un estudiante **no puede prometer** confidencialidad absoluta, ni aceptar esa condición a cambio de que el paciente le cuente algo: debe compartir la información relevante con el equipo tratante.",
+      "tema": "entrevista"
+    },
+    {
+      "id": "q36",
+      "stem": "En relación a la comunicación de una mala noticia a un paciente:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El médico debe comunicar la mala noticia primero al familiar del paciente",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El médico debe evitar comunicar sus sentimientos y brindar esperanzas",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El médico debe diferir la comunicación de una mala notica al psiquiatría",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El médico puede pedir apoyo a un colega o a un profesional de la salud con mayor experiencia",
+          "correct": true
+        }
+      ],
+      "explanation": "Si no se siente preparado, el médico **puede pedir apoyo a un colega o a un profesional con más experiencia**: es honesto y protege al paciente.\n\n- La noticia se da **primero al paciente** (salvo que él decida otra cosa), no al familiar.\n- Se puede mostrar empatía y ofrecer una **esperanza realista**.\n- Es responsabilidad del médico tratante: no se deriva a psiquiatría.",
+      "tema": "malas-noticias"
+    },
+    {
+      "id": "q37",
+      "stem": "En una sesión de retroalimentación (feedback) se debe:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Asumir, cuando haya duda",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Generalizar, para facilitar el aprendizaje",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Juzgar, cuando sea necesario",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ser específica, enfocándose en conductas modificables",
+          "correct": true
+        }
+      ],
+      "explanation": "Un buen **feedback** es **específico** y se centra en **conductas observadas que se pueden cambiar**, no en la persona. Así quien lo recibe sabe exactamente qué repetir y qué corregir.\n\n- **Generalizar** («siempre lo haces mal») no dice qué cambiar.\n- **Juzgar** o **asumir** intenciones pone a la defensiva y corta el aprendizaje.",
+      "tema": "aprendizaje"
+    },
+    {
+      "id": "q38",
+      "stem": "En relación a la adherencia terapéutica, ¿cuál de los siguientes enunciados es CORRECTO?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El porcentaje de los pacientes que siguen los consejos o tratamientos médicos es muy alto",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La falta de adherencia es monofactorial y eso lleva a que no sigan el tratamiento",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El porcentaje de los pacientes que no siguen los consejos o tratamientos médicos es alto",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Dar información clara y la comprobación de su comprensión no favorecen la adherencia",
+          "correct": false
+        }
+      ],
+      "explanation": "La **falta de adherencia es frecuente**: según la OMS, en enfermedades crónicas cerca de la mitad de los pacientes no sigue el tratamiento indicado.\n\n- Es **multifactorial**: la OMS agrupa sus causas en factores socioeconómicos, del tratamiento, de la enfermedad, del paciente y del sistema de salud.\n- **Informar con claridad y comprobar que el paciente entendió** es justamente una de las medidas que la mejoran.",
+      "tema": "adherencia"
+    },
+    {
+      "id": "q39",
+      "stem": "En la etapa de la entrevista \"Recopila información\":",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se facilita la respuesta del paciente en forma verbal y no verbal",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Se establece el contacto inicial",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Se identifican los motivos de la consulta",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Se presenta y aclara su rol",
+          "correct": false
+        }
+      ],
+      "explanation": "Según las **guías Calgary-Cambridge**, en **B) Recogiendo información** el médico: usa preguntas abiertas y cerradas en forma equilibrada, **facilita en forma verbal o no verbal las respuestas** del paciente, clarifica los enunciados poco claros, resume periódicamente y determina la perspectiva del paciente.\n\n- Establecer el contacto inicial, presentarse y aclarar su rol, e identificar el motivo de consulta pertenecen a **A) Iniciando la entrevista**.",
+      "tema": "entrevista"
+    },
+    {
+      "id": "q40",
+      "stem": "¿Cuál de las siguientes características corresponde a la práctica del Mindfulness?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La autocompasión no es aplicable",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Requiere poner la mente en blanco",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El aquí y el ahora",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Es útil para criticar constructivamente",
+          "correct": false
+        }
+      ],
+      "explanation": "El **mindfulness** (atención plena) es prestar atención **al momento presente, al aquí y al ahora**, con aceptación y sin juzgar.\n\n- **No** consiste en poner la mente en blanco: se observan los pensamientos sin engancharse a ellos.\n- Incluye la **autocompasión**, en lugar de excluirla.\n- Su actitud es la de **no juzgar**, no la de criticar.",
+      "tema": "aprendizaje"
+    }
+  ]
+}

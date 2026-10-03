@@ -1,5 +1,6 @@
 import { temasInmunologia } from './inmunologia';
 import { temasEpidemiologia } from './epidemiologia';
+import { temasPsicologiaMedica } from './psicologia-medica';
 
 export interface ClaseRecomendada {
   /** Id de la actividad: /dashboard/cursos/<curso>/<claseId>. */
@@ -42,6 +43,7 @@ export type TablaTemas = Record<string, Tema>;
 export const TEMAS_POR_CURSO: Record<string, TablaTemas> = {
   inmunologia: temasInmunologia,
   epidemiologia: temasEpidemiologia,
+  'psicologia-medica': temasPsicologiaMedica,
 };
 
 export function tablaDeCurso(curso: string): TablaTemas | undefined {

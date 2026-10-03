@@ -113,6 +113,7 @@ export const CURSOS: CursoMeta[] = [
   { slug: 'endocrino-reproductor', nombre: 'Endocrino y Reproductor',    track: 'medicina', materialDe: ['sofia'] },
   { slug: 'patologia',             nombre: 'Patología',                  track: 'medicina', materialDe: ['sofia'], gratis: true },
   { slug: 'epidemiologia',         nombre: 'Epidemiología',              track: 'medicina', materialDe: ['sofia'], gratis: true },
+  { slug: 'psicologia-medica',     nombre: 'Psicología Médica',          track: 'medicina', materialDe: ['sofia'] },
 
   // ── UFBI · Ciencias Básicas (1.er año) ──
   { slug: 'biologia-celular',        nombre: 'Biología Celular',      track: 'basico', materialDe: ['ufbi-1', 'ufbi-2'] },

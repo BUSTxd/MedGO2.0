@@ -81,4 +81,9 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?
   'epidemiologia/parcial-1-susti': {},
   'epidemiologia/parcial-1-kahoot': {},
   'epidemiologia/parcial-1-pasos': { muestra: 27 },
+  // Psicología Médica (de pago, tramo Facultad): el parcial 2022-II abierto
+  // como muestra; el 2021-I y el de repaso, detrás del plan.
+  'psicologia-medica/parcial-2022-2': { free: true },
+  'psicologia-medica/parcial-2021-1': {},
+  'psicologia-medica/parcial-repaso': {},
 };

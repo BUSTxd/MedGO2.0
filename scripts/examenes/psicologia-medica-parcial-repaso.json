@@ -1,0 +1,988 @@
+{
+  "version": 1,
+  "key": "psicologia-medica/parcial-repaso",
+  "title": "Banqueo de repaso — Psicología Médica",
+  "duration_min": 35,
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "Cuando nos referimos a los atributos que definen la empatía, son:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Comunicar que no reconocemos las emociones al paciente.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Juzgar desde el punto de vista médico y personal.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Reconocer las emociones del médico entrevistador.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Intentar ver el mundo como lo ven los otros.",
+          "correct": true
+        }
+      ],
+      "explanation": "Los **atributos de la empatía** (Wiseman): **ver el mundo como lo ven los otros**, **no juzgar**, **reconocer las emociones del otro** y **comunicarle** que se reconocen.\n\n- Las otras opciones dicen lo contrario: comunicar que **no** las reconocemos, **juzgar**, o reconocer las emociones **del médico** en lugar de las del paciente.",
+      "tema": "relacion-medico-paciente"
+    },
+    {
+      "id": "q2",
+      "stem": "Si el paciente da información que no se entiende, ¿qué debe hacer el entrevistador?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No debe solicitar una aclaración, pues incomoda al paciente.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Debe solicitar una aclaración en la siguiente consulta.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Debe continuar la entrevista para no incomodar al paciente.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Si tiene duda, debe solicitar una aclaración siempre.",
+          "correct": true
+        }
+      ],
+      "explanation": "Ante cualquier duda se pide **aclaración en el momento**. Aclarar lo que el paciente ha dicho esclarece el relato y puede **descubrir síntomas** que de otro modo pasarían de largo (Paciente: «Estoy deprimida». Entrevistador: «¿A qué se refiere con deprimida?». Paciente: «Cansada, sin ganas»).\n\n- Seguir sin entender o dejarlo para otra consulta lleva a registrar datos equivocados.\n- Preguntar con respeto no incomoda: muestra que se le está prestando atención.",
+      "tema": "intervenciones"
+    },
+    {
+      "id": "q3",
+      "stem": "¿Cuál de las siguientes áreas del examen mental se evalúa por observación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Funciones superiores.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Percepción.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Ánimo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Afecto.",
+          "correct": true
+        }
+      ],
+      "explanation": "El examen mental tiene dos bloques:\n\n- **Se observa y describe:** apariencia, conducta/actividad motora, nivel de conciencia, actitud durante la entrevista, lenguaje, curso del pensamiento y **afecto**.\n- **Se explora entrevistando:** ánimo, contenido del pensamiento, percepción, funciones superiores, componente cultural y conciencia de enfermedad.\n\nEl **afecto** es la expresión **objetiva** del estado de ánimo (lo que el médico ve). El **ánimo** es lo **subjetivo**: cómo el paciente refiere sentirse, y por eso se pregunta.",
+      "tema": "examen-mental"
+    },
+    {
+      "id": "q4",
+      "stem": "En la etapa de la entrevista que recopila información, se facilita la respuesta del paciente en forma:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Solo verbal.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Solo no verbal.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Verbal y no verbal.",
+          "correct": true
+        }
+      ],
+      "explanation": "En **B) Recogiendo información** (guías Calgary-Cambridge) el médico **facilita en forma verbal y no verbal** las respuestas del paciente: con palabras («continúe», «cuénteme») y con el cuerpo (asentir, mirarlo, una postura abierta). Una sola vía se queda corta.",
+      "tema": "entrevista"
+    },
+    {
+      "id": "q5",
+      "stem": "Las siguientes son recomendaciones de higiene del sueño, excepto:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Establecer un horario para ir a dormir.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Hacer ejercicio regular, pero no justo antes de acostarse.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Evitar la cafeína dos horas antes de acostarse.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Evitar alimentos pesados en la noche.",
+          "correct": false
+        }
+      ],
+      "explanation": "La cafeína se evita **6 horas** antes de acostarse (incluye café, té, muchos refrescos y el chocolate): dos horas no bastan, así que esa es la que **no** es una recomendación correcta.\n\nLas demás sí lo son:\n- Horario regular para acostarse y despertarse.\n- Ejercicio regular, pero **no** justo antes de dormir.\n- Evitar comidas pesadas, picantes o azucaradas **4 horas** antes (un refrigerio ligero está bien).\n- Evitar el alcohol 4 horas antes y no fumar; siestas de no más de 45 minutos; cama sólo para dormir y el sexo.",
+      "tema": "salud-mental"
+    },
+    {
+      "id": "q6",
+      "stem": "Durante la etapa de cierre de la entrevista clínica con el paciente, ¿qué se debe hacer?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Verificar que el familiar haya entendido.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "No establecer una siguiente reunión para explicar los pasos a seguir.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Resumir de manera clara, concisa y breve la información.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Posponer la participación del paciente.",
+          "correct": false
+        }
+      ],
+      "explanation": "En **D) Cerrando la sesión** (guías Calgary-Cambridge) el médico: establece **junto con el paciente** los pasos a seguir, **resume la sesión brevemente** y clarifica el plan de cuidados, y hace una **verificación final** de que el paciente está de acuerdo y cómodo con el plan.\n\n- Quien debe entender es **el paciente**, no el familiar, y su participación no se pospone.\n- Sí se acuerdan los pasos siguientes.",
+      "tema": "entrevista"
+    },
+    {
+      "id": "q7",
+      "stem": "En la escucha activa, según la lectura, ¿cuáles son los elementos principales?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Repetir lo dicho por el paciente después de tomar notas.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Realizar preguntas cerradas y reflejar el mensaje.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Expresar interés en lo dicho por el paciente, parafrasear el mensaje y realizar preguntas alentando al paciente a elaborar lo dicho.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Reflejar el mensaje del paciente usando términos médicos.",
+          "correct": false
+        }
+      ],
+      "explanation": "La **escucha activa** combina tres cosas: **mostrar interés** en lo que dice el paciente, **parafrasear** su mensaje para comprobar que se entendió y **preguntar** de forma que lo anime a desarrollar lo que contó.\n\n- Las **preguntas cerradas** limitan lo que el paciente puede contar.\n- Los **términos médicos** alejan al paciente en lugar de reflejar su mensaje.",
+      "tema": "comunicacion"
+    },
+    {
+      "id": "q8",
+      "stem": "Según el modelo de SPIKES para la entrega de malas noticias, antes de describir el plan de tratamiento, es importante entender cuánto sabe el paciente y qué percepción tiene de su situación. Esta etapa corresponde a:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Percepción.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Empatía.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Comprensión.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Exploración.",
+          "correct": false
+        }
+      ],
+      "explanation": "**SPIKES** (en español, **EPICEE**) tiene seis pasos:\n\n1. **S**etting: entorno adecuado (configuración de la entrevista).\n2. **P**erception: qué sabe y qué entiende el paciente de su situación (**percepción o comprensión**).\n3. **I**nvitation: hasta dónde quiere saber.\n4. **K**nowledge: comunicar la información de forma comprensible.\n5. **E**motions/Empathy: responder a sus emociones con empatía.\n6. **S**trategy and Summary: plan de seguimiento y resumen.\n\nAveriguar **cuánto saben y qué perciben** antes de dar la noticia es el paso **P**.",
+      "tema": "malas-noticias",
+      "reviewNote": "La clave marca «Comprensión», pero «Percepción» es el nombre original de la misma etapa (la P de SPIKES): en el examen de Moodle la opción se llamaba «Percepción o comprensión»."
+    },
+    {
+      "id": "q9",
+      "stem": "En la lectura sobre la comunicación entre médico y paciente, la OMS resalta como determinantes de la adherencia terapéutica:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Factores sociodemográficos.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Factores familiares.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Factores socioeconómicos relacionados con el tratamiento, la enfermedad, el paciente y el sistema de asistencia sanitaria.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Factores educativos del paciente.",
+          "correct": false
+        }
+      ],
+      "explanation": "La OMS agrupa los determinantes de la adherencia en **cinco dimensiones**: factores **socioeconómicos**, relacionados con el **tratamiento**, con la **enfermedad**, con el **paciente** y con el **sistema o equipo de asistencia sanitaria**. Es una causa multifactorial: las otras opciones nombran un solo factor.",
+      "tema": "adherencia"
+    },
+    {
+      "id": "q10",
+      "stem": "Cuando el paciente dice \"estoy deprimido\" y el médico responde con \"¿a qué se refiere con deprimido?\", ¿a qué etapa del proceso se refiere?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Resumir.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Redireccionar.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Aclarar.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Asociar.",
+          "correct": false
+        }
+      ],
+      "explanation": "**Aclarar** es pedirle al paciente que precise un término que puede significar cosas distintas. «Deprimida» puede ser tristeza, cansancio o desgano; al aclarar («cansada, sin ganas») se descubre la sintomatología real.\n\n- **Asociar:** explorar síntomas u otras áreas relacionadas con lo que el paciente va describiendo.\n- **Transición:** pasar de un tema a otro de la entrevista.\n- **Resumir:** recapitular lo dicho para que el paciente confirme o corrija.",
+      "tema": "intervenciones"
+    },
+    {
+      "id": "q11",
+      "stem": "En una entrevista, si el paciente cambia de tema rápidamente sin haber cubierto detalles importantes, es útil redireccionar la entrevista cuando:",
+      "options": [
+        {
+          "id": "a",
+          "text": "El paciente no puede dar más información sobre sus pensamientos.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El paciente hace asociaciones no relacionadas con lo preguntado.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El paciente cambia de tema sin haber cubierto todos los detalles importantes.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "El paciente desea ocultar información.",
+          "correct": false
+        }
+      ],
+      "explanation": "**Redireccionar** es llevar la entrevista hacia un tema distinto del que el paciente está relatando. Se usa cuando **cambia de tema demasiado rápido sin haber cubierto los detalles importantes**, o cuando persiste en dar información excesiva sobre algo ya mencionado. Es difícil, así que se hace con tacto («antes de continuar, tal vez pueda decirme más sobre…»).",
+      "tema": "intervenciones"
+    },
+    {
+      "id": "q12",
+      "stem": "En una entrevista, lidiar con los silencios es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Adecuado, pues puede facilitar la progresión de la entrevista.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Inadecuado, ya que el paciente podría sentirse incómodo.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inadecuado, pues los silencios cortos interfieren en la entrevista.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Adecuado solo si el paciente no tiene ansiedad.",
+          "correct": false
+        }
+      ],
+      "explanation": "El **uso adecuado del silencio facilita la progresión de la entrevista**: el paciente puede necesitar tiempo para pensar lo que se le preguntó o para experimentar un sentimiento que acaba de surgir.\n\n- Lo que interfiere son los silencios **muy frecuentes o muy prolongados**, no los cortos.\n- Si el entrevistador no tolera la ansiedad del silencio puede cortarlo antes de tiempo, interrumpir las ideas del paciente o impedir que exprese sus emociones.",
+      "tema": "intervenciones"
+    },
+    {
+      "id": "q13",
+      "stem": "En la comunicación de malas noticias, una buena técnica permite:",
+      "options": [
+        {
+          "id": "a",
+          "text": "La adaptación del paciente.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Aumentar el impacto emocional.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Dificultar la relación médico-paciente.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Evitar preguntas del paciente.",
+          "correct": false
+        }
+      ],
+      "explanation": "Comunicar bien una mala noticia **facilita que el paciente se adapte** a su nueva situación: entiende lo que pasa, participa en las decisiones y se reduce el impacto emocional. Hacerlo mal produce justo lo contrario: más angustia, peor relación con el médico y peor adherencia.",
+      "tema": "malas-noticias"
+    },
+    {
+      "id": "q14",
+      "stem": "En la comunicación de malas noticias, ¿es correcto que el médico pida apoyo a un colega con más experiencia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sí, es correcto y honesto.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "No, el médico debe comunicar la noticia sin ayuda.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "No, el médico debe primero comunicárselo a un familiar del paciente.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "No, el médico debe evitar mostrar sentimientos.",
+          "correct": false
+        }
+      ],
+      "explanation": "Si no se siente preparado, el médico **puede pedir apoyo a un colega o a un profesional con más experiencia**: es honesto y protege al paciente.\n\n- La noticia se da **primero al paciente** (salvo que él decida otra cosa), no al familiar.\n- Se puede mostrar empatía y ofrecer una **esperanza realista**.\n- Es responsabilidad del médico tratante: no se deriva a psiquiatría.",
+      "tema": "malas-noticias"
+    },
+    {
+      "id": "q15",
+      "stem": "¿Qué categoría verbal describe la manera pausada de hablar del Dr. Amorete?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Automática.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Dinámica.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Audible.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Visual.",
+          "correct": false
+        }
+      ],
+      "explanation": "Según la clave, el modo **pausado** de hablar del Dr. Amorete corresponde a la categoría **audible** (auditiva). La pregunta parte de un caso de la lectura del curso: en los sistemas de representación (visual, auditivo, kinestésico), la persona visual suele hablar rápido, mientras que la auditiva habla de forma más pausada y rítmica.",
+      "tema": "comunicacion",
+      "reviewNote": "Depende del caso del Dr. Amorete de la lectura del curso, que no está en el banqueo; la respuesta es la clave del PDF."
+    },
+    {
+      "id": "q16",
+      "stem": "En la etapa de la entrevista iniciando la sesión, ¿qué se debe hacer?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Resume periódicamente lo dicho por el paciente.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Estimula al paciente a formular preguntas.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Utiliza preguntas abiertas y cerradas de forma equilibrada.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Identifica los problemas con preguntas abiertas.",
+          "correct": true
+        }
+      ],
+      "explanation": "En **A) Iniciando la entrevista** (guías Calgary-Cambridge) el médico: establece el contacto inicial, saluda y obtiene el nombre del paciente, se presenta y aclara su rol, identifica el o los motivos de consulta, **identifica los problemas del paciente con preguntas abiertas** y escucha atentamente sin interrumpir.\n\n- Estimular al paciente a formular preguntas es de **C) Explicación y planificación**.\n- Resumir periódicamente y combinar preguntas abiertas y cerradas son de **B) Recogiendo información**.",
+      "tema": "entrevista"
+    },
+    {
+      "id": "q17",
+      "stem": "¿Cuáles son los factores que intervienen en la interacción médico-paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "No perder el juicio sobre el conjunto del paciente.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Explicar el consentimiento informado dentro de la sesión.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Evitar la ciencia y los valores durante la consulta.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Resumir lo dicho por el paciente antes de terminar la sesión.",
+          "correct": false
+        }
+      ],
+      "explanation": "Según la clave, **explicar el consentimiento informado** dentro de la sesión es uno de los factores de la interacción médico-paciente: el paciente participa en las decisiones sólo si entiende qué se le propone, sus riesgos y sus alternativas.\n\n- **Evitar la ciencia y los valores** va en contra de la medicina centrada en la persona, que se apoya en ambos.",
+      "tema": "relacion-medico-paciente",
+      "reviewNote": "La pregunta es ambigua: «no perder el juicio sobre el conjunto del paciente» y «resumir antes de terminar» también son buenas prácticas. La respuesta es la clave del PDF."
+    },
+    {
+      "id": "q18",
+      "stem": "Cuando el médico debe comunicar una mala noticia a un paciente con cáncer en estadio IV, el escenario ideal para hacerlo es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Usar palabras técnicas para que el paciente entienda mejor los tratamientos posteriores.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "No leer las emociones del paciente para facilitar el tratamiento.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Identificar las emociones del paciente para ayudar a comprender lo expresado.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Minimizar las preguntas del paciente para no afectar su estado emocional.",
+          "correct": false
+        }
+      ],
+      "explanation": "Al dar una mala noticia el médico **identifica las emociones** del paciente y responde a ellas con empatía (la **E** de SPIKES): así entiende lo que el paciente expresa y lo acompaña.\n\n- Los **términos técnicos** dificultan la comprensión: se usa un lenguaje sencillo.\n- **Ignorar las emociones** o **limitar las preguntas** aumenta la angustia y deteriora la relación.",
+      "tema": "malas-noticias"
+    },
+    {
+      "id": "q19",
+      "stem": "En un estudio sobre pacientes con cefaleas crónicas, se demostró que:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Mejoraron porque se sintieron escuchados durante la consulta médica.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Empeoraron debido a la mala relación médico-paciente.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Cambiaron de médico, lo que mejoró su condición.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Empeoraron por falta de adherencia al tratamiento.",
+          "correct": false
+        }
+      ],
+      "explanation": "En el estudio de seguimiento de pacientes con **cefalea crónica** (Headache Study Group, Western Ontario, 1986), lo que mejor predijo la mejoría al año fue que el paciente **sintiera que pudo contar su problema por completo** en la primera consulta: **sentirse escuchado** pesó más que el tratamiento o las pruebas.",
+      "tema": "relacion-medico-paciente"
+    },
+    {
+      "id": "q20",
+      "stem": "Durante una consulta, los médicos pueden dejarse llevar por la intuición. Para combatir esto, ¿qué estrategia se recomienda?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Trabajar sin reflexionar para evitar el uso de emociones.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Generalizar para no evaluar particularidades.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Utilizar mindfulness para reducir el estrés.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Basarse únicamente en evidencia médica.",
+          "correct": false
+        }
+      ],
+      "explanation": "La intuición (el sistema de pensamiento automático) falla más con **estrés, cansancio y prisa**. El **mindfulness** reduce el estrés y ayuda a detenerse y reflexionar, para activar el pensamiento deliberado cuando hace falta.\n\n- Trabajar **sin reflexionar** o **generalizar** es justo lo que favorece los errores de la intuición.\n- La evidencia es necesaria, pero «únicamente» deja fuera al paciente concreto.",
+      "tema": "sesgos"
+    },
+    {
+      "id": "q21",
+      "stem": "En la relación médico-paciente, cuando el paciente decide parar el tratamiento a pesar de las consecuencias, ¿en qué modelo de relación se enmarca esta situación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Informativo.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Interpretativo.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Paternalista.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Deliberativo.",
+          "correct": true
+        }
+      ],
+      "explanation": "Según la clave, es el modelo **deliberativo**: el médico y el paciente trabajan juntos y la decisión final sale de un diálogo auténtico, en el que el médico expone las consecuencias y el paciente puede decidir dejar el tratamiento.\n\n- En el **paternalista** el médico decide por el paciente.\n- En el **interpretativo** el médico actúa como consejero.",
+      "tema": "relacion-medico-paciente",
+      "reviewNote": "Discutible: si el paciente decide solo tras recibir la información, encajaría mejor con el modelo informativo. La respuesta es la clave del PDF (compárala con la pregunta en que deciden juntos parar el tratamiento)."
+    },
+    {
+      "id": "q22",
+      "stem": "Ser un buen médico incluye:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tener paciencia y enseñar a los médicos residentes en proceso de aprendizaje.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Tratar solo a los colegas del mismo nivel jerárquico.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Aceptar opiniones solo de superiores.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tratar bien a los pacientes pero no a los colegas.",
+          "correct": false
+        }
+      ],
+      "explanation": "Ser buen médico incluye también la relación con los colegas: **tener paciencia y enseñar** a quienes están en formación, como los residentes.\n\nLas otras opciones restringen el buen trato a un nivel jerárquico o sólo a los pacientes, que es justo lo contrario.",
+      "tema": "relacion-medico-paciente"
+    },
+    {
+      "id": "q23",
+      "stem": "Cuando el paciente nos comunica sus sentimientos, pensamientos y experiencias, esto se denomina:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Datos introspectivos.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Datos no verbales.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Evaluación emocional.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Fluidez verbal.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **datos introspectivos** son los que sólo el paciente puede dar porque vienen de su interior: **sentimientos, pensamientos y experiencias**. Se distinguen de los datos **observacionales**, que el médico obtiene mirando (conducta, gestos, apariencia).",
+      "tema": "comunicacion"
+    },
+    {
+      "id": "q24",
+      "stem": "En la entrevista médica, el contacto físico:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Es mandatorio para estrechar la relación con el paciente.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "No es obligatorio y se debe pedir permiso antes de realizarlo.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Solo debe hacerse en casos de confianza absoluta.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Es necesario en toda consulta.",
+          "correct": false
+        }
+      ],
+      "explanation": "El **contacto físico no es obligatorio** en la entrevista y, si se usa, **se pide permiso antes**: lo que para un paciente es cercanía, para otro puede ser una invasión de su espacio (depende de la persona, la cultura y la situación).",
+      "tema": "entrevista"
+    },
+    {
+      "id": "q25",
+      "stem": "Cuando nos referimos a los sistemas de pensamiento, el sistema automático:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se refiere al lado emocional y no requiere esfuerzo, tomando generalmente buenas decisiones.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Consume energía mental y toma malas decisiones.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Es deliberado y requiere esfuerzo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Es emocional pero requiere refuerzo.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **dos sistemas de pensamiento** (Kahneman):\n\n- **Sistema automático** (sistema 1): rápido, intuitivo y **emocional**, **no requiere esfuerzo** y en situaciones conocidas suele acertar. Es también donde se originan los sesgos.\n- **Sistema deliberado** (sistema 2): lento, **requiere esfuerzo** y **consume energía mental**; se activa ante lo nuevo o lo complejo.",
+      "tema": "sesgos"
+    },
+    {
+      "id": "q26",
+      "stem": "La frase \"es así siempre ansioso, por eso deben llevarlo allá\", se refiere a qué tipo de sesgo:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Discapacidad.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Género.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Anclaje.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Rectificación.",
+          "correct": false
+        }
+      ],
+      "explanation": "Es un **sesgo de anclaje**: el juicio se queda fijado en una primera impresión o etiqueta («siempre es así, ansioso») y no se revisa ante la información nueva. El riesgo es atribuir cualquier síntoma a esa etiqueta y pasar por alto otra causa.\n\n- Los sesgos de **discapacidad** o de **género** se dirigen a un grupo de personas, y la frase no alude a ninguno.",
+      "tema": "sesgos"
+    },
+    {
+      "id": "q27",
+      "stem": "¿Cuál es el paso correcto en la etapa de explicación y planificación de la entrevista clínica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Contribuye a que el paciente recuerde y comprenda de manera precisa las indicaciones.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Proporciona toda la información disponible de manera extensa.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Estimula al paciente a no realizar preguntas por la cantidad de información brindada.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Logra entendimiento con el familiar del paciente.",
+          "correct": false
+        }
+      ],
+      "explanation": "En **C) Explicación y planificación** (guías Calgary-Cambridge) el médico: proporciona la **cantidad y el tipo de información correctos**, **contribuye a que el paciente recuerde y comprenda** de manera precisa, **estimula** al paciente a formular preguntas y logra un **entendimiento y una planificación en común** con el paciente, incorporando su perspectiva.\n\n- Dar **toda** la información de forma extensa satura; desalentar las preguntas va en contra del paso 3; el entendimiento se busca **con el paciente**, no con el familiar.",
+      "tema": "entrevista"
+    },
+    {
+      "id": "q28",
+      "stem": "El protocolo de seis pasos para la comunicación de malas noticias define el \"resumir y planificar\" como el paso:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Paso 4.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Paso 5.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Paso 6.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Paso 3.",
+          "correct": false
+        }
+      ],
+      "explanation": "En el protocolo de seis pasos (**SPIKES**), «resumir y planificar» (*Strategy and Summary*) es el **último, el paso 6**.\n\n1. Setting (entorno) · 2. Perception (percepción) · 3. Invitation (invitación) · 4. Knowledge (conocimiento) · 5. Emotions (empatía) · **6. Strategy and Summary**.",
+      "tema": "malas-noticias"
+    },
+    {
+      "id": "q29",
+      "stem": "Cuando el médico escucha la reacción emocional del paciente y comenta \"Eso es difícil\", ¿a qué paso corresponde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Resumir.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Aclarar.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Transitivismo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Reasegurar.",
+          "correct": true
+        }
+      ],
+      "explanation": "Según la clave, es **reasegurar**: proporcionar **tranquilidad** al paciente reconociendo lo que le pasa (Paciente: «Creo que nunca voy a mejorar». Entrevistador: «Entiendo que se sienta así en este momento…»).\n\n- **Resumir** recapitula lo dicho; **aclarar** pide precisar un término.",
+      "tema": "intervenciones",
+      "reviewNote": "En el examen de Moodle 2021-I, una frase casi igual («Cualquiera encontraría eso muy difícil») tenía como respuesta «Validar», que aquí no está entre las opciones."
+    },
+    {
+      "id": "q30",
+      "stem": "En el modelo informativo de la relación médico-paciente, el rol del médico es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Suministrar información veraz por ser técnicamente competente en su especialidad.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Actuar como tutor del paciente sin necesidad de su participación.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Trabajar conjuntamente con el paciente en la toma de decisiones.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Actuar como consejero consultivo.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los cuatro **modelos de la relación médico-paciente** (Emanuel y Emanuel):\n\n- **Paternalista:** el médico actúa como **tutor** y decide sin que participe el paciente (relación vertical).\n- **Informativo:** el médico **suministra información veraz** por ser técnicamente competente; el paciente decide.\n- **Interpretativo:** el médico es **consejero**, con un papel consultivo: ayuda a que el paciente aclare sus valores.\n- **Deliberativo:** médico y paciente **trabajan juntos**; la decisión final sale de un **diálogo auténtico**.",
+      "tema": "relacion-medico-paciente"
+    },
+    {
+      "id": "q31",
+      "stem": "En el modelo interpretativo de la relación médico-paciente, el médico:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Actúa como consejero, asumiendo un papel consultivo.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Suministra información técnica y veraz.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Actúa como tutor del paciente.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "No necesita la participación del paciente en las decisiones.",
+          "correct": false
+        }
+      ],
+      "explanation": "En el modelo **interpretativo** el médico actúa como **consejero**, con un **papel consultivo**: además de informar, ayuda al paciente a interpretar sus valores para que decida.\n\n- **Tutor** sin participación del paciente: paternalista.\n- **Trabajan juntos** y deciden tras un diálogo auténtico: deliberativo.\n- **Suministra información veraz**: informativo.",
+      "tema": "relacion-medico-paciente"
+    },
+    {
+      "id": "q32",
+      "stem": "El ser humano tiene dos sistemas de pensamiento. ¿El sistema automático se caracteriza por qué?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se refiere al lado emocional, no requiere esfuerzo y generalmente toma buenas decisiones.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Consume energía mental y toma malas decisiones.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Es deliberado y requiere esfuerzo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Es emocional y necesita refuerzo.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **dos sistemas de pensamiento** (Kahneman):\n\n- **Sistema automático** (sistema 1): rápido, intuitivo y **emocional**, **no requiere esfuerzo** y en situaciones conocidas suele acertar. Es también donde se originan los sesgos.\n- **Sistema deliberado** (sistema 2): lento, **requiere esfuerzo** y **consume energía mental**; se activa ante lo nuevo o lo complejo.",
+      "tema": "sesgos"
+    },
+    {
+      "id": "q33",
+      "stem": "En la relación médico-paciente, cuando el paciente y el médico discuten y deciden juntos parar el tratamiento, se trata de un modelo:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Paternalista.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Interpretativo.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Deliberativo.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Informativo.",
+          "correct": false
+        }
+      ],
+      "explanation": "Cuando médico y paciente **discuten y deciden juntos**, el modelo es **deliberativo**: trabajan conjuntamente y la decisión final es el resultado de un **diálogo auténtico**.\n\n- **Paternalista:** decide el médico. **Informativo:** el médico informa y decide el paciente. **Interpretativo:** el médico aconseja.",
+      "tema": "relacion-medico-paciente"
+    },
+    {
+      "id": "q34",
+      "stem": "Un médico reconocido que es temido por los residentes debe tener:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tratar bien a los colegas del mismo nivel académico.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Paciencia y sapiencia para enseñar a los residentes en formación.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Aceptar opiniones solo de su jefe.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tratar bien solo a los pacientes.",
+          "correct": false
+        }
+      ],
+      "explanation": "Ser buen médico incluye también la relación con los colegas: **tener paciencia y enseñar** a quienes están en formación, como los residentes.\n\nLas otras opciones restringen el buen trato a un nivel jerárquico o sólo a los pacientes, que es justo lo contrario.",
+      "tema": "relacion-medico-paciente"
+    },
+    {
+      "id": "q35",
+      "stem": "Cuando el paciente comunica sus sentimientos, pensamientos y experiencias, ¿qué tipo de datos son?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Datos introspectivos.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Datos no verbales.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Evaluación emocional.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Datos de contacto físico.",
+          "correct": false
+        }
+      ],
+      "explanation": "Los **datos introspectivos** son los que sólo el paciente puede dar porque vienen de su interior: **sentimientos, pensamientos y experiencias**. Se distinguen de los datos **observacionales**, que el médico obtiene mirando (conducta, gestos, apariencia).",
+      "tema": "comunicacion"
+    }
+  ]
+}
