@@ -981,6 +981,43 @@
   line-height: 1.5;
 }
 
+/* Enlace a la clase que conviene repasar antes (`relacionada` del sílabo).
+   Sin caja: una línea con filete, para no competir con las tarjetas de material. */
+.relacionadaLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding: 2px 0 2px 12px;
+  border-left: 3px solid #3b9edd;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #1f6fa8;
+  text-decoration: none;
+}
+
+.relacionadaLink:hover .relacionadaTexto {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.relacionadaFlecha {
+  flex-shrink: 0;
+  transition: transform 0.18s ease;
+}
+
+.relacionadaLink:hover .relacionadaFlecha {
+  transform: translateX(3px);
+}
+
+:global(.dark-mode) .relacionadaLink {
+  color: #7cc4f0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .relacionadaFlecha { transition: none; }
+}
+
 .subtemasSection {
   margin-bottom: 28px;
 }

@@ -85,6 +85,16 @@ export default async function ActividadPage({
 
         {act.nota && <div className={styles.notaBanner}>⚠ {act.nota}</div>}
 
+        {act.relacionada && (
+          <Link
+            href={`/dashboard/cursos/aparato-locomotor/${act.relacionada.id}`}
+            className={styles.relacionadaLink}
+          >
+            <span className={styles.relacionadaTexto}>{act.relacionada.texto}</span>
+            <span className={styles.relacionadaFlecha} aria-hidden>→</span>
+          </Link>
+        )}
+
         {act.subtemas.length > 0 && (
           <div className={styles.subtemasSection}>
             <p className={styles.subtemasLabel}>Temas que cubre</p>

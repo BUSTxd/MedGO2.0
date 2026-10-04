@@ -40,6 +40,8 @@ export interface Actividad {
   fechaISO?: string;
   /** Sobreescribe el destino del card en el sílabo (p.ej. histología → atlas). */
   linkOverride?: string;
+  /** Clase del mismo curso que conviene repasar antes; la página pinta el enlace. */
+  relacionada?: { id: string; texto: string };
 }
 
 export interface Semana {
@@ -260,7 +262,16 @@ export const semanas: Semana[] = [
         subtemas: ['Metabolismo óseo', 'Remodelación ósea', 'Aplicación clínica'],
         docentes: ['Dra. Yanett Mendoza', 'Dr. Juan Carrasco', 'Dra. Karla Tafur', 'Dra. Wendy Sotelo'],
         nota: 'Evaluación: 35% individual + 25% grupal + 40% problema de aplicación (rúbrica). Promedio de los 2 TBL = 25% de conocimientos.',
-        resumen: { tipo: 'pdf', opciones: [{ id: 'loc-tbl-1', label: 'Resumen' }] },
+        // Resumen en HTML (3 figuras), ver /addresumenhtml. El PDF viejo sigue en el bucket.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-tbl-1', label: 'Resumen', formato: 'html' }],
+        },
+        relacionada: {
+          id: 'clase-4',
+          texto: 'Antes del TBL, repasa la remodelación ósea en la clase de Fisiología del tejido óseo',
+        },
       },
       {
         id: 'clase-5',
@@ -424,6 +435,12 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Caso clínico integrador de la semana (2 sesiones de 2 h)'],
         docentes: ['Tutores de SGP'],
+        // Resumen en HTML: caso clínico de cartílago articular y hombro (14 figuras), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-sgp-2', label: 'Resumen', formato: 'html' }],
+        },
       },
     ],
   },
@@ -546,7 +563,12 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Contracción muscular', 'Transmisión neuromuscular', 'Aplicación clínica'],
         docentes: ['Dra. Yanett Mendoza', 'Dr. Juan Carrasco', 'Dra. Karla Tafur', 'Dra. Wendy Sotelo'],
-        resumen: { tipo: 'pdf', opciones: [{ id: 'loc-tbl-2', label: 'Resumen' }] },
+        // Resumen en HTML (3 figuras), ver /addresumenhtml. El PDF viejo sigue en el bucket.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-tbl-2', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-13',
@@ -584,6 +606,13 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Caso clínico integrador de la semana (2 sesiones de 2 h)'],
         docentes: ['Tutores de SGP'],
+        // Resumen en HTML: tejido muscular, energía y ejercicio (8 figuras; las capturas
+        // de texto del export se transcribieron), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-sgp-3', label: 'Resumen', formato: 'html' }],
+        },
       },
     ],
   },
