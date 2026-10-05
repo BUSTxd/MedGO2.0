@@ -299,6 +299,13 @@ export const semanas: Semana[] = [
         subtemas: ['Caso clínico integrador de la semana (2 sesiones de 2 h)'],
         docentes: ['Tutores de SGP'],
         nota: 'Se califica al finalizar la semana. El promedio de los 4 SGP vale 20% del desempeño.',
+        // Resumen en HTML: embriología de las extremidades (16 figuras; las 2 que el export
+        // enlazaba desde webs externas se bajaron y se sirven del bucket), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-sgp-1', label: 'Resumen', formato: 'html' }],
+        },
       },
     ],
   },
