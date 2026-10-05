@@ -23,6 +23,28 @@ export const REGIONES = {
       if (x < -0.145 && y > 0.7) return true;
       return CINTURA_ESCAPULAR.has(p.id);
     },
+    zona: zonaSuperior,
+  },
+  'miembro-inferior-derecho': {
+    nombre: 'Miembro inferior derecho',
+    /** Pelvis y región glútea, muslo, rodilla y pierna, tobillo y pie. */
+    incluir(p) {
+      if (CINTURA_PELVICA.has(p.id)) return true;
+      if (FUERA_INFERIOR.has(p.id)) return false;
+      const sistema = CORRECCIONES[p.id]?.sistema ?? p.system;
+      if (!['skeletal', 'muscular', 'connective', 'arterial', 'venous'].includes(sistema)) return false;
+      const [x, y] = centro(p);
+      // Lo que cuelga del miembro superior derecho queda fuera (misma regla que allí).
+      if (x < -0.145 && y > 0.7) return false;
+      // Por fuera de x = −3,5 cm y por debajo de y = 0,9 m (de la cadera para
+      // abajo): el suelo pélvico y los vasos del periné son más mediales (lo más
+      // lateral, el coccígeo a −2,6 cm y la pudenda interna a −2,4 cm); lo más
+      // medial del miembro, el grácil, a −4,1 cm. Los músculos de la cadera suben
+      // hasta 1 m (glúteo medio a 0,95 m); la pared abdominal empieza en 1,08 m.
+      if (x >= -0.035) return false;
+      return y < (sistema === 'muscular' ? 1.0 : 0.9);
+    },
+    zona: zonaInferior,
   },
 };
 
@@ -76,6 +98,43 @@ const CINTURA_ESCAPULAR = new Set([
 ]);
 
 /**
+ * Cintura pélvica y raíz del miembro inferior: lo que el rango espacial no
+ * alcanza (línea media, o por encima de la cadera). La columna lumbar entra
+ * porque en ella se insertan músculos del miembro: el psoas mayor nace de T12 a
+ * L4 y de sus discos; el sacro da origen al piriforme y al glúteo mayor.
+ * BodyParts3D no trae cóccix, psoas menor ni cuadrado lumbar.
+ */
+const CINTURA_PELVICA = new Set([
+  // Huesos y discos
+  'FJ3152', // coxal
+  'FJ3393', // sacro
+  'FJ3156', // T12
+  'FJ3157', 'FJ3159', 'FJ3162', 'FJ3165', 'FJ3168', // L1-L5
+  'FJ3211', // disco T12-L1
+  'FJ3212', 'FJ3214', 'FJ3215', 'FJ3216', 'FJ3217', // discos L1-L2 … L5-S1
+  // Músculos
+  'FJ1431', // psoas mayor
+  // Arterias
+  'FJ3565', // ilíaca común
+  'FJ3567', // ilíaca externa
+  'FJ3569', // ilíaca interna (BodyParts3D no trae sus ramas glúteas ni la obturatriz)
+  'FJ3614', // epigástrica superficial (rama de la femoral)
+  // Venas
+  'FJ3566', // ilíaca común
+  'FJ3568', // ilíaca externa
+  'FJ3570', 'FJ3571', 'FJ3572', 'FJ3607', 'FJ3608', 'FJ3609', // ilíaca interna (6 tramos)
+  'FJ3616', // glútea superior
+  'FJ3612', // obturatriz
+  'FJ3603', // iliolumbar
+  'FJ2178', // epigástrica superficial (desemboca en la safena mayor)
+]);
+
+/** Dentro del rango espacial del miembro inferior pero del suelo pélvico. */
+const FUERA_INFERIOR = new Set([
+  'FJ1465', 'FJ2553', // arco tendinoso del elevador del ano (dos copias)
+]);
+
+/**
  * Errores del propio BodyParts3D que se corrigen al extraer. Solo lo que se
  * comprobó contra la posición de la pieza.
  */
@@ -93,6 +152,33 @@ export const CORRECCIONES = {
   // anterior (0,1 mm) y a la vena axilar (0,3 mm); la otra, FJ2291, a las
   // arterias axilar y circunfleja anterior. Es la vena.
   FJ2292: { nombreEn: 'Right posterior circumflex humeral vein', sistema: 'venous' },
+
+  // ─── Miembro inferior ───
+  // Clasificados como esqueleto; son músculos (los de la pierna).
+  FJ1439: { sistema: 'muscular' }, // tibial anterior
+  FJ1440: { sistema: 'muscular' }, // tibial posterior
+  FJ1410: { sistema: 'muscular' }, // fibular largo
+  FJ1409: { sistema: 'muscular' }, // fibular corto
+  FJ1411: { sistema: 'muscular' }, // fibular tercero
+  // Clasificado como tejido conectivo; es músculo.
+  FJ1438: { sistema: 'muscular' }, // tensor de la fascia lata
+  // Clasificado como esqueleto; es una fascia.
+  FJ1423: { sistema: 'connective' }, // tracto iliotibial
+  // Rótulos que no corresponden a su sitio; se identificaron por con qué vaso
+  // se tocan (distancia mínima entre mallas):
+  // «Perforating arteries» que nace de la femoral (1,4 mm, a 0,90 m) y da la
+  // circunfleja femoral lateral (0,3 mm) y las perforantes de verdad, FJ2127
+  // (0,4 mm). Corre junto a la vena femoral profunda. Es la femoral profunda.
+  FJ2203: { nombreEn: 'Right deep femoral artery' },
+  // «Calcaneal branches of posterior tibial artery» a la altura de la cadera
+  // (0,84-0,91 m): sale de la circunfleja femoral lateral (0,3 mm) junto a su
+  // rama descendente (0,0 mm) y sube por fuera, hacia el trocánter mayor.
+  FJ2195: { nombreEn: 'Ascending branch of right lateral circumflex femoral artery' },
+  // «Dorsal digital arteries» en la pierna (0,04-0,37 m): nace de la tibial
+  // posterior (0,0 mm) bajo la poplítea y corre junto a la vena fibular.
+  FJ2197: { nombreEn: 'Right fibular artery' },
+  // «Dorsal metacarpal vein» en el dorso del pie.
+  FJ2199: { nombreEn: 'Dorsal metatarsal vein' },
 };
 
 /**
@@ -112,7 +198,7 @@ const ZONA = {
 };
 
 /** Zona dentro del miembro superior, por la altura del centro de la pieza. */
-export function zonaDe(p) {
+function zonaSuperior(p) {
   if (ZONA[p.id]) return ZONA[p.id];
   if (CINTURA_ESCAPULAR.has(p.id)) return 'hombro';
   const [, y] = centro(p);
@@ -120,4 +206,19 @@ export function zonaDe(p) {
   if (y > 1.11) return 'brazo';
   if (y > 0.885) return 'antebrazo';
   return 'mano';
+}
+
+/**
+ * Zona dentro del miembro inferior, por la altura del centro de la pieza. Los
+ * cortes: 0,84 m (bajo el cuadrado femoral y el obturador externo), 0,51 m
+ * (sobre los vasos geniculares: la rodilla va con la pierna, como en el
+ * sílabo) y 0,08 m (bajo el fibular tercero, que es de la pierna).
+ */
+function zonaInferior(p) {
+  if (CINTURA_PELVICA.has(p.id)) return 'pelvis';
+  const [, y] = centro(p);
+  if (y > 0.84) return 'pelvis';
+  if (y > 0.51) return 'muslo';
+  if (y > 0.08) return 'pierna';
+  return 'pie';
 }

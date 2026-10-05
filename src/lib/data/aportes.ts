@@ -183,5 +183,5 @@ export const LABORATORIOS: LaboratorioMeta[] = [
   { slug: 'morfologia-globulos-rojos', nombre: 'Morfología de glóbulos rojos', track: 'medicina', autor: 'bust' },
   { slug: 'cascada-coagulacion',     nombre: 'Cascada de coagulación',       track: 'medicina', autor: 'bust', pesado: true, gratis: true },
   { slug: 'checkpoints-ciclo-celular', nombre: 'Checkpoints del ciclo celular', track: 'medicina', autor: 'bust', pesado: true },
-  { slug: 'atlas-3d',                nombre: 'Atlas 3D (miembro superior)',  track: 'medicina', autor: 'bust', pesado: true },
+  { slug: 'atlas-3d',                nombre: 'Atlas 3D (miembros)', track: 'medicina', autor: 'bust', pesado: true },
 ];

@@ -36,6 +36,19 @@ export const REGIONES: RegionAtlas[] = [
       { id: 'mano', nombre: 'Mano' },
     ],
   },
+  {
+    id: 'miembro-inferior-derecho',
+    nombre: 'Miembro inferior derecho',
+    // Con T12-L5, sus discos y el sacro: ahí se insertan el psoas mayor, el
+    // piriforme y el glúteo mayor.
+    version: 'v1',
+    zonas: [
+      { id: 'pelvis', nombre: 'Pelvis y región glútea' },
+      { id: 'muslo', nombre: 'Muslo' },
+      { id: 'pierna', nombre: 'Rodilla y pierna' },
+      { id: 'pie', nombre: 'Tobillo y pie' },
+    ],
+  },
 ];
 
 export const REGION_POR_DEFECTO = REGIONES[0].id;

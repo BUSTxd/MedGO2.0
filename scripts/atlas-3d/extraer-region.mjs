@@ -19,7 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
-import { REGIONES, CORRECCIONES, DESPEGAR, zonaDe } from './regiones.mjs';
+import { REGIONES, CORRECCIONES, DESPEGAR } from './regiones.mjs';
 import { despegar } from './despegar.mjs';
 import { NOMBRES } from './traducciones.mjs';
 
@@ -62,7 +62,7 @@ const meta = piezas.map((p) => {
   if (!nombre) faltan.push(nombreEn);
   const x = (p.bounds[0][0] + p.bounds[1][0]) / 2;
   const lado = /\bright\b/i.test(nombreEn) ? 'derecho' : /\bleft\b/i.test(nombreEn) ? 'izquierdo' : x < 0 ? 'derecho' : 'izquierdo';
-  return { id: p.id, nombre, nombreEn, sistema, zona: zonaDe(p), lado };
+  return { id: p.id, nombre, nombreEn, sistema, zona: def.zona(p), lado };
 });
 if (faltan.length) {
   throw new Error(`Sin traducción en traducciones.mjs:\n  ${[...new Set(faltan)].join('\n  ')}`);
