@@ -415,11 +415,15 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Osteología del miembro inferior', 'Compartimentos del muslo', 'Triángulo femoral'],
         docentes: ['Dr. Marcos De La Cruz'],
-        // Resumen en HTML: apuntes muy visuales (23 figuras), ver /addresumenhtml.
+        // Resumen en HTML: dos documentos, uno por subtema (muslo y osteología;
+        // 23 y 33 figuras), ver /addresumenhtml.
         resumen: {
           tipo: 'pdf',
           formato: 'html',
-          opciones: [{ id: 'loc-clase-9', label: 'Resumen', formato: 'html' }],
+          opciones: [
+            { id: 'loc-clase-9', label: 'Región del muslo', formato: 'html' },
+            { id: 'loc-clase-9-osteo', label: 'Osteología del miembro inferior', formato: 'html' },
+          ],
         },
       },
       {
