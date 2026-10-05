@@ -61,7 +61,7 @@ const meta = piezas.map((p) => {
   const nombre = NOMBRES[nombreEn];
   if (!nombre) faltan.push(nombreEn);
   const x = (p.bounds[0][0] + p.bounds[1][0]) / 2;
-  const lado = /\bright\b/i.test(nombreEn) ? 'derecho' : /\bleft\b/i.test(nombreEn) ? 'izquierdo' : x < 0 ? 'derecho' : 'izquierdo';
+  const lado = /\bright\b/i.test(nombreEn) ? 'derecho' : /\bleft\b/i.test(nombreEn) ? 'izquierdo' : def.lado ?? (x < 0 ? 'derecho' : 'izquierdo');
   return { id: p.id, nombre, nombreEn, sistema, zona: def.zona(p), lado };
 });
 if (faltan.length) {

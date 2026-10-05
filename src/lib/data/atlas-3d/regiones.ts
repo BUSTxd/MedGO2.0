@@ -28,7 +28,9 @@ export const REGIONES: RegionAtlas[] = [
     // v2: + costillas 1.ª-6.ª con sus cartílagos (región pectoral).
     // v3: vasos supraescapulares sacados de la escápula; FJ2292 es la vena
     //     circunfleja humeral posterior (venía rotulada como arteria).
-    version: 'v3',
+    // v4: + esqueleto axial donde se insertan sus músculos: occipital, C1-T12
+    //     con sus discos, esternón, costillas 7.ª-9.ª; + platisma y mandíbula.
+    version: 'v4',
     zonas: [
       { id: 'hombro', nombre: 'Hombro' },
       { id: 'brazo', nombre: 'Brazo' },

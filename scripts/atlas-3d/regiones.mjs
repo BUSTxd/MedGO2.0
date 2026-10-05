@@ -13,6 +13,10 @@ const centro = (p) => p.bounds[0].map((v, i) => (v + p.bounds[1][i]) / 2);
 export const REGIONES = {
   'miembro-superior-derecho': {
     nombre: 'Miembro superior derecho',
+    // Lado de las piezas de la línea media (vértebras, esternón): sin él, el
+    // esternón (centro en x = +0,0002) saldría «izquierdo» y el visor pondría
+    // (der.)/(izq.) a todo.
+    lado: 'derecho',
     /** Hombro (cintura escapular), brazo, antebrazo y mano. */
     incluir(p) {
       const [x, y] = centro(p);
@@ -27,6 +31,7 @@ export const REGIONES = {
   },
   'miembro-inferior-derecho': {
     nombre: 'Miembro inferior derecho',
+    lado: 'derecho',
     /** Pelvis y región glútea, muslo, rodilla y pierna, tobillo y pie. */
     incluir(p) {
       if (CINTURA_PELVICA.has(p.id)) return true;
@@ -64,6 +69,21 @@ const CINTURA_ESCAPULAR = new Set([
   'FJ3340', 'FJ3339', // 4.ª
   'FJ3342', 'FJ3341', // 5.ª
   'FJ3344', 'FJ3343', // 6.ª
+  // Esqueleto axial donde se insertan los músculos del miembro (medido: hueso
+  // a < 3 mm de cada músculo de la región). Las vértebras van seguidas aunque
+  // alguna no toque, con sus discos: una columna con huecos no se lee.
+  'FJ3309', // occipital: trapecio descendente (línea nucal superior)
+  'FJ3176', 'FJ3177', // atlas y axis: elevador de la escápula, trapecio
+  'FJ3161', 'FJ3164', 'FJ3167', 'FJ3170', 'FJ3172', // C3-C7: elevador, romboide menor, trapecio
+  'FJ3158', 'FJ3160', 'FJ3163', 'FJ3166', 'FJ3169', 'FJ3171', // T1-T6: romboide mayor, trapecio
+  'FJ3173', 'FJ3174', 'FJ3175', 'FJ3154', 'FJ3155', 'FJ3156', // T7-T12: trapecio ascendente
+  'FJ3202', 'FJ3213', 'FJ3218', 'FJ3219', 'FJ3220', // discos C2-C3 … C6-C7
+  'FJ3221', 'FJ3222', 'FJ3223', 'FJ3224', 'FJ3203', 'FJ3204', // discos C7-T1 … T5-T6
+  'FJ3205', 'FJ3206', 'FJ3207', 'FJ3208', 'FJ3209', 'FJ3210', // discos T6-T7 … T11-T12
+  'FJ3290', 'FJ3178', 'FJ3153', // manubrio, cuerpo del esternón, xifoides: pectoral mayor
+  'FJ3346', 'FJ3347', 'FJ3348', // costillas 7.ª-9.ª: serrato anterior
+  'FJ3345', // 7.º cartílago costal: porción abdominal del pectoral mayor (8.º y 9.º no vienen)
+  'FJ3289', // mandíbula: inserción superior del platisma
   // Músculos toracoapendiculares y escapulares
   'FJ1446', 'FJ1447', 'FJ1464', // pectoral mayor (abdominal, clavicular, esternocostal)
   'FJ1456', // pectoral menor
@@ -76,6 +96,7 @@ const CINTURA_ESCAPULAR = new Set([
   'FJ1504', // subescapular
   'FJ1506', // supraespinoso
   'FJ1507', // redondo mayor
+  'FJ1587', // platisma: cruza la clavícula hasta la fascia del pectoral y del deltoides
   // Arterias
   'FJ3579', // subclavia
   'FJ2268', // axilar
