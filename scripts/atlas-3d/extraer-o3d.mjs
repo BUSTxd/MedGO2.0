@@ -95,6 +95,65 @@ function normales(pos, idx) {
   return out;
 }
 
+// Mayor distancia de los vértices del original (muestreados) a la superficie
+// simplificada, que comparte vértices con el original (`pos`, índices `simp`).
+function desvioMax(orig, pos, simp) {
+  const H = 0.003, rej = new Map();
+  const v = (k) => [pos[k * 3], pos[k * 3 + 1], pos[k * 3 + 2]];
+  for (let t = 0; t < simp.length; t += 3) {
+    const mn = [Infinity, Infinity, Infinity], mx = [-Infinity, -Infinity, -Infinity];
+    for (const k of [simp[t], simp[t + 1], simp[t + 2]]) for (let a = 0; a < 3; a++) { mn[a] = Math.min(mn[a], pos[k * 3 + a]); mx[a] = Math.max(mx[a], pos[k * 3 + a]); }
+    for (let x = Math.floor(mn[0] / H); x <= Math.floor(mx[0] / H); x++)
+      for (let y = Math.floor(mn[1] / H); y <= Math.floor(mx[1] / H); y++)
+        for (let z = Math.floor(mn[2] / H); z <= Math.floor(mx[2] / H); z++) { const k = `${x},${y},${z}`; (rej.get(k) ?? rej.set(k, []).get(k)).push(t); }
+  }
+  let peor = 0;
+  const paso = Math.max(1, Math.floor(orig.length / 3 / 3000));
+  for (let i = 0; i < orig.length; i += 3 * paso) {
+    const P = [orig[i], orig[i + 1], orig[i + 2]], c = P.map((x) => Math.floor(x / H));
+    let best = Infinity;
+    for (let r = 0; r < 12 && best > r * H; r++)
+      for (let x = -r; x <= r; x++) for (let y = -r; y <= r; y++) for (let z = -r; z <= r; z++) {
+        if (Math.max(Math.abs(x), Math.abs(y), Math.abs(z)) !== r) continue;
+        for (const t of rej.get(`${c[0] + x},${c[1] + y},${c[2] + z}`) ?? []) best = Math.min(best, distTri(P, v(simp[t]), v(simp[t + 1]), v(simp[t + 2])));
+      }
+    peor = Math.max(peor, best);
+    if (peor > 0.0005) return peor; // basta con saber que se pasa
+  }
+  return peor;
+}
+
+// Distancia de un punto a un triángulo (punto más cercano, Ericson).
+function distTri(p, a, b, c) {
+  const sub = (u, w) => [u[0] - w[0], u[1] - w[1], u[2] - w[2]], dot = (u, w) => u[0] * w[0] + u[1] * w[1] + u[2] * w[2];
+  const en = (o, d, s) => [o[0] + d[0] * s, o[1] + d[1] * s, o[2] + d[2] * s];
+  const ab = sub(b, a), ac = sub(c, a), ap = sub(p, a), d1 = dot(ab, ap), d2 = dot(ac, ap);
+  let q;
+  if (d1 <= 0 && d2 <= 0) q = a;
+  else {
+    const bp = sub(p, b), d3 = dot(ab, bp), d4 = dot(ac, bp);
+    if (d3 >= 0 && d4 <= d3) q = b;
+    else {
+      const vc = d1 * d4 - d3 * d2;
+      if (vc <= 0 && d1 >= 0 && d3 <= 0) q = en(a, ab, d1 / (d1 - d3));
+      else {
+        const cp = sub(p, c), d5 = dot(ab, cp), d6 = dot(ac, cp);
+        if (d6 >= 0 && d5 <= d6) q = c;
+        else {
+          const vb = d5 * d2 - d1 * d6;
+          if (vb <= 0 && d2 >= 0 && d6 <= 0) q = en(a, ac, d2 / (d2 - d6));
+          else {
+            const va = d3 * d6 - d5 * d4;
+            if (va <= 0 && d4 - d3 >= 0 && d5 - d6 >= 0) q = en(b, sub(c, b), (d4 - d3) / (d4 - d3 + (d5 - d6)));
+            else { const den = 1 / (va + vb + vc); q = en(en(a, ab, vb * den), ac, vc * den); }
+          }
+        }
+      }
+    }
+  }
+  return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
+}
+
 let trianOrig = 0;
 for (const p of piezas) {
   const pos = Float32Array.from(p.o.v);
@@ -102,8 +161,19 @@ for (const p of piezas) {
   trianOrig += idx.length / 3;
   // Mantener cada estructura reconocible: nunca menos de 64 triángulos, error
   // acotado al 0,4 % de su extensión (los nervios finos no se aplastan).
-  const objetivo = p.fuente === 'medgo' ? idx.length : Math.min(idx.length, Math.max(192, Math.floor((idx.length * RATIO) / 3) * 3));
-  const [simp] = p.fuente === 'medgo' ? [idx] : MeshoptSimplifier.simplify(idx, pos, 3, objetivo, 0.004);
+  // Nervios y vasos: el simplificador (cuádricas) puede acortar un tubo fino a
+  // lo largo de su eje sin «error» y se comía puntas y ramitas (el axilar perdía
+  // tramos de hasta 10 mm; en el visor, muñones y quiebros). Se mide el desvío
+  // real y, si algún punto del original queda a > 0,5 mm, se repite con el doble.
+  const tubular = p.sistema === 'nervio' || p.sistema === 'arteria' || p.sistema === 'vena';
+  let ratio = RATIO, simp;
+  for (;;) {
+    const objetivo = Math.min(idx.length, Math.max(192, Math.floor((idx.length * ratio) / 3) * 3));
+    [simp] = p.fuente === 'medgo' ? [idx] : MeshoptSimplifier.simplify(idx, pos, 3, objetivo, tubular ? 0.00025 : 0.004, tubular ? ['ErrorAbsolute'] : []);
+    if (!tubular || p.fuente === 'medgo' || simp.length >= idx.length || desvioMax(pos, pos, simp) <= 0.0005) break;
+    ratio *= 2;
+  }
+  p.ratio = ratio;
   const [remap, n] = MeshoptSimplifier.compactMesh(simp);
   const pos2 = new Float32Array(n * 3);
   for (let i = 0; i < remap.length; i++) if (remap[i] !== 0xffffffff) pos2.set(pos.subarray(i * 3, i * 3 + 3), remap[i] * 3);
@@ -207,5 +277,7 @@ const cuenta = (k) => salida.reduce((o, p) => ((o[p[k]] = (o[p[k]] ?? 0) + 1), o
 console.log(`✓ ${REGION}: ${salida.length} piezas · ${Math.round(trianOrig / 1000)}k → ${Math.round(triangulos / 1000)}k triángulos`);
 console.log(`  geometría ${(crudo.length / 1e6).toFixed(2)} MB → ${(gz.length / 1e6).toFixed(2)} MB gzip · manifiesto ${(fs.statSync(path.join(dir, 'manifiesto.json')).size / 1e3).toFixed(1)} kB`);
 console.log(`  error de cuantización máx. ${(errorMax * 1000).toFixed(4)} mm`);
+const mas = piezas.filter((p) => p.ratio > RATIO);
+console.log(`  ${mas.length} nervios/vasos necesitaron más triángulos para no perder ramitas: ${mas.map((p) => `${p.en} ×${p.ratio / RATIO}`).join(', ')}`);
 console.log('  sistemas', cuenta('sistema'));
 console.log('  zonas', cuenta('zona'));

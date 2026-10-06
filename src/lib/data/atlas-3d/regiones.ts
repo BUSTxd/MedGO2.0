@@ -49,7 +49,8 @@ export const REGIONES: RegionAtlas[] = [
     // v11: el frénico nace del ramo de C4 y recibe C3 y C5 en «Y».
     // v12: puntas redondeadas y ramas afinadas donde nacen de otro nervio (sin
     //      tubos «cortados» en las uniones).
-    version: 'v12',
+    // v13: nervios y vasos sin ramitas perdidas al simplificar (≤ 0,5 mm del original).
+    version: 'v13',
     zonas: [
       { id: 'cuello', nombre: 'Cabeza y cuello' },
       { id: 'tronco', nombre: 'Columna y tórax' },
@@ -73,7 +74,8 @@ export const REGIONES: RegionAtlas[] = [
     // piriforme y el glúteo mayor.
     // v2: Open3DModel: plexos lumbar y sacro, ligamentos, meniscos y bolsas.
     //     Sus vasos empiezan en la femoral: sin ilíacas, glúteas ni obturatriz.
-    version: 'v2',
+    // v3: nervios y vasos sin ramitas perdidas al simplificar (≤ 0,5 mm del original).
+    version: 'v3',
     zonas: [
       { id: 'tronco', nombre: 'Columna y tórax' },
       { id: 'pelvis', nombre: 'Pelvis y región glútea' },
