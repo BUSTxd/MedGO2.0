@@ -52,7 +52,8 @@ export const REGIONES: RegionAtlas[] = [
     // v13: nervios y vasos sin ramitas perdidas al simplificar (≤ 0,5 mm del original).
     // v14: formato 2 (códec de meshoptimizer, normales en el navegador): 4,4 → 1,1 MB;
     //      también ligamentos y cartílagos sin bordes perdidos.
-    version: 'v14',
+    // v15: T12-L5 y el sacro, también en «Pelvis y región glútea» (como en el inferior).
+    version: 'v15',
     zonas: [
       { id: 'cuello', nombre: 'Cabeza y cuello' },
       { id: 'tronco', nombre: 'Columna y tórax' },
