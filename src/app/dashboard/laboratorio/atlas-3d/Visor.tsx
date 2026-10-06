@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Vector3 } from 'three';
 import { CREDITO, FALTA_EN_TODAS, SISTEMA, SISTEMAS, regionPorId, type Sistema } from '@/lib/data/atlas-3d/regiones';
 import { cargarAtlas, type Atlas } from '@/lib/atlas-3d/cargar';
@@ -38,6 +39,7 @@ export default function Visor({ regiones }: { regiones: string[] }) {
   const [error, setError] = useState<string | null>(null);
   const [intento, setIntento] = useState(0);
   const [empezado, setEmpezado] = useState(false);
+  const empezar = useCallback(() => setEmpezado(true), []);
 
   useEffect(() => {
     const abort = new AbortController();
@@ -64,19 +66,36 @@ export default function Visor({ regiones }: { regiones: string[] }) {
       </div>
     );
   }
-  // El aviso de lo que falta se lee mientras baja el modelo: no añade espera.
-  if (!atlas || !empezado) {
-    return <Aviso regiones={regiones} progreso={atlas ? 1 : progreso} listo={!!atlas} onEmpezar={() => setEmpezado(true)} />;
+  if (!atlas) {
+    return (
+      <div className={s.cargando} aria-busy="true">
+        <p>Descargando el modelo…</p>
+        <div className={s.barra} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progreso * 100)}>
+          <span style={{ width: `${progreso * 100}%` }} />
+        </div>
+      </div>
+    );
   }
-  return <Explorador atlas={atlas} regiones={regiones} />;
+  return (
+    <>
+      <Explorador atlas={atlas} regiones={regiones} />
+      {!empezado && <Aviso regiones={regiones} onEmpezar={empezar} />}
+    </>
+  );
 }
 
-function Aviso({ regiones, progreso, listo, onEmpezar }: { regiones: string[]; progreso: number; listo: boolean; onEmpezar: () => void }) {
+/** Lo que falta, encima de todo (portal a <body>, también sobre la sidebar) con el modelo ya cargado detrás. */
+function Aviso({ regiones, onEmpezar }: { regiones: string[]; onEmpezar: () => void }) {
   const lista = regiones.map(regionPorId).filter((r) => r !== undefined);
-  return (
-    <div className={s.cargando}>
-      <section className={s.aviso} aria-labelledby="aviso-atlas">
-        <span className={s.kicker}>Antes de empezar</span>
+  useEffect(() => {
+    const tecla = (e: KeyboardEvent) => e.key === 'Escape' && onEmpezar();
+    window.addEventListener('keydown', tecla);
+    return () => window.removeEventListener('keydown', tecla);
+  }, [onEmpezar]);
+  return createPortal(
+    <div className={s.avisoVelo}>
+      <section className={s.aviso} role="dialog" aria-modal="true" aria-labelledby="aviso-atlas">
+        <span className={s.avisoKicker}>Antes de empezar</span>
         <h2 id="aviso-atlas">Lo que este modelo aún no trae</h2>
         {lista.map((r) => (
           <div key={r.id} className={s.avisoRegion}>
@@ -86,21 +105,13 @@ function Aviso({ regiones, progreso, listo, onEmpezar }: { regiones: string[]; p
             </ul>
           </div>
         ))}
-        <p className={s.nota}>{FALTA_EN_TODAS}</p>
-        {listo ? (
-          <button type="button" className={s.boton} onClick={onEmpezar} autoFocus>
-            Empezar
-          </button>
-        ) : (
-          <div className={s.avisoCarga} aria-busy="true">
-            <div className={s.barra} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progreso * 100)}>
-              <span style={{ width: `${progreso * 100}%` }} />
-            </div>
-            <small>Descargando el modelo… {Math.round(progreso * 100)} %</small>
-          </div>
-        )}
+        <p className={s.avisoNota}>{FALTA_EN_TODAS}</p>
+        <button type="button" className={s.avisoBoton} onClick={onEmpezar} autoFocus>
+          Empezar
+        </button>
       </section>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
@@ -151,6 +162,8 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
   );
   const [zona, setZona] = useState<string>('todo');
   const [ocultas, setOcultas] = useState<Set<string>>(() => new Set());
+  /** Lo ocultado, en orden, para deshacer de una en una. */
+  const [historial, setHistorial] = useState<Estructura[]>([]);
   const [aislado, setAislado] = useState<string | null>(null);
   const [seleccion, setSeleccion] = useState<string | null>(null);
   const [transparencia, setTransparencia] = useState<Transparencia>('ninguna');
@@ -225,9 +238,39 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
       elegida.ids.forEach((id) => n.add(id));
       return n;
     });
+    setHistorial((h) => [...h, elegida]);
     if (aislado === elegida.clave) setAislado(null);
     setSeleccion(null);
   };
+
+  /** Vuelve a mostrar la última estructura ocultada y la deja seleccionada. */
+  const deshacer = useCallback(() => {
+    const ultima = historial.at(-1);
+    if (!ultima) return;
+    setHistorial((h) => h.slice(0, -1));
+    setOcultas((prev) => {
+      const n = new Set(prev);
+      ultima.ids.forEach((id) => n.delete(id));
+      return n;
+    });
+    setSeleccion(ultima.clave);
+  }, [historial]);
+
+  const mostrarOcultas = () => {
+    setOcultas(new Set());
+    setHistorial([]);
+  };
+
+  useEffect(() => {
+    const tecla = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && !(e.target instanceof HTMLInputElement)) {
+        e.preventDefault();
+        deshacer();
+      }
+    };
+    window.addEventListener('keydown', tecla);
+    return () => window.removeEventListener('keydown', tecla);
+  }, [deshacer]);
 
   const alternarSistema = (id: Sistema) =>
     setSistemas((prev) => {
@@ -281,18 +324,29 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
             Encuadrar
           </button>
         </div>
-        {aislado && (
-          <button
-            type="button"
-            className={s.salirAislado}
-            onClick={() => {
-              setAislado(null);
-              encuadrar();
-            }}
-          >
-            Mostrar todo
-          </button>
-        )}
+        <div className={s.accionesEscena}>
+          {aislado && (
+            <button
+              type="button"
+              className={s.salirAislado}
+              onClick={() => {
+                setAislado(null);
+                encuadrar();
+              }}
+            >
+              Mostrar todo
+            </button>
+          )}
+          {historial.length > 0 && (
+            <button type="button" className={s.deshacer} onClick={deshacer} title="Deshacer (Ctrl+Z)">
+              <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 14 4 9l5-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>Deshacer: {historial.at(-1)!.nombre}</span>
+            </button>
+          )}
+        </div>
         <p className={s.ayuda}>Arrastra para girar · rueda o pellizca para acercar · toca una estructura · doble toque para aislarla</p>
       </div>
 
@@ -414,7 +468,7 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
             ))}
           </div>
           {ocultas.size > 0 && (
-            <button type="button" className={s.botonSec} onClick={() => setOcultas(new Set())}>
+            <button type="button" className={s.botonSec} onClick={mostrarOcultas}>
               Mostrar ocultas ({new Set([...ocultas].map((id) => estructuraDe.get(id)?.clave)).size})
             </button>
           )}

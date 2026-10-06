@@ -87,21 +87,68 @@
   transition: width 0.2s ease;
 }
 
-/* Aviso de lo que falta, mientras baja el modelo. Filete a la izquierda, como la ficha. */
+/* Aviso de lo que falta: por portal a <body>, encima de todo (sidebar incluida),
+   con el modelo ya cargado detrás. Fuera de .wrapper: lleva sus propias variables.
+   Sin backdrop-filter (regla de la app: deja fondos en blanco al cerrar). */
+.avisoVelo {
+  --texto: #1b2233;
+  --texto-2: #5b6478;
+  --acento: #3b9edd;
+  --panel: #ffffff;
+  --borde: #dde2ec;
+
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(8, 12, 28, 0.55);
+  font-family: var(--font-outfit), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  animation: avisoEntra 0.18s ease-out;
+}
+
+:global(.dark-mode) .avisoVelo {
+  --texto: #eef1fa;
+  --texto-2: #9aa6c2;
+  --acento: #5bb4ec;
+  --panel: #151b30;
+  --borde: #28324f;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+@keyframes avisoEntra {
+  from { opacity: 0; }
+}
+
 .aviso {
-  width: min(520px, 100%);
+  width: min(500px, 100%);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
-  text-align: left;
+  padding: 22px 24px 20px;
+  border-radius: 16px;
+  border: 1px solid var(--borde);
+  border-top: 3px solid var(--acento);
+  background: var(--panel);
   color: var(--texto);
-  border-left: 3px solid var(--acento);
-  padding: 4px 0 4px 18px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
+.avisoKicker {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--acento);
 }
 
 .aviso h2 {
-  margin: 0;
+  margin: -6px 0 0;
   font-size: 20px;
   font-weight: 700;
   line-height: 1.25;
@@ -121,7 +168,7 @@
   padding-left: 18px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
   font-size: 14px;
   line-height: 1.45;
 }
@@ -130,17 +177,34 @@
   color: var(--acento);
 }
 
-.avisoCarga {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 13px;
+.avisoNota {
+  margin: 0;
+  font-size: 12px;
   color: var(--texto-2);
 }
 
-.aviso .boton {
-  padding: 10px 22px;
+.avisoBoton {
+  align-self: flex-end;
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 24px;
+  font: inherit;
   font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--acento);
+  color: #fff;
+}
+
+.avisoBoton:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avisoVelo {
+    animation: none;
+  }
 }
 
 /* ─── Distribución ─────────────────────────────────────────────────────────── */
@@ -202,10 +266,55 @@
   font-weight: 600;
 }
 
-.salirAislado {
+/* Arriba a la derecha: «Mostrar todo» (aislado) y «Deshacer» (ocultado). */
+.accionesEscena {
   position: absolute;
   top: 14px;
   right: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: calc(100% - 28px);
+  pointer-events: none;
+}
+
+.accionesEscena > * {
+  pointer-events: auto;
+}
+
+.deshacer {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 280px;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--panel);
+  color: var(--texto);
+  box-shadow: var(--sombra);
+}
+
+.deshacer:hover {
+  border-color: var(--acento);
+  color: var(--acento);
+}
+
+.deshacer svg {
+  flex-shrink: 0;
+}
+
+.deshacer span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.salirAislado {
   border: 0;
   border-radius: 10px;
   padding: 9px 14px;
@@ -252,10 +361,10 @@
   overflow-y: auto;
   background: var(--panel);
   border-left: 1px solid var(--borde);
-  padding: 20px 18px 16px;
+  padding: 16px 14px 12px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
 }
 
 .cabecera {
@@ -273,8 +382,8 @@
 }
 
 .titulo {
-  margin: 2px 0 0;
-  font-size: 20px;
+  margin: 1px 0 0;
+  font-size: 18px;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -293,12 +402,12 @@
 .buscador input {
   width: 100%;
   box-sizing: border-box;
-  padding: 10px 12px;
-  border-radius: 10px;
+  padding: 8px 11px;
+  border-radius: 9px;
   border: 1px solid var(--borde);
   background: var(--panel-2);
   color: var(--texto);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .buscador input::placeholder {
@@ -392,7 +501,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .boton,
@@ -424,34 +533,37 @@
 .seccion {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .seccion h3 {
   margin: 0;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--texto-2);
 }
 
+/* Dos columnas: seis sistemas en tres filas. */
 .sistemas {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 4px;
 }
 
 .sistema,
 .sistemaOn {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
+  min-width: 0;
   border: 0;
   background: transparent;
-  padding: 7px 8px;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 5px 7px;
+  border-radius: 7px;
+  font-size: 13px;
+  line-height: 1.2;
   text-align: left;
   cursor: pointer;
 }
@@ -489,14 +601,14 @@
 .zonas {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 4px;
 }
 
 .zona,
 .zonaActiva {
   border-radius: 99px;
-  padding: 6px 12px;
-  font-size: 13px;
+  padding: 4px 10px;
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -519,7 +631,7 @@
 
 .credito {
   margin-top: auto;
-  padding-top: 12px;
+  padding-top: 10px;
   border-top: 1px solid var(--borde);
   font-size: 11px;
   line-height: 1.5;
@@ -578,7 +690,7 @@
     padding: 7px 9px;
   }
 
-  .salirAislado {
+  .accionesEscena {
     top: auto;
     bottom: 12px;
     right: 12px;

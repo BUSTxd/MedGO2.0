@@ -39,7 +39,10 @@ export const REGIONES: RegionAtlas[] = [
     //     (inserciones del trapecio y del platisma).
     // v7: + esternocleidomastoideo, temporal (mastoides) y nervio accesorio (XI),
     //     también de Z-Anatomy.
-    version: 'v7',
+    // v8: + plexo cervical (ramos C1-C4, occipital menor, auricular mayor,
+    //     transverso del cuello, supraclaviculares, frénico, ramos al ECM y al
+    //     trapecio) y nervio toracodorsal, modelados (nervios-modelados.mjs).
+    version: 'v8',
     zonas: [
       { id: 'cuello', nombre: 'Cabeza y cuello' },
       { id: 'tronco', nombre: 'Columna y tórax' },
@@ -49,8 +52,8 @@ export const REGIONES: RegionAtlas[] = [
       { id: 'mano', nombre: 'Mano' },
     ],
     faltan: [
-      'Nervio toracodorsal (inerva el dorsal ancho)',
-      'Ramos del plexo cervical (C2-C4) al esternocleidomastoideo y al trapecio: solo está el accesorio (XI)',
+      'Asa cervical y sus ramos a los infrahioideos (los infrahioideos tampoco están)',
+      'El plexo cervical y el nervio toracodorsal son un esquema modelado por MedGO, no una disección: el recorrido es aproximado',
       'Fascia clavipectoral',
       'Escalenos y omohioideo',
       'Ganglios linfáticos axilares',
@@ -128,5 +131,5 @@ export const CREDITO = {
   texto: 'Open3DModel (LUMC, UMC Utrecht, Maastricht University, KU Leuven) · CC BY-SA 4.0',
   url: 'https://anatomytool.org/open3dmodel',
   adaptacion:
-    'Basado en Z-Anatomy y BodyParts3D © DBCLS; platisma, esternocleidomastoideo, nervio accesorio, occipital, temporal, mandíbula y ligamento nucal tomados de Z-Anatomy (CC BY-SA 4.0). Geometría simplificada, dividida por región y rotulada en español; se comparte con la misma licencia.',
+    'Basado en Z-Anatomy y BodyParts3D © DBCLS; platisma, esternocleidomastoideo, nervio accesorio, occipital, temporal, mandíbula y ligamento nucal tomados de Z-Anatomy (CC BY-SA 4.0); plexo cervical y nervio toracodorsal modelados por MedGO sobre el modelo. Geometría simplificada, dividida por región y rotulada en español; se comparte con la misma licencia.',
 };

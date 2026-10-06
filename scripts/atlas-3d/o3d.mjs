@@ -74,6 +74,10 @@ const AXIAL = /vertebra|^atlas|^axis|^art cart of (atlas|axis|sacrum)|sacrum|coc
 const CUELLO = new Set([
   'Platysma', 'Sternocleidomastoid muscle', 'Accessory nerve (XI)',
   'Occipital bone', 'Temporal bone', 'Mandible', 'Nuchal ligament',
+  // modelados (nervios-modelados.mjs)
+  'Cervical plexus (C1-C4 ventral rami)', 'Lesser occipital nerve', 'Great auricular nerve',
+  'Transverse cervical nerve', 'Supraclavicular nerves', 'Phrenic nerve',
+  'Muscular branches of cervical plexus to sternocleidomastoid', 'Muscular branches of cervical plexus to trapezius',
 ]);
 
 // Ajustes de geometría de piezas de Z-Anatomy contra los músculos de
@@ -96,6 +100,7 @@ export const REGIONES_O3D = {
     zona(en, [, y]) {
       if (CUELLO.has(en)) return 'cuello';
       if (AXIAL.test(en)) return 'tronco';
+      if (en === 'Thoracodorsal nerve') return 'hombro'; // su centro cae justo en el corte (1,30 m)
       if (y > 1.29) return 'hombro';
       if (y > 1.1) return 'brazo';
       if (y > 0.862) return 'antebrazo';
@@ -189,6 +194,16 @@ const NOMBRES = {
   'Accessory nerve (XI)': 'Nervio accesorio (XI)',
   'Occipital bone': 'Hueso occipital',
   'Temporal bone': 'Hueso temporal',
+  // ── Modelados por MedGO (nervios-modelados.mjs) ──
+  'Cervical plexus (C1-C4 ventral rami)': 'Plexo cervical (ramos anteriores C1-C4)',
+  'Lesser occipital nerve': 'Nervio occipital menor',
+  'Great auricular nerve': 'Nervio auricular mayor',
+  'Transverse cervical nerve': 'Nervio transverso del cuello',
+  'Supraclavicular nerves': 'Nervios supraclaviculares',
+  'Muscular branches of cervical plexus to sternocleidomastoid': 'Ramos del plexo cervical al esternocleidomastoideo',
+  'Muscular branches of cervical plexus to trapezius': 'Ramos del plexo cervical al trapecio',
+  'Phrenic nerve': 'Nervio frénico',
+  'Thoracodorsal nerve': 'Nervio toracodorsal',
   'Mandible': 'Mandíbula',
   'Nuchal ligament': 'Ligamento nucal',
   // ── Huesos ──

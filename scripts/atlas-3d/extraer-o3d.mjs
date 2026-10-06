@@ -14,6 +14,8 @@
 // (el superior v7 lleva platisma, esternocleidomastoideo, nervio accesorio,
 // occipital, temporal, mandíbula y ligamento nucal; DESPLAZAR en o3d.mjs).
 // Su id lleva `za-` en vez de `o3d-`.
+// `--propio`: nervios modelados con nervios-modelados.mjs (plexo cervical,
+// toracodorsal). Id `medgo-`; no se simplifican (ya son tubos de 8 lados).
 //
 // Deja en scripts/atlas-3d/salida/<region>/ manifiesto.json + geometria.bin.gz.
 // Las coordenadas del OBJ ya son las del atlas (metros, +Y arriba, +X izquierda).
@@ -34,13 +36,14 @@ const arg = (n, def) => {
 const REGION = arg('region');
 const OBJ = arg('obj');
 const ZA = arg('za');
+const PROPIO = arg('propio');
 const RATIO = Number(arg('ratio', 0.22));
 const def = REGIONES_O3D[REGION];
-if (!def || !OBJ) throw new Error(`Uso: --region <${Object.keys(REGIONES_O3D).join('|')}> --obj <archivo.obj> [--za <za.obj>]`);
+if (!def || !OBJ) throw new Error(`Uso: --region <${Object.keys(REGIONES_O3D).join('|')}> --obj <archivo.obj> [--za <za.obj>] [--propio <propios.obj>]`);
 
 // ─── Lectura del OBJ (un objeto por estructura; solo v y f) ─────────────────
 const objetos = [];
-for (const [archivo, fuente] of [[OBJ, 'o3d'], ...(ZA ? [[ZA, 'za']] : [])]) {
+for (const [archivo, fuente] of [[OBJ, 'o3d'], ...(ZA ? [[ZA, 'za']] : []), ...(PROPIO ? [[PROPIO, 'medgo']] : [])]) {
   let cur = null, base = 0;
   const rl = readline.createInterface({ input: fs.createReadStream(archivo), crlfDelay: Infinity });
   for await (const l of rl) {
@@ -99,8 +102,8 @@ for (const p of piezas) {
   trianOrig += idx.length / 3;
   // Mantener cada estructura reconocible: nunca menos de 64 triángulos, error
   // acotado al 0,4 % de su extensión (los nervios finos no se aplastan).
-  const objetivo = Math.min(idx.length, Math.max(192, Math.floor((idx.length * RATIO) / 3) * 3));
-  const [simp] = MeshoptSimplifier.simplify(idx, pos, 3, objetivo, 0.004);
+  const objetivo = p.fuente === 'medgo' ? idx.length : Math.min(idx.length, Math.max(192, Math.floor((idx.length * RATIO) / 3) * 3));
+  const [simp] = p.fuente === 'medgo' ? [idx] : MeshoptSimplifier.simplify(idx, pos, 3, objetivo, 0.004);
   const [remap, n] = MeshoptSimplifier.compactMesh(simp);
   const pos2 = new Float32Array(n * 3);
   for (let i = 0; i < remap.length; i++) if (remap[i] !== 0xffffffff) pos2.set(pos.subarray(i * 3, i * 3 + 3), remap[i] * 3);
@@ -179,6 +182,12 @@ const manifiesto = {
         licencia: 'CC BY-SA 4.0',
         url: 'https://www.z-anatomy.com',
         piezas: piezas.filter((p) => p.fuente === 'za').map((p) => p.en),
+      },
+    } : {}),
+    ...(PROPIO ? {
+      modelados: {
+        autor: 'MedGO (esquema anatómico sobre este modelo, scripts/atlas-3d/nervios-modelados.mjs)',
+        piezas: piezas.filter((p) => p.fuente === 'medgo').map((p) => p.en),
       },
     } : {}),
   },
