@@ -32,7 +32,7 @@ const EXCLUIR = new Set([
 
 // ─── Sistema ─────────────────────────────────────────────────────────────────
 const HUESOS = new Set([
-  'Occipital bone', 'Mandible', // de Z-Anatomy (za-a-obj.py)
+  'Occipital bone', 'Temporal bone', 'Mandible', // de Z-Anatomy (za-a-obj.py)
   'Atlas (C1)', 'Axis (C2)', 'Sacrum', 'Coccyx', 'Manubrium of sternum', 'Body of sternum', 'Xiphoid process',
   'Clavicle', 'Scapula', 'Humerus', 'Radius', 'Ulna', 'Scaphoid', 'Lunate bone', 'Triquetrum', 'Pisiform',
   'Trapezium', 'Trapezoid', 'Capitate', 'Hamate', 'Sesamoid bones of hand', 'Sesamoid bones of foot',
@@ -68,9 +68,24 @@ export function sistemaDe(en) {
 // que las piezas compartidas (T12-L5, sacro) no cambien de zona según qué
 // región se cargó primero.
 const AXIAL = /vertebra|^atlas|^axis|^art cart of (atlas|axis|sacrum)|sacrum|coccyx|sacrococcygeal|annulus fibrosus|nucleus pulposus|^rib \(|rib art cart|costal cart|sternum|manubrium|xiphoid|sternocostal|spinal cord|sympathic|arachnoid|intercornual/i;
-// Lo que se añade de Z-Anatomy para las inserciones del trapecio (línea nucal
-// superior, protuberancia occipital, ligamento nucal) y del platisma (mandíbula).
-const CUELLO = new Set(['Platysma', 'Occipital bone', 'Mandible', 'Nuchal ligament']);
+// Lo que se añade de Z-Anatomy: platisma y esternocleidomastoideo con su nervio
+// (accesorio, XI, que sigue al trapecio) y donde se insertan ellos y el trapecio
+// (occipital, mastoides del temporal, ligamento nucal, mandíbula).
+const CUELLO = new Set([
+  'Platysma', 'Sternocleidomastoid muscle', 'Accessory nerve (XI)',
+  'Occipital bone', 'Temporal bone', 'Mandible', 'Nuchal ligament',
+]);
+
+// Ajustes de geometría de piezas de Z-Anatomy contra los músculos de
+// Open3DModel, que los remodeló. El XI de Z-Anatomy va bien pegado al ECM, pero
+// bajo el cuello se hundía 1-2 mm en los romboides y el elevador de la escápula
+// (el trapecio de Open3DModel queda 1-2 cm más atrás que el de Z-Anatomy):
+// 5 mm hacia atrás desde 1,47 m, entrando en 3 cm, lo deja entre romboides y
+// trapecio, que es su plano. Medido por rayos: ninguna muestra dentro de los
+// romboides; 5 de 197 rozan el origen del elevador junto al atlas, bajo el ECM.
+export const DESPLAZAR = {
+  'Accessory nerve (XI)': (x, y, z) => [x, y, z - 0.005 * Math.min(1, Math.max(0, (1.47 - y) / 0.03))],
+};
 
 export const REGIONES_O3D = {
   'miembro-superior-derecho': {
@@ -170,7 +185,10 @@ export function nombreDe(region, en) {
 const NOMBRES = {
   // ── De Z-Anatomy ──
   'Platysma': 'Platisma',
+  'Sternocleidomastoid muscle': 'Esternocleidomastoideo',
+  'Accessory nerve (XI)': 'Nervio accesorio (XI)',
   'Occipital bone': 'Hueso occipital',
+  'Temporal bone': 'Hueso temporal',
   'Mandible': 'Mandíbula',
   'Nuchal ligament': 'Ligamento nucal',
   // ── Huesos ──

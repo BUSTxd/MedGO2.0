@@ -11,7 +11,8 @@
 //   node scripts/atlas-3d/extraer-o3d.mjs --region miembro-superior-derecho --obj <upper-limb.obj> [--za <za.obj>] [--ratio 0.22]
 //
 // `--za`: piezas que Open3DModel no trae, sacadas de Z-Anatomy con za-a-obj.py
-// (el superior v6 lleva platisma, occipital, mandíbula y ligamento nucal).
+// (el superior v7 lleva platisma, esternocleidomastoideo, nervio accesorio,
+// occipital, temporal, mandíbula y ligamento nucal; DESPLAZAR en o3d.mjs).
 // Su id lleva `za-` en vez de `o3d-`.
 //
 // Deja en scripts/atlas-3d/salida/<region>/ manifiesto.json + geometria.bin.gz.
@@ -23,7 +24,7 @@ import readline from 'node:readline';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { MeshoptSimplifier } from 'meshoptimizer';
-import { REGIONES_O3D, limpiar, idDe, sistemaDe, nombreDe } from './o3d.mjs';
+import { REGIONES_O3D, DESPLAZAR, limpiar, idDe, sistemaDe, nombreDe } from './o3d.mjs';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const arg = (n, def) => {
@@ -67,6 +68,8 @@ for (const o of objetos) {
   if (!sistema || !o.f.length) continue;
   const nombre = nombreDe(REGION, en);
   if (!nombre) { faltan.push(en); continue; }
+  const mover = o.fuente === 'za' && DESPLAZAR[en];
+  if (mover) for (let i = 0; i < o.v.length; i += 3) [o.v[i], o.v[i + 1], o.v[i + 2]] = mover(o.v[i], o.v[i + 1], o.v[i + 2]);
   piezas.push({ o, en, sistema, nombre, fuente: o.fuente });
 }
 if (faltan.length) throw new Error(`Sin traducción en o3d.mjs (${faltan.length}):\n  ${[...new Set(faltan)].join('\n  ')}`);

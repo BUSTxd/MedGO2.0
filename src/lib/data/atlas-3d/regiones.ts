@@ -37,7 +37,9 @@ export const REGIONES: RegionAtlas[] = [
     //     ligamentos, cápsulas y bolsas; sin platisma, occipital ni mandíbula.
     // v6: + platisma, occipital, mandíbula y ligamento nucal de Z-Anatomy
     //     (inserciones del trapecio y del platisma).
-    version: 'v6',
+    // v7: + esternocleidomastoideo, temporal (mastoides) y nervio accesorio (XI),
+    //     también de Z-Anatomy.
+    version: 'v7',
     zonas: [
       { id: 'cuello', nombre: 'Cabeza y cuello' },
       { id: 'tronco', nombre: 'Columna y tórax' },
@@ -47,9 +49,10 @@ export const REGIONES: RegionAtlas[] = [
       { id: 'mano', nombre: 'Mano' },
     ],
     faltan: [
-      'Nervio toracodorsal (inerva el dorsal ancho) y nervio accesorio (XI, inerva el trapecio)',
+      'Nervio toracodorsal (inerva el dorsal ancho)',
+      'Ramos del plexo cervical (C2-C4) al esternocleidomastoideo y al trapecio: solo está el accesorio (XI)',
       'Fascia clavipectoral',
-      'Músculos del cuello: esternocleidomastoideo, escalenos y omohioideo',
+      'Escalenos y omohioideo',
       'Ganglios linfáticos axilares',
     ],
   },
@@ -125,5 +128,5 @@ export const CREDITO = {
   texto: 'Open3DModel (LUMC, UMC Utrecht, Maastricht University, KU Leuven) · CC BY-SA 4.0',
   url: 'https://anatomytool.org/open3dmodel',
   adaptacion:
-    'Basado en Z-Anatomy y BodyParts3D © DBCLS; platisma, occipital, mandíbula y ligamento nucal tomados de Z-Anatomy (CC BY-SA 4.0). Geometría simplificada, dividida por región y rotulada en español; se comparte con la misma licencia.',
+    'Basado en Z-Anatomy y BodyParts3D © DBCLS; platisma, esternocleidomastoideo, nervio accesorio, occipital, temporal, mandíbula y ligamento nucal tomados de Z-Anatomy (CC BY-SA 4.0). Geometría simplificada, dividida por región y rotulada en español; se comparte con la misma licencia.',
 };

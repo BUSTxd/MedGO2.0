@@ -5,8 +5,9 @@
 #
 # Startup.blend es el de https://github.com/LluisV/Z-Anatomy. Open3DModel parte
 # de Z-Anatomy: el esqueleto coincide (C1/C2 a < 1 mm, clavícula y escápula a
-# ~2 mm). Sus nervios y vasos, en cambio, no (~1 cm): de ahí solo huesos,
-# músculos y ligamentos.
+# ~2 mm). Sus nervios y vasos, en cambio, no (~1 cm de los de Open3DModel): uno
+# que Open3DModel no trae (el accesorio) se mide contra los músculos de
+# Open3DModel y, si hace falta, se corrige con DESPLAZAR en o3d.mjs.
 #
 # Coordenadas como el exportador OBJ de Blender (Y arriba): (x, z, -y), en metros,
 # con los modificadores aplicados (el ligamento nucal es un plano con grosor).
