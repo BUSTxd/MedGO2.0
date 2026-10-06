@@ -118,7 +118,9 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
   const titulo = regiones.map((id) => regionPorId(id)?.nombre ?? id).join(' + ');
 
   // ─── Estado de la exploración ──────────────────────────────────────────────
-  const [sistemas, setSistemas] = useState<Set<Sistema>>(() => new Set(sistemasPresentes.map((x) => x.id)));
+  const [sistemas, setSistemas] = useState<Set<Sistema>>(
+    () => new Set(sistemasPresentes.filter((x) => !x.apagado).map((x) => x.id)),
+  );
   const [zona, setZona] = useState<string>('todo');
   const [ocultas, setOcultas] = useState<Set<string>>(() => new Set());
   const [aislado, setAislado] = useState<string | null>(null);

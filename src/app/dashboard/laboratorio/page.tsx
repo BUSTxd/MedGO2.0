@@ -178,8 +178,8 @@ const LAB_TOPICS: Topic[] = [
     icon: <LocomotorIcon size={26} color="#ffffff" colorDark="rgba(255,255,255,0.7)" />,
     experiments: [
       // Un solo visor para todo el atlas 3D: cada región es un paquete aparte (?region=).
-      { name: 'Miembro superior 3D', desc: 'Hombro, brazo, antebrazo y mano derechos, con la columna y el esternón donde se insertan sus músculos: huesos, músculos, arterias y venas', color: '#c9a227', href: '/dashboard/laboratorio/atlas-3d?region=miembro-superior-derecho' },
-      { name: 'Miembro inferior 3D', desc: 'Pelvis y región glútea, muslo, rodilla, pierna y pie derechos, con la columna lumbar donde se insertan sus músculos: huesos, músculos, arterias y venas', color: '#c9a227', href: '/dashboard/laboratorio/atlas-3d?region=miembro-inferior-derecho' },
+      { name: 'Miembro superior 3D', desc: 'Hombro, brazo, antebrazo y mano derechos con el plexo braquial completo: huesos, músculos, vasos, nervios y ligamentos', color: '#c9a227', href: '/dashboard/laboratorio/atlas-3d?region=miembro-superior-derecho' },
+      { name: 'Miembro inferior 3D', desc: 'Pelvis y región glútea, muslo, rodilla, pierna y pie derechos con los plexos lumbar y sacro: huesos, músculos, vasos, nervios, ligamentos y meniscos', color: '#c9a227', href: '/dashboard/laboratorio/atlas-3d?region=miembro-inferior-derecho' },
     ],
   },
   {
