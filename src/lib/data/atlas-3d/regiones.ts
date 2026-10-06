@@ -20,6 +20,8 @@ export interface RegionAtlas {
   version: string;
   /** Zonas en que se divide, en orden de proximal a distal. */
   zonas: { id: string; nombre: string }[];
+  /** Lo que el modelo aún no trae: se avisa antes de empezar. */
+  faltan: string[];
 }
 
 export const REGIONES: RegionAtlas[] = [
@@ -33,13 +35,22 @@ export const REGIONES: RegionAtlas[] = [
     //     con sus discos, esternón, costillas 7.ª-9.ª; + platisma y mandíbula.
     // v5: Open3DModel (revisado por anatomistas): plexo braquial y nervios,
     //     ligamentos, cápsulas y bolsas; sin platisma, occipital ni mandíbula.
-    version: 'v5',
+    // v6: + platisma, occipital, mandíbula y ligamento nucal de Z-Anatomy
+    //     (inserciones del trapecio y del platisma).
+    version: 'v6',
     zonas: [
+      { id: 'cuello', nombre: 'Cabeza y cuello' },
       { id: 'tronco', nombre: 'Columna y tórax' },
       { id: 'hombro', nombre: 'Hombro' },
       { id: 'brazo', nombre: 'Brazo' },
       { id: 'antebrazo', nombre: 'Antebrazo' },
       { id: 'mano', nombre: 'Mano' },
+    ],
+    faltan: [
+      'Nervio toracodorsal (inerva el dorsal ancho) y nervio accesorio (XI, inerva el trapecio)',
+      'Fascia clavipectoral',
+      'Músculos del cuello: esternocleidomastoideo, escalenos y omohioideo',
+      'Ganglios linfáticos axilares',
     ],
   },
   {
@@ -57,8 +68,18 @@ export const REGIONES: RegionAtlas[] = [
       { id: 'pierna', nombre: 'Rodilla y pierna' },
       { id: 'pie', nombre: 'Tobillo y pie' },
     ],
+    faltan: [
+      'Arterias y venas ilíacas, glúteas, obturatrices y pudendas internas: los vasos empiezan en la femoral',
+      'Cuadrado lumbar y elevador del ano',
+      'Ligamento inguinal',
+      'Triángulo femoral y conductos aductor y femoral como espacios (sus paredes sí están)',
+      'Ganglios linfáticos inguinales',
+    ],
   },
 ];
+
+/** Vale para todas las regiones; va al final del aviso. */
+export const FALTA_EN_TODAS = 'Solo está el lado derecho, sin piel ni tejido subcutáneo.';
 
 export const REGION_POR_DEFECTO = REGIONES[0].id;
 
@@ -104,5 +125,5 @@ export const CREDITO = {
   texto: 'Open3DModel (LUMC, UMC Utrecht, Maastricht University, KU Leuven) · CC BY-SA 4.0',
   url: 'https://anatomytool.org/open3dmodel',
   adaptacion:
-    'Basado en Z-Anatomy y BodyParts3D © DBCLS. Geometría simplificada, dividida por región y rotulada en español; se comparte con la misma licencia.',
+    'Basado en Z-Anatomy y BodyParts3D © DBCLS; platisma, occipital, mandíbula y ligamento nucal tomados de Z-Anatomy (CC BY-SA 4.0). Geometría simplificada, dividida por región y rotulada en español; se comparte con la misma licencia.',
 };

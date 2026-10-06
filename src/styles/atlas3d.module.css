@@ -87,6 +87,62 @@
   transition: width 0.2s ease;
 }
 
+/* Aviso de lo que falta, mientras baja el modelo. Filete a la izquierda, como la ficha. */
+.aviso {
+  width: min(520px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  color: var(--texto);
+  border-left: 3px solid var(--acento);
+  padding: 4px 0 4px 18px;
+}
+
+.aviso h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.avisoRegion h3 {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+}
+
+.avisoRegion ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.avisoRegion li::marker {
+  color: var(--acento);
+}
+
+.avisoCarga {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--texto-2);
+}
+
+.aviso .boton {
+  padding: 10px 22px;
+  font-size: 14px;
+}
+
 /* ─── Distribución ─────────────────────────────────────────────────────────── */
 
 .lab {

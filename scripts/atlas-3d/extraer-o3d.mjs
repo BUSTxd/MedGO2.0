@@ -8,7 +8,11 @@
 // anatomistas de LUMC, UMC Utrecht, Maastricht y KU Leuven: nervios y vasos
 // de los miembros remodelados de cero. Solo traen el lado derecho.
 //
-//   node scripts/atlas-3d/extraer-o3d.mjs --region miembro-superior-derecho --obj <upper-limb.obj> [--ratio 0.22]
+//   node scripts/atlas-3d/extraer-o3d.mjs --region miembro-superior-derecho --obj <upper-limb.obj> [--za <za.obj>] [--ratio 0.22]
+//
+// `--za`: piezas que Open3DModel no trae, sacadas de Z-Anatomy con za-a-obj.py
+// (el superior v6 lleva platisma, occipital, mandíbula y ligamento nucal).
+// Su id lleva `za-` en vez de `o3d-`.
 //
 // Deja en scripts/atlas-3d/salida/<region>/ manifiesto.json + geometria.bin.gz.
 // Las coordenadas del OBJ ya son las del atlas (metros, +Y arriba, +X izquierda).
@@ -28,18 +32,19 @@ const arg = (n, def) => {
 };
 const REGION = arg('region');
 const OBJ = arg('obj');
+const ZA = arg('za');
 const RATIO = Number(arg('ratio', 0.22));
 const def = REGIONES_O3D[REGION];
-if (!def || !OBJ) throw new Error(`Uso: --region <${Object.keys(REGIONES_O3D).join('|')}> --obj <archivo.obj>`);
+if (!def || !OBJ) throw new Error(`Uso: --region <${Object.keys(REGIONES_O3D).join('|')}> --obj <archivo.obj> [--za <za.obj>]`);
 
 // ─── Lectura del OBJ (un objeto por estructura; solo v y f) ─────────────────
 const objetos = [];
-{
+for (const [archivo, fuente] of [[OBJ, 'o3d'], ...(ZA ? [[ZA, 'za']] : [])]) {
   let cur = null, base = 0;
-  const rl = readline.createInterface({ input: fs.createReadStream(OBJ), crlfDelay: Infinity });
+  const rl = readline.createInterface({ input: fs.createReadStream(archivo), crlfDelay: Infinity });
   for await (const l of rl) {
     if (l.startsWith('o ')) {
-      cur = { crudo: l.slice(2), v: [], f: [], base };
+      cur = { crudo: l.slice(2), fuente, v: [], f: [], base };
       objetos.push(cur);
     } else if (l.startsWith('v ')) {
       const p = l.split(/\s+/);
@@ -62,7 +67,7 @@ for (const o of objetos) {
   if (!sistema || !o.f.length) continue;
   const nombre = nombreDe(REGION, en);
   if (!nombre) { faltan.push(en); continue; }
-  piezas.push({ o, en, sistema, nombre });
+  piezas.push({ o, en, sistema, nombre, fuente: o.fuente });
 }
 if (faltan.length) throw new Error(`Sin traducción en o3d.mjs (${faltan.length}):\n  ${[...new Set(faltan)].join('\n  ')}`);
 
@@ -103,7 +108,7 @@ for (const p of piezas) {
   for (let i = 0; i < pos2.length; i++) { min[i % 3] = Math.min(min[i % 3], pos2[i]); max[i % 3] = Math.max(max[i % 3], pos2[i]); }
   p.caja = [min, max];
   p.zona = def.zona(p.en, min.map((v, i) => (v + max[i]) / 2));
-  p.id = idDe(REGION, p.en);
+  p.id = idDe(REGION, p.en, p.fuente);
   delete p.o;
 }
 
@@ -165,6 +170,14 @@ const manifiesto = {
     licencia: 'CC BY-SA 4.0',
     url: 'https://anatomytool.org/open3dmodel',
     adaptacion: `Simplificado (meshoptimizer, ~${Math.round(RATIO * 100)} % de los triángulos), rotulado en español.`,
+    ...(ZA ? {
+      complementos: {
+        modelo: 'Z-Anatomy',
+        licencia: 'CC BY-SA 4.0',
+        url: 'https://www.z-anatomy.com',
+        piezas: piezas.filter((p) => p.fuente === 'za').map((p) => p.en),
+      },
+    } : {}),
   },
   unidades: 'm',
   min, paso,

@@ -32,6 +32,7 @@ const EXCLUIR = new Set([
 
 // ─── Sistema ─────────────────────────────────────────────────────────────────
 const HUESOS = new Set([
+  'Occipital bone', 'Mandible', // de Z-Anatomy (za-a-obj.py)
   'Atlas (C1)', 'Axis (C2)', 'Sacrum', 'Coccyx', 'Manubrium of sternum', 'Body of sternum', 'Xiphoid process',
   'Clavicle', 'Scapula', 'Humerus', 'Radius', 'Ulna', 'Scaphoid', 'Lunate bone', 'Triquetrum', 'Pisiform',
   'Trapezium', 'Trapezoid', 'Capitate', 'Hamate', 'Sesamoid bones of hand', 'Sesamoid bones of foot',
@@ -67,6 +68,9 @@ export function sistemaDe(en) {
 // que las piezas compartidas (T12-L5, sacro) no cambien de zona según qué
 // región se cargó primero.
 const AXIAL = /vertebra|^atlas|^axis|^art cart of (atlas|axis|sacrum)|sacrum|coccyx|sacrococcygeal|annulus fibrosus|nucleus pulposus|^rib \(|rib art cart|costal cart|sternum|manubrium|xiphoid|sternocostal|spinal cord|sympathic|arachnoid|intercornual/i;
+// Lo que se añade de Z-Anatomy para las inserciones del trapecio (línea nucal
+// superior, protuberancia occipital, ligamento nucal) y del platisma (mandíbula).
+const CUELLO = new Set(['Platysma', 'Occipital bone', 'Mandible', 'Nuchal ligament']);
 
 export const REGIONES_O3D = {
   'miembro-superior-derecho': {
@@ -75,6 +79,7 @@ export const REGIONES_O3D = {
     // Cortes por la altura del centro (Open3DModel): bajo la escápula (1,255 m)
     // y la cabeza humeral → brazo; codo (1,10 m); muñeca (semilunar, 0,85-0,86 m).
     zona(en, [, y]) {
+      if (CUELLO.has(en)) return 'cuello';
       if (AXIAL.test(en)) return 'tronco';
       if (y > 1.29) return 'hombro';
       if (y > 1.1) return 'brazo';
@@ -110,8 +115,8 @@ const COMPARTIDAS = new Set([
   'Annulus fibrosus L4 L5', 'Annulus fibrosus L5 S1',
 ]);
 const slug = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-export function idDe(region, en) {
-  const base = `o3d-${slug(en)}`;
+export function idDe(region, en, fuente = 'o3d') {
+  const base = `${fuente}-${slug(en)}`;
   if (COMPARTIDAS.has(en)) return base;
   return `${region === 'miembro-superior-derecho' ? 'ms' : 'mi'}-${base}`;
 }
@@ -163,6 +168,11 @@ export function nombreDe(region, en) {
 // Un valor { s, i } distingue el mismo nombre inglés en el miembro superior (s)
 // y en el inferior (i).
 const NOMBRES = {
+  // ── De Z-Anatomy ──
+  'Platysma': 'Platisma',
+  'Occipital bone': 'Hueso occipital',
+  'Mandible': 'Mandíbula',
+  'Nuchal ligament': 'Ligamento nucal',
   // ── Huesos ──
   'Atlas (C1)': 'Atlas (C1)',
   'Axis (C2)': 'Axis (C2)',

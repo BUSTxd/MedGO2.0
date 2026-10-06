@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Vector3 } from 'three';
-import { CREDITO, SISTEMA, SISTEMAS, regionPorId, type Sistema } from '@/lib/data/atlas-3d/regiones';
+import { CREDITO, FALTA_EN_TODAS, SISTEMA, SISTEMAS, regionPorId, type Sistema } from '@/lib/data/atlas-3d/regiones';
 import { cargarAtlas, type Atlas } from '@/lib/atlas-3d/cargar';
 import Escena, { type PeticionCamara, type Transparencia, type Vista } from './Escena';
 import s from '@/styles/atlas3d.module.css';
@@ -37,6 +37,7 @@ export default function Visor({ regiones }: { regiones: string[] }) {
   const [progreso, setProgreso] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [intento, setIntento] = useState(0);
+  const [empezado, setEmpezado] = useState(false);
 
   useEffect(() => {
     const abort = new AbortController();
@@ -63,17 +64,44 @@ export default function Visor({ regiones }: { regiones: string[] }) {
       </div>
     );
   }
-  if (!atlas) {
-    return (
-      <div className={s.cargando} aria-busy="true">
-        <p>Descargando el modelo…</p>
-        <div className={s.barra} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progreso * 100)}>
-          <span style={{ width: `${progreso * 100}%` }} />
-        </div>
-      </div>
-    );
+  // El aviso de lo que falta se lee mientras baja el modelo: no añade espera.
+  if (!atlas || !empezado) {
+    return <Aviso regiones={regiones} progreso={atlas ? 1 : progreso} listo={!!atlas} onEmpezar={() => setEmpezado(true)} />;
   }
   return <Explorador atlas={atlas} regiones={regiones} />;
+}
+
+function Aviso({ regiones, progreso, listo, onEmpezar }: { regiones: string[]; progreso: number; listo: boolean; onEmpezar: () => void }) {
+  const lista = regiones.map(regionPorId).filter((r) => r !== undefined);
+  return (
+    <div className={s.cargando}>
+      <section className={s.aviso} aria-labelledby="aviso-atlas">
+        <span className={s.kicker}>Antes de empezar</span>
+        <h2 id="aviso-atlas">Lo que este modelo aún no trae</h2>
+        {lista.map((r) => (
+          <div key={r.id} className={s.avisoRegion}>
+            {lista.length > 1 && <h3>{r.nombre}</h3>}
+            <ul>
+              {r.faltan.map((f) => <li key={f}>{f}</li>)}
+            </ul>
+          </div>
+        ))}
+        <p className={s.nota}>{FALTA_EN_TODAS}</p>
+        {listo ? (
+          <button type="button" className={s.boton} onClick={onEmpezar} autoFocus>
+            Empezar
+          </button>
+        ) : (
+          <div className={s.avisoCarga} aria-busy="true">
+            <div className={s.barra} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progreso * 100)}>
+              <span style={{ width: `${progreso * 100}%` }} />
+            </div>
+            <small>Descargando el modelo… {Math.round(progreso * 100)} %</small>
+          </div>
+        )}
+      </section>
+    </div>
+  );
 }
 
 function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
