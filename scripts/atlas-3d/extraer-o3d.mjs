@@ -25,7 +25,7 @@ import path from 'node:path';
 import readline from 'node:readline';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
-import { MeshoptSimplifier } from 'meshoptimizer';
+import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
 import { REGIONES_O3D, DESPLAZAR, limpiar, idDe, sistemaDe, nombreDe } from './o3d.mjs';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
@@ -63,6 +63,7 @@ for (const [archivo, fuente] of [[OBJ, 'o3d'], ...(ZA ? [[ZA, 'za']] : []), ...(
 
 // ─── Selección, nombre, sistema, zona ────────────────────────────────────────
 await MeshoptSimplifier.ready;
+await MeshoptEncoder.ready;
 const faltan = [];
 const piezas = [];
 for (const o of objetos) {
@@ -76,24 +77,6 @@ for (const o of objetos) {
   piezas.push({ o, en, sistema, nombre, fuente: o.fuente });
 }
 if (faltan.length) throw new Error(`Sin traducción en o3d.mjs (${faltan.length}):\n  ${[...new Set(faltan)].join('\n  ')}`);
-
-// Normales suaves ponderadas por área.
-function normales(pos, idx) {
-  const n = new Float32Array(pos.length);
-  for (let t = 0; t < idx.length; t += 3) {
-    const a = idx[t] * 3, b = idx[t + 1] * 3, c = idx[t + 2] * 3;
-    const ux = pos[b] - pos[a], uy = pos[b + 1] - pos[a + 1], uz = pos[b + 2] - pos[a + 2];
-    const vx = pos[c] - pos[a], vy = pos[c + 1] - pos[a + 1], vz = pos[c + 2] - pos[a + 2];
-    const nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
-    for (const k of [a, b, c]) { n[k] += nx; n[k + 1] += ny; n[k + 2] += nz; }
-  }
-  const out = new Int16Array(n.length);
-  for (let i = 0; i < n.length; i += 3) {
-    const l = Math.hypot(n[i], n[i + 1], n[i + 2]) || 1;
-    out[i] = Math.round((n[i] / l) * 32767); out[i + 1] = Math.round((n[i + 1] / l) * 32767); out[i + 2] = Math.round((n[i + 2] / l) * 32767);
-  }
-  return out;
-}
 
 // Mayor distancia de los vértices del original (muestreados) a la superficie
 // simplificada, que comparte vértices con el original (`pos`, índices `simp`).
@@ -161,17 +144,19 @@ for (const p of piezas) {
   trianOrig += idx.length / 3;
   // Mantener cada estructura reconocible: nunca menos de 64 triángulos, error
   // acotado al 0,4 % de su extensión (los nervios finos no se aplastan).
-  // Nervios y vasos: el simplificador (cuádricas) puede acortar un tubo fino a
+  // Nervios, vasos y ligamentos: el simplificador (cuádricas) puede acortar un tubo fino a
   // lo largo de su eje sin «error» y se comía puntas y ramitas (el axilar perdía
   // tramos de hasta 10 mm; en el visor, muñones y quiebros). Se mide el desvío
-  // real y, si algún punto del original queda a > 0,5 mm, se repite con el doble.
-  const tubular = p.sistema === 'nervio' || p.sistema === 'arteria' || p.sistema === 'vena';
+  // real y, si algún punto del original queda a > 0,5 mm, se repite con un 25 %
+  // más de triángulos (con el doble, piezas que necesitaban un 30 % acababan en el 88 %).
+  // También ligamentos y cartílagos: láminas finas que perdían bordes de 2-3 mm.
+  const tubular = p.sistema === 'nervio' || p.sistema === 'arteria' || p.sistema === 'vena' || p.sistema === 'conectivo';
   let ratio = RATIO, simp;
   for (;;) {
     const objetivo = Math.min(idx.length, Math.max(192, Math.floor((idx.length * ratio) / 3) * 3));
     [simp] = p.fuente === 'medgo' ? [idx] : MeshoptSimplifier.simplify(idx, pos, 3, objetivo, tubular ? 0.00025 : 0.004, tubular ? ['ErrorAbsolute'] : []);
     if (!tubular || p.fuente === 'medgo' || simp.length >= idx.length || desvioMax(pos, pos, simp) <= 0.0005) break;
-    ratio *= 2;
+    ratio *= 1.25;
   }
   p.ratio = ratio;
   const [remap, n] = MeshoptSimplifier.compactMesh(simp);
@@ -179,7 +164,6 @@ for (const p of piezas) {
   for (let i = 0; i < remap.length; i++) if (remap[i] !== 0xffffffff) pos2.set(pos.subarray(i * 3, i * 3 + 3), remap[i] * 3);
   p.pos = pos2;
   p.idx = simp;
-  p.nor = normales(pos2, simp);
   const min = [Infinity, Infinity, Infinity], max = [-Infinity, -Infinity, -Infinity];
   for (let i = 0; i < pos2.length; i++) { min[i % 3] = Math.min(min[i % 3], pos2[i]); max[i % 3] = Math.max(max[i % 3], pos2[i]); }
   p.caja = [min, max];
@@ -223,12 +207,21 @@ const salida = piezas.map((p) => {
   }
   const v = p.pos.length / 3;
   const idx32 = v > 65536;
-  const indices = idx32 ? Uint32Array.from(p.idx) : Uint16Array.from(p.idx);
+  // Reordenar vértices y triángulos para la caché y el códec, y codificar con
+  // meshoptimizer (EXT_meshopt_compression): un tercio que gzip sobre los números en bruto.
+  const ind = Uint32Array.from(p.idx);
+  const [remap] = MeshoptEncoder.reorderMesh(ind, true, true);
+  const vb = new Uint16Array(v * 4); // x, y, z y relleno: el códec pide múltiplos de 4 bytes
+  for (let i = 0; i < v; i++) if (remap[i] !== 0xffffffff) vb.set(q.subarray(i * 3, i * 3 + 3), remap[i] * 4);
+  const tam = idx32 ? 4 : 2;
+  const ib = idx32 ? ind : Uint16Array.from(ind);
+  const vbc = MeshoptEncoder.encodeVertexBuffer(new Uint8Array(vb.buffer), v, 8);
+  const ibc = MeshoptEncoder.encodeIndexBuffer(new Uint8Array(ib.buffer, ib.byteOffset, ib.byteLength), ind.length, tam);
   triangulos += p.idx.length / 3;
   return {
     id: p.id, nombre: p.nombre, nombreEn: p.en, sistema: p.sistema, zona: p.zona, lado: def.lado,
     v, i: p.idx.length,
-    pos: anexar(q), nor: anexar(p.nor), idx: anexar(indices),
+    vb: anexar(vbc), vbn: vbc.length, ib: anexar(ibc), ibn: ibc.length,
     ...(idx32 ? { idx32: true } : {}),
     caja: p.caja.map((c) => c.map((x) => Math.round(x * 1e5) / 1e5)),
   };
@@ -237,7 +230,9 @@ const salida = piezas.map((p) => {
 const crudo = Buffer.concat(segmentos);
 const gz = zlib.gzipSync(crudo, { level: 9 });
 const manifiesto = {
-  formato: 1,
+  // 2: vértices (posición Uint16 cuantizada, 8 bytes) e índices codificados con
+  // meshoptimizer; las normales las calcula el navegador.
+  formato: 2,
   region: REGION,
   nombre: def.nombre,
   fuente: {
@@ -278,6 +273,6 @@ console.log(`✓ ${REGION}: ${salida.length} piezas · ${Math.round(trianOrig / 
 console.log(`  geometría ${(crudo.length / 1e6).toFixed(2)} MB → ${(gz.length / 1e6).toFixed(2)} MB gzip · manifiesto ${(fs.statSync(path.join(dir, 'manifiesto.json')).size / 1e3).toFixed(1)} kB`);
 console.log(`  error de cuantización máx. ${(errorMax * 1000).toFixed(4)} mm`);
 const mas = piezas.filter((p) => p.ratio > RATIO);
-console.log(`  ${mas.length} nervios/vasos necesitaron más triángulos para no perder ramitas: ${mas.map((p) => `${p.en} ×${p.ratio / RATIO}`).join(', ')}`);
+console.log(`  ${mas.length} nervios, vasos o ligamentos necesitaron más triángulos para no perder ramitas ni bordes: ${mas.map((p) => `${p.en} ×${p.ratio / RATIO}`).join(', ')}`);
 console.log('  sistemas', cuenta('sistema'));
 console.log('  zonas', cuenta('zona'));

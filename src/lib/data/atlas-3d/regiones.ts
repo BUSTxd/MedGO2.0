@@ -50,7 +50,9 @@ export const REGIONES: RegionAtlas[] = [
     // v12: puntas redondeadas y ramas afinadas donde nacen de otro nervio (sin
     //      tubos «cortados» en las uniones).
     // v13: nervios y vasos sin ramitas perdidas al simplificar (≤ 0,5 mm del original).
-    version: 'v13',
+    // v14: formato 2 (códec de meshoptimizer, normales en el navegador): 4,4 → 1,1 MB;
+    //      también ligamentos y cartílagos sin bordes perdidos.
+    version: 'v14',
     zonas: [
       { id: 'cuello', nombre: 'Cabeza y cuello' },
       { id: 'tronco', nombre: 'Columna y tórax' },
@@ -75,7 +77,9 @@ export const REGIONES: RegionAtlas[] = [
     // v2: Open3DModel: plexos lumbar y sacro, ligamentos, meniscos y bolsas.
     //     Sus vasos empiezan en la femoral: sin ilíacas, glúteas ni obturatriz.
     // v3: nervios y vasos sin ramitas perdidas al simplificar (≤ 0,5 mm del original).
-    version: 'v3',
+    // v4: formato 2 (códec de meshoptimizer, normales en el navegador): 4,7 → 1,2 MB;
+    //     también ligamentos y cartílagos sin bordes perdidos.
+    version: 'v4',
     zonas: [
       { id: 'tronco', nombre: 'Columna y tórax' },
       { id: 'pelvis', nombre: 'Pelvis y región glútea' },

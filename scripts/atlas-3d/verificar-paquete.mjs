@@ -14,6 +14,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
+import { MeshoptDecoder } from 'meshoptimizer';
 import { config } from '../load-env.mjs';
 
 // En esta máquina el fetch de Node por IPv6 al CDN de Supabase se corta (ECONNRESET).
@@ -44,7 +45,8 @@ for (const n of ['manifiesto.json', 'geometria.bin.gz']) {
 const m = JSON.parse((await bajar('manifiesto.json')).toString('utf8'));
 const gz = await bajar('geometria.bin.gz');
 const bin = gz[0] === 0x1f && gz[1] === 0x8b ? zlib.gunzipSync(gz) : gz;
-if (m.formato !== 1) falla(`formato ${m.formato}`);
+if (m.formato !== 1 && m.formato !== 2) falla(`formato ${m.formato}`);
+await MeshoptDecoder.ready;
 if (bin.length !== m.bytes) falla(`geometría: ${bin.length} bytes, el manifiesto dice ${m.bytes}`);
 const buf = bin.buffer.slice(bin.byteOffset, bin.byteOffset + bin.byteLength);
 
@@ -57,10 +59,23 @@ for (const p of m.piezas) {
   if (!p.nombre) falla(`${p.id}: sin nombre`);
   if (!p.zona) falla(`${p.id}: sin zona`);
   if (!SISTEMAS.has(p.sistema)) falla(`${p.id}: sistema «${p.sistema}»`);
-  if (p.pos % 4 || p.nor % 4 || p.idx % 4) falla(`${p.id}: offset desalineado`);
-  if (p.idx + p.i * (p.idx32 ? 4 : 2) > bin.length) { falla(`${p.id}: se sale del archivo`); continue; }
   if (p.i % 3) falla(`${p.id}: ${p.i} índices no es múltiplo de 3`);
-  const idx = p.idx32 ? new Uint32Array(buf, p.idx, p.i) : new Uint16Array(buf, p.idx, p.i);
+  let idx;
+  if (m.formato === 2) {
+    // Lo mismo que hace src/lib/atlas-3d/cargar.ts: si el códec no decodifica, lanza.
+    if (p.vb + p.vbn > bin.length || p.ib + p.ibn > bin.length) { falla(`${p.id}: se sale del archivo`); continue; }
+    const tam = p.idx32 ? 4 : 2;
+    const ib = new Uint8Array(p.i * tam);
+    try {
+      MeshoptDecoder.decodeVertexBuffer(new Uint8Array(p.v * 8), p.v, 8, new Uint8Array(buf, p.vb, p.vbn));
+      MeshoptDecoder.decodeIndexBuffer(ib, p.i, tam, new Uint8Array(buf, p.ib, p.ibn));
+    } catch (e) { falla(`${p.id}: no se decodifica (${e.message})`); continue; }
+    idx = p.idx32 ? new Uint32Array(ib.buffer) : new Uint16Array(ib.buffer);
+  } else {
+    if (p.pos % 4 || p.nor % 4 || p.idx % 4) falla(`${p.id}: offset desalineado`);
+    if (p.idx + p.i * (p.idx32 ? 4 : 2) > bin.length) { falla(`${p.id}: se sale del archivo`); continue; }
+    idx = p.idx32 ? new Uint32Array(buf, p.idx, p.i) : new Uint16Array(buf, p.idx, p.i);
+  }
   for (const i of idx) if (i >= p.v) { falla(`${p.id}: índice ${i} ≥ ${p.v} vértices`); break; }
   triangulos += p.i / 3;
 }

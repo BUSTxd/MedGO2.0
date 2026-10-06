@@ -1,7 +1,10 @@
-// Descarga y decodifica las regiones del atlas 3D (formato 1 de
-// `scripts/atlas-3d/extraer-region.mjs`).
+// Descarga y decodifica las regiones del atlas 3D.
+// Formato 1 (extraer-region.mjs, BodyParts3D): posiciones Uint16, normales Int16 e
+// índices en bruto. Formato 2 (extraer-o3d.mjs): posiciones e índices codificados
+// con meshoptimizer y normales calculadas aquí (un tercio del peso).
 
 import { BufferAttribute, BufferGeometry, Vector3 } from 'three';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { regionPorId, urlRegion, type Lado, type Sistema } from '@/lib/data/atlas-3d/regiones';
 
 interface PiezaManifiesto {
@@ -13,9 +16,15 @@ interface PiezaManifiesto {
   lado: Lado;
   v: number;
   i: number;
-  pos: number;
-  nor: number;
-  idx: number;
+  /** Formato 1: offsets de posiciones, normales e índices en bruto. */
+  pos?: number;
+  nor?: number;
+  idx?: number;
+  /** Formato 2: offset y bytes de los vértices y los índices codificados. */
+  vb?: number;
+  vbn?: number;
+  ib?: number;
+  ibn?: number;
   idx32?: boolean;
   caja: [number[], number[]];
 }
@@ -72,7 +81,7 @@ export async function cargarAtlas(
       const res = await fetch(`${urlRegion(r)}/manifiesto.json`, { signal });
       if (!res.ok) throw new Error(`No se pudo leer el modelo (${res.status}).`);
       const m = (await res.json()) as Manifiesto;
-      if (m.formato !== 1) throw new Error('Formato de modelo no soportado.');
+      if (m.formato !== 1 && m.formato !== 2) throw new Error('Formato de modelo no soportado.');
       return m;
     }),
   );
@@ -98,6 +107,8 @@ export async function cargarAtlas(
     }),
   );
 
+  if (manifiestos.some((m) => m.formato === 2)) await MeshoptDecoder.ready;
+
   const vistas = new Set<string>();
   const piezas: PiezaAtlas[] = [];
   const min = new Vector3(Infinity, Infinity, Infinity);
@@ -109,17 +120,7 @@ export async function cargarAtlas(
       if (vistas.has(p.id)) continue;
       vistas.add(p.id);
 
-      const q = new Uint16Array(buf, p.pos, p.v * 3);
-      const pos = new Float32Array(p.v * 3);
-      for (let i = 0; i < pos.length; i++) {
-        const a = i % 3;
-        pos[i] = m.min[a] + q[i] * m.paso[a];
-      }
-      const g = new BufferGeometry();
-      g.setAttribute('position', new BufferAttribute(pos, 3));
-      // Normales Int16 normalizadas: la GPU las lleva a [-1, 1] sin copiarlas.
-      g.setAttribute('normal', new BufferAttribute(new Int16Array(buf, p.nor, p.v * 3).slice(), 3, true));
-      g.setIndex(new BufferAttribute(p.idx32 ? new Uint32Array(buf, p.idx, p.i).slice() : new Uint16Array(buf, p.idx, p.i).slice(), 1));
+      const g = m.formato === 2 ? geometriaF2(m, p, buf) : geometriaF1(m, p, buf);
       g.computeBoundingSphere();
 
       const [a, b] = p.caja;
@@ -140,6 +141,39 @@ export async function cargarAtlas(
   });
 
   return { piezas, min, max };
+}
+
+function geometriaF1(m: Manifiesto, p: PiezaManifiesto, buf: ArrayBuffer): BufferGeometry {
+  const q = new Uint16Array(buf, p.pos!, p.v * 3);
+  const pos = new Float32Array(p.v * 3);
+  for (let i = 0; i < pos.length; i++) {
+    const a = i % 3;
+    pos[i] = m.min[a] + q[i] * m.paso[a];
+  }
+  const g = new BufferGeometry();
+  g.setAttribute('position', new BufferAttribute(pos, 3));
+  // Normales Int16 normalizadas: la GPU las lleva a [-1, 1] sin copiarlas.
+  g.setAttribute('normal', new BufferAttribute(new Int16Array(buf, p.nor!, p.v * 3).slice(), 3, true));
+  g.setIndex(new BufferAttribute(p.idx32 ? new Uint32Array(buf, p.idx!, p.i).slice() : new Uint16Array(buf, p.idx!, p.i).slice(), 1));
+  return g;
+}
+
+function geometriaF2(m: Manifiesto, p: PiezaManifiesto, buf: ArrayBuffer): BufferGeometry {
+  // Vértices de 8 bytes: x, y, z Uint16 cuantizados a la caja de la región y relleno.
+  const vb = new Uint8Array(p.v * 8);
+  MeshoptDecoder.decodeVertexBuffer(vb, p.v, 8, new Uint8Array(buf, p.vb!, p.vbn!));
+  const q = new Uint16Array(vb.buffer);
+  const pos = new Float32Array(p.v * 3);
+  for (let i = 0; i < p.v; i++) for (let a = 0; a < 3; a++) pos[i * 3 + a] = m.min[a] + q[i * 4 + a] * m.paso[a];
+  const tam = p.idx32 ? 4 : 2;
+  const ib = new Uint8Array(p.i * tam);
+  MeshoptDecoder.decodeIndexBuffer(ib, p.i, tam, new Uint8Array(buf, p.ib!, p.ibn!));
+  const g = new BufferGeometry();
+  g.setAttribute('position', new BufferAttribute(pos, 3));
+  g.setIndex(new BufferAttribute(p.idx32 ? new Uint32Array(ib.buffer) : new Uint16Array(ib.buffer), 1));
+  // Suaves y ponderadas por área, como las que traía el formato 1.
+  g.computeVertexNormals();
+  return g;
 }
 
 /**
