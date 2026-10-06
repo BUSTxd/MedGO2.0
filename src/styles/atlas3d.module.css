@@ -530,10 +530,13 @@
 }
 
 /* Secciones */
+/* padding explícito: globals.css pone `section { padding: 100px 48px }` (landing)
+   y sin esto cada sección del panel medía ~300 px. */
 .seccion {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  padding: 0;
 }
 
 .seccion h3 {

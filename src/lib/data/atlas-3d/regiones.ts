@@ -44,7 +44,9 @@ export const REGIONES: RegionAtlas[] = [
     //     trapecio) y nervio toracodorsal, modelados (nervios-modelados.mjs).
     // v9: el plexo cervical se une a los nervios que ya estaban: comunicante
     //     C4 → C5 y ramos al trapecio que se juntan con el XI.
-    version: 'v9',
+    // v10: tronco común del plexo hasta el punto de Erb (sin trenzado) y la
+    //      columna cervical en «Cabeza y cuello».
+    version: 'v10',
     zonas: [
       { id: 'cuello', nombre: 'Cabeza y cuello' },
       { id: 'tronco', nombre: 'Columna y tórax' },

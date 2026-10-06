@@ -41,7 +41,6 @@ const A12 = P(-0.031, 1.530, -0.004), A23 = P(-0.029, 1.514, -0.003), A34 = P(-0
 // Punto de Erb: mitad del borde posterior del ECM (y 1,484: x -0,042, z -0,001).
 // Los ramos llegan por detrás del ECM (z ≈ -0,011 a la altura de C4).
 const ERB = P(-0.046, 1.487, -0.007);
-const TRAS_ECM = P(-0.037, 1.500, -0.011);
 
 export const NERVIOS = [
   {
@@ -55,6 +54,11 @@ export const NERVIOS = [
       [F4, P(-0.026, 1.500, -0.009), A34],
       // comunicante C4 → C5: se une a la raíz C5 de Open3DModel (y 1,475: -0,0284, -0,0096)
       [P(-0.027, 1.500, -0.009), P(-0.029, 1.490, -0.007), P(-0.0284, 1.4748, -0.0096)],
+      // Troncos comunes hasta el punto de Erb (C2-C3 y C3-C4), por detrás del ECM: de
+      // ahí sale el abanico de ramos superficiales. Si cada ramo hiciera su propio
+      // camino desde las asas, los cuatro casi coinciden y se ven trenzados.
+      [A23, P(-0.036, 1.506, -0.012), P(-0.042, 1.497, -0.012), ERB],
+      [A34, P(-0.035, 1.493, -0.012), P(-0.041, 1.489, -0.011), ERB],
     ],
     uniones: [[4, 'fin', 'C5 root']],
   },
@@ -62,26 +66,26 @@ export const NERVIOS = [
     en: 'Lesser occipital nerve', // C2: sube por el borde posterior del ECM hasta detrás de la oreja
     radio: 0.0007,
     // borde posterior del ECM: y 1,52 (-0,046, -0,017) · 1,54 (-0,053, -0,028) · 1,56 (-0,055, -0,041)
-    ramas: [[A12, P(-0.033, 1.516, -0.011), TRAS_ECM, ERB, P(-0.049, 1.503, -0.013), P(-0.051, 1.522, -0.021), P(-0.058, 1.542, -0.032), P(-0.060, 1.562, -0.045), P(-0.062, 1.580, -0.056), P(-0.060, 1.598, -0.066)]],
+    ramas: [[ERB, P(-0.049, 1.503, -0.013), P(-0.051, 1.522, -0.021), P(-0.058, 1.542, -0.032), P(-0.060, 1.562, -0.045), P(-0.062, 1.580, -0.056), P(-0.060, 1.598, -0.066)]],
   },
   {
     en: 'Great auricular nerve', // C2-C3: rodea el ECM y sube sobre su cara superficial hacia el lóbulo de la oreja
     radio: 0.0008,
     // cara lateral del ECM: y 1,50 (-0,046, 0,000) · 1,52 (-0,050, -0,005) · 1,54 (-0,055, -0,014) · 1,56 (-0,060, -0,020)
-    ramas: [[A23, TRAS_ECM, ERB, P(-0.0495, 1.492, -0.003), P(-0.050, 1.502, 0.001), P(-0.054, 1.520, -0.003), P(-0.058, 1.540, -0.010), P(-0.063, 1.558, -0.015), P(-0.066, 1.572, -0.011)]],
+    ramas: [[ERB, P(-0.0495, 1.492, -0.003), P(-0.050, 1.502, 0.001), P(-0.054, 1.520, -0.003), P(-0.058, 1.540, -0.010), P(-0.063, 1.558, -0.015), P(-0.066, 1.572, -0.011)]],
   },
   {
     en: 'Transverse cervical nerve', // C2-C3: cruza la cara superficial del ECM hacia delante, bajo el platisma
     radio: 0.0007,
     // ECM a y 1,475: x -0,042…-0,022, z 0,0025…0,025
-    ramas: [[A23, TRAS_ECM, ERB, P(-0.049, 1.482, 0.000), P(-0.047, 1.478, 0.010), P(-0.044, 1.476, 0.020), P(-0.036, 1.474, 0.030), P(-0.022, 1.472, 0.039), P(-0.008, 1.470, 0.047)]],
+    ramas: [[ERB, P(-0.049, 1.482, 0.000), P(-0.047, 1.478, 0.010), P(-0.044, 1.476, 0.020), P(-0.036, 1.474, 0.030), P(-0.022, 1.472, 0.039), P(-0.008, 1.470, 0.047)]],
   },
   {
     en: 'Supraclavicular nerves', // C3-C4: medial, intermedio y lateral, por encima de la clavícula
     radio: 0.0007,
     ramas: [
       // el medial baja por fuera de la cabeza clavicular del ECM (y 1,44: lateral -0,046, 0,021) y cruza la clavícula por delante
-      [A34, P(-0.034, 1.492, -0.011), ERB, P(-0.049, 1.470, 0.002), P(-0.050, 1.452, 0.014), P(-0.051, 1.435, 0.026), P(-0.049, 1.418, 0.044), P(-0.044, 1.402, 0.056), P(-0.038, 1.385, 0.068)],
+      [ERB, P(-0.049, 1.470, 0.002), P(-0.050, 1.452, 0.014), P(-0.051, 1.435, 0.026), P(-0.049, 1.418, 0.044), P(-0.044, 1.402, 0.056), P(-0.038, 1.385, 0.068)],
       [ERB, P(-0.054, 1.464, -0.002), P(-0.066, 1.444, 0.008), P(-0.075, 1.428, 0.022), P(-0.080, 1.408, 0.040), P(-0.082, 1.388, 0.050)],
       [ERB, P(-0.060, 1.470, -0.012), P(-0.085, 1.450, -0.018), P(-0.110, 1.437, -0.022), P(-0.135, 1.430, -0.026), P(-0.155, 1.424, -0.030)],
     ],

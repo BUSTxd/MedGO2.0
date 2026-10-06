@@ -80,6 +80,10 @@ const CUELLO = new Set([
   'Muscular branches of cervical plexus to sternocleidomastoid', 'Muscular branches of cervical plexus to trapezius',
 ]);
 
+// La columna cervical va con el cuello: sin ella, en «Cabeza y cuello» las raíces
+// del plexo cervical salían de la nada. (Solo existe en el miembro superior.)
+const CERVICAL = /^(Atlas \(C1\)|Axis \(C2\)|Cervical vertebra \(C[3-7]\)|art cart of (Atlas C1|Axis C2)|Vertebra C[3-7] art cart|annulus fibrosus C[2-7] (C[3-7]|T1)|Nucleus pulposus C2-T1)$/i;
+
 // Ajustes de geometría de piezas de Z-Anatomy contra los músculos de
 // Open3DModel, que los remodeló. El XI de Z-Anatomy va bien pegado al ECM, pero
 // bajo el cuello se hundía 1-2 mm en los romboides y el elevador de la escápula
@@ -98,7 +102,7 @@ export const REGIONES_O3D = {
     // Cortes por la altura del centro (Open3DModel): bajo la escápula (1,255 m)
     // y la cabeza humeral → brazo; codo (1,10 m); muñeca (semilunar, 0,85-0,86 m).
     zona(en, [, y]) {
-      if (CUELLO.has(en)) return 'cuello';
+      if (CUELLO.has(en) || CERVICAL.test(en)) return 'cuello';
       if (AXIAL.test(en)) return 'tronco';
       if (en === 'Thoracodorsal nerve') return 'hombro'; // su centro cae justo en el corte (1,30 m)
       if (y > 1.29) return 'hombro';
