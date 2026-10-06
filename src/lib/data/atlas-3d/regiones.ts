@@ -42,7 +42,9 @@ export const REGIONES: RegionAtlas[] = [
     // v8: + plexo cervical (ramos C1-C4, occipital menor, auricular mayor,
     //     transverso del cuello, supraclaviculares, frénico, ramos al ECM y al
     //     trapecio) y nervio toracodorsal, modelados (nervios-modelados.mjs).
-    version: 'v8',
+    // v9: el plexo cervical se une a los nervios que ya estaban: comunicante
+    //     C4 → C5 y ramos al trapecio que se juntan con el XI.
+    version: 'v9',
     zonas: [
       { id: 'cuello', nombre: 'Cabeza y cuello' },
       { id: 'tronco', nombre: 'Columna y tórax' },

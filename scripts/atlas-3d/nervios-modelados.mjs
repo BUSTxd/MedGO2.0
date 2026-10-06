@@ -17,7 +17,7 @@
 
 import fs from 'node:fs';
 import readline from 'node:readline';
-import { limpiar, sistemaDe } from './o3d.mjs';
+import { DESPLAZAR, limpiar, sistemaDe } from './o3d.mjs';
 
 const arg = (n) => {
   const i = process.argv.indexOf(`--${n}`);
@@ -53,7 +53,10 @@ export const NERVIOS = [
       [F2, P(-0.027, 1.533, -0.010), A12],
       [F3, P(-0.026, 1.515, -0.009), A23],
       [F4, P(-0.026, 1.500, -0.009), A34],
+      // comunicante C4 → C5: se une a la raíz C5 de Open3DModel (y 1,475: -0,0284, -0,0096)
+      [P(-0.027, 1.500, -0.009), P(-0.029, 1.490, -0.007), P(-0.0284, 1.4748, -0.0096)],
     ],
+    uniones: [[4, 'fin', 'C5 root']],
   },
   {
     en: 'Lesser occipital nerve', // C2: sube por el borde posterior del ECM hasta detrás de la oreja
@@ -91,11 +94,11 @@ export const NERVIOS = [
     ramas: [[A23, P(-0.031, 1.512, -0.001), P(-0.0335, 1.510, 0.002), P(-0.036, 1.509, 0.004)]],
   },
   {
-    en: 'Muscular branches of cervical plexus to trapezius', // C3-C4, cruzan el triángulo posterior junto al XI
+    en: 'Muscular branches of cervical plexus to trapezius', // C3-C4: bajan por fuera del tronco del XI y se le unen bajo el trapecio
     radio: 0.0006,
-    destino: ['Descending part of Trapezius muscle'],
-    libreFinal: 0.012,
-    ramas: [[A34, P(-0.040, 1.490, -0.010), P(-0.047, 1.476, -0.016), P(-0.054, 1.462, -0.022), P(-0.059, 1.452, -0.027), P(-0.063, 1.446, -0.030)]],
+    // tronco del XI (publicado, con DESPLAZAR): y 1,48 (-0,036, -0,040) · 1,46 (-0,037, -0,055) · 1,445 (-0,0388, -0,0665)
+    ramas: [[A34, P(-0.034, 1.492, -0.013), P(-0.039, 1.484, -0.025), P(-0.041, 1.472, -0.040), P(-0.042, 1.460, -0.053), P(-0.041, 1.450, -0.062), P(-0.0388, 1.4452, -0.0665)]],
+    uniones: [[0, 'fin', 'Accessory nerve (XI)']],
   },
   {
     en: 'Phrenic nerve', // C3-C5: baja por delante del escaleno anterior (no está), entre arteria y vena subclavias, y por el mediastino hasta el diafragma
@@ -104,6 +107,7 @@ export const NERVIOS = [
       [A34, P(-0.031, 1.484, 0.002), P(-0.028, 1.466, 0.005), P(-0.025, 1.446, 0.008), P(-0.023, 1.428, 0.011), P(-0.021, 1.405, 0.014), P(-0.025, 1.375, 0.020), P(-0.034, 1.340, 0.027), P(-0.042, 1.300, 0.031), P(-0.047, 1.260, 0.030), P(-0.049, 1.225, 0.024)],
       [P(-0.030, 1.468, -0.008), P(-0.029, 1.462, 0.001), P(-0.028, 1.456, 0.006)], // raíz de C5 (desde la de Open3DModel)
     ],
+    uniones: [[1, 'inicio', 'C5 root']],
   },
   {
     en: 'Thoracodorsal nerve', // del fascículo posterior, con la arteria toracodorsal, a la cara profunda del dorsal ancho
@@ -111,6 +115,7 @@ export const NERVIOS = [
     libreInicio: 0.005,
     destino: ['Latissimus dorsi'],
     libreFinal: 0.03,
+    uniones: [[0, 'inicio', 'Posterior cord of brachial plexus']],
     ramas: [[P(-0.1214, 1.3797, -0.0146), P(-0.124, 1.372, -0.022), P(-0.130, 1.360, -0.030), P(-0.136, 1.345, -0.038), P(-0.138, 1.330, -0.047), P(-0.135, 1.318, -0.059), P(-0.130, 1.305, -0.070), P(-0.127, 1.290, -0.080), P(-0.128, 1.275, -0.080), P(-0.124, 1.258, -0.084), P(-0.116, 1.240, -0.087), P(-0.106, 1.225, -0.090)]],
   },
 ];
@@ -131,7 +136,20 @@ async function leer(archivo) {
   return objs;
 }
 
-const todos = [...(await leer(OBJ)), ...(await leer(ZA))];
+const todos = [...(await leer(OBJ)), ...(await leer(ZA)).map((o) => ({ ...o, za: true }))];
+
+// Nervio existente tal como se publica (el XI de Z-Anatomy lleva DESPLAZAR),
+// para comprobar las `uniones`: [rama, 'inicio' | 'fin', nervio].
+function nervioPublicado(en) {
+  const o = todos.find((t) => t.en === en);
+  if (!o) throw new Error(`Unión con un nervio que no está: ${en}`);
+  const mover = o.za && DESPLAZAR[en];
+  if (!mover) return o.v;
+  const v = [];
+  for (let i = 0; i < o.v.length; i += 3) v.push(...mover(o.v[i], o.v[i + 1], o.v[i + 2]));
+  return v;
+}
+const distanciaA = (v, p) => { let d = Infinity; for (let i = 0; i < v.length; i += 3) d = Math.min(d, Math.hypot(v[i] - p[0], v[i + 1] - p[1], v[i + 2] - p[2])); return d; };
 const ctrl = NERVIOS.flatMap((n) => n.ramas.flat());
 const zona = [0, 1, 2].map((a) => [Math.min(...ctrl.map((p) => p[a])) - 0.03, Math.max(...ctrl.map((p) => p[a])) + 0.03]);
 const OBSTACULO = new Set(['hueso', 'musculo', 'arteria', 'vena']);
@@ -324,6 +342,7 @@ let texto = '', base = 1;
 for (const nervio of NERVIOS) {
   const mallas = [];
   let muestras = 0, movidoMax = 0;
+  const uniones = [];
   const choques = {};
   for (const rama of nervio.ramas) {
     const { pts, movido } = relajar(curva(rama), nervio);
@@ -338,6 +357,14 @@ for (const nervio of NERVIOS) {
       }
     }
     mallas.push(tubo(pts, nervio.radio));
+    // Un extremo que se une a otro nervio tiene que caer dentro de su tubo
+    // (los de Open3DModel y Z-Anatomy miden 1,5-3 mm de radio).
+    for (const [r, extremo, otro] of nervio.uniones ?? []) {
+      if (r !== nervio.ramas.indexOf(rama)) continue;
+      const d = distanciaA(nervioPublicado(otro), extremo === 'inicio' ? pts[0] : pts.at(-1));
+      uniones.push(`${otro} ${(d * 1000).toFixed(1)} mm`);
+      if (d > 0.003) choques[`no llega a ${otro}`] = 1;
+    }
   }
   texto += `o ${nervio.en}\n`;
   let off = 0;
@@ -355,7 +382,7 @@ for (const nervio of NERVIOS) {
     if (!m || !dentro(m, fin)) choques[`no entra en ${d}`] = 1;
   }
   const lejos = movidoMax > 0.006;
-  console.log(`${n || lejos ? '⚠' : '✓'} ${nervio.en}: ${nervio.ramas.length} rama(s), ${muestras} muestras, se apartó hasta ${(movidoMax * 1000).toFixed(1)} mm de lo diseñado${n ? ' · dentro de ' + JSON.stringify(choques) : ''}`);
+  console.log(`${n || lejos ? '⚠' : '✓'} ${nervio.en}: ${nervio.ramas.length} rama(s), ${muestras} muestras, se apartó hasta ${(movidoMax * 1000).toFixed(1)} mm de lo diseñado${uniones.length ? ' · se une a ' + uniones.join(', ') : ''}${n ? ' · ' + JSON.stringify(choques) : ''}`);
 }
 fs.writeFileSync(SALIDA, texto);
 console.log(`→ ${SALIDA}`);
