@@ -67,18 +67,21 @@ export const NERVIOS = [
     radio: 0.0007,
     // borde posterior del ECM: y 1,52 (-0,046, -0,017) · 1,54 (-0,053, -0,028) · 1,56 (-0,055, -0,041)
     ramas: [[ERB, P(-0.049, 1.503, -0.013), P(-0.051, 1.522, -0.021), P(-0.058, 1.542, -0.032), P(-0.060, 1.562, -0.045), P(-0.062, 1.580, -0.056), P(-0.060, 1.598, -0.066)]],
+    uniones: [[0, 'inicio', 'Cervical plexus (C1-C4 ventral rami)']],
   },
   {
     en: 'Great auricular nerve', // C2-C3: rodea el ECM y sube sobre su cara superficial hacia el lóbulo de la oreja
     radio: 0.0008,
     // cara lateral del ECM: y 1,50 (-0,046, 0,000) · 1,52 (-0,050, -0,005) · 1,54 (-0,055, -0,014) · 1,56 (-0,060, -0,020)
     ramas: [[ERB, P(-0.0495, 1.492, -0.003), P(-0.050, 1.502, 0.001), P(-0.054, 1.520, -0.003), P(-0.058, 1.540, -0.010), P(-0.063, 1.558, -0.015), P(-0.066, 1.572, -0.011)]],
+    uniones: [[0, 'inicio', 'Cervical plexus (C1-C4 ventral rami)']],
   },
   {
     en: 'Transverse cervical nerve', // C2-C3: cruza la cara superficial del ECM hacia delante, bajo el platisma
     radio: 0.0007,
     // ECM a y 1,475: x -0,042…-0,022, z 0,0025…0,025
     ramas: [[ERB, P(-0.049, 1.482, 0.000), P(-0.047, 1.478, 0.010), P(-0.044, 1.476, 0.020), P(-0.036, 1.474, 0.030), P(-0.022, 1.472, 0.039), P(-0.008, 1.470, 0.047)]],
+    uniones: [[0, 'inicio', 'Cervical plexus (C1-C4 ventral rami)']],
   },
   {
     en: 'Supraclavicular nerves', // C3-C4: medial, intermedio y lateral, por encima de la clavícula
@@ -89,6 +92,7 @@ export const NERVIOS = [
       [ERB, P(-0.054, 1.464, -0.002), P(-0.066, 1.444, 0.008), P(-0.075, 1.428, 0.022), P(-0.080, 1.408, 0.040), P(-0.082, 1.388, 0.050)],
       [ERB, P(-0.060, 1.470, -0.012), P(-0.085, 1.450, -0.018), P(-0.110, 1.437, -0.022), P(-0.135, 1.430, -0.026), P(-0.155, 1.424, -0.030)],
     ],
+    uniones: [[0, 'inicio', 'Cervical plexus (C1-C4 ventral rami)'], [1, 'inicio', 'Cervical plexus (C1-C4 ventral rami)'], [2, 'inicio', 'Cervical plexus (C1-C4 ventral rami)']],
   },
   {
     en: 'Muscular branches of cervical plexus to sternocleidomastoid', // C2-C3, por su cara profunda
@@ -96,22 +100,38 @@ export const NERVIOS = [
     destino: ['Sternocleidomastoid muscle'],
     libreFinal: 0.005,
     ramas: [[A23, P(-0.031, 1.512, -0.001), P(-0.0335, 1.510, 0.002), P(-0.036, 1.509, 0.004)]],
+    uniones: [[0, 'inicio', 'Cervical plexus (C1-C4 ventral rami)']],
   },
   {
     en: 'Muscular branches of cervical plexus to trapezius', // C3-C4: bajan por fuera del tronco del XI y se le unen bajo el trapecio
     radio: 0.0006,
     // tronco del XI (publicado, con DESPLAZAR): y 1,48 (-0,036, -0,040) · 1,46 (-0,037, -0,055) · 1,445 (-0,0388, -0,0665)
     ramas: [[A34, P(-0.034, 1.492, -0.013), P(-0.039, 1.484, -0.025), P(-0.041, 1.472, -0.040), P(-0.042, 1.460, -0.053), P(-0.041, 1.450, -0.062), P(-0.0388, 1.4452, -0.0665)]],
-    uniones: [[0, 'fin', 'Accessory nerve (XI)']],
+    uniones: [[0, 'inicio', 'Cervical plexus (C1-C4 ventral rami)'], [0, 'fin', 'Accessory nerve (XI)']],
   },
   {
     en: 'Phrenic nerve', // C3-C5: baja por delante del escaleno anterior (no está), entre arteria y vena subclavias, y por el mediastino hasta el diafragma
     radio: 0.0011,
+    // El tronco nace DEL ramo de C4 (empieza dentro de su tubo y lo sigue unos
+    // milímetros antes de bajar): si arrancara justo donde acaban el asa C3-C4 y
+    // la raíz C4, que llegan por detrás de la transversa, se ve un tubo cortado
+    // saliendo del hueso (lo vio BUST, v10). C3 y C5 se le unen en «Y».
+    libreInicio: 0.004,
     ramas: [
-      [A34, P(-0.031, 1.484, 0.002), P(-0.028, 1.466, 0.005), P(-0.025, 1.446, 0.008), P(-0.023, 1.428, 0.011), P(-0.021, 1.405, 0.014), P(-0.025, 1.375, 0.020), P(-0.034, 1.340, 0.027), P(-0.042, 1.300, 0.031), P(-0.047, 1.260, 0.030), P(-0.049, 1.225, 0.024)],
-      [P(-0.030, 1.468, -0.008), P(-0.029, 1.462, 0.001), P(-0.028, 1.456, 0.006)], // raíz de C5 (desde la de Open3DModel)
+      // tronco (C4): raíz C4 → asa C3-C4 → baja por delante del escaleno anterior
+      [P(-0.026, 1.500, -0.009), A34, P(-0.033, 1.486, -0.003), P(-0.032, 1.472, -0.001), P(-0.029, 1.460, 0.003), P(-0.026, 1.446, 0.008), P(-0.023, 1.428, 0.011), P(-0.021, 1.405, 0.014), P(-0.025, 1.375, 0.020), P(-0.034, 1.340, 0.027), P(-0.042, 1.300, 0.031), P(-0.047, 1.260, 0.030), P(-0.049, 1.225, 0.024)],
+      // contribución de C3: desde el asa C2-C3/C3-C4 (pasa por x -0,0295 a y 1,506)
+      [P(-0.0295, 1.506, -0.004), P(-0.035, 1.494, -0.002), P(-0.0345, 1.483, -0.003), P(-0.033, 1.476, -0.002)],
+      // contribución de C5: desde la raíz C5 de Open3DModel (y 1,47: -0,0307, -0,0093)
+      [P(-0.0307, 1.4696, -0.0093), P(-0.031, 1.465, -0.004), P(-0.0295, 1.459, 0.002)],
     ],
-    uniones: [[1, 'inicio', 'C5 root']],
+    uniones: [
+      [0, 'inicio', 'Cervical plexus (C1-C4 ventral rami)'],
+      [1, 'inicio', 'Cervical plexus (C1-C4 ventral rami)'],
+      [1, 'fin', 'Phrenic nerve'],
+      [2, 'inicio', 'C5 root'],
+      [2, 'fin', 'Phrenic nerve'],
+    ],
   },
   {
     en: 'Thoracodorsal nerve', // del fascículo posterior, con la arteria toracodorsal, a la cara profunda del dorsal ancho
@@ -144,7 +164,9 @@ const todos = [...(await leer(OBJ)), ...(await leer(ZA)).map((o) => ({ ...o, za:
 
 // Nervio existente tal como se publica (el XI de Z-Anatomy lleva DESPLAZAR),
 // para comprobar las `uniones`: [rama, 'inicio' | 'fin', nervio].
+const generados = new Map(); // nervios modelados ya hechos: en → vértices de sus tubos
 function nervioPublicado(en) {
+  if (generados.has(en)) return generados.get(en);
   const o = todos.find((t) => t.en === en);
   if (!o) throw new Error(`Unión con un nervio que no está: ${en}`);
   const mover = o.za && DESPLAZAR[en];
@@ -312,9 +334,26 @@ function relajar(pts, nervio) {
 }
 
 // ─── Tubo ────────────────────────────────────────────────────────────────────
-function tubo(pts, r, lados = 8) {
-  const v = [], f = [];
+// Tubo con radio variable y puntas redondeadas (media esfera): con tapas planas,
+// donde un ramo toca a otro nervio se veía un tubo «cortado» (lo vio BUST en el
+// frénico, v10). `afinar`: [inicio, final] en metros; ese extremo empieza al
+// 55 % del radio y crece hasta el radio entero, para nacer dentro del otro nervio.
+function tubo(pts, r, afinar = [0, 0], lados = 8) {
+  const s = largo(pts), total = s.at(-1);
+  const radio = (i) => {
+    let k = 1;
+    if (afinar[0] > 0) k = Math.min(k, 0.55 + 0.45 * Math.min(1, s[i] / afinar[0]));
+    if (afinar[1] > 0) k = Math.min(k, 0.55 + 0.45 * Math.min(1, (total - s[i]) / afinar[1]));
+    return r * k;
+  };
+  const v = [], f = [], marcos = [];
   let ref = [0, 0, 1];
+  const anillo = (centro, n, bn, rr) => {
+    for (let k = 0; k < lados; k++) {
+      const ang = (2 * Math.PI * k) / lados, c = Math.cos(ang) * rr, sn = Math.sin(ang) * rr;
+      v.push(centro.map((x, j) => x + n[j] * c + bn[j] * sn));
+    }
+  };
   for (let i = 0; i < pts.length; i++) {
     const a = pts[Math.max(0, i - 1)], b = pts[Math.min(pts.length - 1, i + 1)];
     let t = b.map((x, k) => x - a[k]); const lt = Math.hypot(...t) || 1; t = t.map((x) => x / lt);
@@ -324,19 +363,30 @@ function tubo(pts, r, lados = 8) {
     const ln = Math.hypot(...n); n = n.map((x) => x / ln);
     const bn = [t[1] * n[2] - t[2] * n[1], t[2] * n[0] - t[0] * n[2], t[0] * n[1] - t[1] * n[0]];
     ref = bn;
-    for (let k = 0; k < lados; k++) {
-      const ang = (2 * Math.PI * k) / lados, c = Math.cos(ang) * r, s = Math.sin(ang) * r;
-      v.push(pts[i].map((x, j) => x + n[j] * c + bn[j] * s));
-    }
+    marcos.push({ t, n, bn });
+    anillo(pts[i], n, bn, radio(i));
   }
   for (let i = 0; i + 1 < pts.length; i++) for (let k = 0; k < lados; k++) {
     const a = i * lados + k, b = i * lados + ((k + 1) % lados), c = a + lados, d = b + lados;
     f.push([a, c, b], [b, c, d]);
   }
-  // tapas
-  for (const [i, inv] of [[0, true], [pts.length - 1, false]]) {
-    const ci = v.length; v.push([...pts[i]]);
-    for (let k = 0; k < lados; k++) { const a = i * lados + k, b = i * lados + ((k + 1) % lados); f.push(inv ? [ci, b, a] : [ci, a, b]); }
+  // Puntas: dos anillos más (a 35° y 70°) y el polo, hacia fuera del tubo.
+  for (const [i, sentido] of [[0, -1], [pts.length - 1, 1]]) {
+    const { t, n, bn } = marcos[i], rr = radio(i);
+    let prev = i * lados;
+    for (const ang of [35, 70]) {
+      const a = (ang * Math.PI) / 180, centro = pts[i].map((x, j) => x + t[j] * sentido * rr * Math.sin(a));
+      const ini = v.length;
+      anillo(centro, n, bn, rr * Math.cos(a));
+      for (let k = 0; k < lados; k++) {
+        const p0 = prev + k, p1 = prev + ((k + 1) % lados), q0 = ini + k, q1 = ini + ((k + 1) % lados);
+        f.push(...(sentido > 0 ? [[p0, q0, p1], [p1, q0, q1]] : [[p0, p1, q0], [p1, q1, q0]]));
+      }
+      prev = ini;
+    }
+    const polo = v.length;
+    v.push(pts[i].map((x, j) => x + t[j] * sentido * rr));
+    for (let k = 0; k < lados; k++) { const a = prev + k, b = prev + ((k + 1) % lados); f.push(sentido > 0 ? [a, polo, b] : [a, b, polo]); }
   }
   return { v, f };
 }
@@ -360,15 +410,19 @@ for (const nervio of NERVIOS) {
         if (dentro(m, pts[i])) choques[m.en] = (choques[m.en] ?? 0) + 1;
       }
     }
-    mallas.push(tubo(pts, nervio.radio));
     // Un extremo que se une a otro nervio tiene que caer dentro de su tubo
-    // (los de Open3DModel y Z-Anatomy miden 1,5-3 mm de radio).
+    // (los de Open3DModel y Z-Anatomy miden 1,5-3 mm de radio). Se mide antes
+    // de añadir esta rama: una unión con el propio nervio es con sus ramas anteriores.
     for (const [r, extremo, otro] of nervio.uniones ?? []) {
       if (r !== nervio.ramas.indexOf(rama)) continue;
       const d = distanciaA(nervioPublicado(otro), extremo === 'inicio' ? pts[0] : pts.at(-1));
-      uniones.push(`${otro} ${(d * 1000).toFixed(1)} mm`);
+      uniones.push(`${otro === nervio.en ? 'su tronco' : otro} ${(d * 1000).toFixed(1)} mm`);
       if (d > 0.003) choques[`no llega a ${otro}`] = 1;
     }
+    const r = nervio.ramas.indexOf(rama);
+    const une = (e) => (nervio.uniones ?? []).some(([q, extremo]) => q === r && extremo === e);
+    mallas.push(tubo(pts, nervio.radio, [une('inicio') ? 0.003 : 0, une('fin') ? 0.003 : 0]));
+    generados.set(nervio.en, mallas.flatMap((m) => m.v.flat()));
   }
   texto += `o ${nervio.en}\n`;
   let off = 0;

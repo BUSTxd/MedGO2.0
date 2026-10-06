@@ -46,7 +46,10 @@ export const REGIONES: RegionAtlas[] = [
     //     C4 → C5 y ramos al trapecio que se juntan con el XI.
     // v10: tronco común del plexo hasta el punto de Erb (sin trenzado) y la
     //      columna cervical en «Cabeza y cuello».
-    version: 'v10',
+    // v11: el frénico nace del ramo de C4 y recibe C3 y C5 en «Y».
+    // v12: puntas redondeadas y ramas afinadas donde nacen de otro nervio (sin
+    //      tubos «cortados» en las uniones).
+    version: 'v12',
     zonas: [
       { id: 'cuello', nombre: 'Cabeza y cuello' },
       { id: 'tronco', nombre: 'Columna y tórax' },
