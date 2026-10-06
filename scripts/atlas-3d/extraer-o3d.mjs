@@ -14,8 +14,8 @@
 // (el superior v7 lleva platisma, esternocleidomastoideo, nervio accesorio,
 // occipital, temporal, mandíbula y ligamento nucal; DESPLAZAR en o3d.mjs).
 // Su id lleva `za-` en vez de `o3d-`.
-// `--propio`: nervios modelados con nervios-modelados.mjs (plexo cervical,
-// toracodorsal). Id `medgo-`; no se simplifican (ya son tubos de 8 lados).
+// `--propio`: estructuras modeladas con modelar.mjs (plexo cervical y
+// toracodorsal en el superior, vasos de la pelvis en el inferior). Id `medgo-`; no se simplifican (ya son tubos de 8 lados).
 //
 // Deja en scripts/atlas-3d/salida/<region>/ manifiesto.json + geometria.bin.gz.
 // Las coordenadas del OBJ ya son las del atlas (metros, +Y arriba, +X izquierda).
@@ -26,7 +26,7 @@ import readline from 'node:readline';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
-import { REGIONES_O3D, DESPLAZAR, limpiar, idDe, sistemaDe, nombreDe } from './o3d.mjs';
+import { REGIONES_O3D, DESPLAZAR, limpiar, idDe, sistemaDe, nombreDe, tambienDe } from './o3d.mjs';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const arg = (n, def) => {
@@ -220,6 +220,7 @@ const salida = piezas.map((p) => {
   triangulos += p.idx.length / 3;
   return {
     id: p.id, nombre: p.nombre, nombreEn: p.en, sistema: p.sistema, zona: p.zona, lado: def.lado,
+    ...(tambienDe(p.en) ? { tambien: tambienDe(p.en) } : {}),
     v, i: p.idx.length,
     vb: anexar(vbc), vbn: vbc.length, ib: anexar(ibc), ibn: ibc.length,
     ...(idx32 ? { idx32: true } : {}),
@@ -251,7 +252,7 @@ const manifiesto = {
     } : {}),
     ...(PROPIO ? {
       modelados: {
-        autor: 'MedGO (esquema anatómico sobre este modelo, scripts/atlas-3d/nervios-modelados.mjs)',
+        autor: 'MedGO (esquema anatómico sobre este modelo, scripts/atlas-3d/modelar.mjs)',
         piezas: piezas.filter((p) => p.fuente === 'medgo').map((p) => p.en),
       },
     } : {}),

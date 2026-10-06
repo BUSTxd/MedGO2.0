@@ -13,6 +13,8 @@ interface PiezaManifiesto {
   nombreEn: string;
   sistema: Sistema;
   zona: string;
+  /** Otras zonas en las que también sale (la columna lumbar y el sacro, en la pelvis). */
+  tambien?: string[];
   lado: Lado;
   v: number;
   i: number;
@@ -46,6 +48,7 @@ export interface PiezaAtlas {
   nombreEn: string;
   sistema: Sistema;
   zona: string;
+  tambien?: string[];
   lado: Lado;
   region: string;
   geometry: BufferGeometry;
@@ -132,6 +135,7 @@ export async function cargarAtlas(
         nombreEn: p.nombreEn,
         sistema: p.sistema,
         zona: p.zona,
+        tambien: p.tambien,
         lado: p.lado,
         region: m.region,
         geometry: g,

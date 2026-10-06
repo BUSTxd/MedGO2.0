@@ -41,7 +41,7 @@ export const REGIONES: RegionAtlas[] = [
     //     también de Z-Anatomy.
     // v8: + plexo cervical (ramos C1-C4, occipital menor, auricular mayor,
     //     transverso del cuello, supraclaviculares, frénico, ramos al ECM y al
-    //     trapecio) y nervio toracodorsal, modelados (nervios-modelados.mjs).
+    //     trapecio) y nervio toracodorsal, modelados (scripts/atlas-3d/modelar.mjs).
     // v9: el plexo cervical se une a los nervios que ya estaban: comunicante
     //     C4 → C5 y ramos al trapecio que se juntan con el XI.
     // v10: tronco común del plexo hasta el punto de Erb (sin trenzado) y la
@@ -79,7 +79,11 @@ export const REGIONES: RegionAtlas[] = [
     // v3: nervios y vasos sin ramitas perdidas al simplificar (≤ 0,5 mm del original).
     // v4: formato 2 (códec de meshoptimizer, normales en el navegador): 4,7 → 1,2 MB;
     //     también ligamentos y cartílagos sin bordes perdidos.
-    version: 'v4',
+    // v5: vasos de la pelvis modelados (ilíacos, glúteos, pudendos internos y
+    //     obturadores, arteria y vena, empalmados a la femoral); la columna lumbar
+    //     y el sacro también en «Pelvis y región glútea».
+    // v6: la punta de la ilíaca común venosa ya no se mete en L5.
+    version: 'v6',
     zonas: [
       { id: 'tronco', nombre: 'Columna y tórax' },
       { id: 'pelvis', nombre: 'Pelvis y región glútea' },
@@ -88,7 +92,9 @@ export const REGIONES: RegionAtlas[] = [
       { id: 'pie', nombre: 'Tobillo y pie' },
     ],
     faltan: [
-      'Arterias y venas ilíacas, glúteas, obturatrices y pudendas internas: los vasos empiezan en la femoral',
+      'Aorta y vena cava: las ilíacas comunes empiezan en su bifurcación',
+      'Ramas viscerales de la ilíaca interna (vesicales, rectal media, uterina), iliolumbar, sacras laterales, epigástrica inferior y circunfleja ilíaca profunda',
+      'Los vasos de la pelvis son un esquema modelado por MedGO, no una disección: el recorrido es aproximado',
       'Cuadrado lumbar y elevador del ano',
       'Ligamento inguinal',
       'Triángulo femoral y conductos aductor y femoral como espacios (sus paredes sí están)',

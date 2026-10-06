@@ -74,11 +74,20 @@ const AXIAL = /vertebra|^atlas|^axis|^art cart of (atlas|axis|sacrum)|sacrum|coc
 const CUELLO = new Set([
   'Platysma', 'Sternocleidomastoid muscle', 'Accessory nerve (XI)',
   'Occipital bone', 'Temporal bone', 'Mandible', 'Nuchal ligament',
-  // modelados (nervios-modelados.mjs)
+  // modelados (modelar.mjs)
   'Cervical plexus (C1-C4 ventral rami)', 'Lesser occipital nerve', 'Great auricular nerve',
   'Transverse cervical nerve', 'Supraclavicular nerves', 'Phrenic nerve',
   'Muscular branches of cervical plexus to sternocleidomastoid', 'Muscular branches of cervical plexus to trapezius',
 ]);
+
+// Zonas además de la suya: la columna lumbar, el sacro, la médula y la cadena
+// simpática salen también en «Pelvis y región glútea» (sin ellas, las raíces
+// L1-S5 colgaban en el aire). Igual en las dos regiones, porque T12-L5 y el
+// sacro son piezas compartidas y gana la primera región que se carga.
+const LUMBOSACRO = /^Lumbar vertebra|^Thoracic vertebra \(T12\)|^annulus fibrosus (T12|L\d)|^Nucleus pulposus L|^Vertebra L\d art cart|sacrum|coccyx|sacrococcygeal|intercornual|spinal cord|arachnoid|sympathic/i;
+export function tambienDe(en) {
+  return LUMBOSACRO.test(en) ? ['pelvis'] : undefined;
+}
 
 // La columna cervical va con el cuello: sin ella, en «Cabeza y cuello» las raíces
 // del plexo cervical salían de la nada. (Solo existe en el miembro superior.)
@@ -198,7 +207,7 @@ const NOMBRES = {
   'Accessory nerve (XI)': 'Nervio accesorio (XI)',
   'Occipital bone': 'Hueso occipital',
   'Temporal bone': 'Hueso temporal',
-  // ── Modelados por MedGO (nervios-modelados.mjs) ──
+  // ── Modelados por MedGO (modelar.mjs) ──
   'Cervical plexus (C1-C4 ventral rami)': 'Plexo cervical (ramos anteriores C1-C4)',
   'Lesser occipital nerve': 'Nervio occipital menor',
   'Great auricular nerve': 'Nervio auricular mayor',
@@ -208,6 +217,20 @@ const NOMBRES = {
   'Muscular branches of cervical plexus to trapezius': 'Ramos del plexo cervical al trapecio',
   'Phrenic nerve': 'Nervio frénico',
   'Thoracodorsal nerve': 'Nervio toracodorsal',
+  'Common iliac artery': 'Arteria ilíaca común',
+  'External iliac artery': 'Arteria ilíaca externa',
+  'Internal iliac artery': 'Arteria ilíaca interna (hipogástrica)',
+  'Superior gluteal artery': 'Arteria glútea superior',
+  'Inferior gluteal artery': 'Arteria glútea inferior',
+  'Internal pudendal artery': 'Arteria pudenda interna',
+  'Obturator artery': 'Arteria obturatriz',
+  'Common iliac vein': 'Vena ilíaca común',
+  'External iliac vein': 'Vena ilíaca externa',
+  'Internal iliac vein': 'Vena ilíaca interna (hipogástrica)',
+  'Superior gluteal veins': 'Venas glúteas superiores',
+  'Inferior gluteal veins': 'Venas glúteas inferiores',
+  'Internal pudendal vein': 'Vena pudenda interna',
+  'Obturator vein': 'Vena obturatriz',
   'Mandible': 'Mandíbula',
   'Nuchal ligament': 'Ligamento nucal',
   // ── Huesos ──

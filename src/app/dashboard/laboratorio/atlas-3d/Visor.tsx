@@ -30,6 +30,7 @@ interface Estructura {
   nombreEn: string;
   sistema: Sistema;
   zona: string;
+  tambien?: string[];
   ids: string[];
 }
 
@@ -132,6 +133,7 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
           nombreEn: p.nombreEn,
           sistema: p.sistema,
           zona: p.zona,
+          tambien: p.tambien,
           ids: [p.id],
         });
     }
@@ -178,7 +180,7 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
         continue;
       }
       if (!sistemas.has(p.sistema) || ocultas.has(p.id)) continue;
-      if (zona !== 'todo' && p.zona !== zona) continue;
+      if (zona !== 'todo' && p.zona !== zona && !p.tambien?.includes(zona)) continue;
       v.add(p.id);
     }
     return v;
@@ -222,7 +224,7 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
     setBusqueda('');
     if (aislado && aislado !== e.clave) setAislado(null);
     setSistemas((prev) => (prev.has(e.sistema) ? prev : new Set(prev).add(e.sistema)));
-    if (zona !== 'todo' && zona !== e.zona) setZona('todo');
+    if (zona !== 'todo' && zona !== e.zona && !e.tambien?.includes(zona)) setZona('todo');
     setOcultas((prev) => {
       if (!e.ids.some((id) => prev.has(id))) return prev;
       const n = new Set(prev);
