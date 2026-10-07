@@ -1,0 +1,650 @@
+/* ─── Cursos: exámenes arriba, pasarelas por disciplina y laboratorios ───
+   Las tarjetas parten del mismo lila que `.qCard` (cursos.module.css) para que
+   la vista nueva y la de Cayetano se lean como la misma sección. */
+
+.cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+/* Botón a la vista de Cayetano */
+.cayetano {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 8px;
+  border-radius: 14px;
+  border: 1px solid rgba(123, 114, 212, 0.22);
+  background: #ffffff;
+  color: #2d3748;
+  text-decoration: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.cayetano:hover {
+  border-color: rgba(123, 114, 212, 0.5);
+  box-shadow: 0 6px 18px rgba(123, 114, 212, 0.16);
+  transform: translateY(-1px);
+}
+
+:global(.dark-mode) .cayetano {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+
+:global(.dark-mode) .cayetano:hover {
+  border-color: rgba(59, 158, 221, 0.4);
+  box-shadow: 0 6px 18px rgba(59, 158, 221, 0.12);
+}
+
+.cayetanoIcono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(123, 114, 212, 0.12);
+  color: #5445d8;
+}
+
+:global(.dark-mode) .cayetanoIcono {
+  background: rgba(59, 158, 221, 0.14);
+  color: #7cc0ec;
+}
+
+/* ─── Franja del ENCIB sobre los paneles de Cayetano ─── */
+.franjaEncib {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 4px 0 26px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #3b2fc9 0%, #5b5ff0 55%, #3b9edd 100%);
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(84, 69, 216, 0.22);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+:global(.dark-mode) .franjaEncib {
+  background: linear-gradient(135deg, #2c2496 0%, #4b4fd6 55%, #2a7fb8 100%);
+}
+
+.franjaEncib:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(84, 69, 216, 0.32);
+}
+
+.franjaSigla {
+  flex-shrink: 0;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.franjaTexto {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.franjaTexto strong {
+  color: #ffffff;
+}
+
+.franjaIr {
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+@media (max-width: 560px) {
+  .franjaEncib {
+    flex-wrap: wrap;
+    gap: 4px 10px;
+  }
+
+  .franjaTexto {
+    flex-basis: 100%;
+    order: 3;
+  }
+
+  .franjaIr {
+    margin-left: auto;
+  }
+}
+
+.cayetanoTexto {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.cayetanoTexto strong {
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.cayetanoTexto span {
+  font-size: 11.5px;
+  color: #718096;
+}
+
+:global(.dark-mode) .cayetanoTexto span {
+  color: rgba(240, 238, 255, 0.5);
+}
+
+.cayetanoFlecha {
+  opacity: 0.5;
+}
+
+/* ─── Bloques ───
+   `padding: 0`: `globals.css` da `section { padding: 100px 48px }` a la landing. */
+.bloque {
+  padding: 0;
+  margin: 22px 0 8px;
+}
+
+.bloqueTitulo {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  color: #1a1a2e;
+}
+
+:global(.dark-mode) .bloqueTitulo {
+  color: var(--white);
+}
+
+.bloqueNota {
+  margin: 0 0 4px;
+  font-size: 12.5px;
+  color: #718096;
+}
+
+:global(.dark-mode) .bloqueNota {
+  color: rgba(240, 238, 255, 0.5);
+}
+
+/* ─── Pasarela ─── */
+.pasarela {
+  position: relative;
+}
+
+.pasarelaPista {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 2px;
+  /* Aire para la sombra y el `translateY` del hover, que si no se recortan. */
+  padding: 10px 2px 14px;
+  scrollbar-width: none;
+}
+
+.pasarelaPista::-webkit-scrollbar {
+  display: none;
+}
+
+.pasarelaPista > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+.pasarelaPista:focus-visible {
+  outline: 2px solid #3b9edd;
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+.flecha {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  color: #2d3748;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease;
+}
+
+.flecha:hover {
+  transform: translateY(-50%) scale(1.08);
+}
+
+:global(.dark-mode) .flecha {
+  background: #1d1a3d;
+  border-color: rgba(255, 255, 255, 0.14);
+  color: var(--white);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.flechaAtras { left: -10px; }
+.flechaAdelante { right: -10px; }
+
+/* En táctil se arrastra con el dedo: las flechas sobran. */
+@media (hover: none) {
+  .flecha { display: none; }
+}
+
+/* ─── Tarjetas de examen ─── */
+.examen {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 210px;
+  min-height: 168px;
+  padding: 18px;
+  border-radius: 16px;
+  background: #f4f5fb;
+  border: 1px dashed rgba(0, 0, 0, 0.12);
+  color: inherit;
+  text-decoration: none;
+}
+
+:global(.dark-mode) .examen {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.examen[aria-disabled] {
+  opacity: 0.7;
+}
+
+.examenActivo {
+  width: 300px;
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, #3b2fc9 0%, #5b5ff0 55%, #3b9edd 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 26px rgba(84, 69, 216, 0.28);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+:global(.dark-mode) .examenActivo {
+  background: linear-gradient(135deg, #2c2496 0%, #4b4fd6 55%, #2a7fb8 100%);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.examenActivo:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(84, 69, 216, 0.36);
+}
+
+.examenPais {
+  width: fit-content;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.06);
+  color: #4a5568;
+}
+
+:global(.dark-mode) .examenPais {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(240, 238, 255, 0.7);
+}
+
+.examenActivo .examenPais,
+:global(.dark-mode) .examenActivo .examenPais {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
+.examenSigla {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #1a1a2e;
+}
+
+:global(.dark-mode) .examenSigla {
+  color: var(--white);
+}
+
+.examenActivo .examenSigla,
+:global(.dark-mode) .examenActivo .examenSigla {
+  color: #ffffff;
+  font-size: 26px;
+}
+
+.examenNombre {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #718096;
+}
+
+:global(.dark-mode) .examenNombre {
+  color: rgba(240, 238, 255, 0.55);
+}
+
+.examenActivo .examenNombre,
+:global(.dark-mode) .examenActivo .examenNombre {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.examenCuenta {
+  margin-top: auto;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.examenCuenta strong {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.examenPie {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* ─── Tarjetas de área ─── */
+.area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 220px;
+  padding: 18px;
+  border-radius: 16px;
+  background: #eef2ff;
+  border: 1px solid rgba(123, 114, 212, 0.12);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+:global(.dark-mode) .area {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.area:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(123, 114, 212, 0.18);
+  border-color: rgba(123, 114, 212, 0.3);
+}
+
+:global(.dark-mode) .area:hover {
+  box-shadow: 0 8px 24px rgba(59, 158, 221, 0.1);
+  border-color: rgba(59, 158, 221, 0.25);
+}
+
+.areaIcono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
+
+.areaNombre {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1.25;
+}
+
+:global(.dark-mode) .areaNombre {
+  color: var(--white);
+}
+
+.areaLema {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #718096;
+}
+
+:global(.dark-mode) .areaLema {
+  color: rgba(240, 238, 255, 0.5);
+}
+
+.areaPeso {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+:global(.dark-mode) .areaPeso {
+  color: rgba(240, 238, 255, 0.7);
+}
+
+.areaPesoBarra {
+  display: block;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+:global(.dark-mode) .areaPesoBarra {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.areaPesoBarra > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+}
+
+/* ─── Tarjetas de laboratorio ─── */
+.lab {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 210px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+:global(.dark-mode) .lab {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.lab:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+}
+
+:global(.dark-mode) .lab:hover {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+}
+
+.labArea {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #718096;
+}
+
+:global(.dark-mode) .labArea {
+  color: rgba(240, 238, 255, 0.55);
+}
+
+.labPunto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.labGratis {
+  margin-left: auto;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(45, 201, 154, 0.14);
+  color: #13865f;
+}
+
+:global(.dark-mode) .labGratis {
+  color: #5fe0b3;
+}
+
+.labNombre {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+:global(.dark-mode) .labNombre {
+  color: var(--white);
+}
+
+.labDesc {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #718096;
+}
+
+:global(.dark-mode) .labDesc {
+  color: rgba(240, 238, 255, 0.5);
+}
+
+.labTodos {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #5445d8;
+  border-style: dashed;
+}
+
+:global(.dark-mode) .labTodos {
+  color: #7cc0ec;
+}
+
+/* ─── Volver ─── */
+.volver {
+  display: inline-block;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #718096;
+  text-decoration: none;
+}
+
+.volver:hover {
+  color: #5445d8;
+}
+
+:global(.dark-mode) .volver {
+  color: rgba(240, 238, 255, 0.55);
+}
+
+:global(.dark-mode) .volver:hover {
+  color: var(--white);
+}
+
+/* ─── Aviso a quien no es de Cayetano ─── */
+.soloCayetano {
+  max-width: 520px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.soloCayetanoIcono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  margin-bottom: 14px;
+  background: rgba(59, 158, 221, 0.12);
+  color: #3b9edd;
+}
+
+.soloCayetanoTitulo {
+  margin: 0 0 10px;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #1a1a2e;
+}
+
+:global(.dark-mode) .soloCayetanoTitulo {
+  color: var(--white);
+}
+
+.soloCayetanoTexto {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4a5568;
+}
+
+:global(.dark-mode) .soloCayetanoTexto {
+  color: rgba(240, 238, 255, 0.65);
+}
+
+.soloCayetanoBoton {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: #5445d8;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.soloCayetanoBoton:hover {
+  background: #4537c4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cayetano,
+  .franjaEncib,
+  .examenActivo,
+  .area,
+  .lab,
+  .flecha {
+    transition: none;
+  }
+
+  .cayetano:hover,
+  .franjaEncib:hover,
+  .examenActivo:hover,
+  .area:hover,
+  .lab:hover {
+    transform: none;
+  }
+}

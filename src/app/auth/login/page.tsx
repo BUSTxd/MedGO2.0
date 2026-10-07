@@ -111,10 +111,19 @@ function AuthPageInner() {
 
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
     setError('');
 
-    const { error } = await supabase.auth.signUp({
+    // Un correo de Cayetano solo cuenta como tal si viene de Google, que
+    // comprueba que es de quien lo usa (`esDeCayetano`). Con contraseña se
+    // crearía una cuenta sin sílabos — y le dejaría la puerta abierta a quien
+    // se registre con el correo de otro alumno.
+    if (email.trim().toLowerCase().endsWith('@upch.pe')) {
+      setError('Con tu correo @upch.pe regístrate con «Continuar con Google»: así comprobamos que es tuyo y se te abren los cursos de Cayetano.');
+      return;
+    }
+
+    setLoading(true);
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: { data: { full_name: fullName } },
@@ -127,6 +136,12 @@ function AuthPageInner() {
     }
 
     setLoading(false);
+    // Con «Confirm email» activo en Supabase no hay sesión hasta que el correo
+    // se confirma: entrar al dashboard ahora rebotaría al login.
+    if (!data.session) {
+      setSuccess('Te enviamos un correo para confirmar tu cuenta. Ábrelo y vuelve para iniciar sesión.');
+      return;
+    }
     window.location.assign('/dashboard/home');
   }
 

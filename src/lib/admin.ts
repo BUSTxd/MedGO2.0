@@ -1,4 +1,5 @@
 import 'server-only';
+import type { User } from '@supabase/supabase-js';
 import { EMAILS_COLABORADORES } from '@/lib/data/aportes-correos';
 
 export const ADMIN_EMAIL = 'fernandnoob062.0@gmail.com';
@@ -34,6 +35,44 @@ const APORTES_EMAILS: ReadonlySet<string> = new Set(EMAILS_COLABORADORES);
 export function canVerAportes(email: string | null | undefined): boolean {
   if (!email) return false;
   return isAdminEmail(email) || APORTES_EMAILS.has(email.toLowerCase());
+}
+
+/**
+ * Hasta aquí MedGO era solo de Cayetano: toda cuenta creada antes de este
+ * instante es de la UPCH, aunque se registrara con Gmail. Desde el corte, quien
+ * quiera los sílabos tiene que registrarse con su correo `@upch.pe`.
+ */
+const CORTE_CAYETANO = Date.parse('2026-10-08T00:00:00-05:00');
+
+/**
+ * Puede ver lo que es de Cayetano (los sílabos y el panel por tramos de
+ * `cursos/cayetano`):
+ *  - toda cuenta creada antes de `CORTE_CAYETANO`, sea cual sea su correo;
+ *  - desde el corte, solo si entró con **Google** con un correo `@upch.pe`;
+ *  - siempre el admin, las cuentas de acceso total y quienes aportan material.
+ *
+ * Por qué Google y no el correo de la cuenta: el registro con contraseña no
+ * comprueba que el correo sea de quien lo escribe (Supabase lo autoconfirma),
+ * así que cualquiera podría registrarse como `alumno@upch.pe`. Google sí lo
+ * comprueba: su identidad trae el correo verificado por la universidad.
+ *
+ * La cerradura es `middleware.ts`, que rebota cualquier ruta de un curso de
+ * Cayetano antes de que la página llegue a renderizarse.
+ */
+export function esDeCayetano(
+  user: Pick<User, 'email' | 'created_at' | 'identities'> | null | undefined,
+): boolean {
+  if (!user) return false;
+  if (Date.parse(user.created_at) < CORTE_CAYETANO) return true;
+  const upchPorGoogle = (user.identities ?? []).some(
+    (i) =>
+      i.provider === 'google' &&
+      i.identity_data?.email_verified === true &&
+      String(i.identity_data?.email ?? '').toLowerCase().endsWith('@upch.pe'),
+  );
+  if (upchPorGoogle) return true;
+  const e = user.email?.toLowerCase();
+  return !!e && (isAdminEmail(e) || tieneAccesoTotal(e) || APORTES_EMAILS.has(e));
 }
 
 /**

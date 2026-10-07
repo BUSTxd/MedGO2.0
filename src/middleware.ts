@@ -1,8 +1,16 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { esDeCayetano } from '@/lib/admin';
 
 const DEVICE_COOKIE = 'device_id';
 const DEVICE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 año
+
+/**
+ * Lo único bajo `/dashboard/cursos/` que no es de Cayetano: el panel por
+ * tramos (que se explica a sí mismo a quien no puede verlo), los cursos por
+ * disciplina y las páginas de examen.
+ */
+const CURSOS_ABIERTOS = new Set(['cayetano', 'area', 'examen']);
 
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -56,6 +64,16 @@ export async function middleware(request: NextRequest) {
   // /auth/device-limit requiere sesión (es la pantalla post-login de bloqueo).
   if (!user && isDeviceLimit) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
+  }
+
+  // Los sílabos de Cayetano solo para cuentas de Cayetano. Va aquí y no en cada
+  // página porque así no se renderiza nada del curso: un gate en la página o en
+  // un layout llega tarde (el payload del segmento ya viajaría). Todo lo que
+  // cuelga de `cursos/` es de Cayetano salvo lo que está en esta lista: un curso
+  // nuevo queda cerrado sin tocar nada.
+  const cursoCayetano = pathname.match(/^\/dashboard\/cursos\/([^/]+)/)?.[1];
+  if (user && cursoCayetano && !CURSOS_ABIERTOS.has(cursoCayetano) && !esDeCayetano(user)) {
+    return NextResponse.redirect(new URL('/dashboard/cursos/cayetano', request.url));
   }
 
   // /dashboard exacto → /dashboard/home en el middleware (antes del render del layout),

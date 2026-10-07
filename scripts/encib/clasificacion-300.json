@@ -1,0 +1,4214 @@
+[
+ {
+  "anio": 2021,
+  "n": 1,
+  "codigo": "BIO-4.4",
+  "codigos_secundarios": [
+   "FIS-3.6",
+   "PAT-11.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "prueba_diagnostica",
+  "concepto_especifico": "Marcadores bioquímicos de colestasis extrahepática"
+ },
+ {
+  "anio": 2021,
+  "n": 2,
+  "codigo": "BIO-3.3",
+  "codigos_secundarios": [
+   "BIO-4.5",
+   "FIS-9.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "enzima_via_metabolica",
+  "concepto_especifico": "Glucólisis anaerobia en músculo: piruvato → lactato por LDH"
+ },
+ {
+  "anio": 2021,
+  "n": 3,
+  "codigo": "BIO-4.7",
+  "codigos_secundarios": [
+   "PAT-5.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Pérdida de p53 como freno de la apoptosis intrínseca"
+ },
+ {
+  "anio": 2021,
+  "n": 4,
+  "codigo": "BIO-4.2",
+  "codigos_secundarios": [
+   "BIO-3.3",
+   "FIS-2.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "enzima_via_metabolica",
+  "concepto_especifico": "Desvío de Rapoport-Luebering: síntesis de 2,3-BPG en la glucólisis eritrocitaria"
+ },
+ {
+  "anio": 2021,
+  "n": 5,
+  "codigo": "BIO-4.2",
+  "codigos_secundarios": [
+   "PAT-9.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "enzima_via_metabolica",
+  "concepto_especifico": "Favismo: deficiencia de G6PD y estrés oxidativo eritrocitario"
+ },
+ {
+  "anio": 2021,
+  "n": 6,
+  "codigo": "BIO-3.2",
+  "codigos_secundarios": [
+   "FIS-5.3",
+   "BIO-5.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Efecto termogénico de T3: desacoplamiento de la fosforilación oxidativa"
+ },
+ {
+  "anio": 2021,
+  "n": 7,
+  "codigo": "BIO-5.1",
+  "codigos_secundarios": [
+   "BIO-3.3",
+   "BIO-2.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "enzima_via_metabolica",
+  "concepto_especifico": "Adrenalina-AMPc-PKA activa la glucógeno fosforilasa (glucogenólisis)"
+ },
+ {
+  "anio": 2021,
+  "n": 8,
+  "codigo": "BIO-3.1",
+  "codigos_secundarios": [
+   "FIS-3.4",
+   "PAT-11.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Malabsorción de lactosa por déficit de lactasa"
+ },
+ {
+  "anio": 2021,
+  "n": 9,
+  "codigo": "BIO-2.1",
+  "codigos_secundarios": [
+   "PAT-2.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "Tipos de señalización: paracrina (células vecinas por difusión local)"
+ },
+ {
+  "anio": 2021,
+  "n": 10,
+  "codigo": "BIO-1.4",
+  "codigos_secundarios": [
+   "FAR-3.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "interpretacion_grafico_datos",
+  "concepto_especifico": "Inhibición competitiva en Lineweaver-Burk: misma intersección en 1/Vmax, Km aumentado"
+ },
+ {
+  "anio": 2021,
+  "n": 11,
+  "codigo": "FAR-3.10",
+  "codigos_secundarios": [
+   "FAR-1.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "Latencia del efecto de las tionamidas (no actúan sobre hormona ya almacenada)"
+ },
+ {
+  "anio": 2021,
+  "n": 12,
+  "codigo": "FAR-1.16",
+  "codigos_secundarios": [
+   "FAR-3.2",
+   "FAR-2.13"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "Betabloqueo no selectivo: bloqueo β2 bronquial causa broncoespasmo"
+ },
+ {
+  "anio": 2021,
+  "n": 13,
+  "codigo": "FAR-4.7",
+  "codigos_secundarios": [
+   "MIC-3.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "Herpes labial (VHS-1): tratamiento con aciclovir"
+ },
+ {
+  "anio": 2021,
+  "n": 14,
+  "codigo": "FAR-3.7",
+  "codigos_secundarios": [
+   "PAT-9.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "Suplementación de hierro + ácido fólico en anemia del embarazo"
+ },
+ {
+  "anio": 2021,
+  "n": 15,
+  "codigo": "FAR-2.10",
+  "codigos_secundarios": [
+   "FIS-3.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "Ondansetrón: antagonista 5-HT3 en emesis por quimioterapia"
+ },
+ {
+  "anio": 2021,
+  "n": 16,
+  "codigo": "FAR-3.6",
+  "codigos_secundarios": [
+   "FIS-5.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "Sulfonilureas (glibenclamida) causan hipoglucemia por secretagogo"
+ },
+ {
+  "anio": 2021,
+  "n": 17,
+  "codigo": "FAR-2.9",
+  "codigos_secundarios": [
+   "FAR-1.13",
+   "FAR-4.5",
+   "MIC-1.2"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "Reacciones adversas del omeprazol (IBP)"
+ },
+ {
+  "anio": 2021,
+  "n": 18,
+  "codigo": "FAR-1.6",
+  "codigos_secundarios": [
+   "FAR-3.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "Vida media/duración de acción insuficiente con dosis única diaria"
+ },
+ {
+  "anio": 2021,
+  "n": 19,
+  "codigo": "FAR-1.5",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "Elección de vía según propiedades fisicoquímicas: irritantes por vía endovenosa"
+ },
+ {
+  "anio": 2021,
+  "n": 20,
+  "codigo": "FAR-4.5",
+  "codigos_secundarios": [
+   "PAT-10.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "Macrólidos en infección respiratoria baja ambulatoria"
+ },
+ {
+  "anio": 2021,
+  "n": 21,
+  "codigo": "FAR-1.2",
+  "codigos_secundarios": [
+   "FAR-1.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "Terminología: medicamento vs fármaco vs droga vs tóxico"
+ },
+ {
+  "anio": 2021,
+  "n": 22,
+  "codigo": "FAR-2.4",
+  "codigos_secundarios": [
+   "PAT-11.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "Hepatitis por halotano (exposiciones repetidas, obesidad, mujer de edad media)"
+ },
+ {
+  "anio": 2021,
+  "n": 23,
+  "codigo": "FAR-3.10",
+  "codigos_secundarios": [
+   "FAR-1.13"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "Conducta tras agranulocitosis por tionamida: tratamiento definitivo con yodo radiactivo"
+ },
+ {
+  "anio": 2021,
+  "n": 24,
+  "codigo": "FAR-2.14",
+  "codigos_secundarios": [
+   "FIS-9.2",
+   "FIS-4.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "Acetazolamida en mal agudo de montaña"
+ },
+ {
+  "anio": 2021,
+  "n": 25,
+  "codigo": "FAR-1.11",
+  "codigos_secundarios": [
+   "FAR-2.6",
+   "FAR-1.13"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "Sinergismo depresor del SNC (benzodiacepina + etanol, ambos GABAérgicos)"
+ },
+ {
+  "anio": 2021,
+  "n": 26,
+  "codigo": "FAR-4.9",
+  "codigos_secundarios": [
+   "MIC-4.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "Teniasis (Taenia solium): tratamiento con praziquantel"
+ },
+ {
+  "anio": 2021,
+  "n": 27,
+  "codigo": "FAR-4.9",
+  "codigos_secundarios": [
+   "MIC-4.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "Filariasis cutáneo-ocular (oncocercosis/loiasis): ivermectina"
+ },
+ {
+  "anio": 2021,
+  "n": 28,
+  "codigo": "FAR-3.4",
+  "codigos_secundarios": [
+   "BIO-3.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "Miopatía por estatinas (atorvastatina)"
+ },
+ {
+  "anio": 2021,
+  "n": 29,
+  "codigo": "FAR-4.8",
+  "codigos_secundarios": [
+   "MIC-1.6"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "prueba_diagnostica",
+  "concepto_especifico": "Prueba de sensibilidad (antibiograma) ante sospecha de TB-MDR"
+ },
+ {
+  "anio": 2021,
+  "n": 30,
+  "codigo": "FAR-1.8",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "interpretacion_grafico_datos",
+  "concepto_especifico": "Potencia = curva más a la izquierda (menor DE50)"
+ },
+ {
+  "anio": 2021,
+  "n": 31,
+  "codigo": "FAR-4.6",
+  "codigos_secundarios": [
+   "MIC-2.2",
+   "PAT-7.3"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "Coccidioidomicosis (esférulas con endosporas): fluconazol"
+ },
+ {
+  "anio": 2021,
+  "n": 32,
+  "codigo": "FAR-1.16",
+  "codigos_secundarios": [
+   "PAT-4.3"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "Adrenalina en anafilaxia y vía de administración"
+ },
+ {
+  "anio": 2021,
+  "n": 33,
+  "codigo": "FAR-2.8",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "otro",
+  "concepto_especifico": "Posología de antiácidos: 1 h después de comidas para prolongar su acción"
+ },
+ {
+  "anio": 2021,
+  "n": 34,
+  "codigo": "FAR-3.3",
+  "codigos_secundarios": [
+   "FIS-1.4",
+   "FIS-1.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "Nitratos: venodilatación (↓ precarga) y vasodilatación coronaria"
+ },
+ {
+  "anio": 2021,
+  "n": 35,
+  "codigo": "FAR-2.5",
+  "codigos_secundarios": [
+   "FAR-1.16"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "Elección de anestésico local: amida sin vasoconstrictor en zonas acras/terminales"
+ },
+ {
+  "anio": 2021,
+  "n": 36,
+  "codigo": "FIS-5.3",
+  "codigos_secundarios": [
+   "PAT-14.2",
+   "PAT-4.4"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Eje TSH-tiroides en Graves: alteración a nivel del estímulo del receptor de TSH"
+ },
+ {
+  "anio": 2021,
+  "n": 37,
+  "codigo": "FIS-9.2",
+  "codigos_secundarios": [
+   "FIS-2.3"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Gradiente alvéolo-arterial de O2 en la altura"
+ },
+ {
+  "anio": 2021,
+  "n": 38,
+  "codigo": "FIS-8.1",
+  "codigos_secundarios": [
+   "FIS-4.1"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Hipopotasemia: potencial de equilibrio del K+ más negativo (hiperpolarización)"
+ },
+ {
+  "anio": 2021,
+  "n": 39,
+  "codigo": "FIS-7.2",
+  "codigos_secundarios": [
+   "PAT-7.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Teoría de la compuerta: fibras Aβ inhiben la transmisión nociceptiva en el asta dorsal"
+ },
+ {
+  "anio": 2021,
+  "n": 40,
+  "codigo": "FIS-6.3",
+  "codigos_secundarios": [
+   "BIO-4.3",
+   "PAT-9.7"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Vía común de la coagulación: factor X compartido por vía intrínseca y extrínseca"
+ },
+ {
+  "anio": 2021,
+  "n": 41,
+  "codigo": "FIS-5.4",
+  "codigos_secundarios": [
+   "PAT-14.5",
+   "HIS-3.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Déficit de aldosterona por atrofia de la zona glomerular"
+ },
+ {
+  "anio": 2021,
+  "n": 42,
+  "codigo": "FIS-1.1",
+  "codigos_secundarios": [
+   "FAR-2.13",
+   "FIS-1.5"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Taquicardia acorta la diástole y la perfusión coronaria"
+ },
+ {
+  "anio": 2021,
+  "n": 43,
+  "codigo": "FIS-2.3",
+  "codigos_secundarios": [
+   "PAT-10.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Fibrosis pulmonar: barrera engrosada reduce la difusión (Ley de Fick)"
+ },
+ {
+  "anio": 2021,
+  "n": 44,
+  "codigo": "FIS-1.4",
+  "codigos_secundarios": [
+   "FAR-3.1",
+   "PAT-8.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "Determinantes del gasto: diuréticos reducen la precarga"
+ },
+ {
+  "anio": 2021,
+  "n": 45,
+  "codigo": "FIS-9.2",
+  "codigos_secundarios": [
+   "FIS-4.5",
+   "FIS-2.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Hipoxemia en altura → hiperventilación → alcalosis respiratoria"
+ },
+ {
+  "anio": 2021,
+  "n": 46,
+  "codigo": "FIS-6.4",
+  "codigos_secundarios": [
+   "PAT-4.6"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Funciones del complemento: lisis (MAC), opsonización, inflamación"
+ },
+ {
+  "anio": 2021,
+  "n": 47,
+  "codigo": "FIS-4.4",
+  "codigos_secundarios": [
+   "FIS-4.1",
+   "FIS-4.6"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "interpretacion_grafico_datos",
+  "concepto_especifico": "Respuesta renal a carga de agua libre vs carga isotónica"
+ },
+ {
+  "anio": 2021,
+  "n": 48,
+  "codigo": "FIS-1.6",
+  "codigos_secundarios": [
+   "FIS-1.3",
+   "FIS-1.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Latido prematuro: menor llenado → menor volumen sistólico → menor presión de pulso"
+ },
+ {
+  "anio": 2021,
+  "n": 49,
+  "codigo": "FIS-9.1",
+  "codigos_secundarios": [
+   "FIS-2.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "interpretacion_grafico_datos",
+  "concepto_especifico": "Extracción tisular de O2 en ejercicio (diferencia arteriovenosa)"
+ },
+ {
+  "anio": 2021,
+  "n": 50,
+  "codigo": "FIS-5.2",
+  "codigos_secundarios": [
+   "BIO-5.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "otro",
+  "concepto_especifico": "Estímulos de la secreción de GH (ayuno, hipoglucemia, estrés, ejercicio, grelina)"
+ },
+ {
+  "anio": 2021,
+  "n": 51,
+  "codigo": "FIS-9.1",
+  "codigos_secundarios": [
+   "FIS-1.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Límite del VO2max en resistencia: el gasto cardiaco"
+ },
+ {
+  "anio": 2021,
+  "n": 52,
+  "codigo": "FIS-8.2",
+  "codigos_secundarios": [
+   "FAR-1.17",
+   "PAT-17.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "integracion",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "Anticolinesterásicos aumentan la acetilcolina disponible en la placa"
+ },
+ {
+  "anio": 2021,
+  "n": 53,
+  "codigo": "FIS-3.4",
+  "codigos_secundarios": [
+   "BIO-3.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Malabsorción de glucosa-galactosa por defecto de SGLT1"
+ },
+ {
+  "anio": 2021,
+  "n": 54,
+  "codigo": "FIS-4.6",
+  "codigos_secundarios": [
+   "FIS-4.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Hipovolemia activa ADH y SRAA"
+ },
+ {
+  "anio": 2021,
+  "n": 55,
+  "codigo": "FIS-7.6",
+  "codigos_secundarios": [
+   "ANA-5.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "Hipotálamo como centro termorregulador (golpe de calor)"
+ },
+ {
+  "anio": 2021,
+  "n": 56,
+  "codigo": "FIS-3.2",
+  "codigos_secundarios": [
+   "FIS-3.3"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Hormonas GI: la grasa libera CCK, que enlentece el vaciamiento gástrico"
+ },
+ {
+  "anio": 2021,
+  "n": 57,
+  "codigo": "FIS-4.1",
+  "codigos_secundarios": [
+   "FIS-9.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Agua corporal total proporcionalmente menor en el obeso (tejido adiposo pobre en agua)"
+ },
+ {
+  "anio": 2021,
+  "n": 58,
+  "codigo": "FIS-8.1",
+  "codigos_secundarios": [
+   "FIS-4.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Ecuación de Nernst: hipopotasemia hace más negativo el EK"
+ },
+ {
+  "anio": 2021,
+  "n": 59,
+  "codigo": "FIS-5.4",
+  "codigos_secundarios": [
+   "FIS-4.3",
+   "PAT-14.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Déficit de insulina: hiperglucemia con diuresis osmótica"
+ },
+ {
+  "anio": 2021,
+  "n": 60,
+  "codigo": "FIS-2.4",
+  "codigos_secundarios": [
+   "BIO-4.2",
+   "PAT-9.1"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Anemia: desviación a la derecha (2,3-BPG) y mayor extracción que baja la pO2 capilar"
+ },
+ {
+  "anio": 2021,
+  "n": 61,
+  "codigo": "HIS-1.6",
+  "codigos_secundarios": [
+   "PAT-4.3",
+   "FIS-6.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Antígeno D del sistema Rh en la enfermedad hemolítica del recién nacido"
+ },
+ {
+  "anio": 2021,
+  "n": 62,
+  "codigo": "HIS-1.3",
+  "codigos_secundarios": [
+   "PAT-16.4",
+   "BIO-4.6"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Matriz del cartílago articular: pérdida de proteoglucanos (agrecano)"
+ },
+ {
+  "anio": 2021,
+  "n": 63,
+  "codigo": "HIS-3.1",
+  "codigos_secundarios": [
+   "ANA-3.5"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Glándula salival: células mioepiteliales que expulsan la secreción de los acinos"
+ },
+ {
+  "anio": 2021,
+  "n": 64,
+  "codigo": "HIS-5.4",
+  "codigos_secundarios": [
+   "MIC-3.1",
+   "PAT-7.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Epitelio olfatorio: neuronas bipolares, células de sostén y basales"
+ },
+ {
+  "anio": 2021,
+  "n": 65,
+  "codigo": "HIS-1.6",
+  "codigos_secundarios": [
+   "PAT-9.1",
+   "BIO-4.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Drepanocitos (hematíes falciformes) en anemia de células falciformes"
+ },
+ {
+  "anio": 2021,
+  "n": 66,
+  "codigo": "HIS-3.3",
+  "codigos_secundarios": [
+   "FIS-5.3"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Paratiroides del adulto mayor: reemplazo por adipocitos"
+ },
+ {
+  "anio": 2021,
+  "n": 67,
+  "codigo": "HIS-6.1",
+  "codigos_secundarios": [
+   "HIS-1.2",
+   "PAT-6.6"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Elastosis solar: daño de fibras elásticas dérmicas"
+ },
+ {
+  "anio": 2021,
+  "n": 68,
+  "codigo": "HIS-2.3",
+  "codigos_secundarios": [
+   "EMB-3.5",
+   "FIS-2.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Neumocito tipo II y déficit de surfactante (enfermedad de membrana hialina)"
+ },
+ {
+  "anio": 2021,
+  "n": 69,
+  "codigo": "HIS-1.6",
+  "codigos_secundarios": [
+   "MIC-4.1",
+   "FIS-6.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Eosinofilia en parasitosis por helmintos"
+ },
+ {
+  "anio": 2021,
+  "n": 70,
+  "codigo": "HIS-6.3",
+  "codigos_secundarios": [
+   "HIS-6.2"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Glándula sebácea: el sebo lubrica y da brillo al pelo"
+ },
+ {
+  "anio": 2021,
+  "n": 71,
+  "codigo": "HIS-4.1",
+  "codigos_secundarios": [
+   "PAT-13.5"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Reacción de Arias-Stella en las glándulas endometriales"
+ },
+ {
+  "anio": 2021,
+  "n": 72,
+  "codigo": "HIS-5.1",
+  "codigos_secundarios": [
+   "PAT-17.8"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Epitelio pigmentario de la retina y membrana de Bruch"
+ },
+ {
+  "anio": 2021,
+  "n": 73,
+  "codigo": "HIS-1.3",
+  "codigos_secundarios": [
+   "PAT-16.6"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Osteoclastos: células gigantes multinucleadas de linaje monocito-macrófago"
+ },
+ {
+  "anio": 2021,
+  "n": 74,
+  "codigo": "HIS-2.3",
+  "codigos_secundarios": [
+   "MIC-3.1",
+   "PAT-10.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Neumocito tipo II: blanco de SARS-CoV-2 (ACE2) y productor de surfactante"
+ },
+ {
+  "anio": 2021,
+  "n": 75,
+  "codigo": "HIS-2.1",
+  "codigos_secundarios": [
+   "PAT-9.5",
+   "PAT-9.1"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Bazo: arteriolas envainadas (de Schweigger-Seidel) y filtración/secuestro eritrocitario"
+ },
+ {
+  "anio": 2021,
+  "n": 76,
+  "codigo": "PAT-8.3",
+  "codigos_secundarios": [
+   "BIO-3.3"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Lipoproteína(a) como factor de riesgo independiente de aterosclerosis"
+ },
+ {
+  "anio": 2021,
+  "n": 77,
+  "codigo": "PAT-7.2",
+  "codigos_secundarios": [
+   "PAT-2.2",
+   "MIC-1.2",
+   "PAT-9.4"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Linfadenitis por arañazo de gato (Bartonella henselae): granuloma necrotizante supurativo estrellado"
+ },
+ {
+  "anio": 2021,
+  "n": 78,
+  "codigo": "PAT-2.1",
+  "codigos_secundarios": [
+   "FAR-1.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Morfología de la apoptosis (cariorrexis en células aisladas sin inflamación)"
+ },
+ {
+  "anio": 2021,
+  "n": 79,
+  "codigo": "PAT-13.5",
+  "codigos_secundarios": [
+   "FAR-3.9"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Hiperplasia endometrial por estrógenos sin oposición"
+ },
+ {
+  "anio": 2021,
+  "n": 80,
+  "codigo": "PAT-1.2",
+  "codigos_secundarios": [
+   "PAT-2.1",
+   "PAT-9.4"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Mecanismo de necrosis por isquemia/hipoxia en ganglio (infarto ganglionar)"
+ },
+ {
+  "anio": 2021,
+  "n": 81,
+  "codigo": "PAT-17.7",
+  "codigos_secundarios": [
+   "MIC-1.1",
+   "PAT-8.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Abscesos cerebrales por diseminación hematógena (endocarditis/bacteriemia)"
+ },
+ {
+  "anio": 2021,
+  "n": 82,
+  "codigo": "PAT-14.4",
+  "codigos_secundarios": [
+   "PAT-4.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Insulitis autoinmune mediada por linfocitos T en diabetes tipo 1"
+ },
+ {
+  "anio": 2021,
+  "n": 83,
+  "codigo": "PAT-1.1",
+  "codigos_secundarios": [
+   "PAT-10.2",
+   "PAT-6.3",
+   "PAT-5.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Metaplasia escamosa bronquial por humo como lesión precursora de cáncer"
+ },
+ {
+  "anio": 2021,
+  "n": 84,
+  "codigo": "PAT-16.4",
+  "codigos_secundarios": [
+   "BIO-3.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Tofo gotoso: depósito de urato monosódico rodeado de granuloma"
+ },
+ {
+  "anio": 2021,
+  "n": 85,
+  "codigo": "PAT-13.5",
+  "codigos_secundarios": [
+   "FIS-5.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Hiperestrogenismo (aromatización periférica en obesidad) y patología endometrial"
+ },
+ {
+  "anio": 2021,
+  "n": 86,
+  "codigo": "PAT-15.6",
+  "codigos_secundarios": [
+   "PAT-15.2",
+   "PAT-14.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Acantosis nigricans y acrocordones como marcadores de resistencia a insulina"
+ },
+ {
+  "anio": 2021,
+  "n": 87,
+  "codigo": "PAT-2.2",
+  "codigos_secundarios": [
+   "PAT-4.1",
+   "PAT-7.2",
+   "MIC-1.6"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "Inflamación granulomatosa: linfocitos T (Th1, IFN-γ) activan macrófagos"
+ },
+ {
+  "anio": 2021,
+  "n": 88,
+  "codigo": "PAT-2.1",
+  "codigos_secundarios": [
+   "PAT-10.1",
+   "MIC-1.6"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Necrosis caseosa en tuberculosis pulmonar"
+ },
+ {
+  "anio": 2021,
+  "n": 89,
+  "codigo": "PAT-1.1",
+  "codigos_secundarios": [
+   "FIS-8.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Atrofia por desuso"
+ },
+ {
+  "anio": 2021,
+  "n": 90,
+  "codigo": "PAT-5.5",
+  "codigos_secundarios": [
+   "PAT-11.4",
+   "BIO-4.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Poliposis adenomatosa familiar: mutación germinal de APC"
+ },
+ {
+  "anio": 2021,
+  "n": 91,
+  "codigo": "PAT-14.5",
+  "codigos_secundarios": [
+   "FIS-5.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Feocromocitoma: tumor de células cromafines secretor de catecolaminas"
+ },
+ {
+  "anio": 2021,
+  "n": 92,
+  "codigo": "PAT-7.3",
+  "codigos_secundarios": [
+   "MIC-2.1",
+   "PAT-10.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Criptococosis pulmonar como infección oportunista"
+ },
+ {
+  "anio": 2021,
+  "n": 93,
+  "codigo": "PAT-11.3",
+  "codigos_secundarios": [
+   "PAT-4.4",
+   "FIS-3.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Enfermedad celíaca: atrofia vellositaria, hiperplasia de criptas y linfocitos intraepiteliales"
+ },
+ {
+  "anio": 2021,
+  "n": 94,
+  "codigo": "PAT-13.7",
+  "codigos_secundarios": [
+   "PAT-2.2"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Mastitis granulomatosa idiopática (granulomas centrados en lobulillos)"
+ },
+ {
+  "anio": 2021,
+  "n": 95,
+  "codigo": "PAT-11.4",
+  "codigos_secundarios": [
+   "PAT-2.5"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Cirrosis (nódulos de regeneración con septos fibrosos) por esteatohepatitis"
+ },
+ {
+  "anio": 2021,
+  "n": 96,
+  "codigo": "PAT-10.2",
+  "codigos_secundarios": [
+   "FIS-4.4",
+   "PAT-5.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "SIADH paraneoplásico por carcinoma de células pequeñas"
+ },
+ {
+  "anio": 2021,
+  "n": 97,
+  "codigo": "PAT-7.5",
+  "codigos_secundarios": [
+   "MIC-4.1",
+   "PAT-16.5"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Miositis eosinofílica de origen parasitario"
+ },
+ {
+  "anio": 2021,
+  "n": 98,
+  "codigo": "PAT-5.3",
+  "codigos_secundarios": [
+   "PAT-11.4",
+   "ANA-7.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "irrigacion_drenaje_relaciones",
+  "concepto_especifico": "Metástasis hepática del carcinoma colorrectal por vía portal"
+ },
+ {
+  "anio": 2021,
+  "n": 99,
+  "codigo": "PAT-6.4",
+  "codigos_secundarios": [
+   "PAT-10.4",
+   "PAT-5.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Mesotelioma pleural por asbesto"
+ },
+ {
+  "anio": 2021,
+  "n": 100,
+  "codigo": "PAT-3.3",
+  "codigos_secundarios": [
+   "PAT-8.3"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "Organización y recanalización de un trombo"
+ },
+ {
+  "anio": 2024,
+  "n": 1,
+  "codigo": "FAR-3.1",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "antihipertensivo de elección en el embarazo (alfa-metildopa) y contraindicación de IECA/ARA II"
+ },
+ {
+  "anio": 2024,
+  "n": 2,
+  "codigo": "FIS-2.1",
+  "codigos_secundarios": [
+   "PAT-10.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "prueba_diagnostica",
+  "concepto_especifico": "patrón obstructivo reversible (asma) en la espirometría: VEF1 disminuido"
+ },
+ {
+  "anio": 2024,
+  "n": 3,
+  "codigo": "MIC-1.6",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "tuberculosis pulmonar en paciente VIH (síndrome consuntivo con hemoptisis)"
+ },
+ {
+  "anio": 2024,
+  "n": 4,
+  "codigo": "FIS-5.3",
+  "codigos_secundarios": [
+   "PAT-14.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "hipotiroidismo (mixedema) por déficit de tiroxina"
+ },
+ {
+  "anio": 2024,
+  "n": 5,
+  "codigo": "PAT-11.4",
+  "codigos_secundarios": [
+   "EMB-3.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "aganglionosis de los plexos submucoso (Meissner) y mientérico (Auerbach) en el segmento distal"
+ },
+ {
+  "anio": 2024,
+  "n": 6,
+  "codigo": "PAT-17.3",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "distrofia muscular de Duchenne frente a Becker según edad de inicio y gravedad"
+ },
+ {
+  "anio": 2024,
+  "n": 7,
+  "codigo": "FIS-4.2",
+  "codigos_secundarios": [
+   "PAT-8.7",
+   "FIS-9.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "determinantes de la TFG: caída del coeficiente de filtración (Kf) por nefroesclerosis y envejecimiento"
+ },
+ {
+  "anio": 2024,
+  "n": 8,
+  "codigo": "HIS-4.1",
+  "codigos_secundarios": [
+   "FIS-5.5",
+   "PAT-13.6"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "otro",
+  "concepto_especifico": "función de las células de la granulosa: aromatización de andrógenos a estrógenos"
+ },
+ {
+  "anio": 2024,
+  "n": 9,
+  "codigo": "BIO-3.3",
+  "codigos_secundarios": [
+   "BIO-4.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "calculo_valor",
+  "concepto_especifico": "estequiometría de la síntesis de ácidos grasos por la ácido graso sintasa"
+ },
+ {
+  "anio": 2024,
+  "n": 10,
+  "codigo": "MIC-1.2",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "morfologia_estadio_agente",
+  "concepto_especifico": "morfología de Vibrio cholerae: bacilo gramnegativo curvo y móvil por flagelo polar"
+ },
+ {
+  "anio": 2024,
+  "n": 11,
+  "codigo": "EMB-3.3",
+  "codigos_secundarios": [
+   "PAT-11.3"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "atresia duodenal por falta de recanalización (doble burbuja, vómito bilioso precoz, polihidramnios)"
+ },
+ {
+  "anio": 2024,
+  "n": 12,
+  "codigo": "PAT-13.8",
+  "codigos_secundarios": [
+   "PAT-5.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "prueba_diagnostica",
+  "concepto_especifico": "perfil inmunohistoquímico RE, RP y HER2 como factor predictivo de tratamiento"
+ },
+ {
+  "anio": 2024,
+  "n": 13,
+  "codigo": "FAR-2.7",
+  "codigos_secundarios": [
+   "ANA-5.1",
+   "FIS-7.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "hiperactividad noradrenérgica del locus coeruleus en el síndrome de abstinencia"
+ },
+ {
+  "anio": 2024,
+  "n": 14,
+  "codigo": "MIC-2.3",
+  "codigos_secundarios": [
+   "PAT-7.3"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "morfologia_estadio_agente",
+  "concepto_especifico": "aspergilosis (aspergiloma en cavidad tuberculosa residual) por morfología de hifas"
+ },
+ {
+  "anio": 2024,
+  "n": 15,
+  "codigo": "HIS-3.1",
+  "codigos_secundarios": [
+   "FIS-3.3",
+   "PAT-9.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "otro",
+  "concepto_especifico": "célula parietal (oxíntica) del cuerpo gástrico como productora de factor intrínseco y HCl"
+ },
+ {
+  "anio": 2024,
+  "n": 16,
+  "codigo": "PAT-16.4",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "osteoartrosis: pinzamiento asimétrico, osteofitos, sin signos inflamatorios"
+ },
+ {
+  "anio": 2024,
+  "n": 17,
+  "codigo": "FAR-1.17",
+  "codigos_secundarios": [
+   "FIS-8.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "inhibición irreversible de la acetilcolinesterasa por organofosforados"
+ },
+ {
+  "anio": 2024,
+  "n": 18,
+  "codigo": "PAT-6.5",
+  "codigos_secundarios": [
+   "PAT-8.3",
+   "PAT-3.3"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "efecto protrombótico del tabaco: aumento de la agregación plaquetaria y disfunción endotelial"
+ },
+ {
+  "anio": 2024,
+  "n": 19,
+  "codigo": "FAR-3.6",
+  "codigos_secundarios": [
+   "FIS-4.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "glucosuria inducida por gliflozinas → infecciones urinarias y genitales"
+ },
+ {
+  "anio": 2024,
+  "n": 20,
+  "codigo": "PAT-10.1",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "neumonía aspirativa en paciente con alteración de conciencia frente a nosocomial (≥ 48 h)"
+ },
+ {
+  "anio": 2024,
+  "n": 21,
+  "codigo": "BIO-3.1",
+  "codigos_secundarios": [
+   "FAR-2.9",
+   "FIS-3.3"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "hipoclorhidria por IBP crónico: pH gástrico elevado, menor activación de pepsina y dispepsia"
+ },
+ {
+  "anio": 2024,
+  "n": 22,
+  "codigo": "MIC-2.1",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "prueba_diagnostica",
+  "concepto_especifico": "tinta china para visualizar la cápsula de Cryptococcus neoformans en LCR"
+ },
+ {
+  "anio": 2024,
+  "n": 23,
+  "codigo": "FIS-4.6",
+  "codigos_secundarios": [
+   "FIS-4.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "ADH → receptor V2 → inserción de acuaporina 2 en el túbulo colector"
+ },
+ {
+  "anio": 2024,
+  "n": 24,
+  "codigo": "FIS-4.5",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "calculo_valor",
+  "concepto_especifico": "acidosis metabólica hiperclorémica con anión gap normal por pérdida digestiva de bicarbonato"
+ },
+ {
+  "anio": 2024,
+  "n": 25,
+  "codigo": "FAR-2.4",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "etapas de Guedel: estadio II de excitación o delirio"
+ },
+ {
+  "anio": 2024,
+  "n": 26,
+  "codigo": "FAR-3.5",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "warfarina: inhibición de la vitamina K epóxido reductasa y de los factores II, VII, IX y X"
+ },
+ {
+  "anio": 2024,
+  "n": 27,
+  "codigo": "FIS-5.5",
+  "codigos_secundarios": [
+   "EMB-2.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "prueba_diagnostica",
+  "concepto_especifico": "gonadotropina coriónica humana producida por el sincitiotrofoblasto como base de la prueba de embarazo"
+ },
+ {
+  "anio": 2024,
+  "n": 28,
+  "codigo": "ANA-9.4",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "ligamento redondo del útero: mantenimiento de la anteversión"
+ },
+ {
+  "anio": 2024,
+  "n": 29,
+  "codigo": "ANA-5.2",
+  "codigos_secundarios": [
+   "MIC-3.2"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "lesion_nervio_deficit",
+  "concepto_especifico": "parálisis facial y síndrome de Ramsay Hunt (herpes zóster ótico); componentes del VII (lágrima, saliva, gusto 2/3 anteriores)"
+ },
+ {
+  "anio": 2024,
+  "n": 30,
+  "codigo": "PAT-9.2",
+  "codigos_secundarios": [
+   "PAT-2.2",
+   "FIS-6.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "interpretacion_grafico_datos",
+  "concepto_especifico": "neutrofilia reactiva con desviación izquierda en infección bacteriana aguda (apendicitis)"
+ },
+ {
+  "anio": 2024,
+  "n": 31,
+  "codigo": "ANA-3.7",
+  "codigos_secundarios": [
+   "PAT-14.4",
+   "HIS-5.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "catarata (opacidad del cristalino), acelerada por la diabetes y la edad"
+ },
+ {
+  "anio": 2024,
+  "n": 32,
+  "codigo": "ANA-3.1",
+  "codigos_secundarios": [
+   "PAT-17.6"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "irrigacion_drenaje_relaciones",
+  "concepto_especifico": "fractura del pterión con lesión de la arteria meníngea media → hematoma epidural"
+ },
+ {
+  "anio": 2024,
+  "n": 33,
+  "codigo": "FAR-1.12",
+  "codigos_secundarios": [
+   "FAR-2.2",
+   "BIO-4.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "N-acetilcisteína como antídoto del paracetamol (repone glutatión frente a NAPQI)"
+ },
+ {
+  "anio": 2024,
+  "n": 34,
+  "codigo": "HIS-6.2",
+  "codigos_secundarios": [
+   "MIC-2.3",
+   "PAT-15.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "onicomicosis subungueal distal-lateral por dermatofitos: invasión por el hiponiquio"
+ },
+ {
+  "anio": 2024,
+  "n": 35,
+  "codigo": "FAR-1.18",
+  "codigos_secundarios": [
+   "FAR-1.17"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "síndrome muscarínico por pilocarpina revertido con atropina"
+ },
+ {
+  "anio": 2024,
+  "n": 36,
+  "codigo": "MIC-3.2",
+  "codigos_secundarios": [
+   "PAT-7.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "herpes genital por virus herpes simple (VHS-2) con células gigantes multinucleadas en el Tzanck"
+ },
+ {
+  "anio": 2024,
+  "n": 37,
+  "codigo": "FIS-9.2",
+  "codigos_secundarios": [
+   "FIS-2.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "hiperventilación por estímulo hipóxico de quimiorreceptores periféricos como respuesta inmediata"
+ },
+ {
+  "anio": 2024,
+  "n": 38,
+  "codigo": "PAT-3.4",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "embolia gaseosa por descompresión rápida (enfermedad de los buzos y barotrauma)"
+ },
+ {
+  "anio": 2024,
+  "n": 39,
+  "codigo": "PAT-7.1",
+  "codigos_secundarios": [
+   "MIC-3.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "tipos de interacción virus-célula: infección persistente (productiva crónica) frente a lítica, abortiva y latente"
+ },
+ {
+  "anio": 2024,
+  "n": 40,
+  "codigo": "EMB-3.5",
+  "codigos_secundarios": [
+   "EMB-3.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "origen_embriologico_anomalia",
+  "concepto_especifico": "atresia esofágica con fístula traqueoesofágica por defecto del tabique traqueoesofágico"
+ },
+ {
+  "anio": 2024,
+  "n": 41,
+  "codigo": "ANA-6.3",
+  "codigos_secundarios": [
+   "FIS-1.2"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "haz de His (fascículo atrioventricular) como única vía de conducción entre aurículas y ventrículos"
+ },
+ {
+  "anio": 2024,
+  "n": 42,
+  "codigo": "ANA-9.2",
+  "codigos_secundarios": [
+   "PAT-11.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "hemorroides externas (bajo la línea pectínea, inervación somática dolorosa) frente a internas (indoloras)"
+ },
+ {
+  "anio": 2024,
+  "n": 43,
+  "codigo": "FIS-7.1",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "función homeostática del sistema nervioso autónomo"
+ },
+ {
+  "anio": 2024,
+  "n": 44,
+  "codigo": "PAT-4.4",
+  "codigos_secundarios": [
+   "FIS-6.6"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "IL-1 (y TNF) de macrófagos sinoviales estimula metaloproteinasas que destruyen el cartílago en la artritis reumatoide"
+ },
+ {
+  "anio": 2024,
+  "n": 45,
+  "codigo": "PAT-12.4",
+  "codigos_secundarios": [
+   "BIO-1.3"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "litiasis cálcica radiopaca asociada a hipercalciuria"
+ },
+ {
+  "anio": 2024,
+  "n": 46,
+  "codigo": "MIC-6.3",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "morfologia_estadio_agente",
+  "concepto_especifico": "identificación morfológica y ecológica de Aedes aegypti (patas anilladas blancas, criadero en agua limpia peridomiciliaria)"
+ },
+ {
+  "anio": 2024,
+  "n": 47,
+  "codigo": "BIO-3.2",
+  "codigos_secundarios": [
+   "PAT-17.9"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "enzima_via_metabolica",
+  "concepto_especifico": "MELAS: mutación del ADN mitocondrial (tRNA-Leu) con déficit de complejos de la cadena respiratoria (I y IV)"
+ },
+ {
+  "anio": 2024,
+  "n": 48,
+  "codigo": "PAT-14.2",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "tiroiditis de Riedel (fibrosante, enfermedad relacionada con IgG4)"
+ },
+ {
+  "anio": 2024,
+  "n": 49,
+  "codigo": "FAR-4.7",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "profilaxis de la transmisión maternoinfantil del VIH con zidovudina (ITIAN)"
+ },
+ {
+  "anio": 2024,
+  "n": 50,
+  "codigo": "PAT-9.4",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "linfoma de Hodgkin de predominio linfocítico nodular: células L&H (popcorn) CD20+, CD15/CD30−, VEB−"
+ },
+ {
+  "anio": 2024,
+  "n": 51,
+  "codigo": "FIS-1.3",
+  "codigos_secundarios": [
+   "FAR-3.3",
+   "FAR-1.16"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "interpretacion_grafico_datos",
+  "concepto_especifico": "intervalo PR como reflejo de la conducción auriculoventricular (efecto dromotrópico negativo de betabloqueantes/calcioantagonistas)"
+ },
+ {
+  "anio": 2024,
+  "n": 52,
+  "codigo": "MIC-3.2",
+  "codigos_secundarios": [
+   "PAT-15.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "herpes zóster por reactivación del VVZ latente en ganglio sensitivo en inmunodeprimido"
+ },
+ {
+  "anio": 2024,
+  "n": 53,
+  "codigo": "FAR-2.14",
+  "codigos_secundarios": [
+   "FIS-9.2",
+   "FAR-3.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "profilaxis del mal de montaña agudo con acetazolamida (inhibidor de anhidrasa carbónica)"
+ },
+ {
+  "anio": 2024,
+  "n": 54,
+  "codigo": "FAR-2.7",
+  "codigos_secundarios": [],
+  "dificultad": "mayor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "reacción aguda de ansiedad/pánico por cannabis en consumidor inexperto, droga ilícita más consumida por escolares"
+ },
+ {
+  "anio": 2024,
+  "n": 55,
+  "codigo": "PAT-13.1",
+  "codigos_secundarios": [
+   "FAR-3.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "localización de la HBP en la zona de transición y periuretral, frente al carcinoma en la zona periférica"
+ },
+ {
+  "anio": 2024,
+  "n": 56,
+  "codigo": "PAT-15.7",
+  "codigos_secundarios": [
+   "PAT-6.6"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "carcinoma basocelular: pápula perlada con telangiectasias y empalizada periférica de células basaloides"
+ },
+ {
+  "anio": 2024,
+  "n": 57,
+  "codigo": "ANA-9.4",
+  "codigos_secundarios": [
+   "ANA-8.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "irrigacion_drenaje_relaciones",
+  "concepto_especifico": "relación del uréter con la arteria uterina en el ligamento ancho («el agua pasa bajo el puente») y su ligadura accidental bilateral"
+ },
+ {
+  "anio": 2024,
+  "n": 58,
+  "codigo": "PAT-15.7",
+  "codigos_secundarios": [
+   "PAT-9.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "micosis fungoide como linfoma T CD4+ cutáneo primario"
+ },
+ {
+  "anio": 2024,
+  "n": 59,
+  "codigo": "HIS-2.3",
+  "codigos_secundarios": [
+   "HIS-1.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "neumocito tipo I como epitelio simple plano de la barrera alveolocapilar"
+ },
+ {
+  "anio": 2024,
+  "n": 60,
+  "codigo": "ANA-4.2",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "componentes de la glotis (pliegues vocales: ligamento y músculo vocal + hendidura glótica) frente al vestíbulo laríngeo"
+ },
+ {
+  "anio": 2024,
+  "n": 61,
+  "codigo": "ANA-3.1",
+  "codigos_secundarios": [
+   "ANA-3.6",
+   "ANA-5.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "fractura de la lámina cribosa del etmoides con lesión de filetes olfatorios y fístula de LCR"
+ },
+ {
+  "anio": 2024,
+  "n": 62,
+  "codigo": "HIS-6.1",
+  "codigos_secundarios": [
+   "PAT-14.5",
+   "FIS-5.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "localización de los melanocitos en el estrato basal de la epidermis (estimulados por ACTH/MSH en la insuficiencia suprarrenal primaria)"
+ },
+ {
+  "anio": 2024,
+  "n": 63,
+  "codigo": "MIC-5.2",
+  "codigos_secundarios": [
+   "PAT-7.4",
+   "MIC-6.3"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "especie de Leishmania según la región del Perú: L. braziliensis en la selva (espundia) frente a L. peruviana en valles andinos (uta)"
+ },
+ {
+  "anio": 2024,
+  "n": 64,
+  "codigo": "FAR-4.1",
+  "codigos_secundarios": [
+   "MIC-1.2",
+   "PAT-10.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "aminopenicilina con inhibidor de betalactamasa frente a H. influenzae productor de betalactamasa"
+ },
+ {
+  "anio": 2024,
+  "n": 65,
+  "codigo": "ANA-5.1",
+  "codigos_secundarios": [
+   "PAT-17.6",
+   "FIS-7.2"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "irrigacion_drenaje_relaciones",
+  "concepto_especifico": "territorio de la arteria calcarina (rama de la cerebral posterior) en la corteza visual primaria y de asociación occipital"
+ },
+ {
+  "anio": 2024,
+  "n": 66,
+  "codigo": "FIS-2.1",
+  "codigos_secundarios": [
+   "PAT-17.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "hipoventilación alveolar de origen neuromuscular eleva la PACO2 (relación inversa ventilación alveolar–PCO2)"
+ },
+ {
+  "anio": 2024,
+  "n": 67,
+  "codigo": "FIS-3.6",
+  "codigos_secundarios": [
+   "FIS-3.4",
+   "BIO-3.3"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "pérdida de la circulación enterohepática de ácidos biliares que desreprime la 7α-hidroxilasa (CYP7A1) hepática"
+ },
+ {
+  "anio": 2024,
+  "n": 68,
+  "codigo": "MIC-5.1",
+  "codigos_secundarios": [
+   "PAT-17.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "Naegleria fowleri como causa de meningoencefalitis amebiana primaria por vía olfatoria"
+ },
+ {
+  "anio": 2024,
+  "n": 69,
+  "codigo": "EMB-3.5",
+  "codigos_secundarios": [
+   "EMB-2.8"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "otro",
+  "concepto_especifico": "maduración pulmonar (surfactante, periodo sacular) como determinante de viabilidad del prematuro"
+ },
+ {
+  "anio": 2024,
+  "n": 70,
+  "codigo": "FAR-1.16",
+  "codigos_secundarios": [
+   "PAT-4.3",
+   "PAT-3.6"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "vasoconstricción mediada por receptores α1 de la adrenalina para revertir el choque anafiláctico"
+ },
+ {
+  "anio": 2024,
+  "n": 71,
+  "codigo": "EMB-2.9",
+  "codigos_secundarios": [
+   "EMB-3.4",
+   "FAR-1.13"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "origen_embriologico_anomalia",
+  "concepto_especifico": "talidomida como teratógeno de extremidades (amelia, focomelia) en semanas 4-8"
+ },
+ {
+  "anio": 2024,
+  "n": 72,
+  "codigo": "HIS-1.2",
+  "codigos_secundarios": [
+   "BIO-4.6",
+   "PAT-16.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "trastorno hereditario del colágeno (Ehlers-Danlos) como enfermedad del tejido conectivo"
+ },
+ {
+  "anio": 2024,
+  "n": 73,
+  "codigo": "BIO-1.2",
+  "codigos_secundarios": [
+   "PAT-9.1",
+   "FIS-6.2"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "interpretacion_grafico_datos",
+  "concepto_especifico": "diferenciación entre déficit de folato y de B12 por ácido metilmalónico (solo se eleva en déficit de B12)"
+ },
+ {
+  "anio": 2024,
+  "n": 74,
+  "codigo": "BIO-3.3",
+  "codigos_secundarios": [
+   "PAT-1.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "enzima_via_metabolica",
+  "concepto_especifico": "esfingolipidosis: déficit de esfingomielinasa con acumulación de esfingomielina en Niemann-Pick"
+ },
+ {
+  "anio": 2024,
+  "n": 75,
+  "codigo": "FAR-4.5",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "captación de aminoglucósidos dependiente de oxígeno (transporte activo) inactiva en medio anaerobio y ácido"
+ },
+ {
+  "anio": 2024,
+  "n": 76,
+  "codigo": "FAR-1.7",
+  "codigos_secundarios": [
+   "BIO-2.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "receptor de glucocorticoides como receptor intracelular/nuclear que actúa como factor de transcripción"
+ },
+ {
+  "anio": 2024,
+  "n": 77,
+  "codigo": "ANA-6.5",
+  "codigos_secundarios": [
+   "ANA-6.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "proyección anterior de las cisuras del pulmón derecho: lóbulo medio entre la cisura horizontal (4.º cartílago) y la oblicua (6.º cartílago)"
+ },
+ {
+  "anio": 2024,
+  "n": 78,
+  "codigo": "FIS-4.2",
+  "codigos_secundarios": [
+   "BIO-4.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "prueba_diagnostica",
+  "concepto_especifico": "creatinina sérica como marcador de TFG derivado de la creatina fosfato muscular"
+ },
+ {
+  "anio": 2024,
+  "n": 79,
+  "codigo": "MIC-1.3",
+  "codigos_secundarios": [
+   "PAT-17.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "meningococcemia: meningitis bacteriana con púrpura petequial/equimótica por Neisseria meningitidis"
+ },
+ {
+  "anio": 2024,
+  "n": 80,
+  "codigo": "EMB-3.1",
+  "codigos_secundarios": [
+   "EMB-1.3",
+   "EMB-2.9"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "origen_embriologico_anomalia",
+  "concepto_especifico": "cardiopatías congénitas (canal auriculoventricular, CIV) en la trisomía 21"
+ },
+ {
+  "anio": 2024,
+  "n": 81,
+  "codigo": "HIS-4.4",
+  "codigos_secundarios": [
+   "MIC-3.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "uniones estrechas entre células de Sertoli como base de la barrera hematotesticular"
+ },
+ {
+  "anio": 2024,
+  "n": 82,
+  "codigo": "ANA-4.2",
+  "codigos_secundarios": [
+   "ANA-5.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "lesion_nervio_deficit",
+  "concepto_especifico": "relación del nervio laríngeo recurrente con la arteria tiroidea inferior y el surco traqueoesofágico"
+ },
+ {
+  "anio": 2024,
+  "n": 83,
+  "codigo": "EMB-2.5",
+  "codigos_secundarios": [
+   "PAT-5.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "origen_embriologico_anomalia",
+  "concepto_especifico": "teratoma sacrococcígeo derivado de remanentes de la línea primitiva pluripotentes, con tejidos de varias hojas germinativas"
+ },
+ {
+  "anio": 2024,
+  "n": 84,
+  "codigo": "EMB-3.4",
+  "codigos_secundarios": [
+   "ANA-2.2",
+   "PAT-16.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "displasia del desarrollo de la cadera: acetábulo poco profundo y cabeza femoral inestable"
+ },
+ {
+  "anio": 2024,
+  "n": 85,
+  "codigo": "MIC-4.1",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "ciclo_transmision_vector",
+  "concepto_especifico": "oviposición nocturna perianal de la hembra de Enterobius vermicularis como causa del prurito"
+ },
+ {
+  "anio": 2024,
+  "n": 86,
+  "codigo": "PAT-8.3",
+  "codigos_secundarios": [
+   "PAT-6.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "otro",
+  "concepto_especifico": "factores de riesgo modificables (tabaco, HTA, dislipidemia, diabetes) frente a no modificables (edad, sexo, genética)"
+ },
+ {
+  "anio": 2024,
+  "n": 87,
+  "codigo": "EMB-2.9",
+  "codigos_secundarios": [
+   "FAR-1.13"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "síndrome hidantoínico fetal por fenitoína (microcefalia, retraso, dismorfia facial con puente nasal ancho, hipoplasia ungueal)"
+ },
+ {
+  "anio": 2024,
+  "n": 88,
+  "codigo": "FAR-4.8",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "neuritis óptica retrobulbar por etambutol con discromatopsia rojo-verde"
+ },
+ {
+  "anio": 2024,
+  "n": 89,
+  "codigo": "PAT-3.1",
+  "codigos_secundarios": [
+   "PAT-8.2",
+   "FIS-1.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "edema por aumento de la presión hidrostática venosa en la insuficiencia cardiaca congestiva"
+ },
+ {
+  "anio": 2024,
+  "n": 90,
+  "codigo": "PAT-4.4",
+  "codigos_secundarios": [
+   "FIS-6.6"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "pérdida de la autotolerancia (central y periférica) como mecanismo base de la autoinmunidad"
+ },
+ {
+  "anio": 2024,
+  "n": 91,
+  "codigo": "FIS-5.2",
+  "codigos_secundarios": [
+   "PAT-14.1",
+   "FIS-5.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "interpretacion_grafico_datos",
+  "concepto_especifico": "hipotiroidismo central (secundario) por necrosis hipofisaria posparto: TSH baja o inapropiadamente normal con T4 libre baja"
+ },
+ {
+  "anio": 2024,
+  "n": 92,
+  "codigo": "ANA-3.7",
+  "codigos_secundarios": [
+   "ANA-5.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "lesion_nervio_deficit",
+  "concepto_especifico": "lesión del músculo oblicuo superior/tróclea y del nervio troclear (IV): fallo de la infraducción en aducción"
+ },
+ {
+  "anio": 2024,
+  "n": 93,
+  "codigo": "FAR-1.17",
+  "codigos_secundarios": [
+   "FAR-1.18",
+   "PAT-6.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "síndrome colinérgico por organofosforados tratado con atropina (antagonista muscarínico)"
+ },
+ {
+  "anio": 2024,
+  "n": 94,
+  "codigo": "ANA-7.2",
+  "codigos_secundarios": [
+   "ANA-7.3"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "límites del foramen epiploico: anterior ligamento hepatoduodenal (porta), posterior VCI, superior lóbulo caudado, inferior 1.ª porción del duodeno"
+ },
+ {
+  "anio": 2024,
+  "n": 95,
+  "codigo": "FIS-3.1",
+  "codigos_secundarios": [
+   "BIO-5.1",
+   "FIS-5.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "descenso de ghrelina (hormona orexígena del fondo gástrico) tras gastrectomía en manga o bypass"
+ },
+ {
+  "anio": 2024,
+  "n": 96,
+  "codigo": "FIS-1.4",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "otro",
+  "concepto_especifico": "distribución del volumen sanguíneo: las venas (vasos de capacitancia) contienen ~60-65 % del volumen"
+ },
+ {
+  "anio": 2024,
+  "n": 97,
+  "codigo": "ANA-2.1",
+  "codigos_secundarios": [
+   "ANA-5.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "lesion_nervio_deficit",
+  "concepto_especifico": "nervio radial en el surco del nervio radial (canal de torsión) y mano caída por fractura de la diáfisis humeral"
+ },
+ {
+  "anio": 2024,
+  "n": 98,
+  "codigo": "FIS-5.2",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "prolactina bajo inhibición tónica dopaminérgica hipotalámica; aumenta con la sección del tallo"
+ },
+ {
+  "anio": 2024,
+  "n": 99,
+  "codigo": "FIS-9.2",
+  "codigos_secundarios": [
+   "FIS-2.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "hipoxia hipóxica (hipoxémica) por baja PO2 inspirada en altitud"
+ },
+ {
+  "anio": 2024,
+  "n": 100,
+  "codigo": "ANA-8.3",
+  "codigos_secundarios": [
+   "ANA-6.1"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "movilidad respiratoria renal: descenso de ~2-3 cm en inspiración profunda por el empuje diafragmático"
+ },
+ {
+  "anio": 2025,
+  "n": 1,
+  "codigo": "MIC-5.1",
+  "codigos_secundarios": [
+   "PAT-7.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "morfologia_estadio_agente",
+  "concepto_especifico": "trofozoíto hematófago de Entamoeba histolytica en heces disentéricas"
+ },
+ {
+  "anio": 2025,
+  "n": 2,
+  "codigo": "BIO-4.1",
+  "codigos_secundarios": [
+   "BIO-3.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "enzima_via_metabolica",
+  "concepto_especifico": "lipólisis intracelular del adipocito por la lipasa sensible a hormonas"
+ },
+ {
+  "anio": 2025,
+  "n": 3,
+  "codigo": "EMB-2.2",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "origen_embriologico_anomalia",
+  "concepto_especifico": "gemelos monocigóticos monocoriónicos biamnióticos por división del embrioblasto (días 4-8)"
+ },
+ {
+  "anio": 2025,
+  "n": 4,
+  "codigo": "FAR-4.1",
+  "codigos_secundarios": [
+   "MIC-1.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "elección de cefalosporina de 1.ª generación oral frente a SAMS productor de penicilinasa"
+ },
+ {
+  "anio": 2025,
+  "n": 5,
+  "codigo": "BIO-4.5",
+  "codigos_secundarios": [
+   "FIS-8.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "actividad ATPasa de la cabeza de miosina en el ciclo de puentes cruzados"
+ },
+ {
+  "anio": 2025,
+  "n": 6,
+  "codigo": "FAR-1.12",
+  "codigos_secundarios": [
+   "FAR-2.6"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "flumazenil como antagonista competitivo del sitio benzodiacepínico del receptor GABA-A"
+ },
+ {
+  "anio": 2025,
+  "n": 7,
+  "codigo": "HIS-4.1",
+  "codigos_secundarios": [
+   "FIS-5.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "cuerpo lúteo: células granulosoluteínicas y tecaluteínicas"
+ },
+ {
+  "anio": 2025,
+  "n": 8,
+  "codigo": "PAT-9.2",
+  "codigos_secundarios": [
+   "PAT-9.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "tricoleucemia (leucemia de células peludas) por morfología e inmunofenotipo"
+ },
+ {
+  "anio": 2025,
+  "n": 9,
+  "codigo": "FIS-2.3",
+  "codigos_secundarios": [
+   "FIS-9.2",
+   "PAT-10.1"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "hipoxemia por shunt (alveolos ocupados y perfundidos) diferenciada de la hipoxemia por altitud mediante el gradiente A-a"
+ },
+ {
+  "anio": 2025,
+  "n": 10,
+  "codigo": "HIS-6.1",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "estratos de la epidermis de la piel gruesa (incluido el estrato lúcido)"
+ },
+ {
+  "anio": 2025,
+  "n": 11,
+  "codigo": "MIC-1.1",
+  "codigos_secundarios": [
+   "PAT-17.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "meningitis por Streptococcus pneumoniae secundaria a otitis media"
+ },
+ {
+  "anio": 2025,
+  "n": 12,
+  "codigo": "ANA-6.5",
+  "codigos_secundarios": [
+   "ANA-5.2",
+   "FIS-7.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "inervación parasimpática vagal del plexo pulmonar (broncoconstricción y secreción glandular)"
+ },
+ {
+  "anio": 2025,
+  "n": 13,
+  "codigo": "MIC-4.1",
+  "codigos_secundarios": [
+   "PAT-7.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "triquinosis por Trichinella spiralis (fase muscular)"
+ },
+ {
+  "anio": 2025,
+  "n": 14,
+  "codigo": "EMB-3.4",
+  "codigos_secundarios": [
+   "EMB-1.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "origen_embriologico_anomalia",
+  "concepto_especifico": "FGF8 de la cresta ectodérmica apical en el crecimiento proximodistal del miembro"
+ },
+ {
+  "anio": 2025,
+  "n": 15,
+  "codigo": "HIS-3.1",
+  "codigos_secundarios": [
+   "FIS-3.5",
+   "MIC-1.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "enterocitos de las criptas como sitio de secreción de cloro por CFTR"
+ },
+ {
+  "anio": 2025,
+  "n": 16,
+  "codigo": "ANA-6.2",
+  "codigos_secundarios": [
+   "PAT-13.8"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "irrigacion_drenaje_relaciones",
+  "concepto_especifico": "drenaje de los cuadrantes mediales de la mama a ganglios paraesternales (mamarios internos)"
+ },
+ {
+  "anio": 2025,
+  "n": 17,
+  "codigo": "BIO-2.3",
+  "codigos_secundarios": [
+   "FAR-1.7",
+   "FAR-3.8"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "vía Gq-fosfolipasa C: hidrólisis de PIP2 a IP3 y DAG"
+ },
+ {
+  "anio": 2025,
+  "n": 18,
+  "codigo": "PAT-14.2",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "tiroiditis subaguda granulomatosa (de De Quervain): granulomas con células gigantes alrededor de coloide"
+ },
+ {
+  "anio": 2025,
+  "n": 19,
+  "codigo": "MIC-5.2",
+  "codigos_secundarios": [
+   "PAT-7.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "giardiasis con malabsorción y esteatorrea por agua no tratada"
+ },
+ {
+  "anio": 2025,
+  "n": 20,
+  "codigo": "ANA-9.3",
+  "codigos_secundarios": [
+   "HIS-4.5"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "conducto eyaculador: trayecto intraprostático que lleva la secreción de vesículas seminales y deferente"
+ },
+ {
+  "anio": 2025,
+  "n": 21,
+  "codigo": "FAR-1.13",
+  "codigos_secundarios": [
+   "FAR-4.6",
+   "FAR-3.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "inhibición de CYP2C9 por fluconazol que eleva la warfarina S y el INR"
+ },
+ {
+  "anio": 2025,
+  "n": 22,
+  "codigo": "MIC-1.3",
+  "codigos_secundarios": [
+   "PAT-17.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "meningitis meningocócica con púrpura"
+ },
+ {
+  "anio": 2025,
+  "n": 23,
+  "codigo": "BIO-3.2",
+  "codigos_secundarios": [
+   "BIO-4.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "enzima_via_metabolica",
+  "concepto_especifico": "miopatía mitocondrial por defecto de la cadena respiratoria (fosforilación oxidativa)"
+ },
+ {
+  "anio": 2025,
+  "n": 24,
+  "codigo": "FIS-2.1",
+  "codigos_secundarios": [
+   "PAT-10.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "interpretacion_grafico_datos",
+  "concepto_especifico": "interpretación espirométrica: patrón obstructivo con CVF conservada"
+ },
+ {
+  "anio": 2025,
+  "n": 25,
+  "codigo": "PAT-13.8",
+  "codigos_secundarios": [
+   "PAT-15.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "enfermedad de Paget del pezón: células de Paget intraepidérmicas"
+ },
+ {
+  "anio": 2025,
+  "n": 26,
+  "codigo": "FIS-4.1",
+  "codigos_secundarios": [
+   "FIS-4.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "interpretacion_grafico_datos",
+  "concepto_especifico": "deshidratación hipertónica por pérdida de agua libre: LEC hiperosmolar, contraído, y salida de agua del LIC"
+ },
+ {
+  "anio": 2025,
+  "n": 27,
+  "codigo": "PAT-3.1",
+  "codigos_secundarios": [
+   "PAT-12.3",
+   "FIS-4.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "edema por hipoalbuminemia y caída de la presión oncótica plasmática"
+ },
+ {
+  "anio": 2025,
+  "n": 28,
+  "codigo": "HIS-2.3",
+  "codigos_secundarios": [
+   "HIS-1.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "epitelio respiratorio cilíndrico pseudoestratificado ciliado con células caliciformes"
+ },
+ {
+  "anio": 2025,
+  "n": 29,
+  "codigo": "ANA-9.4",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "irrigacion_drenaje_relaciones",
+  "concepto_especifico": "ligamento suspensorio del ovario (infundibulopélvico) como vía de los vasos ováricos"
+ },
+ {
+  "anio": 2025,
+  "n": 30,
+  "codigo": "FIS-3.4",
+  "codigos_secundarios": [
+   "PAT-11.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "enzima_via_metabolica",
+  "concepto_especifico": "lipasa pancreática en la digestión de triglicéridos; esteatorrea por insuficiencia exocrina"
+ },
+ {
+  "anio": 2025,
+  "n": 31,
+  "codigo": "ANA-3.8",
+  "codigos_secundarios": [
+   "ANA-5.2",
+   "FIS-7.2"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "lesion_nervio_deficit",
+  "concepto_especifico": "nervio del estapedio (ramo del facial) y parálisis del músculo estapedio con hiperacusia"
+ },
+ {
+  "anio": 2025,
+  "n": 32,
+  "codigo": "FAR-1.17",
+  "codigos_secundarios": [
+   "ANA-3.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "pilocarpina como agonista muscarínico M3 que estimula la secreción salival"
+ },
+ {
+  "anio": 2025,
+  "n": 33,
+  "codigo": "PAT-15.7",
+  "codigos_secundarios": [
+   "PAT-5.4",
+   "MIC-3.2"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "carcinoma de células de Merkel asociado al poliomavirus de células de Merkel en inmunosuprimidos"
+ },
+ {
+  "anio": 2025,
+  "n": 34,
+  "codigo": "EMB-2.9",
+  "codigos_secundarios": [
+   "EMB-2.6",
+   "EMB-3.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "origen_embriologico_anomalia",
+  "concepto_especifico": "periodo embrionario (semanas 3-8) de organogénesis como periodo crítico de teratogénesis"
+ },
+ {
+  "anio": 2025,
+  "n": 35,
+  "codigo": "BIO-4.7",
+  "codigos_secundarios": [
+   "PAT-5.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "problema",
+  "caso_decorativo": false,
+  "patron": "enzima_via_metabolica",
+  "concepto_especifico": "efecto Warburg: glucólisis aerobia en células tumorales"
+ },
+ {
+  "anio": 2025,
+  "n": 36,
+  "codigo": "ANA-3.4",
+  "codigos_secundarios": [
+   "ANA-3.8"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "hipertrofia adenoidea (amígdala faríngea) que obstruye la nasofaringe y el orificio de la trompa auditiva"
+ },
+ {
+  "anio": 2025,
+  "n": 37,
+  "codigo": "FIS-3.6",
+  "codigos_secundarios": [
+   "FIS-6.3",
+   "BIO-4.3"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "síntesis hepática de factores de coagulación (II, VII, IX, X) y prolongación del tiempo de protrombina"
+ },
+ {
+  "anio": 2025,
+  "n": 38,
+  "codigo": "PAT-9.4",
+  "codigos_secundarios": [
+   "PAT-4.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "linfoma de zona marginal extranodal tipo MALT de glándula salival en Sjögren"
+ },
+ {
+  "anio": 2025,
+  "n": 39,
+  "codigo": "FAR-3.4",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "ezetimibe como inhibidor del transportador NPC1L1 de absorción intestinal de colesterol"
+ },
+ {
+  "anio": 2025,
+  "n": 40,
+  "codigo": "ANA-3.4",
+  "codigos_secundarios": [
+   "ANA-4.2",
+   "ANA-5.2"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "irrigacion_drenaje_relaciones",
+  "concepto_especifico": "ramo interno del nervio laríngeo superior bajo la mucosa del receso piriforme"
+ },
+ {
+  "anio": 2025,
+  "n": 41,
+  "codigo": "PAT-13.4",
+  "codigos_secundarios": [
+   "PAT-5.7",
+   "MIC-3.2"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "conización diagnóstica-terapéutica por riesgo de carcinoma invasivo oculto en lesiones de alto grado con extensión endocervical"
+ },
+ {
+  "anio": 2025,
+  "n": 42,
+  "codigo": "FAR-2.13",
+  "codigos_secundarios": [
+   "FAR-1.16"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "taquicardia por estimulación β (β1 por pérdida de selectividad y reflejo por vasodilatación β2)"
+ },
+ {
+  "anio": 2025,
+  "n": 43,
+  "codigo": "FIS-5.5",
+  "codigos_secundarios": [
+   "PAT-13.6"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "falta de retroalimentación positiva del estradiol sobre la LH por ausencia de folículo dominante"
+ },
+ {
+  "anio": 2025,
+  "n": 44,
+  "codigo": "FAR-2.2",
+  "codigos_secundarios": [
+   "FIS-4.2",
+   "FIS-4.6"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "nefrotoxicidad hemodinámica de los AINE: pérdida de la vasodilatación aferente mediada por prostaglandinas"
+ },
+ {
+  "anio": 2025,
+  "n": 45,
+  "codigo": "EMB-3.6",
+  "codigos_secundarios": [
+   "EMB-3.7",
+   "ANA-4.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "origen_embriologico_anomalia",
+  "concepto_especifico": "quiste del conducto tirogloso"
+ },
+ {
+  "anio": 2025,
+  "n": 46,
+  "codigo": "BIO-3.3",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "enzima_via_metabolica",
+  "concepto_especifico": "lanzadera de carnitina (CPT-I/CPT-II) para el ingreso de acil-CoA de cadena larga a la mitocondria"
+ },
+ {
+  "anio": 2025,
+  "n": 47,
+  "codigo": "ANA-5.1",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "lámina cuadrigémina (tectum: colículos superiores e inferiores) como parte dorsal del mesencéfalo"
+ },
+ {
+  "anio": 2025,
+  "n": 48,
+  "codigo": "HIS-1.5",
+  "codigos_secundarios": [
+   "PAT-17.8"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "oligodendrocito como célula mielinizante del SNC"
+ },
+ {
+  "anio": 2025,
+  "n": 49,
+  "codigo": "FAR-3.6",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "clasificación de análogos de insulina: degludec como basal ultralarga"
+ },
+ {
+  "anio": 2025,
+  "n": 50,
+  "codigo": "FIS-6.5",
+  "codigos_secundarios": [
+   "PAT-4.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "linfocitos T CD8+ citotóxicos restringidos por MHC clase I"
+ },
+ {
+  "anio": 2025,
+  "n": 51,
+  "codigo": "FIS-4.6",
+  "codigos_secundarios": [
+   "PAT-8.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "hipertensión renovascular: hipoperfusión de la arteriola aferente como estímulo barorreceptor de la secreción de renina"
+ },
+ {
+  "anio": 2025,
+  "n": 52,
+  "codigo": "ANA-2.2",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "músculos de la pata de ganso (sartorio, grácil, semitendinoso) como flexores y rotadores internos de la rodilla flexionada"
+ },
+ {
+  "anio": 2025,
+  "n": 53,
+  "codigo": "PAT-3.3",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "estasis venosa por inmovilización como factor de la tríada de Virchow en TVP"
+ },
+ {
+  "anio": 2025,
+  "n": 54,
+  "codigo": "PAT-8.1",
+  "codigos_secundarios": [
+   "PAT-4.3",
+   "PAT-12.3"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "vasculitis por IgA (púrpura de Henoch-Schönlein): depósito de complejos IgA1 y activación del complemento"
+ },
+ {
+  "anio": 2025,
+  "n": 55,
+  "codigo": "PAT-16.4",
+  "codigos_secundarios": [
+   "PAT-4.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "artritis reumatoide: pannus con hiperplasia sinovial, angiogénesis e infiltrado linfoplasmocitario"
+ },
+ {
+  "anio": 2025,
+  "n": 56,
+  "codigo": "MIC-6.1",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "escabiosis por Sarcoptes scabiei: prurito nocturno, distribución típica y contagio intradomiciliario"
+ },
+ {
+  "anio": 2025,
+  "n": 57,
+  "codigo": "FIS-3.6",
+  "codigos_secundarios": [
+   "PAT-11.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "ictericia obstructiva (colestasis extrahepática): falla de excreción de bilirrubina conjugada"
+ },
+ {
+  "anio": 2025,
+  "n": 58,
+  "codigo": "ANA-3.8",
+  "codigos_secundarios": [
+   "HIS-5.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "órgano espiral de Corti como asiento de las células ciliadas auditivas en la cóclea"
+ },
+ {
+  "anio": 2025,
+  "n": 59,
+  "codigo": "ANA-3.7",
+  "codigos_secundarios": [
+   "ANA-5.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "lesion_nervio_deficit",
+  "concepto_especifico": "lesión prequiasmática del nervio óptico en el canal óptico (neuropatía óptica traumática)"
+ },
+ {
+  "anio": 2025,
+  "n": 60,
+  "codigo": "FAR-3.1",
+  "codigos_secundarios": [
+   "PAT-16.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "hiperuricemia y gota inducidas por tiazidas (competencia por secreción tubular de urato)"
+ },
+ {
+  "anio": 2025,
+  "n": 61,
+  "codigo": "FAR-1.10",
+  "codigos_secundarios": [
+   "BIO-4.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "otro",
+  "concepto_especifico": "bioactivación del tamoxifeno a endoxifeno por CYP2D6; metabolizadores lentos con menor eficacia"
+ },
+ {
+  "anio": 2025,
+  "n": 62,
+  "codigo": "PAT-11.4",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "colecistitis crónica litiásica: senos de Rokitansky-Aschoff, fibrosis mural e infiltrado crónico escaso"
+ },
+ {
+  "anio": 2025,
+  "n": 63,
+  "codigo": "FAR-1.16",
+  "codigos_secundarios": [
+   "PAT-3.6"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "norepinefrina como vasopresor de primera línea en shock séptico (agonista α1 predominante con β1)"
+ },
+ {
+  "anio": 2025,
+  "n": 64,
+  "codigo": "FIS-7.4",
+  "codigos_secundarios": [
+   "ANA-5.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "hipocampo y consolidación de memoria declarativa; vulnerabilidad de CA1 a la hipoxia"
+ },
+ {
+  "anio": 2025,
+  "n": 65,
+  "codigo": "PAT-13.4",
+  "codigos_secundarios": [
+   "PAT-5.1"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "lesión intraepitelial escamosa cervical: diferencia entre displasia (CIN 2) y carcinoma in situ (CIN 3) según el espesor afectado"
+ },
+ {
+  "anio": 2025,
+  "n": 66,
+  "codigo": "MIC-2.3",
+  "codigos_secundarios": [
+   "PAT-15.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "prueba_diagnostica",
+  "concepto_especifico": "examen directo con KOH de raspado cutáneo para ver hifas de dermatofitos"
+ },
+ {
+  "anio": 2025,
+  "n": 67,
+  "codigo": "ANA-7.3",
+  "codigos_secundarios": [
+   "PAT-11.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "irrigacion_drenaje_relaciones",
+  "concepto_especifico": "relación posterior de la primera porción del duodeno con la arteria gastroduodenal"
+ },
+ {
+  "anio": 2025,
+  "n": 68,
+  "codigo": "ANA-8.3",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "estrecheces fisiológicas del uréter; la unión ureterovesical como sitio más frecuente de impactación"
+ },
+ {
+  "anio": 2025,
+  "n": 69,
+  "codigo": "FAR-2.6",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "benzodiacepinas frente a barbitúricos: aumento de frecuencia de apertura del canal GABA-A, mayor margen de seguridad, utilidad ansiolítica e hipnótica"
+ },
+ {
+  "anio": 2025,
+  "n": 70,
+  "codigo": "FIS-5.3",
+  "codigos_secundarios": [
+   "PAT-14.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "aumento de la expresión de receptores β-adrenérgicos inducido por hormonas tiroideas (efecto permisivo sobre catecolaminas)"
+ },
+ {
+  "anio": 2025,
+  "n": 71,
+  "codigo": "ANA-9.1",
+  "codigos_secundarios": [
+   "ANA-9.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "identificar_estructura_anatomica",
+  "concepto_especifico": "elevador del ano (diafragma pélvico) como soporte del cuello vesical y la uretra; lesión obstétrica"
+ },
+ {
+  "anio": 2025,
+  "n": 72,
+  "codigo": "PAT-9.1",
+  "codigos_secundarios": [
+   "FIS-6.2",
+   "MIC-1.7"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "anemia hemolítica autoinmune (posible crioaglutininas post-Mycoplasma) con macrocitosis por reticulocitosis"
+ },
+ {
+  "anio": 2025,
+  "n": 73,
+  "codigo": "PAT-17.10",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "ependimoma del cuarto ventrículo con pseudorrosetas perivasculares"
+ },
+ {
+  "anio": 2025,
+  "n": 74,
+  "codigo": "FAR-4.8",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "neuritis óptica retrobulbar por etambutol con discromatopsia rojo-verde"
+ },
+ {
+  "anio": 2025,
+  "n": 75,
+  "codigo": "FAR-1.18",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_accion_farmaco",
+  "concepto_especifico": "efectos antimuscarínicos de la atropina: midriasis, cicloplejia, taquicardia, sequedad"
+ },
+ {
+  "anio": 2025,
+  "n": 76,
+  "codigo": "MIC-3.2",
+  "codigos_secundarios": [
+   "PAT-7.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "VPH de bajo riesgo (6 y 11) como causa de condiloma acuminado"
+ },
+ {
+  "anio": 2025,
+  "n": 77,
+  "codigo": "FAR-2.4",
+  "codigos_secundarios": [
+   "FAR-1.10",
+   "FIS-8.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "hipertermia maligna por succinilcolina/halogenados (mutación RYR1) tratada con dantroleno"
+ },
+ {
+  "anio": 2025,
+  "n": 78,
+  "codigo": "FIS-2.5",
+  "codigos_secundarios": [],
+  "dificultad": "mediana",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "centro neumotáxico pontino como limitador de la duración de la inspiración (frente al centro apnéustico)"
+ },
+ {
+  "anio": 2025,
+  "n": 79,
+  "codigo": "ANA-9.3",
+  "codigos_secundarios": [
+   "FIS-5.6",
+   "ANA-5.2"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "lesion_nervio_deficit",
+  "concepto_especifico": "nervios cavernosos derivados de los esplácnicos pélvicos (parasimpático S2-S4) y su lesión en la prostatectomía"
+ },
+ {
+  "anio": 2025,
+  "n": 80,
+  "codigo": "EMB-3.5",
+  "codigos_secundarios": [
+   "EMB-3.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "origen_embriologico_anomalia",
+  "concepto_especifico": "hernia diafragmática congénita posterolateral (Bochdalek) por cierre defectuoso del canal pleuroperitoneal"
+ },
+ {
+  "anio": 2025,
+  "n": 81,
+  "codigo": "MIC-1.4",
+  "codigos_secundarios": [
+   "FAR-4.5",
+   "PAT-11.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "diagnostico_entidad",
+  "concepto_especifico": "colitis asociada a antibióticos por sobrecrecimiento de Clostridioides difficile tras clindamicina"
+ },
+ {
+  "anio": 2025,
+  "n": 82,
+  "codigo": "PAT-6.5",
+  "codigos_secundarios": [
+   "BIO-4.4",
+   "PAT-11.4"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "toxicidad del acetaldehído por formación de aductos con proteínas y ADN, distinto del exceso de NADH y del CYP2E1"
+ },
+ {
+  "anio": 2025,
+  "n": 83,
+  "codigo": "ANA-5.2",
+  "codigos_secundarios": [
+   "ANA-3.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "lesion_nervio_deficit",
+  "concepto_especifico": "parálisis del VI par (abducens) con déficit del recto lateral"
+ },
+ {
+  "anio": 2025,
+  "n": 84,
+  "codigo": "FIS-3.2",
+  "codigos_secundarios": [
+   "FIS-3.4",
+   "FIS-3.3",
+   "PAT-11.2"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "síndrome de dumping temprano posgastrectomía: paso rápido de quimo hiperosmolar al yeyuno, desplazamiento de líquido y liberación de péptidos vasoactivos"
+ },
+ {
+  "anio": 2025,
+  "n": 85,
+  "codigo": "EMB-3.1",
+  "codigos_secundarios": [
+   "PAT-8.4"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "origen_embriologico_anomalia",
+  "concepto_especifico": "CIA ostium secundum por reabsorción excesiva del septum primum o desarrollo insuficiente del septum secundum"
+ },
+ {
+  "anio": 2025,
+  "n": 86,
+  "codigo": "FAR-2.2",
+  "codigos_secundarios": [
+   "BIO-4.4",
+   "PAT-11.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "efecto_adverso_toxicidad",
+  "concepto_especifico": "hepatotoxicidad del paracetamol por NAPQI vía CYP2E1 y depleción de glutatión"
+ },
+ {
+  "anio": 2025,
+  "n": 87,
+  "codigo": "BIO-4.2",
+  "codigos_secundarios": [
+   "PAT-9.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "otro",
+  "concepto_especifico": "mutación puntual Glu6Val de la HbS y polimerización en desoxigenación"
+ },
+ {
+  "anio": 2025,
+  "n": 88,
+  "codigo": "HIS-1.1",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "desmosomas (mácula adherens): cadherinas desmosómicas y anclaje de filamentos intermedios célula-célula"
+ },
+ {
+  "anio": 2025,
+  "n": 89,
+  "codigo": "FAR-1.12",
+  "codigos_secundarios": [
+   "FAR-2.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "farmaco_de_eleccion",
+  "concepto_especifico": "N-acetilcisteína como precursor de glutatión en intoxicación por paracetamol"
+ },
+ {
+  "anio": 2025,
+  "n": 90,
+  "codigo": "HIS-1.3",
+  "codigos_secundarios": [
+   "PAT-16.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "osteoclasto como célula de resorción ósea (borde en cepillo, origen monocito-macrófago)"
+ },
+ {
+  "anio": 2025,
+  "n": 91,
+  "codigo": "ANA-5.1",
+  "codigos_secundarios": [
+   "ANA-3.7",
+   "FIS-7.2"
+  ],
+  "dificultad": "mayor",
+  "carga_cognitiva": "integracion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "lesion_nervio_deficit",
+  "concepto_especifico": "lesión de la cintilla óptica izquierda: hemianopsia homónima contralateral con DPAR en el ojo contralateral (fibras pupilares antes del cuerpo geniculado)"
+ },
+ {
+  "anio": 2025,
+  "n": 92,
+  "codigo": "EMB-3.8",
+  "codigos_secundarios": [
+   "ANA-9.4"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "origen_embriologico_anomalia",
+  "concepto_especifico": "útero didelfo por falta de fusión de los conductos paramesonéfricos (müllerianos) en la línea media"
+ },
+ {
+  "anio": 2025,
+  "n": 93,
+  "codigo": "MIC-6.3",
+  "codigos_secundarios": [
+   "MIC-3.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "ciclo_transmision_vector",
+  "concepto_especifico": "Aedes aegypti como vector del dengue"
+ },
+ {
+  "anio": 2025,
+  "n": 94,
+  "codigo": "PAT-10.1",
+  "codigos_secundarios": [
+   "PAT-2.5"
+  ],
+  "dificultad": "mediana",
+  "carga_cognitiva": "memoria",
+  "formato": "directa",
+  "caso_decorativo": false,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "neumonía organizada criptogenética con tapones de tejido de granulación intraalveolares (cuerpos de Masson)"
+ },
+ {
+  "anio": 2025,
+  "n": 95,
+  "codigo": "ANA-6.3",
+  "codigos_secundarios": [
+   "ANA-6.1"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "irrigacion_drenaje_relaciones",
+  "concepto_especifico": "ventrículo derecho como cara esternocostal (más anterior) del corazón y el más expuesto en trauma esternal"
+ },
+ {
+  "anio": 2025,
+  "n": 96,
+  "codigo": "FAR-1.7",
+  "codigos_secundarios": [
+   "FAR-1.16",
+   "BIO-2.3",
+   "PAT-14.5"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "aplicacion",
+  "formato": "caso",
+  "caso_decorativo": false,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "receptores β1 (corazón) y β2 (músculo esquelético) acoplados a Gs → adenilil ciclasa → AMPc"
+ },
+ {
+  "anio": 2025,
+  "n": 97,
+  "codigo": "FIS-1.1",
+  "codigos_secundarios": [
+   "PAT-8.7"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "S4 por contracción auricular contra un ventrículo rígido (disfunción diastólica)"
+ },
+ {
+  "anio": 2025,
+  "n": 98,
+  "codigo": "PAT-4.3",
+  "codigos_secundarios": [],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "mecanismo_fisiopatologico",
+  "concepto_especifico": "hipersensibilidad tipo I mediada por IgE y degranulación de mastocitos"
+ },
+ {
+  "anio": 2025,
+  "n": 99,
+  "codigo": "PAT-2.2",
+  "codigos_secundarios": [
+   "MIC-1.6",
+   "PAT-7.2"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "hallazgo_histologico",
+  "concepto_especifico": "célula gigante de Langhans en la inflamación granulomatosa tuberculosa"
+ },
+ {
+  "anio": 2025,
+  "n": 100,
+  "codigo": "ANA-3.3",
+  "codigos_secundarios": [
+   "ANA-3.1",
+   "PAT-17.6"
+  ],
+  "dificultad": "menor",
+  "carga_cognitiva": "memoria",
+  "formato": "caso",
+  "caso_decorativo": true,
+  "patron": "irrigacion_drenaje_relaciones",
+  "concepto_especifico": "arteria meníngea media: rama de la maxilar en la fosa infratemporal, entra por el agujero espinoso; su rotura en el pterión causa hematoma epidural"
+ }
+]

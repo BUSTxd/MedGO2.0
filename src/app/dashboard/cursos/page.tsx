@@ -1,506 +1,147 @@
 import Link from 'next/link';
-import { getCachedPlanState } from '@/lib/plans-server';
-import { cursoEsGratis, planDeTrack, requiredPlanDeCurso, tieneAccesoA, trackDelUsuario } from '@/lib/acceso';
-import { PLANS, type Track } from '@/lib/plans';
-import { PRIORIDAD_LANZAMIENTO } from '@/lib/data/aportes';
-import DigestiveIcon from '@/components/icons/DigestiveIcon';
-import LocomotorIcon from '@/components/icons/LocomotorIcon';
-import EndocrineIcon from '@/components/icons/EndocrineIcon';
-import BiologiaCelularIcon from '@/components/icons/BiologiaCelularIcon';
-import CienciasSocialesIcon from '@/components/icons/CienciasSocialesIcon';
-import FisicaIcon from '@/components/icons/FisicaIcon';
-import QuimicaOrganicaIcon from '@/components/icons/QuimicaOrganicaIcon';
-import ComunicacionIcon from '@/components/icons/ComunicacionIcon';
-import CulturaAmbientalIcon from '@/components/icons/CulturaAmbientalIcon';
-import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
-import HospitalIcon from '@/components/icons/HospitalIcon';
-import PsicologiaIcon from '@/components/icons/PsicologiaIcon';
-import ConstruccionIcon from '@/components/icons/ConstruccionIcon';
+import { getUser } from '@/lib/supabase/get-user';
+import { esDeCayetano } from '@/lib/admin';
+import { labEsGratis } from '@/lib/acceso';
+import { AREAS, AREA_POR_CODIGO, EXAMENES_DESTINO, type AreaEncib } from '@/lib/data/encib';
+import { diasHasta, fechaLarga } from '@/lib/encib/fechas';
+import Pasarela from '@/components/Pasarela';
+import IconoArea from '@/components/IconoArea';
+import CursosCayetano from '@/components/CursosCayetano';
 import styles from '@/styles/cursos.module.css';
+import hub from '@/styles/cursosHub.module.css';
 
-const DIFF_LABEL: Record<string, string> = {
-  easy: 'Interno (fácil)', medium: 'Residente (media)', hard: 'Especialista (difícil)',
-};
-const DIFF_CLASS: Record<string, string> = {
-  easy: 'diffEasy', medium: 'diffMed', hard: 'diffHard',
-};
-
-const COURSES = [
-  {
-    id: 'microbiologia',
-    nombre: 'Microbiología | UPCH',
-    badge: 'Microbiología',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. 2,000 preguntas totales.',
-    badgeColor: '#5445d8',
-    badgeBg: 'rgba(84, 69, 216, 0.12)',
-    activo: true,
-    diff: ['easy'],
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="4" fill="#5445d8" stroke="#5445d8" strokeWidth="2"/>
-        <path d="m8 12-3-2M16 12l3-2M12 8l2-3M12 16l-2 3" stroke="#5445d8" strokeWidth="1.5" strokeLinecap="round"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'farmacologia',
-    nombre: 'Farmacología | UPCH',
-    badge: 'Farmacología',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. 2,000 preguntas totales.',
-    badgeColor: '#5445d8',
-    badgeBg: 'rgba(84, 69, 216, 0.12)',
-    activo: true,
-    diff: ['easy'],
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 1024 1024" fill="none">
-        <path d="M33.956002 93.849026l326.194325 0 0 800.892063-326.194325 0 0-800.892063Z" fill="#9B90F4"/>
-        <path d="M231.051786 1024A216.179916 216.179916 0 0 1 15.032241 807.980455V239.786506a216.019545 216.019545 0 0 1 432.039091 0v568.033578a216.179916 216.179916 0 0 1-216.019546 216.179916z m0-962.225146a178.172023 178.172023 0 0 0-178.011652 178.011652v568.033578a178.011652 178.011652 0 1 0 356.023304 0V239.786506a178.172023 178.172023 0 0 0-178.011652-178.011652z" fill="#5445d8"/>
-        <path d="M231.051786 523.963666H33.956002v284.016789a196.935413 196.935413 0 0 0 171.276076 195.171334 55.969429 55.969429 0 0 1 25.659338-105.684396 129.258911 129.258911 0 0 0 129.258911-129.258911V523.963666h-129.258911z" fill="#5445d8"/>
-        <path d="M392.821848 45.966675l322.940098-45.961182 112.846679 792.902089-322.940098 45.961182-112.846679-792.902089Z" fill="#9B90F4"/>
-        <path d="M906.533839 213.164944l77.298753 562.90171a216.019545 216.019545 0 0 1-428.029819 58.695734l-77.298753-562.90171a216.019545 216.019545 0 1 1 428.029819-58.695734z m39.611601 568.033578l-77.298753-562.901711a178.043726 178.043726 0 1 0-352.815887 48.111258l77.298754 562.90171a178.011652 178.011652 0 1 0 352.815886-47.630145z" fill="#5445d8"/>
-        <path d="M731.248491 523.963666l-128.296686 17.640794-67.195389 9.141139-38.328635-282.252709a196.935413 196.935413 0 0 1 143.211176-216.661029 55.969429 55.969429 0 0 0 39.771972 101.194011 129.258911 129.258911 0 0 1 145.616739 110.495521l33.196768 241.999624z" fill="#5445d8"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'cardiovascular',
-    nombre: 'Cardiovascular | UPCH',
-    badge: 'Cardiovascular',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Sistema Cardiovascular M1552.',
-    badgeColor: '#d44a4a',
-    badgeBg: 'rgba(212, 74, 74, 0.12)',
-    activo: true,
-    diff: ['easy'],
-    icon: (
-      <svg width="22" height="22" viewBox="0 -137.5 1299 1299" fill="none">
-        <path d="M164.854878 495.321455h188.089332l95.704278-132.953342a48.313142 48.313142 0 0 1 82.796187 7.376053l131.846934 275.495551 160.98234-411.952518a49.050747 49.050747 0 0 1 46.65353-30.795018 48.313142 48.313142 0 0 1 44.440715 33.745439l83.349391 264.431473h65.646865a594.694213 594.694213 0 0 0 38.539873-52.554372c73.760522-119.676448-9.220065-376.178665-234.005258-376.178665s-252.260987 176.656451-252.260987 176.656451-27.475795-176.656451-252.260987-176.656451S56.242509 328.438273 130.371834 448.114721a554.310327 554.310327 0 0 0 34.483044 47.206734z" fill="#d44a4a"/>
-        <path d="M963.312534 596.742173a48.313142 48.313142 0 0 1-46.100327-33.745439l-52.738773-167.436386-151.577874 387.242743a48.313142 48.313142 0 0 1-43.334307 30.795019h-1.290809a48.313142 48.313142 0 0 1-43.518708-27.475795L479.99671 483.519771l-62.512043 86.853016a48.313142 48.313142 0 0 1-39.277478 20.099742h-131.109328c147.521045 166.883182 370.277823 394.987598 370.277822 394.987598s217.962344-221.65037 364.376982-388.717954h-18.440131z" fill="#d44a4a"/>
-        <path d="M127.974617 498.456277H184.95462a862.629311 862.629311 0 0 1-65.093661-85.377805c-36.880261-60.483628-32.639031-158.769525 11.986085-238.799691a243.778527 243.778527 0 0 1 219.621956-130.187322c217.777943 0 247.09775 163.379557 248.204158 170.386807a22.128157 22.128157 0 0 0 43.70311 0 201.550628 201.550628 0 0 1 40.383886-84.271397c45.362721-57.164405 115.250816-86.11541 208.004673-86.11541a243.594126 243.594126 0 0 1 219.068752 130.371723c44.625116 80.030167 49.41955 178.316063 11.986085 238.799692a906.148019 906.148019 0 0 1-69.334891 90.172239h57.164405a726.909949 726.909949 0 0 0 49.603951-66.937675c45.547123-73.760522 41.121491-190.117747-10.879677-283.609209a288.772446 288.772446 0 0 0-258.161829-152.868682c-165.961176 0-238.799692 85.562206-270.147913 147.521045-31.348222-61.221234-104.555541-147.521045-269.963513-147.521045a288.772446 288.772446 0 0 0-258.161828 152.868682c-52.001168 93.491462-56.4268 210.033088-10.879678 283.609209a686.341662 686.341662 0 0 0 45.915926 61.958839zM977.142632 591.763338c-130.371724 145.861433-302.971346 324.361898-355.341317 378.391481-53.107576-55.320392-228.842021-236.402475-359.766949-383.185915h-59.008418c153.975091 175.550044 389.63996 416.746952 402.916854 430.392649a22.128157 22.128157 0 0 0 31.532624 0c13.276894-13.645697 244.516132-250.232573 398.675624-425.413813h-59.008418z" fill="#d44a4a"/>
-        <path d="M262.58757 587.522108h-202.841437c-33.007834 0-59.746023 19.73094-59.746023 44.256314s26.738189 44.256313 59.746023 44.256313h282.3184zM1234.566855 592.316542h-258.161828l-76.342141 88.328226h333.950765c35.773853 0 64.724858-19.73094 64.724859-44.256314s-28.397801-44.071912-64.171655-44.071912z" fill="#d44a4a"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'neurologia',
-    nombre: 'Neurología | UPCH',
-    badge: 'Neurología',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Sistema Nervioso M1553.',
-    badgeColor: '#d44a4a',
-    badgeBg: 'rgba(212, 74, 74, 0.12)',
-    activo: true,
-    diff: ['hard'],
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 511.989 511.989" fill="none">
-        <defs>
-          <radialGradient id="bGrdN" cx="50%" cy="46%" r="54%">
-            <stop offset="0%"   stopColor="#fca5a5" />
-            <stop offset="100%" stopColor="#d44a4a" />
-          </radialGradient>
-        </defs>
-        <path
-          fill="url(#bGrdN)"
-          d="M489.333,255.088l-21.344-17.625l8-34.671l4-18.812l-30.656-42.141l6.656-22.53l-8-38.483
-          l-30.655-30.077h-39.999c0,0-22.655,12.312-16,0c6.672-12.328-33.326-36.577-33.326-36.577h-17.328l-40.663,15.483l-9.602,7.828
-          l-31.062-23.702h-30.672l-23.999,0.391l-20.929,23.312L150.41,50.75h-22.383l-23.998,10.654L66.694,73.295l-6.664,29.358
-          l-5.336,42.577l-19.999,22.891v26.516l12.397,37.623l-12.397,16.547l-18.664,22.672v41.326l18.664,29.984v36.67l23.999,55.999
-          c0,0,35.999,18.672,41.335,21.327c5.328,2.672,14.664,0,14.664,0l29.327,32l27.999,9.328h21.336l42.663-18.656l24.397-18.672
-          l10.664,24l42.257,13.328h21.344l31.998-6.656l21.719-38.671l11.609,3.999l38.67-7.999l28-28.327l10.656-46.327v-31.343
-          l17.718-20.156l10.281-35.171L489.333,255.088z"
-        />
-        <path
-          fill="#b83030"
-          opacity="0.85"
-          d="M511.973,294.009c0-24.546-12.891-46.093-32.28-58.218c7.984-11.203,12.672-24.905,12.672-39.701
-          c0-22.203-10.562-41.938-26.938-54.453c2.625-7.655,4.078-15.858,4.078-24.42c0-41.281-33.484-74.749-74.764-74.749
-          c-8.344,0-16.375,1.375-23.875,3.906C363.21,19.594,338.554,0,309.321,0c-22.266,0-41.858,11.359-53.327,28.608
-          C244.525,11.359,224.925,0,202.667,0c-29.233,0-53.889,19.594-61.537,46.374c-7.5-2.531-15.531-3.906-23.89-3.906
-          c-41.288,0-74.757,33.468-74.757,74.749c0,8.562,1.445,16.765,4.086,24.42c-16.382,12.516-26.952,32.25-26.952,54.453
-          c0,14.796,4.695,28.498,12.672,39.701c-19.383,12.125-32.273,33.672-32.273,58.218c0,21.327,9.727,40.374,24.984,52.952
-          c-2.375,8.375-3.656,17.202-3.656,26.343c0,52.53,42.194,95.185,94.537,95.966c13.405,25.406,40.069,42.719,70.787,42.719
-          c29.632,0,55.506-16.125,69.326-40.062c13.82,23.938,39.687,40.062,69.327,40.062c30.718,0,57.389-17.312,70.795-42.719
-          c52.342-0.781,94.529-43.436,94.529-95.966c0-9.141-1.281-17.968-3.656-26.343C502.238,334.383,511.973,315.336,511.973,294.009z
-          M186.668,490.644c-32.351,0-58.663-26.312-58.663-58.654c0-16.406,7.195-31.688,18.078-42.344c2.008-1.938,3.25-4.641,3.25-7.656
-          c0-5.891-4.773-10.655-10.664-10.655c-2.906,0-5.547,1.156-7.469,3.047c-15.569,14.593-24.53,34.577-24.53,57.608
-          c0,5.265,0.516,10.421,1.492,15.405c-16.469-2-31.702-9.391-43.616-21.312c-14.102-14.094-21.867-32.844-21.867-52.78
-          c0-19.952,7.766-38.702,21.867-52.796c14.102-14.109,32.851-21.875,52.796-21.875c6.351,0,12.585,0.781,18.585,2.312
-          c0.883,0.234,1.797,0.375,2.742,0.375c5.891,0,10.664-4.78,10.664-10.671c0-5.203-3.727-9.531-8.656-10.469
-          c-7.477-1.875-15.289-2.875-23.335-2.875c-35.805,0-67.03,19.608-83.529,48.655c-7.734-8.422-12.469-19.641-12.469-31.952
-          c0-16.406,8.32-31.405,22.265-40.14l9.789-6.125c2.898-1.906,4.812-5.188,4.812-8.922c0-2.266-0.719-4.391-1.938-6.109l-6.609-9.297
-          c-5.695-7.999-8.711-17.452-8.711-27.326c0-13.922,6.07-26.453,15.695-35.094c13.578,18.766,35.655,30.984,60.593,30.984
-          c5.89,0,10.765-4.781,10.765-10.672s-4.844-10.656-10.733-10.656c-29.453,0-53.452-23.969-53.452-53.436
-          c0-29.453,23.968-53.422,53.421-53.422c7.679,0,14.976,1.641,21.585,4.562c2.242,33.312,29.968,59.624,63.842,59.624
-          c5.891,0,10.664-4.766,10.664-10.671c0-5.891-4.773-10.657-10.664-10.657c-23.522,0-42.663-19.14-42.663-42.671
-          c0-23.515,19.133-42.655,42.663-42.655c23.523,0,42.663,19.141,42.663,42.655v106.67h-0.016
-          c-0.156,5.734-4.867,10.359-10.655,10.359c-5.891,0-10.664,4.781-10.664,10.672s4.773,10.671,10.664,10.671
-          c3.741,0,7.335-0.656,10.671-1.828v87.451c0,17.64-14.358,31.983-31.999,31.983c-5.891,0-10.664,4.781-10.664,10.672
-          s4.773,10.672,10.664,10.672c12.008,0,23.086-3.969,31.999-10.672v101.357C245.33,464.332,219.011,490.644,186.668,490.644z
-          M478.177,325.961c-16.5-29.047-47.718-48.655-83.529-48.655c-8.047,0-15.859,1-23.344,2.875c-4.922,0.938-8.656,5.266-8.656,10.469
-          c0,5.891,4.781,10.671,10.672,10.671c0.953,0,1.859-0.141,2.734-0.375c6-1.531,12.25-2.312,18.594-2.312
-          c19.938,0,38.687,7.766,52.795,21.875c14.109,14.094,21.859,32.844,21.859,52.796c0,19.937-7.75,38.687-21.859,52.78
-          c-11.922,11.921-27.14,19.312-43.607,21.312c0.969-4.984,1.484-10.141,1.484-15.405c0-23.031-8.953-43.016-24.531-57.608
-          c-1.922-1.891-4.562-3.047-7.469-3.047c-5.891,0-10.672,4.765-10.672,10.655c0,3.016,1.25,5.719,3.25,7.656
-          c10.891,10.656,18.094,25.938,18.094,42.344c0,32.342-26.312,58.654-58.67,58.654c-32.344,0-58.663-26.312-58.663-58.654V330.633
-          c8.914,6.703,19.991,10.672,31.991,10.672c5.906,0,10.672-4.781,10.672-10.672s-4.766-10.672-10.672-10.672
-          c-17.625,0-31.991-14.344-31.991-31.983v-87.451c3.336,1.172,6.93,1.828,10.663,1.828c5.891,0,10.672-4.78,10.672-10.671
-          c0-5.891-4.781-10.672-10.672-10.672c-5.78,0-10.491-4.625-10.647-10.359h-0.016V63.982c0-23.515,19.147-42.655,42.663-42.655
-          s42.671,19.141,42.671,42.655c0,23.531-19.155,42.671-42.671,42.671c-5.891,0-10.672,4.767-10.672,10.657
-          c0,5.905,4.781,10.671,10.672,10.671c33.874,0,61.607-26.312,63.842-59.624c6.609-2.922,13.906-4.562,21.578-4.562
-          c29.468,0,53.436,23.969,53.436,53.422c0,29.467-23.999,53.436-53.467,53.436c-5.891,0-10.719,4.766-10.719,10.656
-          c0,5.89,4.875,10.672,10.75,10.672c24.937,0,47.029-12.219,60.592-30.984c9.625,8.641,15.703,21.172,15.703,35.094
-          c0,9.874-3.016,19.327-8.719,27.326l-6.609,9.297c-1.219,1.719-1.938,3.844-1.938,6.109c0,3.734,1.922,7.016,4.812,8.922
-          l9.797,6.125c13.938,8.734,22.266,23.733,22.266,40.14C490.645,306.32,485.911,317.539,478.177,325.961z"
-        />
-      </svg>
-    ),
-  },
-  {
-    id: 'excretor',
-    nombre: 'Excretor | UPCH',
-    badge: 'Excretor',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Aparato Excretor M1554.',
-    badgeColor: '#d44a4a',
-    badgeBg: 'rgba(212, 74, 74, 0.12)',
-    activo: true,
-    diff: ['hard'],
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 511.985 511.985" fill="none">
-        <path fill="#b83838" d="M260.934,163.337l11,80.373c108.325-17.297,81.482,268.275,81.482,268.275h58.437C432.915,82.057,260.934,163.337,260.934,163.337z"/>
-        <path fill="#d44a4a" d="M299.121,224.897c0,0,4.125-8.765,3.719-21.296c0.406-12.53-3.719-21.312-3.719-21.312c61.67-15.562,61.67-203.167-63.857-180.371C110.688,24.543,98.689,157.243,98.345,203.601c0.344,46.343,12.343,179.058,136.918,201.683C360.791,428.081,360.791,240.475,299.121,224.897z"/>
-        <g style={{opacity: 0.2}}>
-          <path fill="#FFFFFF" d="M256.607,405.284c-124.575-22.625-136.591-155.34-136.935-201.683c0.344-46.358,12.36-179.058,136.935-201.682c3.203-0.578,6.328-1.016,9.359-1.328c-9.25-1.062-19.468-0.718-30.702,1.328C110.688,24.543,98.689,157.243,98.345,203.601c0.344,46.343,12.343,179.058,136.918,201.683c11.234,2.047,21.453,2.391,30.702,1.328C262.934,406.3,259.809,405.862,256.607,405.284z"/>
-        </g>
-      </svg>
-    ),
-  },
-  {
-    id: 'patologia',
-    nombre: 'Patología | UPCH',
-    badge: 'Patología',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Patología y Mecanismos de Enfermedad M1556.',
-    badgeColor: '#8b5cf6',
-    badgeBg: 'rgba(139, 92, 246, 0.12)',
-    activo: true,
-    diff: ['hard'],
-    // Mismo microscopio que Histología usa en la sidebar (monocromo, currentColor).
-    icon: <MicroscopeIcon size={30} style={{ color: '#8b5cf6' }} />,
-  },
-  {
-    id: 'epidemiologia',
-    nombre: 'Epidemiología | UPCH',
-    badge: 'Epidemiología',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Epidemiología Básica y Salud Comunitaria.',
-    badgeColor: '#8b5cf6',
-    badgeBg: 'rgba(139, 92, 246, 0.12)',
-    activo: true,
-    diff: ['easy'],
-    icon: <HospitalIcon size={30} style={{ color: '#8b5cf6' }} />,
-  },
-  {
-    id: 'psicologia-medica',
-    nombre: 'Psicología Médica | UPCH',
-    badge: 'Psicología Médica',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Entrevista clínica, examen mental y relación médico-paciente.',
-    badgeColor: '#8b5cf6',
-    badgeBg: 'rgba(139, 92, 246, 0.12)',
-    activo: true,
-    diff: ['easy'],
-    icon: <PsicologiaIcon size={30} style={{ color: '#8b5cf6' }} />,
-  },
-  {
-    id: 'hematologia',
-    nombre: 'Hematología | UPCH',
-    badge: 'Hematología',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Contenido en preparación.',
-    badgeColor: '#c9a227',
-    badgeBg: 'rgba(201, 162, 39, 0.12)',
-    activo: true,
-    diff: ['easy'],
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <path d="M12 2C12 2 7 7 7 13c0 3 2.5 5.5 5 5.5s5-2.5 5-5.5c0-6-5-11-5-11z" fill="#c9a227" stroke="#c9a227" strokeWidth="1.5"/>
-        <ellipse cx="10.5" cy="9" rx="1.5" ry="2" fill="rgba(255,255,255,0.35)"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'aparato-locomotor',
-    nombre: 'Aparato Locomotor | UPCH',
-    badge: 'Locomotor',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Aparato Locomotor M2060.',
-    badgeColor: '#c9a227',
-    badgeBg: 'rgba(201, 162, 39, 0.12)',
-    activo: true,
-    diff: ['medium'],
-    icon: <LocomotorIcon />,
-  },
-  {
-    id: 'inmunologia',
-    nombre: 'Inmunología | UPCH',
-    badge: 'Inmunología',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Sílabo completo: 14 clases, 2 labs, 2 histologías y 7 casos.',
-    badgeColor: '#c9a227',
-    badgeBg: 'rgba(201, 162, 39, 0.12)',
-    activo: true,
-    diff: ['medium'],
-    icon: (
-      <svg width="30" height="30" viewBox="0 0 256 256" fill="none">
-        <rect x="114" y="120" width="28" height="110" rx="14" fill="#c9a227"/>
-        <rect x="114" y="30" width="28" height="110" rx="14" transform="rotate(-45 128 120)" fill="#c9a227"/>
-        <rect x="114" y="30" width="28" height="110" rx="14" transform="rotate(45 128 120)" fill="#c9a227"/>
-        <circle cx="128" cy="120" r="8" fill="#c9a227"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'digestivo',
-    nombre: 'Sistema Digestivo | UPCH',
-    badge: 'Digestivo',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Aparato Digestivo M1549.',
-    badgeColor: '#c9a227',
-    badgeBg: 'rgba(201, 162, 39, 0.12)',
-    activo: true,
-    diff: ['easy'],
-    icon: <DigestiveIcon />,
-  },
-  {
-    id: 'endocrino-reproductor',
-    nombre: 'Sistema Endocrino y Reproductor | UPCH',
-    badge: 'Endocrino y Reproductor',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Sistema Endocrino y Reproductor M2061.',
-    badgeColor: '#c9a227',
-    badgeBg: 'rgba(201, 162, 39, 0.12)',
-    activo: true,
-    diff: ['easy', 'medium', 'hard'],
-    icon: <EndocrineIcon size={30} />,
-  },
-
-  // ─── CICLO BÁSICO ──────────────────────────────────────────────────────────
-  // Todos comparten el celeste del sitio (--blue) en badge e ícono.
-  {
-    id: 'biologia-celular',
-    nombre: 'Biología Celular y Molecular | UPCH',
-    badge: 'Biología Celular',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Introducción a la Biología Celular U0670.',
-    badgeColor: '#3b9edd',
-    badgeBg: 'rgba(59, 158, 221, 0.12)',
-    activo: true,
-    diff: ['easy'],
-    icon: <BiologiaCelularIcon size={30} />,
-  },
-  {
-    id: 'ciencias-sociales',
-    nombre: 'Ciencias Sociales | UPCH',
-    badge: 'Ciencias Sociales',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Ciencias Sociales en el Contexto Actual U0688.',
-    badgeColor: '#3b9edd',
-    badgeBg: 'rgba(59, 158, 221, 0.12)',
-    activo: true,
-    diff: ['easy'],
-    icon: <CienciasSocialesIcon size={30} />,
-  },
-  {
-    id: 'fisica-medicina',
-    nombre: 'Física | UPCH',
-    badge: 'Física',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Física — Medicina U0669.',
-    badgeColor: '#3b9edd',
-    badgeBg: 'rgba(59, 158, 221, 0.12)',
-    activo: true,
-    diff: ['medium'],
-    icon: <FisicaIcon size={30} />,
-  },
-  {
-    id: 'quimica-organica',
-    nombre: 'Química Orgánica | UPCH',
-    badge: 'Química Orgánica',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Química Orgánica U0016.',
-    badgeColor: '#3b9edd',
-    badgeBg: 'rgba(59, 158, 221, 0.12)',
-    activo: true,
-    diff: ['medium'],
-    icon: <QuimicaOrganicaIcon size={30} />,
-  },
-  {
-    id: 'comunicacion-redaccion-ii',
-    nombre: 'Comunicación y Redacción II | UPCH',
-    badge: 'Comunicación',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Comunicación y Redacción II U0681.',
-    badgeColor: '#3b9edd',
-    badgeBg: 'rgba(59, 158, 221, 0.12)',
-    activo: true,
-    diff: ['easy'],
-    icon: <ComunicacionIcon size={30} />,
-  },
-  {
-    id: 'cultura-ambiental',
-    nombre: 'Cultura Ambiental | UPCH',
-    badge: 'Cultura Ambiental',
-    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Cultura Ambiental y Desarrollo Sostenible U0683.',
-    badgeColor: '#3b9edd',
-    badgeBg: 'rgba(59, 158, 221, 0.12)',
-    activo: true,
-    diff: ['easy'],
-    icon: <CulturaAmbientalIcon size={30} />,
-  },
+/**
+ * Laboratorios que salen en la pasarela, cada uno con el área del ENCIB a la
+ * que más aporta. Son los mismos de `/dashboard/laboratorio`; aquí solo se
+ * anuncian, el candado sigue siendo el `LabGate` de cada uno.
+ */
+const LABS: { slug: string; nombre: string; desc: string; area: AreaEncib }[] = [
+  { slug: 'atlas-3d', nombre: 'Atlas 3D', desc: 'Miembros superior e inferior con nervios, vasos y ligamentos.', area: 'ANA' },
+  { slug: 'cascada-coagulacion', nombre: 'Vías de la coagulación', desc: 'La cascada como lienzo: explora y arma cada vía.', area: 'FIS' },
+  { slug: 'electrocardiograma', nombre: 'Simulador EKG', desc: 'Del impulso eléctrico a la onda en DII.', area: 'FIS' },
+  { slug: 'nefron-interactivo', nombre: 'Nefrón interactivo', desc: 'Transportadores segmento por segmento, y qué pasa al bloquearlos.', area: 'FIS' },
+  { slug: 'checkpoints-ciclo-celular', nombre: 'Checkpoints del ciclo celular', desc: 'Las cinco vías de control, animadas paso a paso.', area: 'PAT' },
+  { slug: 'hemograma', nombre: 'Hemograma completo', desc: 'Los 24 parámetros y qué los sube o los baja.', area: 'PAT' },
+  { slug: 'frotis-sanguineo', nombre: 'Frotis sanguíneo', desc: 'Del extendido a la morfología, en 3D.', area: 'HIS' },
+  { slug: 'atlas-microbiologia', nombre: 'Atlas de microbiología', desc: 'Bacterias patógenas frecuentes al microscopio.', area: 'MIC' },
+  { slug: 'atlas-parasitologia', nombre: 'Atlas de parasitología', desc: 'Parásitos de importancia clínica.', area: 'MIC' },
+  { slug: 'atlas-micologia', nombre: 'Atlas de micología', desc: 'Hongos clínicos: identifícalos o escribe su nombre.', area: 'MIC' },
+  { slug: 'poligono-willis', nombre: 'Polígono de Willis', desc: 'Irrigación cerebral y sus territorios.', area: 'ANA' },
+  { slug: 'tronco-encefalico', nombre: 'Tronco encefálico', desc: 'Núcleos, vías y pares craneales.', area: 'ANA' },
 ];
 
-/** Los dos tramos, con el texto que encabeza su sección. `propio` es el rótulo
- *  cuando el alumno ya paga ese tramo; `ajeno`, cuando el contenido pertenece
- *  al otro plan; `neutro`, cuando aún no tiene ninguno y no hay «tuyo». */
-const SECCION: Record<Track, { propio: string; ajeno: string; neutro: string; nota: string }> = {
-  basico: {
-    propio: 'Tus cursos · Ciencias Básicas',
-    ajeno: 'Ciencias Básicas · 1.er año',
-    neutro: 'Ciencias Básicas · 1.er año (UFBI)',
-    nota: 'Los 6 cursos del ciclo básico, incluidos en el plan UFBI.',
-  },
-  medicina: {
-    propio: 'Tus cursos · Facultad de Medicina',
-    ajeno: 'Facultad de Medicina · 2.º a 7.º año',
-    neutro: 'Facultad de Medicina · 2.º a 7.º año',
-    nota: 'Los cursos de la Facultad, incluidos en el plan Interno.',
-  },
-};
-
-type Curso = (typeof COURSES)[number];
-
-/**
- * Los únicos cursos que se abren son los 7 de `PRIORIDAD_LANZAMIENTO` (la
- * lista que ya usa el panel de Aportes). El resto sale en construcción.
- *
- * Se deriva de esa lista en vez de marcar diez cursos a mano: es la misma
- * verdad que decide qué bloquea el lanzamiento, y tenerla dos veces garantiza
- * que un día discrepen — al terminar un curso basta con añadirlo allí.
- */
-const LISTOS = new Set(PRIORIDAD_LANZAMIENTO);
-
-/**
- * Cursos fuera de los prioritarios que ya tienen algo real que abrir: Psicología
- * Médica llega sin sílabo, sólo con el banqueo del parcial.
- */
-const CON_BANQUEO = new Set(['psicologia-medica']);
-
-function CursoCard({ c, bloqueado }: { c: Curso; bloqueado: boolean }) {
-  // Un curso `gratis` (hoy Patología y Epidemiología) sí tiene material real detrás,
-  // así que no se muestra "en obra" aunque no esté entre los prioritarios.
-  const enObra = !LISTOS.has(c.id) && !cursoEsGratis(c.id) && !CON_BANQUEO.has(c.id);
-
-  const cuerpo = (
-    <>
-      <div className={styles.qCardTop}>
-        <span className={styles.qBadge} style={{ color: c.badgeColor, background: c.badgeBg }}>
-          {c.badge}
-        </span>
-        <span className={styles.qCardIconWrap}>{c.icon}</span>
-      </div>
-      <h3 className={styles.qTitle}>{c.nombre}</h3>
-      <p className={styles.qSummary}>{c.desc}</p>
-      <div className={styles.qDiff}>
-        {c.diff.map((d) => (
-          <span key={d} className={styles[DIFF_CLASS[d]]}>{DIFF_LABEL[d]}</span>
-        ))}
-      </div>
-    </>
-  );
-
-  // Sin `activo` la tarjeta no lleva a ningún sitio: el curso aún no existe.
-  if (!c.activo) {
-    return (
-      <div className={`${styles.qCard} ${styles.qCardLocked}`}>
-        {cuerpo}
-        <span className={styles.qComingSoon}>Próximamente</span>
-      </div>
-    );
-  }
-
-  // En obra: el curso existe pero todavía no tiene material que enseñar, así
-  // que no se abre. Distinto de «Próximamente» (que ni existe) y del candado
-  // de tramo (que sí se abre, para enseñar el sílabo e invitar a pagar).
-  if (enObra) {
-    return (
-      <div className={`${styles.qCard} ${styles.qCardAlpha}`}>
-        {cuerpo}
-        {/* La excavadora no vive en la tarjeta: es una capa que sólo aparece
-            al pasar el cursor, centrada y por encima de todo el panel. */}
-        <span className={styles.qAlphaArt} aria-hidden>
-          <ConstruccionIcon />
-        </span>
-      </div>
-    );
-  }
-
-  // Las del otro tramo sí se pueden abrir: el índice del curso muestra el
-  // sílabo con sus clases bloqueadas, que informa mucho más que una tarjeta
-  // muerta y es donde vive la invitación a suscribirse.
+function CuentaAtras({ fecha }: { fecha: string }) {
+  const dias = diasHasta(fecha);
+  if (dias < 0) return <span className={hub.examenCuenta}>Se rindió el {fechaLarga(fecha)}</span>;
+  if (dias === 0) return <span className={hub.examenCuenta}><strong>Es hoy</strong></span>;
   return (
-    <Link
-      href={`/dashboard/cursos/${c.id}`}
-      className={`${styles.qCard} ${bloqueado ? styles.qCardOtroTramo : ''}`}
-    >
-      {cuerpo}
-      {bloqueado && (
-        <span className={styles.qPlanTag}>
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <rect x="4" y="11" width="16" height="10" rx="2" stroke="currentColor" strokeWidth="2.4" />
-            <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
-          </svg>
-          Plan {PLANS[requiredPlanDeCurso(c.id)].label}
-        </span>
-      )}
-    </Link>
+    <span className={hub.examenCuenta}>
+      <strong>{dias}</strong> {dias === 1 ? 'día' : 'días'} · {fechaLarga(fecha)}
+    </span>
   );
 }
 
+/**
+ * Cursos depende de quién entra: una cuenta de Cayetano ve sus cursos por
+ * tramos, como siempre (`CursosCayetano`); el resto, los exámenes y las
+ * disciplinas del ENCIB.
+ */
 export default async function CursosPage() {
-  const plan = await getCachedPlanState();
-  // Su tramo va arriba. Sin plan no hay «suyo», así que manda el orden de la
-  // carrera: primero 1.er año.
-  const propio = trackDelUsuario(plan);
-  const orden: Track[] = propio === 'medicina' ? ['medicina', 'basico'] : ['basico', 'medicina'];
+  const user = await getUser();
+  if (esDeCayetano(user)) return <CursosCayetano />;
 
   return (
     <>
-      <div className={styles.qbankPanelIcon}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path stroke="#9CA3AF" strokeWidth="2.3" strokeLinecap="round" d="M19.8978 16H7.89778C6.96781 16 6.50282 16 6.12132 16.1022C5.08604 16.3796 4.2774 17.1883 4 18.2235"/>
-          <path stroke="#9CA3AF" strokeWidth="2.3" strokeLinecap="round" d="M8 7H16"/>
-          <path stroke="#9CA3AF" strokeWidth="2.3" strokeLinecap="round" d="M8 10.5H13"/>
-          <path stroke="#9CA3AF" strokeWidth="2.3" strokeLinecap="round" d="M13 16V19.5309C13 19.8065 13 19.9443 12.9051 20C12.8103 20.0557 12.6806 19.9941 12.4211 19.8708L11.1789 19.2808C11.0911 19.2391 11.0472 19.2182 11 19.2182C10.9528 19.2182 10.9089 19.2391 10.8211 19.2808L9.57889 19.8708C9.31943 19.9941 9.18971 20.0557 9.09485 20C9 19.9443 9 19.8065 9 19.5309V16.45"/>
-          <path stroke="#9CA3AF" strokeWidth="2.3" strokeLinecap="round" d="M10 22C7.17157 22 5.75736 22 4.87868 21.1213C4 20.2426 4 18.8284 4 16V8C4 5.17157 4 3.75736 4.87868 2.87868C5.75736 2 7.17157 2 10 2H14C16.8284 2 18.2426 2 19.1213 2.87868C20 3.75736 20 5.17157 20 8M14 22C16.8284 22 18.2426 22 19.1213 21.1213C20 20.2426 20 18.8284 20 16V12"/>
-        </svg>
-      </div>
+      <header className={hub.cabecera}>
+        <div>
+          <h2 className={styles.qbankTitle}>Cursos</h2>
+          <p className={styles.qbankSub}>Elige para qué te preparas o estudia por disciplina.</p>
+        </div>
+        <Link href="/dashboard/cursos/cayetano" className={hub.cayetano}>
+          <span className={hub.cayetanoIcono} aria-hidden>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M3 9.5 12 5l9 4.5-9 4.5-9-4.5Z" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round" />
+              <path d="M7 11.5V16c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-4.5M21 9.5V14" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+            </svg>
+          </span>
+          <span className={hub.cayetanoTexto}>
+            <strong>¿Estudias en Cayetano?</strong>
+            <span>Tus sílabos, clase por clase</span>
+          </span>
+          <svg className={hub.cayetanoFlecha} width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="m9 6 6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </Link>
+      </header>
 
-      <h2 className={styles.qbankTitle}>Cursos</h2>
-      <p className={styles.qbankSub}>Elige una materia o práctica y comienza.</p>
+      <section className={hub.bloque}>
+        <h3 className={hub.bloqueTitulo}>¿Para qué te preparas?</h3>
+        <Pasarela etiqueta="Exámenes">
+          {EXAMENES_DESTINO.map((ex) =>
+            ex.href ? (
+              <Link key={ex.slug} href={ex.href} className={`${hub.examen} ${hub.examenActivo}`}>
+                <span className={hub.examenPais}>{ex.pais}</span>
+                <span className={hub.examenSigla}>{ex.sigla}</span>
+                <span className={hub.examenNombre}>{ex.nombre}</span>
+                {ex.fecha && <CuentaAtras fecha={ex.fecha} />}
+                <span className={hub.examenPie}>300 preguntas oficiales analizadas →</span>
+              </Link>
+            ) : (
+              <div key={ex.slug} className={hub.examen} aria-disabled>
+                <span className={hub.examenPais}>{ex.pais}</span>
+                <span className={hub.examenSigla}>{ex.sigla}</span>
+                <span className={hub.examenNombre}>{ex.nombre}</span>
+                <span className={styles.qComingSoon}>Próximamente</span>
+              </div>
+            ),
+          )}
+        </Pasarela>
+      </section>
 
-      {orden.map((track) => {
-        // Dentro de cada tramo, lo que ya se puede estudiar va primero y los
-        // cursos en obra caen al final. `sort` es estable, así que el orden
-        // original (el de la carrera) se conserva dentro de cada grupo.
-        const cursos = COURSES
-          .filter((c) => requiredPlanDeCurso(c.id) === planDeTrack(track))
-          .sort((a, b) => Number(!LISTOS.has(a.id)) - Number(!LISTOS.has(b.id)));
-        if (!cursos.length) return null;
-        const abierto = tieneAccesoA(plan, planDeTrack(track));
-        const textos = SECCION[track];
-        const titulo = propio === null
-          ? textos.neutro
-          : abierto ? textos.propio : textos.ajeno;
+      <section className={hub.bloque}>
+        <h3 className={hub.bloqueTitulo}>Ciencias básicas</h3>
+        <p className={hub.bloqueNota}>Las 8 áreas del ENCIB, con su temario y lo que de verdad se pregunta.</p>
+        <Pasarela etiqueta="Ciencias básicas">
+          {AREAS.map((a) => (
+            <Link key={a.slug} href={`/dashboard/cursos/area/${a.slug}`} className={hub.area}>
+              <span className={hub.areaIcono} style={{ background: a.color }}>
+                <IconoArea area={a.codigo} />
+              </span>
+              <span className={hub.areaNombre}>{a.nombre}</span>
+              <span className={hub.areaLema}>{a.lema}</span>
+              <span className={hub.areaPeso}>
+                <span className={hub.areaPesoBarra} aria-hidden>
+                  <span style={{ width: `${(a.peso / 16) * 100}%`, background: a.color }} />
+                </span>
+                {a.peso} de 100 en el ENCIB
+              </span>
+            </Link>
+          ))}
+        </Pasarela>
+      </section>
 
-        return (
-          <section key={track} className={styles.trackSection}>
-            <div className={styles.trackHead}>
-              <h3 className={styles.trackTitle}>{titulo}</h3>
-              {!abierto && <p className={styles.trackNote}>{textos.nota}</p>}
-            </div>
-            <div className={styles.qgrid}>
-              {cursos.map((c) => (
-                <CursoCard key={c.id} c={c} bloqueado={!abierto && !cursoEsGratis(c.id)} />
-              ))}
-            </div>
-          </section>
-        );
-      })}
+      <section className={hub.bloque}>
+        <h3 className={hub.bloqueTitulo}>Laboratorios</h3>
+        <Pasarela etiqueta="Laboratorios">
+          {LABS.map((l) => {
+            const area = AREA_POR_CODIGO[l.area];
+            return (
+              <Link key={l.slug} href={`/dashboard/laboratorio/${l.slug}`} className={hub.lab}>
+                <span className={hub.labArea}>
+                  <span className={hub.labPunto} style={{ background: area.color }} aria-hidden />
+                  {area.nombre}
+                  {labEsGratis(l.slug) && <span className={hub.labGratis}>Gratis</span>}
+                </span>
+                <span className={hub.labNombre}>{l.nombre}</span>
+                <span className={hub.labDesc}>{l.desc}</span>
+              </Link>
+            );
+          })}
+          <Link href="/dashboard/laboratorio" className={`${hub.lab} ${hub.labTodos}`}>
+            Ver todos los laboratorios →
+          </Link>
+        </Pasarela>
+      </section>
     </>
   );
 }

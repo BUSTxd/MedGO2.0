@@ -27,6 +27,8 @@ export function EsqueletoCursos() {
       </div>
       <Hueso w={120} h={32} mb={8} />
       <Hueso w={270} h={14} mb={18} />
+      {/* La franja del ENCIB. */}
+      <Hueso h={48} r={14} mb={26} />
 
       {[230, 260].map((w) => (
         <section key={w} className={c.trackSection}>

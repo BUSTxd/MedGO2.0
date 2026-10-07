@@ -60,7 +60,10 @@ src/app/
     ├── layout.tsx                    # RSC: auth + device check + plan
     ├── home/page.tsx
     ├── cursos/
-    │   ├── page.tsx                  # Grid de cursos (título: "Cursos")
+    │   ├── page.tsx                  # Cayetano → grid por tramos (`CursosCayetano`); resto → exámenes + pasarelas (ver «Cursos para Latinoamérica»)
+    │   ├── cayetano/page.tsx         # Aviso «solo @upch.pe» adonde el proxy rebota los sílabos
+    │   ├── area/[area]/page.tsx      # Curso por disciplina: temario ENCIB + lo que ya salió
+    │   ├── examen/encib/page.tsx     # Página del ENCIB 2026 con el análisis de 2021/2024/2025
     │   ├── microbiologia/
     │   │   ├── page.tsx              # Sílabo del curso
     │   │   └── [id]/page.tsx         # Clase individual
@@ -176,6 +179,21 @@ El plan del usuario vive en `profiles.plan` + `profiles.plan_expires_at` en Supa
 - **`LockedContent` acepta `preview`** (default `true`): en una clase el velo difuminado es aperitivo; en una sección entera (montaría una escena 3D completa) va en `false`.
 - **Lo que va como `children` de `LockedContent` viaja al navegador aunque no se pinte** (es componente cliente: sus props se serializan en el payload RSC, `preview={false}` incluido). Material de pago real (solucionarios, datos de un runner) → el servidor decide con `tieneAccesoA` y sin acceso pasa `null`; tras pagar, `SubscribeModal` hace `router.refresh()`.
 - **El candado del sidebar es señal, no cerradura** — `accesoFacultad` se calcula en el servidor (`dashboard/layout.tsx`); con `usePlan()` el admin (sin suscripción) vería candados tras un `refreshPlan()`. Quien bloquea de verdad es el `page.tsx` de la sección.
+
+---
+
+## Cursos para Latinoamérica (exámenes, disciplinas y Cayetano)
+
+`dashboard/cursos` **depende de la cuenta**:
+- **De Cayetano** → el grid por tramos de siempre (`src/components/CursosCayetano.tsx`) con una franja del ENCIB arriba.
+- **El resto** → arriba «¿Para qué te preparas?» (tarjetas de `EXAMENES_DESTINO`; solo el ENCIB tiene página, el resto «Próximamente»), debajo pasarelas (`Pasarela.tsx`, scroll nativo con snap + flechas solo si hay algo escondido) de **Ciencias básicas** (las 8 áreas del ENCIB → `cursos/area/<slug>`) y **Laboratorios**. El botón «¿Estudias en Cayetano?» lleva a `cursos/cayetano`, que solo explica cómo entrar (a una cuenta de Cayetano la devuelve a Cursos).
+
+- **Quién es de Cayetano — `esDeCayetano(user)` en `lib/admin.ts`**: **toda cuenta creada antes de `CORTE_CAYETANO`** (8-10-2026, `auth.users.created_at`) lo es aunque sea Gmail — hasta entonces MedGO era solo de la UPCH. Desde el corte, **solo si tiene una identidad de Google con correo `@upch.pe`** (`user.identities`): el registro con contraseña no verifica el correo (Supabase lo autoconfirma), así que cualquiera podría registrarse como `alumno@upch.pe`. El formulario de registro rechaza `@upch.pe` y manda a Google. Siempre: admin, acceso total y socias de aportes.
+- **La cerradura es `middleware.ts`**: todo `/dashboard/cursos/<x>` con `x` fuera de `CURSOS_ABIERTOS` (`cayetano`, `area`, `examen`) rebota a `cursos/cayetano` si no es de Cayetano — un curso nuevo queda cerrado sin tocar nada; una ruta nueva abierta a todos hay que añadirla a ese set. `cursos/cayetano` se explica sola a quien no puede verla (sin listar los cursos).
+- **Datos del ENCIB — `src/lib/data/encib/`**: `index.ts` a mano (áreas con color/peso/huella, ficha del examen, repeticiones y rotaciones curadas) y `temario.ts` + `preguntas.ts` **generados** con `node scripts/encib/generar.mjs` desde `scripts/encib/temario-2026.md` y `scripts/encib/clasificacion-300.json` (código de tema, dificultad estimada, carga cognitiva, concepto; nunca enunciados, alternativas ni respuestas: **el repo es público** y las respuestas son el futuro banqueo de pago — la clasificación completa vive fuera de git). El generador falla si un código no existe en el temario o un año no suma 100.
+- **Cuentas — `src/lib/encib/analisis.ts`** (`server-only`): las páginas reciben números, no la lista entera.
+- **Gráficos** (`encib.module.css`): dificultad y carga son rampas ordinales de un tono (validadas con la skill dataviz, claro y oscuro con pasos propios), 2024/2025 un par categórico; cifras siempre en tinta debajo de la barra, nunca dentro del color.
+- **Pendiente**: banqueo ENCIB jugable (300 preguntas) y enlazar cada tema del temario con su resumen de MedGO.
 
 ---
 
