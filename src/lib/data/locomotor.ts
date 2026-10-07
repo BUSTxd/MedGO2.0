@@ -564,7 +564,7 @@ export const semanas: Semana[] = [
         fecha: '15 oct',
         fechaISO: '2025-10-15',
         hora: '14:00–18:00',
-        subtemas: ['Cubre hombro, brazo, antebrazo, muñeca, mano y región glútea'],
+        subtemas: ['Cubre solo el miembro superior: hombro, brazo, antebrazo, muñeca y mano'],
         docentes: ['Profesores de Anatomía'],
         nota: 'Las 2 evaluaciones continuas valen 35% de la nota de anatomía; los 4 pasos cortos, 15%.',
       },
