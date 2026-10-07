@@ -471,6 +471,12 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Músculo esquelético', 'Músculo cardiaco', 'Músculo liso', 'Sarcómero'],
         docentes: ['Dr. José Velásquez'],
+        // Resumen en HTML: apuntes muy visuales (20 figuras), ver /addresumenhtml.
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-clase-10', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-11',
