@@ -26,7 +26,7 @@ import readline from 'node:readline';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
-import { REGIONES_O3D, DESPLAZAR, limpiar, idDe, sistemaDe, nombreDe, tambienDe } from './o3d.mjs';
+import { REGIONES_O3D, DESPLAZAR, SEPARAR, limpiar, idDe, sistemaDe, nombreDe, tambienDe } from './o3d.mjs';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const arg = (n, def) => {
@@ -59,6 +59,45 @@ for (const [archivo, fuente] of [[OBJ, 'o3d'], ...(ZA ? [[ZA, 'za']] : []), ...(
       for (let k = 1; k + 1 < ids.length; k++) cur.f.push(ids[0], ids[k], ids[k + 1]);
     }
   }
+}
+
+// ─── Objetos que juntan varias estructuras (SEPARAR en o3d.mjs) ─────────────
+// Se parten por componentes conexas (vértices soldados por posición) y cada
+// componente va con la referencia que tiene más cerca; cada referencia recibe
+// exactamente una, o la extracción falla.
+for (const o of [...objetos]) {
+  const reparto = SEPARAR[limpiar(o.crudo)];
+  if (!reparto) continue;
+  const clave = new Map(), soldado = [];
+  for (let i = 0; i < o.v.length / 3; i++) {
+    const k = `${o.v[i * 3].toFixed(6)},${o.v[i * 3 + 1].toFixed(6)},${o.v[i * 3 + 2].toFixed(6)}`;
+    if (!clave.has(k)) clave.set(k, clave.size);
+    soldado.push(clave.get(k));
+  }
+  const padre = [...clave.keys()].map((_, i) => i);
+  const raiz = (x) => { while (padre[x] !== x) x = padre[x] = padre[padre[x]]; return x; };
+  for (let t = 0; t < o.f.length; t += 3) { const a = raiz(soldado[o.f[t]]); padre[raiz(soldado[o.f[t + 1]])] = a; padre[raiz(soldado[o.f[t + 2]])] = a; }
+  const grupos = new Map();
+  for (let t = 0; t < o.f.length; t += 3) { const r = raiz(soldado[o.f[t]]); (grupos.get(r) ?? grupos.set(r, []).get(r)).push(o.f[t], o.f[t + 1], o.f[t + 2]); }
+  const refs = Object.keys(reparto).map((en) => objetos.find((x) => limpiar(x.crudo) === en) ?? (() => { throw new Error(`SEPARAR: falta ${en}`); })());
+  const usados = new Set();
+  for (const f of grupos.values()) {
+    let mejor = null, dMejor = Infinity;
+    for (const ref of refs) {
+      let d = Infinity;
+      for (let k = 0; k < f.length; k += 3) for (let j = 0; j < ref.v.length; j += 3)
+        d = Math.min(d, Math.hypot(o.v[f[k] * 3] - ref.v[j], o.v[f[k] * 3 + 1] - ref.v[j + 1], o.v[f[k] * 3 + 2] - ref.v[j + 2]));
+      if (d < dMejor) { dMejor = d; mejor = ref; }
+    }
+    const en = reparto[limpiar(mejor.crudo)];
+    if (usados.has(en)) throw new Error(`SEPARAR: dos componentes de ${limpiar(o.crudo)} van a ${limpiar(mejor.crudo)}`);
+    usados.add(en);
+    const mapa = new Map(), v = [];
+    const nf = f.map((i) => { if (!mapa.has(i)) { mapa.set(i, v.length / 3); v.push(o.v[i * 3], o.v[i * 3 + 1], o.v[i * 3 + 2]); } return mapa.get(i); });
+    objetos.splice(objetos.indexOf(o), 0, { crudo: en, fuente: o.fuente, v, f: nf });
+  }
+  if (usados.size !== refs.length) throw new Error(`SEPARAR: ${limpiar(o.crudo)} trae ${grupos.size} componentes para ${refs.length} referencias`);
+  objetos.splice(objetos.indexOf(o), 1);
 }
 
 // ─── Selección, nombre, sistema, zona ────────────────────────────────────────

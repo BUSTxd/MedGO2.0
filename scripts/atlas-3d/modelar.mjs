@@ -310,10 +310,34 @@ function tubo(pts, r, afinar = [0, 0], lados = 8, rFinal = r) {
   return { v, f };
 }
 
+// `partes` (opcional, una entrada por rama): en qué pieza del visor sale cada
+// rama. Una cadena = la rama entera; una lista [[nombre, hasta], …, [nombre]] =
+// la rama cortada en tramos, cada uno hasta la muestra más cercana al punto de
+// control `hasta`. Solo cambia cómo se agrupan los tubos al escribir el OBJ: la
+// curva, la relajación y las comprobaciones son las de la estructura entera.
+function tramos(est, r, pts) {
+  const p = est.partes?.[r];
+  if (!p) return [{ en: est.en, pts }];
+  if (typeof p === 'string') return [{ en: p, pts }];
+  const out = [];
+  let desde = 0;
+  for (const [en, hasta] of p) {
+    let k = pts.length - 1;
+    if (hasta) {
+      let best = Infinity;
+      for (let i = desde + 1; i < pts.length - 1; i++) { const d = Math.hypot(...pts[i].map((x, a) => x - hasta[a])); if (d < best) { best = d; k = i; } }
+    }
+    out.push({ en, pts: pts.slice(desde, k + 1) });
+    desde = k;
+  }
+  return out;
+}
+
 // ─── Generación y comprobación ───────────────────────────────────────────────
 let texto = '', base = 1;
 for (const nervio of ESTRUCTURAS) {
   const mallas = [];
+  const piezas = new Map(); // nombre de la pieza → sus tubos (en orden de aparición)
   let muestras = 0, movidoMax = 0;
   const uniones = [];
   const choques = {};
@@ -347,18 +371,29 @@ for (const nervio of ESTRUCTURAS) {
     // radioFinal afina el tronco (rama 0); las demás ramas llevan radioRamas.
     const r0 = radioEn(nervio, r, 0), r1 = radioEn(nervio, r, 1);
     const lados = Math.max(r0, r1) > 0.0025 ? 12 : 8;
-    mallas.push(tubo(pts, r0, [une('inicio') ? 0.003 : 0, une('fin') ? 0.003 : 0], lados, r1));
+    const partes = tramos(nervio, r, pts);
+    if (partes.length > 1 && r0 !== r1) throw new Error(`${nervio.en}: una rama con radio variable no se puede cortar en tramos`);
+    partes.forEach(({ en, pts: tp }, j) => {
+      // Solo se afina el extremo de la rama que se une a otro nervio, no los cortes entre tramos.
+      const malla = partes.length === 1
+        ? tubo(tp, r0, [une('inicio') ? 0.003 : 0, une('fin') ? 0.003 : 0], lados, r1)
+        : tubo(tp, r0, [j === 0 && une('inicio') ? 0.003 : 0, j === partes.length - 1 && une('fin') ? 0.003 : 0], lados);
+      mallas.push(malla);
+      (piezas.get(en) ?? piezas.set(en, []).get(en)).push(malla);
+    });
     generados.set(nervio.en, mallas.flatMap((m) => m.v.flat()));
     radios.set(nervio.en, Math.max(nervio.radio, nervio.radioFinal ?? 0));
   }
-  texto += `o ${nervio.en}\n`;
-  let off = 0;
-  for (const m of mallas) {
-    for (const p of m.v) texto += `v ${p.map((x) => x.toFixed(6)).join(' ')}\n`;
-    for (const t of m.f) texto += `f ${t.map((i) => i + base + off).join(' ')}\n`;
-    off += m.v.length;
+  for (const [en, ms] of piezas) {
+    texto += `o ${en}\n`;
+    let off = 0;
+    for (const m of ms) {
+      for (const p of m.v) texto += `v ${p.map((x) => x.toFixed(6)).join(' ')}\n`;
+      for (const t of m.f) texto += `f ${t.map((i) => i + base + off).join(' ')}\n`;
+      off += m.v.length;
+    }
+    base += off;
   }
-  base += off;
   // Un vaso ya hecho es obstáculo para los siguientes (la vena no atraviesa su arteria).
   if (esVaso(nervio)) {
     const v = [], f = [];

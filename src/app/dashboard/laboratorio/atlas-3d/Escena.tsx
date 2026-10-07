@@ -28,7 +28,12 @@ interface Props {
   visibles: Set<string>;
   seleccion: Set<string>;
   rotulo: string | null;
+  /** Varios rótulos a la vez (repaso): cada uno en el centro de sus piezas.
+   *  `clave` los vuelve a montar (y a mostrar) al cambiar de paso. */
+  rotulos?: { texto: string; ids: Set<string>; clave: string }[];
   transparencia: Transparencia;
+  /** Si llega, decide qué piezas van translúcidas (en vez de `transparencia`). */
+  translucidas?: Set<string>;
   camara: PeticionCamara;
   reducido: boolean;
   onSelect: (id: string | null) => void;
@@ -65,21 +70,28 @@ export default function Escena(props: Props) {
       <directionalLight position={[-2, 4, 3]} intensity={1.9} />
       <directionalLight position={[2, 2, -3]} intensity={0.9} />
       <Controles peticion={props.camara} reducido={props.reducido} />
-      <Invalidar deps={[props.visibles, props.seleccion, props.transparencia]} />
+      <Invalidar deps={[props.visibles, props.seleccion, props.transparencia, props.translucidas, props.rotulos]} />
       {props.piezas.map((p) =>
         props.visibles.has(p.id) ? (
           <Pieza
             key={p.id}
             pieza={p}
             seleccionada={props.seleccion.has(p.id)}
-            translucida={props.transparencia === 'todo' || (props.transparencia === 'musculos' && p.sistema === 'musculo')}
+            translucida={
+              props.translucidas
+                ? props.translucidas.has(p.id)
+                : props.transparencia === 'todo' || (props.transparencia === 'musculos' && p.sistema === 'musculo')
+            }
             esToque={esToque}
             onSelect={props.onSelect}
             onAislar={props.onAislar}
           />
         ) : null,
       )}
-      {props.rotulo && <Rotulo piezas={props.piezas} seleccion={props.seleccion} texto={props.rotulo} />}
+      {/* El nombre de lo tocado se va solo: ya está en la ficha del panel. La key lo
+          vuelve a montar (y a mostrar) al tocar otra estructura. */}
+      {props.rotulo && <Rotulo key={props.rotulo} piezas={props.piezas} ids={props.seleccion} texto={props.rotulo} efimero />}
+      {props.rotulos?.map((r) => <Rotulo key={r.clave} piezas={props.piezas} ids={r.ids} texto={r.texto} efimero="largo" />)}
     </Canvas>
   );
 }
@@ -165,22 +177,23 @@ const Pieza = memo(function Pieza({
   );
 });
 
-/** Nombre de lo seleccionado, clavado en su centro. Uno solo y de tamaño fijo. */
-function Rotulo({ piezas, seleccion, texto }: { piezas: PiezaAtlas[]; seleccion: Set<string>; texto: string }) {
+/** Nombre clavado en el centro de unas piezas, de tamaño fijo. */
+/** `efimero`: se va solo (corto = lo tocado; largo = los del paso del repaso, que son varios para leer). */
+function Rotulo({ piezas, ids, texto, efimero }: { piezas: PiezaAtlas[]; ids: Set<string>; texto: string; efimero?: true | 'largo' }) {
   const centro = useMemo(() => {
     const c = new Vector3();
     let n = 0;
     for (const p of piezas) {
-      if (!seleccion.has(p.id)) continue;
+      if (!ids.has(p.id)) continue;
       c.add(p.centro);
       n++;
     }
     return n ? c.divideScalar(n) : null;
-  }, [piezas, seleccion]);
+  }, [piezas, ids]);
   if (!centro) return null;
   return (
     <Html position={centro} center zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
-      <span className={s.rotulo}>{texto}</span>
+      <span className={efimero ? `${s.rotulo} ${efimero === 'largo' ? s.rotuloEfimeroLargo : s.rotuloEfimero}` : s.rotulo}>{texto}</span>
     </Html>
   );
 }

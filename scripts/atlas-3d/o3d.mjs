@@ -74,11 +74,34 @@ const AXIAL = /vertebra|^atlas|^axis|^art cart of (atlas|axis|sacrum)|sacrum|coc
 const CUELLO = new Set([
   'Platysma', 'Sternocleidomastoid muscle', 'Accessory nerve (XI)',
   'Occipital bone', 'Temporal bone', 'Mandible', 'Nuchal ligament',
-  // modelados (modelar.mjs)
-  'Cervical plexus (C1-C4 ventral rami)', 'Lesser occipital nerve', 'Great auricular nerve',
-  'Transverse cervical nerve', 'Supraclavicular nerves', 'Phrenic nerve',
+  // modelados (modelar.mjs; el plexo y los supraclaviculares van en piezas, ver `partes`)
+  'Ventral ramus of C1 (cervical plexus)', 'Ventral ramus of C2 (cervical plexus)',
+  'Ventral ramus of C3 (cervical plexus)', 'Ventral ramus of C4 (cervical plexus)',
+  'Loop between C2 and C3 (cervical plexus)', 'Loop between C3 and C4 (cervical plexus)',
+  'Communicating branch between C4 and C5 (cervical plexus)',
+  'Common trunk of C2-C3 cutaneous branches (cervical plexus)', 'Common trunk of C3-C4 cutaneous branches (cervical plexus)',
+  'Lesser occipital nerve', 'Great auricular nerve', 'Transverse cervical nerve',
+  'Medial supraclavicular nerves', 'Intermediate supraclavicular nerves', 'Lateral supraclavicular nerves', 'Phrenic nerve',
   'Muscular branches of cervical plexus to sternocleidomastoid', 'Muscular branches of cervical plexus to trapezius',
 ]);
+
+// Objetos de Open3DModel que juntan varias estructuras: las tres divisiones
+// anteriores del plexo braquial vienen en un solo objeto, y las tres
+// posteriores en otro. extraer-o3d.mjs los parte por componentes conexas y
+// cada componente va con la referencia que tiene más cerca (medido: cada
+// división toca su tronco a ≤ 2,4 mm y el siguiente queda a ≥ 3,2 mm).
+export const SEPARAR = {
+  'Anterior divisions of brachial plexus': {
+    'Superior trunk of brachial plexus': 'Anterior division of superior trunk of brachial plexus',
+    'Middle trunk of brachial plexus': 'Anterior division of middle trunk of brachial plexus',
+    'Inferior trunk of brachial plexus': 'Anterior division of inferior trunk of brachial plexus',
+  },
+  'Posterior divisions of brachial plexus': {
+    'Superior trunk of brachial plexus': 'Posterior division of superior trunk of brachial plexus',
+    'Middle trunk of brachial plexus': 'Posterior division of middle trunk of brachial plexus',
+    'Inferior trunk of brachial plexus': 'Posterior division of inferior trunk of brachial plexus',
+  },
+};
 
 // Zonas además de la suya: la columna lumbar, el sacro, la médula y la cadena
 // simpática salen también en «Pelvis y región glútea» (sin ellas, las raíces
@@ -208,11 +231,21 @@ const NOMBRES = {
   'Occipital bone': 'Hueso occipital',
   'Temporal bone': 'Hueso temporal',
   // ── Modelados por MedGO (modelar.mjs) ──
-  'Cervical plexus (C1-C4 ventral rami)': 'Plexo cervical (ramos anteriores C1-C4)',
+  'Ventral ramus of C1 (cervical plexus)': 'Ramo anterior de C1 (plexo cervical)',
+  'Ventral ramus of C2 (cervical plexus)': 'Ramo anterior de C2 (plexo cervical)',
+  'Ventral ramus of C3 (cervical plexus)': 'Ramo anterior de C3 (plexo cervical)',
+  'Ventral ramus of C4 (cervical plexus)': 'Ramo anterior de C4 (plexo cervical)',
+  'Loop between C2 and C3 (cervical plexus)': 'Asa C2-C3 (plexo cervical)',
+  'Loop between C3 and C4 (cervical plexus)': 'Asa C3-C4 (plexo cervical)',
+  'Communicating branch between C4 and C5 (cervical plexus)': 'Ramo comunicante C4-C5 (plexo cervical con el braquial)',
+  'Common trunk of C2-C3 cutaneous branches (cervical plexus)': 'Tronco C2-C3 de los ramos cutáneos (al punto de Erb)',
+  'Common trunk of C3-C4 cutaneous branches (cervical plexus)': 'Tronco C3-C4 de los ramos cutáneos (al punto de Erb)',
   'Lesser occipital nerve': 'Nervio occipital menor',
   'Great auricular nerve': 'Nervio auricular mayor',
-  'Transverse cervical nerve': 'Nervio transverso del cuello',
-  'Supraclavicular nerves': 'Nervios supraclaviculares',
+  'Transverse cervical nerve': 'Nervio cervical transverso',
+  'Medial supraclavicular nerves': 'Nervios supraclaviculares mediales',
+  'Intermediate supraclavicular nerves': 'Nervios supraclaviculares intermedios',
+  'Lateral supraclavicular nerves': 'Nervios supraclaviculares laterales',
   'Muscular branches of cervical plexus to sternocleidomastoid': 'Ramos del plexo cervical al esternocleidomastoideo',
   'Muscular branches of cervical plexus to trapezius': 'Ramos del plexo cervical al trapecio',
   'Phrenic nerve': 'Nervio frénico',
@@ -914,8 +947,13 @@ const NOMBRES = {
   'Superior trunk of brachial plexus': 'Tronco superior del plexo braquial',
   'Middle trunk of brachial plexus': 'Tronco medio del plexo braquial',
   'Inferior trunk of brachial plexus': 'Tronco inferior del plexo braquial',
-  'Anterior divisions of brachial plexus': 'Divisiones anteriores del plexo braquial',
-  'Posterior divisions of brachial plexus': 'Divisiones posteriores del plexo braquial',
+  // (vienen juntas en dos objetos: SEPARAR)
+  'Anterior division of superior trunk of brachial plexus': 'División anterior del tronco superior (plexo braquial)',
+  'Anterior division of middle trunk of brachial plexus': 'División anterior del tronco medio (plexo braquial)',
+  'Anterior division of inferior trunk of brachial plexus': 'División anterior del tronco inferior (plexo braquial)',
+  'Posterior division of superior trunk of brachial plexus': 'División posterior del tronco superior (plexo braquial)',
+  'Posterior division of middle trunk of brachial plexus': 'División posterior del tronco medio (plexo braquial)',
+  'Posterior division of inferior trunk of brachial plexus': 'División posterior del tronco inferior (plexo braquial)',
   'Lateral cord of brachial plexus': 'Fascículo lateral del plexo braquial',
   'Medial cord of brachial plexus': 'Fascículo medial del plexo braquial',
   'Posterior cord of brachial plexus': 'Fascículo posterior del plexo braquial',

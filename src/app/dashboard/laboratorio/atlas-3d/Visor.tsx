@@ -4,8 +4,13 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Vector3 } from 'three';
 import { CREDITO, FALTA_EN_TODAS, SISTEMA, SISTEMAS, regionPorId, type Sistema } from '@/lib/data/atlas-3d/regiones';
+import { REPASOS } from '@/lib/data/atlas-3d/repasos';
+import { cargarFichas } from '@/lib/data/atlas-3d/fichas';
+import type { Fichas } from '@/lib/data/atlas-3d/fichas/tipos';
 import { cargarAtlas, type Atlas } from '@/lib/atlas-3d/cargar';
 import Escena, { type PeticionCamara, type Transparencia, type Vista } from './Escena';
+import FichaDetalle from './FichaDetalle';
+import PanelRepaso, { type EstadoRepaso, type ModoRepaso, type Pregunta } from './PanelRepaso';
 import s from '@/styles/atlas3d.module.css';
 
 const VISTAS: { id: Vista; nombre: string }[] = [
@@ -22,6 +27,15 @@ const TRANSPARENCIAS: { id: Transparencia; nombre: string }[] = [
 ];
 
 const quitarTildes = (t: string) => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+function barajar<T>(xs: T[]): T[] {
+  const a = [...xs];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 /** Estructura = piezas con el mismo nombre y lado (p. ej. las dos mallas del flexor superficial). */
 interface Estructura {
@@ -171,8 +185,43 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
   const [transparencia, setTransparencia] = useState<Transparencia>('ninguna');
   const [busqueda, setBusqueda] = useState('');
 
+  // ─── Fichas (origen, inserción, inervación…): se bajan aparte ──────────────
+  const [fichas, setFichas] = useState<Fichas | null>(null);
+  useEffect(() => {
+    let vivo = true;
+    cargarFichas(regiones).then((f) => vivo && setFichas(f)).catch(() => {});
+    return () => {
+      vivo = false;
+    };
+  }, [regiones]);
+
+  // ─── Repaso guiado (plexos) ────────────────────────────────────────────────
+  const porEn = useMemo(() => {
+    const m = new Map<string, Estructura>();
+    for (const e of estructuras.values()) if (!m.has(e.nombreEn)) m.set(e.nombreEn, e);
+    return m;
+  }, [estructuras]);
+  const idsDe = useCallback((ens: string[]) => new Set(ens.flatMap((en) => porEn.get(en)?.ids ?? [])), [porEn]);
+  /** Solo los repasos cuyas piezas trae lo cargado. */
+  const repasos = useMemo(() => REPASOS.filter((r) => r.pasos.every((p) => p.piezas.some((x) => porEn.has(x.en)))), [porEn]);
+  const [repaso, setRepaso] = useState<EstadoRepaso | null>(null);
+  const [pregunta, setPregunta] = useState<Pregunta | null>(null);
+  const [marcador, setMarcador] = useState({ aciertos: 0, total: 0 });
+  const def = repaso ? repasos.find((r) => r.id === repaso.id) ?? null : null;
+  const paso = def && repaso ? def.pasos[repaso.paso] : null;
+  const repasoIds = useMemo(() => {
+    if (!def) return null;
+    return { pool: idsDe(def.pasos.flatMap((p) => p.piezas.map((x) => x.en))), contexto: idsDe(def.contexto) };
+  }, [def, idsDe]);
+  const idsPaso = useMemo(() => (paso ? idsDe(paso.piezas.map((x) => x.en)) : null), [paso, idsDe]);
+
   const visibles = useMemo(() => {
     const v = new Set<string>();
+    if (repasoIds) {
+      repasoIds.pool.forEach((id) => v.add(id));
+      repasoIds.contexto.forEach((id) => v.add(id));
+      return v;
+    }
     const aisladas = aislado ? estructuras.get(aislado)?.ids : null;
     for (const p of piezas) {
       if (aisladas) {
@@ -184,10 +233,28 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
       v.add(p.id);
     }
     return v;
-  }, [piezas, estructuras, sistemas, ocultas, zona, aislado]);
+  }, [piezas, estructuras, sistemas, ocultas, zona, aislado, repasoIds]);
 
   const elegida = seleccion ? estructuras.get(seleccion) ?? null : null;
-  const idsSeleccion = useMemo(() => new Set(elegida?.ids.filter((id) => visibles.has(id)) ?? []), [elegida, visibles]);
+  // Resaltado: lo tocado; si no, en el repaso, las piezas del paso o la de la pregunta.
+  const idsSeleccion = useMemo(() => {
+    if (elegida) return new Set(elegida.ids.filter((id) => visibles.has(id)));
+    if (repaso?.modo === 'recorrido' && idsPaso) return idsPaso;
+    if (repaso?.modo === 'prueba' && pregunta) return idsDe([pregunta.en]);
+    return new Set<string>();
+  }, [elegida, visibles, repaso?.modo, idsPaso, pregunta, idsDe]);
+  const rotulo = elegida && idsSeleccion.size
+    ? elegida.nombre
+    : repaso?.modo === 'prueba' && pregunta?.respuesta
+      ? porEn.get(pregunta.en)?.nombre ?? null
+      : null;
+  const rotulos = useMemo(
+    () =>
+      repaso?.modo === 'recorrido' && paso && !elegida
+        ? paso.piezas.map((x) => ({ texto: x.rotulo, ids: idsDe([x.en]), clave: `${repaso.id}|${repaso.paso}|${x.en}` }))
+        : undefined,
+    [repaso?.modo, repaso?.id, repaso?.paso, paso, elegida, idsDe],
+  );
 
   // ─── Cámara ────────────────────────────────────────────────────────────────
   const [vista, setVista] = useState<Vista>('anterior');
@@ -197,8 +264,10 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
   const camara: PeticionCamara = useMemo(() => {
     const min = new Vector3(Infinity, Infinity, Infinity);
     const max = new Vector3(-Infinity, -Infinity, -Infinity);
+    // En el repaso se encuadra el paso (o todo el plexo en la prueba), no los huesos de contexto.
+    const encuadre = repasoIds ? (repaso?.modo === 'recorrido' && idsPaso ? idsPaso : repasoIds.pool) : visibles;
     for (const p of piezas) {
-      if (!visibles.has(p.id)) continue;
+      if (!encuadre.has(p.id)) continue;
       const g = p.geometry;
       if (!g.boundingBox) g.computeBoundingBox();
       min.min(g.boundingBox!.min);
@@ -208,15 +277,76 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
     return { vista, min, max, n: pedido };
     // Solo se reencuadra cuando se pide (vista, zona, aislar, botón), no al ocultar una pieza.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vista, pedido, zona, aislado, piezas, atlas]);
+  }, [vista, pedido, zona, aislado, piezas, atlas, repaso?.id, repaso?.paso, repaso?.modo]);
 
   // ─── Acciones ──────────────────────────────────────────────────────────────
-  const seleccionar = useCallback((id: string | null) => setSeleccion(id ? estructuraDe.get(id)?.clave ?? null : null), [estructuraDe]);
+  const enPrueba = repaso?.modo === 'prueba';
+  const seleccionar = useCallback(
+    (id: string | null) => {
+      // En la prueba tocar una pieza no la nombra (sería la respuesta).
+      if (!enPrueba) setSeleccion(id ? estructuraDe.get(id)?.clave ?? null : null);
+    },
+    [estructuraDe, enPrueba],
+  );
+  const enRepaso = repaso !== null;
   const aislar = useCallback((id: string) => {
+    if (enRepaso) return;
     const clave = estructuraDe.get(id)?.clave ?? null;
     setAislado(clave);
     setSeleccion(clave);
-  }, [estructuraDe]);
+  }, [estructuraDe, enRepaso]);
+
+  /** Pieza al azar del plexo (no la anterior) con tres distractores, primero de su mismo paso. */
+  const nuevaPregunta = useCallback((repasoId: string, anterior?: string) => {
+    const r = repasos.find((x) => x.id === repasoId);
+    if (!r) return;
+    const pool = [...new Set(r.pasos.flatMap((p) => p.piezas.map((x) => x.en)))].filter(
+      (en) => porEn.has(en) && !r.noPreguntar?.includes(en),
+    );
+    const candidatas = pool.filter((en) => en !== anterior);
+    const en = candidatas[Math.floor(Math.random() * candidatas.length)];
+    const hermanas = barajar(r.pasos.filter((p) => p.piezas.some((x) => x.en === en)).flatMap((p) => p.piezas.map((x) => x.en)));
+    const nombre = (x: string) => porEn.get(x)!.nombre;
+    const opciones = [en];
+    for (const x of [...hermanas, ...barajar(pool)]) {
+      if (opciones.length === 4) break;
+      if (pool.includes(x) && !opciones.some((o) => nombre(o) === nombre(x))) opciones.push(x);
+    }
+    setPregunta({ en, opciones: barajar(opciones), respuesta: null });
+  }, [repasos, porEn]);
+
+  const empezarRepaso = (id: string) => {
+    setRepaso({ id, modo: 'recorrido', paso: 0 });
+    setSeleccion(null);
+    setAislado(null);
+    setBusqueda('');
+    setPregunta(null);
+    setMarcador({ aciertos: 0, total: 0 });
+  };
+  const salirRepaso = () => {
+    setRepaso(null);
+    setPregunta(null);
+    setSeleccion(null);
+  };
+  const cambiarModo = (modo: ModoRepaso) => {
+    if (!repaso || repaso.modo === modo) return;
+    setRepaso({ ...repaso, modo });
+    setSeleccion(null);
+    if (modo === 'prueba') {
+      setMarcador({ aciertos: 0, total: 0 });
+      nuevaPregunta(repaso.id);
+    } else setPregunta(null);
+  };
+  const irAPaso = (n: number) => {
+    if (!repaso || !def || n < 0 || n >= def.pasos.length) return;
+    setRepaso({ ...repaso, paso: n });
+    setSeleccion(null);
+  };
+  const responder = (en: string) => {
+    if (!pregunta || pregunta.respuesta) return;
+    setPregunta({ ...pregunta, respuesta: en });
+    setMarcador((m) => ({ aciertos: m.aciertos + (en === pregunta.en ? 1 : 0), total: m.total + 1 }));
+  };
 
   /** Desde el buscador: si la estructura no está a la vista, se destapa. */
   const elegirDeLista = (e: Estructura) => {
@@ -300,8 +430,10 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
           piezas={piezas}
           visibles={visibles}
           seleccion={idsSeleccion}
-          rotulo={elegida && idsSeleccion.size ? elegida.nombre : null}
+          rotulo={rotulo}
+          rotulos={rotulos}
           transparencia={transparencia}
+          translucidas={repasoIds?.contexto}
           camara={camara}
           reducido={reducido}
           onSelect={seleccionar}
@@ -327,7 +459,7 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
           </button>
         </div>
         <div className={s.accionesEscena}>
-          {aislado && (
+          {aislado && !repaso && (
             <button
               type="button"
               className={s.salirAislado}
@@ -339,7 +471,7 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
               Mostrar todo
             </button>
           )}
-          {historial.length > 0 && (
+          {historial.length > 0 && !repaso && (
             <button type="button" className={s.deshacer} onClick={deshacer} title="Deshacer (Ctrl+Z)">
               <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M9 14 4 9l5-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -359,29 +491,51 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
           <p className={s.meta}>{estructuras.size} estructuras</p>
         </header>
 
-        <div className={s.buscador}>
-          <input
-            type="search"
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            placeholder="Buscar estructura…"
-            aria-label="Buscar estructura"
+        {def && repaso && (
+          <PanelRepaso
+            repaso={def}
+            estado={repaso}
+            pregunta={pregunta}
+            marcador={marcador}
+            nombreDe={(en) => porEn.get(en)?.nombre ?? en}
+            elegidaEn={elegida?.nombreEn ?? null}
+            onPaso={irAPaso}
+            onModo={cambiarModo}
+            onElegir={(en) => {
+              const e = porEn.get(en);
+              if (e) setSeleccion(seleccion === e.clave ? null : e.clave);
+            }}
+            onResponder={responder}
+            onSiguiente={() => nuevaPregunta(repaso.id, pregunta?.en)}
+            onSalir={salirRepaso}
           />
-          {resultados.length > 0 && (
-            <ul className={s.resultados}>
-              {resultados.map((e) => (
-                <li key={e.clave}>
-                  <button type="button" onClick={() => elegirDeLista(e)}>
-                    <i style={{ background: SISTEMA[e.sistema].color }} />
-                    <span>{e.nombre}</span>
-                    <small>{nombreZona(e.zona)}</small>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-          {busqueda.trim().length >= 2 && resultados.length === 0 && <p className={s.vacio}>Sin resultados.</p>}
-        </div>
+        )}
+
+        {!repaso && (
+          <div className={s.buscador}>
+            <input
+              type="search"
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              placeholder="Buscar estructura…"
+              aria-label="Buscar estructura"
+            />
+            {resultados.length > 0 && (
+              <ul className={s.resultados}>
+                {resultados.map((e) => (
+                  <li key={e.clave}>
+                    <button type="button" onClick={() => elegirDeLista(e)}>
+                      <i style={{ background: SISTEMA[e.sistema].color }} />
+                      <span>{e.nombre}</span>
+                      <small>{nombreZona(e.zona)}</small>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {busqueda.trim().length >= 2 && resultados.length === 0 && <p className={s.vacio}>Sin resultados.</p>}
+          </div>
+        )}
 
         {elegida && (
           <section className={s.ficha} aria-live="polite">
@@ -391,8 +545,9 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
             </span>
             <h2>{elegida.nombre}</h2>
             <p lang="en">{elegida.nombreEn}</p>
+            <FichaDetalle ficha={fichas?.[elegida.nombreEn]} />
             <div className={s.acciones}>
-              {aislado === elegida.clave ? (
+              {repaso ? null : aislado === elegida.clave ? (
                 <button type="button" className={s.boton} onClick={() => { setAislado(null); encuadrar(); }}>
                   Mostrar todo
                 </button>
@@ -401,9 +556,11 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
                   Aislar
                 </button>
               )}
-              <button type="button" className={s.botonSec} onClick={ocultarSeleccion}>
-                Ocultar
-              </button>
+              {!repaso && (
+                <button type="button" className={s.botonSec} onClick={ocultarSeleccion}>
+                  Ocultar
+                </button>
+              )}
               <button type="button" className={s.botonSec} onClick={() => setSeleccion(null)}>
                 Cerrar
               </button>
@@ -411,70 +568,88 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
           </section>
         )}
 
-        <section className={s.seccion}>
-          <h3>Sistemas</h3>
-          <div className={s.sistemas}>
-            {sistemasPresentes.map((x) => (
-              <button
-                key={x.id}
-                type="button"
-                className={sistemas.has(x.id) ? s.sistemaOn : s.sistema}
-                aria-pressed={sistemas.has(x.id)}
-                onClick={() => alternarSistema(x.id)}
-              >
-                <i style={{ background: x.color }} />
-                {x.nombre}
-                <small>{cuenta[x.id]}</small>
-              </button>
-            ))}
-          </div>
-          {!sistemasPresentes.some((x) => x.id === 'nervio') && (
-            <p className={s.nota}>Este modelo aún no incluye los nervios.</p>
-          )}
-        </section>
+        {!repaso && repasos.length > 0 && (
+          <section className={s.seccion}>
+            <h3>Repasar</h3>
+            <div className={s.repasos}>
+              {repasos.map((r) => (
+                <button key={r.id} type="button" className={s.repasoBoton} onClick={() => empezarRepaso(r.id)}>
+                  <span>{r.nombre}</span>
+                  <small>{r.pasos.length} pasos · prueba</small>
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
 
-        <section className={s.seccion}>
-          <h3>Zona</h3>
-          <div className={s.zonas} role="group" aria-label="Zona">
-            {[{ id: 'todo', nombre: 'Todo' }, ...zonas].map((z) => (
-              <button
-                key={z.id}
-                type="button"
-                className={zona === z.id ? s.zonaActiva : s.zona}
-                aria-pressed={zona === z.id}
-                onClick={() => {
-                  setZona(z.id);
-                  setAislado(null);
-                  encuadrar();
-                }}
-              >
-                {z.nombre}
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <section className={s.seccion}>
-          <h3>Translúcido</h3>
-          <div className={s.zonas} role="group" aria-label="Translúcido">
-            {TRANSPARENCIAS.map((t) => (
-              <button
-                key={t.id}
-                type="button"
-                className={transparencia === t.id ? s.zonaActiva : s.zona}
-                aria-pressed={transparencia === t.id}
-                onClick={() => setTransparencia(t.id)}
-              >
-                {t.nombre}
-              </button>
-            ))}
-          </div>
-          {ocultas.size > 0 && (
-            <button type="button" className={s.botonSec} onClick={mostrarOcultas}>
-              Mostrar ocultas ({new Set([...ocultas].map((id) => estructuraDe.get(id)?.clave)).size})
-            </button>
-          )}
-        </section>
+        {!repaso && (
+          <>
+            <section className={s.seccion}>
+              <h3>Sistemas</h3>
+              <div className={s.sistemas}>
+                {sistemasPresentes.map((x) => (
+                  <button
+                    key={x.id}
+                    type="button"
+                    className={sistemas.has(x.id) ? s.sistemaOn : s.sistema}
+                    aria-pressed={sistemas.has(x.id)}
+                    onClick={() => alternarSistema(x.id)}
+                  >
+                    <i style={{ background: x.color }} />
+                    {x.nombre}
+                    <small>{cuenta[x.id]}</small>
+                  </button>
+                ))}
+              </div>
+              {!sistemasPresentes.some((x) => x.id === 'nervio') && (
+                <p className={s.nota}>Este modelo aún no incluye los nervios.</p>
+              )}
+            </section>
+    
+            <section className={s.seccion}>
+              <h3>Zona</h3>
+              <div className={s.zonas} role="group" aria-label="Zona">
+                {[{ id: 'todo', nombre: 'Todo' }, ...zonas].map((z) => (
+                  <button
+                    key={z.id}
+                    type="button"
+                    className={zona === z.id ? s.zonaActiva : s.zona}
+                    aria-pressed={zona === z.id}
+                    onClick={() => {
+                      setZona(z.id);
+                      setAislado(null);
+                      encuadrar();
+                    }}
+                  >
+                    {z.nombre}
+                  </button>
+                ))}
+              </div>
+            </section>
+    
+            <section className={s.seccion}>
+              <h3>Translúcido</h3>
+              <div className={s.zonas} role="group" aria-label="Translúcido">
+                {TRANSPARENCIAS.map((t) => (
+                  <button
+                    key={t.id}
+                    type="button"
+                    className={transparencia === t.id ? s.zonaActiva : s.zona}
+                    aria-pressed={transparencia === t.id}
+                    onClick={() => setTransparencia(t.id)}
+                  >
+                    {t.nombre}
+                  </button>
+                ))}
+              </div>
+              {ocultas.size > 0 && (
+                <button type="button" className={s.botonSec} onClick={mostrarOcultas}>
+                  Mostrar ocultas ({new Set([...ocultas].map((id) => estructuraDe.get(id)?.clave)).size})
+                </button>
+              )}
+            </section>
+          </>
+        )}
 
         <footer className={s.credito}>
           Modelo: <a href={CREDITO.url} target="_blank" rel="noopener noreferrer">{CREDITO.texto}</a>. {CREDITO.adaptacion}

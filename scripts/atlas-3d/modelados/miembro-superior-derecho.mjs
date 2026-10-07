@@ -39,6 +39,16 @@ export const ESTRUCTURAS = [
       [A34, P(-0.035, 1.493, -0.012), P(-0.041, 1.489, -0.011), ERB],
     ],
     uniones: [[4, 'fin', 'C5 root']],
+    // Cada ramo, asa y tronco es una pieza del visor (se selecciona por separado).
+    partes: [
+      [['Ventral ramus of C1 (cervical plexus)', A12], ['Loop between C2 and C3 (cervical plexus)', A23], ['Loop between C3 and C4 (cervical plexus)']],
+      'Ventral ramus of C2 (cervical plexus)',
+      'Ventral ramus of C3 (cervical plexus)',
+      'Ventral ramus of C4 (cervical plexus)',
+      'Communicating branch between C4 and C5 (cervical plexus)',
+      'Common trunk of C2-C3 cutaneous branches (cervical plexus)',
+      'Common trunk of C3-C4 cutaneous branches (cervical plexus)',
+    ],
   },
   {
     en: 'Lesser occipital nerve', // C2: sube por el borde posterior del ECM hasta detrás de la oreja
@@ -71,6 +81,7 @@ export const ESTRUCTURAS = [
       [ERB, P(-0.060, 1.470, -0.012), P(-0.085, 1.450, -0.018), P(-0.110, 1.437, -0.022), P(-0.135, 1.430, -0.026), P(-0.155, 1.424, -0.030)],
     ],
     uniones: [[0, 'inicio', 'Cervical plexus (C1-C4 ventral rami)'], [1, 'inicio', 'Cervical plexus (C1-C4 ventral rami)'], [2, 'inicio', 'Cervical plexus (C1-C4 ventral rami)']],
+    partes: ['Medial supraclavicular nerves', 'Intermediate supraclavicular nerves', 'Lateral supraclavicular nerves'],
   },
   {
     en: 'Muscular branches of cervical plexus to sternocleidomastoid', // C2-C3, por su cara profunda

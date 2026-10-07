@@ -40,7 +40,7 @@ export const REGIONES: RegionAtlas[] = [
     // v7: + esternocleidomastoideo, temporal (mastoides) y nervio accesorio (XI),
     //     también de Z-Anatomy.
     // v8: + plexo cervical (ramos C1-C4, occipital menor, auricular mayor,
-    //     transverso del cuello, supraclaviculares, frénico, ramos al ECM y al
+    //     cervical transverso, supraclaviculares, frénico, ramos al ECM y al
     //     trapecio) y nervio toracodorsal, modelados (scripts/atlas-3d/modelar.mjs).
     // v9: el plexo cervical se une a los nervios que ya estaban: comunicante
     //     C4 → C5 y ramos al trapecio que se juntan con el XI.
@@ -53,7 +53,11 @@ export const REGIONES: RegionAtlas[] = [
     // v14: formato 2 (códec de meshoptimizer, normales en el navegador): 4,4 → 1,1 MB;
     //      también ligamentos y cartílagos sin bordes perdidos.
     // v15: T12-L5 y el sacro, también en «Pelvis y región glútea» (como en el inferior).
-    version: 'v15',
+    // v16: «Nervio transverso del cuello» pasa a llamarse «Nervio cervical transverso».
+    // v17: plexos por partes: las 6 divisiones del braquial por separado; el cervical
+    //      en ramos anteriores C1-C4, asas, comunicante C4-C5 y troncos al punto de
+    //      Erb; supraclaviculares mediales, intermedios y laterales.
+    version: 'v17',
     zonas: [
       { id: 'cuello', nombre: 'Cabeza y cuello' },
       { id: 'tronco', nombre: 'Columna y tórax' },
