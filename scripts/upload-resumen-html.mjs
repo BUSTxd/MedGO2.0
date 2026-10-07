@@ -18,7 +18,8 @@
  *     `src/app/api/resumen-html/[claseId]/route.ts`
  *   - marcar la actividad en `src/lib/data/<curso>.ts`
  *
- * Flags: --dry (no sube nada, sólo informa) · --force (re-sube y pisa).
+ * Flags: --dry (no sube nada, sólo informa) · --force (re-sube y pisa) ·
+ *        --reusar <mapa.json> (figuras que ya están en el bucket, ver 4-bis).
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'fs';
@@ -42,7 +43,7 @@ for (let i = 2; i < process.argv.length; i++) {
   else { args[key] = next; i++; }
 }
 
-const { dir, curso, id, slug, dry, force } = args;
+const { dir, curso, id, slug, dry, force, reusar } = args;
 if (!dir || !curso || !id || !slug) {
   console.error('Faltan flags. Uso:\n  node scripts/upload-resumen-html.mjs --dir <carpeta> --curso <slug-curso> --id <id-resumen> --slug <slug-doc> [--dry] [--force]');
   process.exit(1);
@@ -137,10 +138,31 @@ for (const ref of refs) {
   grupos.get(canon).push(ref);
 }
 
-let origBytes = 0, avifBytes = 0, subidas = 0, yaAvif = 0, colapsadas = 0;
+let origBytes = 0, avifBytes = 0, subidas = 0, yaAvif = 0, colapsadas = 0, reusadas = 0;
 const fallos = [];
 const destDe = new Map(); // ref (decodificado) → dest en el bucket
 const anchoDe = new Map(); // dest → ancho intrínseco en px
+
+// 4-bis. Figuras que ya publicó OTRO resumen (dos clases del mismo curso que
+// comparten esquemas). `--reusar mapa.json` = { "<nombre en el HTML, sin
+// extensión>": "<curso>/<slug>/<archivo>.avif" }. Esas figuras no se suben:
+// el HTML apunta al archivo que ya está en el bucket. El mapa se arma
+// comparando PÍXELES, no nombres: Notion llama «image 1» a cosas distintas en
+// cada export. Se descarga cada una para comprobar que existe y leer su ancho.
+const mapaReuso = reusar ? JSON.parse(readFileSync(reusar, 'utf8')) : {};
+for (const [canon, miembros] of [...grupos]) {
+  const dest = mapaReuso[canon];
+  if (!dest) continue;
+  const res = await fetch(`${BASE_PUB_ROOT}/${dest}`);
+  if (!res.ok) { fallos.push(`--reusar: no existe ${dest} (${res.status})`); continue; }
+  try { anchoDe.set(dest, (await sharp(Buffer.from(await res.arrayBuffer())).metadata()).width); } catch { /* no crítico */ }
+  for (const ref of miembros) destDe.set(ref, dest);
+  grupos.delete(canon);
+  reusadas++;
+}
+if (reusar) console.log(`  reusadas: ${reusadas} figuras que ya estaban en el bucket (no se suben)`);
+const sinUso = Object.keys(mapaReuso).filter(k => !refs.some(r => canonicalBase(r.replace(/\.(png|jpe?g|webp|avif)$/i, '')) === k));
+if (sinUso.length) fallos.push(`--reusar: el HTML no usa ${sinUso.join(', ')}`);
 
 for (const [canon, miembros] of grupos) {
   if (miembros.length > 1) colapsadas += miembros.length - 1;

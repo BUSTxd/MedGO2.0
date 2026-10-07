@@ -405,6 +405,13 @@ export const semanas: Semana[] = [
           'Acoplamiento excitación-contracción',
         ],
         docentes: ['Dr. Armando Calvo'],
+        // Resumen en HTML (28 figuras; 18 son las de la clase-10 y se sirven de su
+        // carpeta del bucket, ver scripts/resumenes-reuso/loc-clase-8.json).
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-clase-8', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-9',
