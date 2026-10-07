@@ -690,6 +690,12 @@ export const semanas: Semana[] = [
         hora: '08:00–11:00',
         subtemas: ['Músculo esquelético, cardiaco y liso', 'Repaso integrador de todas las láminas'],
         docentes: ['Dr. Sabino Portugal', 'Dra. Mery Revilla', 'Dra. Shirley Alva'],
+        // Mismo resumen que la magistral de Histología del tejido muscular (clase-10).
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [{ id: 'loc-clase-10', label: 'Resumen', formato: 'html' }],
+        },
       },
       {
         id: 'clase-15',
