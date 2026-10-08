@@ -32,4 +32,3 @@ scripts/atlas-3d/salida/
 data/examen-ms/
 docs/examen-ms/*
 !docs/examen-ms/PLAN.md
-!docs/examen-ms/ANALISIS_PATRONES.md

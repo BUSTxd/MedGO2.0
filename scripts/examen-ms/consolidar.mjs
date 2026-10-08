@@ -169,6 +169,25 @@ const FUERA = new Set([
   'musculo|escaleno anterior', 'musculo|escaleno medio', 'arteria|arterias intercostales',
 ]);
 
+// Decisión de BUST (2026-10-07): es poco probable que señalen cada rama pequeña;
+// preguntan la arteria grande y sus ramas. Estas quedan como respuesta de la B de
+// su arteria madre, no como blanco de pregunta A.
+const SOLO_RESPUESTA_B = new Set([
+  'arteria circunfleja humeral anterior', 'arteria circunfleja humeral posterior', 'arteria colateral cubital superior',
+  'arteria colateral media', 'arteria colateral radial', 'arteria interosea anterior', 'arteria interosea recurrente',
+  'arteria recurrente cubital anterior', 'arteria recurrente cubital posterior', 'arteria recurrente radial',
+  'arteria supraescapular', 'arteria toracica lateral', 'arteria toracica superior', 'arteria toracodorsal',
+  'rama carpiana dorsal de la arteria cubital',
+].map((n) => `arteria|${n}`));
+
+// Conflictos ya resueltos: el valor que se descarta y por qué.
+const RESUELTO = {
+  'arteria|rama cubitopalmar de la arteria cubital': {
+    campo: 'desemboca', quitar: ['arco palmar superficial'],
+    nota: 'La figura f39 de loc-clase-3 parecía llevarla al arco superficial (sus flechas de los arcos están invertidas). El texto de loc-clase-5 y las fuentes (CUN, Testut/Rouvière) la ponen en el arco profundo con la radial; BUST lo confirmó el 2026-10-07.',
+  },
+};
+
 // Hueso padre de los accidentes cuyo extractor lo dejó vacío o con otro nombre.
 const PADRE = {
   'cavidad glenoidea': 'Escápula',
@@ -357,6 +376,12 @@ for (const r of [...cat.values()].sort((a, b) => a.categoria.localeCompare(b.cat
     modelo.nombresModelo = modelo.en.map((en) => [...porSistema[SISTEMA[r.categoria]].values()].find((e) => e.nombreEn === en).nombre);
   }
 
+  const resuelto = RESUELTO[k];
+  if (resuelto) {
+    const m = r.datos_B[resuelto.campo];
+    for (const n of [...m.keys()]) if (resuelto.quitar.some((q) => norm(n.replace(/\([^)]*\)/g, ' ')) === norm(q))) m.delete(n);
+  }
+
   // Conflictos entre resúmenes: campos de valor único con conjuntos disjuntos.
   const datos_B = {};
   const procedencia = {};
@@ -417,7 +442,9 @@ for (const r of [...cat.values()].sort((a, b) => a.categoria.localeCompare(b.cat
     categoria: r.categoria,
     ...(r.huesoPadre ? { huesoPadre: r.huesoPadre } : {}),
     regiones: [...r.regiones],
-    preguntable: !grupo && !fuera && !!modelo,
+    preguntable: !grupo && !fuera && !!modelo && !SOLO_RESPUESTA_B.has(k),
+    ...(SOLO_RESPUESTA_B.has(k) ? { soloRespuestaB: true } : {}),
+    ...(resuelto ? { resuelto: resuelto.nota } : {}),
     ...(grupo ? { grupo: true } : {}),
     ...(fuera ? { fueraDeMS: true } : {}),
     modelo,
