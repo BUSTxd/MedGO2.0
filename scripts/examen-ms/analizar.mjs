@@ -27,7 +27,7 @@ const TIPOS_B = {
   nervio: { musculos_que_inerva: ['musculos_que_inerva'], territorio_sensitivo: ['territorio_sensitivo'], origen: ['origen', 'formadores'] },
   hueso: { articulaciones: ['articulaciones'], inserciones_musculares: ['inserciones_musculares'] },
   accidente: { inserciones_musculares: ['inserciones_musculares'], articulaciones: ['articulaciones'] },
-  arteria: { ramas_colaterales: ['ramas_colaterales', 'ramas'], ramas_terminales: ['ramas_terminales'], formadores: ['formadores'] },
+  arteria: { ramas_colaterales: ['ramas_colaterales', 'ramas'], ramas_terminales: ['ramas_terminales'], formadores: ['formadores'], origen: ['origen'] },
   vena: { formadores: ['formadores'], desemboca: ['desemboca'] },
 };
 const ETIQUETA_B = {
@@ -73,7 +73,7 @@ function familia(e) {
     case 'hueso': return CARPO.has(n) ? 'hueso-carpo' : 'hueso-otro';
     case 'accidente': return ['Húmero', 'Escápula'].includes(e.huesoPadre) ? 'accidente-hombro' : 'accidente-otro';
     case 'vena': return VENAS_SUPERFICIALES.has(n) ? 'vena-superficial' : 'vena-profunda';
-    case 'arteria': return ARTERIAS_PRINCIPALES.has(n) ? 'arteria-principal' : 'arteria-menor';
+    case 'arteria': return ARTERIAS_PRINCIPALES.has(n) ? 'arteria-principal' : /^Arteria circunfleja humeral/.test(n) ? 'arteria-circunfleja' : 'arteria-menor';
   }
   return 'otro';
 }
@@ -90,6 +90,8 @@ const PATRON = {
   'hueso-carpo': ['articulaciones'],
   'vena-superficial': ['formadores', 'desemboca'],
   'arteria-principal': ['ramas_colaterales', 'formadores'],
+  // Las circunflejas humerales (la posterior salió en 2024): de dónde nacen.
+  'arteria-circunfleja': ['origen'],
 };
 
 // ── Lo que ya salió ───────────────────────────────────────────────────────────

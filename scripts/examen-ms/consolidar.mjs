@@ -171,9 +171,10 @@ const FUERA = new Set([
 
 // Decisión de BUST (2026-10-07): es poco probable que señalen cada rama pequeña;
 // preguntan la arteria grande y sus ramas. Estas quedan como respuesta de la B de
-// su arteria madre, no como blanco de pregunta A.
+// su arteria madre, no como blanco de pregunta A. Las circunflejas humerales sí
+// se preguntan: la posterior salió en 2024 (BUST, 2026-10-07).
 const SOLO_RESPUESTA_B = new Set([
-  'arteria circunfleja humeral anterior', 'arteria circunfleja humeral posterior', 'arteria colateral cubital superior',
+  'arteria colateral cubital superior',
   'arteria colateral media', 'arteria colateral radial', 'arteria interosea anterior', 'arteria interosea recurrente',
   'arteria recurrente cubital anterior', 'arteria recurrente cubital posterior', 'arteria recurrente radial',
   'arteria supraescapular', 'arteria toracica lateral', 'arteria toracica superior', 'arteria toracodorsal',
