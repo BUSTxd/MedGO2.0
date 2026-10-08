@@ -26,3 +26,10 @@ private/
 # Recortes locales del laboratorio de ciclo celular (se sirven desde el bucket)
 scripts/ciclo-celular/salida/
 scripts/atlas-3d/salida/
+
+# Examen 3D de miembro superior: el banco (respuestas) y lo extraído de los
+# resúmenes de pago no van a git (el repo es público). Se sube al bucket `examenes`.
+data/examen-ms/
+docs/examen-ms/*
+!docs/examen-ms/PLAN.md
+!docs/examen-ms/ANALISIS_PATRONES.md
