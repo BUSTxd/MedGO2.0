@@ -122,6 +122,8 @@ export default async function ActividadPage({
           resumenTitulo={act.titulo}
           /* En las prácticas la primera tarjeta es «Simulación». */
           simulacion={isPractica ? (act.simulacion ?? {}) : undefined}
+          /* Evaluación 1: el examen práctico 3D ocupa la tarjeta «Banqueo». */
+          banco={act.practico3d}
           abrirResumen={sp?.resumen === '1' && accesible}
           resumenOpcion={sp?.opcion}
           resumenSeccion={sp?.seccion}

@@ -54,12 +54,14 @@ interface Estructura {
   ids: string[];
 }
 
-export default function Visor({ regiones }: { regiones: string[] }) {
+export default function Visor({ regiones, examen = false }: { regiones: string[]; examen?: boolean }) {
   const [atlas, setAtlas] = useState<Atlas | null>(null);
   const [progreso, setProgreso] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [intento, setIntento] = useState(0);
-  const [empezado, setEmpezado] = useState(false);
+  /** Entrando directo al examen no se pinta el aviso: el examen trae su propio «Antes de empezar». */
+  const examenDirecto = examen && regiones.includes(REGION_EXAMEN);
+  const [empezado, setEmpezado] = useState(examenDirecto);
   const empezar = useCallback(() => setEmpezado(true), []);
 
   useEffect(() => {
@@ -99,7 +101,7 @@ export default function Visor({ regiones }: { regiones: string[] }) {
   }
   return (
     <>
-      <Explorador atlas={atlas} regiones={regiones} />
+      <Explorador atlas={atlas} regiones={regiones} examenInicial={examenDirecto} />
       {!empezado && <Aviso regiones={regiones} onEmpezar={empezar} />}
     </>
   );
@@ -136,7 +138,7 @@ function Aviso({ regiones, onEmpezar }: { regiones: string[]; onEmpezar: () => v
   );
 }
 
-function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
+function Explorador({ atlas, regiones, examenInicial }: { atlas: Atlas; regiones: string[]; examenInicial: boolean }) {
   const { piezas } = atlas;
   const dosLados = useMemo(() => new Set(piezas.map((p) => p.lado)).size > 1, [piezas]);
 
@@ -224,7 +226,7 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
   // ─── Examen práctico (miembro superior) ────────────────────────────────────
   // El examen manda sobre la escena: qué se señala, si se puede girar, si se
   // desenfoca y qué nombre se revela al corregir.
-  const [examen, setExamen] = useState(false);
+  const [examen, setExamen] = useState(examenInicial);
   const [control, setControl] = useState<ControlEscena>(CONTROL_LIBRE);
   const objetivo: ObjetivoMS | null = examen ? control.objetivo : null;
   const idsObjetivo = useMemo(() => {

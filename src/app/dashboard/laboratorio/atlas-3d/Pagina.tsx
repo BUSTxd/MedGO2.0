@@ -13,11 +13,11 @@ const Visor = dynamic(() => import('./Visor'), {
   loading: () => <div className={s.cargando} aria-busy="true">Preparando el visor…</div>,
 });
 
-export default function Atlas3DPage({ regiones }: { regiones: string[] }) {
+export default function Atlas3DPage({ regiones, examen }: { regiones: string[]; examen: boolean }) {
   return (
     <div className={s.wrapper}>
       <TrackLabVisit labId="atlas-3d" />
-      <Visor regiones={regiones} />
+      <Visor regiones={regiones} examen={examen} />
     </div>
   );
 }

@@ -36,6 +36,8 @@ export interface Actividad {
    * «Video» se sustituye por «Simulación»; sin `href` queda como próximamente.
    */
   simulacion?: { href?: string; desc?: string };
+  /** Examen práctico en el atlas 3D: llena la tarjeta «Banqueo» con un enlace al laboratorio. */
+  practico3d?: { href: string; desc?: string };
   /** ISO date YYYY-MM-DD; usado para "Próximos exámenes" en el home. */
   fechaISO?: string;
   /** Sobreescribe el destino del card en el sílabo (p.ej. histología → atlas). */
@@ -567,6 +569,10 @@ export const semanas: Semana[] = [
         subtemas: ['Cubre solo el miembro superior: hombro, brazo, antebrazo, muñeca y mano'],
         docentes: ['Profesores de Anatomía'],
         nota: 'Las 2 evaluaciones continuas valen 35% de la nota de anatomía; los 4 pasos cortos, 15%.',
+        practico3d: {
+          href: '/dashboard/laboratorio/atlas-3d?region=miembro-superior-derecho&examen=1',
+          desc: 'Examen práctico 3D de miembro superior, como el de la mesa',
+        },
       },
       {
         id: 'anat-6',

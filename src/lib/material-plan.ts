@@ -47,6 +47,8 @@ export interface ActividadLike {
   /** PDF de problemas propuestos (Física C1–C4), abre en el mismo visor que Resumen. */
   propuestos?: unknown;
   simulacion?: { href?: string };
+  /** Examen práctico en el atlas 3D (Evaluación 1 de Aparato Locomotor): cuenta como banqueo. */
+  practico3d?: unknown;
   /**
    * Material interactivo propio del curso de Física, que vive fuera del sílabo
    * (`src/lib/data/fisica-modulos/`). Cumple el mismo papel que `simulacion`
@@ -190,9 +192,9 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
   const usaModulo = (reglas.moduloEn?.includes(act.tipo) ?? false) && act.modulo === true;
   const apoyoListo = usaModulo || (usaSimulacion && !!act.simulacion?.href);
 
-  // El banqueo se llena de seis formas: examen del bucket, qbank, tarjetas de
+  // El banqueo se llena de siete formas: examen del bucket, qbank, tarjetas de
   // repaso, solucionario paso a paso (Química Orgánica), banco de preguntas
-  // (`?banco=1`) o PDF de práctica. Dos de ellas viven fuera del sílabo y se
+  // (`?banco=1`), PDF de práctica o examen práctico en el atlas 3D. Dos de ellas viven fuera del sílabo y se
   // buscan por id.
   //
   // Aquí sólo se decide si está o no está. Si ese material se armó o sólo se
@@ -204,6 +206,7 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
     act.qbank ||
     act.tarjetas ||
     act.propuestos ||
+    act.practico3d ||
     findSolucionario(act.id) ||
     findBanco(act.id)
   );
