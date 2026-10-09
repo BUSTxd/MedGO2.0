@@ -11,7 +11,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const RAIZ = path.join(AQUI, '..', '..');
@@ -33,6 +33,10 @@ const formas = (nombre) => {
 };
 
 const marcadores = leer('marcadores.json');
+// Decisiones de BUST sobre preguntas concretas (gitignored: contienen respuestas).
+const rutaAjustes = path.join(DOCS, 'ajustes.mjs');
+const { AJUSTES = {} } = fs.existsSync(rutaAjustes) ? await import(pathToFileURL(rutaAjustes).href) : {};
+const ajustesUsados = new Set();
 const dirP = path.join(DOCS, 'preguntas');
 const lotes = fs.readdirSync(dirP).filter((f) => f.startsWith('entrada-')).map((f) => f.slice(8, -5));
 
@@ -64,7 +68,9 @@ for (const lote of lotes) {
     const respuestas = (g.preguntaB?.respuestas ?? []).map((r) => {
       if (r.ref) {
         if (!lexico[r.ref]) { errores.push(`${s.id}: ref «${r.ref}» no está en el léxico`); return null; }
-        return { texto: r.texto, ref: r.ref, aceptadas: formas(r.ref), noConfundir: lexico[r.ref].noConfundir ?? [], ...(r.precisión ? { precision: r.precisión } : {}) };
+        // El texto que escribió el generador (a menudo el de la clave oficial,
+        // «Carpiana anterior») también vale en ESTA pregunta.
+        return { texto: r.texto, ref: r.ref, aceptadas: [...new Set([...formas(r.ref), r.texto])], noConfundir: lexico[r.ref].noConfundir ?? [], ...(r.precisión ? { precision: r.precisión } : {}) };
       }
       if (!r.aceptadas?.length) { errores.push(`${s.id}: respuesta «${r.texto}» sin ref ni aceptadas`); return null; }
       return { texto: r.texto, aceptadas: r.aceptadas, ...(r.conceptos?.length ? { conceptos: r.conceptos } : {}) };
@@ -73,7 +79,7 @@ for (const lote of lotes) {
     const pide = Math.min(g.preguntaB.pide ?? 1, respuestas.length);
 
     const rr = s.resumenRelacionado;
-    banco.push({
+    let pregunta = {
       id: s.id,
       categoria: s.grupo,
       tipoEstructura: s.categoria,
@@ -101,9 +107,17 @@ for (const lote of lotes) {
         href: `/dashboard/cursos/${CURSO}/${rr.claseId}?resumen=1&opcion=${rr.opcion}&seccion=${encodeURIComponent(rr.seccion)}`,
       },
       ...(g.revision || lexico[s.estructura]?.revision ? { revision: [g.revision, lexico[s.estructura]?.revision && `Léxico: ${lexico[s.estructura].revision}`].filter(Boolean) } : {}),
-    });
+    };
+    if (AJUSTES[s.id]) {
+      ajustesUsados.add(s.id);
+      pregunta = AJUSTES[s.id](pregunta);
+      if (!pregunta) { descartadas.push({ id: s.id, motivo: 'Quitada por decisión de BUST (ajustes.mjs)' }); continue; }
+      if (pregunta.preguntaB.pide > pregunta.preguntaB.respuestas.length) errores.push(`${s.id}: tras el ajuste pide más respuestas de las que hay`);
+    }
+    banco.push(pregunta);
   }
 }
+for (const id of Object.keys(AJUSTES)) if (!ajustesUsados.has(id)) errores.push(`ajuste para una pregunta que no existe: ${id}`);
 
 if (errores.length) {
   console.error(`✗ ${errores.length} errores`);
@@ -129,6 +143,9 @@ fs.writeFileSync(path.join(RAIZ, 'data', 'examen-ms', 'banco.json'), JSON.string
   region: REGION,
   categorias: ['Huesos', 'Músculos', 'Arterias', 'Nervios', 'Venas'],
   preguntas: banco,
+  // Todas las formas del léxico: el corrector las usa para no dar por buena una
+  // errata que en realidad es el nombre de otra estructura.
+  formas: Object.fromEntries(Object.keys(lexico).map((n) => [n, formas(n)])),
 }, null, 2));
 
 // ── Resumen para revisar ─────────────────────────────────────────────────────

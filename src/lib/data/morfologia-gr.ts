@@ -28,6 +28,8 @@
  * sería la respuesta). `guia-referencia.webp` es la lámina 2 completa.
  */
 
+import { levenshtein, normalizar } from '@/lib/utils/texto';
+
 /** Bloques de la ficha, con los mismos encabezados del material. */
 export interface Ficha {
   /** Columna «Característica» (alteraciones) o «Qué representa» (inclusiones). */
@@ -405,20 +407,6 @@ export const GUIA_IMG = `${RUTA_IMG}/guia-referencia.webp`;
    COMPARACIÓN FLEXIBLE DE LA RESPUESTA
    ──────────────────────────────────────────────────────────────────────── */
 
-/** Marcas diacriticas que deja normalize('NFD') (U+0300 a U+036F). */
-const DIACRITICOS = new RegExp('[\u0300-\u036f]', 'g');
-
-/** minúsculas, sin tildes, sin puntuación, sin espacios de más. */
-export function normalizar(texto: string): string {
-  return texto
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(DIACRITICOS, '')
-    .replace(/[^a-z0-9\s]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
 /** Palabras que el alumno puede añadir sin cambiar la respuesta. */
 const RELLENO = new Set(['el', 'la', 'los', 'las', 'un', 'una', 'de', 'del', 'en', 'es']);
 
@@ -427,26 +415,6 @@ function claves(texto: string): string {
     .split(' ')
     .filter((p) => !RELLENO.has(p))
     .join(' ');
-}
-
-function levenshtein(a: string, b: string): number {
-  const m = a.length;
-  const n = b.length;
-  if (!m) return n;
-  if (!n) return m;
-  let prev = Array.from({ length: n + 1 }, (_, j) => j);
-  for (let i = 1; i <= m; i++) {
-    const cur = [i];
-    for (let j = 1; j <= n; j++) {
-      cur[j] = Math.min(
-        prev[j] + 1,
-        cur[j - 1] + 1,
-        prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1),
-      );
-    }
-    prev = cur;
-  }
-  return prev[n];
 }
 
 /** Todas las formas aceptadas de una morfología, ya normalizadas. */
