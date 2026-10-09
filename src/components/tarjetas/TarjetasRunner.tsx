@@ -70,6 +70,35 @@ const Indice = ({ letra, palo, pie = false }: { letra: string; palo: Palo; pie?:
   </span>
 );
 
+// Barajas grandes (el examen 3D de miembro superior, 420) se sirven por rondas:
+// primero las que aún no salieron, y al verlas todas el registro vuelve a cero.
+const claveVistas = (examKey: string) => `medgo:tarjetas-vistas:${examKey}`;
+
+function leerVistas(examKey: string): Set<string> {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(claveVistas(examKey)) ?? '[]') as string[]);
+  } catch {
+    return new Set();
+  }
+}
+
+function guardarVistas(examKey: string, vistas: Set<string>) {
+  try {
+    localStorage.setItem(claveVistas(examKey), JSON.stringify([...vistas]));
+  } catch { /* sin almacenamiento la ronda sale igual, sólo que sin memoria */ }
+}
+
+function sacarRonda(examKey: string, todas: Flashcard[], n: number): Flashcard[] {
+  let vistas = leerVistas(examKey);
+  if (todas.every(t => vistas.has(t.id))) {
+    vistas = new Set();
+    guardarVistas(examKey, vistas);
+  }
+  const nuevas = shuffle(todas.filter(t => !vistas.has(t.id)));
+  if (nuevas.length >= n) return nuevas.slice(0, n);
+  return [...nuevas, ...shuffle(todas.filter(t => vistas.has(t.id))).slice(0, n - nuevas.length)];
+}
+
 /** «12 tarjetas» o, en muestra, «10 de 32 tarjetas». */
 function cuenta(n: number, deTotal: number | undefined, uno: string, varios: string) {
   const de = deTotal !== undefined && deTotal > n ? ` de ${deTotal}` : '';
@@ -82,6 +111,13 @@ interface Props {
   backHref: string;
   /** Resumen HTML de la clase; `abierto` = el usuario puede leerlo. */
   resumen?: { id: string; abierto: boolean };
+  /**
+   * Para tarjetas que traen su propio `resumen` (una baraja que cruza varias
+   * clases): id del resumen → si el usuario puede leerlo.
+   */
+  resumenes?: Record<string, boolean>;
+  /** Tarjetas por ronda, priorizando las no vistas. Sin esto, la baraja entera. */
+  ronda?: number;
 }
 
 const IconoLibro = () => (
@@ -106,12 +142,14 @@ const IconoCandado = () => (
  * La tarjeta no se remonta entre preguntas: los naipes llevan `key` de
  * **posición**, así el nodo de cada hueco sobrevive y sólo le cambia el texto.
  */
-export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: Props) {
+export default function TarjetasRunner({ examKey, titulo, backHref, resumen, resumenes, ronda }: Props) {
   // Encima de la baraja, no navegando a la clase: así no se pierde el avance.
-  const [leyendo, setLeyendo] = useState<string | null>(null);
+  const [leyendo, setLeyendo] = useState<{ id: string; seccion: string } | null>(null);
   const [paso, setPaso] = useState<Paso>('cargando');
   const [error, setError] = useState<string | null>(null);
   const [preguntas, setPreguntas] = useState<ExamQuestion[]>([]);
+  /** La baraja completa; `tarjetas` es la ronda en curso (la misma, sin `ronda`). */
+  const [todas, setTodas] = useState<Flashcard[]>([]);
   const [tarjetas, setTarjetas] = useState<Flashcard[]>([]);
   const [opciones, setOpciones] = useState<Record<string, ExamOption[]>>({});
   const [muestra, setMuestra] = useState<Muestra | null>(null);
@@ -164,7 +202,9 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
         if (!vivo) return;
         const { orden, opciones: ops } = prepararRonda(payload.questions);
         setPreguntas(orden);
-        setTarjetas(shuffle(flashcardsDe(payload)));
+        const baraja = flashcardsDe(payload);
+        setTodas(baraja);
+        setTarjetas(ronda ? sacarRonda(examKey, baraja, ronda) : shuffle(baraja));
         setOpciones(ops);
         setMuestra(m ?? null);
         setTituloBanco(payload.title || titulo);
@@ -176,7 +216,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
         setPaso('error');
       });
     return () => { vivo = false; };
-  }, [examKey, titulo]);
+  }, [examKey, titulo, ronda]);
 
   // Cada modo recorre su propia baraja: el quiz, las preguntas; la memoria, las
   // tarjetas (que pueden no tener nada que ver con las preguntas).
@@ -191,9 +231,11 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
   const respondida = modo === 'quiz' ? elegida !== null : vista;
 
   /** De qué parte del resumen sale lo que se acaba de ver. Fuera del naipe: el naipe ya es un <button>. */
-  const enlaceResumen = (seccion?: string) => {
-    if (!resumen || !seccion) return null;
-    if (!resumen.abierto) {
+  const enlaceResumen = (seccion?: string, propio?: string) => {
+    // La tarjeta puede traer su resumen (baraja de varias clases); si no, el de la clase.
+    const destino = propio ? { id: propio, abierto: resumenes?.[propio] ?? false } : resumen;
+    if (!destino || !seccion) return null;
+    if (!destino.abierto) {
       return (
         <span className={`${s.irResumen} ${s.irResumenCerrado}`}>
           <IconoCandado /> El resumen entra con la suscripción
@@ -205,8 +247,8 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
         type="button"
         className={s.irResumen}
         onClick={() => {
-          setLeyendo(seccion);
-          trackEvent('resumen_abierto', { claseId: resumen.id, origen: modo === 'quiz' ? 'quiz' : 'tarjeta' });
+          setLeyendo({ id: destino.id, seccion });
+          trackEvent('resumen_abierto', { claseId: destino.id, origen: modo === 'quiz' ? 'quiz' : 'tarjeta' });
         }}
       >
         <IconoLibro /> Ver esto en el resumen
@@ -290,6 +332,11 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
 
   const autoevaluar = (ok: boolean) => {
     if (!tarjeta) return;
+    if (ronda) {
+      const vistas = leerVistas(examKey);
+      vistas.add(tarjeta.id);
+      guardarVistas(examKey, vistas);
+    }
     const finales = [...respuestas, { q: tarjeta.id, ok }];
     setRespuestas(finales);
     avanzar(finales);
@@ -317,11 +364,12 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
     avanzar(respuestas);
   };
 
-  const reiniciar = () => {
+  /** `nueva`: otra ronda de la baraja grande en vez de repetir la misma. */
+  const reiniciar = (nueva = false) => {
     limpiarTimers();
     const { orden, opciones: ops } = prepararRonda(preguntas);
     setPreguntas(orden);
-    setTarjetas(t => shuffle(t));
+    setTarjetas(t => (nueva && ronda ? sacarRonda(examKey, todas, ronda) : shuffle(t)));
     setOpciones(ops);
     setIdx(0);
     setElegida(null);
@@ -402,7 +450,9 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
                   Pregunta delante, respuesta detrás. Para no olvidar lo de siempre, rápido.
                 </span>
                 <span className={s.modoCuenta}>
-                  {cuenta(tarjetas.length, muestra?.flashTotal, 'tarjeta', 'tarjetas')}
+                  {ronda
+                    ? `${cuenta(tarjetas.length, todas.length, 'tarjeta', 'tarjetas')} por ronda`
+                    : cuenta(tarjetas.length, muestra?.flashTotal, 'tarjeta', 'tarjetas')}
                 </span>
               </button>
             )}
@@ -439,7 +489,14 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
             {modo === 'quiz' ? 'respuestas correctas' : 'tarjetas que ya te sabías'}
           </p>
           <div className={s.resultadoAcciones}>
-            <button type="button" className={s.siguiente} onClick={reiniciar}>Repasar otra vez</button>
+            {ronda && modo === 'flash' ? (
+              <>
+                <button type="button" className={s.siguiente} onClick={() => reiniciar(true)}>Otra ronda</button>
+                <button type="button" className={s.secundario} onClick={() => reiniciar()}>Repetir esta ronda</button>
+              </>
+            ) : (
+              <button type="button" className={s.siguiente} onClick={() => reiniciar()}>Repasar otra vez</button>
+            )}
             <Link href={backHref} className={s.secundario}>Volver a la clase</Link>
           </div>
         </div>
@@ -594,7 +651,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
           {/* Siempre montado y fuera del flujo: si apareciera al voltear y
               ocupara sitio, la columna centrada subiría la tarjeta en pleno giro. */}
           <div className={`${s.flashPie} ${vista ? s.flashPieVisible : ''}`}>
-            {enlaceResumen(tarjeta?.seccion)}
+            {enlaceResumen(tarjeta?.seccion, tarjeta?.resumen)}
 
             <div className={s.autoeval}>
               <button type="button" className={`${s.autoevalBtn} ${s.autoevalNo}`} onClick={() => autoevaluar(false)}>
@@ -609,11 +666,11 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen }: P
         </div>
       )}
 
-      {leyendo && resumen && (
+      {leyendo && (
         <HtmlFullscreenModal
-          claseId={resumen.id}
+          claseId={leyendo.id}
           titulo={tituloBanco}
-          seccion={leyendo}
+          seccion={leyendo.seccion}
           onClose={() => setLeyendo(null)}
         />
       )}

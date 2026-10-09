@@ -48,6 +48,9 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?
   // Examen práctico 3D de miembro superior (atlas 3D): plan del curso (Interno).
   // Lo arma scripts/examen-ms/ensamblar-banco.mjs; el JSON fuente no va a git.
   'aparato-locomotor/practico-ms': {},
+  // El mismo banco en tarjetas de memoria (Banqueo de la Evaluación 1), con
+  // scripts/examen-ms/tarjetas.mjs. Mismo plan, sin muestra.
+  'aparato-locomotor/practico-ms-tarjetas': {},
   // Banqueo de repaso del TBL 3 (motor de tarjetas, no hoja de examen). La
   // clase está abierta y el recorte lo hace el servidor: sin `muestra` el JSON
   // entero viajaría al navegador y las tarjetas de pago se leerían en la

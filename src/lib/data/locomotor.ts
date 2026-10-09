@@ -1,3 +1,5 @@
+import type { TarjetasRef } from './tarjetas';
+
 export type TipoActividad =
   | 'MAGISTRAL'
   | 'INVERTIDA'
@@ -36,8 +38,8 @@ export interface Actividad {
    * «Video» se sustituye por «Simulación»; sin `href` queda como próximamente.
    */
   simulacion?: { href?: string; desc?: string };
-  /** Examen práctico en el atlas 3D: llena la tarjeta «Banqueo» con un enlace al laboratorio. */
-  practico3d?: { href: string; desc?: string };
+  /** Banqueo de repaso en tarjetas (`?tarjetas=1`). */
+  tarjetas?: TarjetasRef;
   /** ISO date YYYY-MM-DD; usado para "Próximos exámenes" en el home. */
   fechaISO?: string;
   /** Sobreescribe el destino del card en el sílabo (p.ej. histología → atlas). */
@@ -569,9 +571,14 @@ export const semanas: Semana[] = [
         subtemas: ['Cubre solo el miembro superior: hombro, brazo, antebrazo, muñeca y mano'],
         docentes: ['Profesores de Anatomía'],
         nota: 'Las 2 evaluaciones continuas valen 35% de la nota de anatomía; los 4 pasos cortos, 15%.',
-        practico3d: {
+        // El modelo 3D abre directo en el examen; las tarjetas son el mismo banco de 420 preguntas.
+        simulacion: {
           href: '/dashboard/laboratorio/atlas-3d?region=miembro-superior-derecho&examen=1',
-          desc: 'Examen práctico 3D de miembro superior, como el de la mesa',
+          desc: 'Examen práctico en el modelo 3D de miembro superior',
+        },
+        tarjetas: {
+          key: 'aparato-locomotor/practico-ms-tarjetas',
+          desc: '420 tarjetas del examen práctico de miembro superior',
         },
       },
       {

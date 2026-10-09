@@ -122,6 +122,11 @@ export interface Flashcard {
    * una celda, con «›» para acotar (`GENÉTICAS › Lugar de acción`).
    */
   seccion?: string;
+  /**
+   * Resumen al que pertenece `seccion` cuando la baraja cruza varias clases
+   * (examen 3D de miembro superior). Sin él, el de la clase de la baraja.
+   */
+  resumen?: string;
 }
 
 /** Banqueo recortado por el servidor para quien no tiene el plan. */

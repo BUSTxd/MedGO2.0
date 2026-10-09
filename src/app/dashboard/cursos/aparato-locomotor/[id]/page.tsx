@@ -1,9 +1,11 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { findActividad, esLibre, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/locomotor';
+import { findActividad, esLibre, semanas, UNIDAD_COLOR, TIPO_BADGE } from '@/lib/data/locomotor';
 import styles from '@/styles/cursos.module.css';
 import StudyMaterialSection from '@/components/StudyMaterialSection';
 import LockedContent from '@/components/LockedContent';
+import TarjetasRunner from '@/components/tarjetas/TarjetasRunner';
+import { puedeVerResumen } from '@/lib/acceso-resumen';
 import { tieneMaterial } from '@/lib/material-plan';
 import TrackRecentClass from '@/components/TrackRecentClass';
 import { getUser } from '@/lib/supabase/get-user';
@@ -23,7 +25,7 @@ export default async function ActividadPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ resumen?: string; opcion?: string; seccion?: string }>;
+  searchParams: Promise<{ resumen?: string; opcion?: string; seccion?: string; tarjetas?: string }>;
 }) {
   const { id } = await params;
   const sp = await searchParams;
@@ -31,6 +33,29 @@ export default async function ActividadPage({
   if (!result) notFound();
 
   const { actividad: act, semana } = result;
+
+  // Banqueo en tarjetas. Sin velo: quien bloquea es la route del bucket. La
+  // baraja del examen 3D cruza varias clases, así que cada tarjeta trae su
+  // resumen y aquí sólo se dice cuáles puede abrir el usuario.
+  if (sp?.tarjetas === '1' && act.tarjetas) {
+    const plan = await getCachedPlanState();
+    const resumenes: Record<string, boolean> = {};
+    for (const sem of semanas)
+      for (const a of sem.actividades)
+        for (const o of a.resumen?.opciones ?? [])
+          if ((o.formato ?? a.resumen?.formato) === 'html') resumenes[o.id] = puedeVerResumen(plan, o.id);
+    return (
+      <div className={styles.microPage}>
+        <TarjetasRunner
+          examKey={act.tarjetas.key}
+          titulo={act.titulo}
+          backHref={`/dashboard/cursos/aparato-locomotor/${id}`}
+          resumenes={resumenes}
+          ronda={30}
+        />
+      </div>
+    );
+  }
   const badge = TIPO_BADGE[act.tipo];
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
@@ -120,10 +145,10 @@ export default async function ActividadPage({
           resumenOpciones={act.resumen?.opciones}
           resumenFormato={act.resumen?.formato}
           resumenTitulo={act.titulo}
-          /* En las prácticas la primera tarjeta es «Simulación». */
-          simulacion={isPractica ? (act.simulacion ?? {}) : undefined}
-          /* Evaluación 1: el examen práctico 3D ocupa la tarjeta «Banqueo». */
-          banco={act.practico3d}
+          tarjetas={act.tarjetas}
+          /* En las prácticas y en las evaluaciones prácticas (examen en el modelo 3D)
+             la primera tarjeta es «Simulación». */
+          simulacion={isPractica || act.tipo === 'EXAMEN-P' ? (act.simulacion ?? {}) : undefined}
           abrirResumen={sp?.resumen === '1' && accesible}
           resumenOpcion={sp?.opcion}
           resumenSeccion={sp?.seccion}
