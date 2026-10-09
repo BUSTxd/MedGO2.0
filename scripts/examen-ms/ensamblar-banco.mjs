@@ -110,7 +110,7 @@ for (const lote of lotes) {
     };
     if (AJUSTES[s.id]) {
       ajustesUsados.add(s.id);
-      pregunta = AJUSTES[s.id](pregunta);
+      pregunta = AJUSTES[s.id](pregunta, { lexico });
       if (!pregunta) { descartadas.push({ id: s.id, motivo: 'Quitada por decisión de BUST (ajustes.mjs)' }); continue; }
       if (pregunta.preguntaB.pide > pregunta.preguntaB.respuestas.length) errores.push(`${s.id}: tras el ajuste pide más respuestas de las que hay`);
     }

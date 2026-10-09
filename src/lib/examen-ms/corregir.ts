@@ -153,7 +153,7 @@ export function corregirA(escrito: string, p: PreguntaMS, indice: IndiceFormas):
 }
 
 export interface CorreccionB {
-  /** Fracción de la B (0-1). 0 si la A estuvo mal. */
+  /** 1 si la B está bien (todas las necesarias y ninguna incorrecta), 0 si no o si la A estuvo mal. */
   puntaje: number;
   /** Respuestas esperadas que acertó (índice en `respuestas`) y lo que escribió. */
   acertadas: { indice: number; escrito: string; errata: boolean }[];
@@ -184,7 +184,8 @@ const partesConY = (t: string) => t.split(/\s+(?:y|e)\s+/i).map((x) => x.trim())
 
 /**
  * Corrige la B. Cada elemento escrito se compara por separado contra cada
- * respuesta esperada; acierta `min(aciertos, pide)/pide` (o todas, si `todas`).
+ * respuesta esperada (para mostrar qué acertó, qué faltó y qué sobra); la B vale
+ * solo si escribió `pide` correctas (o todas, si `todas`) y ninguna incorrecta.
  * Si la A estuvo mal, la B vale 0 aunque esté bien escrita.
  */
 export function corregirB(escrito: string, p: PreguntaMS, aCorrecta: boolean, indice: IndiceFormas): CorreccionB {
@@ -246,8 +247,10 @@ export function corregirB(escrito: string, p: PreguntaMS, aCorrecta: boolean, in
     }
   }
 
+  // Regla del examen real (BUST): la B vale entera o nada. Hay que escribir las
+  // `necesarias` bien, y un solo elemento incorrecto la tumba.
   const necesarias = p.preguntaB.todas ? rs.length : Math.min(p.preguntaB.pide, rs.length);
-  const puntaje = aCorrecta ? Math.min(acertadas.length, necesarias) / necesarias : 0;
+  const puntaje = aCorrecta && acertadas.length >= necesarias && !incorrectas.length ? 1 : 0;
   const faltan = rs.map((_, i) => i).filter((i) => !usadas.has(i));
   return { puntaje, acertadas, incorrectas, faltan, necesarias };
 }

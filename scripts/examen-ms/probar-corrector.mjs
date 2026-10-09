@@ -6,7 +6,8 @@
  *
  * - Toda forma aceptada de la A y de cada respuesta B tiene que pasar.
  * - Todo `noConfundir` tiene que fallar.
- * - Escribir todas las respuestas de una B da puntaje 1; con la A mal, 0.
+ * - Escribir todas las respuestas de una B da puntaje 1; con la A mal, 0; con
+ *   menos de las que pide o con una incorrecta, 0 (la B vale entera o nada).
  * - Casos de las reglas: abreviaturas, prefijo opcional, porción obligatoria,
  *   radial ≠ radio, cubital ≠ cúbito, erratas de una letra con aviso.
  */
@@ -109,15 +110,17 @@ const axilarMusculos = 'ms-nervio-axilar-musculos-que-inerva';
 B(axilarMusculos, 'deltoides y redondo menor', 1);
 B(axilarMusculos, 'Redondo menor, deltoides', 1);
 B(axilarMusculos, 'redondo menor\ndeltoides', 1);
-B(axilarMusculos, 'deltoides', 0.5);
-B(axilarMusculos, 'deltoides, redondo mayor', 0.5);
+B(axilarMusculos, 'deltoides', 0);                 // pide 2: con uno no basta
+B(axilarMusculos, 'deltoides, redondo mayor', 0);  // uno mal tumba toda la B
+B(axilarMusculos, 'deltoides, redondo menor, redondo mayor', 0);
 B(axilarMusculos, 'deltoides y redondo menor', 0, false);
 B('ms-tuberculo-mayor-inserciones-musculares', 'supraespinoso, infraespinoso, redondo menor', 1);
-B('ms-tuberculo-mayor-inserciones-musculares', 'supraespinoso, infraespinoso', 2 / 3);
+B('ms-tuberculo-mayor-inserciones-musculares', 'supraespinoso, infraespinoso', 0);
 B('ms-vena-basilica-formadores', 'vena cubital superficial y vena mediana basílica', 1);
 B('ms-redondo-menor-funcion', 'rotación externa del brazo', 1);
 B('ms-redondo-menor-funcion', 'rotación medial del brazo', 0);
-B('ms-arteria-subescapular-ramas-terminales', 'arteria toracodorsal', 0.5);
+B('ms-arteria-subescapular-ramas-terminales', 'arteria toracodorsal', 0);
+B('ms-nervio-radial-musculos-que-inerva', 'ancóneo, supinador', 1);
 B('ms-serrato-anterior-funcion', 'rota la escápula hacia abajo', 0);
 
 console.log(`${comprobaciones} comprobaciones · ${fallos.length} fallos`);
