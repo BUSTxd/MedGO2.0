@@ -25,6 +25,8 @@ export interface ControlEscena {
   borrosa: boolean;
   /** Nombre que se muestra sobre lo señalado (al corregir). */
   revelar: string | null;
+  /** «Quitar músculos»: el modelo sin músculos para ver lo que tapan. */
+  sinMusculos: boolean;
 }
 
 const BIENVENIDA =
@@ -37,6 +39,9 @@ const TIPO_B: Record<TipoB, string> = {
   ramas_colaterales: 'Ramas colaterales', ramas_terminales: 'Ramas terminales', formadores: 'Formantes', desemboca: 'Desembocadura',
 };
 const CATEGORIAS: CategoriaMS[] = ['Huesos', 'Músculos', 'Arterias', 'Nervios', 'Venas'];
+/** Veces que se puede usar «Quitar músculos» en un examen de 10. */
+const USOS_QUITAR = 2;
+const CLAVE_AYUDA = 'medgo:examen-ms:ayuda-musculos';
 /** Mínimo de la animación de carga, para que no parpadee si el banco ya estaba en caché. */
 const CARGA_MIN = 1300;
 
@@ -57,6 +62,9 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
   const [paso, setPaso] = useState<Paso>('volteo');
   const [respuestas, setRespuestas] = useState<Respuesta[]>([]);
   const [intento, setIntento] = useState(0);
+  const [usosQuitar, setUsosQuitar] = useState(USOS_QUITAR);
+  const [sinMusculos, setSinMusculos] = useState(false);
+  const [ayuda, setAyuda] = useState(false);
   const indice = useMemo<IndiceFormas | null>(() => (banco ? indexarFormas(banco.formas) : null), [banco]);
 
   // ── Carga del banco (con la animación de carga) ────────────────────────────
@@ -87,16 +95,32 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
   // ── La escena sigue al paso ────────────────────────────────────────────────
   useEffect(() => {
     if (!actual) {
-      onControl({ objetivo: null, bloqueada: false, borrosa: false, revelar: null });
+      onControl({ objetivo: null, bloqueada: false, borrosa: false, revelar: null, sinMusculos: false });
       return;
     }
-    onControl({
-      objetivo: actual.objetivo,
-      bloqueada: paso === 'B',
-      borrosa: paso === 'B',
-      revelar: paso === 'correccion' ? actual.preguntaA.respuesta : null,
-    });
-  }, [actual, paso, onControl]);
+    // Sin rótulo sobre el modelo: el nombre ya está en la tarjeta de corrección
+    // (en el modelo tapaba la tarjeta).
+    onControl({ objetivo: actual.objetivo, bloqueada: paso === 'B', borrosa: paso === 'B', revelar: null, sinMusculos });
+  }, [actual, paso, sinMusculos, onControl]);
+
+  // La primera vez que se ve la tarjeta en la esquina se explica «Quitar músculos».
+  useEffect(() => {
+    if (paso !== 'esquina' || i !== 0) return;
+    let visto = false;
+    try { visto = localStorage.getItem(CLAVE_AYUDA) === '1'; } catch {}
+    if (!visto) setAyuda(true);
+  }, [paso, i]);
+  const cerrarAyuda = () => {
+    setAyuda(false);
+    try { localStorage.setItem(CLAVE_AYUDA, '1'); } catch {}
+  };
+  const quitarMusculos = () => {
+    if (sinMusculos || usosQuitar <= 0) return;
+    setUsosQuitar((n) => n - 1);
+    setSinMusculos(true);
+    setAyuda(false);
+    try { localStorage.setItem(CLAVE_AYUDA, '1'); } catch {}
+  };
 
   // Volteo con tensión y, al terminar, la tarjeta se va a la esquina.
   useEffect(() => {
@@ -109,6 +133,8 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
     if (!banco) return;
     setPreguntas(armarExamen(banco, new Set(avance.vistas)));
     setRespuestas([]);
+    setUsosQuitar(USOS_QUITAR);
+    setSinMusculos(false);
     setI(0);
     setPaso('volteo');
     setFase('examen');
@@ -135,6 +161,8 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
     setPaso('correccion');
   };
   const siguiente = () => {
+    // Los músculos vuelven en cada pregunta; los usos gastados no.
+    setSinMusculos(false);
     if (i + 1 < preguntas.length) {
       setI(i + 1);
       setPaso('volteo');
@@ -157,6 +185,32 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
     <div className={s.capa}>
       {fase !== 'resultados' && (
         <div className={s.barra}>
+          {actual && (paso === 'esquina' || paso === 'A') && (
+            <div className={s.quitarAncla}>
+              <button
+                type="button"
+                className={sinMusculos ? `${s.quitar} ${s.quitarActivo}` : s.quitar}
+                onClick={quitarMusculos}
+                disabled={sinMusculos || usosQuitar <= 0}
+                aria-describedby={ayuda ? 'ayuda-quitar' : undefined}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6Z" fill="none" stroke="currentColor" strokeWidth="1.8" /><path d="M4 4l16 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
+                {sinMusculos ? 'Sin músculos' : 'Quitar músculos'}
+                <span className={s.usos} aria-label={`${usosQuitar} usos`}>{usosQuitar}</span>
+              </button>
+              {ayuda && (
+                <div id="ayuda-quitar" className={s.ayudaQuitar} role="note">
+                  <div className={s.ayudaDemo} aria-hidden>
+                    <span className={s.demoHueso} />
+                    <span className={s.demoMusculo} />
+                    <span className={s.demoNervio} />
+                  </div>
+                  <p><b>¿Un músculo tapa lo señalado?</b> Quítalos de la vista para ver lo que hay debajo. Puedes usarlo <b>{USOS_QUITAR} veces</b> en cada examen.</p>
+                  <button type="button" className={s.primario} onClick={cerrarAyuda}>Entendido</button>
+                </div>
+              )}
+            </div>
+          )}
           {actual && <span className={s.contador}>Pregunta {i + 1} de {preguntas.length}</span>}
           <button type="button" className={s.salir} onClick={onSalir}>Salir del examen</button>
         </div>

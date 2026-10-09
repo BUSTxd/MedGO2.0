@@ -91,13 +91,27 @@ const estructuraDe = (p: PreguntaMS) => p.preguntaA.respuesta;
 export function armarExamen(banco: BancoMS, vistas: Set<string>, azar: () => number = Math.random): PreguntaMS[] {
   const elegidas: PreguntaMS[] = [];
   const usadas = new Set<string>();
+  // Las preguntas de los exámenes reales (2025-A, 2025-B, 2024) salen primero: las
+  // primeras barajas se arman con las que aún no se vieron (sin marcarlas como tales).
+  const oficiales = banco.preguntas.filter((p) => p.origen.startsWith('oficial') && !vistas.has(p.id)).sort(() => azar() - 0.5);
+  for (const p of oficiales) {
+    if (elegidas.length >= PREGUNTAS_POR_EXAMEN) break;
+    if (usadas.has(estructuraDe(p))) continue;
+    elegidas.push(p);
+    usadas.add(estructuraDe(p));
+  }
+  if (elegidas.length >= PREGUNTAS_POR_EXAMEN) return elegidas;
   const sortear = (lista: PreguntaMS[]) => {
     const total = lista.reduce((n, p) => n + PESO[p.probabilidad], 0);
     let r = azar() * total;
     for (const p of lista) { r -= PESO[p.probabilidad]; if (r <= 0) return p; }
     return lista.at(-1)!;
   };
+  // Los huecos que ya cubre una oficial no se repiten.
+  const cubiertos = new Set(PLANTILLA.filter((h) => elegidas.some((p) => h.encaja(p))).map((h) => h.nombre));
   for (const hueco of PLANTILLA) {
+    if (elegidas.length >= PREGUNTAS_POR_EXAMEN) break;
+    if (cubiertos.has(hueco.nombre)) continue;
     const libres = banco.preguntas.filter((p) => hueco.encaja(p) && !usadas.has(estructuraDe(p)));
     if (!libres.length) continue;
     const nuevas = libres.filter((p) => !vistas.has(p.id));

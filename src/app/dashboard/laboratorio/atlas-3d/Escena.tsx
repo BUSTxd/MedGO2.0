@@ -40,6 +40,8 @@ interface Props {
   onAislar: (id: string) => void;
   /** Examen: ni girar, ni acercar, ni tocar piezas. */
   bloqueada?: boolean;
+  /** Examen: lo señalado en azul intenso y lo translúcido casi transparente (un nervio fino no se pierde). */
+  resaltoFuerte?: boolean;
   /** Examen, pregunta B: el modelo se desenfoca detrás de la tarjeta. */
   borrosa?: boolean;
   /** Examen: punto que late sobre un accidente óseo (se ve a través del hueso). */
@@ -91,6 +93,7 @@ export default function Escena(props: Props) {
                 ? props.translucidas.has(p.id)
                 : props.transparencia === 'todo' || (props.transparencia === 'musculos' && p.sistema === 'musculo')
             }
+            fuerte={!!props.resaltoFuerte}
             esToque={esToque}
             onSelect={props.onSelect}
             onAislar={props.onAislar}
@@ -120,6 +123,8 @@ function Invalidar({ deps }: { deps: unknown[] }) {
 }
 
 const COLOR_SELECCION = new Color('#3b9edd');
+/** Examen: el color de lo señalado sustituye al del sistema (un nervio amarillo con brillo azul se perdía). */
+const COLOR_SENALADO = new Color('#0a84ff');
 const COLOR_HOVER = new Color('#ffffff');
 const NEGRO = new Color('#000000');
 
@@ -127,6 +132,7 @@ const Pieza = memo(function Pieza({
   pieza,
   seleccionada,
   translucida,
+  fuerte,
   esToque,
   onSelect,
   onAislar,
@@ -134,6 +140,7 @@ const Pieza = memo(function Pieza({
   pieza: PiezaAtlas;
   seleccionada: boolean;
   translucida: boolean;
+  fuerte: boolean;
   esToque: (e: { clientX: number; clientY: number }) => boolean;
   onSelect: (id: string | null) => void;
   onAislar: (id: string) => void;
@@ -152,16 +159,18 @@ const Pieza = memo(function Pieza({
   useEffect(() => () => material.dispose(), [material]);
 
   useEffect(() => {
-    material.emissive.copy(seleccionada ? COLOR_SELECCION : hover ? COLOR_HOVER : NEGRO);
-    material.emissiveIntensity = seleccionada ? 0.55 : hover ? 0.14 : 0;
+    const senalado = fuerte && seleccionada;
+    material.color.set(senalado ? COLOR_SENALADO : SISTEMA[pieza.sistema].color);
+    material.emissive.copy(senalado ? COLOR_SENALADO : seleccionada ? COLOR_SELECCION : hover && !fuerte ? COLOR_HOVER : NEGRO);
+    material.emissiveIntensity = senalado ? 0.85 : seleccionada ? 0.55 : hover && !fuerte ? 0.14 : 0;
     // Lo seleccionado se ve entero aunque los músculos estén translúcidos.
     const vidrio = translucida && !seleccionada;
     material.transparent = vidrio;
-    material.opacity = vidrio ? 0.28 : 1;
+    material.opacity = vidrio ? (fuerte ? 0.13 : 0.28) : 1;
     material.depthWrite = !vidrio;
     material.needsUpdate = true;
     invalidate();
-  }, [material, seleccionada, hover, translucida, invalidate]);
+  }, [material, seleccionada, hover, translucida, fuerte, pieza.sistema, invalidate]);
 
   return (
     <mesh

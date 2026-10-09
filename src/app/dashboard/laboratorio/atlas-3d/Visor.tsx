@@ -17,6 +17,7 @@ import s from '@/styles/atlas3d.module.css';
 
 /** El examen práctico existe solo para el miembro superior. */
 const REGION_EXAMEN = 'miembro-superior-derecho';
+const CONTROL_LIBRE: ControlEscena = { objetivo: null, bloqueada: false, borrosa: false, revelar: null, sinMusculos: false };
 
 const VISTAS: { id: Vista; nombre: string }[] = [
   { id: 'anterior', nombre: 'Anterior' },
@@ -224,20 +225,24 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
   // El examen manda sobre la escena: qué se señala, si se puede girar, si se
   // desenfoca y qué nombre se revela al corregir.
   const [examen, setExamen] = useState(false);
-  const [control, setControl] = useState<ControlEscena>({ objetivo: null, bloqueada: false, borrosa: false, revelar: null });
+  const [control, setControl] = useState<ControlEscena>(CONTROL_LIBRE);
   const objetivo: ObjetivoMS | null = examen ? control.objetivo : null;
   const idsObjetivo = useMemo(() => {
     if (!objetivo) return null;
     return objetivo.tipo === 'pieza' ? idsDe(objetivo.en) : new Set<string>();
   }, [objetivo, idsDe]);
-  /** En el examen se ve el miembro entero (sin ligamentos ni fascias), como en la mesa de disección. */
+  /** En el examen se ve el miembro entero (sin ligamentos ni fascias), como en la mesa de
+   *  disección; con «Quitar músculos», sin músculos (salvo si lo señalado es uno). */
   const visiblesExamen = useMemo(() => {
     if (!examen) return null;
     const v = new Set<string>();
-    for (const p of piezas) if (p.sistema !== 'conectivo') v.add(p.id);
+    for (const p of piezas) {
+      if (p.sistema === 'conectivo' || (control.sinMusculos && p.sistema === 'musculo')) continue;
+      v.add(p.id);
+    }
     idsObjetivo?.forEach((id) => v.add(id));
     return v;
-  }, [examen, piezas, idsObjetivo]);
+  }, [examen, piezas, idsObjetivo, control.sinMusculos]);
   /** Todo lo que no es hueso ni lo señalado queda translúcido: lo señalado siempre se ve. */
   const translucidasExamen = useMemo(() => {
     if (!visiblesExamen) return null;
@@ -447,12 +452,12 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
     setSeleccion(null);
     setAislado(null);
     setBusqueda('');
-    setControl({ objetivo: null, bloqueada: false, borrosa: false, revelar: null });
+    setControl(CONTROL_LIBRE);
     setExamen(true);
   };
   const salirExamen = useCallback(() => {
     setExamen(false);
-    setControl({ objetivo: null, bloqueada: false, borrosa: false, revelar: null });
+    setControl(CONTROL_LIBRE);
     setVista('anterior');
     encuadrar();
   }, [encuadrar]);
@@ -498,6 +503,7 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
           onSelect={seleccionar}
           onAislar={aislar}
           bloqueada={examen && control.bloqueada}
+          resaltoFuerte={examen}
           borrosa={examen && control.borrosa}
           marcador={objetivo?.tipo === 'marcador' ? { punto: objetivo.punto, radio: objetivo.radio } : null}
           rotuloFijo={rotuloFijo}
@@ -761,8 +767,8 @@ function encuadreExamen(
   let referencia: Vector3;
   if (objetivo.tipo === 'marcador') {
     const p = new Vector3(...objetivo.punto);
-    min.copy(p).subScalar(0.02);
-    max.copy(p).addScalar(0.02);
+    min.copy(p).subScalar(0.015);
+    max.copy(p).addScalar(0.015);
     // Respecto del centro de su hueso.
     const hueso = porEn.get(objetivo.hueso);
     const c = new Vector3();
@@ -791,9 +797,10 @@ function encuadreExamen(
   const d = centro.clone().sub(referencia);
   // Miembro derecho: lateral = −X; anterior = +Z.
   const vista: Vista = Math.abs(d.z) >= Math.abs(d.x) ? (d.z >= 0 ? 'anterior' : 'posterior') : d.x < 0 ? 'lateral' : 'medial';
-  // Holgura: el doble de lo señalado y nunca menos de 14 cm, para ver dónde está.
+  // Cerca de lo señalado: un 40 % de holgura alrededor y nunca menos de 7,5 cm,
+  // lo justo para reconocer dónde está sin que se pierda (BUST: «mejora el encuadre»).
   const tam = Math.max(max.x - min.x, max.y - min.y, max.z - min.z);
-  const lado = Math.max(tam * 2, 0.14) / 2;
+  const lado = Math.max(tam * 1.4, 0.075) / 2;
   return { vista, min: centro.clone().subScalar(lado), max: centro.clone().addScalar(lado), n };
 }
 

@@ -271,7 +271,10 @@ const NO_SENALABLES = new Set([
   'Cóndilo del húmero', 'Bases de los metacarpianos', 'Cabezas de los metacarpianos',
   'Borde inferior de la escápula',
 ]);
-for (const n of NO_SENALABLES) if (salida[n]) salida[n].noSenalable = true;
+// Tampoco las caras ni los bordes: un punto sobre una superficie larga no se
+// entiende (BUST lo vio en el examen). Quedan los salientes, fosas y surcos.
+const SUPERFICIE = /^(Cara|Borde|Diáfisis|Cuerpo|Superficie)\b/;
+for (const n of Object.keys(salida)) if (NO_SENALABLES.has(n) || SUPERFICIE.test(n)) salida[n].noSenalable = true;
 
 fs.writeFileSync(path.join(DOCS, 'marcadores.json'), JSON.stringify(salida, null, 2));
 console.log(`\n${Object.keys(salida).length} marcadores · ${malos} comprobaciones fallan`);

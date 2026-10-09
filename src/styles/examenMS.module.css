@@ -43,6 +43,146 @@
 
 .salir:hover { color: var(--mal); }
 
+/* ── «Quitar músculos» (2 por examen) y su explicación animada ──────────────── */
+.quitarAncla { position: relative; }
+
+.quitar {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 999px;
+  padding: 6px 7px 6px 13px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--texto);
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra);
+  cursor: pointer;
+}
+
+.quitar:disabled { cursor: default; opacity: 0.6; }
+.quitarActivo { color: var(--acento); border-color: var(--acento); opacity: 1 !important; }
+
+.usos {
+  display: grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: var(--acento-suave);
+  color: var(--acento);
+}
+
+/* Mientras se explica, el botón llama la atención. */
+.quitarAncla:has(.ayudaQuitar) .quitar {
+  border-color: var(--acento);
+  animation: llama 1.6s ease-in-out infinite;
+}
+
+@keyframes llama {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+.ayudaQuitar {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 270px;
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--panel);
+  border: 1px solid var(--acento);
+  box-shadow: var(--sombra);
+  color: var(--texto);
+  font-size: 13.5px;
+  line-height: 1.45;
+  transform-origin: top right;
+  animation: ayudaEntra 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.ayudaQuitar::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 26px;
+  width: 10px;
+  height: 10px;
+  background: var(--panel);
+  border-left: 1px solid var(--acento);
+  border-top: 1px solid var(--acento);
+  transform: rotate(45deg);
+}
+
+.ayudaQuitar p { margin: 0; }
+.ayudaQuitar .primario { justify-self: end; padding: 7px 14px; font-size: 13px; }
+
+@keyframes ayudaEntra {
+  from { opacity: 0; transform: scale(0.6) translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Mini escena: un hueso con un nervio encima y un músculo que los tapa; el
+   músculo se desvanece y el nervio se enciende. En bucle. */
+.ayudaDemo {
+  position: relative;
+  height: 64px;
+  border-radius: 10px;
+  background: var(--panel-2);
+  overflow: hidden;
+}
+
+.demoHueso,
+.demoNervio,
+.demoMusculo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.demoHueso {
+  width: 150px;
+  height: 14px;
+  margin: -7px 0 0 -75px;
+  border-radius: 7px;
+  background: #d9cfb8;
+}
+
+.demoNervio {
+  width: 150px;
+  height: 4px;
+  margin: -16px 0 0 -75px;
+  border-radius: 2px;
+  background: #e8c547;
+  animation: demoNervio 3.2s ease-in-out infinite;
+}
+
+.demoMusculo {
+  width: 120px;
+  height: 46px;
+  margin: -27px 0 0 -60px;
+  border-radius: 22px;
+  background: #c8665a;
+  animation: demoMusculo 3.2s ease-in-out infinite;
+}
+
+@keyframes demoMusculo {
+  0%, 25% { opacity: 0.95; transform: none; }
+  45%, 80% { opacity: 0; transform: scale(0.85) translateY(-6px); }
+  100% { opacity: 0.95; transform: none; }
+}
+
+@keyframes demoNervio {
+  0%, 30% { background: #e8c547; transform: scaleY(1); }
+  50%, 78% { background: #0a84ff; transform: scaleY(1.6); }
+  100% { background: #e8c547; transform: scaleY(1); }
+}
+
 /* ── Velo + diálogos (carga, bienvenida, error) ─────────────────────────────── */
 .velo {
   position: absolute;
@@ -167,26 +307,36 @@
 }
 
 /* ── Tarjeta: posición (centro / esquina) → sacudida → volteo 3D ────────────── */
+/* Centrada por layout (inset + margin auto), no con translate(-50%): un
+   transform en reposo —y más uno 3D— dejaba el texto de la corrección borroso
+   (se rasterizaba a la escala de la esquina). En el centro no hay transform. */
 .posicion {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  inset: 0;
+  margin: auto;
   width: min(430px, calc(100cqw - 32px));
-  perspective: 1300px;
+  height: fit-content;
   pointer-events: auto;
-  transform: translate(-50%, -50%);
   transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.posCentro,
-.posVolteo { transform: translate(-50%, -50%); }
+.posCentro { transform: none; }
+
+/* El 3D solo mientras se voltea o espera en la esquina. */
+.posVolteo,
+.posEsquina { perspective: 1300px; }
+
+.posVolteo .sacude,
+.posVolteo .cara3d,
+.posEsquina .sacude,
+.posEsquina .cara3d { transform-style: preserve-3d; }
+
+.posCentro .dorso { display: none; }
 
 /* A la esquina inferior derecha, a escala: «29 %» = la mitad del 58 % del tamaño. */
 .posEsquina {
-  transform: translate(-50%, -50%) translate(calc(50cqw - 29% - 16px), calc(50cqh - 29% - 16px)) scale(0.58);
+  transform: translate(calc(50cqw - 29% - 16px), calc(50cqh - 29% - 16px)) scale(0.58);
 }
-
-.sacude { transform-style: preserve-3d; }
 
 /* Cada ~7 s un pequeño sacudón para recordar que la pregunta está ahí. */
 .sacudeRecordatorio { animation: recordatorio 7s ease-in-out 2.2s infinite; }
@@ -203,7 +353,6 @@
 .cara3d {
   position: relative;
   display: grid;
-  transform-style: preserve-3d;
 }
 
 /* El volteo «con tensión»: se echa hacia atrás antes de girar y se pasa un poco al llegar. */
@@ -604,11 +753,29 @@ button.frente {
   .pregunta { font-size: 20px; }
 
   .posEsquina {
-    transform: translate(-50%, -50%) translate(calc(50cqw - 32.5% - 10px), calc(-50cqh + 32.5% + 58px)) scale(0.65);
+    transform: translate(calc(50cqw - 32.5% - 10px), calc(-50cqh + 32.5% + 58px)) scale(0.65);
+  }
+
+  .ayudaQuitar {
+    right: auto;
+    left: 0;
+    top: auto;
+    bottom: calc(100% + 10px);
+  }
+
+  .ayudaQuitar::before {
+    top: auto;
+    bottom: -6px;
+    right: auto;
+    left: 26px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .ayudaQuitar,
+  .demoMusculo,
+  .demoNervio,
+  .quitarAncla:has(.ayudaQuitar) .quitar,
   .velo,
   .dialogo,
   .resultadosCapa,

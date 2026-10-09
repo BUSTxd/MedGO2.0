@@ -33,6 +33,13 @@ const formas = (nombre) => {
 };
 
 const marcadores = leer('marcadores.json');
+/** «del húmero», «de la escápula», «del tercer metacarpiano», «de las falanges distales». */
+const FEMENINOS = /^(escápula|clavícula|falange)/i;
+const delHueso = (h) => {
+  const n = h.replace(/ (hueso)$/, '').toLowerCase();
+  if (/^falanges/.test(n)) return `de las ${n}`;
+  return FEMENINOS.test(n) ? `de la ${n}` : `del ${n}`;
+};
 // Decisiones de BUST sobre preguntas concretas (gitignored: contienen respuestas).
 const rutaAjustes = path.join(DOCS, 'ajustes.mjs');
 const { AJUSTES = {} } = fs.existsSync(rutaAjustes) ? await import(pathToFileURL(rutaAjustes).href) : {};
@@ -55,11 +62,14 @@ for (const lote of lotes) {
     if (g.descartar) { descartadas.push({ id: s.id, motivo: g.descartar }); continue; }
 
     let objetivo;
+    // En un marcador, el enunciado dice de qué hueso es (BUST: si no, no se entiende qué se señala).
+    let enunciadoA = 'Nombre de la estructura señalada';
     if (s.objetivo?.tipo === 'marcador') {
       const m = marcadores[s.estructura];
       if (!m) { errores.push(`${s.id}: sin marcador para «${s.estructura}»`); continue; }
       if (m.noSenalable) { noSenalables.push(s.id); continue; }
       objetivo = { tipo: 'marcador', hueso: m.hueso, punto: m.punto, radio: m.radio };
+      enunciadoA = `¿Qué accidente ${delHueso(s.huesoPadre)} se señala?`;
     } else if (s.objetivo?.tipo === 'pieza') {
       for (const en of s.objetivo.en) if (!enModelo.has(en)) errores.push(`${s.id}: la pieza «${en}» no existe en el modelo`);
       objetivo = { tipo: 'pieza', en: s.objetivo.en };
@@ -86,7 +96,7 @@ for (const lote of lotes) {
       region: s.region,
       objetivo,
       preguntaA: {
-        enunciado: 'Nombre de la estructura señalada',
+        enunciado: enunciadoA,
         respuesta: lexico[s.estructura]?.oficial || s.estructura,
         aceptadas: formas(s.estructura),
         noConfundir: lexico[s.estructura]?.noConfundir ?? [],
