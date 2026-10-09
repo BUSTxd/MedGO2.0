@@ -8,6 +8,7 @@ import { tieneMaterial } from '@/lib/material-plan';
 import TrackRecentClass from '@/components/TrackRecentClass';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
+import { tieneAccesoA } from '@/lib/acceso';
 
 const UNIDAD_LABEL: Record<string, string> = {
   DESARROLLO: 'Embriología y desarrollo',
@@ -19,10 +20,13 @@ const UNIDAD_LABEL: Record<string, string> = {
 
 export default async function ActividadPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ resumen?: string; opcion?: string; seccion?: string }>;
 }) {
   const { id } = await params;
+  const sp = await searchParams;
   const result = findActividad(id);
   if (!result) notFound();
 
@@ -42,6 +46,10 @@ export default async function ActividadPage({
       ? Promise.resolve({ plan: 'free' as const, isActive: true })
       : getCachedPlanState(),
   ]);
+  // El visor va por portal al body (por delante del velo de LockedContent): el
+  // enlace directo al resumen (`?resumen=1&opcion=…&seccion=…`, desde el examen
+  // 3D) solo lo abre si la clase es accesible.
+  const accesible = libre || tieneAccesoA(planState, 'interno');
 
   const detail = (
     <div className={styles.microPage}>
@@ -114,6 +122,9 @@ export default async function ActividadPage({
           resumenTitulo={act.titulo}
           /* En las prácticas la primera tarjeta es «Simulación». */
           simulacion={isPractica ? (act.simulacion ?? {}) : undefined}
+          abrirResumen={sp?.resumen === '1' && accesible}
+          resumenOpcion={sp?.opcion}
+          resumenSeccion={sp?.seccion}
         />
       </div>
     </div>

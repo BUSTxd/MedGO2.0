@@ -28,11 +28,23 @@ register('data:text/javascript,' + encodeURIComponent(`
     return n(s, c);
   }`));
 const { clave, indexarFormas, corregirA, corregirB } = await import(pathToFileURL(path.join(RAIZ, 'src', 'lib', 'examen-ms', 'corregir.ts')).href);
+const { hidratarBanco } = await import(pathToFileURL(path.join(RAIZ, 'src', 'lib', 'examen-ms', 'sesion.ts')).href);
 
-const banco = JSON.parse(fs.readFileSync(path.join(RAIZ, 'data', 'examen-ms', 'banco.json'), 'utf8'));
+// Lo mismo que recibe el navegador: el banco publicado, hidratado con la función del cliente.
+const banco = hidratarBanco(JSON.parse(fs.readFileSync(path.join(RAIZ, 'data', 'examen-ms', 'banco.publicar.json'), 'utf8')));
+const completo = JSON.parse(fs.readFileSync(path.join(RAIZ, 'data', 'examen-ms', 'banco.json'), 'utf8'));
 const indice = indexarFormas(banco.formas);
 const fallos = [];
 const falla = (t) => fallos.push(t);
+
+// El publicado no puede haber perdido ninguna forma aceptada del completo.
+for (const c of completo.preguntas) {
+  const h = banco.preguntas.find((x) => x.id === c.id);
+  const falta = (a, b) => a.filter((f) => !b.includes(f));
+  if (!h) { fallos.push(`${c.id}: falta en el publicado`); continue; }
+  if (falta(c.preguntaA.aceptadas, h.preguntaA.aceptadas).length) fallos.push(`${c.id} A: el publicado pierde formas`);
+  c.preguntaB.respuestas.forEach((r, i) => { if (falta(r.aceptadas, h.preguntaB.respuestas[i].aceptadas).length) fallos.push(`${c.id} B${i}: el publicado pierde formas`); });
+}
 
 // ── Todo el banco ─────────────────────────────────────────────────────────────
 let comprobaciones = 0;

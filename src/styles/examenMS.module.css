@@ -1,0 +1,626 @@
+/* Examen práctico de miembro superior, encima del visor del atlas 3D.
+   Vive dentro de .wrapper de atlas3d.module.css: hereda sus variables (claro y
+   oscuro). Todas las animaciones son de transform/opacity; con
+   prefers-reduced-motion se apagan. */
+
+.capa {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  /* La tarjeta se coloca en la esquina con unidades del contenedor (cqw/cqh). */
+  container-type: size;
+}
+
+/* ── Barra: contador y salir ────────────────────────────────────────────────── */
+.barra {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.contador,
+.salir {
+  border-radius: 999px;
+  padding: 7px 13px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra);
+  color: var(--texto);
+}
+
+.salir {
+  cursor: pointer;
+  color: var(--texto-2);
+  font-family: inherit;
+}
+
+.salir:hover { color: var(--mal); }
+
+/* ── Velo + diálogos (carga, bienvenida, error) ─────────────────────────────── */
+.velo {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(8, 12, 28, 0.42);
+  pointer-events: auto;
+  animation: aparece 0.25s ease-out both;
+}
+
+@keyframes aparece {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.dialogo {
+  width: min(470px, 100%);
+  max-height: calc(100cqh - 32px);
+  overflow: auto;
+  padding: 24px 24px 20px;
+  border-radius: 18px;
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra);
+  color: var(--texto);
+  animation: subeDialogo 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes subeDialogo {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+.dialogo h2 {
+  margin: 4px 0 10px;
+  font-size: 21px;
+  line-height: 1.2;
+}
+
+.kicker,
+.etiqueta {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--acento);
+}
+
+.bienvenida {
+  margin: 0 0 14px;
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+
+.reglas {
+  margin: 0 0 16px;
+  padding: 0 0 0 18px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--texto-2);
+}
+
+.reglas b { color: var(--texto); }
+
+.progreso {
+  display: grid;
+  gap: 6px;
+  margin: 4px 0 4px;
+  font-size: 12.5px;
+  color: var(--texto-2);
+}
+
+.progresoBarra {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--borde);
+  overflow: hidden;
+}
+
+.progresoBarra span {
+  display: block;
+  height: 100%;
+  background: var(--acento);
+  transform-origin: left center;
+  transition: transform 0.6s ease-out;
+}
+
+/* Carga: tres cartas que se barajan. */
+.cargando {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.cargandoMazo {
+  position: relative;
+  width: 64px;
+  height: 84px;
+}
+
+.cargandoMazo span {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1a2557, #3b9edd);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  animation: baraja 1.2s cubic-bezier(0.5, 0, 0.3, 1) infinite;
+}
+
+.cargandoMazo span:nth-child(2) { animation-delay: 0.15s; }
+.cargandoMazo span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes baraja {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  35% { transform: translateX(34px) rotate(12deg); }
+  70% { transform: translateX(-6px) rotate(-3deg); }
+}
+
+/* ── Tarjeta: posición (centro / esquina) → sacudida → volteo 3D ────────────── */
+.posicion {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(430px, calc(100cqw - 32px));
+  perspective: 1300px;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.posCentro,
+.posVolteo { transform: translate(-50%, -50%); }
+
+/* A la esquina inferior derecha, a escala: «29 %» = la mitad del 58 % del tamaño. */
+.posEsquina {
+  transform: translate(-50%, -50%) translate(calc(50cqw - 29% - 16px), calc(50cqh - 29% - 16px)) scale(0.58);
+}
+
+.sacude { transform-style: preserve-3d; }
+
+/* Cada ~7 s un pequeño sacudón para recordar que la pregunta está ahí. */
+.sacudeRecordatorio { animation: recordatorio 7s ease-in-out 2.2s infinite; }
+
+@keyframes recordatorio {
+  0%, 86%, 100% { transform: none; }
+  88% { transform: rotate(-4deg) translateY(-4px); }
+  90% { transform: rotate(4deg) translateY(-4px); }
+  92% { transform: rotate(-3deg); }
+  94% { transform: rotate(2deg); }
+  96% { transform: rotate(0); }
+}
+
+.cara3d {
+  position: relative;
+  display: grid;
+  transform-style: preserve-3d;
+}
+
+/* El volteo «con tensión»: se echa hacia atrás antes de girar y se pasa un poco al llegar. */
+.cara3dVolteo { animation: volteo 1.15s cubic-bezier(0.45, 0, 0.2, 1) both; }
+
+@keyframes volteo {
+  0% { transform: rotateY(180deg) scale(0.8); }
+  28% { transform: rotateY(198deg) scale(0.84); }
+  70% { transform: rotateY(-12deg) scale(1.04); }
+  86% { transform: rotateY(5deg) scale(1); }
+  100% { transform: rotateY(0) scale(1); }
+}
+
+.cara {
+  grid-area: 1 / 1;
+  position: relative;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 18px;
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra);
+  color: var(--texto);
+}
+
+.dorso {
+  transform: rotateY(180deg);
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #1a2557 0%, #2a4a9b 55%, #3b9edd 100%);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.dorsoMarca {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Cara compacta (volteo y esquina). */
+button.frente {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  padding: 22px 24px;
+  text-align: left;
+  font-family: inherit;
+  cursor: default;
+}
+
+.posEsquina button.frente { cursor: pointer; }
+
+.pregunta {
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.pista {
+  font-size: 13px;
+  color: var(--texto-2);
+}
+
+/* En la esquina: se enciende y apaga en azul, con un aro que se expande. */
+.posEsquina button.frente::before,
+.posEsquina button.frente::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.posEsquina button.frente::before {
+  background: var(--acento-suave);
+  border: 2px solid var(--acento);
+  animation: brillo 2.2s ease-in-out infinite;
+}
+
+.posEsquina button.frente::after {
+  border: 3px solid var(--acento);
+  animation: aro 2.2s ease-out infinite;
+}
+
+@keyframes brillo {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+@keyframes aro {
+  0% { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.14); }
+}
+
+/* Cara expandida (responder y corregir). */
+.expandida {
+  max-height: calc(100cqh - 84px);
+  overflow: auto;
+  padding: 20px 22px;
+  animation: expande 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes expande {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+.form {
+  display: grid;
+  gap: 10px;
+}
+
+.enunciado {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.ayudaCampo {
+  margin: -4px 0 0;
+  font-size: 12.5px;
+  color: var(--texto-2);
+}
+
+.campo {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 13px;
+  font: inherit;
+  /* 16 px: en iOS menos que eso hace zoom al enfocar. */
+  font-size: 16px;
+  color: var(--texto);
+  background: var(--panel-2);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  resize: vertical;
+}
+
+.campo:focus {
+  outline: 2px solid var(--acento);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.primario,
+.secundario {
+  border-radius: 10px;
+  padding: 10px 18px;
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.primario {
+  border: 0;
+  background: var(--acento);
+  color: #fff;
+}
+
+.primario:disabled { opacity: 0.45; cursor: default; }
+.primario:not(:disabled):active,
+.secundario:active { transform: scale(0.97); }
+
+.secundario {
+  border: 1px solid var(--borde);
+  background: transparent;
+  color: var(--texto);
+}
+
+/* ── Corrección ─────────────────────────────────────────────────────────────── */
+.correccion {
+  display: grid;
+  gap: 14px;
+}
+
+.bloque {
+  display: grid;
+  gap: 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--borde);
+}
+
+.bloqueCabeza {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 10px;
+}
+
+.vBien,
+.vMal,
+.vCasi {
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.vBien { background: var(--bien-suave); color: var(--bien); }
+.vMal { background: var(--mal-suave); color: var(--mal); }
+.vCasi { background: var(--aviso-suave); color: var(--aviso); }
+
+.tuya {
+  margin: 0;
+  font-size: 13px;
+  color: var(--texto-2);
+}
+
+.oficial {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.otras,
+.criterio {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--texto-2);
+  line-height: 1.45;
+}
+
+.lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 4px;
+}
+
+.item,
+.itemBien {
+  display: grid;
+  gap: 1px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--panel-2);
+  font-size: 14px;
+}
+
+.itemBien {
+  background: var(--bien-suave);
+  box-shadow: inset 3px 0 0 var(--bien);
+}
+
+.itemTexto small { color: var(--texto-2); font-weight: 400; }
+.itemFormas,
+.itemNota {
+  font-size: 11.5px;
+  color: var(--texto-2);
+}
+
+.itemNota { color: var(--aviso); }
+
+.sobran,
+.avisoOrtografia,
+.nota {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.sobran { color: var(--mal); }
+.avisoOrtografia { color: var(--aviso); }
+
+.nota {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--acento-suave);
+  color: var(--texto);
+}
+
+/* ── Resultados: las clases de examRunner.module.css con las variables del atlas ── */
+.resultadosCapa {
+  --white: var(--texto);
+  --muted: var(--texto-2);
+  --card-border: var(--borde);
+  --ok: var(--bien);
+  --ambar: var(--aviso);
+
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  padding: 18px 16px 40px;
+  background: var(--fondo);
+  pointer-events: auto;
+  animation: aparece 0.3s ease-out both;
+}
+
+.resultados {
+  max-width: 620px;
+  margin: 0 auto;
+  color: var(--texto);
+}
+
+.diagnostico {
+  display: grid;
+  gap: 8px;
+  max-width: 460px;
+  margin: 0 auto 24px;
+  text-align: left;
+}
+
+.diagnostico p {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--mal-suave);
+  font-size: 14px;
+}
+
+.diagnostico span {
+  flex-basis: 100%;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mal);
+}
+
+.fallos {
+  max-width: 460px;
+  margin: 0 auto 24px;
+  text-align: left;
+}
+
+.fallos ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fallos li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+.fallos li > div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.fallos small {
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.enlaceResumen {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--acento);
+  text-decoration: none;
+}
+
+.enlaceResumen:hover { text-decoration: underline; }
+
+.resultados .progreso {
+  max-width: 460px;
+  margin: 0 auto 6px;
+  text-align: left;
+}
+
+.resultados .botones { justify-content: center; }
+
+/* ── Teléfono ───────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .barra {
+    top: auto;
+    bottom: 12px;
+    left: 12px;
+    right: auto;
+  }
+
+  .pregunta { font-size: 20px; }
+
+  .posEsquina {
+    transform: translate(-50%, -50%) translate(calc(50cqw - 32.5% - 10px), calc(-50cqh + 32.5% + 58px)) scale(0.65);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .velo,
+  .dialogo,
+  .resultadosCapa,
+  .expandida,
+  .cara3dVolteo,
+  .sacudeRecordatorio,
+  .cargandoMazo span,
+  .posEsquina button.frente::before,
+  .posEsquina button.frente::after {
+    animation: none;
+  }
+
+  .posicion,
+  .progresoBarra span { transition: none; }
+}

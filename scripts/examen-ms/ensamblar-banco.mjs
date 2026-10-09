@@ -148,6 +148,41 @@ fs.writeFileSync(path.join(RAIZ, 'data', 'examen-ms', 'banco.json'), JSON.string
   formas: Object.fromEntries(Object.keys(lexico).map((n) => [n, formas(n)])),
 }, null, 2));
 
+// ── Versión para publicar ────────────────────────────────────────────────────
+// Lo que sale del léxico no se repite en cada pregunta: va una vez en `formas` y
+// `confusiones`, y el cliente lo rellena al cargar (hidratarBanco en
+// src/lib/examen-ms/sesion.ts). Así pesa la mitad.
+const nombrePorRespuestaA = new Map(Object.keys(lexico).map((n) => [lexico[n].oficial || n, n]));
+const compacto = {
+  version: 1,
+  generado: new Date().toISOString().slice(0, 10),
+  region: REGION,
+  categorias: ['Huesos', 'Músculos', 'Arterias', 'Nervios', 'Venas'],
+  formas: Object.fromEntries(Object.keys(lexico).map((n) => [n, formas(n)])),
+  confusiones: Object.fromEntries(Object.entries(lexico).filter(([, l]) => l.noConfundir?.length).map(([n, l]) => [n, l.noConfundir])),
+  preguntas: banco.map((p) => {
+    const { revision, origen, tambienOficial, ...resto } = p;
+    void revision; void tambienOficial;
+    const ref = nombrePorRespuestaA.get(p.preguntaA.respuesta);
+    return {
+      ...resto,
+      origen: origen.startsWith('oficial') ? origen.replace(/ \(.*\)$/, '') : origen,
+      preguntaA: ref ? { enunciado: p.preguntaA.enunciado, respuesta: p.preguntaA.respuesta, ref } : p.preguntaA,
+      preguntaB: {
+        ...p.preguntaB,
+        respuestas: p.preguntaB.respuestas.map((r) => {
+          if (!r.ref) return r;
+          const { aceptadas, noConfundir, ...sin } = r;
+          void noConfundir;
+          const propias = aceptadas.filter((a) => !formas(r.ref).includes(a));
+          return propias.length ? { ...sin, aceptadas: propias } : sin;
+        }),
+      },
+    };
+  }),
+};
+fs.writeFileSync(path.join(RAIZ, 'data', 'examen-ms', 'banco.publicar.json'), JSON.stringify(compacto));
+
 // ── Resumen para revisar ─────────────────────────────────────────────────────
 const CATS = ['Huesos', 'Músculos', 'Arterias', 'Nervios', 'Venas'];
 const n = (f) => banco.filter(f).length;

@@ -11,7 +11,12 @@ import { cargarAtlas, type Atlas } from '@/lib/atlas-3d/cargar';
 import Escena, { type PeticionCamara, type Transparencia, type Vista } from './Escena';
 import FichaDetalle from './FichaDetalle';
 import PanelRepaso, { type EstadoRepaso, type ModoRepaso, type Pregunta } from './PanelRepaso';
+import ExamenMS, { type ControlEscena } from './examen/ExamenMS';
+import type { ObjetivoMS } from '@/lib/examen-ms/tipos';
 import s from '@/styles/atlas3d.module.css';
+
+/** El examen práctico existe solo para el miembro superior. */
+const REGION_EXAMEN = 'miembro-superior-derecho';
 
 const VISTAS: { id: Vista; nombre: string }[] = [
   { id: 'anterior', nombre: 'Anterior' },
@@ -215,7 +220,34 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
   }, [def, idsDe]);
   const idsPaso = useMemo(() => (paso ? idsDe(paso.piezas.map((x) => x.en)) : null), [paso, idsDe]);
 
+  // ─── Examen práctico (miembro superior) ────────────────────────────────────
+  // El examen manda sobre la escena: qué se señala, si se puede girar, si se
+  // desenfoca y qué nombre se revela al corregir.
+  const [examen, setExamen] = useState(false);
+  const [control, setControl] = useState<ControlEscena>({ objetivo: null, bloqueada: false, borrosa: false, revelar: null });
+  const objetivo: ObjetivoMS | null = examen ? control.objetivo : null;
+  const idsObjetivo = useMemo(() => {
+    if (!objetivo) return null;
+    return objetivo.tipo === 'pieza' ? idsDe(objetivo.en) : new Set<string>();
+  }, [objetivo, idsDe]);
+  /** En el examen se ve el miembro entero (sin ligamentos ni fascias), como en la mesa de disección. */
+  const visiblesExamen = useMemo(() => {
+    if (!examen) return null;
+    const v = new Set<string>();
+    for (const p of piezas) if (p.sistema !== 'conectivo') v.add(p.id);
+    idsObjetivo?.forEach((id) => v.add(id));
+    return v;
+  }, [examen, piezas, idsObjetivo]);
+  /** Todo lo que no es hueso ni lo señalado queda translúcido: lo señalado siempre se ve. */
+  const translucidasExamen = useMemo(() => {
+    if (!visiblesExamen) return null;
+    const t = new Set<string>();
+    for (const p of piezas) if (visiblesExamen.has(p.id) && p.sistema !== 'hueso' && !idsObjetivo?.has(p.id)) t.add(p.id);
+    return t;
+  }, [visiblesExamen, piezas, idsObjetivo]);
+
   const visibles = useMemo(() => {
+    if (visiblesExamen) return visiblesExamen;
     const v = new Set<string>();
     if (repasoIds) {
       repasoIds.pool.forEach((id) => v.add(id));
@@ -233,17 +265,20 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
       v.add(p.id);
     }
     return v;
-  }, [piezas, estructuras, sistemas, ocultas, zona, aislado, repasoIds]);
+  }, [piezas, estructuras, sistemas, ocultas, zona, aislado, repasoIds, visiblesExamen]);
 
   const elegida = seleccion ? estructuras.get(seleccion) ?? null : null;
   // Resaltado: lo tocado; si no, en el repaso, las piezas del paso o la de la pregunta.
   const idsSeleccion = useMemo(() => {
+    if (examen) return idsObjetivo ?? new Set<string>();
     if (elegida) return new Set(elegida.ids.filter((id) => visibles.has(id)));
     if (repaso?.modo === 'recorrido' && idsPaso) return idsPaso;
     if (repaso?.modo === 'prueba' && pregunta) return idsDe([pregunta.en]);
     return new Set<string>();
-  }, [elegida, visibles, repaso?.modo, idsPaso, pregunta, idsDe]);
-  const rotulo = elegida && idsSeleccion.size
+  }, [examen, idsObjetivo, elegida, visibles, repaso?.modo, idsPaso, pregunta, idsDe]);
+  const rotulo = examen
+    ? null
+    : elegida && idsSeleccion.size
     ? elegida.nombre
     : repaso?.modo === 'prueba' && pregunta?.respuesta
       ? porEn.get(pregunta.en)?.nombre ?? null
@@ -264,6 +299,7 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
   const camara: PeticionCamara = useMemo(() => {
     const min = new Vector3(Infinity, Infinity, Infinity);
     const max = new Vector3(-Infinity, -Infinity, -Infinity);
+    if (objetivo) return encuadreExamen(objetivo, piezas, idsObjetivo!, porEn, pedido);
     // En el repaso se encuadra el paso (o todo el plexo en la prueba), no los huesos de contexto.
     const encuadre = repasoIds ? (repaso?.modo === 'recorrido' && idsPaso ? idsPaso : repasoIds.pool) : visibles;
     for (const p of piezas) {
@@ -277,18 +313,18 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
     return { vista, min, max, n: pedido };
     // Solo se reencuadra cuando se pide (vista, zona, aislar, botón), no al ocultar una pieza.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vista, pedido, zona, aislado, piezas, atlas, repaso?.id, repaso?.paso, repaso?.modo]);
+  }, [vista, pedido, zona, aislado, piezas, atlas, repaso?.id, repaso?.paso, repaso?.modo, objetivo]);
 
   // ─── Acciones ──────────────────────────────────────────────────────────────
-  const enPrueba = repaso?.modo === 'prueba';
+  // En la prueba y en el examen tocar una pieza no la nombra (sería la respuesta).
+  const enPrueba = repaso?.modo === 'prueba' || examen;
   const seleccionar = useCallback(
     (id: string | null) => {
-      // En la prueba tocar una pieza no la nombra (sería la respuesta).
       if (!enPrueba) setSeleccion(id ? estructuraDe.get(id)?.clave ?? null : null);
     },
     [estructuraDe, enPrueba],
   );
-  const enRepaso = repaso !== null;
+  const enRepaso = repaso !== null || examen;
   const aislar = useCallback((id: string) => {
     if (enRepaso) return;
     const clave = estructuraDe.get(id)?.clave ?? null;
@@ -394,6 +430,7 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
   };
 
   useEffect(() => {
+    if (examen) return;
     const tecla = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && !(e.target instanceof HTMLInputElement)) {
         e.preventDefault();
@@ -402,7 +439,29 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
     };
     window.addEventListener('keydown', tecla);
     return () => window.removeEventListener('keydown', tecla);
-  }, [deshacer]);
+  }, [deshacer, examen]);
+
+  const empezarExamen = () => {
+    setRepaso(null);
+    setPregunta(null);
+    setSeleccion(null);
+    setAislado(null);
+    setBusqueda('');
+    setControl({ objetivo: null, bloqueada: false, borrosa: false, revelar: null });
+    setExamen(true);
+  };
+  const salirExamen = useCallback(() => {
+    setExamen(false);
+    setControl({ objetivo: null, bloqueada: false, borrosa: false, revelar: null });
+    setVista('anterior');
+    encuadrar();
+  }, [encuadrar]);
+  const rotuloFijo = useMemo(() => {
+    if (!examen || !control.revelar || !objetivo) return null;
+    return objetivo.tipo === 'marcador'
+      ? { texto: control.revelar, ids: new Set<string>(), punto: objetivo.punto }
+      : { texto: control.revelar, ids: idsObjetivo ?? new Set<string>() };
+  }, [examen, control.revelar, objetivo, idsObjetivo]);
 
   const alternarSistema = (id: Sistema) =>
     setSistemas((prev) => {
@@ -424,7 +483,7 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
   const nombreZona = (id: string) => zonas.find((z) => z.id === id)?.nombre ?? id;
 
   return (
-    <div className={s.lab}>
+    <div className={examen ? `${s.lab} ${s.labExamen}` : s.lab}>
       <div className={s.escenario}>
         <Escena
           piezas={piezas}
@@ -433,14 +492,23 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
           rotulo={rotulo}
           rotulos={rotulos}
           transparencia={transparencia}
-          translucidas={repasoIds?.contexto}
+          translucidas={translucidasExamen ?? repasoIds?.contexto}
           camara={camara}
           reducido={reducido}
           onSelect={seleccionar}
           onAislar={aislar}
+          bloqueada={examen && control.bloqueada}
+          borrosa={examen && control.borrosa}
+          marcador={objetivo?.tipo === 'marcador' ? { punto: objetivo.punto, radio: objetivo.radio } : null}
+          rotuloFijo={rotuloFijo}
         />
+        {examen && (
+          <ExamenMS reducido={reducido} onControl={setControl} onSalir={salirExamen} />
+        )}
+        {!(examen && control.borrosa) && (
         <div className={s.vistas} role="group" aria-label="Vista">
-          {VISTAS.map((v) => (
+          {/* En el examen la vista la elige el encuadre de lo señalado; se gira a mano. */}
+          {!examen && VISTAS.map((v) => (
             <button
               key={v.id}
               type="button"
@@ -454,11 +522,22 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
               {v.nombre}
             </button>
           ))}
-          <button type="button" className={s.vista} onClick={encuadrar} title="Volver a encuadrar lo visible">
-            Encuadrar
+          <button type="button" className={s.vista} onClick={encuadrar} title={examen ? 'Volver a la estructura señalada' : 'Volver a encuadrar lo visible'}>
+            {examen ? 'Volver a la estructura' : 'Encuadrar'}
           </button>
         </div>
+        )}
+        {!examen && (
         <div className={s.accionesEscena}>
+          {regiones.includes(REGION_EXAMEN) && !repaso && (
+            <button type="button" className={s.iniciarExamen} onClick={empezarExamen}>
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 4h6M10 4v3M14 4v3M6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+                <path d="m9 14 2 2 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Iniciar examen
+            </button>
+          )}
           {aislado && !repaso && (
             <button
               type="button"
@@ -481,9 +560,13 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
             </button>
           )}
         </div>
-        <p className={s.ayuda}>Arrastra para girar · rueda o pellizca para acercar · toca una estructura · doble toque para aislarla</p>
+        )}
+        {!examen && (
+          <p className={s.ayuda}>Arrastra para girar · rueda o pellizca para acercar · toca una estructura · doble toque para aislarla</p>
+        )}
       </div>
 
+      {!examen && (
       <aside className={s.panel}>
         <header className={s.cabecera}>
           <span className={s.kicker}>Atlas 3D · Aparato Locomotor</span>
@@ -655,7 +738,62 @@ function Explorador({ atlas, regiones }: { atlas: Atlas; regiones: string[] }) {
           Modelo: <a href={CREDITO.url} target="_blank" rel="noopener noreferrer">{CREDITO.texto}</a>. {CREDITO.adaptacion}
         </footer>
       </aside>
+      )}
     </div>
   );
+}
+
+/**
+ * Encuadre de la estructura del examen: una caja holgada alrededor de lo señalado
+ * (para que se vea su contexto), mirada desde el lado hacia el que sobresale
+ * respecto de lo que la rodea (un tubérculo lateral se ve desde lateral; un
+ * músculo de la cara posterior, desde atrás).
+ */
+function encuadreExamen(
+  objetivo: ObjetivoMS,
+  piezas: Atlas['piezas'],
+  ids: Set<string>,
+  porEn: Map<string, Estructura>,
+  n: number,
+): PeticionCamara {
+  const min = new Vector3(Infinity, Infinity, Infinity);
+  const max = new Vector3(-Infinity, -Infinity, -Infinity);
+  let referencia: Vector3;
+  if (objetivo.tipo === 'marcador') {
+    const p = new Vector3(...objetivo.punto);
+    min.copy(p).subScalar(0.02);
+    max.copy(p).addScalar(0.02);
+    // Respecto del centro de su hueso.
+    const hueso = porEn.get(objetivo.hueso);
+    const c = new Vector3();
+    let k = 0;
+    for (const pz of piezas) if (hueso?.ids.includes(pz.id)) { c.add(pz.centro); k++; }
+    referencia = k ? c.divideScalar(k) : p.clone();
+  } else {
+    for (const p of piezas) {
+      if (!ids.has(p.id)) continue;
+      if (!p.geometry.boundingBox) p.geometry.computeBoundingBox();
+      min.min(p.geometry.boundingBox!.min);
+      max.max(p.geometry.boundingBox!.max);
+    }
+    // Respecto de lo que la rodea (piezas a menos de 8 cm).
+    const centro = min.clone().add(max).multiplyScalar(0.5);
+    const c = new Vector3();
+    let k = 0;
+    for (const p of piezas) {
+      if (ids.has(p.id) || p.sistema === 'conectivo' || p.centro.distanceTo(centro) > 0.08) continue;
+      c.add(p.centro);
+      k++;
+    }
+    referencia = k ? c.divideScalar(k) : centro.clone();
+  }
+  const centro = min.clone().add(max).multiplyScalar(0.5);
+  const d = centro.clone().sub(referencia);
+  // Miembro derecho: lateral = −X; anterior = +Z.
+  const vista: Vista = Math.abs(d.z) >= Math.abs(d.x) ? (d.z >= 0 ? 'anterior' : 'posterior') : d.x < 0 ? 'lateral' : 'medial';
+  // Holgura: el doble de lo señalado y nunca menos de 14 cm, para ver dónde está.
+  const tam = Math.max(max.x - min.x, max.y - min.y, max.z - min.z);
+  const lado = Math.max(tam * 2, 0.14) / 2;
+  return { vista, min: centro.clone().subScalar(lado), max: centro.clone().addScalar(lado), n };
 }
 

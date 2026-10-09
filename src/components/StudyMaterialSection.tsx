@@ -141,6 +141,8 @@ interface Props {
   abrirResumen?: boolean;
   /** Con `abrirResumen`: título de la sección donde abrir (`&seccion=`). */
   resumenSeccion?: string;
+  /** Con `abrirResumen` y varias opciones: abre esa directamente (`&opcion=`) en vez del selector. */
+  resumenOpcion?: string;
 }
 
 const BeakerIcon = () => (
@@ -177,7 +179,7 @@ function Accion({ premium, corona = false, children }: { premium: boolean; coron
   );
 }
 
-export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, tarjetas, resumenDePago, resumenPremium, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel, abrirResumen, resumenSeccion }: Props) {
+export default function StudyMaterialSection({ claseId, hasResumen, resumenOpciones, resumenFormato, resumenTitulo, examen, tarjetas, resumenDePago, resumenPremium, simulacion, banco, solucionario, propuestosPdf, hideBanqueo, banqueoLabel, abrirResumen, resumenSeccion, resumenOpcion }: Props) {
   // Dentro de `LockedContent` = clase de pago, se tenga el plan o no: todo su
   // material va en oro. La corona, en cambio, es la invitación a pagar: sólo la
   // ve quien NO tiene el plan (el aperitivo difuminado).
@@ -200,11 +202,13 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
   // Estado inicial, no efecto: al cerrar el visor el alumno se queda en la
   // clase sin que el query param lo vuelva a abrir.
   const deepLink = !!abrirResumen && hasResumen;
-  const [pickerOpen, setPickerOpen]       = useState(deepLink && !!isMulti);
-  const [fullscreenOpen, setFullscreenOpen] = useState(deepLink && !isMulti);
+  // El examen 3D enlaza a una opción concreta (p. ej. la osteología de la clase 2).
+  const opcionDirecta = deepLink && isMulti && resumenOpciones?.some(o => o.id === resumenOpcion) ? resumenOpcion! : null;
+  const [pickerOpen, setPickerOpen]       = useState(deepLink && !!isMulti && !opcionDirecta);
+  const [fullscreenOpen, setFullscreenOpen] = useState(deepLink && (!isMulti || !!opcionDirecta));
   // Sólo la primera apertura va a la sección; al reabrir, desde arriba.
   const [seccion, setSeccion] = useState(deepLink ? resumenSeccion : undefined);
-  const [selectedId, setSelectedId]       = useState<string | null>(null);
+  const [selectedId, setSelectedId]       = useState<string | null>(opcionDirecta);
   const [propuestosOpen, setPropuestosOpen] = useState(false);
   const [propuestosPickerOpen, setPropuestosPickerOpen] = useState(false);
   const [selectedPropuestosId, setSelectedPropuestosId] = useState<string | null>(null);

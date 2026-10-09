@@ -3,7 +3,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei';
-import { Color, MeshStandardMaterial, Vector3 } from 'three';
+import { Color, MeshStandardMaterial, Vector3, type Mesh, type MeshBasicMaterial } from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { SISTEMA } from '@/lib/data/atlas-3d/regiones';
 import type { PiezaAtlas } from '@/lib/atlas-3d/cargar';
@@ -38,6 +38,14 @@ interface Props {
   reducido: boolean;
   onSelect: (id: string | null) => void;
   onAislar: (id: string) => void;
+  /** Examen: ni girar, ni acercar, ni tocar piezas. */
+  bloqueada?: boolean;
+  /** Examen, pregunta B: el modelo se desenfoca detrás de la tarjeta. */
+  borrosa?: boolean;
+  /** Examen: punto que late sobre un accidente óseo (se ve a través del hueso). */
+  marcador?: { punto: [number, number, number]; radio: number } | null;
+  /** Rótulo que no se va solo (el nombre de la estructura al corregir). */
+  rotuloFijo?: { texto: string; ids: Set<string>; punto?: [number, number, number] } | null;
 }
 
 const FOV = 30;
@@ -54,7 +62,7 @@ export default function Escena(props: Props) {
 
   return (
     <Canvas
-      className={s.lienzo}
+      className={props.borrosa ? `${s.lienzo} ${s.lienzoBorroso}` : s.lienzo}
       dpr={[1, 2]}
       frameloop="demand"
       camera={{ fov: FOV, near: 0.01, far: 50, position: [0, 1.1, 2] }}
@@ -69,8 +77,9 @@ export default function Escena(props: Props) {
       <hemisphereLight args={['#ffffff', '#8d8479', 1.15]} />
       <directionalLight position={[-2, 4, 3]} intensity={1.9} />
       <directionalLight position={[2, 2, -3]} intensity={0.9} />
-      <Controles peticion={props.camara} reducido={props.reducido} />
-      <Invalidar deps={[props.visibles, props.seleccion, props.transparencia, props.translucidas, props.rotulos]} />
+      <Controles peticion={props.camara} reducido={props.reducido} bloqueada={!!props.bloqueada} />
+      <Invalidar deps={[props.visibles, props.seleccion, props.transparencia, props.translucidas, props.rotulos, props.marcador, props.rotuloFijo]} />
+      {props.marcador && <Marcador {...props.marcador} reducido={props.reducido} />}
       {props.piezas.map((p) =>
         props.visibles.has(p.id) ? (
           <Pieza
@@ -92,6 +101,9 @@ export default function Escena(props: Props) {
           vuelve a montar (y a mostrar) al tocar otra estructura. */}
       {props.rotulo && <Rotulo key={props.rotulo} piezas={props.piezas} ids={props.seleccion} texto={props.rotulo} efimero />}
       {props.rotulos?.map((r) => <Rotulo key={r.clave} piezas={props.piezas} ids={r.ids} texto={r.texto} efimero="largo" />)}
+      {props.rotuloFijo && (
+        <Rotulo piezas={props.piezas} ids={props.rotuloFijo.ids} texto={props.rotuloFijo.texto} punto={props.rotuloFijo.punto} />
+      )}
     </Canvas>
   );
 }
@@ -179,8 +191,9 @@ const Pieza = memo(function Pieza({
 
 /** Nombre clavado en el centro de unas piezas, de tamaño fijo. */
 /** `efimero`: se va solo (corto = lo tocado; largo = los del paso del repaso, que son varios para leer). */
-function Rotulo({ piezas, ids, texto, efimero }: { piezas: PiezaAtlas[]; ids: Set<string>; texto: string; efimero?: true | 'largo' }) {
+function Rotulo({ piezas, ids, texto, efimero, punto }: { piezas: PiezaAtlas[]; ids: Set<string>; texto: string; efimero?: true | 'largo'; punto?: [number, number, number] }) {
   const centro = useMemo(() => {
+    if (punto) return new Vector3(...punto);
     const c = new Vector3();
     let n = 0;
     for (const p of piezas) {
@@ -189,12 +202,43 @@ function Rotulo({ piezas, ids, texto, efimero }: { piezas: PiezaAtlas[]; ids: Se
       n++;
     }
     return n ? c.divideScalar(n) : null;
-  }, [piezas, ids]);
+  }, [piezas, ids, punto]);
   if (!centro) return null;
   return (
     <Html position={centro} center zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
       <span className={efimero ? `${s.rotulo} ${efimero === 'largo' ? s.rotuloEfimeroLargo : s.rotuloEfimero}` : s.rotulo}>{texto}</span>
     </Html>
+  );
+}
+
+const AZUL = new Color('#3b9edd');
+
+/**
+ * Marcador de un accidente óseo: esfera azul con un halo que late. Se pinta
+ * encima de todo (sin prueba de profundidad) para verse aunque quede detrás del
+ * hueso desde esta vista. Con movimiento reducido no late.
+ */
+function Marcador({ punto, radio, reducido }: { punto: [number, number, number]; radio: number; reducido: boolean }) {
+  const halo = useRef<Mesh>(null);
+  const { invalidate } = useThree();
+  useFrame(({ clock }) => {
+    if (reducido || !halo.current) return;
+    const t = (clock.getElapsedTime() % 1.4) / 1.4;
+    halo.current.scale.setScalar(1 + t * 1.6);
+    (halo.current.material as MeshBasicMaterial).opacity = 0.45 * (1 - t);
+    invalidate();
+  });
+  return (
+    <group position={punto}>
+      <mesh renderOrder={20}>
+        <sphereGeometry args={[radio, 24, 16]} />
+        <meshBasicMaterial color={AZUL} depthTest={false} transparent opacity={0.92} />
+      </mesh>
+      <mesh ref={halo} renderOrder={19}>
+        <sphereGeometry args={[radio, 24, 16]} />
+        <meshBasicMaterial color={AZUL} depthTest={false} transparent opacity={reducido ? 0.25 : 0.45} depthWrite={false} />
+      </mesh>
+    </group>
   );
 }
 
@@ -208,7 +252,7 @@ const DIRECCION: Record<Vista, [number, number, number]> = {
 };
 
 /** Órbita y vuelo de cámara hacia el encuadre pedido. */
-function Controles({ peticion, reducido }: { peticion: PeticionCamara; reducido: boolean }) {
+function Controles({ peticion, reducido, bloqueada }: { peticion: PeticionCamara; reducido: boolean; bloqueada: boolean }) {
   const ref = useRef<OrbitControlsImpl>(null);
   const { camera, invalidate, size } = useThree();
   const vuelo = useRef<{ desde: Vector3; hasta: Vector3; oDesde: Vector3; oHasta: Vector3; t: number } | null>(null);
@@ -252,5 +296,5 @@ function Controles({ peticion, reducido }: { peticion: PeticionCamara; reducido:
     else invalidate();
   });
 
-  return <OrbitControls ref={ref} makeDefault enableDamping={false} minDistance={0.05} maxDistance={6} />;
+  return <OrbitControls ref={ref} makeDefault enableDamping={false} minDistance={0.05} maxDistance={6} enabled={!bloqueada} />;
 }
