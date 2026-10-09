@@ -603,6 +603,20 @@ Las fuentes **no están en git** (pesan cientos de MB): se bajan cada vez a una 
 
 ---
 
+## Examen práctico 3D de miembro superior (`atlas-3d` · botón «Iniciar examen»)
+
+Calca el examen práctico real de Anatomía (2025-A/B, 2024): **A** = se señala una estructura en el modelo y se escribe su nombre; **B** = una pregunta sobre ella, que se desbloquea al responder la A y **solo vale si la A está bien**. Respuestas escritas, corregidas en el cliente. Plan y decisiones en `docs/examen-ms/PLAN.md` (lo único versionado de `docs/examen-ms/`).
+
+- **Datos fuera de git (el repo es público y son respuestas/resúmenes de pago)**: `docs/examen-ms/*` salvo `PLAN.md`, y `data/examen-ms/`. El banco se sirve como cualquier banqueo: bucket privado `examenes`, clave `aparato-locomotor/practico-ms` en `EXAMENES` (plan del curso), ruta `api/examen`.
+- **Tubería** (`scripts/examen-ms/`, en orden): `bajar-resumenes.mjs` (los 5 resúmenes de anatomía del MS **y sus figuras** —mucho dato solo está en los esquemas: formantes de la basílica, ramas de la radial—) → extracción por subagentes → `consolidar.mjs` (alias, mapeo al manifiesto, conflictos; las decisiones de BUST van en `RESUELTO`/`SOLO_RESPUESTA_B`) → `analizar.mjs` (plantilla de 10 huecos y matriz estructura × tipo B: salió / muy probable / posible) → `preparar-lexico.mjs` + `preparar-preguntas.mjs` (lotes para los generadores) → `marcadores.mjs` → `ensamblar-banco.mjs` (aplica `docs/examen-ms/ajustes.mjs`, decisiones por pregunta) → `probar-corrector.mjs` → `sinonimos.mjs` (tabla para revisar) → `node scripts/upload-examen.mjs data/examen-ms/banco.publicar.json aparato-locomotor/practico-ms.json`.
+- **Léxico**: una ficha por estructura con todas sus formas aceptadas (TA español y latín, abreviaturas, clásicos). Las respuestas B que son estructuras llevan `ref` al léxico: «n. cubital» se corrige igual en todo el banco. Lo descriptivo (funciones, territorios) va con `aceptadas` + `conceptos` (palabras clave obligatorias) y `excluye` (el sentido contrario).
+- **Corrector** (`src/lib/examen-ms/corregir.ts`): normaliza, expande n./a./v./m./lig./r., unifica ordinales; «músculo»/«hueso» opcionales, «nervio»/«arteria»/«vena» obligatorios; la porción es obligatoria; errata de 1 letra en palabra de ≥ 7 con aviso, salvo que quede igual de cerca de OTRA estructura (radial/radio). **La B vale entera o nada** (regla de BUST): las N que pide, sin ningún elemento incorrecto. Las pruebas corren sobre el banco publicado ya hidratado.
+- **Banco publicado compacto**: las formas del léxico van una vez (`formas`, `confusiones`) y `hidratarBanco` (`src/lib/examen-ms/sesion.ts`) las rellena; el bucket limita a 1 MB por archivo.
+- **Accidentes óseos = marcador** (no son mallas): punto calculado por `marcadores.mjs` con una regla por accidente (tramo del hueso + dirección, ejes del modelo: lateral = −X, anterior = +Z) y 17 comprobaciones anatómicas. Las caras/cuerpos enteros son `noSenalable` (sirven solo de respuesta B). **BUST revisa los puntos en el propio examen**; los que caigan mal se corrigen en `REGLAS`.
+- **Interfaz** (`atlas-3d/examen/ExamenMS.tsx` + `examenMS.module.css`): el Visor entra en modo examen (sin panel, sin rótulo al tocar, lo que no es hueso translúcido, lo señalado resaltado o con marcador, cámara al lado desde el que sobresale). Tarjeta en tres capas (posición → sacudida → volteo 3D), en la esquina con pulso azul y sacudón cada ~7 s; en la B, `filter: blur` sobre el lienzo (nunca `backdrop-filter`) y `OrbitControls` deshabilitado. 10 preguntas por examen con la plantilla del real (`armarExamen`), primero las no vistas; avance en `localStorage('medgo:examen-ms:v1')`. Resultados con `NotaFinal` (compartida con ExamRunner) y las clases de `examRunner.module.css`; cada fallo enlaza a `/dashboard/cursos/aparato-locomotor/<clase>?resumen=1&opcion=…&seccion=…`.
+
+---
+
 ## Simulación del microscopio virtual (Hematología · Práctica 2) — ⚠️ INCOMPLETA
 
 **Falta terminar**: estructura e interacción construidas, pero **faltan las 2 imágenes panorámicas reales y las coordenadas de las células** que debe proveer BUST. El ocular muestra un placeholder gris mientras tanto.
