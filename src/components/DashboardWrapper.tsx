@@ -66,7 +66,7 @@ export default function DashboardWrapper({
     <PlanProvider value={planState}>
       <ClarityPlanTag />
       {/* useSearchParams exige Suspense o el prerender del dashboard cae a cliente */}
-      {!isAdmin && <Suspense fallback={null}><PaginaVistaTracker /></Suspense>}
+      <Suspense fallback={null}><PaginaVistaTracker /></Suspense>
       {presencia && <AnunciarPresencia token={presencia} />}
       {buzon && <BuzonUsuario token={buzon} />}
       <CursorCelula />

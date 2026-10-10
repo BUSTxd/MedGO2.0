@@ -136,13 +136,12 @@ export async function loadAdminData(): Promise<AdminData> {
   if (subsRes.error) throw new Error(`subscriptions: ${subsRes.error.message}`);
 
   const emails = new Map<string, string>();
+  // El admin se registra (su fila y su ficha muestran su actividad), pero no
+  // cuenta en los rankings: recorre la web para revisarla.
+  const adminIds = new Set<string>();
   for (const u of authRes.data.users) {
     if (u.email) emails.set(u.id, u.email);
-    // Sus eventos de antes de excluirlo en /api/track siguen en la tabla.
-    if (isAdminEmail(u.email)) {
-      cursosDe.delete(u.id);
-      labsDe.delete(u.id);
-    }
+    if (isAdminEmail(u.email)) adminIds.add(u.id);
   }
 
   const profiles = (profilesRes.data ?? []) as ProfileRow[];
@@ -186,7 +185,8 @@ export async function loadAdminData(): Promise<AdminData> {
   const rankingCursos: CursoRank[] = CURSOS.map((c) => {
     let objetivo = 0;
     let alumnos = 0;
-    for (const lista of cursosDe.values()) {
+    for (const [uid, lista] of cursosDe) {
+      if (adminIds.has(uid)) continue;
       if (lista[0]?.slug === c.slug) objetivo++;
       if (lista.some((x) => x.slug === c.slug)) alumnos++;
     }
@@ -196,7 +196,8 @@ export async function loadAdminData(): Promise<AdminData> {
   const rankingLabs: LabRank[] = LABORATORIOS.map((l) => {
     let alumnos = 0, dias = 0, alumnosExamen = 0, examenesTerminados = 0;
     const notas: number[] = [];
-    for (const lista of labsDe.values()) {
+    for (const [uid, lista] of labsDe) {
+      if (adminIds.has(uid)) continue;
       const x = lista.find((y) => y.slug === l.slug);
       if (!x) continue;
       alumnos++;

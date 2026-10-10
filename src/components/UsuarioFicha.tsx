@@ -226,9 +226,8 @@ export default function UsuarioFicha({
 
         {esAdmin && (
           <p className={styles.avisoAdmin}>
-            Cuenta admin: su actividad no se registra (para no ensuciar las métricas de los alumnos),
-            así que lo de abajo es anterior a esa regla y no avanza aunque esté conectado.
-            Para comprobar el registro, navega con una cuenta de alumno.
+            Cuenta admin: su actividad se registra, pero no cuenta en los rankings ni en el CSV
+            general. Hasta el 10 de octubre se descartaba, así que antes de esa fecha hay un hueco.
           </p>
         )}
         {error && <p className={styles.estado}>No se pudo cargar la actividad.</p>}

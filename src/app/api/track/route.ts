@@ -94,8 +94,10 @@ export async function POST(req: NextRequest) {
     supabase.auth.getUser(),
     getCachedPlanState(),
   ]);
-  // El admin recorre la web para revisarla: sus eventos ensuciarían las métricas.
-  if (isAdminEmail(user?.email)) return new NextResponse(null, { status: 204 });
+  // El admin también se registra (para ver su propia ficha al día y comprobar
+  // que el registro funciona), marcado con `admin`. Los rankings y el CSV
+  // general lo dejan fuera por su id (admin-data.ts, api/admin/actividad).
+  const esAdmin = isAdminEmail(user?.email);
   // Sin sesión sólo se registra la navegación de la landing.
   if (!user && !EVENTOS_ANONIMOS.has(event)) return new NextResponse(null, { status: 204 });
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'sin-ip';
@@ -108,7 +110,7 @@ export async function POST(req: NextRequest) {
   // cuenta si no hay una fuente mejor en el servidor.
   const acceso = accesoAlRegistrar(event, path, props);
   const { acceso: _cliente, ...resto } = props;
-  const propsFinal = { ...resto, acceso_v: ACCESO_V, ...(acceso ? { acceso } : {}) };
+  const propsFinal = { ...resto, acceso_v: ACCESO_V, ...(acceso ? { acceso } : {}), ...(esAdmin ? { admin: true } : {}) };
 
   const admin = createAdminClient();
   const table = admin.from('analytics_events') as unknown as {
