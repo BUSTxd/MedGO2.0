@@ -60,6 +60,19 @@ export interface CursoDeUsuario {
   ultimo: string;
 }
 
+export interface LabDeUsuario {
+  slug: string;
+  nombre: string;
+  dias: number;
+  visitas: number;
+  /** Entró al examen del laboratorio (hoy solo el práctico 3D del Atlas). */
+  examenAbierto: boolean;
+  examenesTerminados: number;
+  /** Nota del último examen terminado, en %. */
+  ultimaNota: number | null;
+  ultimo: string;
+}
+
 export interface Bloqueo {
   lugar: string;
   veces: number;
@@ -73,6 +86,7 @@ export interface ActividadUsuario {
   primerRegistro: string | null;
   diasActivos: number;
   cursos: CursoDeUsuario[];
+  labs: LabDeUsuario[];
   eventos: EventoLegible[];
   bloqueos: Bloqueo[];
   sesiones: Sesion[];
@@ -110,6 +124,16 @@ const ACCION: Record<string, string> = {
 const MODO_BANQUEO: Record<string, string> = {
   tarjetas: 'Tarjetas de memoria',
   quiz: 'Quiz',
+  examen3d: 'Examen práctico 3D',
+};
+
+/**
+ * Laboratorios cuyo `?examen=1` es una evaluación con nombre propio. Sin esto la
+ * línea de tiempo decía «Laboratorio · Atlas 3D · banqueo» y no se sabía que era
+ * la Evaluación continua 1 de Aparato Locomotor.
+ */
+const EXAMEN_DE_LAB: Record<string, string> = {
+  'atlas-3d': 'Examen práctico 3D (Evaluación continua 1 · Aparato Locomotor)',
 };
 
 const ORIGEN_PAGO: Record<string, string> = {
@@ -249,11 +273,14 @@ function etiquetaDe(acceso: string): Etiqueta | null {
 export function legible(e: EventoRow): EventoLegible {
   const { lugar, cursoSlug } = lugarDeRuta(e.path);
   const acceso = accesoDe(e);
+  const lab = e.path?.match(/^\/dashboard\/laboratorio\/([^/]+)/)?.[1];
+  const examenLab = lab ? EXAMEN_DE_LAB[lab] : undefined;
+  const esExamenLab = !!examenLab && (e.props?.banqueo === true || e.props?.modo === 'examen3d');
   return {
     fecha: e.created_at,
     evento: e.event,
     accion: ACCION[e.event] ?? e.event,
-    lugar: e.props?.banqueo === true ? `${lugar} · banqueo` : lugar,
+    lugar: esExamenLab ? `${lugar} · ${examenLab}` : e.props?.banqueo === true ? `${lugar} · banqueo` : lugar,
     detalle: detalleDe(e),
     etiqueta: etiquetaDe(acceso),
     acceso,
@@ -353,10 +380,11 @@ export async function cargarActividadUsuario(userId: string): Promise<ActividadU
       };
     };
   };
-  const [{ filas, truncado }, { count }, cursosRes] = await Promise.all([
+  const [{ filas, truncado }, { count }, cursosRes, labsRes] = await Promise.all([
     cargarEventos(userId, 500),
     admin.from('analytics_events').select('id', { count: 'exact', head: true }).eq('user_id', userId),
     cargarResumenCursos(),
+    cargarResumenLabs(userId),
   ]);
 
   const eventos = filas.map(legible);
@@ -367,6 +395,7 @@ export async function cargarActividadUsuario(userId: string): Promise<ActividadU
     primerRegistro: filas.length ? filas[filas.length - 1].created_at : null,
     diasActivos: dias.size,
     cursos: cursosRes.get(userId) ?? [],
+    labs: labsRes.get(userId) ?? [],
     eventos,
     bloqueos: resumirBloqueos(eventos),
     sesiones: sesionesDe(filas),
@@ -405,6 +434,80 @@ export async function cargarResumenCursos(): Promise<Map<string, CursoDeUsuario[
   }
   for (const lista of out.values()) {
     lista.sort((a, b) => b.dias - a.dias || b.eventos - a.eventos);
+  }
+  return out;
+}
+
+interface LabRow {
+  user_id: string;
+  event: string;
+  path: string;
+  props: Record<string, unknown> | null;
+  created_at: string;
+}
+
+/**
+ * Laboratorios de cada alumno, el que más días visitó primero.
+ *
+ * `resumen_cursos_usuarios` solo mira `/dashboard/cursos/…`: el Atlas 3D (y con
+ * él la Evaluación 1 de Aparato Locomotor) y el resto de laboratorios no salían
+ * en ningún resumen. Se lee de la tabla en vez de con otra RPC para no depender
+ * de una migración; solo trae las filas de laboratorio y sin las salidas.
+ */
+export async function cargarResumenLabs(userId?: string): Promise<Map<string, LabDeUsuario[]>> {
+  const admin = createAdminClient();
+  const filas: LabRow[] = [];
+  for (let from = 0; ; from += PAGINA) {
+    let q = admin
+      .from('analytics_events')
+      .select('user_id, event, path, props, created_at')
+      .like('path', '/dashboard/laboratorio/_%')
+      .in('event', ['pagina_vista', 'banco_iniciado', 'examen_completado'])
+      .order('created_at', { ascending: false })
+      .range(from, from + PAGINA - 1);
+    q = userId ? q.eq('user_id', userId) : q.not('user_id', 'is', null);
+    const { data, error } = await q;
+    if (error) throw new Error(`analytics_events (labs): ${error.message}`);
+    filas.push(...((data ?? []) as LabRow[]));
+    if (!data || data.length < PAGINA) break;
+  }
+
+  // Del más reciente al más antiguo: la primera nota que aparece es la última.
+  const acc = new Map<string, Map<string, LabDeUsuario & { _dias: Set<string> }>>();
+  for (const f of filas) {
+    const slug = f.path.split('/')[3];
+    if (!slug || !NOMBRE_LAB.has(slug)) continue;
+    const porLab = acc.get(f.user_id) ?? new Map();
+    acc.set(f.user_id, porLab);
+    let l = porLab.get(slug);
+    if (!l) {
+      l = {
+        slug, nombre: NOMBRE_LAB.get(slug)!, dias: 0, visitas: 0, examenAbierto: false,
+        examenesTerminados: 0, ultimaNota: null, ultimo: f.created_at, _dias: new Set<string>(),
+      };
+      porLab.set(slug, l);
+    }
+    l._dias.add(diaLima(f.created_at));
+    const p = f.props ?? {};
+    if (f.event === 'pagina_vista') {
+      l.visitas += 1;
+      if (p.banqueo === true) l.examenAbierto = true;
+    } else if (f.event === 'banco_iniciado') {
+      l.examenAbierto = true;
+    } else if (f.event === 'examen_completado') {
+      l.examenAbierto = true;
+      l.examenesTerminados += 1;
+      if (l.ultimaNota === null && typeof p.score === 'number' && typeof p.total === 'number' && p.total > 0) {
+        l.ultimaNota = Math.round((p.score / p.total) * 100);
+      }
+    }
+  }
+
+  const out = new Map<string, LabDeUsuario[]>();
+  for (const [uid, porLab] of acc) {
+    const lista = [...porLab.values()].map(({ _dias, ...l }) => ({ ...l, dias: _dias.size }));
+    lista.sort((a, b) => b.dias - a.dias || b.visitas - a.visitas);
+    out.set(uid, lista);
   }
   return out;
 }

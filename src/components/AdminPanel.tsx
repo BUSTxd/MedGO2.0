@@ -1,6 +1,6 @@
 'use client';
 import { useMemo, useState } from 'react';
-import type { AdminData, AdminRow, CursoRank } from '@/lib/admin-data';
+import type { AdminData, AdminRow, CursoRank, LabRank } from '@/lib/admin-data';
 import UsuarioFicha from './UsuarioFicha';
 import { useEnLinea } from './Presencia';
 import ValoracionesAdmin from './ValoracionesAdmin';
@@ -92,8 +92,18 @@ function sortRows(rows: AdminRow[], tab: TabKey): AdminRow[] {
   return sorted;
 }
 
+function SinVisitas({ nombres }: { nombres: string[] }) {
+  if (nombres.length === 0) return null;
+  return (
+    <p className={styles.sinVisitas}>
+      <strong>Sin visitas registradas ({nombres.length}):</strong> {nombres.join(' · ')}
+    </p>
+  );
+}
+
 function CursosObjetivo({ ranking }: { ranking: CursoRank[] }) {
-  const max = Math.max(1, ...ranking.map((c) => c.objetivo));
+  const conVisitas = ranking.filter((c) => c.alumnos > 0);
+  const max = Math.max(1, ...conVisitas.map((c) => c.objetivo));
   return (
     <section className={styles.cursosSection}>
       <div className={styles.cursosHead}>
@@ -112,11 +122,11 @@ function CursosObjetivo({ ranking }: { ranking: CursoRank[] }) {
         </a>
       </div>
 
-      {ranking.length === 0 ? (
+      {conVisitas.length === 0 ? (
         <div className={styles.empty}>Aún no hay visitas a cursos.</div>
       ) : (
         <ol className={styles.rankList}>
-          {ranking.map((c) => (
+          {conVisitas.map((c) => (
             <li key={c.slug} className={styles.rankItem}>
               <span className={styles.rankName}>
                 <span
@@ -139,6 +149,58 @@ function CursosObjetivo({ ranking }: { ranking: CursoRank[] }) {
           ))}
         </ol>
       )}
+      <SinVisitas nombres={ranking.filter((c) => c.alumnos === 0).map((c) => c.nombre)} />
+    </section>
+  );
+}
+
+function Laboratorios({ ranking }: { ranking: LabRank[] }) {
+  const conVisitas = ranking.filter((l) => l.alumnos > 0);
+  const max = Math.max(1, ...conVisitas.map((l) => l.alumnos));
+  return (
+    <section className={styles.cursosSection}>
+      <div className={styles.cursosHead}>
+        <div>
+          <h2 className={styles.cursosTitle}>Laboratorio virtual</h2>
+          <p className={styles.cursosSub}>
+            Alumnos que entraron a cada laboratorio. El Atlas 3D incluye el examen práctico
+            de la Evaluación continua 1 de Aparato Locomotor.
+          </p>
+        </div>
+      </div>
+
+      {conVisitas.length === 0 ? (
+        <div className={styles.empty}>Aún no hay visitas a laboratorios.</div>
+      ) : (
+        <ol className={styles.rankList}>
+          {conVisitas.map((l) => (
+            <li key={l.slug} className={styles.rankItem}>
+              <span className={styles.rankName}>
+                <span className={`${styles.trackDot} ${styles.trackLab}`} />
+                {l.nombre}
+              </span>
+              <span className={styles.rankBarTrack}>
+                <span
+                  className={`${styles.rankBar} ${styles.trackLab}`}
+                  style={{ width: `${(l.alumnos / max) * 100}%` }}
+                />
+              </span>
+              <span className={styles.rankNum}>
+                <strong>{l.alumnos}</strong> {l.alumnos === 1 ? 'alumno' : 'alumnos'}
+                <span className={styles.muted}> · {l.dias} {l.dias === 1 ? 'día' : 'días'} en total</span>
+              </span>
+              {l.alumnosExamen > 0 && (
+                <span className={styles.rankExtra}>
+                  Examen: {l.alumnosExamen} lo {l.alumnosExamen === 1 ? 'abrió' : 'abrieron'}
+                  {' · '}{l.examenesTerminados} {l.examenesTerminados === 1 ? 'terminado' : 'terminados'}
+                  {l.notaMedia !== null && <> · nota media {l.notaMedia} %</>}
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
+      )}
+      <SinVisitas nombres={ranking.filter((l) => l.alumnos === 0).map((l) => l.nombre)} />
     </section>
   );
 }
@@ -208,6 +270,8 @@ export default function AdminPanel({ data }: { data: AdminData }) {
       <BandejaMensajes emails={emails} />
 
       <CursosObjetivo ranking={data.rankingCursos} />
+
+      <Laboratorios ranking={data.rankingLabs} />
 
       <ValoracionesAdmin />
 

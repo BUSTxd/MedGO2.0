@@ -2,8 +2,8 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { countActiveDevicesByUser } from '@/lib/sessions';
 import { isAdminEmail } from '@/lib/admin';
 import { tokenDePresencia } from '@/lib/presencia';
-import { CURSOS } from '@/lib/data/aportes';
-import { cargarResumenCursos, type CursoDeUsuario } from '@/lib/actividad-usuario';
+import { CURSOS, LABORATORIOS } from '@/lib/data/aportes';
+import { cargarResumenCursos, cargarResumenLabs, type CursoDeUsuario } from '@/lib/actividad-usuario';
 
 export type AdminPlan = 'free' | 'interno' | 'residente' | 'ufbi' | 'ufbi-anual';
 export type AdminSubStatus = 'pending' | 'authorized' | 'paused' | 'cancelled';
@@ -36,6 +36,20 @@ export interface CursoRank {
   alumnos: number;
 }
 
+export interface LabRank {
+  slug: string;
+  nombre: string;
+  /** Alumnos que entraron alguna vez. */
+  alumnos: number;
+  /** Suma de días distintos de cada alumno. */
+  dias: number;
+  /** Alumnos que abrieron su examen (hoy solo el práctico 3D del Atlas). */
+  alumnosExamen: number;
+  examenesTerminados: number;
+  /** Nota media de los exámenes terminados (la última de cada alumno), en %. */
+  notaMedia: number | null;
+}
+
 export interface AdminKpis {
   totalUsers: number;
   activosTotal: number;
@@ -47,7 +61,10 @@ export interface AdminKpis {
 export interface AdminData {
   rows: AdminRow[];
   kpis: AdminKpis;
+  /** Todos los cursos, también los que nadie visitó (alumnos = 0). */
   rankingCursos: CursoRank[];
+  /** Todos los laboratorios, también los que nadie visitó. */
+  rankingLabs: LabRank[];
 }
 
 interface ProfileRow {
@@ -100,7 +117,7 @@ function effectiveStreak(streak: number | null, lastVisit: string | null, today:
 export async function loadAdminData(): Promise<AdminData> {
   const admin = createAdminClient();
 
-  const [authRes, profilesRes, subsRes, deviceCounts, cursosDe] = await Promise.all([
+  const [authRes, profilesRes, subsRes, deviceCounts, cursosDe, labsDe] = await Promise.all([
     admin.auth.admin.listUsers({ perPage: 1000 }),
     admin.from('profiles').select('id, full_name, plan, plan_expires_at, last_visit_date, current_streak'),
     admin
@@ -109,6 +126,7 @@ export async function loadAdminData(): Promise<AdminData> {
       .order('created_at', { ascending: false }),
     countActiveDevicesByUser(),
     cargarResumenCursos(),
+    cargarResumenLabs(),
   ]);
 
   if (authRes.error) throw new Error(`admin.listUsers: ${authRes.error.message}`);
@@ -119,7 +137,10 @@ export async function loadAdminData(): Promise<AdminData> {
   for (const u of authRes.data.users) {
     if (u.email) emails.set(u.id, u.email);
     // Sus eventos de antes de excluirlo en /api/track siguen en la tabla.
-    if (isAdminEmail(u.email)) cursosDe.delete(u.id);
+    if (isAdminEmail(u.email)) {
+      cursosDe.delete(u.id);
+      labsDe.delete(u.id);
+    }
   }
 
   const profiles = (profilesRes.data ?? []) as ProfileRow[];
@@ -167,13 +188,28 @@ export async function loadAdminData(): Promise<AdminData> {
       if (lista.some((x) => x.slug === c.slug)) alumnos++;
     }
     return { slug: c.slug, nombre: c.nombre, track: c.track, objetivo, alumnos };
-  })
-    .filter((c) => c.alumnos > 0)
-    .sort((a, b) => b.objetivo - a.objetivo || b.alumnos - a.alumnos);
+  }).sort((a, b) => b.objetivo - a.objetivo || b.alumnos - a.alumnos);
+
+  const rankingLabs: LabRank[] = LABORATORIOS.map((l) => {
+    let alumnos = 0, dias = 0, alumnosExamen = 0, examenesTerminados = 0;
+    const notas: number[] = [];
+    for (const lista of labsDe.values()) {
+      const x = lista.find((y) => y.slug === l.slug);
+      if (!x) continue;
+      alumnos++;
+      dias += x.dias;
+      if (x.examenAbierto) alumnosExamen++;
+      examenesTerminados += x.examenesTerminados;
+      if (x.ultimaNota !== null) notas.push(x.ultimaNota);
+    }
+    const notaMedia = notas.length ? Math.round(notas.reduce((a, b) => a + b, 0) / notas.length) : null;
+    return { slug: l.slug, nombre: l.nombre, alumnos, dias, alumnosExamen, examenesTerminados, notaMedia };
+  }).sort((a, b) => b.alumnos - a.alumnos || b.dias - a.dias);
 
   return {
     rows,
     rankingCursos,
+    rankingLabs,
     kpis: {
       totalUsers: rows.length,
       activosTotal: activos.length,

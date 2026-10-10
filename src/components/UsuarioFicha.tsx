@@ -193,6 +193,7 @@ export default function UsuarioFicha({
   const sesionActual = datos?.sesiones[0];
   const objetivo = datos?.cursos[0];
   const maxDias = Math.max(1, ...(datos?.cursos.map((c) => c.dias) ?? []));
+  const maxDiasLab = Math.max(1, ...(datos?.labs.map((l) => l.dias) ?? []));
 
   return createPortal(
     <div className={styles.overlay} onClick={onClose}>
@@ -287,6 +288,32 @@ export default function UsuarioFicha({
                       <span className={styles.cursoNum}>
                         {c.dias} {c.dias === 1 ? 'día' : 'días'} · {fechaCorta(c.ultimo)}
                       </span>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
+
+            {datos.labs.length > 0 && (
+              <section className={styles.bloque}>
+                <h3 className={styles.bloqueTitulo}>Laboratorios en los que estuvo</h3>
+                <ol className={styles.cursos}>
+                  {datos.labs.map((l) => (
+                    <li key={l.slug} className={styles.curso}>
+                      <span className={styles.cursoNombre}>{l.nombre}</span>
+                      <span className={styles.barra}>
+                        <span style={{ width: `${(l.dias / maxDiasLab) * 100}%` }} />
+                      </span>
+                      <span className={styles.cursoNum}>
+                        {l.dias} {l.dias === 1 ? 'día' : 'días'} · {fechaCorta(l.ultimo)}
+                      </span>
+                      {l.examenAbierto && (
+                        <span className={styles.labExamen}>
+                          {l.examenesTerminados > 0
+                            ? `Examen: ${l.examenesTerminados} ${l.examenesTerminados === 1 ? 'terminado' : 'terminados'}${l.ultimaNota !== null ? ` · última nota ${l.ultimaNota} %` : ''}`
+                            : 'Abrió el examen, sin terminarlo'}
+                        </span>
+                      )}
                     </li>
                   ))}
                 </ol>

@@ -13,6 +13,7 @@
 
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import NotaFinal from '@/components/examen/NotaFinal';
+import { trackEvent } from '@/lib/analytics';
 import { corregirA, corregirB, indexarFormas, type CorreccionB, type IndiceFormas, type Veredicto } from '@/lib/examen-ms/corregir';
 import { armarExamen, cargarBanco, guardarIntento, leerAvance, type Avance } from '@/lib/examen-ms/sesion';
 import type { BancoMS, CategoriaMS, ObjetivoMS, PreguntaMS, TipoB } from '@/lib/examen-ms/tipos';
@@ -44,6 +45,9 @@ const USOS_QUITAR = 2;
 const CLAVE_AYUDA = 'medgo:examen-ms:ayuda-musculos';
 /** Mínimo de la animación de carga, para que no parpadee si el banco ya estaba en caché. */
 const CARGA_MIN = 1300;
+
+/** Clave del banco en `EXAMENES`: con ella la ficha del admin sabe qué examen es y su acceso. */
+const EXAM_KEY = 'aparato-locomotor/practico-ms';
 
 type Paso = 'volteo' | 'esquina' | 'A' | 'B' | 'correccion';
 interface Respuesta { escritoA: string; veredictoA: Veredicto; escritoB: string; b: CorreccionB }
@@ -138,6 +142,7 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
     setI(0);
     setPaso('volteo');
     setFase('examen');
+    trackEvent('banco_iniciado', { examKey: EXAM_KEY, modo: 'examen3d' });
   };
 
   const responderA = (escrito: string) => {
@@ -170,6 +175,7 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
     }
     const puntos = respuestas.reduce((n, x) => n + (x.veredictoA !== 'mal' ? 1 : 0) + x.b.puntaje, 0);
     setAvance(guardarIntento(preguntas.map((p) => p.id), puntos, preguntas.length * 2));
+    trackEvent('examen_completado', { examKey: EXAM_KEY, modo: 'examen3d', score: puntos, total: preguntas.length * 2 });
     setFase('resultados');
   };
 
