@@ -230,6 +230,14 @@ export default function StudyMaterialSection({ claseId, hasResumen, resumenOpcio
     track('clase_abierta', { claseId });
   }, [claseId]);
 
+  // El enlace directo (`?resumen=1`, desde el examen 3D o «Repasa esto») abre el
+  // visor sin pasar por handleCardClick/handlePick: sin esto no quedaba registro.
+  useEffect(() => {
+    if (fullscreenOpen && deepLink) track('resumen_abierto', { claseId: opcionDirecta ?? resumenOpciones?.[0]?.id ?? claseId, origen: 'enlace' });
+    // Solo al montar: es la apertura inicial del enlace.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Which PDF the fullscreen modal targets.
   // Si hay una sola opcion, usar su id (permite que el data file sobreescriba el
   // claseId — util cuando dos cursos comparten ids como `clase-14`).

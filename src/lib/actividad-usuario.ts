@@ -125,6 +125,7 @@ const MODO_BANQUEO: Record<string, string> = {
   tarjetas: 'Tarjetas de memoria',
   quiz: 'Quiz',
   examen3d: 'Examen práctico 3D',
+  eva: 'EVA de anatomía',
 };
 
 /**
@@ -239,12 +240,13 @@ function detalleDe(e: EventoRow): string | null {
   if (e.event === 'examen_completado' && typeof p.score === 'number' && typeof p.total === 'number') {
     const pct = p.total > 0 ? Math.round((p.score / p.total) * 100) : 0;
     // En memoria no hay acierto: es lo que el alumno dijo que ya se sabía.
-    const cifra = `${p.modo === 'tarjetas' ? 'se sabía ' : ''}${p.score}/${p.total} (${pct} %)`;
+    const cifra = `${p.modo === 'tarjetas' ? 'se sabía ' : p.modo === 'eva' ? 'acertó la A en ' : ''}${p.score}/${p.total} (${pct} %)`;
     return conModo(`${cifra} · ${examKey ?? ''}`);
   }
   if (e.event === 'banco_iniciado') return examKey ? conModo(examKey) : modo;
   if (e.event === 'resumen_abierto' && p.origen === 'tarjeta') return 'Desde una tarjeta de memoria del banqueo';
   if (e.event === 'resumen_abierto' && p.origen === 'quiz') return 'Desde una pregunta del quiz';
+  if (e.event === 'resumen_abierto' && p.origen === 'enlace') return 'Desde un enlace directo (resultados del examen 3D o «Repasa esto»)';
   if (e.event === 'contenido_bloqueado') {
     if (p.origen === 'muestra') return `Terminó la parte gratis de ${examKey ?? 'el banqueo'}`;
     const plan = nombrePlan(p.plan);

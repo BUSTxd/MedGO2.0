@@ -13,6 +13,7 @@
 // El progreso de cada pregunta se conserva al navegar entre ellas.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { trackEvent } from '@/lib/analytics';
 import Image from 'next/image';
 import Link from 'next/link';
 import base from '@/styles/laboratorio.module.css';
@@ -199,6 +200,19 @@ export default function AnatExam({ questions, kicker, title, examId }: AnatExamP
 
   const completedCount = shuffled.filter((qq) => dotDone(progress, qq)).length;
 
+  // Registro para la ficha del admin: el primer intento de la visita y cuando
+  // completa todas las preguntas (no al cargar un progreso ya completo).
+  const iniciadoRef = useRef(false);
+  const completasRef = useRef<number | null>(null);
+  useEffect(() => {
+    if (!hydrated) return;
+    const antes = completasRef.current;
+    completasRef.current = completedCount;
+    if (antes === null || antes >= shuffled.length || completedCount < shuffled.length) return;
+    const score = shuffled.filter((qq) => progress[qq.id]?.aStatus === 'correct').length;
+    trackEvent('examen_completado', { examKey: examId, modo: 'eva', score, total: shuffled.length });
+  }, [completedCount, hydrated, shuffled, progress, examId]);
+
   // Precarga progresiva: mantiene cargadas las próximas PRELOAD_AHEAD preguntas
   // por delante del índice actual (ventana acumulativa). Así nunca se llega a una
   // pregunta cuya imagen aún no se ha pedido — sin importar cuán rápido se navegue.
@@ -214,6 +228,10 @@ export default function AnatExam({ questions, kicker, title, examId }: AnatExamP
   }, [shuffled, idx]);
 
   function verifyA() {
+    if (!iniciadoRef.current) {
+      iniciadoRef.current = true;
+      trackEvent('banco_iniciado', { examKey: examId, modo: 'eva' });
+    }
     const correct = matches(p.aValue, q.answerA.accept);
     update({ aStatus: correct ? 'correct' : 'wrong' });
     if (correct) {

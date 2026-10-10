@@ -378,6 +378,7 @@ export default function AdminPanel({ data }: { data: AdminData }) {
           userId={ficha.id}
           email={ficha.email}
           nombre={ficha.fullName}
+          esAdmin={ficha.esAdmin}
           onClose={() => setFicha(null)}
         />
       )}

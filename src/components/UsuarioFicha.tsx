@@ -135,11 +135,13 @@ export default function UsuarioFicha({
   userId,
   email,
   nombre,
+  esAdmin = false,
   onClose,
 }: {
   userId: string;
   email: string;
   nombre: string | null;
+  esAdmin?: boolean;
   onClose: () => void;
 }) {
   const [datos, setDatos] = useState<ActividadUsuario | null>(null);
@@ -222,6 +224,13 @@ export default function UsuarioFicha({
           </button>
         </header>
 
+        {esAdmin && (
+          <p className={styles.avisoAdmin}>
+            Cuenta admin: su actividad no se registra (para no ensuciar las métricas de los alumnos),
+            así que lo de abajo es anterior a esa regla y no avanza aunque esté conectado.
+            Para comprobar el registro, navega con una cuenta de alumno.
+          </p>
+        )}
         {error && <p className={styles.estado}>No se pudo cargar la actividad.</p>}
         {!error && !datos && <p className={styles.estado}>Cargando actividad…</p>}
 

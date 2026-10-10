@@ -420,3 +420,14 @@
   font-weight: 700;
 }
 :global(body.dark-mode) .bloqueoPago { background: #4c1d95; color: #ddd6fe; }
+
+.avisoAdmin {
+  margin: 14px 20px 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+:global(body.dark-mode) .avisoAdmin { background: #422006; color: #fcd34d; }

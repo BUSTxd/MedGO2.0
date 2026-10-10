@@ -24,6 +24,8 @@ export interface AdminRow {
   cursos: CursoDeUsuario[];
   /** Con qué token se anuncia en el canal de presencia (bolita de «en línea»). */
   presencia: string;
+  /** Cuenta admin: /api/track descarta sus eventos, así que su ficha no avanza. */
+  esAdmin: boolean;
 }
 
 export interface CursoRank {
@@ -169,6 +171,7 @@ export async function loadAdminData(): Promise<AdminData> {
       deviceCount: deviceCounts.get(p.id) ?? 0,
       cursos: cursosDe.get(p.id) ?? [],
       presencia: tokenDePresencia(p.id),
+      esAdmin: isAdminEmail(emails.get(p.id)),
     };
   });
 
