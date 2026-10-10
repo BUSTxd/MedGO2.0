@@ -21,10 +21,14 @@ const AuthContext = createContext<AuthContextValue>({ user: null, loading: true 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const supabase = useRef(createClient());
+  // Se crea en el efecto, no en el render: en el servidor no hace falta y, en
+  // un build sin las variables de Supabase (previews), crearlo al prerenderizar
+  // tumbaba la página 404 y con ella todo el build.
+  const supabase = useRef<ReturnType<typeof createClient> | null>(null);
 
   useEffect(() => {
     let mounted = true;
+    supabase.current ??= createClient();
     supabase.current.auth.getUser().then(({ data }) => {
       if (!mounted) return;
       setUser(data.user);
