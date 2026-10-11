@@ -15,7 +15,13 @@ import type { PlanKey } from '@/lib/plans';
  * `muestraFlash` es el corte de las `flashcards` del motor de tarjetas. Si falta,
  * la muestra no lleva ninguna: el fallo seguro es no regalarlas.
  */
-export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?: number; muestraFlash?: number }> = {
+/**
+ * `barajasLibres` (solo el examen 3D de miembro superior) es la misma idea por
+ * barajas: el servidor arma las barajas con el banco entero y a quien no tiene el
+ * plan le entrega solo las preguntas de esas, más el índice de las demás (número
+ * y nivel, sin preguntas) para pintarlas con candado.
+ */
+export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?: number; muestraFlash?: number; barajasLibres?: number[] }> = {
   'excretor/tbl-3-asa-henle': { free: true },
   'neurologia/snp-histologia': { free: true },
   'neurologia/snp-histologia-b': { free: true },
@@ -45,9 +51,10 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?
   'inmunologia/extra-hemato': {},
   'inmunologia/extra-pato': {},
   'inmunologia/final-2023': { muestra: 34 },
-  // Examen práctico 3D de miembro superior (atlas 3D): plan del curso (Interno).
+  // Examen práctico 3D de miembro superior (atlas 3D): plan del curso (Interno),
+  // con las barajas 1 y 7 de prueba gratis para cualquier cuenta.
   // Lo arma scripts/examen-ms/ensamblar-banco.mjs; el JSON fuente no va a git.
-  'aparato-locomotor/practico-ms': {},
+  'aparato-locomotor/practico-ms': { barajasLibres: [1, 7] },
   // El mismo banco en tarjetas de memoria (Banqueo de la Evaluación 1), con
   // scripts/examen-ms/tarjetas.mjs. Mismo plan, sin muestra.
   'aparato-locomotor/practico-ms-tarjetas': {},

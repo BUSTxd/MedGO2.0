@@ -3,23 +3,84 @@
  * guardado en el navegador.
  */
 
+import type { PlanKey } from '@/lib/plans';
 import type { BancoMS, PreguntaMS } from './tipos';
 
 export const CLAVE_BANCO = 'aparato-locomotor/practico-ms';
 export const PREGUNTAS_POR_EXAMEN = 10;
 
-/** El banco va por la ruta de exámenes (plan + URL firmada): las respuestas no viajan en el bundle. */
-export async function cargarBanco(signal?: AbortSignal): Promise<BancoMS> {
+/**
+ * Una baraja tal como la describe el servidor a quien no tiene el plan: las
+ * libres traen sus `ids` (sus preguntas vienen en el mismo banco recortado); las
+ * demás, solo número y nivel, para pintarlas con candado.
+ */
+export interface IndiceBaraja { numero: number; firma: string; nivel: NivelBaraja; ids?: string[] }
+
+/** Lo que hay detrás del candado, contado en el servidor (el cliente no lo ve). */
+export interface PruebaGratis { plan: PlanKey; preguntas: number; estructuras: number; secciones: number }
+
+export interface CargaBanco {
+  banco: BancoMS;
+  barajas: Baraja[];
+  /** Solo sin plan: qué abre el plan que falta. */
+  prueba: PruebaGratis | null;
+}
+
+/**
+ * El banco va por la ruta de exámenes: las respuestas no viajan en el bundle. Con
+ * el plan llega entero (URL firmada) y las barajas se arman aquí; sin él, el
+ * servidor manda solo las preguntas de las barajas libres y el índice de todas.
+ */
+export async function cargarBanco(signal?: AbortSignal): Promise<CargaBanco> {
   const r = await fetch(`/api/examen/${CLAVE_BANCO}`, { signal });
   if (!r.ok) {
     if (r.status === 401) throw new Error('Necesitas iniciar sesión para hacer el examen.');
     if (r.status === 403) throw new Error('El examen es parte del plan Interno.');
     throw new Error('El examen no está disponible ahora.');
   }
-  const { url } = (await r.json()) as { url: string };
-  const j = await fetch(url, { signal });
+  const res = (await r.json()) as
+    | { url: string }
+    | { payload: BancoPublicado; barajas: IndiceBaraja[]; prueba: PruebaGratis };
+  if ('payload' in res) {
+    const banco = hidratarBanco(res.payload);
+    const porId = new Map(banco.preguntas.map((p) => [p.id, p]));
+    const barajas = res.barajas.map((b): Baraja => ({
+      numero: b.numero,
+      firma: b.firma,
+      nivel: b.nivel,
+      preguntas: (b.ids ?? []).map((id) => porId.get(id)).filter((p): p is PreguntaMS => !!p),
+      bloqueada: !b.ids,
+    }));
+    return { banco, barajas, prueba: res.prueba };
+  }
+  const j = await fetch(res.url, { signal });
   if (!j.ok) throw new Error('No se pudo descargar el examen.');
-  return hidratarBanco(await j.json());
+  const banco = hidratarBanco(await j.json());
+  return { banco, barajas: armarBarajas(banco), prueba: null };
+}
+
+/**
+ * Lo que el servidor entrega a quien no tiene el plan (`barajasLibres` en
+ * `EXAMENES`): las barajas se arman con el banco ENTERO —así salen idénticas a
+ * las de quien sí lo tiene— y del JSON solo se dejan las preguntas de las libres.
+ */
+export function recortarParaPrueba(publicado: BancoPublicado, libres: number[], plan: PlanKey) {
+  const barajas = armarBarajas(hidratarBanco(publicado));
+  const abiertas = barajas.filter((b) => libres.includes(b.numero));
+  const ids = new Set(abiertas.flatMap((b) => b.preguntas.map((p) => p.id)));
+  const { preguntas } = publicado;
+  const estructuras = new Set(preguntas.map((p) => p.preguntaA.respuesta)).size;
+  const secciones = new Set(preguntas.map(({ resumenRelacionado: r }) => `${r.claseId}|${r.opcion}|${r.seccion}`)).size;
+  return {
+    payload: { ...publicado, preguntas: publicado.preguntas.filter((p) => ids.has(p.id)) },
+    barajas: barajas.map((b): IndiceBaraja => ({
+      numero: b.numero,
+      firma: b.firma,
+      nivel: b.nivel,
+      ...(libres.includes(b.numero) ? { ids: b.preguntas.map((p) => p.id) } : {}),
+    })),
+    prueba: { plan, preguntas: preguntas.length, estructuras, secciones } satisfies PruebaGratis,
+  };
 }
 
 /** Banco tal como se publica: lo del léxico va una sola vez (ver ensamblar-banco.mjs). */
@@ -93,7 +154,10 @@ export interface Baraja {
   /** Huella de sus preguntas: si el banco cambia, la baraja deja de contar como hecha. */
   firma: string;
   nivel: NivelBaraja;
+  /** Vacía si está bloqueada: sus preguntas no llegaron al navegador. */
   preguntas: PreguntaMS[];
+  /** Sin el plan: se pinta con candado y abre la pasarela. */
+  bloqueada?: boolean;
 }
 
 /** FNV-1a: mezcla estable (la misma en cada navegador) sin depender del orden del JSON. */

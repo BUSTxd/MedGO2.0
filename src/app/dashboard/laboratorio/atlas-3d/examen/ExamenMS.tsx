@@ -16,13 +16,20 @@
  */
 
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
+import dynamic from 'next/dynamic';
 import NotaFinal from '@/components/examen/NotaFinal';
+import CortePremium from '@/components/examen/CortePremium';
+import { usePlan } from '@/components/PlanProvider';
 import { trackEvent } from '@/lib/analytics';
+import { PLANS, planUnlocks } from '@/lib/plans';
 import { corregirA, corregirB, indexarFormas, type CorreccionB, type IndiceFormas, type Veredicto } from '@/lib/examen-ms/corregir';
-import { armarBarajas, cargarBanco, guardarIntento, leerAvance, type Avance, type Baraja, type NivelBaraja } from '@/lib/examen-ms/sesion';
+import { cargarBanco, guardarIntento, leerAvance, type Avance, type Baraja, type NivelBaraja, type PruebaGratis } from '@/lib/examen-ms/sesion';
 import type { BancoMS, CategoriaMS, ObjetivoMS, PreguntaMS, TipoB } from '@/lib/examen-ms/tipos';
 import r from '@/styles/examRunner.module.css';
 import s from '@/styles/examenMS.module.css';
+
+// El SDK de Mercado Pago pesa: el modal sólo se baja cuando alguien lo abre.
+const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ssr: false });
 
 export interface ControlEscena {
   objetivo: ObjetivoMS | null;
@@ -49,6 +56,8 @@ const NIVELES: { nivel: NivelBaraja; titulo: string }[] = [
   { nivel: 'muy_probable', titulo: 'Muy probables' },
   { nivel: 'posible', titulo: 'Posibles' },
 ];
+/** Cada nivel tiñe sus barajas: dorado lo que ya salió, azul lo muy probable, violeta lo posible. */
+const TINTE: Record<NivelBaraja, string> = { oficial: s.tinteOficial, muy_probable: s.tinteProbable, posible: s.tintePosible };
 /** Veces que se puede usar «Quitar músculos» en un examen de 10. */
 const USOS_QUITAR = 2;
 const CLAVE_AYUDA = 'medgo:examen-ms:ayuda-musculos';
@@ -57,18 +66,28 @@ const CARGA_MIN = 1300;
 
 /** Clave del banco en `EXAMENES`: con ella la ficha del admin sabe qué examen es y su acceso. */
 const EXAM_KEY = 'aparato-locomotor/practico-ms';
+/**
+ * Lo que se espera, tras terminar, antes de que baje el corte premium (igual que
+ * en ExamRunner): da tiempo a que la nota termine de contar.
+ */
+const ESPERA_CORTE = 2400;
 
 type Paso = 'volteo' | 'esquina' | 'A' | 'B' | 'correccion';
 interface Respuesta { escritoA: string; veredictoA: Veredicto; escritoB: string; b: CorreccionB }
 
-export default function ExamenMS({ reducido, onControl, onSalir }: {
+export default function ExamenMS({ reducido, onControl, onSalir, etiquetaVolver = 'Volver al atlas' }: {
   reducido: boolean;
   onControl: (c: ControlEscena) => void;
   onSalir: () => void;
+  etiquetaVolver?: string;
 }) {
   const [fase, setFase] = useState<'cargando' | 'error' | 'barajas' | 'examen' | 'resultados'>('cargando');
   const [error, setError] = useState<string | null>(null);
   const [banco, setBanco] = useState<BancoMS | null>(null);
+  const [barajas, setBarajas] = useState<Baraja[]>([]);
+  /** Solo sin plan: el banco llegó recortado a las barajas de prueba. */
+  const [prueba, setPrueba] = useState<PruebaGratis | null>(null);
+  const [pagoAbierto, setPagoAbierto] = useState(false);
   const [avance, setAvance] = useState<Avance>({ vistas: [], intentos: [], barajas: {} });
   const [baraja, setBaraja] = useState<Baraja | null>(null);
   const [preguntas, setPreguntas] = useState<PreguntaMS[]>([]);
@@ -80,10 +99,26 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
   const [sinMusculos, setSinMusculos] = useState(false);
   const [ayuda, setAyuda] = useState(false);
   const indice = useMemo<IndiceFormas | null>(() => (banco ? indexarFormas(banco.formas) : null), [banco]);
-  const barajas = useMemo(() => (banco ? armarBarajas(banco) : []), [banco]);
-  /** La primera baraja sin hacer a partir de `desde` (y si no, desde el principio). */
-  const pendienteDesde = (desde: number, av: Avance) =>
-    barajas.find((b) => b.numero > desde && !av.barajas[b.firma]) ?? barajas.find((b) => !av.barajas[b.firma]) ?? null;
+  /** La primera baraja abierta sin hacer a partir de `desde` (y si no, desde el principio). */
+  const pendienteDesde = (desde: number, av: Avance) => {
+    const pendiente = (b: Baraja) => !b.bloqueada && !av.barajas[b.firma];
+    return barajas.find((b) => b.numero > desde && pendiente(b)) ?? barajas.find(pendiente) ?? null;
+  };
+
+  const abrirPago = (origen: string) => {
+    if (!prueba) return;
+    trackEvent('pago_abierto', { plan: prueba.plan, origen, examKey: EXAM_KEY });
+    setPagoAbierto(true);
+  };
+
+  // Al pagar, el plan vivo cambia al instante: se vuelve a pedir el banco, que
+  // ahora llega entero. El modal sigue montado (no depende de la fase) y
+  // termina de enseñar el recibo.
+  const plan = usePlan();
+  const pagado = !!prueba && plan.isActive && planUnlocks(plan.plan, prueba.plan);
+  useEffect(() => {
+    if (pagado) setIntento((n) => n + 1);
+  }, [pagado]);
 
   // ── Carga del banco (con la animación de carga) ────────────────────────────
   useEffect(() => {
@@ -92,11 +127,13 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
     setError(null);
     const t0 = performance.now();
     cargarBanco(abort.signal)
-      .then(async (b) => {
+      .then(async (c) => {
         const falta = CARGA_MIN - (performance.now() - t0);
         if (falta > 0 && !reducido) await new Promise((ok) => setTimeout(ok, falta));
         if (abort.signal.aborted) return;
-        setBanco(b);
+        setBanco(c.banco);
+        setBarajas(c.barajas);
+        setPrueba(c.prueba);
         setAvance(leerAvance());
         setFase('barajas');
       })
@@ -148,6 +185,8 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
   }, [paso, i, reducido]);
 
   const comenzar = (b: Baraja) => {
+    // Sus preguntas ni siquiera llegaron: el candado abre la pasarela.
+    if (b.bloqueada) { abrirPago('baraja'); return; }
     setBaraja(b);
     // Orden del examen real: mezclado, sin agrupar por categoría (cambia en cada intento).
     setPreguntas([...b.preguntas].sort(() => Math.random() - 0.5));
@@ -256,7 +295,7 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
             <p>{error}</p>
             <div className={s.botones}>
               <button type="button" className={s.primario} onClick={() => setIntento((n) => n + 1)}>Reintentar</button>
-              <button type="button" className={s.secundario} onClick={onSalir}>Volver al atlas</button>
+              <button type="button" className={s.secundario} onClick={onSalir}>{etiquetaVolver}</button>
             </div>
           </section>
         </div>
@@ -264,7 +303,14 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
 
       {fase === 'barajas' && banco && (
         <div className={s.velo}>
-          <SelectorBarajas barajas={barajas} avance={avance} sugerida={pendienteDesde(0, avance)} onElegir={comenzar} />
+          <SelectorBarajas
+            barajas={barajas}
+            avance={avance}
+            sugerida={pendienteDesde(0, avance)}
+            prueba={prueba}
+            onElegir={comenzar}
+            onPagar={() => abrirPago('barajas')}
+          />
         </div>
       )}
 
@@ -292,10 +338,19 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
           hechas={barajas.filter((b) => avance.barajas[b.firma]).length}
           total={barajas.length}
           siguiente={pendienteDesde(baraja.numero, avance)}
+          prueba={prueba}
+          libres={barajas.filter((b) => !b.bloqueada).length}
+          reducido={reducido}
+          etiquetaVolver={etiquetaVolver}
           onElegir={comenzar}
           onBarajas={() => setFase('barajas')}
+          onPagar={abrirPago}
           onSalir={onSalir}
         />
+      )}
+
+      {prueba && pagoAbierto && (
+        <SubscribeModal open planKey={prueba.plan} onClose={() => setPagoAbierto(false)} />
       )}
     </div>
   );
@@ -312,13 +367,16 @@ function Progreso({ hechas, total }: { hechas: number; total: number }) {
 }
 
 // ── Barajas: las hechas con cheque y nota; cualquiera se puede (re)hacer ─────
-function SelectorBarajas({ barajas, avance, sugerida, onElegir }: {
+function SelectorBarajas({ barajas, avance, sugerida, prueba, onElegir, onPagar }: {
   barajas: Baraja[];
   avance: Avance;
   sugerida: Baraja | null;
+  prueba: PruebaGratis | null;
   onElegir: (b: Baraja) => void;
+  onPagar: () => void;
 }) {
   const hechas = barajas.filter((b) => avance.barajas[b.firma]).length;
+  const libres = barajas.filter((b) => !b.bloqueada);
   return (
     <section className={`${s.dialogo} ${s.dialogoBarajas}`} role="dialog" aria-modal="true" aria-labelledby="examen-ms-titulo">
       <span className={s.kicker}>Examen práctico · Miembro superior</span>
@@ -334,6 +392,12 @@ function SelectorBarajas({ barajas, avance, sugerida, onElegir }: {
           </ul>
         </>
       )}
+      {prueba && (
+        <p className={s.pruebaAviso}>
+          <b>Prueba gratis:</b> las barajas {libres.map((b) => b.numero).join(' y ')} están abiertas. Las otras{' '}
+          {barajas.length - libres.length} se abren con el plan {PLANS[prueba.plan].label}.
+        </p>
+      )}
       <Progreso hechas={hechas} total={barajas.length} />
 
       {NIVELES.map(({ nivel, titulo }) => {
@@ -344,24 +408,43 @@ function SelectorBarajas({ barajas, avance, sugerida, onElegir }: {
             <p className={s.barajasTitulo}>{titulo}</p>
             <div className={s.barajasRejilla}>
               {delNivel.map((b) => {
-                const res = avance.barajas[b.firma];
+                const res = b.bloqueada ? undefined : avance.barajas[b.firma];
                 const esSugerida = b === sugerida;
+                const clases = [
+                  s.baraja,
+                  TINTE[b.nivel],
+                  res ? s.barajaHecha : '',
+                  esSugerida ? s.barajaSugerida : '',
+                  b.bloqueada ? s.barajaBloqueada : '',
+                ].join(' ');
                 return (
                   <button
                     key={b.firma}
                     type="button"
-                    className={`${s.baraja} ${res ? s.barajaHecha : ''} ${esSugerida ? s.barajaSugerida : ''}`}
+                    className={clases}
                     onClick={() => onElegir(b)}
-                    title={res ? `Repetir la baraja ${b.numero}` : `Hacer la baraja ${b.numero}`}
-                    aria-label={res ? `Baraja ${b.numero}, hecha: ${res.puntos} de ${res.total}. Repetir.` : `Baraja ${b.numero}${esSugerida ? ', la siguiente' : ''}`}
+                    title={b.bloqueada ? `La baraja ${b.numero} es parte del plan` : res ? `Repetir la baraja ${b.numero}` : `Hacer la baraja ${b.numero}`}
+                    aria-label={
+                      b.bloqueada ? `Baraja ${b.numero}, bloqueada. Ver el plan.`
+                        : res ? `Baraja ${b.numero}, hecha: ${res.puntos} de ${res.total}. Repetir.`
+                          : `Baraja ${b.numero}${esSugerida ? ', la siguiente' : ''}`
+                    }
                   >
                     {res && (
                       <span className={s.barajaCheque} aria-hidden>
                         <svg width="10" height="10" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                       </span>
                     )}
+                    {prueba && !b.bloqueada && !res && <span className={s.barajaGratis}>Gratis</span>}
                     <span className={s.barajaNumero}>{b.numero}</span>
-                    {res ? <span className={s.barajaNota}>{res.puntos}/{res.total}</span> : esSugerida ? <span className={s.barajaSigue}>Sigue</span> : null}
+                    {b.bloqueada ? (
+                      <svg className={s.barajaCandado} width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+                        <rect x="4" y="11" width="16" height="10" rx="2" stroke="currentColor" strokeWidth="2.4" />
+                        <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+                      </svg>
+                    ) : res ? <span className={s.barajaNota}>{res.puntos}/{res.total}</span>
+                      : esSugerida ? <span className={s.barajaSigue}>Sigue</span>
+                        : <span className={s.barajaPie}>10 preg.</span>}
                   </button>
                 );
               })}
@@ -373,8 +456,10 @@ function SelectorBarajas({ barajas, avance, sugerida, onElegir }: {
       <div className={s.botones}>
         {sugerida ? (
           <button type="button" className={s.primario} onClick={() => onElegir(sugerida)} autoFocus>
-            {hechas ? `Seguir con la baraja ${sugerida.numero}` : 'Empezar la baraja 1'}
+            {hechas ? `Seguir con la baraja ${sugerida.numero}` : `Empezar la baraja ${sugerida.numero}`}
           </button>
+        ) : prueba ? (
+          <button type="button" className={s.primario} onClick={onPagar} autoFocus>Desbloquear las {barajas.length} barajas</button>
         ) : (
           <p className={s.todasHechas}>Hiciste todas las barajas. Toca cualquiera para repetirla.</p>
         )}
@@ -543,18 +628,45 @@ function Correccion({ pregunta, r: x, onSiguiente, ultima }: { pregunta: Pregunt
 }
 
 // ── Resultados: mismo diseño que el examen final de Inmunología ─────────────
-function Resultados({ baraja, preguntas, respuestas, hechas, total, siguiente, onElegir, onBarajas, onSalir }: {
+function Resultados({ baraja, preguntas, respuestas, hechas, total, siguiente, prueba, libres, reducido, etiquetaVolver, onElegir, onBarajas, onPagar, onSalir }: {
   baraja: Baraja;
   preguntas: PreguntaMS[];
   respuestas: Respuesta[];
   hechas: number;
   total: number;
-  /** La próxima baraja sin hacer (null si ya están todas). */
+  /** La próxima baraja abierta sin hacer (null si ya están todas). */
   siguiente: Baraja | null;
+  /** Solo sin plan: qué abre el plan que falta. */
+  prueba: PruebaGratis | null;
+  /** Cuántas barajas están abiertas (las de prueba, sin plan). */
+  libres: number;
+  reducido: boolean;
+  etiquetaVolver: string;
   onElegir: (b: Baraja) => void;
   onBarajas: () => void;
+  onPagar: (origen: string) => void;
   onSalir: () => void;
 }) {
+  // Sin plan, pasados un par de segundos baja el corte premium (la misma pieza y
+  // animación que el final de Inmunología). Al abrirse, la capa vuelve al tope:
+  // el primer impulso es bajar a leer el análisis y el corte se abriría fuera
+  // de la vista.
+  const capaRef = useRef<HTMLDivElement>(null);
+  const [corteAbierto, setCorteAbierto] = useState(false);
+  useEffect(() => {
+    if (!prueba) return;
+    if (reducido) { setCorteAbierto(true); return; }
+    const t = setTimeout(() => setCorteAbierto(true), ESPERA_CORTE);
+    return () => clearTimeout(t);
+  }, [prueba, reducido]);
+  useEffect(() => {
+    if (!corteAbierto || !prueba) return;
+    trackEvent('contenido_bloqueado', { origen: 'prueba-examen3d', examKey: EXAM_KEY, plan: prueba.plan });
+    const behavior = reducido ? 'auto' : 'smooth';
+    capaRef.current?.scrollTo({ top: 0, behavior });
+    window.scrollTo({ top: 0, behavior });
+  }, [corteAbierto, prueba, reducido]);
+
   const filas = preguntas.map((p, k) => {
     const x = respuestas[k];
     const a = !!x && x.veredictoA !== 'mal';
@@ -577,8 +689,34 @@ function Resultados({ baraja, preguntas, respuestas, hechas, total, siguiente, o
   const titulo = pct >= 80 ? '¡Excelente!' : pct >= 60 ? '¡Buen trabajo!' : pct >= 40 ? 'Vas por buen camino' : 'A repasar este tema';
 
   return (
-    <div className={s.resultadosCapa}>
+    <div ref={capaRef} className={s.resultadosCapa}>
       <div className={`${r.resultShell} ${s.resultados}`}>
+        {prueba && (
+          <div className={`${r.corteWrap} ${corteAbierto ? r.corteWrapAbierto : ''}`} inert={!corteAbierto}>
+            <div className={r.corteWrapInner}>
+              <CortePremium
+                plan={prueba.plan}
+                titulo="Completa el examen"
+                acento={`con las ${total} barajas`}
+                cuerpo={<>
+                  Hiciste la <strong>baraja {baraja.numero}</strong>, una de las {libres} de prueba. Con el plan{' '}
+                  {PLANS[prueba.plan].label} se abren <strong>las {total - libres} que faltan</strong>: las{' '}
+                  {prueba.preguntas} preguntas del práctico de miembro superior, de lo que salió en los
+                  exámenes reales a lo menos probable, y el resumen de cada estructura que falles.
+                </>}
+                datos={[
+                  { icono: 'barajas', num: total - libres, label: 'barajas más' },
+                  { icono: 'modelo', num: prueba.estructuras, label: 'estructuras en el modelo 3D' },
+                  { icono: 'explicacion', num: prueba.preguntas, label: 'tarjetas de memoria' },
+                  { icono: 'resumen', num: prueba.secciones, label: 'secciones de resumen enlazadas' },
+                ]}
+                isAuthed
+                onVer={() => onPagar('corte')}
+              />
+            </div>
+          </div>
+        )}
+
         <NotaFinal score={puntos} total={max} pct={pct} etiqueta="del puntaje" />
         <h2 className={r.resultTitle}>{titulo}</h2>
         <p className={r.resultSub}>Baraja {baraja.numero}. Cada pregunta vale 2 puntos: 1 la A y 1 la B. Tu intento se guardó en este navegador.</p>
@@ -617,10 +755,22 @@ function Resultados({ baraja, preguntas, respuestas, hechas, total, siguiente, o
                     <b>{p.preguntaA.respuesta}</b>
                     <small>{!a ? 'Fallaste el nombre' : `Fallaste la B · ${TIPO_B[p.preguntaB.tipoB]}`} · {p.categoria}</small>
                   </div>
-                  <a href={p.resumenRelacionado.href} target="_blank" rel="noopener noreferrer" className={s.enlaceResumen}>
-                    Abrir el resumen
-                    <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  </a>
+                  {prueba ? (
+                    // Los resúmenes de Locomotor son de pago (la cerradura es /api/resumen):
+                    // sin el plan, el enlace llevaría a un velo. Mejor la pasarela aquí.
+                    <button type="button" className={`${s.enlaceResumen} ${s.enlaceResumenBloqueado}`} onClick={() => onPagar('resumen')}>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+                        <rect x="4" y="11" width="16" height="10" rx="2" stroke="currentColor" strokeWidth="2.4" />
+                        <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+                      </svg>
+                      Abrir el resumen
+                    </button>
+                  ) : (
+                    <a href={p.resumenRelacionado.href} target="_blank" rel="noopener noreferrer" className={s.enlaceResumen}>
+                      Abrir el resumen
+                      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -631,9 +781,10 @@ function Resultados({ baraja, preguntas, respuestas, hechas, total, siguiente, o
 
         <div className={s.botones}>
           {siguiente && <button type="button" className={s.primario} onClick={() => onElegir(siguiente)}>Siguiente baraja ({siguiente.numero})</button>}
-          <button type="button" className={siguiente ? s.secundario : s.primario} onClick={() => onElegir(baraja)}>Repetir esta baraja</button>
+          {!siguiente && prueba && <button type="button" className={s.primario} onClick={() => onPagar('fin-prueba')}>Desbloquear las {total} barajas</button>}
+          <button type="button" className={siguiente || prueba ? s.secundario : s.primario} onClick={() => onElegir(baraja)}>Repetir esta baraja</button>
           <button type="button" className={s.secundario} onClick={onBarajas}>Ver todas las barajas</button>
-          <button type="button" className={s.secundario} onClick={onSalir}>Volver al atlas</button>
+          <button type="button" className={s.secundario} onClick={onSalir}>{etiquetaVolver}</button>
         </div>
       </div>
     </div>

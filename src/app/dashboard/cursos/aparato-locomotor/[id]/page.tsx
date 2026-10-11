@@ -39,6 +39,26 @@ export default async function ActividadPage({
   // resumen y aquí sólo se dice cuáles puede abrir el usuario.
   if (sp?.tarjetas === '1' && act.tarjetas) {
     const plan = await getCachedPlanState();
+    // La Evaluación 1 se ve sin velo (su examen 3D trae prueba gratis), pero sus
+    // tarjetas son de pago: sin el plan, la pasarela en vez del runner (que
+    // recibiría un 403 de la route).
+    if (!tieneAccesoA(plan, 'interno')) {
+      const user = await getUser();
+      return (
+        <div className={styles.microPage}>
+          <LockedContent
+            requiredPlan="interno"
+            planState={plan}
+            isAuthed={!!user}
+            preview={false}
+            titulo="Banqueo bloqueado"
+            descripcion="Las 420 tarjetas del examen práctico de miembro superior son parte del plan. En la Simulación tienes 2 barajas de prueba gratis."
+          >
+            {null}
+          </LockedContent>
+        </div>
+      );
+    }
     const resumenes: Record<string, boolean> = {};
     for (const sem of semanas)
       for (const a of sem.actividades)
@@ -158,8 +178,10 @@ export default async function ActividadPage({
   );
 
   // Sin material publicado no hay nada que proteger: se ve igual que en el
-  // índice, sin candado.
-  if (libre || !tieneMaterial('aparato-locomotor', act)) return detail;
+  // índice, sin candado. Una evaluación práctica con examen 3D tampoco lleva
+  // velo: su Simulación trae barajas de prueba gratis y lo de pago lo cierran
+  // sus propias puertas (la route del banco y la de las tarjetas).
+  if (libre || !tieneMaterial('aparato-locomotor', act) || (act.tipo === 'EXAMEN-P' && act.simulacion)) return detail;
 
   return (
     <LockedContent requiredPlan="interno" planState={planState} isAuthed={!!user}>
