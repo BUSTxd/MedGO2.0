@@ -22,29 +22,37 @@ export interface ItemBaraja {
 
 const TINTE: Record<NivelBaraja, string> = { oficial: s.tinteOficial, muy_probable: s.tinteProbable, posible: s.tintePosible };
 
-export default function RejillaBarajas({ items, sugerida, pie, onElegir }: {
+export default function RejillaBarajas({ items, sugerida, pie, onElegir, porNivel = true }: {
   items: ItemBaraja[];
   /** Firma de la siguiente que toca. */
   sugerida?: string | null;
   /** Lo que se lee bajo el número de una baraja pendiente («10 preg.»). */
   pie: string;
   onElegir: (item: ItemBaraja) => void;
+  /**
+   * Agrupadas y teñidas por nivel (examen 3D). Sin esto, una sola lista en orden
+   * y de un solo color: el número ya dice cuál es más probable (tarjetas de 30,
+   * donde casi todas las barajas caerían en «Posibles»).
+   */
+  porNivel?: boolean;
 }) {
+  const grupos = porNivel
+    ? NIVELES_BARAJA.map(({ nivel, titulo }) => ({ clave: nivel, titulo, lista: items.filter((b) => b.nivel === nivel) }))
+    : [{ clave: 'todas', titulo: null, lista: items }];
   return (
     <div className={s.rejilla}>
-      {NIVELES_BARAJA.map(({ nivel, titulo }) => {
-        const delNivel = items.filter((b) => b.nivel === nivel);
+      {grupos.map(({ clave, titulo, lista: delNivel }) => {
         if (!delNivel.length) return null;
         return (
-          <div key={nivel} className={s.grupo}>
-            <p className={s.grupoTitulo}>{titulo}</p>
+          <div key={clave} className={s.grupo}>
+            {titulo && <p className={s.grupoTitulo}>{titulo}</p>}
             <div className={s.lista}>
               {delNivel.map((b) => {
                 const hecha = !b.bloqueada && !!b.nota;
                 const esSugerida = b.firma === sugerida;
                 const clases = [
                   s.baraja,
-                  TINTE[b.nivel],
+                  porNivel ? TINTE[b.nivel] : s.tinteProbable,
                   hecha ? s.hecha : '',
                   esSugerida ? s.sugerida : '',
                   b.bloqueada ? s.bloqueada : '',

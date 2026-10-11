@@ -477,8 +477,9 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
           <p className={s.portadaKicker}>Banqueo</p>
           <h1 className={s.portadaTitulo}>Barajas de {barajas}</h1>
           <p className={s.portadaSub}>
-            Van de lo que salió en los exámenes reales (2025-A, 2025-B y 2024) a lo menos probable.
-            Has hecho <strong>{hechasN} de {mazos.length}</strong>; toca una hecha para repetirla.
+            La 1 es la más probable (lo que salió en 2025-A, 2025-B y 2024) y cada una lo es
+            un poco menos que la anterior. Has hecho <strong>{hechasN} de {mazos.length}</strong>;
+            toca una hecha para repetirla.
           </p>
           <RejillaBarajas
             items={mazos.map(m => {
@@ -487,6 +488,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
             })}
             sugerida={sugerida?.firma}
             pie={`${barajas} tarj.`}
+            porNivel={false}
             onElegir={item => reiniciar(mazos.find(m => m.firma === item.firma))}
           />
           <div className={s.panelBarajasPie}>
