@@ -477,8 +477,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
           <p className={s.portadaKicker}>Banqueo</p>
           <h1 className={s.portadaTitulo}>Barajas de {barajas}</h1>
           <p className={s.portadaSub}>
-            La 1 es la más probable (lo que salió en 2025-A, 2025-B y 2024) y cada una lo es
-            un poco menos que la anterior. Has hecho <strong>{hechasN} de {mazos.length}</strong>;
+            Has hecho <strong>{hechasN} de {mazos.length}</strong>;
             toca una hecha para repetirla.
           </p>
           <RejillaBarajas
