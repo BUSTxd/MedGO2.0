@@ -84,8 +84,11 @@ export default async function LocomotorPage() {
               // Si la card redirige a otra sección, no la bloqueamos:
               // el destino maneja su propio acceso. Y una clase sin material
               // publicado tampoco: no hay nada detrás del candado.
+              // Una evaluación práctica con examen 3D trae barajas de prueba gratis:
+              // sin candado y con su etiqueta (misma regla que su `[id]/page.tsx`).
+              const conPrueba = act.tipo === 'EXAMEN-P' && !!act.simulacion;
               const isLocked =
-                !esLibre(act) && !act.linkOverride && !hasAcceso && tieneMaterial('aparato-locomotor', act);
+                !esLibre(act) && !act.linkOverride && !hasAcceso && !conPrueba && tieneMaterial('aparato-locomotor', act);
 
               const href = act.linkOverride ?? `/dashboard/cursos/aparato-locomotor/${act.id}`;
 
@@ -116,6 +119,9 @@ export default async function LocomotorPage() {
                       {docStr && ` · ${docStr}`}
                     </div>
                   </div>
+                  {conPrueba && !hasAcceso && (
+                    <span className={styles.activityFree} title="2 barajas del examen 3D, gratis">Prueba gratis</span>
+                  )}
                   {isLocked ? (
                     <span className={styles.activityLock} title="Requiere plan Interno" aria-hidden>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
