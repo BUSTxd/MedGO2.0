@@ -47,8 +47,7 @@ export async function GET(req: NextRequest) {
 
   const lineas = [['fecha_lima', 'email', 'plan', 'evento', 'accion', 'lugar', 'acceso', 'detalle', 'ruta'].join(',')];
   for (const f of filas) {
-    // En el CSV general el admin no cuenta; en el suyo propio, sí.
-    if (!userId && f.user_id && adminIds.has(f.user_id)) continue;
+    if (f.user_id && adminIds.has(f.user_id)) continue;
     const e = legible(f);
     lineas.push([
       fechaLima(f.created_at),
