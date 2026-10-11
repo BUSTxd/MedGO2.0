@@ -960,6 +960,55 @@ button.irResumen:hover {
 
 .secundario:hover { border-color: var(--acc); color: var(--acc); }
 
+/* ── Barajas (banco grande partido en barajas fijas) ─────────────────────────
+   Botón de la barra: abre el panel desde cualquier paso. Jugando va después
+   del contador; fuera del juego no hay contador y se empuja él a la derecha. */
+.verBarajas {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1.5px solid var(--linea);
+  background: var(--sup);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tinta);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.verBarajasSolo { margin-left: auto; }
+.verBarajas:hover { border-color: var(--acc); color: var(--acc); }
+
+.verBarajasCuenta {
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(var(--acc-rgb), 0.14);
+  color: var(--acc);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.panelBarajas {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 18px 0 8px;
+  text-align: center;
+}
+
+.panelBarajas .portadaSub { margin-bottom: 14px; }
+.panelBarajas .portadaSub strong { color: var(--tinta); }
+
+.panelBarajasPie {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
 /* ─── Pared de la muestra ─── */
 
 .pared {

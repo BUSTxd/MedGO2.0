@@ -71,7 +71,7 @@ export default async function ActividadPage({
           titulo={act.titulo}
           backHref={`/dashboard/cursos/aparato-locomotor/${id}`}
           resumenes={resumenes}
-          ronda={30}
+          barajas={30}
         />
       </div>
     );

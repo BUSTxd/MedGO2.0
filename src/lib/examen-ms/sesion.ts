@@ -4,6 +4,7 @@
  */
 
 import type { PlanKey } from '@/lib/plans';
+import { RANGO_NIVEL, firmaDe, huella, nivelMayoritario, type NivelBaraja } from '@/lib/barajas';
 import type { BancoMS, PreguntaMS } from './tipos';
 
 export const CLAVE_BANCO = 'aparato-locomotor/practico-ms';
@@ -143,10 +144,10 @@ const PLANTILLA: { nombre: string; encaja: Hueco }[] = [
 const estructuraDe = (p: PreguntaMS) => p.preguntaA.respuesta;
 
 // ── Barajas: el banco partido en exámenes fijos de 10 ────────────────────────
-/** Lo que salió en un examen real (2025-A, 2025-B, 2024) va primero; luego lo muy probable. */
-export type NivelBaraja = 'oficial' | 'muy_probable' | 'posible';
-const RANGO: Record<NivelBaraja, number> = { oficial: 0, muy_probable: 1, posible: 2 };
-const nivelDe = (p: PreguntaMS): NivelBaraja =>
+export type { NivelBaraja };
+const RANGO = RANGO_NIVEL;
+/** También lo usan las tarjetas (`scripts/examen-ms/tarjetas.mjs` lo calca): las dos barajas ordenan igual. */
+export const nivelDe = (p: Pick<PreguntaMS, 'origen' | 'probabilidad'>): NivelBaraja =>
   p.origen.startsWith('oficial') || p.probabilidad === 'salio' ? 'oficial' : p.probabilidad === 'posible' ? 'posible' : 'muy_probable';
 
 export interface Baraja {
@@ -158,13 +159,6 @@ export interface Baraja {
   preguntas: PreguntaMS[];
   /** Sin el plan: se pinta con candado y abre la pasarela. */
   bloqueada?: boolean;
-}
-
-/** FNV-1a: mezcla estable (la misma en cada navegador) sin depender del orden del JSON. */
-function huella(t: string): number {
-  let h = 0x811c9dc5;
-  for (let k = 0; k < t.length; k++) h = Math.imul(h ^ t.charCodeAt(k), 0x01000193);
-  return h >>> 0;
 }
 
 /**
@@ -208,12 +202,10 @@ export function armarBarajas(banco: BancoMS): Baraja[] {
     }
     while (elegidas.length < PREGUNTAS_POR_EXAMEN && quedan.length) tomar(quedan[0]);
 
-    const cuenta = (n: NivelBaraja) => elegidas.filter((p) => nivelDe(p) === n).length;
-    const nivel = (['oficial', 'muy_probable', 'posible'] as const).reduce((m, n) => (cuenta(n) > cuenta(m) ? n : m));
     barajas.push({
       numero: barajas.length + 1,
-      firma: huella(elegidas.map((p) => p.id).sort().join('|')).toString(36),
-      nivel,
+      firma: firmaDe(elegidas.map((p) => p.id)),
+      nivel: nivelMayoritario(elegidas.map(nivelDe)),
       preguntas: elegidas,
     });
   }

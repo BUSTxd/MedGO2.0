@@ -9,6 +9,8 @@ import { dorsoDe, esCorrecta, flashcardsDe, prepararRonda } from '@/lib/tarjetas
 import { shuffle } from '@/lib/utils/shuffle';
 import { cursoDe, desglosarIntento, registrarIntento } from '@/lib/temas-flojos';
 import { trackEvent } from '@/lib/analytics';
+import { partirEnBarajas, type BarajaDe } from '@/lib/barajas';
+import RejillaBarajas from '@/components/examen/RejillaBarajas';
 import Tarjeta, { type Fase } from './Tarjeta';
 import ValoracionPregunta from './ValoracionPregunta';
 import type { Valoracion } from '@/lib/valoraciones';
@@ -33,7 +35,7 @@ const LETRAS = 'ABCDE';
 const PASO_ABANICO = 6;
 
 type Modo = 'flash' | 'quiz';
-type Paso = 'cargando' | 'error' | 'portada' | 'jugando' | 'resultado';
+type Paso = 'cargando' | 'error' | 'portada' | 'barajas' | 'jugando' | 'resultado';
 
 interface Respuesta { q: string; ok: boolean }
 
@@ -70,33 +72,28 @@ const Indice = ({ letra, palo, pie = false }: { letra: string; palo: Palo; pie?:
   </span>
 );
 
-// Barajas grandes (el examen 3D de miembro superior, 420) se sirven por rondas:
-// primero las que aún no salieron, y al verlas todas el registro vuelve a cero.
-const claveVistas = (examKey: string) => `medgo:tarjetas-vistas:${examKey}`;
+// Barajas grandes (el examen 3D de miembro superior, 420) se parten en barajas
+// fijas (`partirEnBarajas`), de lo que salió en los exámenes reales a lo menos
+// probable. Cada una recuerda su último resultado en este navegador, por firma.
+interface ResultadoBaraja { sabidas: number; total: number; fecha: string; veces: number }
+const claveBarajas = (examKey: string) => `medgo:tarjetas-barajas:${examKey}`;
 
-function leerVistas(examKey: string): Set<string> {
+function leerBarajas(examKey: string): Record<string, ResultadoBaraja> {
   try {
-    return new Set(JSON.parse(localStorage.getItem(claveVistas(examKey)) ?? '[]') as string[]);
+    const r = JSON.parse(localStorage.getItem(claveBarajas(examKey)) ?? '{}') as Record<string, ResultadoBaraja> | null;
+    return r && typeof r === 'object' ? r : {};
   } catch {
-    return new Set();
+    return {};
   }
 }
 
-function guardarVistas(examKey: string, vistas: Set<string>) {
+function guardarBaraja(examKey: string, firma: string, sabidas: number, total: number): Record<string, ResultadoBaraja> {
+  const todas = leerBarajas(examKey);
+  const nuevo = { ...todas, [firma]: { sabidas, total, fecha: new Date().toISOString(), veces: (todas[firma]?.veces ?? 0) + 1 } };
   try {
-    localStorage.setItem(claveVistas(examKey), JSON.stringify([...vistas]));
-  } catch { /* sin almacenamiento la ronda sale igual, sólo que sin memoria */ }
-}
-
-function sacarRonda(examKey: string, todas: Flashcard[], n: number): Flashcard[] {
-  let vistas = leerVistas(examKey);
-  if (todas.every(t => vistas.has(t.id))) {
-    vistas = new Set();
-    guardarVistas(examKey, vistas);
-  }
-  const nuevas = shuffle(todas.filter(t => !vistas.has(t.id)));
-  if (nuevas.length >= n) return nuevas.slice(0, n);
-  return [...nuevas, ...shuffle(todas.filter(t => vistas.has(t.id))).slice(0, n - nuevas.length)];
+    localStorage.setItem(claveBarajas(examKey), JSON.stringify(nuevo));
+  } catch { /* sin almacenamiento la baraja se juega igual, sólo que sin cheque */ }
+  return nuevo;
 }
 
 /** «12 tarjetas» o, en muestra, «10 de 32 tarjetas». */
@@ -116,14 +113,26 @@ interface Props {
    * clases): id del resumen → si el usuario puede leerlo.
    */
   resumenes?: Record<string, boolean>;
-  /** Tarjetas por ronda, priorizando las no vistas. Sin esto, la baraja entera. */
-  ronda?: number;
+  /**
+   * Tamaño de baraja: la baraja grande se parte en barajas fijas de este tamaño,
+   * de lo que salió a lo menos probable, con un panel para elegirlas y ver cuáles
+   * faltan. Sin esto, la baraja entera.
+   */
+  barajas?: number;
 }
 
 const IconoLibro = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
     <path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5A2.5 2.5 0 0 1 4 20.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+  </svg>
+);
+
+/** Tres cartas apiladas: abre el panel de barajas. */
+const IconoBarajas = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <rect x="7" y="3.5" width="12" height="15" rx="2.5" stroke="currentColor" strokeWidth="1.8" />
+    <path d="M5 7.5v11A2.5 2.5 0 0 0 7.5 21H15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
   </svg>
 );
 
@@ -142,14 +151,21 @@ const IconoCandado = () => (
  * La tarjeta no se remonta entre preguntas: los naipes llevan `key` de
  * **posición**, así el nodo de cada hueco sobrevive y sólo le cambia el texto.
  */
-export default function TarjetasRunner({ examKey, titulo, backHref, resumen, resumenes, ronda }: Props) {
+export default function TarjetasRunner({ examKey, titulo, backHref, resumen, resumenes, barajas }: Props) {
   // Encima de la baraja, no navegando a la clase: así no se pierde el avance.
   const [leyendo, setLeyendo] = useState<{ id: string; seccion: string } | null>(null);
   const [paso, setPaso] = useState<Paso>('cargando');
   const [error, setError] = useState<string | null>(null);
   const [preguntas, setPreguntas] = useState<ExamQuestion[]>([]);
-  /** La baraja completa; `tarjetas` es la ronda en curso (la misma, sin `ronda`). */
+  /** La baraja completa; `tarjetas` es la baraja en curso (la misma, sin `barajas`). */
   const [todas, setTodas] = useState<Flashcard[]>([]);
+  /** Con `barajas`: la que se juega y el último resultado de cada una. */
+  const [mazo, setMazo] = useState<BarajaDe<Flashcard> | null>(null);
+  const [hechas, setHechas] = useState<Record<string, ResultadoBaraja>>({});
+  const mazos = useMemo(() => (barajas ? partirEnBarajas(todas, barajas) : []), [todas, barajas]);
+  /** La primera sin hacer a partir de `desde` (y si no, desde el principio). */
+  const pendienteDesde = (desde: number) =>
+    mazos.find(m => m.numero > desde && !hechas[m.firma]) ?? mazos.find(m => !hechas[m.firma]) ?? null;
   const [tarjetas, setTarjetas] = useState<Flashcard[]>([]);
   const [opciones, setOpciones] = useState<Record<string, ExamOption[]>>({});
   const [muestra, setMuestra] = useState<Muestra | null>(null);
@@ -204,7 +220,16 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
         setPreguntas(orden);
         const baraja = flashcardsDe(payload);
         setTodas(baraja);
-        setTarjetas(ronda ? sacarRonda(examKey, baraja, ronda) : shuffle(baraja));
+        if (barajas) {
+          const av = leerBarajas(examKey);
+          const ms = partirEnBarajas(baraja, barajas);
+          const primera = ms.find(m => !av[m.firma]) ?? ms[0];
+          setHechas(av);
+          setMazo(primera ?? null);
+          setTarjetas(primera ? shuffle(primera.items) : []);
+        } else {
+          setTarjetas(shuffle(baraja));
+        }
         setOpciones(ops);
         setMuestra(m ?? null);
         setTituloBanco(payload.title || titulo);
@@ -216,7 +241,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
         setPaso('error');
       });
     return () => { vivo = false; };
-  }, [examKey, titulo, ronda]);
+  }, [examKey, titulo, barajas]);
 
   // Cada modo recorre su propia baraja: el quiz, las preguntas; la memoria, las
   // tarjetas (que pueden no tener nada que ver con las preguntas).
@@ -286,14 +311,18 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
       const curso = cursoDe(examKey);
       registrarIntento(curso, desglosarIntento(curso, finales, preguntas));
     }
+    if (modo === 'flash' && barajas && mazo) {
+      setHechas(guardarBaraja(examKey, mazo.firma, finales.filter(r => r.ok).length, finales.length));
+    }
     trackEvent('examen_completado', {
       examKey,
       modo: modo === 'flash' ? 'tarjetas' : 'quiz',
+      ...(mazo && modo === 'flash' ? { baraja: mazo.numero } : {}),
       score: finales.filter(r => r.ok).length,
       total: finales.length,
     });
     setPaso('resultado');
-  }, [examKey, modo, preguntas]);
+  }, [examKey, modo, preguntas, barajas, mazo]);
 
   /** Saca la tarjeta, cambia lo que muestra y la vuelve a meter. Mismo nodo. */
   const avanzar = useCallback((finales: Respuesta[]) => {
@@ -332,11 +361,6 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
 
   const autoevaluar = (ok: boolean) => {
     if (!tarjeta) return;
-    if (ronda) {
-      const vistas = leerVistas(examKey);
-      vistas.add(tarjeta.id);
-      guardarVistas(examKey, vistas);
-    }
     const finales = [...respuestas, { q: tarjeta.id, ok }];
     setRespuestas(finales);
     avanzar(finales);
@@ -364,12 +388,19 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
     avanzar(respuestas);
   };
 
-  /** `nueva`: otra ronda de la baraja grande en vez de repetir la misma. */
-  const reiniciar = (nueva = false) => {
+  /** `otra`: se juega esa baraja (en memoria) en vez de repetir la misma. */
+  const reiniciar = (otra?: BarajaDe<Flashcard>) => {
     limpiarTimers();
     const { orden, opciones: ops } = prepararRonda(preguntas);
     setPreguntas(orden);
-    setTarjetas(t => (nueva && ronda ? sacarRonda(examKey, todas, ronda) : shuffle(t)));
+    if (otra) {
+      setMazo(otra);
+      setModo('flash');
+      setTarjetas(shuffle(otra.items));
+      trackEvent('banco_iniciado', { claseId: examKey, examKey, modo: 'tarjetas', baraja: otra.numero });
+    } else {
+      setTarjetas(t => shuffle(t));
+    }
     setOpciones(ops);
     setIdx(0);
     setElegida(null);
@@ -426,9 +457,50 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
     <div className={s.barra}>
       <Link href={backHref} className={s.volver}>← Volver a la clase</Link>
       <span className={s.barraTitulo}>{tituloBanco}</span>
-      {paso === 'jugando' && <span className={s.contador}>{idx + 1} / {total}</span>}
+      {paso === 'jugando' && <span className={s.contador}>{mazo && modo === 'flash' ? `Baraja ${mazo.numero} · ` : ''}{idx + 1} / {total}</span>}
+      {mazos.length > 0 && paso !== 'barajas' && (
+        <button type="button" className={`${s.verBarajas} ${paso === 'jugando' ? '' : s.verBarajasSolo}`} onClick={() => setPaso('barajas')}>
+          <IconoBarajas /> Barajas <span className={s.verBarajasCuenta}>{mazos.filter(m => hechas[m.firma]).length}/{mazos.length}</span>
+        </button>
+      )}
     </div>
   );
+
+  // Con `barajas`: el panel para elegir una y ver cuáles faltan.
+  if (paso === 'barajas') {
+    const hechasN = mazos.filter(m => hechas[m.firma]).length;
+    const sugerida = pendienteDesde(0);
+    return (
+      <div className={s.shell}>
+        {cabecera}
+        <div className={s.panelBarajas}>
+          <p className={s.portadaKicker}>Banqueo</p>
+          <h1 className={s.portadaTitulo}>Barajas de {barajas}</h1>
+          <p className={s.portadaSub}>
+            Van de lo que salió en los exámenes reales (2025-A, 2025-B y 2024) a lo menos probable.
+            Has hecho <strong>{hechasN} de {mazos.length}</strong>; toca una hecha para repetirla.
+          </p>
+          <RejillaBarajas
+            items={mazos.map(m => {
+              const r = hechas[m.firma];
+              return { firma: m.firma, numero: m.numero, nivel: m.nivel, nota: r ? `${r.sabidas}/${r.total}` : null };
+            })}
+            sugerida={sugerida?.firma}
+            pie={`${barajas} tarj.`}
+            onElegir={item => reiniciar(mazos.find(m => m.firma === item.firma))}
+          />
+          <div className={s.panelBarajasPie}>
+            {sugerida && (
+              <button type="button" className={s.siguiente} onClick={() => reiniciar(sugerida)}>
+                {hechasN ? `Seguir con la baraja ${sugerida.numero}` : `Empezar la baraja ${sugerida.numero}`}
+              </button>
+            )}
+            <button type="button" className={s.secundario} onClick={() => setPaso('portada')}>Volver</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (paso === 'portada') {
     return (
@@ -450,8 +522,8 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
                   Pregunta delante, respuesta detrás. Para no olvidar lo de siempre, rápido.
                 </span>
                 <span className={s.modoCuenta}>
-                  {ronda
-                    ? `${cuenta(tarjetas.length, todas.length, 'tarjeta', 'tarjetas')} por ronda`
+                  {mazo
+                    ? `Baraja ${mazo.numero} · ${cuenta(tarjetas.length, undefined, 'tarjeta', 'tarjetas')}`
                     : cuenta(tarjetas.length, muestra?.flashTotal, 'tarjeta', 'tarjetas')}
                 </span>
               </button>
@@ -486,13 +558,17 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
         <div className={s.resultado}>
           <p className={s.resultadoCifra}>{aciertos}/{respuestas.length}</p>
           <p className={s.resultadoLabel}>
-            {modo === 'quiz' ? 'respuestas correctas' : 'tarjetas que ya te sabías'}
+            {modo === 'quiz' ? 'respuestas correctas' : mazo ? `tarjetas que ya te sabías · baraja ${mazo.numero}` : 'tarjetas que ya te sabías'}
           </p>
           <div className={s.resultadoAcciones}>
-            {ronda && modo === 'flash' ? (
+            {mazo && modo === 'flash' ? (
               <>
-                <button type="button" className={s.siguiente} onClick={() => reiniciar(true)}>Otra ronda</button>
-                <button type="button" className={s.secundario} onClick={() => reiniciar()}>Repetir esta ronda</button>
+                {(() => {
+                  const sig = pendienteDesde(mazo.numero);
+                  return sig && <button type="button" className={s.siguiente} onClick={() => reiniciar(sig)}>Siguiente baraja ({sig.numero})</button>;
+                })()}
+                <button type="button" className={s.secundario} onClick={() => reiniciar()}>Repetir esta baraja</button>
+                <button type="button" className={s.secundario} onClick={() => setPaso('barajas')}>Ver todas las barajas</button>
               </>
             ) : (
               <button type="button" className={s.siguiente} onClick={() => reiniciar()}>Repasar otra vez</button>

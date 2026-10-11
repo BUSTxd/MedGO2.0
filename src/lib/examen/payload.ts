@@ -127,6 +127,8 @@ export interface Flashcard {
    * (examen 3D de miembro superior). Sin él, el de la clase de la baraja.
    */
   resumen?: string;
+  /** Qué tan probable es en el examen: ordena las barajas (`barajas` en TarjetasRunner). */
+  nivel?: 'oficial' | 'muy_probable' | 'posible';
 }
 
 /** Banqueo recortado por el servidor para quien no tiene el plan. */

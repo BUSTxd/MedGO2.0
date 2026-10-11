@@ -23,7 +23,8 @@ import { usePlan } from '@/components/PlanProvider';
 import { trackEvent } from '@/lib/analytics';
 import { PLANS, planUnlocks } from '@/lib/plans';
 import { corregirA, corregirB, indexarFormas, type CorreccionB, type IndiceFormas, type Veredicto } from '@/lib/examen-ms/corregir';
-import { cargarBanco, guardarIntento, leerAvance, type Avance, type Baraja, type NivelBaraja, type PruebaGratis } from '@/lib/examen-ms/sesion';
+import { cargarBanco, guardarIntento, leerAvance, type Avance, type Baraja, type PruebaGratis } from '@/lib/examen-ms/sesion';
+import RejillaBarajas from '@/components/examen/RejillaBarajas';
 import type { BancoMS, CategoriaMS, ObjetivoMS, PreguntaMS, TipoB } from '@/lib/examen-ms/tipos';
 import r from '@/styles/examRunner.module.css';
 import s from '@/styles/examenMS.module.css';
@@ -51,13 +52,6 @@ const TIPO_B: Record<TipoB, string> = {
   ramas_colaterales: 'Ramas colaterales', ramas_terminales: 'Ramas terminales', formadores: 'Formantes', desemboca: 'Desembocadura',
 };
 const CATEGORIAS: CategoriaMS[] = ['Huesos', 'Músculos', 'Arterias', 'Nervios', 'Venas'];
-const NIVELES: { nivel: NivelBaraja; titulo: string }[] = [
-  { nivel: 'oficial', titulo: 'Salieron en exámenes reales' },
-  { nivel: 'muy_probable', titulo: 'Muy probables' },
-  { nivel: 'posible', titulo: 'Posibles' },
-];
-/** Cada nivel tiñe sus barajas: dorado lo que ya salió, azul lo muy probable, violeta lo posible. */
-const TINTE: Record<NivelBaraja, string> = { oficial: s.tinteOficial, muy_probable: s.tinteProbable, posible: s.tintePosible };
 /** Veces que se puede usar «Quitar músculos» en un examen de 10. */
 const USOS_QUITAR = 2;
 const CLAVE_AYUDA = 'medgo:examen-ms:ayuda-musculos';
@@ -400,58 +394,15 @@ function SelectorBarajas({ barajas, avance, sugerida, prueba, onElegir, onPagar 
       )}
       <Progreso hechas={hechas} total={barajas.length} />
 
-      {NIVELES.map(({ nivel, titulo }) => {
-        const delNivel = barajas.filter((b) => b.nivel === nivel);
-        if (!delNivel.length) return null;
-        return (
-          <div key={nivel} className={s.barajasGrupo}>
-            <p className={s.barajasTitulo}>{titulo}</p>
-            <div className={s.barajasRejilla}>
-              {delNivel.map((b) => {
-                const res = b.bloqueada ? undefined : avance.barajas[b.firma];
-                const esSugerida = b === sugerida;
-                const clases = [
-                  s.baraja,
-                  TINTE[b.nivel],
-                  res ? s.barajaHecha : '',
-                  esSugerida ? s.barajaSugerida : '',
-                  b.bloqueada ? s.barajaBloqueada : '',
-                ].join(' ');
-                return (
-                  <button
-                    key={b.firma}
-                    type="button"
-                    className={clases}
-                    onClick={() => onElegir(b)}
-                    title={b.bloqueada ? `La baraja ${b.numero} es parte del plan` : res ? `Repetir la baraja ${b.numero}` : `Hacer la baraja ${b.numero}`}
-                    aria-label={
-                      b.bloqueada ? `Baraja ${b.numero}, bloqueada. Ver el plan.`
-                        : res ? `Baraja ${b.numero}, hecha: ${res.puntos} de ${res.total}. Repetir.`
-                          : `Baraja ${b.numero}${esSugerida ? ', la siguiente' : ''}`
-                    }
-                  >
-                    {res && (
-                      <span className={s.barajaCheque} aria-hidden>
-                        <svg width="10" height="10" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                      </span>
-                    )}
-                    {prueba && !b.bloqueada && !res && <span className={s.barajaGratis}>Gratis</span>}
-                    <span className={s.barajaNumero}>{b.numero}</span>
-                    {b.bloqueada ? (
-                      <svg className={s.barajaCandado} width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-                        <rect x="4" y="11" width="16" height="10" rx="2" stroke="currentColor" strokeWidth="2.4" />
-                        <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
-                      </svg>
-                    ) : res ? <span className={s.barajaNota}>{res.puntos}/{res.total}</span>
-                      : esSugerida ? <span className={s.barajaSigue}>Sigue</span>
-                        : <span className={s.barajaPie}>10 preg.</span>}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
+      <RejillaBarajas
+        items={barajas.map((b) => {
+          const res = b.bloqueada ? undefined : avance.barajas[b.firma];
+          return { firma: b.firma, numero: b.numero, nivel: b.nivel, bloqueada: b.bloqueada, gratis: !!prueba && !b.bloqueada, nota: res ? `${res.puntos}/${res.total}` : null };
+        })}
+        sugerida={sugerida?.firma}
+        pie="10 preg."
+        onElegir={(item) => onElegir(barajas.find((b) => b.firma === item.firma)!)}
+      />
 
       <div className={s.botones}>
         {sugerida ? (

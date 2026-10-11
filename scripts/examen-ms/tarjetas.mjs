@@ -7,6 +7,9 @@
 // Lee data/examen-ms/banco.publicar.json (fuera de git, como su salida). Una
 // tarjeta por pregunta: delante la estructura (la respuesta de la A, que sin el
 // modelo se da por sabida) y la pregunta B; detrás lo que se esperaba.
+//
+// Cada tarjeta lleva su `nivel` (oficial / muy_probable / posible): el runner las
+// parte en barajas de 30 con lo que salió en los exámenes reales primero.
 
 import { readFileSync, writeFileSync } from 'node:fs';
 
@@ -14,6 +17,10 @@ const ENTRADA = 'data/examen-ms/banco.publicar.json';
 const SALIDA = 'data/examen-ms/tarjetas.json';
 
 const banco = JSON.parse(readFileSync(ENTRADA, 'utf8'));
+
+// Calca `nivelDe` de src/lib/examen-ms/sesion.ts: las dos barajas ordenan igual.
+const nivelDe = (q) =>
+  q.origen.startsWith('oficial') || q.probabilidad === 'salio' ? 'oficial' : q.probabilidad === 'posible' ? 'posible' : 'muy_probable';
 const errores = [];
 
 const flashcards = banco.preguntas.map((q) => {
@@ -44,6 +51,7 @@ const flashcards = banco.preguntas.map((q) => {
     respuesta,
     ...(detalle ? { detalle } : {}),
     tema: q.categoria,
+    nivel: nivelDe(q),
     ...(r?.opcion && r?.seccion ? { resumen: r.opcion, seccion: r.seccion } : {}),
   };
 });
@@ -62,6 +70,10 @@ const payload = {
   flashcards,
 };
 writeFileSync(SALIDA, JSON.stringify(payload));
+
+const porNivel = {};
+for (const f of flashcards) porNivel[f.nivel] = (porNivel[f.nivel] ?? 0) + 1;
+console.log('Por nivel:', porNivel);
 
 const porTema = {};
 for (const f of flashcards) porTema[f.tema] = (porTema[f.tema] ?? 0) + 1;
