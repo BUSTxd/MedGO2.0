@@ -164,7 +164,7 @@ Copiar este plan a `docs/examen-ms/PLAN.md`. Con este plan aprobado no hace falt
 
 **Sesión:**
 - 10 ítems, como el real, con la mezcla de categorías de 2025: 3-4 músculos, 2 nervios, 2 huesos, 1 arteria, 1 vena.
-- Se eligen primero los no vistos. El avance del banco va en localStorage `medgo:examen-ms:v1` («has visto X/Y» en la bienvenida), y así «completarlo todo» se logra a lo largo de varias sesiones.
+- El banco se parte en barajas fijas de 10 (`armarBarajas`), de lo que salió a lo menos probable. El selector marca las hechas con cheque y nota y deja repetir cualquiera; el avance va en localStorage `medgo:examen-ms:v1` («has hecho X de 42 barajas»).
 
 **Resultados:**
 - Diseño de `ExamRunner` (aro `NotaFinal` + filas por categoría con `.temaRow` + carrusel de resúmenes). `NotaFinal` y `CarruselResumenes` se extraen a `src/components/examen/` para compartirlos sin tocar su comportamiento.

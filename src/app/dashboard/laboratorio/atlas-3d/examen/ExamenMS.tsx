@@ -8,14 +8,18 @@
  * La escena la mueve el Visor; esto le dice qué señalar, cuándo bloquearla y
  * desenfocarla, y qué nombre revelar al corregir (`onControl`).
  *
- *   cargando → bienvenida → [volteo → esquina ⇄ A → B → corrección] × 10 → resultados
+ *   cargando → barajas → [volteo → esquina ⇄ A → B → corrección] × 10 → resultados
+ *
+ * El banco va partido en barajas fijas de 10 (`armarBarajas`), de lo que salió en
+ * los exámenes reales a lo menos probable: las hechas llevan un cheque y su nota,
+ * y cualquiera se puede repetir.
  */
 
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import NotaFinal from '@/components/examen/NotaFinal';
 import { trackEvent } from '@/lib/analytics';
 import { corregirA, corregirB, indexarFormas, type CorreccionB, type IndiceFormas, type Veredicto } from '@/lib/examen-ms/corregir';
-import { armarExamen, cargarBanco, guardarIntento, leerAvance, type Avance } from '@/lib/examen-ms/sesion';
+import { armarBarajas, cargarBanco, guardarIntento, leerAvance, type Avance, type Baraja, type NivelBaraja } from '@/lib/examen-ms/sesion';
 import type { BancoMS, CategoriaMS, ObjetivoMS, PreguntaMS, TipoB } from '@/lib/examen-ms/tipos';
 import r from '@/styles/examRunner.module.css';
 import s from '@/styles/examenMS.module.css';
@@ -40,6 +44,11 @@ const TIPO_B: Record<TipoB, string> = {
   ramas_colaterales: 'Ramas colaterales', ramas_terminales: 'Ramas terminales', formadores: 'Formantes', desemboca: 'Desembocadura',
 };
 const CATEGORIAS: CategoriaMS[] = ['Huesos', 'Músculos', 'Arterias', 'Nervios', 'Venas'];
+const NIVELES: { nivel: NivelBaraja; titulo: string }[] = [
+  { nivel: 'oficial', titulo: 'Salieron en exámenes reales' },
+  { nivel: 'muy_probable', titulo: 'Muy probables' },
+  { nivel: 'posible', titulo: 'Posibles' },
+];
 /** Veces que se puede usar «Quitar músculos» en un examen de 10. */
 const USOS_QUITAR = 2;
 const CLAVE_AYUDA = 'medgo:examen-ms:ayuda-musculos';
@@ -57,10 +66,11 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
   onControl: (c: ControlEscena) => void;
   onSalir: () => void;
 }) {
-  const [fase, setFase] = useState<'cargando' | 'error' | 'bienvenida' | 'examen' | 'resultados'>('cargando');
+  const [fase, setFase] = useState<'cargando' | 'error' | 'barajas' | 'examen' | 'resultados'>('cargando');
   const [error, setError] = useState<string | null>(null);
   const [banco, setBanco] = useState<BancoMS | null>(null);
-  const [avance, setAvance] = useState<Avance>({ vistas: [], intentos: [] });
+  const [avance, setAvance] = useState<Avance>({ vistas: [], intentos: [], barajas: {} });
+  const [baraja, setBaraja] = useState<Baraja | null>(null);
   const [preguntas, setPreguntas] = useState<PreguntaMS[]>([]);
   const [i, setI] = useState(0);
   const [paso, setPaso] = useState<Paso>('volteo');
@@ -70,6 +80,10 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
   const [sinMusculos, setSinMusculos] = useState(false);
   const [ayuda, setAyuda] = useState(false);
   const indice = useMemo<IndiceFormas | null>(() => (banco ? indexarFormas(banco.formas) : null), [banco]);
+  const barajas = useMemo(() => (banco ? armarBarajas(banco) : []), [banco]);
+  /** La primera baraja sin hacer a partir de `desde` (y si no, desde el principio). */
+  const pendienteDesde = (desde: number, av: Avance) =>
+    barajas.find((b) => b.numero > desde && !av.barajas[b.firma]) ?? barajas.find((b) => !av.barajas[b.firma]) ?? null;
 
   // ── Carga del banco (con la animación de carga) ────────────────────────────
   useEffect(() => {
@@ -84,7 +98,7 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
         if (abort.signal.aborted) return;
         setBanco(b);
         setAvance(leerAvance());
-        setFase('bienvenida');
+        setFase('barajas');
       })
       .catch((e: unknown) => {
         if (abort.signal.aborted) return;
@@ -133,16 +147,17 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
     return () => clearTimeout(t);
   }, [paso, i, reducido]);
 
-  const comenzar = () => {
-    if (!banco) return;
-    setPreguntas(armarExamen(banco, new Set(avance.vistas)));
+  const comenzar = (b: Baraja) => {
+    setBaraja(b);
+    // Orden del examen real: mezclado, sin agrupar por categoría (cambia en cada intento).
+    setPreguntas([...b.preguntas].sort(() => Math.random() - 0.5));
     setRespuestas([]);
     setUsosQuitar(USOS_QUITAR);
     setSinMusculos(false);
     setI(0);
     setPaso('volteo');
     setFase('examen');
-    trackEvent('banco_iniciado', { examKey: EXAM_KEY, modo: 'examen3d' });
+    trackEvent('banco_iniciado', { examKey: EXAM_KEY, modo: 'examen3d', baraja: b.numero });
   };
 
   const responderA = (escrito: string) => {
@@ -173,9 +188,10 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
       setPaso('volteo');
       return;
     }
+    if (!baraja) return;
     const puntos = respuestas.reduce((n, x) => n + (x.veredictoA !== 'mal' ? 1 : 0) + x.b.puntaje, 0);
-    setAvance(guardarIntento(preguntas.map((p) => p.id), puntos, preguntas.length * 2));
-    trackEvent('examen_completado', { examKey: EXAM_KEY, modo: 'examen3d', score: puntos, total: preguntas.length * 2 });
+    setAvance(guardarIntento(baraja, puntos, preguntas.length * 2));
+    trackEvent('examen_completado', { examKey: EXAM_KEY, modo: 'examen3d', baraja: baraja.numero, score: puntos, total: preguntas.length * 2 });
     setFase('resultados');
   };
 
@@ -217,7 +233,7 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
               )}
             </div>
           )}
-          {actual && <span className={s.contador}>Pregunta {i + 1} de {preguntas.length}</span>}
+          {actual && <span className={s.contador}>Baraja {baraja?.numero} · Pregunta {i + 1} de {preguntas.length}</span>}
           <button type="button" className={s.salir} onClick={onSalir}>Salir del examen</button>
         </div>
       )}
@@ -246,22 +262,9 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
         </div>
       )}
 
-      {fase === 'bienvenida' && banco && (
+      {fase === 'barajas' && banco && (
         <div className={s.velo}>
-          <section className={s.dialogo} role="dialog" aria-modal="true" aria-labelledby="examen-ms-titulo">
-            <span className={s.kicker}>Examen práctico · Miembro superior</span>
-            <h2 id="examen-ms-titulo">Antes de empezar</h2>
-            <p className={s.bienvenida}>{BIENVENIDA}</p>
-            <ul className={s.reglas}>
-              <li><b>A:</b> escribe el nombre de la estructura señalada. Puedes girar y acercar el modelo.</li>
-              <li><b>B:</b> se desbloquea al responder la A. Solo cuenta si la A está bien, y vale entera o nada.</li>
-              <li>Son {Math.min(10, banco.preguntas.length)} preguntas con el mismo reparto que el examen real.</li>
-            </ul>
-            <Progreso vistas={avance.vistas.length} total={banco.preguntas.length} />
-            <div className={s.botones}>
-              <button type="button" className={s.primario} onClick={comenzar} autoFocus>Comenzar</button>
-            </div>
-          </section>
+          <SelectorBarajas barajas={barajas} avance={avance} sugerida={pendienteDesde(0, avance)} onElegir={comenzar} />
         </div>
       )}
 
@@ -281,20 +284,102 @@ export default function ExamenMS({ reducido, onControl, onSalir }: {
         />
       )}
 
-      {fase === 'resultados' && (
-        <Resultados preguntas={preguntas} respuestas={respuestas} avance={avance} total={banco?.preguntas.length ?? 0} onOtra={comenzar} onSalir={onSalir} />
+      {fase === 'resultados' && baraja && (
+        <Resultados
+          baraja={baraja}
+          preguntas={preguntas}
+          respuestas={respuestas}
+          hechas={barajas.filter((b) => avance.barajas[b.firma]).length}
+          total={barajas.length}
+          siguiente={pendienteDesde(baraja.numero, avance)}
+          onElegir={comenzar}
+          onBarajas={() => setFase('barajas')}
+          onSalir={onSalir}
+        />
       )}
     </div>
   );
 }
 
-function Progreso({ vistas, total }: { vistas: number; total: number }) {
-  const pct = total ? Math.round((vistas / total) * 100) : 0;
+function Progreso({ hechas, total }: { hechas: number; total: number }) {
+  const pct = total ? Math.round((hechas / total) * 100) : 0;
   return (
     <div className={s.progreso}>
       <div className={s.progresoBarra}><span style={{ transform: `scaleX(${pct / 100})` }} /></div>
-      <span>Has visto {vistas} de {total} preguntas del banco</span>
+      <span>Has hecho {hechas} de {total} barajas</span>
     </div>
+  );
+}
+
+// ── Barajas: las hechas con cheque y nota; cualquiera se puede (re)hacer ─────
+function SelectorBarajas({ barajas, avance, sugerida, onElegir }: {
+  barajas: Baraja[];
+  avance: Avance;
+  sugerida: Baraja | null;
+  onElegir: (b: Baraja) => void;
+}) {
+  const hechas = barajas.filter((b) => avance.barajas[b.firma]).length;
+  return (
+    <section className={`${s.dialogo} ${s.dialogoBarajas}`} role="dialog" aria-modal="true" aria-labelledby="examen-ms-titulo">
+      <span className={s.kicker}>Examen práctico · Miembro superior</span>
+      <h2 id="examen-ms-titulo">{hechas ? 'Elige una baraja' : 'Antes de empezar'}</h2>
+      {/* Las reglas, solo hasta la primera baraja: después estorban a la lista. */}
+      {!hechas && (
+        <>
+          <p className={s.bienvenida}>{BIENVENIDA}</p>
+          <ul className={s.reglas}>
+            <li><b>A:</b> escribe el nombre de la estructura señalada. Puedes girar y acercar el modelo.</li>
+            <li><b>B:</b> se desbloquea al responder la A. Solo cuenta si la A está bien, y vale entera o nada.</li>
+            <li>Cada baraja son 10 preguntas con el mismo reparto que el examen real. Van de lo que ya salió a lo menos probable.</li>
+          </ul>
+        </>
+      )}
+      <Progreso hechas={hechas} total={barajas.length} />
+
+      {NIVELES.map(({ nivel, titulo }) => {
+        const delNivel = barajas.filter((b) => b.nivel === nivel);
+        if (!delNivel.length) return null;
+        return (
+          <div key={nivel} className={s.barajasGrupo}>
+            <p className={s.barajasTitulo}>{titulo}</p>
+            <div className={s.barajasRejilla}>
+              {delNivel.map((b) => {
+                const res = avance.barajas[b.firma];
+                const esSugerida = b === sugerida;
+                return (
+                  <button
+                    key={b.firma}
+                    type="button"
+                    className={`${s.baraja} ${res ? s.barajaHecha : ''} ${esSugerida ? s.barajaSugerida : ''}`}
+                    onClick={() => onElegir(b)}
+                    title={res ? `Repetir la baraja ${b.numero}` : `Hacer la baraja ${b.numero}`}
+                    aria-label={res ? `Baraja ${b.numero}, hecha: ${res.puntos} de ${res.total}. Repetir.` : `Baraja ${b.numero}${esSugerida ? ', la siguiente' : ''}`}
+                  >
+                    {res && (
+                      <span className={s.barajaCheque} aria-hidden>
+                        <svg width="10" height="10" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                      </span>
+                    )}
+                    <span className={s.barajaNumero}>{b.numero}</span>
+                    {res ? <span className={s.barajaNota}>{res.puntos}/{res.total}</span> : esSugerida ? <span className={s.barajaSigue}>Sigue</span> : null}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+
+      <div className={s.botones}>
+        {sugerida ? (
+          <button type="button" className={s.primario} onClick={() => onElegir(sugerida)} autoFocus>
+            {hechas ? `Seguir con la baraja ${sugerida.numero}` : 'Empezar la baraja 1'}
+          </button>
+        ) : (
+          <p className={s.todasHechas}>Hiciste todas las barajas. Toca cualquiera para repetirla.</p>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -458,12 +543,16 @@ function Correccion({ pregunta, r: x, onSiguiente, ultima }: { pregunta: Pregunt
 }
 
 // ── Resultados: mismo diseño que el examen final de Inmunología ─────────────
-function Resultados({ preguntas, respuestas, avance, total, onOtra, onSalir }: {
+function Resultados({ baraja, preguntas, respuestas, hechas, total, siguiente, onElegir, onBarajas, onSalir }: {
+  baraja: Baraja;
   preguntas: PreguntaMS[];
   respuestas: Respuesta[];
-  avance: Avance;
+  hechas: number;
   total: number;
-  onOtra: () => void;
+  /** La próxima baraja sin hacer (null si ya están todas). */
+  siguiente: Baraja | null;
+  onElegir: (b: Baraja) => void;
+  onBarajas: () => void;
   onSalir: () => void;
 }) {
   const filas = preguntas.map((p, k) => {
@@ -492,7 +581,7 @@ function Resultados({ preguntas, respuestas, avance, total, onOtra, onSalir }: {
       <div className={`${r.resultShell} ${s.resultados}`}>
         <NotaFinal score={puntos} total={max} pct={pct} etiqueta="del puntaje" />
         <h2 className={r.resultTitle}>{titulo}</h2>
-        <p className={r.resultSub}>Cada pregunta vale 2 puntos: 1 la A y 1 la B. Tu intento se guardó en este navegador.</p>
+        <p className={r.resultSub}>Baraja {baraja.numero}. Cada pregunta vale 2 puntos: 1 la A y 1 la B. Tu intento se guardó en este navegador.</p>
 
         {(peorCategoria?.pct < 100 || peorTipoB) && (
           <div className={s.diagnostico}>
@@ -538,10 +627,12 @@ function Resultados({ preguntas, respuestas, avance, total, onOtra, onSalir }: {
           </div>
         )}
 
-        <Progreso vistas={avance.vistas.length} total={total} />
+        <Progreso hechas={hechas} total={total} />
 
         <div className={s.botones}>
-          <button type="button" className={s.primario} onClick={onOtra}>Otro examen</button>
+          {siguiente && <button type="button" className={s.primario} onClick={() => onElegir(siguiente)}>Siguiente baraja ({siguiente.numero})</button>}
+          <button type="button" className={siguiente ? s.secundario : s.primario} onClick={() => onElegir(baraja)}>Repetir esta baraja</button>
+          <button type="button" className={s.secundario} onClick={onBarajas}>Ver todas las barajas</button>
           <button type="button" className={s.secundario} onClick={onSalir}>Volver al atlas</button>
         </div>
       </div>

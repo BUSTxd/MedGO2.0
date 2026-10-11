@@ -272,6 +272,94 @@
   transition: transform 0.6s ease-out;
 }
 
+/* ── Barajas: rejilla de exámenes fijos de 10 ───────────────────────────────── */
+.dialogoBarajas { width: min(620px, 100%); }
+
+.barajasGrupo { margin-top: 16px; }
+
+.barajasTitulo {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+}
+
+.barajasRejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+  gap: 8px;
+}
+
+.baraja {
+  position: relative;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 1px;
+  min-height: 58px;
+  padding: 6px 4px;
+  border-radius: 10px;
+  border: 1px solid var(--borde);
+  background: var(--panel-2);
+  color: var(--texto);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s, background-color 0.15s;
+}
+
+.baraja:hover { border-color: var(--acento); transform: translateY(-1px); }
+.baraja:active { transform: scale(0.96); }
+.baraja:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+
+.barajaNumero {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.barajaNota,
+.barajaSigue {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.barajaHecha {
+  background: var(--bien-suave);
+  border-color: var(--bien);
+}
+
+.barajaHecha .barajaNota { color: var(--bien); }
+
+.barajaCheque {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bien);
+  color: #fff;
+  box-shadow: 0 0 0 2px var(--panel);
+}
+
+.barajaSugerida {
+  border: 2px solid var(--acento);
+  box-shadow: 0 0 0 3px var(--acento-suave);
+}
+
+.barajaSugerida .barajaSigue { color: var(--acento); }
+
+.todasHechas {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--texto-2);
+}
+
 /* Carga: tres cartas que se barajan. */
 .cargando {
   display: grid;
@@ -789,5 +877,6 @@ button.frente {
   }
 
   .posicion,
+  .baraja,
   .progresoBarra span { transition: none; }
 }

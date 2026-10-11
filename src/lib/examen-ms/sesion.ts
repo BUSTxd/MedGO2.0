@@ -1,5 +1,5 @@
 /**
- * Examen 3D de miembro superior: carga del banco, armado de cada examen y avance
+ * Examen 3D de miembro superior: carga del banco, barajas fijas de 10 y avance
  * guardado en el navegador.
  */
 
@@ -78,74 +78,107 @@ const PLANTILLA: { nombre: string; encaja: Hueco }[] = [
   { nombre: 'vena', encaja: (p) => p.categoria === 'Venas' },
   { nombre: 'arteria', encaja: (p) => p.categoria === 'Arterias' },
 ];
-const PESO = { salio: 3, muy_probable: 3, posible: 1 } as const;
-
 /** Nombre de la estructura (para no preguntar dos veces la misma en un examen). */
 const estructuraDe = (p: PreguntaMS) => p.preguntaA.respuesta;
 
+// ── Barajas: el banco partido en exámenes fijos de 10 ────────────────────────
+/** Lo que salió en un examen real (2025-A, 2025-B, 2024) va primero; luego lo muy probable. */
+export type NivelBaraja = 'oficial' | 'muy_probable' | 'posible';
+const RANGO: Record<NivelBaraja, number> = { oficial: 0, muy_probable: 1, posible: 2 };
+const nivelDe = (p: PreguntaMS): NivelBaraja =>
+  p.origen.startsWith('oficial') || p.probabilidad === 'salio' ? 'oficial' : p.probabilidad === 'posible' ? 'posible' : 'muy_probable';
+
+export interface Baraja {
+  numero: number;
+  /** Huella de sus preguntas: si el banco cambia, la baraja deja de contar como hecha. */
+  firma: string;
+  nivel: NivelBaraja;
+  preguntas: PreguntaMS[];
+}
+
+/** FNV-1a: mezcla estable (la misma en cada navegador) sin depender del orden del JSON. */
+function huella(t: string): number {
+  let h = 0x811c9dc5;
+  for (let k = 0; k < t.length; k++) h = Math.imul(h ^ t.charCodeAt(k), 0x01000193);
+  return h >>> 0;
+}
+
 /**
- * Arma un examen con la plantilla del real: en cada hueco, primero lo que aún no
- * se vio; entre eso, más peso a lo que salió o es muy probable. Nunca dos
- * preguntas de la misma estructura.
+ * Parte el banco en barajas fijas de 10, de lo más probable a lo menos: cada una
+ * sale del nivel más alto que queda y solo baja al siguiente cuando ese se acaba.
+ * Dentro del nivel, primero los huecos de la plantilla del examen real y luego el
+ * resto; nunca dos preguntas de la misma estructura (salvo, si hace falta, en las
+ * últimas, antes que dejar una baraja corta). Determinista: el mismo banco da
+ * siempre las mismas barajas, así que se pueden marcar como hechas y repetir.
  */
-export function armarExamen(banco: BancoMS, vistas: Set<string>, azar: () => number = Math.random): PreguntaMS[] {
-  const elegidas: PreguntaMS[] = [];
-  const usadas = new Set<string>();
-  // Las preguntas de los exámenes reales (2025-A, 2025-B, 2024) salen primero: las
-  // primeras barajas se arman con las que aún no se vieron (sin marcarlas como tales).
-  const oficiales = banco.preguntas.filter((p) => p.origen.startsWith('oficial') && !vistas.has(p.id)).sort(() => azar() - 0.5);
-  for (const p of oficiales) {
-    if (elegidas.length >= PREGUNTAS_POR_EXAMEN) break;
-    if (usadas.has(estructuraDe(p))) continue;
-    elegidas.push(p);
-    usadas.add(estructuraDe(p));
+export function armarBarajas(banco: BancoMS): Baraja[] {
+  const quedan = [...banco.preguntas].sort(
+    (a, b) => RANGO[nivelDe(a)] - RANGO[nivelDe(b)] || huella(a.id) - huella(b.id),
+  );
+  const barajas: Baraja[] = [];
+  while (quedan.length) {
+    const elegidas: PreguntaMS[] = [];
+    const usadas = new Set<string>();
+    const tomar = (p: PreguntaMS) => {
+      elegidas.push(p);
+      usadas.add(estructuraDe(p));
+      quedan.splice(quedan.indexOf(p), 1);
+    };
+    const libre = (p: PreguntaMS, rango: number) => RANGO[nivelDe(p)] === rango && !usadas.has(estructuraDe(p));
+    for (let rango = RANGO[nivelDe(quedan[0])]; rango <= RANGO.posible && elegidas.length < PREGUNTAS_POR_EXAMEN; rango++) {
+      // Cada pregunta ya elegida ocupa un hueco (el más específico en el que encaja).
+      const huecos = [...PLANTILLA];
+      for (const p of elegidas) {
+        const k = huecos.findIndex((h) => h.encaja(p));
+        if (k >= 0) huecos.splice(k, 1);
+      }
+      for (const hueco of huecos) {
+        if (elegidas.length >= PREGUNTAS_POR_EXAMEN) break;
+        const p = quedan.find((x) => libre(x, rango) && hueco.encaja(x));
+        if (p) tomar(p);
+      }
+      for (const p of [...quedan]) {
+        if (elegidas.length >= PREGUNTAS_POR_EXAMEN) break;
+        if (libre(p, rango)) tomar(p);
+      }
+    }
+    while (elegidas.length < PREGUNTAS_POR_EXAMEN && quedan.length) tomar(quedan[0]);
+
+    const cuenta = (n: NivelBaraja) => elegidas.filter((p) => nivelDe(p) === n).length;
+    const nivel = (['oficial', 'muy_probable', 'posible'] as const).reduce((m, n) => (cuenta(n) > cuenta(m) ? n : m));
+    barajas.push({
+      numero: barajas.length + 1,
+      firma: huella(elegidas.map((p) => p.id).sort().join('|')).toString(36),
+      nivel,
+      preguntas: elegidas,
+    });
   }
-  if (elegidas.length >= PREGUNTAS_POR_EXAMEN) return elegidas;
-  const sortear = (lista: PreguntaMS[]) => {
-    const total = lista.reduce((n, p) => n + PESO[p.probabilidad], 0);
-    let r = azar() * total;
-    for (const p of lista) { r -= PESO[p.probabilidad]; if (r <= 0) return p; }
-    return lista.at(-1)!;
-  };
-  // Los huecos que ya cubre una oficial no se repiten.
-  const cubiertos = new Set(PLANTILLA.filter((h) => elegidas.some((p) => h.encaja(p))).map((h) => h.nombre));
-  for (const hueco of PLANTILLA) {
-    if (elegidas.length >= PREGUNTAS_POR_EXAMEN) break;
-    if (cubiertos.has(hueco.nombre)) continue;
-    const libres = banco.preguntas.filter((p) => hueco.encaja(p) && !usadas.has(estructuraDe(p)));
-    if (!libres.length) continue;
-    const nuevas = libres.filter((p) => !vistas.has(p.id));
-    const p = sortear(nuevas.length ? nuevas : libres);
-    elegidas.push(p);
-    usadas.add(estructuraDe(p));
-  }
-  // Si algún hueco quedó vacío, se completa con cualquiera aún no vista.
-  for (const p of [...banco.preguntas].sort(() => azar() - 0.5)) {
-    if (elegidas.length >= PREGUNTAS_POR_EXAMEN) break;
-    if (!usadas.has(estructuraDe(p)) && !vistas.has(p.id)) { elegidas.push(p); usadas.add(estructuraDe(p)); }
-  }
-  // Orden del examen real: mezclado, sin agrupar por categoría.
-  return elegidas.sort(() => azar() - 0.5);
+  return barajas;
 }
 
 // ── Avance (solo este navegador) ─────────────────────────────────────────────
 const CLAVE_AVANCE = 'medgo:examen-ms:v1';
 export interface Intento { fecha: string; puntos: number; total: number }
-export interface Avance { vistas: string[]; intentos: Intento[] }
+/** Último resultado de una baraja (por su `firma`). */
+export interface ResultadoBaraja { puntos: number; total: number; fecha: string; veces: number }
+export interface Avance { vistas: string[]; intentos: Intento[]; barajas: Record<string, ResultadoBaraja> }
 
 export function leerAvance(): Avance {
   try {
-    const a = JSON.parse(localStorage.getItem(CLAVE_AVANCE) ?? 'null') as Avance | null;
-    if (a && Array.isArray(a.vistas) && Array.isArray(a.intentos)) return a;
+    const a = JSON.parse(localStorage.getItem(CLAVE_AVANCE) ?? 'null') as Partial<Avance> | null;
+    // Los avances de antes de las barajas no traen `barajas`.
+    if (a && Array.isArray(a.vistas) && Array.isArray(a.intentos)) return { vistas: a.vistas, intentos: a.intentos, barajas: a.barajas ?? {} };
   } catch {}
-  return { vistas: [], intentos: [] };
+  return { vistas: [], intentos: [], barajas: {} };
 }
 
-export function guardarIntento(ids: string[], puntos: number, total: number): Avance {
+export function guardarIntento(baraja: Baraja, puntos: number, total: number): Avance {
   const a = leerAvance();
+  const fecha = new Date().toISOString();
   const nuevo: Avance = {
-    vistas: [...new Set([...a.vistas, ...ids])],
-    intentos: [{ fecha: new Date().toISOString(), puntos, total }, ...a.intentos].slice(0, 20),
+    vistas: [...new Set([...a.vistas, ...baraja.preguntas.map((p) => p.id)])],
+    intentos: [{ fecha, puntos, total }, ...a.intentos].slice(0, 20),
+    barajas: { ...a.barajas, [baraja.firma]: { puntos, total, fecha, veces: (a.barajas[baraja.firma]?.veces ?? 0) + 1 } },
   };
   try { localStorage.setItem(CLAVE_AVANCE, JSON.stringify(nuevo)); } catch {}
   return nuevo;
