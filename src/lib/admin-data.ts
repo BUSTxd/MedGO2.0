@@ -24,7 +24,7 @@ export interface AdminRow {
   cursos: CursoDeUsuario[];
   /** Con qué token se anuncia en el canal de presencia (bolita de «en línea»). */
   presencia: string;
-  /** Cuenta admin: sus eventos se guardan (marcados `admin`), pero no cuentan en los rankings ni en el CSV general. */
+  /** Cuenta admin: /api/track descarta sus eventos, así que su ficha no avanza. */
   esAdmin: boolean;
 }
 
