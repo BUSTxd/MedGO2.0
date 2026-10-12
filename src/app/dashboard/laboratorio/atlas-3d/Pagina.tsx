@@ -14,11 +14,13 @@ const Visor = dynamic(() => import('./Visor'), {
   loading: () => <div className={s.cargando} aria-busy="true">Preparando el visor…</div>,
 });
 
-export default function Atlas3DPage({ regiones, examen, soloExamen = false }: {
+export default function Atlas3DPage({ regiones, examen, soloExamen = false, desdeLaboratorio = false }: {
   regiones: string[];
   examen: boolean;
   /** Prueba gratis sin plan: solo el examen, sin salida al atlas libre. */
   soloExamen?: boolean;
+  /** La prueba gratis se abrió desde el índice del Laboratorio: «Salir» vuelve ahí. */
+  desdeLaboratorio?: boolean;
 }) {
   // Un `router.refresh()` (al pagar) trae un arreglo nuevo con las mismas
   // regiones: sin esto el Visor volvería a descargar el modelo.
@@ -28,7 +30,7 @@ export default function Atlas3DPage({ regiones, examen, soloExamen = false }: {
   return (
     <div className={s.wrapper}>
       <TrackLabVisit labId="atlas-3d" />
-      <Visor regiones={estables} examen={examen} soloExamen={soloExamen} />
+      <Visor regiones={estables} examen={examen} soloExamen={soloExamen} desdeLaboratorio={desdeLaboratorio} />
     </div>
   );
 }

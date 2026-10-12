@@ -19,11 +19,14 @@ const REGION_EXAMEN = 'miembro-superior-derecho';
 // no hace nada): al pagar, `router.refresh()` solo cambia `soloExamen`. Si
 // cambiara de rama, React volvería a montar el examen y cerraría la pasarela a
 // mitad del recibo.
-export default async function Page({ searchParams }: { searchParams: Promise<{ region?: string | string[]; examen?: string }> }) {
-  const { region, examen } = await searchParams;
+//
+// `?desde=laboratorio`: la prueba gratis se abrió desde el índice del
+// Laboratorio, y «Salir» vuelve ahí en vez de a la Evaluación 1.
+export default async function Page({ searchParams }: { searchParams: Promise<{ region?: string | string[]; examen?: string; desde?: string }> }) {
+  const { region, examen, desde } = await searchParams;
   if (examen === '1') {
     const acceso = tieneAccesoA(await getCachedPlanState(), requiredPlanDeLab('atlas-3d'));
-    return <Pagina regiones={acceso ? leerRegiones(region) : [REGION_EXAMEN]} examen soloExamen={!acceso} />;
+    return <Pagina regiones={acceso ? leerRegiones(region) : [REGION_EXAMEN]} examen soloExamen={!acceso} desdeLaboratorio={desde === 'laboratorio'} />;
   }
   return (
     <LabGate slug="atlas-3d">

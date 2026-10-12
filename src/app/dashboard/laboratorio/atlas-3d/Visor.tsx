@@ -18,8 +18,12 @@ import s from '@/styles/atlas3d.module.css';
 
 /** El examen práctico existe solo para el miembro superior. */
 const REGION_EXAMEN = 'miembro-superior-derecho';
-/** Adónde vuelve la prueba gratis: sin plan no hay atlas libre al que volver. */
-const VOLVER_PRUEBA = '/dashboard/cursos/aparato-locomotor/examen-p1';
+/** Adónde vuelve la prueba gratis: sin plan no hay atlas libre al que volver.
+ *  Va de vuelta a donde se abrió: la Evaluación 1 del sílabo o el Laboratorio. */
+const VOLVER_PRUEBA = {
+  evaluacion: { href: '/dashboard/cursos/aparato-locomotor/examen-p1', etiqueta: 'Volver a la Evaluación 1' },
+  laboratorio: { href: '/dashboard/laboratorio', etiqueta: 'Volver al laboratorio' },
+};
 const CONTROL_LIBRE: ControlEscena = { objetivo: null, bloqueada: false, borrosa: false, revelar: null, sinMusculos: false };
 
 const VISTAS: { id: Vista; nombre: string }[] = [
@@ -57,7 +61,7 @@ interface Estructura {
   ids: string[];
 }
 
-export default function Visor({ regiones, examen = false, soloExamen = false }: { regiones: string[]; examen?: boolean; soloExamen?: boolean }) {
+export default function Visor({ regiones, examen = false, soloExamen = false, desdeLaboratorio = false }: { regiones: string[]; examen?: boolean; soloExamen?: boolean; desdeLaboratorio?: boolean }) {
   const [atlas, setAtlas] = useState<Atlas | null>(null);
   const [progreso, setProgreso] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -104,7 +108,7 @@ export default function Visor({ regiones, examen = false, soloExamen = false }: 
   }
   return (
     <>
-      <Explorador atlas={atlas} regiones={regiones} examenInicial={examenDirecto} soloExamen={soloExamen} />
+      <Explorador atlas={atlas} regiones={regiones} examenInicial={examenDirecto} soloExamen={soloExamen} desdeLaboratorio={desdeLaboratorio} />
       {!empezado && <Aviso regiones={regiones} onEmpezar={empezar} />}
     </>
   );
@@ -141,8 +145,9 @@ function Aviso({ regiones, onEmpezar }: { regiones: string[]; onEmpezar: () => v
   );
 }
 
-function Explorador({ atlas, regiones, examenInicial, soloExamen }: { atlas: Atlas; regiones: string[]; examenInicial: boolean; soloExamen: boolean }) {
+function Explorador({ atlas, regiones, examenInicial, soloExamen, desdeLaboratorio }: { atlas: Atlas; regiones: string[]; examenInicial: boolean; soloExamen: boolean; desdeLaboratorio: boolean }) {
   const router = useRouter();
+  const volverPrueba = VOLVER_PRUEBA[desdeLaboratorio ? 'laboratorio' : 'evaluacion'];
   const { piezas } = atlas;
   const dosLados = useMemo(() => new Set(piezas.map((p) => p.lado)).size > 1, [piezas]);
 
@@ -462,13 +467,13 @@ function Explorador({ atlas, regiones, examenInicial, soloExamen }: { atlas: Atl
     setExamen(true);
   };
   const salirExamen = useCallback(() => {
-    // La prueba gratis no sale al atlas libre (es de pago): vuelve a la Evaluación 1.
-    if (soloExamen) { router.push(VOLVER_PRUEBA); return; }
+    // La prueba gratis no sale al atlas libre (es de pago): vuelve a donde se abrió.
+    if (soloExamen) { router.push(volverPrueba.href); return; }
     setExamen(false);
     setControl(CONTROL_LIBRE);
     setVista('anterior');
     encuadrar();
-  }, [encuadrar, soloExamen, router]);
+  }, [encuadrar, soloExamen, router, volverPrueba]);
   const rotuloFijo = useMemo(() => {
     if (!examen || !control.revelar || !objetivo) return null;
     return objetivo.tipo === 'marcador'
@@ -517,7 +522,7 @@ function Explorador({ atlas, regiones, examenInicial, soloExamen }: { atlas: Atl
           rotuloFijo={rotuloFijo}
         />
         {examen && (
-          <ExamenMS reducido={reducido} onControl={setControl} onSalir={salirExamen} etiquetaVolver={soloExamen ? 'Volver a la Evaluación 1' : 'Volver al atlas'} />
+          <ExamenMS reducido={reducido} onControl={setControl} onSalir={salirExamen} etiquetaVolver={soloExamen ? volverPrueba.etiqueta : 'Volver al atlas'} />
         )}
         {!(examen && control.borrosa) && (
         <div className={s.vistas} role="group" aria-label="Vista">
