@@ -10,7 +10,10 @@ import FisicaIcon from '@/components/icons/FisicaIcon';
 import LocomotorIcon from '@/components/icons/LocomotorIcon';
 import styles from '@/styles/dashboardPages.module.css';
 
-type Exp = { name: string; desc: string; color: string; href?: string };
+// `prueba`: a dónde lleva la fila a quien NO tiene el plan del panel, cuando el
+// laboratorio tiene una parte gratis (hoy, el examen 3D del miembro superior:
+// `?examen=1` entra sin LabGate). Sin ella, esa persona caería en la pasarela.
+type Exp = { name: string; desc: string; color: string; href?: string; prueba?: string };
 type Topic = { id: string; title: string; badge: string; diff: string[]; icon: ReactNode; experiments: Exp[] };
 
 const LAB_TOPICS: Topic[] = [
@@ -178,7 +181,7 @@ const LAB_TOPICS: Topic[] = [
     icon: <LocomotorIcon size={26} color="#ffffff" colorDark="rgba(255,255,255,0.7)" />,
     experiments: [
       // Un solo visor para todo el atlas 3D: cada región es un paquete aparte (?region=).
-      { name: 'Miembro superior 3D', desc: 'Hombro, brazo, antebrazo y mano derechos con el plexo braquial completo: huesos, músculos, vasos, nervios y ligamentos', color: '#c9a227', href: '/dashboard/laboratorio/atlas-3d?region=miembro-superior-derecho' },
+      { name: 'Miembro superior 3D', desc: 'Hombro, brazo, antebrazo y mano derechos con el plexo braquial completo: huesos, músculos, vasos, nervios y ligamentos', color: '#c9a227', href: '/dashboard/laboratorio/atlas-3d?region=miembro-superior-derecho', prueba: '/dashboard/laboratorio/atlas-3d?region=miembro-superior-derecho&examen=1' },
       { name: 'Miembro inferior 3D', desc: 'Pelvis y región glútea, muslo, rodilla, pierna y pie derechos con los plexos lumbar y sacro: huesos, músculos, vasos, nervios, ligamentos y meniscos', color: '#c9a227', href: '/dashboard/laboratorio/atlas-3d?region=miembro-inferior-derecho' },
     ],
   },
@@ -317,6 +320,7 @@ export default async function LaboratorioPage() {
                 // acceso al panel la etiqueta no dice nada y no se pinta.
                 const slug = exp.href?.startsWith('/dashboard/laboratorio/') ? exp.href.split('?')[0].split('/').pop()! : null;
                 const gratis = !abierto && slug !== null && labEsGratis(slug);
+                const prueba = !abierto && exp.prueba ? exp.prueba : null;
                 const cuerpo = (
                   <>
                     <div className={styles.labExpDot} style={{ background: exp.color }} />
@@ -324,6 +328,7 @@ export default async function LaboratorioPage() {
                       <p className={styles.labExpName}>
                         {exp.name}
                         {gratis && <span className={styles.labExpGratis}>Gratis</span>}
+                        {prueba && <span className={styles.labExpGratis} title="2 barajas del examen 3D, gratis">Prueba gratis</span>}
                       </p>
                       <p className={styles.labExpDesc}>{exp.desc}</p>
                     </div>
@@ -350,7 +355,7 @@ export default async function LaboratorioPage() {
                 return (
                   <Link
                     key={exp.name}
-                    href={exp.href}
+                    href={prueba ?? exp.href}
                     className={styles.labExp}
                     style={{ textDecoration: 'none' }}
                   >
