@@ -1,0 +1,858 @@
+/* ─── Escenario de exámenes, calcado de la referencia de BUST ───
+
+   La referencia mide 1672×941 con la sidebar en 258 px, así que el contenido
+   es un lienzo de 1414×941. Todo se mide en SUS píxeles con --u (un píxel de la
+   referencia en esta pantalla): el lienzo se escala entero y cabe sin scroll.
+     --u = min(alto de pantalla / 941, ancho visible / 1414)
+   Ojo: --u lleva `cqw`, así que solo vale DENTRO del escenario (en el propio
+   escenario se mediría contra el contenedor de fuera).
+
+   El fondo va a todo el ancho y anclado arriba a la derecha: el esqueleto de
+   la derecha se ve entero (BUST). Su podio queda tapado por la franja; el que
+   se ve bajo la tarjeta del centro es el de CSS (`.podio`). */
+
+.escenario {
+  --esc-bg: #eef4fe;
+  --tinta: #0d1236;
+  --tinta-suave: #2c3672;
+  --tinta-link: #3c4e98;
+  --ventaja: #5e71a7;
+  --ventaja-icono: #4c63a2;
+  --panel-bg: rgba(236, 244, 254, 0.82);
+  --panel-borde: #c9dbf8;
+  --panel-sombra: 0 10px 34px rgba(80, 110, 200, 0.13);
+  --flechita-bg: #f3f8ff;
+  --flechita-borde: #c9dbf8;
+  --fondo-opacidad: 0.72;
+  --fondo-velo: transparent;
+  --zona-blanca: rgba(255, 255, 255, 0.86);
+  --zona-suelo: #f1f7fe;
+  --luz-reposo: 0.95;
+  --titulo-grad: linear-gradient(95deg, #1d377e 0%, #3838f2 52%, #7b4dff 100%);
+  --subtitulo: #5566a8;
+
+  /* La sidebar (fija, opaca) tiene 20 px de radio a la derecha: el escenario se
+     mete ese tanto por debajo para que en sus curvas no asome el gris de `.main`. */
+  --extra-izq: 20px;
+  --u: min(calc(100vh / 941), calc((100cqw - var(--extra-izq)) / 1414));
+
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  height: 100vh;
+  /* A sangre: deshace el padding del `.panel` y de `.main`
+     (dashboardLayout.module.css): 28+24 arriba, 28+28 a los lados, 36+24 abajo. */
+  margin: -52px -56px -60px calc(-56px - var(--extra-izq));
+  overflow: hidden;
+  background: var(--esc-bg);
+}
+
+:global(.dark-mode) .escenario {
+  --esc-bg: #0d0b28;
+  --tinta: var(--white);
+  --tinta-suave: rgba(240, 238, 255, 0.72);
+  --tinta-link: #a9b6ff;
+  --ventaja: rgba(240, 238, 255, 0.66);
+  --ventaja-icono: #8f97ff;
+  --panel-bg: rgba(13, 11, 40, 0.66);
+  --panel-borde: rgba(255, 255, 255, 0.12);
+  --panel-sombra: 0 10px 34px rgba(0, 0, 0, 0.4);
+  --flechita-bg: #1d1a3d;
+  --flechita-borde: rgba(255, 255, 255, 0.14);
+  --fondo-opacidad: 1;
+  --fondo-velo: linear-gradient(180deg, rgba(8, 6, 26, 0.72) 0%, rgba(13, 11, 40, 0.84) 100%);
+  --zona-blanca: rgba(120, 150, 255, 0.16);
+  --zona-suelo: #0d0b28;
+  --luz-reposo: 0.55;
+  --titulo-grad: linear-gradient(95deg, #e4e8ff 0%, #a9b6ff 50%, #c39bff 100%);
+  --subtitulo: rgba(214, 220, 255, 0.72);
+}
+
+/* ─── Fondo: la imagen + luz y transparencia por zonas ─── */
+.fondo {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fondoImg {
+  object-fit: cover;
+  /* Anclada arriba a la derecha: el esqueleto entero; lo que se pierde, abajo. */
+  object-position: 100% 0;
+  opacity: var(--fondo-opacidad);
+  user-select: none;
+}
+
+/* Como en la referencia: neblina blanca detrás de las tarjetas, el techo algo
+   más claro y el suelo que se funde en blanco bajo el podio. */
+.fondoZonas {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 30% 40% at 52% 32%, var(--zona-blanca) 0%, transparent 72%),
+    linear-gradient(to bottom, var(--zona-blanca) 0%, transparent 16%),
+    linear-gradient(to bottom, transparent 70%, var(--zona-suelo) 84%, var(--zona-suelo) 100%),
+    var(--fondo-velo);
+}
+
+/* ─── Lienzo de la referencia, centrado en la zona visible ─── */
+.lienzo {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: calc(var(--extra-izq) + (100cqw - var(--extra-izq) - 1414 * var(--u)) / 2);
+  width: calc(1414 * var(--u));
+  height: calc(941 * var(--u));
+}
+
+/* ─── Cabecera: arriba a la izquierda de la zona visible ───
+   Vive fuera del lienzo: centrado, el lienzo deja un margen que cambia con la
+   pantalla y el título quedaba flotando lejos de la sidebar. Colores de la
+   escena (azul marino de las flechas → azul de los puntos → violeta del neón). */
+.cabecera {
+  position: absolute;
+  z-index: 5;
+  top: calc(18 * var(--u));
+  left: calc(var(--extra-izq) + 30 * var(--u));
+  display: flex;
+  align-items: center;
+  gap: calc(14 * var(--u));
+}
+
+.cabeceraIcono {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: calc(56 * var(--u));
+  height: calc(56 * var(--u));
+  border-radius: calc(16 * var(--u));
+  background: linear-gradient(140deg, #3838f2 0%, #6d4dff 55%, #2bb6ff 100%);
+  color: #ffffff;
+  box-shadow:
+    0 calc(6 * var(--u)) calc(18 * var(--u)) rgba(56, 56, 242, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.cabeceraIcono svg {
+  width: calc(30 * var(--u));
+  height: calc(30 * var(--u));
+}
+
+.titulo {
+  margin: 0;
+  font-size: calc(38 * var(--u));
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  background: var(--titulo-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitulo {
+  margin: calc(3 * var(--u)) 0 0;
+  font-size: calc(17 * var(--u));
+  font-weight: 500;
+  color: var(--subtitulo);
+}
+
+/* Cuadradito de Cayetano: arriba a la derecha de la zona visible; se sacude
+   cada pocos segundos hasta que alguien lo pulsa. */
+.cayetanoCuadro {
+  position: absolute;
+  z-index: 6;
+  top: calc(18 * var(--u));
+  right: calc(26 * var(--u));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max(38px, calc(48 * var(--u)));
+  height: max(38px, calc(48 * var(--u)));
+  border-radius: calc(13 * var(--u));
+  border: 1px solid var(--panel-borde);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--tinta-link);
+  box-shadow: 0 6px 18px rgba(60, 80, 170, 0.18);
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+:global(.dark-mode) .cayetanoCuadro {
+  background: rgba(29, 26, 61, 0.92);
+}
+
+.cayetanoCuadro svg {
+  width: 56%;
+  height: 56%;
+}
+
+.cayetanoCuadro:hover,
+.cayetanoCuadro:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(60, 80, 170, 0.26);
+}
+
+.cayetanoLlama {
+  animation: sacudida 5.5s ease-in-out 1.5s infinite;
+}
+
+@keyframes sacudida {
+  0%, 84%, 100% { transform: none; }
+  87% { transform: translateY(-3px) rotate(-10deg); }
+  90% { transform: translateY(-3px) rotate(9deg); }
+  93% { transform: rotate(-6deg); }
+  96% { transform: rotate(3deg); }
+}
+
+.cayetanoEtiqueta {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--tinta);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(6px, -50%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+:global(.dark-mode) .cayetanoEtiqueta {
+  background: #f0eeff;
+  color: #0d1236;
+}
+
+.cayetanoCuadro:hover .cayetanoEtiqueta,
+.cayetanoCuadro:focus-visible .cayetanoEtiqueta {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+/* ─── Carrusel ─── */
+.carrusel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(640 * var(--u));
+  touch-action: pan-y;
+  outline: none;
+}
+
+.carrusel:focus-visible .tarjeta[data-pos='0'] .tarjetaImg {
+  outline: 3px solid #8fd0f5;
+  outline-offset: 2px;
+  border-radius: calc(19 * var(--u));
+}
+
+/* Podio dibujado bajo la tarjeta del centro (la referencia: anillos de luz). */
+.podio {
+  position: absolute;
+  left: calc(50% + 9 * var(--u));
+  top: calc(588 * var(--u));
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.podio > span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Tres anillos finos, blancos por dentro y con halo cian, y un destello blanco
+   en el centro: así brilla el podio de la referencia. */
+/* Medidas de la referencia: tres elipses concéntricas con centro casi en el
+   pie de la tarjeta (544×39, 726×58, 836×78), filo blanco y halo cian; la de
+   dentro con un toque violeta. */
+.podioAnillo {
+  width: calc(544 * var(--u));
+  height: calc(39 * var(--u));
+  border: calc(3 * var(--u)) solid #ffffff;
+  box-shadow:
+    0 0 calc(6 * var(--u)) rgba(130, 225, 255, 1),
+    0 0 calc(18 * var(--u)) rgba(80, 180, 255, 0.9),
+    0 0 calc(34 * var(--u)) rgba(170, 120, 255, 0.55),
+    inset 0 0 calc(12 * var(--u)) rgba(140, 220, 255, 0.9);
+}
+
+.podioAnillo2 {
+  width: calc(726 * var(--u));
+  height: calc(58 * var(--u));
+  border: calc(2.2 * var(--u)) solid rgba(225, 245, 255, 0.98);
+  box-shadow: 0 0 calc(8 * var(--u)) rgba(110, 205, 255, 0.95), 0 0 calc(20 * var(--u)) rgba(80, 150, 255, 0.6);
+}
+
+.podioAnillo3 {
+  width: calc(836 * var(--u));
+  height: calc(78 * var(--u));
+  border: calc(1.8 * var(--u)) solid rgba(170, 215, 255, 0.95);
+  box-shadow: 0 0 calc(10 * var(--u)) rgba(100, 170, 255, 0.7);
+}
+
+/* El suelo bajo la tarjeta: cian saturado (por eso resaltan los filos blancos). */
+.podioLuz {
+  width: calc(760 * var(--u));
+  height: calc(76 * var(--u));
+  background: radial-gradient(ellipse at center, rgba(150, 215, 255, 0.95) 0%, rgba(95, 165, 255, 0.75) 38%, rgba(110, 140, 255, 0.35) 60%, transparent 74%);
+  opacity: var(--luz-reposo);
+}
+
+.podioPulso {
+  animation-name: pulsoPodio;
+  animation-duration: 0.6s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes pulsoPodio {
+  0% { opacity: var(--luz-reposo); transform: translate(-50%, -50%) scale(0.85); }
+  35% { opacity: 1; transform: translate(-50%, -50%) scale(1.14); }
+  100% { opacity: var(--luz-reposo); transform: translate(-50%, -50%) scale(1); }
+}
+
+.escena {
+  position: absolute;
+  inset: 0;
+}
+
+/* ─── Tarjeta: el dibujo de BUST + capas encima ───
+   Tres sitios. Las laterales se inclinan un poco hacia el centro con su propia
+   perspectiva y el origen en el pie (el borde de abajo queda casi plano y el de
+   arriba se inclina); la del centro vuelve a estar derecha. La misma lista de
+   funciones en los tres sitios, para que se interpolen función a función. Los
+   tres dibujos tienen casi la misma proporción: comparten tamaño. */
+.tarjeta {
+  --p: calc(1036 * var(--u));
+  --giro: 16deg;
+  --t-centro: translateX(calc(-50% + 9 * var(--u))) translateY(0) perspective(var(--p)) rotateY(0deg) scale(1);
+  --t-izq: translateX(calc(-50% - 356 * var(--u))) translateY(calc(-27 * var(--u))) perspective(var(--p)) rotateY(calc(-1 * var(--giro))) scale(0.72);
+  --t-der: translateX(calc(-50% + 373 * var(--u))) translateY(calc(-27 * var(--u))) perspective(var(--p)) rotateY(var(--giro)) scale(0.72);
+
+  position: absolute;
+  left: 50%;
+  bottom: calc(64 * var(--u));
+  width: calc(408 * var(--u));
+  transform-origin: 50% 100%;
+  transition:
+    transform 0.38s cubic-bezier(0.34, 1.2, 0.5, 1),
+    filter 0.3s ease;
+  user-select: none;
+}
+
+.tarjeta[data-pos='0'] {
+  z-index: 3;
+  transform: var(--t-centro);
+  /* Brillo ligero: el filo ya viene dibujado, solo se le suma un halo suave. */
+  filter:
+    drop-shadow(0 0 calc(8 * var(--u)) rgba(110, 200, 255, 0.5))
+    drop-shadow(0 0 calc(26 * var(--u)) rgba(120, 140, 255, 0.28));
+}
+
+.tarjeta[data-pos='-1'] {
+  z-index: 2;
+  transform: var(--t-izq);
+  filter: drop-shadow(0 calc(12 * var(--u)) calc(18 * var(--u)) rgba(30, 45, 140, 0.25));
+}
+
+.tarjeta[data-pos='1'] {
+  z-index: 2;
+  transform: var(--t-der);
+  filter: drop-shadow(0 calc(12 * var(--u)) calc(18 * var(--u)) rgba(30, 45, 140, 0.25));
+}
+
+/* Resplandor suave pegado al filo de la tarjeta del centro. */
+.tarjeta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: calc(19 * var(--u));
+  box-shadow: 0 0 calc(14 * var(--u)) calc(2 * var(--u)) rgba(130, 205, 255, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.tarjeta[data-pos='0']::after {
+  opacity: 1;
+}
+
+/* La que da la vuelta (de un extremo al otro) pasa por detrás, encogida.
+   Propiedades sueltas, NO el atajo `animation`: el atajo sin nombre llegaba al
+   navegador con duración `auto` (0 s) y la tarjeta cruzaba por delante. */
+.aDerecha,
+.aIzquierda {
+  z-index: 0 !important;
+  animation-duration: 0.38s;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.3, 1);
+  animation-fill-mode: both;
+}
+
+.aDerecha { animation-name: vueltaADerecha; }
+.aIzquierda { animation-name: vueltaAIzquierda; }
+
+@keyframes vueltaADerecha {
+  0% { transform: var(--t-izq); opacity: 1; }
+  50% { transform: translateX(calc(-50% + 9 * var(--u))) translateY(calc(-50 * var(--u))) perspective(var(--p)) rotateY(0deg) scale(0.5); opacity: 0.35; }
+  100% { transform: var(--t-der); opacity: 1; }
+}
+
+@keyframes vueltaAIzquierda {
+  0% { transform: var(--t-der); opacity: 1; }
+  50% { transform: translateX(calc(-50% + 9 * var(--u))) translateY(calc(-50 * var(--u))) perspective(var(--p)) rotateY(0deg) scale(0.5); opacity: 0.35; }
+  100% { transform: var(--t-izq); opacity: 1; }
+}
+
+.tarjetaImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+/* Toda la tarjeta del centro lleva al examen (si tiene destino). */
+.arteEnlace {
+  position: absolute;
+  inset: 0;
+  border-radius: calc(19 * var(--u));
+}
+
+/* Contador real, tapando el «16 días» impreso con el mismo aspecto. */
+.encibCuenta {
+  position: absolute;
+  z-index: 1;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8%;
+  border-radius: calc(13 * var(--u));
+  background: linear-gradient(180deg, #2f3790 0%, #252c7c 100%);
+  border: calc(1.5 * var(--u)) solid rgba(150, 165, 255, 0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  pointer-events: none;
+}
+
+.encibCuenta svg {
+  width: calc(24 * var(--u));
+  height: calc(24 * var(--u));
+  flex-shrink: 0;
+}
+
+.encibCuenta > span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+}
+
+.encibCuenta strong {
+  font-size: calc(18.5 * var(--u));
+  font-weight: 700;
+}
+
+.encibCuenta small {
+  font-size: calc(10.5 * var(--u));
+  opacity: 0.9;
+}
+
+/* El «Comenzar» impreso del ENCIB es el enlace (transparente, con brillo). */
+.botonEnlace {
+  position: absolute;
+  z-index: 1;
+  border-radius: 999px;
+  transition: box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.tarjeta[data-pos='0'] .botonEnlace:hover,
+.botonEnlace:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 calc(22 * var(--u)) rgba(150, 140, 255, 0.85);
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* En las otras dos, el «Comenzar» impreso se tapa con «Próximamente». */
+.botonPronto {
+  position: absolute;
+  z-index: 1;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #5e69f9 0%, #2c45d5 50%, #3e4df0 100%);
+  border: calc(1.5 * var(--u)) solid rgba(160, 170, 255, 0.95);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: calc(15 * var(--u));
+  font-weight: 700;
+  cursor: default;
+}
+
+.traer {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border: 0;
+  border-radius: calc(19 * var(--u));
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ─── Flechas y puntos ─── */
+.flechaGrande {
+  position: absolute;
+  z-index: 4;
+  top: calc(356 * var(--u));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(62 * var(--u));
+  height: calc(62 * var(--u));
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 30%, #2a4596 0%, #1d377e 55%, #172c69 100%);
+  color: #ffffff;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 calc(8 * var(--u)) calc(20 * var(--u)) rgba(25, 45, 120, 0.32);
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.flechaGrande svg {
+  width: 44%;
+  height: 44%;
+}
+
+.flechaGrande:hover {
+  transform: translate(-50%, -50%) scale(1.07);
+  filter: brightness(1.15);
+}
+
+.flechaGrande:focus-visible,
+.punto:focus-visible {
+  outline: 2px solid #8fd0f5;
+  outline-offset: 2px;
+}
+
+.flechaGrandeIzq { left: calc(115 * var(--u)); }
+.flechaGrandeDer { left: calc(1274 * var(--u)); }
+
+.puntos {
+  position: absolute;
+  z-index: 4;
+  left: calc(50% + 9 * var(--u));
+  top: calc(621 * var(--u));
+  display: flex;
+  align-items: center;
+  gap: calc(18 * var(--u));
+  transform: translate(-50%, -50%);
+}
+
+.punto {
+  width: calc(13 * var(--u));
+  height: calc(13 * var(--u));
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #a4b5e4;
+  /* Aro blanco: sobre el resplandor del podio, si no, se pierden. */
+  box-shadow: 0 0 0 calc(1.5 * var(--u)) rgba(255, 255, 255, 0.9);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease, width 0.2s ease, height 0.2s ease;
+}
+
+.punto[aria-current='true'] {
+  width: calc(18 * var(--u));
+  height: calc(18 * var(--u));
+  background: #3838f2;
+  box-shadow: 0 0 calc(10 * var(--u)) rgba(56, 56, 242, 0.5);
+}
+
+/* ─── Franja de materias ─── */
+.franja {
+  position: absolute;
+  left: calc(27 * var(--u));
+  right: calc(22 * var(--u));
+  top: calc(643 * var(--u));
+  height: calc(225 * var(--u));
+  border-radius: calc(26 * var(--u));
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-borde);
+  box-shadow: var(--panel-sombra);
+}
+
+.franjaCabecera {
+  position: absolute;
+  left: calc(30 * var(--u));
+  right: calc(32 * var(--u));
+  top: calc(13 * var(--u));
+  height: calc(34 * var(--u));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.franjaTitulo {
+  display: flex;
+  align-items: center;
+  gap: calc(14 * var(--u));
+  margin: 0;
+  font-size: calc(21 * var(--u));
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--tinta);
+  white-space: nowrap;
+}
+
+.franjaAtomo {
+  width: calc(32 * var(--u));
+  height: calc(32 * var(--u));
+}
+
+.franjaExplora {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(12 * var(--u));
+  font-size: calc(14.5 * var(--u));
+  color: var(--tinta-link);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.franjaExplora svg {
+  width: calc(20 * var(--u));
+  height: calc(20 * var(--u));
+}
+
+.franjaExplora:hover {
+  text-decoration: underline;
+}
+
+.franjaCuerpo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(52 * var(--u));
+  bottom: calc(10 * var(--u));
+}
+
+.franjaPista {
+  display: flex;
+  align-items: center;
+  gap: calc(14 * var(--u));
+  height: 100%;
+  padding: 0 calc(28 * var(--u));
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.franjaPista::-webkit-scrollbar {
+  display: none;
+}
+
+.franjaPista:focus-visible {
+  outline: 2px solid #3b9edd;
+  outline-offset: -2px;
+  border-radius: 12px;
+}
+
+/* Icono sin rótulo (solo el dibujo, fondo transparente) y el nombre debajo. */
+.materia {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(6 * var(--u));
+  width: calc(104 * var(--u));
+  text-decoration: none;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+a.materia:hover {
+  transform: translateY(calc(-4 * var(--u)));
+  filter: drop-shadow(0 calc(8 * var(--u)) calc(14 * var(--u)) rgba(80, 100, 220, 0.3));
+}
+
+.materiaImg {
+  display: block;
+  width: calc(92 * var(--u));
+  height: auto;
+  user-select: none;
+}
+
+.materiaNombre {
+  font-size: calc(13.5 * var(--u));
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--tinta);
+  white-space: nowrap;
+}
+
+.materiaPronto {
+  opacity: 0.55;
+  filter: grayscale(0.45);
+  cursor: default;
+}
+
+.materiaSello {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(26, 31, 78, 0.85);
+  color: #ffffff;
+  font-size: calc(10 * var(--u));
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.flechaChica {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(36 * var(--u));
+  height: calc(36 * var(--u));
+  border-radius: 50%;
+  border: 1px solid var(--flechita-borde);
+  background: var(--flechita-bg);
+  color: var(--tinta-link);
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 calc(4 * var(--u)) calc(12 * var(--u)) rgba(40, 60, 150, 0.16);
+  transform: translateY(-50%);
+  transition: transform 0.15s ease;
+}
+
+.flechaChica svg {
+  width: 48%;
+  height: 48%;
+}
+
+.flechaChica:hover {
+  transform: translateY(-50%) scale(1.08);
+}
+
+.flechaChicaIzq { left: calc(8 * var(--u)); }
+.flechaChicaDer { right: calc(8 * var(--u)); }
+
+/* ─── Ventajas ─── */
+.ventajas {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(892 * var(--u));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: calc(84 * var(--u));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: calc(15.5 * var(--u));
+  color: var(--ventaja);
+  white-space: nowrap;
+}
+
+.ventajas li {
+  display: flex;
+  align-items: center;
+  gap: calc(14 * var(--u));
+}
+
+.ventajaIcono {
+  display: flex;
+  color: var(--ventaja-icono);
+}
+
+.ventajaIcono svg {
+  width: calc(27 * var(--u));
+  height: calc(27 * var(--u));
+}
+
+/* ─── Pantallas estrechas: el lienzo se escala al ancho (más grande que la
+   pantalla) y se recortan los lados; lo que debe verse entero se mete. ─── */
+@media (max-width: 900px) {
+  .escenario {
+    --u: calc((100cqw - var(--extra-izq)) / 1000);
+  }
+
+  .flechaGrandeIzq { left: calc(232 * var(--u)); }
+  .flechaGrandeDer { left: calc(1182 * var(--u)); }
+
+  .franja {
+    left: calc(214 * var(--u));
+    right: calc(214 * var(--u));
+  }
+
+  .franjaExplora {
+    display: none;
+  }
+
+  .ventajas {
+    left: calc(214 * var(--u));
+    right: calc(214 * var(--u));
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    white-space: normal;
+  }
+}
+
+/* `.main` y `.panel` cambian su padding en móvil (dashboardLayout.module.css). */
+@media (max-width: 600px) {
+  .escenario {
+    /* Aquí la sidebar es un cajón que se superpone: no hay esquina que tapar. */
+    --extra-izq: 0px;
+    margin: -18px -28px -40px;
+  }
+}
+
+/* En táctil la franja se arrastra con el dedo: sus flechas sobran. */
+@media (hover: none) {
+  .flechaChica { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta,
+  .flechaGrande,
+  .materia,
+  .flechaChica,
+  .cayetanoCuadro,
+  .punto {
+    transition: none;
+  }
+
+  .aDerecha,
+  .aIzquierda,
+  .podioPulso,
+  .cayetanoLlama {
+    animation: none;
+  }
+}

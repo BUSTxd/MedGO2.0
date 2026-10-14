@@ -1,3 +1,4 @@
+import { preload } from 'react-dom';
 import Background from '@/components/Background';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -13,6 +14,10 @@ import Footer from '@/components/Footer';
 import ScrollReveal from '@/components/ScrollReveal';
 
 export default function Home() {
+  // El fondo del hero es CSS (`hero.module.css`): sin esto el navegador no lo
+  // descubre hasta tener la hoja de estilos. Solo aquí: en el layout raíz se
+  // bajaba en todas las páginas, también en el dashboard, donde no se usa.
+  preload('/assets/hero-bg.avif', { as: 'image', fetchPriority: 'high' });
   return (
     <>
       <Background />

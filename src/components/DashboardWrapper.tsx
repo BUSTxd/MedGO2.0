@@ -7,7 +7,6 @@ import { SidebarStateProvider } from './SidebarStateContext';
 import { DarkModeProvider } from './DarkModeContext';
 import { EsAdminProvider } from './EsAdminContext';
 import CursorCelula from './CursorCelula';
-import ClarityPlanTag from './ClarityPlanTag';
 import PaginaVistaTracker from './PaginaVistaTracker';
 import { AnunciarPresencia } from './Presencia';
 import BuzonUsuario from './BuzonUsuario';
@@ -64,7 +63,6 @@ export default function DashboardWrapper({
 
   return (
     <PlanProvider value={planState}>
-      <ClarityPlanTag />
       {/* useSearchParams exige Suspense o el prerender del dashboard cae a cliente */}
       {!isAdmin && <Suspense fallback={null}><PaginaVistaTracker /></Suspense>}
       {presencia && <AnunciarPresencia token={presencia} />}

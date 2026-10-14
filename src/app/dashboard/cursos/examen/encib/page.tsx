@@ -6,6 +6,8 @@ import {
   preguntasDeArea, preguntasDificiles, temasDistintos, temasEnLosTres,
 } from '@/lib/encib/analisis';
 import { diasHasta, fechaLarga } from '@/lib/encib/fechas';
+import { getUser } from '@/lib/supabase/get-user';
+import { esDeCayetano } from '@/lib/admin';
 import hub from '@/styles/cursosHub.module.css';
 import s from '@/styles/encib.module.css';
 
@@ -61,7 +63,9 @@ function Leyenda({ tramos }: { tramos: { k: string; label: string; clase: string
   );
 }
 
-export default function EncibPage() {
+export default async function EncibPage() {
+  // Se vuelve al escenario de exámenes: para Cayetano vive en `cursos/examen`.
+  const volver = esDeCayetano(await getUser()) ? '/dashboard/cursos/examen' : '/dashboard/cursos';
   const dias = diasHasta(ENCIB.fecha);
   const segundos = Math.round((ENCIB.minutos * 60) / ENCIB.preguntas);
 
@@ -79,7 +83,7 @@ export default function EncibPage() {
 
   return (
     <div className={s.pagina}>
-      <Link href="/dashboard/cursos" className={hub.volver}>← Cursos</Link>
+      <Link href={volver} className={hub.volver}>← Exámenes</Link>
 
       {/* ── Cabecera ── */}
       <header className={s.hero}>

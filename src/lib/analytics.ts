@@ -17,7 +17,7 @@ export type AnalyticsEvent =
 /**
  * Registra la actividad del alumno dentro del dashboard. No depende del aviso
  * de cookies: es un dato de uso de la cuenta (declarado en /privacidad), no una
- * cookie. El aviso sigue gobernando Clarity, que sí es de terceros.
+ * cookie.
  *
  * `keepalive` evita perder el evento si dispara justo durante una navegación.
  * Fire-and-forget: nunca lanza ni bloquea la UI.

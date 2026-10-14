@@ -3,7 +3,6 @@ import { Outfit } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { AuthProvider } from '@/components/AuthProvider';
 import { ConsentProvider } from '@/components/ConsentProvider';
-import ClarityScript from '@/components/ClarityScript';
 import CookieConsent from '@/components/CookieConsent';
 import './globals.css';
 
@@ -46,14 +45,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className={outfit.variable}>
-      <head>
-        <link rel="preload" as="image" href="/assets/hero-bg.avif" fetchPriority="high" />
-      </head>
       <body className={outfit.className}>
         <ConsentProvider>
           <AuthProvider>
             {children}
-            <ClarityScript />
           </AuthProvider>
           <CookieConsent />
         </ConsentProvider>

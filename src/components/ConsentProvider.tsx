@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 
 export type Consent = 'unknown' | 'granted' | 'denied';
 
-/** Clave en localStorage. Reutilizada por trackEvent() y ClarityScript. */
+/** Clave en localStorage. Reutilizada por trackEvent(). */
 export const CONSENT_KEY = 'medgo-consent';
 
 interface ConsentContextValue {
@@ -23,7 +23,7 @@ const ConsentContext = createContext<ConsentContextValue>({
  * Estado global del consentimiento de cookies analíticas. Distingue:
  *  - cookies NECESARIAS (sesión Supabase, device_id, medgo-dark): siempre activas,
  *    no pasan por aquí.
- *  - cookies OPCIONALES (Microsoft Clarity + registro de eventos en /api/track):
+ *  - cookies OPCIONALES (hoy ninguna: Clarity se quitó el 2026-10-13):
  *    solo se activan si consent === 'granted'.
  *
  * Arranca en 'unknown' para evitar mismatch de hidratación; tras montar lee la

@@ -459,7 +459,7 @@ function CursoCard({ c, bloqueado }: { c: Curso; bloqueado: boolean }) {
 function FranjaEncib() {
   const dias = diasHasta(ENCIB.fecha);
   return (
-    <Link href="/dashboard/cursos/examen/encib" className={hub.franjaEncib}>
+    <Link href="/dashboard/cursos/examen" className={hub.franjaEncib}>
       <span className={hub.franjaSigla}>ENCIB 2026</span>
       <span className={hub.franjaTexto}>
         {dias > 0 && <><strong>{dias} {dias === 1 ? 'día' : 'días'}</strong> · </>}
