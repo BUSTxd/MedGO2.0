@@ -278,9 +278,13 @@ if (ini !== -1 && fin !== -1) {
     .replace(/<header[\s\S]*?<\/header>/i, '');
 }
 
-// 5b. imágenes → CDN público (href del enlace y src de la figura)
-body = body.replace(/href="([^"]+\.(?:png|jpe?g|webp))"/gi, (_, p) => `href="${urlDe(p)}"`);
-body = body.replace(/src="([^"]+\.(?:png|jpe?g|webp))"/gi, (_, p) => `src="${urlDe(p)}"`);
+// 5b. imágenes → CDN público (href del enlace y src de la figura). El .avif
+//     entra también: si BUST reescribe el export para que apunte a sus
+//     .avif (sin PNG en la carpeta), las imágenes se subían pero el HTML
+//     seguía con `src="image.avif"` relativo y no cargaba ninguna (ACP8 de
+//     Patología). Las URL absolutas ya publicadas no se tocan.
+body = body.replace(/href="(?!https?:)([^"]+\.(?:png|jpe?g|webp|avif))"/gi, (_, p) => `href="${urlDe(p)}"`);
+body = body.replace(/src="(?!https?:)([^"]+\.(?:png|jpe?g|webp|avif))"/gi, (_, p) => `src="${urlDe(p)}"`);
 
 // 5c. el enlace queda de fallback: el visor intercepta el clic y abre el
 //     lightbox, pero ctrl+clic sigue abriendo en pestaña nueva
