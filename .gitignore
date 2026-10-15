@@ -32,3 +32,6 @@ scripts/atlas-3d/salida/
 data/examen-ms/
 docs/examen-ms/*
 !docs/examen-ms/PLAN.md
+
+# Laboratorio de linfocitos: imágenes de revisión local (BUST las optimiza y se suben aparte)
+public/lab-linfocitos/

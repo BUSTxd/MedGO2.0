@@ -10,7 +10,8 @@
     "verificar:banco": "node --experimental-strip-types --no-warnings scripts/verificar-banco.mjs",
     "verificar:temas": "node --experimental-strip-types --no-warnings scripts/verificar-temas.mjs",
     "verificar:ciclo": "node --experimental-strip-types --no-warnings scripts/ciclo-celular/verificar.mjs",
-    "verificar:vias-nfkb": "node --experimental-strip-types --no-warnings scripts/vias-nfkb/verificar.mjs"
+    "verificar:vias-nfkb": "node --experimental-strip-types --no-warnings scripts/vias-nfkb/verificar.mjs",
+    "verificar:linfocitos": "node --experimental-strip-types --no-warnings scripts/linfocitos/verificar.mjs"
   },
   "dependencies": {
     "@mercadopago/sdk-react": "^1.0.7",

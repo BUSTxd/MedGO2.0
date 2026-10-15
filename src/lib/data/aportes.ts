@@ -184,5 +184,6 @@ export const LABORATORIOS: LaboratorioMeta[] = [
   { slug: 'cascada-coagulacion',     nombre: 'Cascada de coagulación',       track: 'medicina', autor: 'bust', pesado: true, gratis: true },
   { slug: 'checkpoints-ciclo-celular', nombre: 'Checkpoints del ciclo celular', track: 'medicina', autor: 'bust', pesado: true },
   { slug: 'vias-nfkb-jakstat',       nombre: 'Vías NF-κB y JAK/STAT',        track: 'medicina', autor: 'bust', pesado: true },
+  { slug: 'maduracion-linfocitos',   nombre: 'Maduración de linfocitos',     track: 'medicina', autor: 'bust', pesado: true },
   { slug: 'atlas-3d',                nombre: 'Atlas 3D (miembros)', track: 'medicina', autor: 'bust', pesado: true },
 ];

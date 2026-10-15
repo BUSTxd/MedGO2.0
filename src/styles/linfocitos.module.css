@@ -1,0 +1,409 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Laboratorio «Maduración de linfocitos» (dashboard/laboratorio/maduracion-linfocitos)
+
+   Comparte la cáscara del ciclo celular (cicloCelular.module.css: cabecera,
+   reproductor, pie, ficha, barra de tiempo) pero con FONDO BLANCO, sin tintes
+   pastel: lo pidió BUST. Las estructuras de cada órgano van en trazo fino gris
+   y el color queda para las células, los receptores y el rojo de las
+   neoplasias. En oscuro, gris casi negro neutro (tampoco pastel).
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Doble clase: gana a `.wrapper` del ciclo, que define las mismas variables. */
+.wrapper.wrapper {
+  --campo: #FFFFFF;
+  --campo-2: #F5F6F8;
+  --campo-3: #FFFFFF;
+  --linea: #E2E5EA;
+  --texto: #171B26;
+  --texto-2: #5B6475;
+  --dapi: #2F6FD0;
+  --fitc: #1F9A6A;
+  --rodamina: #E5484D;
+  --cy3: #D9881E;
+  --nucleo-borde: #C9CED8;
+  --nucleo-fondo: transparent;
+  --vineta-op: 0;
+  --trazo: #C4CAD4;
+  --trazo-suave: #DDE1E7;
+  --rojo: #E5484D;
+}
+
+:global(.dark-mode) .wrapper.wrapper {
+  --campo: #0F1115;
+  --campo-2: #171A20;
+  --campo-3: #1C1F26;
+  --linea: #2A2F38;
+  --texto: #ECEEF2;
+  --texto-2: #9AA3B2;
+  --dapi: #6A9BEF;
+  --trazo: #3A404B;
+  --trazo-suave: #2A2F38;
+  --rojo: #FF6B70;
+}
+
+.escena { background: var(--campo); }
+.blanco { fill: var(--campo); }
+
+/* ─── Fondos (trazo fino sobre blanco) ─────────────────────────────────────── */
+
+.fondoTrazo { pointer-events: none; }
+.hueso { fill: none; stroke: #C9A27A; stroke-width: 2.5; }
+.huesoMatriz { fill: #FBF6EE; }
+.huesoLinea { fill: none; stroke: #E4D3BA; stroke-width: 1.6; }
+.endostio { fill: none; stroke: #B8946A; stroke-width: 2.5; }
+.laguna { fill: #F3E8D6; stroke: #C9A27A; stroke-width: 1.2; }
+.osteocito { fill: #9C7550; }
+.canaliculo { stroke: #D8C3A5; stroke-width: 1; }
+.revestimiento { fill: #F1E4D2; stroke: #C9A27A; stroke-width: 1; }
+.luz { fill: #FFF7F6; }
+.endotelio { fill: #D48A85; }
+.megaCito { fill: #F6EEF7; stroke: #B48BBF; stroke-width: 2; }
+.megaNucleo { fill: #C9A6D3; stroke: #9C6FAC; stroke-width: 1.2; }
+.proplaqueta { fill: none; stroke: #B48BBF; stroke-width: 3; stroke-linecap: round; }
+.plaqueta { fill: #C9A6D3; }
+.adipocito { fill: #FFFFFF; stroke: #DCCCAE; stroke-width: 2; }
+.adipoNucleo { fill: #C9B38A; }
+.macroIsla { fill: #F5EFEA; stroke: #C2A58F; stroke-width: 1.5; }
+.macroNucleo { fill: #C2A58F; }
+.eritroblasto { fill: #F6D2CE; stroke: #D9938C; stroke-width: 1.2; }
+.eritroblastoNucleo { fill: #7A4256; }
+.adipoBorde { fill: #F7EEDB; stroke: #CDB98F; stroke-width: 1.6; }
+/* Timo */
+.capsulaFill { fill: #FBF7F1; }
+.colageno { fill: none; stroke: #E8DCC8; stroke-width: 1.6; }
+.fibroblasto { fill: #C2AC8E; }
+.timocitoT { fill: #EEEAF8; stroke: #CBC1E4; stroke-width: 1; }
+.timocitoN { fill: #9C8CC8; }
+.hassallFondo { fill: #FDF0F4; }
+.hassallNucleo { stroke: #C77FA6; stroke-width: 2.2; stroke-linecap: round; }
+.hassallCentro { fill: #F6C3D4; stroke: #E39AB6; stroke-width: 1.5; }
+/* Ganglio */
+.seno { fill: none; stroke: #9FC4E8; stroke-width: 2; stroke-dasharray: 3 6; }
+.flujo { fill: none; stroke: #6FA3D9; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lnfB { fill: #E9F0FC; stroke: #B9CDEE; stroke-width: 1; }
+.lnfBN { fill: #6F8FCB; }
+.lnfT { fill: #E7F6EE; stroke: #A9D8BF; stroke-width: 1; }
+.lnfTN { fill: #5E9C82; }
+.cbFondo { fill: #FDF0DC; stroke: #E7C28A; stroke-width: 1; }
+.cbFondoN { fill: #EBC88F; }
+.cbFondoNucleolo { fill: #9A5A1A; }
+.ccFondo { fill: #FFF7EC; stroke: #EBD2AA; stroke-width: 1; }
+.ccFondoN { fill: #C99555; }
+.redFdc { fill: none; stroke: #E3CB86; stroke-width: 2.5; stroke-linecap: round; opacity: 0.7; }
+.hevCelula { fill: #F6E1E6; stroke: #D69AA6; stroke-width: 1.2; }
+.hevNucleo { fill: #B5677A; }
+.vaso { fill: none; stroke: #E39A96; stroke-width: 2.5; }
+.eritro { fill: #F6C9C5; stroke: #D9827C; stroke-width: 1.5; }
+.eritroCentro { fill: #FBE3E1; }
+.punteado { fill: var(--trazo-suave); }
+.capsula { fill: none; stroke: var(--trazo); stroke-width: 2.5; }
+.corteza { fill: var(--trazo-suave); }
+.limite { fill: none; stroke: var(--trazo); stroke-width: 2; stroke-dasharray: 9 9; }
+.hassall { fill: none; stroke: #E3A9C5; stroke-width: 2.5; }
+.manto { fill: none; stroke: var(--trazo); stroke-width: 2.5; }
+.cg { fill: none; stroke: #E0B062; stroke-width: 3; }
+.zonaOscura { fill: #EED9B2; }
+.lineaRuta { fill: none; stroke: var(--trazo); stroke-width: 3; stroke-dasharray: 2 10; stroke-linecap: round; }
+
+:global(.dark-mode) .wrapper .hueso { stroke: #8A6E52; }
+:global(.dark-mode) .wrapper .huesoMatriz { fill: #221D16; }
+:global(.dark-mode) .wrapper .huesoLinea { stroke: #3A3125; }
+:global(.dark-mode) .wrapper .endostio { stroke: #8A6E52; }
+:global(.dark-mode) .wrapper .laguna, :global(.dark-mode) .wrapper .revestimiento { fill: #2C251C; stroke: #6B5640; }
+:global(.dark-mode) .wrapper .canaliculo { stroke: #3A3125; }
+:global(.dark-mode) .wrapper .luz { fill: #1E1516; }
+:global(.dark-mode) .wrapper .megaCito { fill: #241B27; stroke: #7A5A86; }
+:global(.dark-mode) .wrapper .megaNucleo, :global(.dark-mode) .wrapper .plaqueta { fill: #5E4569; }
+:global(.dark-mode) .wrapper .adipocito { fill: #15171C; stroke: #4A4234; }
+:global(.dark-mode) .wrapper .macroIsla { fill: #241F1B; stroke: #6B5A4C; }
+:global(.dark-mode) .wrapper .eritroblasto { fill: #4A2A2C; stroke: #8A4E4A; }
+:global(.dark-mode) .wrapper .adipoBorde { fill: #2A2519; stroke: #6B5D42; }
+:global(.dark-mode) .wrapper .capsulaFill { fill: #1E1B17; }
+:global(.dark-mode) .wrapper .colageno { stroke: #3A3328; }
+:global(.dark-mode) .wrapper .timocitoT, :global(.dark-mode) .wrapper .lnfB, :global(.dark-mode) .wrapper .lnfT, :global(.dark-mode) .wrapper .cbFondo, :global(.dark-mode) .wrapper .ccFondo { fill: #1F2229; stroke: #3A404B; }
+:global(.dark-mode) .wrapper .hassallFondo { fill: #2A1A22; }
+:global(.dark-mode) .wrapper .hevCelula { fill: #2E1E22; stroke: #7A4A55; }
+:global(.dark-mode) .wrapper .eritro { fill: #6B3533; stroke: #A85B56; }
+:global(.dark-mode) .wrapper .eritroCentro { fill: #52292A; }
+:global(.dark-mode) .wrapper .zonaOscura { fill: #4A3B22; }
+
+.zona {
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  fill: var(--texto-2);
+  opacity: 0.7;
+}
+.zonaMini { font-family: var(--sans); font-size: 14px; fill: var(--texto-2); }
+
+/* ─── Actores ──────────────────────────────────────────────────────────────── */
+
+.rotuloCelula {
+  font-family: var(--sans);
+  font-size: 19px;
+  font-weight: 700;
+  fill: var(--texto);
+  paint-order: stroke;
+  stroke: var(--campo);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.subCelula {
+  font-family: var(--sans);
+  font-size: 14.5px;
+  font-weight: 500;
+  fill: var(--texto-2);
+  paint-order: stroke;
+  stroke: var(--campo);
+  stroke-width: 4px;
+}
+.rotuloMol { font-family: var(--sans); font-size: 15px; font-weight: 600; fill: var(--texto-2); paint-order: stroke; stroke: var(--campo); stroke-width: 4px; }
+.marcaTxt { font-family: var(--sans); font-size: 18px; font-weight: 800; fill: var(--rojo); paint-order: stroke; stroke: var(--campo); stroke-width: 5px; }
+.marcaSub { font-family: var(--sans); font-size: 13.5px; font-weight: 600; font-style: italic; fill: var(--rojo); paint-order: stroke; stroke: var(--campo); stroke-width: 4px; }
+.marcadorTxt { font-family: var(--sans); font-size: calc(13px * var(--tx, 1)); font-weight: 800; paint-order: stroke; stroke: var(--campo); stroke-width: 4px; }
+.protTxt { font-family: var(--sans); font-weight: 800; fill: #fff; pointer-events: none; }
+.simbolo { font-size: 15px; fill: #B4507E; }
+.burbuja { fill: #EDE7F3; stroke: #9C8DB0; stroke-width: 1.5; }
+
+.etiquetaFondo { fill: var(--campo); stroke: var(--linea); stroke-width: 1; opacity: 0.95; }
+.etiquetaConector { font-family: var(--sans); font-size: 14px; font-weight: 700; fill: var(--texto-2); }
+.notaCaja { fill: var(--campo-3); stroke: var(--linea); stroke-width: 1.5; }
+.notaTxt { font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--texto); }
+.desenlaceCaja { fill: var(--campo-3); stroke-width: 2.5; }
+.desenlaceTxt { font-family: var(--sans); font-size: 19px; font-weight: 700; fill: var(--texto); }
+
+/* ─── Lupa ─────────────────────────────────────────────────────────────────── */
+
+.lupaCaja { fill: var(--campo-3); stroke: var(--linea); stroke-width: 2; }
+.lupaSombra { fill: #0F1A33; opacity: 0.08; }
+.hiloLupa { stroke: var(--texto-2); stroke-width: 2; stroke-dasharray: 3 6; opacity: 0.7; }
+.anilloLupa { fill: none; stroke: var(--texto-2); stroke-width: 3; opacity: 0.7; }
+.lupaTitulo { font-family: var(--sans); font-size: calc(19px * var(--txl, 1)); font-weight: 800; fill: var(--texto); }
+.lupaSub { font-family: var(--sans); font-size: calc(14px * var(--txl, 1)); font-weight: 500; fill: var(--texto-2); }
+.lupaNota { font-family: var(--sans); font-size: calc(13.5px * var(--txl, 1)); font-weight: 600; fill: var(--texto-2); }
+.lupaOk { font-family: var(--sans); font-size: calc(15px * var(--txl, 1)); font-weight: 800; fill: #1F9A6A; }
+.lupaResultado { font-family: var(--sans); font-size: calc(19px * var(--txl, 1)); font-weight: 800; }
+.lupaEfecto { margin: 0; font-family: var(--sans); font-size: 13.5px; line-height: 1.35; color: var(--texto-2); }
+.segTxt { font-family: var(--sans); font-size: 13px; font-weight: 800; fill: #fff; pointer-events: none; }
+.adn { stroke: #9AA3B2; stroke-width: 2; }
+.circuloEscision { stroke: #9AA3B2; stroke-width: 2; stroke-dasharray: 4 5; }
+.mutTxt { font-family: var(--sans); font-size: 12px; font-weight: 800; fill: #E5484D; }
+.cromTxt { font-family: var(--sans); font-size: 13px; font-weight: 700; fill: var(--texto-2); }
+.cromGen { font-family: var(--sans); font-size: 13px; font-weight: 800; font-style: italic; fill: var(--texto); }
+
+/* ─── Texto animado (palabra por palabra) ──────────────────────────────────── */
+
+.textoAnimado { display: inline; }
+.palabra {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateY(6px);
+  animation: palabra 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.clave {
+  font-weight: 700;
+  color: var(--texto);
+  background-image: linear-gradient(color-mix(in srgb, var(--dapi) 28%, transparent), color-mix(in srgb, var(--dapi) 28%, transparent));
+  background-repeat: no-repeat;
+  background-position: 0 92%;
+  background-size: 0% 0.38em;
+  animation: palabra 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards, barrido 600ms cubic-bezier(0.16, 1, 0.3, 1) var(--barrido) forwards;
+}
+@keyframes palabra { to { opacity: 1; filter: blur(0); transform: translateY(0); } }
+@keyframes barrido { to { background-size: 100% 0.38em; } }
+
+/* ─── Portada ──────────────────────────────────────────────────────────────── */
+
+.portada { position: relative; flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 340px; }
+.portadaEscena { position: relative; min-height: 0; min-width: 0; }
+.credito { position: absolute; left: 12px; bottom: 8px; margin: 0; font-size: 11px; color: var(--texto-2); opacity: 0.8; pointer-events: none; }
+
+.menu { border-left: 1px solid var(--linea); padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; min-height: 0; }
+.sobretitulo { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rojo); }
+.menuCab h1 { margin: 4px 0 0; font-size: 28px; font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; }
+.menuSub { margin: 4px 0 0; font-size: 17px; color: var(--texto-2); line-height: 1.3; }
+.introNarr { display: flex; flex-direction: column; gap: 10px; }
+.introPartes { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.introParte {
+  width: 100%; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; align-items: center;
+  text-align: left; padding: 6px 8px 6px 4px; border: none; border-radius: 10px; background: transparent;
+  color: var(--texto-2); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: background var(--dur-rapida), color var(--dur-rapida);
+}
+.introParte:hover { background: var(--campo-2); color: var(--texto); }
+.introNum {
+  width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%;
+  border: 1.5px solid var(--linea); font-size: 12px; font-weight: 800; color: var(--texto-2); background: var(--campo);
+}
+.introParteVista .introNum { border-color: var(--dapi); color: var(--dapi); }
+.introParteActiva { background: var(--campo-2); color: var(--texto); }
+.introParteActiva .introNum { background: var(--dapi); border-color: var(--dapi); color: #fff; }
+/* Alto fijo: con alto variable, la barra y los botones saltaban al cambiar de
+   parte y el clic en «Saltar intro» caía en otro sitio. */
+.introTexto { font-size: 15px; line-height: 1.55; color: var(--texto); height: 7.75em; overflow: hidden; padding: 2px 2px 0; }
+.introControles { display: flex; justify-content: center; }
+
+.capitulos { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; counter-reset: cap; }
+.capitulo {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  text-align: left;
+  padding: 10px 10px 10px 6px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--texto);
+  font-family: inherit;
+  cursor: pointer;
+  position: relative;
+  transition: background var(--dur-rapida);
+}
+.capitulo::before {
+  content: '';
+  position: absolute;
+  left: 22px;
+  top: 44px;
+  bottom: -8px;
+  width: 2px;
+  background: var(--linea);
+}
+.capitulos li:last-child .capitulo::before { display: none; }
+.capitulo:hover { background: var(--campo-2); }
+.capNum {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  border: 2px solid var(--parte);
+  color: var(--parte);
+  font-weight: 800;
+  font-size: 15px;
+  background: var(--campo);
+  position: relative;
+  z-index: 1;
+  transition: background var(--dur-rapida), color var(--dur-rapida);
+}
+.capitulo:hover .capNum { background: var(--parte); color: #fff; }
+.capTxt { display: grid; gap: 2px; min-width: 0; }
+.capTxt strong { font-size: 16px; }
+.capLugar { font-size: 12.5px; font-weight: 600; color: var(--parte); }
+.capPregunta { font-size: 13px; line-height: 1.4; color: var(--texto-2); }
+.menuAcciones { display: flex; flex-direction: column; gap: 8px; align-items: stretch; margin-top: auto; }
+.menuAcciones .enlace { align-self: flex-start; }
+
+/* ─── Cabecera de una parte ────────────────────────────────────────────────── */
+
+/* En ventanas estrechas pasa a dos líneas: sin esto empujaba todo el
+   laboratorio fuera de la pantalla (narración y botones cortados). */
+.cabeceraLinf { flex-wrap: wrap; row-gap: 6px; min-width: 0; }
+.cabeceraLinf > div:nth-child(2) { min-width: 240px; }
+.cabeceraLinf h2 { font-size: clamp(18px, 1.6vw, 26px); }
+
+
+.selectorPartes { display: flex; gap: 4px; flex: none; }
+.selectorPartes button {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  border: 1px solid var(--linea); background: transparent; color: var(--texto-2);
+  padding: 4px 10px 4px 4px; border-radius: 999px; cursor: pointer; min-height: 34px;
+}
+.selectorPartes button span {
+  width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%;
+  border: 1.5px solid var(--parte); color: var(--parte); font-weight: 800; font-size: 12px;
+}
+.selectorPartes button:hover { border-color: var(--parte); color: var(--texto); }
+.selectorPartes .parteActiva { border-color: var(--parte); color: var(--texto); }
+/* Solo números: con los cinco nombres la cabecera desbordaba la pantalla. La
+   parte activa sí lleva su nombre. */
+.selectorPartes button:not(.parteActiva) { font-size: 0; gap: 0; padding: 4px; }
+.selectorPartes .parteActiva span { background: var(--parte); color: #fff; }
+
+/* ─── Ficha y tabla de neoplasias ──────────────────────────────────────────── */
+
+.fichaPunto { width: 42px; height: 42px; border-radius: 50%; display: block; }
+.fichaMarcadores { margin: 0 0 8px; font-size: 13px; font-weight: 700; color: var(--dapi); }
+.fichaNeo { margin-top: 10px; padding: 8px 12px; border-left: 3px solid var(--rojo); background: color-mix(in srgb, var(--rojo) 7%, transparent); border-radius: 0 8px 8px 0; }
+
+.panelNeo { width: min(1180px, 100%); max-height: 100%; display: flex; flex-direction: column; background: var(--campo-3); border: 1px solid var(--linea); border-radius: 16px; padding: 16px 20px; min-height: 0; }
+.tablaScroll { overflow: auto; margin-top: 10px; min-height: 0; }
+.tablaNeo { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.tablaNeo th { text-align: left; font-size: 12px; color: var(--texto-2); font-weight: 700; padding: 6px 8px; border-bottom: 1px solid var(--linea); position: sticky; top: 0; background: var(--campo-3); }
+.tablaNeo td { padding: 8px; border-bottom: 1px solid var(--linea); vertical-align: top; line-height: 1.4; }
+.neoNombre { border: none; background: none; padding: 0; font-family: inherit; font-size: 13.5px; font-weight: 800; color: var(--rojo); cursor: pointer; text-align: left; }
+.neoNombre:hover { text-decoration: underline; text-underline-offset: 3px; }
+.mono { font-variant-numeric: tabular-nums; color: var(--dapi); font-weight: 600; }
+.fuente { margin: 8px 0 0; font-size: 12px; color: var(--texto-2); }
+
+/* ─── Responsivo y movimiento reducido ─────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .portada { display: flex; flex-direction: column; }
+  .portadaEscena { flex: 1; min-height: 52vh; }
+  .menu { border-left: none; border-top: 1px solid var(--linea); overflow: visible; }
+  /* El selector de partes baja a su propia fila, bajo el título. */
+  .selectorPartes { order: 5; flex-basis: 100%; }
+}
+
+/* ─── Teléfono vertical (iPhone ~402 × 874) ────────────────────────────────── */
+/* La cámara ya se compila para la proporción de la zona (useModo): aquí solo
+   se reparte el alto. Escena arriba, barra y mando debajo y la narración al
+   final; la tarjeta de la célula sale como hoja inferior (CSS del ciclo). */
+@media (max-width: 700px) {
+  /* `contain`: el subtítulo va en una línea (nowrap) y su ancho completo
+     empujaba toda la página a ~530 px. */
+  .cabeceraLinf { gap: 8px 10px; }
+  .cabeceraLinf > div:nth-child(2) { contain: inline-size; min-width: 0; flex: 1 1 160px; }
+  .cabeceraLinf h2 { font-size: 17px; line-height: 1.2; }
+  .cabeceraLinf p { font-size: 12px; }
+  .cabeceraLinf > button:last-child { padding: 7px 11px; font-size: 13px; }
+  .cabeceraLinf .btnVolver, .cabeceraLinf > button:first-child { width: 36px; height: 36px; }
+  .selectorPartes { gap: 6px; }
+  .selectorPartes button { min-height: 32px; }
+
+  .escenaLinf.escenaLinf { height: min(60dvh, 132vw); }
+  /* Textos libres de la lupa (no las etiquetas de los segmentos, que se
+     saldrían de sus cajas). */
+  .escena { --txl: 1.22; }
+  .btnEncuadrar.btnEncuadrar.btnEncuadrar { display: inline-flex; padding: 6px 10px; font-size: 12px; border-radius: 9px; }
+  /* Abajo a la derecha: arriba chocaba con las lupas que se abren encima. */
+  .escenaLinf > div:has(> .btnEncuadrar) { top: auto; bottom: 8px; right: 8px; }
+  .credito { font-size: 9.5px; left: 8px; bottom: 6px; }
+
+  .portadaEscena { flex: none; height: min(56dvh, 120vw); min-height: 0; }
+  .menu { padding: 14px 14px 18px; gap: 12px; }
+  .menuCab h1 { font-size: 23px; }
+  .menuSub { font-size: 15px; }
+  /* La lista de la intro: solo números; la parte activa lleva su nombre. */
+  .introPartes { display: flex; flex-wrap: wrap; gap: 6px; }
+  .introParte { width: auto; grid-template-columns: 26px; padding: 4px; }
+  .introParte > span:last-child { display: none; }
+  .introParteActiva { grid-template-columns: 26px auto; padding-right: 12px; }
+  .introParteActiva > span:last-child { display: inline; }
+  .introTexto { height: 9.4em; font-size: 14.5px; }
+  .capitulo { padding: 10px 12px; }
+}
+
+/* ─── Teléfono en horizontal ───────────────────────────────────────────────── */
+/* Poco alto: cabecera de una línea y la escena con casi todo el alto visible;
+   la página se desplaza para llegar a la narración. */
+@media (max-height: 520px) and (orientation: landscape) {
+  .wrapper.wrapper { height: auto; min-height: 0; overflow: visible; }
+  .cabeceraLinf { padding: 6px 12px; }
+  .cabeceraLinf h2 { font-size: 16px; }
+  .cabeceraLinf p { display: none; }
+  .selectorPartes { order: 0; flex-basis: auto; }
+  .escenaLinf.escenaLinf { height: calc(100dvh - 150px); min-height: 200px; flex: none; }
+  .portada { display: grid; grid-template-columns: minmax(0, 1fr) 300px; }
+  .portadaEscena { height: calc(100dvh - 60px); min-height: 220px; }
+  .menu { border-top: none; border-left: 1px solid var(--linea); overflow-y: auto; max-height: calc(100dvh - 60px); }
+  .introTexto { height: 6.2em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .introParte { transition: none; }
+  .palabra, .clave { animation: none; opacity: 1; filter: none; transform: none; background-size: 100% 0.38em; }
+}

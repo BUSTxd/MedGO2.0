@@ -1,0 +1,217 @@
+// Parte 5 — Origen de las neoplasias linfoides: cada neoplasia congela una
+// etapa de la maduración. Guion §Parte 5. La tabla del inventario está en
+// `tabla-neoplasias.ts`.
+
+import type { ActorDecl, Parte } from './tipos';
+import { L } from './colores';
+
+const FILA = 2.3;
+/** Fila del linaje T y NK (abajo, para que la fila B respire). */
+const FILA_T = 7.9;
+const C = (label: string, img: string | undefined, color: string, info: string, dibujo?: ActorDecl['dibujo']): ActorDecl =>
+  dibujo ? { forma: 'dibujo', dibujo, label, d: 105, color, info } : { forma: 'celula', img, label, d: 105, color, info };
+
+const neoplasias: Parte = {
+  id: 'neoplasias',
+  numero: 5,
+  nombre: 'Origen de las neoplasias linfoides',
+  nombreCorto: 'Neoplasias',
+  lugar: 'Toda la ruta',
+  color: L.neoplasia,
+  pregunta: '¿De qué etapa de la maduración sale cada leucemia y linfoma?',
+  resumen: 'Cada neoplasia congela una etapa y es monoclonal; los errores de RAG y AID pegan oncogenes al locus de las inmunoglobulinas.',
+  fondo: 'mapa',
+  zonas: [
+    { texto: 'Médula ósea', pos: { col: 0.3, row: 0.6 } },
+    { texto: 'Folículo · manto', pos: { col: 2.45, row: 0.6 } },
+    { texto: 'Centro germinal', pos: { col: 4.65, row: 0.6 } },
+    { texto: 'Posgerminal', pos: { col: 9.05, row: 0.6 } },
+    { texto: 'Timo y periferia T / NK', pos: { col: 0.3, row: 6.6 } },
+  ],
+  actores: {
+    s_preb: C('Pro-B / pre-B', 'linfocito_1', L.b, 'prob'),
+    s_timo: C('Timocito', 'linfocito_2', L.t, 'timocito'),
+    s_naive: C('B naive (manto)', 'linfocito_1', L.b, 'bmaduro'),
+    s_cb: C('Centroblasto', undefined, L.gc, 'centroblasto', 'centroblasto'),
+    s_cc: C('Centrocito', undefined, L.gc, 'centrocito', 'centrocito'),
+    s_mz: C('Zona marginal', 'linfocito_1', L.b, 'bmemoria'),
+    s_mem: C('B maduro / memoria', 'linfocito_1', L.b, 'bmemoria'),
+    s_pc: C('Plasmática', undefined, L.plasma, 'plasmocito', 'plasmocito'),
+    s_t: C('T periférico', 'linfocito_2', L.t, 'sp'),
+    s_nk: C('NK', 'nk', L.nk, 'nk'),
+  },
+  pasos: [
+    {
+      id: 'neo-0',
+      orden: 0,
+      titulo: 'Cada neoplasia congela una etapa',
+      texto: 'Una leucemia o un linfoma nace de un linfocito detenido en una etapa de su maduración: conserva su inmunofenotipo y es monoclonal, porque todas sus células llevan el mismo reordenamiento.',
+      claves: ['inmunofenotipo', 'monoclonal', 'mismo reordenamiento'],
+      profundiza: 'Una proliferación reactiva es policlonal: cada linfocito tiene su VDJ. En un linfoma, todas las células descienden de una sola y comparten el VDJ (o el reordenamiento del TCR). Por PCR se ve un pico único en vez de una campana; por citometría, la restricción de cadena ligera κ o λ.',
+      clinica: 'Clonalidad + inmunofenotipo + alteración genética + morfología: así se clasifican las neoplasias linfoides (OMS).',
+      protagonistas: ['s_preb', 's_timo', 's_naive', 's_cb', 's_cc', 's_mz', 's_mem', 's_pc', 's_t', 's_nk'],
+      acciones: [
+        { at: 0, tipo: 'appear', actor: 's_preb', pos: { col: 1.1, row: FILA }, from: 'grow' },
+        { at: 200, tipo: 'appear', actor: 's_timo', pos: { col: 1.3, row: FILA_T }, from: 'grow' },
+        { at: 400, tipo: 'appear', actor: 's_naive', pos: { col: 3.3, row: FILA }, from: 'grow' },
+        { at: 600, tipo: 'appear', actor: 's_cb', pos: { col: 5.5, row: FILA }, from: 'grow' },
+        { at: 800, tipo: 'appear', actor: 's_cc', pos: { col: 7.7, row: FILA }, from: 'grow' },
+        { at: 1000, tipo: 'appear', actor: 's_mz', pos: { col: 9.9, row: FILA }, from: 'grow' },
+        { at: 1200, tipo: 'appear', actor: 's_mem', pos: { col: 12.1, row: FILA }, from: 'grow' },
+        { at: 1400, tipo: 'appear', actor: 's_pc', pos: { col: 14.3, row: FILA }, from: 'grow' },
+        { at: 1600, tipo: 'appear', actor: 's_t', pos: { col: 4.4, row: FILA_T }, from: 'grow' },
+        { at: 1800, tipo: 'appear', actor: 's_nk', pos: { col: 7.4, row: FILA_T }, from: 'grow' },
+        { at: 1000, tipo: 'connect', id: 'r1', from: 's_preb', to: 's_naive', type: 'migra' },
+        { at: 1200, tipo: 'connect', id: 'r2', from: 's_naive', to: 's_cb', type: 'migra' },
+        { at: 1400, tipo: 'connect', id: 'r3', from: 's_cb', to: 's_cc', type: 'migra' },
+        { at: 1600, tipo: 'connect', id: 'r4', from: 's_cc', to: 's_mz', type: 'migra' },
+        { at: 1800, tipo: 'connect', id: 'r5', from: 's_mz', to: 's_mem', type: 'migra' },
+        { at: 2000, tipo: 'connect', id: 'r6', from: 's_mem', to: 's_pc', type: 'migra' },
+        { at: 2200, tipo: 'connect', id: 'r7', from: 's_timo', to: 's_t', type: 'migra' },
+        { at: 2600, tipo: 'proceso', id: 'clon', cerca: 's_cc', lado: 'abajo', duration: 4200, datos: { clase: 'clonalidad' } },
+      ],
+    },
+    {
+      id: 'neo-1',
+      orden: 1,
+      titulo: 'Precursores B: leucemia linfoblástica B',
+      texto: 'Del pro-B y del pre-B nace la leucemia/linfoma linfoblástico B: TdT+, CD10+, CD19+, CD34+. Es el cáncer más frecuente de la infancia.',
+      claves: ['TdT+', 'CD10+', 'CD19+', 'CD34+'],
+      profundiza: 'Alteraciones típicas: hiperdiploidía y t(12;21) ETV6-RUNX1, de buen pronóstico en niños; t(9;22) BCR-ABL1 (cromosoma Filadelfia), más frecuente en adultos y de mal pronóstico (se trata con inhibidores de tirosina cinasa). Se presenta con fallo medular: anemia, trombocitopenia, infecciones y dolor óseo.',
+      protagonistas: ['s_preb'],
+      acciones: [
+        { at: 0, tipo: 'marca', actor: 's_preb', texto: 'LLA-B', sub: 't(12;21) · t(9;22)' },
+        { at: 400, tipo: 'highlight', actors: ['s_preb'], duration: 2200 },
+      ],
+    },
+    {
+      id: 'neo-2',
+      orden: 2,
+      titulo: 'Timocitos: leucemia/linfoma linfoblástico T',
+      texto: 'Del timocito sale la leucemia/linfoma linfoblástico T: TdT+, CD3 citoplasmático. Típico de varones adolescentes con una masa mediastínica.',
+      claves: ['TdT+', 'CD3', 'masa mediastínica'],
+      profundiza: 'Más de la mitad tiene mutaciones activadoras de NOTCH1, la misma vía que compromete al linaje T en el timo. La masa del mediastino anterior puede comprimir la vía aérea o la vena cava superior.',
+      protagonistas: ['s_timo'],
+      acciones: [
+        { at: 0, tipo: 'marca', actor: 's_timo', texto: 'LLA-T', sub: 'NOTCH1 · masa mediastínica' },
+        { at: 400, tipo: 'highlight', actors: ['s_timo'], duration: 2200 },
+      ],
+    },
+    {
+      id: 'neo-3',
+      orden: 3,
+      titulo: 'El mecanismo: un oncogén junto a IGH',
+      texto: 'Cuando RAG o AID cortan por error otro cromosoma, un oncogén puede quedar pegado al locus IGH (14q32). Su potenciador, encendido en todo linfocito B, enciende entonces el oncogén.',
+      claves: ['RAG', 'AID', 'IGH', 'potenciador'],
+      profundiza: 'La t(14;18) pone BCL2 (18q21) junto a IGH: la célula fabrica BCL2 sin freno y no muere por apoptosis. El punto de rotura en IGH cae justo en un segmento J, la huella de un error de RAG en el pre-B; la célula, sin embargo, da su tumor más tarde, en el centro germinal. Esta translocación se encuentra en niveles bajos en sangre de personas sanas: hace falta más de una alteración.',
+      protagonistas: ['s_cc'],
+      acciones: [
+        { at: 0, tipo: 'proceso', id: 't1418', cerca: 's_cc', lado: 'abajo', duration: 5200, datos: { clase: 'translocacion', a: '14', b: '18', genA: 'IGH', genB: 'BCL2', nombre: 't(14;18)(q32;q21)', efecto: 'BCL2 bajo el potenciador de IGH: la célula no muere' } },
+      ],
+    },
+    {
+      id: 'neo-4',
+      orden: 4,
+      titulo: 'B naive: linfoma de células del manto',
+      texto: 'Del B naive de la zona del manto sale el linfoma de células del manto: t(11;14) pone la ciclina D1 (CCND1) junto a IGH. CD5+ y CD23−.',
+      claves: ['t(11;14)', 'CCND1', 'CD5+', 'CD23−'],
+      profundiza: 'La ciclina D1 empuja el ciclo celular en G1 (activa CDK4/6 y fosforila RB). La rotura ocurre en el pre-B (error de RAG). Es un linfoma agresivo de varones mayores, con adenopatías, médula y a menudo afectación digestiva (poliposis linfomatoide).',
+      clinica: 'Ciclina D1 o SOX11 positivos en inmunohistoquímica confirman el diagnóstico.',
+      protagonistas: ['s_naive'],
+      acciones: [
+        { at: 0, tipo: 'marca', actor: 's_naive', texto: 'Linfoma del manto', sub: 't(11;14) CCND1 · CD5+' },
+        { at: 500, tipo: 'proceso', id: 't1114', cerca: 's_naive', lado: 'abajo', duration: 5000, datos: { clase: 'translocacion', a: '14', b: '11', genA: 'IGH', genB: 'CCND1', nombre: 't(11;14)(q13;q32)', efecto: 'Ciclina D1 sin freno: el ciclo avanza en G1' } },
+      ],
+    },
+    {
+      id: 'neo-5',
+      orden: 5,
+      titulo: 'Centrocito: linfoma folicular',
+      texto: 'El centrocito que debía morir en la zona clara sobrevive gracias a BCL2 por la t(14;18): es el linfoma folicular. CD10+, BCL6+ y BCL2+.',
+      claves: ['t(14;18)', 'BCL2', 'CD10+', 'BCL6+'],
+      profundiza: 'Reproduce la arquitectura del centro germinal (folículos), pero sin macrófagos de cuerpo tingible: las células ya no mueren. Es indolente, con adenopatías que crecen y menguan durante años; puede transformarse en linfoma difuso de células B grandes.',
+      clinica: 'BCL2 positivo dentro de los folículos distingue el linfoma folicular de la hiperplasia folicular reactiva (donde el centro germinal es BCL2 negativo).',
+      protagonistas: ['s_cc'],
+      acciones: [
+        { at: 0, tipo: 'marca', actor: 's_cc', texto: 'Linfoma folicular', sub: 't(14;18) BCL2' },
+        { at: 400, tipo: 'highlight', actors: ['s_cc'], duration: 2200 },
+      ],
+    },
+    {
+      id: 'neo-6',
+      orden: 6,
+      titulo: 'Centroblasto: Burkitt y linfoma de células grandes',
+      texto: 'Del centroblasto salen el linfoma de Burkitt, con t(8;14) que enciende MYC, y el linfoma difuso de células B grandes, con hipermutación aberrante.',
+      claves: ['t(8;14)', 'MYC', 'hipermutación aberrante'],
+      profundiza: 'Burkitt: MYC desregulado por un error de AID; proliferación casi del 100 % (Ki-67) y patrón en «cielo estrellado» por los macrófagos que limpian la apoptosis; forma endémica (África, VEB, mandíbula), esporádica (abdomen) y asociada al VIH. LDCGB: el linfoma no Hodgkin más frecuente del adulto; tipo centro germinal (CD10, BCL6) o tipo activado (ABC; NF-κB, MYD88 L265P, CD79B), este de peor pronóstico.',
+      clinica: 'El Burkitt duplica su masa en horas: riesgo de síndrome de lisis tumoral al iniciar el tratamiento.',
+      protagonistas: ['s_cb'],
+      acciones: [
+        { at: 0, tipo: 'marca', actor: 's_cb', texto: 'Linfoma de Burkitt', sub: 't(8;14) MYC' },
+        { at: 300, tipo: 'proceso', id: 't814', cerca: 's_cb', lado: 'abajo', duration: 5000, datos: { clase: 'translocacion', a: '14', b: '8', genA: 'IGH', genB: 'MYC', nombre: 't(8;14)(q24;q32)', efecto: 'MYC encendido: proliferación casi del 100 %' } },
+        { at: 5400, tipo: 'marca', actor: 's_cb', texto: 'LDCGB', sub: 'BCL6 · MYD88' },
+      ],
+    },
+    {
+      id: 'neo-7',
+      orden: 7,
+      titulo: 'Linfoma de Hodgkin clásico',
+      texto: 'La célula de Reed-Sternberg también es un B del centro germinal, pero su BCR quedó inutilizado por mutaciones: debería haber muerto y la rescatan NF-κB y JAK/STAT.',
+      claves: ['Reed-Sternberg', 'BCR', 'NF-κB', 'JAK/STAT'],
+      profundiza: 'Sus genes de inmunoglobulina están reordenados y mutados (hipermutación), pero a menudo con codones de parada. Ha perdido casi todo el programa B (CD20 negativo, PAX5 débil) y expresa CD30 y CD15. El laboratorio de vías NF-κB y JAK/STAT muestra cómo sobrevive.',
+      protagonistas: ['s_cc'],
+      acciones: [
+        { at: 0, tipo: 'marca', actor: 's_cc', texto: 'Linfoma de Hodgkin', sub: 'CD30+ CD15+' },
+        { at: 400, tipo: 'note', text: 'Ver el laboratorio de vías NF-κB', near: 's_cc', side: 'bottom' },
+      ],
+    },
+    {
+      id: 'neo-8',
+      orden: 8,
+      titulo: 'Posgerminal: zona marginal, LLC y mieloma',
+      texto: 'Del B de zona marginal sale el linfoma MALT; del B maduro CD5+, la leucemia linfocítica crónica; de la célula plasmática, el mieloma múltiple.',
+      claves: ['MALT', 'leucemia linfocítica crónica', 'mieloma múltiple'],
+      profundiza: 'MALT: nace en tejidos con inflamación crónica (H. pylori en el estómago, Sjögren, Hashimoto); la t(11;18) API2-MALT1 activa NF-κB y predice que no responderá a erradicar H. pylori. LLC/linfoma linfocítico: CD5+, CD23+, CD20 débil; del(13q14) (pierde miR-15/16, que frenan BCL2); del(17p) de mal pronóstico. Mieloma: CD138+, proteína M en suero, lesiones líticas, hipercalcemia, anemia e insuficiencia renal; t(11;14) y t(4;14) (FGFR3/NSD2), que rompen en las regiones switch.',
+      clinica: 'En el mieloma, el criterio CRAB (calcio, riñón, anemia, huesos) marca cuándo tratar.',
+      protagonistas: ['s_mz', 's_mem', 's_pc'],
+      acciones: [
+        { at: 0, tipo: 'marca', actor: 's_mz', texto: 'Linfoma MALT', sub: 'H. pylori · t(11;18)' },
+        { at: 900, tipo: 'marca', actor: 's_mem', texto: 'LLC', sub: 'CD5+ CD23+ · del(13q)' },
+        { at: 1800, tipo: 'marca', actor: 's_pc', texto: 'Mieloma múltiple', sub: 'CD138+ · proteína M' },
+      ],
+    },
+    {
+      id: 'neo-9',
+      orden: 9,
+      titulo: 'T y NK periféricos',
+      texto: 'De los T periféricos salen la micosis fungoide, la leucemia/linfoma T del adulto (por HTLV-1, endémico en el Perú) y el linfoma anaplásico; de las NK, el linfoma NK/T extranodal asociado al VEB.',
+      claves: ['micosis fungoide', 'HTLV-1', 'Perú', 'VEB'],
+      profundiza: 'Micosis fungoide/síndrome de Sézary: T CD4 de la piel (placas, eritrodermia, células de Sézary con núcleo cerebriforme). Leucemia/linfoma T del adulto: el retrovirus HTLV-1 (su proteína Tax activa NF-κB), con hipercalcemia y lesiones cutáneas; endémico en el sur de Japón, el Caribe y los Andes peruanos. Linfoma anaplásico de células grandes: CD30+, t(2;5) NPM-ALK. Linfoma NK/T extranodal tipo nasal: destructivo de la línea media facial, VEB positivo.',
+      protagonistas: ['s_t', 's_nk'],
+      acciones: [
+        { at: 0, tipo: 'marca', actor: 's_t', texto: 'Micosis fungoide · ATLL', sub: 'HTLV-1 · ALK' },
+        { at: 900, tipo: 'marca', actor: 's_nk', texto: 'Linfoma NK/T', sub: 'VEB · línea media facial' },
+      ],
+    },
+    {
+      id: 'neo-10',
+      orden: 10,
+      titulo: 'El mapa completo',
+      texto: 'Toda la ruta de la maduración con la neoplasia que puede nacer en cada etapa: la célula de origen explica el inmunofenotipo, la genética y la clínica de cada una.',
+      claves: ['célula de origen'],
+      profundiza: 'Reglas para recordar: los linfoblásticos (TdT+) vienen de la médula y el timo; los del centro germinal (CD10, BCL6) llevan la huella de AID; los posgerminales pierden CD10 y ganan rasgos plasmocíticos. Los errores de RAG (precursores) y de AID (centro germinal) explican la mayoría de las translocaciones a IGH.',
+      protagonistas: ['s_preb', 's_timo', 's_naive', 's_cb', 's_cc', 's_mz', 's_mem', 's_pc', 's_t', 's_nk'],
+      acciones: [
+        { at: 0, tipo: 'highlight', actors: ['s_preb', 's_timo', 's_naive', 's_cb', 's_cc', 's_mz', 's_mem', 's_pc', 's_t', 's_nk'], duration: 2400 },
+        { at: 400, tipo: 'pulse_signal', from: 's_preb', to: 's_naive' },
+        { at: 1000, tipo: 'pulse_signal', from: 's_naive', to: 's_cb' },
+        { at: 1500, tipo: 'pulse_signal', from: 's_cb', to: 's_cc' },
+        { at: 2000, tipo: 'pulse_signal', from: 's_cc', to: 's_mz' },
+        { at: 2500, tipo: 'pulse_signal', from: 's_mem', to: 's_pc' },
+        { at: 3000, tipo: 'outcome', kind: 'neoplasia', pos: { col: 12.3, row: 7.9 }, texto: 'Cada neoplasia es una etapa congelada' },
+      ],
+    },
+  ],
+};
+
+export default neoplasias;
