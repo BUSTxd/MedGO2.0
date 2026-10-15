@@ -1,0 +1,385 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Laboratorio «Vías NF-κB y JAK/STAT» (dashboard/laboratorio/vias-nfkb-jakstat)
+
+   Comparte la cáscara del ciclo celular (cicloCelular.module.css: paleta H&E /
+   fluorescencia, cabecera, reproductor, pie, ficha, barra de tiempo). Aquí va
+   solo lo propio: el dibujo del lienzo (bicapa, ADN, elipses), las marcas
+   rojas de las alteraciones, la portada, el inventario y el modo estudio.
+   Sigue el modo oscuro del dashboard (:global(.dark-mode)).
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.wrapper {
+  --fosfato-trazo: #B8860B;
+  --membrana-cabeza: #E6B8C6;
+  --membrana-cola: rgba(107, 79, 119, 0.35);
+  --extracelular: rgba(255, 255, 255, 0.55);
+  --adn-a: #5A3E8C;
+  --adn-b: #C2185B;
+  --rojo-alt: #D93A3F;
+  --tinta-elipse: #1E1A2E;
+}
+
+:global(.dark-mode) .wrapper {
+  --fosfato-trazo: #FFD23F;
+  --membrana-cabeza: #5B8CFF;
+  --membrana-cola: rgba(159, 179, 204, 0.3);
+  --extracelular: rgba(0, 0, 0, 0.18);
+  --adn-a: #5B8CFF;
+  --adn-b: #B48CE0;
+  --rojo-alt: #FF6B70;
+}
+
+/* ─── Lienzo ───────────────────────────────────────────────────────────────── */
+
+.extracelular { fill: var(--extracelular); }
+.cabeza { fill: var(--membrana-cabeza); opacity: 0.9; }
+.cola { stroke: var(--membrana-cola); stroke-width: 1.6; fill: none; }
+.poro { fill: var(--campo); stroke: var(--nucleo-borde); stroke-width: 2; }
+
+.rotuloVia { font-family: var(--sans); font-size: 21px; font-weight: 600; fill: #fff; }
+
+.rotuloElipse {
+  font-family: var(--sans);
+  font-weight: 600;
+  fill: var(--tinta-elipse);
+  pointer-events: none;
+}
+.rotuloProducto { font-family: var(--sans); font-size: 18px; font-weight: 600; fill: var(--tinta-elipse); pointer-events: none; }
+.rotuloExterno {
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 600;
+  fill: var(--texto);
+  paint-order: stroke;
+  stroke: var(--campo);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+.etiquetaConector { font-family: var(--sans); font-size: 15px; font-weight: 600; fill: var(--texto-2); }
+
+.adnHebra { fill: none; stroke: var(--adn-a); stroke-width: 4; stroke-linecap: round; }
+.adnHebraB { fill: none; stroke: var(--adn-b); stroke-width: 4; stroke-linecap: round; }
+.adnPeldano { stroke: var(--texto-2); stroke-width: 2; opacity: 0.45; }
+
+.chipK63 { fill: color-mix(in srgb, var(--fitc) 22%, var(--campo-3)); stroke: var(--fitc); stroke-width: 1.5; }
+.chipK48 { fill: color-mix(in srgb, var(--ubiquitina) 22%, var(--campo-3)); stroke: var(--ubiquitina); stroke-width: 1.5; }
+.chipCadena { font-family: var(--sans); font-size: 13px; font-weight: 800; fill: var(--texto); }
+
+.marcaAltGen {
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 700;
+  font-style: italic;
+  fill: var(--rojo-alt);
+  paint-order: stroke;
+  stroke: var(--campo);
+  stroke-width: 4px;
+}
+.marcaAltPct {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  fill: var(--rojo-alt);
+  paint-order: stroke;
+  stroke: var(--campo);
+  stroke-width: 4px;
+}
+
+/* ─── Portada ──────────────────────────────────────────────────────────────── */
+
+/* Esquema a la izquierda, a todo el alto; menú (o narración de la intro) en
+   una columna a la derecha. Abajo quedaba un esquema diminuto. */
+.portada {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+}
+.portadaEscena { position: relative; min-height: 0; min-width: 0; }
+
+.altGen { font-family: var(--sans); font-size: 19px; font-weight: 700; font-style: italic; }
+.altPct { font-family: var(--sans); font-size: 15px; font-weight: 500; }
+.alteracionesPanorama text { fill: var(--rojo-alt); paint-order: stroke; stroke: var(--campo); stroke-width: 4px; }
+.alteracionesPanorama { animation: fundido 600ms var(--ease-salida); }
+
+.cajaViaClic { fill: transparent; cursor: pointer; outline: none; }
+.cajaViaClic:hover, .cajaViaClic:focus-visible { fill: rgba(255, 255, 255, 0.16); stroke: #fff; stroke-width: 2; }
+
+.introBarra { display: block; height: 3px; border-radius: 3px; background: var(--linea); overflow: hidden; }
+.introBarra span { display: block; height: 100%; background: var(--dapi); transform-origin: left; transition: transform 120ms linear; }
+.introPaso { display: grid; gap: 4px; animation: aparecerMenu 400ms var(--ease-salida); }
+.introPaso strong { font-size: 16px; }
+.introPaso span { font-size: 14.5px; color: var(--texto-2); line-height: 1.5; }
+
+.menu {
+  border-left: 1px solid var(--linea);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  min-height: 0;
+  animation: aparecerMenu 500ms var(--ease-salida);
+}
+.menuCab h1 { margin: 0; font-size: 22px; font-weight: 600; }
+.menuCab p { margin: 2px 0 0; font-size: 13px; color: var(--texto-2); }
+.menuVias { display: grid; gap: 8px; }
+.tarjetaVia {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--linea);
+  border-left: 5px solid var(--via);
+  background: var(--campo-3);
+  color: var(--texto);
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color var(--dur-rapida), transform var(--dur-rapida);
+}
+.tarjetaVia strong { font-size: 15.5px; color: var(--via); }
+.tarjetaVia span { font-size: 13px; color: var(--texto-2); line-height: 1.4; }
+.tarjetaVia:hover { border-color: var(--via); transform: translateY(-1px); }
+:global(.dark-mode) .wrapper .tarjetaVia strong { filter: brightness(1.45); }
+.menuAcciones { display: flex; flex-direction: column; gap: 8px; align-items: stretch; }
+.menuAcciones .enlace { align-self: flex-start; }
+
+/* ─── Cabecera de una vía ──────────────────────────────────────────────────── */
+
+.selectorVias { display: flex; gap: 4px; flex: none; }
+.selectorVias button {
+  font-family: inherit;
+  border: 1px solid var(--linea);
+  background: transparent;
+  color: var(--texto-2);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 11px;
+  border-radius: 999px;
+  cursor: pointer;
+  min-height: 34px;
+}
+.selectorVias button:hover { border-color: var(--via); color: var(--texto); }
+.selectorVias .viaActiva { background: var(--via); border-color: var(--via); color: #fff; }
+
+.secuencias {
+  display: flex;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--campo-2);
+}
+.secuencias button {
+  font-family: inherit;
+  border: none;
+  background: transparent;
+  color: var(--texto-2);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0 11px;
+  min-height: 34px;
+  cursor: pointer;
+}
+.secuencias .secActiva { background: var(--campo-3); color: var(--texto); box-shadow: inset 0 0 0 1px var(--linea); }
+.secuencias .secLhc.secActiva { color: var(--rojo-alt); }
+
+.leyenda { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.leyenda li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--texto); }
+
+/* ─── Ficha e inventario ───────────────────────────────────────────────────── */
+
+.mini { display: block; flex: none; }
+.miniImg { display: block; object-fit: contain; flex: none; }
+
+.fichaHodgkin {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-left: 3px solid var(--rojo-alt);
+  background: color-mix(in srgb, var(--rojo-alt) 8%, transparent);
+  border-radius: 0 8px 8px 0;
+}
+
+.inventario {
+  width: min(1100px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--campo-3);
+  border: 1px solid var(--linea);
+  border-radius: 16px;
+  padding: 16px 20px;
+  min-height: 0;
+}
+.invCuerpo { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 18px; min-height: 0; margin-top: 10px; overflow: hidden; }
+.invLista { overflow-y: auto; padding-right: 6px; display: grid; gap: 16px; align-content: start; }
+.invFicha { overflow-y: auto; border-left: 1px solid var(--linea); padding-left: 16px; }
+.invVacio { color: var(--texto-2); font-size: 14px; line-height: 1.5; }
+/* `globals.css` pone `section { padding: 100px 48px }` (landing): se anula. */
+.invGrupo { padding: 0; }
+.invGrupo h4 { margin: 0 0 8px; font-size: 15px; font-weight: 700; }
+.invGrupo ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px; }
+.invItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--linea);
+  background: var(--campo);
+  color: var(--texto);
+  font-family: inherit;
+  font-size: 13.5px;
+  text-align: left;
+  cursor: pointer;
+}
+.invItem:hover { border-color: var(--dapi); }
+.invItemSel { border-color: var(--dapi); box-shadow: inset 0 0 0 1px var(--dapi); }
+.invNombre { flex: 1; min-width: 0; line-height: 1.25; }
+.invRojo { width: 9px; height: 9px; border-radius: 50%; background: var(--rojo-alt); flex: none; }
+.invTabla { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.invTabla th { text-align: left; font-size: 12px; color: var(--texto-2); font-weight: 700; padding: 4px 8px; border-bottom: 1px solid var(--linea); }
+.invTabla td { padding: 6px 8px; border-bottom: 1px solid var(--linea); vertical-align: top; line-height: 1.4; }
+.invGen {
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--rojo-alt);
+  cursor: pointer;
+  text-align: left;
+}
+.invGen:hover { text-decoration: underline; text-underline-offset: 3px; }
+.invPct { white-space: nowrap; font-weight: 600; }
+.invFuente { margin: 8px 0 0; font-size: 12px; color: var(--texto-2); }
+
+/* ─── Modo estudio ─────────────────────────────────────────────────────────── */
+
+.rondas {
+  display: flex;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--campo-2);
+  margin-bottom: 10px;
+}
+.rondas button {
+  flex: 1;
+  font-family: inherit;
+  border: none;
+  background: transparent;
+  color: var(--texto-2);
+  font-size: 13px;
+  font-weight: 600;
+  min-height: 36px;
+  cursor: pointer;
+}
+.rondas .rondaActiva { background: var(--campo-3); color: var(--texto); box-shadow: inset 0 0 0 1px var(--linea); }
+.rondas .rondaLhc.rondaActiva { color: var(--rojo-alt); }
+
+.estudioAyuda { margin: 0 0 10px; font-size: 13.5px; color: var(--texto-2); line-height: 1.45; }
+.progresoVias { display: grid; gap: 6px; margin-bottom: 12px; }
+.progresoVia { display: grid; grid-template-columns: 82px 1fr auto; gap: 8px; align-items: center; font-size: 13px; font-weight: 600; }
+.progresoNum { color: var(--texto-2); font-weight: 600; font-size: 12px; }
+:global(.dark-mode) .wrapper .progresoVia > span:first-child { filter: brightness(1.45); }
+
+.avisoTitulo { font-weight: 700; margin-bottom: 4px !important; }
+.avisoEnlace {
+  margin-top: 6px;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dapi);
+  cursor: pointer;
+}
+.avisoEnlace:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.bandeja { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.piezaBtn {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: grab;
+  touch-action: none;
+  font-family: inherit;
+  border-radius: 12px;
+}
+.piezaBtn:disabled { cursor: default; opacity: 0.5; }
+.piezaOrigen { opacity: 0.35; }
+.piezaSel .pieza { border-color: var(--dapi); box-shadow: 0 0 0 2px var(--dapi); }
+
+/* La pieza también viaja por portal a <body> mientras se arrastra: fuera del
+   envoltorio no hay variables, así que todo lleva su valor de reserva. */
+.pieza {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 11px 6px 7px;
+  border-radius: 12px;
+  border: 1.5px solid color-mix(in srgb, var(--col) 70%, #000 0%);
+  background: var(--campo-3, #fff);
+  color: var(--texto, #2B1535);
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  user-select: none;
+}
+.piezaIcono { width: 24px; height: 24px; display: grid; place-items: center; flex: none; }
+.piezaIcono svg, .piezaIcono img { width: 24px; height: 24px; object-fit: contain; }
+.piezaAlt { border-color: var(--rojo-alt, #D93A3F); padding: 6px 11px; }
+.piezaGen { color: var(--rojo-alt, #D93A3F); font-style: italic; font-weight: 700; }
+.piezaFlotando { box-shadow: 0 10px 28px rgba(20, 10, 40, 0.28); transform: rotate(-3deg) scale(1.05); }
+
+.arrastre {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  transform: translate(-50%, -60%);
+}
+
+.hueco { cursor: default; }
+.hueco[role='button'] { cursor: pointer; }
+.huecoPulso { animation: latido 1.8s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.huecoActivo .huecoPulso { animation: none; stroke-width: 4; }
+.huecoTxt { font-family: var(--sans); font-size: 30px; font-weight: 800; pointer-events: none; }
+
+@keyframes latido {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+@keyframes fundido { from { opacity: 0; } }
+@keyframes aparecerMenu { from { opacity: 0; transform: translateY(10px); } }
+
+/* ─── Tablet y móvil ───────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .portada { display: flex; flex-direction: column; }
+  .portadaEscena { flex: 1; min-height: 52vh; }
+  .menu { border-left: none; border-top: 1px solid var(--linea); padding: 12px 16px 16px; overflow: visible; }
+}
+
+@media (max-width: 1099px) {
+  .selectorVias { display: none; }
+  .invCuerpo { grid-template-columns: 1fr; }
+  .invFicha { border-left: none; border-top: 1px solid var(--linea); padding: 12px 0 0; max-height: 40vh; }
+}
+
+@media (max-width: 700px) {
+  .portadaEscena { min-height: 56vh; }
+  .inventario { padding: 12px 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .huecoPulso, .alteracionesPanorama, .introPaso, .menu { animation: none; }
+  .tarjetaVia { transition: none; }
+}

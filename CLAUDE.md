@@ -87,6 +87,7 @@ src/app/
     │   ├── atlas-micologia/          # Selector modo alternativas/escribir
     │   ├── cascada-coagulacion/      # Lienzo de la cascada: explorar + aprender (ver sección propia)
     │   ├── checkpoints-ciclo-celular/ # Patología: anillo del ciclo + 5 vías animadas (ver sección propia)
+    │   ├── vias-nfkb-jakstat/        # Patología: NF-κB clásica/alternativa + JAK/STAT y linfoma de Hodgkin (ver sección propia)
     │   ├── atlas-3d/                 # Locomotor: regiones de BodyParts3D, ?region=a,b (ver sección propia)
     │   └── microscopio/
     ├── investigacion/
@@ -575,6 +576,18 @@ Anillo del ciclo (G1/S/G2/M + G0) con 5 marcadores; cada uno abre su vía molecu
 Gate por `LABORATORIOS` (tramo medicina, no gratis). Tema claro = lámina H&E, oscuro = campo de fluorescencia; todo en Outfit, como el resto de la app.
 
 **Explorar como reproductor de vídeo**: la escena ocupa todo el ancho; leyenda (plegada por defecto, `medgo-ciclo-leyenda`) y ficha flotan encima. Pie = `BarraTiempo` (capítulos por paso, arrastre con la escena siguiendo al puntero; al soltar retoma reproducir/pausa) + controles + narración compacta. `useReproductor` expone `tGlobal`/`buscar`/`empezarArrastre`/`terminarArrastre`/`reproduciendo`; cada paso mide al menos `LARGO_MIN` en la línea global.
+
+---
+
+## Vías NF-κB y JAK/STAT (Patología · `laboratorio/vias-nfkb-jakstat`)
+
+La figura 2 de Küppers (J Clin Invest 2012) hecha laboratorio, para el ACP8 (linfadenopatía persistente). **Inventario y guion de cada paso en `docs/vias-nfkb/GUION.md`**: primero se escribió el guion y los datos lo siguen paso a paso; un cambio de contenido va en los dos. Porcentajes de las alteraciones: los de la figura.
+
+- **Misma arquitectura e interfaz que el ciclo celular**, pero con motor propio (`src/lib/vias-nfkb/motor.ts`, escena = función pura del tiempo): el del ciclo está atado a sus recortes. **Aquí todo se dibuja con SVG** según la `forma` del actor (elipse con brillo como en la figura, receptor que cruza la bicapa, LMP1 con seis pasos, trímero de ligando, célula del infiltrado, doble hélice); las únicas imágenes son proteasoma, ligasa SCF (β-TrCP) y ubiquitina del bucket del ciclo. Acciones propias: cadenas `K63`/`K48`, `deubiquitinate` (A20/CYLD: si el actor tiene `mutate` con pérdida, se inclina pero no quita nada), `process` (p100 → p52) y `mutate` (marca roja; pérdida = gris + cruz, ganancia = copias detrás).
+- **Reutiliza el CSS del ciclo** (`cicloCelular.module.css`: paleta H&E/fluorescencia, cabecera, reproductor, pie, ficha, barra de tiempo) y añade `viasNfkb.module.css`. `useReproductor` y `BarraTiempo` son copias apuntando a este motor (los del ciclo están tipados con sus datos).
+- **Datos** en `src/lib/data/vias-nfkb/`: `clasica.ts`, `alternativa.ts`, `jakstat.ts` (cada una con secuencia «Fisiología» y «Linfoma de Hodgkin clásico», que arranca de un paso anterior con `base`), `panorama.ts` (las tres vías juntas: intro = portada, estado inicial y piezas del modo estudio, rótulos rojos de la portada), `proteinas.ts` (ficha: qué es, de dónde proviene, con qué se activa, papel por vía, alteración en el LHc, clínica), `alteraciones.ts` (tabla del inventario), `colores.ts` (una pieza tiene el mismo color en todas las escenas). `npm run verificar:vias-nfkb` caza actor usado antes de aparecer, `disconnect` de un conector inexistente, ficha que falta, huecos del estudio encimados.
+- **Portada**: la intro se reproduce sola (con «Saltar») y termina en el esquema como la figura; menú y narración de la intro van en una columna a la derecha (abajo dejaban el esquema diminuto y tapaban el núcleo). **Modo estudio**: un hueco brillante por vía con el siguiente paso; se arrastra la pieza (portal a `<body>`) o se toca y luego se toca el hueco. Como el orden entre vías lo decide el alumno, cada pieza se compila sobre el estado que dejó la anterior (`compilarPaso`). Segunda ronda: arrastrar cada alteración a su sitio.
+- Con la pestaña oculta el navegador pausa `requestAnimationFrame` y la escena «se congela»: no es un fallo (al revisar con Claude in Chrome, «Saltar intro» pinta el final sin reloj).
 
 ---
 

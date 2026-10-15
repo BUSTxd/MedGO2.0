@@ -170,6 +170,7 @@ const LAB_TOPICS: Topic[] = [
       // Sin página todavía (enlace inerte, como el resto de pendientes).
       { name: 'Morfología de Glóbulos Rojos', desc: '19 microfotografías reales para reconocer alteraciones e inclusiones, con lámina de referencia', color: '#8b5cf6', href: '/dashboard/laboratorio/morfologia-globulos-rojos' },
       { name: 'Checkpoints del ciclo celular', desc: 'Los cinco puntos de control, de RB–E2F al huso: la vía molecular animada paso a paso, para construirla y ponerte a prueba', color: '#2CA9BC', href: '/dashboard/laboratorio/checkpoints-ciclo-celular' },
+      { name: 'Vías NF-κB y JAK/STAT', desc: 'Las vías clásica y alternativa de NF-κB y JAK/STAT animadas paso a paso, con las alteraciones del linfoma de Hodgkin clásico y un modo de arrastrar', color: '#2CA9BC', href: '/dashboard/laboratorio/vias-nfkb-jakstat' },
     ],
   },
   {
