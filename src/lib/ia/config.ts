@@ -69,8 +69,8 @@ export const LIMITES = {
   historial: 6,
 } as const;
 
-export type Accion = 'definir' | 'explicar' | 'figura' | 'resumir' | 'libre';
-export const ACCIONES: readonly Accion[] = ['definir', 'explicar', 'figura', 'resumir', 'libre'];
+export type Accion = 'definir' | 'explicar' | 'profundizar' | 'figura' | 'resumir' | 'libre';
+export const ACCIONES: readonly Accion[] = ['definir', 'explicar', 'profundizar', 'figura', 'resumir', 'libre'];
 
 /**
  * Por acción: tope de salida (incluye el pensamiento, que se cobra como
@@ -88,6 +88,9 @@ export const ACCION: Record<Accion, {
   // tokens + sección ampliada ~600; la salida pesa más que el contexto (×5).
   definir:  { maxTokens: 700,  effort: 'low',    cacheable: true,  tipico: { entrada: 1_200,  salida: 300 } },
   explicar: { maxTokens: 1600, effort: 'low',    cacheable: true,  tipico: { entrada: 1_500,  salida: 800 } },
+  // «A fondo»: lo subrayado solo como ancla (~300 tokens); el detalle sale del
+  // conocimiento del modelo, así que la respuesta es más larga y piensa más.
+  profundizar: { maxTokens: 2800, effort: 'medium', cacheable: true, tipico: { entrada: 900, salida: 1_500 } },
   figura:   { maxTokens: 1800, effort: 'medium', cacheable: true,  tipico: { entrada: 2_800,  salida: 900 } },
   resumir:  { maxTokens: 4000, effort: 'medium', cacheable: true,  tipico: { entrada: 8_000,  salida: 2_500 } },
   libre:    { maxTokens: 1600, effort: 'low',    cacheable: false, tipico: { entrada: 3_000,  salida: 700 } },
@@ -102,6 +105,8 @@ export const CONTEXTO = {
    * las vecinas hasta llegar aquí, para que la IA vea de qué se está hablando.
    */
   minCharsSeccion: 2_000,
+  /** «A fondo»: solo unas líneas alrededor de lo subrayado, como ancla. */
+  ventanaProfundizar: 1_200,
   /** «Resumir todo»: el documento hasta aquí (~80K tokens, bajo el umbral de 100K). */
   maxCharsDocumento: 240_000,
   /** Chat libre en un resumen: secciones halladas por palabras clave, hasta aquí. */

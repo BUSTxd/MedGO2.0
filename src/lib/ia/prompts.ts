@@ -31,6 +31,10 @@ export function pedido(accion: Accion, datos: { seleccion?: string; pregunta?: s
       return `¿Qué significa «${sel}» en este contexto? Da una definición precisa (2-3 frases) y luego, en una o dos frases, qué papel cumple en este tema del resumen. Máximo 120 palabras.`;
     case 'explicar':
       return `Explícame con detalle y en orden lógico este fragmento del resumen: «${sel}». Que se entienda el porqué de cada paso, no solo el qué.`;
+    case 'profundizar':
+      return `Quiero entender a fondo «${sel}». El resumen solo lo menciona; el fragmento que tienes es únicamente para saber de qué tema hablo, no esperes que traiga el detalle. `
+        + 'Explícalo desde tu conocimiento a nivel de medicina universitaria: los procesos o pasos intermedios en orden, qué molécula, enzima, estructura o célula interviene en cada uno, cómo se regula y por qué importa clínicamente. '
+        + 'Empieza con un esquema breve del proceso completo y luego desarrolla cada paso. Si algo del resumen lo simplifica demasiado, acláralo. Máximo 600 palabras.';
     case 'figura':
       return `Explícame esta figura del resumen${datos.ruta ? ` (sección «${datos.ruta}»)` : ''}: qué representa, qué partes o pasos muestra y qué idea debe llevarse el alumno. Si la figura tiene rótulos, úsalos.`;
     case 'resumir':
@@ -46,6 +50,7 @@ export function rotulo(accion: Accion, datos: { seleccion?: string; pregunta?: s
   switch (accion) {
     case 'definir': return `¿Qué significa «${sel}»?`;
     case 'explicar': return `Explícame: «${sel}»`;
+    case 'profundizar': return `A fondo: «${sel}»`;
     case 'figura': return 'Explícame esta figura';
     case 'resumir': return 'Resume todo el resumen';
     case 'libre': return datos.pregunta?.trim() ?? '';

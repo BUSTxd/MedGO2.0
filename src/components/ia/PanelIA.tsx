@@ -178,6 +178,18 @@ export default function PanelIA({
                   {m.estado === 'listo' && m.cobrado !== undefined && (
                     <span className={s.costo}>−{fmt(m.cobrado)} créditos</span>
                   )}
+                  {/* El resumen suele quedarse en la superficie: «A fondo» lo
+                      explica desde el conocimiento de la IA, con lo subrayado de ancla. */}
+                  {m.estado === 'listo' && m.origen?.seleccion &&
+                    (m.origen.accion === 'definir' || m.origen.accion === 'explicar') && (
+                    <button
+                      className={s.chip}
+                      onClick={() => pedir({ accion: 'profundizar', seleccion: m.origen!.seleccion, seccion: m.origen!.seccion })}
+                      disabled={enCurso}
+                    >
+                      Más a fondo{precio ? ` · ~${fmt(precio.profundizar)}` : ''}
+                    </button>
+                  )}
                 </>
               )}
             </div>

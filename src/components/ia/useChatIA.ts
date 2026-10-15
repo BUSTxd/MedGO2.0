@@ -10,7 +10,7 @@ import { useCallback, useRef, useState } from 'react';
  * (`api/ia/chat`), que es también quien cobra.
  */
 
-export type AccionIA = 'definir' | 'explicar' | 'figura' | 'resumir' | 'libre';
+export type AccionIA = 'definir' | 'explicar' | 'profundizar' | 'figura' | 'resumir' | 'libre';
 
 export interface PedidoIA {
   accion: AccionIA;
@@ -29,6 +29,8 @@ export interface MensajeIA {
   guardada?: boolean;
   /** Miniatura de la figura que se preguntó. */
   figura?: string;
+  /** En una respuesta: el pedido que la originó (para ofrecer «Más a fondo»). */
+  origen?: PedidoIA;
 }
 
 export interface SaldoIA {
@@ -74,6 +76,7 @@ function rotulo(p: PedidoIA): string {
   switch (p.accion) {
     case 'definir': return `¿Qué significa «${p.seleccion?.trim()}»?`;
     case 'explicar': return `Explícame: «${p.seleccion?.trim()}»`;
+    case 'profundizar': return `A fondo: «${p.seleccion?.trim()}»`;
     case 'figura': return 'Explícame esta figura';
     case 'resumir': return 'Resume todo el resumen';
     case 'libre': return p.pregunta?.trim() ?? '';
@@ -111,7 +114,7 @@ export function useChatIA(claseId: string | null) {
     setMensajes((ms) => [
       ...ms,
       { id: idRespuesta - 1, rol: 'user', texto: rotulo(p), figura: p.figura },
-      { id: idRespuesta, rol: 'assistant', texto: '', estado: 'cargando' },
+      { id: idRespuesta, rol: 'assistant', texto: '', estado: 'cargando', origen: p },
     ]);
     const fallar = (motivo?: string) =>
       actualizar(idRespuesta, (m) => ({ ...m, estado: 'error', texto: mensajeDe(motivo) }));

@@ -257,8 +257,7 @@ export function buscarPorPregunta(doc: Documento, pregunta: string): string {
 }
 
 /** Recorta un tramo largo a una ventana alrededor de lo subrayado. */
-export function recortar(texto: string, seleccion?: string): string {
-  const max = CONTEXTO.maxCharsSeccion;
+export function recortar(texto: string, seleccion?: string, max: number = CONTEXTO.maxCharsSeccion): string {
   if (texto.length <= max) return texto;
   let centro = texto.length / 2;
   if (seleccion) {

@@ -24,7 +24,7 @@ interface Resumen {
 const usd = (n: number) => `US$ ${n.toFixed(n < 1 ? 4 : 2)}`;
 const num = (n: number) => n.toLocaleString('es-PE');
 const ACCIONES: Record<string, string> = {
-  definir: '¿Qué significa?', explicar: 'Explícame', figura: 'Figura', resumir: 'Resumir todo', libre: 'Chat libre',
+  definir: '¿Qué significa?', explicar: 'Explícame', figura: 'Figura', resumir: 'Resumir todo', profundizar: 'A fondo', libre: 'Chat libre',
 };
 
 /**

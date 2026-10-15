@@ -75,7 +75,7 @@ export default function BurbujaSeleccion({
   const largo = sel.texto.length > MAX;
   const corto = sel.texto.split(' ').length <= 6;
 
-  const mandar = (accion: 'definir' | 'explicar') => {
+  const mandar = (accion: 'definir' | 'explicar' | 'profundizar') => {
     onPedir({ accion, seleccion: sel.texto, seccion: sel.ruta });
     window.getSelection()?.removeAllRanges();
     setSel(null);
@@ -93,6 +93,9 @@ export default function BurbujaSeleccion({
       ) : (
         <>
           {corto && <button onClick={() => mandar('definir')}>¿Qué significa?</button>}
+          <button onClick={() => mandar('profundizar')} title="Lo que el resumen no cuenta: pasos intermedios, mecanismo y regulación">
+            A fondo
+          </button>
           <button onClick={() => mandar('explicar')}>Explícame</button>
         </>
       )}

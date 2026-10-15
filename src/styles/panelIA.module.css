@@ -641,3 +641,9 @@
     transition: none;
   }
 }
+
+/* «Más a fondo» bajo una respuesta. */
+.respuesta .chip {
+  display: block;
+  margin-top: 8px;
+}

@@ -66,7 +66,7 @@ function validar(b: unknown): Cuerpo | null {
   // Un campo de más largo no se recorta: se rechaza (str devuelve null).
   if ([o.claseId, o.seleccion, o.seccion, o.figura, o.pregunta, o.conversacionId]
     .some((v, i) => v != null && [c.claseId, c.seleccion, c.seccion, c.figura, c.pregunta, c.conversacionId][i] === undefined)) return null;
-  if ((accion === 'definir' || accion === 'explicar') && !c.seleccion?.trim()) return null;
+  if ((accion === 'definir' || accion === 'explicar' || accion === 'profundizar') && !c.seleccion?.trim()) return null;
   if (c.figura) c.figura = urlCanonica(c.figura) ?? undefined;
   if (accion === 'figura' && !c.figura) return null;
   if (accion === 'libre' && !c.pregunta?.trim()) return null;
@@ -106,11 +106,17 @@ export async function POST(req: Request) {
     if (!doc) return error('resumen', 404);
     version = doc.version;
 
-    if (accion === 'definir' || accion === 'explicar') {
+    if (accion === 'definir' || accion === 'explicar' || accion === 'profundizar') {
       const tramo = buscarTramo(doc, cuerpo.seleccion!, cuerpo.seccion);
       if (!tramo) return error('seleccion_ajena', 400);
-      const seccion = ampliar(doc, tramo);
-      contexto = { titulo: doc.titulo, ruta: seccion.ruta, texto: recortar(seccion.texto, cuerpo.seleccion) };
+      if (accion === 'profundizar') {
+        // Lo que se pide no está en el resumen: el tramo solo dice de qué tema
+        // se habla. Unas líneas alrededor de lo subrayado bastan como ancla.
+        contexto = { titulo: doc.titulo, ruta: tramo.ruta, texto: recortar(tramo.texto, cuerpo.seleccion, CONTEXTO.ventanaProfundizar) };
+      } else {
+        const seccion = ampliar(doc, tramo);
+        contexto = { titulo: doc.titulo, ruta: seccion.ruta, texto: recortar(seccion.texto, cuerpo.seleccion) };
+      }
     } else if (accion === 'figura') {
       const tramo = esFiguraDeResumen(cuerpo.figura!) ? tramoDeFigura(doc, cuerpo.figura!) : null;
       if (!tramo) return error('figura_ajena', 400);
