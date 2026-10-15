@@ -10,12 +10,19 @@ interface Resumen {
   topeDiarioUsd: number;
   creditosPorUsd: number;
   hoy: { usd: number; consultas: number };
-  mes: { usd: number; consultas: number; usuarios: number };
-  porAccion: Record<string, { usd: number; consultas: number }>;
-  top: { email: string; usd: number; consultas: number; creditos: number }[];
+  mes: {
+    usd: number; consultas: number; usuarios: number;
+    tokens: {
+      entrada: number; salida: number; cacheLeida: number;
+      porAlumno: number; entradaPorConsulta: number; salidaPorConsulta: number; guardadas: number;
+    };
+  };
+  porAccion: Record<string, { usd: number; consultas: number; entradaPromedio: number; salidaPromedio: number }>;
+  top: { email: string; usd: number; consultas: number; creditos: number; tokens: number }[];
 }
 
 const usd = (n: number) => `US$ ${n.toFixed(n < 1 ? 4 : 2)}`;
+const num = (n: number) => n.toLocaleString('es-PE');
 const ACCIONES: Record<string, string> = {
   definir: '¿Qué significa?', explicar: 'Explícame', figura: 'Figura', resumir: 'Resumir todo', libre: 'Chat libre',
 };
@@ -82,6 +89,19 @@ export default function IAAdmin() {
               <p className={styles.kpiValue}>{usd(datos.mes.consultas ? datos.mes.usd / datos.mes.consultas : 0)}</p>
               <p className={styles.kpiHint}>por consulta este mes</p>
             </div>
+            <div className={styles.kpiCard}>
+              <p className={styles.kpiLabel}>Tokens por alumno</p>
+              <p className={styles.kpiValue}>{num(datos.mes.tokens.porAlumno)}</p>
+              <p className={styles.kpiHint}>promedio este mes (entrada + salida)</p>
+            </div>
+            <div className={styles.kpiCard}>
+              <p className={styles.kpiLabel}>Tokens por consulta</p>
+              <p className={styles.kpiValue}>{num(datos.mes.tokens.entradaPorConsulta + datos.mes.tokens.salidaPorConsulta)}</p>
+              <p className={styles.kpiHint}>
+                {num(datos.mes.tokens.entradaPorConsulta)} entrada · {num(datos.mes.tokens.salidaPorConsulta)} salida
+                {datos.mes.tokens.guardadas > 0 && <> · {datos.mes.tokens.guardadas} guardadas</>}
+              </p>
+            </div>
           </div>
 
           {Object.keys(datos.porAccion).length > 0 && (
@@ -89,7 +109,10 @@ export default function IAAdmin() {
               {Object.entries(datos.porAccion).map(([a, v]) => (
                 <li key={a} className={styles.rankItem}>
                   <span className={styles.rankName}>{ACCIONES[a] ?? a}</span>
-                  <span className={styles.rankNum}><strong>{v.consultas}</strong> · {usd(v.usd)}</span>
+                  <span className={styles.rankNum}>
+                    <strong>{v.consultas}</strong> · {usd(v.usd)}
+                    <span className={styles.muted}> · ~{num(v.entradaPromedio)} entrada / {num(v.salidaPromedio)} salida</span>
+                  </span>
                 </li>
               ))}
             </ol>
@@ -104,7 +127,7 @@ export default function IAAdmin() {
                   <span className={styles.rankName}>{t.email}</span>
                   <span className={styles.rankNum}>
                     <strong>{usd(t.usd)}</strong>
-                    <span className={styles.muted}> · {t.consultas} consultas · {t.creditos.toLocaleString('es-PE')} créditos</span>
+                    <span className={styles.muted}> · {t.consultas} consultas · {num(t.tokens)} tokens · {num(t.creditos)} créditos</span>
                   </span>
                 </li>
               ))}

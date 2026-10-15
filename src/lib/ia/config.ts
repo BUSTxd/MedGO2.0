@@ -84,21 +84,30 @@ export const ACCION: Record<Accion, {
   cacheable: boolean;
   tipico: { entrada: number; salida: number };
 }> = {
-  definir:  { maxTokens: 700,  effort: 'low',    cacheable: true,  tipico: { entrada: 3_000,  salida: 300 } },
-  explicar: { maxTokens: 1600, effort: 'low',    cacheable: true,  tipico: { entrada: 4_000,  salida: 800 } },
-  figura:   { maxTokens: 1800, effort: 'medium', cacheable: true,  tipico: { entrada: 5_000,  salida: 900 } },
-  resumir:  { maxTokens: 4000, effort: 'medium', cacheable: true,  tipico: { entrada: 40_000, salida: 2_500 } },
-  libre:    { maxTokens: 1600, effort: 'low',    cacheable: false, tipico: { entrada: 4_000,  salida: 700 } },
+  // `tipico` medido sobre resúmenes reales (2026-10-15): instrucciones ~500
+  // tokens + sección ampliada ~600; la salida pesa más que el contexto (×5).
+  definir:  { maxTokens: 700,  effort: 'low',    cacheable: true,  tipico: { entrada: 1_200,  salida: 300 } },
+  explicar: { maxTokens: 1600, effort: 'low',    cacheable: true,  tipico: { entrada: 1_500,  salida: 800 } },
+  figura:   { maxTokens: 1800, effort: 'medium', cacheable: true,  tipico: { entrada: 2_800,  salida: 900 } },
+  resumir:  { maxTokens: 4000, effort: 'medium', cacheable: true,  tipico: { entrada: 8_000,  salida: 2_500 } },
+  libre:    { maxTokens: 1600, effort: 'low',    cacheable: false, tipico: { entrada: 3_000,  salida: 700 } },
 };
 
 /** Recortes del contexto que se manda al modelo (en caracteres). */
 export const CONTEXTO = {
   /** Una sección más larga se recorta a una ventana alrededor de lo subrayado. */
   maxCharsSeccion: 12_000,
-  /** «Resumir todo» y el chat libre sin sección: el documento hasta aquí (~80K tokens). */
+  /**
+   * Las secciones de Notion suelen ser diminutas (~150 tokens): se les suman
+   * las vecinas hasta llegar aquí, para que la IA vea de qué se está hablando.
+   */
+  minCharsSeccion: 2_000,
+  /** «Resumir todo»: el documento hasta aquí (~80K tokens, bajo el umbral de 100K). */
   maxCharsDocumento: 240_000,
-  /** Chat libre dentro de un resumen sin sección elegida. */
-  maxCharsLibre: 60_000,
+  /** Chat libre en un resumen: secciones halladas por palabras clave, hasta aquí. */
+  maxCharsLibre: 8_000,
+  /** Cada mensaje viejo del historial se recorta a esto antes de reenviarlo. */
+  maxCharsHistorial: 1_500,
   /** Lado mayor de la figura que se manda (≈ 1.600 tokens a 1092×1092). */
   ladoFigura: 1092,
 } as const;

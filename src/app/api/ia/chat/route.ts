@@ -15,7 +15,7 @@ import {
   liquidar, reservar, respuestaGuardada,
 } from '@/lib/ia/saldo';
 import {
-  buscarTramo, documentoDe, normalizar, recortar, tramoDeFigura, tramoPorRuta, urlCanonica,
+  ampliar, buscarPorPregunta, buscarTramo, documentoDe, normalizar, recortar, tramoDeFigura, tramoPorRuta, urlCanonica,
 } from '@/lib/ia/secciones';
 
 export const runtime = 'nodejs';
@@ -36,7 +36,7 @@ export const maxDuration = 60;
  */
 
 /** Sube si cambian las instrucciones: las respuestas guardadas con otras dejan de valer. */
-const VERSION_PROMPT = 'v1';
+const VERSION_PROMPT = 'v2';
 
 interface Cuerpo {
   accion: Accion;
@@ -109,11 +109,13 @@ export async function POST(req: Request) {
     if (accion === 'definir' || accion === 'explicar') {
       const tramo = buscarTramo(doc, cuerpo.seleccion!, cuerpo.seccion);
       if (!tramo) return error('seleccion_ajena', 400);
-      contexto = { titulo: doc.titulo, ruta: tramo.ruta, texto: recortar(tramo.texto, cuerpo.seleccion) };
+      const seccion = ampliar(doc, tramo);
+      contexto = { titulo: doc.titulo, ruta: seccion.ruta, texto: recortar(seccion.texto, cuerpo.seleccion) };
     } else if (accion === 'figura') {
       const tramo = esFiguraDeResumen(cuerpo.figura!) ? tramoDeFigura(doc, cuerpo.figura!) : null;
       if (!tramo) return error('figura_ajena', 400);
-      contexto = { titulo: doc.titulo, ruta: tramo.ruta, texto: recortar(tramo.texto) };
+      const seccion = ampliar(doc, tramo);
+      contexto = { titulo: doc.titulo, ruta: seccion.ruta, texto: recortar(seccion.texto) };
       try {
         imagen = await figuraParaModelo(cuerpo.figura!);
       } catch (e) {
@@ -123,10 +125,15 @@ export async function POST(req: Request) {
     } else if (accion === 'resumir') {
       contexto = { titulo: doc.titulo, ruta: null, texto: doc.completo.slice(0, CONTEXTO.maxCharsDocumento) };
     } else {
+      // Pregunta libre: nunca el documento entero. Con sección, esa y sus
+      // vecinas; sin ella, las que comparten palabras clave con la pregunta.
       const tramo = cuerpo.seccion ? tramoPorRuta(doc, cuerpo.seccion) : null;
-      contexto = tramo
-        ? { titulo: doc.titulo, ruta: tramo.ruta, texto: recortar(tramo.texto) }
-        : { titulo: doc.titulo, ruta: null, texto: doc.completo.slice(0, CONTEXTO.maxCharsLibre) };
+      if (tramo) {
+        const seccion = ampliar(doc, tramo);
+        contexto = { titulo: doc.titulo, ruta: seccion.ruta, texto: recortar(seccion.texto) };
+      } else {
+        contexto = { titulo: doc.titulo, ruta: null, texto: buscarPorPregunta(doc, cuerpo.pregunta!) };
+      }
     }
   }
 
@@ -135,7 +142,11 @@ export async function POST(req: Request) {
   const conversacionId = await conversacionDe(acceso.userId, cuerpo.conversacionId ?? null, claseId);
   // Solo el chat libre arrastra historial; las acciones sobre el resumen van solas
   // (más baratas, y así su respuesta sirve igual para el siguiente alumno).
-  const previos = accion === 'libre' ? await historial(conversacionId) : [];
+  // Las respuestas viejas van recortadas: reenviarlas enteras era lo que más
+  // inflaba la entrada de una conversación larga.
+  const previos = accion === 'libre'
+    ? (await historial(conversacionId)).map((m) => ({ ...m, contenido: m.contenido.slice(0, CONTEXTO.maxCharsHistorial) }))
+    : [];
 
   // ── Respuesta ya guardada (se repite entre alumnos) ───────────────────────
   const clave = ACCION[accion].cacheable && claseId

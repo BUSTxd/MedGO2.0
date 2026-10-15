@@ -197,6 +197,65 @@ export function tramoDeFigura(doc: Documento, url: string): Tramo | null {
   return canonica ? doc.tramos.find((t) => t.figuras.includes(canonica)) ?? null : null;
 }
 
+/**
+ * El tramo con sus vecinos (antes y después, alternando) hasta
+ * `CONTEXTO.minCharsSeccion`. Un subtítulo de Notion suele traer dos líneas:
+ * sin su entorno la IA no sabe de qué tema forma parte.
+ */
+export function ampliar(doc: Documento, tramo: Tramo): { ruta: string; texto: string } {
+  const i = doc.tramos.indexOf(tramo);
+  if (i < 0 || tramo.texto.length >= CONTEXTO.minCharsSeccion) return { ruta: tramo.ruta, texto: tramo.texto };
+  let desde = i, hasta = i, largo = tramo.texto.length;
+  while (largo < CONTEXTO.minCharsSeccion && (desde > 0 || hasta < doc.tramos.length - 1)) {
+    if (desde > 0) { desde--; largo += doc.tramos[desde].texto.length; }
+    if (largo < CONTEXTO.minCharsSeccion && hasta < doc.tramos.length - 1) { hasta++; largo += doc.tramos[hasta].texto.length; }
+  }
+  const texto = doc.tramos.slice(desde, hasta + 1)
+    .map((t) => (t === tramo ? `### ${t.ruta} (sección del alumno)\n${t.texto}` : `### ${t.ruta}\n${t.texto}`))
+    .join('\n\n');
+  return { ruta: tramo.ruta, texto };
+}
+
+const VACIAS = new Set(('que como cual cuales cuando donde porque para por con sin una uno unos unas los las del '
+  + 'esta este esto estos estas ese esa eso entre sobre tiene tienen hace hacen puede pueden explica explicame '
+  + 'dime significa sirve funciona diferencia ejemplo mas menos muy todo toda todos todas cada desde hasta ser son '
+  + 'esta estan fue pasa ocurre').split(' '));
+
+function palabras(s: string): string[] {
+  return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+    .split(/[^a-z0-9ñ]+/).filter((p) => p.length >= 4 && !VACIAS.has(p));
+}
+
+/**
+ * Para una pregunta libre dentro de un resumen: las secciones que más
+ * palabras comparten con la pregunta (el título cuenta doble), en el orden
+ * del documento y hasta `CONTEXTO.maxCharsLibre`. Sin IA: es un buscador por
+ * palabras clave. Si nada coincide, el índice de títulos para orientarse.
+ */
+export function buscarPorPregunta(doc: Documento, pregunta: string): string {
+  const claves = new Set(palabras(pregunta).map((p) => p.slice(0, 6)));
+  const puntuados = doc.tramos.map((t, i) => {
+    let n = 0;
+    for (const p of palabras(t.ruta)) if (claves.has(p.slice(0, 6))) n += 2;
+    for (const p of palabras(t.texto)) if (claves.has(p.slice(0, 6))) n += 1;
+    return { t, i, n };
+  }).filter((x) => x.n > 0).sort((a, b) => b.n - a.n);
+
+  const elegidos: typeof puntuados = [];
+  let largo = 0;
+  for (const x of puntuados) {
+    if (largo + x.t.texto.length > CONTEXTO.maxCharsLibre && elegidos.length) continue;
+    elegidos.push(x);
+    largo += x.t.texto.length;
+    if (largo >= CONTEXTO.maxCharsLibre) break;
+  }
+  if (!elegidos.length) {
+    return `Índice del resumen (ninguna sección coincide con la pregunta):\n${doc.tramos.map((t) => `- ${t.ruta}`).join('\n')}`;
+  }
+  return elegidos.sort((a, b) => a.i - b.i)
+    .map((x) => `### ${x.t.ruta}\n${recortar(x.t.texto)}`).join('\n\n').slice(0, CONTEXTO.maxCharsLibre + 2_000);
+}
+
 /** Recorta un tramo largo a una ventana alrededor de lo subrayado. */
 export function recortar(texto: string, seleccion?: string): string {
   const max = CONTEXTO.maxCharsSeccion;
