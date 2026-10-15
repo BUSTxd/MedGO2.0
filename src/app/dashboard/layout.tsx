@@ -7,6 +7,7 @@ import { isAdminEmail, canVerAportes } from '@/lib/admin';
 import { tieneAccesoA } from '@/lib/acceso';
 import { checkDevice, getDeviceId, touchSession } from '@/lib/sessions';
 import { canalBuzonAdmin, tokenDePresencia } from '@/lib/presencia';
+import { iaAbierta } from '@/lib/ia/config';
 
 export default async function DashboardRootLayout({
   children,
@@ -73,6 +74,8 @@ export default async function DashboardRootLayout({
       // El buzón sí incluye al admin: puede escribirse a sí mismo para probar.
       buzon={user ? tokenDePresencia(user.id) : undefined}
       canalAdmin={isAdmin ? canalBuzonAdmin() : undefined}
+      // Sólo la señal de la interfaz: la ruta de la IA vuelve a comprobarlo.
+      iaAbierta={iaAbierta()}
     >
       {children}
     </DashboardWrapper>

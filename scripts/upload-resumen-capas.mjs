@@ -682,7 +682,7 @@ if (dry) {
 console.log(`
 Falta el código:
 
- 1. src/app/api/resumen-html/[claseId]/route.ts
+ 1. src/lib/resumen-html.ts
       ALLOWED     → añadir '${id}'
       FILE_ALIAS  → '${id}': '${curso}/${id}'
 

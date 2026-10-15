@@ -15,7 +15,7 @@
  *
  * Lo que NO hace (queda para el agente, son cambios de código):
  *   - registrar el id en ALLOWED/FILE_ALIAS de
- *     `src/app/api/resumen-html/[claseId]/route.ts`
+ *     `src/lib/resumen-html.ts`
  *   - marcar la actividad en `src/lib/data/<curso>.ts`
  *
  * Flags: --dry (no sube nada, sólo informa) · --force (re-sube y pisa) ·
@@ -386,7 +386,7 @@ if (dry) {
 console.log(`
 Falta el código:
 
- 1. src/app/api/resumen-html/[claseId]/route.ts
+ 1. src/lib/resumen-html.ts
       ALLOWED     → añadir '${id}'
       FILE_ALIAS  → '${id}': '${curso}/${id}'
 

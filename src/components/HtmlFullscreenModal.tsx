@@ -5,6 +5,10 @@ import { createPortal } from 'react-dom';
 
 const bloquear = (e: React.SyntheticEvent) => e.preventDefault();
 import { useDarkMode } from './DarkModeContext';
+import { useIA } from './ia/IAContext';
+import PanelIA, { IconoIA, type ApiPanelIA } from './ia/PanelIA';
+import BurbujaSeleccion from './ia/BurbujaSeleccion';
+import type { PedidoIA } from './ia/useChatIA';
 import styles from '@/styles/resumenHtml.module.css';
 
 /* Mismos íconos que el botón de tema de la sidebar (DashboardSidebar.tsx):
@@ -123,6 +127,24 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
   const lbRef = useRef<HTMLDivElement>(null);
   const lbImgRef = useRef<HTMLImageElement>(null);
   const lbArrastro = useRef(false);
+
+  /* MedGO IA. El «modo IA» abre la selección del texto (sólo entonces) y la
+     columna del panel; el chat vive dentro de `PanelIA` y se le habla por
+     `iaRef`, para que una respuesta en curso no re-renderice este visor.
+     Copiar sigue bloqueado igual que siempre (onCopy, teclas, impresión). */
+  const ia = useIA();
+  const [modoIA, setModoIA] = useState(false);
+  const iaRef = useRef<ApiPanelIA>(null);
+  const pedirIA = useCallback((p: PedidoIA) => {
+    setModoIA(true);
+    iaRef.current?.pedir(p);
+  }, []);
+  const alternarIA = useCallback(() => {
+    setModoIA((m) => {
+      if (m) window.getSelection()?.removeAllRanges();
+      return !m;
+    });
+  }, []);
 
   /**
    * Un resumen puede venir en dos envases (ver CLAUDE.md): el flujo de un
@@ -723,7 +745,7 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
 
   const overlay = (
     <div
-      className={styles.overlay}
+      className={`${styles.overlay} ${modoIA ? styles.modoIA : ''}`}
       onCopy={bloquear}
       onCut={bloquear}
       onContextMenu={bloquear}
@@ -733,6 +755,22 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
         <p className={styles.title}>{titulo ?? 'Resumen'}</p>
 
         <div className={styles.spacer} />
+
+        {ia && (
+          <button
+            className={`${styles.iaBtn} ${modoIA ? styles.iaBtnActivo : ''}`}
+            onClick={ia.puedeUsar ? alternarIA : undefined}
+            aria-disabled={!ia.puedeUsar}
+            aria-pressed={modoIA}
+            title={ia.puedeUsar
+              ? (modoIA ? 'Cerrar MedGO IA' : 'Subraya y pregúntale a la IA')
+              : 'MedGO IA — próximamente'}
+          >
+            <IconoIA size={16} />
+            <span>IA</span>
+            {!ia.puedeUsar && <small>Pronto</small>}
+          </button>
+        )}
 
         <div className={styles.sizeGroup}>
           <button
@@ -774,24 +812,39 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
         </button>
       </div>
 
-      <div className={styles.scroller} ref={scrollerRef}>
-        {error ? (
-          <p className={styles.status}>No se pudo cargar el resumen. Vuelve a intentarlo.</p>
-        ) : html === null ? (
-          <p className={styles.status}>Cargando resumen…</p>
-        ) : (
-          <article
-            ref={sheetRef}
-            className={`${styles.sheet} ${hojaSuelta ? styles.sheetCapas : ''}`}
-            // String, no número: para una custom property React entrega el
-            // valor tal cual, y un número suelto aquí es más frágil de leer
-            // dentro del calc() que la escala.
-            style={{ ['--s' as string]: String(SIZES[sizeIndex]) }}
-            onClick={onSheetClick}
-            dangerouslySetInnerHTML={contenido}
+      <div className={styles.cuerpo}>
+        <div className={styles.scroller} ref={scrollerRef}>
+          {error ? (
+            <p className={styles.status}>No se pudo cargar el resumen. Vuelve a intentarlo.</p>
+          ) : html === null ? (
+            <p className={styles.status}>Cargando resumen…</p>
+          ) : (
+            <article
+              ref={sheetRef}
+              className={`${styles.sheet} ${hojaSuelta ? styles.sheetCapas : ''}`}
+              // String, no número: para una custom property React entrega el
+              // valor tal cual, y un número suelto aquí es más frágil de leer
+              // dentro del calc() que la escala.
+              style={{ ['--s' as string]: String(SIZES[sizeIndex]) }}
+              onClick={onSheetClick}
+              dangerouslySetInnerHTML={contenido}
+            />
+          )}
+        </div>
+
+        {ia?.puedeUsar && (
+          <PanelIA
+            modo="embebido"
+            abierto={modoIA}
+            puedeUsar
+            claseId={claseId}
+            onCerrar={alternarIA}
+            api={iaRef}
           />
         )}
       </div>
+
+      {ia?.puedeUsar && <BurbujaSeleccion sheetRef={sheetRef} activo={modoIA} onPedir={pedirIA} />}
 
       {/* ── Figura ampliada ── */}
       {lightbox && (
@@ -820,6 +873,20 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img ref={lbImgRef} className={styles.lightboxImg} src={lightbox} alt="" draggable={false} />
           <span className={styles.lightboxHint}>Rueda para ampliar · clic fuera o Esc para cerrar</span>
+          {ia?.puedeUsar && (
+            <button
+              className={styles.lightboxIA}
+              onClick={(e) => {
+                e.stopPropagation();
+                const figura = lightbox;
+                setLightbox(null);
+                pedirIA({ accion: 'figura', figura });
+              }}
+            >
+              <IconoIA size={16} />
+              Explícame esta figura
+            </button>
+          )}
         </div>
       )}
     </div>

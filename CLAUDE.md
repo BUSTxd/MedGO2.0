@@ -117,6 +117,7 @@ src/app/
 | `src/components/PlanProvider.tsx` | Context con `plan`, `isActive`, `expiresAt`. Consumido con `usePlan()` |
 | `src/components/AuthProvider.tsx` | Singleton del cliente Supabase, compartido para evitar múltiples instancias |
 | `src/components/LockedContent.tsx` | Paywall reutilizable para contenido premium |
+| `src/components/ia/PanelIA.tsx` | Panel de MedGO IA (flotante en el dashboard / embebido en el visor de resúmenes). Ver **MedGO IA** |
 | `src/components/AportesPanel.tsx` | Panel de avance y aportes (`dashboard/aportes`). Lee `src/lib/aportes-stats.ts` y `src/lib/material-plan.ts`; ver **Sistema de Avance y Aportes** |
 
 ---
@@ -361,7 +362,7 @@ Motor en **`src/components/SolucionarioRunner.tsx`** + `src/styles/solucionario.
 
 Segundo envase de la tarjeta «Resumen», para apuntes propios muy visuales donde el PDF pesa demasiado. El fragmento HTML conserva texto real seleccionable y sirve figuras en AVIF desde CDN público.
 
-**Piezas**: `scripts/upload-resumen-html.mjs` (convierte a AVIF, sube, transforma export de Notion) · `src/app/api/resumen-html/[claseId]/route.ts` (sirve con ETag) · `HtmlFullscreenModal.tsx` · `resumenHtml.module.css`.
+**Piezas**: `scripts/upload-resumen-html.mjs` (convierte a AVIF, sube, transforma export de Notion) · `src/app/api/resumen-html/[claseId]/route.ts` (sirve con ETag; los ids `ALLOWED`/`FILE_ALIAS` y la descarga viven en `src/lib/resumen-html.ts`) · `HtmlFullscreenModal.tsx` · `resumenHtml.module.css`.
 
 **Almacenamiento**: fragmento en bucket privado `resumenes`; imágenes en bucket público `resumenes-img/<curso>/<slug>/`.
 
@@ -416,7 +417,7 @@ Para un PowerPoint exportado a PDF: se reconstruye **desde el PDF** con PyMuPDF 
 Un `.pptx` (casi siempre de Histología) se convierte con `.claude/skills/pptx-a-html/` (**la carpeta `.claude` está en `.gitignore`: la skill y sus scripts viven sólo en la máquina de BUST**, no en git). Dos salidas distintas:
 
 - **Para revisar en local** (carpeta en Descargas, nada se sube): `index.html` + `assets/` con **sólo las imágenes histológicas ya recortadas** (`sNN_imageM`), sin capturas completas; las imágenes que son sólo texto se reconstruyen en HTML y lo que no es histología se excluye. BUST las pasa a AVIF él mismo (mismo nombre, otra extensión) y `reescribir_a_avif.py` apunta el HTML a los `.avif`.
-- **Para publicar** (`--resumen`): `resumen.html` en el envase **«hojas de tamaño fijo»** (`.doc-hojas`): una hoja 1280×720 por diapositiva, figuras como `<img class="pdf-image">` (así heredan hover, clic con velo oscuro y zoom del visor) y `scripts/upload-resumen-doc.mjs --dir … --curso … --id … --slug …` (`--force` para pisar). Luego `ALLOWED` + `FILE_ALIAS` de `api/resumen-html/[claseId]/route.ts` y `resumen:` en la actividad del sílabo. Primer caso: `loc-histo-3` (Locomotor, Práctica de Histología 3).
+- **Para publicar** (`--resumen`): `resumen.html` en el envase **«hojas de tamaño fijo»** (`.doc-hojas`): una hoja 1280×720 por diapositiva, figuras como `<img class="pdf-image">` (así heredan hover, clic con velo oscuro y zoom del visor) y `scripts/upload-resumen-doc.mjs --dir … --curso … --id … --slug …` (`--force` para pisar). Luego `ALLOWED` + `FILE_ALIAS` de `src/lib/resumen-html.ts` y `resumen:` en la actividad del sílabo. Primer caso: `loc-histo-3` (Locomotor, Práctica de Histología 3).
 
 **Lo no obvio:**
 - Una práctica de Anatomía/Histología **con** resumen deja de ser libre (`esLibre`): el resumen pasa a ser de pago. El 403 sin plan lo da `acceso-resumen.ts` solo (lee el sílabo); el visor ya trae las protecciones anticopia.
@@ -474,6 +475,24 @@ Panel que mide cuánto material real hay publicado por curso, **leyendo los síl
 - **Puntero de la célula** (`CursorCelula.tsx`, montado en `DashboardWrapper`): **no es un `cursor: url()`** — eso no se anima y el navegador lo cambia por la mano en enlaces. Es una capa fija (portal a `<body>`, fuera del desenfoque) que sigue al mouse con rAF, con `* { cursor: none !important }` inyectado solo mientras está activo; sobre algo pulsable la célula crece (sustituye a la mano). **Dos capas: la de fuera solo se desplaza, la de dentro solo escala** — con `scale` y el `transform: translate` en el mismo elemento, el scale se aplica después y multiplica la distancia a la esquina (la célula salía disparada lejos del click al pasar por un botón). Solo con `(pointer: fine)`. **Iframes del mismo origen** (frotis, microscopio): sus eventos no llegan a la página, así que se engancha también a su `contentDocument` (en cada `load`, con un `MutationObserver` porque aparecen al navegar) traduciendo coordenadas con su `getBoundingClientRect`; un iframe de otro origen conserva su propio cursor. Sin la preferencia (`localStorage('medgo-cursor-celula')`) no se monta ni se baja nada; las otras pestañas se sincronizan por el evento `storage`.
 - **Nada se baja de más**: con `invocado === null` no se pinta sprite; el círculo solo si no se invocó (tras invocar no vuelve a pedirse); la célula y la tarjeta solo con racha ≥ 20 (precarga), prueba del admin o ya invocada.
 - **Sprites en `public/assets/esfuerzo/`, con versión en el nombre (`_v1`) y servidos `immutable` un año** (`headers()` en `next.config.mjs`): ni un 304 al cambiar de página o pestaña. **Cambiar un dibujo obliga a subir la versión** en el script y en `src/lib/esfuerzo.ts`. Generadores: `generar_circulo_64.py` (64 fotogramas de 64×64, ×3) y `generar_celula.mjs` (dos tiras de 16 de 32×32 del mismo dibujo: con sombra lossless a ×6 para el home; sin sombra con paleta de 24 colores para el puntero, a 32 px). Home a 192 px: escala entera siempre, o los píxeles salen desiguales.
+
+---
+
+## MedGO IA (chatbot con Claude Haiku 5.5) — construido, SIN LANZAR
+
+Tutor de IA: panel lateral derecho en el dashboard y, en el visor de resúmenes HTML, subrayar → «¿Qué significa?» / «Explícame», «Explícame esta figura» en la figura ampliada y «Resumir todo». **Mientras `IA_ABIERTA` no sea `1`, solo el admin la usa**; el resto ve el cuadradito flotante «Próximamente» (se sacude cada ~6 s) y el botón «IA · Pronto» del visor.
+
+- **La API key NUNCA va en el repo, en CLAUDE.md ni en la memoria**: solo `ANTHROPIC_API_KEY` en `.env.local` y Vercel (`.env.example` la lleva vacía). Sin ella `api/ia/chat` responde 503 `no_configurada` y todo lo demás funciona. Crearla en un workspace de Anthropic con **límite de gasto mensual** (última barrera).
+- **Todo número de cobro vive en `src/lib/ia/config.ts`**: modelo, precios de Haiku 5.5, `CREDITOS_POR_USD` (100.000 → 1 crédito = US$ 0,00001), `CUOTA_POR_PLAN`, `max_tokens`/`effort` por acción, límites (8/min, 200/día, una petición a la vez) y `IA_TOPE_DIARIO_USD` (freno global del día). Los créditos se cobran por el `usage` real; el precio «~N créditos» que ve el alumno sale de `creditosTipicos()`.
+- **Créditos tipo Higgsfield** (`supabase/migrations/0010_ia.sql`): dos bolsas en `ia_saldos` — `plan` (se **repone** cada 30 días, no se acumula, al primer uso del ciclo) y `recarga` (no caduca, se gasta después). Libro contable `ia_movimientos` (reserva −máximo / liquidación +sobrante con costo y tokens). Tablas con RLS sin políticas **y sin privilegios** para anon/authenticated; el saldo solo se mueve con `ia_reservar` / `ia_liquidar` / `ia_abonar` (security definer, solo `service_role`). `ia_reservar` bloquea la fila (`FOR UPDATE`): ráfagas en paralelo no gastan dos veces. `ia_abonar` lleva clave de idempotencia (id del pago de MP) para la futura compra de recargas.
+- **El contexto lo arma el servidor** (`src/lib/ia/secciones.ts`): baja el fragmento con `descargarResumenHtml` (`src/lib/resumen-html.ts`, que ahora guarda `ALLOWED`/`FILE_ALIAS`), lo parte por títulos h1-h4, por hoja (`page-shell`/`pdf-page`/`page`) o en trozos, y manda **solo el tramo** de lo subrayado (recortado a 12K caracteres). Lo subrayado se busca por contenido normalizado (sin tildes ni espacios): si no está en el resumen → 400 `seleccion_ajena`. Una figura vale solo si es del bucket `resumenes-img` y está en ese resumen (URL canónica: el navegador codifica tildes). «Resumir todo» es lo único que lee el documento entero (≤ 240K caracteres, por debajo del umbral de 100K tokens).
+- **Figuras**: la API no acepta AVIF → `sharp` las pasa a WEBP ≤ 1092 px (`figuras.ts`).
+- **Caché**: prompt caching (sistema fijo → bloque `<resumen>` con `cache_control` → historial); y `ia_respuestas_cache` para las acciones sobre el resumen (no el chat libre): el siguiente alumno paga el mismo precio y la app no gasta. La clave incluye `VERSION_PROMPT` (subirla en `api/ia/chat/route.ts` si cambian las instrucciones) y la versión del fragmento.
+- **Historial en el servidor** (`ia_conversaciones`/`ia_mensajes`): el cliente solo manda `conversacionId`; solo el chat libre arrastra los 6 últimos mensajes.
+- **Respuesta en NDJSON** (`meta` / `delta` / `fin` / `error`); `useChatIA.ts` la lee. Si el alumno cierra, el servidor sigue leyendo hasta el final para cobrar lo real. Un error del modelo no se cobra.
+- **Interfaz**: `components/ia/` — `BotonIA` + `PanelIA` (flotante) montados en `DashboardWrapper`; al abrir el panel la sidebar se contrae (y vuelve como estaba al cerrar) y `.main` recibe `.mainConPanel`. En el visor (`HtmlFullscreenModal`) el «modo IA» abre la columna `PanelIA embebido` (oscura siempre) y **solo entonces** la selección (`.modoIA .sheet { user-select: text }`); copiar sigue bloqueado (onCopy/teclas/impresión). El chat vive en `PanelIA` y el visor le habla por `ref` (`ApiPanelIA`): una respuesta en curso no re-renderiza el visor. El panel corta la propagación de teclas (salvo Esc) para no disparar los atajos A–E del examen. El PDF (`PdfViewer`) no tiene capa de texto: ahí todavía no hay IA.
+- **Admin**: tarjeta «MedGO IA» en `dashboard/admin` (`IAAdmin.tsx` + `api/admin/ia`): gasto de hoy/mes, por acción, top 10 alumnos y abono manual de créditos por correo.
+- **Para lanzar**: key en Vercel, decidir `CREDITOS_POR_USD`/cuotas (y la subida del plan a S/ 20), `IA_ABIERTA=1`. Pendiente: compra de recargas con Mercado Pago (pago único → `abonar(..., 'recarga', idPago)`) e IA en los resúmenes PDF.
 
 ---
 

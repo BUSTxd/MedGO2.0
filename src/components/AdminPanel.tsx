@@ -4,6 +4,7 @@ import type { AdminData, AdminRow, CursoRank, LabRank } from '@/lib/admin-data';
 import UsuarioFicha from './UsuarioFicha';
 import { useEnLinea } from './Presencia';
 import ValoracionesAdmin from './ValoracionesAdmin';
+import IAAdmin from './IAAdmin';
 import { BandejaMensajes, BotonMensaje, EnviarMensaje, type Destinatario } from './MensajesAdmin';
 import styles from '@/styles/adminPage.module.css';
 import accountStyles from '@/styles/accountPage.module.css';
@@ -274,6 +275,8 @@ export default function AdminPanel({ data }: { data: AdminData }) {
       <Laboratorios ranking={data.rankingLabs} />
 
       <ValoracionesAdmin />
+
+      <IAAdmin />
 
       {/* ─── Tabs ─── */}
       <div className={styles.tabBar} role="tablist">

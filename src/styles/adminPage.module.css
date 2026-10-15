@@ -326,6 +326,31 @@
   transition: background 0.15s ease;
 }
 .descargar:hover { background: #1d4ed8; }
+button.descargar {
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* MedGO IA: abono manual de créditos (IAAdmin.tsx). */
+.iaForm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.iaInput {
+  flex: 1 1 220px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(20, 22, 40, 0.14);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+.iaInputNum { flex: 0 0 120px; }
+:global(body.dark-mode) .iaInput { border-color: rgba(255, 255, 255, 0.14); }
 :global(body.dark-mode) .descargar { background: #3b82f6; }
 :global(body.dark-mode) .descargar:hover { background: #2563eb; }
 

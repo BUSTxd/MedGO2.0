@@ -760,6 +760,98 @@
   pointer-events: none;
 }
 
+/* ─── MedGO IA ─── */
+/* Cuerpo del visor: el documento y, en «modo IA», la columna del panel. Los
+   ResizeObserver del escalado (capas, páginas, hojas) miran el ancho del
+   documento, así que al abrir el panel la hoja se reajusta sola. */
+.cuerpo {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  position: relative;
+}
+
+.cuerpo .scroller {
+  min-width: 0;
+}
+
+/* Sólo en «modo IA» se puede seleccionar el texto (para preguntarle a la IA).
+   Copiar sigue bloqueado: onCopy/onCut del overlay, Ctrl+C/A y la impresión. */
+.modoIA .sheet,
+.modoIA .sheet :global(*) {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.modoIA .sheet ::selection,
+.modoIA .sheet :global(*)::selection {
+  background: rgba(139, 139, 255, 0.35);
+}
+
+.iaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 9px;
+  border: 1px solid rgba(139, 139, 255, 0.35);
+  background: rgba(139, 139, 255, 0.12);
+  color: #f0eeff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.iaBtn:hover:not([aria-disabled='true']) {
+  background: rgba(139, 139, 255, 0.22);
+}
+
+.iaBtn small {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(240, 238, 255, 0.75);
+}
+
+.iaBtn[aria-disabled='true'] {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.iaBtnActivo {
+  border-color: transparent;
+  background: linear-gradient(135deg, #5b5bd6, #3b9edd);
+}
+
+.lightboxIA {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #5b5bd6, #3b9edd);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 600px) {
+  .iaBtn span { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lightbox,
   .lightboxImg {

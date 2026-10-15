@@ -11,11 +11,19 @@
   min-height: 100vh;
   background: #f0f2f8;
   padding: 24px 28px;
-  transition: margin-left 0.3s ease, background 0.3s ease;
+  transition: margin-left 0.3s ease, margin-right 0.3s ease, background 0.3s ease;
 }
 
 .mainCollapsed {
   margin-left: 68px;
+}
+
+/* Panel de MedGO IA abierto: el contenido le deja su ancho (380px, ver
+   panelIA.module.css). En pantallas angostas el panel va encima. */
+@media (min-width: 900px) {
+  .mainConPanel {
+    margin-right: 380px;
+  }
 }
 
 .panel {
