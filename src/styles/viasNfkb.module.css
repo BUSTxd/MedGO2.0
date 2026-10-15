@@ -124,26 +124,75 @@
 }
 .menuCab h1 { margin: 0; font-size: 22px; font-weight: 600; }
 .menuCab p { margin: 2px 0 0; font-size: 13px; color: var(--texto-2); }
-.menuVias { display: grid; gap: 8px; }
-.tarjetaVia {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  text-align: left;
-  padding: 11px 14px;
-  border-radius: 12px;
-  border: 1px solid var(--linea);
-  border-left: 5px solid var(--via);
-  background: var(--campo-3);
+/* Rutas: las tres vías como una lista con filete, no tres tarjetas iguales.
+   Cada fila se reconoce por su cadena dibujada (MiniVia) y sus cifras. */
+.rutas { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--linea); }
+.rutas > li { border-bottom: 1px solid var(--linea); }
+.ruta {
+  position: relative;
+  width: 100%;
+  display: grid;
+  gap: 6px;
+  padding: 12px 10px 12px 14px;
+  border: none;
+  background: transparent;
   color: var(--texto);
-  cursor: pointer;
   font-family: inherit;
-  transition: border-color var(--dur-rapida), transform var(--dur-rapida);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--dur-rapida);
 }
-.tarjetaVia strong { font-size: 15.5px; color: var(--via); }
-.tarjetaVia span { font-size: 13px; color: var(--texto-2); line-height: 1.4; }
-.tarjetaVia:hover { border-color: var(--via); transform: translateY(-1px); }
-:global(.dark-mode) .wrapper .tarjetaVia strong { filter: brightness(1.45); }
+.ruta::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--via);
+  transform-origin: top;
+  transform: scaleY(0.35);
+  transition: transform var(--dur-media) var(--ease-salida);
+}
+.ruta:hover, .ruta:focus-visible { background: color-mix(in srgb, var(--via) 7%, transparent); }
+.ruta:hover::before, .ruta:focus-visible::before { transform: scaleY(1); }
+.rutaCab { display: flex; align-items: baseline; gap: 8px; }
+.rutaCab strong { font-size: 15.5px; font-weight: 600; color: var(--via); line-height: 1.25; }
+.rutaNum { font-size: 12px; font-weight: 700; color: var(--texto-2); font-variant-numeric: tabular-nums; }
+.rutaPregunta { font-size: 13px; color: var(--texto-2); line-height: 1.4; }
+.rutaCifras { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12.5px; color: var(--texto-2); }
+.rutaCifras b { color: var(--texto); font-weight: 700; font-variant-numeric: tabular-nums; }
+.rutaCifraLhc b { color: var(--rojo-alt); }
+.rutaAlts { display: flex; flex-wrap: wrap; gap: 4px; }
+.rutaAlts em {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--rojo-alt);
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--rojo-alt) 45%, transparent);
+  background: color-mix(in srgb, var(--rojo-alt) 7%, transparent);
+}
+:global(.dark-mode) .wrapper .rutaCab strong { filter: brightness(1.5); }
+
+.miniVia { display: block; max-width: 100%; height: auto; overflow: visible; }
+.miniViaCompacta { display: block; flex: none; }
+.miniViaLinea { stroke: var(--via); stroke-width: 2; opacity: 0.5; }
+.miniViaMembrana { stroke: var(--membrana-cabeza); stroke-width: 2.4; stroke-linecap: round; opacity: 0.8; }
+.miniViaAdn path { fill: none; stroke-width: 1.8; }
+.miniViaAdn path:first-child { stroke: var(--adn-a); }
+.miniViaAdn path:last-child { stroke: var(--adn-b); }
+/* Al pasar el ratón, la señal recorre la cadena de la membrana al ADN. */
+.miniViaPunto { fill: var(--via); opacity: 0; }
+.ruta:hover .miniViaPunto, .ruta:focus-visible .miniViaPunto { animation: recorrer 1.5s var(--ease-salida) infinite; }
+@keyframes recorrer {
+  0% { transform: translateX(0); opacity: 0; }
+  12% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateX(var(--recorrido)); opacity: 0; }
+}
+
 .menuAcciones { display: flex; flex-direction: column; gap: 8px; align-items: stretch; }
 .menuAcciones .enlace { align-self: flex-start; }
 
@@ -151,6 +200,9 @@
 
 .selectorVias { display: flex; gap: 4px; flex: none; }
 .selectorVias button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: inherit;
   border: 1px solid var(--linea);
   background: transparent;
@@ -380,6 +432,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .huecoPulso, .alteracionesPanorama, .introPaso, .menu { animation: none; }
-  .tarjetaVia { transition: none; }
+  .huecoPulso, .alteracionesPanorama, .introPaso, .menu, .ruta:hover .miniViaPunto { animation: none; }
+  .ruta, .ruta::before { transition: none; }
 }

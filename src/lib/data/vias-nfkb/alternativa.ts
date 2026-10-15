@@ -29,7 +29,7 @@ const alternativa: Via = {
     relb: { forma: 'proteina', label: 'RELB', color: C.relb },
     p52: { forma: 'proteina', label: 'p52', color: C.p52 },
     btrcp: { forma: 'imagen', img: 'e3_ligasa_scf', label: 'SCF-β-TrCP', w: 150, info: 'btrcp' },
-    proteasoma: { forma: 'imagen', img: 'proteasoma', label: 'Proteasoma 26S', w: 140 },
+    proteasoma: { forma: 'imagen', img: 'proteasoma', label: 'Proteasoma 26S', w: 92 },
     adn: { forma: 'adn', label: 'Sitio κB', tira: 14, info: 'adn' },
     prod_anti: { forma: 'producto', label: 'BCL-xL', color: C.antiapoptotico, info: 'antiapoptoticos' },
     prod_quim: { forma: 'producto', label: 'CXCL13 · CCL19 · CCL21', color: C.quimiocina, info: 'quimiocinas' },

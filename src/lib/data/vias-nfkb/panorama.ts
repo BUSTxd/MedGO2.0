@@ -50,7 +50,7 @@ const actores: Record<string, ActorDecl> = {
   c_ikbn: P('IκBα', C.ikba, 'ikba'),
   c_rel: P('c-Rel', C.crel, 'crel', 80),
   // Compartido
-  prot: { forma: 'imagen', img: 'proteasoma', label: 'Proteasoma', w: 108, info: 'proteasoma' },
+  prot: { forma: 'imagen', img: 'proteasoma', label: 'Proteasoma', w: 70, info: 'proteasoma' },
   adn: { forma: 'adn', label: 'ADN', tira: 16, info: 'adn', h: 50 },
   // Vía alternativa
   a_cd40l: L('CD40L', C.cd40, 'cd40l'),

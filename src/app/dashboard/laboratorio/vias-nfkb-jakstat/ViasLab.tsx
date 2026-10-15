@@ -12,6 +12,7 @@ import { compilado, siguienteVia, VIA_POR_ID, VIAS } from '@/lib/vias-nfkb/regis
 import Portada from './Portada';
 import Explorar from './Explorar';
 import Estudio from './Estudio';
+import { MiniVia } from './PanelVias';
 import { Inventario, type Destino } from './Ficha';
 import c from '@/styles/cicloCelular.module.css';
 import s from '@/styles/viasNfkb.module.css';
@@ -100,7 +101,7 @@ export default function ViasLab() {
               style={{ ['--via' as string]: v.color }}
               aria-current={vista.v === 'via' && vista.id === v.id ? 'page' : undefined}
               onClick={() => abrir(v.id)}
-            >{v.nombreCorto}</button>
+            ><MiniVia via={v.id} compacto />{v.nombreCorto}</button>
           ))}
         </nav>
         <nav className={c.modos} aria-label="Modo">

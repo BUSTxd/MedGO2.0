@@ -14,6 +14,7 @@ import { compilado, INTRO, VIAS } from '@/lib/vias-nfkb/registro';
 import Escena from './Escena';
 import { FichaProteina, type Destino } from './Ficha';
 import { useReproductor } from './useReproductor';
+import PanelVias from './PanelVias';
 import c from '@/styles/cicloCelular.module.css';
 import s from '@/styles/viasNfkb.module.css';
 
@@ -120,14 +121,7 @@ function Contenido({ onVia, onEstudio, onInventario, onDestino, sinIntro, onRepe
             <h1>Vías NF-κB y JAK/STAT</h1>
             <p>En la célula de Reed-Sternberg del linfoma de Hodgkin clásico · Küppers R. J Clin Invest. 2012</p>
           </div>
-          <div className={s.menuVias}>
-            {VIAS.map((v) => (
-              <button key={v.id} type="button" className={s.tarjetaVia} style={{ ['--via' as string]: v.color }} onClick={() => onVia(v.id)}>
-                <strong>{v.nombre}</strong>
-                <span>{v.pregunta}</span>
-              </button>
-            ))}
-          </div>
+          <PanelVias onVia={onVia} />
           <div className={s.menuAcciones}>
             <button type="button" className={c.btnPrim} onClick={onEstudio}>Modo estudio: arrastra las piezas</button>
             <button type="button" className={c.btnSec} onClick={onInventario}>Proteínas y alteraciones</button>

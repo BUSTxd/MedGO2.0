@@ -33,7 +33,7 @@ const clasica: Via = {
     p50: { forma: 'proteina', label: 'p50', color: C.p50 },
     p65: { forma: 'proteina', label: 'p65', color: C.p65 },
     btrcp: { forma: 'imagen', img: 'e3_ligasa_scf', label: 'SCF-β-TrCP', w: 150, info: 'btrcp' },
-    proteasoma: { forma: 'imagen', img: 'proteasoma', label: 'Proteasoma 26S', w: 140 },
+    proteasoma: { forma: 'imagen', img: 'proteasoma', label: 'Proteasoma 26S', w: 92 },
     adn: { forma: 'adn', label: 'Sitio κB', tira: 14, info: 'adn' },
     prod_anti: { forma: 'producto', label: 'BCL-xL · cFLIP · cIAP', color: C.antiapoptotico, info: 'antiapoptoticos' },
     prod_prol: { forma: 'producto', label: 'Ciclina D2 · MYC', color: C.proliferacion, info: 'proliferacion' },
