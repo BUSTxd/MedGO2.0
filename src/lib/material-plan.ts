@@ -153,6 +153,7 @@ const REGLAS: Record<string, CursoReglas> = {
   'aparato-locomotor':      { simulacionEn: ['ANATOMIA', 'HISTOLOGIA', 'EXAMEN-P'] },
   digestivo:                { simulacionEn: ['ANATOMIA', 'HISTOLOGIA'] },
   'endocrino-reproductor':  { simulacionEn: ['ANATOMIA', 'HISTOLOGIA', 'TALLER'] },
+  respiratorio:             { simulacionEn: ['ANATOMIA', 'HISTOLOGIA'] },
   // Todas las clases teóricas (C1–C14) usan el PDF de propuestos, no un banco
   // interactivo — PC/EXAMEN-T siguen mostrando "Banqueo" por defecto. Y las
   // catorce tienen laboratorio virtual, que ocupa el sitio de la tarjeta Video.

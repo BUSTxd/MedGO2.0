@@ -22,7 +22,10 @@ export type Unidad =
   | 'UNIDAD_5'
   | 'EVALUACION';
 
+export type ResumenFormato = 'pdf' | 'html';
+
 export interface ResumenOpcion {
+  formato?: ResumenFormato;
   id: string;
   label: string;
 }
@@ -40,7 +43,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   examen?: ExamenRef;
 }
 
@@ -103,6 +106,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't02',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t02', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_2',
         titulo: 'Histología: Introducción al Sistema Nervioso',
@@ -118,6 +122,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't03',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t03', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_1',
         titulo: 'Anatomía: Osteología de la Cabeza (CT1)',
@@ -166,6 +171,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't04',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t04', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_1',
         titulo: 'Anatomía: Regiones Superficiales de la Cara (CT2)',
@@ -196,6 +202,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't05',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t05', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_2',
         titulo: 'Embriología del Sistema Nervioso',
@@ -247,6 +254,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't06',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t06', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_2',
         titulo: 'Histología: Piel',
@@ -263,6 +271,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't07',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t07', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_1',
         titulo: 'Anatomía: Fosas Cigomáticas y Pterigoidea (CT3)',
@@ -287,6 +296,7 @@ export const semanas: Semana[] = [
     actividades: [
       {
         id: 't08',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t08', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_2',
         titulo: 'Fisiología Neuronal 1',
@@ -303,6 +313,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't09',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t09', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_1',
         titulo: 'Anatomía: Región Orbitaria (CT4)',
@@ -382,6 +393,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't10',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t10', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_2',
         titulo: 'Fisiología Neuronal 2',
@@ -429,6 +441,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't11',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t11', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_2',
         titulo: 'Fisiología: Vías Neuronales',
@@ -446,6 +459,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'tbl1',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-tbl1', label: 'Resumen', formato: 'html' }] },
         tipo: 'TBL',
         unidad: 'UNIDAD_5',
         titulo: 'TBL 1: Hipertensión Endocraneana',
@@ -478,6 +492,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't12',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t12', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_1',
         titulo: 'Anatomía: Región del Oído (CT5)',
@@ -502,6 +517,7 @@ export const semanas: Semana[] = [
     actividades: [
       {
         id: 't13',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t13', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_3',
         titulo: 'Fisiología: Sistema Sensitivo',
@@ -519,6 +535,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't14',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t14', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_1',
         titulo: 'Anatomía: Columna Vertebral y Médula Espinal (CT6)',
@@ -600,6 +617,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't15',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t15', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_3',
         titulo: 'Fisiología: Sistema Motor 1',
@@ -681,6 +699,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't17',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t17', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_1',
         titulo: 'Anatomía: Tronco Encefálico (CT7)',
@@ -722,6 +741,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't19',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t19-diencefalo', label: 'Anatomía del diencéfalo', formato: 'html' }, { id: 'neu-t19', label: 'Hemisferios cerebrales (morfología externa)', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_1',
         titulo: 'Anatomía: Hemisferios Cerebrales (Morfología Externa) y Diencéfalo (CT8)',
@@ -797,6 +817,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't20',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t20', label: 'Sistema de la conciencia', formato: 'html' }, { id: 'neu-t20-eeg', label: 'EEG y fisiología del sueño', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_4',
         titulo: 'Fisiología: Conciencia',
@@ -858,6 +879,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't21',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t21', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_4',
         titulo: 'Fisiología: Regulación Interna',
@@ -890,6 +912,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't22',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t22', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_1',
         titulo: 'Anatomía: Hemisferios Cerebrales (Morfología Interna) (CT9)',
@@ -946,6 +969,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't23',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t23', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_4',
         titulo: 'Fisiología: Funciones Superiores',
@@ -978,6 +1002,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't24',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t24', label: 'LCR y barrera hematoencefálica', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_5',
         titulo: 'Fisiología: Circulación Cerebral y LCR',
@@ -994,6 +1019,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'tbl2',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-tbl2', label: 'Resumen', formato: 'html' }] },
         tipo: 'TBL',
         unidad: 'UNIDAD_4',
         titulo: 'TBL 2: Bases Biológicas de la Memoria',
@@ -1028,6 +1054,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't25',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t25', label: 'Vascularización, meninges y LCR', formato: 'html' }, { id: 'neu-t25-circulacion', label: 'Circulación cerebral', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_5',
         titulo: 'Anatomía: Vascularización del SNC, Meninges y LCR (CT10)',
@@ -1053,6 +1080,7 @@ export const semanas: Semana[] = [
     actividades: [
       {
         id: 't26',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t26', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_3',
         titulo: 'Fisiología: Órganos de los Sentidos',
@@ -1082,6 +1110,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 't27',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t27', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'UNIDAD_3',
         titulo: 'Fisiología: Equilibrio y Postura',

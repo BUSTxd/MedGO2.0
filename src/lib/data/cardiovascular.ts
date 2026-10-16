@@ -20,9 +20,12 @@ export type Unidad =
   | 'UNIDAD_5'
   | 'EVALUACION';
 
+export type ResumenFormato = 'pdf' | 'html';
+
 export interface ResumenOpcion {
   id: string;
   label: string;
+  formato?: ResumenFormato;
 }
 
 export interface Actividad {
@@ -35,7 +38,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
 }
 
 export interface Semana {
@@ -89,6 +92,7 @@ export const semanas: Semana[] = [
           'Formación del tubo cardíaco y movimientos de torsión',
         ],
         docentes: ['Dr. Henry Anchante', 'Dra. Díaz Kuan'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-emb-1', label: 'Embriología', formato: 'html' }] },
       },
       {
         id: 'cv-t1-mediastino',
@@ -102,6 +106,7 @@ export const semanas: Semana[] = [
           'Relaciones anatómicas generales',
         ],
         docentes: ['Dr. De la Cruz'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-t1-mediastino', label: 'Mediastino', formato: 'html' }] },
       },
       {
         id: 'cv-histo-clase',
@@ -117,6 +122,7 @@ export const semanas: Semana[] = [
           'Relación estructura–función',
         ],
         docentes: ['Dr. José Velásquez'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-histo-clase', label: 'Histología', formato: 'html' }] },
       },
       {
         id: 'cv-p1-anat',
@@ -164,6 +170,7 @@ export const semanas: Semana[] = [
           'Malformaciones, heterotaxias, defectos de tabicación',
         ],
         docentes: ['Dra. Díaz Kuan'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-emb-1', label: 'Embriología', formato: 'html' }] },
       },
       {
         id: 'cv-t2-pericardio',
@@ -178,6 +185,7 @@ export const semanas: Semana[] = [
           'Relaciones anatómicas',
         ],
         docentes: ['Dr. Fernandini'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-t2-pericardio', label: 'Pericardio y morfología externa', formato: 'html' }] },
       },
       {
         id: 'cv-clase-3',
@@ -192,6 +200,7 @@ export const semanas: Semana[] = [
           'Fisiología de la contracción del músculo cardíaco',
         ],
         docentes: ['Dr. Félix Medina'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-clase-3', label: 'Músculo cardiaco', formato: 'html' }] },
       },
       {
         id: 'cv-clase-4',
@@ -206,6 +215,7 @@ export const semanas: Semana[] = [
           'Bases del electrocardiograma',
         ],
         docentes: ['Dr. Henry Anchante'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-clase-4', label: 'Sistema eléctrico cardiaco', formato: 'html' }] },
       },
       {
         id: 'cv-exam-anat-1',
@@ -273,6 +283,7 @@ export const semanas: Semana[] = [
           'Sistema de conducción intracardiaco',
         ],
         docentes: ['Dr. Fernandini'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-t3-morfologia', label: 'Morfología interna', formato: 'html' }] },
       },
       {
         id: 'cv-clase-5',
@@ -287,6 +298,7 @@ export const semanas: Semana[] = [
           'Expresión mecánica de la fisiología cardíaca',
         ],
         docentes: ['Dr. Arnold Zárate'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-clase-5', label: 'Ciclo cardiaco y gasto cardiaco', formato: 'html' }] },
       },
       {
         id: 'cv-paso-corto-1',
@@ -311,6 +323,7 @@ export const semanas: Semana[] = [
           'Fisiología de la circulación coronaria',
         ],
         docentes: ['Dr. Anchante', 'Dr. Durand', 'Dra. Inquilla', 'Dr. W. Quispe', 'Dr. D. Espinoza', 'Dr. Arévalo'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-tbl-1', label: 'Fisiología de la circulación', formato: 'html' }] },
         nota: 'Evaluación individual 60% + trabajo grupal 40%. Duración 120 min. Material en Blackboard®.',
       },
       {
@@ -326,6 +339,7 @@ export const semanas: Semana[] = [
           'Reconocimiento de alteraciones patológicas frecuentes',
         ],
         docentes: ['Dr. Percy Durand'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-clase-6', label: 'Electrocardiograma', formato: 'html' }] },
       },
       {
         id: 'cv-paso-corto-2',
@@ -368,6 +382,7 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Mediastino posterior', 'Esófago, aorta torácica, vena ácigos, conducto torácico'],
         docentes: ['Dr. De la Cruz'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-t4-mediastino-post', label: 'Mediastino posterior', formato: 'html' }] },
       },
       {
         id: 'cv-p4-anat',
@@ -435,6 +450,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Edema agudo de pulmón', 'Fisiopatología y manejo'],
         docentes: ['Dr. Anchante', 'Dr. Durand', 'Dra. Inquilla', 'Dr. W. Quispe', 'Dr. D. Espinoza', 'Dr. Arévalo'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-tbl-2', label: 'Edema agudo de pulmón', formato: 'html' }] },
         nota: 'Evaluación individual 60% + trabajo grupal 40%.',
       },
       {
@@ -451,6 +467,7 @@ export const semanas: Semana[] = [
           'Fisiología del ejercicio cardiovascular',
         ],
         docentes: ['Dr. Félix Medina'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-clase-7', label: 'Regulación de FC y presión arterial', formato: 'html' }] },
       },
       {
         id: 'cv-efi-games',
@@ -505,6 +522,7 @@ export const semanas: Semana[] = [
           'Criterios de interpretación en patologías eléctricas frecuentes',
         ],
         docentes: ['Dr. Henry Anchante'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-clase-8', label: 'ECG en arritmias', formato: 'html' }] },
       },
       {
         id: 'cv-exam-anat-2',
@@ -530,6 +548,7 @@ export const semanas: Semana[] = [
           'Estudios invasivos e imágenes cardíacas',
         ],
         docentes: ['Dr. Martín Salazar'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'cv-clase-9', label: 'Métodos diagnósticos', formato: 'html' }] },
       },
       {
         id: 'cv-p5-repaso',

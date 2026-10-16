@@ -16,9 +16,12 @@ export type Unidad =
   | 'UNIDAD_4'
   | 'EVALUACION';
 
+export type ResumenFormato = 'pdf' | 'html';
+
 export interface ResumenOpcion {
   id: string;
   label: string;
+  formato?: ResumenFormato;
 }
 
 import type { ExamenRef } from './examen';
@@ -34,7 +37,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   examen?: ExamenRef;
   qbank?: ExamenRef;
 }
@@ -83,6 +86,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Histología del riñón', 'Corpúsculo renal', 'Sistema tubular'],
         docentes: ['Dr. S. Portugal'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-clase-1-histo', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-t1-pared',
@@ -93,6 +97,7 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Pared abdominal posterior', 'Espacio retroperitoneal'],
         docentes: ['Dr. B. Fernandini'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-t1-pared', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-p1-anat',
@@ -125,6 +130,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Líquidos corporales', 'Función glomerular', 'Filtración glomerular'],
         docentes: ['Dr. J. García', 'Dr. H. Pérez', 'Dra. J. Bernuy'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-tbl-1', label: 'Líquidos corporales', formato: 'html' }, { id: 'exc-tbl-1-glomerular', label: 'Función glomerular', formato: 'html' }] },
       },
       {
         id: 'exc-abp-1',
@@ -155,6 +161,7 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Anatomía renal', 'Uréteres', 'Relaciones topográficas'],
         docentes: ['Dr. B. Fernandini'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-t2-rinones', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-clase-2-emb',
@@ -165,6 +172,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Pronefros, mesonefros, metanefros', 'Desarrollo del riñón definitivo', 'Malformaciones renales'],
         docentes: ['Dra. A. Díaz'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-clase-2-emb', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-paso-corto-1',
@@ -186,6 +194,7 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Vejiga urinaria', 'Uretra masculina y femenina', 'Relaciones anatómicas'],
         docentes: ['Dr. M. De La Cruz'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-t3-vejiga', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-tbl-2',
@@ -196,6 +205,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Reabsorción en el túbulo proximal', 'Cotransportadores', 'Secreción tubular'],
         docentes: ['Dr. J. García', 'Dr. H. Pérez', 'Dra. J. Bernuy'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-tbl-2', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-p2-anat',
@@ -227,6 +237,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Mecanismos de reabsorción de sodio', 'Regulación del balance hídrico', 'ADH y aldosterona'],
         docentes: ['Dr. L. Estremadoyro'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-clase-3-regna', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-exam-anat-1',
@@ -268,6 +279,7 @@ export const semanas: Semana[] = [
         hora: '11:00–13:00',
         subtemas: ['Aorta abdominal', 'Vena cava inferior', 'Linfáticos retroperitoneales', 'Plexo lumbar', 'Cadena simpática'],
         docentes: ['Dr. M. De La Cruz'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-t4-aorta', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-clase-3-calc',
@@ -278,6 +290,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Homeostasis del calcio', 'Homeostasis del fósforo', 'PTH, calcitonina, vitamina D'],
         docentes: ['Dr. L. Estremadoyro'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-clase-3-calc', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-paso-corto-2',
@@ -299,7 +312,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Asa de Henle', 'Mecanismo contracorriente', 'Gradiente medular'],
         docentes: ['Dr. J. García', 'Dr. H. Pérez', 'Dra. J. Bernuy'],
-        resumen: { tipo: 'pdf' },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-tbl-3-html', label: 'Resumen', formato: 'html' }, { id: 'exc-tbl-3', label: 'PDF' }] },
         examen: { key: 'excretor/tbl-3-asa-henle', free: true },
       },
       {
@@ -342,6 +355,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Sistemas buffer', 'Regulación renal del pH', 'Acidosis y alcalosis', 'Gasometría arterial'],
         docentes: ['Dr. C. León'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-clase-4-acido', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-abp-3',
@@ -372,6 +386,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Mecanismos de concentración urinaria', 'Diuréticos y su mecanismo de acción', 'Interacciones farmacológicas'],
         docentes: ['Dr. L. Estremadoyro'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-clase-5-diuresis', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-clase-6-nefrotox',
@@ -382,6 +397,7 @@ export const semanas: Semana[] = [
         hora: '10:00–12:00',
         subtemas: ['Fármacos nefrotóxicos', 'Mecanismos de daño renal', 'AINE, aminoglucósidos, contrastes yodados'],
         docentes: ['Dr. H. Pérez'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-clase-6-nefrotox', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-exam-anat-2',
@@ -402,6 +418,7 @@ export const semanas: Semana[] = [
         hora: '07:00–09:00',
         subtemas: ['Túbulo contorneado distal', 'Conducto colector', 'Regulación hormonal'],
         docentes: ['Dr. J. García', 'Dr. H. Pérez', 'Dra. J. Bernuy'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'exc-tbl-4', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'exc-clase-7-potasio',

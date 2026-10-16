@@ -6,6 +6,7 @@ import { PRIORIDAD_LANZAMIENTO } from '@/lib/data/aportes';
 import DigestiveIcon from '@/components/icons/DigestiveIcon';
 import LocomotorIcon from '@/components/icons/LocomotorIcon';
 import EndocrineIcon from '@/components/icons/EndocrineIcon';
+import LungsIcon from '@/components/icons/LungsIcon';
 import BiologiaCelularIcon from '@/components/icons/BiologiaCelularIcon';
 import CienciasSocialesIcon from '@/components/icons/CienciasSocialesIcon';
 import FisicaIcon from '@/components/icons/FisicaIcon';
@@ -275,6 +276,17 @@ const COURSES = [
     activo: true,
     diff: ['easy', 'medium', 'hard'],
     icon: <EndocrineIcon size={30} />,
+  },
+  {
+    id: 'respiratorio',
+    nombre: 'Sistema Respiratorio | UPCH',
+    badge: 'Respiratorio',
+    desc: 'Dirigido a Universidad Peruana Cayetano Heredia. Sistema Respiratorio (sílabo referencial).',
+    badgeColor: '#2b86b8',
+    badgeBg: 'rgba(63, 167, 214, 0.12)',
+    activo: true,
+    diff: ['medium'],
+    icon: <LungsIcon size={30} />,
   },
 
   // ─── CICLO BÁSICO ──────────────────────────────────────────────────────────

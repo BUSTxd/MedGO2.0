@@ -71,7 +71,8 @@ src/app/
     │   ├── farmacologia/[id]/page.tsx
     │   ├── cardiovascular/[id]/page.tsx
     │   ├── neurologia/[id]/page.tsx
-    │   └── excretor/[id]/page.tsx
+    │   ├── excretor/[id]/page.tsx
+    │   └── respiratorio/             # Sílabo REFERENCIAL (el oficial aún no llega): ids `resp-*`, resúmenes HTML ya colgados de ellos
     ├── histologia/
     │   ├── page.tsx                  # Atlas filtrable (chips clase/tinción/aumento)
     │   └── [curso]/page.tsx

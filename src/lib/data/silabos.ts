@@ -10,6 +10,7 @@ import { semanas as locomotor }       from '@/lib/data/locomotor';
 import { semanas as inmunologia }     from '@/lib/data/inmunologia';
 import { semanas as digestivo }       from '@/lib/data/digestivo';
 import { semanas as endocrino }       from '@/lib/data/endocrino';
+import { semanas as respiratorio }    from '@/lib/data/respiratorio';
 import { semanas as patologia }       from '@/lib/data/patologia';
 import { semanas as epidemiologia }   from '@/lib/data/epidemiologia';
 import { semanas as psicologiaMedica } from '@/lib/data/psicologiaMedica';
@@ -44,6 +45,7 @@ export const SILABOS: Record<string, readonly SemanaLike[]> = {
   'inmunologia':            inmunologia     as unknown as SemanaLike[],
   'digestivo':              digestivo       as unknown as SemanaLike[],
   'endocrino-reproductor':  endocrino       as unknown as SemanaLike[],
+  'respiratorio':           respiratorio    as unknown as SemanaLike[],
   'patologia':              patologia       as unknown as SemanaLike[],
   'epidemiologia':          epidemiologia   as unknown as SemanaLike[],
   'psicologia-medica':      psicologiaMedica as unknown as SemanaLike[],

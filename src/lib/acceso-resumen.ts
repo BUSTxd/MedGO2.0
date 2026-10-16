@@ -54,6 +54,9 @@ const LIBRE: Record<string, (a: Act) => boolean> = {
   'aparato-locomotor':     (a) => esTipo('ANATOMIA', 'HISTOLOGIA')(a) && !a.resumen,
   'digestivo':             esTipo('ANATOMIA', 'HISTOLOGIA'),
   'endocrino-reproductor': esTipo('ANATOMIA', 'HISTOLOGIA', 'TALLER'),
+  // A diferencia de Endocrino, aquí los talleres (Espirometría, AGA) llevan
+  // resumen y son de pago: libres sólo las prácticas. Ver `esPractica`.
+  'respiratorio':          esTipo('ANATOMIA', 'HISTOLOGIA'),
   'inmunologia':           (a) => (a.tipo === 'LAB' && !a.premium) || !!a.gratis,
   'patologia':             (a) => a.tipo === 'LAB' || examenLibre(a),
   'epidemiologia':         examenLibre,
@@ -105,6 +108,8 @@ const CURSO_POR_PREFIJO: [string, string][] = [
   ['fis-', 'fisica-medicina'], ['bcm-', 'biologia-celular'], ['loc-', 'aparato-locomotor'],
   ['dig-', 'digestivo'], ['exc-', 'excretor'], ['inm-', 'inmunologia'],
   ['pat-', 'patologia'], ['epi-', 'epidemiologia'],
+  ['cv-', 'cardiovascular'], ['neu-', 'neurologia'], ['endo-', 'endocrino-reproductor'],
+  ['resp-', 'respiratorio'],
   ['clase-', 'microbiologia'], ['practica-', 'microbiologia'],
 ];
 

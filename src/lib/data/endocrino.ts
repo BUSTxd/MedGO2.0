@@ -18,9 +18,12 @@ export type Unidad =
   | 'ANATOMIA'
   | 'EVALUACION';
 
+export type ResumenFormato = 'pdf' | 'html';
+
 export interface ResumenOpcion {
   id: string;
   label: string;
+  formato?: ResumenFormato;
 }
 
 export interface Actividad {
@@ -33,7 +36,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   /**
    * Módulo interactivo de la práctica. En las actividades de práctica la tarjeta
    * «Video» se sustituye por «Simulación»; sin `href` queda como próximamente.
@@ -101,6 +104,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-2',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-2', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'ANATOMIA',
         titulo: 'T1 — Introducción a la anatomía del sistema endocrino',
@@ -138,6 +142,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-4',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-4', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'ANATOMIA',
         titulo: 'T2 — Pelvis ósea e irrigación de la pelvis',
@@ -183,6 +188,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-5',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-5', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'ENDOCRINA',
         titulo: 'Regulación hipofisaria',
@@ -198,6 +204,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'tbl-1',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-tbl-1', label: 'Resumen', formato: 'html' }] },
         tipo: 'TBL',
         unidad: 'ENDOCRINA',
         titulo: 'TBL 1 — Hormona antidiurética y neurohipófisis',
@@ -219,6 +226,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-6',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-6', label: 'Resumen', formato: 'html' }] },
         tipo: 'INVERTIDA',
         unidad: 'ENDOCRINA',
         titulo: 'Regulación del apetito',
@@ -236,6 +244,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-7',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-7', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'REPRODUCTOR',
         titulo: 'Embriología de glándulas endocrinas',
@@ -270,6 +279,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-9',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-9', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'ANATOMIA',
         titulo: 'T3 — Periné masculino y femenino',
@@ -310,6 +320,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-11',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-11', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'ANATOMIA',
         titulo: 'T4 — Genitales masculinos',
@@ -357,6 +368,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-12',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-12', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'METABOLISMO',
         titulo: 'Metabolismo basal',
@@ -374,6 +386,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'tbl-2',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-tbl-2', label: 'Resumen', formato: 'html' }] },
         tipo: 'TBL',
         unidad: 'METABOLISMO',
         titulo: 'TBL 2 — Metabolismo del calcio y fósforo',
@@ -394,6 +407,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-13',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-13', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'METABOLISMO',
         titulo: 'Metabolismo energético',
@@ -431,6 +445,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-15',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-15', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'ANATOMIA',
         titulo: 'T5 — Genitales femeninos',
@@ -492,6 +507,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-17',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-17', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'REPRODUCTOR',
         titulo: 'Fisiología del aparato reproductor femenino',
@@ -530,6 +546,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-18',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-18', label: 'Resumen', formato: 'html' }] },
         tipo: 'INVERTIDA',
         unidad: 'ESTRES',
         titulo: 'Respuesta endocrina al estrés 1 — Médula adrenal',
@@ -546,6 +563,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-19',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-19', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'ESTRES',
         titulo: 'Respuesta endocrina al estrés 2 — Corteza adrenal',
@@ -562,6 +580,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-20',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-20', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'ANATOMIA',
         titulo: 'T6 — Peritoneo pelviano, recto-ano y plexo sacro',
@@ -596,6 +615,7 @@ export const semanas: Semana[] = [
     actividades: [
       {
         id: 'clase-21',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-21', label: 'Resumen', formato: 'html' }] },
         tipo: 'INVERTIDA',
         unidad: 'REPRODUCTOR',
         titulo: 'Fisiología del aparato reproductor masculino',
