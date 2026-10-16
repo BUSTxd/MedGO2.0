@@ -391,14 +391,27 @@ const LISTOS = new Set(PRIORIDAD_LANZAMIENTO);
 
 /**
  * Cursos fuera de los prioritarios que ya tienen algo real que abrir: Psicología
- * Médica llega sin sílabo, sólo con el banqueo del parcial.
+ * Médica llega sin sílabo, sólo con el banqueo del parcial, y los cinco de
+ * sistemas, con todos sus resúmenes en HTML. Van aparte de
+ * `PRIORIDAD_LANZAMIENTO` para no cambiar lo que el panel de Aportes cuenta
+ * como bloqueante del lanzamiento.
  */
-const CON_BANQUEO = new Set(['psicologia-medica']);
+const CON_MATERIAL = new Set([
+  'psicologia-medica',
+  'cardiovascular',
+  'neurologia',
+  'excretor',
+  'endocrino-reproductor',
+  'respiratorio',
+]);
+
+/** Se abre en la rejilla (no sale «en obra»). */
+const abierto = (id: string) => LISTOS.has(id) || cursoEsGratis(id) || CON_MATERIAL.has(id);
 
 function CursoCard({ c, bloqueado }: { c: Curso; bloqueado: boolean }) {
   // Un curso `gratis` (hoy Patología y Epidemiología) sí tiene material real detrás,
   // así que no se muestra "en obra" aunque no esté entre los prioritarios.
-  const enObra = !LISTOS.has(c.id) && !cursoEsGratis(c.id) && !CON_BANQUEO.has(c.id);
+  const enObra = !abierto(c.id);
 
   const cuerpo = (
     <>
@@ -517,23 +530,23 @@ export default async function CursosCayetano() {
         // original (el de la carrera) se conserva dentro de cada grupo.
         const cursos = COURSES
           .filter((c) => requiredPlanDeCurso(c.id) === planDeTrack(track))
-          .sort((a, b) => Number(!LISTOS.has(a.id)) - Number(!LISTOS.has(b.id)));
+          .sort((a, b) => Number(!abierto(a.id)) - Number(!abierto(b.id)));
         if (!cursos.length) return null;
-        const abierto = tieneAccesoA(plan, planDeTrack(track));
+        const tramoAbierto = tieneAccesoA(plan, planDeTrack(track));
         const textos = SECCION[track];
         const titulo = propio === null
           ? textos.neutro
-          : abierto ? textos.propio : textos.ajeno;
+          : tramoAbierto ? textos.propio : textos.ajeno;
 
         return (
           <section key={track} className={styles.trackSection}>
             <div className={styles.trackHead}>
               <h3 className={styles.trackTitle}>{titulo}</h3>
-              {!abierto && <p className={styles.trackNote}>{textos.nota}</p>}
+              {!tramoAbierto && <p className={styles.trackNote}>{textos.nota}</p>}
             </div>
             <div className={styles.qgrid}>
               {cursos.map((c) => (
-                <CursoCard key={c.id} c={c} bloqueado={!abierto && !cursoEsGratis(c.id)} />
+                <CursoCard key={c.id} c={c} bloqueado={!tramoAbierto && !cursoEsGratis(c.id)} />
               ))}
             </div>
           </section>

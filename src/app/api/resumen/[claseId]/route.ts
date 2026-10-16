@@ -18,8 +18,6 @@ const ALLOWED = new Set([
   // Microbiología — Prácticas Parasitología/Artrópodos
   'practica-8', 'practica-9', 'practica-10',
   'practica-11', 'practica-12', 'practica-13',
-  // Aparato Excretor
-  'exc-tbl-3',
   // Farmacología (prefijo `far-` evita colisión con clase-* de Microbiología)
   'far-14', 'far-16', 'far-17', 'far-18',
   'far-19', 'far-19.2',
@@ -105,7 +103,6 @@ const ALLOWED = new Set([
 const FILE_ALIAS: Record<string, string> = {
   'practica-2':  'practica-2-3',
   'practica-3':  'practica-2-3',
-  'exc-tbl-3':   'excretor/tbl-3-asa-henle',
   // Parasitología — todos en subcarpeta
   'clase-12':    'parasitologia/clase-12',
   'clase-12.2':  'parasitologia/clase-12.2',
