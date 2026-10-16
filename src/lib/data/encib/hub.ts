@@ -1,4 +1,3 @@
-import type { AreaEncib } from './tipos';
 
 /**
  * Lo que pinta el escenario de Cursos: el carrusel de exámenes y la franja de
@@ -66,23 +65,21 @@ export interface Materia {
   imagen: string;
   ancho: number;
   alto: number;
-  /** Área del ENCIB que abre. Sin área, «Próximamente». */
-  area?: AreaEncib;
 }
 
 /** Las imágenes son solo el icono: `nombre` se pinta debajo. */
 const SIN_IMAGEN: Omit<Materia, 'imagen'>[] = [
-  { slug: 'anatomia', nombre: 'Anatomía', area: 'ANA', ancho: 200, alto: 200 },
-  { slug: 'fisiologia', nombre: 'Fisiología', area: 'FIS', ancho: 200, alto: 200 },
-  { slug: 'bioquimica', nombre: 'Bioquímica', area: 'BIO', ancho: 200, alto: 200 },
-  { slug: 'histologia', nombre: 'Histología', area: 'HIS', ancho: 200, alto: 200 },
-  { slug: 'embriologia', nombre: 'Embriología', area: 'EMB', ancho: 200, alto: 200 },
+  { slug: 'anatomia', nombre: 'Anatomía', ancho: 200, alto: 200 },
+  { slug: 'fisiologia', nombre: 'Fisiología', ancho: 200, alto: 200 },
+  { slug: 'bioquimica', nombre: 'Bioquímica', ancho: 200, alto: 200 },
+  { slug: 'histologia', nombre: 'Histología', ancho: 200, alto: 200 },
+  { slug: 'embriologia', nombre: 'Embriología', ancho: 200, alto: 200 },
   { slug: 'genetica', nombre: 'Genética', ancho: 200, alto: 200 },
-  { slug: 'microbiologia', nombre: 'Microbiología', area: 'MIC', ancho: 200, alto: 200 },
-  { slug: 'parasitologia', nombre: 'Parasitología', area: 'MIC', ancho: 200, alto: 200 },
+  { slug: 'microbiologia', nombre: 'Microbiología', ancho: 200, alto: 200 },
+  { slug: 'parasitologia', nombre: 'Parasitología', ancho: 200, alto: 200 },
   { slug: 'inmunologia', nombre: 'Inmunología', ancho: 200, alto: 200 },
-  { slug: 'farmacologia', nombre: 'Farmacología', area: 'FAR', ancho: 200, alto: 200 },
-  { slug: 'patologia', nombre: 'Patología', area: 'PAT', ancho: 200, alto: 200 },
+  { slug: 'farmacologia', nombre: 'Farmacología', ancho: 200, alto: 200 },
+  { slug: 'patologia', nombre: 'Patología', ancho: 200, alto: 200 },
 ];
 
 /** Las materias llevan su propia versión (`V_MATERIAS` del script). */

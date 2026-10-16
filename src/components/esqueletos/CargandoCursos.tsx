@@ -6,6 +6,7 @@ import EsqueletoEncib from './EsqueletoEncib';
 import EsqueletoEscenario from './EsqueletoEscenario';
 import EsqueletoJuegoEncib from './EsqueletoJuegoEncib';
 import EsqueletoTemario from './EsqueletoTemario';
+import EsqueletoCursoEncib from './EsqueletoCursoEncib';
 
 /** Lo que cuelga de `cursos/` sin ser un curso de Cayetano. */
 const NO_SILABO = new Set(['cayetano', 'area', 'examen']);
@@ -39,6 +40,7 @@ export default function CargandoCursos() {
     if (tramos[3] === 'temario') return <EsqueletoTemario />;
     return <EsqueletoEscenario />;
   }
+  if (tramos[2] === 'area') return <EsqueletoCursoEncib />;
   if (NO_SILABO.has(tramos[2])) return <EsqueletoGenerico />;
   if (nivel === 3) return <EsqueletoSilabo />;
   if (nivel === 4) return <EsqueletoClase />;

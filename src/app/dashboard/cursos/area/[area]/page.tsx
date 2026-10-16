@@ -1,131 +1,93 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import Image from 'next/image';
+import { notFound, redirect } from 'next/navigation';
 import type { Metadata } from 'next';
-import { AREAS, AREA_POR_SLUG } from '@/lib/data/encib';
-import { TEMARIO } from '@/lib/data/encib/temario';
-import { ANIOS_VIGENTES, aparicionesDeArea, carga, dificultad, preguntasDeArea } from '@/lib/encib/analisis';
-import IconoArea from '@/components/IconoArea';
+import { CURSOS_ENCIB, CURSO_POR_SLUG, SLUG_VIEJO } from '@/lib/data/encib/cursos';
+import { TEMARIO_OFICIAL } from '@/lib/data/encib/temario-oficial';
+import { aparicionesPorTema, nombreTema } from '@/lib/encib/analisis';
+import { getUser } from '@/lib/supabase/get-user';
+import { esDeCayetano } from '@/lib/admin';
 import hub from '@/styles/cursosHub.module.css';
-import s from '@/styles/encib.module.css';
+import s from '@/styles/cursoEncib.module.css';
 
 type Props = { params: Promise<{ area: string }> };
 
 export function generateStaticParams() {
-  return AREAS.map((a) => ({ area: a.slug }));
+  return CURSOS_ENCIB.map((c) => ({ area: c.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const a = AREA_POR_SLUG.get((await params).area);
-  return { title: a ? `${a.nombre} · MedGO` : 'MedGO' };
+  const c = CURSO_POR_SLUG.get((await params).area);
+  return { title: c ? `${c.nombre} · MedGO` : 'MedGO' };
 }
 
-const DIF_CLASE = { menor: s.d1, mediana: s.d2, mayor: s.d3 } as const;
-const DIF_TEXTO = { menor: 'Menor', mediana: 'Mediana', mayor: 'Mayor' } as const;
-
 /**
- * Un área del ENCIB como curso: su temario oficial, tema por tema, marcando lo
- * que ya salió en los cuadernillos y qué se preguntó exactamente.
+ * Un curso de ciencias básicas: el temario del ENCIB 2026 en orden, tema por
+ * tema, y debajo de cada uno, en viñetas, lo que ya se preguntó. Nada más.
  */
-export default async function AreaPage({ params }: Props) {
-  const area = AREA_POR_SLUG.get((await params).area);
-  if (!area) notFound();
+export default async function CursoEncibPage({ params }: Props) {
+  const slug = (await params).area;
+  if (SLUG_VIEJO[slug]) redirect(`/dashboard/cursos/area/${SLUG_VIEJO[slug]}`);
+  const curso = CURSO_POR_SLUG.get(slug);
+  if (!curso) notFound();
 
-  const subareas = TEMARIO[area.codigo];
-  const apariciones = aparicionesDeArea(area.codigo);
-  const d = dificultad(ANIOS_VIGENTES, area.codigo);
-  const c = carga(ANIOS_VIGENTES, area.codigo);
-  const nVig = d.menor + d.mediana + d.mayor;
-  const nTemas = subareas.reduce((t, x) => t + x.temas.length, 0);
-  const salieron = subareas.reduce((t, x) => t + x.temas.filter((tm) => apariciones.has(tm.codigo)).length, 0);
+  // Se vuelve al escenario de exámenes: para Cayetano vive en `cursos/examen`.
+  const volver = esDeCayetano(await getUser()) ? '/dashboard/cursos/examen' : '/dashboard/cursos';
+  const apariciones = aparicionesPorTema();
 
   return (
-    <div className={s.pagina}>
-      <Link href="/dashboard/cursos" className={hub.volver}>← Cursos</Link>
+    <div className={s.pagina} style={{ ['--ac' as string]: curso.color }}>
+      <Link href={volver} className={hub.volver}>← Cursos</Link>
 
-      <header className={s.areaCabecera}>
-        <span className={s.areaCabeceraIcono} style={{ background: area.color }}>
-          <IconoArea area={area.codigo} size={30} />
-        </span>
+      <header className={s.cabecera}>
+        <Image
+          src={`/assets/cursos/materia-${curso.slug}_v6.avif`}
+          alt=""
+          width={64}
+          height={64}
+          unoptimized
+          className={s.icono}
+        />
         <div>
-          <span className={s.kicker}>Ciencias básicas · ENCIB</span>
-          <h1 className={s.titulo}>{area.nombre}</h1>
-          <p className={s.subtitulo}>{area.lema}</p>
+          <h1 className={s.titulo}>{curso.nombre}</h1>
+          <p className={s.sub}>Temario ENCIB 2026</p>
         </div>
       </header>
 
-      <ul className={s.datos}>
-        <li><strong>{area.peso}</strong> de 100 preguntas</li>
-        <li><strong>{preguntasDeArea(area.codigo, 2024)}</strong> en 2024</li>
-        <li><strong>{preguntasDeArea(area.codigo, 2025)}</strong> en 2025</li>
-        <li><strong>{salieron}</strong> de {nTemas} temas ya salieron</li>
-        <li><strong>{nVig ? Math.round((100 * d.menor) / nVig) : 0} %</strong> de dificultad menor</li>
-        <li><strong>{nVig ? Math.round((100 * c.memoria) / nVig) : 0} %</strong> de memoria</li>
-      </ul>
-
-      <section className={s.seccion}>
-        <h2 className={s.h2}>Cómo se pregunta</h2>
-        <p className={s.lead}>{area.huella}</p>
-      </section>
-
-      <section className={s.seccion}>
-        <h2 className={s.h2}>Temario oficial</h2>
-        <p className={s.lead}>
-          Todos los temas de la tabla de especificaciones. Los marcados ya salieron en un ENCIB: debajo está qué se preguntó
-          exactamente y con qué dificultad.
-        </p>
-        <div className={s.leyenda}>
-          <span><i className={s.d1} aria-hidden />Menor</span>
-          <span><i className={s.d2} aria-hidden />Mediana</span>
-          <span><i className={s.d3} aria-hidden />Mayor</span>
-        </div>
-
-        {subareas.map((sub) => {
-          const nSub = sub.temas.reduce((t, tm) => t + (apariciones.get(tm.codigo)?.length ?? 0), 0);
-          return (
-            <div key={sub.codigo} className={s.subarea}>
-              <div className={s.subareaCab}>
-                <h3 className={s.subareaNombre}>{sub.nombre}</h3>
-                <span className={s.subareaCuenta}>
-                  {nSub ? `${nSub} ${nSub === 1 ? 'pregunta' : 'preguntas'}` : 'Aún no ha salido'}
-                </span>
-              </div>
-              <ul className={s.temas}>
-                {sub.temas.map((tm) => {
-                  const ap = (apariciones.get(tm.codigo) ?? []).slice().sort((x, y) => y.anio - x.anio || x.n - y.n);
-                  return (
-                    <li key={tm.codigo} className={ap.length ? s.temaSalio : s.tema}>
-                      <div className={s.temaCab}>
-                        <span className={s.temaNombre}>{tm.nombre}</span>
-                        {ap.length > 0 && (
-                          <span className={s.temaVeces}>
-                            {[...new Set(ap.map((x) => x.anio))].sort().join(' · ')}
-                          </span>
-                        )}
-                      </div>
-                      {ap.length > 0 && (
-                        <ul className={s.conceptos}>
-                          {ap.map((x) => (
+      <ol className={s.bloques}>
+        {curso.bloques.map((b, i) => (
+          <li key={b.nombre} className={s.bloque}>
+            <h2 className={s.bloqueNombre}>
+              <span className={s.num}>{i + 1}</span>
+              {b.nombre}
+            </h2>
+            <ol className={s.temas}>
+              {b.temas.map((codigo, j) => {
+                const salio = (apariciones.get(codigo) ?? [])
+                  .slice()
+                  .sort((x, y) => y.anio - x.anio || x.n - y.n);
+                return (
+                  <li key={codigo} className={s.tema}>
+                    <span className={s.temaNum}>{i + 1}.{j + 1}</span>
+                    <div>
+                      <p className={s.temaTexto}>{TEMARIO_OFICIAL[codigo] ?? nombreTema(codigo)}</p>
+                      {salio.length > 0 && (
+                        <ul className={s.salio}>
+                          {salio.map((x) => (
                             <li key={`${x.anio}-${x.n}`}>
-                              <i className={DIF_CLASE[x.dificultad]} title={`Dificultad ${DIF_TEXTO[x.dificultad].toLowerCase()}`} aria-label={`Dificultad ${DIF_TEXTO[x.dificultad].toLowerCase()}`} />
-                              <span>{x.concepto}</span>
-                              <em>{x.anio}</em>
+                              {x.concepto} <span className={s.anio}>{x.anio}</span>
                             </li>
                           ))}
                         </ul>
                       )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          );
-        })}
-      </section>
-
-      <p className={s.fuente}>
-        Temario de la tabla de especificaciones ENCIB 2026 (ASPEFAM). Preguntas de los cuadernillos oficiales 2021, 2024 y 2025
-        clasificadas por MedGO; la dificultad es estimada. Pronto: el resumen de MedGO de cada tema, enlazado aquí.
-      </p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </li>
+        ))}
+      </ol>
     </div>
   );
 }

@@ -35,3 +35,4 @@ docs/examen-ms/*
 
 # Laboratorio de linfocitos: imágenes de revisión local (BUST las optimiza y se suben aparte)
 public/lab-linfocitos/
+data/encib/

@@ -84,6 +84,17 @@ export function aparicionesDeArea(area: AreaEncib): Map<string, AparicionTema[]>
   return m;
 }
 
+/** Para cada tema (de cualquier área): en qué preguntas salió, como tema principal. */
+export function aparicionesPorTema(): Map<string, AparicionTema[]> {
+  const m = new Map<string, AparicionTema[]>();
+  for (const q of PREGUNTAS) {
+    const lista = m.get(q.codigo) ?? [];
+    lista.push({ anio: q.anio, n: q.n, dificultad: q.dificultad, concepto: q.concepto });
+    m.set(q.codigo, lista);
+  }
+  return m;
+}
+
 /** Subáreas de un área ordenadas por cuántas preguntas recibieron en 2024 y 2025. */
 export function subareasMasPreguntadas(area: AreaEncib) {
   return TEMARIO[area]

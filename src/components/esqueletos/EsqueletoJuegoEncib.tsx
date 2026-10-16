@@ -1,10 +1,10 @@
 import Hueso, { Esqueleto } from './Hueso';
-import s from '@/styles/juegoEncib.module.css';
+import s from '@/styles/quizEncib.module.css';
 
 /**
- * El mazo de preguntas del ENCIB (`cursos/examen/encib`): cabecera con el
- * cuadrado de estadísticas, los tres años, los chips de área, la carta y el
- * mando. Las cajas son las del juego, así que mide lo mismo.
+ * Las preguntas del ENCIB (`cursos/examen/encib`): cabecera con el cuadrado de
+ * estadísticas, los tres años y la carta con su enunciado y cuatro
+ * alternativas. Cajas del juego real (`QuizEncib`), así mide lo mismo.
  */
 export default function EsqueletoJuegoEncib() {
   return (
@@ -34,23 +34,23 @@ export default function EsqueletoJuegoEncib() {
           ))}
         </div>
 
-        <div className={s.chips}>
-          {[70, 96, 104, 92, 96, 92, 104, 116, 150].map((w, i) => (
-            <Hueso key={i} w={w} h={34} r={999} />
-          ))}
-        </div>
-
-        <div className={s.escenario}>
-          <Hueso w="100%" h="100%" r={28} />
-        </div>
-
-        <div className={s.mando}>
-          <Hueso w={48} h={48} r="50%" />
-          <div className={s.progreso}>
-            <Hueso w={70} h={16} mb={8} style={{ margin: '0 auto 8px' }} />
-            <Hueso w="100%" h={6} r={3} />
+        <div className={s.mazo}>
+          <div className={s.carta}>
+            <div className={s.top}>
+              <Hueso w={110} h={16} />
+              <Hueso w={96} h={24} r={999} />
+            </div>
+            <div>
+              <Hueso w="100%" h={20} mb={9} />
+              <Hueso w="92%" h={20} mb={9} />
+              <Hueso w="60%" h={20} />
+            </div>
+            <div className={s.ops}>
+              {[0, 1, 2, 3].map((i) => (
+                <Hueso key={i} w="100%" h={56} r={14} />
+              ))}
+            </div>
           </div>
-          <Hueso w={48} h={48} r="50%" />
         </div>
       </div>
     </Esqueleto>

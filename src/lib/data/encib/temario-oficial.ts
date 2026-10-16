@@ -64,7 +64,7 @@ export const TEMARIO_OFICIAL: Record<string, string> = {
   "HIS-6.2": "Faneras: pelo, uña",
   "HIS-6.3": "Glándulas",
   "EMB-1.1": "Regulación molecular y señalización",
-  "EMB-1.2": "Cascadas de señalización del desarrollo: fgf, shh, wnt, tgf-b, notch.",
+  "EMB-1.2": "Cascadas de señalización del desarrollo: FGF, SHH, WNT, TGF-b, NOTCH.",
   "EMB-1.3": "Meiosis y mitosis",
   "EMB-2.1": "Gametogénesis.",
   "EMB-2.2": "Fertilización e implantación. Embarazo múltiple.",

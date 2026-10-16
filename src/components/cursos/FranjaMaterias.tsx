@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { AREA_POR_CODIGO } from '@/lib/data/encib';
 import { MATERIAS } from '@/lib/data/encib/hub';
 import FisicaIcon from '@/components/icons/FisicaIcon';
 import s from '@/styles/cursosHubEscena.module.css';
@@ -82,15 +81,11 @@ export default function FranjaMaterias() {
                 <span className={s.materiaNombre}>{m.nombre}</span>
               </>
             );
-            return m.area ? (
-              <Link key={m.slug} href={`/dashboard/cursos/area/${AREA_POR_CODIGO[m.area].slug}`} className={s.materia}>
+            // Las 11 abren su curso: el temario del ENCIB de esa materia (`CURSOS_ENCIB`).
+            return (
+              <Link key={m.slug} href={`/dashboard/cursos/area/${m.slug}`} className={s.materia}>
                 {img}
               </Link>
-            ) : (
-              <div key={m.slug} className={`${s.materia} ${s.materiaPronto}`} aria-disabled>
-                {img}
-                <span className={s.materiaSello}>Próximamente</span>
-              </div>
             );
           })}
         </div>

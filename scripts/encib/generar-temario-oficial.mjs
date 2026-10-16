@@ -22,7 +22,7 @@ const AREA = {
 };
 
 // Siglas que se conservan en mayúsculas.
-const SIGLAS = new Set(['snc', 'sna', 'adn', 'arn', 'arnm', 'arnt', 'arnr', 'vih', 'sida', 'ecg', 'ekg', 'atp', 'gtp', 'nad', 'nadh', 'nadph', 'fad', 'ldl', 'hdl', 'vldl', 'htlv', 'vsr', 'epoc', 'sdra', 'hta', 'lcr', 'pcr', 'aines', 'gaba', 'mhc', 'hla', 'tnf', 'abo']);
+const SIGLAS = new Set(['snc', 'sna', 'adn', 'arn', 'arnm', 'arnt', 'arnr', 'vih', 'sida', 'ecg', 'ekg', 'atp', 'gtp', 'nad', 'nadh', 'nadph', 'fad', 'ldl', 'hdl', 'vldl', 'htlv', 'vsr', 'epoc', 'sdra', 'hta', 'lcr', 'pcr', 'aines', 'gaba', 'mhc', 'hla', 'tnf', 'abo', 'fgf', 'shh', 'wnt', 'tgf', 'notch', 'vph', 'vhb', 'vhc', 'vha', 'vvz', 'veb', 'cmv', 'igg', 'iga', 'igm', 'ige', 'igd', 'hpv', 'rna', 'dna', 'pth', 'tsh', 'acth', 'adh', 'gh', 'lh', 'fsh', 'hcg', 'imc', 'sra', 'usg', 'tac', 'rmn', 'nk', 'ets', 'its', 'ldh', 'g6pd', 'tbc', 'tb', 'oms', 'srs']);
 // Nombres propios, géneros y especies (se escriben con inicial mayúscula).
 const PROPIOS = new Set([
   'staphylococcus', 'sthaphylococcus', 'streptococcus', 'enterococcus', 'escherichia', 'shigella', 'brucella', 'pseudomonas', 'klebsiella', 'klebsiellla', 'salmonella', 'bartonella', 'proteus', 'helicobacter', 'haemophilus', 'acinetobacter', 'vibrio', 'neisserias', 'clostridium', 'bacillus', 'listeria', 'treponema', 'leptospira', 'mycobacterium', 'rickettsia', 'mycoplasma', 'chlamydia',

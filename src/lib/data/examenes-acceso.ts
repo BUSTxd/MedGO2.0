@@ -22,6 +22,11 @@ import type { PlanKey } from '@/lib/plans';
  * y nivel, sin preguntas) para pintarlas con candado.
  */
 export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?: number; muestraFlash?: number; barajasLibres?: number[] }> = {
+  // ENCIB: los tres cuadernillos oficiales, de pago (tramo Facultad). El JSON
+  // fuente vive en data/encib/ (fuera de git: el repo es público).
+  'encib/2025': { plan: 'interno' },
+  'encib/2024': { plan: 'interno' },
+  'encib/2021': { plan: 'interno' },
   'excretor/tbl-3-asa-henle': { free: true },
   'neurologia/snp-histologia': { free: true },
   'neurologia/snp-histologia-b': { free: true },
