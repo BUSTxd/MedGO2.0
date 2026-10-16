@@ -106,6 +106,27 @@
   background: rgba(255, 255, 255, 0.22);
 }
 
+/* ─── Escenario de exámenes (medidas en --u, como cursosHubEscena) ─── */
+.escTarjeta {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: calc(10 * var(--u));
+  padding: calc(34 * var(--u));
+}
+
+/* El sitio de `.flechaGrande` sin su azul marino; el `left` lo pone
+   `.flechaGrandeIzq/Der` (con su ajuste en pantallas estrechas). */
+.escFlecha {
+  position: absolute;
+  z-index: 4;
+  top: calc(356 * var(--u));
+  width: calc(62 * var(--u));
+  height: calc(62 * var(--u));
+  transform: translate(-50%, -50%);
+}
+
 /* ─── Genérico (rutas sin silueta propia) ─── */
 .genericoGrid {
   display: grid;
