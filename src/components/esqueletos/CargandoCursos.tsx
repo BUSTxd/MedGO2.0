@@ -2,6 +2,7 @@
 import { usePathname } from 'next/navigation';
 import { EsqueletoCursos, EsqueletoSilabo, EsqueletoClase } from './EsqueletoCursos';
 import EsqueletoGenerico from './EsqueletoGenerico';
+import EsqueletoEncib from './EsqueletoEncib';
 
 /** Lo que cuelga de `cursos/` sin ser un curso de Cayetano. */
 const NO_SILABO = new Set(['cayetano', 'area', 'examen']);
@@ -20,13 +21,16 @@ const NO_SILABO = new Set(['cayetano', 'area', 'examen']);
  * React, en vez de volver a enseñar su silueta, deja la página vieja quieta
  * hasta que llega la nueva — el clic parecía no hacer nada. Con un `loading`
  * en la carpeta del curso la frontera es nueva en cada salto sílabo ↔ clase.
- * Por lo mismo `area/` lleva el suyo (de una disciplina a otra).
+ * Por lo mismo `area/` lleva el suyo (de una disciplina a otra), y `examen/`
+ * y `examen/encib/` el suyo: Cursos → ENCIB entra por `examen/` (nueva) y el
+ * escenario de Cayetano → ENCIB, por `encib/`.
  */
 export default function CargandoCursos() {
   // /dashboard/cursos → 2 · /<curso> → 3 · /<curso>/<clase> → 4
   const tramos = usePathname().split('/').filter(Boolean);
   const nivel = tramos.length;
   if (nivel <= 2) return <EsqueletoCursos />;
+  if (tramos[2] === 'examen' && tramos[3] === 'encib') return <EsqueletoEncib />;
   if (NO_SILABO.has(tramos[2])) return <EsqueletoGenerico />;
   if (nivel === 3) return <EsqueletoSilabo />;
   if (nivel === 4) return <EsqueletoClase />;

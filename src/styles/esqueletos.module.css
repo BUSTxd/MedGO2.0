@@ -97,6 +97,15 @@
   gap: 7px;
 }
 
+/* ─── ENCIB: líneas sobre la cabecera en degradado (el gris no se ve ahí).
+   Como `.linea`, no barren. ─── */
+.heroLinea {
+  display: block;
+  max-width: 100%;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
 /* ─── Genérico (rutas sin silueta propia) ─── */
 .genericoGrid {
   display: grid;
