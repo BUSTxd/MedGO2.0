@@ -606,6 +606,14 @@ export const TEMARIO: Record<string, SubareaEncib[]> = {
         {
           "codigo": "PAT-6.6",
           "nombre": "Agentes físicos"
+        },
+        {
+          "codigo": "PAT-6.7",
+          "nombre": "Contaminación ambiental (repetido en la tabla)"
+        },
+        {
+          "codigo": "PAT-6.8",
+          "nombre": "Riesgos profesionales (repetido en la tabla)"
         }
       ]
     },
@@ -748,6 +756,10 @@ export const TEMARIO: Record<string, SubareaEncib[]> = {
         {
           "codigo": "PAT-11.4",
           "nombre": "Intestino grueso / hígado y vías biliares / páncreas"
+        },
+        {
+          "codigo": "PAT-11.5",
+          "nombre": "Esófago (repetido en la tabla)"
         }
       ]
     },

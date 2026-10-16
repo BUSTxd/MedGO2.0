@@ -1,0 +1,575 @@
+/* ─── Temario del ENCIB 2026 ───
+   Mismo lenguaje que el escenario de Cursos: azul marino → azul → violeta en
+   los títulos. Modo oscuro propio (`:global(.dark-mode) .raiz`). */
+
+.raiz {
+  --tinta: #1a1a2e;
+  --tinta-2: #4a5568;
+  --tinta-3: #5f6b7e;
+  --linea: rgba(29, 55, 126, 0.12);
+  --fondo-suave: #f4f5fb;
+  --tarjeta: #ffffff;
+  --acento: #3838f2;
+  --acento-fuerte: #1d377e;
+  --link: #3c4e98;
+  --marca-bg: #fde68a;
+  --marca-tx: #1a1a2e;
+  --titulo-grad: linear-gradient(95deg, #1d377e 0%, #3838f2 52%, #7b4dff 100%);
+  --foco: #3838f2;
+
+  max-width: 980px;
+  color: var(--tinta);
+}
+
+:global(.dark-mode) .raiz {
+  --tinta: #f0eeff;
+  --tinta-2: rgba(240, 238, 255, 0.78);
+  --tinta-3: rgba(240, 238, 255, 0.58);
+  --linea: rgba(255, 255, 255, 0.1);
+  --fondo-suave: rgba(255, 255, 255, 0.04);
+  --tarjeta: rgba(255, 255, 255, 0.045);
+  --acento: #a9b6ff;
+  --acento-fuerte: #e4e8ff;
+  --link: #a9b6ff;
+  --marca-bg: rgba(250, 204, 21, 0.35);
+  --marca-tx: #fff7d1;
+  --titulo-grad: linear-gradient(95deg, #e4e8ff 0%, #a9b6ff 50%, #c39bff 100%);
+  --foco: #a9b6ff;
+}
+
+/* ─── Cabecera ─── */
+.cabecera {
+  margin-bottom: 22px;
+}
+
+.titulo {
+  margin: 0 0 6px;
+  font-size: clamp(26px, 4.2vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  background: var(--titulo-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitulo {
+  margin: 0 0 16px;
+  max-width: 62ch;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--tinta-2);
+}
+
+.cifras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.cifras li {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--linea);
+  background: var(--tarjeta);
+  font-size: 13.5px;
+  color: var(--tinta-2);
+}
+
+.cifras strong {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--tinta);
+  margin-right: 3px;
+}
+
+.reparto {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--linea);
+  background: var(--tarjeta);
+}
+
+.repartoBarra {
+  display: flex;
+  gap: 3px;
+  height: 14px;
+}
+
+.repartoTramo {
+  min-width: 6px;
+  border-radius: 4px;
+  transform-origin: left center;
+}
+
+.repartoLeyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12.5px;
+  color: var(--tinta-2);
+}
+
+.repartoLeyenda strong {
+  color: var(--tinta);
+  font-weight: 800;
+}
+
+.punto {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 6px;
+  border-radius: 50%;
+  flex: none;
+}
+
+/* ─── Controles ─── */
+.controles {
+  margin-bottom: 18px;
+}
+
+.buscador {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  color: var(--tinta-3);
+}
+
+.buscador > svg {
+  position: absolute;
+  left: 14px;
+  pointer-events: none;
+}
+
+.entrada {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 44px 0 42px;
+  border-radius: 12px;
+  border: 1px solid var(--linea);
+  background: var(--tarjeta);
+  color: var(--tinta);
+  font-family: inherit;
+  font-size: 16px;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.entrada::placeholder {
+  color: var(--tinta-3);
+}
+
+.entrada:focus-visible {
+  outline: none;
+  border-color: var(--foco);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--foco) 25%, transparent);
+}
+
+.limpiar {
+  position: absolute;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--tinta-3);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.limpiar:hover {
+  color: var(--tinta);
+  background: var(--fondo-suave);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--linea);
+  background: var(--tarjeta);
+  color: var(--tinta-2);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.chip:hover {
+  border-color: var(--ac, var(--acento));
+  color: var(--tinta);
+}
+
+.chipOn {
+  border-color: var(--ac, var(--acento));
+  background: color-mix(in srgb, var(--ac, var(--acento)) 16%, transparent);
+  color: var(--tinta);
+}
+
+.chip:focus-visible,
+.subBtn:focus-visible,
+.enlaceBtn:focus-visible,
+.limpiar:focus-visible,
+.areaEnlace:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+}
+
+.estado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--tinta-3);
+}
+
+.enlaceBtn {
+  min-height: 36px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--link);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.enlaceBtn:hover {
+  text-decoration: underline;
+}
+
+.vacio {
+  padding: 28px 8px;
+  text-align: center;
+  color: var(--tinta-2);
+}
+
+/* ─── Áreas ─── */
+.areas {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* `globals.css` pone padding a todo <section>. */
+.area {
+  padding: 0;
+  border-radius: 16px;
+  border: 1px solid var(--linea);
+  background: var(--tarjeta);
+  overflow: hidden;
+}
+
+.areaCab {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--linea);
+  background: color-mix(in srgb, var(--ac) 7%, transparent);
+}
+
+.areaBarra {
+  align-self: stretch;
+  width: 5px;
+  border-radius: 3px;
+  background: var(--ac);
+}
+
+.areaTextos {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.areaNombre {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--tinta);
+}
+
+.areaLema {
+  margin: 3px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--tinta-2);
+}
+
+.areaPeso {
+  font-size: 12.5px;
+  color: var(--tinta-2);
+  white-space: nowrap;
+}
+
+.areaPeso strong {
+  font-size: 16px;
+  color: var(--tinta);
+}
+
+.areaEnlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 10px;
+  color: var(--link);
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.18s;
+}
+
+.areaEnlace:hover {
+  background: var(--fondo-suave);
+}
+
+/* ─── Subáreas ─── */
+.subareas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sub + .sub {
+  border-top: 1px solid var(--linea);
+}
+
+.subBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 18px;
+  border: 0;
+  background: transparent;
+  color: var(--tinta);
+  font-family: inherit;
+  font-size: 14.5px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+.subBtn:hover {
+  background: var(--fondo-suave);
+}
+
+.chev {
+  flex: none;
+  color: var(--tinta-3);
+  transition: transform 0.22s;
+}
+
+.chevOn {
+  transform: rotate(90deg);
+}
+
+.subCodigo {
+  flex: none;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--tinta-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.subNombre {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+}
+
+.subCuenta {
+  flex: none;
+  font-size: 12px;
+  color: var(--tinta-3);
+}
+
+.cuerpo {
+  overflow: hidden;
+}
+
+.temas {
+  margin: 0;
+  padding: 2px 18px 14px 46px;
+  list-style: none;
+}
+
+.tema {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 4px 14px;
+  align-items: start;
+  padding: 11px 0;
+  border-top: 1px dashed var(--linea);
+}
+
+.tema:first-child {
+  border-top: 0;
+}
+
+.temaCodigo {
+  margin-top: 2px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--ac) 14%, transparent);
+  color: var(--tinta);
+  font-size: 11.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.temaTexto {
+  min-width: 0;
+}
+
+.temaNombre {
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--tinta);
+}
+
+.temaOficial {
+  margin: 3px 0 0;
+  max-width: 70ch;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--tinta-2);
+}
+
+.marca {
+  padding: 0 2px;
+  border-radius: 3px;
+  background: var(--marca-bg);
+  color: var(--marca-tx);
+}
+
+/* Marca de 2021 / 2024 / 2025: el número va en tinta, el color solo acompaña. */
+.salidas {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.salida {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 34px;
+  padding: 3px 4px;
+  border-radius: 8px;
+  border: 1px solid var(--linea);
+  color: var(--tinta-3);
+  line-height: 1.15;
+}
+
+.salidaOn {
+  border-color: var(--ac);
+  background: color-mix(in srgb, var(--ac) 16%, transparent);
+  color: var(--tinta);
+}
+
+.salidaAnio {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.salidaN {
+  font-size: 13px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.fuente {
+  margin: 22px 0 0;
+  max-width: 70ch;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--tinta-3);
+}
+
+/* ─── Móvil ─── */
+@media (max-width: 640px) {
+  .areaCab {
+    padding: 14px;
+  }
+
+  .areaPeso {
+    order: 3;
+  }
+
+  .subBtn {
+    padding: 10px 12px;
+    flex-wrap: wrap;
+  }
+
+  .subCuenta {
+    margin-left: 28px;
+    width: 100%;
+  }
+
+  .temas {
+    padding: 2px 12px 12px 12px;
+  }
+
+  .tema {
+    grid-template-columns: auto 1fr;
+  }
+
+  .salidas {
+    grid-column: 2;
+    margin-top: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chev,
+  .chip,
+  .entrada,
+  .subBtn,
+  .areaEnlace {
+    transition: none;
+  }
+}

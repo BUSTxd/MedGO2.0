@@ -4,6 +4,8 @@ import { EsqueletoCursos, EsqueletoSilabo, EsqueletoClase } from './EsqueletoCur
 import EsqueletoGenerico from './EsqueletoGenerico';
 import EsqueletoEncib from './EsqueletoEncib';
 import EsqueletoEscenario from './EsqueletoEscenario';
+import EsqueletoJuegoEncib from './EsqueletoJuegoEncib';
+import EsqueletoTemario from './EsqueletoTemario';
 
 /** Lo que cuelga de `cursos/` sin ser un curso de Cayetano. */
 const NO_SILABO = new Set(['cayetano', 'area', 'examen']);
@@ -31,7 +33,12 @@ export default function CargandoCursos() {
   const tramos = usePathname().split('/').filter(Boolean);
   const nivel = tramos.length;
   if (nivel <= 2) return <EsqueletoCursos />;
-  if (tramos[2] === 'examen') return tramos[3] === 'encib' ? <EsqueletoEncib /> : <EsqueletoEscenario />;
+  if (tramos[2] === 'examen') {
+    // encib → el mazo de preguntas; encib/estadisticas → el análisis.
+    if (tramos[3] === 'encib') return tramos[4] === 'estadisticas' ? <EsqueletoEncib /> : <EsqueletoJuegoEncib />;
+    if (tramos[3] === 'temario') return <EsqueletoTemario />;
+    return <EsqueletoEscenario />;
+  }
   if (NO_SILABO.has(tramos[2])) return <EsqueletoGenerico />;
   if (nivel === 3) return <EsqueletoSilabo />;
   if (nivel === 4) return <EsqueletoClase />;

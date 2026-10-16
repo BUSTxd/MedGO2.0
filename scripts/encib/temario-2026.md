@@ -34,12 +34,12 @@ PAT-2 Inflamación y reparación: 2.1 necrosis y apoptosis (morfología) · 2.2 
 PAT-3 Hemodinámicos: 3.1 edema y derrames · 3.2 hiperemia y congestión · 3.3 hemostasia, hemorragia, trombosis · 3.4 embolia · 3.5 infarto · 3.6 shock
 PAT-4 Inmunopatología: 4.1 células inmunes · 4.2 tejidos inmunes · 4.3 hipersensibilidad · 4.4 autoinmunes · 4.5 rechazo de trasplante · 4.6 inmunodeficiencias
 PAT-5 Neoplasias: 5.1 conceptos · 5.2 diferenciación y anaplasia · 5.3 invasión y metástasis · 5.4 factores ambientales · 5.5 oncogenes y supresores · 5.6 grado y estadio · 5.7 diagnóstico
-PAT-6 Medioambientales: 6.1 cambio climático · 6.2 tóxicos químicos y físicos · 6.3 contaminación · 6.4 riesgos ocupacionales · 6.5 tabaco y alcohol · 6.6 agentes físicos
+PAT-6 Medioambientales: 6.1 cambio climático · 6.2 tóxicos químicos y físicos · 6.3 contaminación · 6.4 riesgos ocupacionales · 6.5 tabaco y alcohol · 6.6 agentes físicos · 6.7 contaminación ambiental (repetido en la tabla) · 6.8 riesgos profesionales (repetido en la tabla)
 PAT-7 Infecciosa: 7.1 viral · 7.2 bacteriana · 7.3 micótica · 7.4 protozoos · 7.5 helmintos · 7.6 emergentes/reemergentes
 PAT-8 Cardiovascular: 8.1 vasculitis · 8.2 insuficiencia cardiaca · 8.3 aterosclerosis · 8.4 malformaciones · 8.5 infección cardiaca · 8.6 valvulopatías · 8.7 HTA y corazón
 PAT-9 Hematopoyético: 9.1 hematíes · 9.2 leucocitos · 9.3 médula ósea · 9.4 ganglios · 9.5 bazo · 9.6 timo · 9.7 plasmocitos, coagulación y plaquetas
 PAT-10 Respiratorio: 10.1 infección · 10.2 neoplasia · 10.3 EPOC · 10.4 pleura
-PAT-11 Digestivo: 11.1 esófago · 11.2 estómago · 11.3 intestino delgado · 11.4 intestino grueso / hígado y vías biliares / páncreas
+PAT-11 Digestivo: 11.1 esófago · 11.2 estómago · 11.3 intestino delgado · 11.4 intestino grueso / hígado y vías biliares / páncreas · 11.5 esófago (repetido en la tabla)
 PAT-12 Renal y urinario: 12.1 malformaciones · 12.2 infecciosa · 12.3 glomerulopatías · 12.4 tubulointersticiales · 12.5 neoplasias renales
 PAT-13 Reproductor y mama: 13.1 próstata · 13.2 testículo y epidídimo · 13.3 vulva y vagina · 13.4 cérvix · 13.5 cuerpo uterino · 13.6 anexos · 13.7 mama no neoplásica · 13.8 mama neoplásica
 PAT-14 Endocrino: 14.1 hipófisis · 14.2 tiroides · 14.3 paratiroides · 14.4 páncreas endocrino · 14.5 suprarrenales · 14.6 pineal y MEN

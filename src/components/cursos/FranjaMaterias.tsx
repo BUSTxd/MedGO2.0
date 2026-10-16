@@ -64,9 +64,9 @@ export default function FranjaMaterias() {
           <FisicaIcon className={s.franjaAtomo} color="#4b3fd6" />
           Ciencias Básicas · Facultad de Medicina
         </h2>
-        {/* El análisis del ENCIB recorre las 8 áreas: es «todas las materias». */}
-        <Link href="/dashboard/cursos/examen/encib" className={s.franjaExplora}>
-          Explora todas las materias básicas
+        {/* El temario oficial recorre las 8 áreas y sus 337 temas: es «todas las materias». */}
+        <Link href="/dashboard/cursos/examen/temario" className={s.franjaExplora}>
+          Ver todos los temas del ENCIB
           <svg viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
