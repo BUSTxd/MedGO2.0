@@ -9,7 +9,13 @@
  *   - explicaciones/*.json    { "<ref>": { explanation, flujo? } }
  *   - secciones-*.json        { "<ref>": { claseId, resumenId, seccion } }  (ancla al resumen)
  * y escribe `scripts/examenes/patologia-parcial-2-<modulo>.json`, que es lo que
- * se sube con `node scripts/upload-examen.mjs`.
+ * se sube con `node scripts/upload-examen.mjs`. Además:
+ *   - `patologia-parcial-2-temas.json`: todas las preguntas juntas para el modo
+ *     por temas (mismo texto, explicación y flujo que en los módulos). Las
+ *     `MUESTRA` primeras son las gratis del módulo 1, así que la misma
+ *     `muestra` de `examenes-acceso.ts` abre lo mismo en los dos modos.
+ *   - `src/lib/data/temas/patologia-parcial-2-conteo.ts`: preguntas por tema
+ *     (total y gratis) para la ruleta. Solo cifras: no lleva respuestas.
  *
  * El id de cada pregunta sale de su ref (`examen-3#12` → `examen-3-12`), no de
  * su posición: reordenar un módulo no rompe el historial de los alumnos.
@@ -85,8 +91,12 @@ function opcionesDe(q, correcta, prefijo = '') {
   return q.options.map((o) => ({ id: prefijo + o.letra.toLowerCase(), text: o.text, correct: o.letra.toUpperCase() === correcta?.toUpperCase() }));
 }
 
+/** Igual que `muestra` de 'patologia/parcial-2-m1' en examenes-acceso.ts. */
+const MUESTRA = 20;
+
 let total = 0;
 const avisos = [];
+const porModulo = [];
 for (const [mi, mod] of decision.modulos.entries()) {
   const questions = [];
   for (const ref of mod.preguntas) {
@@ -139,8 +149,37 @@ for (const [mi, mod] of decision.modulos.entries()) {
     questions,
   };
   writeFileSync(join(SALIDA, `patologia-parcial-2-${mod.id}.json`), JSON.stringify(payload, null, 2) + '\n');
+  porModulo.push(questions);
   total += questions.length;
   console.log(`${String(mi + 1).padStart(2)}. ${key.padEnd(30)} ${String(questions.length).padStart(3)} preguntas · ${mod.rotulo}`);
 }
 console.log(`\n${total} preguntas en ${decision.modulos.length} módulos.`);
+
+// ── modo por temas ───────────────────────────────────────────────────────────
+const [m1, ...resto] = porModulo;
+const todas = [...m1.slice(0, MUESTRA), ...m1.slice(MUESTRA), ...resto.flat()];
+const gratis = new Set(m1.slice(0, MUESTRA).map((q) => q.id));
+writeFileSync(join(SALIDA, 'patologia-parcial-2-temas.json'), JSON.stringify({
+  version: 1,
+  key: 'patologia/parcial-2-temas',
+  title: 'Examen Parcial 2 — Por temas',
+  duration_min: todas.length * 2,
+  questions: todas,
+}, null, 2) + '\n');
+
+const conteo = {};
+for (const q of todas) {
+  conteo[q.tema] ??= { total: 0, gratis: 0 };
+  conteo[q.tema].total++;
+  if (gratis.has(q.id)) conteo[q.tema].gratis++;
+}
+const filas = Object.entries(conteo).map(([t, c]) => `  '${t}': { total: ${c.total}, gratis: ${c.gratis} },`).join('\n');
+writeFileSync(join(RAIZ, 'src', 'lib', 'data', 'temas', 'patologia-parcial-2-conteo.ts'),
+`// GENERADO por scripts/patologia-u2/ensamblar.mjs — no editar a mano.
+// Preguntas del Parcial 2 por tema (\`gratis\` = dentro de la muestra sin plan).
+export const CONTEO_PARCIAL_2: Record<string, { total: number; gratis: number }> = {
+${filas}
+};
+`);
+console.log(`Por temas: ${todas.length} preguntas (${gratis.size} gratis), ${Object.keys(conteo).length} temas.`);
 if (avisos.length) { console.log(`\nAvisos (${avisos.length}):`); for (const a of avisos) console.log('  · ' + a); }

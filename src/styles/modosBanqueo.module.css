@@ -1,0 +1,67 @@
+/* Interruptor «Suelto / Por temas» encima del banqueo (ModosBanqueo). */
+
+.modos {
+  --mb-tinta: #1d2340;
+  --mb-suave: rgba(29, 35, 64, 0.62);
+  --mb-fondo: rgba(29, 35, 64, 0.06);
+  --mb-activo: #ffffff;
+  --mb-sombra: 0 2px 8px rgba(29, 35, 64, 0.12);
+}
+
+:global(.dark-mode) .modos {
+  --mb-tinta: #f0eeff;
+  --mb-suave: rgba(240, 238, 255, 0.6);
+  --mb-fondo: rgba(255, 255, 255, 0.06);
+  --mb-activo: rgba(255, 255, 255, 0.12);
+  --mb-sombra: none;
+}
+
+.selector {
+  display: flex;
+  gap: 4px;
+  width: max-content;
+  margin: 0 auto 18px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--mb-fondo);
+}
+
+.opcion,
+.opcionActiva {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+
+.opcion {
+  background: transparent;
+  color: var(--mb-suave);
+}
+
+.opcion:hover { color: var(--mb-tinta); }
+
+.opcionActiva {
+  background: var(--mb-activo);
+  color: var(--mb-tinta);
+  box-shadow: var(--mb-sombra);
+}
+
+.cambiarTema {
+  display: block;
+  margin: 0 auto 10px;
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: var(--mb-suave);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cambiarTema:hover { color: var(--mb-tinta); }

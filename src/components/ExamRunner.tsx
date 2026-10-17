@@ -126,6 +126,11 @@ interface Props {
    * la pregunta sale una sola vez (el folio). Sin él, el runner de siempre.
    */
   estilo?: 'escenario';
+  /**
+   * Modo por temas: solo las preguntas con este `tema` (del banqueo agregado).
+   * El historial va aparte por tema y el tiempo recomendado se escala.
+   */
+  filtroTema?: string;
 }
 
 const attemptsKey = (k: string) => `medgo:attempts:${k}`;
@@ -633,6 +638,7 @@ export default function ExamRunner({
   groupHints,
   suscripcion,
   estilo,
+  filtroTema,
 }: Props) {
   const escenario = estilo === 'escenario';
   // Etapas: Grupo A (examKey) + grupos adicionales. Sin extras → examen simple.
@@ -690,6 +696,8 @@ export default function ExamRunner({
   const [corteAbierto, setCorteAbierto] = useState(false);
 
   const stageKey = stages[stage].key;
+  // Notas e intentos de un tema no se mezclan con los del banqueo entero.
+  const histKey = filtroTema ? `${stageKey}#${filtroTema}` : stageKey;
   // Un banqueo de pago sin plan no se pide: la route respondería 403, y lo que
   // toca enseñar es la tarjeta de suscripción, no un error.
   const bloqueada = esDePago(stageKey) && !acceso;
@@ -743,10 +751,11 @@ export default function ExamRunner({
     // Con el plan, la mitad gratis y la premium se barajan cada una por su lado
     // y lo premium va detrás: el rastro queda como en la muestra, con la
     // segunda parte entera en oro. El corte es por índice del JSON.
+    // El corte premium es por índice del JSON completo: se marca antes de filtrar.
     const marcadas = payload.questions.map((q, i) => ({
       ...q,
       premium: premiumDesde != null && i >= premiumDesde,
-    }));
+    })).filter(q => !filtroTema || q.tema === filtroTema);
     const orden = [
       ...shuffle(marcadas.filter(q => !q.premium)),
       ...shuffle(marcadas.filter(q => q.premium)),
@@ -759,7 +768,7 @@ export default function ExamRunner({
         : {}),
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [payload, premiumDesde, runId, stage]);
+  }, [payload, premiumDesde, runId, stage, filtroTema]);
 
   // `base` es la pregunta con sus dos versiones; `current`, la que se ve. La
   // corrección va siempre contra `base`: la respuesta puede ser de la otra.
@@ -769,7 +778,12 @@ export default function ExamRunner({
   // En una muestra el mando cuenta sobre el banqueo COMPLETO —el 2023 son 68
   // preguntas, no 34—: `total` es lo que se puede responder y `totalReal` lo
   // que hay detrás. Sin muestra los dos son el mismo número.
-  const totalReal = muestra?.total ?? total;
+  // Por temas, la muestra se cuenta sobre el banqueo entero y no sobre el tema.
+  const totalReal = filtroTema ? total : (muestra?.total ?? total);
+  // Minutos recomendados: los del banqueo, a prorrata si solo se hace un tema.
+  const minutosRecomendados = payload?.duration_min
+    ? (filtroTema ? Math.max(1, Math.round(payload.duration_min * total / payload.questions.length)) : payload.duration_min)
+    : null;
 
   const aciertoActual = picked && base ? acierta(base, picked) : null;
 
@@ -800,7 +814,7 @@ export default function ExamRunner({
   // declara el examen; al pasarse vira a rojo. No corta nada: es un aviso, no
   // un límite, porque el banco se usa también para estudiar sin prisa. Se puede
   // pausar: el tiempo detenido no cuenta ni para el aro ni para el intento.
-  const recomendadoSeg = (payload?.duration_min ?? 0) * 60;
+  const recomendadoSeg = (minutosRecomendados ?? 0) * 60;
   const conCronometro = recomendadoSeg > 0;
   const segundos = useCronometro(
     conCronometro && phase === 'running' && !!payload && !pausado,
@@ -880,7 +894,7 @@ export default function ExamRunner({
     if (currentIdx + 1 >= total) {
       // Grupo terminado: cada grupo se califica de forma independiente.
       const score = nextAll.filter(a => a.ok).length;
-      saveAttempt(stageKey, {
+      saveAttempt(histKey, {
         id: `att-${Date.now()}`,
         score,
         total: nextAll.length,
@@ -954,7 +968,8 @@ export default function ExamRunner({
     setPausado(false);
   };
 
-  const title = payload?.title ?? fallbackTitle ?? 'Examen';
+  // Por temas, el título dice el tema: el del agregado es genérico.
+  const title = (filtroTema && fallbackTitle) || payload?.title || fallbackTitle || 'Examen';
 
   return (
     <div className={`${styles.shell} ${escenario ? styles.estiloEscenario : ''}`} ref={shellRef}>
@@ -998,8 +1013,8 @@ export default function ExamRunner({
             )}
             <span>{total} preguntas</span>
             <span>
-              {payload.duration_min
-                ? `${payload.duration_min} min recomendados`
+              {minutosRecomendados
+                ? `${minutosRecomendados} min recomendados`
                 : 'Sin tiempo límite'}
             </span>
             <span>Preguntas y alternativas aleatorizadas</span>
@@ -1460,7 +1475,7 @@ export default function ExamRunner({
         const score = answersAll.filter(a => a.ok).length;
         const grandTotal = answersAll.length;
         const pct = grandTotal > 0 ? Math.round((score / grandTotal) * 100) : 0;
-        const history = loadAttempts(stageKey);
+        const history = loadAttempts(histKey);
         const marcasFinal: MarcaRastro[] = answersAll.map(a => (a.ok ? 'ok' : 'mal'));
         const desglose = desglosarIntento(cursoDe(stageKey), answersAll, deck ?? []);
         // Todos los temas flojos, no un top: la pista de fichas se arrastra en

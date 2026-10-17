@@ -55,6 +55,9 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?
   'patologia/parcial-2-m3': {},
   'patologia/parcial-2-m4': {},
   'patologia/parcial-2-m5': {},
+  // Las 176 juntas para el modo por temas: las 20 primeras son las gratis del
+  // m1, así que sin plan se abre exactamente lo mismo que en el modo suelto.
+  'patologia/parcial-2-temas': { muestra: 20 },
   // Inmunología: dos banqueos abiertos como muestra del curso (2025 y 2024-II),
   // con el aviso de suscripción del runner cada pocas preguntas. El 2022 y los
   // dos Extra están detrás del plan del tramo; el 2023 —el más elaborado— se

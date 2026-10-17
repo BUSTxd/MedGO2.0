@@ -777,6 +777,7 @@ export const semanas: Semana[] = [
         examen: {
           key: 'patologia/parcial-2-m1',
           estilo: 'escenario',
+          porTemas: 'patologia/parcial-2-temas',
           groups: ['patologia/parcial-2-m2', 'patologia/parcial-2-m3', 'patologia/parcial-2-m4', 'patologia/parcial-2-m5'],
           labels: {
             'patologia/parcial-2-m1': 'Parciales 2020-22',

@@ -35,4 +35,10 @@ export interface ExamenRef {
    * de la pregunta una sola vez. Sin él, el banqueo se ve como siempre.
    */
   estilo?: 'escenario';
+  /**
+   * Modo «por temas»: clave del banqueo con TODAS las preguntas (cada una con
+   * su `tema`). Con ella aparece el interruptor Suelto / Por temas y la ruleta;
+   * la clave va en `EXAMENES` (con la misma `muestra` que el primer módulo).
+   */
+  porTemas?: string;
 }
