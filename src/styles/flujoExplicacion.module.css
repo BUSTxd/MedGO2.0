@@ -1,0 +1,152 @@
+/* Esquema del razonamiento de una pregunta de nivel 2-3 (FlujoExplicacion).
+   Vive dentro de `.explicacion` del runner, así que entra después de ella: el
+   retardo base (1.5s) cuenta desde que se responde y deja leer el ✓/✕. */
+
+.flujo {
+  --fx-tinta: #1d2340;
+  --fx-suave: rgba(29, 35, 64, 0.6);
+  --fx-fondo: rgba(59, 158, 221, 0.05);
+  --fx-borde: rgba(29, 35, 64, 0.1);
+  --fx-causa: #c47a10;
+  --fx-mecanismo: #2f86c4;
+  --fx-efecto: #7a52cc;
+  --fx-clinica: #c2456a;
+  --fx-clave: #1f9d67;
+  margin: 18px 0 4px;
+  padding: 16px 16px 18px;
+  border: 1px solid var(--fx-borde);
+  border-radius: 14px;
+  background: var(--fx-fondo);
+}
+
+:global(.dark-mode) .flujo {
+  --fx-tinta: #f0eeff;
+  --fx-suave: rgba(240, 238, 255, 0.6);
+  --fx-fondo: rgba(59, 158, 221, 0.06);
+  --fx-borde: rgba(255, 255, 255, 0.09);
+  --fx-causa: #f5b54a;
+  --fx-mecanismo: #6cb8ea;
+  --fx-efecto: #b297f2;
+  --fx-clinica: #f08aa6;
+  --fx-clave: #4fd39a;
+}
+
+.titulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fx-suave);
+}
+
+.tituloIcono {
+  display: inline-flex;
+  color: var(--fx-mecanismo);
+}
+
+.capas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.capa {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.paso {
+  --c: var(--fx-mecanismo);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 0 1 300px;
+  min-width: 0;
+  padding: 9px 13px 10px 15px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--c) 28%, transparent);
+  background: color-mix(in srgb, var(--c) 8%, transparent);
+  color: var(--fx-tinta);
+  /* Se encienden en orden, de arriba abajo, tras la explicación escrita. */
+  animation: pasoEnciende 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) calc(1.5s + var(--orden) * 0.16s) both;
+}
+
+.paso::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--c);
+}
+
+.causa { --c: var(--fx-causa); }
+.mecanismo { --c: var(--fx-mecanismo); }
+.efecto { --c: var(--fx-efecto); }
+.clinica { --c: var(--fx-clinica); }
+.clave {
+  --c: var(--fx-clave);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 14%, transparent);
+  font-weight: 600;
+}
+
+.pasoTipo {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--c);
+}
+
+.pasoTexto {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.flecha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 0;
+  color: var(--fx-suave);
+  animation: flechaAparece 0.35s ease calc(1.5s + var(--orden) * 0.16s) both;
+}
+
+.flechaRotulo {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--fx-suave);
+  text-align: center;
+}
+
+@keyframes pasoEnciende {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes flechaAparece {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 600px) {
+  .flujo { padding: 14px 12px 16px; }
+  .paso { flex-basis: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paso,
+  .flecha { animation: none; }
+}

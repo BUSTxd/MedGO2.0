@@ -44,6 +44,15 @@ export interface VariantePregunta {
   reviewNote?: string;
 }
 
+export type TipoPasoFlujo = 'causa' | 'mecanismo' | 'efecto' | 'clinica' | 'clave';
+
+/** Pasos encadenados de una explicación; `enlaces` son [de, a, rótulo?]. */
+export interface FlujoExplicacion {
+  titulo: string;
+  pasos: { id: string; texto: string; tipo: TipoPasoFlujo }[];
+  enlaces: [string, string, string?][];
+}
+
 export interface ExamQuestion {
   id: string;
   stem: string;
@@ -91,6 +100,17 @@ export interface ExamQuestion {
   repite?: string;
   /** La misma pregunta en otra versión; el alumno elige cuál ver con un interruptor. */
   variante?: VariantePregunta;
+  /** Nivel cognitivo: 1 recordar · 2 aplicar/interpretar · 3 integrar varios pasos. */
+  nivel?: 1 | 2 | 3;
+  /** Esquema del razonamiento (preguntas de nivel 2-3), bajo la explicación. */
+  flujo?: FlujoExplicacion;
+  /**
+   * Ancla al resumen (Parcial 2 de Patología): la clase a la que enlaza y el
+   * fragmento que abre, que puede ser de otra clase (C5 abre el de TBL4). La
+   * sección es `seccion`, el comienzo de un título h1-h4 de ese resumen.
+   */
+  claseId?: string;
+  resumenId?: string;
   /**
    * No barajar las alternativas: van en el orden del JSON. Sólo para las que
    * traen su letra dentro de la imagen, o la letra del botón y la de la foto

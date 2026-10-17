@@ -29,6 +29,7 @@ import {
   figurasExplicacionDe,
   type Ampliada,
 } from './examen/FiguraAmpliable';
+import FlujoExplicacion from './examen/FlujoExplicacion';
 import NotaFinal from './examen/NotaFinal';
 import CortePremium, { IconoCandado } from './examen/CortePremium';
 import { usePlan } from './PlanProvider';
@@ -1353,6 +1354,9 @@ export default function ExamRunner({
                       <div className={styles.explicacionTexto}>
                         <ReactMarkdown>{current.explanation}</ReactMarkdown>
                       </div>
+                      {/* El flujo es de la pregunta base: la variante comparte
+                          razonamiento y respuesta. */}
+                      {current.flujo && <FlujoExplicacion flujo={current.flujo} />}
                       {(() => {
                         const figuras = figurasExplicacionDe(current);
                         if (figuras.length === 0) return null;
