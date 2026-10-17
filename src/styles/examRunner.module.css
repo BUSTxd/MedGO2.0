@@ -2702,3 +2702,45 @@
   .ficha:hover .fichaLibro,
   .ficha:focus-visible .fichaLibro { transform: none; }
 }
+
+/* «Abrir resumen» bajo la explicación: abre el visor recortado a la sección
+   que responde la pregunta (campos `resumenId` + `seccion` del JSON). */
+.abrirResumen {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  margin-top: 16px;
+  padding: 9px 14px;
+  border: 1px solid rgba(59, 158, 221, 0.35);
+  border-radius: 10px;
+  background: rgba(59, 158, 221, 0.08);
+  color: #2f86c4;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.abrirResumen:hover {
+  background: rgba(59, 158, 221, 0.14);
+  border-color: rgba(59, 158, 221, 0.55);
+}
+
+.abrirResumenSeccion {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.abrirResumenPago {
+  border-color: rgba(212, 160, 23, 0.4);
+  background: rgba(212, 160, 23, 0.08);
+  color: #a87a0a;
+}
+
+:global(.dark-mode) .abrirResumen { color: #6cb8ea; }
+:global(.dark-mode) .abrirResumenPago { color: #f5c451; }

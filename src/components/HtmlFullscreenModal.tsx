@@ -100,6 +100,67 @@ const FIGURAS = [
   'figure.image img',
 ].join(', ');
 
+const normSeccion = (s: string) =>
+  s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+/**
+ * El título (o la celda) donde empieza `seccion`, con la misma regla que el
+ * efecto que abre en la sección: cada tramo de «A › B» se busca después del
+ * anterior; mandan los títulos y, si ninguno calza, una celda.
+ */
+function buscarSeccion(sheet: HTMLElement, seccion: string): HTMLElement | null {
+  const titulos = Array.from(sheet.querySelectorAll<HTMLElement>('h1, h2, h3, h4'));
+  const celdas = Array.from(sheet.querySelectorAll<HTMLElement>('td, th'));
+  const despues = (a: HTMLElement | null, b: HTMLElement) =>
+    !a || !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+  let destino: HTMLElement | null = null;
+  for (const tramo of seccion.split('›').map(normSeccion).filter(Boolean)) {
+    const calza = (el: HTMLElement) => despues(destino, el) && normSeccion(el.textContent ?? '').startsWith(tramo);
+    const hallado = titulos.find(calza) ?? celdas.find(calza);
+    if (!hallado) break;
+    destino = hallado;
+  }
+  return destino;
+}
+
+const nivelTitulo = (el: Element) => {
+  const m = /^H([1-4])$/.exec(el.tagName);
+  return m ? Number(m[1]) : 0;
+};
+/** Nivel más alto (número más bajo) entre los títulos de un bloque; 0 si no tiene. */
+const nivelMinimo = (el: Element) => {
+  const niveles = [nivelTitulo(el), ...Array.from(el.querySelectorAll('h1, h2, h3, h4'), nivelTitulo)].filter(Boolean);
+  return niveles.length ? Math.min(...niveles) : 0;
+};
+
+/**
+ * Bloques que forman la sección de `destino`, subiendo `pasos` veces a la
+ * sección que la contiene. Los bloques son los hijos del contenedor común de
+ * todos los títulos (en Notion, el `page-body`): la sección va de su título
+ * hasta el siguiente de su nivel o superior. `null` = el documento entero.
+ */
+function bloquesDeSeccion(sheet: HTMLElement, destino: HTMLElement, pasos: number) {
+  const titulos = Array.from(sheet.querySelectorAll('h1, h2, h3, h4'));
+  let cont: Element | null = destino.parentElement;
+  while (cont && cont !== sheet && !titulos.every((t) => cont!.contains(t))) cont = cont.parentElement;
+  if (!cont) return null;
+  const bloques = Array.from(cont.children);
+  let ini = bloques.findIndex((b) => b.contains(destino));
+  if (ini < 0) return null;
+  let nivel = nivelTitulo(destino) || 4;
+  for (let p = 0; p < pasos; p++) {
+    let j = ini - 1;
+    while (j >= 0 && !(nivelTitulo(bloques[j]) && nivelTitulo(bloques[j]) < nivel)) j--;
+    if (j < 0) return null;
+    ini = j;
+    nivel = nivelTitulo(bloques[j]);
+  }
+  let fin = ini + 1;
+  while (fin < bloques.length && !(nivelMinimo(bloques[fin]) && nivelMinimo(bloques[fin]) <= nivel)) fin++;
+  if (ini === 0 && fin === bloques.length) return null;
+  return { cont, dentro: new Set(bloques.slice(ini, fin)) };
+}
+
 interface Props {
   claseId: string;
   titulo?: string;
@@ -108,10 +169,15 @@ interface Props {
    * ruta con «›» (`GENÉTICAS › Ejemplos`). Sin él, desde arriba.
    */
   seccion?: string;
+  /**
+   * Con `seccion`, enseña SOLO esa sección (desde una pregunta del banqueo) y
+   * una barra para ir cargando la que la contiene, hasta el resumen entero.
+   */
+  soloSeccion?: boolean;
   onClose: () => void;
 }
 
-export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose }: Props) {
+export default function HtmlFullscreenModal({ claseId, titulo, seccion, soloSeccion, onClose }: Props) {
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
   const [html, setHtml] = useState<string | null>(null);
   const [error, setError] = useState(false);
@@ -362,6 +428,39 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
       soltar();
     };
   }, [html, seccion]);
+
+  /**
+   * Recorte a la sección (`soloSeccion`): los bloques de fuera se esconden con
+   * una clase, sin tocar el HTML inyectado (`contenido` sigue siendo el mismo
+   * objeto y React no rehace el documento). `ampliar` sube un nivel por clic.
+   */
+  const [ampliar, setAmpliar] = useState(0);
+  const [recortado, setRecortado] = useState(false);
+  useEffect(() => {
+    const sheet = sheetRef.current;
+    const scroller = scrollerRef.current;
+    if (!html || !seccion || !soloSeccion || !sheet || !scroller) return;
+    const destino = buscarSeccion(sheet, seccion);
+    const rango = destino ? bloquesDeSeccion(sheet, destino, ampliar) : null;
+    setRecortado(!!rango);
+    if (!rango || !destino) return;
+
+    const ocultos: Element[] = [];
+    const ocultar = (el: Element) => { el.classList.add(styles.fueraDeSeccion); ocultos.push(el); };
+    for (const b of Array.from(rango.cont.children)) if (!rango.dentro.has(b)) ocultar(b);
+    // Lo que cuelga fuera del contenedor (cabecera y título de la página).
+    for (let n: Element = rango.cont; n !== sheet && n.parentElement; n = n.parentElement) {
+      for (const hermano of Array.from(n.parentElement.children)) if (hermano !== n) ocultar(hermano);
+    }
+    // Al cargar más, lo nuevo entra por encima: el título de la pregunta se
+    // queda donde estaba en vez de saltar hacia abajo.
+    if (ampliar > 0) {
+      requestAnimationFrame(() => {
+        scroller.scrollTop += destino.getBoundingClientRect().top - scroller.getBoundingClientRect().top - 16;
+      });
+    }
+    return () => ocultos.forEach((el) => el.classList.remove(styles.fueraDeSeccion));
+  }, [html, seccion, soloSeccion, ampliar]);
 
   /* Zoom con la rueda sobre la figura ampliada (de 1× a 6×, hacia donde apunta
      el cursor) y arrastre para moverla cuando está ampliada. El listener va
@@ -829,6 +928,19 @@ export default function HtmlFullscreenModal({ claseId, titulo, seccion, onClose 
               onClick={onSheetClick}
               dangerouslySetInnerHTML={contenido}
             />
+          )}
+          {soloSeccion && recortado && html !== null && (
+            <div className={styles.recorteBarra}>
+              <span className={styles.recorteTexto}>Estás viendo solo la parte que responde la pregunta.</span>
+              <div className={styles.recorteBotones}>
+                <button type="button" className={styles.recorteBoton} onClick={() => setAmpliar((a) => a + 1)}>
+                  Cargar más
+                </button>
+                <button type="button" className={styles.recorteBotonSec} onClick={() => setAmpliar(99)}>
+                  Ver el resumen completo
+                </button>
+              </div>
+            </div>
           )}
         </div>
 

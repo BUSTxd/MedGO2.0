@@ -37,6 +37,8 @@ import styles from '@/styles/examRunner.module.css';
 
 // El SDK de Mercado Pago pesa: el modal sólo se monta cuando alguien lo abre.
 const SubscribeModal = dynamic(() => import('./SubscribeModal'), { ssr: false });
+// El visor de resúmenes solo se baja si el alumno abre uno desde una pregunta.
+const HtmlFullscreenModal = dynamic(() => import('./HtmlFullscreenModal'), { ssr: false });
 
 /** La pregunta tal como se ve en la versión elegida. Conserva `variante` para el interruptor. */
 function vistaDe(q: ExamQuestion, enVariante: boolean): ExamQuestion {
@@ -677,6 +679,7 @@ export default function ExamRunner({
   const [phase, setPhase] = useState<Phase>('running');
   const [pausado, setPausado] = useState(false);
   const [ampliada, setAmpliada] = useState<Ampliada | null>(null);
+  const [resumenAbierto, setResumenAbierto] = useState<{ id: string; seccion: string } | null>(null);
   // Versión que se ve de la pregunta actual, en las que traen `variante`. Vuelve
   // a la base al pasar de pregunta: es una elección sobre ESTA pregunta.
   const [enVariante, setEnVariante] = useState(false);
@@ -847,7 +850,7 @@ export default function ExamRunner({
 
   // La imagen ampliada se cierra sola al cambiar de pregunta, de grupo o al
   // reintentar: si no, quedaría abierta sobre una pregunta que ya no es la suya.
-  useEffect(() => { setAmpliada(null); }, [currentIdx, stage, runId, enVariante]);
+  useEffect(() => { setAmpliada(null); setResumenAbierto(null); }, [currentIdx, stage, runId, enVariante]);
 
   const handlePick = (id: string) => {
     if (picked || pausado) return;
@@ -899,7 +902,7 @@ export default function ExamRunner({
   useEffect(() => { accionesRef.current = { handlePick, handleNext, handleComprobar }; });
 
   useEffect(() => {
-    if (phase !== 'running' || !current || pausado || ampliada || modalAbierto) return;
+    if (phase !== 'running' || !current || pausado || ampliada || modalAbierto || resumenAbierto) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       const tag = (e.target as HTMLElement | null)?.tagName;
@@ -923,7 +926,7 @@ export default function ExamRunner({
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [phase, current, picked, marcadas, pausado, ampliada, modalAbierto]);
+  }, [phase, current, picked, marcadas, pausado, ampliada, modalAbierto, resumenAbierto]);
 
   // Salto directo a un grupo desde el selector (o desde la pantalla de
   // resultados). Reinicia el estado: cada grupo es un intento independiente.
@@ -1357,6 +1360,21 @@ export default function ExamRunner({
                       {/* El flujo es de la pregunta base: la variante comparte
                           razonamiento y respuesta. */}
                       {current.flujo && <FlujoExplicacion flujo={current.flujo} />}
+                      {/* El resumen va con el plan del curso: sin él, el botón
+                          abre la pasarela en vez de un visor que daría 403. */}
+                      {current.resumenId && current.seccion && (
+                        <button
+                          type="button"
+                          className={`${styles.abrirResumen} ${acceso ? '' : styles.abrirResumenPago}`}
+                          onClick={() => acceso
+                            ? setResumenAbierto({ id: current.resumenId!, seccion: current.seccion! })
+                            : setModalAbierto(true)}
+                        >
+                          {acceso ? <IconoLibro size={16} /> : <IconoCandado size={14} />}
+                          Abrir resumen
+                          <span className={styles.abrirResumenSeccion}>· {current.seccion}</span>
+                        </button>
+                      )}
                       {(() => {
                         const figuras = figurasExplicacionDe(current);
                         if (figuras.length === 0) return null;
@@ -1611,6 +1629,15 @@ export default function ExamRunner({
       </PuertaDePago>
 
       {ampliada && <VisorImagen img={ampliada} onClose={() => setAmpliada(null)} />}
+
+      {resumenAbierto && (
+        <HtmlFullscreenModal
+          claseId={resumenAbierto.id}
+          seccion={resumenAbierto.seccion}
+          soloSeccion
+          onClose={() => setResumenAbierto(null)}
+        />
+      )}
 
       {suscripcion && modalAbierto && (
         <SubscribeModal open planKey={suscripcion.plan} onClose={() => setModalAbierto(false)} />
