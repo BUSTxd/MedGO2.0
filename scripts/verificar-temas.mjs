@@ -35,6 +35,14 @@ const CURSOS = [
     // Los ids de clase ya llevan el prefijo (`epi-t-2`) y el resumen usa el mismo.
     prefijoResumen: '',
   },
+  {
+    slug: 'patologia',
+    temas: path.join(RAIZ, 'src', 'lib', 'data', 'temas', 'patologia.ts'),
+    silabo: path.join(RAIZ, 'src', 'lib', 'data', 'patologia.ts'),
+    prefijoResumen: '',
+    // Solo el Parcial 2 lleva `tema` (Unidad 2); los demás banqueos del curso aún no.
+    prefijoExamen: 'patologia-parcial-2',
+  },
 ];
 
 const errores = [];
@@ -114,7 +122,7 @@ function verificarTabla(curso, tabla, silabo) {
 
 async function verificarExamenes(curso, tabla) {
   const archivos = (await readdir(DIR_EXAMENES))
-    .filter((f) => f.startsWith(`${curso.slug}-`) && f.endsWith('.json'))
+    .filter((f) => f.startsWith(curso.prefijoExamen ?? `${curso.slug}-`) && f.endsWith('.json'))
     .sort();
 
   const porTema = new Map();

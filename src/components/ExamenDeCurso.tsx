@@ -62,6 +62,7 @@ export default async function ExamenDeCurso({
         }}
         fallbackTitle={titulo}
         backHref={backHref}
+        estilo={examen.estilo}
       />
     </div>
   );

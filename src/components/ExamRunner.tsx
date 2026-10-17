@@ -117,6 +117,12 @@ interface Props {
   /** Nota de un banqueo, por su clave: tooltip de su cuadro y cola del rótulo en la cabecera. */
   groupHints?: Record<string, string>;
   suscripcion?: SuscripcionExamen;
+  /**
+   * Estilo visual opcional. `'escenario'`: el enunciado entra grande y se
+   * asienta, las alternativas llegan alternando izquierda/derecha y el número de
+   * la pregunta sale una sola vez (el folio). Sin él, el runner de siempre.
+   */
+  estilo?: 'escenario';
 }
 
 const attemptsKey = (k: string) => `medgo:attempts:${k}`;
@@ -623,7 +629,9 @@ export default function ExamRunner({
   groupLabels,
   groupHints,
   suscripcion,
+  estilo,
 }: Props) {
+  const escenario = estilo === 'escenario';
   // Etapas: Grupo A (examKey) + grupos adicionales. Sin extras → examen simple.
   const stages = useMemo(
     () => [examKey, ...(groupKeys ?? [])].map((key, i) => ({
@@ -945,7 +953,7 @@ export default function ExamRunner({
   const title = payload?.title ?? fallbackTitle ?? 'Examen';
 
   return (
-    <div className={styles.shell} ref={shellRef}>
+    <div className={`${styles.shell} ${escenario ? styles.estiloEscenario : ''}`} ref={shellRef}>
       <div className={styles.barraSuperior}>
         {backHref ? (
           <Link href={backHref} className={styles.backLink}>
@@ -1063,11 +1071,15 @@ export default function ExamRunner({
           {/* ── Mando: contador · rastro · cronómetro ─────────────────────── */}
           <div className={styles.mando}>
             <div className={styles.contador}>
-              <span className={styles.contadorNum}>
-                {String(currentIdx + 1).padStart(2, '0')}
-              </span>
+              {/* En el estilo escenario el número de la pregunta lo dice sólo
+                  el folio de la pregunta; aquí queda el total. */}
+              {!escenario && (
+                <span className={styles.contadorNum}>
+                  {String(currentIdx + 1).padStart(2, '0')}
+                </span>
+              )}
               <span className={`${styles.contadorTotal} ${conOro ? styles.contadorTotalPremium : ''}`}>
-                /{String(totalReal).padStart(2, '0')}
+                {escenario ? `${totalReal} preguntas` : `/${String(totalReal).padStart(2, '0')}`}
               </span>
             </div>
 
@@ -1267,7 +1279,7 @@ export default function ExamRunner({
                               key={opt.id}
                               type="button"
                               className={cls.join(' ')}
-                              style={{ '--i': i } as React.CSSProperties}
+                              style={{ '--i': i, '--lado': i % 2 === 0 ? -1 : 1 } as React.CSSProperties}
                               onClick={() => handlePick(opt.id)}
                               disabled={showFeedback}
                               aria-pressed={current.multiple ? marcada || isPicked : undefined}
@@ -1293,7 +1305,7 @@ export default function ExamRunner({
                           if (marcada) fichaCls.push(styles.opcionImgMarcada);
                           const img = opt.image;
                           return (
-                            <div key={opt.id} className={fichaCls.join(' ')} style={{ '--i': i } as React.CSSProperties}>
+                            <div key={opt.id} className={fichaCls.join(' ')} style={{ '--i': i, '--lado': i % 2 === 0 ? -1 : 1 } as React.CSSProperties}>
                               {img && (
                                 <button
                                   type="button"

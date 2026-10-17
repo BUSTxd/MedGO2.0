@@ -46,6 +46,15 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?
   // TBL 3 (cáncer de mama): las 8 del individual 2025. El grupal repetía las
   // mismas con las alternativas en otro orden, y el runner ya las baraja.
   'patologia/tbl-3-cancer-mama': { free: true },
+  // Parcial 2 (Unidad 2): un módulo por examen fuente, los reales primero. El
+  // primero se entrega recortado (la mitad, en oro el resto) como el final 2023
+  // de Inmunología; los demás son de pago. Lo arma
+  // scripts/patologia-u2/ensamblar.mjs; las fuentes no van a git.
+  'patologia/parcial-2-m1': { muestra: 20 },
+  'patologia/parcial-2-m2': {},
+  'patologia/parcial-2-m3': {},
+  'patologia/parcial-2-m4': {},
+  'patologia/parcial-2-m5': {},
   // Inmunología: dos banqueos abiertos como muestra del curso (2025 y 2024-II),
   // con el aviso de suscripción del runner cada pocas preguntas. El 2022 y los
   // dos Extra están detrás del plan del tramo; el 2023 —el más elaborado— se

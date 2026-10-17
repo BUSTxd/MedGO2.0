@@ -1,0 +1,1517 @@
+{
+  "version": 1,
+  "key": "patologia/parcial-2-m3",
+  "title": "Examen Parcial 2 — Teórico A/B",
+  "duration_min": 42,
+  "questions": [
+    {
+      "id": "examen-3-10",
+      "stem": "Paciente mujer de 50 años, con antecedente de cáncer de ovario hace 5 años tratado con cirugía y quimioterapia; acude a consulta por presentar palidez, decaimiento y sangrado de encías desde hace 1 mes. En el hemograma se confirma anemia severa, plaquetopenia y leucositosis con presencia de blastos. Se realiza un extendido de sangre periférica donde se informa blastos 25% algunos con bastones de Auer. Marque la mejor respuesta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "La paciente tiene una Leucemia Mieloide Aguda secundaria a tratamiento",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La paciente tiene Leucemia Linfoblástica Aguda secundaria a tratamiento",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La paciente tiene una crisis blástica de una Leucemia Mieloide Crónica",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El valor de blastos no es suficiente para diagnósticar Leucemia Aguda, es necesario hacer seguimiento",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Leucemia mieloide aguda secundaria a tratamiento.** Hay tres datos que encajan:\n- **Aguda:** blastos ≥ 20 % en sangre (aquí 25 %) y la falla medular que producen (anemia, plaquetopenia con sangrado gingival).\n- **Mieloide:** los **bastones de Auer** son agregados de gránulos azurófilos (mieloperoxidasa) presentes solo en mieloblastos.\n- **Secundaria a tratamiento:** la quimioterapia del cáncer de ovario (agentes alquilantes, platinos) daña el ADN de las células madre; 5-10 años después aparece una LMA relacionada con la terapia, a menudo con alteraciones de los cromosomas 5 y 7 y mal pronóstico. Con los inhibidores de la topoisomerasa II la latencia es más corta (1-3 años), con reordenamientos de *KMT2A*.\n- **B. LLA:** los linfoblastos nunca tienen bastones de Auer.\n- **C. Crisis blástica de una LMC:** no hay antecedente de LMC ni basofilia o esplenomegalia previas.\n- **D. Blastos insuficientes:** el umbral es 20 %, que ya está superado.",
+      "tema": "leucemias",
+      "nivel": 3,
+      "flujo": {
+        "titulo": "Blastos con Auer tras quimioterapia",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Quimioterapia previa por cáncer de ovario",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Daño del ADN de la célula madre hematopoyética",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Blastos 25 %: falla medular",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p4",
+            "texto": "Bastones de Auer: estirpe mieloide",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p5",
+            "texto": "Leucemia aguda (≥ 20 % de blastos)",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p6",
+            "texto": "LMA secundaria a tratamiento",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p5"
+          ],
+          [
+            "p4",
+            "p6"
+          ],
+          [
+            "p5",
+            "p6"
+          ]
+        ]
+      },
+      "claseId": "pat-tbl-4",
+      "resumenId": "pat-tbl-4",
+      "seccion": "2. Clasificación OMS 2022: Mielodisplasia y Diferenciación",
+      "repite": "También en el examen 2021 y el examen 2020"
+    },
+    {
+      "id": "examen-3-11",
+      "stem": "Paciente mujer de 90 años con múltiples lesiones nodulares pequeñas en piel. La biopsia revela células grandes, de aspecto blastoide que infiltran la dermis. En el Hemograma y sangre periférica se reportó blastos 60%. ¿qué diagnóstico es más probable en la paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Leucemia Mieloide Aguda",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Leucemia Mieloide Crónica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfoma Difuso de células grandes",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfoma / Leucemia Linfocítica Crónica",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Leucemia mieloide aguda.** Un 60 % de blastos en sangre periférica define una **leucemia aguda** (umbral ≥ 20 %). Los nódulos cutáneos con infiltración de la dermis por células blásticas son una **leucemia cutis**, típica de las LMA con diferenciación **monocítica o mielomonocítica** (los monoblastos tienden a infiltrar tejidos: piel y encías). En una paciente de 90 años, la LMA es además la leucemia aguda propia de la edad avanzada (la LLA predomina en niños).\n- **B. LMC:** en fase crónica la sangre muestra leucocitosis con todas las etapas de maduración y menos del 10 % de blastos.\n- **C. Linfoma difuso de células grandes:** puede afectar la piel, pero no da 60 % de blastos circulantes.\n- **D. LLC/linfoma linfocítico:** en la sangre hay linfocitos pequeños y maduros (con «células en mancha»), no blastos.",
+      "tema": "leucemias",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Blastos en sangre y en la piel",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Nódulos cutáneos con células blásticas en dermis",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "60 % de blastos en sangre",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p3",
+            "texto": "≥ 20 % de blastos: leucemia aguda",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Blastos monocíticos infiltran piel (leucemia cutis)",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p5",
+            "texto": "Leucemia mieloide aguda en adulto mayor",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p1",
+            "p4"
+          ],
+          [
+            "p3",
+            "p5"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-tbl-4",
+      "resumenId": "pat-tbl-4",
+      "seccion": "Leucemia Mieloide Aguda (LMA)",
+      "repite": "También en el examen 2021, el Teórico B y el examen 2020"
+    },
+    {
+      "id": "examen-3-12",
+      "stem": "Paciente de 14 años, con diagnóstico de Leucemia Linfoblástica Aguda hace 2 años, recibió quimioterapia sistémica con buena respuesta al tratamiento. Actualmente en estudios por presentar recurrencia de enfermedad. Una posible causa de recaída es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Afectación inicial del sistema nervioso central",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Marcada leucocitosis al diagnóstico",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Adenopatías generalizadas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Infiltración ósea subperióstica",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Afectación inicial del sistema nervioso central.** El SNC es un **santuario**: la barrera hematoencefálica impide que la mayoría de los quimioterápicos sistémicos alcancen concentraciones eficaces en el líquido cefalorraquídeo. Los linfoblastos que se alojaron en las meninges sobreviven al tratamiento sistémico y repueblan después la médula o el propio SNC. Por eso todos los protocolos de LLA incluyen profilaxis del SNC (quimioterapia intratecal, dosis altas de metotrexato) y la afectación del SNC al diagnóstico aumenta el riesgo de recaída.\n- **B. Marcada leucocitosis al diagnóstico:** una cuenta muy alta (> 50 000-100 000/µL) es un factor de **mal pronóstico**, pero indica carga tumoral, no un mecanismo de escape al tratamiento.\n- **C. Adenopatías generalizadas:** son frecuentes en la LLA y no predicen recaída.\n- **D. Infiltración ósea subperióstica:** causa el dolor óseo característico, pero responde al tratamiento sistémico.",
+      "tema": "leucemias",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "El SNC como santuario",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Linfoblastos alojados en meninges al diagnóstico",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Barrera hematoencefálica frena la quimioterapia sistémica",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Clona residual sobrevive en el LCR",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Recaída meses o años después",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "Afectación inicial del SNC",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p3"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-tbl-4",
+      "resumenId": "pat-tbl-4",
+      "seccion": "Leucemia Linfoblástica Aguda (LLA)",
+      "repite": "También en el Teórico B y el examen 2020"
+    },
+    {
+      "id": "examen-3-14",
+      "stem": "Un avance reciente en el tratamiento del cancer es el bloqueo de la interacción entre PD-1 y PD-1 L. Marque la afirmación correcta.",
+      "options": [
+        {
+          "id": "a",
+          "text": "esta inmunoterapia se conoce como el desbloqueo del check point inmunológico al interactuar con el receptor PD 1L en la célula cancerígena",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "esta inmunoterapia se conoce como el bloqueo del check point inmunológico porque inhibe la acción de PD-1 en el linfocito citotóxico",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "PD-1-L es expresado en linfocitos T regulatorios que al interactuar con las células cancerígenas inhibe su replicación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "PD-1L es expresado en linfocitos T citotóxicos, su activación permite que ataquen a las células cancerígenas.",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. «Bloqueo del checkpoint» porque inhibe la acción de PD-1 en el linfocito citotóxico.** **PD-1** es un receptor inhibitorio del linfocito T activado; su ligando **PD-L1** lo expresan las células tumorales (y las presentadoras de antígeno). Al unirse, apagan al linfocito citotóxico: es un punto de control (*checkpoint*) que el tumor usa para escapar. Los anticuerpos anti-PD-1 (nivolumab, pembrolizumab) o anti-PD-L1 (atezolizumab) impiden esa unión y el linfocito recupera su acción.\n- **A. «Desbloqueo»… al interactuar con el receptor PD-1L de la célula cancerígena:** PD-L1 es el ligando, no el receptor, y la terapia *bloquea* el checkpoint.\n- **C. PD-L1 en T reguladores que inhibe la replicación tumoral:** PD-L1 no frena al tumor; frena al linfocito.\n- **D. PD-L1 en linfocitos citotóxicos que los activa:** el receptor del linfocito es PD-1 y su señal es inhibitoria.\n\n*El examen original marcaba la A; aquí se da por buena la B, que es la que describe bien el mecanismo.*",
+      "tema": "inmunidad-cancer",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Liberar al linfocito del freno PD-1",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Célula tumoral expresa PD-L1",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "PD-L1 se une a PD-1 del linfocito T",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Señal inhibitoria: linfocito agotado, tumor escapa",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Anticuerpo anti-PD-1/PD-L1 impide la unión",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p5",
+            "texto": "Linfocito citotóxico recupera su ataque",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p4",
+            "p2",
+            "bloquea"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-14",
+      "resumenId": "pat-acp-7",
+      "seccion": "9. Aplicaciones: terapias dirigidas, inmunoterapia, resistencia y prevención",
+      "repite": "También en el examen 2020",
+      "reviewNote": "La clave del examen original marca la A («desbloqueo… receptor PD-1L en la célula cancerígena»), pero PD-L1 es el ligando, no el receptor, y el término es «bloqueo» del checkpoint: MedGO da por correcta la B."
+    },
+    {
+      "id": "examen-3-28",
+      "stem": "Paciente mujer de 40 años que en la colonoscopía presenta un pólipo, y se toma biopsia. El diagnóstico es................... y se caracteriza por...........................",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-2/examen-3/28.webp",
+      "imageW": 1201,
+      "imageH": 647,
+      "options": [
+        {
+          "id": "a",
+          "text": "Adenoma con displasia de alto grado / presentarse en las zonas de patrón velloso",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Adenoma con displasia de bajo grado / elongación de los núcleos hasta la mitad del grosor del epitelio.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Adenoma con displasia de bajo grado / pérdida de la polaridad.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Adenoma con displasia de alto grado / elongación de los núcleos hasta la mitad del grosor del epitelio.",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Adenoma con displasia de alto grado / más frecuente en las zonas de patrón velloso.** En la micrografía el epitelio del adenoma tiene núcleos **estratificados hasta la superficie luminal**, apiñados, vesiculosos y redondeados, con **pérdida de la polaridad** (ya no se alinean perpendiculares a la membrana basal), nucléolos visibles, una mitosis cerca de la luz y casi sin células caliciformes. Eso es displasia de **alto grado**. Este grado se ve con más frecuencia en los adenomas grandes y con componente **velloso**, que son los de mayor riesgo de transformación a carcinoma.\n- **B. Bajo grado con núcleos hasta la mitad del epitelio:** describe correctamente el bajo grado, pero no corresponde a esta imagen.\n- **C. Bajo grado / pérdida de la polaridad:** la pérdida de polaridad es un criterio de alto grado.\n- **D. Alto grado / núcleos hasta la mitad del epitelio:** esa estratificación limitada es de bajo grado.",
+      "tema": "histopatologia",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Núcleos hasta la luz: alto grado",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Núcleos estratificados hasta la superficie luminal",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p2",
+            "texto": "Pérdida de polaridad, núcleos vesiculosos con nucléolo",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Mitosis altas, pocas células caliciformes",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Displasia de alto grado en adenoma",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Más frecuente en el componente velloso",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p4"
+          ],
+          [
+            "p2",
+            "p4"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-lab-6",
+      "resumenId": "pat-lab-6",
+      "seccion": "LAB - Neoplasias benignas",
+      "repite": "También en el Teórico B",
+      "variante": {
+        "rotulo": "Teórico B",
+        "rotuloBase": "Teórico A",
+        "stem": "Paciente mujer de 40 años que en la colonoscopía presenta un pólipo, y se toma biopsia. El diagnóstico es……………… y se caracteriza por……………………",
+        "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-2/examen-5/colon.webp",
+        "imageW": 1235,
+        "imageH": 689,
+        "options": [
+          {
+            "id": "va",
+            "text": "Adenoma con displasia de bajo grado / elongación de los núcleos hasta la mitad del grosor del epitelio.",
+            "correct": true
+          },
+          {
+            "id": "vb",
+            "text": "Adenoma con displasia de bajo grado / pérdida de la polaridad.",
+            "correct": false
+          },
+          {
+            "id": "vc",
+            "text": "Adenoma con displasia de alto grado / elongación de los núcleos  hasta la mitad del grosor del epitelio.",
+            "correct": false
+          },
+          {
+            "id": "vd",
+            "text": "Adenoma con displasia de alto grado / presentarse en las zonas de patrón velloso.",
+            "correct": false
+          }
+        ],
+        "explanation": "**A. Adenoma con displasia de bajo grado / núcleos alargados hasta la mitad del grosor del epitelio.** En la imagen las criptas mantienen su forma regular, con luz central; el epitelio tiene núcleos **alargados en forma de lápiz**, hipercromáticos y seudoestratificados, pero **ocupan solo la mitad basal** de las células y conservan la **polaridad** (perpendiculares a la membrana basal). Queda mucina apical y el estroma entre las criptas se conserva. Es la displasia de bajo grado propia del adenoma tubular común.\n- **B. Bajo grado / pérdida de la polaridad:** la pérdida de polaridad es un criterio de alto grado y aquí la polaridad está conservada.\n- **C. Alto grado / núcleos hasta la mitad:** la combinación es contradictoria; en el alto grado los núcleos llegan a la superficie.\n- **D. Alto grado / patrón velloso:** la imagen no muestra núcleos hasta la luz ni atipia marcada."
+      }
+    },
+    {
+      "id": "examen-3-33",
+      "stem": "Corte histológico de tumor de testículo, en el que se observan:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-2/examen-3/33.webp",
+      "imageW": 1211,
+      "imageH": 835,
+      "options": [
+        {
+          "id": "a",
+          "text": "Células germinales neoplásicas, linfocitos y células plasmáticas",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Células epiteliales glandulares neoplásicas, linfocitos, eosinófilos, macrófagos",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células estromales neoplásicas, macrófagos y células plasmáticas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Células linfoides neoplásicas, células plasmáticas, linfocitos reactivos",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Células germinales neoplásicas, linfocitos y células plasmáticas.** Es un **seminoma**, el tumor germinal testicular más frecuente. En la imagen se ven láminas de células grandes y uniformes, con **citoplasma claro** (rico en glucógeno) y bordes celulares nítidos, núcleo central redondo con cromatina granular y **nucléolo prominente**: son células germinales neoplásicas, parecidas a las espermatogonias. Entre ellas hay tractos fibrosos delgados con **linfocitos pequeños** (núcleos oscuros, sin citoplasma visible) y algunas células plasmáticas: el infiltrado linfoide es la reacción inmunitaria típica de este tumor, y a veces se acompaña de granulomas.\n- **B. Células epiteliales glandulares:** no hay luces ni glándulas; correspondería a un adenocarcinoma.\n- **C. Células estromales neoplásicas:** los tumores del estroma gonadal (Leydig, Sertoli) tienen citoplasma eosinófilo y no tienen este patrón.\n- **D. Células linfoides neoplásicas:** describe un linfoma testicular (adulto mayor); aquí los linfocitos son pequeños y reactivos.",
+      "tema": "histopatologia",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Células claras con linfocitos en testículo",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Láminas de células grandes de citoplasma claro",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p2",
+            "texto": "Núcleo central con nucléolo prominente",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Septos fibrosos con linfocitos y plasmáticas",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Células germinales neoplásicas: seminoma",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Germinales neoplásicas, linfocitos y plasmáticas",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p4"
+          ],
+          [
+            "p2",
+            "p4"
+          ],
+          [
+            "p3",
+            "p5"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-lab-7",
+      "resumenId": "pat-ai-10",
+      "seccion": "2. Tumores Malignos",
+      "repite": "También en el Teórico B"
+    },
+    {
+      "id": "examen-3-34",
+      "stem": "Biopsia de cérvix, paciente de 27 años. Marque la mejor respuesta:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-2/examen-3/34.webp",
+      "imageW": 1235,
+      "imageH": 705,
+      "options": [
+        {
+          "id": "a",
+          "text": "NIC 3, causado principalmente por VPH 16 y 18",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Coilocitos, causados por VPH 6 y 11",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "NIC 1, causado por VPH 6 y 11",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Condiloma con coilocitos, causado por VPH 6 y 11",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. NIC 3, causada principalmente por VPH 16 y 18.** En la imagen el epitelio escamoso del cérvix está ocupado **en todo su espesor** por células basaloides atípicas: núcleos grandes e hipercromáticos, alta relación núcleo/citoplasma, apiñamiento y pérdida de la maduración (no se aplanan hacia la superficie), con mitosis en las capas altas. La membrana basal está conservada, así que no hay invasión. Es displasia de alto grado (NIC 3/HSIL). Los VPH de **alto riesgo** 16 y 18 integran su genoma: E6 degrada p53 y E7 inactiva Rb, y la célula prolifera sin madurar.\n- **B. Coilocitos por VPH 6 y 11:** no se ven halos perinucleares con núcleos arrugados; además 6 y 11 son de bajo riesgo.\n- **C. NIC 1:** en la NIC 1 la atipia se limita al tercio inferior y la superficie madura.\n- **D. Condiloma con coilocitos:** es una lesión exofítica de bajo riesgo, sin atipia en todo el espesor.",
+      "tema": "vph",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Atipia en todo el espesor",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "VPH 16/18: E6 degrada p53, E7 inactiva Rb",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Células basaloides atípicas en todo el espesor",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Sin maduración; mitosis en capas altas",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Membrana basal intacta: sin invasión",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p5",
+            "texto": "NIC 3 por VPH de alto riesgo",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p5"
+          ],
+          [
+            "p3",
+            "p5"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-acp-6",
+      "resumenId": "pat-acp-6",
+      "seccion": "Carcinogénesis por VPH: E6 y E7",
+      "repite": "También en el Teórico B"
+    },
+    {
+      "id": "examen-3-27",
+      "stem": "Paciente de 30 años con tumor cerebral localizado en región frontoparietal. Usted observa la imagen microscópica y en referencia al diagnóstico , puede afirmar que:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-2/examen-3/27.webp",
+      "imageW": 1221,
+      "imageH": 683,
+      "options": [
+        {
+          "id": "a",
+          "text": "Está compuesto por células meningoteliales (aracnoideas).",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Esta neoplasia se presenta con mayor frecuencia en varones.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Los cuerpos de Psammoma( calcificaciones de tipo metastásicas) se observan exclusivamente en estas neoplasias.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Estas neoplasias suelen tener bordes mal definidos , que infiltran el parénquima cerebral adyacente.",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Está compuesto por células meningoteliales (aracnoideas).** La imagen muestra células con núcleos ovalados, de cromatina fina, y citoplasma eosinófilo de bordes imprecisos (aspecto sincitial), dispuestas en **remolinos concéntricos**; varios remolinos tienen en el centro estructuras laminadas, concéntricas y hialinizadas o calcificadas: **cuerpos de psamoma**. Es un **meningioma**, tumor que nace de las células meningoteliales de la aracnoides, adherido a la duramadre (la región frontoparietal, sobre la convexidad, es una localización típica).\n- **B. Más frecuente en varones:** predomina en **mujeres** (aproximadamente 3:2), en parte por la expresión de receptores de progesterona.\n- **C. Psamomas exclusivos del meningioma:** también aparecen en el carcinoma papilar de tiroides, el seroso de ovario y el mesotelioma, y son calcificaciones **distróficas**, no metastásicas.\n- **D. Bordes mal definidos e infiltrantes:** el meningioma típico es extraaxial y bien delimitado; **comprime** el cerebro sin infiltrarlo.",
+      "tema": "histopatologia",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Remolinos y psamomas",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Células sincitiales en remolinos concéntricos",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p2",
+            "texto": "Cuerpos de psamoma laminados",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Tumor extraaxial adherido a la duramadre",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p4",
+            "texto": "Meningioma: origen en células aracnoideas",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p4"
+          ],
+          [
+            "p2",
+            "p4"
+          ],
+          [
+            "p3",
+            "p4"
+          ]
+        ]
+      },
+      "claseId": "pat-lab-7",
+      "resumenId": "pat-ai-10",
+      "seccion": "2. Tumores Malignos"
+    },
+    {
+      "id": "examen-3-32",
+      "stem": "Biopsia de lesión elevada, rojiza, de un niño de 3 años. Usted puede decir que es una proliferación vascular benigna por la siguiente característica:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-2/examen-3/32.webp",
+      "imageW": 1161,
+      "imageH": 769,
+      "options": [
+        {
+          "id": "a",
+          "text": "Lesión bien delimitada",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Crecimiento rápido",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Riesgo moderado de transformación maligna",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Atipia nuclear moderada",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Lesión bien delimitada.** A bajo aumento la lesión está debajo de una epidermis intacta, organizada en **lóbulos** de capilares separados por tabiques fibrosos y **bien circunscrita** respecto a la dermis vecina; en el inserto se ven capilares pequeños tapizados por células endoteliales planas o algo prominentes, con hematíes en su luz y sin atipia relevante. Es un **hemangioma** capilar lobulillar (el más frecuente en la infancia). La buena delimitación, sin infiltración del tejido vecino, es el criterio arquitectural de benignidad.\n- **B. Crecimiento rápido:** el hemangioma infantil crece rápido en los primeros meses y luego involuciona; la velocidad no distingue lo benigno de lo maligno.\n- **C. Riesgo moderado de transformación maligna:** el hemangioma prácticamente no se malignitiza.\n- **D. Atipia nuclear moderada:** la atipia es un rasgo de malignidad (angiosarcoma), no de benignidad.",
+      "tema": "histopatologia",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Lóbulos vasculares bien delimitados",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Lóbulos de capilares con tabiques fibrosos",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p2",
+            "texto": "Endotelio sin atipia, hematíes en la luz",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Límite neto con la dermis; sin infiltración",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Hemangioma capilar: benigno",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Criterio: lesión bien delimitada",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p4"
+          ],
+          [
+            "p2",
+            "p4"
+          ],
+          [
+            "p3",
+            "p5"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-lab-6",
+      "resumenId": "pat-lab-6",
+      "seccion": "LAB - Neoplasias benignas"
+    },
+    {
+      "id": "examen-5-1",
+      "stem": "Paciente varón de 40 años con nódulo en tórax. Usted observa la siguiente imagen histológica, con respecto al diagnóstico es correcto:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-2/examen-5/neurofibroma.webp",
+      "imageW": 1261,
+      "imageH": 677,
+      "options": [
+        {
+          "id": "a",
+          "text": "La proliferación celular está conformada por células de Schwann y fibroblastos.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Es un tumor benigno de nervios periféricos  encapsulado.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Las células neoplásicas se acompañan frecuentemente de células plasmáticas.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La forma cutánea localizada se asocia más a Neurofibromatosis tipo 1 que las formas difusa y plexiforme.",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. La proliferación está formada por células de Schwann y fibroblastos.** A bajo aumento hay un nódulo dérmico **bien delimitado pero sin cápsula**, bajo una epidermis intacta; a mayor aumento se ven células fusiformes con núcleos **ondulados** («en coma» o en serpentina), poco densas, en un estroma laxo, mixoide y con fibras de colágeno en «zanahoria rallada». Es un **neurofibroma**: proliferación mixta de células de Schwann, fibroblastos y células perineurales, a menudo con **mastocitos**.\n- **B. Benigno y encapsulado:** el tumor de la vaina nerviosa **encapsulado** es el schwannoma; el neurofibroma no tiene cápsula.\n- **C. Acompañado de células plasmáticas:** la célula acompañante típica es el mastocito, no la plasmática.\n- **D. Forma cutánea localizada asociada a NF1:** la forma localizada es casi siempre esporádica; la **plexiforme** es la casi diagnóstica de NF1 (y la que puede malignizarse).",
+      "tema": "histopatologia",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Células onduladas en estroma laxo",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Nódulo dérmico delimitado sin cápsula",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p2",
+            "texto": "Células fusiformes de núcleo ondulado",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Estroma mixoide con colágeno «zanahoria rallada»",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Neurofibroma",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Schwann más fibroblastos",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p4"
+          ],
+          [
+            "p2",
+            "p4"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-lab-6",
+      "resumenId": "pat-lab-6",
+      "seccion": "LAB - Neoplasias benignas"
+    },
+    {
+      "id": "examen-5-3",
+      "stem": "Paciente mujer de 60 años , sin exámenes de citología cervical previos. Al examen ginecológico se observa cérvix con tumoración exofítica de 2x2 cm, la cual es biopsiada.  El diagnóstico microscópico es…….",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-2/examen-5/escamoso.webp",
+      "imageW": 1243,
+      "imageH": 693,
+      "options": [
+        {
+          "id": "a",
+          "text": "Carcinoma escamoso",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Neoplasia intraepitelial cervical 3",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Adenocarcinoma",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Neoplasia intraepitelial cervical 2",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Carcinoma escamoso.** La imagen muestra nidos de células escamosas atípicas, grandes, con núcleos pleomórficos e hipercromáticos, nucléolos prominentes y citoplasma eosinófilo denso, que **infiltran el estroma** formando islotes rodeados de reacción inflamatoria; en el centro de varios nidos se ven **perlas córneas** (queratina laminada en capas concéntricas). La queratinización confirma la estirpe escamosa y la presencia de nidos en el estroma demuestra invasión. Encaja con la clínica: mujer de 60 años nunca tamizada con una masa exofítica de 2 cm.\n- **B. NIC 3** y **D. NIC 2:** son lesiones **intraepiteliales**, con la membrana basal intacta; no forman nidos en el estroma ni una masa exofítica.\n- **C. Adenocarcinoma:** formaría glándulas con mucina, no queratina ni perlas córneas.",
+      "tema": "histopatologia",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Perlas córneas en el estroma",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Mujer de 60 años sin tamizaje, masa exofítica",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "Nidos de células escamosas atípicas en el estroma",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Perlas córneas: queratinización",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Invasión más estirpe escamosa",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Carcinoma escamoso de cérvix",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p5"
+          ],
+          [
+            "p2",
+            "p4"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-lab-7",
+      "resumenId": "pat-ai-10",
+      "seccion": "2. Tumores Malignos"
+    },
+    {
+      "id": "examen-5-6",
+      "stem": "Tumor benigno de  crecimiento lento, bien delimitado, a veces encapsulado, compuesto por: ______________ . Diagnóstico:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-2/examen-5/leiomioma.webp",
+      "imageW": 1213,
+      "imageH": 653,
+      "options": [
+        {
+          "id": "a",
+          "text": "Músculo liso / leiomioma",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Fibroblastos / neurofibroma",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Células meningoteliales /meningioma",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "células neurales / neurofibroma",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Músculo liso / leiomioma.** A bajo aumento hay un nódulo grande, **bien delimitado**, que empuja el miometrio vecino (seudocápsula) y no lo infiltra; a mayor aumento se ven **fascículos** de células fusiformes con citoplasma eosinófilo fibrilar y núcleos alargados de extremos romos («en puro»), sin atipia, mitosis ni necrosis. Es un **leiomioma**, la neoplasia más frecuente de la mujer, que nace del músculo liso del miometrio y crece por estímulo de estrógenos y progesterona.\n- **B. Fibroblastos / neurofibroma:** el neurofibroma tiene núcleos ondulados en un estroma laxo, no fascículos densos y eosinófilos.\n- **C. Células meningoteliales / meningioma:** formaría remolinos sincitiales con psamomas.\n- **D. Células neurales / neurofibroma:** el neurofibroma no está hecho de neuronas, sino de células de Schwann y fibroblastos.",
+      "tema": "histopatologia",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Fascículos eosinófilos con núcleos en puro",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Nódulo bien delimitado que empuja el miometrio",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p2",
+            "texto": "Fascículos de células fusiformes eosinófilas",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Núcleos en puro, sin atipia ni mitosis",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Origen en músculo liso, benigno",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Leiomioma",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p4"
+          ],
+          [
+            "p2",
+            "p4"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-lab-6",
+      "resumenId": "pat-lab-6",
+      "seccion": "LAB - Neoplasias benignas"
+    },
+    {
+      "id": "examen-5-7",
+      "stem": "Tumor dependiente de miembro superior derecho, de crecimiento rápido. A la histología se observan diferentes áreas (imagen 1 y 2). ¿Qué características presentes en este tumor favorecen un diagnóstico de malignidad?",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-2/examen-5/sarcoma.webp",
+      "imageW": 1301,
+      "imageH": 427,
+      "options": [
+        {
+          "id": "a",
+          "text": "Necrosis coagulativa, pleomorfismo nuclear, presencia de mitosis",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Necrosis licuefactiva, células uniformes, aumento del índice  núcleo/citoplasma",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hemorragia, células bien diferenciadas, presencia de nucleolo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Desmoplasia, pleomorfismo nuclear, presencia de nucleolo",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Necrosis coagulativa, pleomorfismo nuclear y mitosis.** La **imagen 1** muestra un área de **necrosis coagulativa tumoral**: siluetas de células fantasma, pálidas y eosinófilas, sin núcleos o con restos nucleares (cariorrexis), por un tumor que crece más rápido que su irrigación. La **imagen 2** muestra células con **pleomorfismo nuclear** marcado (núcleos grandes, de tamaño y forma variables, hipercromáticos, con nucléolos) y **figuras mitóticas**, alguna atípica. Junto con el crecimiento rápido, son los criterios de malignidad de un **sarcoma** (la necrosis y el índice mitótico forman parte de la gradación FNCLCC).\n- **B. Necrosis licuefactiva, células uniformes:** la necrosis tumoral es coagulativa (la licuefactiva es del SNC y los abscesos) y la uniformidad celular es propia de lo benigno.\n- **C. Hemorragia, células bien diferenciadas:** la buena diferenciación favorece la benignidad.\n- **D. Desmoplasia:** es una reacción del estroma al carcinoma infiltrante, no un rasgo de sarcoma.",
+      "tema": "histopatologia",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Criterios de malignidad en sarcoma",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Crecimiento rápido en miembro superior",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "Imagen 1: células fantasma, necrosis coagulativa",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Imagen 2: pleomorfismo nuclear marcado",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Imagen 2: figuras mitóticas",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p5",
+            "texto": "Necrosis, pleomorfismo y mitosis: malignidad",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p5"
+          ],
+          [
+            "p2",
+            "p5"
+          ],
+          [
+            "p3",
+            "p5"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-lab-7",
+      "resumenId": "pat-ai-10",
+      "seccion": "2. Tumores Malignos"
+    },
+    {
+      "id": "examen-3-29",
+      "stem": "Paciente de 30 años, con pérdida de peso y fiebre desde hace 2 meses. Se palpa linfadenopatías, se toma biopsia, la cual muestra la siguiente imagen . Respecto al diagnóstico es correcto:",
+      "image": "https://dabrwqwzvvnosdnmvlrp.supabase.co/storage/v1/object/public/examenes-img/patologia/parcial-2/examen-3/29.webp",
+      "imageW": 1209,
+      "imageH": 641,
+      "options": [
+        {
+          "id": "a",
+          "text": "Suelen afectar un solo grupo ganglionar y se diseminan con contigüidad.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Es más frecuente en pacientes mujeres con linfadenopatías cervicales dolorosas.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Presencia de abundantes células neoplásicas , con preservación de la arquitectura ganglionar.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Suelen ser de mal pronóstico , por su pobre respuesta al tratamiento.",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Suelen afectar un solo grupo ganglionar y se diseminan por contigüidad.** En la imagen, sobre un fondo de linfocitos pequeños reactivos, hay pocas células grandes (rodeadas con círculos) de núcleo bilobulado o multilobulado con **nucléolos grandes eosinófilos** («ojos de búho»): **células de Reed-Sternberg**. Con fiebre y pérdida de peso (síntomas B), es un **linfoma de Hodgkin**. A diferencia de los no Hodgkin, suele empezar en un grupo ganglionar (cervical o mediastínico) y se disemina de forma ordenada a los grupos **contiguos**, lo que permite estadificarlo y tratarlo por campos.\n- **B. Mujeres con adenopatías dolorosas:** las adenopatías son indoloras (el dolor con el alcohol es raro).\n- **C. Abundantes células neoplásicas con arquitectura conservada:** las células de Reed-Sternberg son escasas (1-5 %) y la arquitectura del ganglio está **borrada**.\n- **D. Mal pronóstico:** es uno de los cánceres más curables (supervivencia de más del 80-90 %).",
+      "tema": "linfomas",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Reed-Sternberg en un fondo reactivo",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Fiebre y pérdida de peso: síntomas B",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "Células grandes bilobuladas con nucléolo eosinófilo",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Escasas, en fondo de linfocitos reactivos",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Linfoma de Hodgkin",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Un grupo ganglionar, diseminación por contigüidad",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p4"
+          ],
+          [
+            "p2",
+            "p4"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-acp-8",
+      "resumenId": "pat-acp-8",
+      "seccion": "Biopsia: Células de Reed-Sternberg (RS)"
+    },
+    {
+      "id": "examen2-2020-10",
+      "stem": "Niño de 3 años de edad, con decaimiento, palidez, fiebre desde hace más de 15 días. Recibió antibióticos de amplio espectro sin cambios en el cuadro clínico. Al exámen físico presenta linfadenopatías generalizadas, equímosis y petequias en abdomen y piernas. Usted sospecha de una Leucemia Aguda ¿cuál de los siguientes es necesario para el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Presencia de > 20% de blastos en el frotis de sangre periférico",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Leucocitosis > 20 000/uL",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Plaquetopenia severa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Velosidad de Sedimentación Globular elevada",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Más del 20 % de blastos.** La leucemia aguda se define por la proliferación de células inmaduras (blastos) que se bloquean en su diferenciación y reemplazan la médula; según la OMS, el diagnóstico exige **≥ 20 % de blastos** en sangre periférica o médula ósea (en la práctica se confirma con mielograma y citometría de flujo). El cuadro del niño es típico de una **LLA**: falla medular (palidez por anemia, petequias y equimosis por plaquetopenia, fiebre que no responde a antibióticos por neutropenia) y adenopatías generalizadas por infiltración.\n- **B. Leucocitosis > 20 000/µL:** es frecuente, pero muchos pacientes tienen leucocitos normales o bajos (forma aleucémica); no es un criterio.\n- **C. Plaquetopenia severa:** acompaña al cuadro, pero aparece en muchas otras causas (PTI, aplasia).\n- **D. VSG elevada:** es inespecífica.",
+      "tema": "leucemias",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Lo que define a la leucemia aguda",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Blastos bloqueados en su maduración",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Reemplazan la médula: falla medular",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Palidez, petequias, fiebre, adenopatías",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p4",
+            "texto": "Criterio OMS: ≥ 20 % de blastos",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p1",
+            "p4"
+          ]
+        ]
+      },
+      "claseId": "pat-tbl-4",
+      "resumenId": "pat-tbl-4",
+      "seccion": "Leucemia Linfoblástica Aguda (LLA)"
+    },
+    {
+      "id": "examen-3-13",
+      "stem": "Existen virus linfotropos asociados a neoplasias hematológicas; los principales son:",
+      "options": [
+        {
+          "id": "a",
+          "text": "HTLV-1, EBV, HHV8",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "EBV, Herpes Simple, CMV",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Herpes virus del Sarcoma de Kaposi, CMV, Adenovirus",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "HHV8, EBV, Adenovirus",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. HTLV-1, VEB y HHV-8.** Son los tres virus **linfotropos** (infectan linfocitos) con un papel oncogénico demostrado en neoplasias hematológicas:\n- **HTLV-1:** infecta linfocitos T CD4+; su proteína **Tax** activa NF-κB y otros genes de proliferación, y causa la **leucemia/linfoma de células T del adulto** (endémica en Japón, el Caribe y regiones andinas del Perú).\n- **Virus de Epstein-Barr:** infecta linfocitos B por CD21; LMP1 imita a CD40 y activa NF-κB. Se asocia al linfoma de Burkitt endémico, al Hodgkin, a los linfomas del inmunodeprimido y al linfoma NK/T nasal.\n- **HHV-8:** además del sarcoma de Kaposi, causa el **linfoma primario de cavidades** y la enfermedad de Castleman multicéntrica.\n\nLos distractores incluyen virus no oncogénicos para linfocitos: **herpes simple, citomegalovirus y adenovirus** (B, C y D).",
+      "tema": "carcinogenesis-microbiana",
+      "nivel": 1,
+      "claseId": "pat-ai-11",
+      "resumenId": "pat-ai-11",
+      "seccion": "C) Carcinogénesis microbiana",
+      "repite": "También en el examen 2021 y el examen 2020"
+    },
+    {
+      "id": "examen2-2021-14",
+      "stem": "Usted está iniciando su práctica clínica. En su primera visita médica entrevista a un paciente con sospecha de linfoma. Entre las preguntas que incluirá en la entrevista querrá indagar sobre síntomas B: marque la mejor respuesta",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fiebre, sudor nocturno, baja de peso",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Fiebre, adenopatías cervicales, dolor óseo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Sangrado de encías, baja de peso, prurito",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Linfadenopatías, pérdida de apetito, decaimiento",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Fiebre, sudoración nocturna y pérdida de peso.** Los **síntomas B** son tres, con definiciones precisas: fiebre inexplicada mayor de 38 °C, sudoración nocturna profusa y pérdida de más del 10 % del peso corporal en los últimos 6 meses. Se deben a las **citocinas** que liberan las células tumorales y el infiltrado reactivo (IL-6, TNF, IL-1). Su presencia se anota como sufijo «B» en el estadio de Ann Arbor/Lugano y empeora el pronóstico, sobre todo en el linfoma de Hodgkin.\n- **B.** Las adenopatías cervicales y el dolor óseo son signos de localización, no síntomas B.\n- **C.** El sangrado de encías orienta a una leucemia; el prurito es frecuente en el Hodgkin, pero no es un síntoma B.\n- **D.** Las adenopatías, la hiporexia y el decaimiento son inespecíficos y no forman parte de la definición.",
+      "tema": "linfomas",
+      "nivel": 1,
+      "claseId": "pat-acp-8",
+      "resumenId": "pat-acp-8",
+      "seccion": "Linfoma de Hodgkin",
+      "repite": "También en el Teórico B y el examen 2020"
+    },
+    {
+      "id": "examen-3-1",
+      "stem": "CUAL DE LAS SIGUIENTES DEFINICIONES CORRESPONDE A COILOCITO:",
+      "options": [
+        {
+          "id": "a",
+          "text": "ES UNA CELULA INFECTADA POR VIRUS PAPILOMA HUMANO",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "ES UN CAMBIO METAPLASICO CELULAR",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ES UNA CELULA INFECTADA POR EL VIRUS HERPES SIMPLEX",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ES UNA CELULA CON DISPLASIA DE ALTO GRADO",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "UNA CAMBIO HIPERPLASICO",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Es una célula infectada por el virus del papiloma humano.** El **coilocito** es la célula escamosa superficial o intermedia con el efecto citopático del VPH: **halo perinuclear** claro (por destrucción del citoplasma alrededor del núcleo) y núcleo **agrandado, hipercromático y arrugado** («en pasa»), a veces binucleado. Refleja la replicación viral productiva en las capas maduras del epitelio y es el rasgo distintivo de la **NIC 1/LSIL** y de los condilomas.\n- **B. Cambio metaplásico:** la metaplasia es el reemplazo de un epitelio adulto por otro (p. ej. escamosa en la zona de transformación), sin efecto viral.\n- **C. Herpes simple:** produce células multinucleadas con núcleos moldeados y cromatina en vidrio esmerilado (las 3 M), no coilocitos.\n- **D. Displasia de alto grado:** la NIC 3 está formada por células basaloides inmaduras; los coilocitos son propios del bajo grado.\n- **E. Cambio hiperplásico:** el aumento del número de células no explica el halo ni la atipia nuclear.",
+      "tema": "vph",
+      "nivel": 1,
+      "claseId": "pat-acp-6",
+      "resumenId": "pat-acp-6",
+      "seccion": "6. Presencia de coilocitos en áreas vecinas",
+      "repite": "También en el examen 2018",
+      "variante": {
+        "rotulo": "2018",
+        "rotuloBase": "Teórico A",
+        "stem": "¿Qué es un COILOCITO?",
+        "options": [
+          {
+            "id": "va",
+            "text": "Es una célula con un cambio citopático viral",
+            "correct": true
+          },
+          {
+            "id": "vb",
+            "text": "Es una célula con un cambio metaplásico",
+            "correct": false
+          },
+          {
+            "id": "vc",
+            "text": "Es una célula reactiva",
+            "correct": false
+          },
+          {
+            "id": "vd",
+            "text": "Es una célula displásica",
+            "correct": false
+          },
+          {
+            "id": "ve",
+            "text": "Es una célula neoplásica",
+            "correct": false
+          }
+        ],
+        "explanation": "**A. Es una célula con un cambio citopático viral.** El **coilocito** es la célula escamosa madura infectada por el **VPH**: tiene un **halo perinuclear** claro por destrucción del citoplasma alrededor del núcleo y un núcleo agrandado, hipercromático y de contorno irregular («en pasa»), a veces binucleado. Es la huella morfológica de la replicación viral productiva y caracteriza a la NIC 1/LSIL y a los condilomas.\n- **B. Cambio metaplásico:** la metaplasia sustituye un epitelio adulto por otro, sin atipia viral.\n- **C. Célula reactiva:** los cambios reactivos (inflamación, reparación) dan núcleos algo grandes, pero con cromatina fina y sin halo coilocítico.\n- **D. Célula displásica:** la NIC 1 con coilocitos se considera displasia de bajo grado, pero el coilocito como tal se define por el efecto citopático viral.\n- **E. Célula neoplásica:** la infección productiva no equivale a neoplasia; la mayoría de las lesiones con coilocitos regresan."
+      }
+    },
+    {
+      "id": "examen2-2021-1",
+      "stem": "CON RESPECTO AL CANCER DE PROSTATA. CUAL AFIRMACION ES CORRECTA:",
+      "options": [
+        {
+          "id": "a",
+          "text": "TIENE 5 GRUPOS PRONOSTICOS BASADOS EN EL SCORE DE GLEASON",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "EL PSA Y EL TACTO RECTAL PUEDEN SER SUSTITUIDOS POR LA BIOPSIA",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "EL SCORE DE GLEASON SE OBTIENE DE LA SUMA DE 3 PATRONES HISTOLOGICOS",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ES EL SEGUNDO CANCER MAS FRECUENTE DESPUES DEL DE ESTOMAGO",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "EL SUBTIPO MAS FRECUENTE ES EL CARCINOMA ESCAMOSO",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Tiene 5 grupos pronósticos basados en el puntaje de Gleason.** El sistema de Gleason gradúa el adenocarcinoma de próstata solo por su **arquitectura glandular** (patrones 1 a 5, de glándulas bien formadas a láminas sólidas). La ISUP agrupa los puntajes en **5 grupos de grado**: GG1 (≤ 6), GG2 (3+4), GG3 (4+3), GG4 (8) y GG5 (9-10), que se correlacionan con el pronóstico mejor que el puntaje solo.\n- **B. Biopsia en lugar de PSA y tacto:** son pasos distintos; el PSA y el tacto rectal seleccionan a quién biopsiar, y la biopsia confirma el diagnóstico.\n- **C. Suma de 3 patrones:** se suman **2**, el más extenso (primario) y el segundo más extenso o el de mayor grado.\n- **D. Segundo después del de estómago:** en los varones es el primero en incidencia en el Perú y el segundo en el mundo (después del de pulmón).\n- **E. Carcinoma escamoso:** más del 95 % son **adenocarcinomas** acinares.",
+      "tema": "clinica-tumoral",
+      "nivel": 1,
+      "claseId": "pat-ai-13",
+      "resumenId": "pat-ai-13",
+      "seccion": "Clasificación y estadificación de los tumores"
+    },
+    {
+      "id": "examen2-2021-2",
+      "stem": "CON RESPECTO A LAS CELULAS TIPO ANILLO DE SELLO. CUAL AFIRMACION ES CORRECTA:",
+      "options": [
+        {
+          "id": "a",
+          "text": "SON CELULAS INDIVIDUALES / DISCOHESIVAS DE ADENOCARCINOMA",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "TIENEN MENOR PROBABILIDAD DE METASTASIS LINFATICA",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "SON EXCLUSIVAS DEL CANCER DE ESTOMAGO",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "FORMAN ESTRUCTURAS GLANDULARES BIEN DIFERENCIADAS",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "SE CORRELACIONAN CON UN MEJOR PRONOSTICO DE SOBREVIDA",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Son células sueltas, sin cohesión, de un adenocarcinoma.** La célula en **anillo de sello** tiene una gran vacuola de mucina intracitoplasmática que empuja el núcleo contra la membrana, en forma de medialuna. Es típica del **adenocarcinoma de tipo difuso** (estómago): la pérdida de la **E-cadherina** (mutación de *CDH1*, hereditaria o somática) rompe las uniones intercelulares, de modo que las células infiltran la pared de una en una, sin formar glándulas, y pueden dar la *linitis plástica*.\n- **B. Menos metástasis linfáticas:** al revés; al ser discohesivas se diseminan pronto a ganglios, peritoneo y ovario (tumor de Krukenberg).\n- **C. Exclusivas del estómago:** también aparecen en el carcinoma lobulillar de mama, el colon, la vesícula y la vejiga.\n- **D. Glándulas bien diferenciadas:** justamente **no** forman glándulas.\n- **E. Mejor pronóstico:** se asocian a un pronóstico **peor**.",
+      "tema": "gastrico-pulmon",
+      "nivel": 1,
+      "claseId": "pat-acp-7",
+      "resumenId": "pat-acp-7",
+      "seccion": "3. Cáncer gástrico intestinal frente a difuso, E-cadherina y HER2"
+    },
+    {
+      "id": "examen2-2020-9",
+      "stem": "En relación con infecciones virales marque la respuesta correcta",
+      "options": [
+        {
+          "id": "a",
+          "text": "La mortalidad por Carcinoma cervical en nuestro medio está relacionada directamente con una exposición previa a virus papiloma humano.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Rubeola, Polio y Epstein Barr pueden mostrar cambios citopáticos en biopsias con la microscopía de luz.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Es bien conocida la relación de Citomegalovirus, Herpes virus 1 y Varicela Zoster con el desarrollo de neoplasia malignas linfoides.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "El tropismo de COVID 19 por células mesoteliales explica el compromiso sistémico de los pacientes infectados.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Las pruebas citológicas exfoliativas no son de utilidad para un diagnóstico temprano de infección viral en el cuello uterino.",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. La mortalidad por carcinoma cervical en nuestro medio se relaciona directamente con una exposición previa al VPH.** Prácticamente todos los carcinomas de cérvix contienen ADN de VPH de alto riesgo (16 y 18 causan cerca del 70 %). Las oncoproteínas **E6** (degrada p53) y **E7** (inactiva Rb) llevan de la infección persistente a la NIC y al carcinoma invasor. En el Perú es de las primeras causas de muerte por cáncer en mujeres.\n- **B. Rubéola, polio y VEB con efecto citopático visible:** ninguno deja inclusiones características en las biopsias de rutina.\n- **C. CMV, herpes 1 y varicela-zóster en neoplasias linfoides:** no son oncogénicos; los linfotropos oncogénicos son VEB, HTLV-1 y HHV-8.\n- **D. Tropismo del SARS-CoV-2 por el mesotelio:** el virus entra por ACE2 en el epitelio respiratorio, los neumocitos y el endotelio.\n- **E. La citología no sirve:** el Papanicolaou detecta coilocitos y lesiones intraepiteliales; es la base del tamizaje.",
+      "tema": "vph",
+      "nivel": 1,
+      "claseId": "pat-acp-6",
+      "resumenId": "pat-acp-6",
+      "seccion": "IV. El virus VPH"
+    }
+  ]
+}

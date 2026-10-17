@@ -17,7 +17,8 @@ import BancoPreguntas from '@/components/BancoPreguntas';
 import { findBanco } from '@/lib/data/banco';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
-import { cursoEsGratis } from '@/lib/acceso';
+import { cursoEsGratis, requiredPlanDeCurso } from '@/lib/acceso';
+import { destinoDeResumen, puedeVerResumen } from '@/lib/acceso-resumen';
 
 const UNIDAD_LABEL: Record<string, string> = {
   UNIDAD_1:    'Respuesta celular y tisular al daño',
@@ -33,7 +34,7 @@ export default async function PatologiaActividadPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ examen?: string; banco?: string }>;
+  searchParams: Promise<{ examen?: string; banco?: string; resumen?: string; opcion?: string; seccion?: string }>;
 }) {
   const { id } = await params;
   const sp = await searchParams;
@@ -54,6 +55,15 @@ export default async function PatologiaActividadPage({
   // Patología es curso `gratis`: abierto para cualquier cuenta.
   const isFreeAccess = isLab || isFreeExam || cursoEsGratis('patologia');
   const [user, planState] = await Promise.all([getUser(), getCachedPlanState()]);
+
+  // El curso es gratis, pero los resúmenes de la Unidad 2 van en
+  // `SIEMPRE_DE_PAGO`: la tarjeta tiene que saberlo o se vería abierta y el
+  // visor recibiría un 403. Es la misma respuesta que dará `/api/resumen-html`.
+  const idsResumen = act.resumen
+    ? (act.resumen.opciones?.map(o => o.id) ?? [act.id])
+    : [];
+  const resumenPremium = idsResumen.some(rid => !destinoDeResumen(rid).libre);
+  const resumenDePago = idsResumen.length > 0 && !idsResumen.every(rid => puedeVerResumen(planState, rid));
 
   // Banco de preguntas: gratis, como el resto de exámenes del proyecto, así que
   // no pasa por LockedContent. Va dentro de `.microPage` porque es esa clase la
@@ -154,6 +164,14 @@ export default async function PatologiaActividadPage({
             resumenTitulo={act.titulo}
             examen={act.examen}
             examenTitle={act.titulo}
+            resumenDePago={resumenDePago ? requiredPlanDeCurso('patologia') : undefined}
+            resumenPremium={resumenPremium}
+            /* Los enlaces del informe por temas (`?resumen=1&seccion=…`) abren
+               el resumen en su sección. El visor va por portal al body, así que
+               solo se abre si el resumen es accesible. */
+            abrirResumen={sp?.resumen === '1' && !resumenDePago}
+            resumenOpcion={sp?.opcion}
+            resumenSeccion={sp?.seccion}
             banco={
               banco
                 ? {

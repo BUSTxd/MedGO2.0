@@ -35,6 +35,10 @@ const SIEMPRE_DE_PAGO = new Set([
   'practica-8', 'practica-9', 'practica-10',
   'practica-11', 'practica-12', 'practica-13',
   'inm-tbl-3',
+  // Patología es curso gratis (`claseLibre` abriría todo), pero los resúmenes
+  // de la Unidad 2 son de pago: se abre el curso y se vende el material.
+  'pat-ai-8', 'pat-acp-5', 'pat-ai-10', 'pat-ai-11', 'pat-acp-6', 'pat-lab-6',
+  'pat-ai-12', 'pat-ai-13', 'pat-tbl-3', 'pat-acp-7', 'pat-tbl-4', 'pat-acp-8',
 ]);
 
 const esTipo = (...tipos: string[]) => (a: Act) => tipos.includes(a.tipo);

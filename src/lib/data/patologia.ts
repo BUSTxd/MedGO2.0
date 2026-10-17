@@ -115,6 +115,13 @@ const NOTA_LAB =
 /** Aviso de las ACP: el sílabo no fija día, la fecha es toda la semana. */
 const NOTA_ACP = 'Fecha flexible: se trabaja a lo largo de la semana con el tutor asignado.';
 
+/** Resumen en HTML con una sola opción, colgado del id del fragmento. */
+const resumenHtml = (id: string): Actividad['resumen'] => ({
+  tipo: 'pdf',
+  formato: 'html',
+  opciones: [{ id, label: 'Resumen', formato: 'html' }],
+});
+
 export const semanas: Semana[] = [
   // ═══ UNIDAD 1 — Respuesta celular y tisular al daño ════════════════════════
   {
@@ -463,6 +470,10 @@ export const semanas: Semana[] = [
         // `parcial-1-<año>`, del más reciente al más antiguo. Para añadir uno:
         // subir el JSON, registrarlo en `EXAMENES` de la route y sumarlo aquí a
         // `groups` y a `labels`.
+        // Las cifras de abajo son las de la transcripción original: el 16-10-2026
+        // las preguntas de neoplasia y genética se mudaron al Parcial 2 (39 en
+        // total: 1 del 2024, 11 del 2022, 14 del 2020 A, 13 del 2020 B), y hoy
+        // quedan 39 / 29 / 35 / 36.
         // 2020 tiene dos versiones del mismo parcial, A y B, cada una su banqueo:
         // A (clave sin letra, por los intentos ya guardados), 49 preguntas —el
         // PDF empieza en la 2—, 10 del práctico y sin la micrografía del 7; B
@@ -504,6 +515,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        resumen: resumenHtml('pat-ai-8'),
       },
       {
         id: 'pat-ai-9',
@@ -515,6 +527,8 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        // Sin resumen propio: abre el de pat-ai-8, que cubre sus temas.
+        resumen: resumenHtml('pat-ai-8'),
       },
       {
         id: 'pat-acp-5',
@@ -527,6 +541,7 @@ export const semanas: Semana[] = [
         subtemas: ['BRCA1 / BRCA2', 'Síndrome de Lynch', 'FAP', 'MEN2'],
         docentes: [],
         nota: NOTA_ACP,
+        resumen: resumenHtml('pat-acp-5'),
       },
     ],
   },
@@ -545,6 +560,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        resumen: resumenHtml('pat-ai-10'),
       },
       {
         id: 'pat-ai-11',
@@ -556,6 +572,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        resumen: resumenHtml('pat-ai-11'),
       },
       {
         id: 'pat-acp-6',
@@ -568,6 +585,7 @@ export const semanas: Semana[] = [
         subtemas: [],
         docentes: [],
         nota: NOTA_ACP,
+        resumen: resumenHtml('pat-acp-6'),
       },
       {
         id: 'pat-lab-6',
@@ -580,6 +598,7 @@ export const semanas: Semana[] = [
         subtemas: [],
         docentes: [],
         nota: NOTA_LAB,
+        resumen: resumenHtml('pat-lab-6'),
       },
     ],
   },
@@ -598,6 +617,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        resumen: resumenHtml('pat-ai-12'),
       },
       {
         id: 'pat-ai-13',
@@ -609,6 +629,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        resumen: resumenHtml('pat-ai-13'),
       },
       {
         id: 'pat-tbl-3',
@@ -621,6 +642,7 @@ export const semanas: Semana[] = [
         subtemas: [],
         docentes: [],
         examen: { key: 'patologia/tbl-3-cancer-mama', free: true },
+        resumen: resumenHtml('pat-tbl-3'),
       },
     ],
   },
@@ -640,6 +662,7 @@ export const semanas: Semana[] = [
         subtemas: [],
         docentes: [],
         nota: NOTA_ACP,
+        resumen: resumenHtml('pat-acp-7'),
       },
       {
         id: 'pat-lab-7',
@@ -670,6 +693,8 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        // Sin resumen propio: abre el de pat-tbl-4, que cubre sus temas.
+        resumen: resumenHtml('pat-tbl-4'),
       },
       {
         id: 'pat-ai-14',
@@ -681,6 +706,8 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Vigilancia inmunológica', 'Escape tumoral', 'Inmunoterapia'],
         docentes: [],
+        // Sin resumen propio: abre el de pat-acp-7, que cubre sus temas.
+        resumen: resumenHtml('pat-acp-7'),
       },
       {
         id: 'pat-c-6',
@@ -692,6 +719,8 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        // Sin resumen propio: abre el de pat-acp-8, que cubre sus temas.
+        resumen: resumenHtml('pat-acp-8'),
       },
       {
         id: 'pat-tbl-4',
@@ -703,6 +732,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        resumen: resumenHtml('pat-tbl-4'),
       },
       {
         id: 'pat-acp-8',
@@ -739,8 +769,31 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Unidad 2 · semanas 6 – 10'],
         docentes: [],
-        nota:
-          'El sílabo ubica este parcial al cierre de la semana 10, entre el fin de la Unidad 2 y el inicio de la Unidad 3. Confirmar con coordinación si evalúa la Unidad 2, la 3 o ambas.',
+        // Banco filtrado de los exámenes 2 de años anteriores: solo lo de la
+        // Unidad 2 (genética y neoplasias), sin duplicados entre fuentes, y las
+        // preguntas de neoplasia que antes iban en el Parcial 1. Un módulo por
+        // examen fuente, del más parecido al real al banqueo de estudio. El
+        // primero lleva muestra (`examenes-acceso.ts`); los demás, candado.
+        examen: {
+          key: 'patologia/parcial-2-m1',
+          estilo: 'escenario',
+          groups: ['patologia/parcial-2-m2', 'patologia/parcial-2-m3', 'patologia/parcial-2-m4', 'patologia/parcial-2-m5'],
+          labels: {
+            'patologia/parcial-2-m1': 'Parciales 2020-22',
+            'patologia/parcial-2-m2': '2018',
+            'patologia/parcial-2-m3': 'Teórico A/B',
+            'patologia/parcial-2-m4': 'Pato-oncología I',
+            'patologia/parcial-2-m5': 'Pato-oncología II',
+          },
+          hints: {
+            'patologia/parcial-2-m1': 'Neoplasia de los parciales 2020 (A y B) y 2022',
+            'patologia/parcial-2-m2': 'Examen 2 de Patología General, octubre de 2018',
+            'patologia/parcial-2-m3': 'Teórico A y B, con micrografías de neoplasias',
+            'patologia/parcial-2-m4': 'Banqueo de estudio por bloques (no es un examen real)',
+            'patologia/parcial-2-m5': 'Banqueo de estudio por bloques (no es un examen real)',
+          },
+          dePago: ['patologia/parcial-2-m2', 'patologia/parcial-2-m3', 'patologia/parcial-2-m4', 'patologia/parcial-2-m5'],
+        },
       },
     ],
   },

@@ -1,0 +1,1670 @@
+{
+  "version": 1,
+  "key": "patologia/parcial-2-m2",
+  "title": "Examen Parcial 2 — 2018",
+  "duration_min": 54,
+  "questions": [
+    {
+      "id": "examen2-2018-10",
+      "stem": "Un niño nace con una única copia funcional en el gen supresor tumoral. A los 5 años una célula somática pierde el segundo alelo debido a una mutación. Como resultado, la célula mutada pierde la capacidad de controlar la transición de la fase G1 a la fase S del ciclo celular. ¿Cuál de las siguientes neoplasias es más probable que se origine en este paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Retinoblastoma",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Leucemia mieloide crónica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Adenocarcinoma de colon",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Retinoblastoma** es la respuesta. El niño nace con una línea germinal portadora de un alelo inactivo de un gen supresor (primer golpe); la pérdida somática del segundo alelo (segundo golpe) deja a la célula sin la proteína. El gen cuya pérdida suelta el paso **G1 → S** es **RB**: la pRb hipofosforilada secuestra a E2F; sin ella, E2F transcribe los genes de la fase S sin freno. Es el modelo de los *dos golpes de Knudson*, y la forma hereditaria aparece en la infancia, a menudo bilateral (y con riesgo posterior de osteosarcoma).\n- **B. Leucemia mieloide crónica:** se debe a una ganancia de función (oncogén de fusión BCR-ABL por t(9;22)), no a la pérdida de dos alelos de un supresor.\n- **C. Adenocarcinoma de colon:** el síndrome hereditario clásico (APC) también sigue dos golpes, pero APC regula la vía WNT/β-catenina, no directamente G1/S, y el cáncer aparece en la adultez.",
+      "tema": "cancer-hereditario",
+      "nivel": 3,
+      "flujo": {
+        "titulo": "Dos golpes en RB",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Alelo RB mutado heredado (primer golpe)",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Pérdida somática del segundo alelo",
+            "tipo": "causa"
+          },
+          {
+            "id": "p3",
+            "texto": "Sin pRb: E2F queda libre",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Paso G1 → S sin control",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Tumor infantil de retina, a menudo bilateral",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p6",
+            "texto": "Retinoblastoma",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ],
+          [
+            "p5",
+            "p6"
+          ]
+        ]
+      },
+      "claseId": "pat-acp-5",
+      "resumenId": "pat-acp-5",
+      "seccion": "Hipótesis de los dos golpes de Knudson (1971)"
+    },
+    {
+      "id": "examen2-2018-12",
+      "stem": "Un varón de 70 años es evaluado por presentar baja de peso y unas fascies pletórica (cara enrojecida). Un examen de sangre revela que tiene una hemoglobina de 19g/dL y niveles de eritropoyetina elevada. El médico sospecha que puede tener una policitemia paraneoplásica. ¿Cuál de los siguientes exámenes es más probable que sea de utilidad para identificar la localización de tumor primario?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Una tomografía de tórax para evaluar pulmones",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Un tacto rectal para evaluar la próstata",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Una colonoscopía para buscar lesiones en el colon",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Una endoscopia digestiva alta para investigar el estómago",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Una ecografía de región lumbar para evaluar riñones",
+          "correct": true
+        }
+      ],
+      "explanation": "**E. Ecografía de la región lumbar para evaluar los riñones.** La policitemia paraneoplásica es secundaria: el tumor produce **eritropoyetina** de forma autónoma, la médula aumenta la masa eritrocitaria (Hb 19 g/dL) y la EPO sérica está alta, a diferencia de la policitemia vera, donde está baja. El **carcinoma de células renales** es el tumor que con más frecuencia secreta EPO (el riñón es el órgano que normalmente la fabrica); otros posibles son el hepatocarcinoma y el hemangioblastoma cerebeloso. Por eso el primer examen útil es mirar los riñones.\n- **A. Tomografía de tórax:** el cáncer de pulmón da otros síndromes (SIADH, ACTH, PTHrP), no policitemia.\n- **B. Tacto rectal:** el cáncer de próstata no produce EPO.\n- **C. Colonoscopía** y **D. endoscopia alta:** los tumores digestivos sangran y causan anemia, lo contrario de este cuadro.",
+      "tema": "clinica-tumoral",
+      "nivel": 3,
+      "flujo": {
+        "titulo": "Policitemia con EPO alta",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Hb 19 g/dL y facies pletórica",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "EPO sérica elevada: policitemia secundaria",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Producción tumoral autónoma de EPO",
+            "tipo": "causa"
+          },
+          {
+            "id": "p4",
+            "texto": "El riñón fabrica EPO normalmente",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p5",
+            "texto": "Buscar carcinoma renal: ecografía lumbar",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-13",
+      "resumenId": "pat-ai-13",
+      "seccion": "1. Endocrinopatías (Sintetizadas por Producción Hormonal Ectópica)"
+    },
+    {
+      "id": "examen2-2018-1",
+      "stem": "Los padres de un niño de 1 año llevan a su hijo al médico porque se han dado cuenta que el niño no responde a estímulos auditivos. Luego de los exámenes que comprueban la sordera, el medico explica a los padres que esto podría ser de origen genético y que existe más de un gen cuya mutación podría hacer esta condición. En este caso, el medico ha aplicado el siguiente concepto relacionado con enfermedades mendelianas:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Expresividad variable",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Heterogeneidad genética",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Pleiotropismo",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Codominancia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Penetrancia incompleta",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Heterogeneidad genética.** Se dice que hay heterogeneidad (de locus) cuando mutaciones en **genes distintos** producen el mismo fenotipo. La sordera congénita es el ejemplo clásico: más de cien genes pueden causarla, y por eso dos padres sordos pueden tener hijos oyentes (cada uno con un gen diferente). Es justo lo que explica el médico: «más de un gen cuya mutación podría causar esta condición».\n- **A. Expresividad variable:** una misma mutación da el rasgo con distinta intensidad entre portadores.\n- **C. Pleiotropismo:** es lo inverso, un solo gen con efectos sobre varios órganos o rasgos (p. ej. Marfan).\n- **D. Codominancia:** los dos alelos se expresan a la vez (grupo sanguíneo AB).\n- **E. Penetrancia incompleta:** algunos portadores de la mutación no manifiestan la enfermedad.",
+      "tema": "mendelianos",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Muchos genes, un fenotipo",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Sordera congénita en el niño",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "Mutaciones en genes distintos causan sordera",
+            "tipo": "causa"
+          },
+          {
+            "id": "p3",
+            "texto": "Todas convergen en la misma vía auditiva",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Heterogeneidad genética (de locus)",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "Clasificación de Trastornos Genéticos"
+    },
+    {
+      "id": "examen2-2018-3",
+      "stem": "En un experimento se trata de evitar la muerte celular programada a fines de determinar que nuevas mutaciones se producen en clonas celulares inmortalizadas. Para lograr este efecto sería de mayor utilidad estimular la actividad del siguiente gen:",
+      "options": [
+        {
+          "id": "a",
+          "text": "P53",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "BCL2",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Rb",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "P16",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "BRAC1",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. BCL2.** BCL-2 es la proteína antiapoptótica principal de la vía intrínseca (mitocondrial): se inserta en la membrana mitocondrial externa y bloquea a BAX y BAK, de modo que no se libera citocromo c ni se activan las caspasas. Estimular su actividad es la forma directa de que las clonas inmortalizadas **no mueran** y sigan acumulando mutaciones (es lo que hace la t(14;18) en el linfoma folicular).\n- **A. p53:** promueve la apoptosis (activa BAX, PUMA, NOXA) y la detención en G1; estimularla haría lo contrario.\n- **C. Rb** y **D. p16:** son frenos del ciclo celular; activarlos detendría la proliferación, no evitaría la apoptosis.\n- **E. BRCA1:** gen de reparación del ADN por recombinación homóloga; no impide la muerte celular.",
+      "tema": "genes-cancer",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Evitar la apoptosis",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Objetivo: que la clona no muera",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Vía intrínseca depende de BAX/BAK mitocondriales",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "BCL-2 bloquea BAX/BAK y el citocromo c",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "No se activan caspasas: célula sobrevive",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Estimular BCL2",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-acp-5",
+      "resumenId": "pat-acp-5",
+      "seccion": "Sistemas de reparación del ADN"
+    },
+    {
+      "id": "examen2-2018-5",
+      "stem": "Durante el consejo genético a unos padres que acaban de tener a su primer hijo. El médico les informa lo siguiente: “Si un niño nace con este defecto, la probabilidad de que se presente en un 2do embarazo es de 4%, y si los dos primeros hijos tienen esta anomalía, el riesgo para el tercero sube a 9%”. ¿A cuál de las siguientes condiciones es mas probable que se esté refiriendo el médico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Síndrome de Turner",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Anemia falciforme",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Síndrome de X frágil",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Labio leporino",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Fenilcetonuria",
+          "correct": false
+        }
+      ],
+      "explanation": "**D. Labio leporino.** El patrón descrito es el de la **herencia multifactorial**: el riesgo de recurrencia es bajo (2-7 %, aquí 4 %) y **sube con cada familiar afectado** (9 % con dos hijos afectados), porque cada caso indica que la familia acumula más alelos de riesgo y factores ambientales que la acercan al umbral. El labio leporino con o sin paladar hendido es el ejemplo clásico, junto con los defectos del tubo neural y la estenosis pilórica.\n- **A. Síndrome de Turner:** monosomía X por error esporádico de la meiosis; casi sin recurrencia.\n- **B. Anemia falciforme** y **E. fenilcetonuria:** autosómicas recesivas; el riesgo es fijo, 25 % en cada embarazo, sin importar cuántos hijos estén afectados.\n- **C. X frágil:** ligada al X con premutación materna; el riesgo es alto y sigue reglas mendelianas.",
+      "tema": "mendelianos",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Riesgo que sube con cada caso",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Recurrencia 4 % → 9 % con dos afectados",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "Riesgo no mendeliano: no 25 % ni 50 %",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Cada afectado indica más alelos de riesgo",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Herencia multifactorial con umbral",
+            "tipo": "causa"
+          },
+          {
+            "id": "p5",
+            "texto": "Labio leporino",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "A) Trastornos autosómicos dominantes"
+    },
+    {
+      "id": "examen2-2018-6",
+      "stem": "En un recién nacido, el examen de genitales externos no permite definir con certeza el sexo fenotípico. En este caso la prueba de mayor utilidad para determinar el sexo genético será:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hibridación genómica comparativa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Citometría de flujo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Southern blot",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Cariotipo",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Secuenciamiento de todo el genoma",
+          "correct": false
+        }
+      ],
+      "explanation": "**D. Cariotipo.** En los genitales ambiguos la primera pregunta es el **sexo cromosómico** (46,XX, 46,XY o un mosaico como 45,X/46,XY), y el cariotipo en linfocitos de sangre periférica responde de forma directa, barata y rápida, mostrando además aneuploidías y reordenamientos grandes. Con ese dato se orienta el resto del estudio (hiperplasia suprarrenal congénita en una 46,XX virilizada, insensibilidad a andrógenos en un 46,XY, etc.).\n- **A. Hibridación genómica comparativa:** detecta ganancias y pérdidas submicroscópicas, pero no muestra reordenamientos balanceados y no es el examen inicial.\n- **B. Citometría de flujo:** mide marcadores de superficie y contenido de ADN; no define cromosomas sexuales.\n- **C. Southern blot:** analiza fragmentos concretos de ADN (repeticiones, reordenamientos); no da el sexo genético global.\n- **E. Secuenciación del genoma:** costosa y lenta para una pregunta que el cariotipo resuelve.",
+      "tema": "cromosomicos",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Genitales ambiguos: sexo genético",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Genitales externos ambiguos al nacer",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "Pregunta: ¿cuáles son los cromosomas sexuales?",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Se necesita ver el conjunto cromosómico",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Cariotipo en sangre periférica",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "3. Ambigüedad sexual: Hermafroditismo y seudohermafroditismo"
+    },
+    {
+      "id": "examen2-2018-13",
+      "stem": "Un varón de 30 años, soltero y con diabetes mellitus le solicita consejo médico. ¿Cuál de las siguientes afirmaciones incluiría en su explicación al paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El riesgo de que su descendencia presente diabetes es mayor mientras más alto sea el número de familiares de primer y segundo grado con esta enfermedad",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Si alguno de sus hijos presenta diabetes lo mas probable es que se manifieste a una edad más temprana que en la que le fue diagnosticada al paciente",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La única posibilidad de controlar la expresión clínica de esta enfermedad es seguir el tratamiento farmacológico indicado",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Si se casa con una mujer con antecedentes familiares de diabetes, sus descendientes tendrán un 50% de probabilidades de presentar esta enfermedad",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. El riesgo de la descendencia aumenta con el número de familiares afectados.** La diabetes mellitus (sobre todo la tipo 2) es una enfermedad **multifactorial**: muchos alelos de efecto pequeño más el ambiente (obesidad, dieta, sedentarismo). En este modelo el riesgo de un individuo crece con la cantidad de parientes de primer y segundo grado afectados, porque eso refleja una mayor carga de alelos de riesgo compartidos.\n- **B. Edad de inicio más temprana en los hijos:** describe la *anticipación*, propia de las expansiones de tripletes, no de la herencia multifactorial.\n- **C. Solo el fármaco controla la expresión:** falso; la dieta, el peso y la actividad física modifican mucho la expresión clínica.\n- **D. 50 % de probabilidad:** es una cifra mendeliana (autosómica dominante); en lo multifactorial el riesgo es menor y empírico.\n\n*La pregunta no tiene clave en ninguna fuente; se eligió A por el modelo multifactorial.*",
+      "tema": "mendelianos",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Diabetes: riesgo multifactorial",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Diabetes: muchos genes de efecto pequeño",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Más ambiente: dieta, peso, actividad",
+            "tipo": "causa"
+          },
+          {
+            "id": "p3",
+            "texto": "Familiares afectados reflejan alelos de riesgo compartidos",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Más familiares afectados, más riesgo",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p3"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "2. Influencia ambiental y rasgos fenotípicos",
+      "reviewNote": "Sin clave en ninguna fuente (falta en la página resaltada); A por herencia multifactorial: el riesgo sube con el número de familiares afectados."
+    },
+    {
+      "id": "examen2-2018-17",
+      "stem": "¿Cuál de las siguientes condiciones hereditarias se caracteriza por expresión clínica médica menos aparente en mujeres, afectar al SNC, sistema esquelético y gónadas, y manifestar el fenómeno de anticipación?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Síndrome de X frágil",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Fenilcetonuria",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Enfermedad de Gaucher",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Síndrome de Down",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Gota",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Síndrome de X frágil.** Es una expansión de tripletes **CGG** en la región 5′ no traducida del gen *FMR1* (Xq27.3): más de 200 repeticiones metilan el promotor y apagan el gen (pérdida de FMRP). Cumple todo lo pedido:\n- **Menos aparente en mujeres:** tienen otro X normal y la inactivación al azar atenúa el cuadro.\n- **SNC:** discapacidad intelectual, la causa hereditaria más frecuente en varones.\n- **Esquelético y gónadas:** cara alargada, mandíbula prominente, hiperlaxitud articular y **macroorquidia** pospuberal.\n- **Anticipación:** la premutación se expande al pasar por la **madre**, y la enfermedad es más grave en cada generación.\n\nLos distractores no anticipan: **B. fenilcetonuria** y **C. Gaucher** son autosómicas recesivas, **D. Down** es una trisomía y **E. gota** es multifactorial/metabólica.",
+      "tema": "herencia-no-clasica",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Tripletes CGG en FMR1",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Expansión CGG en FMR1 a través de la madre",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Metilación del promotor: sin FMRP",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Discapacidad intelectual, macroorquidia, hiperlaxitud",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p4",
+            "texto": "Más grave en cada generación: anticipación",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Síndrome de X frágil",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p1",
+            "p4",
+            "expansión meiótica"
+          ],
+          [
+            "p3",
+            "p5"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "Enfermedades causadas por mutaciones en secuencias repetidas de trinucleótidos"
+    },
+    {
+      "id": "examen2-2018-18",
+      "stem": "Un varón de 60 años es evaluado por presentar tos persistente y pérdida de peso. En su radiografía de tórax se le encontró una masa de 5cm adyacente al bronquio principal derecho. Se le realizó una biopsia y se le diagnóstico carcinoma infiltrante. ¿Cuál de los siguientes agentes está más probablemente relacionado con el origen de esta neoplasia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Colorantes azoicos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Radiaciones ionizantes",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Hidrocarburos aromáticos policíclicos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Cloruro de vinilo",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Aflatoxina B1",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Hidrocarburos aromáticos policíclicos.** Una masa **central**, junto al bronquio principal, en un varón de 60 años orienta a un carcinoma escamoso o microcítico, los dos tipos más ligados al **tabaco**. Los hidrocarburos aromáticos policíclicos del humo (benzo[a]pireno) son procarcinógenos: el citocromo P450 los activa a epóxidos que forman aductos con el ADN, típicamente transversiones G→T en *TP53* y *KRAS*.\n- **A. Colorantes azoicos:** se asocian a carcinoma hepatocelular (experimental) y las aminas aromáticas a la vejiga.\n- **B. Radiaciones ionizantes:** aumentan el riesgo de cáncer pulmonar (radón, mineros de uranio), pero son una causa mucho menos frecuente que el tabaco.\n- **D. Cloruro de vinilo:** angiosarcoma hepático.\n- **E. Aflatoxina B1:** carcinoma hepatocelular (mutación de *TP53* en el codón 249).",
+      "tema": "carcinogenesis",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Masa central y tabaco",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Masa junto al bronquio principal, varón fumador",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "Carcinoma central: escamoso o microcítico",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Humo de tabaco: benzo[a]pireno",
+            "tipo": "causa"
+          },
+          {
+            "id": "p4",
+            "texto": "P450 lo activa; aductos y mutaciones TP53",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p5",
+            "texto": "Hidrocarburos aromáticos policíclicos",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-11",
+      "resumenId": "pat-ai-11",
+      "seccion": "A) Carcinogénesis química"
+    },
+    {
+      "id": "examen2-2018-20",
+      "stem": "En el genoma de una célula ocurre el siguiente evento: La información genética de todo el brazo de un cromosoma se intercambia de lugar con el brazo de otro cromosoma, dando lugar a la sobreexpresión de un gen normalmente silenciado. Este evento se denomina mejor ………… y podría estar relacionado con la siguiente condición …………",
+      "options": [
+        {
+          "id": "a",
+          "text": "Translocación robertsoniana – síndrome de Down",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Cambio en un par de bases – anemia falciforme",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Inserción de una secuencia de nucleótidos – fibrosis quística",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Rearreglo estructural – leucemia mieloide crónica",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Delección de un par de bases – albinismo oculocutáneo",
+          "correct": false
+        }
+      ],
+      "explanation": "**D. Rearreglo estructural – leucemia mieloide crónica.** El intercambio de material entre dos cromosomas no homólogos es una **translocación recíproca**, un rearreglo estructural. En la LMC, la t(9;22) lleva *ABL* del 9 junto a *BCR* del 22 (cromosoma Filadelfia) y crea el gen de fusión **BCR-ABL**, una tirosina cinasa constitutivamente activa. En rigor, en la LMC se forma una proteína de fusión más que sobreexpresarse un gen silenciado (eso último describe la t(8;14) de Burkitt), pero es la única opción que nombra el mecanismo correcto.\n- **A. Translocación robertsoniana:** fusión céntrica de dos acrocéntricos con pérdida de los brazos cortos, no un intercambio recíproco.\n- **B. Cambio de un par de bases** (falciforme), **C. inserción** (algunas mutaciones de fibrosis quística) y **E. deleción de una base** (albinismo): son mutaciones puntuales o pequeñas, no movimientos de brazos cromosómicos.",
+      "tema": "mutaciones",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Intercambio de brazos cromosómicos",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Brazos de dos cromosomas se intercambian",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Translocación recíproca: rearreglo estructural",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "t(9;22): gen de fusión BCR-ABL",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Tirosina cinasa siempre activa",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Rearreglo estructural – LMC",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-8",
+      "resumenId": "pat-ai-8",
+      "seccion": "Tipos y mecanismos principales de mutación"
+    },
+    {
+      "id": "examen2-2018-21",
+      "stem": "Un varón de 60 años es evaluado por presentar hematuria. Al realizarse una cistoscopia se le encuentra una lesión proliferativa de 2.5cm a nivel del trígono vesical del cual se toma una biopsia, que es informada por el patólogo como un carcinoma de células transicionales. ¿Cuál de las siguientes preguntas orientada a explicar la etiología de este tumor haría usted en la anamnesis del paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "¿Es Ud. fumador crónico?",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "¿Ha trabajado Ud. en la industria del plástico?",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "¿Ha estado Ud. expuesto con frecuencia a radiaciones ionizantes?",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "¿Tiene Ud. familiares de primer o segundo grado con este mismo tipo de cáncer?",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "¿Es Ud. consumidor frecuente de carnes ahumadas?",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. ¿Es usted fumador crónico?** El carcinoma urotelial (de células transicionales) de vejiga tiene como principal factor de riesgo el **tabaco**, que multiplica el riesgo por 3 a 7 y explica cerca de la mitad de los casos. Las aminas aromáticas del humo (2-naftilamina, 4-aminobifenilo) se absorben, se conjugan en el hígado y se eliminan por la orina, donde se hidrolizan y quedan en contacto prolongado con el urotelio; el **trígono** es donde la orina se estanca más tiempo. Otros factores son la exposición laboral a aminas (tintes, caucho), la ciclofosfamida y *Schistosoma haematobium* (este último da carcinoma escamoso).\n- **B. Industria del plástico:** el cloruro de vinilo se asocia al angiosarcoma hepático.\n- **C. Radiaciones ionizantes:** la radioterapia pélvica aumenta el riesgo, pero es poco frecuente frente al tabaco.\n- **D. Familiares con el mismo cáncer:** el componente hereditario es pequeño.\n- **E. Carnes ahumadas:** se relacionan con el cáncer gástrico.",
+      "tema": "carcinogenesis",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Tabaco y urotelio",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Hematuria; carcinoma urotelial en el trígono",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "Aminas aromáticas del humo se excretan por orina",
+            "tipo": "causa"
+          },
+          {
+            "id": "p3",
+            "texto": "Contacto prolongado del carcinógeno con el urotelio",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Mutaciones en el urotelio vesical",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Preguntar por tabaquismo",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p1"
+          ],
+          [
+            "p1",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-11",
+      "resumenId": "pat-ai-11",
+      "seccion": "B. Carcinógenos de Acción Indirecta (Procarcinógenos)"
+    },
+    {
+      "id": "examen2-2018-22",
+      "stem": "Al comparar secuencias genómicas de dos hermanos, se encuentra numerosas variaciones de posiciones de nucleótidos aislados únicos, casi siempre bialélicas. ¿Cuál de las siguientes afirmaciones se correlaciona mejor con estos hallazgos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Estas diferencias podrían explicar por qué un hermano tiene talla más alta que el otro",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Lo más probable es que un hermano sea de género femenino y el otro masculino",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La frecuencia esperada de estas variaciones es de un nucleótido por cada cien pares de bases",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La mayor parte de estos cambios debería estar ocurriendo en regiones codificadoras de proteínas",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Uno de los hermanos es fenotípicamente normal y el otro es portador de un síndrome mutacional complejo",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Estas diferencias podrían explicar que un hermano sea más alto.** Las variaciones de un único nucleótido, casi siempre bialélicas, son **polimorfismos de un nucleótido (SNP)**, la forma más común de variación del genoma. La mayoría son neutros, pero en conjunto modulan rasgos **poligénicos** como la talla (cientos de loci de efecto pequeño) y la susceptibilidad a enfermedades complejas.\n- **B. Uno sea mujer y otro varón:** el sexo depende de los cromosomas X/Y (SRY), no de SNP dispersos.\n- **C. Uno cada cien pares de bases:** la frecuencia es de aproximadamente **uno cada mil**.\n- **D. Mayoría en regiones codificantes:** menos del 1 % cae en exones; la mayoría está en regiones no codificantes.\n- **E. Un síndrome mutacional complejo:** los SNP son variación normal entre personas sanas; no indican enfermedad.",
+      "tema": "mutaciones",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "SNP: variación normal y poligénica",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Variantes de un nucleótido, bialélicas",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "Son SNP: ~1 cada 1 000 pb",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Mayoría en ADN no codificante; efecto pequeño",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Muchos SNP suman en rasgos poligénicos",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Explican diferencias de talla",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-8",
+      "resumenId": "pat-ai-8",
+      "seccion": "Tipos y mecanismos principales de mutación"
+    },
+    {
+      "id": "examen2-2018-23",
+      "stem": "En relación al gen p53 y la proteína codificada por este gen, marque la alternativa incorrecta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "La fosforilación de p53 es crucial en la progresión del ciclo celular",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Cuando hay mutación se puede detectar por inmunohistoquímica la … (No entiendo:’v)",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "p53 promueve la muerte celular a través de la activación de bax, que a su vez inhibe a BCL-2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los individuos portadores del síndrome de Li Fraumeni tienen un alelo p53 mutante heredado",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "p53 induce la detención del ciclo celular en G1 facilitando la reparación del DNA",
+          "correct": false
+        }
+      ],
+      "explanation": "Se pide la **incorrecta**: **A. «La fosforilación de p53 es crucial en la progresión del ciclo celular».** Ante daño del ADN, las cinasas ATM/ATR fosforilan p53; eso la separa de MDM2, la estabiliza y la activa como factor de transcripción para **detener** el ciclo (vía p21) o inducir apoptosis. La fosforilación que **impulsa** la progresión G1 → S es la de **Rb** por los complejos ciclina D-CDK4/6.\n\nLas otras son verdaderas:\n- **B.** La p53 mutada suele tener una vida media larga y se acumula en el núcleo, de modo que la inmunohistoquímica la detecta como tinción intensa.\n- **C.** p53 activa genes proapoptóticos como *BAX*, que contrarresta a BCL-2.\n- **D.** En el síndrome de Li-Fraumeni se hereda un alelo *TP53* mutado.\n- **E.** p53 detiene el ciclo en G1 (vía p21) para permitir la reparación.\n\n*La alternativa B está truncada en el original; se interpreta como la detección de p53 mutada por inmunohistoquímica.*",
+      "tema": "genes-cancer",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "p53: freno, no motor",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Daño del ADN",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "ATM/ATR fosforilan p53; se libera de MDM2",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "p53 estable induce p21",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Detención en G1 o apoptosis",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Falso que impulse la progresión del ciclo",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-12",
+      "resumenId": "pat-ai-12",
+      "seccion": "⁘ TP53 (Guardián del Genoma)",
+      "reviewNote": "La alternativa B está truncada en el original con un comentario del transcriptor; reescribirla (p. ej. «la p53 mutada se acumula y se detecta por inmunohistoquímica»)."
+    },
+    {
+      "id": "examen2-2018-24",
+      "stem": "Un varón de 30 años VIH positivo es evaluado por presentar placas de color violáceo en ambas piernas. La biopsia de una de esas placas muestra una proliferación neoplásica de células endoteliales localizadas en la dermis. En esta lesión es altamente probable identificar proteínas virales del siguiente patógeno:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Virus de Epstein-Barr",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Poliomavirus",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Herpes virus 8",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "HTLV-1",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Citomegalovirus",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Herpesvirus 8** (HHV-8, herpesvirus asociado al sarcoma de Kaposi). Placas violáceas en las piernas de un paciente con VIH y una proliferación de células endoteliales en la dermis definen el **sarcoma de Kaposi**. El HHV-8 infecta las células endoteliales y expresa proteínas latentes que impulsan la proliferación y la supervivencia: un homólogo de ciclina D (v-ciclina), vFLIP (activa NF-κB), LANA (inhibe p53 y Rb) y un receptor viral de quimiocinas que estimula VEGF. La inmunosupresión del VIH permite que estas células se expandan; LANA se detecta por inmunohistoquímica en todos los casos.\n- **A. Epstein-Barr:** Burkitt, Hodgkin, carcinoma nasofaríngeo, linfomas del inmunodeprimido.\n- **B. Poliomavirus:** carcinoma de células de Merkel (MCPyV) y nefropatía por BK.\n- **D. HTLV-1:** leucemia/linfoma de células T del adulto.\n- **E. Citomegalovirus:** produce inclusiones en el inmunodeprimido, pero no es oncogénico.",
+      "tema": "carcinogenesis-microbiana",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Placas violáceas en paciente con VIH",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Inmunosupresión por VIH",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Infección latente endotelial por HHV-8",
+            "tipo": "causa"
+          },
+          {
+            "id": "p3",
+            "texto": "v-ciclina, vFLIP, LANA: proliferación y supervivencia",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Proliferación endotelial dérmica; placas violáceas",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "HHV-8 (sarcoma de Kaposi)",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p3",
+            "sin control inmune"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-11",
+      "resumenId": "pat-ai-11",
+      "seccion": "1. Virus de ADN Oncogénicos"
+    },
+    {
+      "id": "examen2-2018-27",
+      "stem": "Con respecto a la cinética celular tumoral, marque la alternativa correcta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los tumores con fracción de crecimiento más alta son los menos sensibles a quimioterapia",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El tiempo del ciclo celular usualmente es igual o mayor que el de las células normales",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "La fracción de crecimiento es mayor cuando las células tumorales se encuentran en replicación (fase G0 del ciclo celular)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Los agentes antineoplásicos actúan principalmente sobre las células que no se encuentran en división celular",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. El tiempo de ciclo celular de las células tumorales suele ser igual o mayor que el de las normales.** Los tumores no crecen porque sus células se dividan más rápido, sino porque **más células están en ciclo** (fracción de crecimiento) y la producción supera a la pérdida (apoptosis, necrosis, diferenciación). Por eso un tumor tarda años en hacerse clínicamente detectable (unas 30 duplicaciones hasta 1 g).\n- **A. Mayor fracción de crecimiento, menos sensibles a la quimioterapia:** es al revés; los tumores con alta fracción de crecimiento (linfomas, leucemias, microcítico) son los más sensibles.\n- **C. Replicación en G0:** G0 es la fase de reposo; las células en G0 no se replican y no suman a la fracción de crecimiento.\n- **D. Antineoplásicos sobre células que no se dividen:** la mayoría actúan sobre células en ciclo; las células en G0 escapan al tratamiento.",
+      "tema": "neoplasia-conceptos",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Por qué crece un tumor",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Ciclo de la célula tumoral no más corto",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p2",
+            "texto": "Crecimiento depende de la fracción en ciclo",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Producción celular supera a la pérdida",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Tiempo de ciclo igual o mayor que lo normal",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p4"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p1",
+            "p2"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-10",
+      "resumenId": "pat-ai-10",
+      "seccion": "I. DEFINICIÓN DE CONCEPTOS"
+    },
+    {
+      "id": "examen2-2018-28",
+      "stem": "¿Cuál de los siguientes NO forma parte del panel inmunohistoquímico para carcinoma de mama?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Her2/Neu",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "KRAS",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Ki67",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Receptor de estrógeno",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. KRAS** no forma parte del panel inmunohistoquímico del carcinoma de mama. El panel estándar define el subtipo molecular aproximado y la terapia: **receptor de estrógeno** y **de progesterona** (candidatos a hormonoterapia), **HER2/neu** (candidato a trastuzumab) y **Ki-67** (índice de proliferación que separa luminal A de luminal B). *KRAS* es un oncogén que se estudia por técnicas moleculares (secuenciación), sobre todo en cáncer de colon (predice resistencia a anti-EGFR), pulmón y páncreas, y casi nunca está mutado en la mama.\n- **A. HER2/neu**, **C. Ki-67** y **D. receptor de estrógeno:** los tres son parte de la rutina en toda biopsia de carcinoma de mama.",
+      "tema": "mama",
+      "nivel": 1,
+      "claseId": "pat-tbl-3",
+      "resumenId": "pat-tbl-3",
+      "seccion": "Factores pronósticos y predictivos del carcinoma invasivo",
+      "repite": "También en el Teórico A"
+    },
+    {
+      "id": "examen2-2018-2",
+      "stem": "¿Cuál de las siguientes enfermedades de base genética se caracteriza porque su tendencia a expandirse depende del sexo del padre transmisor; afectan principalmente SNC y pueden manifestarse clínicamente independientemente de que la mutación se haya producido en una región codificante o no codificante de un gen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Enfermedades causadas por mutaciones en los genes mitocondriales",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Errores innatos del metabolismo",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Enfermedades causadas por mutaciones con repetición de tripletes",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Enfermedades asociadas con mosaicismo gonadal",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Enfermedades asociadas con impronta genómica",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Enfermedades por expansión de tripletes.** Reúnen las tres pistas:\n- **Dependen del sexo del progenitor:** la repetición inestable se expande sobre todo en la ovogénesis (X frágil) o en la espermatogénesis (Huntington), y por eso la gravedad aumenta en cada generación (anticipación).\n- **Afectan sobre todo al SNC:** X frágil, Huntington, ataxias espinocerebelosas, ataxia de Friedreich, distrofia miotónica.\n- **Región codificante o no:** las repeticiones CAG dentro del exón dan proteínas con poliglutamina (Huntington), y las que están fuera alteran la expresión: 5′ UTR en X frágil, intrón en Friedreich y 3′ UTR en la distrofia miotónica.\n\n**A. Mitocondriales:** herencia solo materna, sin efecto del sexo del transmisor. **B. Errores innatos:** autosómicos recesivos y estables. **D. Mosaicismo gonadal** y **E. impronta:** no producen expansión progresiva ni anticipación.",
+      "tema": "herencia-no-clasica",
+      "nivel": 1,
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "4. Patrón de herencia no clásico y anticipación"
+    },
+    {
+      "id": "examen2-2018-8",
+      "stem": "¿Cuál de las siguientes afirmaciones describe mejor el genoma humano?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Contiene 20 mil genes, menos del 10% codifica proteínas y las proteínas codificadas son más de 20 mil",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Contiene 20 mil genes, menos del 2% codifica proteínas y las proteínas codificadas son más de cien mil",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Contiene 100 mil genes, menos del 5% codifica proteínas y las proteínas codificadas son más de 100 mil",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Contiene 200 mil genes, menos del 10% codifica proteínas y las proteínas codificadas son más de 200 mil",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Contiene 100 mil genes, menos del 2% codifica proteínas y las proteínas codificadas son más de 100 mil",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Unos 20 000 genes, menos del 2 % codifica proteínas y las proteínas son más de cien mil.** El Proyecto Genoma Humano encontró solo unos 20 000 genes que codifican proteínas, y los exones suman alrededor del **1,5 %** del ADN; el resto son intrones, regiones reguladoras, ARN no codificantes y secuencias repetidas. Aun así el proteoma supera las 100 000 proteínas, gracias al **empalme alternativo** del ARN (un gen da varios ARNm) y a las modificaciones postraduccionales.\n- **A.** Acierta en los 20 000 genes, pero el 10 % sobreestima la parte codificante y subestima el número de proteínas.\n- **C** y **E.** 100 000 genes era la estimación antigua, previa a la secuenciación.\n- **D.** 200 000 genes es una cifra que nunca se manejó.",
+      "tema": "mutaciones",
+      "nivel": 1,
+      "claseId": "pat-ai-8",
+      "resumenId": "pat-ai-8",
+      "seccion": "Clasificación de Trastornos Genéticos"
+    },
+    {
+      "id": "examen2-2018-9",
+      "stem": "Oncogén frecuentemente mutado en pacientes con linfoma de Burkitt. Su activación resulta de la traslocación t(8;14) y es inducida por el virus de Epstein-Barr:",
+      "options": [
+        {
+          "id": "a",
+          "text": "C-fos",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "K-ras",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "C-erb-2",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "C-myc",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "C-kit",
+          "correct": false
+        }
+      ],
+      "explanation": "**D. c-MYC.** En el linfoma de Burkitt, la **t(8;14)** lleva el gen *MYC* (8q24) junto al locus de la cadena pesada de inmunoglobulina (14q32), cuyo potente potenciador lo hace sobreexpresar constantemente en el linfocito B. MYC es un factor de transcripción que activa el crecimiento celular, el metabolismo (efecto Warburg) y el paso por el ciclo, lo que explica la altísima tasa de proliferación (Ki-67 cercano al 100 %). En la forma **endémica** africana, el virus de Epstein-Barr infecta casi todos los casos y favorece la expansión de los linfocitos B donde ocurre la translocación. Variantes: t(2;8) y t(8;22).\n- **A. c-FOS:** factor de transcripción de respuesta temprana, sin papel en Burkitt.\n- **B. KRAS:** colon, pulmón, páncreas.\n- **C. c-ERB-B2 (HER2):** amplificado en mama y estómago.\n- **E. c-KIT:** GIST, mastocitosis, seminoma.",
+      "tema": "linfomas",
+      "nivel": 1,
+      "claseId": "pat-acp-8",
+      "resumenId": "pat-acp-8",
+      "seccion": "Linfoma no Hodgkin"
+    },
+    {
+      "id": "examen2-2018-11",
+      "stem": "De las siguientes características, ¿Cuál es observada con mayor frecuencia en neoplasias benignas con respecto a las neoplasias malignas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Crecimiento local expansivo",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Abundantes mitosis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Tasa de crecimiento alta",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Pobre diferenciación",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Cromatina nuclear incrementada",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Crecimiento local expansivo.** La neoplasia benigna crece como una masa cohesiva que **empuja** el tejido vecino sin invadirlo; al comprimirlo forma a menudo una cápsula fibrosa, por eso queda bien delimitada, se puede movilizar y se extirpa fácilmente. La maligna, en cambio, crece por **infiltración** y destrucción de lo que la rodea, sin cápsula real.\n\nLas demás son rasgos de **malignidad**:\n- **B. Abundantes mitosis** (sobre todo atípicas) y **C. tasa de crecimiento alta:** reflejan proliferación descontrolada.\n- **D. Pobre diferenciación (anaplasia):** la célula pierde la semejanza con su tejido de origen.\n- **E. Cromatina nuclear incrementada (hipercromasia):** forma parte del pleomorfismo nuclear de la célula maligna.",
+      "tema": "neoplasia-conceptos",
+      "nivel": 1,
+      "claseId": "pat-ai-10",
+      "resumenId": "pat-ai-10",
+      "seccion": "1. Tumores Benignos"
+    },
+    {
+      "id": "examen2-2018-15",
+      "stem": "Con respecto a la mutación EGFR:",
+      "options": [
+        {
+          "id": "a",
+          "text": "No existe actualmente un tratamiento molecular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Está relacionada con los carcinomas escamosos pulmonares",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Es una mutación excluyente con la mutación KRAS",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Es más frecuente en los pacientes fumadores",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Es una mutación excluyente con la mutación de KRAS.** EGFR y KRAS forman parte de la misma vía de señalización (receptor de tirosina cinasa → RAS → MAPK); basta una de las dos para activar la vía, y por eso casi nunca coinciden en el mismo adenocarcinoma de pulmón. Tiene importancia práctica: un tumor con *KRAS* mutado no responde a los inhibidores de EGFR, porque la señal se activa más abajo.\n- **A. Sin tratamiento molecular:** falso; existen inhibidores de tirosina cinasa (gefitinib, erlotinib, osimertinib).\n- **B. Carcinomas escamosos:** las mutaciones de EGFR son propias del **adenocarcinoma**.\n- **D. Más frecuente en fumadores:** es al revés; predomina en **no fumadores**, mujeres y pacientes asiáticos (en fumadores predomina KRAS).",
+      "tema": "gastrico-pulmon",
+      "nivel": 1,
+      "claseId": "pat-acp-7",
+      "resumenId": "pat-acp-7",
+      "seccion": "Caso 2: Adenocarcinoma pulmonar"
+    },
+    {
+      "id": "examen2-2018-16",
+      "stem": "¿Cuál de las siguientes es característica de la radiación ultravioleta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Es fuerte desactivadora de genes supresores tumorales",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Funciona como promotora de carcinogénesis cutánea",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Induce formación de dímeros de pirimidina en el DNA",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Es débil activadora de oncogenes",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Es un potente inductor de translocaciones asociadas a cáncer",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Induce la formación de dímeros de pirimidina en el ADN.** La radiación UVB, sobre todo, hace que dos pirimidinas adyacentes (timina-timina, citosina-timina) se unan de forma covalente. Estos dímeros los repara la **reparación por escisión de nucleótidos**; si la reparación falla o se satura, la replicación introduce mutaciones características (C→T) en genes como *TP53*, *CDKN2A* y *PTCH*. De ahí los carcinomas basocelular y escamoso y el melanoma en la piel expuesta, y el riesgo enorme en el **xeroderma pigmentoso**, donde la vía de escisión es defectuosa.\n- **A**, **D.** La UV no actúa como «desactivadora» o «activadora» selectiva; muta el ADN sin elegir genes.\n- **B. Solo promotora:** la UV es un carcinógeno completo, iniciador y promotor.\n- **E. Inductor de translocaciones:** eso es propio de la radiación ionizante, que rompe la doble cadena.",
+      "tema": "carcinogenesis",
+      "nivel": 1,
+      "claseId": "pat-ai-11",
+      "resumenId": "pat-ai-11",
+      "seccion": "1. Radiación Ultravioleta (UV)"
+    },
+    {
+      "id": "examen2-2018-19",
+      "stem": "¿Cuál de las siguientes afirmaciones se correlaciona mejor con las características de los errores innatos del metabolismo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Se pueden detectar mediante estudios de cariotipo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La mayor parte están asociados a mutaciones del DNA mitocondrial",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Su manifestación clínica está influenciada por interacciones con el medio ambiente",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Son infrecuentes y se deben a la mutación de un gen de gran efecto",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Involucran una única mutación y presentan fenómeno de anticipación",
+          "correct": false
+        }
+      ],
+      "explanation": "**D. Son infrecuentes y se deben a la mutación de un gen de gran efecto.** Los errores innatos del metabolismo (fenilcetonuria, galactosemia, enfermedades por depósito lisosómico) son enfermedades **mendelianas**, casi siempre autosómicas recesivas: la mutación de un solo gen que codifica una enzima basta para causar la enfermedad (alta penetrancia) y cada una por separado es rara.\n- **A. Detectables por cariotipo:** son mutaciones puntuales, invisibles al microscopio; se diagnostican por análisis bioquímico o molecular (tamizaje neonatal).\n- **B. Mayoría mitocondriales:** la mayoría son mutaciones del ADN nuclear.\n- **C. Influenciadas por el ambiente:** es cierto en algunos casos (la dieta controla la fenilcetonuria), pero no define al grupo como lo hace D.\n- **E. Fenómeno de anticipación:** propio de las expansiones de tripletes.\n\n*La clave es D, aunque C también es defendible porque el ambiente (la dieta) modula la expresión de la fenilcetonuria.*",
+      "tema": "mendelianos",
+      "nivel": 1,
+      "claseId": "pat-ai-8",
+      "resumenId": "pat-ai-8",
+      "seccion": "Trastornos autosómicos recesivos",
+      "reviewNote": "Clave resaltada D; C también es defendible (el ambiente modula la expresión, p. ej. dieta en fenilcetonuria)."
+    },
+    {
+      "id": "examen2-2018-25",
+      "stem": "¿A cuál de los siguientes factores se le atribuiría el hecho de que un gen, que ha sido adecuadamente transcrito, no llegue a expresarse como una proteína?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Actividad de endonucleasas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Actividad de micro RNAs",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Actividad de citoquinas",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Inmunosupresión",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Actividad de un gen supresor tumoral",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Actividad de micro-ARN.** Los miARN son ARN de unos 22 nucleótidos que se cargan en el complejo RISC y se unen por complementariedad a la región 3′ no traducida de ARNm diana: si el emparejamiento es perfecto, el ARNm se degrada, y si es parcial, se bloquea su **traducción**. Es un silenciamiento **postranscripcional**: el gen se transcribe bien, pero la proteína no se produce. En el cáncer, algunos miARN actúan como oncogenes (el miR-155 en linfomas) y otros como supresores (miR-15/16, que frenan BCL2 en la LLC).\n- **A. Endonucleasas:** cortan ácidos nucleicos de forma inespecífica; no regulan la expresión de un gen.\n- **C. Citocinas** y **D. inmunosupresión:** actúan sobre la célula o el organismo, no sobre un ARNm concreto.\n- **E. Gen supresor tumoral:** regula el ciclo y la apoptosis, no la traducción de un ARNm cualquiera.",
+      "tema": "mutaciones",
+      "nivel": 1,
+      "claseId": "pat-ai-8",
+      "resumenId": "pat-ai-8",
+      "seccion": "Tipos y mecanismos principales de mutación"
+    },
+    {
+      "id": "examen2-2018-26",
+      "stem": "¿Cuál de los siguientes signos físicos en un recién nacido está relacionado con mayor probabilidad con el diagnóstico de Síndrome de Down?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Microglosia",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Espina bífida",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Dermatoglifos atípicos",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Microcefalia",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Genitales hipertróficos",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Dermatoglifos atípicos.** En la trisomía 21 los surcos de la palma son característicos: **pliegue palmar único** (pliegue simiesco), trirradio axial distal y asas cubitales en casi todos los dedos. Son marcadores fáciles de ver en el recién nacido, junto con la hipotonía, las fisuras palpebrales oblicuas hacia arriba, los pliegues epicánticos, el perfil facial plano y la separación entre el primer y el segundo dedo del pie.\n- **A. Microglosia:** la lengua es normal o grande y protruye por la hipotonía y la boca pequeña.\n- **B. Espina bífida:** es un defecto del tubo neural de herencia multifactorial, no típico del Down.\n- **D. Microcefalia:** el Down cursa con braquicefalia; la microcefalia marcada es más propia de otros síndromes (p. ej. la trisomía 13).\n- **E. Genitales hipertróficos:** en los varones con Down son más bien hipoplásicos.",
+      "tema": "cromosomicos",
+      "nivel": 1,
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "TRASTORNOS CROMOSÓMICOS"
+    },
+    {
+      "id": "examen2-2018-29",
+      "stem": "Es CORRECTO con respecto al CÁNCER DE ESTÓMAGO:",
+      "options": [
+        {
+          "id": "a",
+          "text": "La ubicación más frecuente es en el fondo gástrico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Las células en anillo de sello rara vez dan metástasis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "En la metaplasia intestinal incompleta, el epitelio se parece al del intestino grueso",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Si un paciente tiene H. pylori (1+) NO es necesario iniciar tratamiento",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. En la metaplasia intestinal incompleta el epitelio se parece al del intestino grueso.** La metaplasia intestinal es la lesión precursora del adenocarcinoma gástrico de tipo intestinal (secuencia de Correa: gastritis por *H. pylori* → atrofia → metaplasia → displasia → carcinoma). La **completa** (tipo I) imita al intestino delgado, con enterocitos con borde en cepillo y células de Paneth. La **incompleta** (tipos II-III) imita al **colon**: células caliciformes entre células columnares que secretan sialomucinas o sulfomucinas, sin borde en cepillo. La incompleta se asocia a un riesgo mayor de cáncer.\n- **A. Fondo gástrico:** la localización más frecuente es el **antro** y la curvatura menor.\n- **B. Anillo de sello rara vez metastatiza:** al contrario, el carcinoma difuso es muy agresivo y disemina pronto.\n- **D. *H. pylori* (1+) sin tratamiento:** toda infección se erradica, porque es un carcinógeno de tipo I.",
+      "tema": "gastrico-pulmon",
+      "nivel": 1,
+      "claseId": "pat-acp-7",
+      "resumenId": "pat-acp-7",
+      "seccion": "Caso 1: Cáncer gástrico"
+    },
+    {
+      "id": "examen2-2018-30",
+      "stem": "Según la fuente GLOBOCAN, a nivel mundial, el cáncer más frecuente, sumado hombres y mujeres, es:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vejiga",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Pulmón",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Estómago",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Colon",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Pulmón.** Según GLOBOCAN, el cáncer de pulmón es el más diagnosticado del mundo sumando ambos sexos (2,5 millones de casos nuevos en 2022) y es, con diferencia, la primera causa de muerte por cáncer. Lo sostiene el tabaco, responsable de cerca del 85 % de los casos. En la edición de 2020 la mama femenina lo superó por poco en incidencia, pero no es una alternativa aquí, y en 2022 el pulmón volvió al primer lugar.\n- **A. Vejiga:** está fuera de los cinco primeros a nivel mundial.\n- **C. Estómago:** quinto en incidencia en el mundo; en Perú sí ocupa un lugar más alto.\n- **D. Colon:** el colorrectal es tercero en incidencia y segundo en mortalidad.",
+      "tema": "gastrico-pulmon",
+      "nivel": 1,
+      "claseId": "pat-acp-7",
+      "resumenId": "pat-acp-7",
+      "seccion": "Caso 2: Adenocarcinoma pulmonar"
+    }
+  ]
+}

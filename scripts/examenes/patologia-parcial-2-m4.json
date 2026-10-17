@@ -1,0 +1,2971 @@
+{
+  "version": 1,
+  "key": "patologia/parcial-2-m4",
+  "title": "Examen Parcial 2 — Pato-oncología I",
+  "duration_min": 88,
+  "questions": [
+    {
+      "id": "pato-onc-a-13",
+      "stem": "Una gestante de 38 años presenta una prueba de cribado prenatal con alto riesgo de trisomía 21. La amniocentesis confirma material adicional del cromosoma 21 mediante FISH. Sin embargo, el cariotipo fetal muestra 46 cromosomas, con una translocación robertsoniana no equilibrada entre los cromosomas 14 y 21. ¿Cuál de las siguientes afirmaciones es la más adecuada para el asesoramiento genético?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El número total de 46 cromosomas descarta trisomía 21 y convierte al FISH en un resultado falso positivo.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La alteración corresponde necesariamente a un error mitótico poscigótico, por lo que el riesgo de recurrencia es despreciable.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La presencia de material adicional 21q puede causar síndrome de Down pese a existir 46 cromosomas, y debe evaluarse el cariotipo de ambos progenitores.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "La translocación robertsoniana implica intercambio recíproco equilibrado de segmentos entre cromosomas no acrocéntricos.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El riesgo de recurrencia es siempre idéntico al de la trisomía 21 libre, independientemente del cariotipo parental.",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Material 21q extra con 46 cromosomas; cariotipar a los padres.** En la translocación robertsoniana dos acrocéntricos (14 y 21) fusionan sus brazos largos. El feto tiene 46 cromosomas, pero dos 21 libres más el 21q unido al 14: tres dosis de 21q, que es lo que produce el fenotipo de Down. A diferencia de la trisomía libre por no disyunción, puede heredarse de un progenitor portador equilibrado (45 cromosomas, fenotipo normal), así que el cariotipo parental define el riesgo de recurrencia.\n\n- **A.** «46 cromosomas descarta trisomía; FISH falso positivo»: el recuento no mide la dosis de 21q.\n- **B.** «Error mitótico poscigótico, recurrencia despreciable»: eso es el mosaicismo; esta puede heredarse.\n- **D.** «Intercambio recíproco equilibrado entre no acrocéntricos»: eso es la recíproca; la robertsoniana une acrocéntricos.\n- **E.** «Recurrencia siempre igual a la trisomía libre»: con madre portadora el riesgo es mucho mayor (~10-15 %); de novo, bajo.",
+      "tema": "cromosomicos",
+      "nivel": 3,
+      "flujo": {
+        "titulo": "Down con 46 cromosomas",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Fusión robertsoniana de brazos largos 14 y 21",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Gameto con un 21 libre más el der(14;21)",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Feto: 46 cromosomas, pero tres dosis de 21q",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Fenotipo de síndrome de Down; FISH positivo",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "Cariotipar a ambos progenitores",
+            "tipo": "clave"
+          },
+          {
+            "id": "p6",
+            "texto": "Portador equilibrado: riesgo de recurrencia alto",
+            "tipo": "efecto"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3",
+            "fecundación"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p3",
+            "p5",
+            "¿heredada?"
+          ],
+          [
+            "p5",
+            "p6",
+            "si portador"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "TRASTORNOS CROMOSÓMICOS"
+    },
+    {
+      "id": "pato-onc-a-27",
+      "stem": "Un varón de 64 años, fumador de 40 paquetes-año, desarrolla un carcinoma pulmonar. El análisis molecular identifica mutaciones en TP53 asociadas con aductos de ADN producidos por metabolitos del benzo[a]pireno, un hidrocarburo aromático policíclico presente en el humo del tabaco. ¿Cuál de los siguientes mecanismos explica mejor la acción carcinogénica de este compuesto?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El benzo[a]pireno actúa como carcinógeno directo, uniéndose al ADN sin requerir transformación metabólica.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El benzo[a]pireno activa proteína cinasa C y estimula la proliferación celular sin producir daño genético.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El benzo[a]pireno requiere activación mediante CYP1A1/CYP1B1 y otras enzimas, generando metabolitos electrofílicos que forman aductos con el ADN.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "El benzo[a]pireno produce exclusivamente alteraciones epigenéticas mediante hipermetilación de promotores de genes supresores tumorales.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "El benzo[a]pireno es activado principalmente por la glutatión S-transferasa, que genera los intermediarios responsables de las mutaciones.",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Requiere activación por CYP1A1/CYP1B1 y forma aductos.** El benzo[a]pireno es un procarcinógeno: inerte hasta que el citocromo P450 (CYP1A1/1B1) lo oxida a epóxido, la epóxido hidrolasa lo hidrata y una segunda oxidación genera el diol epóxido (BPDE), un electrófilo que se une covalentemente a la guanina. Si el aducto no se repara, la replicación introduce transversiones G→T, típicas de TP53 en el cáncer de pulmón del fumador. Los polimorfismos de CYP1A1 modulan el riesgo individual.\n\n- **A.** «Carcinógeno directo, sin metabolizar»: los directos (agentes alquilantes) no necesitan activación; este sí.\n- **B.** «Activa PKC sin daño genético»: eso define a los promotores como los ésteres de forbol, no a un iniciador genotóxico.\n- **D.** «Exclusivamente epigenético»: puede haber cambios epigenéticos, pero el mecanismo central son aductos y mutaciones.\n- **E.** «Activado por la glutatión S-transferasa»: la GST conjuga y elimina los metabolitos; es detoxificación (su déficit aumenta el riesgo).",
+      "tema": "carcinogenesis",
+      "nivel": 3,
+      "flujo": {
+        "titulo": "Del humo del tabaco a TP53",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Humo aporta benzo[a]pireno, un procarcinógeno",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "CYP1A1/1B1 y epóxido hidrolasa lo oxidan",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "BPDE electrófilo forma aductos con guanina",
+            "tipo": "clave"
+          },
+          {
+            "id": "p4",
+            "texto": "Transversiones G→T en TP53",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Carcinoma pulmonar del fumador",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p6",
+            "texto": "GST conjuga metabolitos y los elimina",
+            "tipo": "mecanismo"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4",
+            "sin reparar"
+          ],
+          [
+            "p4",
+            "p5"
+          ],
+          [
+            "p2",
+            "p6",
+            "detoxificación"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-11",
+      "resumenId": "pat-ai-11",
+      "seccion": "B. Carcinógenos de Acción Indirecta (Procarcinógenos)"
+    },
+    {
+      "id": "pato-onc-a-31",
+      "stem": "Un adolescente de 15 años presenta una masa mandibular de crecimiento rápido. La biopsia muestra proliferación de linfocitos B de tamaño intermedio, patrón histológico de cielo estrellado y un índice Ki-67 cercano al 100 %. El estudio molecular identifica infección por virus de Epstein-Barr (VEB) y una translocación t(8;14). ¿Cuál de las siguientes afirmaciones integra correctamente los mecanismos implicados en la transformación neoplásica?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La translocación t(8;14) activa BCL2, mientras que LMP1 inhibe NF-κB, favoreciendo la supervivencia de linfocitos B.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La infección por VEB produce transformación exclusivamente por inflamación crónica, mientras que la translocación t(8;14) inactiva TP53.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La translocación t(8;14) desregula MYC al situarlo bajo elementos reguladores de inmunoglobulinas, mientras que proteínas del VEB, como LMP1, pueden activar señales de supervivencia mediante NF-κB.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "EBNA2 inhibe la proliferación de linfocitos B y la translocación t(8;14) produce sobreexpresión de ciclina D1.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "LMP1 activa directamente la degradación de p53 mediante E6AP, mientras que MYC actúa principalmente inhibiendo la síntesis proteica.",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. t(8;14) desregula MYC bajo los reguladores de IGH; LMP1 activa NF-κB.** En el linfoma de Burkitt la translocación pone MYC junto al potenciador de la cadena pesada de inmunoglobulina, muy activo en el linfocito B. MYC, factor de transcripción, aumenta la biogénesis ribosomal, la síntesis proteica y la glucólisis aeróbica: de ahí el Ki-67 cercano al 100 % y el «cielo estrellado» (macrófagos que fagocitan células apoptóticas). Del VEB, LMP1 imita a un CD40 siempre activo y enciende NF-κB.\n\n- **A.** «t(8;14) activa BCL2; LMP1 inhibe NF-κB»: BCL2 es la t(14;18) del folicular, y LMP1 activa NF-κB.\n- **B.** «VEB solo por inflamación; t(8;14) inactiva TP53»: el VEB actúa con proteínas propias.\n- **D.** «EBNA2 inhibe la proliferación; ciclina D1»: EBNA2 la estimula; la ciclina D1 es la t(11;14) del manto.\n- **E.** «LMP1 degrada p53 vía E6AP»: E6/E6AP es del VPH.\n\nEn el Burkitt clásico LMP1 casi no se expresa (latencia I): por eso dice «pueden».",
+      "tema": "linfomas",
+      "nivel": 3,
+      "flujo": {
+        "titulo": "Burkitt: MYC más VEB",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "t(8;14): MYC junto al potenciador de IGH",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "MYC alto: ribosomas, glucólisis, entrada al ciclo",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Proliferación extrema: Ki-67 ≈100 %, cielo estrellado",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "VEB latente en el linfocito B",
+            "tipo": "causa"
+          },
+          {
+            "id": "p5",
+            "texto": "LMP1 imita CD40 y activa NF-κB",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p6",
+            "texto": "MYC desregulado más supervivencia viral: transformación",
+            "tipo": "clave"
+          },
+          {
+            "id": "p7",
+            "texto": "Masa mandibular de crecimiento rápido",
+            "tipo": "clinica"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p4",
+            "p5"
+          ],
+          [
+            "p2",
+            "p6"
+          ],
+          [
+            "p5",
+            "p6"
+          ],
+          [
+            "p3",
+            "p7"
+          ]
+        ]
+      },
+      "claseId": "pat-c-6",
+      "resumenId": "pat-acp-8",
+      "seccion": "Linfoma no Hodgkin"
+    },
+    {
+      "id": "pato-onc-c-9",
+      "stem": "Una paciente de 29 años acude por equimosis marcadas, sangrado gingival y epistaxis severa. Los exámenes muestran coagulopatía de consumo con tiempo de protrombina (TP) prolongado, fibrinógeno bajo (105 mg/dL) y Dímero D críticamente elevado. En el frotis sanguíneo se observan abundantes promielocitos anómalos con citoplasma hipergranular y bastones de Auer agrupados en \"faggot cells\". La prueba molecular por FISH/RT-PCR confirma la fusión PML-RARA. ¿Cuál es el diagnóstico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Leucemia mieloide aguda con RUNX1-RUNX1T1",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Leucemia promielocítica aguda (LPA / LMA M3)",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Leucemia mieloide monocítica (LMA M5)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Síndrome mielodisplásico con exceso de blastos",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Leucemia promielocítica aguda (LMA M3).** La t(15;17) fusiona PML con el receptor α del ácido retinoico (RARA). La proteína quimérica reprime los genes que el ácido retinoico necesita para la diferenciación, y la maduración se detiene en el promielocito. Estos promielocitos están cargados de gránulos (bastones de Auer en haces, las «faggot cells») que liberan factor tisular y anexina II: activan la coagulación y la fibrinólisis a la vez, con CID, fibrinógeno bajo y dímero D muy alto. Es una urgencia hemorrágica; el ácido transretinoico y el trióxido de arsénico fuerzan la diferenciación.\n\n- **A.** «LMA con RUNX1-RUNX1T1»: es la t(8;21), LMA con maduración, sin CID característica ni faggot cells.\n- **C.** «LMA monocítica (M5)»: blastos monocíticos que infiltran encías y piel; no lleva PML-RARA.\n- **D.** «Síndrome mielodisplásico con exceso de blastos»: PML-RARA define una LPA con cualquier recuento de blastos.",
+      "tema": "leucemias",
+      "nivel": 3,
+      "flujo": {
+        "titulo": "PML-RARA y la hemorragia",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "t(15;17) genera la fusión PML-RARA",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Bloqueo de la diferenciación en promielocito",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Promielocitos hipergranulares con bastones de Auer",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Gránulos liberan factor tisular y anexina II",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p5",
+            "texto": "CID: fibrinógeno bajo, dímero D alto, sangrado",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p6",
+            "texto": "Leucemia promielocítica aguda (LMA M3)",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ],
+          [
+            "p3",
+            "p6"
+          ],
+          [
+            "p5",
+            "p6"
+          ]
+        ]
+      },
+      "claseId": "pat-c-5",
+      "resumenId": "pat-tbl-4",
+      "seccion": "Leucemia Mieloide Aguda (LMA)"
+    },
+    {
+      "id": "pato-onc-a-1",
+      "stem": "En la patología molecular de las hemoglobinopatías y talasemias se describen diversos tipos de mutaciones génicas puntuales. ¿Cuál de las siguientes afirmaciones describe con precisión la base molecular de la anemia falciforme (drepanocítica) a nivel de su secuencia codificadora?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deleción de tres pares de bases que ocasiona la pérdida de una fenilalanina sin alterar el marco de lectura.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Mutación puntual de tipo nonsense que introduce un codón de parada prematuro y genera una cadena beta-globina truncada.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mutación puntual de tipo missense no conservadora que sustituye una adenina por uracilo a nivel del transcrito de ARNm, codificando valina en lugar de ácido glutámico.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Inserción de cuatro nucleótidos con desplazamiento del marco de lectura (frameshift) que activa el decaimiento mediado por pérdida de sentido.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Mutación en secuencias no codificantes del promotor que reduce la tasa de transcripción sin modificar la secuencia de aminoácidos.",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Missense no conservadora: A→U en el ARNm, valina por glutamato.** En el codón 6 de HBB el triplete GAG pasa a GUG (en el ADN, A→T). Cambia un aminoácido ácido y polar por uno hidrofóbico: por eso es no conservadora. La valina deja un parche hidrofóbico en la superficie de la HbS que, al desoxigenarse, encaja con la cadena vecina; la hemoglobina polimeriza en fibras largas que deforman al eritrocito (drepanocito), causando hemólisis y oclusión microvascular.\n\n- **A.** «Deleción de tres bases, pierde una fenilalanina»: es la ΔF508 de CFTR en la fibrosis quística.\n- **B.** «Nonsense con β-globina truncada»: produce β⁰-talasemia, no una cadena con un aminoácido cambiado.\n- **D.** «Inserción de cuatro bases (frameshift)»: corre el marco de lectura; es mecanismo de algunas β-talasemias.\n- **E.** «Mutación del promotor»: baja la cantidad de globina sin cambiar su secuencia (β⁺-talasemia).",
+      "tema": "mutaciones",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "De un codón al drepanocito",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Codón 6 de HBB: GAG cambia a GUG",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Missense: valina sustituye a glutamato",
+            "tipo": "clave"
+          },
+          {
+            "id": "p3",
+            "texto": "Parche hidrofóbico en la superficie de HbS",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "HbS desoxigenada polimeriza en fibras",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Drepanocitos: hemólisis y oclusión vascular",
+            "tipo": "clinica"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4",
+            "hipoxia"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-8",
+      "resumenId": "pat-ai-8",
+      "seccion": "Tipos y mecanismos principales de mutación"
+    },
+    {
+      "id": "pato-onc-a-3",
+      "stem": "En el estudio de las alteraciones de proteínas de la matriz extracelular (MEC), el Síndrome de Marfan tradicionalmente se entendía como una debilidad mecánica pasiva de los tejidos elásticos por mutaciones en FBN1(15q21). No obstante, los modelos patogénicos contemporáneos han demostrado que la desorganización de las microfibrillas de fibrilina-1 desencadena una cascada de señalización molecular aberrante que explica la degradación de la pared aórtica. ¿Cuál es la consecuencia molecular directa de la falla de fibrilina-1 sobre la MEC?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Inhibición de la translocación nuclear de factores de transcripción dependientes de SMAD.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Imposibilidad de secuestrar TGF-β en la MEC, lo que produce una liberación excesiva de TGF-β libre y la consiguiente regulación positiva (upregulation) de metaloproteinasas de matriz (MMP) que degradan activamente el tejido conectivo.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Hipermetilación global del promotor de la elastina en la túnica íntima, induciendo apoptosis endotelial inmediata.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Conversión irreversible de monómeros de tropoelastina en complejos amiloides fibrilares perivasculares.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Activación directa de la caspasa-3 por unión ectópica de elastasa a los proteoglicanos de la túnica media.",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. La MEC no secuestra TGF-β: exceso de TGF-β libre y más MMP.** Las microfibrillas de fibrilina-1 anclan el complejo latente de TGF-β (a través de LTBP) en la matriz. Con FBN1 mutada, por efecto dominante negativo o haploinsuficiencia, ese reservorio se libera y el TGF-β activo sobreestimula su receptor y la vía SMAD. El resultado es la inducción de metaloproteinasas que degradan elastina y colágeno, pérdida de células musculares lisas y degeneración de la media aórtica: dilatación de la raíz y disección. Por eso se ensayó el losartán, que frena esa señalización.\n\n- **A.** «Inhibe la translocación de SMAD»: ocurre lo contrario, la señalización SMAD aumenta.\n- **C.** «Hipermetilación del promotor de elastina»: no es el mecanismo del Marfan.\n- **D.** «Tropoelastina convertida en amiloide»: no hay depósito amiloide en el Marfan.\n- **E.** «Elastasa que activa caspasa-3»: no explica la falla primaria de la matriz.",
+      "tema": "mendelianos",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Marfan: el exceso de TGF-β",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Mutación de FBN1 (fibrilina-1)",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Microfibrillas no retienen el TGF-β latente",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "TGF-β libre en exceso induce MMP",
+            "tipo": "clave"
+          },
+          {
+            "id": "p4",
+            "texto": "Degradación de elastina: degeneración de la media",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Dilatación de la raíz aórtica y disección",
+            "tipo": "clinica"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4",
+            "vía SMAD"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "1) Síndrome de Marfan"
+    },
+    {
+      "id": "pato-onc-a-5",
+      "stem": "Una mujer presenta una enfermedad autosómica dominante. Su madre y su hermano poseen la misma variante patogénica, pero la madre tiene manifestaciones leves, el hermano presenta afectación grave y ella desarrolla síntomas recién en la adultez. ¿Qué fenómeno explica mejor las diferencias de gravedad entre los familiares?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Penetrancia incompleta",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Expresividad variable",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Herencia mitocondrial",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mosaicismo gonadal obligatorio",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Disomía uniparental",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Expresividad variable.** Los tres portadores tienen la enfermedad (en esta familia la penetrancia es completa), pero con distinta gravedad y edad de inicio. Eso es expresividad variable: la misma variante produce fenotipos de intensidad diferente porque otros genes (modificadores), el ambiente y el azar modulan su efecto. Es típica de los trastornos autosómicos dominantes, como la neurofibromatosis tipo 1 o el síndrome de Marfan.\n\n- **A.** «Penetrancia incompleta»: algunos portadores no muestran ningún rasgo; aquí los tres están afectados.\n- **C.** «Herencia mitocondrial»: transmisión solo materna con heteroplasmia; no encaja con un patrón autosómico dominante.\n- **D.** «Mosaicismo gonadal obligatorio»: explica hijos afectados de padres sanos, no grados de gravedad.\n- **E.** «Disomía uniparental»: ambos homólogos de un mismo progenitor (Prader-Willi, Angelman); no se relaciona con este cuadro.",
+      "tema": "mendelianos",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Misma variante, distinta gravedad",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Misma variante dominante en madre, hermano y paciente",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Los tres expresan la enfermedad: penetrancia completa",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p3",
+            "texto": "Genes modificadores y ambiente modulan el efecto",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Gravedad y edad de inicio distintas",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "Expresividad variable",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "A) Trastornos autosómicos dominantes"
+    },
+    {
+      "id": "pato-onc-a-7",
+      "stem": "Un varón de 42 años presenta una enfermedad neurológica hereditaria. Su padre desarrolló síntomas a los 55 años y su abuelo a los 68. El paciente tiene una expansión de repeticiones trinucleotídicas mayor que la identificada en su padre. ¿Qué fenómeno explica mejor el patrón familiar?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Penetrancia incompleta por mosaicismo somático",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Anticipación genética asociada a expansión de tripletes",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Herencia multifactorial por variantes de baja penetrancia",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Impronta genómica con silenciamiento del alelo materno",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Translocación cromosómica equilibrada",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Anticipación genética por expansión de tripletes.** Las repeticiones trinucleotídicas (por ejemplo CAG en la enfermedad de Huntington) son inestables: al pasar por la meiosis tienden a alargarse, y en Huntington sobre todo durante la espermatogénesis. Cuantas más repeticiones, más tóxica es la proteína o el ARN y antes aparece la enfermedad. Por eso los síntomas se adelantan en cada generación (68 → 55 → 42 años) y el paciente tiene más repeticiones que su padre.\n\n- **A.** «Penetrancia incompleta por mosaicismo somático»: explicaría portadores sanos, no un adelanto progresivo.\n- **C.** «Herencia multifactorial»: muchos genes de efecto pequeño más ambiente, sin expansión medible.\n- **D.** «Impronta genómica»: la expresión depende del progenitor de origen, pero el alelo no crece.\n- **E.** «Translocación equilibrada»: no cambia de tamaño entre generaciones ni explica el adelanto.",
+      "tema": "herencia-no-clasica",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Repeticiones que crecen",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Repeticiones CAG inestables en el gen",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Se expanden al transmitirse, sobre todo vía paterna",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Más repeticiones en cada generación",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Inicio a los 68, 55 y 42 años",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "Anticipación genética",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3",
+            "meiosis"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "4. Patrón de herencia no clásico y anticipación"
+    },
+    {
+      "id": "pato-onc-a-9",
+      "stem": "Un recién nacido presenta restricción del crecimiento intrauterino, micrognatia, occipucio prominente, cardiopatía congénita y manos persistentemente cerradas con superposición de los dedos. El estudio citogenético confirma una aneuploidía autosómica. ¿Cuál de las siguientes asociaciones entre diagnóstico y mecanismo genético es la más probable?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Síndrome de Patau, causado principalmente por una translocación robertsoniana entre los cromosomas 13 y 14.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Síndrome de Down, asociado a una trisomía 21 por no disyunción mitótica poscigótica.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Síndrome de Turner, producido por monosomía completa del cromosoma X.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Síndrome de Edwards, asociado a trisomía 18 por no disyunción meiótica.",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Síndrome de Patau, asociado a trisomía 13 por no disyunción meiótica.",
+          "correct": false
+        }
+      ],
+      "explanation": "**D. Síndrome de Edwards: trisomía 18 por no disyunción meiótica.** Puños cerrados con el índice sobre el medio y el meñique sobre el anular, occipucio prominente, micrognatia, restricción del crecimiento y cardiopatía (sobre todo comunicación interventricular) son la firma de la trisomía 18. La gran mayoría son trisomías completas por un error de separación en la meiosis materna, relacionado con la edad materna; las formas por translocación o mosaico son raras.\n\n- **A.** «Patau por translocación robertsoniana 13;14»: solo una minoría de Patau es por translocación, y su fenotipo es otro.\n- **B.** «Down por no disyunción mitótica poscigótica»: el mosaico es raro; Down da hipotonía, epicanto y pliegue palmar único, no puños cerrados.\n- **C.** «Turner, monosomía X»: es de cromosomas sexuales, no autosómica (cuello alado, linfedema, talla baja).\n- **E.** «Patau, trisomía 13 meiótica»: mecanismo válido, pero Patau da holoprosencefalia, fisura labiopalatina y polidactilia.",
+      "tema": "cromosomicos",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Trisomía 18 en el recién nacido",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "No disyunción en la meiosis materna",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Óvulo disómico para el cromosoma 18",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Cigoto con trisomía 18 completa",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Puños cerrados, dedos superpuestos, occipucio, micrognatia",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "Síndrome de Edwards",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2",
+            "edad materna"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "TRASTORNOS CROMOSÓMICOS"
+    },
+    {
+      "id": "pato-onc-a-11",
+      "stem": "Una adolescente de 16 años consulta por amenorrea primaria y ausencia de desarrollo mamario. Presenta talla baja, cuello alado e implantación baja del cabello. La ecocardiografía identifica una válvula aórtica bicúspide y la ecografía pélvica muestra gónadas en cintilla. ¿Cuál de las siguientes afirmaciones explica mejor la relación entre su alteración cromosómica y el fenotipo observado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La presencia de un cromosoma X adicional produce inactivación completa de los genes responsables del desarrollo ovárico.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La monosomía X ocasiona una deficiencia primaria de GnRH, responsable de la falta de desarrollo puberal.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La ausencia del cromosoma Y impide la formación de ovarios funcionales y determina el fenotipo.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La inactivación del único cromosoma X genera pérdida completa de la expresión génica ligada al X.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La pérdida de material del cromosoma X altera la dosis de genes que escapan a su inactivación, contribuyendo a la talla baja y disgenesia gonadal.",
+          "correct": true
+        }
+      ],
+      "explanation": "**E. Falta material del X y se altera la dosis de genes que escapan a la inactivación.** En la mujer uno de los X se inactiva, pero varios genes (los de las regiones pseudoautosómicas y otros) escapan a ese silenciamiento y necesitan dos copias. En el Turner (45,X o deleciones/mosaicos) quedan en dosis única: la haploinsuficiencia de SHOX da talla baja, y la de genes ováricos acelera la atresia folicular hasta dejar gónadas en cintilla. Sin estrógenos no hay pubertad: amenorrea primaria y ausencia de mamas, con FSH y LH altas.\n\n- **A.** «Un X adicional»: describe 47,XXX o 47,XXY, no el Turner.\n- **B.** «Déficit primario de GnRH»: el fallo es ovárico; el hipogonadismo es hipergonadotrópico.\n- **C.** «La ausencia del Y impide los ovarios»: en toda mujer 46,XX falta el Y y los ovarios son normales.\n- **D.** «Se inactiva el único X»: el único X permanece activo.",
+      "tema": "cromosomicos",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Turner: un problema de dosis",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Monosomía X (45,X) o pérdida parcial del X",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Genes que escapan a la inactivación quedan en dosis única",
+            "tipo": "clave"
+          },
+          {
+            "id": "p3",
+            "texto": "Haploinsuficiencia de SHOX: talla baja",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Atresia folicular acelerada: gónadas en cintilla",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Amenorrea primaria, sin mamas, FSH alta",
+            "tipo": "clinica"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p2",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5",
+            "sin estrógenos"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-9",
+      "resumenId": "pat-ai-8",
+      "seccion": "2. Síndrome de Turner"
+    },
+    {
+      "id": "pato-onc-a-15",
+      "stem": "Un niño de 7 años presenta retraso global del desarrollo, múltiples anomalías congénitas y dismorfias faciales. El cariotipo convencional no identifica alteraciones numéricas ni estructurales evidentes. Sin embargo, persiste una alta sospecha de enfermedad genética. Se plantea ampliar el estudio molecular, considerando que podría existir una variante patogénica en un gen no incluido en los paneles diagnósticos habituales. ¿Cuál de las siguientes estrategias es la más razonable?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Realizar secuenciación del exoma completo para investigar variantes en regiones codificantes de múltiples genes y considerar secuenciación del genoma completo si el resultado es negativo y persiste la sospecha.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Repetir exclusivamente el cariotipo convencional, porque un resultado normal excluye alteraciones de secuencia en genes individuales.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Realizar FISH con una única sonda cromosómica, porque permite identificar simultáneamente todas las variantes codificantes del genoma.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Utilizar PCR convencional de un gen seleccionado al azar, porque su alta sensibilidad garantiza identificar la alteración causal.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Realizar secuenciación de Sanger de todos los cromosomas, porque constituye la técnica estándar para analizar simultáneamente el genoma completo.",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Secuenciación del exoma completo y, si sale negativa, del genoma.** El cariotipo solo ve cambios de unos 5-10 Mb: no detecta variantes puntuales ni pequeñas deleciones. Cuando se sospecha una variante en un gen que no está en los paneles, hace falta una prueba que no parta de una hipótesis previa. El exoma secuencia en paralelo todas las regiones codificantes (~1,5 % del genoma, donde está la mayoría de variantes patogénicas conocidas). El genoma completo añade intrones, regiones reguladoras y variantes estructurales si el exoma no encuentra la causa.\n\n- **B.** «Repetir el cariotipo»: su resolución no cambia; un cariotipo normal no excluye variantes de secuencia.\n- **C.** «FISH con una sonda»: interroga un solo locus elegido de antemano.\n- **D.** «PCR de un gen al azar»: la PCR necesita saber qué secuencia buscar.\n- **E.** «Sanger de todos los cromosomas»: Sanger lee un fragmento cada vez; no es secuenciación masiva.",
+      "tema": "mutaciones",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Cuando el cariotipo es normal",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Retraso global, anomalías múltiples y dismorfias",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "Cariotipo normal: resolución de solo 5-10 Mb",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p3",
+            "texto": "Sospecha de variante pequeña en gen desconocido",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Exoma completo: todos los exones a la vez",
+            "tipo": "clave"
+          },
+          {
+            "id": "p5",
+            "texto": "Si es negativo: genoma completo",
+            "tipo": "efecto"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3",
+            "no descarta"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5",
+            "negativo"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-8",
+      "resumenId": "pat-ai-8",
+      "seccion": "Síndrome por deleción del cromosoma 22q 11 .2"
+    },
+    {
+      "id": "pato-onc-a-17",
+      "stem": "Un tumor infiltrativo, de crecimiento rápido, con focos de necrosis, originado en el muslo, que al examen microscópico presenta pleomorfismo nuclear, numerosas mitosis y estriaciones transversales en las células malignas, será con mayor probabilidad un:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Rabdomiosarcoma",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Leiomioma",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Rabdomioma",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Leiomiosarcoma",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Rabdomiosarcoma.** El nombre de un tumor sale de dos datos. El comportamiento: crecimiento rápido e infiltrativo, necrosis, pleomorfismo y muchas mitosis son criterios de malignidad, y un tumor maligno mesenquimal se llama sarcoma. La línea de diferenciación: las estriaciones transversales son sarcómeros, propios del músculo esquelético («rabdo»), y se confirman con desmina, miogenina o MyoD1. Por eso es un rabdomiosarcoma.\n\n- **B.** «Leiomioma»: benigno y de músculo liso; no infiltra ni tiene estriaciones.\n- **C.** «Rabdomioma»: comparte la diferenciación estriada, pero es benigno (típico del corazón en la esclerosis tuberosa).\n- **D.** «Leiomiosarcoma»: maligno, pero de músculo liso, con células fusiformes de núcleos en «puro» y sin estriaciones.",
+      "tema": "neoplasia-conceptos",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Nombrar un tumor muscular",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Masa del muslo infiltrativa, rápida, con necrosis",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "Pleomorfismo y mitosis: comportamiento maligno",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p3",
+            "texto": "Origen mesenquimal maligno: sufijo -sarcoma",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Estriaciones: diferenciación a músculo esquelético",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p5",
+            "texto": "Rabdomiosarcoma",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p5"
+          ],
+          [
+            "p4",
+            "p5",
+            "«rabdo»"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-10",
+      "resumenId": "pat-ai-10",
+      "seccion": "2. Tumores Malignos"
+    },
+    {
+      "id": "pato-onc-a-19",
+      "stem": "Una mujer de 52 años presenta una masa ovárica quística. El estudio histopatológico revela proliferación epitelial serosa con estratificación celular, formación de papilas complejas y atipia nuclear. Sin embargo, no se identifica invasión destructiva del estroma. ¿Cuál es la interpretación más adecuada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cistoadenoma seroso benigno, porque la ausencia de invasión excluye proliferación atípica.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Carcinoma seroso invasor, porque la complejidad papilar demuestra invasión.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Adenocarcinoma metastásico, porque las estructuras papilares indican diseminación secundaria.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Tumor seroso borderline, caracterizado por proliferación epitelial atípica sin invasión estromal destructiva.",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Teratoma quístico maduro, porque presenta componentes epiteliales diferenciados.",
+          "correct": false
+        }
+      ],
+      "explanation": "**D. Tumor seroso borderline.** La lesión supera a un cistoadenoma benigno (estratificación, papilas complejas y atipia), pero no cumple el criterio que define al carcinoma: la invasión destructiva del estroma. Esa combinación define la categoría intermedia, de bajo potencial maligno. Pueden dar implantes peritoneales y algunos progresan a carcinoma seroso de bajo grado (vía de KRAS/BRAF), pero su pronóstico es mucho mejor que el del invasor.\n\n- **A.** «Cistoadenoma seroso benigno»: tiene epitelio simple sin atipia ni estratificación; la falta de invasión no lo convierte en benigno.\n- **B.** «Carcinoma seroso invasor»: la complejidad papilar no es invasión; sin infiltración del estroma no es carcinoma.\n- **C.** «Adenocarcinoma metastásico»: la forma papilar no indica que sea una metástasis.\n- **E.** «Teratoma quístico maduro»: contiene tejidos de varias capas germinales (piel, pelo, dientes), no epitelio seroso.",
+      "tema": "neoplasia-conceptos",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Entre benigno y carcinoma",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Masa ovárica quística de epitelio seroso",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p2",
+            "texto": "Estratificación, papilas complejas y atipia",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p3",
+            "texto": "Sin invasión destructiva del estroma",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Tumor seroso borderline",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p1",
+            "p3"
+          ],
+          [
+            "p2",
+            "p4",
+            "más que benigno"
+          ],
+          [
+            "p3",
+            "p4",
+            "no es carcinoma"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-10",
+      "resumenId": "pat-ai-10",
+      "seccion": "Tipos de neoplasia"
+    },
+    {
+      "id": "pato-onc-a-21",
+      "stem": "En una pieza quirúrgica de adenocarcinoma de colon se identifican glándulas neoplásicas rodeadas por abundante tejido conectivo fibroso, vasos sanguíneos y células inflamatorias. La consistencia firme del tumor se atribuye a una reacción desmoplásica intensa. ¿Cuál de las siguientes afirmaciones es correcta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El estroma determina la clasificación histológica porque contiene las células neoplásicas.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La reacción desmoplásica demuestra una segunda neoplasia maligna de fibroblastos.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El parénquima está constituido por células neoplásicas, mientras que el estroma proporciona soporte conectivo y vascular.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "El parénquima está formado principalmente por vasos sanguíneos y células inflamatorias.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La abundancia de estroma indica benignidad, porque los carcinomas invasores carecen de soporte conectivo.",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. El parénquima son las células neoplásicas; el estroma es el soporte.** Todo tumor tiene dos componentes. El parénquima, formado por las células transformadas, decide el nombre y el comportamiento (aquí, glándulas de adenocarcinoma). El estroma no es neoplásico: fibroblastos, vasos e inflamación que el tumor recluta. Al invadir, las células tumorales secretan TGF-β y PDGF, que activan fibroblastos y los hacen depositar colágeno: es la desmoplasia, que hace que el tumor se sienta duro, casi pétreo (escirro).\n\n- **A.** «El estroma contiene las células neoplásicas»: el estroma es reactivo; la clasificación depende del parénquima.\n- **B.** «La desmoplasia es un segundo tumor de fibroblastos»: son fibroblastos reactivos, no neoplásicos.\n- **D.** «El parénquima son vasos e inflamación»: invierte los dos componentes.\n- **E.** «Mucho estroma indica benignidad»: la desmoplasia intensa es típica de carcinomas invasores.",
+      "tema": "neoplasia-conceptos",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Por qué el tumor es duro",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Glándulas neoplásicas invaden la pared colónica",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Secretan TGF-β y PDGF",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Fibroblastos activados depositan colágeno: desmoplasia",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Tumor firme, de consistencia pétrea",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "Parénquima neoplásico; estroma reactivo de soporte",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p1",
+            "p5",
+            "parénquima"
+          ],
+          [
+            "p3",
+            "p5",
+            "estroma"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-10",
+      "resumenId": "pat-ai-10",
+      "seccion": "Tipos de neoplasia"
+    },
+    {
+      "id": "pato-onc-a-23",
+      "stem": "Un queratinocito de la epidermis de un paciente sufre una mutación por efecto de radiación ultravioleta. En condiciones normales esta célula al sufrir esta mutación detendría su ciclo celular y activaría sus mecanismos de reparación del ADN; sin embargo, debido a un trastorno autosómico dominante que además afecta la capacidad de la célula para sufrir apoptosis en caso de que fracase la reparación del ADN, la célula continúa dentro del ciclo y como consecuencia de esto se añaden nuevas mutaciones, originándose un carcinoma epidermoide. Este mismo fenómeno ocurre en diferentes puntos en la piel y el paciente desarrolla múltiples carcinomas epidermoides. La mutación responsable de esta anomalía con mayor probabilidad compromete al siguiente gen:",
+      "options": [
+        {
+          "id": "a",
+          "text": "p53",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Bcl-2",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "HNPCC",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Myc",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. p53.** Ante un daño en el ADN, ATM/ATR estabilizan p53, que induce p21 (detiene el ciclo en G1/S) y GADD45 (reparación). Si la reparación fracasa, activa BAX y PUMA para llevar la célula a la apoptosis. El enunciado describe esas tres funciones perdidas a la vez, y un trastorno autosómico dominante con tumores múltiples: es la mutación germinal de TP53 (síndrome de Li-Fraumeni). Cada célula ya trae un alelo dañado; basta un segundo golpe (aquí la radiación UV) para que el queratinocito siga dividiéndose y acumule mutaciones.\n\n- **B.** «Bcl-2»: es antiapoptótica, pero no detiene el ciclo ni coordina la reparación.\n- **C.** «HNPCC»: es un síndrome, no un gen; sus genes (MLH1, MSH2) reparan apareamientos erróneos y predisponen a cáncer de colon y endometrio.\n- **D.** «Myc»: es un oncogén que empuja la proliferación; no vigila el genoma.",
+      "tema": "genes-cancer",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Sin guardián del genoma",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Radiación UV daña el ADN del queratinocito",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Normal: p53 induce p21 y GADD45 (paro y reparación)",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Si falla la reparación: p53 activa BAX/PUMA",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "TP53 germinal mutado (dominante): sin freno",
+            "tipo": "clave"
+          },
+          {
+            "id": "p5",
+            "texto": "La célula sigue ciclando y acumula mutaciones",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p6",
+            "texto": "Múltiples carcinomas epidermoides",
+            "tipo": "clinica"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3",
+            "si falla"
+          ],
+          [
+            "p4",
+            "p2",
+            "anula"
+          ],
+          [
+            "p4",
+            "p3",
+            "anula"
+          ],
+          [
+            "p4",
+            "p5"
+          ],
+          [
+            "p5",
+            "p6"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-10",
+      "resumenId": "pat-ai-10",
+      "seccion": "Cuatro Clases Principales de Genes Afectados"
+    },
+    {
+      "id": "pato-onc-a-25",
+      "stem": "Un comité de investigación evalúa tres sustancias potencialmente carcinogénicas. La sustancia X cuenta con evidencia suficiente de carcinogenicidad en humanos. La sustancia Y presenta evidencia limitada en humanos, pero suficiente en animales de experimentación. Finalmente, la sustancia Z presenta evidencia limitada tanto en humanos como en animales, sin evidencia mecanística fuerte adicional. Según la clasificación de la Agencia Internacional para la Investigación del Cáncer (IARC), ¿cuál es la correspondencia más adecuada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "X: grupo 1; Y: grupo 2B; Z: grupo 3.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "X: grupo 2A; Y: grupo 1; Z: grupo 2B.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "X: grupo 1; Y: grupo 3; Z: grupo 2A.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "X: grupo 1; Y: grupo 2A; Z: grupo 2B.",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "X: grupo 2B; Y: grupo 2A; Z: grupo 3.",
+          "correct": false
+        }
+      ],
+      "explanation": "**D. X: grupo 1; Y: grupo 2A; Z: grupo 2B.** La IARC clasifica según cuán sólida es la evidencia de que un agente puede causar cáncer, no según cuánto riesgo da una exposición concreta. Grupo 1: evidencia suficiente en humanos (X). Grupo 2A, «probablemente carcinógeno»: evidencia limitada en humanos y suficiente en animales (Y). Grupo 2B, «posiblemente carcinógeno»: evidencia limitada en humanos, aunque la de animales tampoco sea suficiente (Z). Grupo 3: no clasificable por evidencia inadecuada.\n\n- **A.** «Y: 2B; Z: 3»: subestima a Y, y Z sí tiene evidencia limitada, que basta para 2B.\n- **B.** «X: 2A; Y: 1»: X ya tiene evidencia suficiente en humanos y es grupo 1.\n- **C.** «Y: 3; Z: 2A»: invierte la solidez de la evidencia de Y y Z.\n- **E.** «X: 2B»: subestima un agente con evidencia humana suficiente.",
+      "tema": "carcinogenesis",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Evidencia y grupo IARC",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "X: evidencia suficiente en humanos",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Grupo 1: carcinógeno demostrado",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p3",
+            "texto": "Y: limitada en humanos, suficiente en animales",
+            "tipo": "causa"
+          },
+          {
+            "id": "p4",
+            "texto": "Grupo 2A: probablemente carcinógeno",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Z: limitada en humanos y en animales",
+            "tipo": "causa"
+          },
+          {
+            "id": "p6",
+            "texto": "Grupo 2B: posiblemente carcinógeno",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p7",
+            "texto": "X: 1, Y: 2A, Z: 2B",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p5",
+            "p6"
+          ],
+          [
+            "p2",
+            "p7"
+          ],
+          [
+            "p4",
+            "p7"
+          ],
+          [
+            "p6",
+            "p7"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-11",
+      "resumenId": "pat-ai-11",
+      "seccion": "II. Agentes carcinógenos y sus interacciones celulares"
+    },
+    {
+      "id": "pato-onc-a-29",
+      "stem": "Un varón de 45 años con antecedentes de exposición ocupacional a radiación ionizante desarrolla una neoplasia hematológica. El análisis citogenético identifica múltiples deleciones y reordenamientos cromosómicos. Al comparar estos hallazgos con las lesiones inducidas por radiación ultravioleta, ¿cuál de las siguientes afirmaciones es correcta?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La radiación ionizante produce principalmente dímeros de timina, mientras que la radiación UV genera roturas de doble cadena como lesión característica.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La radiación ionizante puede producir roturas de doble cadena, deleciones y reordenamientos cromosómicos, mientras que la radiación UV induce principalmente fotoproductos de pirimidina.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Ambas radiaciones producen exclusivamente mutaciones puntuales por sustitución de bases, sin alteraciones cromosómicas.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La radiación UV genera predominantemente roturas cromosómicas, mientras que la ionizante actúa únicamente mediante estrés oxidativo sin lesión directa del ADN.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La radiación ionizante solo puede promover la proliferación de células previamente mutadas, pero no puede actuar como iniciadora de carcinogénesis.",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. La ionizante rompe ambas cadenas y reordena cromosomas; la UV forma fotoproductos de pirimidina.** La radiación ionizante (rayos X, γ, partículas) daña el ADN directamente y por la radiólisis del agua, que genera radicales hidroxilo. Su lesión crítica es la rotura de doble cadena; si se repara mal (unión de extremos no homólogos), quedan deleciones y translocaciones, como en las leucemias de los expuestos. La UVB, en cambio, forma dímeros de pirimidina y fotoproductos 6-4, que se reparan por escisión de nucleótidos (su defecto es el xeroderma pigmentoso).\n\n- **A.** «Ionizante da dímeros; UV, roturas de doble cadena»: invierte las lesiones típicas.\n- **C.** «Ambas solo dan mutaciones puntuales»: la ionizante causa alteraciones estructurales extensas.\n- **D.** «UV rompe cromosomas; la ionizante solo oxida»: la ionizante también lesiona el ADN de forma directa.\n- **E.** «La ionizante solo promueve»: es un iniciador completo, porque muta el ADN.",
+      "tema": "carcinogenesis",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Dos radiaciones, dos lesiones",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Radiación ionizante: impacto directo y radiólisis del agua",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Roturas de doble cadena del ADN",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Reparación errónea: deleciones y translocaciones",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Neoplasia hematológica con reordenamientos",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "Radiación UVB sobre la piel",
+            "tipo": "causa"
+          },
+          {
+            "id": "p6",
+            "texto": "Dímeros de pirimidina, reparados por escisión de nucleótidos",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p7",
+            "texto": "Ionizante rompe cromosomas; UV forma fotoproductos",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p5",
+            "p6"
+          ],
+          [
+            "p3",
+            "p7"
+          ],
+          [
+            "p6",
+            "p7"
+          ]
+        ]
+      },
+      "claseId": "pat-ai-11",
+      "resumenId": "pat-ai-11",
+      "seccion": "2. Radiación Ionizante"
+    },
+    {
+      "id": "pato-onc-a-33",
+      "stem": "Paciente mujer de 46 años se presenta a consulta por aumento de tamaño, eritema y piel de naranja en la mama izquierda. Refiere haber recibido 2 veces terapia con antibióticos sin mejoría. Elija la mejor respuesta:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Una biopsia de piel mostrará émbolos tumorales en vasos linfáticos de la dermis.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Los cambios observados son netamente inflamatorios.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "En la biopsia se encontraron múltiples focos de carcinoma ductal in situ (DCIS).",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "De confirmarse un cáncer de mama, será de buen pronóstico.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La probabilidad de metástasis ganglionar es baja.",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. La biopsia de piel mostrará émbolos tumorales en los linfáticos dérmicos.** Es un carcinoma inflamatorio: no hay infección ni inflamación verdadera, sino un carcinoma invasor que tapona con émbolos los linfáticos de la dermis. Sin drenaje linfático la piel se edematiza y queda retraída en los folículos pilosos (piel de naranja), con eritema y calor. Por eso no responde a antibióticos. Se estadifica como T4d, suele tener ganglios comprometidos y tiene mal pronóstico; una biopsia cutánea negativa no lo descarta.\n\n- **B.** «Cambios netamente inflamatorios»: una mastitis mejoraría con antibióticos; aquí el mecanismo es neoplásico.\n- **C.** «Múltiples focos de carcinoma in situ»: el in situ no invade linfáticos y no explica el edema cutáneo.\n- **D.** «De buen pronóstico»: es enfermedad localmente avanzada, de mal pronóstico.\n- **E.** «Metástasis ganglionar poco probable»: la diseminación linfática es frecuente.",
+      "tema": "mama",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Piel de naranja que no es infección",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Carcinoma mamario invasor agresivo",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Émbolos tumorales ocluyen los linfáticos dérmicos",
+            "tipo": "clave"
+          },
+          {
+            "id": "p3",
+            "texto": "Linfedema cutáneo con retracción folicular",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Eritema y piel de naranja sin respuesta a antibióticos",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "T4d: ganglios frecuentes, mal pronóstico",
+            "tipo": "efecto"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p2",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-tbl-3",
+      "resumenId": "pat-tbl-3",
+      "seccion": "D. Carcinoma Invasivo"
+    },
+    {
+      "id": "pato-onc-a-35",
+      "stem": "Mujer de 58 años, presenta una lesión cutánea que simula una dermatitis eczematosa crónica en el pezón y la zona areolar durante 24 meses, que no mejoró con esteroides tópicos, lo que resultó en la inversión progresiva del pezón. Se sospecha Enfermedad de Paget de la Mama. ¿Cuál es el mecanismo patológico subyacente y la acción diagnóstica recomendada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Una lesión benigna inflamatoria que se maneja con el uso prolongado de antibióticos y observación, ya que la inversión del pezón es un hallazgo inespecífico.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Propagación de un carcinoma lobulillar in situ (LCIS) a través del estroma, lo que exige una biopsia del pezón.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Obstrucción linfática dérmica, que causa linfedema, requiriendo un punch de piel para confirmar células tumorales en la dermis.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Extensión de un Carcinoma Ductal (in situ o invasivo) hacia el pezón y la areola, lo que requiere una biopsia para identificar células de Paget y una mamografía para detectar un cáncer subyacente.",
+          "correct": true
+        }
+      ],
+      "explanation": "**D. Extensión de un carcinoma ductal al pezón; biopsia y mamografía.** En la enfermedad de Paget mamaria las células de un carcinoma ductal subyacente (in situ o invasor, a menudo HER2 positivo) migran por los conductos galactóforos y se instalan en la epidermis del pezón sin cruzar la membrana basal. Son células de Paget: grandes, de citoplasma pálido y núcleo atípico, entre los queratinocitos. Clínicamente parece un eccema unilateral que no cede con corticoides y retrae el pezón. La biopsia confirma las células, y la imagen mamaria busca el carcinoma asociado.\n\n- **A.** «Lesión benigna inflamatoria»: un eccema unilateral refractario con retracción obliga a descartar cáncer.\n- **B.** «Carcinoma lobulillar in situ que avanza por el estroma»: Paget se asocia a carcinoma ductal y avanza por dentro del epitelio, no por el estroma.\n- **C.** «Obstrucción linfática dérmica»: es el mecanismo del carcinoma inflamatorio (piel de naranja).",
+      "tema": "mama",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Eccema del pezón que es cáncer",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Carcinoma ductal subyacente, in situ o invasor",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Células migran por los conductos galactóforos",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Células de Paget dentro de la epidermis del pezón",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Eccema unilateral refractario y pezón retraído",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "Biopsia del pezón y mamografía",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ],
+          [
+            "p1",
+            "p5",
+            "buscar"
+          ]
+        ]
+      },
+      "claseId": "pat-tbl-3",
+      "resumenId": "pat-tbl-3",
+      "seccion": "VII. Manifestaciones clínicas y signos de alarma"
+    },
+    {
+      "id": "pato-onc-a-37",
+      "stem": "Mujer de 55 años con masa palpable en mama izquierda. La biopsia muestra Carcinoma Invasivo Tipo No Especial (NST). En cortes seriados adyacentes hay lesión Ductal In Situ (DCIS). ¿Qué hallazgo o alteración histopatológica es característica distintiva de la transformación neoplásica de 'In Situ' a 'Invasor'?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Presencia de las células de Paget.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Comedonecrosis intraductal mamaria.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Calcificaciones lineales intraductales malignas.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Ruptura de membrana basal e infiltrado estromal.",
+          "correct": true
+        }
+      ],
+      "explanation": "**D. Ruptura de la membrana basal e infiltración del estroma.** En el carcinoma ductal in situ las células malignas siguen dentro del conducto, rodeadas por la capa mioepitelial y la membrana basal. El salto a invasor ocurre cuando pierden esa capa, secretan metaloproteinasas, degradan la membrana basal y entran al estroma, donde ya pueden alcanzar linfáticos y vasos. En la práctica se demuestra por la ausencia de células mioepiteliales (p63, calponina) alrededor de los nidos tumorales.\n\n- **A.** «Células de Paget»: indican extensión intraepidérmica; pueden acompañar a un in situ sin invasión.\n- **B.** «Comedonecrosis intraductal»: es un rasgo del in situ de alto grado, todavía confinado.\n- **C.** «Calcificaciones lineales intraductales»: delatan el in situ en la mamografía, pero no prueban invasión.",
+      "tema": "mama",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Del in situ al invasor",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Células de DCIS rodeadas de mioepitelio y membrana basal",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Pierden la capa mioepitelial y secretan MMP",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Ruptura de la membrana basal",
+            "tipo": "clave"
+          },
+          {
+            "id": "p4",
+            "texto": "Infiltración del estroma: carcinoma tipo no especial",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Acceso a linfáticos y vasos: riesgo de metástasis",
+            "tipo": "clinica"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-tbl-3",
+      "resumenId": "pat-tbl-3",
+      "seccion": "D. Carcinoma Invasivo"
+    },
+    {
+      "id": "pato-onc-a-39",
+      "stem": "Una mujer de 70 años con un Carcinoma Ductal Invasivo de 1.2 cm es diagnosticada con un tumor Grado 1, fuertemente ER positivo y PR positivo, HER2 negativo, y un índice Ki-67 bajo (menor al 10%). No hay compromiso de ganglios. ¿Cuál es el subtipo molecular, el pronóstico asociado y la base de la terapia sistémica preferida para esta paciente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "HER2-positivo, pronóstico agresivo; requiere Trastuzumab.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Luminal B, pronóstico intermedio; requiere quimioterapia debido al bajo Ki-67.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Luminal A, pronóstico favorable; responde bien a la terapia endocrina (Inhibidores de la aromatasa) y es poco probable que se beneficie de la quimioterapia.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Basal-like, mal pronóstico; la quimioterapia es obligatoria.",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Luminal A, buen pronóstico, terapia endocrina con inhibidores de aromatasa.** Receptores hormonales positivos, HER2 negativo, Ki-67 bajo y grado 1 describen un tumor diferenciado, que crece lento y depende de los estrógenos: el perfil luminal A. En la posmenopausia los estrógenos ya no vienen del ovario, sino de la aromatización periférica de andrógenos (sobre todo en el tejido adiposo); bloquear la aromatasa le quita al tumor su estímulo. Pequeño, sin ganglios y poco proliferativo, la quimioterapia le aporta poco.\n\n- **A.** «HER2 positivo, trastuzumab»: el tumor es HER2 negativo; no tiene la diana.\n- **B.** «Luminal B, quimioterapia por el Ki-67 bajo»: luminal B tiene Ki-67 alto, PR bajo o HER2; un Ki-67 bajo no indica quimioterapia.\n- **D.** «Basal-like, quimioterapia obligatoria»: es triple negativo, de alto grado y muy proliferativo, lo contrario del caso.",
+      "tema": "mama",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Del perfil al tratamiento",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "RE+, RP+, HER2−, Ki-67 bajo, grado 1",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p2",
+            "texto": "Luminal A: proliferación baja, buen pronóstico",
+            "tipo": "clave"
+          },
+          {
+            "id": "p3",
+            "texto": "El crecimiento depende de los estrógenos",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Posmenopausia: estrógeno por aromatasa periférica",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p5",
+            "texto": "Inhibidor de aromatasa; la quimioterapia aporta poco",
+            "tipo": "clinica"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5",
+            "bloquear"
+          ]
+        ]
+      },
+      "claseId": "pat-tbl-3",
+      "resumenId": "pat-tbl-3",
+      "seccion": "Factores pronósticos y predictivos del carcinoma invasivo"
+    },
+    {
+      "id": "pato-onc-b-18",
+      "stem": "Paciente varón de 28 años presenta prurito, fiebre y una masa mediastinal. La biopsia con inmunohistoquímica reporta células de Reed-Sternberg CD15+, CD30+ y PAX5 débil. ¿Cuál es el diagnóstico más probable?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfoma de Hodgkin",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Linfoma T periférico",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Leucemia linfoblástica aguda T",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Leucemia mieloide aguda",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Linfoma de Hodgkin.** La célula de Reed-Sternberg viene de un linfocito B del centro germinal que perdió su programa B: por eso PAX5 queda débil y no expresa CD20 ni CD45, pero sí CD15 y CD30. Sobrevive gracias a NF-κB activado de forma constante y secreta citocinas que atraen un infiltrado reactivo abundante; esas citocinas explican la fiebre y el prurito. Un adulto joven con masa mediastinal sugiere el subtipo esclerosis nodular.\n\n- **B.** «Linfoma T periférico»: expresa CD3 y otros marcadores T; puede ser CD30+, pero no tiene células de Reed-Sternberg CD15+ con PAX5 débil.\n- **C.** «Leucemia linfoblástica aguda T»: también da masa mediastinal, pero son linfoblastos TdT+ y CD3 citoplasmático.\n- **D.** «Leucemia mieloide aguda»: mieloblastos MPO+, CD13 y CD33, sin células de Reed-Sternberg.",
+      "tema": "linfomas",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "La célula de Reed-Sternberg",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Linfocito B del centro germinal con mutaciones dañinas",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Pierde el programa B; NF-κB lo mantiene vivo",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Reed-Sternberg: CD15+, CD30+, PAX5 débil",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Citocinas atraen un infiltrado reactivo",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p5",
+            "texto": "Masa mediastinal, fiebre y prurito",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p6",
+            "texto": "Linfoma de Hodgkin clásico",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p4",
+            "p5"
+          ],
+          [
+            "p3",
+            "p6"
+          ],
+          [
+            "p5",
+            "p6"
+          ]
+        ]
+      },
+      "claseId": "pat-c-6",
+      "resumenId": "pat-acp-8",
+      "seccion": "Biopsia: Células de Reed-Sternberg (RS)"
+    },
+    {
+      "id": "pato-onc-b-20",
+      "stem": "En el estado de los linfomas (clasificación de Ann Arbor), ¿cómo se clasifica a un paciente diagnosticado con Linfoma B que presenta afectación ganglionar tanto abdominal como supradiagragmática, sin compromiso extranodal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Estadio I",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Estadio Ann Arbor III",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Estadio II",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Estadio IV",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Estadio III de Ann Arbor.** Ann Arbor ordena la extensión con el diafragma como frontera. Una sola región ganglionar es estadio I; dos o más del mismo lado, II; regiones a ambos lados del diafragma, III; compromiso difuso de órganos extranodales (médula ósea, hígado, pulmón), IV. Este paciente tiene ganglios supradiafragmáticos y abdominales, sin órganos extranodales: estadio III. A la cifra se le añade A o B según haya fiebre, sudoración nocturna o pérdida de peso.\n\n- **A.** «Estadio I»: exige una sola región ganglionar.\n- **C.** «Estadio II»: las regiones están todas del mismo lado del diafragma.\n- **D.** «Estadio IV»: requiere afectación extranodal diseminada, que aquí no hay.",
+      "tema": "linfomas",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Estadificar con el diafragma",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Ganglios supradiafragmáticos comprometidos",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p2",
+            "texto": "Ganglios abdominales (infradiafragmáticos) comprometidos",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p3",
+            "texto": "Enfermedad a ambos lados del diafragma",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Sin órganos extranodales: no llega a IV",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Estadio III de Ann Arbor",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p3"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p5"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-c-6",
+      "resumenId": "pat-acp-8",
+      "seccion": "Estadificación de linfomas: Ann Arbor modificada por Lugano"
+    },
+    {
+      "id": "pato-onc-b-24",
+      "stem": "Un niño de 4 años acude por astenia, fiebre y petequias. En el aspirado de médula ósea se observa un 85% de linfoblastos inmaduros. El inmunofenotipo revela CD19+, CD10+ (CALLA), CD22+ y TdT+. ¿Cuál es la entidad correspondiente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Leucemia mieloide aguda (LMA M2)",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Leucemia linfoblástica aguda B (LLA-B)",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Leucemia mieloide crónica (LMC)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Leucemia linfoblástica aguda T (LLA-T)",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Leucemia linfoblástica aguda B.** Es la leucemia más frecuente de la infancia, con pico entre los 2 y 5 años. El inmunofenotipo dice tres cosas: TdT (una ADN polimerasa de los precursores) marca inmadurez; CD19 y CD22, linaje B; CD10 (CALLA), la etapa pre-B «común». Los linfoblastos ocupan el 85 % de la médula y desplazan a la hematopoyesis normal: la anemia da astenia, la neutropenia fiebre y la trombocitopenia petequias.\n\n- **A.** «LMA M2»: mieloblastos MPO+, CD13 y CD33, a menudo con bastones de Auer; es de adultos.\n- **C.** «Leucemia mieloide crónica»: granulocitos en todas las etapas de maduración con BCR-ABL1, no linfoblastos.\n- **D.** «LLA T»: expresa CD3 citoplasmático, CD7, CD2 y CD5, y suele dar masa mediastinal en adolescentes.",
+      "tema": "leucemias",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Linfoblastos que llenan la médula",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Precursores B detenidos en una etapa temprana",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Linfoblastos ocupan el 85 % de la médula",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p3",
+            "texto": "Anemia, neutropenia y trombocitopenia",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Astenia, fiebre y petequias",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "TdT+ inmaduro, CD19/CD22 B, CD10 pre-B",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p6",
+            "texto": "Leucemia linfoblástica aguda B",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3",
+            "desplazan"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p1",
+            "p5"
+          ],
+          [
+            "p5",
+            "p6"
+          ],
+          [
+            "p4",
+            "p6"
+          ]
+        ]
+      },
+      "claseId": "pat-c-5",
+      "resumenId": "pat-tbl-4",
+      "seccion": "Leucemia Linfoblástica Aguda (LLA)"
+    },
+    {
+      "id": "pato-onc-c-11",
+      "stem": "Un paciente de 56 años presenta adenopatías cervicales y axilares bilaterales indoloras de 3 meses de evolución, acompañadas de sudoración nocturna y pérdida de peso de 6 kg. La tomografía demuestra adenopatías supra e infradiafragmáticas. La biopsia ganglionar muestra alteración de la arquitectura linfoide por una población monoclonal B con inmunohistoquímica: CD20+, CD10+, BCL2+ y un índice de proliferación Ki-67 del 25%. ¿Cuál es el diagnóstico definitivo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Leucemia linfocítica crónica",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfoma no-Hodgkin folicular",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Linfoma de Hodgkin clásico",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Leucemia mieloide aguda con t(8;21)",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Linfoma no Hodgkin folicular.** CD20 marca linaje B y CD10, origen en el centro germinal. Allí BCL2 normalmente está apagado, para que los linfocitos B que no se seleccionan mueran por apoptosis. Su expresión en estas células delata la t(14;18), que pone BCL2 bajo el potenciador de IGH: las células no proliferan mucho (Ki-67 bajo-moderado), pero no mueren y se acumulan. Por eso es indolente y se diagnostica en adultos mayores con adenopatías indoloras ya diseminadas.\n\n- **A.** «Leucemia linfocítica crónica»: da linfocitosis en sangre y es CD5+ y CD23+, con CD10 negativo.\n- **C.** «Linfoma de Hodgkin clásico»: células de Reed-Sternberg CD30+ y CD15+ sobre un fondo reactivo, no una población B monoclonal difusa.\n- **D.** «LMA con t(8;21)»: es una neoplasia de blastos mieloides de la médula, no un linfoma B ganglionar.",
+      "tema": "linfomas",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "BCL2 en el centro germinal",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "t(14;18): BCL2 junto al potenciador de IGH",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "BCL2 encendido en células de centro germinal",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Evaden la apoptosis y se acumulan lentamente",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Adenopatías indoloras diseminadas en adulto mayor",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "IHQ: CD20+, CD10+, BCL2+, Ki-67 bajo",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p6",
+            "texto": "Linfoma folicular",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p2",
+            "p5"
+          ],
+          [
+            "p4",
+            "p6"
+          ],
+          [
+            "p5",
+            "p6"
+          ]
+        ]
+      },
+      "claseId": "pat-c-6",
+      "resumenId": "pat-acp-8",
+      "seccion": "Caso de linfoma de Hodgkin"
+    },
+    {
+      "id": "pato-onc-c-13",
+      "stem": "Un varón de 62 años acude por astenia, equimosis fácil e infecciones respiratorias a repetición. Al examen físico se encuentra hepatoesplenomegalia moderada sin adenopatías. El hemograma reporta neutropenia (900/µL), trombocitopenia (55,000/µL) y presencia de blastos junto a monocitos atípicos en frotis. La biopsia de médula ósea muestra un recuento de blastos mieloides superior al 20%. ¿Cuál es el diagnóstico correspondiente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Reacción leucemoide reactiva",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Síndrome mielodisplásico",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Leucemia mieloide aguda (LMA)",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Leucemia linfocítica crónica",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Leucemia mieloide aguda.** Mutaciones en los precursores mieloides bloquean su diferenciación y se acumulan blastos que no maduran. Con 20 % o más de blastos mieloides en médula el diagnóstico es LMA (la OMS acepta menos en algunos subtipos genéticos). Los blastos desplazan la hematopoyesis normal: la neutropenia trae infecciones, la trombocitopenia equimosis y la anemia astenia. La hepatoesplenomegalia es infiltración, y los monocitos atípicos sugieren un componente monocítico.\n\n- **A.** «Reacción leucemoide reactiva»: leucocitosis de células maduras por una infección o inflamación, sin exceso de blastos en médula.\n- **B.** «Síndrome mielodisplásico»: tiene citopenias y displasia, pero menos del 20 % de blastos.\n- **D.** «Leucemia linfocítica crónica»: proliferan linfocitos maduros CD5+ y CD23+, no blastos mieloides.",
+      "tema": "leucemias",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "Blastos que desplazan la médula",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "Mutaciones bloquean la diferenciación mieloide",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Blastos mieloides por encima del 20 % en médula",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p3",
+            "texto": "Desplazan a la hematopoyesis normal",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p4",
+            "texto": "Neutropenia y trombocitopenia: infecciones y equimosis",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p5",
+            "texto": "Leucemia mieloide aguda",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p2",
+            "p5",
+            "umbral 20 %"
+          ],
+          [
+            "p4",
+            "p5"
+          ]
+        ]
+      },
+      "claseId": "pat-c-5",
+      "resumenId": "pat-tbl-4",
+      "seccion": "Leucemia Mieloide Crónica (LMC)"
+    },
+    {
+      "id": "pato-onc-c-15",
+      "stem": "Un paciente masculino de 48 años acude por astenia, equimosis en extremidades y fiebre. Los exámenes de laboratorio revelan pancitopenia (Hb: 7.2 g/dL, Leucocitos: 3,100/µL, Plaquetas: 38,000/µL). En el frotis de sangre periférica se identifica un 24% de blastos con escasa granulación mieloide y presencia de bastones de Auer. El estudio citogenético revela la translocación t(8;21). ¿Cuál es el diagnóstico más probable según la definición actual de leucemia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Síndrome mielodisplásico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Leucemia mieloide crónica (LMC)",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Leucemia mieloide aguda (LMA)",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Leucemia linfoblástica aguda (LLA)",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Leucemia mieloide aguda.** La t(8;21) fusiona RUNX1 con RUNX1T1: la proteína quimérica reprime los genes que el factor de transcripción RUNX1 necesita para la diferenciación mieloide, y se acumulan mieloblastos. Los bastones de Auer (gránulos de mieloperoxidasa fusionados) confirman el linaje mieloide, y la pancitopenia refleja la médula ocupada. Con 24 % de blastos ya se supera el umbral del 20 %, aunque la OMS considera que la t(8;21) basta para definir una LMA con cualquier recuento de blastos.\n\n- **A.** «Síndrome mielodisplásico»: menos del 20 % de blastos, y la t(8;21) lo excluye.\n- **B.** «Leucemia mieloide crónica»: leucocitosis con todas las etapas de maduración y BCR-ABL1, no pancitopenia con blastos.\n- **D.** «Leucemia linfoblástica aguda»: los bastones de Auer no aparecen en el linaje linfoide.",
+      "tema": "leucemias",
+      "nivel": 2,
+      "flujo": {
+        "titulo": "t(8;21) y los bastones de Auer",
+        "pasos": [
+          {
+            "id": "p1",
+            "texto": "t(8;21): fusión RUNX1-RUNX1T1",
+            "tipo": "causa"
+          },
+          {
+            "id": "p2",
+            "texto": "Reprime los genes de diferenciación mieloide",
+            "tipo": "mecanismo"
+          },
+          {
+            "id": "p3",
+            "texto": "Se acumulan mieloblastos: 24 % en sangre",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p4",
+            "texto": "Bastones de Auer: linaje mieloide",
+            "tipo": "efecto"
+          },
+          {
+            "id": "p5",
+            "texto": "Pancitopenia: astenia, equimosis y fiebre",
+            "tipo": "clinica"
+          },
+          {
+            "id": "p6",
+            "texto": "LMA: la t(8;21) basta con cualquier recuento",
+            "tipo": "clave"
+          }
+        ],
+        "enlaces": [
+          [
+            "p1",
+            "p2"
+          ],
+          [
+            "p2",
+            "p3"
+          ],
+          [
+            "p3",
+            "p4"
+          ],
+          [
+            "p3",
+            "p5",
+            "médula ocupada"
+          ],
+          [
+            "p4",
+            "p6"
+          ],
+          [
+            "p1",
+            "p6",
+            "define"
+          ]
+        ]
+      },
+      "claseId": "pat-c-5",
+      "resumenId": "pat-tbl-4",
+      "seccion": "LEUCEMIAS AGUDAS"
+    },
+    {
+      "id": "pato-onc-b-2",
+      "stem": "¿Cuáles son las tres fases secuenciales descritas en el proceso de la carcinogénesis?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Iniciación, promoción y progresión",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Inducción, angiogénesis y metástasis",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Mutación, proliferación y apoptosis",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Invasión, escape inmune y diseminación",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. Iniciación, promoción y progresión.** En la iniciación un carcinógeno muta el ADN de forma irreversible y deja una célula «iniciada», que todavía no es un tumor. En la promoción, agentes que no mutan (ésteres de forbol, hormonas, inflamación crónica) estimulan su proliferación y expanden el clon; es reversible y solo funciona si actúa después de la iniciación y de forma repetida. En la progresión el clon acumula nuevas mutaciones (TP53, RAS, genes de reparación), se vuelve heterogéneo y adquiere la capacidad de invadir y dar metástasis.\n\n- **B.** «Inducción, angiogénesis y metástasis»: la angiogénesis y la metástasis son capacidades que aparecen en la progresión, no fases del modelo.\n- **C.** «Mutación, proliferación y apoptosis»: la apoptosis es justamente lo que el tumor evade.\n- **D.** «Invasión, escape inmune y diseminación»: son rasgos (hallmarks) del tumor ya avanzado.",
+      "tema": "carcinogenesis",
+      "nivel": 1,
+      "claseId": "pat-ai-11",
+      "resumenId": "pat-ai-11",
+      "seccion": "III. ETAPAS CLÁSICAS DE LA CARCINOGÉNESIS QUÍMICA"
+    },
+    {
+      "id": "pato-onc-b-4",
+      "stem": "¿Cuál es una característica frecuente de las mutaciones del EGFR en el cáncer de pulmón de células no pequeñas (CPCNP)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Son más frecuentes en fumadores varones de edad avanzada tipo escamoso",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Presentan con mayor frecuencia deleciones en los exones 18, 19 y 20",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Se localizan exclusivamente en el dominio extracelular sin alterar la tirosina kinasa",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Inducen la disminución de la proliferación y estimulan la apoptosis",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Deleciones en los exones 18, 19 y 20.** Las mutaciones de EGFR en el cáncer de pulmón de células no pequeñas caen en el dominio tirosina cinasa intracelular (exones 18 a 21) y dejan el receptor encendido sin ligando. Así activan RAS/MAPK y PI3K/AKT, que aumentan la proliferación y la supervivencia. Predominan en adenocarcinomas de mujeres, no fumadores y asiáticos, y predicen respuesta a los inhibidores de tirosina cinasa (gefitinib, osimertinib).\n\n- **A.** «Fumadores varones mayores, tipo escamoso»: el perfil es el opuesto.\n- **C.** «Solo en el dominio extracelular, sin tocar la cinasa»: alteran justamente la cinasa.\n- **D.** «Frenan la proliferación y estimulan la apoptosis»: hacen lo contrario.\n\n*La clave sigue la diapositiva del curso; según Robbins, las más frecuentes son la deleción del exón 19 y la mutación puntual L858R del exón 21, y en el exón 20 predominan inserciones.*",
+      "tema": "gastrico-pulmon",
+      "nivel": 1,
+      "claseId": "pat-acp-7",
+      "resumenId": "pat-acp-7",
+      "seccion": "Caso 2: Adenocarcinoma pulmonar",
+      "reviewNote": "Clave según la diapositiva del curso; en Robbins las más frecuentes son la deleción del exón 19 y L858R del exón 21."
+    },
+    {
+      "id": "pato-onc-b-6",
+      "stem": "¿Cuál de los siguientes mecanismos epigenéticos es parte de las alteraciones del epigenoma en el cáncer?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Duplicación completa del genoma mitocondrial",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Metilación del DNA, Metilación de Histonas, Acetilación de Histonas y Modificación de RNA",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Translocación recíproca del cromosoma Filadelfia exclusivamente",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mutación puntual de bases nitrogenadas por radiación ultravioleta",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Metilación del ADN, metilación y acetilación de histonas y modificación del ARN.** La epigenética cambia qué genes se expresan sin cambiar la secuencia del ADN, y lo hace de forma heredable entre divisiones celulares. En el cáncer, la metilación de las islas CpG de los promotores silencia supresores (CDKN2A/p16, MLH1, BRCA1); las marcas en las histonas compactan o abren la cromatina; y las modificaciones del ARN regulan su traducción. Como son reversibles, son diana de fármacos (azacitidina, inhibidores de desacetilasas de histonas).\n\n- **A.** «Duplicación del genoma mitocondrial»: es un cambio de número de copias, no una marca epigenética.\n- **C.** «Cromosoma Filadelfia»: es una translocación t(9;22), una alteración genética estructural.\n- **D.** «Mutación puntual por UV»: cambia la secuencia de bases; es genética, no epigenética.",
+      "tema": "genes-cancer",
+      "nivel": 1,
+      "claseId": "pat-ai-10",
+      "resumenId": "pat-ai-10",
+      "seccion": "Alteraciones Epigenéticas y ARN no Codificantes"
+    },
+    {
+      "id": "pato-onc-b-8",
+      "stem": "¿Cómo se dividen las dos grandes respuestas inmunes frente al cáncer descritas en la inmunovigilancia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Respuesta humoral pasiva y respuesta epitelial directa",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Respuesta estrictamente vascular y respuesta estromal fibrótica",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Respuesta por citoquinas mitocondriales y respuesta por ribosomas libres",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Respuesta inmune innata (rápida, inespecífica, mediada por DAMPs) y respuesta adaptativa (linfocitos T y B específicos)",
+          "correct": true
+        }
+      ],
+      "explanation": "**D. Respuesta innata y respuesta adaptativa.** La innata es rápida e inespecífica: macrófagos, células NK y dendríticas reconocen señales de daño (DAMPs), ligandos de estrés como MICA/MICB o la pérdida de MHC de clase I en la célula tumoral. La adaptativa es específica y tiene memoria: los linfocitos T CD8 reconocen neoantígenos presentados en MHC I, los CD4 coordinan y los linfocitos B producen anticuerpos. Las células dendríticas unen ambas, porque captan antígenos tumorales y se los presentan a los linfocitos T.\n\n- **A.** «Humoral pasiva y epitelial directa»: no existe esa división; la respuesta humoral es parte de la adaptativa.\n- **B.** «Vascular y estromal fibrótica»: describe el microambiente tumoral, no la respuesta inmune.\n- **C.** «Citoquinas mitocondriales y ribosomas libres»: no corresponde a ninguna clasificación inmunológica.",
+      "tema": "inmunidad-cancer",
+      "nivel": 1,
+      "claseId": "pat-ai-14",
+      "resumenId": "pat-acp-7",
+      "seccion": "8. Inmunidad y cáncer"
+    },
+    {
+      "id": "pato-onc-b-10",
+      "stem": "¿Cuáles son algunas de las características principales que definen a una célula maligna?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Crecimiento controlado y función especializada en el organismo",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "No apoptosis, invasión tisular, replicación continua y no cumplir ninguna función",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Alta diferenciación estructural y respuesta coordinada a las señales de contacto",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Sensibilidad absoluta a la inhibición por contacto y muerte celular programada intacta",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Evade la apoptosis, invade, se replica sin límite y no cumple función.** La célula maligna sobrevive a señales que matarían a una normal (por ejemplo, pérdida de p53 o exceso de BCL2). Rompe la membrana basal e infiltra los tejidos vecinos. Mantiene sus telómeros con la telomerasa y se divide sin límite. Y pierde la diferenciación (anaplasia), así que deja de cumplir la función de su tejido de origen. Estos rasgos la separan de la célula benigna, que crece de forma expansiva y conserva su especialización.\n\n- **A.** «Crecimiento controlado y función especializada»: describe una célula normal.\n- **C.** «Alta diferenciación y respuesta a señales de contacto»: es propio de células sanas o tumores benignos.\n- **D.** «Inhibición por contacto y apoptosis intactas»: la célula maligna pierde precisamente esos frenos.",
+      "tema": "neoplasia-conceptos",
+      "nivel": 1,
+      "claseId": "pat-ai-10",
+      "resumenId": "pat-ai-10",
+      "seccion": "II. Características Celulares y Morfológicas (Citopatología de la Anaplasia)"
+    },
+    {
+      "id": "pato-onc-b-12",
+      "stem": "¿Qué evalúa específicamente el Estadío (Stage) de un tumor según las definiciones comparativas de las diapositivas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Qué tan rápido se están dividiendo las células tumorales bajo el microscopio",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Qué tan anormal se ve el tumor al compararlo con las células sanas circundantes",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Qué tan lejos ha viajado el cáncer desde el sitio del tumor original",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "El porcentaje exacto de expresión del marcador de proliferación Ki-67",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Qué tan lejos ha llegado el cáncer desde el tumor original.** El estadio mide la extensión anatómica. En el sistema TNM, T es el tamaño y la invasión local, N los ganglios comprometidos y M las metástasis a distancia. El grado, en cambio, es microscópico: cuánto se parecen las células a su tejido de origen y cuántas mitosis tienen. Los dos importan, pero el estadio predice mejor la evolución y orienta el tratamiento.\n\n- **A.** «Qué tan rápido se dividen las células»: es un componente del grado (índice mitótico).\n- **B.** «Qué tan anormal se ve el tumor frente a las células sanas»: es la diferenciación, base del grado.\n- **D.** «Porcentaje de Ki-67»: mide proliferación; es un marcador biológico, no la extensión del tumor.",
+      "tema": "clinica-tumoral",
+      "nivel": 1,
+      "claseId": "pat-ai-13",
+      "resumenId": "pat-ai-13",
+      "seccion": "2. Estadificación (Estadiaje)"
+    },
+    {
+      "id": "pato-onc-b-14",
+      "stem": "¿Cuál es una de las principales limitaciones de la Gammagrafía ósea para el diagnóstico oncológico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Presenta una bajísima sensibilidad para detectar lesiones óseas",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Se utiliza exclusivamente para diagnosticar tumores cerebrales primarios",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Requiere obligatoriamente el uso de glucosa marcada con flúor (FDG)",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Es muy sensible pero poco específica",
+          "correct": true
+        }
+      ],
+      "explanation": "**D. Es muy sensible pero poco específica.** La gammagrafía ósea usa difosfonatos marcados con tecnecio-99m, que se fijan donde el hueso tiene recambio osteoblástico. Por eso detecta pronto las metástasis óseas del cáncer de mama y de próstata. Pero también capta en fracturas, artrosis, osteomielitis o enfermedad de Paget ósea, así que una captación positiva no prueba metástasis y suele confirmarse con otra imagen. Además, puede no ver lesiones puramente líticas, como las del mieloma.\n\n- **A.** «Sensibilidad bajísima»: su punto fuerte es justamente la sensibilidad.\n- **B.** «Solo para tumores cerebrales primarios»: estudia el esqueleto, no el cerebro.\n- **C.** «Requiere FDG»: la glucosa marcada con flúor es el trazador del PET, no de la gammagrafía ósea.",
+      "tema": "clinica-tumoral",
+      "nivel": 1,
+      "claseId": "pat-ai-13",
+      "resumenId": "pat-ai-13",
+      "seccion": "Clasificación y estadificación de los tumores"
+    },
+    {
+      "id": "pato-onc-b-16",
+      "stem": "¿Cuáles son señaladas como las principales vías moleculares aberrantes recurrentes en el mapa de vías en cáncer?",
+      "options": [
+        {
+          "id": "a",
+          "text": "RAS/RAF/MEK y PI3K/AKT/mTOR",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Glucólisis anaeróbica estricta y ciclo de Krebs mitocondrial íntegro",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Coagulación intravascular diseminada y fibrinólisis hepática",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Síntesis de urea y excreción de amoníaco renal",
+          "correct": false
+        }
+      ],
+      "explanation": "**A. RAS/RAF/MEK y PI3K/AKT/mTOR.** Son las dos vías que transmiten la señal de los receptores tirosina cinasa (EGFR, HER2) al núcleo, y se alteran en muchos tipos de cáncer. La primera (MAPK) empuja la proliferación; la segunda, la supervivencia, el crecimiento celular y el metabolismo. RAS es el oncogén mutado con más frecuencia (cerca de un tercio de los tumores), y PIK3CA mutado o la pérdida de PTEN dejan encendida la segunda. Ambas tienen fármacos dirigidos: inhibidores de BRAF y MEK, y de mTOR.\n\n- **B.** «Glucólisis anaeróbica estricta y Krebs íntegro»: el tumor usa glucólisis aeróbica (efecto Warburg); además, no son vías de señalización.\n- **C.** «Coagulación y fibrinólisis»: son procesos sistémicos, no señalización intracelular.\n- **D.** «Síntesis de urea y excreción de amoníaco»: es metabolismo del nitrógeno, sin relación con estas vías.",
+      "tema": "hallmarks",
+      "nivel": 1,
+      "claseId": "pat-ai-12",
+      "resumenId": "pat-ai-12",
+      "seccion": "Características distintivas del cáncer (Hallmarks of Cancer)"
+    },
+    {
+      "id": "pato-onc-b-22",
+      "stem": "¿Qué figura histórica describió en el siglo XVII una enfermedad uniformemente fatal que afectaba al bazo y los ganglios linfáticos, antecediendo a los trabajos del Dr. Thomas Hodgkin?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Basso K.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Dr. Thomas Hodgkin",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Marcello Malpighi",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Veiga L.",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Marcello Malpighi.** En 1666 el anatomista italiano describió una enfermedad mortal que agrandaba el bazo y los ganglios. Thomas Hodgkin publicó en 1832 su serie de casos sobre «apariencias mórbidas de las glándulas absorbentes y el bazo», y Samuel Wilks le dio después su nombre. Las células características las describieron Carl Sternberg (1898) y Dorothy Reed (1902).\n\n- **A.** «Basso K.»: es una investigadora actual de la biología molecular de los linfomas, no del siglo XVII.\n- **B.** «Dr. Thomas Hodgkin»: trabajó en el siglo XIX, y la pregunta pide a quien lo precedió.\n- **D.** «Veiga L.»: es un autor citado en la bibliografía actual, no la figura histórica del siglo XVII.",
+      "tema": "linfomas",
+      "nivel": 1,
+      "claseId": "pat-c-6",
+      "resumenId": "pat-acp-8",
+      "seccion": "Linfoma de Hodgkin"
+    },
+    {
+      "id": "pato-onc-b-26",
+      "stem": "De acuerdo con las fases de la interacción inmune con el tumor, ¿en qué fase las células tumorales escapan de la destrucción inmune debido a mutaciones resistentes o a la modulación del microambiente con células reguladoras?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fase de equilibrio",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Fase de escape",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Fase de eliminación",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Fase de inducción",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Fase de escape.** La inmunoedición tiene tres fases. En la eliminación, NK y linfocitos T destruyen las células transformadas. En el equilibrio, el tumor sobrevive pero queda contenido, y esa presión selecciona las variantes menos visibles. En el escape, esas variantes crecen sin control porque pierden el MHC de clase I o los antígenos, expresan PD-L1 o rodean el tumor de linfocitos T reguladores, células mieloides supresoras y TGF-β.\n\n- **A.** «Fase de equilibrio»: el tumor persiste controlado; todavía no escapa.\n- **C.** «Fase de eliminación»: el sistema inmune detecta y destruye las células tumorales.\n- **D.** «Fase de inducción»: no es una de las tres fases de la inmunoedición.",
+      "tema": "inmunidad-cancer",
+      "nivel": 1,
+      "claseId": "pat-ai-14",
+      "resumenId": "pat-acp-7",
+      "seccion": "8. Inmunidad y cáncer"
+    },
+    {
+      "id": "pato-onc-b-28",
+      "stem": "Según la nomenclatura estándar de anticuerpos monoclonales de uso clínico, ¿qué indica el subsistema de origen (infix) \"-zu-\"?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Anticuerpo quimérico",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Anticuerpo de origen murino (ratón)",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Anticuerpo humanizado",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Anticuerpo completamente humano",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Anticuerpo humanizado.** La sílaba antes de «-mab» indica cuánto del anticuerpo es de ratón. En los humanizados («-zu-»: trastuzumab, bevacizumab) solo las regiones que se unen al antígeno (CDR) son murinas y el resto es humano (alrededor de 95 %). Cuanto más humano es, menos anticuerpos anti-fármaco genera el paciente. Desde 2017 la OMS dejó de usar estas sílabas para los nombres nuevos, pero los clásicos las conservan.\n\n- **A.** «Quimérico»: se marca con «-xi-» (rituximab); toda la región variable es de ratón.\n- **B.** «Murino»: llevaba «-o-» (muromonab-CD3); es completamente de ratón.\n- **D.** «Completamente humano»: lleva «-u-» (adalimumab, nivolumab).",
+      "tema": "inmunidad-cancer",
+      "nivel": 1,
+      "claseId": "pat-ai-14",
+      "resumenId": "pat-acp-7",
+      "seccion": "9. Aplicaciones: terapias dirigidas, inmunoterapia, resistencia y prevención"
+    },
+    {
+      "id": "pato-onc-b-30",
+      "stem": "¿Cuál de los siguientes fármacos es uninhibidor específico de las quinasas JAK1 y JAK2, empleado en trastornos mieloproliferativos y procesos inflamatorios?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tofacitinib",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Ruxolitinib",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Anakinra",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Etanercept",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Ruxolitinib.** Inhibe JAK1 y JAK2, las cinasas que transmiten la señal de los receptores de citocinas y de factores de crecimiento hematopoyético hasta los factores de transcripción STAT. En la policitemia vera y la mielofibrosis la mutación JAK2 V617F deja esa vía siempre activa. Bloquearla reduce la esplenomegalia y los síntomas causados por las citocinas. También se usa en la enfermedad de injerto contra huésped.\n\n- **A.** «Tofacitinib»: inhibe sobre todo JAK1 y JAK3; se usa en la artritis reumatoide.\n- **C.** «Anakinra»: es un antagonista del receptor de la interleucina 1, no un inhibidor de JAK.\n- **D.** «Etanercept»: es un receptor soluble de TNF unido a la región Fc de IgG1, que neutraliza el TNF.",
+      "tema": "inmunidad-cancer",
+      "nivel": 1,
+      "claseId": "pat-ai-14",
+      "resumenId": "pat-acp-7",
+      "seccion": "9. Aplicaciones: terapias dirigidas, inmunoterapia, resistencia y prevención"
+    },
+    {
+      "id": "pato-onc-b-32",
+      "stem": "¿Qué característica estructural diferencia fundamentalmente a un receptor de antígeno quimérico (CAR) de un receptor de linfocitos T (TCR) convencional?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El CAR requiere obligatoriamente la presentación de antígenos por moléculas de MHC de clase II",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "El CAR carece por completo de dominios intracelulares de señalización",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "El dominio extracelular del CAR se compone de fragmentos variables de cadena sencilla (scFv) derivados de anticuerpos, lo que le permite reconocer antígenos de superficie de forma independiente del MHC",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "El CAR solo puede expresarse en células presentadoras de antígeno profesionales como las células dendríticas",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. El CAR reconoce con un scFv de anticuerpo, sin necesidad de MHC.** El receptor de antígeno quimérico une en una sola molécula el fragmento variable de un anticuerpo (scFv: las regiones variables de las cadenas pesada y ligera) con una bisagra, un dominio transmembrana, la cadena CD3ζ y un coestimulador (CD28 o 4-1BB). Reconoce una proteína entera de superficie (por ejemplo CD19), mientras que el TCR solo ve péptidos presentados en el MHC. Así el linfocito T modificado ataca aunque el tumor haya perdido el MHC de clase I.\n\n- **A.** «Requiere MHC de clase II»: su ventaja es justamente no depender del MHC.\n- **B.** «No tiene dominios de señalización»: lleva CD3ζ y coestimuladores, sin los cuales no se activaría.\n- **D.** «Solo en células dendríticas»: se introduce en linfocitos T del propio paciente.",
+      "tema": "inmunidad-cancer",
+      "nivel": 1,
+      "claseId": "pat-ai-14",
+      "resumenId": "pat-acp-7",
+      "seccion": "9. Aplicaciones: terapias dirigidas, inmunoterapia, resistencia y prevención"
+    },
+    {
+      "id": "pato-onc-c-1",
+      "stem": "¿Qué porcentaje aproximado de todas las neoplasias malignas representan los linfomas en general?",
+      "options": [
+        {
+          "id": "a",
+          "text": "1%",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "5%",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "10%",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "25%",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. Alrededor del 5 %.** Los linfomas, como grupo, representan cerca de una de cada veinte neoplasias malignas. Dentro de ellos, el linfoma de Hodgkin es aproximadamente el 10 % y los linfomas no Hodgkin el 90 % restante; entre estos, el difuso de células B grandes es el más frecuente. No hay que confundir el porcentaje de los linfomas entre todos los cánceres con el reparto de subtipos dentro de los linfomas.\n\n- **A.** «1 %»: subestima su frecuencia.\n- **C.** «10 %»: se acerca a la proporción del linfoma de Hodgkin dentro de los linfomas, no al total de cánceres.\n- **D.** «25 %»: se parece a la proporción del linfoma difuso de células B grandes dentro de los no Hodgkin, no al total de neoplasias.",
+      "tema": "linfomas",
+      "nivel": 1,
+      "claseId": "pat-c-6",
+      "resumenId": "pat-acp-8",
+      "seccion": "LINFOMAS"
+    },
+    {
+      "id": "pato-onc-c-3",
+      "stem": "¿Cuál es el subtipo más común de Linfoma No Hodgkin (NHL), constituyendo entre el 25% y el 30% de los casos y catalogándose como un linfoma clínicamente agresivo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Linfoma folicular",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Linfoma de manto",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Linfoma difuso de células B grandes (DLBCL)",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Linfoma de Burkitt",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Linfoma difuso de células B grandes.** Es el linfoma no Hodgkin más frecuente (25-30 %) y es agresivo: crece en semanas y sin tratamiento mata pronto, pero responde bien a la quimioinmunoterapia (R-CHOP) y una parte importante de los pacientes se cura. Puede aparecer de novo o por transformación de un linfoma indolente, como el folicular.\n\n- **A.** «Linfoma folicular»: es el segundo en frecuencia (~20 %), pero indolente.\n- **B.** «Linfoma de células del manto»: alrededor del 6 %, con t(11;14) y ciclina D1.\n- **D.** «Linfoma de Burkitt»: es el más agresivo, pero raro en adultos.",
+      "tema": "linfomas",
+      "nivel": 1,
+      "claseId": "pat-c-6",
+      "resumenId": "pat-acp-8",
+      "seccion": "Clasificación WHO/ICC"
+    },
+    {
+      "id": "pato-onc-c-5",
+      "stem": "Según el sistema de estadiaje modificado de Ann Arbor, ¿cómo se define el Estadio III de un linfoma?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Afectación de una sola región ganglionar o una sola estructura linfoide",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Compromiso de dos o más regiones ganglionares localizadas en el mismo lado del diafragma",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Afectación de regiones ganglionares situadas a ambos lados del diafragma, pudiendo acompañarse de compromiso esplénico o extranodal localizado",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Afectación diseminada y multifocal de uno o más órganos extranodales con o sin afectación ganglionar asociada",
+          "correct": false
+        }
+      ],
+      "explanation": "**C. Regiones ganglionares a ambos lados del diafragma.** En Ann Arbor la frontera es el diafragma. El estadio III significa enfermedad ganglionar por encima y por debajo de él; puede llevar el sufijo S si compromete el bazo, o E si hay una extensión extranodal localizada y contigua. A cada estadio se le añade A o B según falten o estén presentes la fiebre, la sudoración nocturna y la pérdida de más del 10 % del peso.\n\n- **A.** «Una sola región ganglionar»: es el estadio I.\n- **B.** «Dos o más regiones del mismo lado del diafragma»: es el estadio II.\n- **D.** «Afectación diseminada de órganos extranodales»: es el estadio IV (médula ósea, hígado, pulmón no contiguo).",
+      "tema": "linfomas",
+      "nivel": 1,
+      "claseId": "pat-c-6",
+      "resumenId": "pat-acp-8",
+      "seccion": "Estadificación de linfomas: Ann Arbor modificada por Lugano"
+    },
+    {
+      "id": "pato-onc-c-7",
+      "stem": "¿Qué método de imagen es el recomendado internacionalmente (según las guías de Lugano y el ILROG) para la estadificación inicial y la evaluación precisa de la respuesta biológica al tratamiento en los linfomas ávidos de glucosa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "La radiografía convencional de tórax en dos proyecciones",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La tomografía por emisión de positrones combinada con tomografía computarizada (PET/CT con fluorodesoxiglucosa - FDG)",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "La resonancia magnética nuclear cerebral sin contraste",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La ecografía Doppler color periférica seriada",
+          "correct": false
+        }
+      ],
+      "explanation": "**B. PET/CT con fluorodesoxiglucosa.** Las células de los linfomas ávidos de glucosa (Hodgkin, difuso de células B grandes, folicular) captan FDG, así que el PET muestra la actividad metabólica y la tomografía la ubica en la anatomía. Según Lugano, se usa para estadificar y para medir la respuesta con la escala de Deauville (1-5). Además, en el Hodgkin evita la biopsia de médula ósea. En los linfomas poco ávidos (linfocítico pequeño, MALT) se usa la tomografía sola.\n\n- **A.** «Radiografía de tórax»: solo ve masas grandes y no mide actividad metabólica.\n- **C.** «Resonancia cerebral»: se reserva para el sistema nervioso central, no para estadificar todo el cuerpo.\n- **D.** «Ecografía Doppler periférica»: no explora ganglios profundos ni retroperitoneales.",
+      "tema": "linfomas",
+      "nivel": 1,
+      "claseId": "pat-c-6",
+      "resumenId": "pat-acp-8",
+      "seccion": "Estadificación de linfomas: Ann Arbor modificada por Lugano"
+    }
+  ]
+}

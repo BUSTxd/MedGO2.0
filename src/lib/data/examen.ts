@@ -29,4 +29,10 @@ export interface ExamenRef {
    * route, que es quien los bloquea de verdad; esto sólo pinta el candado.
    */
   dePago?: string[];
+  /**
+   * Estilo visual opcional del runner. `'escenario'`: enunciado que entra en
+   * grande y se asienta, alternativas alternando izquierda/derecha y el número
+   * de la pregunta una sola vez. Sin él, el banqueo se ve como siempre.
+   */
+  estilo?: 'escenario';
 }

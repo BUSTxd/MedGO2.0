@@ -2571,7 +2571,84 @@
   .avisoCta { grid-column: 1 / -1; justify-self: stretch; justify-content: center; }
 }
 
+/* ── Estilo «escenario» (prop `estilo="escenario"` del runner) ─────────────
+   Opcional y sólo de movimiento: no toca colores (el claro/oscuro sale de las
+   variables de siempre) ni el layout (todo es transform/opacity). Cuelga de la
+   clase raíz para que los demás banqueos se vean igual que antes. */
+
+/* El bloque sólo se funde: el desplazamiento lo pone el enunciado. */
+.estiloEscenario .pregunta {
+  animation: escenarioAparece 0.28s ease-out both;
+}
+
+@keyframes escenarioAparece {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* El enunciado llega en grande, centrado sobre su propia caja (−17,5 % = la
+   mitad de lo que crece a 1,35× con el origen arriba a la izquierda), y se
+   asienta en su sitio. */
+.estiloEscenario .stem {
+  transform-origin: top left;
+  animation: enunciadoAsienta 0.62s ease-out both;
+}
+
+@keyframes enunciadoAsienta {
+  from {
+    opacity: 0;
+    transform: translate(-17.5%, 10px) scale(1.35);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(-17.5%, 10px) scale(1.35);
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Lo que va entre el enunciado y las alternativas (figuras, aviso de las
+   `multiple`) espera a que el enunciado deje de ocupar su sitio. Sólo opacidad:
+   el hover de la figura sigue moviéndola. */
+.estiloEscenario .stem ~ :not(.opciones):not(.explicacion) {
+  animation: escenarioAparece 0.32s ease-out 0.34s backwards;
+}
+
+/* Alternativas alternando lados: A desde la izquierda, B desde la derecha…
+   `--lado` (−1/+1) lo pone el componente junto a `--i`. */
+.estiloEscenario .opcion,
+.estiloEscenario .opcionImg {
+  animation: opcionEntraLado 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  animation-delay: calc(0.45s + var(--i, 0) * 0.075s);
+}
+
+@keyframes opcionEntraLado {
+  from { opacity: 0; transform: translateX(calc(var(--lado, -1) * 48px)); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Dentro de una ficha entra la ficha, no su barra (como en el estilo base). */
+.estiloEscenario .opcionImg .opcion { animation: none; }
+
+/* La sacudida del fallo sigue mandando sobre la entrada. */
+.estiloEscenario .opcionMal,
+.estiloEscenario .opcionImgMal {
+  animation: falloSacude 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .estiloEscenario .pregunta,
+  .estiloEscenario .stem,
+  .estiloEscenario .stem ~ :not(.opciones):not(.explicacion),
+  .estiloEscenario .opcion,
+  .estiloEscenario .opcionImg,
+  .estiloEscenario .opcionMal,
+  .estiloEscenario .opcionImgMal {
+    animation: none;
+  }
   .aviso,
   .pregunta,
   .opcion,
