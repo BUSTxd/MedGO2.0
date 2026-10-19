@@ -19,7 +19,8 @@ export const MUCOSA = {
   ganglio: { x0: 1060, y0: 300, x1: 1580, y1: 960 },
 };
 
-export const CUERPO = { cx: 470, cabeza: 120, laringe: 232, pulmon: 400, corazon: 430, intestino: 590, monitor: { x0: 900, y0: 120, x1: 1540, y1: 880 } };
+// Canon de 7,5 cabezas: coronilla 46, mentón ~172, hombros 222, ombligo ~470, entrepierna 592, pies 997.
+export const CUERPO = { cx: 470, cabeza: 108, laringe: 196, pulmon: 300, corazon: 318, intestino: 492, monitor: { x0: 900, y0: 120, x1: 1540, y1: 880 } };
 
 export const SANGRE = { y0: 230, y1: 770, placenta: 500 };
 
@@ -57,9 +58,9 @@ export const ZONAS: Partial<Record<Fondo, Partial<Record<ParamTejido, Rect>>>> =
   },
   cuerpo: {
     piel: R(240, 20, 700, 980),
-    laringe: R(330, 150, 610, 320),
-    bronquio: R(300, 300, 640, 520),
-    intestino: R(330, 500, 610, 700),
+    laringe: R(380, 140, 560, 260),
+    bronquio: R(370, 190, 570, 370),
+    intestino: R(370, 410, 570, 590),
     vasos: R(240, 20, 700, 980),
     presion: R(CUERPO.monitor.x0, CUERPO.monitor.y0, CUERPO.monitor.x1, CUERPO.monitor.y1),
     adrenalina: R(240, 600, 1540, 980),
