@@ -827,6 +827,7 @@ export const semanas: Semana[] = [
         subtemas: [],
         docentes: [],
         nota: NOTA_ACP,
+        resumen: resumenHtml('pat-acp-9'),
       },
       {
         id: 'pat-acp-10',
