@@ -1,0 +1,150 @@
+// Intro de la portada: qué es la hipersensibilidad y los cuatro mecanismos.
+// Termina en la lámina de los cuatro tipos, que es el estado de la portada.
+// Guion §Intro.
+
+import type { Escenario } from './tipos';
+import { H } from './colores';
+
+/** Duración mínima de cada parte de la intro (ms): que dé tiempo a leerla. */
+const LECTURA = 6500;
+
+const intro: Escenario = {
+  id: 'intro',
+  nombre: 'Hipersensibilidad',
+  resumen: 'Cuando los mecanismos que defienden lesionan el tejido: tipos I a IV.',
+  fondo: 'blanco',
+  actores: {
+    i_alg: { forma: 'celula', img: 'alergeno', label: 'Alérgeno', d: 66, color: '#E8B21E', info: 'alergeno' },
+    i_mast: { forma: 'celula', img: 'mastocito', label: 'Mastocito', d: 150, color: H.mastocito, info: 'mastocito' },
+    i_ige1: { forma: 'anticuerpo', ab: 'IgE', label: 'IgE', d: 42, color: H.ige, info: 'ige' },
+    i_ige2: { forma: 'anticuerpo', ab: 'IgE', label: 'IgE', d: 42, color: H.ige, info: 'ige' },
+    i_ops: { forma: 'celula', img: 'celula_opsonizada', label: 'Célula opsonizada', d: 120, color: H.tipo2, info: 'celula_opsonizada' },
+    i_igg1: { forma: 'anticuerpo', ab: 'IgG', label: 'IgG', d: 38, color: H.igg, info: 'igg' },
+    i_igg2: { forma: 'anticuerpo', ab: 'IgG', label: 'IgG', d: 38, color: H.igg, info: 'igg' },
+    i_fago: { forma: 'celula', img: 'fagocito', label: 'Fagocito', d: 150, color: H.macrofago, info: 'fagocito' },
+    i_comp: { forma: 'complejo', n: 6, label: 'Inmunocomplejo', d: 96, color: H.complejo, info: 'complejo' },
+    i_neu: { forma: 'celula', img: 'neutrofilo', label: 'Neutrófilo', d: 130, color: H.neutrofilo, info: 'neutrofilo' },
+    i_t: { forma: 'celula', img: 't_cd4', label: 'Linfocito T CD4', d: 130, color: H.tipo4, info: 't_cd4' },
+    i_mac: { forma: 'celula', img: 'macrofago', label: 'Macrófago', d: 130, color: H.macrofago, info: 'macrofago' },
+  },
+  pasos: [
+    {
+      id: 'in-0',
+      orden: 0,
+      titulo: 'Una defensa que hace daño',
+      texto: 'Hipersensibilidad es una reacción inmunitaria excesiva o mal dirigida que lesiona el tejido. Usa los mismos efectores que eliminan a los microbios: el problema es que están mal controlados.',
+      claves: ['excesiva', 'mal dirigida', 'mismos efectores'],
+      profundiza: '',
+      protagonistas: [],
+      acciones: [
+        { at: 0, tipo: 'wait', ms: LECTURA },
+        { at: 0, tipo: 'appear', actor: 'i_mast', pos: { col: 4.4, row: 5 }, posV: { col: 6.4, row: 3.2 }, from: 'grow' },
+        { at: 300, tipo: 'appear', actor: 'i_neu', pos: { col: 8, row: 5 }, posV: { col: 9.6, row: 3.2 }, from: 'grow' },
+        { at: 600, tipo: 'appear', actor: 'i_t', pos: { col: 11.6, row: 5 }, posV: { col: 8, row: 6.4 }, from: 'grow' },
+        { at: 1600, tipo: 'note', text: 'Los mismos mecanismos que matan microbios', near: 'i_neu', side: 'top' },
+      ],
+    },
+    {
+      id: 'in-1',
+      orden: 1,
+      titulo: 'Sensibilizado',
+      texto: 'El nombre viene de «sensibilizado»: el primer contacto con el antígeno no da síntomas pero deja memoria (IgE, IgG o linfocitos T). La reacción aparece cuando el antígeno vuelve.',
+      claves: ['primer contacto', 'memoria', 'vuelve'],
+      profundiza: '',
+      protagonistas: ['i_alg', 'i_mast'],
+      acciones: [
+        { at: 0, tipo: 'wait', ms: LECTURA },
+        { at: 0, tipo: 'appear', actor: 'i_alg', pos: { col: 1.4, row: 2.4 }, posV: { col: 4.6, row: 1.4 }, from: 'left' },
+        { at: 600, tipo: 'appear', actor: 'i_ige1', pos: { col: 4.4, row: 3.2 }, posV: { col: 6.4, row: 1.8 } },
+        { at: 700, tipo: 'appear', actor: 'i_ige2', pos: { col: 3.4, row: 3.6 }, posV: { col: 5.6, row: 2 } },
+        { at: 900, tipo: 'bind', actor: 'i_ige1', target: 'i_mast', ang: -60, dist: 106, apunta: 'fc' },
+        { at: 1000, tipo: 'bind', actor: 'i_ige2', target: 'i_mast', ang: -120, dist: 106, apunta: 'fc' },
+        { at: 1700, tipo: 'note', text: '1.er contacto: memoria, sin síntomas', near: 'i_mast', side: 'bottom' },
+        { at: 3000, tipo: 'bind', actor: 'i_alg', target: 'i_mast', ang: -90, dist: 150, duration: 1100 },
+        { at: 4300, tipo: 'activate', actor: 'i_mast' },
+        { at: 4300, tipo: 'swap', actor: 'i_mast', img: 'mastocito_activo' },
+      ],
+    },
+    {
+      id: 'in-2',
+      orden: 2,
+      titulo: '¿Contra qué?',
+      texto: 'Contra antígenos de fuera (polvo, polen, alimentos, fármacos, microbios), que causan las alergias, o contra antígenos propios, que causan las enfermedades autoinmunes.',
+      claves: ['alergias', 'propios', 'autoinmunes'],
+      profundiza: '',
+      protagonistas: ['i_alg', 'i_t'],
+      acciones: [
+        { at: 0, tipo: 'wait', ms: LECTURA },
+        { at: 300, tipo: 'note', text: 'Exógenos: polen, ácaros, alimentos, fármacos', near: 'i_alg', side: 'top' },
+        { at: 1500, tipo: 'note', text: 'Propios: autoinmunidad', near: 'i_t', side: 'bottom' },
+      ],
+    },
+    {
+      id: 'in-3',
+      orden: 3,
+      titulo: '¿Por qué a unos sí?',
+      texto: 'Suele haber un desequilibrio entre los efectores y los mecanismos que los frenan: falla la regulación normal. Y se heredan genes de susceptibilidad, del HLA y de fuera de él.',
+      claves: ['desequilibrio', 'regulación', 'HLA'],
+      profundiza: '',
+      protagonistas: ['i_neu'],
+      acciones: [
+        { at: 0, tipo: 'wait', ms: LECTURA },
+        { at: 200, tipo: 'proceso', id: 'causas', cerca: 'i_neu', lado: 'abajo', duration: 4400, datos: { clase: 'lista', titulo: 'Lo que predispone', items: [
+          { nombre: 'Regulación que falla', color: H.treg, detalle: 'Los frenos (T reguladores, citocinas inhibidoras) no alcanzan.' },
+          { nombre: 'Genes HLA', color: H.tipo3, detalle: 'Ciertos alelos presentan mejor ciertos antígenos.' },
+          { nombre: 'Genes no HLA', color: H.tipo1, detalle: 'Citocinas, receptores, moléculas de señal.' },
+          { nombre: 'Ambiente', color: H.tipo2, detalle: 'Infecciones, contaminantes, fármacos, microbiota.' },
+        ] } },
+      ],
+    },
+    {
+      id: 'in-4',
+      orden: 4,
+      titulo: 'Cuatro mecanismos',
+      texto: 'Tipo I: IgE y mastocitos. Tipo II: anticuerpos contra la propia célula. Tipo III: complejos antígeno-anticuerpo que se depositan. Tipo IV: linfocitos T. Muchas enfermedades usan más de uno.',
+      claves: ['Tipo I', 'Tipo II', 'Tipo III', 'Tipo IV'],
+      profundiza: '',
+      planoGeneral: true,
+      protagonistas: ['i_mast', 'i_ops', 'i_comp', 'i_t'],
+      acciones: [
+        { at: 0, tipo: 'wait', ms: LECTURA },
+        { at: 0, tipo: 'move', actor: 'i_mast', to: { col: 2.2, row: 5.4 }, toV: { col: 5.2, row: 3.2 } },
+        { at: 0, tipo: 'move', actor: 'i_neu', to: { col: 10.2, row: 6.6 }, toV: { col: 9.6, row: 6 } },
+        { at: 0, tipo: 'move', actor: 'i_t', to: { col: 13.2, row: 4.4 }, toV: { col: 7, row: 6.6 } },
+        { at: 500, tipo: 'appear', actor: 'i_ops', pos: { col: 5.4, row: 4.4 }, posV: { col: 9, row: 2.6 }, from: 'grow' },
+        { at: 600, tipo: 'appear', actor: 'i_igg1', pos: { col: 5.4, row: 3.4 }, posV: { col: 9, row: 1.8 } },
+        { at: 700, tipo: 'appear', actor: 'i_igg2', pos: { col: 4.6, row: 4.4 }, posV: { col: 8.2, row: 2.6 } },
+        { at: 900, tipo: 'bind', actor: 'i_igg1', target: 'i_ops', ang: -80, apunta: 'fab' },
+        { at: 1000, tipo: 'bind', actor: 'i_igg2', target: 'i_ops', ang: 160, apunta: 'fab' },
+        { at: 900, tipo: 'appear', actor: 'i_fago', pos: { col: 6.9, row: 6.1 }, posV: { col: 10.4, row: 3.6 }, from: 'grow' },
+        { at: 1200, tipo: 'appear', actor: 'i_comp', pos: { col: 9.4, row: 4.4 }, posV: { col: 10.4, row: 5.2 }, from: 'grow' },
+        { at: 1500, tipo: 'appear', actor: 'i_mac', pos: { col: 14.4, row: 6.4 }, posV: { col: 6, row: 7.8 }, from: 'grow' },
+        { at: 1800, tipo: 'note', text: 'Tipo I · IgE', near: 'i_alg', side: 'top', persist: true },
+        { at: 2100, tipo: 'note', text: 'Tipo II · anticuerpo contra la célula', near: 'i_igg1', side: 'top', persist: true },
+        { at: 2400, tipo: 'note', text: 'Tipo III · complejos', near: 'i_comp', side: 'top', persist: true },
+        { at: 2700, tipo: 'note', text: 'Tipo IV · linfocito T', near: 'i_t', side: 'top', persist: true },
+        { at: 2400, tipo: 'connect', id: 'c-neu', from: 'i_comp', to: 'i_neu', type: 'activa' },
+        { at: 2900, tipo: 'connect', id: 't-mac', from: 'i_t', to: 'i_mac', type: 'activa', label: 'IFN-γ' },
+      ],
+    },
+    {
+      id: 'in-5',
+      orden: 5,
+      titulo: 'Cuánto tardan',
+      texto: 'El tipo I aparece en minutos; el II, en horas o días; el III, una a dos semanas después de la primera dosis (o en horas si ya hay anticuerpos); el IV, a las 24 a 72 horas.',
+      claves: ['minutos', '24 a 72 horas'],
+      profundiza: '',
+      planoGeneral: true,
+      protagonistas: [],
+      acciones: [
+        { at: 0, tipo: 'wait', ms: LECTURA },
+        { at: 300, tipo: 'note', text: 'minutos', near: 'i_mast', side: 'bottom', persist: true },
+        { at: 800, tipo: 'note', text: 'horas–días', near: 'i_fago', side: 'bottom', persist: true },
+        { at: 1300, tipo: 'note', text: '1–2 semanas', near: 'i_neu', side: 'bottom', persist: true },
+        { at: 1800, tipo: 'note', text: '24–72 h', near: 'i_mac', side: 'bottom', persist: true },
+      ],
+    },
+  ],
+};
+
+export default intro;

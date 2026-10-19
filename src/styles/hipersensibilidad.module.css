@@ -1,0 +1,237 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Laboratorio «Hipersensibilidad» (dashboard/laboratorio/hipersensibilidad)
+
+   Comparte la cáscara del ciclo celular (cicloCelular.module.css) y la de
+   «Maduración de linfocitos» (linfocitos.module.css: fondo blanco, rótulos,
+   lupa, portada). Aquí van los TEJIDOS de fondo, que se animan con la
+   fisiología, y las piezas propias de la lupa. En oscuro, los tejidos bajan a
+   tonos apagados sobre gris casi negro (sin pasteles), como en maduración.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.fondo {
+  pointer-events: none;
+  --luz-venula: #FCEDEB;
+  --pulmon: #F6E3E6;
+}
+:global(.dark-mode) .fondo { --luz-venula: #3A2224; --pulmon: #3A2A30; }
+
+.rotuloTejido { font-family: var(--sans); font-size: 16px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; fill: var(--texto-2); opacity: 0.75; }
+.rotuloDato { font-family: var(--sans); font-size: 15px; font-weight: 700; fill: var(--texto-2); paint-order: stroke; stroke: var(--campo); stroke-width: 4px; }
+
+/* ─── Comunes ──────────────────────────────────────────────────────────────── */
+.hematie { fill: #F2A49C; stroke: #C9554B; stroke-width: 1.4; }
+.hematieCentro { fill: #F7C6C0; }
+.endotelio { fill: #F2C6C1; stroke: #C77D75; stroke-width: 1.2; }
+.selectina { fill: #8A4FCF; }
+.colagenoFibra { fill: none; stroke: #EADFD2; stroke-width: 2; }
+.edema { fill: #BFDDF2; }
+.gotaPlasma { fill: #9CCBEA; }
+.intersticio { fill: #FDFBF8; }
+.membranaBasal { fill: none; stroke: #B8A2D6; stroke-width: 3; }
+.nucleoEpi { fill: #8E7CC3; opacity: 0.85; }
+.nucleoLiso { fill: #A2546A; opacity: 0.8; }
+.fibrina { fill: none; stroke: #E07CA0; stroke-width: 2; opacity: 0.7; }
+.c3 { fill: #C0397A; }
+
+/* ─── Mucosa respiratoria ──────────────────────────────────────────────────── */
+.luzAerea { fill: #F3F8FB; }
+.laminaPropia { fill: #FFFCF8; }
+.epiCelula { fill: #E3F1F4; stroke: #8CC2CE; stroke-width: 1.4; }
+.caliciforme { fill: #EEF6EA; stroke: #9CC48C; stroke-width: 1.4; }
+.mocoCaliz { fill: #D6EBCB; stroke: #9CC48C; stroke-width: 1; }
+.gotaMoco { fill: #CFE6C1; stroke: #8DB97B; stroke-width: 1; }
+.capaMoco { fill: #DCEDD2; }
+.cilio { stroke: #7FB3C0; stroke-width: 2; stroke-linecap: round; }
+.conducto { fill: none; stroke: #C8DDBF; stroke-width: 10; stroke-linecap: round; }
+.acino { fill: #EEF6EA; stroke: #9CC48C; stroke-width: 1.6; }
+.paredVenula { fill: none; stroke: #F1D0CC; }
+.luzVenula { fill: var(--luz-venula); stroke: none; }
+.nervio { fill: none; stroke: #E8D9A8; stroke-width: 12; stroke-linecap: round; }
+.nervioBrillo { fill: none; stroke: #FFD23F; stroke-width: 6; stroke-linecap: round; }
+.potencial { fill: #FFB800; }
+.capaMuscular { fill: #FBEDEF; }
+.fibraLisa { fill: #F1C3CB; stroke: #C77D8C; stroke-width: 1.2; }
+.paredBronquio { fill: #F7F1E8; stroke: #D8C3A5; stroke-width: 3; }
+.musculoBronquio { fill: #F7DDE2; stroke: #C77D8C; stroke-width: 6; }
+.mucosaBronquio { fill: #E3F1F4; stroke: #8CC2CE; stroke-width: 2; }
+.luzBronquio { fill: #FFFFFF; stroke: #8CC2CE; stroke-width: 1.5; }
+.tapon { fill: #CFE6C1; stroke: #8DB97B; stroke-width: 1.5; }
+.linfatico { fill: none; stroke: #9FC4E8; stroke-width: 4; stroke-dasharray: 3 9; stroke-linecap: round; }
+.panelGanglio { fill: var(--campo-3); stroke: var(--linea); stroke-width: 2; }
+.capsulaGanglio { fill: #F7F9FD; stroke: #B9CDEE; stroke-width: 3; }
+.foliculo { fill: #E9F0FC; stroke: #B9CDEE; stroke-width: 2; }
+
+/* ─── Cuerpo y monitor ─────────────────────────────────────────────────────── */
+.cuerpo { fill: #F8EDE5; stroke: #D8B9A3; stroke-width: 3; }
+.pielRoja { fill: #E5484D; }
+.vasoPeriferico { stroke: #E07C74; stroke-linecap: round; opacity: 0.7; }
+.halo { fill: #F28B82; opacity: 0.45; }
+.habon { fill: #FFF1EE; stroke: #EFA49B; stroke-width: 1.5; }
+.laringe { fill: #F3D9D2; stroke: #C9887C; stroke-width: 2; }
+.laringeEdema { fill: #E5484D; }
+.traquea { stroke: #C9A9A0; stroke-linecap: round; }
+.pulmon { fill: var(--pulmon); stroke: #D9A7AF; stroke-width: 2; }
+.bronquios { fill: none; stroke: #C98C96; stroke-linecap: round; }
+.corazon { fill: #E5484D; }
+.intestino { fill: none; stroke: #E0B48A; stroke-width: 14; stroke-linecap: round; }
+.jeringa { fill: #FFFFFF; stroke: #1F9A6A; stroke-width: 3; }
+.aguja { stroke: #5B6475; stroke-width: 3; }
+.monitor { fill: #101722; stroke: #2A3444; stroke-width: 3; }
+.ecg { fill: none; stroke: #3DDC97; stroke-width: 3; stroke-linejoin: round; }
+.monitorRotulo { font-family: var(--sans); font-size: 22px; font-weight: 700; fill: #8A97AB; letter-spacing: 0.04em; }
+.monitorValor { font-family: var(--sans); font-size: 70px; font-weight: 800; fill: #3DDC97; font-variant-numeric: tabular-nums; }
+.monitorAlerta { font-family: var(--sans); font-size: 70px; font-weight: 800; fill: #FF6B70; font-variant-numeric: tabular-nums; }
+.monitorEstado { font-family: var(--sans); font-size: 26px; font-weight: 800; fill: #3DDC97; }
+.monitorAlerta2 { font-family: var(--sans); font-size: 26px; font-weight: 800; fill: #FF6B70; }
+
+/* ─── Sangre y placenta ────────────────────────────────────────────────────── */
+.paredVaso { fill: #F6DCD8; }
+.plasmaSangre { fill: #FFF7F4; }
+.hemoLibre { fill: #E5484D; }
+.trofoblasto { fill: #EAD7EC; stroke: #B48BBF; stroke-width: 2; }
+.nucleoTrofo { fill: #9C6FAC; }
+
+/* ─── Glomérulo ────────────────────────────────────────────────────────────── */
+.capsulaBowman { fill: #FBF6F1; stroke: #D8C3A5; stroke-width: 3; }
+.espacioUrinario { fill: #FFFFFF; }
+.podocito { fill: #EDE7F6; stroke: #A898D6; stroke-width: 1.8; }
+.nucleoPodo { fill: #8E7CC3; }
+.pedicelo { fill: #D9D0EF; stroke: #A898D6; stroke-width: 1; }
+.luzCapilar { fill: #FFF1EF; stroke: #E8B1AB; stroke-width: 1.5; }
+.mbg { fill: none; stroke: #C9B8E2; }
+.endotelioFenestrado { fill: none; stroke: #E39A96; stroke-width: 4; stroke-dasharray: 16 6; }
+.ifLineal { fill: none; stroke: #3DDC97; stroke-width: 7; filter: drop-shadow(0 0 6px #3DDC97); }
+.ifGranular { fill: #3DDC97; stroke: #1F9A6A; stroke-width: 1; }
+.proteina { fill: #D9881E; }
+.paredAlveolo { fill: #F7E8E8; stroke: #D9A7AF; stroke-width: 2; }
+.alveolo { fill: #FFFFFF; }
+
+/* ─── Placa motora y tiroides ──────────────────────────────────────────────── */
+.divisor { stroke: var(--linea); stroke-width: 2; stroke-dasharray: 8 8; }
+.fibraMuscular { fill: #FBE3E6; stroke: #E0A3AD; stroke-width: 2; }
+.sarcomero { stroke: #E6B3BC; stroke-width: 4; }
+.membranaPost { fill: none; stroke: #C77D8C; stroke-width: 4; stroke-linejoin: round; }
+.achr { fill: #7CC6A0; stroke: #2F7A57; stroke-width: 2; }
+.ach { fill: #2C9BD6; }
+.medidorFondo { fill: var(--campo-2); stroke: var(--linea); stroke-width: 1.5; }
+.medidorOk { fill: #1F9A6A; }
+.medidorBajo { fill: #E5484D; }
+.capilarTiroides { fill: #FBE1DD; stroke: #E39A96; stroke-width: 2; }
+.coloide { fill: #F7E3B3; stroke: #E3C27A; stroke-width: 2; }
+.vacuola { fill: #FFFFFF; stroke: #E3C27A; stroke-width: 1.2; }
+.tirocito { fill: #CFEAF0; stroke: #2C8FA6; stroke-width: 1.6; }
+.nucleoTiro { fill: #5FB5C9; }
+.tshr { fill: none; stroke: #5B4CB0; stroke-width: 3.5; stroke-linecap: round; }
+.t4 { fill: #D9881E; }
+
+/* ─── Vaso (complejos inmunitarios) ────────────────────────────────────────── */
+.adventicia { fill: #FBF3EC; stroke: #E3CDB6; stroke-width: 3; }
+.media { fill: #F7DAD7; stroke: #E8B1AB; stroke-width: 2; }
+.intima { fill: #FBE8E6; }
+.luzVaso { fill: #FFF6F3; }
+.fibrinoide { fill: #F06292; opacity: 0.55; }
+.deposito { fill: #2C3E9E; opacity: 0.85; }
+.depositoAg { fill: #4CB848; }
+
+/* ─── Piel ─────────────────────────────────────────────────────────────────── */
+.aire { fill: #F7FAFC; }
+.dermis { fill: #FFF8F3; }
+.eritema { fill: #E5484D; }
+.epidermis { fill: #F6E7EE; }
+.queratinocito { fill: #F9EEF3; stroke: #D9A9BE; stroke-width: 1.2; }
+.nucleoQuera { fill: #B07A9A; opacity: 0.8; }
+.basal { fill: #EED3E0; stroke: #C990AC; stroke-width: 1.2; }
+.cornea { fill: none; stroke: #E9C2D3; stroke-width: 10; stroke-linejoin: round; }
+.langerhans { stroke: #C9A64A; stroke-width: 3; stroke-linecap: round; }
+.langerhansCuerpo { fill: #E8CD82; }
+.vesicula { fill: #FFFFFF; stroke: #BFDDF2; stroke-width: 2.5; }
+
+/* ─── Granuloma ────────────────────────────────────────────────────────────── */
+.ganglioFondo { fill: #F7F4FB; }
+.linfocitoFondo { fill: #8070B8; opacity: 0.55; }
+.linfocitoCorona { fill: #5A4AA0; }
+.fibroblasto { fill: #C2AC8E; }
+.capsulaFibrosa { fill: none; stroke: #E3D2BC; stroke-width: 14; }
+.macrofagoFondo { fill: #F4D9C6; stroke: #C99A7A; stroke-width: 1.5; }
+.nucleoMacro { fill: #A87358; }
+.caseum { fill: #F5C9D6; }
+.detritus { fill: #9C5A78; opacity: 0.6; }
+
+/* ─── Actores ──────────────────────────────────────────────────────────────── */
+.poroExo { fill: #FFFFFF; stroke: #2CA9BC; stroke-width: 1.5; }
+.poroMac { fill: #2E1A4F; stroke: #FFFFFF; stroke-width: 1.5; }
+.fagosoma { fill: #FFFFFF; stroke: #E8B79A; stroke-width: 3; }
+.seudopodo { fill: none; stroke: #F2B48A; stroke-width: 14; stroke-linecap: round; opacity: 0.92; }
+.etiquetaChorro { fill: var(--campo); stroke-width: 2; }
+.etiquetaChorroTxt { font-family: var(--sans); font-size: 16px; font-weight: 800; }
+
+/* ─── Lupa ─────────────────────────────────────────────────────────────────── */
+.cajaFlujo { fill: var(--campo); stroke-width: 2.5; }
+.cajaTxt { font-family: var(--sans); font-size: 14px; font-weight: 800; fill: var(--texto); }
+.cajaSub { font-family: var(--sans); font-size: 11.5px; font-weight: 500; fill: var(--texto-2); }
+.eje { fill: none; stroke: var(--texto-2); stroke-width: 1.8; }
+.ejeTxt { font-family: var(--sans); font-size: 12px; font-weight: 600; fill: var(--texto-2); }
+.tarjeta { fill: var(--campo-2); stroke: var(--linea); stroke-width: 1; }
+.tarjetaNombre { font-family: var(--sans); font-size: 14px; font-weight: 800; }
+.tarjetaTxt { font-family: var(--sans); font-size: 12px; font-weight: 500; fill: var(--texto-2); }
+.bicapa { fill: #F4D9A6; stroke: #D9B26A; stroke-width: 1.5; }
+.fcAlfa { fill: none; stroke: #E8B21E; stroke-width: 5; stroke-linecap: round; }
+.fcBeta { fill: #E0892E; }
+.fcGamma { fill: #C9792A; }
+.itam { fill: #FFFFFF; stroke: #8A93A6; stroke-width: 1.5; }
+.itamP { fill: #E5484D; stroke: #B13A26; stroke-width: 1.5; }
+.alergenoLupa { fill: #F2C230; stroke: #B48A1E; stroke-width: 2; }
+.alergenoBola { fill: #FBE38A; stroke: #B48A1E; stroke-width: 1; }
+.fosfo { font-family: var(--sans); font-size: 13px; font-weight: 800; fill: #E5484D; }
+.calcio { fill: #2CA9BC; }
+.enzima { font-family: var(--sans); font-size: 11.5px; font-weight: 800; fill: var(--texto-2); font-style: italic; }
+.achrLupa { fill: #7CC6A0; stroke: #2F7A57; stroke-width: 2.5; }
+.achLupa { fill: #2C9BD6; }
+.tshrLupa { fill: none; stroke: #5B4CB0; stroke-width: 4; stroke-linecap: round; }
+.bandaSintomas { fill: #E5484D; opacity: 0.1; }
+.bandaLectura { fill: #D24E80; opacity: 0.1; }
+.fuenteLamina { font-family: var(--sans); font-size: 10.5px; fill: var(--texto-2); opacity: 0.8; }
+
+/* ─── Portada, tabla ───────────────────────────────────────────────────────── */
+.credito { max-width: calc(100% - 24px); }
+.sobretitulo { color: #1F9AAE; }
+.tipoNombre { border: none; background: none; padding: 0; font-family: inherit; font-size: 14px; font-weight: 800; cursor: pointer; text-align: left; display: grid; gap: 2px; }
+.tipoNombre span { font-size: 12px; font-weight: 600; color: var(--texto-2); }
+.tipoNombre:hover { text-decoration: underline; text-underline-offset: 3px; }
+.tablaSub { margin: 18px 0 4px; font-size: 14px; color: var(--texto-2); }
+
+/* ─── Oscuro ───────────────────────────────────────────────────────────────── */
+:global(.dark-mode) .intersticio, :global(.dark-mode) .laminaPropia, :global(.dark-mode) .dermis, :global(.dark-mode) .plasmaSangre { fill: #15171C; }
+:global(.dark-mode) .luzAerea, :global(.dark-mode) .aire, :global(.dark-mode) .espacioUrinario, :global(.dark-mode) .alveolo { fill: #101318; }
+:global(.dark-mode) .colagenoFibra { stroke: #2A2D34; }
+:global(.dark-mode) .epiCelula, :global(.dark-mode) .mucosaBronquio { fill: #1C2A2E; stroke: #3E6A74; }
+:global(.dark-mode) .caliciforme, :global(.dark-mode) .acino { fill: #1E2A1C; stroke: #4E6E44; }
+:global(.dark-mode) .mocoCaliz, :global(.dark-mode) .gotaMoco, :global(.dark-mode) .capaMoco, :global(.dark-mode) .tapon { fill: #34482C; stroke: #5E7E52; }
+:global(.dark-mode) .conducto { stroke: #2E3C2A; }
+:global(.dark-mode) .paredVenula { stroke: #4A2E2C; }
+:global(.dark-mode) .endotelio { fill: #5A3533; stroke: #8A4E4A; }
+:global(.dark-mode) .hematie { fill: #8A3F3A; stroke: #B5605A; }
+:global(.dark-mode) .hematieCentro { fill: #6B3533; }
+:global(.dark-mode) .nervio { stroke: #4A4330; }
+:global(.dark-mode) .capaMuscular { fill: #22181B; }
+:global(.dark-mode) .fibraLisa { fill: #5A3540; stroke: #8A5060; }
+:global(.dark-mode) .paredBronquio, :global(.dark-mode) .adventicia, :global(.dark-mode) .capsulaBowman { fill: #1E1B17; stroke: #4A4234; }
+:global(.dark-mode) .musculoBronquio, :global(.dark-mode) .media, :global(.dark-mode) .fibraMuscular { fill: #2E1E22; stroke: #6B4048; }
+:global(.dark-mode) .luzBronquio { fill: #0F1115; }
+:global(.dark-mode) .capsulaGanglio, :global(.dark-mode) .foliculo { fill: #1A1F2A; stroke: #3A4A66; }
+:global(.dark-mode) .cuerpo { fill: #2A2320; stroke: #5E4A3E; }
+:global(.dark-mode) .habon { fill: #3A2624; stroke: #8A4E4A; }
+:global(.dark-mode) .paredVaso, :global(.dark-mode) .intima, :global(.dark-mode) .luzVaso, :global(.dark-mode) .luzCapilar, :global(.dark-mode) .capilarTiroides { fill: #2A1C1C; stroke: #6B3B38; }
+:global(.dark-mode) .trofoblasto, :global(.dark-mode) .podocito, :global(.dark-mode) .pedicelo { fill: #2A2030; stroke: #6B5080; }
+:global(.dark-mode) .mbg { stroke: #4E4466; }
+:global(.dark-mode) .coloide { fill: #3A3220; stroke: #6B5A34; }
+:global(.dark-mode) .tirocito { fill: #1C2E34; stroke: #3E7A8A; }
+:global(.dark-mode) .epidermis, :global(.dark-mode) .queratinocito, :global(.dark-mode) .basal { fill: #2A1E24; stroke: #6B4A5A; }
+:global(.dark-mode) .cornea { stroke: #4A3440; }
+:global(.dark-mode) .vesicula, :global(.dark-mode) .vacuola { fill: #101318; stroke: #3E5A6E; }
+:global(.dark-mode) .ganglioFondo { fill: #16141C; }
+:global(.dark-mode) .macrofagoFondo { fill: #3A2C24; stroke: #7A5A48; }
+:global(.dark-mode) .caseum { fill: #4A2A36; }
+:global(.dark-mode) .capsulaFibrosa { stroke: #3A3328; }
+:global(.dark-mode) .bicapa { fill: #4A3C22; stroke: #7A6438; }
+:global(.dark-mode) .fagosoma { fill: #1C1F26; }
