@@ -1,0 +1,32 @@
+/* Marco de carga de los laboratorios de lienzo blanco (hipersensibilidad).
+   Calca las medidas y el fondo de `.wrapper` de cicloCelular.module.css con el
+   fondo de linfocitos.module.css, sin cargar esas hojas en el `loading.tsx` de
+   todos los laboratorios: si cambian allí, cambiarlas aquí o la rueda saltará
+   al montarse el lab. */
+.marco {
+  position: relative;
+  margin: -28px -28px -36px;
+  height: calc(100dvh - 48px);
+  min-height: 520px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+}
+
+:global(.dark-mode) .marco { background: #0F1115; }
+
+.centro {
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+
+@media (max-width: 700px) {
+  .marco {
+    margin: -18px -16px -28px;
+    height: calc(100dvh - 88px);
+    border-radius: 14px;
+  }
+}

@@ -4,9 +4,10 @@
 // mecanismo. Cada fila lleva al paso donde se anima.
 
 import type { Escenario, ParteId } from '@/lib/data/hipersensibilidad/tipos';
-import FICHAS from '@/lib/data/hipersensibilidad/fichas';
 import { ENFERMEDADES, TIPOS } from '@/lib/data/hipersensibilidad/tabla-tipos';
 import { srcImagen } from './imagenes';
+import { useContenido } from './ContenidoLab';
+import { Candado } from './MuroPago';
 import c from '@/styles/cicloCelular.module.css';
 import ls from '@/styles/linfocitos.module.css';
 import s from '@/styles/hipersensibilidad.module.css';
@@ -14,9 +15,10 @@ import s from '@/styles/hipersensibilidad.module.css';
 export type Destino = { parte: ParteId; paso: string };
 
 export function FichaActor({ escenario, actor, onCerrar }: { escenario: Escenario; actor: string; onCerrar: () => void }) {
+  const { fichas } = useContenido();
   const decl = escenario.actores[actor];
   if (!decl) return null;
-  const f = FICHAS[decl.info ?? actor];
+  const f = fichas[decl.info ?? actor];
   const src = decl.img ? srcImagen(decl.img) : null;
   return (
     <aside className={c.ficha} role="dialog" aria-label={`Ficha de ${f?.nombre ?? decl.label}`}>
@@ -59,6 +61,8 @@ export function FichaActor({ escenario, actor, onCerrar }: { escenario: Escenari
 }
 
 export function PanelTabla({ onCerrar, onIr }: { onCerrar: () => void; onIr: (d: Destino) => void }) {
+  const { partes } = useContenido();
+  const cerrado = (d: Destino) => !partes.some((p) => p.id === d.parte);
   return (
     <div className={c.velo} role="dialog" aria-label="Los cuatro tipos de hipersensibilidad" data-bloquea-esc onClick={(e) => { if (e.target === e.currentTarget) onCerrar(); }}>
       <div className={ls.panelNeo}>
@@ -72,7 +76,7 @@ export function PanelTabla({ onCerrar, onIr }: { onCerrar: () => void; onIr: (d:
             <tbody>
               {TIPOS.map((t) => (
                 <tr key={t.tipo}>
-                  <td><button type="button" className={s.tipoNombre} style={{ color: t.color }} onClick={() => onIr(t.destino)}>{t.tipo}<span>{t.nombre}</span></button></td>
+                  <td><button type="button" className={s.tipoNombre} style={{ color: t.color }} onClick={() => onIr(t.destino)}>{t.tipo}{cerrado(t.destino) && <Candado />}<span>{t.nombre}</span></button></td>
                   <td>{t.efector}</td>
                   <td>{t.antigeno}</td>
                   <td className={ls.mono}>{t.tiempo}</td>
@@ -91,7 +95,7 @@ export function PanelTabla({ onCerrar, onIr }: { onCerrar: () => void; onIr: (d:
                 const col = TIPOS.find((t) => t.tipo === e.tipo.split(' (')[0])?.color;
                 return (
                   <tr key={e.nombre}>
-                    <td><button type="button" className={ls.neoNombre} style={{ color: col }} onClick={() => onIr(e.destino)}>{e.nombre}</button></td>
+                    <td><button type="button" className={ls.neoNombre} style={{ color: col }} onClick={() => onIr(e.destino)}>{e.nombre}{cerrado(e.destino) && <Candado />}</button></td>
                     <td className={ls.mono} style={{ color: col }}>{e.tipo}</td>
                     <td>{e.blanco}</td>
                     <td>{e.manifestacion}</td>

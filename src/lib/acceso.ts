@@ -52,6 +52,13 @@ export function requiredPlanDeLab(slug: string): PlanKey {
   return PLAN_DE_TRACK[trackDeLab(slug)];
 }
 
+const LABS_VISTAZO = new Set(LABORATORIOS.filter((l) => l.vistazo).map((l) => l.slug));
+
+/** Laboratorio con una parte gratis (flag `vistazo` en `LABORATORIOS`); el resto lo cierra su `page.tsx`. */
+export function labTieneVistazo(slug: string): boolean {
+  return LABS_VISTAZO.has(slug);
+}
+
 const LABS_GRATIS = new Set(LABORATORIOS.filter((l) => l.gratis).map((l) => l.slug));
 
 /**

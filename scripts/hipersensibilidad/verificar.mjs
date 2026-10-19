@@ -98,6 +98,9 @@ for (const f of [...TIPOS, ...ENFERMEDADES]) {
   const d = f.destino;
   if (!porId[d.parte]?.pasos.some((p) => p.id === d.paso)) err('tabla', `«${f.nombre ?? f.tipo}» apunta a ${d.parte} · ${d.paso}, que no existe`);
 }
+const { VISTAZO } = await cargar('lib/data/hipersensibilidad/vistazo.ts');
+if (!VISTAZO.length) err('vistazo', 'no hay ningún capítulo gratis');
+for (const id of VISTAZO) if (!porId[id] || id === 'intro') err('vistazo', `«${id}» no es un capítulo`);
 for (const [id, f] of Object.entries(FICHAS)) if (f.id !== id) err('fichas', `la ficha «${id}» lleva id «${f.id}»`);
 
 // ─── Barrido con el motor ─────────────────────────────────────────────────────

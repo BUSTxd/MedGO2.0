@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { getCachedPlanState } from '@/lib/plans-server';
-import { labEsGratis, requiredPlanDeCurso, tieneAccesoA, trackDeCurso, trackDelUsuario } from '@/lib/acceso';
+import { labEsGratis, labTieneVistazo, requiredPlanDeCurso, tieneAccesoA, trackDeCurso, trackDelUsuario } from '@/lib/acceso';
 import { PLANS } from '@/lib/plans';
 import KidneyIcon from '@/components/icons/KidneyIcon';
 import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
@@ -324,6 +324,7 @@ export default async function LaboratorioPage() {
                 const slug = exp.href?.startsWith('/dashboard/laboratorio/') ? exp.href.split('?')[0].split('/').pop()! : null;
                 const gratis = !abierto && slug !== null && labEsGratis(slug);
                 const prueba = !abierto && exp.prueba ? exp.prueba : null;
+                const vistazo = !abierto && !gratis && slug !== null && labTieneVistazo(slug);
                 const cuerpo = (
                   <>
                     <div className={styles.labExpDot} style={{ background: exp.color }} />
@@ -331,6 +332,7 @@ export default async function LaboratorioPage() {
                       <p className={styles.labExpName}>
                         {exp.name}
                         {gratis && <span className={styles.labExpGratis}>Gratis</span>}
+                        {vistazo && <span className={styles.labExpGratis} title="La intro y el primer capítulo, gratis">Vistazo gratis</span>}
                         {prueba && <span className={styles.labExpGratis} title="2 barajas del examen 3D, gratis">Prueba gratis</span>}
                       </p>
                       <p className={styles.labExpDesc}>{exp.desc}</p>

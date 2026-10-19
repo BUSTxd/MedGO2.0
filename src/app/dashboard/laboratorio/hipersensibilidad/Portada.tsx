@@ -7,7 +7,9 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ParteId } from '@/lib/data/hipersensibilidad/tipos';
-import { compilado, INTRO, PARTES } from '@/lib/hipersensibilidad/registro';
+import { compilado } from '@/lib/hipersensibilidad/contenido';
+import { useContenido } from './ContenidoLab';
+import { Candado } from './MuroPago';
 import Escena from './Escena';
 import TextoAnimado from '../maduracion-linfocitos/TextoAnimado';
 import BarraTiempo from './BarraTiempo';
@@ -27,9 +29,10 @@ export default function Portada(props: Props) {
 }
 
 function Contenido({ onParte, onTabla, sinIntro, onRepetir }: Props & { onRepetir: () => void }) {
+  const { intro: INTRO, indice, completo } = useContenido();
   const zona = useRef<HTMLDivElement>(null);
   const modo = useModo(zona);
-  const cmp = useMemo(() => compilado(INTRO, modo), [modo]);
+  const cmp = useMemo(() => compilado(INTRO, modo), [INTRO, modo]);
   const ultimo = cmp.pasos.length - 1;
   const rep = useReproductor(cmp, sinIntro ? ultimo : 0, { autoInicial: !sinIntro });
   const [ficha, setFicha] = useState<string | null>(null);
@@ -94,18 +97,21 @@ function Contenido({ onParte, onTabla, sinIntro, onRepetir }: Props & { onRepeti
         ) : (
           <>
             <ol className={s.capitulos}>
-              {PARTES.map((p) => (
+              {indice.map((p) => {
+                const bloqueado = !completo && !p.gratis;
+                return (
                 <li key={p.id}>
-                  <button type="button" className={s.capitulo} style={{ ['--parte' as string]: p.color }} onClick={() => onParte(p.id)}>
+                  <button type="button" className={`${s.capitulo} ${bloqueado ? h.capBloqueado : ''}`} style={{ ['--parte' as string]: p.color }} onClick={() => onParte(p.id)}>
                     <span className={s.capNum}>{p.numero}</span>
                     <span className={s.capTxt}>
-                      <strong>{p.nombreCorto}</strong>
-                      <span className={s.capLugar}>{p.tipo} · {p.lugar} · {p.pasos.length} pasos</span>
+                      <strong>{p.nombreCorto}{!completo && p.gratis && <span className={h.etqGratis}>Gratis</span>}{bloqueado && <Candado />}</strong>
+                      <span className={s.capLugar}>{p.tipo} · {p.lugar} · {p.nPasos} pasos</span>
                       <span className={s.capPregunta}>{p.pregunta}</span>
                     </span>
                   </button>
                 </li>
-              ))}
+                );
+              })}
             </ol>
             <div className={s.menuAcciones}>
               <button type="button" className={c.btnPrim} onClick={() => onParte('sensibilizacion')}>Empezar por la sensibilización</button>

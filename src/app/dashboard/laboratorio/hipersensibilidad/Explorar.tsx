@@ -5,7 +5,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Parte } from '@/lib/data/hipersensibilidad/tipos';
-import { compilado as compilar } from '@/lib/hipersensibilidad/registro';
+import { compilado as compilar } from '@/lib/hipersensibilidad/contenido';
 import Escena from './Escena';
 import BarraTiempo from './BarraTiempo';
 import TextoAnimado from '../maduracion-linfocitos/TextoAnimado';

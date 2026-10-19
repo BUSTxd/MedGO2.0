@@ -235,3 +235,49 @@
 :global(.dark-mode) .capsulaFibrosa { stroke: #3A3328; }
 :global(.dark-mode) .bicapa { fill: #4A3C22; stroke: #7A6438; }
 :global(.dark-mode) .fagosoma { fill: #1C1F26; }
+
+/* ─── Vistazo gratis y muro de pago ────────────────────────────────────────── */
+
+.candado { width: 13px; height: 13px; flex: none; color: var(--texto-2); vertical-align: -1px; margin-left: 5px; }
+.etqGratis {
+  display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 999px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em; vertical-align: 2px;
+  color: #13707F; background: #E3F4F6;
+}
+:global(.dark-mode) .etqGratis { color: #7FD4DF; background: #14303A; }
+.capBloqueado .capNum { border-style: dashed; opacity: 0.7; }
+.capBloqueado .capTxt strong { color: var(--texto-2); }
+.parteBloqueada span { border-style: dashed !important; opacity: 0.6; }
+
+.muro {
+  width: min(460px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  background: var(--campo-3);
+  border: 1px solid var(--linea);
+  border-top: 4px solid var(--parte);
+  border-radius: 16px;
+  padding: 22px 24px 20px;
+  box-shadow: 0 18px 50px rgba(23, 27, 38, 0.14);
+  animation: muroEntra 260ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+:global(.dark-mode) .muro { box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5); }
+@keyframes muroEntra { from { opacity: 0; transform: translateY(10px) scale(0.97); } }
+@media (prefers-reduced-motion: reduce) { .muro { animation: none; } }
+
+.muroIcono {
+  width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--parte) 14%, transparent); color: var(--parte);
+}
+.muroCandado { width: 20px; height: 20px; }
+.muroKicker { margin: 14px 0 2px; font-size: 12.5px; font-weight: 700; color: var(--parte); }
+.muroTitulo { margin: 0; font-size: 21px; line-height: 1.2; color: var(--texto); }
+.muroPregunta { margin: 6px 0 0; font-size: 14px; font-style: italic; color: var(--texto-2); }
+.muroTexto { margin: 14px 0 0; font-size: 14px; line-height: 1.5; color: var(--texto); }
+.muroAcciones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.muroAcciones button:first-child { flex: 1 1 220px; }
+
+/* El lab entra cuando ya bajaron las imágenes de la primera escena. */
+.aparece { animation: apareceLab 320ms ease-out; }
+@keyframes apareceLab { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .aparece { animation: none; } }

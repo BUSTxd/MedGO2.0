@@ -161,6 +161,13 @@ export interface LaboratorioMeta {
    * bloqueado. Lo lee `labEsGratis` (src/lib/acceso.ts).
    */
   gratis?: boolean;
+  /**
+   * Tiene una parte gratis y el resto de pago: su `page.tsx` no usa `LabGate`
+   * sino que decide en el servidor qué manda (hipersensibilidad: `VISTAZO`), y
+   * el índice lo marca «Vistazo gratis» dentro de un panel bloqueado. Lo lee
+   * `labTieneVistazo` (src/lib/acceso.ts).
+   */
+  vistazo?: boolean;
 }
 
 /** Laboratorios y simuladores publicados en /dashboard/laboratorio. */
@@ -186,6 +193,6 @@ export const LABORATORIOS: LaboratorioMeta[] = [
   { slug: 'checkpoints-ciclo-celular', nombre: 'Checkpoints del ciclo celular', track: 'medicina', autor: 'bust', pesado: true },
   { slug: 'vias-nfkb-jakstat',       nombre: 'Vías NF-κB y JAK/STAT',        track: 'medicina', autor: 'bust', pesado: true },
   { slug: 'maduracion-linfocitos',   nombre: 'Maduración de linfocitos',     track: 'medicina', autor: 'bust', pesado: true },
-  { slug: 'hipersensibilidad',       nombre: 'Hipersensibilidad',            track: 'medicina', autor: 'bust', pesado: true },
+  { slug: 'hipersensibilidad',       nombre: 'Hipersensibilidad',            track: 'medicina', autor: 'bust', pesado: true, vistazo: true },
   { slug: 'atlas-3d',                nombre: 'Atlas 3D (miembros)', track: 'medicina', autor: 'bust', pesado: true },
 ];
