@@ -34,7 +34,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: A — inflamación crónica, daño oxidativo y señalización alterada (CagA → SHP2/ERK) en la secuencia de Correa.** H. pylori no es mutágeno directo: décadas de gastritis crónica activa liberan especies reactivas de oxígeno que dañan el ADN, y el recambio epitelial aumentado fija esas mutaciones. CagA, inyectada por el sistema de secreción tipo IV, activa SHP2 y ERK (proliferación) y altera la polaridad celular. Así se recorre gastritis → atrofia → metaplasia intestinal → displasia → adenocarcinoma intestinal.\n\n- **B.** Integración del ADN bacteriano y activación de MYC: H. pylori no integra su genoma (eso lo hacen virus como VPH o VHB).\n- **C.** Metaplasia intestinal como neoplasia invasora: es un cambio adaptativo precursor, sin invasión.\n- **D.** VacA repara ADN y CagA bloquea ERK: es al revés, CagA activa ERK.\n- **E.** Solo mutaciones germinales: casi todos son esporádicos y la inflamación es el motor.",
+      "explanation": "**Inflamación crónica, daño oxidativo y señalización alterada (CagA → SHP2/ERK) en la secuencia de Correa.** H. pylori no es mutágeno directo: décadas de gastritis crónica activa liberan especies reactivas de oxígeno que dañan el ADN, y el recambio epitelial aumentado fija esas mutaciones. CagA, inyectada por el sistema de secreción tipo IV, activa SHP2 y ERK (proliferación) y altera la polaridad celular. Así se recorre gastritis → atrofia → metaplasia intestinal → displasia → adenocarcinoma intestinal.\n\n- Integración del ADN bacteriano y activación de MYC: H. pylori no integra su genoma (eso lo hacen virus como VPH o VHB).\n- Metaplasia intestinal como neoplasia invasora: es un cambio adaptativo precursor, sin invasión.\n- VacA repara ADN y CagA bloquea ERK: es al revés, CagA activa ERK.\n- Solo mutaciones germinales: casi todos son esporádicos y la inflamación es el motor.",
       "tema": "carcinogenesis-microbiana",
       "nivel": 3,
       "flujo": {
@@ -129,7 +129,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — fenotipo basal-like agresivo; la quimioterapia (con platinos como opción preferente) es la base del manejo sistémico.** BRCA1 repara roturas de doble cadena por recombinación homóloga; sin él hay inestabilidad genómica y la mayoría de sus carcinomas son triple negativos, basal-like, de grado 3 y Ki-67 alto. Sin receptores hormonales ni HER2 no hay diana endocrina ni anti-HER2: queda la quimioterapia, a menudo neoadyuvante. Como el tumor no repara bien los entrecruzamientos del ADN, es sensible a platinos e inhibidores de PARP (letalidad sintética); el uso de platinos depende del estadio, no es obligatorio en todos.\n\n- **A.** Bajo riesgo, basta cirugía + radioterapia: el triple negativo de alto grado recurre pronto y exige tratamiento sistémico.\n- **C.** Lobulillar de bajo grado: el lobulillar clásico es ER+ y de bajo grado.\n- **D.** Responde a terapia endocrina: es ER/PR negativo; BRCA1 no activa el receptor de estrógeno.",
+      "explanation": "**Fenotipo basal-like agresivo; la quimioterapia (con platinos como opción preferente) es la base del manejo sistémico.** BRCA1 repara roturas de doble cadena por recombinación homóloga; sin él hay inestabilidad genómica y la mayoría de sus carcinomas son triple negativos, basal-like, de grado 3 y Ki-67 alto. Sin receptores hormonales ni HER2 no hay diana endocrina ni anti-HER2: queda la quimioterapia, a menudo neoadyuvante. Como el tumor no repara bien los entrecruzamientos del ADN, es sensible a platinos e inhibidores de PARP (letalidad sintética); el uso de platinos depende del estadio, no es obligatorio en todos.\n\n- Bajo riesgo, basta cirugía + radioterapia: el triple negativo de alto grado recurre pronto y exige tratamiento sistémico.\n- Lobulillar de bajo grado: el lobulillar clásico es ER+ y de bajo grado.\n- Responde a terapia endocrina: es ER/PR negativo; BRCA1 no activa el receptor de estrógeno.",
       "tema": "mama",
       "nivel": 3,
       "flujo": {
@@ -232,7 +232,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: C — inhibidor de aromatasa (anastrozol) o tamoxifeno.** Células de alto grado con necrosis central y calcificación distrófica dentro de los conductos, con membrana basal intacta, es un carcinoma ductal in situ tipo comedo; esas calcificaciones son las que se ven en la mamografía. Tras la cirugía conservadora el riesgo es la recurrencia ipsilateral y un tumor nuevo contralateral. Si el DCIS es ER+, su crecimiento depende de estrógenos: el tamoxifeno bloquea el receptor en la mama y el inhibidor de aromatasa suprime la síntesis periférica de estrógenos en la posmenopáusica, y ambos reducen esos eventos.\n\n- **A.** Trastuzumab: es anti-HER2, no estándar en DCIS, y el dato aquí es ER+.\n- **B.** Quimioterapia neoadyuvante con platinos: un in situ no metastatiza; no está indicada.\n- **D.** Solo cirugía y radioterapia: válido, pero renuncia al beneficio de la hormonoterapia en ER+.",
+      "explanation": "**Inhibidor de aromatasa (anastrozol) o tamoxifeno.** Células de alto grado con necrosis central y calcificación distrófica dentro de los conductos, con membrana basal intacta, es un carcinoma ductal in situ tipo comedo; esas calcificaciones son las que se ven en la mamografía. Tras la cirugía conservadora el riesgo es la recurrencia ipsilateral y un tumor nuevo contralateral. Si el DCIS es ER+, su crecimiento depende de estrógenos: el tamoxifeno bloquea el receptor en la mama y el inhibidor de aromatasa suprime la síntesis periférica de estrógenos en la posmenopáusica, y ambos reducen esos eventos.\n\n- Trastuzumab: es anti-HER2, no estándar en DCIS, y el dato aquí es ER+.\n- Quimioterapia neoadyuvante con platinos: un in situ no metastatiza; no está indicada.\n- Solo cirugía y radioterapia: válido, pero renuncia al beneficio de la hormonoterapia en ER+.",
       "tema": "mama",
       "nivel": 3,
       "flujo": {
@@ -330,7 +330,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: A — 1-C, 2-D, 3-A, 4-B.** El tipo de proteína afectada decide el mecanismo:\n- **1 → osteogénesis imperfecta:** el colágeno I es una triple hélice; una cadena mutada se incorpora y arruina toda la molécula (negativo dominante), así que basta un alelo.\n- **2 → hipercolesterolemia familiar:** el heterocigoto tiene la mitad de receptores de LDL; la endocitosis hepática de LDL no alcanza (haploinsuficiencia) y el colesterol sube.\n- **3 → síndrome de Rett:** MECP2, ligado al X, lee las CpG metiladas y silencia genes; sin él falla la regulación epigenética neuronal.\n- **4 → Tay-Sachs:** sin hexosaminidasa A, el gangliósido GM2 se acumula en los lisosomas neuronales.\n\nLas demás combinaciones rompen algún par: la de «1-D, 2-C» cambia el colágeno por el receptor de LDL; las que ponen «2-A» o «1-A» dan a Rett la haploinsuficiencia o el efecto negativo dominante; la de «1-B … 4-C» hace estructural a una enzima lisosomal.",
+      "explanation": "**1-C, 2-D, 3-A, 4-B.** El tipo de proteína afectada decide el mecanismo:\n- **1 → osteogénesis imperfecta:** el colágeno I es una triple hélice; una cadena mutada se incorpora y arruina toda la molécula (negativo dominante), así que basta un alelo.\n- **2 → hipercolesterolemia familiar:** el heterocigoto tiene la mitad de receptores de LDL; la endocitosis hepática de LDL no alcanza (haploinsuficiencia) y el colesterol sube.\n- **3 → síndrome de Rett:** MECP2, ligado al X, lee las CpG metiladas y silencia genes; sin él falla la regulación epigenética neuronal.\n- **4 → Tay-Sachs:** sin hexosaminidasa A, el gangliósido GM2 se acumula en los lisosomas neuronales.\n\nLas demás combinaciones rompen algún par: la de «1-D, 2-C» cambia el colágeno por el receptor de LDL; las que ponen «2-A» o «1-A» dan a Rett la haploinsuficiencia o el efecto negativo dominante; la de «1-B … 4-C» hace estructural a una enzima lisosomal.",
       "tema": "mendelianos",
       "nivel": 2,
       "flujo": {
@@ -440,7 +440,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: C — 50 %.** La fibrosis quística es autosómica recesiva: un portador (Aa) conserva un alelo funcional de CFTR, suficiente para un fenotipo normal. En el cruce Aa × Aa cada progenitor aporta A o a con probabilidad ½, así que cada embarazo da AA 25 %, Aa 50 % y aa 25 %. «Sano pero portador» es exactamente Aa: 50 % de cada embarazo, y el hijo afectado previo no cambia estas cifras (eventos independientes).\n\n- **B.** 25 %: es la probabilidad de afectado (aa) o de sano no portador (AA).\n- **D.** 75 %: probabilidad de ser fenotípicamente sano (AA + Aa).\n- **A / E.** 0 % o 100 %: el cruce produce los tres genotipos.\n\nOjo: si el hijo ya se sabe sano, la probabilidad de que sea portador sube a 2/3.",
+      "explanation": "**50 %.** La fibrosis quística es autosómica recesiva: un portador (Aa) conserva un alelo funcional de CFTR, suficiente para un fenotipo normal. En el cruce Aa × Aa cada progenitor aporta A o a con probabilidad ½, así que cada embarazo da AA 25 %, Aa 50 % y aa 25 %. «Sano pero portador» es exactamente Aa: 50 % de cada embarazo, y el hijo afectado previo no cambia estas cifras (eventos independientes).\n\n- 25 %: es la probabilidad de afectado (aa) o de sano no portador (AA).\n- 75 %: probabilidad de ser fenotípicamente sano (AA + Aa).\n- 0 % o 100 %: el cruce produce los tres genotipos.\n\nOjo: si el hijo ya se sabe sano, la probabilidad de que sea portador sube a 2/3.",
       "tema": "mendelianos",
       "nivel": 2,
       "flujo": {
@@ -516,7 +516,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: C — inactivación aleatoria del X y mosaicismo funcional.** En la embriogénesis temprana cada célula femenina silencia al azar uno de sus dos X (vía XIST, cuerpo de Barr) y sus descendientes heredan esa elección. La portadora es así un mosaico: unos clones expresan el alelo normal y otros el mutado. Si en un tejido predomina por azar la inactivación del X sano (inactivación sesgada) aparecen síntomas, y como la proporción de clones varía de una región a otra, pueden ser leves y asimétricos; las portadoras con inactivación favorable quedan asintomáticas.\n\n- **A.** Recombinación entre autosomas: no toca un gen del X.\n- **B.** X solo de origen paterno: la mujer recibe un X de cada progenitor.\n- **D.** Expansión de tripletes: explica la anticipación, no la variabilidad entre portadoras.\n- **E.** No disyunción del Y: las mujeres no tienen Y.",
+      "explanation": "**Inactivación aleatoria del X y mosaicismo funcional.** En la embriogénesis temprana cada célula femenina silencia al azar uno de sus dos X (vía XIST, cuerpo de Barr) y sus descendientes heredan esa elección. La portadora es así un mosaico: unos clones expresan el alelo normal y otros el mutado. Si en un tejido predomina por azar la inactivación del X sano (inactivación sesgada) aparecen síntomas, y como la proporción de clones varía de una región a otra, pueden ser leves y asimétricos; las portadoras con inactivación favorable quedan asintomáticas.\n\n- Recombinación entre autosomas: no toca un gen del X.\n- X solo de origen paterno: la mujer recibe un X de cada progenitor.\n- Expansión de tripletes: explica la anticipación, no la variabilidad entre portadoras.\n- No disyunción del Y: las mujeres no tienen Y.",
       "tema": "mendelianos",
       "nivel": 2,
       "flujo": {
@@ -601,7 +601,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — mosaicismo gonadal en uno de los progenitores.** Si la mutación surge después de la fecundación en una célula que formará la línea germinal, ese progenitor tiene una población de gametos con la variante mientras sus células somáticas, incluida la sangre, son normales. Por eso está sano, el estudio en sangre sale negativo y aun así puede transmitir la misma variante dominante a varios hijos. Es la explicación clásica de hermanos afectados por una enfermedad dominante con padres sanos (p. ej., osteogénesis imperfecta).\n\n- **A.** Herencia recesiva: la enfermedad está confirmada como dominante, con una sola variante.\n- **C.** Herencia mitocondrial paterna: el ADN mitocondrial se hereda de la madre.\n- **D.** Aneuploidía: es un número cromosómico anómalo, no una variante puntual idéntica.\n- **E.** Expresividad variable: explicaría un fenotipo leve, pero la variante sí aparecería en sangre.",
+      "explanation": "**Mosaicismo gonadal en uno de los progenitores.** Si la mutación surge después de la fecundación en una célula que formará la línea germinal, ese progenitor tiene una población de gametos con la variante mientras sus células somáticas, incluida la sangre, son normales. Por eso está sano, el estudio en sangre sale negativo y aun así puede transmitir la misma variante dominante a varios hijos. Es la explicación clásica de hermanos afectados por una enfermedad dominante con padres sanos (p. ej., osteogénesis imperfecta).\n\n- Herencia recesiva: la enfermedad está confirmada como dominante, con una sola variante.\n- Herencia mitocondrial paterna: el ADN mitocondrial se hereda de la madre.\n- Aneuploidía: es un número cromosómico anómalo, no una variante puntual idéntica.\n- Expresividad variable: explicaría un fenotipo leve, pero la variante sí aparecería en sangre.",
       "tema": "herencia-no-clasica",
       "nivel": 2,
       "flujo": {
@@ -690,7 +690,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: A — 47,XXY con degeneración de túbulos seminíferos e insuficiencia testicular primaria.** El X extra (no disyunción meiótica) lleva a hialinización y fibrosis de los túbulos: no hay espermatogénesis (azoospermia, testículos pequeños y firmes) ni inhibina B, y las células de Leydig producen poca testosterona. Al fallar el testículo se pierde la retroalimentación negativa y suben FSH y LH: hipogonadismo hipergonadotrópico. La testosterona baja retrasa el cierre epifisario (talla alta, piernas largas) y el cociente estrógeno/testosterona alto produce ginecomastia.\n\n- **B.** 47,XYY: testículos y fertilidad suelen ser normales.\n- **C.** 45,X: es el síndrome de Turner, con fenotipo femenino.\n- **D.** Falla hipotalámica de GnRH: daría FSH y LH bajas, no altas.\n- **E.** 48,XXYY con función conservada: también causa hipogonadismo.",
+      "explanation": "**47,XXY con degeneración de túbulos seminíferos e insuficiencia testicular primaria.** El X extra (no disyunción meiótica) lleva a hialinización y fibrosis de los túbulos: no hay espermatogénesis (azoospermia, testículos pequeños y firmes) ni inhibina B, y las células de Leydig producen poca testosterona. Al fallar el testículo se pierde la retroalimentación negativa y suben FSH y LH: hipogonadismo hipergonadotrópico. La testosterona baja retrasa el cierre epifisario (talla alta, piernas largas) y el cociente estrógeno/testosterona alto produce ginecomastia.\n\n- 47,XYY: testículos y fertilidad suelen ser normales.\n- 45,X: es el síndrome de Turner, con fenotipo femenino.\n- Falla hipotalámica de GnRH: daría FSH y LH bajas, no altas.\n- 48,XXYY con función conservada: también causa hipogonadismo.",
       "tema": "cromosomicos",
       "nivel": 2,
       "flujo": {
@@ -784,7 +784,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — sube hasta ~9 %.** El labio y paladar hendido aislado es multifactorial: muchos alelos de efecto pequeño más factores ambientales suman una «carga» de susceptibilidad, y la malformación aparece cuando se supera un umbral. El riesgo empírico de recurrencia no es fijo: cada familiar afectado indica que esa familia porta más alelos de riesgo, así que la estimación pasa de ~4 % tras un hijo afectado a ~9 % tras dos. A diferencia de las monogénicas, depende del número y cercanía de los afectados.\n\n- **A.** Se mantiene en 4 %: valdría para un riesgo mendeliano fijo, no para el empírico multifactorial.\n- **C.** 25 % por herencia recesiva: no hay patrón mendeliano demostrado.\n- **D.** 50 % por herencia dominante: tampoco.\n- **E.** Disminuye por selección negativa: la selección actúa en la población a lo largo de generaciones, no entre hermanos.",
+      "explanation": "**Sube hasta ~9 %.** El labio y paladar hendido aislado es multifactorial: muchos alelos de efecto pequeño más factores ambientales suman una «carga» de susceptibilidad, y la malformación aparece cuando se supera un umbral. El riesgo empírico de recurrencia no es fijo: cada familiar afectado indica que esa familia porta más alelos de riesgo, así que la estimación pasa de ~4 % tras un hijo afectado a ~9 % tras dos. A diferencia de las monogénicas, depende del número y cercanía de los afectados.\n\n- Se mantiene en 4 %: valdría para un riesgo mendeliano fijo, no para el empírico multifactorial.\n- 25 % por herencia recesiva: no hay patrón mendeliano demostrado.\n- 50 % por herencia dominante: tampoco.\n- Disminuye por selección negativa: la selección actúa en la población a lo largo de generaciones, no entre hermanos.",
       "tema": "mendelianos",
       "nivel": 2,
       "flujo": {
@@ -860,7 +860,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: D — FISH con sondas dirigidas a ERBB2.** La FISH hibrida sondas fluorescentes con secuencias concretas del ADN y cuenta las señales en cada núcleo; funciona en núcleos en interfase, así que sirve en tejido fijado en formol e incluido en parafina, sin cultivo. Se compara el número de señales ERBB2 con las del centrómero 17: un cociente ≥ 2 confirma amplificación y la indicación de terapia anti-HER2. Por eso es la prueba refleja cuando la inmunohistoquímica sale equívoca (2+).\n\n- **A.** Cariotipo con bandeo G: necesita metafases y no resuelve amplificaciones focales.\n- **B.** Secuenciación de Sanger: lee la secuencia (mutaciones puntuales), no cuenta copias.\n- **C.** PCR cualitativa: dice si la secuencia está, no cuántas copias hay.\n- **E.** Exoma completo: no es la prueba validada ni la más directa para esto.",
+      "explanation": "**FISH con sondas dirigidas a ERBB2.** La FISH hibrida sondas fluorescentes con secuencias concretas del ADN y cuenta las señales en cada núcleo; funciona en núcleos en interfase, así que sirve en tejido fijado en formol e incluido en parafina, sin cultivo. Se compara el número de señales ERBB2 con las del centrómero 17: un cociente ≥ 2 confirma amplificación y la indicación de terapia anti-HER2. Por eso es la prueba refleja cuando la inmunohistoquímica sale equívoca (2+).\n\n- Cariotipo con bandeo G: necesita metafases y no resuelve amplificaciones focales.\n- Secuenciación de Sanger: lee la secuencia (mutaciones puntuales), no cuenta copias.\n- PCR cualitativa: dice si la secuencia está, no cuántas copias hay.\n- Exoma completo: no es la prueba validada ni la más directa para esto.",
       "tema": "mama",
       "nivel": 2,
       "flujo": {
@@ -945,7 +945,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — la biopsia líquida analiza ADN tumoral circulante para detectar resistencia; CRISPR/Cas9 corta una secuencia de ADN guiada por un ARN guía.** Las células tumorales que mueren liberan fragmentos de ADN a la sangre (ctDNA); secuenciarlos permite ver mutaciones de resistencia adquiridas tras la terapia anti-EGFR, como T790M, sin otra biopsia de tejido. CRISPR/Cas9 usa un ARN guía complementario a la diana para llevar la nucleasa Cas9, que corta la doble cadena; la reparación permite inactivar o editar la variante y estudiar su función.\n\n- **A.** Solo células intactas / CRISPR edita proteínas: también analiza ADN libre, y CRISPR actúa sobre el ADN.\n- **C.** Reemplaza siempre a la biopsia / corrige todo: ninguna de las dos cosas.\n- **D.** Solo aneuploidías / reconoce con anticuerpos: detecta variantes puntuales y reconoce por ARN.\n- **E.** Solo epigenética / exige metafase: falso en ambos extremos.",
+      "explanation": "**La biopsia líquida analiza ADN tumoral circulante para detectar resistencia; CRISPR/Cas9 corta una secuencia de ADN guiada por un ARN guía.** Las células tumorales que mueren liberan fragmentos de ADN a la sangre (ctDNA); secuenciarlos permite ver mutaciones de resistencia adquiridas tras la terapia anti-EGFR, como T790M, sin otra biopsia de tejido. CRISPR/Cas9 usa un ARN guía complementario a la diana para llevar la nucleasa Cas9, que corta la doble cadena; la reparación permite inactivar o editar la variante y estudiar su función.\n\n- Solo células intactas / CRISPR edita proteínas: también analiza ADN libre, y CRISPR actúa sobre el ADN.\n- Reemplaza siempre a la biopsia / corrige todo: ninguna de las dos cosas.\n- Solo aneuploidías / reconoce con anticuerpos: detecta variantes puntuales y reconoce por ARN.\n- Solo epigenética / exige metafase: falso en ambos extremos.",
       "tema": "gastrico-pulmon",
       "nivel": 2,
       "flujo": {
@@ -1039,7 +1039,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — estómago.** Desmosomas (uniones intercelulares) y citoqueratinas (filamentos intermedios epiteliales) prueban que la metástasis es un carcinoma, y la formación de glándulas lo precisa como adenocarcinoma. El primario debe ser, por tanto, un órgano con epitelio glandular, y entre las opciones solo el estómago lo es. Además, el adenocarcinoma gástrico disemina por vía linfática y puede dar adenopatías cervicales (ganglio de Virchow, supraclavicular izquierdo).\n\n- **A.** Médula ósea: origina neoplasias hematolinfoides, CD45+, sin desmosomas, glándulas ni citoqueratinas.\n- **C.** Meninges: el meningioma es meningotelial y no forma glándulas.\n- **D.** Testículo: algunos tumores germinales son citoqueratina+, pero no reproducen este adenocarcinoma glandular.",
+      "explanation": "**Estómago.** Desmosomas (uniones intercelulares) y citoqueratinas (filamentos intermedios epiteliales) prueban que la metástasis es un carcinoma, y la formación de glándulas lo precisa como adenocarcinoma. El primario debe ser, por tanto, un órgano con epitelio glandular, y entre las opciones solo el estómago lo es. Además, el adenocarcinoma gástrico disemina por vía linfática y puede dar adenopatías cervicales (ganglio de Virchow, supraclavicular izquierdo).\n\n- Médula ósea: origina neoplasias hematolinfoides, CD45+, sin desmosomas, glándulas ni citoqueratinas.\n- Meninges: el meningioma es meningotelial y no forma glándulas.\n- Testículo: algunos tumores germinales son citoqueratina+, pero no reproducen este adenocarcinoma glandular.",
       "tema": "neoplasia-conceptos",
       "nivel": 2,
       "flujo": {
@@ -1119,7 +1119,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: A — mayor cantidad de cromatina (hipercromasia).** Un virus oncogénico transforma la célula al desarmar los frenos del ciclo (p. ej., E6/E7 del VPH sobre p53 y pRb) y favorecer la inestabilidad genómica. La célula transformada prolifera y acumula ADN: el núcleo se ve grande, con cromatina gruesa y oscura, a menudo aneuploide. De las opciones, es el único cambio morfológico propio de la transformación neoplásica (anaplasia).\n\n- **B.** Más mitocondrias: refleja demanda metabólica, no es criterio de malignidad.\n- **C.** Apoptosis aumentada: la transformación tiende a *evadir* la apoptosis.\n- **D.** Más lisosomas: aparece en autofagia o fagocitosis, no en la transformación.\n\n*Duda: la hipercromasia por sí sola no demuestra oncogenicidad viral (lo harían la pérdida de inhibición por contacto, el crecimiento en agar blando o tumores en ratón); es la «menos mala» de las opciones.*",
+      "explanation": "**Mayor cantidad de cromatina (hipercromasia).** Un virus oncogénico transforma la célula al desarmar los frenos del ciclo (p. ej., E6/E7 del VPH sobre p53 y pRb) y favorecer la inestabilidad genómica. La célula transformada prolifera y acumula ADN: el núcleo se ve grande, con cromatina gruesa y oscura, a menudo aneuploide. De las opciones, es el único cambio morfológico propio de la transformación neoplásica (anaplasia).\n\n- Más mitocondrias: refleja demanda metabólica, no es criterio de malignidad.\n- Apoptosis aumentada: la transformación tiende a *evadir* la apoptosis.\n- Más lisosomas: aparece en autofagia o fagocitosis, no en la transformación.\n\n*Duda: la hipercromasia por sí sola no demuestra oncogenicidad viral (lo harían la pérdida de inhibición por contacto, el crecimiento en agar blando o tumores en ratón); es la «menos mala» de las opciones.*",
       "tema": "neoplasia-conceptos",
       "nivel": 2,
       "flujo": {
@@ -1205,7 +1205,7 @@
           "correct": true
         }
       ],
-      "explanation": "**Correcta: E — es maligno por su capacidad de invasión y destrucción local, aunque las metástasis sean excepcionales.** La malignidad se define por la invasión: el carcinoma basocelular infiltra la dermis y destruye cartílago y hueso vecinos (de ahí el «ulcus rodens» nasal), aunque metastatiza en menos del 0,1 %, en parte porque depende de su estroma. La metástasis es el criterio inequívoco de malignidad, pero su ausencia no la descarta.\n\n- **A.** Benigno porque no metastatiza: la invasión basta para ser maligno.\n- **B.** Borderline por crecer lento: la velocidad no define el comportamiento.\n- **C.** In situ por estar en la piel: la infiltración dérmica ya rompió la membrana basal.\n- **D.** La ausencia de metástasis demuestra diferenciación normal: una cosa no implica la otra.",
+      "explanation": "**Es maligno por su capacidad de invasión y destrucción local, aunque las metástasis sean excepcionales.** La malignidad se define por la invasión: el carcinoma basocelular infiltra la dermis y destruye cartílago y hueso vecinos (de ahí el «ulcus rodens» nasal), aunque metastatiza en menos del 0,1 %, en parte porque depende de su estroma. La metástasis es el criterio inequívoco de malignidad, pero su ausencia no la descarta.\n\n- Benigno porque no metastatiza: la invasión basta para ser maligno.\n- Borderline por crecer lento: la velocidad no define el comportamiento.\n- In situ por estar en la piel: la infiltración dérmica ya rompió la membrana basal.\n- La ausencia de metástasis demuestra diferenciación normal: una cosa no implica la otra.",
       "tema": "neoplasia-conceptos",
       "nivel": 2,
       "flujo": {
@@ -1294,7 +1294,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — es una entidad excepcional que obliga a interpretar la diseminación junto con la histología y el contexto.** La regla es que solo los malignos metastatizan, pero el leiomioma metastatizante benigno la rompe: células de un leiomioma uterino (a menudo liberadas en una miomectomía o histerectomía previa) llegan al pulmón y crecen como nódulos de músculo liso sin atipia, necrosis ni mitosis, desmina+ y con receptores hormonales, igual que el tumor original. El diagnóstico integra morfología, inmunohistoquímica y antecedente, no solo la localización.\n\n- **A.** Confirma leiomiosarcoma: la histología no tiene criterios de sarcoma.\n- **C.** Sin atipia no hay diseminación: justamente esta entidad lo desmiente.\n- **D.** Desmina = diferenciación epitelial: la desmina es un filamento intermedio muscular.\n- **E.** Receptores de estrógeno = lesión reactiva: el leiomioma uterino es RE+ y neoplásico.",
+      "explanation": "**Es una entidad excepcional que obliga a interpretar la diseminación junto con la histología y el contexto.** La regla es que solo los malignos metastatizan, pero el leiomioma metastatizante benigno la rompe: células de un leiomioma uterino (a menudo liberadas en una miomectomía o histerectomía previa) llegan al pulmón y crecen como nódulos de músculo liso sin atipia, necrosis ni mitosis, desmina+ y con receptores hormonales, igual que el tumor original. El diagnóstico integra morfología, inmunohistoquímica y antecedente, no solo la localización.\n\n- Confirma leiomiosarcoma: la histología no tiene criterios de sarcoma.\n- Sin atipia no hay diseminación: justamente esta entidad lo desmiente.\n- Desmina = diferenciación epitelial: la desmina es un filamento intermedio muscular.\n- Receptores de estrógeno = lesión reactiva: el leiomioma uterino es RE+ y neoplásico.",
       "tema": "neoplasia-conceptos",
       "nivel": 2,
       "flujo": {
@@ -1383,7 +1383,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: A — el hidrocarburo induce una alteración genética permanente y el éster de forbol expande el clon iniciado.** Los hidrocarburos aromáticos policíclicos se activan por citocromo P450 y forman aductos con el ADN; si la célula se divide antes de repararlos, el daño queda fijado como mutación irreversible (iniciación), y basta una dosis. El éster de forbol no muta: activa la proteína cinasa C y estimula la proliferación, de modo que la célula iniciada forma un clon. La promoción exige exposiciones repetidas, es reversible y sin iniciación previa no da tumores.\n\n- **B.** Invierte los papeles: el forbol no forma aductos.\n- **C.** Solo cambios epigenéticos: la iniciación es mutacional.\n- **D.** Promoción antes que iniciación: el orden importa; promover células no iniciadas no da tumores.\n- **E.** Iniciación continua y promoción única: es al revés.",
+      "explanation": "**El hidrocarburo induce una alteración genética permanente y el éster de forbol expande el clon iniciado.** Los hidrocarburos aromáticos policíclicos se activan por citocromo P450 y forman aductos con el ADN; si la célula se divide antes de repararlos, el daño queda fijado como mutación irreversible (iniciación), y basta una dosis. El éster de forbol no muta: activa la proteína cinasa C y estimula la proliferación, de modo que la célula iniciada forma un clon. La promoción exige exposiciones repetidas, es reversible y sin iniciación previa no da tumores.\n\n- Invierte los papeles: el forbol no forma aductos.\n- Solo cambios epigenéticos: la iniciación es mutacional.\n- Promoción antes que iniciación: el orden importa; promover células no iniciadas no da tumores.\n- Iniciación continua y promoción única: es al revés.",
       "tema": "carcinogenesis",
       "nivel": 2,
       "flujo": {
@@ -1479,7 +1479,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: D — β-naftilamina → urotelial; aflatoxina B1 → hepatocarcinoma; asbesto → mesotelioma; cloruro de vinilo → angiosarcoma hepático.** Cada carcinógeno daña donde se activa o se concentra: la β-naftilamina (colorantes) se conjuga en el hígado y su metabolito se libera en la orina, sobre el urotelio; la aflatoxina B1 se activa en el hígado y causa la mutación característica del codón 249 de TP53; las fibras de asbesto quedan en la pleura y mantienen inflamación y especies reactivas de oxígeno; el cloruro de vinilo se metaboliza en el hígado y daña su endotelio sinusoidal.\n\n- **A.** Intercambia urotelio e hígado entre β-naftilamina y aflatoxina.\n- **B.** «Asbesto → carcinoma pulmonar exclusivamente»: también da mesotelioma, su neoplasia distintiva.\n- **C.** Cloruro de vinilo → hepatocarcinoma: su asociación característica es el angiosarcoma.\n- **E.** Intercambia aflatoxina y asbesto.",
+      "explanation": "**Β-naftilamina → urotelial; aflatoxina B1 → hepatocarcinoma; asbesto → mesotelioma; cloruro de vinilo → angiosarcoma hepático.** Cada carcinógeno daña donde se activa o se concentra: la β-naftilamina (colorantes) se conjuga en el hígado y su metabolito se libera en la orina, sobre el urotelio; la aflatoxina B1 se activa en el hígado y causa la mutación característica del codón 249 de TP53; las fibras de asbesto quedan en la pleura y mantienen inflamación y especies reactivas de oxígeno; el cloruro de vinilo se metaboliza en el hígado y daña su endotelio sinusoidal.\n\n- Intercambia urotelio e hígado entre β-naftilamina y aflatoxina.\n- «Asbesto → carcinoma pulmonar exclusivamente»: también da mesotelioma, su neoplasia distintiva.\n- Cloruro de vinilo → hepatocarcinoma: su asociación característica es el angiosarcoma.\n- Intercambia aflatoxina y asbesto.",
       "tema": "carcinogenesis",
       "nivel": 2,
       "flujo": {
@@ -1585,7 +1585,7 @@
           "correct": true
         }
       ],
-      "explanation": "**Correcta: E — E6 favorece la degradación de p53 y E7 inactiva pRb, liberando E2F y el paso de G1 a S.** En la infección persistente por VPH-16 el genoma viral suele integrarse y pierde E2, su represor, así que E6 y E7 se expresan en exceso. E6, con la ligasa E6AP, ubiquitina a p53 y lo envía al proteasoma: la célula ya no se detiene ni muere ante el daño del ADN. E7 se une a pRb y suelta E2F, que transcribe los genes de fase S. Sin pRb funcional, p16 se sobreexpresa: p16 difusa es el marcador de esta vía.\n\n- **A.** Invierte las dianas (E6 → pRb, E7 → p53) y les atribuye apoptosis.\n- **B.** E6 activa p53 y E7 retiene E2F: eso detendría el ciclo.\n- **C.** Activan la reparación por escisión: no, desarman los frenos del ciclo.\n- **D.** E7 inhibe CDK2 y E6 sube p21: p21 frena el ciclo.",
+      "explanation": "**E6 favorece la degradación de p53 y E7 inactiva pRb, liberando E2F y el paso de G1 a S.** En la infección persistente por VPH-16 el genoma viral suele integrarse y pierde E2, su represor, así que E6 y E7 se expresan en exceso. E6, con la ligasa E6AP, ubiquitina a p53 y lo envía al proteasoma: la célula ya no se detiene ni muere ante el daño del ADN. E7 se une a pRb y suelta E2F, que transcribe los genes de fase S. Sin pRb funcional, p16 se sobreexpresa: p16 difusa es el marcador de esta vía.\n\n- Invierte las dianas (E6 → pRb, E7 → p53) y les atribuye apoptosis.\n- E6 activa p53 y E7 retiene E2F: eso detendría el ciclo.\n- Activan la reparación por escisión: no, desarman los frenos del ciclo.\n- E7 inhibe CDK2 y E6 sube p21: p21 frena el ciclo.",
       "tema": "vph",
       "nivel": 2,
       "flujo": {
@@ -1680,7 +1680,7 @@
           "correct": true
         }
       ],
-      "explanation": "**Correcta: D — el estado de los ganglios linfáticos axilares.** Sin metástasis a distancia, el compromiso ganglionar es el factor pronóstico más potente del carcinoma de mama: demuestra que el tumor ya invade linfáticos y disemina, y el riesgo de recurrencia y muerte crece con el número de ganglios afectados. Dos de tres ganglios positivos (pN1a si son macrometástasis) pesan más que el perfil Luminal A favorable.\n\n- **A.** Tamaño de 2,5 cm (pT2): es pronóstico, pero menos determinante que los ganglios.\n- **B.** Receptores hormonales positivos: es un factor *favorable* (diana endocrina, menor agresividad).\n- **C.** Alto grado histológico: no consta en el caso; un Luminal A con Ki-67 bajo suele ser de bajo grado.",
+      "explanation": "**El estado de los ganglios linfáticos axilares.** Sin metástasis a distancia, el compromiso ganglionar es el factor pronóstico más potente del carcinoma de mama: demuestra que el tumor ya invade linfáticos y disemina, y el riesgo de recurrencia y muerte crece con el número de ganglios afectados. Dos de tres ganglios positivos (pN1a si son macrometástasis) pesan más que el perfil Luminal A favorable.\n\n- Tamaño de 2,5 cm (pT2): es pronóstico, pero menos determinante que los ganglios.\n- Receptores hormonales positivos: es un factor *favorable* (diana endocrina, menor agresividad).\n- Alto grado histológico: no consta en el caso; un Luminal A con Ki-67 bajo suele ser de bajo grado.",
       "tema": "mama",
       "nivel": 2,
       "flujo": {
@@ -1760,7 +1760,7 @@
           "correct": true
         }
       ],
-      "explanation": "**Correcta: D — acumulación de daño del ADN por falla de la reparación homóloga.** BRCA1 es un supresor tumoral «guardián»: con BRCA2 y RAD51 repara las roturas de doble cadena usando la cromátida hermana como molde. La paciente hereda un alelo inactivo en todas sus células; cuando una célula mamaria pierde el segundo (doble impacto de Knudson), esas roturas se reparan por vías propensas a error, se acumulan mutaciones y reordenamientos, y surge un carcinoma de alto grado, precoz y a menudo triple negativo.\n\n- **A.** Colágeno aberrante en el estroma: interviene en la invasión, no en la predisposición.\n- **B.** Activación de células mioepiteliales: las mioepiteliales frenan la invasión; no explican la herencia.\n- **C.** Sobreexpresión del ER inducida por BRCA1: BRCA1 no induce ER; sus tumores suelen ser ER−.",
+      "explanation": "**Acumulación de daño del ADN por falla de la reparación homóloga.** BRCA1 es un supresor tumoral «guardián»: con BRCA2 y RAD51 repara las roturas de doble cadena usando la cromátida hermana como molde. La paciente hereda un alelo inactivo en todas sus células; cuando una célula mamaria pierde el segundo (doble impacto de Knudson), esas roturas se reparan por vías propensas a error, se acumulan mutaciones y reordenamientos, y surge un carcinoma de alto grado, precoz y a menudo triple negativo.\n\n- Colágeno aberrante en el estroma: interviene en la invasión, no en la predisposición.\n- Activación de células mioepiteliales: las mioepiteliales frenan la invasión; no explican la herencia.\n- Sobreexpresión del ER inducida por BRCA1: BRCA1 no induce ER; sus tumores suelen ser ER−.",
       "tema": "mama",
       "nivel": 2,
       "flujo": {
@@ -1840,7 +1840,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — linfoma de Burkitt.** La t(8;14) coloca a MYC junto al potenciador de la cadena pesada de inmunoglobulinas (IgH), muy activo en células B: MYC se sobreexpresa e impulsa ciclo y metabolismo anabólico, de ahí el Ki-67 ~100 %. Las células B de centro germinal (CD20+, CD10+, BCL2−) mueren también a gran velocidad, y los macrófagos que fagocitan sus restos forman las «estrellas» claras sobre el «cielo» tumoral. Las masas ileocecal y mandibular de crecimiento rápido, la LDH alta y el ácido úrico elevado reflejan ese recambio masivo (riesgo de lisis tumoral).\n\n- **A.** LLA-B: blastos TdT+, sin cielo estrellado ni t(8;14) típica.\n- **C.** Leucemia mieloide crónica: mieloproliferativa, t(9;22) BCR::ABL1.\n- **D.** Linfoma folicular: t(14;18), BCL2+, Ki-67 bajo.",
+      "explanation": "**Linfoma de Burkitt.** La t(8;14) coloca a MYC junto al potenciador de la cadena pesada de inmunoglobulinas (IgH), muy activo en células B: MYC se sobreexpresa e impulsa ciclo y metabolismo anabólico, de ahí el Ki-67 ~100 %. Las células B de centro germinal (CD20+, CD10+, BCL2−) mueren también a gran velocidad, y los macrófagos que fagocitan sus restos forman las «estrellas» claras sobre el «cielo» tumoral. Las masas ileocecal y mandibular de crecimiento rápido, la LDH alta y el ácido úrico elevado reflejan ese recambio masivo (riesgo de lisis tumoral).\n\n- LLA-B: blastos TdT+, sin cielo estrellado ni t(8;14) típica.\n- Leucemia mieloide crónica: mieloproliferativa, t(9;22) BCR::ABL1.\n- Linfoma folicular: t(14;18), BCL2+, Ki-67 bajo.",
       "tema": "linfomas",
       "nivel": 2,
       "flujo": {
@@ -1933,7 +1933,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: C — leucemia linfocítica crónica (LLC).** Una linfocitosis de linfocitos B pequeños y maduros en una adulta mayor, CD19+ con coexpresión aberrante de CD5 (marcador T) y CD23, define la LLC. El clon no prolifera rápido: se acumula porque resiste la apoptosis, e infiltra la médula de forma difusa desplazando la hematopoyesis normal (Hb 8,7 g/dL, plaquetas 95 000/µL). ZAP-70+ señala genes IGHV no mutados, es decir, peor pronóstico.\n\n- **A.** Leucemia mieloide crónica: proliferación granulocítica con BCR::ABL1, no linfocitos B CD5+.\n- **B.** Linfoma T/NK: no expresa CD19 ni CD23.\n- **D.** Leucemia mieloide aguda: mieloblastos MPO+, no linfocitos maduros.",
+      "explanation": "**Leucemia linfocítica crónica (LLC).** Una linfocitosis de linfocitos B pequeños y maduros en una adulta mayor, CD19+ con coexpresión aberrante de CD5 (marcador T) y CD23, define la LLC. El clon no prolifera rápido: se acumula porque resiste la apoptosis, e infiltra la médula de forma difusa desplazando la hematopoyesis normal (Hb 8,7 g/dL, plaquetas 95 000/µL). ZAP-70+ señala genes IGHV no mutados, es decir, peor pronóstico.\n\n- Leucemia mieloide crónica: proliferación granulocítica con BCR::ABL1, no linfocitos B CD5+.\n- Linfoma T/NK: no expresa CD19 ni CD23.\n- Leucemia mieloide aguda: mieloblastos MPO+, no linfocitos maduros.",
       "tema": "leucemias",
       "nivel": 2,
       "flujo": {
@@ -2013,7 +2013,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: C — leucemia mieloide crónica en fase crónica.** La t(9;22) forma el cromosoma Filadelfia y el gen de fusión BCR-ABL1 (p210), una tirosina cinasa siempre activa que estimula la proliferación y supervivencia de la célula madre mieloide sin bloquear su maduración. Por eso la sangre se llena de granulocitos en todos los estadios (mielocitos, metamielocitos, neutrófilos) con basofilia, y la hematopoyesis extramedular produce una esplenomegalia gigante (pesadez, saciedad precoz). Con blastos escasos, sigue en fase crónica.\n\n- **A.** Policitemia vera: predominan los eritrocitos y la mutación es JAK2 V617F.\n- **B.** Reacción leucemoide: es reactiva, sin basofilia ni BCR-ABL1.\n- **D.** Linfoma no Hodgkin B: es linfoide, no granulocítico.",
+      "explanation": "**Leucemia mieloide crónica en fase crónica.** La t(9;22) forma el cromosoma Filadelfia y el gen de fusión BCR-ABL1 (p210), una tirosina cinasa siempre activa que estimula la proliferación y supervivencia de la célula madre mieloide sin bloquear su maduración. Por eso la sangre se llena de granulocitos en todos los estadios (mielocitos, metamielocitos, neutrófilos) con basofilia, y la hematopoyesis extramedular produce una esplenomegalia gigante (pesadez, saciedad precoz). Con blastos escasos, sigue en fase crónica.\n\n- Policitemia vera: predominan los eritrocitos y la mutación es JAK2 V617F.\n- Reacción leucemoide: es reactiva, sin basofilia ni BCR-ABL1.\n- Linfoma no Hodgkin B: es linfoide, no granulocítico.",
       "tema": "leucemias",
       "nivel": 2,
       "flujo": {
@@ -2106,7 +2106,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: C — leucemia linfocítica crónica (LLC).** Un clon B monoclonal CD19+, CD5+, CD23+ con CD20 débil es el inmunofenotipo de la LLC. Sus linfocitos maduros se acumulan porque escapan de la apoptosis (BCL2 alto), no porque proliferen rápido: de ahí la linfocitosis absoluta de células pequeñas, las adenopatías y la esplenomegalia. Son células frágiles que se aplastan al extender el frotis y dejan las «sombras de Gumprecht» (smudge cells).\n\n- **A.** Leucemia promielocítica: aguda y mieloide, con promielocitos anómalos y coagulación intravascular diseminada.\n- **B.** Leucemia linfoblástica aguda: blastos inmaduros CD34+/TdT+, no linfocitos maduros.\n- **D.** Linfoma NK/T: CD3/CD56, lesión destructiva de línea media, sin CD19.",
+      "explanation": "**Leucemia linfocítica crónica (LLC).** Un clon B monoclonal CD19+, CD5+, CD23+ con CD20 débil es el inmunofenotipo de la LLC. Sus linfocitos maduros se acumulan porque escapan de la apoptosis (BCL2 alto), no porque proliferen rápido: de ahí la linfocitosis absoluta de células pequeñas, las adenopatías y la esplenomegalia. Son células frágiles que se aplastan al extender el frotis y dejan las «sombras de Gumprecht» (smudge cells).\n\n- Leucemia promielocítica: aguda y mieloide, con promielocitos anómalos y coagulación intravascular diseminada.\n- Leucemia linfoblástica aguda: blastos inmaduros CD34+/TdT+, no linfocitos maduros.\n- Linfoma NK/T: CD3/CD56, lesión destructiva de línea media, sin CD19.",
       "tema": "leucemias",
       "nivel": 2,
       "flujo": {
@@ -2199,7 +2199,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — leucemia linfoblástica aguda de precursores B.** Blastos CD19+ (linaje B), CD10+ (CALLA) y CD34+ (inmadurez) son linfoblastos B; es la leucemia más frecuente de la infancia. Se expanden en la médula y desplazan la hematopoyesis normal: anemia, trombocitopenia (petequias, epistaxis) y pocos neutrófilos funcionales (fiebre). La cefalea alerta sobre infiltración del sistema nervioso central, frecuente en la LLA.\n\n- **A.** «Leucemia aplásica» (anemia aplásica): médula vacía y pancitopenia, sin blastos.\n- **C.** Linfoma NK/T: expresa CD3/CD56, no CD19 ni CD10.\n- **D.** Leucemia mieloide crónica: rara en niños, con granulocitos maduros y BCR-ABL1, no 82 % de blastos.",
+      "explanation": "**Leucemia linfoblástica aguda de precursores B.** Blastos CD19+ (linaje B), CD10+ (CALLA) y CD34+ (inmadurez) son linfoblastos B; es la leucemia más frecuente de la infancia. Se expanden en la médula y desplazan la hematopoyesis normal: anemia, trombocitopenia (petequias, epistaxis) y pocos neutrófilos funcionales (fiebre). La cefalea alerta sobre infiltración del sistema nervioso central, frecuente en la LLA.\n\n- «Leucemia aplásica» (anemia aplásica): médula vacía y pancitopenia, sin blastos.\n- Linfoma NK/T: expresa CD3/CD56, no CD19 ni CD10.\n- Leucemia mieloide crónica: rara en niños, con granulocitos maduros y BCR-ABL1, no 82 % de blastos.",
       "tema": "leucemias",
       "nivel": 2,
       "flujo": {
@@ -2292,7 +2292,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — estimula la supervivencia celular.** Un receptor tirosina cinasa activado recluta PI3K, que fosforila PIP2 a PIP3 en la membrana; PIP3 ancla y activa AKT. AKT inactiva proteínas proapoptóticas como BAD, activa mTOR (crecimiento y metabolismo) y frena factores de muerte: la célula sobrevive aunque esté dañada. PTEN es su freno natural (desfosforila PIP3) y se pierde en muchos tumores.\n\n- **A.** Proliferación «mediante WNT»: WNT/β-catenina es otra vía.\n- **C.** Supresor tumoral proapoptótico: PI3K actúa como oncogén; el supresor es PTEN.\n- **D.** Inhibe la angiogénesis: la vía PI3K/AKT/mTOR más bien la favorece (HIF-1α, VEGF).",
+      "explanation": "**Estimula la supervivencia celular.** Un receptor tirosina cinasa activado recluta PI3K, que fosforila PIP2 a PIP3 en la membrana; PIP3 ancla y activa AKT. AKT inactiva proteínas proapoptóticas como BAD, activa mTOR (crecimiento y metabolismo) y frena factores de muerte: la célula sobrevive aunque esté dañada. PTEN es su freno natural (desfosforila PIP3) y se pierde en muchos tumores.\n\n- Proliferación «mediante WNT»: WNT/β-catenina es otra vía.\n- Supresor tumoral proapoptótico: PI3K actúa como oncogén; el supresor es PTEN.\n- Inhibe la angiogénesis: la vía PI3K/AKT/mTOR más bien la favorece (HIF-1α, VEGF).",
       "tema": "hallmarks",
       "nivel": 1,
       "claseId": "pat-ai-12",
@@ -2324,7 +2324,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — identificar dianas terapéuticas y mecanismos de resistencia, como la mutación T790M.** Las células tumorales circulantes se desprenden del tumor y viajan por la sangre; capturarlas en una simple toma y analizar su ADN muestra qué mutaciones tiene el tumor *hoy*. En un adenocarcinoma de pulmón tratado con inhibidores de EGFR, la aparición de T790M explica la resistencia y orienta el cambio de fármaco; su recuento también estima riesgo de recaída y monitoriza la respuesta.\n\n- **A.** Inducir apoptosis del tumor: son un biomarcador, no un tratamiento.\n- **C.** Sustituir siempre a la biopsia tisular: la complementan; la histología sigue siendo necesaria.\n- **D.** Medir colesterol y triglicéridos: no tiene relación.",
+      "explanation": "**Identificar dianas terapéuticas y mecanismos de resistencia, como la mutación T790M.** Las células tumorales circulantes se desprenden del tumor y viajan por la sangre; capturarlas en una simple toma y analizar su ADN muestra qué mutaciones tiene el tumor *hoy*. En un adenocarcinoma de pulmón tratado con inhibidores de EGFR, la aparición de T790M explica la resistencia y orienta el cambio de fármaco; su recuento también estima riesgo de recaída y monitoriza la respuesta.\n\n- Inducir apoptosis del tumor: son un biomarcador, no un tratamiento.\n- Sustituir siempre a la biopsia tisular: la complementan; la histología sigue siendo necesaria.\n- Medir colesterol y triglicéridos: no tiene relación.",
       "tema": "metastasis",
       "nivel": 1,
       "claseId": "pat-ai-12",
@@ -2356,7 +2356,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — cambios cuantitativos, cualitativos y metagenómicos de la microbiota.** La disbiosis es un desequilibrio: sobrecrecimiento bacteriano, menos simbiontes protectores y más bacterias invasivas, proinflamatorias y genotóxicas (p. ej., *E. coli* pks+ productora de colibactina o *Fusobacterium nucleatum*), además de metabolitos procancerígenos como el ácido desoxicólico (DCA). Todo ello mantiene inflamación crónica y daño del ADN en el epitelio.\n\n- **A.** Equilibrio perfecto de bacterias saludables: eso es eubiosis, lo opuesto.\n- **C.** Ausencia de microorganismos: la disbiosis es composición alterada, no esterilidad.\n- **D.** Eliminación espontánea de *H. pylori*: no la define, y *H. pylori* rara vez desaparece solo.",
+      "explanation": "**Cambios cuantitativos, cualitativos y metagenómicos de la microbiota.** La disbiosis es un desequilibrio: sobrecrecimiento bacteriano, menos simbiontes protectores y más bacterias invasivas, proinflamatorias y genotóxicas (p. ej., *E. coli* pks+ productora de colibactina o *Fusobacterium nucleatum*), además de metabolitos procancerígenos como el ácido desoxicólico (DCA). Todo ello mantiene inflamación crónica y daño del ADN en el epitelio.\n\n- Equilibrio perfecto de bacterias saludables: eso es eubiosis, lo opuesto.\n- Ausencia de microorganismos: la disbiosis es composición alterada, no esterilidad.\n- Eliminación espontánea de *H. pylori*: no la define, y *H. pylori* rara vez desaparece solo.",
       "tema": "carcinogenesis-microbiana",
       "nivel": 1,
       "claseId": "pat-ai-11",
@@ -2388,7 +2388,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: A — se reclutan SHP-1 y SHP-2, que desfosforilan las cinasas de la señal del TCR y de CD28 (RAS, PI3K), frenan la proliferación y las citocinas e inducen apoptosis del linfocito T.** PD-1 es un receptor de punto de control que aparece en el T activado; al unir PD-L1, que el tumor sobreexpresa (a menudo inducido por IFN-γ), su cola citoplasmática recluta esas fosfatasas y apaga la activación. El resultado es agotamiento del T y escape tumoral; por eso los anti-PD-1/PD-L1 lo reactivan.\n\n- **B.** Proliferación e IFN-γ sin restricciones: es lo opuesto.\n- **C.** Señal coestimuladora idéntica a B7-CD28: PD-1 es inhibitorio.\n- **D.** Bloqueo del ciclo en G0 con activación de telomerasa: no es su efecto.",
+      "explanation": "**Se reclutan SHP-1 y SHP-2, que desfosforilan las cinasas de la señal del TCR y de CD28 (RAS, PI3K), frenan la proliferación y las citocinas e inducen apoptosis del linfocito T.** PD-1 es un receptor de punto de control que aparece en el T activado; al unir PD-L1, que el tumor sobreexpresa (a menudo inducido por IFN-γ), su cola citoplasmática recluta esas fosfatasas y apaga la activación. El resultado es agotamiento del T y escape tumoral; por eso los anti-PD-1/PD-L1 lo reactivan.\n\n- Proliferación e IFN-γ sin restricciones: es lo opuesto.\n- Señal coestimuladora idéntica a B7-CD28: PD-1 es inhibitorio.\n- Bloqueo del ciclo en G0 con activación de telomerasa: no es su efecto.",
       "tema": "inmunidad-cancer",
       "nivel": 1,
       "claseId": "pat-ai-12",
@@ -2420,7 +2420,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — caquexia.** El tumor y la respuesta del huésped liberan citocinas (TNF, IL-1, IL-6) y factores como el inductor de proteólisis (PIF), que movilizan la grasa, degradan el músculo esquelético por la vía ubiquitina-proteasoma, aumentan el gasto energético y reducen el apetito. El resultado es pérdida de peso y masa muscular que no se corrige solo comiendo más.\n\n- **A.** Hiperproteinemia: lo típico es hipoproteinemia por consumo y desnutrición.\n- **C.** Regeneración acelerada sin pérdida de peso: es lo contrario del desgaste tumoral.\n- **D.** Menor riesgo trombótico: el cáncer causa hipercoagulabilidad (síndrome de Trousseau).",
+      "explanation": "**Caquexia.** El tumor y la respuesta del huésped liberan citocinas (TNF, IL-1, IL-6) y factores como el inductor de proteólisis (PIF), que movilizan la grasa, degradan el músculo esquelético por la vía ubiquitina-proteasoma, aumentan el gasto energético y reducen el apetito. El resultado es pérdida de peso y masa muscular que no se corrige solo comiendo más.\n\n- Hiperproteinemia: lo típico es hipoproteinemia por consumo y desnutrición.\n- Regeneración acelerada sin pérdida de peso: es lo contrario del desgaste tumoral.\n- Menor riesgo trombótico: el cáncer causa hipercoagulabilidad (síndrome de Trousseau).",
       "tema": "clinica-tumoral",
       "nivel": 1,
       "claseId": "pat-ai-13",
@@ -2452,7 +2452,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — qué tan rápido se dividen las células tumorales.** Ki-67 es una proteína nuclear presente en todas las fases activas del ciclo (G1, S, G2 y M) y ausente en las células en reposo (G0). Por inmunohistoquímica se cuenta el porcentaje de núcleos teñidos: ese índice es la fracción de crecimiento del tumor. Un Ki-67 alto indica más agresividad (Burkitt ~100 %) y en mama ayuda a separar Luminal A de Luminal B.\n\n- **A.** PSA sérico: es un marcador bioquímico de próstata.\n- **C.** Cantidad de vasos tumorales: la angiogénesis se mide con otros marcadores (p. ej., CD31).\n- **D.** Metilación de p53: se estudia con técnicas moleculares, no con Ki-67.",
+      "explanation": "**Qué tan rápido se dividen las células tumorales.** Ki-67 es una proteína nuclear presente en todas las fases activas del ciclo (G1, S, G2 y M) y ausente en las células en reposo (G0). Por inmunohistoquímica se cuenta el porcentaje de núcleos teñidos: ese índice es la fracción de crecimiento del tumor. Un Ki-67 alto indica más agresividad (Burkitt ~100 %) y en mama ayuda a separar Luminal A de Luminal B.\n\n- PSA sérico: es un marcador bioquímico de próstata.\n- Cantidad de vasos tumorales: la angiogénesis se mide con otros marcadores (p. ej., CD31).\n- Metilación de p53: se estudia con técnicas moleculares, no con Ki-67.",
       "tema": "clinica-tumoral",
       "nivel": 1,
       "claseId": "pat-ai-13",
@@ -2484,7 +2484,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — unidades SUV, representadas en una escala de colores según la captación metabólica.** La PET usa ¹⁸F-fluorodesoxiglucosa (FDG): por el efecto Warburg, las células tumorales sobreexpresan transportadores GLUT y hexocinasa, captan FDG y la dejan atrapada como FDG-6-fosfato. El valor de captación estandarizado (SUV) corrige esa captación por la dosis y el peso, y la TC añade la localización anatómica.\n\n- **A.** Unidades Hounsfield: miden densidad de rayos X en la TC.\n- **C.** Milímetros de mercurio: unidad de presión.\n- **D.** Saturación de oxígeno por infrarrojos: es oximetría, no PET.",
+      "explanation": "**Unidades SUV, representadas en una escala de colores según la captación metabólica.** La PET usa ¹⁸F-fluorodesoxiglucosa (FDG): por el efecto Warburg, las células tumorales sobreexpresan transportadores GLUT y hexocinasa, captan FDG y la dejan atrapada como FDG-6-fosfato. El valor de captación estandarizado (SUV) corrige esa captación por la dosis y el peso, y la TC añade la localización anatómica.\n\n- Unidades Hounsfield: miden densidad de rayos X en la TC.\n- Milímetros de mercurio: unidad de presión.\n- Saturación de oxígeno por infrarrojos: es oximetría, no PET.",
       "tema": "clinica-tumoral",
       "nivel": 1,
       "claseId": "pat-ai-13",
@@ -2516,7 +2516,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — detección temprana, enfermedad residual mínima, monitoreo de resistencia y selección de terapias dirigidas.** Las células tumorales que mueren liberan a la sangre fragmentos cortos de ADN (ctDNA) con las mutaciones del tumor. Secuenciarlo en una toma de sangre permite detectar el cáncer, ver si queda enfermedad tras la cirugía, descubrir mutaciones de resistencia (p. ej., EGFR T790M) y elegir el fármaco dirigido, repitiéndolo cuantas veces haga falta.\n\n- **A.** Grupo sanguíneo ABO: depende de antígenos eritrocitarios.\n- **C.** Presión arterial: no tiene relación.\n- **D.** Descartar infecciones bacterianas: el ctDNA es tumoral, no bacteriano.",
+      "explanation": "**Detección temprana, enfermedad residual mínima, monitoreo de resistencia y selección de terapias dirigidas.** Las células tumorales que mueren liberan a la sangre fragmentos cortos de ADN (ctDNA) con las mutaciones del tumor. Secuenciarlo en una toma de sangre permite detectar el cáncer, ver si queda enfermedad tras la cirugía, descubrir mutaciones de resistencia (p. ej., EGFR T790M) y elegir el fármaco dirigido, repitiéndolo cuantas veces haga falta.\n\n- Grupo sanguíneo ABO: depende de antígenos eritrocitarios.\n- Presión arterial: no tiene relación.\n- Descartar infecciones bacterianas: el ctDNA es tumoral, no bacteriano.",
       "tema": "clinica-tumoral",
       "nivel": 1,
       "claseId": "pat-ai-13",
@@ -2548,7 +2548,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: C — linaje B.** Alrededor del 85-90 % de los linfomas no Hodgkin son de células B (folicular, Burkitt, difuso de células B grandes, tricoleucemia, linfoplasmocítico, manto). Muchos nacen en el centro germinal, donde la célula B reordena y muta sus genes de inmunoglobulina (hipermutación somática, cambio de clase); esa maquinaria propensa a roturas explica por qué tantas translocaciones afectan los loci de Ig.\n\n- **A.** Linaje NK: grupo muy infrecuente.\n- **B.** Células plasmáticas: son el extremo final del linaje B (mieloma), un subgrupo, no la mayoría.\n- **D.** Linaje T: solo ~10-15 % de los linfomas no Hodgkin.",
+      "explanation": "**Linaje B.** Alrededor del 85-90 % de los linfomas no Hodgkin son de células B (folicular, Burkitt, difuso de células B grandes, tricoleucemia, linfoplasmocítico, manto). Muchos nacen en el centro germinal, donde la célula B reordena y muta sus genes de inmunoglobulina (hipermutación somática, cambio de clase); esa maquinaria propensa a roturas explica por qué tantas translocaciones afectan los loci de Ig.\n\n- Linaje NK: grupo muy infrecuente.\n- Células plasmáticas: son el extremo final del linaje B (mieloma), un subgrupo, no la mayoría.\n- Linaje T: solo ~10-15 % de los linfomas no Hodgkin.",
       "tema": "linfomas",
       "nivel": 1,
       "claseId": "pat-c-6",
@@ -2580,7 +2580,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — CD34+, CD117+, CD38−, lin−.** La célula madre hematopoyética es la más inmadura: expresa CD34 (marcador de progenitor) y CD117 (c-KIT, receptor del factor de célula madre), pero no CD38, que aparece al comprometerse, ni ningún marcador de linaje (lin−). Ese perfil se usa para aislarla en los trasplantes, y CD34 en blastos señala inmadurez en las leucemias agudas.\n\n- **A.** CD45, CD19, CD20: linfocito B maduro.\n- **C.** CD13, CD33, MPO: precursor mieloide ya comprometido.\n- **D.** CD3, CD4, CD8: timocito o linfocito T.",
+      "explanation": "**CD34+, CD117+, CD38−, lin−.** La célula madre hematopoyética es la más inmadura: expresa CD34 (marcador de progenitor) y CD117 (c-KIT, receptor del factor de célula madre), pero no CD38, que aparece al comprometerse, ni ningún marcador de linaje (lin−). Ese perfil se usa para aislarla en los trasplantes, y CD34 en blastos señala inmadurez en las leucemias agudas.\n\n- CD45, CD19, CD20: linfocito B maduro.\n- CD13, CD33, MPO: precursor mieloide ya comprometido.\n- CD3, CD4, CD8: timocito o linfocito T.",
       "tema": "leucemias",
       "nivel": 1,
       "claseId": "pat-c-5",
@@ -2612,7 +2612,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — HER-2/neu (ERBB2).** Es un receptor tirosina cinasa de la familia del EGFR. La amplificación de su gen (17q) multiplica la proteína en la membrana, que dimeriza y señaliza sin ligando por RAS-MAPK y PI3K-AKT, impulsando proliferación y supervivencia. Ocurre en ~15-20 % de los carcinomas de mama y en algunos de ovario y estómago; definía mal pronóstico y hoy es también diana terapéutica (trastuzumab).\n\n- **A.** CEA: glucoproteína de adhesión usada como marcador sérico (colon), no un receptor cinasa.\n- **C.** Tirosinasa: enzima de la síntesis de melanina, antígeno de diferenciación del melanoma.\n- **D.** NY-ESO-1: antígeno cáncer-testis.",
+      "explanation": "**HER-2/neu (ERBB2).** Es un receptor tirosina cinasa de la familia del EGFR. La amplificación de su gen (17q) multiplica la proteína en la membrana, que dimeriza y señaliza sin ligando por RAS-MAPK y PI3K-AKT, impulsando proliferación y supervivencia. Ocurre en ~15-20 % de los carcinomas de mama y en algunos de ovario y estómago; definía mal pronóstico y hoy es también diana terapéutica (trastuzumab).\n\n- CEA: glucoproteína de adhesión usada como marcador sérico (colon), no un receptor cinasa.\n- Tirosinasa: enzima de la síntesis de melanina, antígeno de diferenciación del melanoma.\n- NY-ESO-1: antígeno cáncer-testis.",
       "tema": "inmunidad-cancer",
       "nivel": 1,
       "claseId": "pat-ai-12",
@@ -2644,7 +2644,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: C — citotoxicidad celular dependiente de anticuerpos (ADCC) y activación del complemento (CDC).** El rituximab es una IgG1 anti-CD20: su Fab se une al CD20 de la célula B y deja el Fc expuesto. Los receptores Fcγ de células NK y macrófagos reconocen ese Fc y lisan o fagocitan la célula (ADCC), y el C1q se fija y activa el complemento hasta el complejo de ataque a la membrana (CDC). Además puede inducir apoptosis directa.\n\n- **A.** Bloqueo de receptores de andrógenos: es el mecanismo de los antiandrógenos.\n- **B.** Inhibición de BTK: es el ibrutinib, una molécula pequeña intracelular.\n- **D.** Tolerancia por Treg: el rituximab destruye células B, no induce tolerancia.",
+      "explanation": "**Citotoxicidad celular dependiente de anticuerpos (ADCC) y activación del complemento (CDC).** El rituximab es una IgG1 anti-CD20: su Fab se une al CD20 de la célula B y deja el Fc expuesto. Los receptores Fcγ de células NK y macrófagos reconocen ese Fc y lisan o fagocitan la célula (ADCC), y el C1q se fija y activa el complemento hasta el complejo de ataque a la membrana (CDC). Además puede inducir apoptosis directa.\n\n- Bloqueo de receptores de andrógenos: es el mecanismo de los antiandrógenos.\n- Inhibición de BTK: es el ibrutinib, una molécula pequeña intracelular.\n- Tolerancia por Treg: el rituximab destruye células B, no induce tolerancia.",
       "tema": "inmunidad-cancer",
       "nivel": 1,
       "claseId": "pat-ai-14",
@@ -2676,7 +2676,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — bloquean la señal inhibitoria sobre los linfocitos T y depletan Treg por ADCC.** CTLA-4 compite con CD28 por B7 (CD80/86) con mayor afinidad y frena la activación del T durante el cebado en el ganglio. El ipilimumab lo bloquea: B7 vuelve a unirse a CD28 y el T recibe coestimulación. Como los Treg intratumorales expresan mucho CTLA-4, el Fc del anticuerpo los marca además para su destrucción por células con receptores Fc.\n\n- **A.** Inducir MHC II en el tumor: no es su efecto.\n- **C.** Anticuerpos anti-CEA: no tiene relación.\n- **D.** Destruir la IL-2: no; al liberar el freno, la IL-2 actúa más.",
+      "explanation": "**Bloquean la señal inhibitoria sobre los linfocitos T y depletan Treg por ADCC.** CTLA-4 compite con CD28 por B7 (CD80/86) con mayor afinidad y frena la activación del T durante el cebado en el ganglio. El ipilimumab lo bloquea: B7 vuelve a unirse a CD28 y el T recibe coestimulación. Como los Treg intratumorales expresan mucho CTLA-4, el Fc del anticuerpo los marca además para su destrucción por células con receptores Fc.\n\n- Inducir MHC II en el tumor: no es su efecto.\n- Anticuerpos anti-CEA: no tiene relación.\n- Destruir la IL-2: no; al liberar el freno, la IL-2 actúa más.",
       "tema": "inmunidad-cancer",
       "nivel": 1,
       "claseId": "pat-ai-14",
@@ -2708,7 +2708,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — se procesan y presentan por MHC I y MHC II, activando a la vez linfocitos T CD4 y CD8.** Un péptido largo (25-30 aminoácidos) no cabe directamente en el MHC: tiene que ser captado y procesado por células dendríticas, que lo presentan por MHC II (CD4 cooperadores) y, por presentación cruzada, por MHC I (CD8 citotóxicos). La ayuda CD4 sostiene una respuesta CD8 eficaz y duradera, y se evita la presentación en células no profesionales, que induce tolerancia.\n\n- **A.** Solo MHC I sin procesamiento: eso hacen los péptidos cortos (8-10 aminoácidos).\n- **C.** Nunca requieren adyuvantes: los péptidos son poco inmunogénicos y sí los necesitan.\n- **D.** ADN bicatenario: son péptidos, no ácidos nucleicos.",
+      "explanation": "**Se procesan y presentan por MHC I y MHC II, activando a la vez linfocitos T CD4 y CD8.** Un péptido largo (25-30 aminoácidos) no cabe directamente en el MHC: tiene que ser captado y procesado por células dendríticas, que lo presentan por MHC II (CD4 cooperadores) y, por presentación cruzada, por MHC I (CD8 citotóxicos). La ayuda CD4 sostiene una respuesta CD8 eficaz y duradera, y se evita la presentación en células no profesionales, que induce tolerancia.\n\n- Solo MHC I sin procesamiento: eso hacen los péptidos cortos (8-10 aminoácidos).\n- Nunca requieren adyuvantes: los péptidos son poco inmunogénicos y sí los necesitan.\n- ADN bicatenario: son péptidos, no ácidos nucleicos.",
       "tema": "inmunidad-cancer",
       "nivel": 1,
       "claseId": "pat-ai-14",
@@ -2740,7 +2740,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — células de Hodgkin Reed-Sternberg grandes y bilobuladas sobre un fondo inflamatorio no maligno.** La célula de Reed-Sternberg tiene dos núcleos o lóbulos con nucléolos eosinófilos grandes («ojos de búho»); deriva de una célula B de centro germinal que perdió su programa B (CD20−) y expresa CD30 y CD15. Es una minoría del tumor (~1-5 %): con NF-κB activado de forma constitutiva secreta citocinas que atraen linfocitos, eosinófilos, macrófagos y fibroblastos, y ese infiltrado reactivo forma casi toda la masa.\n\n- **A.** Linfocitos pequeños con sombras de Gumprecht: es la LLC.\n- **C.** t(11;14) y ciclina D1: linfoma de manto.\n- **D.** CD20+ sin CD30: es al revés en el Hodgkin clásico.",
+      "explanation": "**Células de Hodgkin Reed-Sternberg grandes y bilobuladas sobre un fondo inflamatorio no maligno.** La célula de Reed-Sternberg tiene dos núcleos o lóbulos con nucléolos eosinófilos grandes («ojos de búho»); deriva de una célula B de centro germinal que perdió su programa B (CD20−) y expresa CD30 y CD15. Es una minoría del tumor (~1-5 %): con NF-κB activado de forma constitutiva secreta citocinas que atraen linfocitos, eosinófilos, macrófagos y fibroblastos, y ese infiltrado reactivo forma casi toda la masa.\n\n- Linfocitos pequeños con sombras de Gumprecht: es la LLC.\n- t(11;14) y ciclina D1: linfoma de manto.\n- CD20+ sin CD30: es al revés en el Hodgkin clásico.",
       "tema": "linfomas",
       "nivel": 1,
       "claseId": "pat-c-6",
@@ -2772,7 +2772,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — la translocación t(14;18).** Lleva el gen BCL2 (cromosoma 18) junto al potenciador de la cadena pesada de inmunoglobulinas IgH (cromosoma 14), muy activo en células B. Las células del centro germinal normalmente apagan BCL2 y mueren si su receptor no gana afinidad; con BCL2 sobreexpresado, ese antiapoptótico las mantiene vivas y se acumulan. Por eso el linfoma folicular es BCL2+, de crecimiento lento y Ki-67 bajo.\n\n- **A.** t(8;14): MYC-IgH, linfoma de Burkitt.\n- **C.** t(11;14): ciclina D1-IgH, linfoma de manto.\n- **D.** Fusión BCR-ABL1: t(9;22), leucemia mieloide crónica.",
+      "explanation": "**La translocación t(14;18).** Lleva el gen BCL2 (cromosoma 18) junto al potenciador de la cadena pesada de inmunoglobulinas IgH (cromosoma 14), muy activo en células B. Las células del centro germinal normalmente apagan BCL2 y mueren si su receptor no gana afinidad; con BCL2 sobreexpresado, ese antiapoptótico las mantiene vivas y se acumulan. Por eso el linfoma folicular es BCL2+, de crecimiento lento y Ki-67 bajo.\n\n- t(8;14): MYC-IgH, linfoma de Burkitt.\n- t(11;14): ciclina D1-IgH, linfoma de manto.\n- Fusión BCR-ABL1: t(9;22), leucemia mieloide crónica.",
       "tema": "linfomas",
       "nivel": 1,
       "claseId": "pat-c-6",
@@ -2804,7 +2804,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: C — R-CHOP.** El linfoma difuso de células B grandes es agresivo pero potencialmente curable. R-CHOP combina el anti-CD20 rituximab (lisis de células B por ADCC y complemento) con fármacos de mecanismos complementarios: ciclofosfamida (alquilante), doxorrubicina (antraciclina, inhibe la topoisomerasa II), vincristina (bloquea el huso mitótico) y prednisona (linfolítica). Añadir rituximab al CHOP mejoró la supervivencia y fijó el estándar.\n\n- **A.** ABVD: primera línea del linfoma de Hodgkin.\n- **B.** BEACOPP: Hodgkin avanzado, más tóxico.\n- **D.** Hyper-CVAD: leucemia linfoblástica aguda, Burkitt o manto de alto riesgo.",
+      "explanation": "**R-CHOP.** El linfoma difuso de células B grandes es agresivo pero potencialmente curable. R-CHOP combina el anti-CD20 rituximab (lisis de células B por ADCC y complemento) con fármacos de mecanismos complementarios: ciclofosfamida (alquilante), doxorrubicina (antraciclina, inhibe la topoisomerasa II), vincristina (bloquea el huso mitótico) y prednisona (linfolítica). Añadir rituximab al CHOP mejoró la supervivencia y fijó el estándar.\n\n- ABVD: primera línea del linfoma de Hodgkin.\n- BEACOPP: Hodgkin avanzado, más tóxico.\n- Hyper-CVAD: leucemia linfoblástica aguda, Burkitt o manto de alto riesgo.",
       "tema": "linfomas",
       "nivel": 1,
       "claseId": "pat-c-6",
@@ -2836,7 +2836,7 @@
           "correct": false
         }
       ],
-      "explanation": "**Correcta: B — por su tasa de proliferación extremadamente alta, que obliga a quimioterapia intensiva inmediata.** La sobreexpresión de MYC por la t(8;14) mantiene casi todas las células en ciclo (Ki-67 ~100 %) y el tumor puede duplicarse en días: comprime órganos (obstrucción o invaginación intestinal) e infiltra médula y sistema nervioso central. Al iniciar el tratamiento, la lisis masiva libera potasio, fosfato y ácido úrico (síndrome de lisis tumoral), que se previene desde el primer día.\n\n- **A.** Indolente y de crecimiento lento: es el linfoma de crecimiento más rápido.\n- **C.** No responde a anti-CD20: es CD20+ y los esquemas actuales incluyen rituximab.\n- **D.** Trombosis venosa masiva: no es su urgencia característica.",
+      "explanation": "**Por su tasa de proliferación extremadamente alta, que obliga a quimioterapia intensiva inmediata.** La sobreexpresión de MYC por la t(8;14) mantiene casi todas las células en ciclo (Ki-67 ~100 %) y el tumor puede duplicarse en días: comprime órganos (obstrucción o invaginación intestinal) e infiltra médula y sistema nervioso central. Al iniciar el tratamiento, la lisis masiva libera potasio, fosfato y ácido úrico (síndrome de lisis tumoral), que se previene desde el primer día.\n\n- Indolente y de crecimiento lento: es el linfoma de crecimiento más rápido.\n- No responde a anti-CD20: es CD20+ y los esquemas actuales incluyen rituximab.\n- Trombosis venosa masiva: no es su urgencia característica.",
       "tema": "linfomas",
       "nivel": 1,
       "claseId": "pat-c-6",
@@ -2868,7 +2868,7 @@
           "correct": true
         }
       ],
-      "explanation": "**Correcta: D — sipuleucel-T.** Se extraen por aféresis las células mononucleares del propio paciente (incluidas las presentadoras de antígeno), se cultivan con una proteína de fusión de fosfatasa ácida prostática (PAP) y GM-CSF, y se reinfunden: presentan PAP y activan linfocitos T contra el tumor. Está aprobada por la FDA para el cáncer de próstata metastásico resistente a la castración (el «metabólicamente activo» del enunciado debe leerse como metastásico).\n\n- **A.** GVAX: células tumorales modificadas con GM-CSF; fracasó en fase 3.\n- **B.** Rindopepimut: vacuna peptídica contra EGFRvIII (glioblastoma), no aprobada.\n- **C.** T-VEC (Imlygic): virus herpes oncolítico para melanoma, no una vacuna celular autóloga.",
+      "explanation": "**Sipuleucel-T.** Se extraen por aféresis las células mononucleares del propio paciente (incluidas las presentadoras de antígeno), se cultivan con una proteína de fusión de fosfatasa ácida prostática (PAP) y GM-CSF, y se reinfunden: presentan PAP y activan linfocitos T contra el tumor. Está aprobada por la FDA para el cáncer de próstata metastásico resistente a la castración (el «metabólicamente activo» del enunciado debe leerse como metastásico).\n\n- GVAX: células tumorales modificadas con GM-CSF; fracasó en fase 3.\n- Rindopepimut: vacuna peptídica contra EGFRvIII (glioblastoma), no aprobada.\n- T-VEC (Imlygic): virus herpes oncolítico para melanoma, no una vacuna celular autóloga.",
       "tema": "inmunidad-cancer",
       "nivel": 1,
       "claseId": "pat-ai-14",

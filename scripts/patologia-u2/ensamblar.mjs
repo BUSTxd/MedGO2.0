@@ -133,11 +133,17 @@ for (const [mi, mod] of decision.modulos.entries()) {
         ...(await imagenDe(vq).then((im) => (im.image ? im : {}))),
         options: opcionesDe(vq, vd.correcta, 'v'),
         ...(vexp.explanation ? { explanation: vexp.explanation } : {}),
+        ...(vexp.flujo ? { flujo: vexp.flujo } : {}),
       };
     }
     const correctas = pregunta.options.filter((o) => o.correct).length;
     if (correctas !== 1) avisos.push(`${ref}: ${correctas} correctas`);
     if (!pregunta.explanation) avisos.push(`${ref}: sin explicación`);
+    // El runner baraja las alternativas: «la B» en la explicación no dice nada.
+    const LETRA = /\*\*[A-E][.:)/ *]|\*\*Correcta: [A-E]|\b(?:la|opción|alternativa|clave es|marcaba la) [A-E]\b|\([A-E](?:, ?[A-E])*(?: y [A-E])?\)/;
+    for (const e of [pregunta.explanation, pregunta.variante?.explanation]) {
+      if (e && LETRA.test(e)) avisos.push(`${ref}: la explicación nombra la letra de una alternativa`);
+    }
     questions.push(pregunta);
   }
   const key = `patologia/parcial-2-${mod.id}`;

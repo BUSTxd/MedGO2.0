@@ -54,6 +54,7 @@ function vistaDe(q: ExamQuestion, enVariante: boolean): ExamQuestion {
     extraImages: v.image ? v.extraImages : q.extraImages,
     options: v.options,
     explanation: v.explanation ?? q.explanation,
+    flujo: v.flujo ?? q.flujo,
     reviewNote: v.reviewNote,
   };
 }
@@ -1372,8 +1373,8 @@ export default function ExamRunner({
                       <div className={styles.explicacionTexto}>
                         <ReactMarkdown>{current.explanation}</ReactMarkdown>
                       </div>
-                      {/* El flujo es de la pregunta base: la variante comparte
-                          razonamiento y respuesta. */}
+                      {/* La variante trae su propio flujo cuando su respuesta
+                          es otra (el pólipo de bajo grado del Teórico B). */}
                       {current.flujo && <FlujoExplicacion flujo={current.flujo} />}
                       {/* El resumen va con el plan del curso: sin él, el botón
                           abre la pasarela en vez de un visor que daría 403. */}

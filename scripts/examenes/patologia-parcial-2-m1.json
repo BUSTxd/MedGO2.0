@@ -34,7 +34,7 @@
           "correct": false
         }
       ],
-      "explanation": "Varón mayor con **PSA elevado**, dolor lumbar y lesiones en los cuerpos vertebrales: **metástasis vertebral de adenocarcinoma de próstata**. Las células llegan a la columna por vía hematógena, en buena parte por el **plexo venoso vertebral de Batson** (sin válvulas, comunica las venas pélvicas con las vertebrales). En el hueso estimulan a los osteoblastos (endotelina-1, BMP): por eso suelen ser **osteoblásticas** y elevan la **fosfatasa alcalina**, marcador de formación ósea.\n- **B.** **Mieloma múltiple**: da lesiones líticas en sacabocado, pero no eleva el PSA y la FA suele ser normal.\n- **C.** **Síndrome paraneoplásico**: es un efecto a distancia de sustancias del tumor, no lesiones óseas focales.\n- **D.** **Angiogénesis tumoral**: la necesita cualquier tumor; no explica el cuadro.\n- **E.** **Osteosarcoma**: tumor primario de adolescentes, en metáfisis de huesos largos, sin PSA.\n\n*Duda: el original dice «lesiones líticas», cuando la metástasis prostática suele ser osteoblástica; la FA y el PSA sostienen igual la A.*",
+      "explanation": "Varón mayor con **PSA elevado**, dolor lumbar y lesiones en los cuerpos vertebrales: **metástasis vertebral de adenocarcinoma de próstata**. Las células llegan a la columna por vía hematógena, en buena parte por el **plexo venoso vertebral de Batson** (sin válvulas, comunica las venas pélvicas con las vertebrales). En el hueso estimulan a los osteoblastos (endotelina-1, BMP): por eso suelen ser **osteoblásticas** y elevan la **fosfatasa alcalina**, marcador de formación ósea.\n- **Mieloma múltiple**: da lesiones líticas en sacabocado, pero no eleva el PSA y la FA suele ser normal.\n- **Síndrome paraneoplásico**: es un efecto a distancia de sustancias del tumor, no lesiones óseas focales.\n- **Angiogénesis tumoral**: la necesita cualquier tumor; no explica el cuadro.\n- **Osteosarcoma**: tumor primario de adolescentes, en metáfisis de huesos largos, sin PSA.\n\n*Duda: el original dice «lesiones líticas», cuando la metástasis prostática suele ser osteoblástica; la FA y el PSA sostienen igual la metástasis prostática.*",
       "tema": "metastasis",
       "nivel": 3,
       "flujo": {
@@ -124,7 +124,7 @@
           "correct": false
         }
       ],
-      "explanation": "Debilidad **proximal** (le cuesta subir escaleras), peor por la mañana, con **hiporreflexia** y pérdida de peso: es el **síndrome miasténico de Lambert-Eaton**. El tumor, casi siempre un **carcinoma de células pequeñas del pulmón** (neuroendocrino), expresa canales de calcio dependientes de voltaje; los anticuerpos que genera contra ellos atacan también los **canales presinápticos** de la placa motora, y se libera menos acetilcolina. Como el cáncer de pulmón es lo que hay que descartar, el primer estudio es la **radiografía de tórax** (después, TAC).\n- **B.** **PSA sérico**: busca cáncer de próstata, que no se asocia a este síndrome.\n- **C.** **Sangre oculta en heces**: tamizaje de cáncer colorrectal, sin relación con Lambert-Eaton.\n- **D.** **Aspirado de médula ósea**: estudia neoplasias hematológicas; es invasivo y no es el primer paso.",
+      "explanation": "Debilidad **proximal** (le cuesta subir escaleras), peor por la mañana, con **hiporreflexia** y pérdida de peso: es el **síndrome miasténico de Lambert-Eaton**. El tumor, casi siempre un **carcinoma de células pequeñas del pulmón** (neuroendocrino), expresa canales de calcio dependientes de voltaje; los anticuerpos que genera contra ellos atacan también los **canales presinápticos** de la placa motora, y se libera menos acetilcolina. Como el cáncer de pulmón es lo que hay que descartar, el primer estudio es la **radiografía de tórax** (después, TAC).\n- **PSA sérico**: busca cáncer de próstata, que no se asocia a este síndrome.\n- **Sangre oculta en heces**: tamizaje de cáncer colorrectal, sin relación con Lambert-Eaton.\n- **Aspirado de médula ósea**: estudia neoplasias hematológicas; es invasivo y no es el primer paso.",
       "tema": "clinica-tumoral",
       "nivel": 3,
       "flujo": {
@@ -220,7 +220,7 @@
           "correct": false
         }
       ],
-      "explanation": "Centros germinales expandidos por **centrocitos y centroblastos** neoplásicos, **sin macrófagos con cuerpos tingibles** y casi sin mitosis, en un adulto mayor con adenopatías indolentes: es el **linfoma folicular**. Su lesión es la **t(14;18)**, que coloca *BCL2* bajo el potenciador de la cadena pesada de las inmunoglobulinas y hace que la célula B **sobreexprese BCL2**, una proteína **antiapoptótica**. Un centro germinal normal elimina por apoptosis a los linfocitos que no ganan afinidad (sus restos son los cuerpos tingibles); aquí no mueren y se acumulan sin proliferar mucho, por eso el curso es lento.\n- **B.** **Tirosina quinasa**: es el mecanismo de BCR-ABL o EGFR, no del linfoma folicular.\n- **C.** **Angiogénesis**: la necesita cualquier tumor; no es la lesión inicial.\n- **D.** **Inhibición de la adhesión** (E-cadherina): facilita la invasión de los carcinomas.\n- **E.** **Inhibición de proteasas**: iría incluso en contra de la invasión.",
+      "explanation": "Centros germinales expandidos por **centrocitos y centroblastos** neoplásicos, **sin macrófagos con cuerpos tingibles** y casi sin mitosis, en un adulto mayor con adenopatías indolentes: es el **linfoma folicular**. Su lesión es la **t(14;18)**, que coloca *BCL2* bajo el potenciador de la cadena pesada de las inmunoglobulinas y hace que la célula B **sobreexprese BCL2**, una proteína **antiapoptótica**. Un centro germinal normal elimina por apoptosis a los linfocitos que no ganan afinidad (sus restos son los cuerpos tingibles); aquí no mueren y se acumulan sin proliferar mucho, por eso el curso es lento.\n- **Tirosina quinasa**: es el mecanismo de BCR-ABL o EGFR, no del linfoma folicular.\n- **Angiogénesis**: la necesita cualquier tumor; no es la lesión inicial.\n- **Inhibición de la adhesión** (E-cadherina): facilita la invasión de los carcinomas.\n- **Inhibición de proteasas**: iría incluso en contra de la invasión.",
       "tema": "linfomas",
       "nivel": 3,
       "flujo": {
@@ -314,7 +314,7 @@
           "correct": false
         }
       ],
-      "explanation": "Los VPH de **alto riesgo** (16, 18) integran su ADN en el genoma de la célula; al integrarse se rompe el gen viral **E2**, que reprimía a **E6 y E7**, y estas oncoproteínas se expresan sin freno. **E7** se une a **RB**, libera E2F y empuja la célula de G1 a S; **E6** marca a **p53** para su degradación en el proteasoma, y la célula ya no se detiene ni muere ante el daño del ADN. El virus **interfiere con la función de los supresores tumorales**.\n- **B.** **Hipermetilación de oncogenes**: la metilación silencia supresores, no oncogenes, y no es el mecanismo del VPH.\n- **C.** **Telomerasa**: E6 la activa, pero es un efecto accesorio.\n- **D.** **Forma episomal**: es la de la infección productiva y las lesiones de bajo grado; la que transforma es la integrada.\n- **E.** **Inflamación crónica**: el VPH actúa por sus oncoproteínas, no por inflamación.",
+      "explanation": "Los VPH de **alto riesgo** (16, 18) integran su ADN en el genoma de la célula; al integrarse se rompe el gen viral **E2**, que reprimía a **E6 y E7**, y estas oncoproteínas se expresan sin freno. **E7** se une a **RB**, libera E2F y empuja la célula de G1 a S; **E6** marca a **p53** para su degradación en el proteasoma, y la célula ya no se detiene ni muere ante el daño del ADN. El virus **interfiere con la función de los supresores tumorales**.\n- **Hipermetilación de oncogenes**: la metilación silencia supresores, no oncogenes, y no es el mecanismo del VPH.\n- **Telomerasa**: E6 la activa, pero es un efecto accesorio.\n- **Forma episomal**: es la de la infección productiva y las lesiones de bajo grado; la que transforma es la integrada.\n- **Inflamación crónica**: el VPH actúa por sus oncoproteínas, no por inflamación.",
       "tema": "vph",
       "nivel": 2,
       "flujo": {
@@ -422,7 +422,77 @@
             "correct": false
           }
         ],
-        "explanation": "Los VPH de **alto riesgo** (16, 18) se **integran** en el genoma de la célula epitelial, y la integración interrumpe el gen viral **E2**, que reprimía a **E6 y E7**. **E7** se une a **RB** y libera E2F, así que la célula entra en S sin control; **E6** lleva a **p53** a degradación en el proteasoma, y la célula no se detiene ni muere ante el daño del ADN. Es la **inactivación de genes supresores tumorales**, que con mutaciones añadidas progresa hasta el carcinoma invasivo.\n- **A.** **Replicación episomal** («vial episódica»): es la forma de la infección productiva y del bajo grado, no la que transforma.\n- **B.** **Inflamación crónica**: el VPH no actúa por inflamación.\n- **D.** **Telomerasa**: E6 activa TERT, pero es un efecto accesorio.\n- **E.** **Hipermetilación de oncogenes**: la metilación silencia supresores, y no es el mecanismo del VPH."
+        "explanation": "Los VPH de **alto riesgo** (16, 18) se **integran** en el genoma de la célula epitelial, y la integración interrumpe el gen viral **E2**, que reprimía a **E6 y E7**. **E7** se une a **RB** y libera E2F, así que la célula entra en S sin control; **E6** lleva a **p53** a degradación en el proteasoma, y la célula no se detiene ni muere ante el daño del ADN. Es la **inactivación de genes supresores tumorales**, que con mutaciones añadidas progresa hasta el carcinoma invasivo.\n- **Replicación episomal** («vial episódica»): es la forma de la infección productiva y del bajo grado, no la que transforma.\n- **Inflamación crónica**: el VPH no actúa por inflamación.\n- **Telomerasa**: E6 activa TERT, pero es un efecto accesorio.\n- **Hipermetilación de oncogenes**: la metilación silencia supresores, y no es el mecanismo del VPH.",
+        "flujo": {
+          "titulo": "Del VPH de alto riesgo a la neoplasia",
+          "pasos": [
+            {
+              "id": "p1",
+              "texto": "Infección por VPH de alto riesgo",
+              "tipo": "causa"
+            },
+            {
+              "id": "p2",
+              "texto": "La integración viral rompe E2 y libera E6/E7",
+              "tipo": "mecanismo"
+            },
+            {
+              "id": "p3",
+              "texto": "E7 se une a RB y libera E2F",
+              "tipo": "mecanismo"
+            },
+            {
+              "id": "p4",
+              "texto": "E6 lleva a p53 a degradación",
+              "tipo": "mecanismo"
+            },
+            {
+              "id": "p5",
+              "texto": "Supresores tumorales inactivados",
+              "tipo": "clave"
+            },
+            {
+              "id": "p6",
+              "texto": "Proliferación sin freno y daño del ADN acumulado",
+              "tipo": "efecto"
+            },
+            {
+              "id": "p7",
+              "texto": "Carcinoma epidermoide invasivo de cuello uterino",
+              "tipo": "clinica"
+            }
+          ],
+          "enlaces": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p2",
+              "p3"
+            ],
+            [
+              "p2",
+              "p4"
+            ],
+            [
+              "p3",
+              "p5"
+            ],
+            [
+              "p4",
+              "p5"
+            ],
+            [
+              "p5",
+              "p6"
+            ],
+            [
+              "p6",
+              "p7"
+            ]
+          ]
+        }
       }
     },
     {
@@ -455,7 +525,7 @@
           "correct": false
         }
       ],
-      "explanation": "La luz **UVB** une pirimidinas vecinas y forma **dímeros de timina**, que deforman la doble hélice. Los retira la **reparación por escisión de nucleótidos** (genes *XP*): se corta el tramo dañado y se resintetiza. En el **xeroderma pigmentoso**, autosómico recesivo, ese sistema falla: cada exposición al sol deja mutaciones (p. ej. en *TP53*) y aparecen carcinomas basocelulares, epidermoides y melanomas **desde la infancia y en zonas fotoexpuestas**.\n- **B.** **Síndrome de Bloom**: helicasa BLM (recombinación); da cánceres variados, no un defecto de escisión de nucleótidos.\n- **C.** **Li-Fraumeni**: *TP53* germinal; sarcomas, mama, cerebro, sin relación con la UV.\n- **D.** **Neuroblastoma**: es un tumor embrionario, no un síndrome de reparación.\n- **E.** **Ataxia telangiectasia**: gen *ATM*, que detecta roturas de doble cadena por radiación ionizante; da sobre todo linfomas.",
+      "explanation": "La luz **UVB** une pirimidinas vecinas y forma **dímeros de timina**, que deforman la doble hélice. Los retira la **reparación por escisión de nucleótidos** (genes *XP*): se corta el tramo dañado y se resintetiza. En el **xeroderma pigmentoso**, autosómico recesivo, ese sistema falla: cada exposición al sol deja mutaciones (p. ej. en *TP53*) y aparecen carcinomas basocelulares, epidermoides y melanomas **desde la infancia y en zonas fotoexpuestas**.\n- **Síndrome de Bloom**: helicasa BLM (recombinación); da cánceres variados, no un defecto de escisión de nucleótidos.\n- **Li-Fraumeni**: *TP53* germinal; sarcomas, mama, cerebro, sin relación con la UV.\n- **Neuroblastoma**: es un tumor embrionario, no un síndrome de reparación.\n- **Ataxia telangiectasia**: gen *ATM*, que detecta roturas de doble cadena por radiación ionizante; da sobre todo linfomas.",
       "tema": "cancer-hereditario",
       "nivel": 2,
       "flujo": {
@@ -551,7 +621,7 @@
           "correct": false
         }
       ],
-      "explanation": "El **carcinoma epidermoide** cutáneo depende de la **dosis total acumulada** de UV: aparece en ancianos, en cara, orejas y dorso de las manos, y en quienes trabajan al aire libre. Cada exposición forma **dímeros de pirimidina**; los que escapan a la reparación por escisión de nucleótidos se fijan como mutaciones (las típicas C→T en *TP53*) y se suman durante décadas hasta transformar al queratinocito.\n- **B.** **Exposición intensa intermitente a UVB** (quemaduras): es el patrón del melanoma, no del epidermoide.\n- **C.** **Grupo 4**: la radiación UV está en el **grupo 1** de la IARC (carcinógeno probado en humanos).\n- **D.** **Ocupación sin riesgo**: al contrario, la agricultura es la exposición crónica típica.\n- **E.** **Daño directo de p53**: la UV daña el ADN de forma inespecífica; p53 resulta mutado porque el daño no se repara, no es un blanco directo.",
+      "explanation": "El **carcinoma epidermoide** cutáneo depende de la **dosis total acumulada** de UV: aparece en ancianos, en cara, orejas y dorso de las manos, y en quienes trabajan al aire libre. Cada exposición forma **dímeros de pirimidina**; los que escapan a la reparación por escisión de nucleótidos se fijan como mutaciones (las típicas C→T en *TP53*) y se suman durante décadas hasta transformar al queratinocito.\n- **Exposición intensa intermitente a UVB** (quemaduras): es el patrón del melanoma, no del epidermoide.\n- **Grupo 4**: la radiación UV está en el **grupo 1** de la IARC (carcinógeno probado en humanos).\n- **Ocupación sin riesgo**: al contrario, la agricultura es la exposición crónica típica.\n- **Daño directo de p53**: la UV daña el ADN de forma inespecífica; p53 resulta mutado porque el daño no se repara, no es un blanco directo.",
       "tema": "carcinogenesis",
       "nivel": 2,
       "flujo": {
@@ -646,7 +716,7 @@
           "correct": false
         }
       ],
-      "explanation": "La pregunta no es si hay **más receptor** (proteína), sino si hay **más copias del gen** que lo codifica: una **amplificación**. Eso se demuestra con **FISH**: una sonda de ADN marcada con un fluorocromo hibrida con su secuencia en los núcleos del corte y cada copia se ve como un punto; se cuentan los puntos por núcleo (comparando con una sonda del centrómero) sin perder la histología.\n- **B.** **Inmunohistoquímica**: detecta la proteína RE en el núcleo; es la que mostró el aumento, pero no dice por qué.\n- **C.** **Inmunofluorescencia indirecta**: también detecta proteínas (o anticuerpos); no cuenta genes.\n- **D.** **Western blot**: mide proteína en un extracto, perdiendo la arquitectura.\n- **E.** **PCR**: amplifica secuencias de un extracto; no cuantifica copias en cada célula del tejido.",
+      "explanation": "La pregunta no es si hay **más receptor** (proteína), sino si hay **más copias del gen** que lo codifica: una **amplificación**. Eso se demuestra con **FISH**: una sonda de ADN marcada con un fluorocromo hibrida con su secuencia en los núcleos del corte y cada copia se ve como un punto; se cuentan los puntos por núcleo (comparando con una sonda del centrómero) sin perder la histología.\n- **Inmunohistoquímica**: detecta la proteína RE en el núcleo; es la que mostró el aumento, pero no dice por qué.\n- **Inmunofluorescencia indirecta**: también detecta proteínas (o anticuerpos); no cuenta genes.\n- **Western blot**: mide proteína en un extracto, perdiendo la arquitectura.\n- **PCR**: amplifica secuencias de un extracto; no cuantifica copias en cada célula del tejido.",
       "tema": "mama",
       "nivel": 2,
       "flujo": {
@@ -732,7 +802,55 @@
             "correct": false
           }
         ],
-        "explanation": "La sospecha es una **amplificación** de *ERBB2* (HER2): muchas copias del gen, mucha proteína en la membrana y parte de su dominio extracelular liberado a la sangre. Para **contar copias del gen** se usa la **FISH**: una sonda de ADN fluorescente específica de *HER2* hibrida en los núcleos del tumor y cada copia se ve como un punto; se compara con una sonda del centrómero 17 (cociente HER2/CEP17 ≥ 2 = amplificado). En la práctica se pide cuando la IHQ es dudosa (2+).\n- **B.** **Inmunohistoquímica**: mide la **proteína** HER2 en la membrana (0 a 3+), no el número de copias.\n- **C.** **Inmunofluorescencia indirecta**: detecta proteínas o anticuerpos, no genes.\n- **D.** **Western blot**: proteína en un extracto, sin histología.\n- **E.** **PCR**: amplifica secuencias de un extracto; no cuenta copias célula por célula."
+        "explanation": "La sospecha es una **amplificación** de *ERBB2* (HER2): muchas copias del gen, mucha proteína en la membrana y parte de su dominio extracelular liberado a la sangre. Para **contar copias del gen** se usa la **FISH**: una sonda de ADN fluorescente específica de *HER2* hibrida en los núcleos del tumor y cada copia se ve como un punto; se compara con una sonda del centrómero 17 (cociente HER2/CEP17 ≥ 2 = amplificado). En la práctica se pide cuando la IHQ es dudosa (2+).\n- **Inmunohistoquímica**: mide la **proteína** HER2 en la membrana (0 a 3+), no el número de copias.\n- **Inmunofluorescencia indirecta**: detecta proteínas o anticuerpos, no genes.\n- **Western blot**: proteína en un extracto, sin histología.\n- **PCR**: amplifica secuencias de un extracto; no cuenta copias célula por célula.",
+        "flujo": {
+          "titulo": "Copias del gen, no proteína",
+          "pasos": [
+            {
+              "id": "p1",
+              "texto": "HER2 elevado en suero",
+              "tipo": "efecto"
+            },
+            {
+              "id": "p2",
+              "texto": "Sospecha: amplificación del gen ERBB2",
+              "tipo": "causa"
+            },
+            {
+              "id": "p3",
+              "texto": "La pregunta es por el ADN, no la proteína",
+              "tipo": "mecanismo"
+            },
+            {
+              "id": "p4",
+              "texto": "Sonda de ADN fluorescente marca cada copia nuclear",
+              "tipo": "mecanismo"
+            },
+            {
+              "id": "p5",
+              "texto": "FISH: cociente HER2/CEP17 ≥ 2",
+              "tipo": "clave"
+            }
+          ],
+          "enlaces": [
+            [
+              "p1",
+              "p2"
+            ],
+            [
+              "p2",
+              "p3"
+            ],
+            [
+              "p3",
+              "p4"
+            ],
+            [
+              "p4",
+              "p5"
+            ]
+          ]
+        }
       }
     },
     {
@@ -765,7 +883,7 @@
           "correct": false
         }
       ],
-      "explanation": "Alrededor del 15-20 % de los carcinomas de mama tiene **amplificación de *ERBB2***: muchas copias del gen, mucho receptor **HER2** en la membrana, dimerización espontánea y señal tirosina quinasa (RAS/MAPK, PI3K/AKT) constante. Ese tumor depende de HER2, así que bloquearlo funciona: **trastuzumab**, pertuzumab, lapatinib. Por eso se determina en todo carcinoma infiltrante (IHQ y, si es dudosa, FISH): abre una **posibilidad terapéutica**. («Sobreexposición» en el enunciado quiere decir sobreexpresión.)\n- **B.** **Carcinoma benigno**: carcinoma es una neoplasia **maligna** epitelial.\n- **C.** **Sin ganglio centinela**: es estándar en el cáncer de mama para estadificar la axila.\n- **D.** **Siembra de cavidades**: propia de tumores de ovario o peritoneales; la mama se disemina primero por vía **linfática**.\n- **E.** **Encapsulado y bien delimitado**: rasgos de tumor benigno (fibroadenoma), no de uno infiltrante.",
+      "explanation": "Alrededor del 15-20 % de los carcinomas de mama tiene **amplificación de *ERBB2***: muchas copias del gen, mucho receptor **HER2** en la membrana, dimerización espontánea y señal tirosina quinasa (RAS/MAPK, PI3K/AKT) constante. Ese tumor depende de HER2, así que bloquearlo funciona: **trastuzumab**, pertuzumab, lapatinib. Por eso se determina en todo carcinoma infiltrante (IHQ y, si es dudosa, FISH): abre una **posibilidad terapéutica**. («Sobreexposición» en el enunciado quiere decir sobreexpresión.)\n- **Carcinoma benigno**: carcinoma es una neoplasia **maligna** epitelial.\n- **Sin ganglio centinela**: es estándar en el cáncer de mama para estadificar la axila.\n- **Siembra de cavidades**: propia de tumores de ovario o peritoneales; la mama se disemina primero por vía **linfática**.\n- **Encapsulado y bien delimitado**: rasgos de tumor benigno (fibroadenoma), no de uno infiltrante.",
       "tema": "mama",
       "nivel": 2,
       "flujo": {
@@ -850,7 +968,7 @@
           "correct": false
         }
       ],
-      "explanation": "El adenocarcinoma de colon invade la pared desde la mucosa y, según la estructura que alcanza, usa las **tres vías**: los **linfáticos** de la submucosa lo llevan a los ganglios pericólicos y mesentéricos; las **venas** drenan a la porta y dan metástasis **hepáticas** (vía hematógena); y si atraviesa la serosa siembra la **cavidad peritoneal** (carcinomatosis).\n- **B.** **Origen mesenquimal**: el adenocarcinoma es epitelial glandular; lo mesenquimal maligno es el sarcoma.\n- **C.** **La invasión aleja el diagnóstico**: al revés, la invasión de la membrana basal es lo que define al carcinoma.\n- **D.** **Neoplasia benigna**: la benigna glandular es el adenoma.\n- **E.** **TP53 y APC sin relación**: son pasos centrales de la secuencia adenoma–carcinoma (APC al inicio, TP53 al final).",
+      "explanation": "El adenocarcinoma de colon invade la pared desde la mucosa y, según la estructura que alcanza, usa las **tres vías**: los **linfáticos** de la submucosa lo llevan a los ganglios pericólicos y mesentéricos; las **venas** drenan a la porta y dan metástasis **hepáticas** (vía hematógena); y si atraviesa la serosa siembra la **cavidad peritoneal** (carcinomatosis).\n- **Origen mesenquimal**: el adenocarcinoma es epitelial glandular; lo mesenquimal maligno es el sarcoma.\n- **La invasión aleja el diagnóstico**: al revés, la invasión de la membrana basal es lo que define al carcinoma.\n- **Neoplasia benigna**: la benigna glandular es el adenoma.\n- **TP53 y APC sin relación**: son pasos centrales de la secuencia adenoma–carcinoma (APC al inicio, TP53 al final).",
       "tema": "metastasis",
       "nivel": 2,
       "flujo": {
@@ -952,7 +1070,7 @@
           "correct": false
         }
       ],
-      "explanation": "El **melanoma** se asocia a la exposición **intensa e intermitente** a **UVB**: las **quemaduras solares**, sobre todo en la infancia y en piel no habituada al sol (tronco, piernas). La UVB forma **dímeros de pirimidina**; en el melanocito, los que no se reparan dejan mutaciones, y el tumor acumula alteraciones de *BRAF*, *NRAS* o *CDKN2A*. La exposición continua y acumulada es, en cambio, el patrón del carcinoma epidermoide.\n- **B.** **Acumulada y UVC**: la UVC la retiene la capa de ozono, y lo acumulado es del epidermoide.\n- **C.** **Roturas y reordenamientos**: son el daño de la radiación **ionizante**, no de la UV.\n- **D.** **p53 y Rb**: no son los blancos principales del melanoma; pesan más BRAF y NRAS.\n- **E.** **Daño irreparable**: el dímero sí se repara por escisión de nucleótidos; el cáncer surge cuando la reparación no alcanza.",
+      "explanation": "El **melanoma** se asocia a la exposición **intensa e intermitente** a **UVB**: las **quemaduras solares**, sobre todo en la infancia y en piel no habituada al sol (tronco, piernas). La UVB forma **dímeros de pirimidina**; en el melanocito, los que no se reparan dejan mutaciones, y el tumor acumula alteraciones de *BRAF*, *NRAS* o *CDKN2A*. La exposición continua y acumulada es, en cambio, el patrón del carcinoma epidermoide.\n- **Acumulada y UVC**: la UVC la retiene la capa de ozono, y lo acumulado es del epidermoide.\n- **Roturas y reordenamientos**: son el daño de la radiación **ionizante**, no de la UV.\n- **P53 y Rb**: no son los blancos principales del melanoma; pesan más BRAF y NRAS.\n- **Daño irreparable**: el dímero sí se repara por escisión de nucleótidos; el cáncer surge cuando la reparación no alcanza.",
       "tema": "carcinogenesis",
       "nivel": 2,
       "flujo": {
@@ -1037,7 +1155,7 @@
           "correct": false
         }
       ],
-      "explanation": "Una neoplasia es **monoclonal**: todas sus células descienden de una. En los linfocitos se puede demostrar directamente: cada linfocito T reordena su gen del **receptor T (TCR)** de forma única al madurar (y el B, el de las inmunoglobulinas). Una población reactiva tiene miles de reordenamientos distintos (policlonal); un linfoma tiene **uno solo**, que la PCR detecta como un pico único.\n- **B.** **Clave para el diagnóstico de cáncer**: el diagnóstico es morfológico; la clonalidad ayuda en casos dudosos, sobre todo linfoides.\n- **C.** **Incompatible con lo benigno**: los tumores benignos (adenomas, leiomiomas) también son clonales.\n- **D.** **IHQ en tumores epiteliales**: la IHQ solo sugiere clonalidad con cadenas ligeras κ/λ en linfocitos B.\n- **E.** **FISH**: detecta translocaciones concretas; no es el método de clonalidad.\n\n*Duda: la clave salió muy dispersa (31 %); A es la correcta según Robbins, pero conviene revisarla.*",
+      "explanation": "Una neoplasia es **monoclonal**: todas sus células descienden de una. En los linfocitos se puede demostrar directamente: cada linfocito T reordena su gen del **receptor T (TCR)** de forma única al madurar (y el B, el de las inmunoglobulinas). Una población reactiva tiene miles de reordenamientos distintos (policlonal); un linfoma tiene **uno solo**, que la PCR detecta como un pico único.\n- **Clave para el diagnóstico de cáncer**: el diagnóstico es morfológico; la clonalidad ayuda en casos dudosos, sobre todo linfoides.\n- **Incompatible con lo benigno**: los tumores benignos (adenomas, leiomiomas) también son clonales.\n- **IHQ en tumores epiteliales**: la IHQ solo sugiere clonalidad con cadenas ligeras κ/λ en linfocitos B.\n- **FISH**: detecta translocaciones concretas; no es el método de clonalidad.\n\n*Duda: en el banqueo original las respuestas estaban muy repartidas; según Robbins, la correcta es la del reordenamiento del TCR.*",
       "tema": "neoplasia-conceptos",
       "nivel": 2,
       "flujo": {
@@ -1128,7 +1246,7 @@
           "correct": false
         }
       ],
-      "explanation": "Todos los datos son favorables, pero no pesan igual. El factor pronóstico más potente en el cáncer de mama, como en casi todos los tumores sólidos, es el **estadio**, y dentro de él lo que más pesa es la **diseminación**: las **metástasis a distancia** (M) separan un cáncer potencialmente curable de uno que no lo es; le sigue el compromiso de los **ganglios axilares** (N). Grado, mitosis y receptores modulan el pronóstico dentro de un mismo estadio.\n- **B.** **Bajo grado histológico**: es favorable, pero el grado pesa menos que el estadio.\n- **C.** **RE positivo**: predice sobre todo la **respuesta a hormonoterapia** (factor predictivo), con un pronóstico algo mejor.\n- **D.** **HER2 negativo**: es predictivo (no hay diana anti-HER2), no el mejor indicador pronóstico.\n- **E.** **Bajo índice mitótico**: es parte del grado; mismo razonamiento que el grado.",
+      "explanation": "Todos los datos son favorables, pero no pesan igual. El factor pronóstico más potente en el cáncer de mama, como en casi todos los tumores sólidos, es el **estadio**, y dentro de él lo que más pesa es la **diseminación**: las **metástasis a distancia** (M) separan un cáncer potencialmente curable de uno que no lo es; le sigue el compromiso de los **ganglios axilares** (N). Grado, mitosis y receptores modulan el pronóstico dentro de un mismo estadio.\n- **Bajo grado histológico**: es favorable, pero el grado pesa menos que el estadio.\n- **RE positivo**: predice sobre todo la **respuesta a hormonoterapia** (factor predictivo), con un pronóstico algo mejor.\n- **HER2 negativo**: es predictivo (no hay diana anti-HER2), no el mejor indicador pronóstico.\n- **Bajo índice mitótico**: es parte del grado; mismo razonamiento que el grado.",
       "tema": "mama",
       "nivel": 2,
       "flujo": {
@@ -1213,7 +1331,7 @@
           "correct": false
         }
       ],
-      "explanation": "Los tres efectos son el **metabolismo anabólico** que necesita una célula para crecer: síntesis de proteínas, lipogénesis y **glucólisis aerobia** (efecto Warburg). Los dispara la señal de un **receptor tirosina quinasa** (factores de crecimiento, insulina): su autofosforilación activa **PI3K → AKT → mTOR**; AKT aumenta la captación de glucosa y la glucólisis, y mTOR enciende la síntesis de proteínas y de lípidos (vía SREBP).\n- **B.** **Receptor de TNF**: activa NF-κB o la apoptosis extrínseca (caspasa-8), no este programa metabólico.\n- **C.** **«Receptor» de BCL-1**: BCL-1 es la ciclina D1, una proteína intracelular, no un receptor.\n- **D.** **E-cadherina**: es una molécula de adhesión entre células.\n- **E.** **p21**: es un inhibidor nuclear de CDK que frena el ciclo; tampoco es un receptor.",
+      "explanation": "Los tres efectos son el **metabolismo anabólico** que necesita una célula para crecer: síntesis de proteínas, lipogénesis y **glucólisis aerobia** (efecto Warburg). Los dispara la señal de un **receptor tirosina quinasa** (factores de crecimiento, insulina): su autofosforilación activa **PI3K → AKT → mTOR**; AKT aumenta la captación de glucosa y la glucólisis, y mTOR enciende la síntesis de proteínas y de lípidos (vía SREBP).\n- **Receptor de TNF**: activa NF-κB o la apoptosis extrínseca (caspasa-8), no este programa metabólico.\n- **«Receptor» de BCL-1**: BCL-1 es la ciclina D1, una proteína intracelular, no un receptor.\n- **E-cadherina**: es una molécula de adhesión entre células.\n- **P21**: es un inhibidor nuclear de CDK que frena el ciclo; tampoco es un receptor.",
       "tema": "hallmarks",
       "nivel": 2,
       "flujo": {
@@ -1298,7 +1416,7 @@
           "correct": false
         }
       ],
-      "explanation": "El **EGFR** es un receptor tirosina quinasa codificado por un **protooncogén**. Las mutaciones del adenocarcinoma de pulmón (deleciones del exón 19, L858R del exón 21) son de **ganancia de función**: el receptor queda activo sin ligando y envía señal proliferativa constante por RAS/MAPK y PI3K/AKT. Basta un alelo mutado (efecto dominante): es la **activación de un oncogén**. Por eso detectarla en la biopsia líquida indica inhibidores de tirosina quinasa (osimertinib).\n- **B.** **Supresor tumoral**: el EGFR no frena el ciclo; lo empuja.\n- **C.** **Genes reparadores**: el EGFR no repara ADN.\n- **D.** **Inhibición de la apoptosis**: la señal del EGFR puede favorecerla, pero es una consecuencia, no el mecanismo de la mutación.\n- **E.** **Angiogénesis**: igual, un efecto secundario posible.",
+      "explanation": "El **EGFR** es un receptor tirosina quinasa codificado por un **protooncogén**. Las mutaciones del adenocarcinoma de pulmón (deleciones del exón 19, L858R del exón 21) son de **ganancia de función**: el receptor queda activo sin ligando y envía señal proliferativa constante por RAS/MAPK y PI3K/AKT. Basta un alelo mutado (efecto dominante): es la **activación de un oncogén**. Por eso detectarla en la biopsia líquida indica inhibidores de tirosina quinasa (osimertinib).\n- **Supresor tumoral**: el EGFR no frena el ciclo; lo empuja.\n- **Genes reparadores**: el EGFR no repara ADN.\n- **Inhibición de la apoptosis**: la señal del EGFR puede favorecerla, pero es una consecuencia, no el mecanismo de la mutación.\n- **Angiogénesis**: igual, un efecto secundario posible.",
       "tema": "genes-cancer",
       "nivel": 2,
       "flujo": {
@@ -1393,7 +1511,7 @@
           "correct": false
         }
       ],
-      "explanation": "El **citocromo c** vive en el espacio intermembrana; su salida al citosol es el paso decisivo de la **vía intrínseca (mitocondrial)** de la apoptosis: con **Apaf-1** forma el apoptosoma, que activa la **caspasa-9** y luego las ejecutoras. Esa salida la controla la familia BCL2: **BAX/BAK** abren poros y **BCL2/BCL-XL** los impiden. Un tumor que sobrevive porque bloqueó ese paso (BCL2 sobreexpresado en el linfoma folicular o la LLC) es el que más se beneficia de forzar la salida; es la lógica de los BH3 miméticos como **venetoclax**.\n- **B.** **Activación de un oncogén**: el defecto está en la señal de proliferación, no en la mitocondria.\n- **C.** **Supresor tumoral**: según cuál, puede no tocar la apoptosis (p. ej. RB).\n- **D.** **Genes reparadores**: el problema es la acumulación de mutaciones.\n- **E.** **Angiogénesis**: la molécula no actúa sobre los vasos.",
+      "explanation": "El **citocromo c** vive en el espacio intermembrana; su salida al citosol es el paso decisivo de la **vía intrínseca (mitocondrial)** de la apoptosis: con **Apaf-1** forma el apoptosoma, que activa la **caspasa-9** y luego las ejecutoras. Esa salida la controla la familia BCL2: **BAX/BAK** abren poros y **BCL2/BCL-XL** los impiden. Un tumor que sobrevive porque bloqueó ese paso (BCL2 sobreexpresado en el linfoma folicular o la LLC) es el que más se beneficia de forzar la salida; es la lógica de los BH3 miméticos como **venetoclax**.\n- **Activación de un oncogén**: el defecto está en la señal de proliferación, no en la mitocondria.\n- **Supresor tumoral**: según cuál, puede no tocar la apoptosis (p. ej. RB).\n- **Genes reparadores**: el problema es la acumulación de mutaciones.\n- **Angiogénesis**: la molécula no actúa sobre los vasos.",
       "tema": "hallmarks",
       "nivel": 2,
       "flujo": {
@@ -1483,7 +1601,7 @@
           "correct": false
         }
       ],
-      "explanation": "La infección crónica por ***H. pylori*** mantiene una gastritis con neutrófilos y macrófagos que liberan **especies reactivas de oxígeno** y óxido nítrico. Ese **estrés oxidativo** daña el ADN y las membranas del epitelio, mientras la regeneración constante multiplica las divisiones con ADN dañado; las cepas **CagA+** suman una señal proliferativa directa. La secuencia es gastritis crónica → **atrofia → metaplasia intestinal → displasia → adenocarcinoma**.\n- **B.** **Hiperplasia glandular previa**: la lesión precursora es la metaplasia intestinal con displasia, no una hiperplasia.\n- **C.** **Solo adenocarcinoma**: también causa **linfoma MALT** gástrico, por estímulo antigénico crónico de linfocitos B.\n- **D.** **Inhibición de Rb**: es el mecanismo de la E7 del VPH; *H. pylori* no tiene una oncoproteína que secuestre RB.\n\n*Duda: el enunciado dice «ver imagen», pero la pregunta publicada no trae imagen.*",
+      "explanation": "La infección crónica por ***H. pylori*** mantiene una gastritis con neutrófilos y macrófagos que liberan **especies reactivas de oxígeno** y óxido nítrico. Ese **estrés oxidativo** daña el ADN y las membranas del epitelio, mientras la regeneración constante multiplica las divisiones con ADN dañado; las cepas **CagA+** suman una señal proliferativa directa. La secuencia es gastritis crónica → **atrofia → metaplasia intestinal → displasia → adenocarcinoma**.\n- **Hiperplasia glandular previa**: la lesión precursora es la metaplasia intestinal con displasia, no una hiperplasia.\n- **Solo adenocarcinoma**: también causa **linfoma MALT** gástrico, por estímulo antigénico crónico de linfocitos B.\n- **Inhibición de Rb**: es el mecanismo de la E7 del VPH; *H. pylori* no tiene una oncoproteína que secuestre RB.\n\n*Duda: el enunciado dice «ver imagen», pero la pregunta publicada no trae imagen.*",
       "tema": "carcinogenesis-microbiana",
       "nivel": 2,
       "flujo": {
@@ -1573,7 +1691,7 @@
           "correct": false
         }
       ],
-      "explanation": "La carcinogénesis química tiene dos fases. La **iniciación** es una **mutación**: el carcinógeno (o su metabolito electrofílico, activado por el citocromo P450) se une al ADN; si la célula no muere y el daño no se repara antes de replicar, la alteración queda fija y pasa a las hijas. Es **no letal e irreparable**. La **promoción** viene después: agentes no mutagénicos (hormonas, ésteres de forbol) hacen proliferar a la célula iniciada y expanden el clon, con un efecto reversible si cesan.\n- **B.** **Evolución invariable a cáncer**: la célula iniciada aún no es neoplásica; sin promoción puede no progresar nunca.\n- **C.** **El daño desaparece con los años**: una mutación fijada es permanente.\n- **D.** **Los promotores bastan**: no dañan el ADN y no son suficientes por sí solos; hace falta un iniciador antes.",
+      "explanation": "La carcinogénesis química tiene dos fases. La **iniciación** es una **mutación**: el carcinógeno (o su metabolito electrofílico, activado por el citocromo P450) se une al ADN; si la célula no muere y el daño no se repara antes de replicar, la alteración queda fija y pasa a las hijas. Es **no letal e irreparable**. La **promoción** viene después: agentes no mutagénicos (hormonas, ésteres de forbol) hacen proliferar a la célula iniciada y expanden el clon, con un efecto reversible si cesan.\n- **Evolución invariable a cáncer**: la célula iniciada aún no es neoplásica; sin promoción puede no progresar nunca.\n- **El daño desaparece con los años**: una mutación fijada es permanente.\n- **Los promotores bastan**: no dañan el ADN y no son suficientes por sí solos; hace falta un iniciador antes.",
       "tema": "carcinogenesis",
       "nivel": 1,
       "claseId": "pat-ai-11",
@@ -1611,7 +1729,7 @@
           "correct": false
         }
       ],
-      "explanation": "La **radiación ionizante** rompe el ADN (roturas de doble cadena) y produce reordenamientos. La tiroides infantil es de los órganos más sensibles: tras radioterapia de cabeza y cuello en la infancia, o tras Chernóbil, aumentó el **carcinoma papilar**, con reordenamientos de **RET** (RET/PTC). La misma radiación daña las células germinales y causa **infertilidad**: es la única alternativa que explica las dos cosas.\n- **B.** **Virus de Epstein-Barr**: linfoma de Burkitt, Hodgkin y carcinoma nasofaríngeo.\n- **C.** **Hidrocarburos aromáticos policíclicos**: tabaco y hollín; pulmón, piel, escroto.\n- **D.** **Aminas aromáticas**: industria de colorantes; carcinoma urotelial de vejiga.\n- **E.** **Agentes alquilantes**: son gonadotóxicos, pero el cáncer que causan es la leucemia mieloide aguda secundaria, no el de tiroides.",
+      "explanation": "La **radiación ionizante** rompe el ADN (roturas de doble cadena) y produce reordenamientos. La tiroides infantil es de los órganos más sensibles: tras radioterapia de cabeza y cuello en la infancia, o tras Chernóbil, aumentó el **carcinoma papilar**, con reordenamientos de **RET** (RET/PTC). La misma radiación daña las células germinales y causa **infertilidad**: es la única alternativa que explica las dos cosas.\n- **Virus de Epstein-Barr**: linfoma de Burkitt, Hodgkin y carcinoma nasofaríngeo.\n- **Hidrocarburos aromáticos policíclicos**: tabaco y hollín; pulmón, piel, escroto.\n- **Aminas aromáticas**: industria de colorantes; carcinoma urotelial de vejiga.\n- **Agentes alquilantes**: son gonadotóxicos, pero el cáncer que causan es la leucemia mieloide aguda secundaria, no el de tiroides.",
       "tema": "carcinogenesis",
       "nivel": 1,
       "claseId": "pat-ai-11",
@@ -1649,7 +1767,7 @@
           "correct": false
         }
       ],
-      "explanation": "El **linfoma folicular** porta la **t(14;18)**: el gen *BCL2* (18q21) pasa junto al locus de la cadena pesada de las inmunoglobulinas (14q32), cuyo potenciador está siempre activo en el linfocito B. La consecuencia es la **sobreexpresión de BCL2**, una proteína **antiapoptótica** que impide la salida del citocromo c: las células B del centro germinal no mueren y se acumulan lentamente.\n- **B.** **Deleción con BCR-ABL**: BCR-ABL no sale de una deleción.\n- **C.** **Translocación con MYC**: es la t(8;14) del **linfoma de Burkitt**, muy proliferativo.\n- **D.** **Deleción con BCL2**: BCL2 se activa por translocación, no por deleción.\n- **E.** **Translocación con BCR-ABL**: es el cromosoma Filadelfia, t(9;22), de la **leucemia mieloide crónica**.",
+      "explanation": "El **linfoma folicular** porta la **t(14;18)**: el gen *BCL2* (18q21) pasa junto al locus de la cadena pesada de las inmunoglobulinas (14q32), cuyo potenciador está siempre activo en el linfocito B. La consecuencia es la **sobreexpresión de BCL2**, una proteína **antiapoptótica** que impide la salida del citocromo c: las células B del centro germinal no mueren y se acumulan lentamente.\n- **Deleción con BCR-ABL**: BCR-ABL no sale de una deleción.\n- **Translocación con MYC**: es la t(8;14) del **linfoma de Burkitt**, muy proliferativo.\n- **Deleción con BCL2**: BCL2 se activa por translocación, no por deleción.\n- **Translocación con BCR-ABL**: es el cromosoma Filadelfia, t(9;22), de la **leucemia mieloide crónica**.",
       "tema": "linfomas",
       "nivel": 1,
       "claseId": "pat-acp-8",
@@ -1686,7 +1804,7 @@
           "correct": false
         }
       ],
-      "explanation": "**TP53** está mutado en más de la mitad de los cánceres humanos. Su proteína es el «guardián del genoma»: ante un daño del ADN se estabiliza (vía ATM/ATR) y, como factor de transcripción, induce **p21** (detiene el ciclo en G1), genes de reparación y, si el daño no tiene arreglo, **BAX** y PUMA (apoptosis) o senescencia. Sin p53, las células con ADN dañado siguen dividiéndose y acumulan mutaciones: **inestabilidad genómica**. Los demás también son supresores, pero con menos frecuencia global o en tumores concretos:\n- **B.** **CDH1** (E-cadherina): carcinoma gástrico difuso y lobulillar de mama.\n- **C.** **PTEN**: frena PI3K/AKT; endometrio, próstata, síndrome de Cowden.\n- **D.** **RB**: controla el paso G1→S; retinoblastoma y osteosarcoma.\n- **E.** **APC**: degrada la β-catenina; cáncer colorrectal.",
+      "explanation": "**TP53** está mutado en más de la mitad de los cánceres humanos. Su proteína es el «guardián del genoma»: ante un daño del ADN se estabiliza (vía ATM/ATR) y, como factor de transcripción, induce **p21** (detiene el ciclo en G1), genes de reparación y, si el daño no tiene arreglo, **BAX** y PUMA (apoptosis) o senescencia. Sin p53, las células con ADN dañado siguen dividiéndose y acumulan mutaciones: **inestabilidad genómica**. Los demás también son supresores, pero con menos frecuencia global o en tumores concretos:\n- **CDH1** (E-cadherina): carcinoma gástrico difuso y lobulillar de mama.\n- **PTEN**: frena PI3K/AKT; endometrio, próstata, síndrome de Cowden.\n- **RB**: controla el paso G1→S; retinoblastoma y osteosarcoma.\n- **APC**: degrada la β-catenina; cáncer colorrectal.",
       "tema": "genes-cancer",
       "nivel": 1,
       "claseId": "pat-ai-12",
@@ -1723,7 +1841,7 @@
           "correct": false
         }
       ],
-      "explanation": "La **estadificación** describe la **extensión** del tumor con el sistema **TNM**: tamaño o profundidad de invasión del primario (**T**), compromiso de **ganglios regionales (N)** y **metástasis a distancia (M)**. Sale de la pieza quirúrgica, los ganglios y las imágenes, y es el factor pronóstico más importante en los tumores sólidos, por encima del grado.\n- **B.** **El grado no se relaciona con el comportamiento**: un tumor poco diferenciado suele ser más agresivo.\n- **C.** **El grado es necesario para estadificar**: el TNM no incluye el grado; son dos parámetros distintos.\n- **D.** **Lo más importante para el grado es el índice mitótico**: el grado se basa sobre todo en la diferenciación y la atipia; las mitosis son un componente más.\n- **E.** **El grado importa más que el estadio**: es al revés.",
+      "explanation": "La **estadificación** describe la **extensión** del tumor con el sistema **TNM**: tamaño o profundidad de invasión del primario (**T**), compromiso de **ganglios regionales (N)** y **metástasis a distancia (M)**. Sale de la pieza quirúrgica, los ganglios y las imágenes, y es el factor pronóstico más importante en los tumores sólidos, por encima del grado.\n- **El grado no se relaciona con el comportamiento**: un tumor poco diferenciado suele ser más agresivo.\n- **El grado es necesario para estadificar**: el TNM no incluye el grado; son dos parámetros distintos.\n- **Lo más importante para el grado es el índice mitótico**: el grado se basa sobre todo en la diferenciación y la atipia; las mitosis son un componente más.\n- **El grado importa más que el estadio**: es al revés.",
       "tema": "clinica-tumoral",
       "nivel": 1,
       "claseId": "pat-ai-13",
@@ -1756,7 +1874,7 @@
           "correct": false
         }
       ],
-      "explanation": "Un **oncogén** es un **protooncogén alterado**: por mutación puntual (RAS), amplificación (*ERBB2*, *MYC*) o translocación (*BCR-ABL*). El protooncogén normal codifica una proteína que estimula el crecimiento solo cuando recibe una señal; el oncogén produce una **oncoproteína** activa de forma constante o en exceso, y basta un alelo alterado para que actúe (efecto dominante).\n- **B.** **Genes normales**: esa es la definición del protooncogén, antes de alterarse.\n- **C.** **Oncoproteínas**: son el **producto** del oncogén, no el gen.\n- **D.** **Enzimas**: son proteínas, no genes (aunque muchas oncoproteínas, como las tirosina quinasas, sean enzimas).",
+      "explanation": "Un **oncogén** es un **protooncogén alterado**: por mutación puntual (RAS), amplificación (*ERBB2*, *MYC*) o translocación (*BCR-ABL*). El protooncogén normal codifica una proteína que estimula el crecimiento solo cuando recibe una señal; el oncogén produce una **oncoproteína** activa de forma constante o en exceso, y basta un alelo alterado para que actúe (efecto dominante).\n- **Genes normales**: esa es la definición del protooncogén, antes de alterarse.\n- **Oncoproteínas**: son el **producto** del oncogén, no el gen.\n- **Enzimas**: son proteínas, no genes (aunque muchas oncoproteínas, como las tirosina quinasas, sean enzimas).",
       "tema": "genes-cancer",
       "nivel": 1,
       "claseId": "pat-acp-5",
@@ -1793,7 +1911,7 @@
           "correct": false
         }
       ],
-      "explanation": "La **desmoplasia** es el estroma colágeno denso que forma el huésped **inducido por el tumor maligno**: las células neoplásicas secretan factores (TGF-β, PDGF) que convierten fibroblastos en miofibroblastos, y estos depositan colágeno. Da la consistencia **pétrea** de muchos carcinomas (el «escirro» de mama, el gástrico difuso, el de páncreas). Las otras cuatro describen al parénquima, no al estroma:\n- **B.** **Metaplasia**: sustitución de un epitelio adulto por otro (esófago de Barrett).\n- **C.** **Anaplasia**: falta de diferenciación de las células tumorales.\n- **D.** **Displasia**: crecimiento desordenado con atipia, lesión precursora.\n- **E.** **Hiperplasia**: aumento del número de células.",
+      "explanation": "La **desmoplasia** es el estroma colágeno denso que forma el huésped **inducido por el tumor maligno**: las células neoplásicas secretan factores (TGF-β, PDGF) que convierten fibroblastos en miofibroblastos, y estos depositan colágeno. Da la consistencia **pétrea** de muchos carcinomas (el «escirro» de mama, el gástrico difuso, el de páncreas). Las otras cuatro describen al parénquima, no al estroma:\n- **Metaplasia**: sustitución de un epitelio adulto por otro (esófago de Barrett).\n- **Anaplasia**: falta de diferenciación de las células tumorales.\n- **Displasia**: crecimiento desordenado con atipia, lesión precursora.\n- **Hiperplasia**: aumento del número de células.",
       "tema": "neoplasia-conceptos",
       "nivel": 1,
       "claseId": "pat-ai-10",
@@ -1830,7 +1948,7 @@
           "correct": false
         }
       ],
-      "explanation": "La pérdida de función de **p53** es la alteración genética más frecuente del cáncer humano: aparece en más de la mitad de los tumores, entre ellos los de **mama, colon y pulmón** (y, en forma germinal, en el síndrome de Li-Fraumeni). Las demás alternativas describen lo que hace un p53 **funcional**; mutado, ocurre lo contrario:\n- **B.** **Promueve la senescencia**: p53 normal la induce vía p21; mutado, la célula no envejece.\n- **C.** **Induce la apoptosis**: p53 normal induce BAX y PUMA; mutado, la célula dañada sobrevive.\n- **D.** **Promueve la reparación**: p53 normal activa genes de reparación (p. ej. GADD45); mutado, el daño persiste.\n- **E.** **Arresto en G1**: p53 normal lo logra con p21; mutado, la célula entra en S con el ADN dañado.",
+      "explanation": "La pérdida de función de **p53** es la alteración genética más frecuente del cáncer humano: aparece en más de la mitad de los tumores, entre ellos los de **mama, colon y pulmón** (y, en forma germinal, en el síndrome de Li-Fraumeni). Las demás alternativas describen lo que hace un p53 **funcional**; mutado, ocurre lo contrario:\n- **Promueve la senescencia**: p53 normal la induce vía p21; mutado, la célula no envejece.\n- **Induce la apoptosis**: p53 normal induce BAX y PUMA; mutado, la célula dañada sobrevive.\n- **Promueve la reparación**: p53 normal activa genes de reparación (p. ej. GADD45); mutado, el daño persiste.\n- **Arresto en G1**: p53 normal lo logra con p21; mutado, la célula entra en S con el ADN dañado.",
       "tema": "genes-cancer",
       "nivel": 1,
       "claseId": "pat-ai-12",
@@ -1867,7 +1985,7 @@
           "correct": false
         }
       ],
-      "explanation": "La sangre venosa del estómago, intestino, páncreas y bazo drena a la **vena porta**, que entra al hígado y se ramifica en sus sinusoides. Una célula tumoral que invade una vénula de esos órganos queda detenida en la primera red capilar que encuentra: el **hígado**. Por eso es el sitio más frecuente de metástasis de los carcinomas digestivos (el pulmón cumple el mismo papel para lo que drena a la cava).\n- **B.** **Atipia en el epitelio metaplásico**: pleomorfismo e hipercromasia son de la **displasia**; la metaplasia no tiene atipia.\n- **C.** **Sarcomas por vía linfática**: los sarcomas van sobre todo por vía **hematógena**; la linfática es la de los carcinomas.\n- **D.** **In situ invasivo**: el carcinoma in situ, por definición, **no** atraviesa la membrana basal.\n- **E.** **In situ infrecuente**: es **frecuente** justamente en piel, mama, vejiga y cuello uterino.",
+      "explanation": "La sangre venosa del estómago, intestino, páncreas y bazo drena a la **vena porta**, que entra al hígado y se ramifica en sus sinusoides. Una célula tumoral que invade una vénula de esos órganos queda detenida en la primera red capilar que encuentra: el **hígado**. Por eso es el sitio más frecuente de metástasis de los carcinomas digestivos (el pulmón cumple el mismo papel para lo que drena a la cava).\n- **Atipia en el epitelio metaplásico**: pleomorfismo e hipercromasia son de la **displasia**; la metaplasia no tiene atipia.\n- **Sarcomas por vía linfática**: los sarcomas van sobre todo por vía **hematógena**; la linfática es la de los carcinomas.\n- **In situ invasivo**: el carcinoma in situ, por definición, **no** atraviesa la membrana basal.\n- **In situ infrecuente**: es **frecuente** justamente en piel, mama, vejiga y cuello uterino.",
       "tema": "metastasis",
       "nivel": 1,
       "claseId": "pat-ai-12",
@@ -1899,7 +2017,7 @@
           "correct": false
         }
       ],
-      "explanation": "La **leucemia mieloide crónica** se define por el **cromosoma Filadelfia**, una **translocación** recíproca **t(9;22)**: el gen *ABL* del cromosoma 9 se une al *BCR* del 22. El **gen de fusión BCR-ABL** codifica una tirosina quinasa **constitutivamente activa** que hace proliferar a la célula madre mieloide sin factor de crecimiento. Es la diana del **imatinib**.\n- **B.** **Translocación con BCL2**: es la t(14;18) del **linfoma folicular**.\n- **C.** **Deleción con BCR-ABL**: el cromosoma 22 queda más corto porque el intercambio es recíproco y desigual, no por una deleción.\n- **D.** **Translocación con MYC**: es la t(8;14) del **linfoma de Burkitt**.",
+      "explanation": "La **leucemia mieloide crónica** se define por el **cromosoma Filadelfia**, una **translocación** recíproca **t(9;22)**: el gen *ABL* del cromosoma 9 se une al *BCR* del 22. El **gen de fusión BCR-ABL** codifica una tirosina quinasa **constitutivamente activa** que hace proliferar a la célula madre mieloide sin factor de crecimiento. Es la diana del **imatinib**.\n- **Translocación con BCL2**: es la t(14;18) del **linfoma folicular**.\n- **Deleción con BCR-ABL**: el cromosoma 22 queda más corto porque el intercambio es recíproco y desigual, no por una deleción.\n- **Translocación con MYC**: es la t(8;14) del **linfoma de Burkitt**.",
       "tema": "leucemias",
       "nivel": 1,
       "claseId": "pat-tbl-4",
@@ -1936,7 +2054,7 @@
           "correct": false
         }
       ],
-      "explanation": "Los **protooncogenes** son **genes normales** que todas las células tienen y que codifican proteínas que promueven el crecimiento **cuando se las estimula**: factores de crecimiento, receptores (EGFR), transductores (RAS), factores de transcripción (MYC) y ciclinas. Son necesarios para la proliferación normal y la reparación de los tejidos; solo al alterarse se vuelven oncogenes.\n- **B.** **Genes anormales**: un protooncogén alterado deja de llamarse así y pasa a ser un **oncogén**.\n- **C.** **Oncoproteínas**: son el producto del oncogén.\n- **D.** **Mutaciones**: la mutación es lo que convierte al protooncogén en oncogén, no su definición.\n- **E.** **Enzimas**: son proteínas, no genes.",
+      "explanation": "Los **protooncogenes** son **genes normales** que todas las células tienen y que codifican proteínas que promueven el crecimiento **cuando se las estimula**: factores de crecimiento, receptores (EGFR), transductores (RAS), factores de transcripción (MYC) y ciclinas. Son necesarios para la proliferación normal y la reparación de los tejidos; solo al alterarse se vuelven oncogenes.\n- **Genes anormales**: un protooncogén alterado deja de llamarse así y pasa a ser un **oncogén**.\n- **Oncoproteínas**: son el producto del oncogén.\n- **Mutaciones**: la mutación es lo que convierte al protooncogén en oncogén, no su definición.\n- **Enzimas**: son proteínas, no genes.",
       "tema": "genes-cancer",
       "nivel": 1,
       "claseId": "pat-acp-5",
@@ -1973,7 +2091,7 @@
           "correct": false
         }
       ],
-      "explanation": "**BCL2** es el prototipo de los genes que regulan la **apoptosis**. Su proteína se ancla en la membrana mitocondrial externa y **bloquea a BAX y BAK**, que de otro modo formarían poros para que salga el citocromo c: es **antiapoptótica**. Se descubrió en la t(14;18) del **linfoma folicular**, donde su sobreexpresión mantiene vivas a las células B.\n- **B/E.** **BRCA1 y BRCA2** (escritos «BRAC»): supresores que reparan roturas de doble cadena por recombinación homóloga; cáncer de mama y ovario.\n- **C.** **PI3K**: transductor de la señal de los receptores tirosina quinasa; su vía (AKT) inhibe la apoptosis de forma indirecta, pero es un gen de señalización del crecimiento.\n- **D.** **KRAS**: GTPasa de la vía MAPK; oncogén de proliferación.",
+      "explanation": "**BCL2** es el prototipo de los genes que regulan la **apoptosis**. Su proteína se ancla en la membrana mitocondrial externa y **bloquea a BAX y BAK**, que de otro modo formarían poros para que salga el citocromo c: es **antiapoptótica**. Se descubrió en la t(14;18) del **linfoma folicular**, donde su sobreexpresión mantiene vivas a las células B.\n- **BRCA1 y BRCA2** (escritos «BRAC»): supresores que reparan roturas de doble cadena por recombinación homóloga; cáncer de mama y ovario.\n- **PI3K**: transductor de la señal de los receptores tirosina quinasa; su vía (AKT) inhibe la apoptosis de forma indirecta, pero es un gen de señalización del crecimiento.\n- **KRAS**: GTPasa de la vía MAPK; oncogén de proliferación.",
       "tema": "genes-cancer",
       "nivel": 1,
       "claseId": "pat-ai-12",
@@ -2010,7 +2128,7 @@
           "correct": false
         }
       ],
-      "explanation": "Las neoplasias malignas de origen **mesenquimal** (tejido conectivo, músculo, hueso, cartílago, grasa, vasos) se llaman **sarcomas**, del griego «carnoso», porque suelen tener poco estroma: fibrosarcoma, liposarcoma, leiomiosarcoma, osteosarcoma. Se diseminan sobre todo por vía hematógena.\n- **B.** **Carcinoma**: neoplasia maligna de origen **epitelial**.\n- **C.** **Hamartoma**: masa desorganizada de tejidos propios del lugar; es una malformación, no una neoplasia maligna.\n- **D.** **Teratoma**: neoplasia de células germinales con tejidos de varias capas embrionarias.\n- **E.** **Fibroma**: el sufijo «-oma» sin más indica la neoplasia **benigna** mesenquimal.",
+      "explanation": "Las neoplasias malignas de origen **mesenquimal** (tejido conectivo, músculo, hueso, cartílago, grasa, vasos) se llaman **sarcomas**, del griego «carnoso», porque suelen tener poco estroma: fibrosarcoma, liposarcoma, leiomiosarcoma, osteosarcoma. Se diseminan sobre todo por vía hematógena.\n- **Carcinoma**: neoplasia maligna de origen **epitelial**.\n- **Hamartoma**: masa desorganizada de tejidos propios del lugar; es una malformación, no una neoplasia maligna.\n- **Teratoma**: neoplasia de células germinales con tejidos de varias capas embrionarias.\n- **Fibroma**: el sufijo «-oma» sin más indica la neoplasia **benigna** mesenquimal.",
       "tema": "neoplasia-conceptos",
       "nivel": 1,
       "claseId": "pat-ai-10",
@@ -2047,7 +2165,7 @@
           "correct": false
         }
       ],
-      "explanation": "**BRCA1 y BRCA2** reparan las **roturas de doble cadena** del ADN por **recombinación homóloga**, usando la cromátide hermana como molde. Con una mutación germinal (herencia autosómica dominante) basta perder el segundo alelo para que la célula repare con mecanismos propensos a error y acumule reordenamientos: el riesgo de **cáncer de mama** (y de ovario, próstata y páncreas) aumenta mucho.\n- **B.** **Microsatélites como protección**: la inestabilidad de microsatélites es un mecanismo **causal** de cáncer de colon (síndrome de Lynch).\n- **C.** **BRCA y escisión de nucleótidos**: esa vía es la que falla en el xeroderma pigmentoso.\n- **D.** **Xeroderma con menor riesgo**: tienen un riesgo **muchísimo mayor** de cáncer de piel.\n- **E.** **MLH1/MSH2 y recombinación homóloga**: son genes de **reparación de errores de emparejamiento** (*mismatch repair*).",
+      "explanation": "**BRCA1 y BRCA2** reparan las **roturas de doble cadena** del ADN por **recombinación homóloga**, usando la cromátide hermana como molde. Con una mutación germinal (herencia autosómica dominante) basta perder el segundo alelo para que la célula repare con mecanismos propensos a error y acumule reordenamientos: el riesgo de **cáncer de mama** (y de ovario, próstata y páncreas) aumenta mucho.\n- **Microsatélites como protección**: la inestabilidad de microsatélites es un mecanismo **causal** de cáncer de colon (síndrome de Lynch).\n- **BRCA y escisión de nucleótidos**: esa vía es la que falla en el xeroderma pigmentoso.\n- **Xeroderma con menor riesgo**: tienen un riesgo **muchísimo mayor** de cáncer de piel.\n- **MLH1/MSH2 y recombinación homóloga**: son genes de **reparación de errores de emparejamiento** (*mismatch repair*).",
       "tema": "genes-cancer",
       "nivel": 1,
       "claseId": "pat-acp-5",
@@ -2084,7 +2202,7 @@
           "correct": false
         }
       ],
-      "explanation": "Los **receptores tirosina quinasa** (EGFR, HER2, KIT, PDGFR, RET) transmiten la señal de los factores de crecimiento por **RAS → RAF → MEK → ERK** y **PI3K → AKT**. Es la vía de crecimiento alterada con **más frecuencia** en el cáncer: *RAS* es el oncogén mutado más a menudo (~30 % de los tumores), y se suman receptores mutados o amplificados, *BRAF*, *PIK3CA* y la pérdida de *PTEN*. Con un eslabón activado, la señal sale sin factor de crecimiento.\n- **B.** **Receptor acoplado a proteína G**: se altera en algunos tumores (GNAS), mucho menos.\n- **C.** **JAK/STAT**: mutada en neoplasias mieloproliferativas (JAK2 V617F).\n- **D.** **WNT**: característica del colon (APC/β-catenina).\n- **E.** **NOTCH**: en la LLA-T y algunos carcinomas.",
+      "explanation": "Los **receptores tirosina quinasa** (EGFR, HER2, KIT, PDGFR, RET) transmiten la señal de los factores de crecimiento por **RAS → RAF → MEK → ERK** y **PI3K → AKT**. Es la vía de crecimiento alterada con **más frecuencia** en el cáncer: *RAS* es el oncogén mutado más a menudo (~30 % de los tumores), y se suman receptores mutados o amplificados, *BRAF*, *PIK3CA* y la pérdida de *PTEN*. Con un eslabón activado, la señal sale sin factor de crecimiento.\n- **Receptor acoplado a proteína G**: se altera en algunos tumores (GNAS), mucho menos.\n- **JAK/STAT**: mutada en neoplasias mieloproliferativas (JAK2 V617F).\n- **WNT**: característica del colon (APC/β-catenina).\n- **NOTCH**: en la LLA-T y algunos carcinomas.",
       "tema": "hallmarks",
       "nivel": 1,
       "claseId": "pat-ai-12",
@@ -2121,7 +2239,7 @@
           "correct": false
         }
       ],
-      "explanation": "El **aumento de la relación núcleo/citoplasma** es un rasgo de las células neoplásicas, sobre todo malignas: el núcleo crece (llega a 1:1 en vez del normal 1:4-1:6), con más ADN y cromatina gruesa, mientras el citoplasma está poco diferenciado. Suele acompañarse de pleomorfismo, **hipercromasia** y nucléolos prominentes.\n- **B.** **Pérdida de la basofilia nuclear**: la neoplasia da lo contrario, núcleos **hipercromáticos** (más basófilos).\n- **C.** **Núcleos redondos y regulares**: es el aspecto de una célula normal; la neoplásica tiene contornos irregulares.\n- **D.** **Condensación y picnosis**: son cambios de **muerte celular** (necrosis o apoptosis).\n- **E.** **Citoplasma amplio y claro**: indica una célula madura y diferenciada (o acúmulo de glucógeno o lípidos), no atipia.",
+      "explanation": "El **aumento de la relación núcleo/citoplasma** es un rasgo de las células neoplásicas, sobre todo malignas: el núcleo crece (llega a 1:1 en vez del normal 1:4-1:6), con más ADN y cromatina gruesa, mientras el citoplasma está poco diferenciado. Suele acompañarse de pleomorfismo, **hipercromasia** y nucléolos prominentes.\n- **Pérdida de la basofilia nuclear**: la neoplasia da lo contrario, núcleos **hipercromáticos** (más basófilos).\n- **Núcleos redondos y regulares**: es el aspecto de una célula normal; la neoplásica tiene contornos irregulares.\n- **Condensación y picnosis**: son cambios de **muerte celular** (necrosis o apoptosis).\n- **Citoplasma amplio y claro**: indica una célula madura y diferenciada (o acúmulo de glucógeno o lípidos), no atipia.",
       "tema": "neoplasia-conceptos",
       "nivel": 1,
       "claseId": "pat-ai-10",
@@ -2158,7 +2276,7 @@
           "correct": false
         }
       ],
-      "explanation": "En la mayoría de los casos el **estudio histológico** distingue una neoplasia benigna de una maligna: diferenciación o anaplasia, atipia, mitosis (sobre todo atípicas), necrosis y, lo decisivo, la **invasión local** del tejido vecino o de los vasos. Por eso la biopsia es el patrón de referencia del diagnóstico.\n- **B.** **El tamaño discrimina**: un leiomioma puede ser enorme y un carcinoma, milimétrico.\n- **C.** **Un único tipo celular**: hay tumores mixtos (fibroadenoma, adenoma pleomorfo) y teratomas con varias líneas.\n- **D.** **Benignas sin mutaciones**: las benignas también son clonales y tienen mutaciones (p. ej. *APC* en el adenoma de colon).\n- **E.** **Siempre masas sólidas de rápido crecimiento**: las leucemias no forman masas y muchos carcinomas crecen despacio.",
+      "explanation": "En la mayoría de los casos el **estudio histológico** distingue una neoplasia benigna de una maligna: diferenciación o anaplasia, atipia, mitosis (sobre todo atípicas), necrosis y, lo decisivo, la **invasión local** del tejido vecino o de los vasos. Por eso la biopsia es el patrón de referencia del diagnóstico.\n- **El tamaño discrimina**: un leiomioma puede ser enorme y un carcinoma, milimétrico.\n- **Un único tipo celular**: hay tumores mixtos (fibroadenoma, adenoma pleomorfo) y teratomas con varias líneas.\n- **Benignas sin mutaciones**: las benignas también son clonales y tienen mutaciones (p. ej. *APC* en el adenoma de colon).\n- **Siempre masas sólidas de rápido crecimiento**: las leucemias no forman masas y muchos carcinomas crecen despacio.",
       "tema": "neoplasia-conceptos",
       "nivel": 1,
       "claseId": "pat-ai-10",
@@ -2195,7 +2313,7 @@
           "correct": false
         }
       ],
-      "explanation": "El **síndrome de Lynch** (cáncer de colon hereditario no polipósico) se debe a mutaciones germinales de genes de **reparación de errores de emparejamiento** (*mismatch repair*: *MLH1*, *MSH2*, *MSH6*, *PMS2*), que corrigen las bases mal emparejadas que deja la ADN polimerasa al replicar. En los **microsatélites** (repeticiones cortas en tándem) la polimerasa «patina» a menudo; sin reparación, cada división cambia su longitud: eso es la **inestabilidad de microsatélites**, que alcanza genes como *TGFBR2* o *BAX*.\n- **B.** **Escisión de nucleótidos**: es el defecto del xeroderma pigmentoso.\n- **C.** **Recombinación homóloga**: es el de BRCA1/2.\n- **D.** **Mutaciones de la ADN polimerasa**: existen (*POLE*), pero no son el mecanismo del Lynch.\n- **E.** **Células linfoides**: el Lynch afecta al epitelio de colon y endometrio.",
+      "explanation": "El **síndrome de Lynch** (cáncer de colon hereditario no polipósico) se debe a mutaciones germinales de genes de **reparación de errores de emparejamiento** (*mismatch repair*: *MLH1*, *MSH2*, *MSH6*, *PMS2*), que corrigen las bases mal emparejadas que deja la ADN polimerasa al replicar. En los **microsatélites** (repeticiones cortas en tándem) la polimerasa «patina» a menudo; sin reparación, cada división cambia su longitud: eso es la **inestabilidad de microsatélites**, que alcanza genes como *TGFBR2* o *BAX*.\n- **Escisión de nucleótidos**: es el defecto del xeroderma pigmentoso.\n- **Recombinación homóloga**: es el de BRCA1/2.\n- **Mutaciones de la ADN polimerasa**: existen (*POLE*), pero no son el mecanismo del Lynch.\n- **Células linfoides**: el Lynch afecta al epitelio de colon y endometrio.",
       "tema": "cancer-hereditario",
       "nivel": 1,
       "claseId": "pat-acp-5",
@@ -2232,7 +2350,7 @@
           "correct": false
         }
       ],
-      "explanation": "**p53** es un **factor de transcripción**. Ante un daño del ADN se estabiliza y activa genes según la situación: **p21** para detener el ciclo en G1, GADD45 para reparar y, si el daño es irreparable, genes proapoptóticos como **BAX** y PUMA, que permeabilizan la mitocondria. Inducir la transcripción de BAX es una de sus funciones clásicas.\n- **B.** **Actúa como oncogén**: p53 es un gen **supresor** tumoral.\n- **C.** **Estimula el ciclo y bloquea la apoptosis**: hace exactamente lo contrario.\n- **D.** **Bloquea el paso de S a G2**: su punto de control principal es **G1/S** (también actúa en G2/M), no entre S y G2.\n- **E.** **Aumenta las mutaciones**: su efecto neto es **reducirlas**, deteniendo o eliminando a las células dañadas.",
+      "explanation": "**P53** es un **factor de transcripción**. Ante un daño del ADN se estabiliza y activa genes según la situación: **p21** para detener el ciclo en G1, GADD45 para reparar y, si el daño es irreparable, genes proapoptóticos como **BAX** y PUMA, que permeabilizan la mitocondria. Inducir la transcripción de BAX es una de sus funciones clásicas.\n- **Actúa como oncogén**: p53 es un gen **supresor** tumoral.\n- **Estimula el ciclo y bloquea la apoptosis**: hace exactamente lo contrario.\n- **Bloquea el paso de S a G2**: su punto de control principal es **G1/S** (también actúa en G2/M), no entre S y G2.\n- **Aumenta las mutaciones**: su efecto neto es **reducirlas**, deteniendo o eliminando a las células dañadas.",
       "tema": "genes-cancer",
       "nivel": 1,
       "claseId": "pat-ai-12",
@@ -2269,7 +2387,7 @@
           "correct": false
         }
       ],
-      "explanation": "En los epitelios, el camino a la malignidad suele pasar por la **displasia**: proliferación desordenada con **atipia** (núcleos grandes e hipercromáticos, pleomorfismo), pérdida de la maduración ordenada desde la capa basal y mitosis por encima de ella, pero **sin atravesar la membrana basal**. Cuando ocupa todo el espesor es un carcinoma in situ; al invadir, un carcinoma. Se reconoce en biopsias de cérvix, esófago de Barrett o colon.\n- **B.** **Anaplasia**: falta de diferenciación de un tumor que ya es maligno.\n- **C.** **Hiperplasia**: aumento de células sin atipia; puede preceder a la displasia, pero no es la etapa intermedia con atipia.\n- **D.** **Hipertrofia**: aumento del tamaño celular, una adaptación.\n- **E.** **Apoptosis**: muerte celular programada.",
+      "explanation": "En los epitelios, el camino a la malignidad suele pasar por la **displasia**: proliferación desordenada con **atipia** (núcleos grandes e hipercromáticos, pleomorfismo), pérdida de la maduración ordenada desde la capa basal y mitosis por encima de ella, pero **sin atravesar la membrana basal**. Cuando ocupa todo el espesor es un carcinoma in situ; al invadir, un carcinoma. Se reconoce en biopsias de cérvix, esófago de Barrett o colon.\n- **Anaplasia**: falta de diferenciación de un tumor que ya es maligno.\n- **Hiperplasia**: aumento de células sin atipia; puede preceder a la displasia, pero no es la etapa intermedia con atipia.\n- **Hipertrofia**: aumento del tamaño celular, una adaptación.\n- **Apoptosis**: muerte celular programada.",
       "tema": "neoplasia-conceptos",
       "nivel": 1,
       "claseId": "pat-ai-10",
@@ -2306,7 +2424,7 @@
           "correct": false
         }
       ],
-      "explanation": "Los genes reparadores del ADN (*MLH1/MSH2* en el síndrome de Lynch, *BRCA1/2*, genes *XP*, *ATM*) son supresores «cuidadores»: su pérdida no hace proliferar a la célula por sí sola, sino que aumenta la tasa de mutaciones. Muchos de estos defectos se **heredan** en línea germinal: la persona nace con un alelo inactivo, basta perder el segundo y aparecen cánceres en varios familiares, a menudo **jóvenes** y en varios órganos.\n- **B.** **Virus**: los oncogénicos (VPH, VEB, HTLV-1) actúan con oncoproteínas propias, no mutando genes reparadores.\n- **C.** **Insensibles a la apoptosis**: es otro rasgo del cáncer (BCL2), no el que define a este grupo.\n- **D.** **Etapas tardías**: al ser hereditarios suelen aparecer **antes** que los esporádicos.\n- **E.** **Índice replicativo muy elevado**: no es lo que caracteriza a estos tumores.",
+      "explanation": "Los genes reparadores del ADN (*MLH1/MSH2* en el síndrome de Lynch, *BRCA1/2*, genes *XP*, *ATM*) son supresores «cuidadores»: su pérdida no hace proliferar a la célula por sí sola, sino que aumenta la tasa de mutaciones. Muchos de estos defectos se **heredan** en línea germinal: la persona nace con un alelo inactivo, basta perder el segundo y aparecen cánceres en varios familiares, a menudo **jóvenes** y en varios órganos.\n- **Virus**: los oncogénicos (VPH, VEB, HTLV-1) actúan con oncoproteínas propias, no mutando genes reparadores.\n- **Insensibles a la apoptosis**: es otro rasgo del cáncer (BCL2), no el que define a este grupo.\n- **Etapas tardías**: al ser hereditarios suelen aparecer **antes** que los esporádicos.\n- **Índice replicativo muy elevado**: no es lo que caracteriza a estos tumores.",
       "tema": "cancer-hereditario",
       "nivel": 1,
       "claseId": "pat-acp-5",
@@ -2343,7 +2461,7 @@
           "correct": false
         }
       ],
-      "explanation": "Es **p53**. Ante un daño del ADN, las quinasas ATM/ATR lo fosforilan y lo liberan de su inhibidor MDM2; como factor de transcripción induce **p21**, que inhibe los complejos ciclina-CDK, deja a RB sin fosforilar y **detiene el ciclo en G1**; si el daño no se repara, induce **BAX** (y PUMA, NOXA), que abren la mitocondria y desencadenan la **apoptosis**.\n- **B.** **p16**: también frena el ciclo, pero inhibiendo directamente a CDK4/6, sin pasar por p21 ni BAX.\n- **C.** **APC**: supresor que degrada la β-catenina (vía WNT).\n- **D.** **MYC**: es un **oncogén** (factor de transcripción proliferativo).\n- **E.** **MSH-1**: gen de reparación de errores de emparejamiento (síndrome de Lynch).",
+      "explanation": "Es **p53**. Ante un daño del ADN, las quinasas ATM/ATR lo fosforilan y lo liberan de su inhibidor MDM2; como factor de transcripción induce **p21**, que inhibe los complejos ciclina-CDK, deja a RB sin fosforilar y **detiene el ciclo en G1**; si el daño no se repara, induce **BAX** (y PUMA, NOXA), que abren la mitocondria y desencadenan la **apoptosis**.\n- **P16**: también frena el ciclo, pero inhibiendo directamente a CDK4/6, sin pasar por p21 ni BAX.\n- **APC**: supresor que degrada la β-catenina (vía WNT).\n- **MYC**: es un **oncogén** (factor de transcripción proliferativo).\n- **MSH-1**: gen de reparación de errores de emparejamiento (síndrome de Lynch).",
       "tema": "genes-cancer",
       "nivel": 1,
       "claseId": "pat-ai-12",
@@ -2380,7 +2498,7 @@
           "correct": false
         }
       ],
-      "explanation": "Los tres son **sistemas de reparación del ADN**: el de errores de **emparejamiento** (*MLH1/MSH2*, síndrome de Lynch, inestabilidad de microsatélites), el de **escisión de nucleótidos** (genes *XP*, xeroderma pigmentoso) y el de **recombinación homóloga** (*BRCA1/2*, roturas de doble cadena). Cuando fallan, cada división deja más mutaciones sin corregir: es la **inestabilidad genómica**, el rasgo «facilitador» que acelera la adquisición de todos los demás.\n- **B.** **Inhibición de la apoptosis**: depende de BCL2 o de la pérdida de p53.\n- **C.** **Activación de un oncogén**: RAS, MYC, BCR-ABL.\n- **D.** **Inhibición de un supresor**: los reparadores son, en rigor, supresores, pero lo que nombra el mecanismo común es la inestabilidad genómica.\n- **E.** **Angiogénesis**: VEGF y el cambio angiogénico.",
+      "explanation": "Los tres son **sistemas de reparación del ADN**: el de errores de **emparejamiento** (*MLH1/MSH2*, síndrome de Lynch, inestabilidad de microsatélites), el de **escisión de nucleótidos** (genes *XP*, xeroderma pigmentoso) y el de **recombinación homóloga** (*BRCA1/2*, roturas de doble cadena). Cuando fallan, cada división deja más mutaciones sin corregir: es la **inestabilidad genómica**, el rasgo «facilitador» que acelera la adquisición de todos los demás.\n- **Inhibición de la apoptosis**: depende de BCL2 o de la pérdida de p53.\n- **Activación de un oncogén**: RAS, MYC, BCR-ABL.\n- **Inhibición de un supresor**: los reparadores son, en rigor, supresores, pero lo que nombra el mecanismo común es la inestabilidad genómica.\n- **Angiogénesis**: VEGF y el cambio angiogénico.",
       "tema": "genes-cancer",
       "nivel": 1,
       "claseId": "pat-acp-5",
@@ -2417,7 +2535,7 @@
           "correct": true
         }
       ],
-      "explanation": "La inflamación crónica crea un microambiente que **favorece** el desarrollo tumoral: neutrófilos y macrófagos liberan **especies reactivas de oxígeno** que dañan el ADN; la lesión y la reparación continuas obligan al epitelio a **proliferar**, multiplicando las oportunidades de mutación; y las citocinas (IL-6, TNF) activan NF-κB y STAT3 y estimulan la **angiogénesis**. Ejemplos: colitis ulcerosa → carcinoma de colon, hepatitis B o C → hepatocarcinoma, *H. pylori* → carcinoma y linfoma MALT, esófago de Barrett → adenocarcinoma.\n- **A.** **Elimina las células tumorales**: la inflamación crónica no elimina el tumor; más bien lo protege.\n- **B.** **Inhibe la angiogénesis**: la **estimula**.\n- **C.** **Es irrelevante**: contribuye a una fracción importante de los cánceres.\n- **D.** **Siempre protege**: es un factor de riesgo, no un protector.",
+      "explanation": "La inflamación crónica crea un microambiente que **favorece** el desarrollo tumoral: neutrófilos y macrófagos liberan **especies reactivas de oxígeno** que dañan el ADN; la lesión y la reparación continuas obligan al epitelio a **proliferar**, multiplicando las oportunidades de mutación; y las citocinas (IL-6, TNF) activan NF-κB y STAT3 y estimulan la **angiogénesis**. Ejemplos: colitis ulcerosa → carcinoma de colon, hepatitis B o C → hepatocarcinoma, *H. pylori* → carcinoma y linfoma MALT, esófago de Barrett → adenocarcinoma.\n- **Elimina las células tumorales**: la inflamación crónica no elimina el tumor; más bien lo protege.\n- **Inhibe la angiogénesis**: la **estimula**.\n- **Es irrelevante**: contribuye a una fracción importante de los cánceres.\n- **Siempre protege**: es un factor de riesgo, no un protector.",
       "tema": "inmunidad-cancer",
       "nivel": 1,
       "claseId": "pat-ai-14",

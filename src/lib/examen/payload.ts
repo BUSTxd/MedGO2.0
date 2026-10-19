@@ -41,6 +41,8 @@ export interface VariantePregunta {
   extraImages?: ExamQuestion['extraImages'];
   options: ExamOption[];
   explanation?: string;
+  /** Su propio esquema cuando la respuesta cambia (si falta, hereda el de la base). */
+  flujo?: FlujoExplicacion;
   reviewNote?: string;
 }
 
