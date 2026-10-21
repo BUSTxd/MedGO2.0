@@ -57,7 +57,7 @@ export async function middleware(request: NextRequest) {
   const isAuthEscape = isDeviceLimit || isClearDevice;
 
   // Rutas protegidas: redirige al login si no hay sesión.
-  if (!user && pathname.startsWith('/dashboard')) {
+  if (!user && (pathname.startsWith('/dashboard') || pathname.startsWith('/estudio'))) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
@@ -95,5 +95,5 @@ export const config = {
   // `/dashboard` se declara explícito además de `/dashboard/:path*`: el matcher
   // con `:path*` no captura de forma fiable la ruta base exacta, y necesitamos
   // que el middleware corra en `/dashboard` para protegerla y redirigir a /home.
-  matcher: ['/dashboard', '/dashboard/:path*', '/auth/:path*'],
+  matcher: ['/dashboard', '/dashboard/:path*', '/estudio', '/estudio/:path*', '/auth/:path*'],
 };
