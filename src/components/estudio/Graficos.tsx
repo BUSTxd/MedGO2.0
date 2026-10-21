@@ -1,58 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { cx, Icono } from './Icono';
-import type { CursoMuestra, LeccionMuestra } from '@/lib/estudio/muestra';
 
 // En el prototipo los <text> pedían «Outfit» por nombre; aquí la fuente es la variable de next/font.
 const FUENTE = { fontFamily: 'var(--font-estudio), sans-serif' };
 
 export const norm = (v: string) => String(v).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-
-function DiagramaConceptual({ tipo }: { tipo: 'heart' | 'brain' | 'nephron' }) {
-  if (tipo === 'heart') return (
-    <svg viewBox="0 0 650 205" role="img" aria-label="Esquema conceptual: mediastino superior e inferior, este último dividido en anterior, medio y posterior">
-      <defs><linearGradient id="nodeGrad" x2="1" y2="1"><stop stopColor="#f2f0ff" /><stop offset="1" stopColor="#e8e8fc" /></linearGradient></defs>
-      <g fill="none" stroke="#b6b5da" strokeWidth="1.4"><path d="M325 57v22H166v18 M325 79h159v18 M484 132v21H353v17 M484 153v17 M484 153h131v17" /></g>
-      <g fill="url(#nodeGrad)" stroke="#c7c0ed"><rect x="245" y="17" width="160" height="41" rx="8" /><rect x="95" y="97" width="142" height="35" rx="7" /><rect x="413" y="97" width="142" height="35" rx="7" /></g>
-      <g fill="#f7f8fd" stroke="#d9deef"><rect x="296" y="170" width="114" height="30" rx="6" /><rect x="427" y="170" width="114" height="30" rx="6" /><rect x="558" y="170" width="90" height="30" rx="6" /></g>
-      <g fill="#7e79a9" style={FUENTE} textAnchor="middle" fontSize="13">
-        <text x="325" y="43" fill="#6c5bba" fontWeight="500">Mediastino</text><text x="166" y="119">Superior</text><text x="484" y="119">Inferior</text>
-        <text x="353" y="190" fontSize="11">Anterior</text><text x="484" y="190" fontSize="11">Medio</text><text x="603" y="190" fontSize="11">Posterior</text>
-      </g>
-    </svg>
-  );
-  if (tipo === 'brain') return (
-    <svg viewBox="0 0 650 205" role="img" aria-label="Mapa conceptual de organización nerviosa">
-      <g fill="none" stroke="#c7c0e6" strokeWidth="1.5"><path d="M325 59v32H150v26 M325 91h175v26" /></g>
-      <g fill="#eeeafa" stroke="#d2c9e9"><rect x="232" y="20" width="186" height="40" rx="8" /><rect x="65" y="117" width="170" height="44" rx="8" /><rect x="415" y="117" width="170" height="44" rx="8" /></g>
-      <g fill="#81739f" style={FUENTE} textAnchor="middle" fontSize="13"><text x="325" y="46">Sistema nervioso</text><text x="150" y="144">Sistema central</text><text x="500" y="144">Sistema periférico</text></g>
-    </svg>
-  );
-  return (
-    <svg viewBox="0 0 650 205" role="img" aria-label="Mapa conceptual de los procesos renales">
-      <path d="M135 105H515" stroke="#acccc9" strokeWidth="2" strokeDasharray="6 6" />
-      <g fill="#ecf8f5" stroke="#c4ded9"><rect x="25" y="75" width="155" height="60" rx="10" /><rect x="247" y="75" width="155" height="60" rx="10" /><rect x="470" y="75" width="155" height="60" rx="10" /></g>
-      <g style={FUENTE} textAnchor="middle" fontSize="13" fill="#668f89"><text x="102" y="110">Filtración</text><text x="325" y="110">Reabsorción</text><text x="548" y="110">Secreción</text></g>
-      <g fill="#a9cbc3"><circle cx="211" cy="105" r="5" /><circle cx="435" cy="105" r="5" /></g>
-    </svg>
-  );
-}
-
-export function DiagramaResumen({ c, l }: { c: CursoMuestra; l: LeccionMuestra }) {
-  if (norm(l.title).includes('mediastino')) return <DiagramaConceptual tipo="heart" />;
-  return (
-    <div className={cx('concept-map')}>
-      <div className={cx('concept-root')}>
-        <Icono n={c.icon === 'brain' ? 'brain' : c.icon === 'kidney' ? 'flask' : 'heart'} />
-        <span>{l.kicker || c.shortName || c.name}</span>
-      </div>
-      <div className={cx('concept-branches')}>
-        {l.summary.sections.map((s, i) => (
-          <div key={s.id}><span className={cx('concept-step')}>0{i + 1}</span><strong>{s.title}</strong></div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 const CELULAS: [number, number, number][] = [[85, 60, 28], [163, 46, 25], [239, 57, 29], [317, 93, 31], [260, 148, 29], [147, 155, 30], [64, 147, 26], [191, 106, 28]];
 const RUTA_NEURONA = 'M200 45v52l-45 28-39-28m84 0 47 28 38-28 M155 125l-15 47m107-47 15 47 M155 125h92 M200 97v70';

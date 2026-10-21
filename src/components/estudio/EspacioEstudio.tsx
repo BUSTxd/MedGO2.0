@@ -1,7 +1,9 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { MUESTRA, type CursoMuestra, type LeccionMuestra, type PreguntaMuestra } from '@/lib/estudio/muestra';
+import { useParams, useRouter } from 'next/navigation';
+import { MUESTRA } from '@/lib/estudio/muestra';
+import type { ClaseEstudio, CursoEstudio, CursoListado, SemanaEstudio } from '@/lib/estudio/tipos';
 import { useDarkMode } from '@/components/DarkModeContext';
 import { cx, Icono } from './Icono';
 import { norm } from './Graficos';
@@ -9,84 +11,68 @@ import Lector, { BarraLector, Practica } from './Lector';
 import Laboratorio from './Laboratorio';
 import Progreso from './Progreso';
 import { Buscador, VisorLab } from './Dialogos';
+import { useMarcas, type Marcas } from './marcas';
 
 export type Pagina = 'study' | 'labs' | 'progress';
 export type Ruta = 'UPCH' | 'Ciencias básicas' | 'ENCIB';
-export interface Simulacro {
-  courseId: string; running: boolean; finished: boolean; index: number;
-  answers: Record<number, number>; questions: PreguntaMuestra[]; endsAt: number;
-}
 export interface EstadoEstudio {
-  page: Pagina; route: Ruta; courseId: string; lessonId: string; tab: 'summary' | 'practice';
-  practiceMode: 'training' | 'simulation'; filter: string; collapsed: Set<string>; saved: Set<string>;
-  visited: Set<string>; answers: Record<string, { selected: number }>; sim: Simulacro | null;
-  labFilter: string; labSearch: string; labSubject: string; planCourseId: string; completed: Set<string>;
-  readingSheet: boolean; focus: boolean; fontSize: number; simulations: Record<string, Simulacro>;
+  page: Pagina; route: Ruta; tab: 'summary' | 'practice'; filter: string; collapsed: Set<string>;
+  labFilter: string; labSearch: string; labSubject: string; readingSheet: boolean; focus: boolean;
 }
 type Overlay = null | { tipo: 'buscar' } | { tipo: 'lab'; id: string };
 
-const DATA = MUESTRA;
-export const leccionesDe = (c: CursoMuestra) => c.groups.flatMap((g) => g.lessons);
-export const todasLasLecciones = () =>
-  DATA.courses.flatMap((c) => c.groups.flatMap((g) => g.lessons.map((l) => ({ ...l, course: c, group: g }))));
-
-const CURSO_INICIAL = DATA.courses[0];
-const LECCION_INICIAL = leccionesDe(CURSO_INICIAL).find((l) => norm(l.title).includes('mediastino')) || CURSO_INICIAL.groups[0].lessons[0];
+/** Los laboratorios siguen siendo los de muestra hasta la Fase 4. */
+const LABS = MUESTRA.labs;
 /** Tono de la luna elegido en el prototipo (`?luna=blue`). */
 const LUNA = '#245b8f';
 
-/** Cambiar de curso guarda el simulacro en curso y recupera el del curso nuevo. */
-function cambioDeCurso(s: EstadoEstudio, id: string): Partial<EstadoEstudio> {
-  const simulations = s.sim?.courseId ? { ...s.simulations, [s.sim.courseId]: s.sim } : s.simulations;
-  return { courseId: id, sim: simulations[id] || null, simulations };
-}
-
 const estadoInicial = (): EstadoEstudio => ({
-  page: 'study', route: 'UPCH', courseId: CURSO_INICIAL.id, lessonId: LECCION_INICIAL.id, tab: 'summary',
-  practiceMode: 'training', filter: '', collapsed: new Set(), saved: new Set(), visited: new Set([LECCION_INICIAL.id]),
-  answers: {}, sim: null, labFilter: 'Todos', labSearch: '', labSubject: 'Todos', planCourseId: CURSO_INICIAL.id,
-  completed: new Set(), readingSheet: false, focus: false, fontSize: 16, simulations: {},
+  page: 'study', route: 'UPCH', tab: 'summary', filter: '', collapsed: new Set(),
+  labFilter: 'Todos', labSearch: '', labSubject: 'Todos', readingSheet: false, focus: false,
 });
+
+export const leccionesDe = (c: CursoEstudio) => c.groups.flatMap((g) => g.lessons);
+/** La primera clase con resumen (la que tiene algo que leer); si no hay, la primera. */
+const claseDeEntrada = (c: CursoEstudio) => leccionesDe(c).find((l) => l.resumenes.length) ?? leccionesDe(c)[0];
 
 export interface Contexto {
   st: EstadoEstudio;
   set: (fn: (s: EstadoEstudio) => Partial<EstadoEstudio>) => void;
-  course: CursoMuestra;
-  lessons: LeccionMuestra[];
-  lesson: LeccionMuestra;
-  group: CursoMuestra['groups'][number];
-  relatedLab: (typeof DATA.labs)[number] | undefined;
-  openLesson: (id: string, cid?: string) => void;
-  openPracticeLesson: (id: string, cid?: string) => void;
-  toggleCompleted: (id: string) => void;
+  marcas: Marcas;
+  cursos: CursoListado[];
+  course: CursoEstudio;
+  lessons: ClaseEstudio[];
+  lesson: ClaseEstudio;
+  group: SemanaEstudio;
+  openLesson: (id: string) => void;
+  cambiarCurso: (slug: string, pagina?: Pagina) => void;
   irA: (page: Pagina) => void;
   abrirLab: (id: string) => void;
   toast: (msg: string) => void;
   posiciones: React.MutableRefObject<Record<string, number>>;
   barraOculta: boolean;
   setBarraOculta: (v: boolean) => void;
-  ahora: number;
 }
 
-export default function EspacioEstudio() {
+export default function EspacioEstudio({ cursos, curso, children }: { cursos: CursoListado[]; curso: CursoEstudio | null; children?: React.ReactNode }) {
+  const router = useRouter();
+  const params = useParams<{ clase?: string[] }>();
   const [st, setSt] = useState<EstadoEstudio>(estadoInicial);
   const set = useCallback((fn: (s: EstadoEstudio) => Partial<EstadoEstudio>) => setSt((s) => ({ ...s, ...fn(s) })), []);
+  const marcas = useMarcas();
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [aviso, setAviso] = useState({ msg: '', visible: false });
   const [barraOculta, setBarraOculta] = useState(false);
-  const [ahora, setAhora] = useState(() => Date.now());
+  const [sidebarAbierta, setSidebarAbierta] = useState(false);
   const posiciones = useRef<Record<string, number>>({});
   const vuelveFoco = useRef<HTMLElement | null>(null);
   const temporizador = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const [hashLeido, setHashLeido] = useState(false);
   const { darkMode, toggleDark } = useDarkMode();
 
-  const course = DATA.courses.find((c) => c.id === st.courseId) || DATA.courses[0];
-  const lessons = leccionesDe(course);
-  const lesson = lessons.find((l) => l.id === st.lessonId) || lessons[0];
-  const group = course.groups.find((g) => g.lessons.some((l) => l.id === st.lessonId)) || course.groups[0];
-  const relatedLab = DATA.labs.find((l) => l.id === lesson.relatedLab)
-    || DATA.labs.find((l) => l.kind === (course.icon === 'kidney' ? 'nephron' : course.icon === 'brain' ? 'brain' : 'heart'));
+  const lessons = curso ? leccionesDe(curso) : [];
+  const pedida = params?.clase?.[0];
+  const lesson = (curso && (lessons.find((l) => l.id === pedida) ?? claseDeEntrada(curso))) || null;
+  const group = curso && lesson ? curso.groups.find((g) => g.lessons.some((l) => l.id === lesson.id)) ?? curso.groups[0] : null;
 
   const toast = useCallback((msg: string) => {
     setAviso({ msg, visible: true });
@@ -94,23 +80,15 @@ export default function EspacioEstudio() {
     temporizador.current = setTimeout(() => setAviso((a) => ({ ...a, visible: false })), 2500);
   }, []);
 
-  const [sidebarAbierta, setSidebarAbierta] = useState(false);
-  const openLesson = useCallback((id: string, cid?: string) => {
-    set((s) => ({
-      ...(cid && cid !== s.courseId ? cambioDeCurso(s, cid) : {}),
-      lessonId: id, page: 'study', tab: 'summary', visited: new Set(s.visited).add(id), filter: '',
-    }));
+  const base = curso ? `/estudio/upch/${curso.id}` : '/estudio';
+  const openLesson = useCallback((id: string) => {
+    set(() => ({ page: 'study', tab: 'summary', filter: '' }));
     setSidebarAbierta(false);
-  }, [set]);
-  const openPracticeLesson = useCallback((id: string, cid?: string) => {
-    set((s) => ({
-      ...(cid && cid !== s.courseId ? cambioDeCurso(s, cid) : {}),
-      lessonId: id, page: 'study', tab: 'practice', practiceMode: 'training', focus: false, visited: new Set(s.visited).add(id), filter: '',
-    }));
-  }, [set]);
-  const toggleCompleted = useCallback((id: string) => {
-    set((s) => { const completed = new Set(s.completed); if (completed.has(id)) completed.delete(id); else completed.add(id); return { completed }; });
-  }, [set]);
+    router.push(`${base}/${id}`, { scroll: false });
+  }, [base, router, set]);
+  const cambiarCurso = useCallback((slug: string, pagina?: Pagina) => {
+    router.push(`/estudio/upch/${slug}${pagina && pagina !== 'study' ? `#${pagina === 'labs' ? 'labs' : 'progress'}` : ''}`);
+  }, [router]);
   const irA = useCallback((page: Pagina) => { set(() => ({ page, focus: false })); setSidebarAbierta(false); }, [set]);
   const abrirOverlay = (o: Overlay) => { vuelveFoco.current = document.activeElement as HTMLElement; setOverlay(o); };
   const cerrarOverlay = useCallback(() => {
@@ -118,55 +96,33 @@ export default function EspacioEstudio() {
     const el = vuelveFoco.current; vuelveFoco.current = null;
     requestAnimationFrame(() => el?.focus?.());
   }, []);
-  const abrirLab = (id: string) => { if (DATA.labs.some((l) => l.id === id)) abrirOverlay({ tipo: 'lab', id }); };
+  const abrirLab = (id: string) => { if (LABS.some((l) => l.id === id)) abrirOverlay({ tipo: 'lab', id }); };
 
-  // ── Hash: `#study/<curso>/<clase>/<pestaña>`, `#labs`, `#progress` (como el prototipo) ──
-  const leerHash = useCallback(() => {
-    const [page, cid, lid, tab] = location.hash.slice(1).split('/');
-    if (!['study', 'labs', 'progress'].includes(page)) return;
-    set((s) => {
-      const r: Partial<EstadoEstudio> = { page: page as Pagina, focus: false };
-      if (page === 'study') {
-        const target = DATA.courses.find((c) => c.id === cid);
-        if (target) {
-          Object.assign(r, cambioDeCurso(s, target.id));
-          r.lessonId = leccionesDe(target).find((l) => l.id === lid)?.id || target.groups[0].lessons[0].id;
-        }
-        r.tab = tab === 'practice' ? 'practice' : 'summary';
-      }
-      return r;
-    });
-  }, [set]);
+  // La clase visitada queda marcada en el temario (el check gris del prototipo).
+  const visitar = marcas.visitar;
+  useEffect(() => { if (lesson) visitar(lesson.id); }, [lesson?.id, visitar]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Hash: `#labs` y `#progress` son páginas de la interfaz; la clase va en la ruta ──
+  const [hashLeido, setHashLeido] = useState(false);
   useEffect(() => {
-    leerHash();
+    const leer = () => {
+      const h = location.hash.slice(1);
+      set(() => ({ page: h === 'labs' ? 'labs' : h === 'progress' ? 'progress' : 'study', focus: false }));
+    };
+    leer();
     if (new URLSearchParams(location.search).get('hoja') === '1') set(() => ({ readingSheet: true }));
     setHashLeido(true);
-    const alCambiar = () => leerHash();
-    window.addEventListener('hashchange', alCambiar);
-    return () => window.removeEventListener('hashchange', alCambiar);
-  }, [leerHash, set]);
+    window.addEventListener('hashchange', leer);
+    return () => window.removeEventListener('hashchange', leer);
+  }, [set]);
   useEffect(() => {
     if (!hashLeido) return;
-    const hash = `#${st.page}${st.page === 'study' ? `/${st.courseId}/${st.lessonId}/${st.tab}` : ''}`;
-    history.replaceState(null, '', location.pathname + location.search + hash);
-  }, [hashLeido, st.page, st.courseId, st.lessonId, st.tab]);
+    const hash = st.page === 'study' ? '' : `#${st.page}`;
+    if (location.hash !== hash) history.replaceState(history.state, '', location.pathname + location.search + hash);
+  }, [hashLeido, st.page]);
 
   // En el prototipo cada render rehacía el DOM y la barra del lector volvía a verse.
-  useEffect(() => { setBarraOculta(false); }, [st.page, st.tab, st.lessonId, st.focus, st.saved, st.completed]);
-
-  // ── Simulacro: reloj de 1 s ──
-  const simEnCurso = st.sim?.running ? st.sim : null;
-  useEffect(() => {
-    if (!simEnCurso) return;
-    const t = setInterval(() => {
-      setAhora(Date.now());
-      if (simEnCurso.endsAt - Date.now() <= 0) {
-        set((s) => ({ sim: s.sim && { ...s.sim, running: false, finished: true } }));
-        toast('El tiempo del simulacro ha terminado');
-      }
-    }, 1000);
-    return () => clearInterval(t);
-  }, [simEnCurso, set, toast]);
+  useEffect(() => { setBarraOculta(false); }, [st.page, st.tab, lesson?.id, st.focus, marcas.saved, marcas.completed]);
 
   // ── Teclado global ──
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -191,22 +147,41 @@ export default function EspacioEstudio() {
     return () => document.removeEventListener('keydown', alTeclear);
   }, [overlay, st.focus, cerrarOverlay, set]);
 
-  const ctx: Contexto = {
-    st, set, course, lessons, lesson, group, relatedLab, openLesson, openPracticeLesson, toggleCompleted,
-    irA, abrirLab, toast, posiciones, barraOculta, setBarraOculta, ahora,
-  };
-
   const claseRaiz = cx(
     'wrapper',
     st.focus && st.page === 'study' && 'focus-mode',
     st.readingSheet && 'reading-sheet',
     sidebarAbierta && 'sidebar-open',
   );
+  const estilo = { '--reading-size': `${marcas.fontSize}px` } as React.CSSProperties;
+
+  // Cuenta que no es de Cayetano: la misma cáscara con el aviso en lugar del temario.
+  if (!curso || !lesson || !group) {
+    return (
+      <div className={claseRaiz} data-palette="pearl" style={estilo}>
+        <BarraSuperior page="study" onPagina={() => {}} onBuscar={() => {}} darkMode={darkMode} onLuna={toggleDark} />
+        <main className={cx('page-scroll studio-page')}>
+          <div className={cx('studio-shell')}>
+            <div className={cx('resource-empty')}>
+              <Icono n="lock" />
+              <h2>Los cursos de Cayetano son para cuentas @upch.pe</h2>
+              <p>Entra con tu correo de la universidad (Google) para ver tus sílabos. Las rutas de Ciencias básicas y ENCIB llegan pronto.</p>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  const ctx: Contexto = {
+    st, set, marcas, cursos, course: curso, lessons, lesson, group, openLesson, cambiarCurso,
+    irA, abrirLab, toast, posiciones, barraOculta, setBarraOculta,
+  };
 
   return (
-    <div className={claseRaiz} data-palette="pearl" style={{ '--reading-size': `${st.fontSize}px` } as React.CSSProperties}>
+    <div className={claseRaiz} data-palette="pearl" style={estilo}>
       <div inert={overlay !== null}>
-        <BarraSuperior ctx={ctx} onBuscar={() => abrirOverlay({ tipo: 'buscar' })} darkMode={darkMode} onLuna={toggleDark} />
+        <BarraSuperior page={st.page} onPagina={irA} onBuscar={() => abrirOverlay({ tipo: 'buscar' })} darkMode={darkMode} onLuna={toggleDark} />
         {st.page === 'study' ? (
           <>
             <BarraRuta ctx={ctx} onMenu={() => setSidebarAbierta((v) => !v)} />
@@ -218,33 +193,36 @@ export default function EspacioEstudio() {
               </section>
             </main>
           </>
-        ) : st.page === 'labs' ? <Laboratorio ctx={ctx} labs={DATA.labs} /> : <Progreso ctx={ctx} cursos={DATA.courses} labs={DATA.labs} />}
+        ) : st.page === 'labs' ? <Laboratorio ctx={ctx} labs={LABS} /> : <Progreso ctx={ctx} />}
       </div>
       <div ref={overlayRef}>
         {overlay?.tipo === 'buscar' && (
           <Buscador
+            curso={curso}
+            cursos={cursos}
             onCerrar={cerrarOverlay}
-            onAbrir={(id, cid) => { cerrarOverlay(); openLesson(id, cid); }}
+            onAbrir={(id) => { cerrarOverlay(); openLesson(id); }}
+            onCurso={(slug) => { cerrarOverlay(); cambiarCurso(slug); }}
           />
         )}
-        {overlay?.tipo === 'lab' && <VisorLab lab={DATA.labs.find((l) => l.id === overlay.id)!} onCerrar={cerrarOverlay} />}
+        {overlay?.tipo === 'lab' && <VisorLab lab={LABS.find((l) => l.id === overlay.id)!} onCerrar={cerrarOverlay} />}
       </div>
       <div className={cx('toast', aviso.visible && 'visible')} role="status" aria-live="polite">{aviso.msg}</div>
+      {children}
     </div>
   );
 }
 
-function BarraSuperior({ ctx, onBuscar, darkMode, onLuna }: { ctx: Contexto; onBuscar: () => void; darkMode: boolean; onLuna: () => void }) {
-  const { st, irA } = ctx;
-  const enlace = (page: Pagina, label: string, icon: 'book' | 'flask' | 'chart') => (
-    <button className={cx('nav-link', st.page === page && 'active')} data-page={page} aria-current={st.page === page ? 'page' : undefined} onClick={() => irA(page)}>
+function BarraSuperior({ page, onPagina, onBuscar, darkMode, onLuna }: { page: Pagina; onPagina: (p: Pagina) => void; onBuscar: () => void; darkMode: boolean; onLuna: () => void }) {
+  const enlace = (p: Pagina, label: string, icon: 'book' | 'flask' | 'chart') => (
+    <button className={cx('nav-link', page === p && 'active')} data-page={p} aria-current={page === p ? 'page' : undefined} onClick={() => onPagina(p)}>
       <Icono n={icon} /><span>{label}</span>
     </button>
   );
   const etiquetaLuna = darkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
   return (
     <header className={cx('topbar')}>
-      <button className={cx('brand')} aria-label="MedGO, ir a Estudiar" onClick={() => irA('study')}><span className={cx('brand-lockup')} aria-hidden="true" /></button>
+      <button className={cx('brand')} aria-label="MedGO, ir a Estudiar" onClick={() => onPagina('study')}><span className={cx('brand-lockup')} aria-hidden="true" /></button>
       <nav className={cx('main-nav')} aria-label="Navegación principal">
         {enlace('study', 'Estudiar', 'book')}{enlace('labs', 'Laboratorio virtual', 'flask')}{enlace('progress', 'Mi progreso', 'chart')}
       </nav>
@@ -266,16 +244,15 @@ function BarraSuperior({ ctx, onBuscar, darkMode, onLuna }: { ctx: Contexto; onB
 const RUTAS: Ruta[] = ['UPCH', 'Ciencias básicas', 'ENCIB'];
 
 function BarraRuta({ ctx, onMenu }: { ctx: Contexto; onMenu: () => void }) {
-  const { st, set, toast } = ctx;
+  const { st, cursos, course, cambiarCurso, toast } = ctx;
   return (
     <div className={cx('contextbar')}>
       <button className={cx('icon-button mobile-menu')} aria-label="Abrir temario" onClick={onMenu}><Icono n="menu" /></button>
       <div className={cx('context-label')}>Tu ruta</div>
       <div className={cx('select-shell')}>
+        {/* Por ahora sólo UPCH tiene temario: las otras dos rutas avisan y no cambian nada. */}
         <select aria-label="Ruta de estudio" value={st.route} onChange={(e) => {
-          const route = e.target.value as Ruta;
-          set(() => ({ route }));
-          toast(route === 'UPCH' ? 'Temario organizado según el sílabo' : route === 'ENCIB' ? 'Vista de preparación ENCIB · Temas de muestra' : 'Vista por temas · Ciencias básicas');
+          if (e.target.value !== 'UPCH') toast(`${e.target.value} llega pronto · Seguimos con tu sílabo de UPCH`);
         }}>
           {RUTAS.map((r) => <option key={r}>{r}</option>)}
         </select>
@@ -283,37 +260,27 @@ function BarraRuta({ ctx, onMenu }: { ctx: Contexto; onMenu: () => void }) {
       </div>
       <span className={cx('context-divider')} />
       <div className={cx('select-shell')}>
-        <select className={cx('course-select')} aria-label="Elegir curso" value={st.courseId} onChange={(e) => {
-          const id = e.target.value;
-          const destino = DATA.courses.find((c) => c.id === id)!;
-          const primera = leccionesDe(destino)[0].id;
-          set((s) => ({
-            ...cambioDeCurso(s, id), filter: '', collapsed: new Set(),
-            lessonId: primera, page: 'study', tab: 'summary', visited: new Set(s.visited).add(primera),
-          }));
-        }}>
-          {DATA.courses.map((c) => <option key={c.id} value={c.id}>{st.route === 'UPCH' ? c.name : c.shortName || c.name}</option>)}
+        <select className={cx('course-select')} aria-label="Elegir curso" value={course.id} onChange={(e) => cambiarCurso(e.target.value)}>
+          {cursos.map((c) => <option key={c.id} value={c.id}>{c.name}{c.bloqueado ? ' · con plan' : ''}</option>)}
         </select>
         <Icono n="down" />
       </div>
-      <span className={cx('route-badge')}>{st.route === 'UPCH' ? 'MEDICINA' : st.route === 'ENCIB' ? 'PREPARACIÓN' : 'ESTUDIO LIBRE'}</span>
+      <span className={cx('route-badge')}>{course.track === 'basico' ? 'UFBI' : 'MEDICINA'}</span>
       <div className={cx('context-end')}><span>Todo tu estudio, en un mismo lugar</span><Icono n="book" /></div>
     </div>
   );
 }
 
-function IconoCurso({ c }: { c: CursoMuestra }) {
-  if (c.icon === 'brain') return <Icono n="brain" />;
-  return <img src={`/assets/estudio/${c.icon === 'kidney' ? 'kidney.svg' : 'course-fisiologia.avif'}`} alt="" />;
+function IconoCurso({ c }: { c: CursoEstudio }) {
+  if (!c.icono) return <Icono n="book" />;
+  return <img src={c.icono} alt="" />;
 }
 
 function Temario({ ctx }: { ctx: Contexto }) {
-  const { st, set, course: c, openLesson } = ctx;
+  const { st, set, course: c, lesson: actual, marcas, openLesson } = ctx;
   const query = norm(st.filter);
-  const grupos = useMemo(() => c.groups.map((g, gi) => {
-    const found = g.lessons.filter((l) => !query || norm(l.title).includes(query));
-    return { g, gi, found };
-  }).filter((x) => x.found.length), [c, query]);
+  const grupos = useMemo(() => c.groups.map((g) => ({ g, found: g.lessons.filter((l) => !query || norm(l.title).includes(query)) }))
+    .filter((x) => x.found.length), [c, query]);
   return (
     <aside className={cx('course-nav')} aria-label="Temario del curso">
       <div className={cx('course-nav-head')}>
@@ -321,7 +288,7 @@ function Temario({ ctx }: { ctx: Contexto }) {
           <div className={cx('subject-icon')}><IconoCurso c={c} /></div>
           <div>
             <h2>{c.name}</h2>
-            <p>{st.route === 'UPCH' ? 'Tu sílabo, a tu ritmo' : st.route === 'ENCIB' ? 'Temas para preparar el examen' : 'Explora y conecta los conceptos'}</p>
+            <p>Tu sílabo, a tu ritmo</p>
           </div>
         </div>
         <label className={cx('small-search')}>
@@ -330,29 +297,28 @@ function Temario({ ctx }: { ctx: Contexto }) {
         </label>
       </div>
       <div className={cx('course-nav-scroll')}>
-        {grupos.length ? grupos.map(({ g, gi, found }) => {
+        {grupos.length ? grupos.map(({ g, found }) => {
           const closed = st.collapsed.has(g.id) && !query;
           return (
             <section key={g.id} className={cx('nav-group')}>
               <button className={cx('nav-group-heading')} aria-expanded={!closed} onClick={() => set((s) => {
                 const collapsed = new Set(s.collapsed); if (collapsed.has(g.id)) collapsed.delete(g.id); else collapsed.add(g.id); return { collapsed };
               })}>
-                <span>{st.route === 'UPCH' ? g.title : `BLOQUE ${gi + 1}`}</span>
+                <span>{g.title}</span>
                 <Icono n={closed ? 'right' : 'down'} />
               </button>
               {!closed && found.map((l) => (
-                <button key={l.id} className={cx('lesson-link', l.id === st.lessonId && 'active')} aria-current={l.id === st.lessonId ? 'true' : undefined} onClick={() => openLesson(l.id)}>
-                  <Icono n="document" cls="lesson-summary-icon" />
+                <button key={l.id} className={cx('lesson-link', l.id === actual.id && 'active')} aria-current={l.id === actual.id ? 'true' : undefined} onClick={() => openLesson(l.id)}>
+                  <Icono n={l.bloqueada ? 'lock' : 'document'} cls="lesson-summary-icon" />
                   <span>{l.title}</span>
-                  {st.visited.has(l.id) && l.id !== st.lessonId && <Icono n="check" cls="done-icon" />}
+                  {marcas.visited.has(l.id) && l.id !== actual.id && <Icono n="check" cls="done-icon" />}
                 </button>
               ))}
             </section>
           );
         }) : <div className={cx('empty-state')}>Sin clases con ese nombre.</div>}
       </div>
-      <div className={cx('nav-info')}><Icono n="info" />Contenido de ejemplo · Sin conexiones</div>
+      <div className={cx('nav-info')}><Icono n="info" />Según tu sílabo de Cayetano</div>
     </aside>
   );
 }
-

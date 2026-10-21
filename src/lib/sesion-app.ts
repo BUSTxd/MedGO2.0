@@ -1,4 +1,5 @@
 import 'server-only';
+import { cache } from 'react';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import { getCachedPlanState } from '@/lib/plans-server';
@@ -14,8 +15,9 @@ import type { ClientPlanState } from '@/components/PlanProvider';
  * Lo que comparten los dos «interiores» de la app (`/dashboard` y `/estudio`):
  * sesión, límite de dispositivos y plan. Las redirecciones de dispositivo se
  * lanzan aquí mismo, así que el layout que la llama no renderiza nada si no pasa.
+ * Con `cache`: el layout y la página de una misma petición comparten la consulta.
  */
-export async function prepararSesionApp() {
+export const prepararSesionApp = cache(async () => {
   const [planState, supabase, deviceId] = await Promise.all([
     getCachedPlanState(),
     createClient(),
@@ -83,4 +85,4 @@ export async function prepararSesionApp() {
     // Sólo la señal de la interfaz: la ruta de la IA vuelve a comprobarlo.
     iaAbierta: iaAbierta(),
   };
-}
+});

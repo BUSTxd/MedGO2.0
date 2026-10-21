@@ -12,7 +12,8 @@ const CATEGORIAS: [string, string, NombreIcono][] = [
 ];
 
 export default function Laboratorio({ ctx, labs }: { ctx: Contexto; labs: LabMuestra[] }) {
-  const { st, set, lesson, relatedLab: related, irA, abrirLab } = ctx;
+  const { st, set, lesson, irA, abrirLab } = ctx;
+  const related = undefined as { id: string } | undefined;
   const subjects = [...new Set(labs.map((l) => l.subject))];
   const found = labs.filter((l) =>
     (st.labFilter === 'Todos' || l.category === st.labFilter)
