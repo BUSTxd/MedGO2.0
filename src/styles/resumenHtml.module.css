@@ -1886,3 +1886,53 @@
 }
 
 .recorteBotonSec:hover { background: rgba(255, 255, 255, 0.07); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Figura ampliada fuera del visor
+
+   `DocumentoResumen` la pinta por portal a <body> (encima de cualquier
+   cáscara: el visor a pantalla completa o el lector de /estudio), así que
+   ya no hereda lo que le daba `.overlay`: sin selección y fuera al imprimir.
+   ═══════════════════════════════════════════════════════════════════════ */
+.lightbox {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+@media print {
+  .lightbox { display: none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Hoja incrustada (lector de la interfaz de estudio)
+
+   El lector ya es la superficie de lectura: la hoja va plana, sin la
+   tarjeta, el borde ni la sombra con que el visor la separa de su fondo
+   oscuro. `:global(body)` sube la especificidad por encima de
+   `body.dark-mode .sheet`, que vuelve a poner borde y sombra.
+   Las mismas protecciones que el visor: sin selección, sin arrastrar
+   figuras y nada al imprimir.
+   ═══════════════════════════════════════════════════════════════════════ */
+:global(body) .sheet.incrustado {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  /* Su propio fondo, no transparente: el texto de la hoja sigue al modo
+     oscuro y debe tener siempre su fondo debajo. En claro es el mismo blanco
+     del lector. */
+  background: var(--sheet-bg);
+}
+.incrustado {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+.incrustado :global(img) {
+  -webkit-user-drag: none;
+}
+@media print {
+  .incrustado { display: none !important; }
+}

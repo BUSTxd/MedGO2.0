@@ -413,7 +413,7 @@ Para un PowerPoint exportado a PDF: se reconstruye **desde el PDF** con PyMuPDF 
 
 ## Antes de tocar el visor de resúmenes — 4 cosas que se rompen en silencio
 
-1. Un cambio en `HtmlFullscreenModal.tsx`/`resumenHtml.module.css` toca **todos** los envases a la vez (Notion, «layers», «pdf-page», flujo, páginas, hojas) — pensarlo contra cada uno.
+1. Un cambio en `resumen/DocumentoResumen.tsx`/`resumenHtml.module.css` toca **todos** los envases a la vez (Notion, «layers», «pdf-page», flujo, páginas, hojas) **y en los dos sitios donde se leen**: el visor a pantalla completa (`HtmlFullscreenModal`, que sólo pone la cáscara: barra, tema, IA, recorte) y el lector de `/estudio` (hoja plana con `.incrustado`). Descarga, envase, escalado, figuras y protecciones viven en `DocumentoResumen`; la figura ampliada va por portal a `<body>` y Esc la cierra sola (captura en `window`).
 2. La tinta se audita **sin navegador**: parseando cajas del fragmento (bucket `resumenes`) contra bbox del SVG (bucket público `resumenes-img`) se ve qué tinta cae sobre qué figura y con qué opacidad.
 3. Cualquier `useState` nuevo en el modal multiplica re-renders del HTML inyectado — comprobar que `dangerouslySetInnerHTML` sigue recibiendo la misma referencia.
 4. El vocabulario de clases es compartido entre envases y está lleno de nombres genéricos (`.figure`, `.page`, `.callout`) — acotar siempre con `:where(...)` o el selector del envase, nunca dejarlo colgado de `.sheet` a secas.
@@ -502,6 +502,19 @@ Tutor de IA: panel lateral derecho en el dashboard y, en el visor de resúmenes 
 - **Interfaz**: `components/ia/` — `BotonIA` + `PanelIA` (flotante) montados en `DashboardWrapper`; al abrir el panel la sidebar se contrae (y vuelve como estaba al cerrar) y `.main` recibe `.mainConPanel`. En el visor (`HtmlFullscreenModal`) el «modo IA» abre la columna `PanelIA embebido` (oscura siempre) y **solo entonces** la selección (`.modoIA .sheet { user-select: text }`); copiar sigue bloqueado (onCopy/teclas/impresión). El chat vive en `PanelIA` y el visor le habla por `ref` (`ApiPanelIA`): una respuesta en curso no re-renderiza el visor. El panel corta la propagación de teclas (salvo Esc) para no disparar los atajos A–E del examen. El PDF (`PdfViewer`) no tiene capa de texto: ahí todavía no hay IA.
 - **Admin**: tarjeta «MedGO IA» en `dashboard/admin` (`IAAdmin.tsx` + `api/admin/ia`): gasto de hoy/mes, por acción, top 10 alumnos y abono manual de créditos por correo.
 - **Para lanzar**: key en Vercel, decidir `CREDITOS_POR_USD`/cuotas (y la subida del plan a S/ 20), `IA_ABIERTA=1`. Pendiente: compra de recargas con Mercado Pago (pago único → `abonar(..., 'recarga', idPago)`) e IA en los resúmenes PDF.
+
+---
+
+## Interfaz nueva de estudio (`/estudio`, rama `interfaz-nueva`) — EN MIGRACIÓN
+
+Port a Next del prototipo `prototipos/espacio-estudio` (barra marina con el GO blanco, temario, lector, laboratorio, progreso). Convive con `/dashboard`, que no se toca. El login sigue llevando al dashboard hasta que la interfaz tenga lo esencial.
+
+- **Estilos**: un solo `src/styles/estudio/estudio.module.css`, generado de las cinco hojas del prototipo en su orden (cascada intacta) y colgado de `.wrapper`. Arriba devuelve los márgenes del navegador que borra `globals.css` (y anula su `section { padding: 100px }`). Lo añadido para la interfaz real va al final, bajo su propio rótulo. Fuente: Outfit **variable** (`--font-estudio`, en `estudio/layout.tsx`): el prototipo usa pesos 350/550/650.
+- **Sesión**: `prepararSesionApp()` (`src/lib/sesion-app.ts`, con `cache`) — la misma de `dashboard/layout.tsx`. `middleware.ts` protege `/estudio`.
+- **Ruta UPCH**: `/estudio/upch/<curso>/<clase>`. La interfaz vive en el layout del curso (`upch/[curso]/layout.tsx`) y la página está vacía: cambiar de clase no la remonta. El temario lo arma el servidor (`src/lib/estudio/cursos.ts`) sólo para el curso abierto y sólo para cuentas de Cayetano; el candado de cada clase es `puedeVerResumen` (la misma regla que la API). Iconos de curso: tabla `MATERIA` con las materias del ENCIB.
+- **Lector**: el resumen HTML se pinta con `DocumentoResumen` (hoja plana) y el PDF con `PdfViewer`; «En esta clase» sale de los h1-h3 del documento. El botón de pantalla completa abre el visor de siempre (con la IA).
+- **Marcas** (guardadas, estudiadas, visitadas, tamaño de letra): `localStorage('medgo-estudio-marcas-v1')` hasta que el progreso pase a Supabase.
+- **Pendiente**: Práctica (banqueos), rutas Ciencias básicas y ENCIB, laboratorios reales (hoy los de muestra), menú del avatar (cuenta, contacto, planes), modo oscuro de la interfaz, MedGO IA en el lector.
 
 ---
 

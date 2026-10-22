@@ -980,3 +980,5 @@ div.wrapper .article-controls .icon-button.saved { background: var(--personal-so
 .resumen-opciones { display: flex; flex-wrap: wrap; gap: 10px; margin: 4px 0 2px; }
 .resumen-opciones .button { padding: 10px 14px; font-size: 12px; }
 .key-card > ul + ul, .resumen-opciones + ul { margin-top: 10px; }
+.resumen-selector { display: inline-flex; margin: 0 0 22px; }
+.toc button.toc-sub { padding-left: 22px; font-size: 10.5px; }

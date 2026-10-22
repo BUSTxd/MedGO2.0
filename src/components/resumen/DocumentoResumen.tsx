@@ -1,0 +1,848 @@
+'use client';
+
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import styles from '@/styles/resumenHtml.module.css';
+
+const bloquear = (e: React.SyntheticEvent) => e.preventDefault();
+
+/**
+ * El documento de un resumen en HTML: descarga, envase, escalado y figuras.
+ *
+ * Es el interior de `HtmlFullscreenModal`, sacado tal cual para que el lector de
+ * la interfaz de estudio pinte el mismo documento sin abrir el visor a pantalla
+ * completa. Quien lo monta pone el contenedor con scroll (`scrollerRef`) y decide
+ * la escala del texto; todo lo que depende del envase vive aquí, una sola vez.
+ *
+ * ⚠️ Lo que toca este archivo toca TODOS los envases (Notion, capas, «pdf-page»,
+ * flujo, páginas, hojas) en los dos sitios donde se lee: ver CLAUDE.md,
+ * «Antes de tocar el visor de resúmenes».
+ */
+
+/**
+ * `max-width` de un bloque del envase «páginas» → px reales.
+ *
+ * ⚠️ Viene en % de la hoja, y **`getComputedStyle` no lo resuelve**: para
+ * `max-width` el valor resuelto sigue siendo el valor computado, o sea el
+ * porcentaje. Leerlo de ahí devolvía `"84.38287%"`, que `parseFloat` convierte
+ * en 84.38 — y tomarlo por píxeles aplastaba una frase entera de 670 px dentro
+ * de 84 px: ilegible. Se lee del estilo inline y se resuelve a mano.
+ */
+const maxEnPx = (valor: string, pagina: number) => {
+  if (!valor) return NaN;
+  return valor.endsWith('%') ? (parseFloat(valor) / 100) * pagina : parseFloat(valor);
+};
+
+/* Qué cuenta como "figura de contenido" que el clic puede ampliar, por envase.
+   Lista blanca a propósito: en el envase en capas la tinta y el resaltador
+   también son <img> a página completa, y abrir una de ellas en el lightbox no
+   tendría ningún sentido. El CSS del hover en `resumenHtml.module.css` sigue
+   esta misma lista — si se añade un envase, hay que tocar los dos sitios. */
+/* En «documento de flujo» vale cualquier <img>: ahí no existen las capas a
+   página completa que obligan a la lista blanca en el envase en capas, y
+   exigir `figure` dejaba mudas las imágenes que el export no envuelve (en Ta7,
+   una de dos; en Ta10, dos de once). */
+/* Las del envase en capas van acotadas a `.capas`, igual que en el CSS: sus
+   nombres son genéricos y `.figure` es también el de las figuras de un
+   documento de flujo. */
+const FIGURAS = [
+  '.capas img.pdf-image',
+  '.capas .pdf-image img',
+  '.capas .image-layer img',
+  '.capas .figure img',
+  '.capas img.asset',
+  '.doc-flujo img',
+  '.doc-paginas .figure img',
+  '.doc-hojas .pdf-image img',
+  // Las dos formas de figura del conversor, igual que en `.capas`: LAB6 envuelve
+  // la imagen en un contenedor `.pdf-image`; LAB10 la marca directamente.
+  '.doc-hojas img.pdf-image',
+  // Notion envuelve sus figuras en <a href="…avif"> y por ahí se interceptan
+  // antes de llegar aquí; un documento «integrado» trae la <img> suelta dentro
+  // del mismo `figure.image`, y sin esta entrada el clic no haría nada.
+  'figure.image img',
+].join(', ');
+
+const normSeccion = (s: string) =>
+  s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+/**
+ * El título (o la celda) donde empieza `seccion`, con la misma regla que el
+ * efecto que abre en la sección: cada tramo de «A › B» se busca después del
+ * anterior; mandan los títulos y, si ninguno calza, una celda.
+ */
+function buscarSeccion(sheet: HTMLElement, seccion: string): HTMLElement | null {
+  const titulos = Array.from(sheet.querySelectorAll<HTMLElement>('h1, h2, h3, h4'));
+  const celdas = Array.from(sheet.querySelectorAll<HTMLElement>('td, th'));
+  const despues = (a: HTMLElement | null, b: HTMLElement) =>
+    !a || !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+  let destino: HTMLElement | null = null;
+  for (const tramo of seccion.split('›').map(normSeccion).filter(Boolean)) {
+    const calza = (el: HTMLElement) => despues(destino, el) && normSeccion(el.textContent ?? '').startsWith(tramo);
+    const hallado = titulos.find(calza) ?? celdas.find(calza);
+    if (!hallado) break;
+    destino = hallado;
+  }
+  return destino;
+}
+
+const nivelTitulo = (el: Element) => {
+  const m = /^H([1-4])$/.exec(el.tagName);
+  return m ? Number(m[1]) : 0;
+};
+/** Nivel más alto (número más bajo) entre los títulos de un bloque; 0 si no tiene. */
+const nivelMinimo = (el: Element) => {
+  const niveles = [nivelTitulo(el), ...Array.from(el.querySelectorAll('h1, h2, h3, h4'), nivelTitulo)].filter(Boolean);
+  return niveles.length ? Math.min(...niveles) : 0;
+};
+
+/**
+ * Bloques que forman la sección de `destino`, subiendo `pasos` veces a la
+ * sección que la contiene. Los bloques son los hijos del contenedor común de
+ * todos los títulos (en Notion, el `page-body`): la sección va de su título
+ * hasta el siguiente de su nivel o superior. `null` = el documento entero.
+ */
+function bloquesDeSeccion(sheet: HTMLElement, destino: HTMLElement, pasos: number) {
+  const titulos = Array.from(sheet.querySelectorAll('h1, h2, h3, h4'));
+  let cont: Element | null = destino.parentElement;
+  while (cont && cont !== sheet && !titulos.every((t) => cont!.contains(t))) cont = cont.parentElement;
+  if (!cont) return null;
+  const bloques = Array.from(cont.children);
+  let ini = bloques.findIndex((b) => b.contains(destino));
+  if (ini < 0) return null;
+  let nivel = nivelTitulo(destino) || 4;
+  for (let p = 0; p < pasos; p++) {
+    let j = ini - 1;
+    while (j >= 0 && !(nivelTitulo(bloques[j]) && nivelTitulo(bloques[j]) < nivel)) j--;
+    if (j < 0) return null;
+    ini = j;
+    nivel = nivelTitulo(bloques[j]);
+  }
+  let fin = ini + 1;
+  while (fin < bloques.length && !(nivelMinimo(bloques[fin]) && nivelMinimo(bloques[fin]) <= nivel)) fin++;
+  if (ini === 0 && fin === bloques.length) return null;
+  return { cont, dentro: new Set(bloques.slice(ini, fin)) };
+}
+
+export interface PropsDocumento {
+  claseId: string;
+  /** Escala del texto (A−/A/A+). En capas y hojas es además un zoom real. */
+  escala: number;
+  /** El contenedor que desplaza el documento (lo pone quien lo monta). */
+  scrollerRef: React.RefObject<HTMLElement | null>;
+  /** La hoja, para quien necesite leerla (la burbuja de la IA). */
+  sheetRef: React.RefObject<HTMLElement | null>;
+  /**
+   * Dónde abrir: comienzo de un título (h1-h4) o de una celda de tabla. Admite
+   * ruta con «›» (`GENÉTICAS › Ejemplos`). Sin él, desde arriba.
+   */
+  seccion?: string;
+  /** Con `seccion`, enseña SOLO esa sección; `ampliar` sube un nivel por paso. */
+  soloSeccion?: boolean;
+  ampliar?: number;
+  onRecortado?: (recortado: boolean) => void;
+  /** Clase extra de la hoja (el lector la pinta plana, sin la tarjeta del visor). */
+  className?: string;
+  /** Clase de los mensajes «Cargando…» / error. */
+  estadoClass?: string;
+  /** Cuando el documento ya está en el DOM (para armar un índice, p. ej.). */
+  onCargado?: (sheet: HTMLElement) => void;
+  /** Botón «Explícame esta figura» en la figura ampliada (MedGO IA) y su icono. */
+  onFiguraIA?: (figura: string) => void;
+  iconoFiguraIA?: React.ReactNode;
+  /** Ctrl/Cmd + C/X/A/S/P/U bloqueados mientras el documento está montado. */
+  bloquearTeclas?: boolean;
+}
+
+export default function DocumentoResumen({
+  claseId, escala, scrollerRef, sheetRef, seccion, soloSeccion, ampliar = 0, onRecortado,
+  className, estadoClass, onCargado, onFiguraIA, iconoFiguraIA, bloquearTeclas,
+}: PropsDocumento) {
+  const [html, setHtml] = useState<string | null>(null);
+  const [error, setError] = useState(false);
+  const [lightbox, setLightbox] = useState<string | null>(null);
+  // Última escala realmente escrita en el DOM (ver `fit()`).
+  const aplicado = useRef<number | null>(null);
+  // Zoom de la figura ampliada. Va en refs y se escribe directo en el <img>:
+  // un estado nuevo re-renderizaría el documento entero (ver `contenido`).
+  const lbRef = useRef<HTMLDivElement>(null);
+  const lbImgRef = useRef<HTMLImageElement>(null);
+  const lbArrastro = useRef(false);
+
+  /**
+   * Un resumen puede venir en dos envases (ver CLAUDE.md): el flujo de un
+   * export de Notion, que reflowea, o un **PDF reconstruido en capas**, que
+   * es una página de tamaño fijo con el texto en posición absoluta.
+   *
+   * Se decide sobre el string, no con estado: si no, el primer frame se
+   * pintaría con los estilos del envase equivocado.
+   */
+  const esCapas = html !== null && html.includes('class="capas"');
+
+  /**
+   * Y una tercera forma: «páginas auto-escaladas» (`.doc-paginas`), hojas de
+   * proporción fija que se escalan solas por container query. Trae sus propias
+   * hojas blancas con sombra, así que —como capas— no debe ir dentro de la
+   * tarjeta de lectura del visor, que la enmarcaría por segunda vez.
+   *
+   * Es una bandera aparte de `esCapas` a propósito: comparte la hoja suelta,
+   * pero **no** el escalado. Reutilizar `esCapas` habría metido este documento
+   * en el `fit()`, que le buscaría una `.page` de altura fija que no tiene.
+   */
+  const esPaginas = html !== null && html.includes('class="doc-paginas"');
+
+  /**
+   * Y una cuarta: «hojas de tamaño fijo» (`.doc-hojas`), N páginas en px que
+   * hay que escalar con `transform` — como capas, pero con las medidas en
+   * cada hoja en vez de una sola en el envoltorio.
+   */
+  const esHojas = html !== null && html.includes('class="doc-hojas"');
+
+  const hojaSuelta = esCapas || esPaginas || esHojas;
+
+  /**
+   * ⚠️ El objeto de `dangerouslySetInnerHTML` TIENE que ser estable.
+   *
+   * React no compara el string: en `updateProperties` recorre las props y
+   * decide con `nextProp === lastProp`, una comparación **por referencia**.
+   * Un `{{ __html: html }}` escrito en el JSX es un objeto nuevo en cada
+   * render, así que la comparación siempre falla y React ejecuta
+   * `domElement.innerHTML = html` otra vez — aunque el string sea idéntico.
+   *
+   * Eso **destruye y reconstruye el documento entero** en cada re-render del
+   * visor (abrir una figura, cambiar de tema, tocar A+/A−). Y como el
+   * escalado del envase "en capas" son estilos inline sobre esos nodos, la
+   * `.page` nueva nace sin `transform` y el `.page-shell` sin `height`: la
+   * página es `position:absolute` y no aporta altura, así que el contenedor
+   * se queda en altura cero, el navegador **clampa el scroll a 0** y el
+   * alumno vuelve al principio del resumen cada vez que amplía una imagen.
+   *
+   * Con el objeto memoizado React ni siquiera entra a `setProp`: el HTML se
+   * escribe una sola vez, cuando `html` cambia de verdad.
+   */
+  const contenido = useMemo(() => ({ __html: html ?? '' }), [html]);
+
+  /**
+   * Ampliar una figura sin salir del documento. Cada envase las sirve
+   * distinto, así que hay dos caminos:
+   *
+   *  - **Notion**: cada figura viene envuelta en <a href="…avif">, que por sí
+   *    solo se llevaría al alumno a otra pestaña y le haría perder el punto de
+   *    lectura. Se intercepta el enlace.
+   *  - **Capas y «documento de flujo»**: las figuras son <img> sueltas, sin
+   *    enlace. En capas llevan además el texto en posición absoluta por encima
+   *    (los <span>, y en la variante «pdf-page» también los bloques
+   *    reconstruidos sobre la propia figura), así que buscar por `e.target`
+   *    fallaría en cuanto el clic cayera sobre una letra: se mira **toda la
+   *    pila bajo el cursor** y se toma la primera figura que aparezca. En
+   *    «documento de flujo» no hay nada encima y `e.target` bastaría, pero
+   *    pasa por la misma vía para no tener dos comportamientos que mantener.
+   *
+   * El selector es una **lista blanca de figuras de contenido**, no `img` a
+   * secas: las capas a página completa (tinta, resaltador) son <img> y jamás
+   * deben abrirse como si fueran una figura. Al añadir un envase nuevo hay que
+   * añadir aquí su forma de figura, o el clic no hará nada — que es justo lo
+   * que le pasó al Taller 1 recién publicado.
+   *
+   * Sólo el clic simple: con ctrl/cmd/shift o botón central se respeta el
+   * gesto del navegador de abrir en pestaña nueva, que ahí sí es intencional.
+   */
+  const onSheetClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+
+    const href = (e.target as HTMLElement).closest?.('a')?.getAttribute('href');
+    if (href && /\.(avif|webp)$/.test(href)) {
+      e.preventDefault();
+      setLightbox(href);
+      return;
+    }
+
+    /* Índice interno (los documentos «integrados» abren con uno). Dejarlo al
+       navegador funciona —el scroll lo hace el scroller del visor—, pero le
+       cuelga el `#ancla` a la URL del dashboard, que se queda ahí después de
+       cerrar el resumen. Se hace a mano sobre el nodo, sin tocar la ruta. */
+    if (href?.startsWith('#') && href.length > 1) {
+      const destino = sheetRef.current?.querySelector(`[id="${CSS.escape(href.slice(1))}"]`);
+      if (destino) {
+        e.preventDefault();
+        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      return;
+    }
+
+    // El visor bloquea la selección (`user-select: none`), pero si alguna
+    // quedara, el clic que la cierra no debe abrir la figura.
+    if (window.getSelection()?.toString()) return;
+
+    const figura = document
+      .elementsFromPoint(e.clientX, e.clientY)
+      .find((el): el is HTMLImageElement =>
+        el instanceof HTMLImageElement && el.matches(FIGURAS));
+    if (!figura?.src) return;
+    e.preventDefault();
+    setLightbox(figura.src);
+  }, [sheetRef]);
+
+  // Descarga del fragmento. `ignore` evita pisar el estado si el alumno
+  // cierra (o cambia de resumen) antes de que llegue la respuesta.
+  useEffect(() => {
+    let ignore = false;
+    setHtml(null);
+    setError(false);
+    aplicado.current = null;
+
+    fetch(`/api/resumen-html/${claseId}`)
+      .then(r => {
+        if (!r.ok) throw new Error(String(r.status));
+        return r.text();
+      })
+      .then(text => { if (!ignore) setHtml(text); })
+      .catch(() => { if (!ignore) setError(true); });
+
+    return () => { ignore = true; };
+  }, [claseId]);
+
+  // Avisar a quien lo monta cuando el documento ya está escrito en el DOM.
+  const cargado = useRef(onCargado);
+  cargado.current = onCargado;
+  useEffect(() => {
+    if (html && sheetRef.current) cargado.current?.(sheetRef.current);
+  }, [html, sheetRef]);
+
+  /**
+   * Abrir en la sección del tema (enlace desde el informe de un banqueo).
+   * Las figuras de arriba cargan en diferido y empujan el texto al llegar, así
+   * que se re-ancla a cada cambio de alto hasta que el alumno mueve el scroll
+   * (o pasan 4 s): después el sitio es suyo. Sin estado: nada de re-render.
+   */
+  useEffect(() => {
+    const sheet = sheetRef.current;
+    const scroller = scrollerRef.current;
+    if (!html || !seccion || !sheet || !scroller) return;
+
+    const destino = buscarSeccion(sheet, seccion);
+    if (!destino) return;
+
+    // Una celda se señala con su fila entera: el `box-shadow` de un <tr> no se
+    // pinta en todos los navegadores, así que el destello va en cada celda.
+    const fila = destino.matches('td, th') ? destino.closest('tr') : null;
+    const ancla: HTMLElement = fila ?? destino;
+    const resaltadas: HTMLElement[] = fila ? Array.from(fila.cells) : [destino];
+
+    const anclar = () => {
+      const delta = ancla.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
+      scroller.scrollTop += delta - 16;
+    };
+    const raf = requestAnimationFrame(anclar);
+    resaltadas.forEach((el) => el.classList.add(styles.seccionDestino));
+
+    const ro = new ResizeObserver(anclar);
+    ro.observe(sheet);
+    const soltar = () => {
+      ro.disconnect();
+      scroller.removeEventListener('wheel', soltar);
+      scroller.removeEventListener('touchstart', soltar);
+      scroller.removeEventListener('pointerdown', soltar);
+      window.removeEventListener('keydown', soltar);
+    };
+    scroller.addEventListener('wheel', soltar, { passive: true });
+    scroller.addEventListener('touchstart', soltar, { passive: true });
+    scroller.addEventListener('pointerdown', soltar);
+    window.addEventListener('keydown', soltar);
+    const tope = setTimeout(soltar, 4000);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(tope);
+      soltar();
+    };
+  }, [html, seccion, sheetRef, scrollerRef]);
+
+  /**
+   * Recorte a la sección (`soloSeccion`): los bloques de fuera se esconden con
+   * una clase, sin tocar el HTML inyectado (`contenido` sigue siendo el mismo
+   * objeto y React no rehace el documento). `ampliar` sube un nivel por clic.
+   */
+  const recortado = useRef(onRecortado);
+  recortado.current = onRecortado;
+  useEffect(() => {
+    const sheet = sheetRef.current;
+    const scroller = scrollerRef.current;
+    if (!html || !seccion || !soloSeccion || !sheet || !scroller) return;
+    const destino = buscarSeccion(sheet, seccion);
+    const rango = destino ? bloquesDeSeccion(sheet, destino, ampliar) : null;
+    recortado.current?.(!!rango);
+    if (!rango || !destino) return;
+
+    const ocultos: Element[] = [];
+    const ocultar = (el: Element) => { el.classList.add(styles.fueraDeSeccion); ocultos.push(el); };
+    for (const b of Array.from(rango.cont.children)) if (!rango.dentro.has(b)) ocultar(b);
+    // Lo que cuelga fuera del contenedor (cabecera y título de la página).
+    for (let n: Element = rango.cont; n !== sheet && n.parentElement; n = n.parentElement) {
+      for (const hermano of Array.from(n.parentElement.children)) if (hermano !== n) ocultar(hermano);
+    }
+    // Al cargar más, lo nuevo entra por encima: el título de la pregunta se
+    // queda donde estaba en vez de saltar hacia abajo.
+    if (ampliar > 0) {
+      requestAnimationFrame(() => {
+        scroller.scrollTop += destino.getBoundingClientRect().top - scroller.getBoundingClientRect().top - 16;
+      });
+    }
+    return () => ocultos.forEach((el) => el.classList.remove(styles.fueraDeSeccion));
+  }, [html, seccion, soloSeccion, ampliar, sheetRef, scrollerRef]);
+
+  /* Zoom con la rueda sobre la figura ampliada (de 1× a 6×, hacia donde apunta
+     el cursor) y arrastre para moverla cuando está ampliada. El listener va
+     nativo y no pasivo: React registra `onWheel` como pasivo, y entonces no se
+     puede impedir que la rueda desplace el documento de detrás. Sin estado:
+     se escribe `transform` directo en el <img>. */
+  useEffect(() => {
+    const caja = lbRef.current;
+    const img = lbImgRef.current;
+    if (!lightbox || !caja || !img) return;
+
+    let escalaLb = 1, x = 0, y = 0;
+    const pintar = () => {
+      img.style.transform = escalaLb === 1 && !x && !y ? '' : `translate(${x}px, ${y}px) scale(${escalaLb})`;
+      caja.style.cursor = escalaLb > 1 ? 'grab' : 'zoom-out';
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const r = img.getBoundingClientRect();
+      // Punto bajo el cursor, relativo al centro actual de la imagen.
+      const px = e.clientX - (r.left + r.width / 2);
+      const py = e.clientY - (r.top + r.height / 2);
+      const nueva = Math.max(1, Math.min(6, escalaLb * Math.exp(-e.deltaY * 0.0015)));
+      const k = nueva / escalaLb;
+      x -= px * (k - 1);
+      y -= py * (k - 1);
+      escalaLb = nueva;
+      if (escalaLb === 1) { x = 0; y = 0; }
+      pintar();
+    };
+
+    let ancla: { cx: number; cy: number; x: number; y: number } | null = null;
+    const onDown = (e: PointerEvent) => {
+      if (escalaLb <= 1 || e.button !== 0) return;
+      ancla = { cx: e.clientX, cy: e.clientY, x, y };
+      lbArrastro.current = false;
+      caja.setPointerCapture(e.pointerId);
+      caja.style.cursor = 'grabbing';
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!ancla) return;
+      const dx = e.clientX - ancla.cx, dy = e.clientY - ancla.cy;
+      if (Math.abs(dx) + Math.abs(dy) > 4) lbArrastro.current = true;
+      x = ancla.x + dx;
+      y = ancla.y + dy;
+      pintar();
+    };
+    const onUp = () => { ancla = null; pintar(); };
+
+    lbArrastro.current = false;
+    caja.addEventListener('wheel', onWheel, { passive: false });
+    caja.addEventListener('pointerdown', onDown);
+    caja.addEventListener('pointermove', onMove);
+    caja.addEventListener('pointerup', onUp);
+    caja.addEventListener('pointercancel', onUp);
+    return () => {
+      caja.removeEventListener('wheel', onWheel);
+      caja.removeEventListener('pointerdown', onDown);
+      caja.removeEventListener('pointermove', onMove);
+      caja.removeEventListener('pointerup', onUp);
+      caja.removeEventListener('pointercancel', onUp);
+    };
+  }, [lightbox]);
+
+  // Con la figura abierta, Esc cierra SÓLO la figura: cerrar el resumen (o
+  // salir del enfoque en el lector) perdería el punto de lectura. Va en la fase
+  // de captura de `window`, antes que cualquier listener de `document`.
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      e.stopImmediatePropagation();
+      setLightbox(null);
+    };
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
+  }, [lightbox]);
+
+  // Copiar, seleccionar todo, guardar, imprimir, ver código: fuera (menos en un campo de texto).
+  useEffect(() => {
+    if (!bloquearTeclas) return;
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      if ((e.ctrlKey || e.metaKey) && ['c', 'x', 'a', 's', 'p', 'u'].includes(e.key.toLowerCase())) e.preventDefault();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [bloquearTeclas]);
+
+  /**
+   * Escalado del envase "en capas".
+   *
+   * El export trae un <script> que hace esto mismo, pero el HTML se inyecta
+   * con dangerouslySetInnerHTML y **los <script> así insertados no se
+   * ejecutan**: sin esto la página quedaría clavada a su ancho original
+   * (~1500 px) desbordando el visor.
+   *
+   * La escala multiplica el ajuste al contenedor por `escala`, así que A−/A+
+   * funcionan como un zoom real —imprescindible en móvil, donde el ajuste deja
+   * la letra muy pequeña— y el desbordamiento lo absorbe el `overflow:auto` de
+   * .page-shell.
+   */
+  useEffect(() => {
+    if (!esCapas) return;
+    const sheet = sheetRef.current;
+    const capas = sheet?.querySelector<HTMLElement>('.capas');
+    const shell = sheet?.querySelector<HTMLElement>('.page-shell');
+    const page  = sheet?.querySelector<HTMLElement>('.page');
+    if (!capas || !shell || !page) return;
+
+    const cs = getComputedStyle(capas);
+    const W = parseFloat(cs.getPropertyValue('--page-w'));
+    const H = parseFloat(cs.getPropertyValue('--page-h'));
+    if (!W || !H) return;
+
+    // Ajustar la altura del shell vuelve a disparar el observer; sin esta
+    // guarda el par (fit → resize → fit) se realimenta en bucle.
+    let ultimoAncho = -1;
+    const fit = () => {
+      const ancho = shell.clientWidth;
+      if (ancho === ultimoAncho) return;
+      ultimoAncho = ancho;
+      const s = (ancho / W) * escala;
+      const transformacion = `scale(${s})`;
+      const alto = `${H * s}px`;
+
+      /* Si el escalado ya está puesto, NO se vuelve a escribir.
+       *
+       * El observer dispara `fit()` ante cualquier cambio de tamaño del shell,
+       * y muchas veces lo que encuentra es el escalado intacto: entonces
+       * reescribir `transform` y `height` con el MISMO valor sólo sirve para
+       * invalidar el layout del documento entero —miles de nodos absolutos— y
+       * arriesgarse a que el contenedor pierda el punto de lectura.
+       *
+       * Se compara contra `aplicado` (un ref, así sobrevive a los re-renders) y
+       * **no** contra `page.style.transform`: el navegador re-serializa lo que
+       * se le escribe —`scale(0.6404077217929812)` vuelve como
+       * `scale(0.640408)`— y esa comparación sería siempre falsa, con lo que la
+       * guarda no serviría de nada.
+       *
+       * Lo que sí se mira del DOM es si el escalado **sigue ahí**: en cuanto
+       * `transform` o `height` vengan vacíos, los estilos se perdieron y hay
+       * que re-aplicarlos aunque la escala no haya cambiado. Con el HTML
+       * memoizado eso ya no debería pasar nunca; se deja como red de
+       * seguridad, porque el modo de fallo es que el documento desaparezca. */
+      if (aplicado.current === s && page.style.transform && shell.style.height) return;
+      aplicado.current = s;
+
+      const scroller = scrollerRef.current;
+      const scrollPrevio = scroller?.scrollTop ?? 0;
+      const altoPrevio = scroller?.scrollHeight ?? 0;
+
+      page.style.transform = transformacion;
+      shell.style.height = alto;
+      // La página entera va escalada, así que un px de dentro no es un px en
+      // pantalla. Los efectos que sí deben medirse en pantalla —la elevación y
+      // la sombra del hover de una figura— se dividen por esto en el CSS; sin
+      // ello se verían a la mitad, que es justo lo que las hacía parecer
+      // distintas de las figuras de los resúmenes de Notion.
+      page.style.setProperty('--fit', String(s));
+
+      /* Cuando el escalado sí cambia (A+/A−, girar el móvil) el documento
+       * crece o encoge y el scroll en píxeles deja de significar lo mismo: se
+       * traslada en proporción para que el alumno siga viendo el mismo punto
+       * del texto, en vez de aparecer en otro sitio del documento. */
+      if (scroller && scrollPrevio > 0 && altoPrevio > 0) {
+        const altoNuevo = scroller.scrollHeight;
+        if (altoNuevo !== altoPrevio) {
+          scroller.scrollTop = (scrollPrevio * altoNuevo) / altoPrevio;
+        } else if (scroller.scrollTop !== scrollPrevio) {
+          scroller.scrollTop = scrollPrevio;
+        }
+      }
+    };
+
+    const ro = new ResizeObserver(fit);
+    ro.observe(shell);
+    fit();
+    return () => ro.disconnect();
+
+    /* Aquí NO van la figura abierta ni el tema.
+     *
+     * Estuvieron, y era un parche a otro problema: como el objeto de
+     * `dangerouslySetInnerHTML` se recreaba en cada render, cualquier
+     * re-render rehacía el documento inyectado y se llevaba por delante estos
+     * estilos inline —dejando el shell a altura cero y el documento en
+     * blanco—, así que el efecto tenía que volver a correr para repararlo.
+     *
+     * Con el HTML memoizado los nodos ya no se rehacen, de modo que el
+     * escalado sólo depende de lo que de verdad lo cambia: el envase, el
+     * documento y el zoom. Volver a meterlas haría correr el efecto —y
+     * reenganchar el ResizeObserver— cada vez que se abre una figura, sin
+     * nada que ganar. */
+  }, [esCapas, html, escala, sheetRef, scrollerRef]);
+
+  /**
+   * Envase «páginas auto-escaladas»: ajuste tipográfico.
+   *
+   * Este export reconstruye el PDF palabra a palabra, cada una en su
+   * coordenada. El ancho que ocupa una palabra en Arial o Times NO es el que
+   * medía en el PDF, así que el conversor guarda el ancho objetivo en
+   * `--target-w` (en % de la página) y trae un `<script>` que estira o encoge
+   * cada palabra con `scaleX` hasta cuadrarlo. Sin él las palabras largas se
+   * montan sobre la siguiente y las cortas dejan huecos.
+   *
+   * Ese `<script>` no se ejecuta al inyectarse con `dangerouslySetInnerHTML`
+   * —la misma razón por la que el `fit()` de capas vive aquí—, de modo que
+   * está portado. Dos diferencias con el original, las dos por rendimiento
+   * sobre ~1900 nodos: se mide en un solo pase (limpiar todos los transform →
+   * leer todos los anchos → escribir todos), en vez de forzar un reflujo por
+   * palabra; y el ancho de página se lee una vez por hoja.
+   */
+  useEffect(() => {
+    if (!esPaginas) return;
+    const sheet = sheetRef.current;
+    const doc = sheet?.querySelector<HTMLElement>('.doc-paginas');
+    if (!doc) return;
+
+    let ultimoAncho = -1;
+    let vivo = true;
+
+    const ajustar = () => {
+      const ancho = doc.clientWidth;
+      // Escribir transforms no cambia el ancho del documento, así que no hay
+      // bucle observer→ajuste→observer; la guarda evita el trabajo inútil.
+      if (!ancho || ancho === ultimoAncho) return;
+      ultimoAncho = ancho;
+
+      const nodos = Array.from(doc.querySelectorAll<HTMLElement>('.word, .patch'));
+      for (const el of nodos) el.style.transform = 'none';
+
+      const anchoDe = new Map<Element, number>();
+      const medidas = nodos.map((el) => {
+        const hoja = el.closest('.pdf-page');
+        if (hoja && !anchoDe.has(hoja)) anchoDe.set(hoja, hoja.getBoundingClientRect().width);
+        const pagina = hoja ? anchoDe.get(hoja)! : 0;
+        /* El ancho natural de un `.patch` NO se puede leer de su caja: su
+           propio `max-width` la recorta, y como va en `nowrap` el texto se
+           sale sin ensancharla. Medido así, un bloque que necesita 741 px
+           dentro de 690 devuelve 690 —«ya cabe»— y se publica desbordado.
+           `scrollWidth` sí da el ancho del contenido. (El export original
+           tiene este fallo; las palabras no lo sufren porque no llevan tope.) */
+        const caja = el.getBoundingClientRect().width;
+        return {
+          natural: Math.max(caja, el.scrollWidth),
+          pagina,
+          // El objetivo de un `.patch` (un bloque reescrito, no una palabra)
+          // es su `max-width`, y sólo se encoge: nunca se estira.
+          maxima: el.classList.contains('patch') ? maxEnPx(el.style.maxWidth, pagina) : NaN,
+        };
+      });
+
+      nodos.forEach((el, i) => {
+        const { natural, pagina, maxima } = medidas[i];
+        if (!natural || !pagina) return;
+        if (!Number.isNaN(maxima)) {
+          if (natural > maxima && maxima > 0) {
+            el.style.transformOrigin = 'left top';
+            el.style.transform = `scaleX(${maxima / natural})`;
+          }
+          return;
+        }
+        const pct = parseFloat(getComputedStyle(el).getPropertyValue('--target-w'));
+        if (!pct) return;
+        const objetivo = (pct / 100) * pagina;
+        // Los mismos topes que el export: fuera de ellos el conversor midió
+        // mal y deformar la palabra se nota más que el desajuste.
+        el.style.transform = `scaleX(${Math.max(0.55, Math.min(1.65, objetivo / natural))})`;
+      });
+    };
+
+    /* ⚠️ Una medida hecha con OTRA fuente no se corrige sola, y el resultado no
+       parece un error de medición: cada palabra queda ~11 % más ancha de lo que
+       le toca (Outfit lo es respecto a Times), se come el hueco de ~5 px que la
+       separa de la siguiente y el documento se lee «todojunto sin espacios».
+       Así que no basta con esperar a `fonts.ready` al arrancar: hay que rehacer
+       el ajuste cada vez que termine de cargar una fuente, porque con
+       `font-display: swap` la definitiva puede entrar DESPUÉS de haber medido.
+       `ultimoAncho = -1` fuerza el recálculo: lo que cambió no es el ancho del
+       documento, son las medidas. */
+    const rehacer = () => { if (!vivo) return; ultimoAncho = -1; ajustar(); };
+    (document.fonts?.ready ?? Promise.resolve()).then(rehacer);
+    document.fonts?.addEventListener?.('loadingdone', rehacer);
+
+    const ro = new ResizeObserver(ajustar);
+    ro.observe(doc);
+    ajustar();
+    return () => {
+      vivo = false;
+      ro.disconnect();
+      document.fonts?.removeEventListener?.('loadingdone', rehacer);
+    };
+  }, [esPaginas, html, sheetRef]);
+
+  /**
+   * Envase «hojas de tamaño fijo»: escalado por hoja + ajuste de líneas.
+   *
+   * Aquí el `<script>` del export hace DOS cosas y las dos hacen falta:
+   *
+   *  · `fit()` — escala cada `.pdf-page` al hueco disponible. No vale el
+   *    escalado de «capas», que lee un único `--page-w/--page-h` del
+   *    envoltorio: aquí cada hoja trae las suyas en `data-w`/`data-h`, y en
+   *    LAB6 no son ni siquiera todas iguales (612×792 y 455×588).
+   *  · `fitLines()` — estira o encoge cada línea con `scaleX` hasta el ancho
+   *    que tenía en el PDF (`data-target`). Es el mismo problema que en
+   *    «páginas», una escala arriba: allí se ajusta palabra a palabra y aquí
+   *    línea a línea. Sin esto las líneas largas se salen de su caja.
+   *
+   * Las líneas se miden en coordenadas de la página, así que el `transform`
+   * de la hoja no las afecta y da igual el orden.
+   */
+  useEffect(() => {
+    if (!esHojas) return;
+    const sheet = sheetRef.current;
+    const doc = sheet?.querySelector<HTMLElement>('.doc-hojas');
+    if (!doc) return;
+
+    let ultimo = '';
+    let vivo = true;
+
+    const ajustar = () => {
+      const disponible = doc.clientWidth;
+      if (!disponible) return;
+      const huella = `${disponible}|${escala}`;
+      if (huella === ultimo) return;
+      ultimo = huella;
+
+      // 1 · líneas. Un solo pase: limpiar → medir → escribir.
+      const lineas = Array.from(doc.querySelectorAll<HTMLElement>('.text-line'));
+      const dentro = lineas.map(l => l.querySelector<HTMLElement>('.line-content'));
+      dentro.forEach(el => { if (el) el.style.transform = 'none'; });
+      const naturales = dentro.map(el => el ? (el.scrollWidth || el.getBoundingClientRect().width) : 0);
+      lineas.forEach((linea, i) => {
+        const el = dentro[i];
+        if (!el || !naturales[i]) return;
+        const objetivo = parseFloat(linea.dataset.target || '') || linea.clientWidth;
+        if (!objetivo) return;
+        // Los mismos topes que el export: más allá, deformar la línea se nota
+        // más que el desajuste que corrige.
+        el.style.transform = `scaleX(${Math.max(0.78, Math.min(1.22, objetivo / naturales[i]))})`;
+      });
+
+      /* 2 · hojas, cada una a SU ancho, como el resto del visor. El `fit()` del
+         export topaba en `min(1, …)` para no ampliar, y aquí eso saldría mal:
+         este documento mezcla hojas de 612 px con otras de 455 —que son la
+         misma página al 74 %, con la letra proporcionalmente menor—, así que
+         sin normalizar por ancho unas se leerían más pequeñas que otras. El
+         zoom de A−/A+ se multiplica encima, y si la hoja se pasa de ancho la
+         desplaza su propio `overflow:auto` en vez de recortarla el scroller. */
+      for (const shell of Array.from(doc.querySelectorAll<HTMLElement>('.page-shell'))) {
+        const pagina = shell.querySelector<HTMLElement>('.pdf-page');
+        const W = parseFloat(shell.dataset.w || '');
+        const H = parseFloat(shell.dataset.h || '');
+        if (!pagina || !W || !H) continue;
+        const s = (disponible / W) * escala;
+        pagina.style.transform = `scale(${s})`;
+        shell.style.width = `${Math.min(W * s, disponible)}px`;
+        shell.style.height = `${H * s}px`;
+        /* Sin zoom la hoja mide exactamente el hueco, y un redondeo de medio
+           píxel bastaba para que el `overflow:auto` del CSS pintara barras en
+           cada hoja. Se desplaza sólo cuando el alumno agranda (A+): ahí la
+           hoja sí se pasa del ancho y necesita su propio scroll. */
+        shell.style.overflow = escala > 1 ? 'auto' : 'hidden';
+      }
+    };
+
+    /* Igual que en «páginas»: una medida hecha con la fuente de reserva deja
+       las líneas mal escaladas y nada lo corrige después. */
+    const rehacer = () => { if (!vivo) return; ultimo = ''; ajustar(); };
+    (document.fonts?.ready ?? Promise.resolve()).then(rehacer);
+    document.fonts?.addEventListener?.('loadingdone', rehacer);
+
+    const ro = new ResizeObserver(ajustar);
+    ro.observe(doc);
+    ajustar();
+    return () => {
+      vivo = false;
+      ro.disconnect();
+      document.fonts?.removeEventListener?.('loadingdone', rehacer);
+    };
+  }, [esHojas, html, escala, sheetRef]);
+
+  return (
+    <>
+      {error ? (
+        <p className={estadoClass}>No se pudo cargar el resumen. Vuelve a intentarlo.</p>
+      ) : html === null ? (
+        <p className={estadoClass}>Cargando resumen…</p>
+      ) : (
+        <article
+          ref={sheetRef as React.RefObject<HTMLElement>}
+          className={`${styles.sheet} ${hojaSuelta ? styles.sheetCapas : ''} ${className ?? ''}`}
+          // String, no número: para una custom property React entrega el
+          // valor tal cual, y un número suelto aquí es más frágil de leer
+          // dentro del calc() que la escala.
+          style={{ ['--s' as string]: String(escala) }}
+          onClick={onSheetClick}
+          onCopy={bloquear}
+          onCut={bloquear}
+          onContextMenu={bloquear}
+          onDragStart={bloquear}
+          dangerouslySetInnerHTML={contenido}
+        />
+      )}
+
+      {/* ── Figura ampliada: por portal a <body>, encima de cualquier cáscara ── */}
+      {lightbox && createPortal(
+        <div
+          ref={lbRef}
+          className={styles.lightbox}
+          onClick={() => {
+            // Soltar un arrastre sobre la figura no debe cerrarla.
+            if (lbArrastro.current) { lbArrastro.current = false; return; }
+            setLightbox(null);
+          }}
+          onContextMenu={bloquear}
+          onDragStart={bloquear}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Figura ampliada"
+        >
+          <button
+            className={styles.lightboxClose}
+            onClick={() => setLightbox(null)}
+            aria-label="Cerrar la figura"
+          >
+            ✕
+          </button>
+          {/* Misma URL que la figura del documento: ya está en caché del
+              navegador (immutable), así que se pinta sin volver a descargarla.
+              next/image no aplica: el HTML es contenido remoto inyectado. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img ref={lbImgRef} className={styles.lightboxImg} src={lightbox} alt="" draggable={false} />
+          <span className={styles.lightboxHint}>Rueda para ampliar · clic fuera o Esc para cerrar</span>
+          {onFiguraIA && (
+            <button
+              className={styles.lightboxIA}
+              onClick={(e) => {
+                e.stopPropagation();
+                const figura = lightbox;
+                setLightbox(null);
+                onFiguraIA(figura);
+              }}
+            >
+              {iconoFiguraIA}
+              Explícame esta figura
+            </button>
+          )}
+        </div>,
+        document.body,
+      )}
+    </>
+  );
+}

@@ -1,8 +1,10 @@
 'use client';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { trackEvent } from '@/lib/analytics';
 import type { ResumenEstudio } from '@/lib/estudio/tipos';
+import DocumentoResumen from '@/components/resumen/DocumentoResumen';
+import rs from '@/styles/resumenHtml.module.css';
 import { cx, Icono } from './Icono';
 import type { Contexto } from './EspacioEstudio';
 
@@ -10,6 +12,32 @@ import type { Contexto } from './EspacioEstudio';
 const HtmlFullscreenModal = dynamic(() => import('@/components/HtmlFullscreenModal'), { ssr: false });
 const PdfFullscreenModal = dynamic(() => import('@/components/PdfFullscreenModal'), { ssr: false });
 const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ssr: false });
+// react-pdf (~2 MB) sólo baja si la clase abierta tiene el resumen en PDF.
+const PdfViewer = dynamic(() => import('@/components/PdfViewer'), { ssr: false });
+
+interface EntradaIndice { el: HTMLElement; titulo: string; nivel: number }
+
+/** Los títulos del resumen ya inyectado (h1-h3), para el índice «En esta clase». */
+function indiceDe(sheet: HTMLElement): EntradaIndice[] {
+  return Array.from(sheet.querySelectorAll<HTMLElement>('h1, h2, h3'))
+    .map((el) => ({ el, titulo: (el.textContent ?? '').replace(/\s+/g, ' ').trim(), nivel: Number(el.tagName[1]) }))
+    .filter((e) => e.titulo && e.el.offsetParent !== null)
+    .slice(0, 40);
+}
+
+/** Ancho útil del artículo para el PDF (el visor de react-pdf no reflowea). */
+function useAncho(ref: React.RefObject<HTMLElement | null>, activo: boolean) {
+  const [ancho, setAncho] = useState(0);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !activo) return;
+    const ro = new ResizeObserver(() => setAncho(el.clientWidth));
+    ro.observe(el);
+    setAncho(el.clientWidth);
+    return () => ro.disconnect();
+  }, [ref, activo]);
+  return ancho;
+}
 
 export function BarraLector({ ctx }: { ctx: Contexto }) {
   const { st, set, barraOculta } = ctx;
@@ -49,8 +77,45 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
   const [tocActivo, setTocActivo] = useState('');
   const [abierto, setAbierto] = useState<ResumenEstudio | null>(null);
   const [comprar, setComprar] = useState(false);
+  const [opcion, setOpcion] = useState(0);
+  const [indice, setIndice] = useState<EntradaIndice[]>([]);
+  const [indiceActivo, setIndiceActivo] = useState(0);
+  const sheetRef = useRef<HTMLElement>(null);
+  const cuerpoRef = useRef<HTMLDivElement>(null);
   const guardada = !!marcas.saved[l.id];
   const estudiada = marcas.completed.has(l.id);
+
+  // El resumen se lee aquí mismo si la clase lo tiene y el plan lo abre.
+  const resumen = !l.bloqueada ? l.resumenes[Math.min(opcion, l.resumenes.length - 1)] : undefined;
+  const anchoPdf = useAncho(cuerpoRef, resumen?.formato === 'pdf');
+  useEffect(() => { setOpcion(0); }, [l.id]);
+  useEffect(() => { setIndice([]); setIndiceActivo(0); }, [resumen?.id]);
+
+  // Con el documento ya en el DOM: índice, vuelta al punto de lectura y registro de la apertura.
+  const alCargar = useCallback((sheet: HTMLElement) => {
+    setIndice(indiceDe(sheet));
+    const pos = posiciones.current[l.id];
+    if (pos) requestAnimationFrame(() => scroller.current?.scrollTo({ top: pos, behavior: 'instant' }));
+    if (resumen) trackEvent('resumen_abierto', { claseId: resumen.id, origen: 'estudio' });
+  }, [l.id, posiciones, resumen]);
+
+  // El índice sigue la lectura: el último título que ya pasó por arriba.
+  useEffect(() => {
+    const el = scroller.current;
+    if (!el || !indice.length) return;
+    let raf = 0;
+    const alDesplazar = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const tope = el.getBoundingClientRect().top + 90;
+        let i = 0;
+        indice.forEach((e, k) => { if (e.el.getBoundingClientRect().top <= tope) i = k; });
+        setIndiceActivo(i);
+      });
+    };
+    el.addEventListener('scroll', alDesplazar, { passive: true });
+    return () => { el.removeEventListener('scroll', alDesplazar); cancelAnimationFrame(raf); };
+  }, [indice]);
 
   // Secciones del lector (numeradas como en el prototipo); el índice «En esta clase» las sigue.
   const secciones: [string, string][] = [
@@ -113,6 +178,11 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
               <button className={cx('icon-button', guardada && 'saved')} aria-label={guardada ? 'Quitar de guardados' : 'Guardar clase'} title="Guardar clase" onClick={guardar}>
                 <Icono n="bookmark" />
               </button>
+              {resumen && (
+                <button className={cx('icon-button')} aria-label="Abrir el resumen a pantalla completa" title="Pantalla completa" onClick={() => setAbierto(resumen)}>
+                  <Icono n="expand" />
+                </button>
+              )}
             </div>
           </div>
           <h1>{l.title}</h1>
@@ -123,6 +193,34 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
           </div>
           {l.nota && <p className={cx('article-intro')}>{l.nota}</p>}
 
+          {resumen ? (
+            <div ref={cuerpoRef}>
+              {l.resumenes.length > 1 && (
+                <div className={cx('segmented resumen-selector')} role="tablist" aria-label="Resúmenes de la clase">
+                  {l.resumenes.map((r, i) => (
+                    <button key={r.id} role="tab" aria-selected={resumen.id === r.id} className={cx(resumen.id === r.id && 'active')} onClick={() => setOpcion(i)}>{r.label}</button>
+                  ))}
+                </div>
+              )}
+              {resumen.formato === 'html' ? (
+                <DocumentoResumen
+                  key={resumen.id}
+                  claseId={resumen.id}
+                  escala={marcas.fontSize / 16}
+                  scrollerRef={scroller}
+                  sheetRef={sheetRef}
+                  className={rs.incrustado}
+                  estadoClass={cx('article-intro')}
+                  onCargado={alCargar}
+                  bloquearTeclas
+                />
+              ) : anchoPdf > 0 ? (
+                <div className={rs.incrustado} onContextMenu={(e) => e.preventDefault()}>
+                  <PdfViewer key={resumen.id} claseId={resumen.id} widthOverride={anchoPdf} scale={marcas.fontSize / 16} loadingClass={cx('article-intro')} />
+                </div>
+              ) : null}
+            </div>
+          ) : (<>
           {l.subtemas.length > 0 && (
             <section id="section-temas">
               <div className={cx('section-heading')}><span>{num('section-temas')}</span><h2>Temas de la clase</h2></div>
@@ -153,6 +251,7 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
               <p>{l.docentes.join(' · ')}</p>
             </section>
           )}
+          </>)}
 
           <div className={cx('completion-row')}>
             <span>¿Terminaste de estudiar esta clase?</span>
@@ -169,8 +268,15 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
       <aside className={cx('reading-aside')} aria-label="Índice de la clase">
         <div className={cx('eyebrow')}>En esta clase</div>
         <nav className={cx('toc')} aria-label="Índice de la clase">
-          {secciones.map(([id, titulo]) => <button key={id} className={cx(tocActivo === id && 'active')} onClick={() => irASeccion(id)}>{titulo}</button>)}
+          {resumen
+            ? indice.map((e, i) => (
+              <button key={i} className={cx(indiceActivo === i && 'active', e.nivel > 2 && 'toc-sub')} onClick={() => { e.el.scrollIntoView({ behavior: 'smooth', block: 'start' }); setIndiceActivo(i); }}>
+                {e.titulo}
+              </button>
+            ))
+            : secciones.map(([id, titulo]) => <button key={id} className={cx(tocActivo === id && 'active')} onClick={() => irASeccion(id)}>{titulo}</button>)}
         </nav>
+        {resumen && !indice.length && <p className={cx('aside-note')}>Este resumen va por páginas: desplázate para recorrerlo.</p>}
         <p className={cx('aside-note')}>Este espacio recuerda tu clase mientras exploras. Elige otro tema en el temario para seguir estudiando.</p>
       </aside>
 
