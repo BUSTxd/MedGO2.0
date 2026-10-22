@@ -29,7 +29,7 @@ const MATERIA: Record<string, string> = {
   'endocrino-reproductor': 'embriologia',
 };
 
-const iconoDe = (slug: string) => (MATERIA[slug] ? `/assets/cursos/materia-${MATERIA[slug]}_v6.avif` : null);
+export const iconoDe = (slug: string) => (MATERIA[slug] ? `/assets/cursos/materia-${MATERIA[slug]}_v6.avif` : null);
 
 const TIPO: Record<string, string> = {
   MAGISTRAL: 'Magistral', TEORIA: 'Teoría', TEMA: 'Tema', LAB: 'Laboratorio', 'LAB-ANAT': 'Lab. anatomía',

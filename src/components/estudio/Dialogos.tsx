@@ -1,8 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { cx, Icono } from './Icono';
-import { ArteLab, norm } from './Graficos';
-import type { LabMuestra } from '@/lib/estudio/muestra';
+import { norm } from './texto';
 import type { CursoEstudio, CursoListado } from '@/lib/estudio/tipos';
 
 /** Cierra al pulsar el fondo, no el diálogo. */
@@ -59,56 +58,6 @@ export function Buscador({ curso, cursos, onCerrar, onAbrir, onCurso }: {
           ) : <div className={cx('empty-state')}>Prueba con otro tema o con el nombre de un curso.</div>}
         </div>
         <div className={cx('search-footer')} id="search-heading">Busca en {curso.name} y en tus cursos · Enter para abrir el primer resultado</div>
-      </section>
-    </Fondo>
-  );
-}
-
-export function VisorLab({ lab, onCerrar }: { lab: LabMuestra; onCerrar: () => void }) {
-  const [rotacion, setRotacion] = useState(0);
-  const [zoom, setZoom] = useState(100);
-  const [vista, setVista] = useState<'normal' | 'outline'>('normal');
-  const dialogo = useRef<HTMLElement>(null);
-  useEffect(() => { (dialogo.current?.querySelector<HTMLElement>('button,input,select') || dialogo.current)?.focus(); }, []);
-  return (
-    <Fondo onCerrar={onCerrar}>
-      <section ref={dialogo} className={cx('lab-view-dialog')} role="dialog" aria-modal="true" aria-labelledby="lab-view-title" tabIndex={-1}>
-        <header className={cx('lab-view-head')}>
-          <div><h2 id="lab-view-title">{lab.title}</h2><p>{lab.subject} · {lab.category}</p></div>
-          <button className={cx('icon-button')} aria-label="Cerrar recurso" onClick={onCerrar}><Icono n="close" /></button>
-        </header>
-        <div className={cx('lab-view-body')}>
-          <div className={cx('lab-stage')}>
-            <div className={cx('lab-stage-object')} style={{
-              transform: `rotateY(${rotacion}deg) rotateZ(${rotacion / 15}deg) scale(${zoom / 100})`,
-              filter: vista === 'outline' ? 'saturate(.35) contrast(1.3)' : 'none',
-            }}>
-              <ArteLab kind={lab.kind} />
-            </div>
-            <span className={cx('viewer-help')}>Vista ilustrativa · Explora los controles</span>
-          </div>
-          <aside className={cx('lab-settings')}>
-            <div className={cx('eyebrow')}>Controles del visor</div>
-            <div>
-              <label className={cx('setting-label')} htmlFor="lab-rotation">Rotación<span>{rotacion}°</span></label>
-              <input type="range" id="lab-rotation" min="-65" max="65" value={rotacion} onChange={(e) => setRotacion(Number(e.target.value))} />
-            </div>
-            <div>
-              <label className={cx('setting-label')} htmlFor="lab-zoom">Acercamiento<span>{zoom}%</span></label>
-              <input type="range" id="lab-zoom" min="70" max="135" value={zoom} onChange={(e) => setZoom(Number(e.target.value))} />
-            </div>
-            <div>
-              <div className={cx('setting-label')}>Presentación</div>
-              <div className={cx('filter-pills')}>
-                <button className={cx('filter-pill', vista === 'normal' && 'active')} onClick={() => setVista('normal')}>Completa</button>
-                <button className={cx('filter-pill', vista === 'outline' && 'active')} onClick={() => setVista('outline')}>Contraste</button>
-              </div>
-            </div>
-            <p>{lab.description}<br /><br />Esta vista permite probar la navegación. El motor del laboratorio real todavía no está conectado.</p>
-            <button className={cx('text-button')} onClick={() => { setRotacion(0); setZoom(100); }}><Icono n="reset" />Restablecer vista</button>
-          </aside>
-        </div>
-        <div className={cx('lab-view-footer')}><Icono n="info" />Puedes cerrar este recurso y continuar exactamente donde estabas leyendo.</div>
       </section>
     </Fondo>
   );

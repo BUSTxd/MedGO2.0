@@ -1137,3 +1137,23 @@ div.wrapper .course-nav::after { animation: orbe-sube 30s ease-in-out infinite; 
 @media (prefers-reduced-motion: reduce) {
   div.wrapper .course-nav::before, div.wrapper .course-nav::after { animation: none; }
 }
+
+/* ── Laboratorio real ── */
+/* Marco de un laboratorio: fuera de .wrapper (ver MarcoLab), con el fondo y el panel del dashboard. */
+.lab-main { background: #f0f2f8; padding: 24px 28px; min-height: calc(100dvh - 64px); }
+:global(.dark-mode) .lab-main { background: #08061a; }
+.lab-panel { min-height: calc(100dvh - 64px - 48px); }
+@media (max-width: 720px) {
+  .lab-main { padding: 12px; min-height: calc(100dvh - 56px); }
+  .lab-panel { min-height: calc(100dvh - 56px - 24px); }
+}
+/* Tarjetas: las que piden plan, un punto apagadas; sin icono de materia, uno de trazo. */
+.resource-main .lab-card.is-bloqueada .lab-card-art { filter: saturate(0.55); opacity: 0.85; }
+.resource-main .lab-card.is-bloqueada .lab-card-bottom { color: var(--secondary); }
+.resource-main .lab-card-art > .lab-art-icono { width: 64px; height: 64px; color: #245b8f; stroke-width: 1.3; position: relative; }
+.lab-card-bottom > span .icon { width: 13px; height: 13px; }
+/* El filtro de curso con el desplegable propio, en la caja del prototipo. */
+.subject-filter .select-shell { width: 100%; }
+.subject-filter .select-trigger { padding: 12px 32px 12px 13px; font-size: 12px; font-weight: 400; color: #233147; min-width: 160px; max-width: none; width: 100%; border-radius: 9px; }
+.subject-filter .select-trigger:hover, .subject-filter .select-abierto .select-trigger { background: transparent; }
+.subject-filter .select-panel { left: 0; right: auto; }

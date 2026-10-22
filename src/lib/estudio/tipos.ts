@@ -47,3 +47,20 @@ export interface CursoListado {
   bloqueado: boolean;
   icono: string | null;
 }
+
+export type TipoLab = 'Simulación' | 'Modelo 3D' | 'Atlas' | 'Práctica' | 'Investigación';
+
+/** Una tarjeta del Laboratorio virtual, con el acceso ya resuelto en el servidor. */
+export interface TarjetaLab {
+  id: string;
+  nombre: string;
+  desc: string;
+  /** Curso al que pertenece (el primero si se comparte) y todos, para el filtro. */
+  materia: string;
+  cursos: string[];
+  tipo: TipoLab;
+  href: string;
+  icono: string | null;
+  /** abierto: lo abre su plan · gratis/vistazo/prueba: una parte sin plan · plan: candado. */
+  acceso: 'abierto' | 'gratis' | 'vistazo' | 'prueba' | 'plan';
+}

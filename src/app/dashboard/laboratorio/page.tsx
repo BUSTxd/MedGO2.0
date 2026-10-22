@@ -9,227 +9,62 @@ import ConstruccionIcon from '@/components/icons/ConstruccionIcon';
 import FisicaIcon from '@/components/icons/FisicaIcon';
 import LocomotorIcon from '@/components/icons/LocomotorIcon';
 import styles from '@/styles/dashboardPages.module.css';
+import { LAB_TOPICS as CATALOGO, type TemaLab } from '@/lib/data/laboratorio-catalogo';
 
-// `prueba`: a dónde lleva la fila a quien NO tiene el plan del panel, cuando el
-// laboratorio tiene una parte gratis (hoy, el examen 3D del miembro superior:
-// `?examen=1` entra sin LabGate). Sin ella, esa persona caería en la pasarela.
-type Exp = { name: string; desc: string; color: string; href?: string; prueba?: string };
-type Topic = { id: string; title: string; badge: string; diff: string[]; icon: ReactNode; experiments: Exp[] };
+type Topic = TemaLab & { icon: ReactNode };
 
-const LAB_TOPICS: Topic[] = [
-  {
-    id: 'microbiologia',
-    title: 'Microbiología | UPCH',
-    badge: 'Microbiología',
-    diff: ['easy'],
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="4" fill="white" stroke="white" strokeWidth="2"/>
-        <path d="m8 12-3-2M16 12l3-2M12 8l2-3M12 16l-2 3" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-      </svg>
-    ),
-    experiments: [
-      { name: 'Atlas Micología',      desc: 'Identificación microscópica de hongos clínicos',        color: '#2DC99A', href: '/dashboard/laboratorio/atlas-micologia' },
-      { name: 'Atlas Parasitología',  desc: 'Identificación de parásitos clínicamente relevantes',   color: '#F5A623', href: '/dashboard/laboratorio/atlas-parasitologia' },
-      { name: 'Atlas Microbiología',  desc: 'Identificación de bacterias patógenas frecuentes',      color: '#E85B4A', href: '/dashboard/laboratorio/atlas-microbiologia' },
-    ],
-  },
-  {
-    id: 'excretor',
-    title: 'Sistema Excretor | UPCH',
-    badge: 'Fisiología',
-    diff: ['easy'],
-    icon: <KidneyIcon size={26} white />,
-    experiments: [
-      { name: 'Parámetro: Sangre vs Orina', desc: 'Arrastra los valores normales al compartimento correcto', color: '#E85B4A', href: '/dashboard/laboratorio/parametro-sangre-orina' },
-      { name: 'Nefrón INTERACTIVO', desc: 'Explora el trayecto del filtrado, los transportadores y su bloqueo en tiempo real', color: '#3b9edd', href: '/dashboard/laboratorio/nefron-interactivo' },
-    ],
-  },
-  {
-    id: 'farmacologia',
-    title: 'Farmacología | UPCH',
-    badge: 'Farmacología',
-    diff: ['medium'],
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 1024 1024" fill="none">
-        <path d="M33.956002 93.849026l326.194325 0 0 800.892063-326.194325 0 0-800.892063Z" fill="rgba(255,255,255,0.5)"/>
-        <path d="M231.051786 1024A216.179916 216.179916 0 0 1 15.032241 807.980455V239.786506a216.019545 216.019545 0 0 1 432.039091 0v568.033578a216.179916 216.179916 0 0 1-216.019546 216.179916z m0-962.225146a178.172023 178.172023 0 0 0-178.011652 178.011652v568.033578a178.011652 178.011652 0 1 0 356.023304 0V239.786506a178.172023 178.172023 0 0 0-178.011652-178.011652z" fill="white"/>
-        <path d="M231.051786 523.963666H33.956002v284.016789a196.935413 196.935413 0 0 0 171.276076 195.171334 55.969429 55.969429 0 0 1 25.659338-105.684396 129.258911 129.258911 0 0 0 129.258911-129.258911V523.963666h-129.258911z" fill="white"/>
-        <path d="M392.821848 45.966675l322.940098-45.961182 112.846679 792.902089-322.940098 45.961182-112.846679-792.902089Z" fill="rgba(255,255,255,0.5)"/>
-        <path d="M906.533839 213.164944l77.298753 562.90171a216.019545 216.019545 0 0 1-428.029819 58.695734l-77.298753-562.90171a216.019545 216.019545 0 1 1 428.029819-58.695734z m39.611601 568.033578l-77.298753-562.901711a178.043726 178.043726 0 1 0-352.815887 48.111258l77.298754 562.90171a178.011652 178.011652 0 1 0 352.815886-47.630145z" fill="white"/>
-        <path d="M731.248491 523.963666l-128.296686 17.640794-67.195389 9.141139-38.328635-282.252709a196.935413 196.935413 0 0 1 143.211176-216.661029 55.969429 55.969429 0 0 0 39.771972 101.194011 129.258911 129.258911 0 0 1 145.616739 110.495521l33.196768 241.999624z" fill="white"/>
-      </svg>
-    ),
-    experiments: [
-      { name: 'Farmacocinética',        desc: 'Absorción, distribución, metabolismo y excreción', color: '#2DC99A' },
-      { name: 'Interacciones',          desc: 'Análisis de interacciones entre fármacos',          color: '#F5A623' },
-      { name: 'Ensayos de Toxicidad',   desc: 'Evaluación de efectos tóxicos y dosis letal',       color: '#E85B4A' },
-      { name: 'Curvas Dosis-Respuesta', desc: 'Análisis de relaciones dosis-efecto',               color: '#2DC99A' },
-      { name: 'Biodisponibilidad',      desc: 'Estudios de liberación y absorción de fármacos',    color: '#F5A623' },
-      { name: 'Farmacogenómica',        desc: 'Variabilidad genética en respuesta a fármacos',     color: '#E85B4A' },
-    ],
-  },
-  {
-    id: 'cardiovascular',
-    title: 'Cardiovascular | UPCH',
-    badge: 'Cardiovascular',
-    diff: ['medium'],
-    icon: (
-      <svg width="26" height="26" viewBox="0 -137.5 1299 1299" fill="none">
-        <path d="M164.854878 495.321455h188.089332l95.704278-132.953342a48.313142 48.313142 0 0 1 82.796187 7.376053l131.846934 275.495551 160.98234-411.952518a49.050747 49.050747 0 0 1 46.65353-30.795018 48.313142 48.313142 0 0 1 44.440715 33.745439l83.349391 264.431473h65.646865a594.694213 594.694213 0 0 0 38.539873-52.554372c73.760522-119.676448-9.220065-376.178665-234.005258-376.178665s-252.260987 176.656451-252.260987 176.656451-27.475795-176.656451-252.260987-176.656451S56.242509 328.438273 130.371834 448.114721a554.310327 554.310327 0 0 0 34.483044 47.206734z" fill="white"/>
-        <path d="M963.312534 596.742173a48.313142 48.313142 0 0 1-46.100327-33.745439l-52.738773-167.436386-151.577874 387.242743a48.313142 48.313142 0 0 1-43.334307 30.795019h-1.290809a48.313142 48.313142 0 0 1-43.518708-27.475795L479.99671 483.519771l-62.512043 86.853016a48.313142 48.313142 0 0 1-39.277478 20.099742h-131.109328c147.521045 166.883182 370.277823 394.987598 370.277822 394.987598s217.962344-221.65037 364.376982-388.717954h-18.440131z" fill="white"/>
-        <path d="M127.974617 498.456277H184.95462a862.629311 862.629311 0 0 1-65.093661-85.377805c-36.880261-60.483628-32.639031-158.769525 11.986085-238.799691a243.778527 243.778527 0 0 1 219.621956-130.187322c217.777943 0 247.09775 163.379557 248.204158 170.386807a22.128157 22.128157 0 0 0 43.70311 0 201.550628 201.550628 0 0 1 40.383886-84.271397c45.362721-57.164405 115.250816-86.11541 208.004673-86.11541a243.594126 243.594126 0 0 1 219.068752 130.371723c44.625116 80.030167 49.41955 178.316063 11.986085 238.799692a906.148019 906.148019 0 0 1-69.334891 90.172239h57.164405a726.909949 726.909949 0 0 0 49.603951-66.937675c45.547123-73.760522 41.121491-190.117747-10.879677-283.609209a288.772446 288.772446 0 0 0-258.161829-152.868682c-165.961176 0-238.799692 85.562206-270.147913 147.521045-31.348222-61.221234-104.555541-147.521045-269.963513-147.521045a288.772446 288.772446 0 0 0-258.161828 152.868682c-52.001168 93.491462-56.4268 210.033088-10.879678 283.609209a686.341662 686.341662 0 0 0 45.915926 61.958839zM977.142632 591.763338c-130.371724 145.861433-302.971346 324.361898-355.341317 378.391481-53.107576-55.320392-228.842021-236.402475-359.766949-383.185915h-59.008418c153.975091 175.550044 389.63996 416.746952 402.916854 430.392649a22.128157 22.128157 0 0 0 31.532624 0c13.276894-13.645697 244.516132-250.232573 398.675624-425.413813h-59.008418z" fill="white"/>
-        <path d="M262.58757 587.522108h-202.841437c-33.007834 0-59.746023 19.73094-59.746023 44.256314s26.738189 44.256313 59.746023 44.256313h282.3184zM1234.566855 592.316542h-258.161828l-76.342141 88.328226h333.950765c35.773853 0 64.724858-19.73094 64.724859-44.256314s-28.397801-44.071912-64.171655-44.071912z" fill="white"/>
-      </svg>
-    ),
-    experiments: [
-      { name: 'Ciclo Cardíaco',          desc: 'Fases de sístole y diástole y eventos valvulares',  color: '#2DC99A' },
-      { name: 'Electrocardiograma',      desc: 'Del impulso eléctrico a la onda: conducción sincronizada con DII', color: '#F5A623', href: '/dashboard/laboratorio/electrocardiograma' },
-      { name: 'Presión Arterial',        desc: 'Regulación y medición de la presión sanguínea',   color: '#E85B4A' },
-      { name: 'Gasto Cardíaco',          desc: 'Determinantes del volumen sistólico y frecuencia', color: '#2DC99A' },
-      { name: 'Auscultación Cardíaca',   desc: 'Identificación de ruidos y soplos cardíacos',     color: '#F5A623' },
-      { name: 'Circulación Coronaria',   desc: 'Perfusión miocárdica e isquemia',                 color: '#E85B4A' },
-    ],
-  },
-  {
-    id: 'hematologia',
-    title: 'Hematología | UPCH',
-    badge: 'Hematología',
-    diff: ['easy'],
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M12 2C12 2 7 7 7 13c0 3 2.5 5.5 5 5.5s5-2.5 5-5.5c0-6-5-11-5-11z" fill="white" stroke="white" strokeWidth="1.5"/>
-        <ellipse cx="10.5" cy="9" rx="1.5" ry="2" fill="rgba(84,69,216,0.25)"/>
-      </svg>
-    ),
-    experiments: [
-      { name: 'Frotis Sanguíneo · Simulación', desc: 'Práctica 1 completa en 3D: extendido, zonas, tinción de Wright, morfología eritrocitaria y recuento plaquetario', color: '#E85B4A', href: '/dashboard/laboratorio/frotis-sanguineo' },
-      { name: 'Hemograma Completo',     desc: 'Los 28 parámetros del CBC con rangos reales, 11 escenarios clínicos, comparador y quiz', color: '#2DC99A', href: '/dashboard/laboratorio/hemograma' },
-      // Compartido con Patología — sin página todavía (enlace inerte, como el resto de pendientes).
-      { name: 'Morfología de Glóbulos Rojos', desc: '19 microfotografías reales para reconocer alteraciones e inclusiones, con lámina de referencia', color: '#8b5cf6', href: '/dashboard/laboratorio/morfologia-globulos-rojos' },
-      { name: 'Microscopio: Médula Ósea y Serie Blanca · Simulación', desc: 'Práctica 2: microscopio virtual, identificación de la serie blanca y fórmula diferencial', color: '#F5A623', href: '/dashboard/laboratorio/microscopio-hematologia' },
-      { name: 'Vías de la coagulación', desc: 'La cascada completa en un lienzo: mueve los factores, despliega sus avisos y completa cada vía paso a paso', color: '#2CA9BC', href: '/dashboard/laboratorio/cascada-coagulacion' },
-      { name: 'Pruebas de Coagulación', desc: 'Estudios de hemostasia y factores de coagulación',  color: '#E85B4A' },
-      { name: 'Conteo de Reticulocitos',desc: 'Evaluación de la producción de glóbulos rojos',    color: '#F5A623' },
-      { name: 'Electroforesis Hb',      desc: 'Identificación de hemoglobinopatías',               color: '#E85B4A' },
-    ],
-  },
-  {
-    id: 'neurologia',
-    title: 'Neurología | UPCH',
-    badge: 'Neurología',
-    diff: ['medium'],
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M9.5 3.5a2.5 2.5 0 00-2.45 2A2.5 2.5 0 004.5 8c0 .5.15 1 .4 1.4A2.5 2.5 0 004 11.5c0 .9.47 1.68 1.18 2.12A2.5 2.5 0 007 17.5a2.5 2.5 0 002.5 2.5c.55 0 1-.2 1.5-.5V4c-.5-.3-.95-.5-1.5-.5z" fill="white"/>
-        <path d="M14.5 3.5a2.5 2.5 0 012.45 2A2.5 2.5 0 0119.5 8c0 .5-.15 1-.4 1.4A2.5 2.5 0 0120 11.5c0 .9-.47 1.68-1.18 2.12A2.5 2.5 0 0117 17.5a2.5 2.5 0 01-2.5 2.5c-.55 0-1-.2-1.5-.5V4c.5-.3.95-.5 1.5-.5z" fill="rgba(255,255,255,0.55)"/>
-      </svg>
-    ),
-    experiments: [
-      { name: 'Polígono de Willis 3D', desc: 'Vascularización de la base del encéfalo: el anillo, sus ramas y el sistema vertebrobasilar en un modelo rotatorio', color: '#c22222', href: '/dashboard/laboratorio/poligono-willis' },
-      { name: 'Tronco encefálico', desc: 'Compara las vistas del cadáver con la maqueta 3D rotatoria; colapsa cada panel a tu gusto', color: '#3b9edd', href: '/dashboard/laboratorio/tronco-encefalico' },
-      { name: 'Biomecánica extraocular', desc: 'Activa los músculos extraoculares y observa el movimiento del globo, individual y por grupo vectorial', color: '#3b9edd', href: '/dashboard/laboratorio/biomecanica-extraocular' },
-      { name: 'Médula Espinal 3D', desc: 'Corte transversal interactivo: láminas de Rexed, tractos, meninges y síndromes clínicos', color: '#2DC99A', href: '/dashboard/laboratorio/medula-espinal' },
-      { name: 'EVA 2 · Anatomía', desc: 'Examen interactivo de identificación: nombra la estructura (A) y desbloquea su detalle clínico (B)', color: '#F5A623', href: '/dashboard/laboratorio/eva-2' },
-      { name: 'EVA 3 · Anatomía', desc: 'Examen interactivo de identificación: nombra la estructura (A) y desbloquea su detalle clínico (B)', color: '#E85B4A', href: '/dashboard/laboratorio/eva-3' },
-    ],
-  },
-  {
-    id: 'inmunologia',
-    title: 'Inmunología | UPCH',
-    badge: 'Inmunología',
-    diff: ['medium'],
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 256 256" fill="none">
-        <rect x="114" y="120" width="28" height="110" rx="14" fill="white"/>
-        <rect x="114" y="30" width="28" height="110" rx="14" transform="rotate(-45 128 120)" fill="white"/>
-        <rect x="114" y="30" width="28" height="110" rx="14" transform="rotate(45 128 120)" fill="white"/>
-        <circle cx="128" cy="120" r="8" fill="white"/>
-      </svg>
-    ),
-    experiments: [
-      { name: 'Ensayos ELISA',        desc: 'Detección de anticuerpos y antígenos específicos',    color: '#2DC99A' },
-      { name: 'Inmunofluorescencia',  desc: 'Técnicas de marcaje fluorescente para detección',     color: '#F5A623' },
-      { name: 'Citometría de Flujo',  desc: 'Análisis de poblaciones celulares y marcadores',      color: '#E85B4A' },
-      { name: 'Aglutinación',         desc: 'Detección de antígenos mediante aglutinación',        color: '#2DC99A' },
-      { name: 'Western Blot',         desc: 'Identificación de proteínas específicas',             color: '#F5A623' },
-      { name: 'PCR en Tiempo Real',   desc: 'Cuantificación de ácidos nucleicos',                  color: '#E85B4A' },
-    ],
-  },
-  {
-    id: 'patologia',
-    title: 'Patología | UPCH',
-    badge: 'Patología',
-    diff: ['hard'],
-    // Mismo microscopio que Histología usa en la sidebar (monocromo, currentColor:
-    // .labIconBox ya lo pinta de blanco).
-    icon: <MicroscopeIcon size={26} />,
-    experiments: [
-      // Compartidos con Hematología — se ven en los dos cursos.
-      { name: 'Hemograma Completo',   desc: 'Los 28 parámetros del CBC con rangos reales, 11 escenarios clínicos, comparador y quiz', color: '#2DC99A', href: '/dashboard/laboratorio/hemograma' },
-      // Sin página todavía (enlace inerte, como el resto de pendientes).
-      { name: 'Morfología de Glóbulos Rojos', desc: '19 microfotografías reales para reconocer alteraciones e inclusiones, con lámina de referencia', color: '#8b5cf6', href: '/dashboard/laboratorio/morfologia-globulos-rojos' },
-      { name: 'Checkpoints del ciclo celular', desc: 'Los cinco puntos de control, de RB–E2F al huso: la vía molecular animada paso a paso, para construirla y ponerte a prueba', color: '#2CA9BC', href: '/dashboard/laboratorio/checkpoints-ciclo-celular' },
-      { name: 'Vías NF-κB y JAK/STAT', desc: 'Las vías clásica y alternativa de NF-κB y JAK/STAT animadas paso a paso, con las alteraciones del linfoma de Hodgkin clásico y un modo de arrastrar', color: '#2CA9BC', href: '/dashboard/laboratorio/vias-nfkb-jakstat' },
-      { name: 'Maduración de linfocitos', desc: 'De la célula madre a la plasmática: recombinación V(D)J, selección en el timo, centro germinal y el origen de cada leucemia y linfoma', color: '#2CA9BC', href: '/dashboard/laboratorio/maduracion-linfocitos' },
-      { name: 'Hipersensibilidad', desc: 'Los tipos I a IV animados como fisiología: el mastocito que desgranula, la vénula que se abre, el complemento que perfora, los complejos en el vaso y el granuloma', color: '#2CA9BC', href: '/dashboard/laboratorio/hipersensibilidad' },
-    ],
-  },
-  {
-    id: 'aparato-locomotor',
-    title: 'Aparato Locomotor | UPCH',
-    badge: 'Anatomía',
-    diff: ['medium'],
-    // Mismo ícono que la tarjeta del curso en cursos/page.tsx, en blanco.
-    icon: <LocomotorIcon size={26} color="#ffffff" colorDark="rgba(255,255,255,0.7)" />,
-    experiments: [
-      // Un solo visor para todo el atlas 3D: cada región es un paquete aparte (?region=).
-      { name: 'Miembro superior 3D', desc: 'Hombro, brazo, antebrazo y mano derechos con el plexo braquial completo: huesos, músculos, vasos, nervios y ligamentos', color: '#c9a227', href: '/dashboard/laboratorio/atlas-3d?region=miembro-superior-derecho', prueba: '/dashboard/laboratorio/atlas-3d?region=miembro-superior-derecho&examen=1&desde=laboratorio' },
-      { name: 'Miembro inferior 3D', desc: 'Pelvis y región glútea, muslo, rodilla, pierna y pie derechos con los plexos lumbar y sacro: huesos, músculos, vasos, nervios, ligamentos y meniscos', color: '#c9a227', href: '/dashboard/laboratorio/atlas-3d?region=miembro-inferior-derecho' },
-    ],
-  },
-  {
-    // Curso de UFBI: 'fisica-medicina' ya está en CURSOS (track 'basico'), así
-    // que `requiredPlanDeCurso` lo abre con el plan UFBI sin tocar nada más.
-    //
-    // Las filas son las 14 clases del sílabo (`src/lib/data/fisica.ts`), con su
-    // código visible. Antes eran 8 temas de un temario genérico que NO cuadraba
-    // con el curso: «Campo eléctrico y potencial» mezclaba C9 y C10, y C7, C8,
-    // C11, C12 y C14 no existían — así que un módulo nuevo de esas clases no
-    // tenía dónde colgarse. Que C6 encajara fue casualidad.
-    //
-    // Todo vive dentro del curso (`modulo/[id]`) y no bajo `laboratorio/`: las
-    // simulaciones son los temas de esa clase, no piezas sueltas. El gate real
-    // lo pone esa página con `requiredPlan="ufbi"`; el candado del panel es sólo
-    // la señal visual.
-    //
-    // Las catorce llevan `href` desde que cada clase tiene laboratorio: C6 y C7
-    // abren su módulo completo de teoría y las otras doce el menú de temas.
-    // Ojo al quitar uno: sin `href` la fila deja de ser un enlace y se pinta con
-    // la marca de obra (`.labExpObra`), que es lo que las tenía apagadas.
-    id: 'fisica-medicina',
-    title: 'Física | UPCH',
-    badge: 'Física',
-    diff: ['easy'],
-    icon: <FisicaIcon size={26} white />,
-    experiments: [
-      { name: 'C1 · Leyes de Newton',                    desc: 'Bloque en plano inclinado con su diagrama de cuerpo libre en movimiento: normal, fricción y el ángulo al que empieza a deslizar', color: '#3b9edd', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-1' },
-      { name: 'C2 · Trabajo y energía',                  desc: 'Choque frontal con la restitución como perilla continua: el momento se conserva siempre, la energía sólo si es elástico', color: '#2DC99A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-2' },
-      { name: 'C3 · Dinámica rotacional',                desc: 'Barra con punto de apoyo que se cae cuando los torques no se empatan, y aro/disco/esfera con la misma masa arrancando distinto', color: '#F5A623', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-3' },
-      { name: 'C4 · Equilibrio y elasticidad',           desc: 'La palanca del codo: cuánta fuerza hace el bíceps para sostener una carga y qué aguanta de verdad la articulación', color: '#E85B4A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-4' },
-      { name: 'C5 · Mecánica de fluidos',                desc: 'Vaso con estenosis: continuidad y Bernoulli sobre la misma escena, con el número de Reynolds y el umbral del soplo', color: '#8b5cf6', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-5' },
-      { name: 'C6 · Movimiento periódico y ondas',       desc: 'Módulo interactivo: MAS, péndulo y masa-resorte, ondas mecánicas y sonido, con 4 simulaciones y problemas guiados', color: '#3b9edd', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-6' },
-      { name: 'C7 · Temperatura y calor',                desc: 'Módulo interactivo: escalas, calor específico, cambios de fase y las tres vías de pérdida, con el balance térmico del cuerpo', color: '#E85B4A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-7' },
-      { name: 'C8 · Termodinámica',                      desc: 'Cilindro con pistón y diagrama PV sincronizados: los cuatro procesos entre los mismos volúmenes, y el trabajo como área', color: '#F5A623', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-8' },
-      { name: 'C9 · Campo eléctrico',                    desc: 'Dos cargas con sus líneas de campo trazadas de verdad: el 1/r² de la fuerza frente al 1/r del potencial', color: '#2DC99A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-9' },
-      { name: 'C10 · Potencial y capacitancia',          desc: 'Condensador de placas con dos presets: la membrana celular a 70 mV y el desfibrilador a miles de voltios', color: '#8b5cf6', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-10' },
-      { name: 'C11 · Corriente y resistencia',           desc: 'La misma pareja de resistencias en serie y en paralelo, con la escala de efectos fisiológicos en miliamperios', color: '#3b9edd', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-11' },
-      { name: 'C12 · Magnetismo e inducción',            desc: 'Lorentz y Faraday conmutables: el periodo de giro que no depende de la velocidad, y la fem desfasada del flujo', color: '#2DC99A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-12' },
-      { name: 'C13 · Óptica geométrica',                 desc: 'Lente delgada con los tres rayos principales y un modo ojo que sitúa la imagen respecto a la retina', color: '#F5A623', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-13' },
-      { name: 'C14 · Fotones y átomos',                  desc: 'Efecto fotoeléctrico: por debajo del umbral no sale un electrón por mucha intensidad que eches', color: '#E85B4A', href: '/dashboard/cursos/fisica-medicina/modulo/fis-c-14' },
-    ],
-  },
-];
+const ICONOS: Record<string, ReactNode> = {
+  'microbiologia': (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="4" fill="white" stroke="white" strokeWidth="2"/>
+      <path d="m8 12-3-2M16 12l3-2M12 8l2-3M12 16l-2 3" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  ),
+  'excretor': <KidneyIcon size={26} white />,
+  'farmacologia': (
+    <svg width="24" height="24" viewBox="0 0 1024 1024" fill="none">
+      <path d="M33.956002 93.849026l326.194325 0 0 800.892063-326.194325 0 0-800.892063Z" fill="rgba(255,255,255,0.5)"/>
+      <path d="M231.051786 1024A216.179916 216.179916 0 0 1 15.032241 807.980455V239.786506a216.019545 216.019545 0 0 1 432.039091 0v568.033578a216.179916 216.179916 0 0 1-216.019546 216.179916z m0-962.225146a178.172023 178.172023 0 0 0-178.011652 178.011652v568.033578a178.011652 178.011652 0 1 0 356.023304 0V239.786506a178.172023 178.172023 0 0 0-178.011652-178.011652z" fill="white"/>
+      <path d="M231.051786 523.963666H33.956002v284.016789a196.935413 196.935413 0 0 0 171.276076 195.171334 55.969429 55.969429 0 0 1 25.659338-105.684396 129.258911 129.258911 0 0 0 129.258911-129.258911V523.963666h-129.258911z" fill="white"/>
+      <path d="M392.821848 45.966675l322.940098-45.961182 112.846679 792.902089-322.940098 45.961182-112.846679-792.902089Z" fill="rgba(255,255,255,0.5)"/>
+      <path d="M906.533839 213.164944l77.298753 562.90171a216.019545 216.019545 0 0 1-428.029819 58.695734l-77.298753-562.90171a216.019545 216.019545 0 1 1 428.029819-58.695734z m39.611601 568.033578l-77.298753-562.901711a178.043726 178.043726 0 1 0-352.815887 48.111258l77.298754 562.90171a178.011652 178.011652 0 1 0 352.815886-47.630145z" fill="white"/>
+      <path d="M731.248491 523.963666l-128.296686 17.640794-67.195389 9.141139-38.328635-282.252709a196.935413 196.935413 0 0 1 143.211176-216.661029 55.969429 55.969429 0 0 0 39.771972 101.194011 129.258911 129.258911 0 0 1 145.616739 110.495521l33.196768 241.999624z" fill="white"/>
+    </svg>
+  ),
+  'cardiovascular': (
+    <svg width="26" height="26" viewBox="0 -137.5 1299 1299" fill="none">
+      <path d="M164.854878 495.321455h188.089332l95.704278-132.953342a48.313142 48.313142 0 0 1 82.796187 7.376053l131.846934 275.495551 160.98234-411.952518a49.050747 49.050747 0 0 1 46.65353-30.795018 48.313142 48.313142 0 0 1 44.440715 33.745439l83.349391 264.431473h65.646865a594.694213 594.694213 0 0 0 38.539873-52.554372c73.760522-119.676448-9.220065-376.178665-234.005258-376.178665s-252.260987 176.656451-252.260987 176.656451-27.475795-176.656451-252.260987-176.656451S56.242509 328.438273 130.371834 448.114721a554.310327 554.310327 0 0 0 34.483044 47.206734z" fill="white"/>
+      <path d="M963.312534 596.742173a48.313142 48.313142 0 0 1-46.100327-33.745439l-52.738773-167.436386-151.577874 387.242743a48.313142 48.313142 0 0 1-43.334307 30.795019h-1.290809a48.313142 48.313142 0 0 1-43.518708-27.475795L479.99671 483.519771l-62.512043 86.853016a48.313142 48.313142 0 0 1-39.277478 20.099742h-131.109328c147.521045 166.883182 370.277823 394.987598 370.277822 394.987598s217.962344-221.65037 364.376982-388.717954h-18.440131z" fill="white"/>
+      <path d="M127.974617 498.456277H184.95462a862.629311 862.629311 0 0 1-65.093661-85.377805c-36.880261-60.483628-32.639031-158.769525 11.986085-238.799691a243.778527 243.778527 0 0 1 219.621956-130.187322c217.777943 0 247.09775 163.379557 248.204158 170.386807a22.128157 22.128157 0 0 0 43.70311 0 201.550628 201.550628 0 0 1 40.383886-84.271397c45.362721-57.164405 115.250816-86.11541 208.004673-86.11541a243.594126 243.594126 0 0 1 219.068752 130.371723c44.625116 80.030167 49.41955 178.316063 11.986085 238.799692a906.148019 906.148019 0 0 1-69.334891 90.172239h57.164405a726.909949 726.909949 0 0 0 49.603951-66.937675c45.547123-73.760522 41.121491-190.117747-10.879677-283.609209a288.772446 288.772446 0 0 0-258.161829-152.868682c-165.961176 0-238.799692 85.562206-270.147913 147.521045-31.348222-61.221234-104.555541-147.521045-269.963513-147.521045a288.772446 288.772446 0 0 0-258.161828 152.868682c-52.001168 93.491462-56.4268 210.033088-10.879678 283.609209a686.341662 686.341662 0 0 0 45.915926 61.958839zM977.142632 591.763338c-130.371724 145.861433-302.971346 324.361898-355.341317 378.391481-53.107576-55.320392-228.842021-236.402475-359.766949-383.185915h-59.008418c153.975091 175.550044 389.63996 416.746952 402.916854 430.392649a22.128157 22.128157 0 0 0 31.532624 0c13.276894-13.645697 244.516132-250.232573 398.675624-425.413813h-59.008418z" fill="white"/>
+      <path d="M262.58757 587.522108h-202.841437c-33.007834 0-59.746023 19.73094-59.746023 44.256314s26.738189 44.256313 59.746023 44.256313h282.3184zM1234.566855 592.316542h-258.161828l-76.342141 88.328226h333.950765c35.773853 0 64.724858-19.73094 64.724859-44.256314s-28.397801-44.071912-64.171655-44.071912z" fill="white"/>
+    </svg>
+  ),
+  'hematologia': (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2C12 2 7 7 7 13c0 3 2.5 5.5 5 5.5s5-2.5 5-5.5c0-6-5-11-5-11z" fill="white" stroke="white" strokeWidth="1.5"/>
+      <ellipse cx="10.5" cy="9" rx="1.5" ry="2" fill="rgba(84,69,216,0.25)"/>
+    </svg>
+  ),
+  'neurologia': (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M9.5 3.5a2.5 2.5 0 00-2.45 2A2.5 2.5 0 004.5 8c0 .5.15 1 .4 1.4A2.5 2.5 0 004 11.5c0 .9.47 1.68 1.18 2.12A2.5 2.5 0 007 17.5a2.5 2.5 0 002.5 2.5c.55 0 1-.2 1.5-.5V4c-.5-.3-.95-.5-1.5-.5z" fill="white"/>
+      <path d="M14.5 3.5a2.5 2.5 0 012.45 2A2.5 2.5 0 0119.5 8c0 .5-.15 1-.4 1.4A2.5 2.5 0 0120 11.5c0 .9-.47 1.68-1.18 2.12A2.5 2.5 0 0117 17.5a2.5 2.5 0 01-2.5 2.5c-.55 0-1-.2-1.5-.5V4c.5-.3.95-.5 1.5-.5z" fill="rgba(255,255,255,0.55)"/>
+    </svg>
+  ),
+  'inmunologia': (
+    <svg width="24" height="24" viewBox="0 0 256 256" fill="none">
+      <rect x="114" y="120" width="28" height="110" rx="14" fill="white"/>
+      <rect x="114" y="30" width="28" height="110" rx="14" transform="rotate(-45 128 120)" fill="white"/>
+      <rect x="114" y="30" width="28" height="110" rx="14" transform="rotate(45 128 120)" fill="white"/>
+      <circle cx="128" cy="120" r="8" fill="white"/>
+    </svg>
+  ),
+  'patologia': <MicroscopeIcon size={26} />,
+  'aparato-locomotor': <LocomotorIcon size={26} color="#ffffff" colorDark="rgba(255,255,255,0.7)" />,
+  'fisica-medicina': <FisicaIcon size={26} white />,
+};
+
+const LAB_TOPICS: Topic[] = CATALOGO.map((t) => ({ ...t, icon: ICONOS[t.id] }));
 
 const DIFF_LABEL: Record<string, string> = {
   easy: 'Interno (fácil)', medium: 'Residente (media)', hard: 'Especialista (difícil)',

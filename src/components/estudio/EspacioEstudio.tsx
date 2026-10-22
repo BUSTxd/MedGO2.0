@@ -2,34 +2,28 @@
 /* eslint-disable @next/next/no-img-element */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { MUESTRA } from '@/lib/estudio/muestra';
 import type { ClaseEstudio, CursoEstudio, CursoListado, SemanaEstudio } from '@/lib/estudio/tipos';
-import { useDarkMode } from '@/components/DarkModeContext';
+import { recordarUltima } from '@/lib/estudio/rutas';
 import { cx, Icono } from './Icono';
-import { norm } from './Graficos';
+import { norm } from './texto';
+import BarraSuperior, { type Pagina } from './BarraSuperior';
 import Lector, { BarraLector, Practica } from './Lector';
-import Laboratorio from './Laboratorio';
 import Progreso from './Progreso';
-import { Buscador, VisorLab } from './Dialogos';
+import { Buscador } from './Dialogos';
 import { useMarcas, type Marcas } from './marcas';
 import Desplegable from './Desplegable';
 
-export type Pagina = 'study' | 'labs' | 'progress';
+export type { Pagina };
 export type Ruta = 'UPCH' | 'Ciencias básicas' | 'ENCIB';
 export interface EstadoEstudio {
-  page: Pagina; route: Ruta; tab: 'summary' | 'practice'; filter: string; collapsed: Set<string>;
-  labFilter: string; labSearch: string; labSubject: string; readingSheet: boolean; focus: boolean;
+  /** Dentro de un curso sólo hay dos vistas; el Laboratorio tiene su propia ruta. */
+  page: Exclude<Pagina, 'labs'>; route: Ruta; tab: 'summary' | 'practice'; filter: string; collapsed: Set<string>;
+  readingSheet: boolean; focus: boolean;
 }
-type Overlay = null | { tipo: 'buscar' } | { tipo: 'lab'; id: string };
-
-/** Los laboratorios siguen siendo los de muestra hasta la Fase 4. */
-const LABS = MUESTRA.labs;
-/** Tono de la luna elegido en el prototipo (`?luna=blue`). */
-const LUNA = '#245b8f';
+type Overlay = null | { tipo: 'buscar' };
 
 const estadoInicial = (): EstadoEstudio => ({
-  page: 'study', route: 'UPCH', tab: 'summary', filter: '', collapsed: new Set(),
-  labFilter: 'Todos', labSearch: '', labSubject: 'Todos', readingSheet: false, focus: false,
+  page: 'study', route: 'UPCH', tab: 'summary', filter: '', collapsed: new Set(), readingSheet: false, focus: false,
 });
 
 export const leccionesDe = (c: CursoEstudio) => c.groups.flatMap((g) => g.lessons);
@@ -48,7 +42,6 @@ export interface Contexto {
   openLesson: (id: string) => void;
   cambiarCurso: (slug: string, pagina?: Pagina) => void;
   irA: (page: Pagina) => void;
-  abrirLab: (id: string) => void;
   toast: (msg: string) => void;
   posiciones: React.MutableRefObject<Record<string, number>>;
   barraOculta: boolean;
@@ -68,7 +61,6 @@ export default function EspacioEstudio({ cursos, curso, children }: { cursos: Cu
   const posiciones = useRef<Record<string, number>>({});
   const vuelveFoco = useRef<HTMLElement | null>(null);
   const temporizador = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const { darkMode, toggleDark } = useDarkMode();
 
   const lessons = curso ? leccionesDe(curso) : [];
   const pedida = params?.clase?.[0];
@@ -88,27 +80,41 @@ export default function EspacioEstudio({ cursos, curso, children }: { cursos: Cu
     router.push(`${base}/${id}`, { scroll: false });
   }, [base, router, set]);
   const cambiarCurso = useCallback((slug: string, pagina?: Pagina) => {
-    router.push(`/estudio/upch/${slug}${pagina && pagina !== 'study' ? `#${pagina === 'labs' ? 'labs' : 'progress'}` : ''}`);
+    router.push(`/estudio/upch/${slug}${pagina === 'progress' ? '#progress' : ''}`);
   }, [router]);
-  const irA = useCallback((page: Pagina) => { set(() => ({ page, focus: false })); setSidebarAbierta(false); }, [set]);
+  const irA = useCallback((page: Pagina) => {
+    if (page === 'labs') { router.push('/estudio/laboratorio'); return; }
+    set(() => ({ page, focus: false }));
+    setSidebarAbierta(false);
+  }, [router, set]);
   const abrirOverlay = (o: Overlay) => { vuelveFoco.current = document.activeElement as HTMLElement; setOverlay(o); };
   const cerrarOverlay = useCallback(() => {
     setOverlay(null);
     const el = vuelveFoco.current; vuelveFoco.current = null;
     requestAnimationFrame(() => el?.focus?.());
   }, []);
-  const abrirLab = (id: string) => { if (LABS.some((l) => l.id === id)) abrirOverlay({ tipo: 'lab', id }); };
-
-  // La clase visitada queda marcada en el temario (el check gris del prototipo).
+  // La clase visitada queda marcada en el temario (el check gris del prototipo), y es
+  // la que retoman «Estudiar» y «Mi progreso» desde el Laboratorio.
   const visitar = marcas.visitar;
-  useEffect(() => { if (lesson) visitar(lesson.id); }, [lesson?.id, visitar]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (!curso || !lesson) return;
+    visitar(lesson.id);
+    recordarUltima(`/estudio/upch/${curso.id}/${lesson.id}`);
+  }, [curso?.id, lesson?.id, visitar]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── Hash: `#labs` y `#progress` son páginas de la interfaz; la clase va en la ruta ──
+  // ── Hash: `#progress` es la otra vista del curso; `#buscar` abre el buscador (llega así
+  //    desde el Laboratorio, que no tiene clases donde buscar). La clase va en la ruta. ──
   const [hashLeido, setHashLeido] = useState(false);
   useEffect(() => {
     const leer = () => {
       const h = location.hash.slice(1);
-      set(() => ({ page: h === 'labs' ? 'labs' : h === 'progress' ? 'progress' : 'study', focus: false }));
+      if (h === 'buscar') {
+        history.replaceState(history.state, '', location.pathname + location.search);
+        vuelveFoco.current = null;
+        setOverlay({ tipo: 'buscar' });
+        return;
+      }
+      set(() => ({ page: h === 'progress' ? 'progress' : 'study', focus: false }));
     };
     leer();
     if (new URLSearchParams(location.search).get('hoja') === '1') set(() => ({ readingSheet: true }));
@@ -160,7 +166,7 @@ export default function EspacioEstudio({ cursos, curso, children }: { cursos: Cu
   if (!curso || !lesson || !group) {
     return (
       <div className={claseRaiz} data-palette="pearl" style={estilo}>
-        <BarraSuperior page="study" onPagina={() => {}} onBuscar={() => {}} darkMode={darkMode} onLuna={toggleDark} />
+        <BarraSuperior page="study" onPagina={(p) => { if (p === 'labs') router.push('/estudio/laboratorio'); }} onBuscar={() => {}} />
         <main className={cx('page-scroll studio-page')}>
           <div className={cx('studio-shell')}>
             <div className={cx('resource-empty')}>
@@ -176,13 +182,13 @@ export default function EspacioEstudio({ cursos, curso, children }: { cursos: Cu
 
   const ctx: Contexto = {
     st, set, marcas, cursos, course: curso, lessons, lesson, group, openLesson, cambiarCurso,
-    irA, abrirLab, toast, posiciones, barraOculta, setBarraOculta,
+    irA, toast, posiciones, barraOculta, setBarraOculta,
   };
 
   return (
     <div className={claseRaiz} data-palette="pearl" style={estilo}>
       <div inert={overlay !== null}>
-        <BarraSuperior page={st.page} onPagina={irA} onBuscar={() => abrirOverlay({ tipo: 'buscar' })} darkMode={darkMode} onLuna={toggleDark} />
+        <BarraSuperior page={st.page} onPagina={irA} onBuscar={() => abrirOverlay({ tipo: 'buscar' })} />
         {st.page === 'study' ? (
           <>
             <BarraRuta ctx={ctx} onMenu={() => setSidebarAbierta((v) => !v)} />
@@ -194,7 +200,7 @@ export default function EspacioEstudio({ cursos, curso, children }: { cursos: Cu
               </section>
             </main>
           </>
-        ) : st.page === 'labs' ? <Laboratorio ctx={ctx} labs={LABS} /> : <Progreso ctx={ctx} />}
+        ) : <Progreso ctx={ctx} />}
       </div>
       <div ref={overlayRef}>
         {overlay?.tipo === 'buscar' && (
@@ -206,39 +212,10 @@ export default function EspacioEstudio({ cursos, curso, children }: { cursos: Cu
             onCurso={(slug) => { cerrarOverlay(); cambiarCurso(slug); }}
           />
         )}
-        {overlay?.tipo === 'lab' && <VisorLab lab={LABS.find((l) => l.id === overlay.id)!} onCerrar={cerrarOverlay} />}
       </div>
       <div className={cx('toast', aviso.visible && 'visible')} role="status" aria-live="polite">{aviso.msg}</div>
       {children}
     </div>
-  );
-}
-
-function BarraSuperior({ page, onPagina, onBuscar, darkMode, onLuna }: { page: Pagina; onPagina: (p: Pagina) => void; onBuscar: () => void; darkMode: boolean; onLuna: () => void }) {
-  const enlace = (p: Pagina, label: string, icon: 'book' | 'flask' | 'chart') => (
-    <button className={cx('nav-link', page === p && 'active')} data-page={p} aria-current={page === p ? 'page' : undefined} onClick={() => onPagina(p)}>
-      <Icono n={icon} /><span>{label}</span>
-    </button>
-  );
-  const etiquetaLuna = darkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
-  return (
-    <header className={cx('topbar')}>
-      <button className={cx('brand')} aria-label="MedGO, ir a Estudiar" onClick={() => onPagina('study')}><span className={cx('brand-lockup')} aria-hidden="true" /></button>
-      <nav className={cx('main-nav')} aria-label="Navegación principal">
-        {enlace('study', 'Estudiar', 'book')}{enlace('labs', 'Laboratorio virtual', 'flask')}{enlace('progress', 'Mi progreso', 'chart')}
-      </nav>
-      <div className={cx('top-tools')}>
-        <button className={cx('search-launch')} aria-label="Buscar una clase o tema" onClick={onBuscar}>
-          <Icono n="search" /><span>Buscar una clase o tema...</span><kbd>Ctrl K</kbd>
-        </button>
-        <div className={cx('top-account')}>
-          <button className={cx('icon-button moon-toggle')} aria-label={etiquetaLuna} title={etiquetaLuna} aria-pressed={darkMode} onClick={onLuna} style={{ '--moon-color': LUNA } as React.CSSProperties}>
-            <Icono n="moon" />
-          </button>
-          <span className={cx('avatar')} title="Perfil de ejemplo">B</span>
-        </div>
-      </div>
-    </header>
   );
 }
 
