@@ -12,6 +12,7 @@ import Laboratorio from './Laboratorio';
 import Progreso from './Progreso';
 import { Buscador, VisorLab } from './Dialogos';
 import { useMarcas, type Marcas } from './marcas';
+import Desplegable from './Desplegable';
 
 export type Pagina = 'study' | 'labs' | 'progress';
 export type Ruta = 'UPCH' | 'Ciencias básicas' | 'ENCIB';
@@ -249,22 +250,27 @@ function BarraRuta({ ctx, onMenu }: { ctx: Contexto; onMenu: () => void }) {
     <div className={cx('contextbar')}>
       <button className={cx('icon-button mobile-menu')} aria-label="Abrir temario" onClick={onMenu}><Icono n="menu" /></button>
       <div className={cx('context-label')}>Tu ruta</div>
-      <div className={cx('select-shell')}>
-        {/* Por ahora sólo UPCH tiene temario: las otras dos rutas avisan y no cambian nada. */}
-        <select aria-label="Ruta de estudio" value={st.route} onChange={(e) => {
-          if (e.target.value !== 'UPCH') toast(`${e.target.value} llega pronto · Seguimos con tu sílabo de UPCH`);
-        }}>
-          {RUTAS.map((r) => <option key={r}>{r}</option>)}
-        </select>
-        <Icono n="down" />
-      </div>
+      {/* Por ahora sólo UPCH tiene temario: las otras dos rutas avisan y no cambian nada. */}
+      <Desplegable
+        etiqueta="Ruta de estudio"
+        valor={st.route}
+        opciones={RUTAS.map((r) => ({ value: r, label: r, ...(r !== 'UPCH' ? { etiqueta: 'Pronto' } : {}) }))}
+        onCambiar={(r) => toast(`${r} llega pronto · Seguimos con tu sílabo de UPCH`)}
+      />
       <span className={cx('context-divider')} />
-      <div className={cx('select-shell')}>
-        <select className={cx('course-select')} aria-label="Elegir curso" value={course.id} onChange={(e) => cambiarCurso(e.target.value)}>
-          {cursos.map((c) => <option key={c.id} value={c.id}>{c.name}{c.bloqueado ? ' · con plan' : ''}</option>)}
-        </select>
-        <Icono n="down" />
-      </div>
+      <Desplegable
+        etiqueta="Elegir curso"
+        claseBoton="course-select"
+        valor={course.id}
+        opciones={cursos.map((c) => ({
+          value: c.id,
+          label: c.name,
+          grupo: c.track === 'basico' ? 'UFBI · Ciencias básicas' : 'Facultad de Medicina',
+          icono: c.icono,
+          ...(c.bloqueado ? { etiqueta: 'Con plan', bloqueada: true } : {}),
+        }))}
+        onCambiar={(slug) => cambiarCurso(slug)}
+      />
       <span className={cx('route-badge')}>{course.track === 'basico' ? 'UFBI' : 'MEDICINA'}</span>
       <div className={cx('context-end')}><span>Todo tu estudio, en un mismo lugar</span><Icono n="book" /></div>
     </div>

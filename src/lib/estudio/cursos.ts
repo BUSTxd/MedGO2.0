@@ -29,6 +29,8 @@ const MATERIA: Record<string, string> = {
   'endocrino-reproductor': 'embriologia',
 };
 
+const iconoDe = (slug: string) => (MATERIA[slug] ? `/assets/cursos/materia-${MATERIA[slug]}_v6.avif` : null);
+
 const TIPO: Record<string, string> = {
   MAGISTRAL: 'Magistral', TEORIA: 'Teoría', TEMA: 'Tema', LAB: 'Laboratorio', 'LAB-ANAT': 'Lab. anatomía',
   'LAB-HISTO': 'Lab. histología', ANATOMIA: 'Anatomía', HISTOLOGIA: 'Histología', TALLER: 'Taller',
@@ -81,6 +83,7 @@ export function cursosListados(plan: Plan): CursoListado[] {
       name: c.nombre,
       track: c.track,
       bloqueado: !cursoEsGratis(c.slug) && !tieneAccesoA(plan, requiredPlanDeCurso(c.slug)),
+      icono: iconoDe(c.slug),
     }))
     .sort((a, b) => {
       const pa = a.track === suyo ? -1 : ORDEN_TRAMO[a.track];
@@ -96,7 +99,7 @@ export function cursoEstudio(slug: string, plan: Plan): CursoEstudio | null {
   return {
     id: slug,
     name: meta.nombre,
-    icono: MATERIA[slug] ? `/assets/cursos/materia-${MATERIA[slug]}_v6.avif` : null,
+    icono: iconoDe(slug),
     track: meta.track,
     planRequerido: planDeTrack(meta.track) as 'ufbi' | 'interno',
     groups: semanas

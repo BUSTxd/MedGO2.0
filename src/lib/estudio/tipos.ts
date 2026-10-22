@@ -45,4 +45,5 @@ export interface CursoListado {
   name: string;
   track: 'basico' | 'medicina';
   bloqueado: boolean;
+  icono: string | null;
 }
