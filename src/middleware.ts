@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { esDeCayetano } from '@/lib/admin';
+import { DESTINO_POR_DEFECTO, destinoSeguro } from '@/lib/destino';
 
 const DEVICE_COOKIE = 'device_id';
 const DEVICE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 año
@@ -56,9 +57,13 @@ export async function middleware(request: NextRequest) {
   // Rutas /auth que pueden visitarse con sesión activa (no rebotar a /dashboard).
   const isAuthEscape = isDeviceLimit || isClearDevice;
 
-  // Rutas protegidas: redirige al login si no hay sesión.
+  // Rutas protegidas: redirige al login si no hay sesión, recordando a dónde iba
+  // (`?next=`, que el login valida con `destinoSeguro`). La entrada por defecto no hace falta.
   if (!user && (pathname.startsWith('/dashboard') || pathname.startsWith('/estudio'))) {
-    return NextResponse.redirect(new URL('/auth/login', request.url));
+    const login = new URL('/auth/login', request.url);
+    const pedido = pathname + request.nextUrl.search;
+    if (pedido !== DESTINO_POR_DEFECTO) login.searchParams.set('next', pedido);
+    return NextResponse.redirect(login);
   }
 
   // /auth/device-limit requiere sesión (es la pantalla post-login de bloqueo).
@@ -82,11 +87,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/dashboard/home', request.url));
   }
 
-  // Si ya está logueado y va a otra ruta de /auth (login, signup), a la entrada de la app
-  // (/estudio, que manda al dashboard a quien no es de Cayetano).
-  // Excepción: device-limit y clear-device son válidas con sesión activa.
+  // Si ya está logueado y va a otra ruta de /auth (login, signup), a donde pedía el
+  // `?next=` o a la entrada de la app (/estudio, que manda al dashboard a quien no es
+  // de Cayetano). Excepción: device-limit y clear-device son válidas con sesión activa.
   if (user && pathname.startsWith('/auth') && !isAuthEscape) {
-    return NextResponse.redirect(new URL('/estudio', request.url));
+    const destino = destinoSeguro(request.nextUrl.searchParams.get('next'), request.nextUrl.origin);
+    return NextResponse.redirect(new URL(destino, request.url));
   }
 
   return supabaseResponse;

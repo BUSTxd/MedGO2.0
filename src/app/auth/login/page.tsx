@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { destinoSeguro, recordarDestino } from '@/lib/destino';
 import Logo from '@/components/Logo';
 import Background from '@/components/Background';
 import styles from '@/styles/auth.module.css';
@@ -33,6 +34,9 @@ export default function AuthPage() {
 function AuthPageInner() {
   const searchParams = useSearchParams();
   const supabase = createClient();
+  // A dónde volver al entrar (`?next=`, p. ej. los planes de la landing o la página que
+  // pidió el middleware); validado: sólo rutas internas.
+  const destino = () => destinoSeguro(searchParams.get('next'), window.location.origin);
 
   const [tab, setTab] = useState<Tab>('login');
   const [loading, setLoading] = useState(false);
@@ -73,6 +77,7 @@ function AuthPageInner() {
   async function handleGoogle() {
     setGoogleLoading(true);
     setError('');
+    recordarDestino(destino());
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -106,7 +111,7 @@ function AuthPageInner() {
     // con el primer request al middleware y el árbol RSC se reinicia con
     // la sesión válida. Con router.push había una carrera donde el server
     // veía user=null y rebotaba al login.
-    window.location.assign('/estudio');
+    window.location.assign(destino());
   }
 
   async function handleRegister(e: React.FormEvent) {
@@ -142,7 +147,7 @@ function AuthPageInner() {
       setSuccess('Te enviamos un correo para confirmar tu cuenta. Ábrelo y vuelve para iniciar sesión.');
       return;
     }
-    window.location.assign('/estudio');
+    window.location.assign(destino());
   }
 
   return (

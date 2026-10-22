@@ -1,48 +1,36 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { COOKIE_DESTINO, destinoSeguro } from '@/lib/destino';
 
-/**
- * Sólo rutas internas: `${origin}${next}` con `next=@evil.com` o `.evil.com`
- * sacaba al usuario a otro host justo después de iniciar sesión.
- */
-function destinoSeguro(next: string | null, origin: string): string {
-  // /estudio decide: la interfaz nueva para Cayetano, el dashboard para el resto.
-  const porDefecto = '/estudio';
-  if (!next || !next.startsWith('/') || next.startsWith('//') || next.startsWith('/\\')) {
-    return porDefecto;
-  }
-  try {
-    const url = new URL(next, origin);
-    return url.origin === origin ? url.pathname + url.search + url.hash : porDefecto;
-  } catch {
-    return porDefecto;
-  }
-}
-
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
-  const next = destinoSeguro(searchParams.get('next'), origin);
+  // El login con Google no lleva `?next=` en el `redirectTo` (Supabase lo compara con su
+  // lista de URLs permitidas y, si no casa, se iría a la Site URL): deja el destino en
+  // una cookie corta antes de salir hacia Google, y aquí se lee.
+  const deCookie = request.cookies.get(COOKIE_DESTINO)?.value;
+  const next = destinoSeguro(searchParams.get('next') ?? (deCookie?.startsWith('%') ? decodeURIComponent(deCookie) : deCookie), origin);
   const errorDescription = searchParams.get('error_description');
+  const conDestino = (url: string) => {
+    const res = NextResponse.redirect(url);
+    res.cookies.delete(COOKIE_DESTINO);
+    return res;
+  };
 
   if (errorDescription) {
-    return NextResponse.redirect(
-      `${origin}/auth/login?error=${encodeURIComponent(errorDescription)}`
-    );
+    return conDestino(`${origin}/auth/login?error=${encodeURIComponent(errorDescription)}`);
   }
 
   if (!code) {
-    return NextResponse.redirect(`${origin}/auth/login`);
+    return conDestino(`${origin}/auth/login`);
   }
 
   const supabase = await createClient();
   const { error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error) {
-    return NextResponse.redirect(
-      `${origin}/auth/login?error=${encodeURIComponent(error.message)}`
-    );
+    return conDestino(`${origin}/auth/login?error=${encodeURIComponent(error.message)}`);
   }
 
-  return NextResponse.redirect(`${origin}${next}`);
+  return conDestino(`${origin}${next}`);
 }

@@ -526,7 +526,7 @@ Port a Next del prototipo `prototipos/espacio-estudio` (barra marina con el GO b
 
 ## Flujo de autenticación
 
-1. Login en `/auth/login` → Supabase Auth
+1. Login en `/auth/login` → Supabase Auth. **Vuelve al `?next=`** (si no, `/estudio`), validado por `destinoSeguro` (`src/lib/destino.ts`: sólo rutas internas, nunca `/auth/…`), que comparten login, `/auth/callback` y middleware. El middleware pone `?next=` con la página pedida al rebotar al login. Google **no** lleva el `next` en el `redirectTo` (Supabase lo compara con su lista de URLs permitidas y, si no casa, se va a la Site URL): va en la cookie `medgo-next` (10 min) y el callback la lee y la borra
 2. `dashboard/layout.tsx` (RSC) verifica sesión, plan y dispositivo
 3. Redirecciones: `/auth/clear-device` (sesión revocada) o `/auth/device-limit` (límite de dispositivos)
 4. El plan se inyecta via `PlanProvider` a todo el árbol del dashboard
