@@ -204,6 +204,19 @@ const prefiereQuieto = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/**
+ * Quien desplaza al examen: la ventana en el dashboard (`.microPage` lleva
+ * `overflow: hidden`, no es un contenedor de scroll) y, en la interfaz de
+ * estudio, el panel de práctica, que tiene su propio scroll.
+ */
+function desplazadorDe(el: HTMLElement | null): HTMLElement | null {
+  for (let p = el?.parentElement; p && p !== document.body; p = p.parentElement) {
+    const o = getComputedStyle(p).overflowY;
+    if ((o === 'auto' || o === 'scroll') && p.scrollHeight > p.clientHeight) return p;
+  }
+  return null;
+}
+
 function formatoTiempo(seg: number, conHoras: boolean): string {
   const s = Math.max(0, Math.floor(seg));
   const mm = Math.floor(s / 60) % 60;
@@ -835,9 +848,11 @@ export default function ExamRunner({
   useEffect(() => {
     if (currentIdx === 0) return;
     const rect = shellRef.current?.getBoundingClientRect();
-    if (!rect || rect.top > -8) return; // ya se ve el inicio: no hay nada que mover
-    window.scrollTo({
-      top: rect.top + window.scrollY - 12,
+    const caja = desplazadorDe(shellRef.current);
+    const tope = caja ? caja.getBoundingClientRect().top : 0;
+    if (!rect || rect.top - tope > -8) return; // ya se ve el inicio: no hay nada que mover
+    (caja ?? window).scrollTo({
+      top: rect.top - tope + (caja ? caja.scrollTop : window.scrollY) - 12,
       behavior: prefiereQuieto() ? 'auto' : 'smooth',
     });
   }, [currentIdx]);
@@ -860,7 +875,7 @@ export default function ExamRunner({
 
   useEffect(() => {
     if (!corteAbierto) return;
-    window.scrollTo({ top: 0, behavior: prefiereQuieto() ? 'auto' : 'smooth' });
+    (desplazadorDe(shellRef.current) ?? window).scrollTo({ top: 0, behavior: prefiereQuieto() ? 'auto' : 'smooth' });
   }, [corteAbierto]);
 
   // La imagen ampliada se cierra sola al cambiar de pregunta, de grupo o al

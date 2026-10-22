@@ -68,7 +68,7 @@ const CLAVE_DESCARTE = 'medgo-aviso-respuestas';
  * bajas), así que esto es lo que de verdad avisa. Cerrarlo lo calla hasta que
  * llegue otra respuesta más.
  */
-export function AvisoRespuestas({ nuevas, ocultar }: { nuevas: number | null; ocultar: boolean }) {
+export function AvisoRespuestas({ nuevas, ocultar, href = '/dashboard/admin#mensajes' }: { nuevas: number | null; ocultar: boolean; href?: string }) {
   const [descartadas, setDescartadas] = useState(0);
   const [destino, setDestino] = useState<HTMLElement | null>(null);
 
@@ -98,7 +98,7 @@ export function AvisoRespuestas({ nuevas, ocultar }: { nuevas: number | null; oc
       <span className={s.avisoTexto}>
         Tienes <strong>{nuevas}</strong> {nuevas === 1 ? 'respuesta nueva' : 'respuestas nuevas'} en Mensajes
       </span>
-      <a href="/dashboard/admin#mensajes" className={s.avisoVer} onClick={cerrar}>Ver</a>
+      <a href={href} className={s.avisoVer} onClick={cerrar}>Ver</a>
       <button type="button" className={s.avisoCerrar} onClick={cerrar} aria-label="Cerrar aviso">✕</button>
     </div>,
     destino,

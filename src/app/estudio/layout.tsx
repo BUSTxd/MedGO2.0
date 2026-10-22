@@ -23,7 +23,7 @@ export default async function EstudioLayout({ children }: { children: React.Reac
   };
   return (
     <div className={outfitEstudio.variable}>
-      <EstudioShell planState={s.clientPlan} isAdmin={s.isAdmin} presencia={s.presencia} buzon={s.buzon} cuenta={cuenta}>
+      <EstudioShell planState={s.clientPlan} isAdmin={s.isAdmin} presencia={s.presencia} buzon={s.buzon} canalAdmin={s.canalAdmin} cuenta={cuenta}>
         {children}
       </EstudioShell>
     </div>

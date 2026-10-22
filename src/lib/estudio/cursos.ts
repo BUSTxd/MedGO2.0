@@ -5,6 +5,7 @@ import { puedeVerResumen } from '@/lib/acceso-resumen';
 import { cursoEsGratis, planDeTrack, requiredPlanDeCurso, tieneAccesoA, trackDelUsuario } from '@/lib/acceso';
 import type { PlanState } from '@/lib/plans';
 import { laboratorioDeClase } from './laboratorios';
+import { practicaDeClase, type ActPractica } from './practica';
 import type { ClaseEstudio, CursoEstudio, CursoListado, FormatoResumen, ResumenEstudio } from './tipos';
 
 type Plan = Pick<PlanState, 'plan' | 'isActive' | 'allAccess'>;
@@ -43,7 +44,7 @@ const TIPO: Record<string, string> = {
 };
 const etiquetaTipo = (t: string) => TIPO[t] ?? t.charAt(0) + t.slice(1).toLowerCase().replace(/-/g, ' ');
 
-interface ActCruda {
+interface ActCruda extends ActPractica {
   id: string; tipo: string; titulo: string; fecha?: string; hora?: string; subtemas?: string[];
   docentes?: string[]; nota?: string; simulacion?: { href?: string; desc?: string }; modulo?: boolean;
   resumen?: { formato?: FormatoResumen; opciones?: { id: string; label?: string; formato?: FormatoResumen }[] };
@@ -71,6 +72,7 @@ function clase(a: ActCruda, plan: Plan, curso: string): ClaseEstudio {
     resumenes,
     bloqueada: resumenes.length > 0 && !resumenes.some((r) => puedeVerResumen(plan, r.id)),
     ...(laboratorio ? { laboratorio } : {}),
+    practica: practicaDeClase(curso, a, plan),
   };
 }
 

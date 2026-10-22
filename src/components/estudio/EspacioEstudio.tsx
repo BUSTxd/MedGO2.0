@@ -1,13 +1,14 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import type { ClaseEstudio, CursoEstudio, CursoListado, SemanaEstudio } from '@/lib/estudio/tipos';
 import { recordarUltima } from '@/lib/estudio/rutas';
 import { cx, Icono } from './Icono';
 import { norm } from './texto';
 import BarraSuperior, { type Pagina } from './BarraSuperior';
-import Lector, { BarraLector, Practica } from './Lector';
+import Lector, { BarraLector } from './Lector';
+import { Practica, ZonaPractica } from './Practica';
 import Progreso from './Progreso';
 import { Buscador } from './Dialogos';
 import { useMarcas, type Marcas } from './marcas';
@@ -66,6 +67,9 @@ export default function EspacioEstudio({ cursos, curso, children }: { cursos: Cu
   const pedida = params?.clase?.[0];
   const lesson = (curso && (lessons.find((l) => l.id === pedida) ?? claseDeEntrada(curso))) || null;
   const group = curso && lesson ? curso.groups.find((g) => g.lessons.some((l) => l.id === lesson.id)) ?? curso.groups[0] : null;
+  // El banqueo abierto (`?practica=<tipo>`): lo pinta la página, que llega como `children`.
+  const pedidaPractica = useSearchParams().get('practica');
+  const practicaAbierta = lesson?.practica.find((p) => p.tipo === pedidaPractica && p.tipo !== 'propuestos') ?? null;
 
   const toast = useCallback((msg: string) => {
     setAviso({ msg, visible: true });
@@ -93,14 +97,18 @@ export default function EspacioEstudio({ cursos, curso, children }: { cursos: Cu
     const el = vuelveFoco.current; vuelveFoco.current = null;
     requestAnimationFrame(() => el?.focus?.());
   }, []);
-  // La clase visitada queda marcada en el temario (el check gris del prototipo), y es
-  // la que retoman «Estudiar» y «Mi progreso» desde el Laboratorio.
+  // La clase visitada es la que retoman «Estudiar» y «Mi progreso» desde el Laboratorio.
+  // El check del temario no sale de aquí: sólo lo pone «Marcar como estudiada».
   const visitar = marcas.visitar;
   useEffect(() => {
     if (!curso || !lesson) return;
     visitar(lesson.id);
     recordarUltima(`/estudio/upch/${curso.id}/${lesson.id}`);
   }, [curso?.id, lesson?.id, visitar]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Entrar (o volver con el historial) a un banqueo abre su pestaña.
+  useEffect(() => {
+    if (practicaAbierta) set(() => ({ page: 'study', tab: 'practice' }));
+  }, [practicaAbierta?.tipo, lesson?.id, set]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── Hash: `#progress` es la otra vista del curso; `#buscar` abre el buscador (llega así
   //    desde el Laboratorio, que no tiene clases donde buscar). La clase va en la ruta. ──
@@ -196,7 +204,9 @@ export default function EspacioEstudio({ cursos, curso, children }: { cursos: Cu
               <Temario ctx={ctx} />
               <section className={cx('study-area', barraOculta && 'reader-bar-hidden')} aria-label="Espacio de estudio">
                 <BarraLector ctx={ctx} />
-                {st.tab === 'summary' ? <Lector ctx={ctx} /> : <Practica ctx={ctx} />}
+                {st.tab === 'summary' && <Lector ctx={ctx} />}
+                {st.tab === 'practice' && !practicaAbierta && <Practica ctx={ctx} />}
+                {practicaAbierta && <ZonaPractica ctx={ctx} oculta={st.tab !== 'practice'}>{children}</ZonaPractica>}
               </section>
             </main>
           </>
@@ -214,7 +224,6 @@ export default function EspacioEstudio({ cursos, curso, children }: { cursos: Cu
         )}
       </div>
       <div className={cx('toast', aviso.visible && 'visible')} role="status" aria-live="polite">{aviso.msg}</div>
-      {children}
     </div>
   );
 }
@@ -294,7 +303,7 @@ function Temario({ ctx }: { ctx: Contexto }) {
                 <button key={l.id} className={cx('lesson-link', l.id === actual.id && 'active')} aria-current={l.id === actual.id ? 'true' : undefined} onClick={() => openLesson(l.id)}>
                   <Icono n={l.bloqueada ? 'lock' : 'document'} cls="lesson-summary-icon" />
                   <span>{l.title}</span>
-                  {marcas.visited.has(l.id) && l.id !== actual.id && <Icono n="check" cls="done-icon" />}
+                  {marcas.completed.has(l.id) && <Icono n="check" cls="done-icon" />}
                 </button>
               ))}
             </section>

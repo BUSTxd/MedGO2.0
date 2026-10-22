@@ -106,7 +106,7 @@ function useAncho(ref: React.RefObject<HTMLElement | null>, activo: boolean) {
 
 /* eslint-disable @next/next/no-img-element */
 /** «Llévalo a la práctica»: el laboratorio que el sílabo enlaza a la clase (tarjeta del prototipo). */
-function TarjetaLaboratorio({ lab }: { lab: LabRecomendado }) {
+export function TarjetaLaboratorio({ lab }: { lab: LabRecomendado }) {
   const router = useRouter();
   return (
     <div className={cx('related-card')}>
@@ -382,24 +382,6 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
         ? <HtmlFullscreenModal claseId={abierto.id} titulo={l.title} onClose={() => setAbierto(null)} />
         : <PdfFullscreenModal claseId={abierto.id} onClose={() => setAbierto(null)} />)}
       {comprar && <SubscribeModal open planKey={c.planRequerido} onClose={() => setComprar(false)} />}
-    </div>
-  );
-}
-
-export function Practica({ ctx }: { ctx: Contexto }) {
-  const { lesson } = ctx;
-  return (
-    <div className={cx('practice-wrap')} id="study-content" role="tabpanel" aria-labelledby="practice-tab">
-      <div className={cx('practice-inner')}>
-        <div className={cx('practice-head')}>
-          <div><h1>Aprende practicando</h1><p>{lesson.title}</p></div>
-        </div>
-        <div className={cx('sim-setup')}>
-          <Icono n="quiz" />
-          <h2>La práctica llega pronto</h2>
-          <p>Aquí vas a encontrar el banqueo y las preguntas de esta clase. Mientras tanto, sigue con el resumen y marca lo que vayas estudiando.</p>
-        </div>
-      </div>
     </div>
   );
 }

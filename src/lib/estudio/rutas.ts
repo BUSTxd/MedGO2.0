@@ -9,6 +9,9 @@ const MAPA: [string, string][] = [
   ['/dashboard/investigacion', '/estudio/laboratorio/investigacion'],
   ['/dashboard/cursos/fisica-medicina/modulo', '/estudio/laboratorio/fisica'],
   ['/dashboard/cuenta', '/estudio/cuenta'],
+  ['/dashboard/aportes', '/estudio/aportes'],
+  ['/dashboard/admin', '/estudio/admin'],
+  ['/dashboard/modelado', '/estudio/modelado'],
 ];
 
 /** Bajo `/dashboard/cursos/` lo que NO es un curso de Cayetano (ver `CURSOS_ABIERTOS` del middleware). */

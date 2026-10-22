@@ -10,6 +10,8 @@ export interface CuentaEstudio {
   planActivo: boolean;
   isAdmin: boolean;
   verAportes: boolean;
+  /** Respuestas de alumnos sin leer en la bandeja del admin (lo pone `EstudioShell`, en vivo). */
+  respuestasNuevas?: number;
 }
 
 const VACIA: CuentaEstudio = { nombre: 'Tu cuenta', correo: '', planLabel: 'Gratuito', planActivo: false, isAdmin: false, verAportes: false };

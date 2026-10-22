@@ -29,6 +29,7 @@ export default function MenuCuenta() {
   const boton = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const inicial = (cuenta.nombre.trim()[0] ?? 'M').toUpperCase();
+  const nuevas = cuenta.respuestasNuevas ?? 0;
 
   // Bajo el círculo, alineado a su borde derecho; se recoloca si cambia la ventana.
   useLayoutEffect(() => {
@@ -82,6 +83,7 @@ export default function MenuCuenta() {
         onClick={() => setAbierto((v) => !v)}
       >
         {inicial}
+        {nuevas > 0 && <span className={cx('avatar-aviso')} aria-hidden="true" />}
       </button>
       {abierto && (
         <div ref={panel} className={cx('cuenta-panel')} role="menu" aria-label="Tu cuenta" style={{ top: pos.top, right: pos.right }}>
@@ -111,14 +113,20 @@ export default function MenuCuenta() {
               </>
             )}
             {cuenta.verAportes && (
-              <Link href="/dashboard/aportes" role="menuitem" className={cx('cuenta-item')}>
+              <Link href="/estudio/aportes" role="menuitem" className={cx('cuenta-item')}>
                 <Icono n="chart" /><span>Avance y aportes</span>
               </Link>
             )}
             {cuenta.isAdmin && (
-              <Link href="/dashboard/admin" role="menuitem" className={cx('cuenta-item')}>
-                <Icono n="target" /><span>Panel de administración</span>
-              </Link>
+              <>
+                <Link href={nuevas ? '/estudio/admin#mensajes' : '/estudio/admin'} role="menuitem" className={cx('cuenta-item')}>
+                  <Icono n="target" /><span>Panel de administración</span>
+                  {nuevas > 0 && <span className={cx('cuenta-contador')} aria-label={`${nuevas} ${nuevas === 1 ? 'respuesta nueva' : 'respuestas nuevas'}`}>{nuevas}</span>}
+                </Link>
+                <Link href="/estudio/modelado" role="menuitem" className={cx('cuenta-item')}>
+                  <Icono n="cube" /><span>Modelado 3D</span>
+                </Link>
+              </>
             )}
             <Link href="/dashboard/home" role="menuitem" className={cx('cuenta-item')}>
               <Icono n="grid" /><span>Dashboard clásico<small>La vista anterior de MedGO</small></span>

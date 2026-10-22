@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
+import { useRutaInterfaz } from './RutaInterfaz';
 import type { Bloque, Solucionario } from '@/lib/data/solucionarios';
 import SolucionarioEsquema from './SolucionarioEsquema';
 import styles from '@/styles/solucionario.module.css';
@@ -237,6 +238,7 @@ function BloqueView({ bloque, idx }: { bloque: Bloque; idx: number }) {
 
 export default function SolucionarioRunner({ solucionario, backHref }: Props) {
   const router = useRouter();
+  const ruta = useRutaInterfaz();
   const { pasos } = solucionario;
   const total = pasos.length;
 
@@ -284,8 +286,8 @@ export default function SolucionarioRunner({ solucionario, backHref }: Props) {
   }, [portalTarget, vistaMovil]);
 
   const cerrar = useCallback(() => {
-    router.push(backHref);
-  }, [router, backHref]);
+    router.push(ruta(backHref));
+  }, [router, ruta, backHref]);
 
   const ir = useCallback(
     (delta: number) => {

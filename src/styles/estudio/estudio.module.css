@@ -4,30 +4,30 @@
 
 /* globals.css borra márgenes y paddings con `*` y le da 100px a `section`:
    aquí vuelven los del navegador, con la misma especificidad que una etiqueta. */
-:where(.wrapper) p { margin: 1em 0; }
-:where(.wrapper) :is(ul, ol) { margin: 1em 0; padding-left: 40px; }
-:where(.wrapper) h1 { margin: 0.67em 0; }
-:where(.wrapper) h2 { margin: 0.83em 0; }
-:where(.wrapper) h3 { margin: 1em 0; }
-:where(.wrapper) button { padding: 1px 6px; }
-:where(.wrapper) input { padding: 1px 2px; }
-:where(.wrapper) input[type='checkbox'] { margin: 3px 3px 3px 4px; padding: 0; }
-:where(.wrapper) input[type='range'] { margin: 2px; padding: 0; }
+:where(.wrapper) p:not(:where(.practica-zona *)) { margin: 1em 0; }
+:where(.wrapper) :is(ul, ol):not(:where(.practica-zona *)) { margin: 1em 0; padding-left: 40px; }
+:where(.wrapper) h1:not(:where(.practica-zona *)) { margin: 0.67em 0; }
+:where(.wrapper) h2:not(:where(.practica-zona *)) { margin: 0.83em 0; }
+:where(.wrapper) h3:not(:where(.practica-zona *)) { margin: 1em 0; }
+:where(.wrapper) button:not(:where(.practica-zona *)) { padding: 1px 6px; }
+:where(.wrapper) input:not(:where(.practica-zona *)) { padding: 1px 2px; }
+:where(.wrapper) input[type='checkbox']:not(:where(.practica-zona *)) { margin: 3px 3px 3px 4px; padding: 0; }
+:where(.wrapper) input[type='range']:not(:where(.practica-zona *)) { margin: 2px; padding: 0; }
 :where(.wrapper) :is(div, main, aside, article, nav, section) > section { padding: 0; }
 
 /* ── styles.css ── */
 .wrapper { --bg: #f7f8fc; --paper: #fff; --nav: #fff; --text: #182443; --muted: #778197; --line: #e8ecf4; --accent: #5144e9; --accent-hover: #4034cf; --soft: #efedff; --blue: #538eea; --green: #299579; --shadow: 0 12px 40px #29345009; --radius: 14px; --reading-size: 16px; color-scheme: light; }
 div:where(.wrapper) { margin: 0px; background: var(--bg); color: var(--text); font-family: var(--font-estudio), Inter, system-ui, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }
-:where(.wrapper) button, :where(.wrapper) input, :where(.wrapper) select { font: inherit; }
-:where(.wrapper) button, :where(.wrapper) a, :where(.wrapper) input, :where(.wrapper) select { -webkit-tap-highlight-color: transparent; }
-:where(.wrapper) button { cursor: pointer; }
-:where(.wrapper) button { color: inherit; }
-:where(.wrapper) button:disabled { cursor: default; }
-:where(.wrapper) button, :where(.wrapper) input, :where(.wrapper) select { outline-offset: 4px; }
-:where(.wrapper) button:focus-visible, :where(.wrapper) a:focus-visible { outline: 2px solid var(--accent); }
-:where(.wrapper) a { color: inherit; text-decoration: none; }
-:where(.wrapper) button { border: 0px; background: none; }
-:where(.wrapper) svg { display: block; flex-shrink: 0; }
+:where(.wrapper) button:not(:where(.practica-zona *)), :where(.wrapper) input:not(:where(.practica-zona *)), :where(.wrapper) select:not(:where(.practica-zona *)) { font: inherit; }
+:where(.wrapper) button:not(:where(.practica-zona *)), :where(.wrapper) a:not(:where(.practica-zona *)), :where(.wrapper) input:not(:where(.practica-zona *)), :where(.wrapper) select:not(:where(.practica-zona *)) { -webkit-tap-highlight-color: transparent; }
+:where(.wrapper) button:not(:where(.practica-zona *)) { cursor: pointer; }
+:where(.wrapper) button:not(:where(.practica-zona *)) { color: inherit; }
+:where(.wrapper) button:disabled:not(:where(.practica-zona *)) { cursor: default; }
+:where(.wrapper) button:not(:where(.practica-zona *)), :where(.wrapper) input:not(:where(.practica-zona *)), :where(.wrapper) select:not(:where(.practica-zona *)) { outline-offset: 4px; }
+:where(.wrapper) button:focus-visible:not(:where(.practica-zona *)), :where(.wrapper) a:focus-visible:not(:where(.practica-zona *)) { outline: 2px solid var(--accent); }
+:where(.wrapper) a:not(:where(.practica-zona *)) { color: inherit; text-decoration: none; }
+:where(.wrapper) button:not(:where(.practica-zona *)) { border: 0px; background: none; }
+:where(.wrapper) svg:not(:where(.practica-zona *)) { display: block; flex-shrink: 0; }
 .icon { width: 20px; height: 20px; stroke: currentcolor; stroke-width: 1.7; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .muted { color: var(--muted); }
 .eyebrow { text-transform: uppercase; letter-spacing: 1.6px; font-size: 10px; font-weight: 650; }
@@ -931,6 +931,9 @@ div.wrapper .article-controls .icon-button.saved { background: var(--personal-so
   .topbar { display: grid; grid-template-columns: calc(var(--course-column) - var(--header-inset)) minmax(0, 1fr) auto; column-gap: var(--reader-inset); padding: 0 var(--header-inset); }
   .brand { min-width: 0; justify-self: start; }
   .top-tools { margin-left: 0; }
+  /* El GO en el eje de la barra lateral: su columna empieza en el inset, no en 0, así
+     que centrado en ella quedaría medio inset a la derecha. */
+  .brand { justify-self: center; justify-content: center; left: calc(var(--header-inset) / -2); }
   .workspace { grid-template-columns: var(--course-column) minmax(0, 1fr); }
   .focus-mode .workspace { grid-template-columns: minmax(0, 1fr); }
 }
@@ -1189,6 +1192,10 @@ div.wrapper .course-nav::after { animation: orbe-sube 30s ease-in-out infinite; 
 .cuenta-salir { border-top: 1px solid var(--border); border-radius: 0 0 9px 9px; margin-top: 2px; padding-top: 12px; color: #9b3e4a; }
 .cuenta-salir > .icon { color: #9b3e4a; }
 @media (max-width: 720px) { .top-tools .avatar-boton { display: grid; } }
+/* Respuestas de alumnos sin leer (solo admin): punto en el círculo y contador en su entrada. */
+.avatar-boton { position: relative; }
+.avatar-aviso { position: absolute; top: -1px; right: -1px; width: 10px; height: 10px; border-radius: 50%; background: #e5484d; box-shadow: 0 0 0 2px var(--bar, #10233f); }
+.cuenta-item > .cuenta-contador { flex: none; min-width: 20px; padding: 2px 6px; border-radius: 10px; background: #e5484d; color: #fff; font-size: 11px; font-weight: 600; text-align: center; }
 @media (prefers-reduced-motion: reduce) { .cuenta-panel { animation: none; } }
 
 /* «Llévalo a la práctica» en el cuerpo de la clase: sólo cuando el panel lateral se oculta. */
@@ -1197,3 +1204,43 @@ div.wrapper .course-nav::after { animation: orbe-sube 30s ease-in-out infinite; 
 .lab-reco .related-card { max-width: 420px; }
 @media (max-width: 1000px) { .lab-reco { display: block; } }
 .related-card button .icon { display: inline-block; }
+
+/* ── Pestaña «Práctica»: los banqueos de la clase ── */
+.practica-lista { display: grid; gap: 14px; }
+.practica-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 18px; padding: 20px 22px; background: var(--surface); border: 1px solid var(--border); border-radius: 13px; box-shadow: 0 6px 22px #29315c08; transition: border-color .15s, box-shadow .15s; }
+.practica-item:hover { border-color: #b9cbe0; box-shadow: 0 10px 28px #29315c10; }
+.practica-icono { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 12px; background: var(--soft-fill); color: var(--action); }
+.practica-icono .icon { width: 22px; height: 22px; }
+.practica-cuerpo { min-width: 0; }
+.practica-cuerpo .eyebrow { color: var(--explore); font-size: 9px; letter-spacing: 1.2px; }
+.practica-cuerpo h2 { margin: 5px 0 4px; font-size: 17px; font-weight: 600; letter-spacing: -0.3px; color: var(--ink); }
+.practica-cuerpo p { margin: 0; font-size: 12px; line-height: 1.6; color: var(--secondary); }
+.practica-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.practica-chips span { padding: 3px 9px; border-radius: 20px; background: var(--support); border: 1px solid var(--border); font-size: 10.5px; font-weight: 550; color: var(--action-ink); }
+.practica-acciones { display: flex; flex-direction: column; align-items: stretch; gap: 7px; }
+.practica-acciones .button { white-space: nowrap; padding: 10px 16px; }
+.practica-acciones .button:disabled { opacity: .7; cursor: progress; }
+.practica-rueda { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #ffffff55; border-top-color: #fff; animation: practica-gira .7s linear infinite; }
+@keyframes practica-gira { to { transform: rotate(360deg); } }
+.practica-lab { margin-top: 30px; }
+.practica-lab .eyebrow { color: var(--secondary); margin-bottom: 10px; }
+.practica-lab .related-card { max-width: 340px; }
+@media (max-width: 720px) {
+  .practica-item { grid-template-columns: auto minmax(0, 1fr); padding: 17px; gap: 14px; }
+  .practica-acciones { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { .practica-rueda { animation-duration: 2s; } }
+
+/* El runner abierto: el panel del dashboard dentro del espacio de estudio. Las
+   etiquetas no reciben el reset de la interfaz (ver arriba, `:not(.practica-zona *)`)
+   y las variables globales vuelven a las de `:root`, que son las que el runner usa. */
+.practice-wrap.practica-scroll { padding: 20px 24px 28px; }
+.practice-wrap .practica-zona {
+  --bg: #08061a; --bg2: #0d0b28; --blue: #3b9edd; --orange: #f5a623;
+  --purple: oklch(0.42 0.18 275); --purple-light: oklch(0.62 0.18 275);
+  min-height: 100%; max-width: 1180px; margin: 0 auto;
+  font-family: var(--font-outfit), sans-serif; font-size: 16px; line-height: normal;
+  color: var(--white); color-scheme: normal; -webkit-font-smoothing: auto;
+  box-shadow: 0 6px 22px #29315c08;
+}
+@media (max-width: 720px) { .practice-wrap.practica-scroll { padding: 10px; } }

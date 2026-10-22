@@ -23,6 +23,24 @@ export interface ClaseEstudio {
   bloqueada: boolean;
   /** El laboratorio que el sílabo enlaza a esta clase («Llévalo a la práctica»). */
   laboratorio?: LabRecomendado;
+  /** Los banqueos de la clase (pestaña «Práctica»), en el orden en que se ofrecen. */
+  practica: PracticaEstudio[];
+}
+
+/**
+ * Cómo se practica una clase. Los cuatro primeros son el runner del dashboard que
+ * su `[id]/page.tsx` monta con `?<tipo>=1`; los propuestos son documentos del visor.
+ */
+export type TipoPractica = 'examen' | 'banco' | 'tarjetas' | 'solucionario' | 'propuestos';
+
+export interface PracticaEstudio {
+  tipo: TipoPractica;
+  titulo: string;
+  desc: string;
+  /** Lo que trae dentro: los años de cada banqueo, «Por temas»… */
+  chips: string[];
+  /** Sólo los propuestos: cada documento, con el acceso de `/api/resumen` ya resuelto. */
+  documentos?: (ResumenEstudio & { bloqueado: boolean })[];
 }
 
 export interface LabRecomendado {
