@@ -1,7 +1,9 @@
+import { PLANS, type PlanCatalogEntry, type PlanKey, type Track } from '@/lib/plans';
+
 /**
  * Contenido de la landing nueva (prototipo de GO con DOT), tal cual lo trae el
- * prototipo. La demo es ilustrativa; los planes son una copia visual de
- * `PLANS` / `Pricing.tsx` que todavía no se lee de `src/lib/plans.ts`.
+ * prototipo. La demo es ilustrativa; los planes leen importes, cadencia y
+ * compromiso de `PLANS` (`src/lib/plans.ts`) y sólo el texto vive aquí.
  */
 
 export type CursoDemo = 'cardio' | 'farmaco' | 'histo';
@@ -87,61 +89,97 @@ export const RUTAS: { id: RutaLanding; tab: string; label: string; title: [strin
   },
 ];
 
-export type TramoLanding = 'medicina' | 'basico';
+export type TramoLanding = Track;
 
 export interface PlanLanding {
-  key: string; name: string; price: string; period: string; billing: string; note: string;
-  intro: string; features: string[]; cta: string; summary: string[];
+  /** `free` o la clave de `PLANS`: de ahí salen importe, cadencia y compromiso. */
+  key: 'free' | PlanKey;
+  name: string;
+  /** Lo que se ve grande: el importe, o su equivalente mensual en los anuales (como `Pricing.tsx`). */
+  price: string;
+  period: string;
+  billing: string;
+  note: string;
+  intro: string;
+  features: string[];
+  summary: string[];
+  cta: string;
 }
 
-const GRATUITO: PlanLanding = {
-  key: 'free', name: 'Gratuito', price: '0', period: '', billing: 'Para siempre', note: 'Acceso gratuito y limitado.',
-  intro: 'Para empezar:', features: ['Cursos limitados', 'Calculadora de promedio', 'Lecciones básicas', 'Quizzes de práctica'],
-  cta: 'Empezar gratis', summary: ['Cursos limitados y lecciones básicas', 'Quizzes de práctica', 'Calculadora de promedio'],
+/** El texto de cada tarjeta (el de `Pricing.tsx`). Los números NO van aquí: los pone `planLanding`. */
+const TEXTO: Record<'free' | PlanKey, Pick<PlanLanding, 'intro' | 'features' | 'summary'>> = {
+  free: {
+    intro: 'Para empezar:',
+    features: ['Cursos limitados', 'Calculadora de promedio', 'Lecciones básicas', 'Quizzes de práctica'],
+    summary: ['Cursos limitados y lecciones básicas', 'Quizzes de práctica', 'Calculadora de promedio'],
+  },
+  interno: {
+    intro: 'Incluye:',
+    features: ['Todos los cursos de Medicina', 'Sílabo personalizado', 'Quizzes ilimitados', 'Seguimiento de progreso', 'Soporte prioritario', 'Resúmenes y trabajos', 'Modelos 3D'],
+    summary: ['Cursos y sílabo personalizado', 'Quizzes y seguimiento de progreso', 'Resúmenes, trabajos y modelos 3D', 'Soporte prioritario'],
+  },
+  residente: {
+    intro: 'Todo lo de Interno, más:',
+    features: ['Bloqueo de precio por 12 meses', 'Exámenes simulacro', 'Flashcards', 'Acceso anticipado a simulaciones'],
+    summary: ['Simulacros y flashcards', 'Precio fijo por 12 meses', 'Acceso anticipado a simulaciones'],
+  },
+  ufbi: {
+    intro: 'Los 6 cursos de tu ciclo:',
+    features: ['Biología Celular, Física y Química Orgánica', 'Ciencias Sociales, Comunicación y Cultura Ambiental (beta)', 'Sílabo personalizado', 'Quizzes ilimitados (beta)', 'Laboratorios y simulaciones'],
+    summary: ['6 cursos del ciclo (incluye beta)', 'Sílabo personalizado', 'Quizzes ilimitados (beta)', 'Laboratorios y simulaciones'],
+  },
+  'ufbi-anual': {
+    intro: 'Todo lo de UFBI, más:',
+    features: ['20% de descuento en el plan anual', 'Acceso anticipado a nuevo contenido', 'Acceso anticipado a simulaciones', 'Sin renovaciones mensuales'],
+    summary: ['20% de descuento anual', 'Contenido y simulaciones anticipados', 'Un pago para 12 meses'],
+  },
 };
 
-export const PLANES: Record<TramoLanding, PlanLanding[]> = {
-  medicina: [
-    GRATUITO,
-    {
-      key: 'interno', name: 'Interno', price: '14', period: '/ mes', billing: 'Facturado cada mes', note: 'Compromiso mínimo de 3 meses.',
-      intro: 'Incluye:',
-      features: ['Todos los cursos de Medicina', 'Sílabo personalizado', 'Quizzes ilimitados', 'Seguimiento de progreso', 'Soporte prioritario', 'Resúmenes y trabajos', 'Modelos 3D'],
-      cta: 'Ver plan Interno',
-      summary: ['Cursos y sílabo personalizado', 'Quizzes y seguimiento de progreso', 'Resúmenes, trabajos y modelos 3D', 'Soporte prioritario'],
-    },
-    {
-      key: 'residente', name: 'Residente', price: '11.90', period: '/ mes', billing: 'Pago único de S/ 142.80 al año', note: 'Equivalente mensual con pago anual.',
-      intro: 'Todo lo de Interno, más:',
-      features: ['Precio fijo durante 12 meses', 'Exámenes simulacro', 'Flashcards', 'Acceso anticipado a simulaciones'],
-      cta: 'Ver plan Residente',
-      summary: ['Simulacros y flashcards', 'Precio fijo por 12 meses', 'Acceso anticipado a simulaciones'],
-    },
-  ],
-  basico: [
-    GRATUITO,
-    {
-      key: 'ufbi', name: 'UFBI', price: '19.70', period: '/ mes', billing: 'Facturado cada mes', note: 'Compromiso mínimo de 3 meses.',
-      intro: 'Los 6 cursos de tu ciclo:',
-      features: ['Biología Celular, Física y Química Orgánica', 'Ciencias Sociales, Comunicación y Cultura Ambiental (beta)', 'Sílabo personalizado', 'Quizzes ilimitados (beta)', 'Laboratorios y simulaciones'],
-      cta: 'Ver plan UFBI',
-      summary: ['6 cursos del ciclo (incluye beta)', 'Sílabo personalizado', 'Quizzes ilimitados (beta)', 'Laboratorios y simulaciones'],
-    },
-    {
-      key: 'ufbi-anual', name: 'UFBI Anual', price: '15.75', period: '/ mes', billing: 'Pago único de S/ 189 al año', note: 'Equivalente mensual con pago anual.',
-      intro: 'Todo lo de UFBI, más:',
-      features: ['20% de descuento en el plan anual', 'Acceso anticipado a nuevo contenido', 'Acceso anticipado a simulaciones', 'Sin renovaciones mensuales'],
-      cta: 'Ver plan UFBI Anual',
-      summary: ['20% de descuento anual', 'Contenido y simulaciones anticipados', 'Un pago para 12 meses'],
-    },
-  ],
-};
+/** «14», «19.70», «142.80»: los céntimos sólo cuando los hay (como en el resto de la web). */
+export const soles = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(2));
+
+/**
+ * La tarjeta de un plan con los números de `PLANS` (`src/lib/plans.ts`): la cadencia sale
+ * de `durationDays` (nunca del nombre) y el compromiso de `commitmentMonths`, como en
+ * `SubscribeModal`, Mi cuenta y /terminos. Cambiar un precio allí lo cambia aquí.
+ */
+export function planLanding(key: 'free' | PlanKey): PlanLanding {
+  const texto = TEXTO[key];
+  if (key === 'free') {
+    return { key, name: 'Gratuito', price: '0', period: '', billing: 'Para siempre', note: 'Acceso gratuito y limitado.', cta: 'Empezar gratis', ...texto };
+  }
+  const p = PLANS[key];
+  const anual = p.durationDays >= 365;
+  return {
+    key,
+    name: p.label,
+    price: soles(anual ? Math.round((p.amount / 12) * 100) / 100 : p.amount),
+    period: '/ mes',
+    billing: anual ? `Pago único de S/ ${soles(p.amount)} al año` : 'Facturado cada mes',
+    note: anual
+      ? 'Equivalente mensual con pago anual.'
+      : p.commitmentMonths ? `Compromiso mínimo de ${p.commitmentMonths} meses.` : 'Sin compromiso de permanencia.',
+    cta: `Ver plan ${p.label}`,
+    ...texto,
+  };
+}
+
+/** Gratuito + los planes del tramo, el mensual antes que el anual. */
+export const planesDe = (tramo: TramoLanding): PlanLanding[] => [
+  planLanding('free'),
+  ...(Object.values(PLANS) as PlanCatalogEntry[])
+    .filter((p) => p.track === tramo)
+    .sort((a, b) => a.durationDays - b.durationDays)
+    .map((p) => planLanding(p.key)),
+];
+
+const anuales = (Object.values(PLANS) as PlanCatalogEntry[]).filter((p) => p.durationDays >= 365);
 
 export const PREGUNTAS: { q: string; a: string; abierta?: boolean }[] = [
-  { q: '¿Cómo se cobra un plan anual?', a: 'El precio por mes es un equivalente para comparar. Residente se paga en un único cobro de S/ 142.80 al año y UFBI Anual en un único cobro de S/ 189 al año. El importe total también aparece en cada tarjeta.' },
+  { q: '¿Cómo se cobra un plan anual?', a: `El precio por mes es un equivalente para comparar. ${anuales.map((p) => `${p.label} se paga en un único cobro de S/ ${soles(p.amount)} al año`).join(' y ')}. El importe total también aparece en cada tarjeta.` },
   { q: '¿GO es sólo para estudiantes de la UPCH?', a: 'No. La ruta UPCH sigue el sílabo del curso; Ciencias básicas permite estudiar por materias y ENCIB orienta el recorrido hacia el examen.', abierta: true },
-  { q: '¿Qué puedo probar aquí?', a: 'Esta es una demostración visual. Puedes cambiar de recurso, explorar una pregunta y comparar rutas. «Probar mi espacio» abre la interfaz local de estudio.' },
+  { q: '¿Qué puedo probar aquí?', a: 'La ventana de la portada es una demostración: puedes cambiar de recurso, explorar una pregunta y comparar rutas. «Probar mi espacio» abre tu espacio de estudio real.' },
   { q: '¿Ciencias básicas y ENCIB son contenidos separados?', a: 'Comparten fundamentos. Cambia la organización del estudio y el objetivo de la ruta; no necesitas pensar en ellos como dos bibliotecas independientes.' },
-  { q: '¿Qué hace DOT en esta versión?', a: 'Es la mascota del espacio: sigue tu cursor y responde al saludo. Esta demostración no conecta un asistente de IA, cuentas ni pagos.' },
+  { q: '¿Qué hace DOT en esta versión?', a: 'Es la mascota del espacio: sigue tu cursor y responde al saludo. La ventana de la portada es una demostración: no conecta un asistente de IA.' },
   { q: '¿Puedo detener el movimiento?', a: 'Sí. Usa «Pausar movimiento» debajo de la demostración. También se respeta la preferencia de movimiento reducido de tu dispositivo.' },
 ];

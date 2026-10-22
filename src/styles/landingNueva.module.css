@@ -445,3 +445,7 @@
 .m-movil .m-progreso-fila{grid-template-columns:minmax(0,1fr);gap:14px;margin-top:20px}
 .m-movil .m-stats>div{flex-direction:column;align-items:flex-start;gap:8px;padding:14px}
 .m-movil .m-stats strong{font-size:20px}
+
+/* Planes conectados: el botón de quien ya tiene plan, y el enlace a los términos del diálogo */
+.button.primary:disabled{opacity:.55;transform:none;background:var(--ink)}
+.dialog-enlace{color:#cfe0ef;text-decoration:underline;text-underline-offset:3px}

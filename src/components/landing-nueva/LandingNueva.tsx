@@ -1,17 +1,24 @@
 'use client';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/components/AuthProvider';
+import { PLANS, type PlanKey, type ProfilePlan } from '@/lib/plans';
 import { c } from './estilos';
 import Mascota from './Mascota';
 import DemoEspacio from './DemoEspacio';
 import { Ico, teclasDePestanas } from './piezas';
-import { PLANES, PREGUNTAS, RUTAS, type PlanLanding, type RutaLanding, type TramoLanding } from './datos';
+import { PREGUNTAS, RUTAS, planesDe, soles, type PlanLanding, type RutaLanding, type TramoLanding } from './datos';
+
+// El SDK de Mercado Pago sólo baja al abrir la compra (como en `Pricing.tsx`).
+const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ssr: false });
 
 /**
- * La landing nueva de GO con DOT (port del prototipo `prototipos/espacio-estudio/landing`).
- * Ruta provisional para pulir lo visual; todavía sin conectar: los CTA llevan al
- * espacio de estudio (`/estudio`, que pide sesión) y los planes abren una vista previa
- * sin cobro.
+ * La landing nueva de MedGO (port del prototipo `prototipos/espacio-estudio/landing`),
+ * en ruta provisional. Los CTA llevan al espacio de estudio (`/estudio`, que pide
+ * sesión) y los planes son los reales: importes de `PLANS` y la compra de siempre
+ * (`SubscribeModal`, Mercado Pago), con el mismo flujo que `Pricing.tsx`.
  */
 
 const ESPACIO = '/estudio';
@@ -104,6 +111,42 @@ export default function LandingNueva() {
   const [plan, setPlan] = useState<PlanLanding | null>(null);
   const dialogo = useRef<HTMLDialogElement>(null);
   const abrirPlan = (p: PlanLanding) => { setPlan(p); requestAnimationFrame(() => dialogo.current?.showModal()); };
+
+  // ── La compra real (el flujo de `Pricing.tsx`) ──
+  // Sin sesión, el plan lleva al login; con sesión se pide el plan vigente: quien ya paga
+  // ve «Tu plan actual» y no puede volver a comprar, y su tramo se abre solo.
+  const router = useRouter();
+  const { user } = useAuth();
+  const [planActual, setPlanActual] = useState<{ plan: ProfilePlan; isActive: boolean } | null>(null);
+  const [comprar, setComprar] = useState<PlanKey | null>(null);
+  useEffect(() => {
+    if (!user) { setPlanActual(null); return; }
+    let cancelado = false;
+    fetch('/api/subscriptions/me', { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((json) => {
+        if (cancelado || !json?.planState) return;
+        const ps = json.planState as { plan: ProfilePlan; isActive: boolean };
+        setPlanActual(ps);
+        if (ps.isActive && ps.plan !== 'free' && PLANS[ps.plan].track !== pestanaTramo) {
+          setPestanaTramo(PLANS[ps.plan].track); setTramo(PLANS[ps.plan].track);
+        }
+      })
+      .catch(() => {});
+    return () => { cancelado = true; };
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
+  const yaPaga = !!planActual?.isActive && planActual.plan !== 'free';
+  /** Lo que dice (y si se puede pulsar) el botón de compra de un plan de pago. */
+  const estadoCompra = (key: PlanKey) =>
+    !yaPaga ? null : planActual!.plan === key ? 'Tu plan actual' : 'Ya tienes un plan activo';
+  const empezarGratis = () => router.push(user ? ESPACIO : '/auth/login?signup=1');
+  const suscribirme = (key: PlanKey) => {
+    dialogo.current?.close();
+    if (!user) { router.push(`/auth/login?next=${encodeURIComponent('/landing-nueva#planes')}`); return; }
+    if (estadoCompra(key)) return;
+    // El diálogo vive en la capa superior del navegador: el modal de pago se abre al cerrarlo.
+    requestAnimationFrame(() => setComprar(key));
+  };
 
   return (
     <div className={c('pagina')} data-motion={parado ? 'paused' : 'active'}>
@@ -285,18 +328,23 @@ export default function LandingNueva() {
             className={c('plans-grid')} id="pricing-panel" role="tabpanel" aria-labelledby={`pricing-${tramo}`}
             data-fase={fase} style={{ '--sentido': sentido } as React.CSSProperties}
           >
-            {PLANES[tramo].map((p, i) => (
-              <article key={`${tramo}-${p.key}`} className={c('plan-card')} data-plan={p.key} aria-labelledby={`plan-name-${p.key}`} style={{ '--i': i } as React.CSSProperties}>
-                <div className={c('plan-name-row')}><h3 id={`plan-name-${p.key}`}>{p.name}</h3></div>
-                <Precio p={p} />
-                <div className={c('plan-billing')}><p>{p.billing}</p><small>{p.note}</small></div>
-                {p.key === 'free'
-                  ? <Link className={c('button primary plan-action')} href={ESPACIO}>{p.cta}</Link>
-                  : <button className={c('button primary plan-action')} aria-haspopup="dialog" onClick={() => abrirPlan(p)}>{p.cta}</button>}
-                <p className={c('plan-includes')}>{p.intro}</p>
-                <Beneficios lista={p.summary} />
-              </article>
-            ))}
+            {planesDe(tramo).map((p, i) => {
+              const bloqueo = p.key === 'free' ? null : estadoCompra(p.key);
+              return (
+                <article key={`${tramo}-${p.key}`} className={c('plan-card')} data-plan={p.key} aria-labelledby={`plan-name-${p.key}`} style={{ '--i': i } as React.CSSProperties}>
+                  <div className={c('plan-name-row')}><h3 id={`plan-name-${p.key}`}>{p.name}</h3></div>
+                  <Precio p={p} />
+                  <div className={c('plan-billing')}><p>{p.billing}</p><small>{p.note}</small></div>
+                  {p.key === 'free'
+                    ? <button className={c('button primary plan-action')} onClick={empezarGratis}>{p.cta}</button>
+                    : bloqueo
+                      ? <button className={c('button primary plan-action')} disabled>{bloqueo}</button>
+                      : <button className={c('button primary plan-action')} aria-haspopup="dialog" onClick={() => abrirPlan(p)}>{p.cta}</button>}
+                  <p className={c('plan-includes')}>{p.intro}</p>
+                  <Beneficios lista={p.summary} />
+                </article>
+              );
+            })}
           </div>
           <div className={c('pricing-access')}>
             <Ico id="i-book" />
@@ -304,7 +352,7 @@ export default function LandingNueva() {
             <Link href={ESPACIO}>Probar la demo <span aria-hidden="true">↗</span></Link>
           </div>
           <div className={c('sr-only')} role="status">
-            {`Planes de ${tramo === 'medicina' ? 'Medicina' : 'primer año, UFBI'}: ${PLANES[tramo].map((p) => p.name).join(', ')}.`}
+            {`Planes de ${tramo === 'medicina' ? 'Medicina' : 'primer año, UFBI'}: ${planesDe(tramo).map((p) => p.name).join(', ')}.`}
           </div>
         </section>
 
@@ -344,16 +392,29 @@ export default function LandingNueva() {
 
       <dialog ref={dialogo} className={c('plan-dialog')} aria-labelledby="plan-dialog-title" aria-describedby="plan-dialog-description" onClose={() => setPlan(null)}>
         <button className={c('dialog-close')} aria-label="Cerrar detalle del plan" onClick={() => dialogo.current?.close()}><Ico id="i-plus" /></button>
-        <p className={c('eyebrow')}>VISTA PREVIA DEL PLAN</p>
+        <p className={c('eyebrow')}>DETALLE DEL PLAN</p>
         <h2 id="plan-dialog-title">{plan?.name}</h2>
         {plan && <Precio p={plan} />}
         <p className={c('dialog-billing')}>{plan?.billing}</p>
         <p className={c('dialog-note')}>{plan?.note}</p>
         <p className={c('plan-includes')}>{plan?.intro}</p>
         {plan && <Beneficios lista={plan.features} />}
-        <p id="plan-dialog-description" className={c('dialog-preview-note')}>Esta es una vista previa. No activa una suscripción ni realiza cobros.</p>
-        <Link className={c('button primary')} href={ESPACIO}>Explorar la demo <Ico id="i-arrow" /></Link>
+        <p id="plan-dialog-description" className={c('dialog-preview-note')}>
+          Pago seguro con Mercado Pago. Al suscribirte aceptas los <Link href="/terminos" className={c('dialog-enlace')}>Términos y condiciones</Link>.
+        </p>
+        {plan && plan.key !== 'free' && (() => {
+          const key = plan.key;
+          const bloqueo = estadoCompra(key);
+          const cadencia = PLANS[key].durationDays >= 365 ? 'al año' : 'al mes';
+          return (
+            <button className={c('button primary')} disabled={!!bloqueo} onClick={() => suscribirme(key)}>
+              {bloqueo ?? `Suscribirme · S/ ${soles(PLANS[key].amount)} ${cadencia}`}
+              {!bloqueo && <Ico id="i-arrow" />}
+            </button>
+          );
+        })()}
       </dialog>
+      {comprar && <SubscribeModal open planKey={comprar} onClose={() => setComprar(null)} />}
       <div className={c('sr-only')} role="status">{`Ruta ${rutaActiva.stamp}: ${rutaActiva.note}`}</div>
     </div>
   );
