@@ -192,7 +192,7 @@ export default function Pricing() {
 
   async function handlePlanClick(action: PlanCard['action']) {
     if (action === 'free') {
-      router.push(authed ? '/dashboard/home' : '/auth/login?signup=1');
+      router.push(authed ? '/estudio' : '/auth/login?signup=1');
       return;
     }
     if (!authed) {

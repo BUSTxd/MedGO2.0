@@ -69,8 +69,14 @@ export const prepararSesionApp = cache(async () => {
     expiresAt: planState.expiresAt ? planState.expiresAt.toISOString() : null,
   };
 
+  // Para el avatar y el menú de la cuenta: el nombre que trae Google, o el correo.
+  const meta = (user?.user_metadata ?? {}) as { full_name?: string; name?: string };
+  const correo = user?.email ?? '';
+  const perfil = { nombre: meta.full_name || meta.name || correo.split('@')[0] || 'Tu cuenta', correo };
+
   return {
     user,
+    perfil,
     planState,
     clientPlan,
     isAdmin,

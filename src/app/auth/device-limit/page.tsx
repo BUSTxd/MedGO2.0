@@ -46,7 +46,7 @@ export default async function DeviceLimitPage() {
   const { allowed, sessions, limit } = await assertDeviceAllowed(user.id, deviceId, plan.plan);
 
   // Si ya hay slot disponible (revocó una sesión), llevarlo al dashboard.
-  if (allowed) redirect('/dashboard/home');
+  if (allowed) redirect('/estudio');
 
   const items = sessions.map((s) => toItem(s, deviceId));
 

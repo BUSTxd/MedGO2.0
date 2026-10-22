@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useDarkMode } from '@/components/DarkModeContext';
 import { ultimaClase } from '@/lib/estudio/rutas';
 import { cx, Icono } from './Icono';
+import MenuCuenta from './MenuCuenta';
 
 export type Pagina = 'study' | 'labs' | 'progress';
 
@@ -15,7 +16,8 @@ const LUNA = '#245b8f';
  * botón navega: a la última clase abierta, a su progreso o al Laboratorio.
  */
 export default function BarraSuperior({ page, onPagina, onBuscar }: {
-  page: Pagina;
+  /** La pestaña marcada; `null` en las páginas que no son de ninguna (Mi cuenta). */
+  page: Pagina | null;
   onPagina?: (p: Pagina) => void;
   onBuscar?: () => void;
 }) {
@@ -47,7 +49,7 @@ export default function BarraSuperior({ page, onPagina, onBuscar }: {
           <button className={cx('icon-button moon-toggle')} aria-label={etiquetaLuna} title={etiquetaLuna} aria-pressed={darkMode} onClick={toggleDark} style={{ '--moon-color': LUNA } as React.CSSProperties}>
             <Icono n="moon" />
           </button>
-          <span className={cx('avatar')} title="Perfil de ejemplo">B</span>
+          <MenuCuenta />
         </div>
       </div>
     </header>

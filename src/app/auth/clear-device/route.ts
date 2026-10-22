@@ -28,7 +28,7 @@ export async function GET(req: Request) {
   if (!user) return NextResponse.redirect(new URL('/auth/login', req.url));
 
   if (!(await dispositivoRevocado(user.id, await getDeviceId()))) {
-    return NextResponse.redirect(new URL('/dashboard/home', req.url));
+    return NextResponse.redirect(new URL('/estudio', req.url));
   }
 
   revalidateTag(`user-sessions:${user.id}`, { expire: 0 });

@@ -82,10 +82,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/dashboard/home', request.url));
   }
 
-  // Si ya está logueado y va a otra ruta de /auth (login, signup), redirige al dashboard/home.
+  // Si ya está logueado y va a otra ruta de /auth (login, signup), a la entrada de la app
+  // (/estudio, que manda al dashboard a quien no es de Cayetano).
   // Excepción: device-limit y clear-device son válidas con sesión activa.
   if (user && pathname.startsWith('/auth') && !isAuthEscape) {
-    return NextResponse.redirect(new URL('/dashboard/home', request.url));
+    return NextResponse.redirect(new URL('/estudio', request.url));
   }
 
   return supabaseResponse;

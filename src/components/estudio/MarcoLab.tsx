@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import { rutaEnEstudio } from '@/lib/estudio/rutas';
 import panel from '@/styles/dashboardLayout.module.css';
 import { cx } from './Icono';
-import BarraSuperior from './BarraSuperior';
+import BarraSuperior, { type Pagina } from './BarraSuperior';
 
 /**
- * Un laboratorio dentro de la interfaz de estudio: la barra marina arriba y,
+ * Un laboratorio (o Mi cuenta) dentro de la interfaz de estudio: la barra marina arriba y,
  * debajo, el mismo panel blanco del dashboard (`.panel`, con su modo oscuro).
  *
  * El laboratorio va FUERA del `.wrapper` de la interfaz a propósito: ese
@@ -19,7 +19,7 @@ import BarraSuperior from './BarraSuperior';
  * laboratorio, el marco los intercepta en la fase de captura —antes de que el
  * <Link> de Next los procese— y navega a la misma pieza dentro de /estudio.
  */
-export default function MarcoLab({ children }: { children: React.ReactNode }) {
+export default function MarcoLab({ children, pagina = 'labs' }: { children: React.ReactNode; pagina?: Pagina | null }) {
   const router = useRouter();
   const main = useRef<HTMLElement>(null);
 
@@ -44,7 +44,7 @@ export default function MarcoLab({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div className={cx('wrapper')} data-palette="pearl">
-        <BarraSuperior page="labs" />
+        <BarraSuperior page={pagina} />
       </div>
       <main ref={main} className={cx('lab-main')}>
         <div className={`${panel.panel} ${cx('lab-panel')}`}>{children}</div>

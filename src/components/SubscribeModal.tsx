@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react';
 import { PLANS, type PlanKey } from '@/lib/plans';
 import { usePlan } from './PlanProvider';
@@ -36,6 +36,9 @@ const shortRef = (id: string) => id.slice(-8);
 
 export default function SubscribeModal({ open, planKey, onClose }: Props) {
   const router = useRouter();
+  // En la interfaz de estudio se paga desde la clase o el laboratorio que se quiere abrir:
+  // al terminar, el alumno se queda ahí (ya desbloqueado) en vez de saltar al dashboard.
+  const enEstudio = usePathname().startsWith('/estudio');
   const { refreshPlan } = usePlan();
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -146,14 +149,15 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
         if (json.receipt) {
           setReceipt(json.receipt as Receipt);
         } else {
-          router.push(json.redirectTo || '/dashboard/home');
+          if (enEstudio) onClose();
+          else router.push(json.redirectTo || '/dashboard/home');
         }
       } catch (e) {
         setError((prev) => prev ?? (e instanceof Error ? e.message : 'Error inesperado'));
         throw e;
       }
     },
-    [planKey, refreshPlan, router],
+    [planKey, refreshPlan, router, enEstudio, onClose],
   );
 
   const handleError = useCallback((err: unknown) => {
@@ -164,6 +168,7 @@ export default function SubscribeModal({ open, planKey, onClose }: Props) {
   if (!open) return null;
 
   const handleContinue = () => {
+    if (enEstudio) { onClose(); router.refresh(); return; }
     router.push('/dashboard/home');
     router.refresh();
   };

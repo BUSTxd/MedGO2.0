@@ -8,6 +8,7 @@ const MAPA: [string, string][] = [
   ['/dashboard/laboratorio', '/estudio/laboratorio'],
   ['/dashboard/investigacion', '/estudio/laboratorio/investigacion'],
   ['/dashboard/cursos/fisica-medicina/modulo', '/estudio/laboratorio/fisica'],
+  ['/dashboard/cuenta', '/estudio/cuenta'],
 ];
 
 /** `/dashboard/...` → `/estudio/...`, o `null` si esa ruta no vive en la interfaz de estudio. */

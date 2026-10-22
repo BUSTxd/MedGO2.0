@@ -1157,3 +1157,36 @@ div.wrapper .course-nav::after { animation: orbe-sube 30s ease-in-out infinite; 
 .subject-filter .select-trigger { padding: 12px 32px 12px 13px; font-size: 12px; font-weight: 400; color: #233147; min-width: 160px; max-width: none; width: 100%; border-radius: 9px; }
 .subject-filter .select-trigger:hover, .subject-filter .select-abierto .select-trigger { background: transparent; }
 .subject-filter .select-panel { left: 0; right: auto; }
+
+/* ── Menú de la cuenta (círculo del avatar) ── */
+.avatar-boton { padding: 0; border: 0; cursor: pointer; transition: box-shadow .15s, transform .15s; }
+.avatar-boton:hover, .avatar-boton.is-abierto { box-shadow: 0 0 0 3px #ffffff2e; }
+.avatar-boton:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.cuenta-panel {
+  position: fixed; z-index: 80; width: 300px; max-width: calc(100vw - 24px); max-height: calc(100dvh - 90px); overflow-y: auto;
+  padding: 14px 8px 8px; background: var(--surface); color: var(--ink);
+  border: 1px solid var(--border); border-radius: 14px;
+  box-shadow: 0 22px 50px #10233f2e, 0 2px 8px #10233f12;
+  animation: select-entra .14s ease-out;
+}
+.cuenta-cabecera { display: flex; align-items: center; gap: 12px; padding: 0 8px 12px; }
+.cuenta-avatar { width: 42px; height: 42px; font-size: 16px; flex-shrink: 0; }
+.cuenta-quien { min-width: 0; }
+.cuenta-quien strong { display: block; font-size: 14px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cuenta-quien small { display: block; font-size: 11px; color: var(--secondary); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cuenta-plan { display: inline-flex; align-items: center; gap: 5px; margin: 0 8px 10px; padding: 4px 9px; border-radius: 20px; font-size: 11px; font-weight: 550; background: var(--support); color: var(--secondary); }
+.cuenta-plan.is-activo { background: var(--personal-soft); color: var(--personal); }
+.cuenta-plan .icon { width: 12px; height: 12px; }
+.cuenta-lista, .cuenta-contacto { display: grid; gap: 2px; padding: 6px 0; border-top: 1px solid var(--border); }
+.cuenta-contacto > .eyebrow { padding: 8px 10px 4px; color: var(--secondary); font-size: 9px; }
+.cuenta-item { display: flex; align-items: center; gap: 11px; width: 100%; padding: 9px 10px; border-radius: 9px; font-size: 13px; color: var(--ink); text-align: left; line-height: 1.3; }
+.cuenta-item:hover, .cuenta-item:focus-visible { background: var(--soft-fill); outline: none; }
+.cuenta-item > .icon { width: 17px; height: 17px; color: var(--secondary); flex-shrink: 0; }
+.cuenta-item > span { flex: 1; min-width: 0; }
+.cuenta-item small { display: block; font-size: 11px; color: var(--secondary); margin-top: 2px; }
+.cuenta-item.is-destacado { color: var(--action-ink); font-weight: 550; }
+.cuenta-item.is-destacado > .icon { color: var(--action); }
+.cuenta-salir { border-top: 1px solid var(--border); border-radius: 0 0 9px 9px; margin-top: 2px; padding-top: 12px; color: #9b3e4a; }
+.cuenta-salir > .icon { color: #9b3e4a; }
+@media (max-width: 720px) { .top-tools .avatar-boton { display: grid; } }
+@media (prefers-reduced-motion: reduce) { .cuenta-panel { animation: none; } }

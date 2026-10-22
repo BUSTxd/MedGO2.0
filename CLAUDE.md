@@ -507,7 +507,7 @@ Tutor de IA: panel lateral derecho en el dashboard y, en el visor de resúmenes 
 
 ## Interfaz nueva de estudio (`/estudio`, rama `interfaz-nueva`) — EN MIGRACIÓN
 
-Port a Next del prototipo `prototipos/espacio-estudio` (barra marina con el GO blanco, temario, lector, laboratorio, progreso). Convive con `/dashboard`, que no se toca. El login sigue llevando al dashboard hasta que la interfaz tenga lo esencial.
+Port a Next del prototipo `prototipos/espacio-estudio` (barra marina con el GO blanco, temario, lector, laboratorio, progreso). Convive con `/dashboard`, que no se toca. **Entrada tras iniciar sesión: `/estudio`** (login, callback, device-limit, clear-device, middleware, landing): con cuenta de Cayetano abre su primer curso; sin ella, `/estudio` manda a `/dashboard/home` (sus rutas Ciencias básicas/ENCIB aún viven ahí).
 
 - **Estilos**: un solo `src/styles/estudio/estudio.module.css`, generado de las cinco hojas del prototipo en su orden (cascada intacta) y colgado de `.wrapper`. Arriba devuelve los márgenes del navegador que borra `globals.css` (y anula su `section { padding: 100px }`). Lo añadido para la interfaz real va al final, bajo su propio rótulo. Fuente: Outfit **variable** (`--font-estudio`, en `estudio/layout.tsx`): el prototipo usa pesos 350/550/650.
 - **Sesión**: `prepararSesionApp()` (`src/lib/sesion-app.ts`, con `cache`) — la misma de `dashboard/layout.tsx`. `middleware.ts` protege `/estudio`.
@@ -515,7 +515,9 @@ Port a Next del prototipo `prototipos/espacio-estudio` (barra marina con el GO b
 - **Lector**: el resumen HTML se pinta con `DocumentoResumen` (hoja plana) y el PDF con `PdfViewer`; «En esta clase» sale de los h1-h3 del documento. El botón de pantalla completa abre el visor de siempre (con la IA).
 - **Marcas** (guardadas, estudiadas, visitadas, tamaño de letra): `localStorage('medgo-estudio-marcas-v1')` hasta que el progreso pase a Supabase. La última clase abierta (`medgo-estudio-ultima`, `src/lib/estudio/rutas.ts`) es a donde vuelven «Estudiar» y «Mi progreso» desde el Laboratorio.
 - **Laboratorio** (`/estudio/laboratorio`): las tarjetas salen del catálogo compartido con el dashboard (`src/lib/data/laboratorio-catalogo.ts`: **un laboratorio nuevo se añade ahí una vez**) vía `src/lib/estudio/laboratorios.ts` (tipo para los filtros, acceso resuelto en el servidor, Investigación como tarjeta, Física sólo para Cayetano). Cada laboratorio es una página de una línea en `laboratorio/(lab)/<slug>/page.tsx` que reexporta la del dashboard (su `LabGate`/vistazo intactos): **un laboratorio nuevo necesita también esa línea**. `MarcoLab` lo pinta FUERA del `.wrapper` (los labs cuentan con el reset de `globals.css`) en el `.panel` del dashboard, e intercepta en captura los enlaces internos a `/dashboard/laboratorio|investigacion|cursos/fisica-medicina/modulo` (`rutaEnEstudio`).
-- **Pendiente**: Práctica (banqueos), rutas Ciencias básicas y ENCIB, imágenes de vista previa de los laboratorios, Histología, menú del avatar (cuenta, contacto, planes), modo oscuro de la interfaz, MedGO IA en el lector.
+- **Cuenta** (círculo del avatar, `MenuCuenta`): sustituye a «Mi cuenta» y «Contacto» de la sidebar. Nombre/correo/plan llegan del servidor por `CuentaContext` (`estudio/layout.tsx`). Mi cuenta es `/estudio/cuenta` (reexporta la del dashboard en `MarcoLab` sin pestaña); contacto sale de `src/lib/contacto.ts` (compartido con `dashboard/contacto`); sin plan, «Suscribirme» abre `SubscribeModal` de cada tramo. El panel es `position: fixed`: la barra superior recorta lo que se le sale (por su luz).
+- **Compra**: `SubscribeModal` dentro de `/estudio` cierra el recibo y deja al alumno donde pagó (ya desbloqueado) en vez de llevarlo a `/dashboard/home`.
+- **Pendiente**: Práctica (banqueos), rutas Ciencias básicas y ENCIB, imágenes de vista previa de los laboratorios, Histología, modo oscuro de la interfaz, MedGO IA en el lector, «Repasa esto»/racha en Mi progreso.
 
 ---
 

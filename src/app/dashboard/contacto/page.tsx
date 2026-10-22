@@ -1,15 +1,7 @@
 'use client';
 import styles from '@/styles/dashboardPages.module.css';
-
-/** Un único buzón para todo el sitio: las seis tarjetas de abajo se diferencian
- *  por el motivo de la consulta, no por la dirección a la que escribes. */
-const CORREO = 'contacto@medgoplus.com';
-
-/** Número de atención. `WHATSAPP_TEL` es el que se muestra y `WHATSAPP_URL` el
- *  que se abre — se derivan del mismo dato para que no puedan discrepar. */
-const WHATSAPP_NUM = '51995626387';
-const WHATSAPP_TEL = '+51 995 626 387';
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUM}`;
+// Un único buzón: las seis tarjetas de abajo se diferencian por el motivo, no por la dirección.
+import { CORREO, WHATSAPP_TEL, WHATSAPP_URL } from '@/lib/contacto';
 
 const CONTACTS = [
   {

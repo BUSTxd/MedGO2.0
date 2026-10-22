@@ -6,7 +6,8 @@ import { createClient } from '@/lib/supabase/server';
  * sacaba al usuario a otro host justo después de iniciar sesión.
  */
 function destinoSeguro(next: string | null, origin: string): string {
-  const porDefecto = '/dashboard/home';
+  // /estudio decide: la interfaz nueva para Cayetano, el dashboard para el resto.
+  const porDefecto = '/estudio';
   if (!next || !next.startsWith('/') || next.startsWith('//') || next.startsWith('/\\')) {
     return porDefecto;
   }

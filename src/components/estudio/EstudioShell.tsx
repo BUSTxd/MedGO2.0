@@ -8,17 +8,19 @@ import PaginaVistaTracker from '@/components/PaginaVistaTracker';
 import { AnunciarPresencia } from '@/components/Presencia';
 import BuzonUsuario from '@/components/BuzonUsuario';
 import { pingRacha } from '@/lib/racha';
+import { CuentaProvider, type CuentaEstudio } from './CuentaContext';
 
 /**
  * La parte invisible de `DashboardWrapper` (plan, admin, analítica, presencia,
  * buzón, racha y modo oscuro) para la interfaz nueva, que pinta su propia cáscara.
  */
 export default function EstudioShell({
-  children, planState, isAdmin, presencia, buzon,
+  children, planState, isAdmin, presencia, buzon, cuenta,
 }: {
   children: React.ReactNode;
   planState: ClientPlanState;
   isAdmin: boolean;
+  cuenta: CuentaEstudio;
   presencia?: string;
   buzon?: string;
 }) {
@@ -48,7 +50,9 @@ export default function EstudioShell({
       {buzon && <BuzonUsuario token={buzon} />}
       <CursorCelula />
       <DarkModeProvider darkMode={darkMode} toggleDark={toggleDark}>
-        <EsAdminProvider value={isAdmin}>{children}</EsAdminProvider>
+        <EsAdminProvider value={isAdmin}>
+          <CuentaProvider value={cuenta}>{children}</CuentaProvider>
+        </EsAdminProvider>
       </DarkModeProvider>
     </PlanProvider>
   );

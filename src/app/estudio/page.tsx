@@ -1,13 +1,14 @@
 import { redirect } from 'next/navigation';
-import EspacioEstudio from '@/components/estudio/EspacioEstudio';
 import { prepararSesionApp } from '@/lib/sesion-app';
 import { cursosListados } from '@/lib/estudio/cursos';
 
-/** Entrada de la interfaz: al primer curso del tramo del alumno (los de Cayetano). */
+/**
+ * Entrada de la app tras iniciar sesión: el primer curso del tramo del alumno.
+ * Sin cuenta de Cayetano no hay ruta UPCH, y las de Ciencias básicas y ENCIB aún
+ * viven en el dashboard: allí va (el escenario de exámenes).
+ */
 export default async function EstudioPage() {
   const s = await prepararSesionApp();
-  const cursos = cursosListados(s.planState);
-  // Sin cuenta de Cayetano no hay temario UPCH: la interfaz se pinta con el aviso.
-  if (!s.deCayetano) return <EspacioEstudio cursos={[]} curso={null} />;
-  redirect(`/estudio/upch/${cursos[0].id}`);
+  if (!s.deCayetano) redirect('/dashboard/home');
+  redirect(`/estudio/upch/${cursosListados(s.planState)[0].id}`);
 }
