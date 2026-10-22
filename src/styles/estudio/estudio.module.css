@@ -1015,3 +1015,5 @@ div.wrapper .article-controls .icon-button.saved { background: var(--personal-so
 @media (max-width: 720px) { .select-trigger { font-size: 11px; max-width: 190px; } }
 @media (max-width: 480px) { .select-panel { min-width: min(300px, calc(100vw - 24px)); } }
 @media (prefers-reduced-motion: reduce) { .select-panel { animation: none; } .select-shell > .icon { transition: none; } }
+.toc button.toc-grupo { font-weight: 600; color: var(--ink); margin-top: 6px; }
+.toc button.toc-grupo:first-child { margin-top: 0; }

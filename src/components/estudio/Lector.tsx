@@ -15,14 +15,77 @@ const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ss
 // react-pdf (~2 MB) sólo baja si la clase abierta tiene el resumen en PDF.
 const PdfViewer = dynamic(() => import('@/components/PdfViewer'), { ssr: false });
 
-interface EntradaIndice { el: HTMLElement; titulo: string; nivel: number }
+interface EntradaIndice { el: HTMLElement; titulo: string; nivel: number; grupo?: boolean }
 
-/** Los títulos del resumen ya inyectado (h1-h3), para el índice «En esta clase». */
+const limpio = (t: string | null) => (t ?? '').replace(/\s+/g, ' ').trim();
+
+/** El índice «En esta clase» del resumen ya inyectado: sus títulos (h1-h3) o, si no trae, sus hojas. */
 function indiceDe(sheet: HTMLElement): EntradaIndice[] {
-  return Array.from(sheet.querySelectorAll<HTMLElement>('h1, h2, h3'))
-    .map((el) => ({ el, titulo: (el.textContent ?? '').replace(/\s+/g, ' ').trim(), nivel: Number(el.tagName[1]) }))
-    .filter((e) => e.titulo && e.el.offsetParent !== null)
-    .slice(0, 40);
+  const titulos = Array.from(sheet.querySelectorAll<HTMLElement>('h1, h2, h3'))
+    .map((el) => ({ el, titulo: limpio(el.textContent), nivel: Number(el.tagName[1]) }))
+    .filter((e) => e.titulo && e.el.offsetParent !== null);
+  return (titulos.length ? titulos : indicePorHojas(sheet)).slice(0, 60);
+}
+
+const SEPARADOR = /^(grupo|estaci[oó]n|unidad|parte|bloque|m[oó]dulo|secci[oó]n)\s*\d+/i;
+
+/** Lo que el título de una hoja suele arrastrar detrás: viñetas, rótulos, el arranque de una definición. */
+function acortarTitulo(t: string): string {
+  t = t.split('•')[0]
+    .replace(/^[^\p{L}\p{N}]+/u, '')
+    .replace(/\s(Objetivos?|Tarea|Localizaci[oó]n|Funci[oó]n|Caracter[ií]sticas)\b.*$/u, '')
+    .replace(/(.{8,}?)\s(Es|Son)\s(el|la|los|las|un|una)\s.*$/u, '$1')
+    .trim();
+  const dos = t.indexOf(':');
+  if (t.length > 50 && dos >= 6 && dos <= 45) t = t.slice(0, dos);
+  t = t.replace(/[:·\-–—\s]+$/, '');
+  return t.length > 60 ? `${t.slice(0, 60).replace(/\s+\S*$/, '')}…` : t;
+}
+
+/**
+ * Envases por hojas (diapositivas de un PPTX, PDF reconstruido): el texto va
+ * colocado por coordenadas y no hay <h1-h3>. El título de cada hoja es su letra
+ * más grande; las hojas cuya letra mayor destaca mucho sobre la del resto del
+ * documento son separadores («Grupo 1 Epitelios simples») y abren grupo.
+ * Las unidades dan igual (px, cqw…): sólo se comparan dentro del documento.
+ */
+function indicePorHojas(sheet: HTMLElement): EntradaIndice[] {
+  const shells = Array.from(sheet.querySelectorAll<HTMLElement>('.page-shell'));
+  const hojas = shells.length ? shells : Array.from(sheet.querySelectorAll<HTMLElement>('.pdf-page'));
+  const tamano = (el: HTMLElement) => parseFloat(el.style.fontSize) || 0;
+
+  const porHoja = hojas.map((hoja) => {
+    // Sólo los nodos con texto propio y tamaño declarado (no sus contenedores).
+    const textos = Array.from(hoja.querySelectorAll<HTMLElement>('[style*="font-size"]'))
+      .filter((el) => limpio(el.textContent) && !el.querySelector('[style*="font-size"]'));
+    let mayor: HTMLElement | null = null;
+    for (const el of textos) if (!mayor || tamano(el) > tamano(mayor)) mayor = el;
+    if (!mayor) return null;
+    const max = tamano(mayor);
+    // El título es la LÍNEA de la letra mayor (no la caja: debajo suele ir el texto), con
+    // sólo lo que va casi tan grande. Una línea muy corta («Grupo 1») sigue en la de abajo.
+    const linea = mayor.closest<HTMLElement>('.p, .text-line') ?? mayor.parentElement ?? mayor;
+    const grande = (l: Element) => limpio(textos.filter((el) => l.contains(el) && tamano(el) >= max * 0.75).map((el) => el.textContent).join(' '));
+    let titulo = grande(linea);
+    const sig = linea.nextElementSibling;
+    if (titulo.length <= 25 && sig?.matches('.p, .text-line')) titulo = limpio(`${titulo} ${grande(sig)}`);
+    titulo = acortarTitulo(titulo);
+    return titulo ? { el: hoja, titulo, max } : null;
+  }).filter((x): x is { el: HTMLElement; titulo: string; max: number } => !!x);
+  if (!porHoja.length) return [];
+
+  const ordenados = porHoja.map((h) => h.max).sort((a, b) => a - b);
+  const mediana = ordenados[Math.floor(ordenados.length / 2)];
+  const entradas: EntradaIndice[] = [];
+  for (const h of porHoja) {
+    if (h.max < mediana * 0.6) continue; // hoja sin título: sólo texto corrido o figuras
+    if (entradas.at(-1)?.titulo === h.titulo) continue;
+    // Separador: letra mucho mayor que la del documento, o rótulo «Grupo 2», «Estación 5»…
+    const grupo = h.max >= mediana * 1.6 || SEPARADOR.test(h.titulo);
+    entradas.push({ el: h.el, titulo: h.titulo, nivel: grupo ? 2 : 3, grupo });
+  }
+  // Sin ningún separador, todas las hojas van al mismo nivel.
+  return entradas.some((e) => e.grupo) ? entradas : entradas.map((e) => ({ ...e, nivel: 2 }));
 }
 
 /** Ancho útil del artículo para el PDF (el visor de react-pdf no reflowea). */
@@ -270,7 +333,7 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
         <nav className={cx('toc')} aria-label="Índice de la clase">
           {resumen
             ? indice.map((e, i) => (
-              <button key={i} className={cx(indiceActivo === i && 'active', e.nivel > 2 && 'toc-sub')} onClick={() => { e.el.scrollIntoView({ behavior: 'smooth', block: 'start' }); setIndiceActivo(i); }}>
+              <button key={i} className={cx(indiceActivo === i && 'active', e.nivel > 2 && 'toc-sub', e.grupo && 'toc-grupo')} onClick={() => { e.el.scrollIntoView({ behavior: 'smooth', block: 'start' }); setIndiceActivo(i); }}>
                 {e.titulo}
               </button>
             ))
