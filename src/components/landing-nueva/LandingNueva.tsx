@@ -9,7 +9,7 @@ import { c } from './estilos';
 import Mascota from './Mascota';
 import DemoEspacio from './DemoEspacio';
 import { Ico, teclasDePestanas } from './piezas';
-import { PREGUNTAS, RUTAS, planesDe, soles, type PlanLanding, type RutaLanding, type TramoLanding } from './datos';
+import { PREGUNTAS, RUTAS, planesDe, soles, type CuentaBiblioteca, type PlanLanding, type RutaLanding, type TramoLanding } from './datos';
 
 // El SDK de Mercado Pago sólo baja al abrir la compra (como en `Pricing.tsx`).
 const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ssr: false });
@@ -24,12 +24,15 @@ const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ss
 const ESPACIO = '/estudio';
 const LABORATORIO = '/estudio/laboratorio';
 
-const SALUDO_REPOSO = 'MedGO te acompaña en esta demostración.';
+/** Las dos siluetas de la portada se miran entre ellas, hacia el título. */
+const MIRA_DERECHA = { yaw: 0.75, pitch: 0.15 };
+const MIRA_IZQUIERDA = { yaw: -0.75, pitch: 0.1 };
+const SALUDO_REPOSO ='MedGO te acompaña en esta demostración.';
 const TRAMOS: TramoLanding[] = ['medicina', 'basico'];
 /** Lo que tardan las tarjetas de planes en irse antes de que entren las del otro tramo. */
 const SALIDA_PLANES = 190;
 
-export default function LandingNueva() {
+export default function LandingNueva({ biblioteca }: { biblioteca: CuentaBiblioteca }) {
   // ── Movimiento: el botón de pausa y la preferencia del sistema ──
   const [reducido, setReducido] = useState(false);
   const [pausado, setPausado] = useState(false);
@@ -179,8 +182,8 @@ export default function LandingNueva() {
       <main id="contenido" tabIndex={-1}>
         <section className={c('hero')} aria-labelledby="hero-title">
           <div className={c('hero-decorations')} aria-hidden="true">
-            <svg className={c('bot-silhouette hero-silhouette silhouette-left')} viewBox="0 0 128 136" focusable="false"><use href="#dot-silhouette" /></svg>
-            <svg className={c('bot-silhouette hero-silhouette silhouette-right')} viewBox="0 0 128 136" focusable="false"><use href="#dot-silhouette" /></svg>
+            <Mascota pausado={parado} cls="bot-silhouette hero-silhouette silhouette-left" mirada={MIRA_DERECHA} silueta />
+            <Mascota pausado={parado} cls="bot-silhouette hero-silhouette silhouette-right" mirada={MIRA_IZQUIERDA} silueta />
           </div>
           <div className={c('hero-copy')}>
             <a href="#espacio" className={c('announcement')}>
@@ -188,7 +191,7 @@ export default function LandingNueva() {
             </a>
             <h1 id="hero-title" aria-label="Conoce MedGO">
               <span>Conoce</span>
-              <button className={c('title-mascot mascot-button')} aria-label="Saludar a la mascota de MedGO" onClick={saludar}><Mascota pausado={parado} cls="" /></button>
+              <button className={c('title-mascot mascot-button')} aria-label="Saludar a la mascota de MedGO" onClick={saludar}><Mascota pausado={parado} cls="" detalle={1} /></button>
               <span>MedGO</span>
             </h1>
             <p className={c('hero-description')}>Un compañero para tu espacio de estudio médico.<br />Comprende, practica y explora. Todo sigue el hilo de tu aprendizaje.</p>
@@ -208,7 +211,7 @@ export default function LandingNueva() {
               <span className={c('window-title')}><Mascota pausado={parado} cls="tiny-mascot" /> Tu espacio de estudio</span>
               <span className={c('demo-badge')}>VISTA DE EJEMPLO <Ico id="i-monitor" /></span>
             </div>
-            <DemoEspacio parado={parado} rutaDemo={rutaActiva.demo.replace('MI RUTA · ', '')} />
+            <DemoEspacio parado={parado} rutaDemo={rutaActiva.demo.replace('MI RUTA · ', '')} biblioteca={biblioteca} />
           </div>
           <div className={c('demo-caption')}>
             <span>Tu temario. Tus recursos. Un mismo espacio.</span>
@@ -226,7 +229,7 @@ export default function LandingNueva() {
             <p className={c('section-description')}>Tu temario a un lado. El resumen, la práctica y los recursos al frente. Un espacio pensado para seguir estudiando.</p>
             <Link className={c('text-action')} href={ESPACIO}>Conoce el espacio de estudio <span aria-hidden="true">↗</span></Link>
           </div>
-          <div className={c('intro-illustration')} aria-hidden="true"><Mascota pausado={parado} cls="feature-mascot" /></div>
+          <div className={c('intro-illustration')} aria-hidden="true"><Mascota pausado={parado} cls="feature-mascot" guion="cardinal" detalle={2} /></div>
         </section>
 
         <section className={c('resources-section wrap')} id="recursos">
@@ -299,7 +302,7 @@ export default function LandingNueva() {
             </div>
             <div className={c('route-visual')}>
               <span className={c('route-stamp')}>{rutaActiva.stamp}</span>
-              <Mascota pausado={parado} cls="route-mascot" />
+              <Mascota pausado={parado} cls="route-mascot" detalle={2} />
               <span className={c('route-visual-note')}>{rutaActiva.note}</span>
             </div>
           </div>
@@ -369,7 +372,7 @@ export default function LandingNueva() {
         </section>
 
         <section className={c('closing-section')}>
-          <svg className={c('bot-silhouette closing-silhouette')} viewBox="0 0 128 136" aria-hidden="true" focusable="false"><use href="#dot-silhouette" /></svg>
+          <Mascota pausado={parado} cls="bot-silhouette closing-silhouette" guion="silueta" silueta />
           <div className={c('closing-copy wrap')}>
             <h2>Tu próxima clase<br />ya tiene su espacio.</h2>
             <p>Un tema. Un paso. Un poco más cerca.</p>
@@ -437,7 +440,7 @@ function Beneficios({ lista }: { lista: string[] }) {
   );
 }
 
-/** Los iconos del prototipo y la silueta de DOT, como símbolos que reusan los `<use>`. */
+/** Los iconos del prototipo, como símbolos que reusan los `<use>`. */
 function SimbolosSvg() {
   return (
     <svg className={c('svg-library')} xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -470,17 +473,6 @@ function SimbolosSvg() {
         <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" /><path d="M12 3v3M12 18v3M3 12h3M18 12h3" /></symbol>
         <symbol id="i-pin" viewBox="0 0 24 24"><path d="M8 3h8l-1 6 4 4H5l4-4zM12 13v8" /></symbol>
         <symbol id="i-cards" viewBox="0 0 24 24"><rect x="3" y="7" width="14" height="13" rx="2" /><path d="M7 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2" /></symbol>
-        <symbol id="dot-silhouette" viewBox="0 0 128 136">
-          <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M23 60a47 47 0 1 0 82 0" vectorEffect="non-scaling-stroke" />
-            <path d="M17 49c0-16 4-28 16-34C46 8 82 8 96 15c12 6 15 18 15 34l-2 11c-23 5-66 5-90 0l-2-11Z" vectorEffect="non-scaling-stroke" />
-            <path d="M18 48c24 4 68 4 92 0M35 19l-3 22m63-22 3 22m8 9 9 3-4 8-8-7m4-7 6-7 6 6-12 6" vectorEffect="non-scaling-stroke" />
-            <rect x="47" y="73" width="9" height="21" rx="4.5" vectorEffect="non-scaling-stroke" />
-            <rect x="73" y="73" width="9" height="21" rx="4.5" vectorEffect="non-scaling-stroke" />
-            <rect x="57" y="43" width="17" height="16" rx="4" vectorEffect="non-scaling-stroke" />
-            <path d="M65.5 47v8m-4-4h8" vectorEffect="non-scaling-stroke" />
-          </g>
-        </symbol>
       </defs>
     </svg>
   );
