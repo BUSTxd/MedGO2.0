@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { cx, Icono } from './Icono';
 import type { Contexto, Ruta } from './EspacioEstudio';
 
@@ -12,6 +13,7 @@ export default function Progreso({ ctx }: { ctx: Contexto }) {
   const saved = Object.entries(marcas.saved);
   const percent = Math.round((completed.length / list.length) * 100);
   const practicar = (id: string) => { openLesson(id); set(() => ({ tab: 'practice' })); };
+  const router = useRouter();
 
   return (
     <main className={cx('page-scroll studio-page')}>
@@ -75,6 +77,7 @@ export default function Progreso({ ctx }: { ctx: Contexto }) {
               <p>{completed.length === list.length ? 'Ya recorriste el curso. Elige una clase para repasar.' : 'Parte de tu siguiente clase sin marcar.'}</p>
               <button className={cx('session-step')} onClick={() => openLesson(next.id)}><span>1</span><span><strong>Leer el resumen</strong><small>{next.title}</small></span><Icono n="arrow" /></button>
               <button className={cx('session-step')} onClick={() => practicar(next.id)}><span>2</span><span><strong>Ponerlo en práctica</strong><small>Preguntas de esta clase</small></span><Icono n="arrow" /></button>
+              {next.laboratorio && <button className={cx('session-step')} onClick={() => router.push(next.laboratorio!.href)}><span>3</span><span><strong>Explorar el recurso</strong><small>{next.laboratorio.titulo}</small></span><Icono n="arrow" /></button>}
             </section>
             <section className={cx('review-panel')}>
               <div className={cx('panel-heading')}><h2>Para repasar</h2><span className={cx('count-pill')}>0</span></div>

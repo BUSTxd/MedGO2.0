@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { rutaEnEstudio } from '@/lib/estudio/rutas';
 import { Vector3 } from 'three';
 import { CREDITO, FALTA_EN_TODAS, SISTEMA, SISTEMAS, regionPorId, type Sistema } from '@/lib/data/atlas-3d/regiones';
 import { REPASOS } from '@/lib/data/atlas-3d/repasos';
@@ -148,6 +149,9 @@ function Aviso({ regiones, onEmpezar }: { regiones: string[]; onEmpezar: () => v
 function Explorador({ atlas, regiones, examenInicial, soloExamen, desdeLaboratorio }: { atlas: Atlas; regiones: string[]; examenInicial: boolean; soloExamen: boolean; desdeLaboratorio: boolean }) {
   const router = useRouter();
   const volverPrueba = VOLVER_PRUEBA[desdeLaboratorio ? 'laboratorio' : 'evaluacion'];
+  // Abierto desde la interfaz de estudio, vuelve a su misma pieza allí (la clase o su Laboratorio).
+  const enEstudio = usePathname().startsWith('/estudio');
+  const volverA = enEstudio ? rutaEnEstudio(volverPrueba.href) ?? volverPrueba.href : volverPrueba.href;
   const { piezas } = atlas;
   const dosLados = useMemo(() => new Set(piezas.map((p) => p.lado)).size > 1, [piezas]);
 
@@ -468,12 +472,12 @@ function Explorador({ atlas, regiones, examenInicial, soloExamen, desdeLaborator
   };
   const salirExamen = useCallback(() => {
     // La prueba gratis no sale al atlas libre (es de pago): vuelve a donde se abrió.
-    if (soloExamen) { router.push(volverPrueba.href); return; }
+    if (soloExamen) { router.push(volverA); return; }
     setExamen(false);
     setControl(CONTROL_LIBRE);
     setVista('anterior');
     encuadrar();
-  }, [encuadrar, soloExamen, router, volverPrueba]);
+  }, [encuadrar, soloExamen, router, volverA]);
   const rotuloFijo = useMemo(() => {
     if (!examen || !control.revelar || !objetivo) return null;
     return objetivo.tipo === 'marcador'

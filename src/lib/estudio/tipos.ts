@@ -21,6 +21,17 @@ export interface ClaseEstudio {
   resumenes: ResumenEstudio[];
   /** Tiene resumen y el plan no lo abre (misma regla que `/api/resumen-html`). */
   bloqueada: boolean;
+  /** El laboratorio que el sílabo enlaza a esta clase («Llévalo a la práctica»). */
+  laboratorio?: LabRecomendado;
+}
+
+export interface LabRecomendado {
+  titulo: string;
+  desc: string;
+  /** «Examen práctico 3D», «Simulación», «Modelo 3D»… */
+  etiqueta: string;
+  href: string;
+  icono: string | null;
 }
 
 export interface SemanaEstudio {

@@ -1190,3 +1190,10 @@ div.wrapper .course-nav::after { animation: orbe-sube 30s ease-in-out infinite; 
 .cuenta-salir > .icon { color: #9b3e4a; }
 @media (max-width: 720px) { .top-tools .avatar-boton { display: grid; } }
 @media (prefers-reduced-motion: reduce) { .cuenta-panel { animation: none; } }
+
+/* «Llévalo a la práctica» en el cuerpo de la clase: sólo cuando el panel lateral se oculta. */
+.lab-reco { display: none; margin: 28px 0 0; }
+.lab-reco > .eyebrow { color: var(--secondary); font-size: 9px; letter-spacing: 1.2px; margin-bottom: 12px; }
+.lab-reco .related-card { max-width: 420px; }
+@media (max-width: 1000px) { .lab-reco { display: block; } }
+.related-card button .icon { display: inline-block; }

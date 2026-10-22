@@ -5,6 +5,8 @@ import { trackEvent } from '@/lib/analytics';
 import type { ResumenEstudio } from '@/lib/estudio/tipos';
 import DocumentoResumen from '@/components/resumen/DocumentoResumen';
 import rs from '@/styles/resumenHtml.module.css';
+import { useRouter } from 'next/navigation';
+import type { LabRecomendado } from '@/lib/estudio/tipos';
 import { cx, Icono } from './Icono';
 import type { Contexto } from './EspacioEstudio';
 
@@ -100,6 +102,25 @@ function useAncho(ref: React.RefObject<HTMLElement | null>, activo: boolean) {
     return () => ro.disconnect();
   }, [ref, activo]);
   return ancho;
+}
+
+/* eslint-disable @next/next/no-img-element */
+/** «Llévalo a la práctica»: el laboratorio que el sílabo enlaza a la clase (tarjeta del prototipo). */
+function TarjetaLaboratorio({ lab }: { lab: LabRecomendado }) {
+  const router = useRouter();
+  return (
+    <div className={cx('related-card')}>
+      <div className={cx('related-art')}>
+        <span className={cx('related-tag')}>{lab.etiqueta}</span>
+        {lab.icono ? <img src={lab.icono} alt="" /> : <Icono n="flask" />}
+      </div>
+      <div className={cx('related-card-body')}>
+        <h3>{lab.titulo}</h3>
+        {lab.desc && <p>{lab.desc}</p>}
+        <button onClick={() => router.push(lab.href)}>Abrir el laboratorio <Icono n="arrow" /></button>
+      </div>
+    </div>
+  );
 }
 
 export function BarraLector({ ctx }: { ctx: Contexto }) {
@@ -316,6 +337,13 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
           )}
           </>)}
 
+          {l.laboratorio && (
+            <section className={cx('lab-reco')} aria-label="Llévalo a la práctica">
+              <div className={cx('eyebrow')}>Llévalo a la práctica</div>
+              <TarjetaLaboratorio lab={l.laboratorio} />
+            </section>
+          )}
+
           <div className={cx('completion-row')}>
             <span>¿Terminaste de estudiar esta clase?</span>
             <button className={cx('lesson-complete', estudiada && 'is-complete')} aria-pressed={estudiada} onClick={() => marcas.alternarEstudiada(l.id)}>
@@ -340,6 +368,13 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
             : secciones.map(([id, titulo]) => <button key={id} className={cx(tocActivo === id && 'active')} onClick={() => irASeccion(id)}>{titulo}</button>)}
         </nav>
         {resumen && !indice.length && <p className={cx('aside-note')}>Este resumen va por páginas: desplázate para recorrerlo.</p>}
+        {l.laboratorio && (
+          <>
+            <div className={cx('aside-divider')} />
+            <div className={cx('eyebrow')}>Llévalo a la práctica</div>
+            <TarjetaLaboratorio lab={l.laboratorio} />
+          </>
+        )}
         <p className={cx('aside-note')}>Este espacio recuerda tu clase mientras exploras. Elige otro tema en el temario para seguir estudiando.</p>
       </aside>
 

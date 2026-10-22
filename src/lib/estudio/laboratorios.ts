@@ -4,7 +4,7 @@ import { labEsGratis, labTieneVistazo, requiredPlanDeCurso, requiredPlanDeLab, t
 import type { PlanState } from '@/lib/plans';
 import { iconoDe } from './cursos';
 import { rutaEnEstudio } from './rutas';
-import type { TarjetaLab, TipoLab } from './tipos';
+import type { LabRecomendado, TarjetaLab, TipoLab } from './tipos';
 
 type Plan = Pick<PlanState, 'plan' | 'isActive' | 'allAccess'>;
 
@@ -25,6 +25,31 @@ const TIPO: Record<string, TipoLab> = {
 };
 
 const LAB = '/dashboard/laboratorio/';
+const sinQuery = (href: string) => href.split(/[?#]/)[0];
+
+/**
+ * El laboratorio que el sílabo enlaza a una clase: `simulacion.href` (la
+ * Evaluación 1 de Locomotor → el examen 3D, las prácticas de Hematología) o
+ * `modulo` (las clases de Física). Nombre y descripción salen del catálogo; la
+ * descripción del sílabo, si la trae, manda porque habla de esa clase.
+ */
+export function laboratorioDeClase(
+  curso: string,
+  act: { id: string; simulacion?: { href?: string; desc?: string }; modulo?: boolean },
+): LabRecomendado | undefined {
+  const deDashboard = act.simulacion?.href ?? (act.modulo ? `/dashboard/cursos/${curso}/modulo/${act.id}` : null);
+  const href = deDashboard ? rutaEnEstudio(deDashboard) : null;
+  if (!deDashboard || !href) return undefined;
+  const exp = LAB_TOPICS.flatMap((t) => t.experiments).find((e) => e.href && sinQuery(e.href) === sinQuery(deDashboard));
+  const slug = deDashboard.startsWith(LAB) ? sinQuery(deDashboard).slice(LAB.length) : null;
+  return {
+    titulo: exp?.name ?? 'Laboratorio virtual',
+    desc: act.simulacion?.desc ?? exp?.desc ?? '',
+    etiqueta: /[?&]examen=1/.test(deDashboard) ? 'Examen práctico 3D' : (slug && TIPO[slug]) || 'Simulación',
+    href,
+    icono: iconoDe(curso),
+  };
+}
 
 /**
  * Las tarjetas del Laboratorio: los laboratorios publicados del catálogo (los

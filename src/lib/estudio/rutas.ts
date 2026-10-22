@@ -11,11 +11,17 @@ const MAPA: [string, string][] = [
   ['/dashboard/cuenta', '/estudio/cuenta'],
 ];
 
+/** Bajo `/dashboard/cursos/` lo que NO es un curso de Cayetano (ver `CURSOS_ABIERTOS` del middleware). */
+const NO_SON_CURSOS = new Set(['cayetano', 'area', 'examen']);
+
 /** `/dashboard/...` → `/estudio/...`, o `null` si esa ruta no vive en la interfaz de estudio. */
 export function rutaEnEstudio(href: string): string | null {
   for (const [de, a] of MAPA) {
     if (href === de || href.startsWith(`${de}/`) || href.startsWith(`${de}?`)) return a + href.slice(de.length);
   }
+  // Una clase del sílabo (`/dashboard/cursos/<curso>/<clase>`) es la misma clase en la ruta UPCH.
+  const clase = /^\/dashboard\/cursos\/([^/?#]+)\/([^/?#]+)([?#].*)?$/.exec(href);
+  if (clase && !NO_SON_CURSOS.has(clase[1])) return `/estudio/upch/${clase[1]}/${clase[2]}${clase[3] ?? ''}`;
   return null;
 }
 

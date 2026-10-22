@@ -4,6 +4,7 @@ import { CURSOS } from '@/lib/data/aportes';
 import { puedeVerResumen } from '@/lib/acceso-resumen';
 import { cursoEsGratis, planDeTrack, requiredPlanDeCurso, tieneAccesoA, trackDelUsuario } from '@/lib/acceso';
 import type { PlanState } from '@/lib/plans';
+import { laboratorioDeClase } from './laboratorios';
 import type { ClaseEstudio, CursoEstudio, CursoListado, FormatoResumen, ResumenEstudio } from './tipos';
 
 type Plan = Pick<PlanState, 'plan' | 'isActive' | 'allAccess'>;
@@ -44,7 +45,7 @@ const etiquetaTipo = (t: string) => TIPO[t] ?? t.charAt(0) + t.slice(1).toLowerC
 
 interface ActCruda {
   id: string; tipo: string; titulo: string; fecha?: string; hora?: string; subtemas?: string[];
-  docentes?: string[]; nota?: string;
+  docentes?: string[]; nota?: string; simulacion?: { href?: string; desc?: string }; modulo?: boolean;
   resumen?: { formato?: FormatoResumen; opciones?: { id: string; label?: string; formato?: FormatoResumen }[] };
 }
 
@@ -55,8 +56,9 @@ function resumenesDe(a: ActCruda): ResumenEstudio[] {
   return a.resumen.opciones.map((o) => ({ id: o.id, label: o.label ?? 'Resumen', formato: o.formato ?? base }));
 }
 
-function clase(a: ActCruda, plan: Plan): ClaseEstudio {
+function clase(a: ActCruda, plan: Plan, curso: string): ClaseEstudio {
   const resumenes = resumenesDe(a);
+  const laboratorio = laboratorioDeClase(curso, a);
   return {
     id: a.id,
     title: a.titulo,
@@ -68,6 +70,7 @@ function clase(a: ActCruda, plan: Plan): ClaseEstudio {
     ...(a.nota ? { nota: a.nota } : {}),
     resumenes,
     bloqueada: resumenes.length > 0 && !resumenes.some((r) => puedeVerResumen(plan, r.id)),
+    ...(laboratorio ? { laboratorio } : {}),
   };
 }
 
@@ -106,7 +109,7 @@ export function cursoEstudio(slug: string, plan: Plan): CursoEstudio | null {
       .map((s, i) => ({
         id: `sem-${i + 1}`,
         title: s.titulo,
-        lessons: (s.actividades as unknown as ActCruda[]).map((a) => clase(a, plan)),
+        lessons: (s.actividades as unknown as ActCruda[]).map((a) => clase(a, plan, slug)),
       }))
       .filter((g) => g.lessons.length),
   };
