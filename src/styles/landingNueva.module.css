@@ -538,3 +538,9 @@
 @media(max-width:900px){.red{min-height:0;aspect-ratio:1/1;border-left:0;border-top:1px solid #ffffff08}}
 @media(max-width:560px){.red{aspect-ratio:1/1}.redPista{left:14px;right:auto}}
 @media(prefers-reduced-motion:reduce){
+
+/* Pie: enlaces legales y correo de soporte (los pide la revisión de Creem). */
+.footer-legal{display:flex;flex-wrap:wrap;gap:10px 26px;padding:0 0 24px;font-size:13px}
+.footer-legal a{color:#aab4c0;text-decoration:none}
+.footer-legal a:hover,.footer-legal a:focus-visible{color:#fff;text-decoration:underline}
+@media(max-width:640px){.footer-legal{flex-direction:column;gap:12px;font-size:12px}}

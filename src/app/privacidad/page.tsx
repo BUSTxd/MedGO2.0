@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { CORREO } from '@/lib/contacto';
 import styles from '@/styles/legal.module.css';
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export default function PrivacidadPage() {
       <main className={styles.wrap}>
         <div className={styles.hero}>
           <h1 className={styles.pageTitle}>Política de Privacidad</h1>
-          <p className={styles.lastUpdated}>Última actualización: 22 de mayo de 2026</p>
+          <p className={styles.lastUpdated}>Última actualización: 28 de octubre de 2026</p>
         </div>
 
         <section className={styles.section}>
@@ -24,8 +25,8 @@ export default function PrivacidadPage() {
             El responsable del tratamiento de tus datos personales es <strong>MedGO</strong>{' '}
             (medgoplus.com). Para cualquier consulta sobre esta política o sobre el manejo de
             tus datos puedes escribir a{' '}
-            <a className={styles.link} href="mailto:soporte@medgoplus.com">
-              soporte@medgoplus.com
+            <a className={styles.link} href={`mailto:${CORREO}`}>
+              {CORREO}
             </a>
             .
           </p>
@@ -43,7 +44,7 @@ export default function PrivacidadPage() {
             <li>Progreso académico dentro de la plataforma: lecciones completadas, respuestas a quizzes, racha de estudio y tiempos de uso.</li>
             <li>Actividad dentro del panel: páginas visitadas y materiales abiertos, con fecha y hora.</li>
             <li>Datos técnicos básicos: dirección IP, tipo de navegador, sistema operativo y zona horaria.</li>
-            <li>Identificadores opacos de pago entregados por Mercado Pago (nunca datos de tu tarjeta).</li>
+            <li>Identificadores opacos de pago entregados por Mercado Pago o Creem (nunca datos de tu tarjeta).</li>
           </ul>
         </section>
 
@@ -82,7 +83,7 @@ export default function PrivacidadPage() {
         </section>
 
         <section className={styles.section}>
-          <h2 className={styles.h2}>5. Procesador de pagos (Mercado Pago)</h2>
+          <h2 className={styles.h2}>5. Procesadores de pago (Mercado Pago y Creem)</h2>
           <p className={styles.p}>
             Los pagos se procesan a través de <strong>Mercado Pago</strong>. MedGO{' '}
             <strong>no almacena datos de tarjetas</strong>: los datos de tu tarjeta viajan
@@ -90,6 +91,18 @@ export default function PrivacidadPage() {
             recibimos un identificador opaco del cobro. Para más información consulta la{' '}
             <a className={styles.link} href="https://www.mercadopago.com.pe/ayuda/politica-privacidad_2381" target="_blank" rel="noopener noreferrer">
               política de privacidad de Mercado Pago
+            </a>
+            .
+          </p>
+          <p className={styles.p}>
+            Cuando el pago se procesa con <strong>Creem</strong> (Armitage Labs OÜ, Estonia), Creem
+            actúa como <em>merchant of record</em>: es el vendedor de la suscripción y trata, como
+            responsable, los datos que necesita para cobrar, facturar, calcular impuestos y prevenir
+            fraude (nombre, correo, país, dirección de facturación y datos de la tarjeta). MedGO solo
+            recibe de Creem tu correo, el estado de la suscripción y un identificador del pedido.
+            Consulta la{' '}
+            <a className={styles.link} href="https://www.creem.io/privacy" target="_blank" rel="noopener noreferrer">
+              política de privacidad de Creem
             </a>
             .
           </p>
@@ -145,8 +158,8 @@ export default function PrivacidadPage() {
             al tratamiento y <strong>portabilidad</strong> de los mismos, conforme a la Ley
             N.° 29733 de Protección de Datos Personales del Perú. Para ejercer estos derechos
             escríbenos a{' '}
-            <a className={styles.link} href="mailto:soporte@medgoplus.com">
-              soporte@medgoplus.com
+            <a className={styles.link} href={`mailto:${CORREO}`}>
+              {CORREO}
             </a>
             . Responderemos en un plazo máximo de <strong>20 días hábiles</strong>.
           </p>
@@ -177,8 +190,8 @@ export default function PrivacidadPage() {
           <h2 className={styles.h2}>13. Contacto</h2>
           <p className={styles.p}>
             Para cualquier consulta sobre privacidad o ejercicio de derechos escribe a{' '}
-            <a className={styles.link} href="mailto:soporte@medgoplus.com">
-              soporte@medgoplus.com
+            <a className={styles.link} href={`mailto:${CORREO}`}>
+              {CORREO}
             </a>
             .
           </p>

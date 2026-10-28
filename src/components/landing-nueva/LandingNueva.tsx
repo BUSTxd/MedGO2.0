@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import { PLANS, type PlanKey, type ProfilePlan } from '@/lib/plans';
 import { OFERTAS, soles } from '@/components/planes/oferta';
+import { CORREO } from '@/lib/contacto';
 import { c } from './estilos';
 import Mascota from './Mascota';
 import DemoEspacio from './DemoEspacio';
@@ -418,7 +419,13 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
           <span>MedGO. Comprende las bases.</span>
           <a href="#inicio">Volver arriba ↗</a>
         </div>
-        <div className={c('footer-bottom')}><span>MedGO · Preclínicos de medicina</span><span>Aprende a tu ritmo, desde donde estés.</span></div>
+        <nav className={c('footer-legal')} aria-label="Información legal y contacto">
+          <Link href="/terminos">Términos y condiciones</Link>
+          <Link href="/privacidad">Política de privacidad</Link>
+          <Link href="/reembolsos">Política de reembolsos</Link>
+          <a href={`mailto:${CORREO}`}>{CORREO}</a>
+        </nav>
+        <div className={c('footer-bottom')}><span>© 2026 MedGO · Preclínicos de medicina</span><span>Aprende a tu ritmo, desde donde estés.</span></div>
       </footer>
 
       {comprar && <SubscribeModal open planKey={comprar} onClose={() => setComprar(null)} />}

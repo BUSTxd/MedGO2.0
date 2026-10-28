@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { PLANS } from '@/lib/plans';
+import { CORREO } from '@/lib/contacto';
 import styles from '@/styles/legal.module.css';
 
 export const metadata: Metadata = {
@@ -133,8 +134,24 @@ export default function TerminosPage() {
           </p>
           <p className={styles.p}>
             Los precios están expresados en soles peruanos (PEN) e incluyen los impuestos
-            aplicables. MedGO puede actualizar precios con aviso previo de 30 días; los cambios
-            no afectan suscripciones ya autorizadas hasta su renovación.
+            aplicables. En los pagos procesados por Creem, el importe, la moneda y los impuestos
+            son los que se muestran en la página de pago antes de confirmar. MedGO puede actualizar
+            precios con aviso previo de 30 días; los cambios no afectan suscripciones ya
+            autorizadas hasta su renovación.
+          </p>
+          <p className={styles.p}>
+            <strong>Quién procesa el pago.</strong> Los pagos en soles se procesan con{' '}
+            <strong>Mercado Pago</strong>. Cuando el pago se procesa con <strong>Creem</strong> (por
+            ejemplo, desde fuera del Perú), el pedido lo gestiona nuestro revendedor en línea{' '}
+            <strong>Creem</strong> (Armitage Labs OÜ, Tallin, Estonia), que actúa como{' '}
+            <em>merchant of record</em>: Creem es el vendedor de la suscripción, cobra, emite el
+            comprobante, calcula y declara los impuestos del país del comprador, aparece en el
+            extracto de la tarjeta y atiende los reembolsos que correspondan. En esas compras se
+            aplican además los{' '}
+            <a className={styles.link} href="https://www.creem.io/terms" target="_blank" rel="noopener noreferrer">
+              términos de Creem
+            </a>
+            . El acceso al contenido y el soporte los presta MedGO.
           </p>
         </section>
 
@@ -183,8 +200,8 @@ export default function TerminosPage() {
             MedGO no procesa reembolsos automáticos sobre cobros ya realizados. La cancelación
             de una suscripción detiene los cobros futuros, pero el periodo en curso permanece
             activo hasta su vencimiento. Para reclamos o casos excepcionales el usuario puede
-            escribir a soporte; cualquier devolución queda a discreción de MedGO y se evalúa
-            caso por caso.
+            escribir a soporte; los casos en que sí devolvemos el dinero están en la{' '}
+            <a className={styles.link} href="/reembolsos">Política de reembolsos</a>.
           </p>
         </section>
 
@@ -227,8 +244,8 @@ export default function TerminosPage() {
           <h2 className={styles.h2}>13. Cancelación de cuenta por el usuario</h2>
           <p className={styles.p}>
             El usuario puede solicitar la eliminación de su cuenta escribiendo a{' '}
-            <a className={styles.link} href="mailto:soporte@medgoplus.com">
-              soporte@medgoplus.com
+            <a className={styles.link} href={`mailto:${CORREO}`}>
+              {CORREO}
             </a>
             . La eliminación implica el borrado de sus datos personales y de progreso, salvo
             registros contables que MedGO esté obligado a conservar por ley. La eliminación
@@ -260,8 +277,8 @@ export default function TerminosPage() {
           <h2 className={styles.h2}>16. Contacto</h2>
           <p className={styles.p}>
             Para consultas sobre estos términos escribe a{' '}
-            <a className={styles.link} href="mailto:soporte@medgoplus.com">
-              soporte@medgoplus.com
+            <a className={styles.link} href={`mailto:${CORREO}`}>
+              {CORREO}
             </a>
             .
           </p>
