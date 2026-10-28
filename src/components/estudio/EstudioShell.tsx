@@ -37,7 +37,6 @@ export default function EstudioShell({
   // Las respuestas sin leer del admin: el contador del menú de la cuenta y el aviso flotante.
   const respuestasNuevas = useRespuestasNuevas(canalAdmin);
   const avisoOculto = pathname.startsWith('/estudio/admin');
-  const enUnLaboratorio = /^\/estudio\/laboratorio\/[^/]+/.test(pathname);
   const cuentaViva = useMemo(() => ({ ...cuenta, respuestasNuevas: respuestasNuevas ?? 0 }), [cuenta, respuestasNuevas]);
 
   useEffect(() => {
@@ -63,10 +62,9 @@ export default function EstudioShell({
       {presencia && <AnunciarPresencia token={presencia} />}
       {buzon && <BuzonUsuario token={buzon} />}
       {canalAdmin && <AvisoRespuestas nuevas={respuestasNuevas} ocultar={avisoOculto} href="/estudio/admin#mensajes" />}
-      {/* Dentro de un laboratorio no: cada uno tiene sus mandos y los suele llevar abajo. */}
-      {!enUnLaboratorio && (
-        <Grimi subir={!!canalAdmin && !!respuestasNuevas && !avisoOculto} sobreBarra={pathname.startsWith('/estudio/examenes')} />
-      )}
+      {/* En todas las páginas, laboratorios incluidos (BUST lo quiere siempre a la vista). */}
+      <Grimi subir={!!canalAdmin && !!respuestasNuevas && !avisoOculto} sobreBarra={pathname.startsWith('/estudio/examenes')} />
+
       <CursorCelula />
       <DarkModeProvider darkMode={darkMode} toggleDark={toggleDark}>
         <EsAdminProvider value={isAdmin}>
