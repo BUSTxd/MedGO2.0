@@ -4,6 +4,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { CORREO } from '@/lib/contacto';
 import { enviarCorreo, escHtml } from '@/lib/correo';
 import { PROVEEDOR } from '@/lib/proveedor';
+import { domicilioProveedor } from '@/lib/proveedor-server';
 import {
   DEFINICIONES,
   PLAZO_RESPUESTA,
@@ -23,7 +24,7 @@ const esc = escHtml;
 function htmlHoja(h: HojaReclamacion, codigo: string, fecha: string): string {
   const fila = (k: string, v: string) =>
     v ? `<tr><td style="padding:4px 12px 4px 0;color:#555;vertical-align:top">${esc(k)}</td><td style="padding:4px 0">${esc(v)}</td></tr>` : '';
-  const proveedor = [PROVEEDOR.nombreComercial, PROVEEDOR.titular, PROVEEDOR.ruc && `RUC ${PROVEEDOR.ruc}`, PROVEEDOR.domicilio]
+  const proveedor = [PROVEEDOR.nombreComercial, PROVEEDOR.titular, PROVEEDOR.ruc && `RUC ${PROVEEDOR.ruc}`, domicilioProveedor()]
     .filter(Boolean)
     .join(' · ');
   return `<div style="font-family:Arial,sans-serif;font-size:14px;color:#111;max-width:640px">
@@ -138,6 +139,6 @@ export async function POST(req: Request) {
   const copiaEnviada = await enviarCopia(h, data.codigo, fecha);
   if (copiaEnviada) await tabla.update({ copia_enviada: true }).eq('id', data.id);
 
-  const respuesta: HojaRegistrada = { codigo: data.codigo, fecha, copiaEnviada };
+  const respuesta: HojaRegistrada = { codigo: data.codigo, fecha, copiaEnviada, domicilio: domicilioProveedor() };
   return NextResponse.json(respuesta);
 }

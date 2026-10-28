@@ -31,6 +31,8 @@ export interface HojaRegistrada {
   codigo: string;
   fecha: string;
   copiaEnviada: boolean;
+  /** Domicilio del proveedor: solo viaja aquí, con la hoja ya registrada. */
+  domicilio: string | null;
 }
 
 export const DEFINICIONES = {

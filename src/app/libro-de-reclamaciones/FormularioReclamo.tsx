@@ -69,7 +69,7 @@ export default function FormularioReclamo() {
     const { hoja, registro } = hecha;
     const filas: [string, string][] = [
       ['Fecha', registro.fecha],
-      ['Proveedor', [PROVEEDOR.nombreComercial, PROVEEDOR.titular, PROVEEDOR.ruc && `RUC ${PROVEEDOR.ruc}`, PROVEEDOR.domicilio].filter(Boolean).join(' · ')],
+      ['Proveedor', [PROVEEDOR.nombreComercial, PROVEEDOR.titular, PROVEEDOR.ruc && `RUC ${PROVEEDOR.ruc}`, registro.domicilio].filter(Boolean).join(' · ')],
       ['Tipo', hoja.tipo === 'reclamo' ? 'Reclamo' : 'Queja'],
       ['Consumidor', hoja.nombre],
       ['Documento', `${hoja.tipoDocumento} ${hoja.numeroDocumento}`],

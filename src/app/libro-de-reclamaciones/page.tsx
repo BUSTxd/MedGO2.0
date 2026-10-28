@@ -27,7 +27,6 @@ export default function LibroReclamacionesPage() {
             <strong>{PROVEEDOR.nombreComercial}</strong> ({PROVEEDOR.web}) · Titular:{' '}
             {PROVEEDOR.titular}
             {PROVEEDOR.ruc && <> · RUC {PROVEEDOR.ruc}</>}
-            {PROVEEDOR.domicilio && <> · {PROVEEDOR.domicilio}</>}
           </p>
           <p className={styles.p}>
             Conforme a lo establecido en el Código de Protección y Defensa del Consumidor, MedGO
