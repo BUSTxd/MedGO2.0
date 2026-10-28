@@ -5,7 +5,8 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import { PLANS, type PlanKey, type ProfilePlan } from '@/lib/plans';
-import { OFERTAS, soles } from '@/components/planes/oferta';
+import { ofertasPara } from '@/components/planes/oferta';
+import { usePasarela } from '@/components/planes/usePasarela';
 import Footer from '@/components/Footer';
 import { c } from './estilos';
 import Mascota from './Mascota';
@@ -100,6 +101,7 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
   const { user } = useAuth();
   const [planActual, setPlanActual] = useState<{ plan: ProfilePlan; isActive: boolean } | null>(null);
   const [comprar, setComprar] = useState<PlanKey | null>(null);
+  const [pasarela] = usePasarela();
   const [pronto, setPronto] = useState(false);
   useEffect(() => {
     if (!user) { setPlanActual(null); return; }
@@ -349,7 +351,7 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
             <p>Todo MedGO se abre con un plan. Cuanto más tiempo te quedas, menos pagas al mes.</p>
           </div>
           <div className={c('plans-grid')}>
-            {OFERTAS.map((o) => {
+            {ofertasPara(pasarela ?? 'mercadopago').map((o) => {
               const p = o.plan;
               const bloqueo = estadoCompra(p.key);
               return (
@@ -361,7 +363,7 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
                   <div className={c('plan-name-row')}><h3 id={`plan-name-${p.key}`}>{p.label}</h3></div>
                   <p className={c('plan-acceso')}>{o.acceso} <span>({o.tipo})</span></p>
                   <p className={c('plan-price')}>
-                    <span className={c('plan-currency')}>S/</span><span>{soles(p.amount)}</span><span className={c('plan-period')}>/ mes</span>
+                    <span className={c('plan-currency')}>{o.moneda}</span><span>{o.importe}</span><span className={c('plan-period')}>/ {o.periodo}</span>
                   </p>
                   <div className={c('plan-billing')}><p>{o.cobro}</p></div>
                   <button className={c('button primary plan-action')} disabled={!!bloqueo} onClick={() => suscribirme(p.key)}>{bloqueo ?? 'Empieza ahora'}</button>
@@ -379,7 +381,7 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
           <p className={c('pricing-aviso')} role="status">
             {pronto
               ? 'Muy pronto: estamos activando los pagos de los planes nuevos.'
-              : <>Pago seguro con Mercado Pago. Al suscribirte aceptas los <Link href="/terminos" className={c('dialog-enlace')}>Términos y condiciones</Link>.</>}
+              : <>Pago seguro con {pasarela === 'creem' ? 'Creem' : 'Mercado Pago'}. Al suscribirte aceptas los <Link href="/terminos" className={c('dialog-enlace')}>Términos y condiciones</Link>.</>}
           </p>
           <div className={c('pricing-access')}>
             <Ico id="i-book" />

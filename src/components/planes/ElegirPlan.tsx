@@ -4,7 +4,8 @@ import { createPortal } from 'react-dom';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { planUnlocks, type PlanKey, type Requisito } from '@/lib/plans';
-import { OFERTAS, soles } from './oferta';
+import { ofertasPara } from './oferta';
+import { usePasarela } from './usePasarela';
 import styles from './elegirPlan.module.css';
 
 // El SDK de Mercado Pago sólo baja si alguien elige un plan que ya está a la venta.
@@ -21,6 +22,7 @@ const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ss
  */
 export default function ElegirPlan({ requisito, onClose }: { requisito?: Requisito; onClose: () => void }) {
   const [comprar, setComprar] = useState<PlanKey | null>(null);
+  const [pasarela] = usePasarela();
   const [pronto, setPronto] = useState(false);
   const caja = useRef<HTMLDivElement>(null);
 
@@ -50,7 +52,7 @@ export default function ElegirPlan({ requisito, onClose }: { requisito?: Requisi
         <h2 id="elegir-plan-titulo" className={styles.titulo}>Elige tu plan</h2>
         <p className={styles.sub}>Todo MedGO se abre con un plan. Cuanto más tiempo te quedas, menos pagas al mes.</p>
         <div className={styles.rejilla}>
-          {OFERTAS.map((o) => {
+          {ofertasPara(pasarela ?? 'mercadopago').map((o) => {
             const p = o.plan;
             const noAbre = !!requisito && !planUnlocks(p.key, requisito);
             return (
@@ -62,7 +64,7 @@ export default function ElegirPlan({ requisito, onClose }: { requisito?: Requisi
                 {p.destacado && <span className={styles.cinta}>{p.destacado}</span>}
                 <h3 id={`plan-${p.key}`} className={styles.nombre}>{p.label}</h3>
                 <p className={styles.acceso}>{o.acceso} <span>({o.tipo})</span></p>
-                <p className={styles.precio}><strong>S/ {soles(p.amount)}</strong><span>/mes</span></p>
+                <p className={styles.precio}><strong>{o.moneda} {o.importe}</strong><span>/{o.periodo}</span></p>
                 <p className={styles.cobro}>{o.cobro}</p>
                 <ul className={styles.lista}>
                   {o.incluye.map((i) => (
@@ -87,7 +89,7 @@ export default function ElegirPlan({ requisito, onClose }: { requisito?: Requisi
         <p className={styles.pie} role="status">
           {pronto
             ? 'Muy pronto: estamos activando los pagos de los planes nuevos. Te avisaremos.'
-            : <>Pago seguro con Mercado Pago. Al suscribirte aceptas los <Link href="/terminos">Términos y condiciones</Link>.</>}
+            : <>Pago seguro con {pasarela === 'creem' ? 'Creem' : 'Mercado Pago'}. Al suscribirte aceptas los <Link href="/terminos">Términos y condiciones</Link>.</>}
         </p>
       </div>
     </div>,

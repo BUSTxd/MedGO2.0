@@ -21,7 +21,8 @@ interface SubRow {
   amount: number;
   currency: string;
   next_payment_date: string | null;
-  mp_preapproval_id: string;
+  mp_preapproval_id: string | null;
+  proveedor: 'mercadopago' | 'creem';
   created_at: string;
 }
 
@@ -44,7 +45,7 @@ export default async function AccountPage() {
 
   const { data: sub } = await supabase
     .from('subscriptions')
-    .select('id, plan_key, status, amount, currency, next_payment_date, mp_preapproval_id, created_at')
+    .select('id, plan_key, status, amount, currency, next_payment_date, mp_preapproval_id, proveedor, created_at')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
     .limit(1)

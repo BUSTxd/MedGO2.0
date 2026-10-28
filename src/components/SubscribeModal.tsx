@@ -7,10 +7,12 @@ import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react';
 import dynamic from 'next/dynamic';
 import { PLANS, requisitoDe, type PlanKey } from '@/lib/plans';
 import { usePlan } from './PlanProvider';
+import { usePasarela } from './planes/usePasarela';
 import styles from '@/styles/subscribeModal.module.css';
 
 // ElegirPlan importa este archivo: por `dynamic` el ciclo no se resuelve al cargar el módulo.
 const ElegirPlan = dynamic(() => import('./planes/ElegirPlan'), { ssr: false });
+const PagoCreem = dynamic(() => import('./planes/PagoCreem'), { ssr: false });
 
 let mpInited = false;
 
@@ -27,6 +29,8 @@ interface Props {
   open: boolean;
   planKey: PlanKey;
   onClose: () => void;
+  /** Pasar a pagar en dólares con Creem (solo si el plan existe allí). */
+  onCambiar?: () => void;
 }
 
 const formatDate = (iso: string) =>
@@ -44,13 +48,21 @@ const shortRef = (id: string) => id.slice(-8);
  * lo que pedía ese candado. Así ningún punto de venta tiene que saberlo.
  */
 export default function SubscribeModal(props: Props) {
-  if (!PLANS[props.planKey].aLaVenta) {
+  const [pasarela, cambiar] = usePasarela();
+  const plan = PLANS[props.planKey];
+  if (!plan.aLaVenta) {
     return props.open ? <ElegirPlan requisito={requisitoDe(props.planKey)} onClose={props.onClose} /> : null;
   }
-  return <PasarelaMP {...props} />;
+  // Mercado Pago solo en el Perú; fuera, Creem (si el plan existe allí). Hasta
+  // saber el país no se pinta nada: así no se baja el SDK de MP sin necesidad.
+  if (props.open && pasarela === null) return null;
+  if (pasarela === 'creem' && plan.creem) {
+    return <PagoCreem open={props.open} planKey={props.planKey} onClose={props.onClose} onCambiar={() => cambiar('mercadopago')} />;
+  }
+  return <PasarelaMP {...props} onCambiar={plan.creem ? () => cambiar('creem') : undefined} />;
 }
 
-function PasarelaMP({ open, planKey, onClose }: Props) {
+function PasarelaMP({ open, planKey, onClose, onCambiar }: Props) {
   const router = useRouter();
   // En la interfaz de estudio se paga desde la clase o el laboratorio que se quiere abrir:
   // al terminar, el alumno se queda ahí (ya desbloqueado) en vez de saltar al dashboard.
@@ -215,6 +227,11 @@ function PasarelaMP({ open, planKey, onClose }: Props) {
                   ? `Pago mensual. Compromiso mínimo de ${meses} meses.`
                   : 'Pago mensual. Cancela cuando quieras.'}
             </p>
+            {onCambiar && (
+              <button type="button" className={styles.cambiar} onClick={onCambiar}>
+                ¿No estás en Perú? Paga en dólares con Creem
+              </button>
+            )}
 
             <div className={styles.priceRow}>
               <span className={styles.priceMain}>S/ {plan.amount.toFixed(2)}</span>

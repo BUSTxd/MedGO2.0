@@ -13,7 +13,8 @@ interface SubRow {
   amount: number;
   currency: string;
   next_payment_date: string | null;
-  mp_preapproval_id: string;
+  mp_preapproval_id: string | null;
+  proveedor?: 'mercadopago' | 'creem';
   created_at: string;
 }
 
@@ -58,12 +59,17 @@ export default function SubscriptionPanel({
   // Cadencia del cobro leída del catálogo, no del nombre del plan: hay un
   // anual por tramo ('residente' y 'ufbi-anual') y comparar nombres deja al
   // siguiente mostrando «S/ 189.00/mes».
+  // Con Creem el ciclo es el del producto (1, 12 o 24 meses, pagados por adelantado).
+  const deCreem = subscription?.proveedor === 'creem';
+  const mesesCreem = deCreem ? PLANS[subscription!.plan_key].creem?.meses ?? 1 : 0;
   const esAnual = subscription
-    ? PLANS[subscription.plan_key].durationDays >= 365
+    ? (deCreem ? mesesCreem >= 12 : PLANS[subscription.plan_key].durationDays >= 365)
     : false;
+  const unidad = deCreem && mesesCreem === 24 ? '2 años' : esAnual ? 'año' : 'mes';
+  const moneda = subscription?.currency === 'USD' ? 'US$' : 'S/';
   // Meses de compromiso del plan contratado (Interno y UFBI: 3). El texto usa
   // este número, así que cambiarlo en el catálogo actualiza también los avisos.
-  const meses = subscription
+  const meses = subscription && !deCreem
     ? PLANS[subscription.plan_key].commitmentMonths ?? 0
     : 0;
   const expiresLabel = formatDate(expiresAt);
@@ -71,7 +77,7 @@ export default function SubscriptionPanel({
 
   // Misma función que usa `api/subscriptions/cancel`: si el botón calculara la
   // fecha por su cuenta podría habilitarse antes de que la API acepte cancelar.
-  const unlockDate = subscription && !exentoDeCompromiso
+  const unlockDate = subscription && !exentoDeCompromiso && !deCreem
     ? unlockDateFor(subscription.plan_key, subscription.created_at)
     : null;
   const isLocked = unlockDate ? unlockDate.getTime() > Date.now() : false;
@@ -117,7 +123,7 @@ export default function SubscriptionPanel({
             <div className={styles.planLabel}>Plan {planLabel}</div>
             {!isFree && subscription && (
               <div className={styles.planMeta}>
-                S/ {Number(subscription.amount).toFixed(2)}/{esAnual ? 'año' : 'mes'}
+                {moneda} {Number(subscription.amount).toFixed(2)}/{unidad}
               </div>
             )}
           </div>

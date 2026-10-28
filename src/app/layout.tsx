@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { AuthProvider } from '@/components/AuthProvider';
 import { ConsentProvider } from '@/components/ConsentProvider';
 import CookieConsent from '@/components/CookieConsent';
+import AvisoPagoCreem from '@/components/planes/AvisoPagoCreem';
 import './globals.css';
 
 const outfit = Outfit({
@@ -49,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ConsentProvider>
           <AuthProvider>
             {children}
+            <AvisoPagoCreem />
           </AuthProvider>
           <CookieConsent />
         </ConsentProvider>

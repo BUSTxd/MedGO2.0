@@ -335,3 +335,26 @@
 .continueBtn:active {
   transform: translateY(0);
 }
+
+/* Cambiar de pasarela (Mercado Pago en el Perú ↔ Creem fuera). */
+.cambiar {
+  display: inline-block;
+  margin: -4px 0 14px;
+  padding: 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: 13px;
+  color: inherit;
+  opacity: 0.75;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.cambiar:hover,
+.cambiar:focus-visible { opacity: 1; }
+
+.continueBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}

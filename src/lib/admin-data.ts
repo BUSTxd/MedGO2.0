@@ -1,4 +1,5 @@
 import { createAdminClient } from '@/lib/supabase/admin';
+import { PLANS, isPlanKey } from '@/lib/plans';
 import { countActiveDevicesByUser } from '@/lib/sessions';
 import { isAdminEmail } from '@/lib/admin';
 import { tokenDePresencia } from '@/lib/presencia';
@@ -19,6 +20,8 @@ export interface AdminRow {
   subStatus: AdminSubStatus | null;
   nextPaymentDate: string | null;
   subAmount: number | null;
+  /** Lo que aporta al mes, en soles (anuales y dólares normalizados). */
+  subMensualSoles: number | null;
   deviceCount: number;
   /** Cursos en los que estuvo, el de más días primero (su curso objetivo). */
   cursos: CursoDeUsuario[];
@@ -83,7 +86,28 @@ interface SubRow {
   status: AdminSubStatus;
   next_payment_date: string | null;
   amount: number | null;
+  currency: string | null;
+  plan_key: string | null;
+  proveedor: string | null;
   created_at: string;
+}
+
+/** Soles por dólar para sumar al MRR los cobros de Creem. Aproximado: el MRR es orientativo. */
+const SOLES_POR_USD = 3.75;
+
+/**
+ * Lo que una suscripción aporta al mes, en soles: el importe cobrado repartido
+ * en los meses que cubre (anuales y los pagos por adelantado de Creem) y pasado
+ * a soles si se cobró en dólares.
+ */
+function mensualEnSoles(sub: SubRow): number {
+  const p = sub.plan_key && isPlanKey(sub.plan_key) ? PLANS[sub.plan_key] : null;
+  const importe = sub.amount ?? p?.amount ?? 0;
+  const meses = sub.proveedor === 'creem'
+    ? p?.creem?.meses ?? 1
+    : p && p.durationDays >= 365 ? 12 : 1;
+  const soles = sub.currency === 'USD' ? importe * SOLES_POR_USD : importe;
+  return soles / meses;
 }
 
 function todayLima(): string {
@@ -124,7 +148,7 @@ export async function loadAdminData(): Promise<AdminData> {
     admin.from('profiles').select('id, full_name, plan, plan_expires_at, last_visit_date, current_streak'),
     admin
       .from('subscriptions')
-      .select('user_id, status, next_payment_date, amount, created_at')
+      .select('user_id, status, next_payment_date, amount, currency, plan_key, proveedor, created_at')
       .order('created_at', { ascending: false }),
     countActiveDevicesByUser(),
     cargarResumenCursos(),
@@ -168,6 +192,7 @@ export async function loadAdminData(): Promise<AdminData> {
       subStatus: sub?.status ?? null,
       nextPaymentDate: sub?.next_payment_date ?? null,
       subAmount: sub?.amount ?? null,
+      subMensualSoles: sub ? mensualEnSoles(sub) : null,
       deviceCount: deviceCounts.get(p.id) ?? 0,
       cursos: cursosDe.get(p.id) ?? [],
       presencia: tokenDePresencia(p.id),
@@ -181,7 +206,7 @@ export async function loadAdminData(): Promise<AdminData> {
     const d = daysUntil(r.nextPaymentDate);
     return d !== null && d >= 0 && d <= 7;
   }).length;
-  const mrrSoles = activos.reduce((sum, r) => sum + (r.subAmount ?? 14), 0);
+  const mrrSoles = Math.round(activos.reduce((sum, r) => sum + (r.subMensualSoles ?? 0), 0) * 100) / 100;
 
   const rankingCursos: CursoRank[] = CURSOS.map((c) => {
     let objetivo = 0;

@@ -1,0 +1,36 @@
+/* Aviso flotante al volver del checkout de Creem. Igual en claro y en oscuro
+   (fondo marino propio), por encima de cualquier interfaz. */
+.aviso {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 10000;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #1a2557;
+  color: #f0eeff;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.45;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.cerrar {
+  flex-shrink: 0;
+  padding: 0 4px;
+  background: none;
+  border: 0;
+  color: inherit;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.cerrar:hover,
+.cerrar:focus-visible { opacity: 1; }

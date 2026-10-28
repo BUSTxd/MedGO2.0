@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { puedeCancelarSinCompromiso } from '@/lib/admin';
 import { cancelPreapproval } from '@/lib/mercadopago';
+import { cancelarSuscripcion } from '@/lib/creem';
 import { PLANS, unlockDateFor, type PlanKey } from '@/lib/plans';
 
 export const runtime = 'nodejs';
@@ -18,13 +19,15 @@ export async function POST() {
 
   const { data: sub } = await admin
     .from('subscriptions')
-    .select('id, mp_preapproval_id, status, plan_key, created_at')
+    .select('id, proveedor, mp_preapproval_id, creem_subscription_id, status, plan_key, created_at')
     .eq('user_id', user.id)
     .in('status', ['authorized', 'pending'])
     .order('created_at', { ascending: false })
     .maybeSingle<{
       id: string;
-      mp_preapproval_id: string;
+      proveedor: 'mercadopago' | 'creem';
+      mp_preapproval_id: string | null;
+      creem_subscription_id: string | null;
       status: string;
       plan_key: PlanKey;
       created_at: string;
@@ -43,7 +46,9 @@ export async function POST() {
   // esperar tres meses para volver a probar la cancelación. No es un permiso
   // de «cancelar por otros»: siguen cancelando únicamente su propia
   // suscripción, la que devolvió la consulta de arriba (`user_id = user.id`).
-  const exentoDeCompromiso = puedeCancelarSinCompromiso(user.email);
+  // Con Creem el periodo entero ya está pagado por adelantado: no hay permanencia
+  // que esperar, cancelar solo apaga la renovación.
+  const exentoDeCompromiso = sub.proveedor === 'creem' || puedeCancelarSinCompromiso(user.email);
 
   const unlockAt = exentoDeCompromiso
     ? null
@@ -60,10 +65,11 @@ export async function POST() {
   }
 
   try {
-    await cancelPreapproval(sub.mp_preapproval_id);
+    if (sub.proveedor === 'creem') await cancelarSuscripcion(sub.creem_subscription_id!);
+    else await cancelPreapproval(sub.mp_preapproval_id!);
   } catch (err) {
-    console.error('[subs/cancel] MP error', err);
-    return NextResponse.json({ error: 'mp_error', detail: String(err) }, { status: 502 });
+    console.error('[subs/cancel]', sub.proveedor, err);
+    return NextResponse.json({ error: sub.proveedor === 'creem' ? 'creem_error' : 'mp_error', detail: String(err) }, { status: 502 });
   }
 
   const subsTable = admin.from('subscriptions') as unknown as {

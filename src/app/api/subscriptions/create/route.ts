@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { getPlan } from '@/lib/plans';
+import { bloqueoDeCompra } from '@/lib/suscripciones-server';
 import { createPreapproval, getPreapproval, type PreapprovalResponse } from '@/lib/mercadopago';
 
 export const runtime = 'nodejs';
@@ -50,44 +51,8 @@ export async function POST(req: Request) {
 
   const admin = createAdminClient();
 
-  const { data: existing } = await admin
-    .from('subscriptions')
-    .select('id, status')
-    .eq('user_id', user.id)
-    .in('status', ['authorized', 'pending'])
-    .maybeSingle<{ id: string; status: string }>();
-  if (existing) {
-    return NextResponse.json(
-      { error: 'already_subscribed', status: existing.status },
-      { status: 409 },
-    );
-  }
-
-  // Bloqueo adicional: el usuario puede haber cancelado pero su acceso pagado
-  // sigue vigente hasta plan_expires_at. En ese caso, no permitimos comprar
-  // otro plan hasta que el acceso actual expire de verdad.
-  const { data: profile } = await admin
-    .from('profiles')
-    .select('plan, plan_expires_at')
-    .eq('id', user.id)
-    .maybeSingle<{ plan: string | null; plan_expires_at: string | null }>();
-  const expiresAtIso = profile?.plan_expires_at ?? null;
-  const hasActiveAccess =
-    !!profile?.plan &&
-    profile.plan !== 'free' &&
-    !!expiresAtIso &&
-    new Date(expiresAtIso).getTime() > Date.now();
-  if (hasActiveAccess) {
-    return NextResponse.json(
-      {
-        error: 'already_subscribed',
-        reason: 'active_access',
-        plan: profile?.plan,
-        expiresAt: expiresAtIso,
-      },
-      { status: 409 },
-    );
-  }
+  const bloqueo = await bloqueoDeCompra(admin, user.id);
+  if (bloqueo) return bloqueo;
 
   let preapproval;
   try {
@@ -115,6 +80,7 @@ export async function POST(req: Request) {
   };
   const { error: insertErr } = await subsTable.insert({
     user_id: user.id,
+    proveedor: 'mercadopago',
     mp_preapproval_id: preapproval.id,
     mp_plan_id: plan.mpPlanId,
     plan_key: plan.key,
