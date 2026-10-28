@@ -539,3 +539,9 @@
 @media(max-width:560px){.red{aspect-ratio:1/1}.redPista{left:14px;right:auto}}
 @media(prefers-reduced-motion:reduce){
 
+
+/* «Iniciar sesión» (sustituye a «Cómo funciona»): en la cabecera hasta 721 px; debajo, dentro del menú. */
+@media(max-width:1100px){.header-login{display:inline-flex}}
+@media(max-width:720px){.header-login{display:none}}
+.solo-menu{display:none}
+@media(max-width:720px){.header-links .solo-menu{display:block}}

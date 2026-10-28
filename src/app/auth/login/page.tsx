@@ -6,7 +6,6 @@ import { useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { destinoSeguro, recordarDestino } from '@/lib/destino';
 import Logo from '@/components/Logo';
-import Background from '@/components/Background';
 import styles from '@/styles/auth.module.css';
 
 type Tab = 'login' | 'register';
@@ -153,7 +152,6 @@ function AuthPageInner() {
 
   return (
     <>
-      <Background />
       <div className={styles.page}>
         <div className={styles.card}>
           <Link href="/" className={styles.logo}>
