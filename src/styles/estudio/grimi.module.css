@@ -25,28 +25,26 @@
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 35%, #24336e, #141d45 70%);
-  box-shadow: 0 12px 30px -10px rgba(16, 24, 58, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  background: transparent;
   cursor: pointer;
   font-family: inherit;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
-.boton:hover {
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 16px 34px -10px rgba(16, 24, 58, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-}
+.boton:hover { transform: translateY(-2px) scale(1.05); }
 
 .boton:focus-visible {
   outline: 2px solid #91b9d7;
   outline-offset: 4px;
 }
 
+/* Sin disco detrás: una sombra suave lo despega de la hoja clara (su cuerpo es blanco). */
 .mascota {
   display: block;
-  width: 46px;
-  height: 46px;
+  width: 60px;
+  height: 60px;
+  filter: drop-shadow(0 6px 10px rgba(16, 24, 58, 0.28)) drop-shadow(0 0 1px rgba(16, 24, 58, 0.35));
 }
 
 .globo {
@@ -88,7 +86,7 @@
   .caja { right: 14px; bottom: 14px; }
   .subir { bottom: 86px; }
   .boton { width: 54px; height: 54px; }
-  .mascota { width: 40px; height: 40px; }
+  .mascota { width: 52px; height: 52px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
