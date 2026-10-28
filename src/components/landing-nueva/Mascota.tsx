@@ -107,6 +107,10 @@ const ORDENES = {
   ],
   /** Al despedirse: te mira y se alegra un momento. */
   adios: [mirar(0, 0, 400), { t: 'feliz', ms: 1000 }, pausa(300)],
+  /** Le preguntaron algo: mira hacia arriba, pensando, y vuelve a mirarte para contestar. */
+  pensar: [mirar(-0.45, 0.48, 600), pausa(900), PARPADEO, mirar(-0.25, 0.55, 800), pausa(1000), PARPADEO, mirar(0, 0.05, 600), pausa(2500)],
+  /** Terminó de explicar: se alegra y te mira. */
+  listo: [mirar(0, 0, 400), { t: 'feliz', ms: 1100 }, pausa(1200)],
 } satisfies Record<string, Paso[]>;
 export type OrdenMascota = { n: number; tipo: keyof typeof ORDENES };
 

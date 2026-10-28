@@ -11,6 +11,9 @@ import { cx, Icono } from './Icono';
 import type { Contexto } from './EspacioEstudio';
 import { veces } from './texto';
 import { duracion, fechaLarga } from './plan/formato';
+import { useGrimi } from './GrimiIA';
+import BurbujaSeleccion from '@/components/ia/BurbujaSeleccion';
+import type { PedidoIA } from '@/components/ia/useChatIA';
 
 // Los mismos visores que la tarjeta «Resumen» del dashboard; sólo bajan al abrirlos.
 const HtmlFullscreenModal = dynamic(() => import('@/components/HtmlFullscreenModal'), { ssr: false });
@@ -185,6 +188,12 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
   const seccionDestino = destino && resumen?.id === destino.resumenId ? destino.seccion : undefined;
   useEffect(() => { setIndice([]); setIndiceActivo(0); }, [resumen?.id]);
 
+  // MedGO IA con la cara de GRIMI: subrayar en un resumen HTML (o pedir una figura) y él lo explica.
+  const grimi = useGrimi();
+  const resumenIA = grimi?.puedeUsar && resumen?.formato === 'html' ? resumen.id : null;
+  const pedirIA = useCallback((p: PedidoIA) => { if (resumenIA) grimi?.pedir(p, resumenIA); }, [grimi, resumenIA]);
+  const figuraIA = useCallback((figura: string) => pedirIA({ accion: 'figura', figura }), [pedirIA]);
+
   // Con el documento ya en el DOM: índice, vuelta al punto de lectura y registro de la apertura.
   const alCargar = useCallback((sheet: HTMLElement) => {
     setIndice(indiceDe(sheet));
@@ -315,9 +324,10 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
                   escala={marcas.fontSize / 16}
                   scrollerRef={scroller}
                   sheetRef={sheetRef}
-                  className={rs.incrustado}
+                  className={resumenIA ? `${rs.incrustado} ${rs.conIA}` : rs.incrustado}
                   estadoClass={cx('article-intro')}
                   onCargado={alCargar}
+                  onFiguraIA={resumenIA ? figuraIA : undefined}
                   seccion={seccionDestino}
                   bloquearTeclas
                 />
@@ -326,6 +336,7 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
                   <PdfViewer key={resumen.id} claseId={resumen.id} widthOverride={anchoPdf} scale={marcas.fontSize / 16} loadingClass={cx('article-intro')} />
                 </div>
               ) : null}
+              {resumenIA && <BurbujaSeleccion sheetRef={sheetRef} activo onPedir={pedirIA} />}
             </div>
           ) : l.encib ? (<>
           <section id="section-oficial" className={cx('article-section')}>

@@ -1940,6 +1940,17 @@
 .sheet.incrustado :global(h1.page-title) {
   display: none;
 }
+/* Con MedGO IA (GRIMI) el lector deja subrayar para preguntarle; copiar sigue
+   bloqueado (teclas, menú, impresión), como en el «modo IA» del visor. */
+.incrustado.conIA,
+.incrustado.conIA :global(*) {
+  user-select: text;
+  -webkit-user-select: text;
+}
+.incrustado.conIA ::selection,
+.incrustado.conIA :global(*)::selection {
+  background: rgba(139, 139, 255, 0.35);
+}
 @media print {
   .incrustado { display: none !important; }
 }

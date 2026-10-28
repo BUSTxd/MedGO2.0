@@ -1,7 +1,6 @@
 'use client';
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import dynamic from 'next/dynamic';
 import { PlanProvider, type ClientPlanState } from '@/components/PlanProvider';
 import { DarkModeProvider } from '@/components/DarkModeContext';
 import { EsAdminProvider } from '@/components/EsAdminContext';
@@ -12,9 +11,7 @@ import BuzonUsuario from '@/components/BuzonUsuario';
 import { AvisoRespuestas, useRespuestasNuevas } from '@/components/MensajesAdmin';
 import { pingRacha } from '@/lib/racha';
 import { CuentaProvider, type CuentaEstudio } from './CuentaContext';
-
-// La mascota trae la hoja de estilos de la landing: baja aparte, cuando ya se pintó la interfaz.
-const Grimi = dynamic(() => import('./Grimi'), { ssr: false });
+import GrimiIA from './GrimiIA';
 
 /**
  * La parte invisible de `DashboardWrapper` (plan, admin, analítica, presencia,
@@ -62,13 +59,21 @@ export default function EstudioShell({
       {presencia && <AnunciarPresencia token={presencia} />}
       {buzon && <BuzonUsuario token={buzon} />}
       {canalAdmin && <AvisoRespuestas nuevas={respuestasNuevas} ocultar={avisoOculto} href="/estudio/admin#mensajes" />}
-      {/* En todas las páginas, laboratorios incluidos (BUST lo quiere siempre a la vista). */}
-      <Grimi subir={!!canalAdmin && !!respuestasNuevas && !avisoOculto} sobreBarra={pathname.startsWith('/estudio/examenes')} />
 
       <CursorCelula />
       <DarkModeProvider darkMode={darkMode} toggleDark={toggleDark}>
         <EsAdminProvider value={isAdmin}>
-          <CuentaProvider value={cuentaViva}>{children}</CuentaProvider>
+          <CuentaProvider value={cuentaViva}>
+            {/* GRIMI en todas las páginas, laboratorios incluidos (BUST lo quiere siempre a la vista).
+                Su IA, de momento sólo para el admin. */}
+            <GrimiIA
+              puedeUsar={isAdmin}
+              subir={!!canalAdmin && !!respuestasNuevas && !avisoOculto}
+              sobreBarra={pathname.startsWith('/estudio/examenes')}
+            >
+              {children}
+            </GrimiIA>
+          </CuentaProvider>
         </EsAdminProvider>
       </DarkModeProvider>
     </PlanProvider>

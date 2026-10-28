@@ -18,6 +18,8 @@ export interface PedidoIA {
   seccion?: string;
   figura?: string;
   pregunta?: string;
+  /** El resumen de este pedido, si no es el del hook (GRIMI atiende a la clase abierta, que cambia). */
+  claseId?: string;
 }
 
 export interface MensajeIA {
@@ -125,7 +127,7 @@ export function useChatIA(claseId: string | null) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...p,
-          claseId: claseId ?? undefined,
+          claseId: p.claseId ?? claseId ?? undefined,
           conversacionId: conversacion.current ?? undefined,
         }),
       });
