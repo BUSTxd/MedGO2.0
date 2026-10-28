@@ -7,11 +7,13 @@
 export type Pasarela = 'mercadopago' | 'creem';
 
 /**
- * ¿Ya cobra Creem? Hasta que Creem apruebe la cuenta (revisión de su equipo),
- * su checkout responde «Live payments are not enabled»: mientras tanto todos
- * pagan con Mercado Pago. El día de la aprobación, pasarlo a `true`.
+ * ¿Se ofrece Creem fuera del Perú? Encendido también durante la revisión de la
+ * cuenta: su equipo prueba la compra con un código de descuento del 100 %, y
+ * para eso tiene que llegar a su checkout desde la web. Hasta la aprobación,
+ * una compra sin código responde «Live payments are not enabled»; el modal deja
+ * pasar a Mercado Pago desde cualquier país. Con `false`, todos van a Mercado Pago.
  */
-export const CREEM_COBROS_ACTIVOS = false;
+export const CREEM_COBROS_ACTIVOS = true;
 
 export function pasarelaDePais(pais: string | null | undefined): Pasarela {
   // Sin país (en local no hay cabecera de Vercel) se queda en Mercado Pago.

@@ -85,7 +85,7 @@ export default function PagoCreem({
             : 'Pago mensual. Cancela cuando quieras.'}
         </p>
         <button type="button" className={styles.cambiar} onClick={onCambiar}>
-          ¿Estás en Perú? Paga en soles con Mercado Pago
+          ¿Prefieres pagar en soles? Hazlo con Mercado Pago
         </button>
 
         <div className={styles.priceRow}>
