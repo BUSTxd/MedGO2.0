@@ -278,6 +278,11 @@ if (ini !== -1 && fin !== -1) {
     .replace(/<header[\s\S]*?<\/header>/i, '');
 }
 
+// 5a. Con un bloque de código Notion mete el <script> de Prism DENTRO del
+//     cuerpo (ACP10 de Patología). Inyectado no se ejecuta: es peso y una
+//     carga externa que no pinta nada.
+body = body.replace(/<script[\s\S]*?<\/script>/gi, '');
+
 // 5b. imágenes → CDN público (href del enlace y src de la figura). El .avif
 //     entra también: si BUST reescribe el export para que apunte a sus
 //     .avif (sin PNG en la carpeta), las imágenes se subían pero el HTML
