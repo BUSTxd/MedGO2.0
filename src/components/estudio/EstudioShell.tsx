@@ -1,6 +1,7 @@
 'use client';
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { PlanProvider, type ClientPlanState } from '@/components/PlanProvider';
 import { DarkModeProvider } from '@/components/DarkModeContext';
 import { EsAdminProvider } from '@/components/EsAdminContext';
@@ -11,6 +12,9 @@ import BuzonUsuario from '@/components/BuzonUsuario';
 import { AvisoRespuestas, useRespuestasNuevas } from '@/components/MensajesAdmin';
 import { pingRacha } from '@/lib/racha';
 import { CuentaProvider, type CuentaEstudio } from './CuentaContext';
+
+// La mascota trae la hoja de estilos de la landing: baja aparte, cuando ya se pintó la interfaz.
+const Grimi = dynamic(() => import('./Grimi'), { ssr: false });
 
 /**
  * La parte invisible de `DashboardWrapper` (plan, admin, analítica, presencia,
@@ -32,6 +36,8 @@ export default function EstudioShell({
   const pathname = usePathname();
   // Las respuestas sin leer del admin: el contador del menú de la cuenta y el aviso flotante.
   const respuestasNuevas = useRespuestasNuevas(canalAdmin);
+  const avisoOculto = pathname.startsWith('/estudio/admin');
+  const enUnLaboratorio = /^\/estudio\/laboratorio\/[^/]+/.test(pathname);
   const cuentaViva = useMemo(() => ({ ...cuenta, respuestasNuevas: respuestasNuevas ?? 0 }), [cuenta, respuestasNuevas]);
 
   useEffect(() => {
@@ -56,7 +62,11 @@ export default function EstudioShell({
       {!isAdmin && <Suspense fallback={null}><PaginaVistaTracker /></Suspense>}
       {presencia && <AnunciarPresencia token={presencia} />}
       {buzon && <BuzonUsuario token={buzon} />}
-      {canalAdmin && <AvisoRespuestas nuevas={respuestasNuevas} ocultar={pathname.startsWith('/estudio/admin')} href="/estudio/admin#mensajes" />}
+      {canalAdmin && <AvisoRespuestas nuevas={respuestasNuevas} ocultar={avisoOculto} href="/estudio/admin#mensajes" />}
+      {/* Dentro de un laboratorio no: cada uno tiene sus mandos y los suele llevar abajo. */}
+      {!enUnLaboratorio && (
+        <Grimi subir={!!canalAdmin && !!respuestasNuevas && !avisoOculto} sobreBarra={pathname.startsWith('/estudio/examenes')} />
+      )}
       <CursorCelula />
       <DarkModeProvider darkMode={darkMode} toggleDark={toggleDark}>
         <EsAdminProvider value={isAdmin}>
