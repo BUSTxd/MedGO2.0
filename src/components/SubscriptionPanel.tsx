@@ -145,7 +145,7 @@ export default function SubscriptionPanel({
         {isFree && (
           <p className={styles.dateLine}>
             No tienes una suscripción activa.{' '}
-            <Link href="/#precios" className={styles.linkInline}>Ver planes</Link>
+            <Link href="/#planes" className={styles.linkInline}>Ver planes</Link>
           </p>
         )}
 

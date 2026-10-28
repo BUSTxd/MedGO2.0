@@ -15,7 +15,7 @@ const AuthContext = createContext<AuthContextValue>({ user: null, loading: true 
  * Provider unico de auth para el lado del cliente. Hace una sola llamada a
  * supabase.auth.getUser() al montar y mantiene la suscripcion a
  * onAuthStateChange. Componentes que antes invocaban getUser por su cuenta
- * (Navbar, Pricing, HeroCtas, ...) ahora consumen useAuth() y comparten una
+ * (Navbar, la landing, ...) ahora consumen useAuth() y comparten una
  * unica peticion por sesion del browser, en lugar de N por cada componente.
  */
 export function AuthProvider({ children }: { children: React.ReactNode }) {

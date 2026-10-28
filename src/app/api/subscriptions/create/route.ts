@@ -156,7 +156,7 @@ export async function POST(req: Request) {
   return NextResponse.json({
     ok: true,
     status: preapproval.status,
-    redirectTo: '/dashboard/home',
+    redirectTo: '/estudio',
     receipt: {
       mpPreapprovalId: preapproval.id,
       planLabel: plan.label,

@@ -605,7 +605,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
               El resto del banqueo de esta clase entra con la suscripción, junto al resumen
               y al resto del curso.
             </p>
-            <a href="/#precios" className={s.siguiente}>Ver los planes</a>
+            <a href="/#planes" className={s.siguiente}>Ver los planes</a>
           </div>
         )}
       </div>

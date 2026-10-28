@@ -170,7 +170,7 @@ export default function LockedContent({
             </button>
           </div>
 
-          {!nuevos && <a href="/#precios" className={styles.smallLink}>Ver todos los planes</a>}
+          {!nuevos && <a href="/#planes" className={styles.smallLink}>Ver todos los planes</a>}
         </div>
       </div>
 

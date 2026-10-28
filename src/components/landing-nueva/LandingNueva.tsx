@@ -120,7 +120,7 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
   const entrar = user ? ESPACIO : '/auth/login?signup=1';
   const textoEntrar = user ? 'Ir a estudiar' : 'Empieza ahora';
   const suscribirme = (key: PlanKey) => {
-    if (!user) { router.push(`/auth/login?next=${encodeURIComponent('/landing-nueva#planes')}`); return; }
+    if (!user) { router.push(`/auth/login?next=${encodeURIComponent('/#planes')}`); return; }
     if (estadoCompra(key)) return;
     if (!PLANS[key].aLaVenta) { setPronto(true); return; }
     setComprar(key);

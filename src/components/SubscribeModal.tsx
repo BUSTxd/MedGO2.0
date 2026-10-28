@@ -166,7 +166,7 @@ function PasarelaMP({ open, planKey, onClose }: Props) {
           setReceipt(json.receipt as Receipt);
         } else {
           if (enEstudio) onClose();
-          else router.push(json.redirectTo || '/dashboard/home');
+          else router.push(json.redirectTo || '/estudio');
         }
       } catch (e) {
         setError((prev) => prev ?? (e instanceof Error ? e.message : 'Error inesperado'));
@@ -185,7 +185,7 @@ function PasarelaMP({ open, planKey, onClose }: Props) {
 
   const handleContinue = () => {
     if (enEstudio) { onClose(); router.refresh(); return; }
-    router.push('/dashboard/home');
+    router.push('/estudio');
     router.refresh();
   };
 
