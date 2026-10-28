@@ -1933,6 +1933,13 @@
 .incrustado :global(img) {
   -webkit-user-drag: none;
 }
+/* El lector ya pone el título de la clase justo encima: el de portada del
+   documento lo repetía. En el visor a pantalla completa sí se queda (su
+   barra no presenta el documento; el caso del AI3). Con `display: none`
+   tampoco entra en «En esta clase». */
+.sheet.incrustado :global(h1.page-title) {
+  display: none;
+}
 @media print {
   .incrustado { display: none !important; }
 }
