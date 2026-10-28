@@ -9,6 +9,7 @@ import { ofertasPara } from '@/components/planes/oferta';
 import { usePasarela } from '@/components/planes/usePasarela';
 import { CREEM_COBROS_ACTIVOS } from '@/lib/pasarela';
 import Footer from '@/components/Footer';
+import MenuCuenta from './MenuCuenta';
 import { c } from './estilos';
 import Mascota from './Mascota';
 import DemoEspacio from './DemoEspacio';
@@ -148,7 +149,9 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
           ))}
         </nav>
         <div className={c('header-actions')}>
-          {!user && <Link className={c('header-secondary header-login')} href="/auth/login">Iniciar sesión</Link>}
+          {user
+            ? <MenuCuenta email={user.email ?? null} />
+            : <Link className={c('header-secondary header-login')} href="/auth/login">Iniciar sesión</Link>}
           <Link className={c('button primary small')} href={entrar}>{textoEntrar} <Ico id="i-arrow" /></Link>
         </div>
         <button
