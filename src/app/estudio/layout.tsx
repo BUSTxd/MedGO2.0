@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import type { Metadata, Viewport } from 'next';
 import { Outfit } from 'next/font/google';
 import EstudioShell from '@/components/estudio/EstudioShell';
-import EsqueletoEstudio from '@/components/estudio/EsqueletoEstudio';
+import SiluetaRuta from '@/components/estudio/SiluetaRuta';
 import { prepararSesionApp } from '@/lib/sesion-app';
 import { PLANS } from '@/lib/plans';
 
@@ -21,7 +21,7 @@ export const viewport: Viewport = { themeColor: '#18212c' };
 export default function EstudioLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className={outfitEstudio.variable}>
-      <Suspense fallback={<EsqueletoEstudio />}>
+      <Suspense fallback={<SiluetaRuta />}>
         <ConSesion>{children}</ConSesion>
       </Suspense>
     </div>

@@ -1556,3 +1556,6 @@ button.session-badge:hover { border-color: #245b8f; color: #245b8f; }
 @media (prefers-reduced-motion: reduce) {
   .esq-hueso { animation: none; background-image: none; }
 }
+/* Laboratorio: el texto del buscador y la chapita del conteo, vacía pero del mismo tamaño. */
+.esq-placeholder { font-size: 13px; }
+.esq-vacio { color: transparent !important; }

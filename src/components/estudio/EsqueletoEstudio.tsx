@@ -1,4 +1,5 @@
 import { cx, Icono } from './Icono';
+import type { Pagina } from './BarraSuperior';
 
 /**
  * La silueta de /estudio mientras llega la sesión o el curso. Las cajas son las
@@ -12,7 +13,7 @@ import { cx, Icono } from './Icono';
 export default function EsqueletoEstudio({ barra }: { barra?: React.ReactNode }) {
   return (
     <div className={cx('wrapper esq')} data-palette="pearl" role="status" aria-busy="true" aria-label="Cargando tu espacio de estudio">
-      {barra ?? <BarraEsqueleto />}
+      {barra ?? <BarraEsqueleto page="study" />}
       <div className={cx('contextbar')}>
         <div className={cx('context-label')}>Tu meta</div>
         <Hueso w={150} h={30} r={8} />
@@ -84,14 +85,14 @@ export default function EsqueletoEstudio({ barra }: { barra?: React.ReactNode })
 }
 
 /** La barra marina antes de la sesión: todo es fijo salvo el avatar. */
-function BarraEsqueleto() {
-  const pestanas = [['Estudiar', 'book'], ['Exámenes', 'quiz'], ['Laboratorio virtual', 'flask'], ['Mi progreso', 'chart']] as const;
+export function BarraEsqueleto({ page }: { page: Pagina | null }) {
+  const pestanas = [['study', 'Estudiar', 'book'], ['exams', 'Exámenes', 'quiz'], ['labs', 'Laboratorio virtual', 'flask'], ['progress', 'Mi progreso', 'chart']] as const;
   return (
     <header className={cx('topbar')}>
       <span className={cx('brand')}><span className={cx('brand-lockup')} aria-hidden="true" /></span>
       <nav className={cx('main-nav')} aria-hidden="true">
-        {pestanas.map(([label, icon], i) => (
-          <span key={label} className={cx('nav-link', i === 0 && 'active')}><Icono n={icon} /><span>{label}</span></span>
+        {pestanas.map(([id, label, icon]) => (
+          <span key={id} className={cx('nav-link', page === id && 'active')}><Icono n={icon} /><span>{label}</span></span>
         ))}
       </nav>
       <div className={cx('top-tools')} aria-hidden="true">
@@ -109,6 +110,6 @@ function Lineas({ anchos }: { anchos: number[] }) {
   return <>{anchos.map((w, i) => <Hueso key={i} w={`${w}%`} h={12} style={{ marginTop: i ? 0 : 6 }} />)}</>;
 }
 
-function Hueso({ w, h, r, style }: { w: number | string; h: number; r?: number | string; style?: React.CSSProperties }) {
+export function Hueso({ w, h, r, style }: { w: number | string; h: number; r?: number | string; style?: React.CSSProperties }) {
   return <span className={cx('esq-hueso')} style={{ width: w, height: h, borderRadius: r, ...style }} />;
 }
