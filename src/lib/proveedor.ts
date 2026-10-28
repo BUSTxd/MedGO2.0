@@ -9,7 +9,7 @@
 export const PROVEEDOR = {
   nombreComercial: 'MedGO',
   titular: 'Fernand Gonzalo Durand Bustamante',
-  ruc: null as string | null,
+  ruc: '10705926315' as string | null,
   domicilio: null as string | null,
   web: 'www.medgoplus.com',
 };
