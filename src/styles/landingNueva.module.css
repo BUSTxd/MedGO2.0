@@ -540,8 +540,6 @@
 @media(prefers-reduced-motion:reduce){
 
 
-/* «Iniciar sesión» (sustituye a «Cómo funciona»): en la cabecera hasta 721 px; debajo, dentro del menú. */
+/* «Iniciar sesión» (sustituye a «Cómo funciona»), siempre al lado de «Empieza ahora»; en el móvil, más compacto. */
 @media(max-width:1100px){.header-login{display:inline-flex}}
-@media(max-width:720px){.header-login{display:none}}
-.solo-menu{display:none}
-@media(max-width:720px){.header-links .solo-menu{display:block}}
+@media(max-width:720px){.header-login{padding:8px 12px;font-size:12px;white-space:nowrap}}

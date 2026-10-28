@@ -146,8 +146,6 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
           {[['#espacio', 'Tu espacio'], ['#recursos', 'Recursos'], ['#rutas', 'Rutas de estudio'], ['#planes', 'Planes'], ['#preguntas', 'Preguntas']].map(([h, t]) => (
             <a key={h} href={h} onClick={() => cerrarMenu()}>{t}</a>
           ))}
-          {/* En móvil el enlace de la cabecera no cabe: va al menú. */}
-          {!user && <Link className={c('solo-menu')} href="/auth/login" onClick={() => cerrarMenu()}>Iniciar sesión</Link>}
         </nav>
         <div className={c('header-actions')}>
           {!user && <Link className={c('header-secondary header-login')} href="/auth/login">Iniciar sesión</Link>}
