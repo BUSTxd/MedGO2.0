@@ -1,0 +1,179 @@
+/* Formulario y hoja del Libro de Reclamaciones. Mismo fondo oscuro que las
+   páginas legales (legal.module.css), en las que se monta. */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.grupo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 16px;
+  margin: 0;
+  padding: 22px 28px 26px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  min-width: 0;
+}
+
+.grupo legend {
+  float: left;
+  width: 100%;
+  margin-bottom: 4px;
+  padding: 0 0 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.grupo label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13.5px;
+  color: rgba(240, 238, 255, 0.8);
+  min-width: 0;
+}
+
+.ancho { grid-column: 1 / -1; }
+
+.opcional { color: var(--muted); font-size: 12px; }
+
+.form input:not([type='checkbox']):not([type='radio']),
+.form select,
+.form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 14.5px;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+}
+
+.form select option { color: #111; }
+
+.form textarea { resize: vertical; }
+
+.form input:focus-visible,
+.form select:focus-visible,
+.form textarea:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.opciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.grupo .opcion {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--white);
+}
+
+.grupo .opcion:has(input:checked) {
+  border-color: var(--blue);
+  background: rgba(59, 158, 221, 0.1);
+}
+
+.opcion span { display: flex; flex-direction: column; gap: 3px; }
+.opcion small { color: var(--muted); font-size: 12.5px; line-height: 1.45; }
+
+.check {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: rgba(240, 238, 255, 0.8);
+}
+
+.check input, .opcion input { margin-top: 3px; accent-color: var(--blue); }
+
+.check a, .nota a { color: var(--blue); }
+
+.trampa {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0;
+}
+
+.error {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fecaca;
+  font-size: 14px;
+}
+
+.boton {
+  align-self: flex-start;
+  padding: 12px 22px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--blue);
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.boton:disabled { opacity: 0.6; cursor: progress; }
+.boton:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
+
+.nota { margin: 0; font-size: 13px; color: var(--muted); }
+
+/* ── Hoja registrada ── */
+.hoja {
+  margin-top: 12px;
+  padding: 26px 28px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(59, 158, 221, 0.35);
+  border-radius: 14px;
+}
+
+.hojaOk { margin: 0; font-size: 13px; font-weight: 700; color: #6ee7b7; text-transform: uppercase; letter-spacing: 0.6px; }
+.hojaCodigo { margin: 4px 0 10px; font-size: 30px; letter-spacing: 0.5px; color: var(--white); }
+.hojaAviso { margin: 0 0 18px; color: rgba(240, 238, 255, 0.85); }
+
+.hojaDatos { margin: 0 0 20px; display: grid; gap: 10px; }
+.hojaDatos div { display: grid; grid-template-columns: 180px 1fr; gap: 12px; }
+.hojaDatos dt { color: var(--muted); font-size: 13.5px; }
+.hojaDatos dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--white); }
+
+@media (max-width: 640px) {
+  .grupo { grid-template-columns: 1fr; padding: 18px 18px 22px; }
+  .opciones { grid-template-columns: 1fr; }
+  .hojaDatos div { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* Al imprimir, solo la hoja, en negro sobre blanco. */
+@media print {
+  :global(body) * { visibility: hidden; }
+  .hoja, .hoja * { visibility: visible; }
+  .hoja { position: absolute; inset: 0 auto auto 0; width: 100%; border: 0; background: #fff; color: #000; }
+  .hojaCodigo, .hojaDatos dd { color: #000; }
+  .hojaDatos dt, .hojaAviso { color: #333; }
+  .boton { display: none; }
+}

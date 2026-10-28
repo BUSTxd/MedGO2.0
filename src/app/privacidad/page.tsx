@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { CORREO } from '@/lib/contacto';
+import { PROVEEDOR } from '@/lib/proveedor';
 import styles from '@/styles/legal.module.css';
 
 export const metadata: Metadata = {
@@ -23,7 +24,8 @@ export default function PrivacidadPage() {
           <h2 className={styles.h2}>1. Responsable del tratamiento</h2>
           <p className={styles.p}>
             El responsable del tratamiento de tus datos personales es <strong>MedGO</strong>{' '}
-            (medgoplus.com). Para cualquier consulta sobre esta política o sobre el manejo de
+            (medgoplus.com), cuyo titular es <strong>{PROVEEDOR.titular}</strong>
+            {PROVEEDOR.ruc && <> (RUC {PROVEEDOR.ruc})</>}. Para cualquier consulta sobre esta política o sobre el manejo de
             tus datos puedes escribir a{' '}
             <a className={styles.link} href={`mailto:${CORREO}`}>
               {CORREO}
@@ -74,6 +76,7 @@ export default function PrivacidadPage() {
             <li>Procesar suscripciones y pagos.</li>
             <li>Enviarte correos transaccionales (confirmación de pago, recordatorios de cobro, cambios en los términos).</li>
             <li>Mejorar la plataforma analizando tu actividad dentro del panel: qué secciones, cursos, clases, resúmenes y banqueos abres, y los resultados de tus exámenes. Este registro va asociado a tu cuenta, es solo para uso interno de MedGO y no depende del aviso de cookies.</li>
+            <li>Atender las hojas del Libro de Reclamaciones y responderlas por correo.</li>
             <li>Cumplir con obligaciones legales y contables.</li>
           </ul>
           <p className={styles.p}>

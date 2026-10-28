@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { PLANS } from '@/lib/plans';
 import { CORREO } from '@/lib/contacto';
+import { PROVEEDOR } from '@/lib/proveedor';
 import styles from '@/styles/legal.module.css';
 
 export const metadata: Metadata = {
@@ -32,7 +33,8 @@ export default function TerminosPage() {
           <h2 className={styles.h2}>1. Definiciones</h2>
           <p className={styles.p}>
             <strong>MedGO</strong> es una plataforma educativa digital orientada a estudiantes
-            de medicina. <strong>Usuario</strong> es toda persona que crea una cuenta en
+            de medicina, cuyo titular es <strong>{PROVEEDOR.titular}</strong>
+            {PROVEEDOR.ruc && <> (RUC {PROVEEDOR.ruc})</>}. <strong>Usuario</strong> es toda persona que crea una cuenta en
             <span> </span>medgoplus.com. <strong>Suscripción</strong> es el pago recurrente que
             otorga acceso al contenido premium. Estos términos constituyen un contrato entre
             el usuario y MedGO; al crear una cuenta o usar la plataforma el usuario los acepta
@@ -276,6 +278,8 @@ export default function TerminosPage() {
         <section className={styles.section}>
           <h2 className={styles.h2}>16. Contacto</h2>
           <p className={styles.p}>
+            Para reclamos y quejas está disponible el{' '}
+            <a className={styles.link} href="/libro-de-reclamaciones">Libro de Reclamaciones</a>.
             Para consultas sobre estos términos escribe a{' '}
             <a className={styles.link} href={`mailto:${CORREO}`}>
               {CORREO}
