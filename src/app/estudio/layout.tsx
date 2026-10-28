@@ -1,6 +1,8 @@
+import { Suspense } from 'react';
 import type { Metadata, Viewport } from 'next';
 import { Outfit } from 'next/font/google';
 import EstudioShell from '@/components/estudio/EstudioShell';
+import EsqueletoEstudio from '@/components/estudio/EsqueletoEstudio';
 import { prepararSesionApp } from '@/lib/sesion-app';
 import { PLANS } from '@/lib/plans';
 
@@ -11,7 +13,22 @@ const outfitEstudio = Outfit({ subsets: ['latin'], variable: '--font-estudio', d
 export const metadata: Metadata = { title: 'MedGO · Tu espacio de estudio' };
 export const viewport: Viewport = { themeColor: '#18212c' };
 
-export default async function EstudioLayout({ children }: { children: React.ReactNode }) {
+/**
+ * El layout no espera a la sesión: la silueta sale en cuanto llega la primera
+ * respuesta (desde la portada, lo primero que se ve) y la sesión entra detrás.
+ * Un `loading.tsx` no serviría para esto: cuelga de este layout y esperaría con él.
+ */
+export default function EstudioLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className={outfitEstudio.variable}>
+      <Suspense fallback={<EsqueletoEstudio />}>
+        <ConSesion>{children}</ConSesion>
+      </Suspense>
+    </div>
+  );
+}
+
+async function ConSesion({ children }: { children: React.ReactNode }) {
   const s = await prepararSesionApp();
   const { plan, isActive, allAccess } = s.planState;
   const cuenta = {
@@ -22,10 +39,8 @@ export default async function EstudioLayout({ children }: { children: React.Reac
     verAportes: s.verAportes,
   };
   return (
-    <div className={outfitEstudio.variable}>
-      <EstudioShell planState={s.clientPlan} isAdmin={s.isAdmin} presencia={s.presencia} buzon={s.buzon} canalAdmin={s.canalAdmin} cuenta={cuenta}>
-        {children}
-      </EstudioShell>
-    </div>
+    <EstudioShell planState={s.clientPlan} isAdmin={s.isAdmin} presencia={s.presencia} buzon={s.buzon} canalAdmin={s.canalAdmin} cuenta={cuenta}>
+      {children}
+    </EstudioShell>
   );
 }

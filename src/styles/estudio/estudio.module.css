@@ -1528,3 +1528,31 @@ button.session-badge:hover { border-color: #245b8f; color: #245b8f; }
   .plan-en-lector .button { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .plan-hero-meter > span { transition: none; } }
+
+/* ── Esqueleto de carga (EsqueletoEstudio) ──
+   Las cajas son las clases reales; aquí sólo los huesos. El brillo va fijo a la
+   ventana (`background-attachment: fixed`): es UNA franja de luz que cruza toda la
+   pantalla, como un reflejo sobre una hoja, y no un destello por hueso. Pasa y
+   descansa un momento antes de volver. Colores tomados de las variables del wrapper. */
+.esq { pointer-events: none; }
+.esq-pila { display: flex; flex-direction: column; gap: 10px; }
+.esq-fila { display: flex; align-items: center; gap: 10px; }
+.esq-hueso {
+  display: block;
+  flex-shrink: 0;
+  max-width: 100%;
+  border-radius: 6px;
+  background-color: color-mix(in srgb, var(--text) 7%, transparent);
+  background-image: linear-gradient(100deg, transparent 40%, color-mix(in srgb, var(--paper) 70%, transparent) 50%, transparent 60%);
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  animation: esq-hoja 2.8s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+@keyframes esq-hoja {
+  0% { background-position: 100% 0; }
+  62%, 100% { background-position: 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .esq-hueso { animation: none; background-image: none; }
+}
