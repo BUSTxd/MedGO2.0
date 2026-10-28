@@ -537,7 +537,6 @@
 .red-nota>span{font-size:9.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#cfd6df;padding:3px 8px;border:1px solid #ffffff1f;border-radius:99px}
 @media(max-width:900px){.red{min-height:0;aspect-ratio:1/1;border-left:0;border-top:1px solid #ffffff08}}
 @media(max-width:560px){.red{aspect-ratio:1/1}.redPista{left:14px;right:auto}}
-@media(prefers-reduced-motion:reduce){
 
 
 /* «Iniciar sesión» (sustituye a «Cómo funciona»), siempre al lado de «Empieza ahora»; en el móvil, más compacto. */
