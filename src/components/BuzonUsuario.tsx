@@ -16,6 +16,9 @@ interface Mensaje {
 
 const MAX = 500;
 const ACUSE_MS = 1600;
+/** Segundos que cada mensaje se queda en pantalla antes de poder cerrarse. */
+const ESPERA_S = 5;
+const ARO = 2 * Math.PI * 12;
 
 const post = (body: Record<string, unknown>) =>
   fetch('/api/mensajes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
@@ -33,6 +36,9 @@ export default function BuzonUsuario({ token }: { token: string }) {
   const [acuse, setAcuse] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [destino, setDestino] = useState<HTMLElement | null>(null);
+  // Cuenta atrás del mensaje que se está mostrando. Va atada a su id para que,
+  // al pasar al siguiente de la cola, no herede el 0 del anterior ni un render.
+  const [espera, setEspera] = useState<{ id: string; s: number } | null>(null);
   const tarjetaRef = useRef<HTMLDivElement>(null);
   const vistos = useRef(new Set<string>());
   // Ya contestados en esta sesión: el servidor los cierra al responder, pero si
@@ -81,6 +87,21 @@ export default function BuzonUsuario({ token }: { token: string }) {
   }, [mensajes]);
 
   const actual = cola[0];
+  const restante = actual && espera?.id === actual.id ? espera.s : ESPERA_S;
+  const bloqueado = restante > 0;
+
+  // Sólo descuenta con la pestaña a la vista: un mensaje que llega con la
+  // pestaña en segundo plano no se da por leído sin haberse visto.
+  useEffect(() => {
+    const id = actual?.id;
+    if (!id) return;
+    setEspera({ id, s: ESPERA_S });
+    const t = setInterval(() => {
+      if (document.visibilityState !== 'visible') return;
+      setEspera(e => (e && e.id === id && e.s > 0 ? { id, s: e.s - 1 } : e));
+    }, 1000);
+    return () => clearInterval(t);
+  }, [actual?.id]);
 
   // La primera vez que se muestra, queda registrado para la bandeja del admin.
   useEffect(() => {
@@ -128,6 +149,7 @@ export default function BuzonUsuario({ token }: { token: string }) {
   }
 
   const cerrar = () => {
+    if (bloqueado) return;
     setMensajes(m => m.filter(x => x.id !== actual.id));
     setTexto('');
     setError(null);
@@ -163,10 +185,31 @@ export default function BuzonUsuario({ token }: { token: string }) {
 
   return createPortal(
     <div ref={tarjetaRef} className={s.tarjeta} role="dialog" aria-labelledby={`buzon-${actual.id}`}>
-      <button type="button" className={s.cerrar} onClick={cerrar} aria-label="Cerrar mensaje">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-        </svg>
+      <button
+        type="button"
+        className={s.cerrar}
+        onClick={cerrar}
+        disabled={bloqueado}
+        aria-label={bloqueado ? `Podrás cerrarlo en ${restante} s` : 'Cerrar mensaje'}
+      >
+        {bloqueado ? (
+          <>
+            <svg className={s.aro} width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+              <circle cx="15" cy="15" r="12" className={s.aroFondo} />
+              <circle
+                cx="15" cy="15" r="12"
+                className={s.aroAvance}
+                strokeDasharray={ARO}
+                strokeDashoffset={ARO * (1 - restante / ESPERA_S)}
+              />
+            </svg>
+            <span className={s.aroNum} aria-hidden="true">{restante}</span>
+          </>
+        ) : (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+          </svg>
+        )}
       </button>
 
       <p className={s.kicker}>
@@ -190,7 +233,7 @@ export default function BuzonUsuario({ token }: { token: string }) {
         <>
           <p className={s.gracias}>¡Gracias! Tu respuesta ya nos llegó.</p>
           <div className={s.acciones}>
-            <button type="button" className={s.secundario} onClick={cerrar}>Cerrar</button>
+            <button type="button" className={s.secundario} onClick={cerrar} disabled={bloqueado}>Cerrar</button>
           </div>
         </>
       ) : (
@@ -202,7 +245,7 @@ export default function BuzonUsuario({ token }: { token: string }) {
             className={s.campo}
             value={texto}
             onChange={e => setTexto(e.target.value.slice(0, MAX))}
-            placeholder="Escribe aquí tu opinión…"
+            placeholder="Escribe aquí tu respuesta…"
             rows={3}
             readOnly={enviando}
             aria-label="Tu respuesta"
@@ -210,7 +253,7 @@ export default function BuzonUsuario({ token }: { token: string }) {
           <p className={`${s.cuenta} ${cerca ? s.cuentaTope : ''}`}>{texto.length}/{MAX}</p>
           {error && <p className={s.error}>{error}</p>}
           <div className={s.acciones}>
-            <button type="button" className={s.secundario} onClick={cerrar}>Ahora no</button>
+            <button type="button" className={s.secundario} onClick={cerrar} disabled={bloqueado}>Ahora no</button>
             <button type="submit" className={s.enviar} disabled={!texto.trim() || enviando}>
               {enviando ? 'Enviando…' : 'Enviar'}
             </button>

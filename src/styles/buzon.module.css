@@ -64,7 +64,26 @@
   font-family: inherit;
   transition: background 0.15s, color 0.15s;
 }
-.cerrar:hover { background: rgba(var(--b-acc-rgb), 0.12); color: var(--b-tinta); }
+.cerrar:hover:not(:disabled) { background: rgba(var(--b-acc-rgb), 0.12); color: var(--b-tinta); }
+.cerrar:disabled { cursor: default; }
+
+/* Cuenta atrás en el sitio de la X: el aro se vacía en ESPERA_S segundos. */
+.aro { position: absolute; inset: 0; transform: rotate(-90deg); }
+.aroFondo,
+.aroAvance { fill: none; stroke-width: 2.4; }
+.aroFondo { stroke: rgba(var(--b-acc-rgb), 0.16); }
+.aroAvance {
+  stroke: var(--b-acc);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+.aroNum {
+  position: relative;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--b-acc);
+  font-variant-numeric: tabular-nums;
+}
 
 .kicker {
   display: flex;
@@ -189,7 +208,8 @@
   background: transparent;
   color: var(--b-suave);
 }
-.secundario:hover { color: var(--b-tinta); }
+.secundario:hover:not(:disabled) { color: var(--b-tinta); }
+.secundario:disabled { opacity: 0.45; cursor: default; }
 
 .enviar {
   border: none;
@@ -201,4 +221,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .tarjeta { animation: none; }
+  .aroAvance { transition: none; }
 }
