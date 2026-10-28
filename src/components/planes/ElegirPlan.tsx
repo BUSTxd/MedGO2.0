@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { planUnlocks, type PlanKey, type Requisito } from '@/lib/plans';
 import { ofertasPara } from './oferta';
 import { usePasarela } from './usePasarela';
+import { CREEM_COBROS_ACTIVOS } from '@/lib/pasarela';
 import styles from './elegirPlan.module.css';
 
 // El SDK de Mercado Pago sólo baja si alguien elige un plan que ya está a la venta.
@@ -22,7 +23,8 @@ const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ss
  */
 export default function ElegirPlan({ requisito, onClose }: { requisito?: Requisito; onClose: () => void }) {
   const [comprar, setComprar] = useState<PlanKey | null>(null);
-  const [pasarela] = usePasarela();
+  const [elegida] = usePasarela();
+  const pasarela = CREEM_COBROS_ACTIVOS ? elegida : 'mercadopago';
   const [pronto, setPronto] = useState(false);
   const caja = useRef<HTMLDivElement>(null);
 

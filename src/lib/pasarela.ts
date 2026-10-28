@@ -6,6 +6,13 @@
  */
 export type Pasarela = 'mercadopago' | 'creem';
 
+/**
+ * ¿Ya cobra Creem? Hasta que Creem apruebe la cuenta (revisión de su equipo),
+ * su checkout responde «Live payments are not enabled»: mientras tanto todos
+ * pagan con Mercado Pago. El día de la aprobación, pasarlo a `true`.
+ */
+export const CREEM_COBROS_ACTIVOS = false;
+
 export function pasarelaDePais(pais: string | null | undefined): Pasarela {
   // Sin país (en local no hay cabecera de Vercel) se queda en Mercado Pago.
   if (!pais) return 'mercadopago';

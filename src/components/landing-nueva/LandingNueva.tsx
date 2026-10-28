@@ -7,6 +7,7 @@ import { useAuth } from '@/components/AuthProvider';
 import { PLANS, type PlanKey, type ProfilePlan } from '@/lib/plans';
 import { ofertasPara } from '@/components/planes/oferta';
 import { usePasarela } from '@/components/planes/usePasarela';
+import { CREEM_COBROS_ACTIVOS } from '@/lib/pasarela';
 import Footer from '@/components/Footer';
 import { c } from './estilos';
 import Mascota from './Mascota';
@@ -101,7 +102,8 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
   const { user } = useAuth();
   const [planActual, setPlanActual] = useState<{ plan: ProfilePlan; isActive: boolean } | null>(null);
   const [comprar, setComprar] = useState<PlanKey | null>(null);
-  const [pasarela] = usePasarela();
+  const [elegida] = usePasarela();
+  const pasarela = CREEM_COBROS_ACTIVOS ? elegida : 'mercadopago';
   const [pronto, setPronto] = useState(false);
   useEffect(() => {
     if (!user) { setPlanActual(null); return; }

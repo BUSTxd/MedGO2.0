@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import { PLANS, requisitoDe, type PlanKey } from '@/lib/plans';
 import { usePlan } from './PlanProvider';
 import { usePasarela } from './planes/usePasarela';
+import { CREEM_COBROS_ACTIVOS } from '@/lib/pasarela';
 import styles from '@/styles/subscribeModal.module.css';
 
 // ElegirPlan importa este archivo: por `dynamic` el ciclo no se resuelve al cargar el módulo.
@@ -56,10 +57,10 @@ export default function SubscribeModal(props: Props) {
   // Mercado Pago solo en el Perú; fuera, Creem (si el plan existe allí). Hasta
   // saber el país no se pinta nada: así no se baja el SDK de MP sin necesidad.
   if (props.open && pasarela === null) return null;
-  if (pasarela === 'creem' && plan.creem) {
+  if (CREEM_COBROS_ACTIVOS && pasarela === 'creem' && plan.creem) {
     return <PagoCreem open={props.open} planKey={props.planKey} onClose={props.onClose} onCambiar={() => cambiar('mercadopago')} />;
   }
-  return <PasarelaMP {...props} onCambiar={plan.creem ? () => cambiar('creem') : undefined} />;
+  return <PasarelaMP {...props} onCambiar={CREEM_COBROS_ACTIVOS && plan.creem ? () => cambiar('creem') : undefined} />;
 }
 
 function PasarelaMP({ open, planKey, onClose, onCambiar }: Props) {
