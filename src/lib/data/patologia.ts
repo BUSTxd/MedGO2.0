@@ -859,6 +859,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        resumen: resumenHtml('pat-ai-16'),
       },
       {
         id: 'pat-c-7',

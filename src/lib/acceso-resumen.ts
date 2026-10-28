@@ -40,7 +40,7 @@ const SIEMPRE_DE_PAGO = new Set([
   'pat-ai-8', 'pat-acp-5', 'pat-ai-10', 'pat-ai-11', 'pat-acp-6', 'pat-lab-6',
   'pat-ai-12', 'pat-ai-13', 'pat-tbl-3', 'pat-acp-7', 'pat-tbl-4', 'pat-acp-8',
   // Unidad 3, igual que la 2.
-  'pat-acp-9', 'pat-acp-10',
+  'pat-acp-9', 'pat-acp-10', 'pat-ai-16',
 ]);
 
 const esTipo = (...tipos: string[]) => (a: Act) => tipos.includes(a.tipo);
