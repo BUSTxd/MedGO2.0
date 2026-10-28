@@ -1,4 +1,7 @@
-import type { PlanKey } from '@/lib/plans';
+import type { PlanKey, Requisito } from '@/lib/plans';
+
+/** El ENCIB es una meta de examen: nivel completo (entre los legados, lo abre la Facultad). Igual que `REQ_ENCIB` de `acceso.ts`. */
+const ENCIB: Requisito = { tramo: 'medicina', nivel: 'completo' };
 
 /**
  * `free` abre el examen a cualquier cuenta. Sin él, hace falta un plan activo
@@ -21,12 +24,12 @@ import type { PlanKey } from '@/lib/plans';
  * plan le entrega solo las preguntas de esas, más el índice de las demás (número
  * y nivel, sin preguntas) para pintarlas con candado.
  */
-export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey; muestra?: number; muestraFlash?: number; barajasLibres?: number[] }> = {
-  // ENCIB: los tres cuadernillos oficiales, de pago (tramo Facultad). El JSON
+export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey | Requisito; muestra?: number; muestraFlash?: number; barajasLibres?: number[] }> = {
+  // ENCIB: los tres cuadernillos oficiales, de pago (nivel completo). El JSON
   // fuente vive en data/encib/ (fuera de git: el repo es público).
-  'encib/2025': { plan: 'interno' },
-  'encib/2024': { plan: 'interno' },
-  'encib/2021': { plan: 'interno' },
+  'encib/2025': { plan: ENCIB },
+  'encib/2024': { plan: ENCIB },
+  'encib/2021': { plan: ENCIB },
   'excretor/tbl-3-asa-henle': { free: true },
   'neurologia/snp-histologia': { free: true },
   'neurologia/snp-histologia-b': { free: true },

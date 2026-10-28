@@ -5,14 +5,15 @@ import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { CORREO, WHATSAPP_TEL, WHATSAPP_URL } from '@/lib/contacto';
-import { PLANS } from '@/lib/plans';
+import { PLANES_NUEVOS } from '@/lib/plans';
+import { soles } from '@/components/planes/oferta';
 import { useCuenta } from './CuentaContext';
 import { cx, Icono } from './Icono';
 
-// El SDK de Mercado Pago sólo baja si alguien pulsa «Suscribirme».
-const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ssr: false });
+// Las tarjetas (y con ellas el SDK de Mercado Pago) sólo bajan si alguien pulsa «Elegir mi plan».
+const ElegirPlan = dynamic(() => import('@/components/planes/ElegirPlan'), { ssr: false });
 
-const precio = (k: 'interno' | 'ufbi') => `S/ ${PLANS[k].amount.toFixed(2).replace(/\.00$/, '')} al mes`;
+const DESDE = `Desde S/ ${soles(Math.min(...PLANES_NUEVOS.map((p) => p.amount)))} al mes`;
 
 /**
  * El círculo de la cuenta y su menú: sustituye a «Mi cuenta» y «Contacto» de la
@@ -25,7 +26,7 @@ export default function MenuCuenta() {
   const pathname = usePathname();
   const [abierto, setAbierto] = useState(false);
   const [pos, setPos] = useState({ top: 72, right: 16 });
-  const [suscribir, setSuscribir] = useState<'interno' | 'ufbi' | null>(null);
+  const [elegir, setElegir] = useState(false);
   const boton = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const inicial = (cuenta.nombre.trim()[0] ?? 'M').toUpperCase();
@@ -68,7 +69,7 @@ export default function MenuCuenta() {
     // Navegación completa: el siguiente request lleva las cookies limpias.
     window.location.assign('/auth/login');
   };
-  const abrirCompra = (k: 'interno' | 'ufbi') => { setAbierto(false); setSuscribir(k); };
+  const abrirPlanes = () => { setAbierto(false); setElegir(true); };
 
   return (
     <>
@@ -103,14 +104,9 @@ export default function MenuCuenta() {
               <Icono n="user" /><span>Mi cuenta<small>Suscripción y dispositivos</small></span>
             </Link>
             {!cuenta.planActivo && (
-              <>
-                <button type="button" role="menuitem" className={cx('cuenta-item is-destacado')} onClick={() => abrirCompra('interno')}>
-                  <Icono n="star" /><span>Suscribirme · Facultad<small>{precio('interno')} · cursos de 2.º a 7.º año</small></span>
-                </button>
-                <button type="button" role="menuitem" className={cx('cuenta-item is-destacado')} onClick={() => abrirCompra('ufbi')}>
-                  <Icono n="star" /><span>Suscribirme · UFBI<small>{precio('ufbi')} · cursos de 1.er año</small></span>
-                </button>
-              </>
+              <button type="button" role="menuitem" className={cx('cuenta-item is-destacado')} onClick={abrirPlanes}>
+                <Icono n="star" /><span>Elegir mi plan<small>{DESDE} · Visitante, Residente o Especialista</small></span>
+              </button>
             )}
             {cuenta.verAportes && (
               <Link href="/estudio/aportes" role="menuitem" className={cx('cuenta-item')}>
@@ -148,7 +144,7 @@ export default function MenuCuenta() {
           </button>
         </div>
       )}
-      {suscribir && <SubscribeModal open planKey={suscribir} onClose={() => setSuscribir(null)} />}
+      {elegir && <ElegirPlan onClose={() => setElegir(false)} />}
     </>
   );
 }

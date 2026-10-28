@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { PLANS, type PlanKey } from '@/lib/plans';
+import { PLANS, ofertaPara, type PlanKey } from '@/lib/plans';
 import styles from '@/styles/examRunner.module.css';
 
 /**
@@ -137,7 +137,8 @@ export default function CortePremium({
   onVer: () => void;
 }) {
   const p = PLANS[plan];
-  const precio = Number.isInteger(p.amount) ? String(p.amount) : p.amount.toFixed(2);
+  const o = ofertaPara(plan);
+  const precio = Number.isInteger(o.amount) ? String(o.amount) : o.amount.toFixed(2);
   return (
     <section className={styles.corte} aria-label={`${titulo} ${acento}`}>
       <div className={styles.corteCol}>
@@ -167,8 +168,8 @@ export default function CortePremium({
           <button type="button" className={styles.corteCta} onClick={onVer}>
             <IconoCandado size={17} />
             <span>
-              Todo por S/ {precio}
-              <span className={styles.corteCtaUnidad}>/ {p.durationDays === 30 ? 'mes' : 'año'}</span>
+              {o.nombre ? 'Todo por' : 'Todo desde'} S/ {precio}
+              <span className={styles.corteCtaUnidad}>/ {o.unidad}</span>
             </span>
             <svg className={styles.corteCtaFlecha} width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path d="M5 12h13M12 5.5 18.5 12 12 18.5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />

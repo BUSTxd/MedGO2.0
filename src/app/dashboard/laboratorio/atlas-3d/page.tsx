@@ -1,6 +1,6 @@
 import { LabGate } from '@/components/SeccionGate';
 import { getCachedPlanState } from '@/lib/plans-server';
-import { requiredPlanDeLab, tieneAccesoA } from '@/lib/acceso';
+import { requisitoDeLab, tieneAccesoA } from '@/lib/acceso';
 import { leerRegiones } from '@/lib/data/atlas-3d/regiones';
 import Pagina from './Pagina';
 
@@ -25,7 +25,7 @@ const REGION_EXAMEN = 'miembro-superior-derecho';
 export default async function Page({ searchParams }: { searchParams: Promise<{ region?: string | string[]; examen?: string; desde?: string }> }) {
   const { region, examen, desde } = await searchParams;
   if (examen === '1') {
-    const acceso = tieneAccesoA(await getCachedPlanState(), requiredPlanDeLab('atlas-3d'));
+    const acceso = tieneAccesoA(await getCachedPlanState(), requisitoDeLab('atlas-3d'));
     return <Pagina regiones={acceso ? leerRegiones(region) : [REGION_EXAMEN]} examen soloExamen={!acceso} desdeLaboratorio={desde === 'laboratorio'} />;
   }
   return (

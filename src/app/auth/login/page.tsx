@@ -38,7 +38,8 @@ function AuthPageInner() {
   // pidió el middleware); validado: sólo rutas internas.
   const destino = () => destinoSeguro(searchParams.get('next'), window.location.origin);
 
-  const [tab, setTab] = useState<Tab>('login');
+  // `?signup=1` (los «Empezar gratis» de la landing y de los planes) abre directamente el registro.
+  const [tab, setTab] = useState<Tab>(() => (searchParams.get('signup') === '1' ? 'register' : 'login'));
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState('');

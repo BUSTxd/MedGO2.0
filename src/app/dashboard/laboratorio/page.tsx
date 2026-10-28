@@ -87,7 +87,9 @@ export default async function LaboratorioPage() {
       // faltan algunos, la marca va en esas filas (ver `.labExpObra`).
       const publicados = topic.experiments.filter((e) => e.href).length;
       const enObra = publicados === 0;
-      return { topic, required, enObra, publicados, abierto: tieneAccesoA(plan, required) };
+      // Los laboratorios son nivel completo con los planes nuevos (`required` sigue diciendo qué plan legado ofrecer).
+      const abierto = tieneAccesoA(plan, { tramo: trackDeCurso(topic.id), nivel: 'completo' });
+      return { topic, required, enObra, publicados, abierto };
     })
     // Dos criterios, en este orden: el tramo del alumno manda (los suyos
     // primero; sin plan no hay «suyos» y no separa nada), y dentro de cada

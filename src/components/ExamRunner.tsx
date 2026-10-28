@@ -6,8 +6,8 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import ReactMarkdown from 'react-markdown';
 import { trackEvent } from '@/lib/analytics';
-import { PLANS, planUnlocks, type PlanKey, type ProfilePlan } from '@/lib/plans';
-import { cursoDe, desglosarIntento, registrarIntento, UMBRAL_FLOJO, type Desglose } from '@/lib/temas-flojos';
+import { PLANS, ofertaPara, planUnlocks, type PlanKey, type ProfilePlan } from '@/lib/plans';
+import { cursoDe, desglosarIntento, registrarIntento, temasDelEvento, UMBRAL_FLOJO, type Desglose } from '@/lib/temas-flojos';
 import { hrefDeClase } from '@/lib/data/temas';
 import {
   fetchExam,
@@ -471,8 +471,9 @@ function AvisoSuscripcion({
   onCerrar: () => void;
 }) {
   const p = PLANS[plan];
+  const o = ofertaPara(plan);
   return (
-    <aside className={styles.aviso} aria-label={`Suscríbete al plan ${p.label}`}>
+    <aside className={styles.aviso} aria-label={o.nombre ? `Suscríbete al plan ${o.nombre}` : 'Suscríbete a MedGO'}>
       <span className={styles.avisoIcono}>
         <IconoCandado size={18} />
       </span>
@@ -480,18 +481,18 @@ function AvisoSuscripcion({
         <p className={styles.avisoTitulo}>
           ¿Te está sirviendo el banqueo?
           <span className={styles.avisoPrecio}>
-            S/ {p.amount.toFixed(2)} <span className={styles.avisoPrecioUnidad}>/ {p.durationDays === 30 ? 'mes' : 'año'}</span>
+            {!o.nombre && 'Desde '}S/ {o.amount.toFixed(2)} <span className={styles.avisoPrecioUnidad}>/ {o.unidad}</span>
           </span>
         </p>
         <p className={styles.avisoCuerpo}>
-          Con el plan <strong>{p.label}</strong> desbloqueas{' '}
+          {o.nombre ? <>Con el plan <strong>{o.nombre}</strong> desbloqueas</> : 'Con un plan de MedGO desbloqueas'}{' '}
           {dePago.length > 0 && <><strong>el {dePago.join(' y el ')}</strong>, </>}
           los resúmenes de todas las clases, el atlas de histología y{' '}
           {p.track === 'basico' ? 'los cursos del ciclo básico' : 'los cursos de la Facultad de Medicina'}.
         </p>
       </div>
       <button type="button" className={styles.avisoCta} onClick={onVer}>
-        Ver plan {p.label}
+        {o.nombre ? `Ver plan ${o.nombre}` : 'Ver los planes'}
         <svg className={styles.avisoCtaFlecha} width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
           <path d="M5 12h13M12 5.5 18.5 12 12 18.5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -917,8 +918,10 @@ export default function ExamRunner({
         finishedAt: new Date().toISOString(),
         ...(conCronometro ? { seconds: segundos } : {}),
       });
-      registrarIntento(cursoDe(stageKey), desglosarIntento(cursoDe(stageKey), nextAll, deck ?? []));
-      trackEvent('examen_completado', { examKey: stageKey, score, total: nextAll.length });
+      const desglose = desglosarIntento(cursoDe(stageKey), nextAll, deck ?? []);
+      registrarIntento(cursoDe(stageKey), desglose);
+      const temas = temasDelEvento(desglose);
+      trackEvent('examen_completado', { examKey: stageKey, score, total: nextAll.length, ...(filtroTema ? { tema: filtroTema } : {}), ...(temas ? { temas } : {}) });
       setPhase('finished');
     } else {
       setCurrentIdx(i => i + 1);

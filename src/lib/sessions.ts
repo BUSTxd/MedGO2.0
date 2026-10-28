@@ -13,6 +13,9 @@ const PLAN_DEVICE_LIMIT: Record<ProfilePlan, number> = {
   residente:     3,
   ufbi:          3,
   'ufbi-anual':  3,
+  visitante:     3,
+  'residente-12': 3,
+  'especialista-24': 3,
 };
 
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;

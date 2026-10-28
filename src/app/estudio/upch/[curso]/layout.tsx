@@ -2,6 +2,7 @@ import { notFound, redirect } from 'next/navigation';
 import EspacioEstudio from '@/components/estudio/EspacioEstudio';
 import { prepararSesionApp } from '@/lib/sesion-app';
 import { cursoEstudio, cursosListados } from '@/lib/estudio/cursos';
+import { rutasDeLaCuenta } from '@/lib/estudio/rutas-cuenta';
 
 /**
  * La interfaz vive en el layout del curso: cambiar de clase sólo cambia la página
@@ -14,5 +15,5 @@ export default async function CursoLayout({ children, params }: { children: Reac
   if (!s.deCayetano) redirect('/estudio');
   const curso = cursoEstudio(slug, s.planState);
   if (!curso) notFound();
-  return <EspacioEstudio cursos={cursosListados(s.planState)} curso={curso}>{children}</EspacioEstudio>;
+  return <EspacioEstudio cursos={cursosListados(s.planState)} curso={curso} rutas={rutasDeLaCuenta(true)}>{children}</EspacioEstudio>;
 }

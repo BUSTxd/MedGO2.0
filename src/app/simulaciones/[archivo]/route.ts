@@ -3,7 +3,7 @@ import path from 'node:path';
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { getCachedPlanState } from '@/lib/plans-server';
-import { labEsGratis, requiredPlanDeLab, tieneAccesoA } from '@/lib/acceso';
+import { labEsGratis, requisitoDeLab, tieneAccesoA } from '@/lib/acceso';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -45,7 +45,7 @@ export async function GET(
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return new NextResponse('Unauthorized', { status: 401 });
     const planState = await getCachedPlanState();
-    if (!tieneAccesoA(planState, requiredPlanDeLab(sim.lab))) {
+    if (!tieneAccesoA(planState, requisitoDeLab(sim.lab))) {
       return new NextResponse('Forbidden', { status: 403 });
     }
   }

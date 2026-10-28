@@ -1,6 +1,6 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { TarjetaLab, TipoLab } from '@/lib/estudio/tipos';
@@ -33,6 +33,7 @@ export default function IndiceLaboratorio({ tarjetas }: { tarjetas: TarjetaLab[]
   const [categoria, setCategoria] = useState<TipoLab | 'Todos'>('Todos');
   const [materia, setMateria] = useState('Todas');
   const [busqueda, setBusqueda] = useState('');
+  const buscador = useRef<HTMLInputElement>(null);
 
   const materias = useMemo(() => [...new Set(tarjetas.flatMap((t) => t.cursos))], [tarjetas]);
   const q = norm(busqueda);
@@ -62,15 +63,18 @@ export default function IndiceLaboratorio({ tarjetas }: { tarjetas: TarjetaLab[]
             </aside>
             <section className={cx('resource-main')} aria-label="Recursos del laboratorio">
               <div className={cx('resource-toolbar')}>
-                <label className={cx('resource-search')}>
+                <div className={cx('resource-search')}>
                   <Icono n="search" />
-                  <input type="search" placeholder="Buscar un modelo, simulación o tema" value={busqueda} aria-label="Buscar recursos del laboratorio" onChange={(e) => setBusqueda(e.target.value)} />
-                </label>
+                  <input ref={buscador} type="search" placeholder="Buscar un modelo, simulación o tema" value={busqueda} aria-label="Buscar recursos del laboratorio" onChange={(e) => setBusqueda(e.target.value)} />
+                  {busqueda && <button type="button" className={cx('campo-limpiar')} aria-label="Limpiar búsqueda de material" onClick={() => { setBusqueda(''); buscador.current?.focus(); }}><Icono n="close" /></button>}
+                </div>
                 <div className={cx('subject-filter')}>
                   <Desplegable
                     etiqueta="Filtrar laboratorio por curso"
+                    variante="campo"
+                    icono="book"
                     valor={materia}
-                    opciones={[{ value: 'Todas', label: 'Todos los cursos' }, ...materias.map((m) => ({ value: m, label: m }))]}
+                    opciones={[{ value: 'Todas', label: 'Todos los cursos', simbolo: 'layers' }, ...materias.map((m) => ({ value: m, label: m, simbolo: 'book' as const }))]}
                     onCambiar={setMateria}
                   />
                 </div>

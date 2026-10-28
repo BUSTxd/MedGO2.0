@@ -7,16 +7,21 @@
 // fagocito y la «lupa» con el proceso molecular. Interacción de cámara (rueda,
 // pellizco, arrastre) igual que en «Maduración de linfocitos».
 
-import { memo, useMemo, useRef, useState, type ReactNode } from 'react';
+import { memo, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import dynamic from 'next/dynamic';
 import type { Dibujo, Escenario, TipoMarcador } from '@/lib/data/hipersensibilidad/tipos';
 import { PARTICULA } from '@/lib/data/hipersensibilidad/colores';
 import { ALTO, ANCHO, CELDA, LUPA_H, LUPA_W, cajaActor, hash, posAbs, posLupa, rotAbs, type ActorSt, type Caja, type ConectorSt, type DesenlaceSt, type EfectoSt, type Escena as EscenaSt, type MarcadorSt, type ProcesoSt } from '@/lib/hipersensibilidad/motor';
 import { trazoEntre, type Punto, type Trazo } from '@/lib/ciclo-celular/geometria';
 import { DefsCelulas } from '../maduracion-linfocitos/Celulas';
-import Proceso from './Procesos';
 import { Anticuerpo, Complejo, DefsPropias, DibujoCelula } from './Celulas';
 import { FondoDe } from './Fondos';
-import { medidasImagen, srcImagen } from './imagenes';
+import { FuentesImagen, medidasImagen, srcImagen } from './imagenes';
+
+// Las lupas (con su contenido de los capítulos) se bajan aparte: la landing, que no las
+// usa, no las carga; el laboratorio las precarga al montar la escena (ver `Escena`).
+const cargarProcesos = () => import('./Procesos');
+const Proceso = dynamic(cargarProcesos, { ssr: false });
 import c from '@/styles/cicloCelular.module.css';
 import ls from '@/styles/linfocitos.module.css';
 import s from '@/styles/hipersensibilidad.module.css';
@@ -88,7 +93,8 @@ function Cuerpo({ a, img, dibujo }: { a: ActorSt; img?: string; dibujo?: Dibujo 
       </g>
     );
   }
-  const src = img ? srcImagen(img) : null;
+  const fuentes = useContext(FuentesImagen);
+  const src = img ? (fuentes?.[img] ?? srcImagen(img)) : null;
   const m = img ? medidasImagen(img) : null;
   if (src && m) {
     const k = d / Math.max(m.w, m.h);
@@ -361,10 +367,13 @@ export type PropsEscena = {
   camaraLibre?: boolean;
   onInteraccion?: () => void;
   vistaReset?: number;
+  /** Baja ya el código de las lupas (el laboratorio); la landing lo deja en `false`. */
+  precargarProcesos?: boolean;
   children?: ReactNode;
 };
 
-export default function Escena({ escenario, escena, resaltar, seleccionado, onActor, camaraLibre = true, onInteraccion, vistaReset = 0, children }: PropsEscena) {
+export default function Escena({ escenario, escena, resaltar, seleccionado, onActor, camaraLibre = true, onInteraccion, vistaReset = 0, precargarProcesos = true, children }: PropsEscena) {
+  useEffect(() => { if (precargarProcesos) void cargarProcesos(); }, [precargarProcesos]);
   const [vista, setVista] = useState({ k: 1, px: 0, py: 0, reset: vistaReset });
   if (vista.reset !== vistaReset) setVista({ k: 1, px: 0, py: 0, reset: vistaReset });
   const svgRef = useRef<SVGSVGElement>(null);

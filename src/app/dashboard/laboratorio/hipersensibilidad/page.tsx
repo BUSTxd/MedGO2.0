@@ -1,5 +1,5 @@
 import { getCachedPlanState } from '@/lib/plans-server';
-import { labEsGratis, requiredPlanDeLab, tieneAccesoA } from '@/lib/acceso';
+import { labEsGratis, requiredPlanDeLab, requisitoDeLab, tieneAccesoA } from '@/lib/acceso';
 import { contenidoDelLab } from '@/lib/hipersensibilidad/registro';
 import Pagina from './Pagina';
 
@@ -17,6 +17,6 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ v
   const [planState, { vistazo }] = await Promise.all([getCachedPlanState(), searchParams]);
   const requerido = requiredPlanDeLab(SLUG);
   const prueba = !!planState.allAccess && vistazo === '1';
-  const completo = !prueba && (labEsGratis(SLUG) || tieneAccesoA(planState, requerido));
+  const completo = !prueba && (labEsGratis(SLUG) || tieneAccesoA(planState, requisitoDeLab(SLUG)));
   return <Pagina contenido={contenidoDelLab(completo)} plan={requerido} prueba={prueba} />;
 }

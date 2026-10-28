@@ -6,8 +6,8 @@ import styles from '@/styles/faq.module.css';
 
 /**
  * La respuesta sobre cancelación se compone del catálogo y no se escribe a
- * mano: hay un mensual y un anual por tramo, el compromiso lo llevan sólo los
- * mensuales, y los dos ejes (cadencia y compromiso) salen de `PLANS`.
+ * mano: la permanencia de cada plan (`commitmentMonths`) y si está a la venta
+ * salen de `PLANS`.
  *
  * El texto fijo que había aquí ya se desincronizó una vez: decía que sólo
  * Interno tenía compromiso, cuando UFBI mensual también lo tiene — y era
@@ -15,12 +15,11 @@ import styles from '@/styles/faq.module.css';
  */
 function respuestaCancelacion(): string {
   const claves = Object.keys(PLANS) as PlanKey[];
-  const dePago = claves.filter((k) => PLANS[k].amount > 0);
+  const dePago = claves.filter((k) => PLANS[k].amount > 0 && PLANS[k].aLaVenta);
   const conLock = dePago.filter((k) => (PLANS[k].commitmentMonths ?? 0) > 0);
   const sinLock = dePago.filter((k) => !PLANS[k].commitmentMonths);
 
-  const lista = (ks: PlanKey[]) => {
-    const nombres = ks.map((k) => PLANS[k].label);
+  const lista = (nombres: string[]) => {
     if (nombres.length <= 1) return nombres[0] ?? '';
     return `${nombres.slice(0, -1).join(', ')} y ${nombres[nombres.length - 1]}`;
   };
@@ -28,23 +27,20 @@ function respuestaCancelacion(): string {
   const partes: string[] = [];
 
   if (conLock.length) {
-    // Hoy los dos mensuales comparten el mismo compromiso. Si algún día
-    // difieren, este número dejaría de ser uno solo y habría que desglosarlo.
-    const meses = PLANS[conLock[0]].commitmentMonths ?? 0;
+    // Cada plan con su propia permanencia (Residente 12, Especialista 24).
+    const conMeses = conLock.map((k) => `${PLANS[k].label} (${PLANS[k].commitmentMonths} meses)`);
     const varios = conLock.length > 1;
     partes.push(
-      `${varios ? 'Los planes mensuales' : 'El plan mensual'} (${lista(conLock)}) ` +
-      `${varios ? 'tienen' : 'tiene'} un compromiso mínimo de ${meses} meses: ` +
-      'el botón de cancelar se habilita una vez cumplidos.',
+      `${varios ? 'Los planes con permanencia' : 'El plan con permanencia'}, ${lista(conMeses)}, ` +
+      'se pueden cancelar desde Mi cuenta una vez cumplida.',
     );
   }
 
   if (sinLock.length) {
     const varios = sinLock.length > 1;
     partes.push(
-      `${varios ? 'Los planes anuales' : 'El plan anual'} (${lista(sinLock)}) ` +
-      `${varios ? 'son cancelables' : 'es cancelable'} cuando quieras desde Mi cuenta ` +
-      '— mantienes el acceso hasta el final del periodo pagado.',
+      `${lista(sinLock.map((k) => PLANS[k].label))} ${varios ? 'se cancelan' : 'se cancela'} cuando quieras ` +
+      'desde Mi cuenta — mantienes el acceso hasta el final del periodo pagado.',
     );
   }
 

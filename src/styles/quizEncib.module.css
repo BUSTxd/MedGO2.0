@@ -417,3 +417,97 @@
   .stats, .anio, .chip, .flecha, .op, .rastro i, .btn { transition: none; }
   .stats:hover, .stats:focus-visible { transform: none; }
 }
+
+/* /estudio: una hoja de práctica, acento estable y color reservado al feedback. */
+.raiz.practica {
+  --tinta: #22332f; --tinta-2: #4e625c; --tinta-3: #5c7069;
+  --linea: #dce5e1; --suave: #f4f7f5; --carta: #fff;
+  --carta-borde: #dce5e1; --sombra: none;
+  --acento: #286659; --sobre-acento: #fff; --ac: var(--acento);
+  --ok: #236747; --ok-fondo: #eff7f2; --mal: #a53c35; --mal-fondo: #fcf2f0;
+  --card-border: var(--linea); --card-bg: var(--suave); --acc-rgb: 40, 102, 89;
+  max-width: 960px; margin: 0 auto; font-family: inherit;
+}
+:global(.dark-mode) .raiz.practica {
+  --tinta: #e4eee9; --tinta-2: #bacbc3; --tinta-3: #a2b6ad;
+  --linea: #384b45; --suave: #1e2c29; --carta: #182420; --carta-borde: #384b45;
+  --acento: #9fcbb9; --sobre-acento: #152b22; --ok: #9bceb0; --ok-fondo: #20382c;
+  --mal: #efada6; --mal-fondo: #382724; --acc-rgb: 159, 203, 185;
+}
+.practica .fantasma { display: none; }
+/* La carta que sale (popLayout, absoluta) puede ser más alta que la nueva: sin recorte asoma bajo el panel. */
+.practica .mazo { width: 100%; margin: 0 auto 24px; overflow-y: clip; }
+.practica .carta { gap: 25px; padding: 30px 36px; border: 1px solid var(--linea); border-radius: 12px; box-shadow: none; }
+.practica .top { padding-bottom: 16px; border-bottom: 1px solid var(--linea); }
+.practica .numero { font-size: 13px; font-weight: 450; }
+.practica .numero strong { font-size: 16px; font-weight: 650; }
+.practica .areaPill { padding: 0; background: none; border: 0; color: var(--tinta-2); font-weight: 500; font-size: 12px; }
+.practica .areaPill i { display: none; }
+.practica .enunciado { max-width: 70ch; margin: 0; font-size: clamp(18px, 2vw, 21px); line-height: 1.65; font-weight: 500; letter-spacing: -.2px; }
+.practica .ops { gap: 0; border-top: 1px solid var(--linea); }
+.raiz.practica .op { padding: 16px 12px; min-height: 64px; border: 0; border-bottom: 1px solid var(--linea); border-radius: 0; background: transparent; font-size: 15px; font-weight: 450; gap: 14px; }
+.practica .letra { width: 30px; height: 30px; border: 1px solid var(--linea); border-radius: 50%; background: transparent; font-size: 12px; font-weight: 550; }
+.raiz.practica .op:not(:disabled):hover { background: var(--suave); }
+.raiz.practica .op:disabled { opacity: 1; }
+.raiz.practica .opAcierto { background: var(--ok-fondo); box-shadow: inset 3px 0 var(--ok); }
+.raiz.practica .opFallo { background: var(--mal-fondo); box-shadow: inset 3px 0 var(--mal); }
+.practica .opApagada .opTexto { color: var(--tinta-2); }
+.practica .opAcierto .letra { background: var(--ok-fondo); color: var(--ok); border-color: var(--ok); }
+.practica .opFallo .letra { background: var(--mal-fondo); color: var(--mal); border-color: var(--mal); }
+.raiz.practica .btn { min-height: 44px; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 550; }
+.raiz.practica .btnTexto { font-size: 12px; padding: 7px 10px; border: 0; border-radius: 6px; text-decoration: underline; text-underline-offset: 4px; }
+.practica .btnTexto:disabled { opacity: .5; }
+.practica .btnTexto:focus-visible, .separar input:focus-visible, .descartes summary:focus-visible { outline: 2px solid var(--acento); outline-offset: 4px; }
+.practica .herramientas { padding: 12px 0; margin-bottom: 10px; border-bottom: 1px solid var(--linea); }
+.practica .aviso, .practica .atajo { font-size: 12px; }
+.practica .mando { width: 100%; }
+.practica .flecha { width: 44px; height: 44px; border-width: 1px; background: transparent; }
+.practica .contador { font-size: 12px; }
+.practica .contador strong { font-size: 16px; }
+.practica .barraNombre i { display: none; }
+.practica .barraRelleno { background: var(--acento); }
+.vista { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; padding: 18px 0; border-block: 1px solid var(--linea); }
+.vistaTexto { display: flex; flex: 1; flex-direction: column; gap: 4px; min-width: 180px; }
+.vistaTexto strong { font-size: 13px; font-weight: 550; }
+.vistaTexto span { color: var(--tinta-2); font-size: 12px; line-height: 1.5; }
+.separar { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer; min-height: 44px; }
+.separar input { width: 18px; height: 18px; accent-color: var(--acento); }
+.cursoSelector { display: flex; flex-basis: 100%; align-items: center; gap: 14px; font-size: 12px; color: var(--tinta-2); }
+.cursoSelector > label { flex-shrink: 0; }
+.raiz.practica .cursoSelector > div {
+  --select-paper: var(--carta); --select-ink: var(--tinta); --select-muted: var(--tinta-2);
+  --select-border: var(--linea); --select-accent: var(--acento); --select-soft: var(--suave);
+  width: min(420px, 100%); min-width: 0;
+}
+.razonamiento { padding: 0; color: var(--tinta); font-size: 15px; line-height: 1.75; }
+.razonamiento h3 { margin: 0 0 8px; color: var(--tinta-2); font-size: 12px; font-weight: 650; letter-spacing: .04em; }
+.razonamiento p { margin: 0; }
+.razonamiento p + p { margin-top: 12px; }
+.feedback { display: flex; align-items: flex-start; gap: 10px; padding-bottom: 20px; font-size: 12px; line-height: 1.5; }
+.feedback .marca { width: 20px; height: 20px; flex-shrink: 0; }
+.feedback strong { display: block; color: var(--tinta); margin-top: 3px; font-size: 15px; font-weight: 600; }
+.feedbackOk { color: var(--ok); }
+.feedbackMal { color: var(--mal); }
+.fundamento { padding-bottom: 20px; }
+.descartes { border-top: 1px solid var(--linea); }
+.descartes summary { cursor: pointer; padding: 16px 0; font-size: 13px; font-weight: 550; }
+.descartes summary > span { margin-left: 6px; color: var(--tinta-3); font-size: 12px; }
+.descartes dl { margin: 0 0 20px; }
+.descartes dl > div { padding: 12px 0; border-top: 1px solid var(--linea); }
+.descartes dt { color: var(--tinta); font-size: 13px; font-weight: 600; }
+.descartes dt small { display: inline-block; margin-left: 8px; color: var(--mal); font-size: 11px; font-weight: 500; }
+.descartes dd { margin: 4px 0 0; font-size: 14px; color: var(--tinta-2); }
+.datoClave { display: flex; gap: 12px; border-top: 1px solid var(--linea); padding: 18px 0 0; }
+.datoClave > span { color: var(--acento); font-size: 24px; line-height: 1; }
+.datoClave p { font-size: 14px; color: var(--tinta-2); }
+.datoClave h3 { color: var(--acento); }
+@media (max-width: 560px) {
+  .practica .carta { padding: 20px 16px; gap: 20px; }
+  .raiz.practica .op { padding: 14px 8px; gap: 10px; font-size: 14px; }
+  .vista { gap: 12px; }
+  .vistaTexto { flex-basis: 100%; }
+  .cursoSelector { flex-direction: column; align-items: stretch; gap: 6px; }
+  .practica .contador em { display: block; margin-top: 3px; }
+  .practica .herramientas > span { flex-wrap: wrap; }
+  .practica .pie .btn { flex: 1; }
+}

@@ -1,4 +1,5 @@
 /** Lo que el servidor le pasa a la interfaz de estudio: sólo el curso abierto, ya resuelto. */
+import type { Requisito } from '@/lib/plans';
 
 export type FormatoResumen = 'pdf' | 'html';
 
@@ -25,6 +26,24 @@ export interface ClaseEstudio {
   laboratorio?: LabRecomendado;
   /** Los banqueos de la clase (pestaña «Práctica»), en el orden en que se ofrecen. */
   practica: PracticaEstudio[];
+  /** Sólo en la ruta ENCIB: la clase es un tema de la tabla oficial. */
+  encib?: TemaEncibEstudio;
+  /** Sólo en Preclínicos: un tema del temario universal (`subtemas` son sus puntos). */
+  basicas?: { num: string; disciplinas: string[] };
+}
+
+/** Un tema del ENCIB 2026: qué pide la tabla oficial y en qué preguntas ya salió. */
+export interface TemaEncibEstudio {
+  /** `ÁREA-sub.tema`, p. ej. `ANA-2.1`. */
+  codigo: string;
+  /** Su número dentro de la materia («3.2»). */
+  num: string;
+  /** Área del examen de la que viene (en Genética e Inmunología no es la materia). */
+  area: string;
+  /** Texto oficial de ASPEFAM. */
+  oficial: string;
+  /** Las preguntas en que salió como tema principal, de la más reciente a la más vieja. */
+  salio: { anio: number; n: number; dificultad: 'menor' | 'mediana' | 'mayor'; concepto: string }[];
 }
 
 /**
@@ -58,14 +77,20 @@ export interface SemanaEstudio {
   lessons: ClaseEstudio[];
 }
 
+/** El segmento de la URL de cada ruta: `/estudio/<ruta>/<curso>/<clase>`. */
+export type RutaEstudio = 'upch' | 'encib' | 'preclinicos';
+
 export interface CursoEstudio {
   id: string;
   name: string;
+  ruta: RutaEstudio;
   /** Icono de materia del ENCIB, o null si el curso aún no tiene uno propio. */
   icono: string | null;
+  /** Debajo del nombre en el temario; sin él, el de cada ruta. */
+  subtitulo?: string;
   track: 'basico' | 'medicina';
-  /** Plan mensual del tramo, para abrir la compra desde un candado. */
-  planRequerido: 'ufbi' | 'interno';
+  /** Lo que pide el curso: el candado ofrece los planes que lo abren. */
+  requisito: Requisito;
   groups: SemanaEstudio[];
 }
 
@@ -75,6 +100,8 @@ export interface CursoListado {
   track: 'basico' | 'medicina';
   bloqueado: boolean;
   icono: string | null;
+  /** Rótulo del grupo en el selector de cursos; sin él, el del tramo. */
+  grupo?: string;
 }
 
 export type TipoLab = 'Simulación' | 'Modelo 3D' | 'Atlas' | 'Práctica' | 'Investigación';

@@ -1,10 +1,14 @@
-import { PLANS, type PlanCatalogEntry, type PlanKey, type Track } from '@/lib/plans';
+import { PLANES_NUEVOS } from '@/lib/plans';
+import { soles } from '@/components/planes/oferta';
 
 /**
- * Contenido de la landing nueva (prototipo de GO con DOT), tal cual lo trae el
- * prototipo. La demo es ilustrativa; los planes leen importes, cadencia y
- * compromiso de `PLANS` (`src/lib/plans.ts`) y sólo el texto vive aquí.
+ * Contenido de la landing nueva (prototipo de GO con su mascota), tal cual lo trae el
+ * prototipo. La demo es ilustrativa; los planes (tarjetas y textos) viven en
+ * `components/planes/oferta.ts`, con los importes de `PLANS`.
  */
+
+/** El nombre de la mascota y asistente de IA. Cambiarlo aquí lo cambia en toda la landing. */
+export const ASISTENTE = 'GRIMI';
 
 /** El curso del miniclon. `materia` = icono del ENCIB (`/assets/cursos/materia-<materia>_v6.avif`), el mismo de /estudio. */
 export const CURSO_DEMO = {
@@ -35,113 +39,27 @@ export type RutaLanding = 'upch' | 'basicas' | 'encib';
 
 export const RUTAS: { id: RutaLanding; tab: string; label: string; title: [string, string]; description: string; stamp: string; note: string; demo: string }[] = [
   {
-    id: 'upch', tab: 'UPCH', label: 'TU SÍLABO, A TU RITMO', title: ['El orden de tu curso.', 'El espacio para entenderlo.'],
-    description: 'Encuentra tus clases organizadas por sílabo. Mantén el temario a mano y continúa con el tema que necesitas.',
-    stamp: 'UPCH', note: 'Tu sílabo. Tu ritmo.', demo: 'MI RUTA · UPCH',
+    id: 'upch', tab: 'Aprender', label: 'PRÓXIMAMENTE · TU RUTA CON IA', title: ['Empieza por tus bases.', 'Construye tus conexiones.'],
+    description: `Cuéntale a ${ASISTENTE} qué tema quieres aprender y de dónde partes. Te propondrá un orden para comprender sus fundamentos, relacionarlos y practicar. Tú eliges por dónde empezar y a qué ritmo.`,
+    stamp: 'APRENDER', note: `${ASISTENTE} propone. Tú eliges.`, demo: 'MI RUTA · APRENDER',
   },
   {
-    id: 'basicas', tab: 'Ciencias básicas', label: 'TUS FUNDAMENTOS, CONECTADOS', title: ['Construye una base.', 'Conecta lo que aprendes.'],
-    description: 'Recorre las materias de ciencias básicas y vuelve a cada concepto desde su resumen, su práctica o un recurso del laboratorio.',
-    stamp: 'CIENCIAS BÁSICAS', note: 'Una base para seguir aprendiendo.', demo: 'MI RUTA · CIENCIAS BÁSICAS',
+    id: 'basicas', tab: 'Reforzar', label: 'PRÓXIMAMENTE · REPASO CON IA', title: ['Vuelve a lo que cuesta.', 'Entiéndelo desde la base.'],
+    description: `Elige los conceptos que te cuestan. ${ASISTENTE} te sugerirá qué fundamentos retomar y con qué resúmenes y preguntas. Podrás aceptar la propuesta, cambiar el orden o centrarte en un tema.`,
+    stamp: 'REFORZAR', note: 'Refuerza lo que tú necesitas.', demo: 'MI RUTA · REFORZAR',
   },
   {
-    id: 'encib', tab: 'ENCIB', label: 'UN OBJETIVO DE PREPARACIÓN', title: ['Las mismas bases.', 'Una ruta hacia el examen.'],
-    description: 'Organiza los fundamentos con un objetivo de examen. Un recorrido orientado al repaso y a la práctica, sobre la misma biblioteca de ciencias básicas.',
-    stamp: 'ENCIB', note: 'Un objetivo. Un siguiente paso.', demo: 'MI RUTA · ENCIB',
+    id: 'encib', tab: 'Preparar', label: 'PRÓXIMAMENTE · UN PLAN CON IA', title: ['Un examen en mente.', 'Un repaso con sentido.'],
+    description: `Indica qué entra en tu examen, cuánto tiempo tienes y qué necesitas reforzar. ${ASISTENTE} te propondrá cómo repartir el repaso y la práctica. Tú ajustas el recorrido.`,
+    stamp: 'PREPARAR', note: 'Tu objetivo marca el recorrido.', demo: 'MI RUTA · PREPARAR',
   },
 ];
-
-export type TramoLanding = Track;
-
-export interface PlanLanding {
-  /** `free` o la clave de `PLANS`: de ahí salen importe, cadencia y compromiso. */
-  key: 'free' | PlanKey;
-  name: string;
-  /** Lo que se ve grande: el importe, o su equivalente mensual en los anuales (como `Pricing.tsx`). */
-  price: string;
-  period: string;
-  billing: string;
-  note: string;
-  intro: string;
-  features: string[];
-  summary: string[];
-  cta: string;
-}
-
-/** El texto de cada tarjeta (el de `Pricing.tsx`). Los números NO van aquí: los pone `planLanding`. */
-const TEXTO: Record<'free' | PlanKey, Pick<PlanLanding, 'intro' | 'features' | 'summary'>> = {
-  free: {
-    intro: 'Para empezar:',
-    features: ['Cursos limitados', 'Calculadora de promedio', 'Lecciones básicas', 'Quizzes de práctica'],
-    summary: ['Cursos limitados y lecciones básicas', 'Quizzes de práctica', 'Calculadora de promedio'],
-  },
-  interno: {
-    intro: 'Incluye:',
-    features: ['Todos los cursos de Medicina', 'Sílabo personalizado', 'Quizzes ilimitados', 'Seguimiento de progreso', 'Soporte prioritario', 'Resúmenes y trabajos', 'Modelos 3D'],
-    summary: ['Cursos y sílabo personalizado', 'Quizzes y seguimiento de progreso', 'Resúmenes, trabajos y modelos 3D', 'Soporte prioritario'],
-  },
-  residente: {
-    intro: 'Todo lo de Interno, más:',
-    features: ['Bloqueo de precio por 12 meses', 'Exámenes simulacro', 'Flashcards', 'Acceso anticipado a simulaciones'],
-    summary: ['Simulacros y flashcards', 'Precio fijo por 12 meses', 'Acceso anticipado a simulaciones'],
-  },
-  ufbi: {
-    intro: 'Los 6 cursos de tu ciclo:',
-    features: ['Biología Celular, Física y Química Orgánica', 'Ciencias Sociales, Comunicación y Cultura Ambiental (beta)', 'Sílabo personalizado', 'Quizzes ilimitados (beta)', 'Laboratorios y simulaciones'],
-    summary: ['6 cursos del ciclo (incluye beta)', 'Sílabo personalizado', 'Quizzes ilimitados (beta)', 'Laboratorios y simulaciones'],
-  },
-  'ufbi-anual': {
-    intro: 'Todo lo de UFBI, más:',
-    features: ['20% de descuento en el plan anual', 'Acceso anticipado a nuevo contenido', 'Acceso anticipado a simulaciones', 'Sin renovaciones mensuales'],
-    summary: ['20% de descuento anual', 'Contenido y simulaciones anticipados', 'Un pago para 12 meses'],
-  },
-};
-
-/** «14», «19.70», «142.80»: los céntimos sólo cuando los hay (como en el resto de la web). */
-export const soles = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(2));
-
-/**
- * La tarjeta de un plan con los números de `PLANS` (`src/lib/plans.ts`): la cadencia sale
- * de `durationDays` (nunca del nombre) y el compromiso de `commitmentMonths`, como en
- * `SubscribeModal`, Mi cuenta y /terminos. Cambiar un precio allí lo cambia aquí.
- */
-export function planLanding(key: 'free' | PlanKey): PlanLanding {
-  const texto = TEXTO[key];
-  if (key === 'free') {
-    return { key, name: 'Gratuito', price: '0', period: '', billing: 'Para siempre', note: 'Acceso gratuito y limitado.', cta: 'Empezar gratis', ...texto };
-  }
-  const p = PLANS[key];
-  const anual = p.durationDays >= 365;
-  return {
-    key,
-    name: p.label,
-    price: soles(anual ? Math.round((p.amount / 12) * 100) / 100 : p.amount),
-    period: '/ mes',
-    billing: anual ? `Pago único de S/ ${soles(p.amount)} al año` : 'Facturado cada mes',
-    note: anual
-      ? 'Equivalente mensual con pago anual.'
-      : p.commitmentMonths ? `Compromiso mínimo de ${p.commitmentMonths} meses.` : 'Sin compromiso de permanencia.',
-    cta: `Ver plan ${p.label}`,
-    ...texto,
-  };
-}
-
-/** Gratuito + los planes del tramo, el mensual antes que el anual. */
-export const planesDe = (tramo: TramoLanding): PlanLanding[] => [
-  planLanding('free'),
-  ...(Object.values(PLANS) as PlanCatalogEntry[])
-    .filter((p) => p.track === tramo)
-    .sort((a, b) => a.durationDays - b.durationDays)
-    .map((p) => planLanding(p.key)),
-];
-
-const anuales = (Object.values(PLANS) as PlanCatalogEntry[]).filter((p) => p.durationDays >= 365);
 
 export const PREGUNTAS: { q: string; a: string; abierta?: boolean }[] = [
-  { q: '¿Cómo se cobra un plan anual?', a: `El precio por mes es un equivalente para comparar. ${anuales.map((p) => `${p.label} se paga en un único cobro de S/ ${soles(p.amount)} al año`).join(' y ')}. El importe total también aparece en cada tarjeta.` },
-  { q: '¿GO es sólo para estudiantes de la UPCH?', a: 'No. La ruta UPCH sigue el sílabo del curso; Ciencias básicas permite estudiar por materias y ENCIB orienta el recorrido hacia el examen.', abierta: true },
-  { q: '¿Qué puedo probar aquí?', a: 'La ventana de la portada es una demostración: puedes cambiar de recurso, explorar una pregunta y comparar rutas. «Probar mi espacio» abre tu espacio de estudio real.' },
-  { q: '¿Ciencias básicas y ENCIB son contenidos separados?', a: 'Comparten fundamentos. Cambia la organización del estudio y el objetivo de la ruta; no necesitas pensar en ellos como dos bibliotecas independientes.' },
-  { q: '¿Qué hace DOT en esta versión?', a: 'Es la mascota del espacio: sigue tu cursor y responde al saludo. La ventana de la portada es una demostración: no conecta un asistente de IA.' },
-  { q: '¿Puedo detener el movimiento?', a: 'Sí. Usa «Pausar movimiento» debajo de la demostración. También se respeta la preferencia de movimiento reducido de tu dispositivo.' },
+  { q: '¿Qué incluye cada plan y cómo se cobra?', a: `Hay tres planes y todos se cobran cada mes, en soles peruanos (S/), y se renuevan solos hasta que canceles. ${PLANES_NUEVOS.map((p) => p.commitmentMonths ? `${p.label}: S/ ${soles(p.amount)} al mes, con permanencia de ${p.commitmentMonths} meses` : `${p.label}: S/ ${soles(p.amount)} al mes, sin permanencia`).join('; ')}. Visitante abre los cursos preclínicos y tu universidad; Residente y Especialista suman las metas de examen (como el ENCIB), el laboratorio virtual y MedGO IA.` },
+  { q: '¿MedGO es para mí si estudio en otro país o universidad?', a: 'Sí. MedGO está pensado para cualquier persona que quiera aprender las ciencias básicas de medicina, sin depender de un país, universidad o examen concreto. Puedes usarlo para empezar, acompañar tus cursos o reforzar conocimientos. El contenido está actualmente en español; los recorridos universitarios y exámenes específicos son opciones dentro de la plataforma, no su único enfoque.', abierta: true },
+  { q: '¿Qué puedo estudiar y cómo me ayuda MedGO?', a: 'Puedes explorar anatomía, fisiología, bioquímica, histología, embriología, microbiología, patología y farmacología según el catálogo disponible. MedGO conecta resúmenes, banqueos explicados, modelos 3D, atlas y simulaciones para que pases de entender un concepto a reconocerlo y ponerlo a prueba. La disponibilidad de cada recurso se indica en su curso o sección.' },
+  { q: '¿Cómo funcionarán las rutas de estudio con IA?', a: `Próximamente podrás indicar tu objetivo, los temas que quieres estudiar, tu punto de partida y el tiempo disponible. ${ASISTENTE} te propondrá una secuencia de conceptos, recursos y práctica. Tú podrás elegirla, cambiar su orden y ajustar el recorrido según avances. Es una función en preparación: las rutas de esta página ilustran la propuesta, todavía no generan un plan personalizado.` },
+  { q: `¿Quién es ${ASISTENTE}?`, a: `${ASISTENTE} es la mascota de MedGO y su asistente de inteligencia artificial: el personaje que ves en esta página. Está pensado para ayudarte a aclarar conceptos y profundizar en lo que estudias, y para proponerte rutas de estudio. Esas rutas todavía no están activas: llegarán pronto.` },
+  { q: '¿Qué puedo explorar antes de suscribirme?', a: 'Puedes recorrer la vista previa de esta página para conocer el espacio de estudio, la práctica, el laboratorio y el progreso. Con tu cuenta puedes recorrer el temario completo de cada curso y meta; los resúmenes, banqueos y laboratorios se abren con un plan.' },
 ];

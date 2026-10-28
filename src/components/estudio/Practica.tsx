@@ -14,7 +14,7 @@ import type { Contexto } from './EspacioEstudio';
 // Los propuestos se leen en los mismos visores que el resumen; sólo bajan al abrirlos.
 const HtmlFullscreenModal = dynamic(() => import('@/components/HtmlFullscreenModal'), { ssr: false });
 const PdfFullscreenModal = dynamic(() => import('@/components/PdfFullscreenModal'), { ssr: false });
-const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ssr: false });
+const ElegirPlan = dynamic(() => import('@/components/planes/ElegirPlan'), { ssr: false });
 
 const ICONO: Record<TipoPractica, NombreIcono> = {
   examen: 'quiz', banco: 'grid', tarjetas: 'layers', solucionario: 'bulb', propuestos: 'document',
@@ -85,8 +85,8 @@ export function Practica({ ctx }: { ctx: Contexto }) {
         ) : (
           <div className={cx('sim-setup')}>
             <Icono n="quiz" />
-            <h2>Esta clase todavía no tiene banqueo</h2>
-            <p>Cuando lo subamos aparecerá aquí, junto a sus explicaciones. Mientras tanto, sigue con el resumen y marca lo que vayas estudiando.</p>
+            <h2>{l.encib || l.basicas ? 'Este tema' : 'Esta clase'} todavía no tiene banqueo</h2>
+            <p>Cuando lo subamos aparecerá aquí, junto a sus explicaciones. Mientras tanto, sigue con {l.encib ? 'lo que pide el temario' : l.basicas ? 'los puntos del tema' : 'el resumen'} y marca lo que vayas estudiando.</p>
           </div>
         )}
 
@@ -101,7 +101,7 @@ export function Practica({ ctx }: { ctx: Contexto }) {
       {documento && (documento.formato === 'html'
         ? <HtmlFullscreenModal claseId={documento.id} titulo={l.title} onClose={() => setDocumento(null)} />
         : <PdfFullscreenModal claseId={documento.id} onClose={() => setDocumento(null)} />)}
-      {comprar && <SubscribeModal open planKey={c.planRequerido} onClose={() => setComprar(false)} />}
+      {comprar && <ElegirPlan requisito={c.requisito} onClose={() => setComprar(false)} />}
     </div>
   );
 }

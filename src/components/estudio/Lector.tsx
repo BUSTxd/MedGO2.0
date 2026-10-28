@@ -9,11 +9,13 @@ import { useRouter } from 'next/navigation';
 import type { LabRecomendado } from '@/lib/estudio/tipos';
 import { cx, Icono } from './Icono';
 import type { Contexto } from './EspacioEstudio';
+import { veces } from './texto';
+import { duracion, fechaLarga } from './plan/formato';
 
 // Los mismos visores que la tarjeta «Resumen» del dashboard; sólo bajan al abrirlos.
 const HtmlFullscreenModal = dynamic(() => import('@/components/HtmlFullscreenModal'), { ssr: false });
 const PdfFullscreenModal = dynamic(() => import('@/components/PdfFullscreenModal'), { ssr: false });
-const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ssr: false });
+const ElegirPlan = dynamic(() => import('@/components/planes/ElegirPlan'), { ssr: false });
 // react-pdf (~2 MB) sólo baja si la clase abierta tiene el resumen en PDF.
 const PdfViewer = dynamic(() => import('@/components/PdfViewer'), { ssr: false });
 
@@ -173,15 +175,24 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
   const resumen = !l.bloqueada ? l.resumenes[Math.min(opcion, l.resumenes.length - 1)] : undefined;
   const anchoPdf = useAncho(cuerpoRef, resumen?.formato === 'pdf');
   useEffect(() => { setOpcion(0); }, [l.id]);
+  // Una tarea del plan pide un resumen concreto (una clase puede tener varios).
+  const destino = st.destino;
+  useEffect(() => {
+    if (!destino) return;
+    const i = l.resumenes.findIndex((r) => r.id === destino.resumenId);
+    if (i >= 0) setOpcion(i);
+  }, [l.id, destino, l.resumenes]);
+  const seccionDestino = destino && resumen?.id === destino.resumenId ? destino.seccion : undefined;
   useEffect(() => { setIndice([]); setIndiceActivo(0); }, [resumen?.id]);
 
   // Con el documento ya en el DOM: índice, vuelta al punto de lectura y registro de la apertura.
   const alCargar = useCallback((sheet: HTMLElement) => {
     setIndice(indiceDe(sheet));
     const pos = posiciones.current[l.id];
-    if (pos) requestAnimationFrame(() => scroller.current?.scrollTo({ top: pos, behavior: 'instant' }));
+    // Con un subtítulo pedido manda el salto a la sección, no el punto donde se dejó.
+    if (pos && !seccionDestino) requestAnimationFrame(() => scroller.current?.scrollTo({ top: pos, behavior: 'instant' }));
     if (resumen) trackEvent('resumen_abierto', { claseId: resumen.id, origen: 'estudio' });
-  }, [l.id, posiciones, resumen]);
+  }, [l.id, posiciones, resumen, seccionDestino]);
 
   // El índice sigue la lectura: el último título que ya pasó por arriba.
   useEffect(() => {
@@ -202,8 +213,12 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
   }, [indice]);
 
   // Secciones del lector (numeradas como en el prototipo); el índice «En esta clase» las sigue.
-  const secciones: [string, string][] = [
-    ...(l.subtemas.length ? [['section-temas', 'Temas de la clase'] as [string, string]] : []),
+  const secciones: [string, string][] = l.encib ? [
+    ['section-oficial', 'Qué entra en el examen'],
+    ['section-salio', 'Lo que ya salió'],
+    ['section-resumen', 'Resumen'],
+  ] : [
+    ...(l.subtemas.length ? [['section-temas', l.basicas ? 'Qué tienes que saber' : 'Temas de la clase'] as [string, string]] : []),
     ['section-resumen', l.resumenes.length > 1 ? 'Resúmenes' : 'Resumen'],
     ...(l.docentes.length ? [['section-docentes', 'Docentes'] as [string, string]] : []),
   ];
@@ -241,8 +256,9 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
     setTocActivo(id);
   };
   const guardar = () => {
-    const queda = marcas.alternarGuardada(l.id, { title: l.title, curso: c.id, cursoNombre: c.name });
-    toast(queda ? 'Clase guardada en Mi progreso' : 'Clase quitada de guardados');
+    const queda = marcas.alternarGuardada(l.id, { title: l.title, curso: c.id, cursoNombre: c.name, ruta: c.ruta });
+    const [que, o] = l.encib || l.basicas ? ['Tema', 'o'] : ['Clase', 'a'];
+    toast(queda ? `${que} guardad${o} en Mi progreso` : `${que} quitad${o} de guardados`);
   };
   const abrir = (r: ResumenEstudio) => {
     if (l.bloqueada) { setComprar(true); return; }
@@ -255,7 +271,7 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
       <div className={cx('article-scroller')} id="article-scroller" ref={scroller} tabIndex={0} aria-label="Contenido de la clase" data-reading-lesson={l.id}>
         <article className={cx('article')}>
           <div className={cx('article-topline')}>
-            <div className={cx('breadcrumb')}>{c.name}<span>/</span><span>{st.route === 'UPCH' ? g.title : 'Temario'}</span></div>
+            <div className={cx('breadcrumb')}>{c.name}<span>/</span><span>{g.title}</span></div>
             <div className={cx('article-controls')}>
               <button className={cx('icon-button')} aria-label="Reducir tamaño de letra" onClick={() => marcas.setFontSize((n) => Math.max(14, n - 1))}>A−</button>
               <button className={cx('icon-button')} aria-label="Aumentar tamaño de letra" onClick={() => marcas.setFontSize((n) => Math.min(21, n + 1))}>A+</button>
@@ -273,9 +289,15 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
           <div className={cx('article-meta')}>
             {(l.fecha || l.hora) && <span><Icono n="clock" />{[l.fecha, l.hora].filter(Boolean).join(' · ')}</span>}
             <span><Icono n="document" />{l.tipo}</span>
-            <span className={cx('material-chip')}>{l.resumenes.length ? (l.bloqueada ? 'Con tu plan' : 'Con resumen') : 'Sin resumen aún'}</span>
+            {l.encib && l.encib.area !== c.name && <span><Icono n="book" />Área de {l.encib.area}</span>}
+            <span className={cx('material-chip')}>
+              {l.encib
+                ? (l.encib.salio.length ? `Salió ${veces(l.encib.salio.length)}` : 'Aún no ha salido')
+                : l.resumenes.length ? (l.bloqueada ? 'Con tu plan' : 'Con resumen') : 'Sin resumen aún'}
+            </span>
           </div>
           {l.nota && <p className={cx('article-intro')}>{l.nota}</p>}
+          <TareaDelPlan ctx={ctx} />
 
           {resumen ? (
             <div ref={cuerpoRef}>
@@ -296,6 +318,7 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
                   className={rs.incrustado}
                   estadoClass={cx('article-intro')}
                   onCargado={alCargar}
+                  seccion={seccionDestino}
                   bloquearTeclas
                 />
               ) : anchoPdf > 0 ? (
@@ -304,10 +327,37 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
                 </div>
               ) : null}
             </div>
-          ) : (<>
+          ) : l.encib ? (<>
+          <section id="section-oficial" className={cx('article-section')}>
+            <div className={cx('section-heading')}><span>{num('section-oficial')}</span><h2>Qué entra en el examen</h2></div>
+            <p>{l.encib.oficial}</p>
+            <p className={cx('tema-fuente')}>Tabla de especificaciones del ENCIB 2026 (ASPEFAM) · {l.encib.codigo}</p>
+          </section>
+
+          <section id="section-salio" className={cx('article-section')}>
+            <div className={cx('section-heading')}><span>{num('section-salio')}</span><h2>Lo que ya salió</h2></div>
+            {l.encib.salio.length ? (
+              <ul className={cx('objectives')}>
+                {l.encib.salio.map((x) => (
+                  <li key={`${x.anio}-${x.n}`}>
+                    <Icono n="circleCheck" />
+                    <span>{x.concepto}<small className={cx('tema-anio')}>{x.anio} · pregunta {x.n} · dificultad {x.dificultad}</small></span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No salió como tema principal en los cuadernillos de 2021, 2024 ni 2025. Entra igual: la tabla oficial lo pide.</p>
+            )}
+          </section>
+
+          <section id="section-resumen" className={cx('key-card')}>
+            <div className={cx('key-card-title')}><Icono n="bulb" />Resumen</div>
+            <ul><li>El resumen de este tema llega pronto. Mientras, guíate por lo que pide la tabla oficial y por lo que ya se preguntó.</li></ul>
+          </section>
+          </>) : (<>
           {l.subtemas.length > 0 && (
             <section id="section-temas">
-              <div className={cx('section-heading')}><span>{num('section-temas')}</span><h2>Temas de la clase</h2></div>
+              <div className={cx('section-heading')}><span>{num('section-temas')}</span><h2>{secciones.find(([s]) => s === 'section-temas')![1]}</h2></div>
               <ul className={cx('objectives')}>{l.subtemas.map((o) => <li key={o}><Icono n="circleCheck" /><span>{o}</span></li>)}</ul>
             </section>
           )}
@@ -324,9 +374,9 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
                 ))}
               </div>
             ) : (
-              <ul><li>Esta clase todavía no tiene resumen. Puedes repasar sus temas y seguir con la siguiente.</li></ul>
+              <ul><li>{l.basicas ? 'El resumen de este tema llega pronto. Mientras, guíate por sus puntos.' : 'Esta clase todavía no tiene resumen. Puedes repasar sus temas y seguir con la siguiente.'}</li></ul>
             )}
-            {l.bloqueada && <ul><li>Se abre con el plan de {c.track === 'basico' ? 'UFBI' : 'la Facultad'}.</li></ul>}
+            {l.bloqueada && <ul><li>Se abre con cualquier plan de MedGO.</li></ul>}
           </section>
 
           {l.docentes.length > 0 && (
@@ -345,7 +395,7 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
           )}
 
           <div className={cx('completion-row')}>
-            <span>¿Terminaste de estudiar esta clase?</span>
+            <span>¿Terminaste de estudiar {l.encib || l.basicas ? 'este tema' : 'esta clase'}?</span>
             <button className={cx('lesson-complete', estudiada && 'is-complete')} aria-pressed={estudiada} onClick={() => marcas.alternarEstudiada(l.id)}>
               <Icono n={estudiada ? 'circleCheck' : 'check'} />{estudiada ? 'Marcada como estudiada' : 'Marcar como estudiada'}
             </button>
@@ -381,7 +431,41 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
       {abierto && (abierto.formato === 'html'
         ? <HtmlFullscreenModal claseId={abierto.id} titulo={l.title} onClose={() => setAbierto(null)} />
         : <PdfFullscreenModal claseId={abierto.id} onClose={() => setAbierto(null)} />)}
-      {comprar && <SubscribeModal open planKey={c.planRequerido} onClose={() => setComprar(false)} />}
+      {comprar && <ElegirPlan requisito={c.requisito} onClose={() => setComprar(false)} />}
+    </div>
+  );
+}
+
+/**
+ * La conexión con el plan dentro del lector: si la próxima sesión del plan tiene
+ * algo de esta clase, se dice aquí mismo y se marca sin salir a «Mi progreso».
+ */
+function TareaDelPlan({ ctx }: { ctx: Contexto }) {
+  const { plan: p, lesson: l, abrirTarea, irA } = ctx;
+  const r = p.resultado;
+  if (!r) return null;
+  const sesion = r.dias.find((d) => d.tareas.length);
+  const tarea = sesion?.tareas.find((t) => t.claseId === l.id);
+  if (!sesion || !tarea) {
+    const cuando = r.diaDeClase[l.id];
+    return cuando ? (
+      <div className={cx('plan-en-lector', 'is-suave')}>
+        <Icono n="target" /><span>En tu plan: <strong>{fechaLarga(cuando, p.hoy).toLowerCase()}</strong></span>
+        <button className={cx('text-button')} onClick={() => irA('progress')}>Ver plan</button>
+      </div>
+    ) : null;
+  }
+  const aMano = tarea.tipo === 'leer' || tarea.tipo === 'repasar';
+  return (
+    <div className={cx('plan-en-lector')}>
+      <Icono n="target" />
+      <span>
+        <small>{sesion.fecha === p.hoy ? 'Tu plan de hoy' : `Tu plan · ${fechaLarga(sesion.fecha, p.hoy).toLowerCase()}`} · {duracion(tarea.minutos)}</small>
+        {tarea.titulo}
+      </span>
+      {aMano
+        ? <button className={cx('button secondary')} onClick={() => { p.marcar(tarea.id, true); ctx.toast('Hecho. Sigue con lo siguiente del plan.'); }}><Icono n="check" />Ya lo leí</button>
+        : <button className={cx('button')} onClick={() => abrirTarea(tarea)}>Practicar<Icono n="arrow" /></button>}
     </div>
   );
 }

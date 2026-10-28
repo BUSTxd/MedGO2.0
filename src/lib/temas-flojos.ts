@@ -94,6 +94,16 @@ export function desglosarIntento(
     .sort(porFlojedad);
 }
 
+/**
+ * El desglose en la forma compacta que viaja en `examen_completado`
+ * (`{ tema: [aciertos, total] }`): así el servidor sabe los temas flojos del
+ * alumno (el planificador de `/estudio`) sin depender de este navegador.
+ */
+export function temasDelEvento(desglose: Desglose[]): Record<string, [number, number]> | undefined {
+  if (!desglose.length) return undefined;
+  return Object.fromEntries(desglose.map((d) => [d.temaId, [d.ok, d.total]]));
+}
+
 function defaultState(): RegistroTemas {
   return { v: VERSION, cursos: {} };
 }

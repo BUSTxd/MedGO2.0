@@ -30,6 +30,8 @@ export async function GET(
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   const requerido = meta.plan ?? requiredPlanDeCurso(key.split('/')[0]);
+  // El plan que se le ofrece al cliente (un `Requisito` no se puede comprar).
+  const ofertado = typeof requerido === 'string' ? requerido : requiredPlanDeCurso(key.split('/')[0]);
 
   // Sólo se resuelve si hace falta: un banqueo `free` sin muestra no consulta el plan.
   const recortable = !!meta.muestra || !!meta.barajasLibres?.length;
@@ -45,7 +47,7 @@ export async function GET(
   // mismo con sesión que sin ella.
   if (!meta.free && !recortable && !conAcceso) {
     return user
-      ? NextResponse.json({ error: 'plan_required', plan: requerido }, { status: 403 })
+      ? NextResponse.json({ error: 'plan_required', plan: ofertado }, { status: 403 })
       : NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }
 
@@ -66,7 +68,7 @@ export async function GET(
       return NextResponse.json({ error: 'not_available' }, { status: 404 });
     }
     const publicado = JSON.parse(await blob.text()) as BancoPublicado;
-    return NextResponse.json(recortarParaPrueba(publicado, meta.barajasLibres, requerido), {
+    return NextResponse.json(recortarParaPrueba(publicado, meta.barajasLibres, ofertado), {
       headers: { 'Cache-Control': 'private, no-store' },
     });
   }
@@ -100,7 +102,7 @@ export async function GET(
           mostradas: Math.min(meta.muestra, todas.length),
           total: todas.length,
           ...(flash ? { flashMostradas: flashCorte, flashTotal: flash.length } : {}),
-          plan: requerido,
+          plan: ofertado,
           variantes: cuantas(q => q.variante),
           conExplicacion: cuantas(q => q.explanation),
           conNota: cuantas(q => q.reviewNote),

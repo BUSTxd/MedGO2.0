@@ -46,6 +46,10 @@ export const CUOTA_POR_PLAN: Record<ProfilePlan, number | null> = {
   'ufbi-anual': 50_000,
   interno: 50_000,
   residente: 50_000,
+  // La IA es de nivel completo: Visitante no la trae.
+  visitante: null,
+  'residente-12': 50_000,
+  'especialista-24': 50_000,
 };
 /** El admin prueba sin preocuparse del saldo. */
 export const CUOTA_ADMIN = 500_000;

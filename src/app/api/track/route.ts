@@ -52,6 +52,24 @@ function sanearProps(raw: unknown): Record<string, unknown> {
   return out;
 }
 
+/**
+ * La única excepción a «nada de objetos»: el desglose por tema de un banqueo
+ * terminado (`{ tema: [aciertos, total] }`), que lee el planificador de /estudio.
+ * Ids de tema cortos y cifras enteras pequeñas, como mucho 40 temas.
+ */
+function sanearTemas(raw: unknown): Record<string, [number, number]> | undefined {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return undefined;
+  const out: Record<string, [number, number]> = {};
+  for (const [k, v] of Object.entries(raw as Record<string, unknown>)) {
+    if (Object.keys(out).length >= 40) break;
+    if (!/^[a-z0-9-]{1,40}$/.test(k) || !Array.isArray(v) || v.length !== 2) continue;
+    const [ok, total] = v.map(Number);
+    if (!Number.isInteger(ok) || !Number.isInteger(total) || ok < 0 || total < 1 || ok > total || total > 1000) continue;
+    out[k] = [ok, total];
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+
 interface TrackBody {
   event?: unknown;
   props?: unknown;
@@ -76,6 +94,10 @@ export async function POST(req: NextRequest) {
   }
 
   let props = sanearProps(body.props);
+  if (event === 'examen_completado') {
+    const temas = sanearTemas((body.props as Record<string, unknown> | undefined)?.temas);
+    if (temas) props.temas = temas;
+  }
   if (event === 'pagina_salida') {
     // Lo único que la ficha suma: un número fuera de rango descuadraría los tiempos.
     const s = Number(props.segundos);

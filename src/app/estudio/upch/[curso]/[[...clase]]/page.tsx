@@ -6,13 +6,14 @@ import { PAGINA_DE_CLASE, esRunner } from '@/lib/estudio/practica';
  * La clase abierta la lee la interfaz del layout con `useParams`: aquí sólo se pinta
  * un banqueo, cuando la pestaña «Práctica» lo abre (`?practica=examen|banco|tarjetas|
  * solucionario`). Es el runner de la página de clase del dashboard, con su velo y su
- * plan; la interfaz lo coloca en el panel de práctica.
+ * plan; la interfaz lo coloca en el panel de práctica. `tema`/`seccion` (las
+ * tareas del planificador) llegan al runner como filtro.
  */
 export default async function ClasePage({ params, searchParams }: {
   params: Promise<{ curso: string; clase?: string[] }>;
-  searchParams: Promise<{ practica?: string }>;
+  searchParams: Promise<{ practica?: string; tema?: string; seccion?: string }>;
 }) {
-  const [{ curso, clase }, { practica }] = await Promise.all([params, searchParams]);
+  const [{ curso, clase }, { practica, tema, seccion }] = await Promise.all([params, searchParams]);
   const id = clase?.[0];
   if (!id || !practica || !esRunner(practica) || !PAGINA_DE_CLASE[curso]) return null;
 
@@ -23,5 +24,5 @@ export default async function ClasePage({ params, searchParams }: {
   if (!leccion?.practica.some((p) => p.tipo === practica)) return null;
 
   const { default: Pagina } = await PAGINA_DE_CLASE[curso]();
-  return <Pagina params={Promise.resolve({ id })} searchParams={Promise.resolve({ [practica]: '1' })} />;
+  return <Pagina params={Promise.resolve({ id })} searchParams={Promise.resolve({ [practica]: '1', ...(tema ? { tema } : {}), ...(seccion ? { seccion } : {}) })} />;
 }

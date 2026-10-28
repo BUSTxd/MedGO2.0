@@ -2,7 +2,7 @@ import 'server-only';
 import { SILABOS } from '@/lib/data/silabos';
 import { CURSOS } from '@/lib/data/aportes';
 import { puedeVerResumen } from '@/lib/acceso-resumen';
-import { cursoEsGratis, planDeTrack, requiredPlanDeCurso, tieneAccesoA, trackDelUsuario } from '@/lib/acceso';
+import { cursoEsGratis, requiredPlanDeCurso, requisitoDeCurso, tieneAccesoA, trackDelUsuario } from '@/lib/acceso';
 import type { PlanState } from '@/lib/plans';
 import { laboratorioDeClase } from './laboratorios';
 import { practicaDeClase, type ActPractica } from './practica';
@@ -104,9 +104,10 @@ export function cursoEstudio(slug: string, plan: Plan): CursoEstudio | null {
   return {
     id: slug,
     name: meta.nombre,
+    ruta: 'upch',
     icono: iconoDe(slug),
     track: meta.track,
-    planRequerido: planDeTrack(meta.track) as 'ufbi' | 'interno',
+    requisito: requisitoDeCurso(slug),
     groups: semanas
       .map((s, i) => ({
         id: `sem-${i + 1}`,

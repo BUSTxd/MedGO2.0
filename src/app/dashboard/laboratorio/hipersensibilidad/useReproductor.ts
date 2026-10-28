@@ -116,9 +116,11 @@ export function useReproductor(c: EscenarioCompilado, inicial = 0, opciones: { a
   useEffect(() => {
     if (!auto || !terminado || pausado || arrastrando) return;
     if (paso >= c.pasos.length - 1) { setAuto(false); return; }
-    const id = setTimeout(() => { setPaso((p) => p + 1); setT(0); }, 1400 / velocidad);
-    return () => clearTimeout(id);
-  }, [auto, terminado, pausado, arrastrando, paso, c.pasos.length, velocidad]);
+    // Sin pausa entre pasos: lo que deja uno se desvanece (`despedir`) mientras entra
+    // lo del siguiente. Una espera aquí cortaba la fisiología en cada capítulo.
+    setPaso((p) => p + 1);
+    setT(0);
+  }, [auto, terminado, pausado, arrastrando, paso, c.pasos.length]);
 
   const irA = useCallback((i: number, animar = true) => {
     const j = Math.min(Math.max(0, i), c.pasos.length - 1);

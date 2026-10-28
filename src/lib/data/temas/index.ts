@@ -36,6 +36,20 @@ export interface Tema {
    * fallado pero no recomienda clase.
    */
   clases: ClaseRecomendada[];
+  /**
+   * Subtítulos del resumen que lo cubren, como ids del índice del planificador
+   * (`<resumenId>#<slug>`, ver `scripts/estudio/indexar-curso.mjs`). Opcional:
+   * el indexador ya los deduce del `seccion` de las preguntas y tarjetas con este
+   * tema; esto solo añade los que ninguna pregunta toca todavía.
+   */
+  secciones?: string[];
+  /**
+   * Banqueo propio del tema (clave del bucket `examenes`, también en `EXAMENES`).
+   * El planificador lo prefiere a filtrar por `tema` los banqueos de la clase.
+   */
+  banqueo?: string;
+  /** Tarjetas propias del tema (clave del bucket `examenes`, también en `EXAMENES`). */
+  tarjetas?: string;
 }
 
 export type TablaTemas = Record<string, Tema>;

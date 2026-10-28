@@ -5,7 +5,7 @@ import { ultimaClase } from '@/lib/estudio/rutas';
 import { cx, Icono } from './Icono';
 import MenuCuenta from './MenuCuenta';
 
-export type Pagina = 'study' | 'labs' | 'progress';
+export type Pagina = 'study' | 'exams' | 'labs' | 'progress';
 
 /** Tono de la luna elegido en el prototipo (`?luna=blue`). */
 const LUNA = '#245b8f';
@@ -24,13 +24,14 @@ export default function BarraSuperior({ page, onPagina, onBuscar }: {
   const router = useRouter();
   const { darkMode, toggleDark } = useDarkMode();
   const ir = (p: Pagina) => {
+    if (p === 'exams') { if (page !== 'exams') router.push('/estudio/examenes'); return; }
     if (p === 'labs') { if (page !== 'labs' || !onPagina) router.push('/estudio/laboratorio'); return; }
     if (onPagina) { onPagina(p); return; }
     router.push(p === 'progress' ? `${ultimaClase()}#progress` : ultimaClase());
   };
   const buscar = onBuscar ?? (() => router.push(`${ultimaClase()}#buscar`));
-  const enlace = (p: Pagina, label: string, icon: 'book' | 'flask' | 'chart') => (
-    <button className={cx('nav-link', page === p && 'active')} data-page={p} aria-current={page === p ? 'page' : undefined} onClick={() => ir(p)}>
+  const enlace = (p: Pagina, label: string, icon: 'book' | 'quiz' | 'flask' | 'chart') => (
+    <button className={cx('nav-link', page === p && 'active')} data-page={p} aria-label={label} title={label} aria-current={page === p ? 'page' : undefined} onClick={() => ir(p)}>
       <Icono n={icon} /><span>{label}</span>
     </button>
   );
@@ -39,7 +40,7 @@ export default function BarraSuperior({ page, onPagina, onBuscar }: {
     <header className={cx('topbar')}>
       <button className={cx('brand')} aria-label="MedGO, ir a Estudiar" onClick={() => ir('study')}><span className={cx('brand-lockup')} aria-hidden="true" /></button>
       <nav className={cx('main-nav')} aria-label="Navegación principal">
-        {enlace('study', 'Estudiar', 'book')}{enlace('labs', 'Laboratorio virtual', 'flask')}{enlace('progress', 'Mi progreso', 'chart')}
+        {enlace('study', 'Estudiar', 'book')}{enlace('exams', 'Exámenes', 'quiz')}{enlace('labs', 'Laboratorio virtual', 'flask')}{enlace('progress', 'Mi progreso', 'chart')}
       </nav>
       <div className={cx('top-tools')}>
         <button className={cx('search-launch')} aria-label="Buscar una clase o tema" onClick={buscar}>

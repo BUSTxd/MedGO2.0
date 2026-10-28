@@ -1,10 +1,10 @@
 'use client';
 
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { createClient } from '@/lib/supabase/client';
-import { PLANS, planUnlocks, type ProfilePlan, type PlanKey } from '@/lib/plans';
+import { PLANES_NUEVOS, PLANS, planUnlocks, requisitoDe, type ProfilePlan, type PlanKey, type Requisito } from '@/lib/plans';
 import { usePlan } from './PlanProvider';
 import { trackEvent } from '@/lib/analytics';
 import styles from '@/styles/lockedContent.module.css';
@@ -12,6 +12,7 @@ import styles from '@/styles/lockedContent.module.css';
 // El SDK de Mercado Pago es pesado: solo se descarga cuando se abre el modal,
 // no al renderizar contenido bloqueado.
 const SubscribeModal = dynamic(() => import('./SubscribeModal'), { ssr: false });
+const ElegirPlan = dynamic(() => import('./planes/ElegirPlan'), { ssr: false });
 
 /**
  * Dice a lo que va dentro si el contenido está tras el candado. Lo que se pinta
@@ -39,7 +40,10 @@ interface PlanState {
 }
 
 interface Props {
+  /** El plan (legado) que ofrece la tarjeta. */
   requiredPlan: PlanKey;
+  /** Lo que pide el contenido, si no basta con `requiredPlan` (un laboratorio es nivel completo). */
+  requisito?: Requisito;
   planState: PlanState;
   isAuthed: boolean;
   /**
@@ -57,6 +61,7 @@ interface Props {
 
 export default function LockedContent({
   requiredPlan,
+  requisito,
   planState,
   isAuthed,
   preview = true,
@@ -65,6 +70,7 @@ export default function LockedContent({
   children,
 }: Props) {
   const router = useRouter();
+  const enEstudio = usePathname()?.startsWith('/estudio') ?? false;
   const clientPlan = usePlan();
   const [open, setOpen] = useState(false);
 
@@ -74,8 +80,9 @@ export default function LockedContent({
   // No se puede elegir "el más permisivo" comparando rangos: interno y ufbi
   // tienen el mismo rango en tramos distintos, y quedarse con uno de los dos
   // bloquearía contenido al que el otro sí da acceso.
-  const serverOk = planState.isActive && planUnlocks(planState.plan, requiredPlan);
-  const clientOk = clientPlan.isActive && planUnlocks(clientPlan.plan, requiredPlan);
+  const pide = requisito ?? requiredPlan;
+  const serverOk = planState.isActive && planUnlocks(planState.plan, pide);
+  const clientOk = clientPlan.isActive && planUnlocks(clientPlan.plan, pide);
   const meetsRequirement = !!planState.allAccess || serverOk || clientOk;
 
   // Qué quiso abrir sin tener el plan: la ficha del admin lo lista aparte.
@@ -92,6 +99,10 @@ export default function LockedContent({
   if (meetsRequirement && !open) return <CandadoContext.Provider value="abierto">{children}</CandadoContext.Provider>;
 
   const plan = PLANS[requiredPlan];
+  // Se ofrecen los planes nuevos (las tres tarjetas) en /estudio y en cuanto el legado
+  // que pide el dashboard deja de venderse; si no, el legado de su tramo.
+  const nuevos = enEstudio || !plan.aLaVenta;
+  const desde = Math.min(...PLANES_NUEVOS.map((p) => p.amount));
 
   async function handleClick() {
     if (!isAuthed) {
@@ -128,32 +139,44 @@ export default function LockedContent({
 
           <h2 className={styles.title}>{titulo}</h2>
           <p className={styles.desc}>
-            {descripcion ?? (
+            {descripcion ?? (nuevos ? (
+              <>Elige un plan de MedGO para abrir esta clase y todo lo que estudias aquí.</>
+            ) : (
               <>
                 Suscríbete al plan <strong>{plan.label}</strong> para acceder a esta clase y al resto de{' '}
                 {plan.track === 'basico'
                   ? 'los cursos del ciclo básico'
                   : 'los cursos de la Facultad de Medicina'}.
               </>
-            )}
+            ))}
           </p>
 
-          <span className={styles.priceTag}>
-            <strong>S/ {plan.amount.toFixed(2)}</strong>
-            <span>/ {plan.durationDays === 30 ? 'mes' : 'año'}</span>
-          </span>
+          {nuevos ? (
+            <span className={styles.priceTag}>
+              <span>Desde</span>
+              <strong>S/ {desde.toFixed(2)}</strong>
+              <span>/ mes</span>
+            </span>
+          ) : (
+            <span className={styles.priceTag}>
+              <strong>S/ {plan.amount.toFixed(2)}</strong>
+              <span>/ {plan.durationDays === 30 ? 'mes' : 'año'}</span>
+            </span>
+          )}
 
           <div>
             <button className={styles.cta} onClick={handleClick}>
-              Desbloquear ahora
+              {nuevos ? 'Ver los planes' : 'Desbloquear ahora'}
             </button>
           </div>
 
-          <a href="/#precios" className={styles.smallLink}>Ver todos los planes</a>
+          {!nuevos && <a href="/#precios" className={styles.smallLink}>Ver todos los planes</a>}
         </div>
       </div>
 
-      <SubscribeModal open={open} planKey={requiredPlan} onClose={() => setOpen(false)} />
+      {nuevos
+        ? open && <ElegirPlan requisito={requisitoDe(pide)} onClose={() => setOpen(false)} />
+        : <SubscribeModal open={open} planKey={requiredPlan} onClose={() => setOpen(false)} />}
     </div>
   );
 }

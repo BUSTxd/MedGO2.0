@@ -1,11 +1,13 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useId, useRef, useState } from 'react';
-import { cx, Icono } from './Icono';
+import { cx, Icono, type NombreIcono } from './Icono';
 
 export interface OpcionDesplegable {
   value: string;
   label: string;
+  descripcion?: string;
+  simbolo?: NombreIcono;
   /** Rótulo del grupo; se pinta cuando cambia respecto a la opción anterior. */
   grupo?: string;
   icono?: string | null;
@@ -20,12 +22,15 @@ export interface OpcionDesplegable {
  * lista propia con el patrón `listbox`: flechas, Inicio/Fin, Enter, Esc y saltar
  * escribiendo la primera letra.
  */
-export default function Desplegable({ valor, opciones, onCambiar, etiqueta, claseBoton }: {
+export default function Desplegable({ valor, opciones, onCambiar, etiqueta, claseBoton, variante = 'compacto', icono, id: idBoton }: {
   valor: string;
   opciones: OpcionDesplegable[];
   onCambiar: (value: string) => void;
   etiqueta: string;
   claseBoton?: string;
+  variante?: 'compacto' | 'campo';
+  icono?: NombreIcono;
+  id?: string;
 }) {
   const [abierto, setAbierto] = useState(false);
   const [activa, setActiva] = useState(0);
@@ -80,7 +85,7 @@ export default function Desplegable({ valor, opciones, onCambiar, etiqueta, clas
     else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); elegir(activa); }
     // Esc no debe llegar a la interfaz (saldría del enfoque o cerraría el temario).
     else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); cerrar(); }
-    else if (e.key === 'Tab') cerrar(false);
+    else if (e.key === 'Tab') cerrar();
     else if (e.key.length === 1 && /\S/.test(e.key)) {
       const letra = e.key.toLowerCase();
       const desde = opciones.findIndex((o, i) => i > activa && o.label.toLowerCase().startsWith(letra));
@@ -90,23 +95,27 @@ export default function Desplegable({ valor, opciones, onCambiar, etiqueta, clas
   };
 
   return (
-    <div ref={caja} className={cx('select-shell', abierto && 'select-abierto')}>
+    <div ref={caja} className={cx('select-shell', variante === 'campo' && 'select-campo', abierto && 'select-abierto')}>
+      {icono && <span className={cx('select-campo-icono')}><Icono n={icono} /></span>}
       <button
         ref={boton}
+        id={idBoton}
         type="button"
         className={cx('select-trigger', claseBoton)}
         aria-haspopup="listbox"
         aria-expanded={abierto}
+        aria-controls={abierto ? `${id}-lista` : undefined}
         aria-label={`${etiqueta}: ${actual?.label ?? ''}`}
         onClick={() => (abierto ? cerrar() : abrir())}
         onKeyDown={teclaBoton}
       >
-        {actual?.label}
+        <span className={cx('select-valor')}>{actual?.label}</span>
       </button>
       <Icono n="down" />
       {abierto && (
         <div
           ref={lista}
+          id={`${id}-lista`}
           className={cx('select-panel')}
           role="listbox"
           aria-label={etiqueta}
@@ -129,10 +138,10 @@ export default function Desplegable({ valor, opciones, onCambiar, etiqueta, clas
                   onPointerEnter={() => setActiva(i)}
                   onClick={() => elegir(i)}
                 >
-                  {o.icono !== undefined && (
-                    <span className={cx('select-icono')}>{o.icono ? <img src={o.icono} alt="" /> : <Icono n="book" />}</span>
+                  {(o.icono !== undefined || o.simbolo) && (
+                    <span className={cx('select-icono')}>{o.icono ? <img src={o.icono} alt="" /> : <Icono n={o.simbolo ?? 'book'} />}</span>
                   )}
-                  <span className={cx('select-texto')}>{o.label}</span>
+                  <span className={cx('select-texto')}><span className={cx('select-nombre')}>{o.label}</span>{o.descripcion && <small className={cx('select-descripcion')}>{o.descripcion}</small>}</span>
                   {o.etiqueta && <span className={cx('select-etiqueta')}>{o.bloqueada && <Icono n="lock" />}{o.etiqueta}</span>}
                   {elegida && <Icono n="check" cls="select-check" />}
                 </div>

@@ -4,9 +4,13 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { usePathname, useRouter } from 'next/navigation';
 import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react';
-import { PLANS, type PlanKey } from '@/lib/plans';
+import dynamic from 'next/dynamic';
+import { PLANS, requisitoDe, type PlanKey } from '@/lib/plans';
 import { usePlan } from './PlanProvider';
 import styles from '@/styles/subscribeModal.module.css';
+
+// ElegirPlan importa este archivo: por `dynamic` el ciclo no se resuelve al cargar el módulo.
+const ElegirPlan = dynamic(() => import('./planes/ElegirPlan'), { ssr: false });
 
 let mpInited = false;
 
@@ -34,7 +38,19 @@ const formatDate = (iso: string) =>
 
 const shortRef = (id: string) => id.slice(-8);
 
-export default function SubscribeModal({ open, planKey, onClose }: Props) {
+/**
+ * Un plan que ya no se vende (los legados, que siguen pidiendo los candados del
+ * dashboard) abre las tarjetas de los planes nuevos en su lugar, filtradas por
+ * lo que pedía ese candado. Así ningún punto de venta tiene que saberlo.
+ */
+export default function SubscribeModal(props: Props) {
+  if (!PLANS[props.planKey].aLaVenta) {
+    return props.open ? <ElegirPlan requisito={requisitoDe(props.planKey)} onClose={props.onClose} /> : null;
+  }
+  return <PasarelaMP {...props} />;
+}
+
+function PasarelaMP({ open, planKey, onClose }: Props) {
   const router = useRouter();
   // En la interfaz de estudio se paga desde la clase o el laboratorio que se quiere abrir:
   // al terminar, el alumno se queda ahí (ya desbloqueado) en vez de saltar al dashboard.

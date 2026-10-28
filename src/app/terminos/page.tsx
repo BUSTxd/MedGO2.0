@@ -6,15 +6,14 @@ import styles from '@/styles/legal.module.css';
 
 export const metadata: Metadata = {
   title: 'Términos y Condiciones — MedGO',
-  description: 'Términos y condiciones de uso de MedGO, planes de suscripción y compromiso mínimo de los planes mensuales.',
+  description: 'Términos y condiciones de uso de MedGO, planes de suscripción y permanencia mínima.',
 };
 
-/** Mensuales primero y dentro de cada grupo por tramo, que es el orden en que
- *  el alumno los ve en la landing. */
-const PLANES = Object.values(PLANS).sort(
-  (a, b) => a.durationDays - b.durationDays || a.track.localeCompare(b.track),
+/** Solo los que se pueden comprar hoy, en el orden de sus tarjetas. */
+const PLANES = Object.values(PLANS).filter((p) => p.aLaVenta).sort(
+  (a, b) => (a.orden ?? 0) - (b.orden ?? 0) || a.durationDays - b.durationDays,
 );
-/** Los que llevan compromiso mínimo, para la sección 7. */
+/** Los que llevan permanencia mínima, para la sección 7. */
 const CON_COMPROMISO = PLANES.filter((p) => p.commitmentMonths);
 const SIN_COMPROMISO = PLANES.filter((p) => !p.commitmentMonths);
 
@@ -25,7 +24,7 @@ export default function TerminosPage() {
       <main className={styles.wrap}>
         <div className={styles.hero}>
           <h1 className={styles.pageTitle}>Términos y Condiciones</h1>
-          <p className={styles.lastUpdated}>Última actualización: 22 de mayo de 2026</p>
+          <p className={styles.lastUpdated}>Última actualización: 28 de octubre de 2026</p>
         </div>
 
         <section className={styles.section}>
@@ -95,14 +94,10 @@ export default function TerminosPage() {
                 <th>Plan</th>
                 <th>Precio</th>
                 <th>Periodicidad</th>
+                <th>Permanencia</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Gratuito</td>
-                <td>S/ 0</td>
-                <td>—</td>
-              </tr>
               {/* Recorrido sobre el catálogo, no una lista escrita a mano: al
                   añadir un plan la tabla legal se actualiza sola. Un precio que
                   aquí diga otra cosa que el cobrado es un problema, no un typo. */}
@@ -115,15 +110,26 @@ export default function TerminosPage() {
                       ? 'Mensual (cobro cada 30 días)'
                       : 'Anual (cobro cada 365 días)'}
                   </td>
+                  <td>{p.commitmentMonths ? `${p.commitmentMonths} meses` : 'Sin permanencia'}</td>
                 </tr>
               ))}
             </tbody>
           </table>
           <p className={styles.p}>
-            Los planes <strong>UFBI</strong> dan acceso a los cursos del ciclo básico (1.er año,
-            UFBI) y los planes <strong>Interno</strong> y <strong>Residente</strong> a los cursos
-            de la Facultad de Medicina (2.º a 7.º año). Son tramos distintos: contratar uno no
-            otorga acceso a los cursos del otro.
+            Sin un plan activo el usuario solo puede ver el temario. Todos los planes dan acceso a
+            Preclínicos y al contenido de la universidad del usuario;{' '}
+            {PLANES.filter((p) => p.nivel === 'completo').map((p, i, l) => (
+              <span key={p.key}>
+                {i > 0 && (i === l.length - 1 ? ' y ' : ', ')}
+                <strong>{p.label}</strong>
+              </span>
+            ))}{' '}
+            dan acceso, además, a las metas de examen (como el ENCIB), al laboratorio virtual y a
+            MedGO IA cuando esté disponible.
+          </p>
+          <p className={styles.p}>
+            Quien contrató un plan anterior (UFBI, Interno o Residente anual) lo conserva con su
+            precio, su acceso y sus condiciones mientras no lo cancele.
           </p>
           <p className={styles.p}>
             Los precios están expresados en soles peruanos (PEN) e incluyen los impuestos
@@ -133,40 +139,41 @@ export default function TerminosPage() {
         </section>
 
         <section className={styles.callout}>
-          <h2 className={styles.h2}>7. Compromiso mínimo — planes mensuales</h2>
+          <h2 className={styles.h2}>7. Permanencia mínima</h2>
           <p className={styles.calloutBody}>
-            Al contratar un plan mensual el usuario acepta un compromiso mínimo de{' '}
-            <strong>3 cobros mensuales consecutivos</strong>. El botón de &quot;Cancelar
-            suscripción&quot; en Mi cuenta se habilitará al cumplirse los 3 meses contados desde
-            la fecha de la primera autorización del pago. Antes de esa fecha la suscripción no es
-            cancelable a través de la plataforma. No existe devolución parcial ni total de los
-            cobros realizados dentro de ese periodo.
+            Los planes con permanencia se cobran cada mes, y al contratarlos el usuario acepta un
+            número mínimo de <strong>cobros mensuales consecutivos</strong>. El botón de
+            &quot;Cancelar suscripción&quot; en Mi cuenta se habilitará al cumplirse ese número de
+            meses, contados desde la fecha de la primera autorización del pago. Antes de esa fecha
+            la suscripción no es cancelable a través de la plataforma. No existe devolución parcial
+            ni total de los cobros realizados dentro de ese periodo. Cumplida la permanencia, la
+            suscripción sigue cobrándose cada mes al mismo precio hasta que el usuario la cancele.
           </p>
           <ul className={styles.calloutList}>
             {CON_COMPROMISO.map((p) => (
               <li key={p.key}>
                 <strong>{p.label}</strong>: S/ {p.amount.toFixed(2)} × {p.commitmentMonths} ={' '}
                 S/ {(p.amount * (p.commitmentMonths ?? 0)).toFixed(2)} durante el periodo de
-                compromiso.
+                permanencia.
               </li>
             ))}
           </ul>
         </section>
 
         <section className={styles.section}>
-          <h2 className={styles.h2}>8. Planes anuales</h2>
+          <h2 className={styles.h2}>8. Planes sin permanencia</h2>
           <p className={styles.p}>
-            Los planes{' '}
+            {SIN_COMPROMISO.length > 1 ? 'Los planes' : 'El plan'}{' '}
             {SIN_COMPROMISO.map((p, i) => (
               <span key={p.key}>
                 {i > 0 && (i === SIN_COMPROMISO.length - 1 ? ' y ' : ', ')}
                 <strong>{p.label}</strong>
               </span>
             ))}{' '}
-            son <strong>cancelables en cualquier momento</strong> desde Mi cuenta: al cobrar 12
-            meses por adelantado no llevan compromiso mínimo. La cancelación detiene la renovación
-            anual pero el usuario mantiene acceso al contenido premium hasta el final del periodo
-            pagado. <strong>No existen devoluciones del año en curso.</strong>
+            {SIN_COMPROMISO.length > 1 ? 'son' : 'es'} <strong>cancelable{SIN_COMPROMISO.length > 1 ? 's' : ''} en
+            cualquier momento</strong> desde Mi cuenta. La cancelación detiene la renovación, pero el
+            usuario mantiene el acceso hasta el final del periodo pagado.{' '}
+            <strong>No existen devoluciones del periodo en curso.</strong>
           </p>
         </section>
 
@@ -225,8 +232,8 @@ export default function TerminosPage() {
             </a>
             . La eliminación implica el borrado de sus datos personales y de progreso, salvo
             registros contables que MedGO esté obligado a conservar por ley. La eliminación
-            de la cuenta no exime al usuario de los cobros pendientes derivados del compromiso
-            mínimo de los planes mensuales.
+            de la cuenta no exime al usuario de los cobros pendientes derivados del permanencia
+            mínima de su plan.
           </p>
         </section>
 

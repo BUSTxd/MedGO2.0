@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 import { fetchExam, type ExamOption, type ExamQuestion, type Flashcard, type Muestra } from '@/lib/examen/payload';
 import { dorsoDe, esCorrecta, flashcardsDe, prepararRonda } from '@/lib/tarjetas/motor';
 import { shuffle } from '@/lib/utils/shuffle';
-import { cursoDe, desglosarIntento, registrarIntento } from '@/lib/temas-flojos';
+import { cursoDe, desglosarIntento, registrarIntento, temasDelEvento } from '@/lib/temas-flojos';
 import { trackEvent } from '@/lib/analytics';
 import { partirEnBarajas, type BarajaDe } from '@/lib/barajas';
 import RejillaBarajas from '@/components/examen/RejillaBarajas';
@@ -119,6 +119,13 @@ interface Props {
    * faltan. Sin esto, la baraja entera.
    */
   barajas?: number;
+  /**
+   * Sólo lo de un tema (`tema` de la tabla del curso) o de un subtítulo del
+   * resumen (`seccion`): la práctica por tema del planificador de `/estudio`.
+   * Si el filtro deja la baraja vacía se juega entera.
+   */
+  filtroTema?: string;
+  filtroSeccion?: string;
 }
 
 const IconoLibro = () => (
@@ -151,7 +158,7 @@ const IconoCandado = () => (
  * La tarjeta no se remonta entre preguntas: los naipes llevan `key` de
  * **posición**, así el nodo de cada hueco sobrevive y sólo le cambia el texto.
  */
-export default function TarjetasRunner({ examKey, titulo, backHref, resumen, resumenes, barajas }: Props) {
+export default function TarjetasRunner({ examKey, titulo, backHref, resumen, resumenes, barajas, filtroTema, filtroSeccion }: Props) {
   // Encima de la baraja, no navegando a la clase: así no se pierde el avance.
   const [leyendo, setLeyendo] = useState<{ id: string; seccion: string } | null>(null);
   const [paso, setPaso] = useState<Paso>('cargando');
@@ -216,9 +223,15 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
     fetchExam(examKey)
       .then(({ payload, muestra: m }) => {
         if (!vivo) return;
-        const { orden, opciones: ops } = prepararRonda(payload.questions);
+        const pasa = (x: { tema?: string; seccion?: string }) =>
+          (!filtroTema || x.tema === filtroTema) && (!filtroSeccion || x.seccion === filtroSeccion);
+        const filtrar = <T extends { tema?: string; seccion?: string }>(xs: T[]) => {
+          const f = xs.filter(pasa);
+          return f.length ? f : xs;
+        };
+        const { orden, opciones: ops } = prepararRonda(filtrar(payload.questions));
         setPreguntas(orden);
-        const baraja = flashcardsDe(payload);
+        const baraja = filtrar(flashcardsDe(payload));
         setTodas(baraja);
         if (barajas) {
           const av = leerBarajas(examKey);
@@ -241,7 +254,7 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
         setPaso('error');
       });
     return () => { vivo = false; };
-  }, [examKey, titulo, barajas]);
+  }, [examKey, titulo, barajas, filtroTema, filtroSeccion]);
 
   // Cada modo recorre su propia baraja: el quiz, las preguntas; la memoria, las
   // tarjetas (que pueden no tener nada que ver con las preguntas).
@@ -307,9 +320,12 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
     // Sólo el quiz alimenta el acumulado de temas flojos: el flashcard es
     // autoevaluación, y mezclar lo que uno cree saber con lo que ha demostrado
     // saber corrompería las recomendaciones del home.
+    let temas: Record<string, [number, number]> | undefined;
     if (modo === 'quiz') {
       const curso = cursoDe(examKey);
-      registrarIntento(curso, desglosarIntento(curso, finales, preguntas));
+      const desglose = desglosarIntento(curso, finales, preguntas);
+      registrarIntento(curso, desglose);
+      temas = temasDelEvento(desglose);
     }
     if (modo === 'flash' && barajas && mazo) {
       setHechas(guardarBaraja(examKey, mazo.firma, finales.filter(r => r.ok).length, finales.length));
@@ -320,9 +336,12 @@ export default function TarjetasRunner({ examKey, titulo, backHref, resumen, res
       ...(mazo && modo === 'flash' ? { baraja: mazo.numero } : {}),
       score: finales.filter(r => r.ok).length,
       total: finales.length,
+      ...(temas ? { temas } : {}),
+      ...(filtroTema ? { tema: filtroTema } : {}),
+      ...(filtroSeccion ? { seccion: filtroSeccion } : {}),
     });
     setPaso('resultado');
-  }, [examKey, modo, preguntas, barajas, mazo]);
+  }, [examKey, modo, preguntas, barajas, mazo, filtroTema, filtroSeccion]);
 
   /** Saca la tarjeta, cambia lo que muestra y la vuelve a meter. Mismo nodo. */
   const avanzar = useCallback((finales: Respuesta[]) => {

@@ -9,7 +9,7 @@ import { PLANS } from '@/lib/plans';
 const outfitEstudio = Outfit({ subsets: ['latin'], variable: '--font-estudio', display: 'swap' });
 
 export const metadata: Metadata = { title: 'MedGO · Tu espacio de estudio' };
-export const viewport: Viewport = { themeColor: '#10233f' };
+export const viewport: Viewport = { themeColor: '#18212c' };
 
 export default async function EstudioLayout({ children }: { children: React.ReactNode }) {
   const s = await prepararSesionApp();

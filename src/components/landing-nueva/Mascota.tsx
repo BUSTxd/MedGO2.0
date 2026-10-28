@@ -3,15 +3,16 @@ import { useEffect, useId, useRef } from 'react';
 import { c } from './estilos';
 
 /**
- * DOT, la mascota de GO: una esfera blanca con gorro quirúrgico azul y dos ojos en
- * píldora que viven SOBRE la esfera (como el Grok Bot de xAI). La mirada es una
+ * DOT, la mascota de GO: una esfera blanca con gorro quirúrgico azul noche y dos ojos
+ * en píldora que viven SOBRE la esfera (como el Grok Bot de xAI). La mirada es una
  * rotación de la esfera: cada ojo es un punto de su superficie que se proyecta en
  * el plano, y cerca del borde se aplasta hacia el centro (escorzo) hasta perderse
- * detrás. El gorro quirúrgico es un casquete de tela sobre la misma esfera y gira con
- * ella: tela abombada con trama y frunces, banda doblada con pespunte, dos costuras de
- * paneles y las cintas de la nuca, que asoman por detrás al girar. El brillo y la sombra
- * van pegados al gorro y giran con él. `detalle` elige cuánto se dibuja según el tamaño
- * (las figuras diminutas van simples y con menos puntos).
+ * detrás. El gorro es un casquete sobre la misma esfera y gira con ella: calado hasta
+ * casi los ojos, con la banda ancha y un tono más clara y dos cintas de tela en la nuca,
+ * de dos largos, que de frente asoman por los lados, se dan la vuelta (enseñan el revés)
+ * y se quedan atrás con un vaivén cuando la cabeza se mueve. Los ojos van por delante
+ * del gorro (un filo del color de la cara los separa de la banda) y la luz, muy tenue,
+ * no gira con la cabeza. `detalle` elige cuántos puntos llevan los anillos del gorro.
  *
  * Tres modos:
  *  - cursor (por defecto): sigue al puntero, parpadea solo, al quedarse quieto el
@@ -21,13 +22,18 @@ import { c } from './estilos';
  * `silueta` la pinta en contorno. Todo se para con `pausado`, movimiento reducido,
  * pestaña oculta o fuera de vista, y vuelve a la pose de reposo. Escribe directo en
  * el SVG (refs): animar no re-renderiza.
+ *
+ * Las otras variantes del gorro (el detallado con malla y frunces y diez minimalistas)
+ * se sacaron del proyecto; la copia está en `Descargas/variantes de dot`.
  */
 
 type Mirada = { yaw: number; pitch: number };
 type Paso =
   | { t: 'mirar'; yaw: number; pitch: number; ms: number }
-  /** Una vuelta entera (360°) sobre su eje, con un saltito. */
-  | { t: 'vuelta'; ms: number }
+  /** Una vuelta entera sobre su eje, hacia la izquierda (los ojos salen por ese borde y entran por el otro), hasta mirar a `yaw`/`pitch`. */
+  | { t: 'vuelta'; yaw: number; pitch: number; ms: number }
+  /** Un brinco en el sitio: se agacha, sube estirado y se aplasta al caer. */
+  | { t: 'salto'; ms: number }
   | { t: 'pausa'; ms: number }
   | { t: 'parpadeo' }
   | { t: 'feliz'; ms: number };
@@ -37,12 +43,22 @@ const pausa = (ms: number): Paso => ({ t: 'pausa', ms });
 const PARPADEO: Paso = { t: 'parpadeo' };
 
 const GUIONES = {
-  /** Los puntos cardinales con calma y, al final, una vuelta de 360° (amago, vuelta con saltito y asiento). */
-  cardinal: [
-    pausa(1400), mirar(0, 0.55, 650), pausa(900), PARPADEO, pausa(350),
-    mirar(0.8, 0, 750), pausa(1000), mirar(0, -0.5, 700), pausa(900), PARPADEO,
-    mirar(-0.8, 0, 850), pausa(1000), mirar(0, 0, 600), pausa(800),
-    mirar(-0.3, 0.06, 420), pausa(120), { t: 'vuelta', ms: 1900 }, mirar(0.12, 0, 260), mirar(0, 0, 320), pausa(500), PARPADEO, pausa(1500),
+  /**
+   * El de «De encontrar tu clase» (empezó como calco del Grok Bot de x.ai y se le dio más
+   * vida): parpadea a menudo (a veces dos seguidas), curiosea sobre todo arriba a la
+   * izquierda, se alegra, da brinquitos y muy de vez en cuando una vuelta entera. Nunca
+   * se queda quieto: encima del guion lleva una deriva lenta y una respiración (`VIVOS`),
+   * y la mirada va con un muelle que llega con un pequeño rebote.
+   */
+  vivo: [
+    mirar(0, 0, 900), pausa(1200), PARPADEO, pausa(1500), PARPADEO, pausa(220), PARPADEO, pausa(600),
+    mirar(-0.55, 0.38, 1000), pausa(900), PARPADEO, pausa(1400), mirar(-0.4, 0.26, 1100), PARPADEO, mirar(-0.62, 0.42, 1200), pausa(1600),
+    mirar(0, 0, 900), pausa(700), { t: 'salto', ms: 760 }, { t: 'feliz', ms: 1300 }, pausa(1700), PARPADEO, pausa(1000),
+    mirar(-0.55, 0.4, 1000), mirar(-0.2, 0.32, 1200), PARPADEO, pausa(800), mirar(-0.58, 0.4, 1200), pausa(1800),
+    mirar(0, 0, 1000), pausa(900), PARPADEO, pausa(1900), mirar(0.25, -0.1, 900), PARPADEO, pausa(220), PARPADEO, pausa(1500), mirar(0, 0, 800), pausa(900),
+    mirar(0.35, 0.08, 900), mirar(0.8, 0.35, 900), PARPADEO, pausa(500), mirar(-0.3, -0.35, 1100), mirar(0, -0.65, 900), pausa(400),
+    mirar(-0.5, 0.42, 1000), { t: 'vuelta', yaw: 0, pitch: 0, ms: 1900 }, { t: 'salto', ms: 640 }, { t: 'feliz', ms: 1200 }, pausa(1500), PARPADEO,
+    mirar(-0.6, 0.45, 1000), pausa(1600), mirar(-0.35, 0.12, 1100), pausa(1400),
   ],
   /** La silueta del final: mira más lejos (un ojo se pierde tras el borde) y parpadea. */
   silueta: [
@@ -52,12 +68,49 @@ const GUIONES = {
   ],
 } satisfies Record<string, Paso[]>;
 
+/** Los guiones que nunca se quedan quietos: deriva lenta de la mirada y respiración del cuerpo. */
+const VIVOS = new Set<keyof typeof GUIONES>(['vivo']);
+/** La deriva de la mirada (suma de senos lentos: nunca se repite igual) y la escala de la respiración, para el instante `s` (segundos). */
+const derivaViva = (s: number): Mirada => ({
+  yaw: 0.07 * Math.sin(0.83 * s) + 0.035 * Math.sin(1.71 * s + 1.3),
+  pitch: 0.05 * Math.sin(0.67 * s + 0.4) + 0.03 * Math.sin(1.37 * s + 2.1),
+});
+const respiracion = (s: number) => 1 + 0.03 * Math.sin((2 * Math.PI * s) / 3.2);
+/** El muelle de la mirada (por ms): rigidez y amortiguación; con ζ ≈ 0,5 llega con un rebote pequeño. */
+const MUELLE = { k: 0.000144, c: 0.0126 };
+
 /** Lo que hace la del cursor si el puntero se queda quieto un rato. */
 const OCIOSO: Paso[] = [mirar(-0.7, 0.15, 520), pausa(700), mirar(0.7, 0.15, 700), pausa(700), PARPADEO, mirar(0, -0.06, 500)];
 
 // ── Geometría (viewBox 0 0 120 120) ──
 const CX = 60, CY = 63, R = 52;
 const OJO = { ex: 0.25, ey: -0.1, w: 13, h: 29 };
+/** El filo del color de la cara alrededor de cada ojo: lo separa de la banda, que llega casi a los ojos. */
+const FILO_OJO = 2.2;
+/** El cuerpo acompaña a la mirada: se desplaza un poco hacia donde mira, como el Grok Bot (en unidades del viewBox). */
+const DERIVA = 5;
+/** Cuánto inclina la cabeza hacia el lado al que mira (grados). */
+const INCLINA = 6;
+/**
+ * Un brinco en `u` (0 a 1): se agacha (aplastado y ancho), sube estirado y al caer se
+ * vuelve a aplastar. `alto` en unidades del viewBox; `sx`/`sy`, desde el pie de la esfera.
+ */
+function brinco(u: number) {
+  const campana = (c: number, w: number) => Math.max(0, 1 - ((u - c) / w) ** 2);
+  const aire = u > 0.18 && u < 0.82 ? Math.sin((Math.PI * (u - 0.18)) / 0.64) : 0;
+  const aplasta = 0.08 * campana(0.09, 0.09) + 0.1 * campana(0.9, 0.1) - 0.05 * aire;
+  return { alto: 9 * aire, sx: 1 + 0.8 * aplasta, sy: 1 - aplasta };
+}
+/**
+ * El cuerpo entero: se desplaza un poco hacia donde mira, inclina la cabeza hacia ese
+ * lado, respira (`escala`, desde el pie) y brinca (`salto`, de 0 a 1; −1 sin brinco).
+ */
+const cuerpo = (m: Mirada, escala = 1, salto = -1) => {
+  const b = salto >= 0 ? brinco(salto) : { alto: 0, sx: 1, sy: 1 };
+  const dx = DERIVA * Math.sin(m.yaw) * Math.cos(m.pitch), dy = -DERIVA * Math.sin(m.pitch) - b.alto;
+  const giro = INCLINA * Math.sin(m.yaw) * Math.cos(m.pitch);
+  return `translate(${n(dx)} ${n(dy)}) rotate(${n(giro)} ${CX} ${CY}) translate(${CX} ${CY + R}) scale(${(b.sx * escala).toFixed(4)} ${(b.sy * escala).toFixed(4)}) translate(${-CX} ${-(CY + R)})`;
+};
 const REPOSO_CURSOR: Mirada = { yaw: 0, pitch: -0.06 };
 const REPOSO_GUION: Mirada = { yaw: 0, pitch: 0 };
 
@@ -89,15 +142,48 @@ const base = (p: ReturnType<typeof proyectar>) =>
   `translate(${n(p.X)} ${n(p.Y)}) rotate(${n(p.ang)}) scale(${n(Math.max(0.001, p.z))} 1) rotate(${n(-p.ang)})`;
 const visibilidad = (z: number) => Math.min(1, Math.max(0, z / 0.12));
 
-/** Atributos de los dos ojos para una mirada, un párpado (1 abierto) y una alegría (1 = ojos ^ ^). */
+/** Las esquinas de una píldora, en su plano: cuatro cuartos de círculo de 6 puntos. */
+const CUARTOS = [0, 1, 2, 3].map((q) => Array.from({ length: 6 }, (_, k) => ((q + k / 5) * Math.PI) / 2));
+/**
+ * Un ojo dibujado SOBRE la esfera: la píldora (semiancho `a`, semialto `b`, en radios) se
+ * pega a la superficie alrededor de su centro y se proyecta, así que al acercarse al borde
+ * se curva y se estrecha como en el Grok Bot. Lo que pasa por detrás se aplasta contra el
+ * contorno. Devuelve el trazo cerrado en el SVG.
+ */
+function pildora(lado: number, m: Mirada, a: number, b: number) {
+  const ex = lado * OJO.ex, ce = Math.cos(OJO.ey), se = Math.sin(OJO.ey);
+  const d: V = [Math.sin(ex) * ce, se, Math.cos(ex) * ce];
+  const ux: V = [Math.cos(ex), 0, -Math.sin(ex)], uy: V = [-Math.sin(ex) * se, ce, -Math.cos(ex) * se];
+  const r = Math.min(a, b);
+  const centros = [[a - r, b - r], [-(a - r), b - r], [-(a - r), -(b - r)], [a - r, -(b - r)]];
+  const pts = CUARTOS.flatMap((angulos, q) => angulos.map((t) => {
+    const u = centros[q][0] + r * Math.cos(t), v = centros[q][1] + r * Math.sin(t);
+    const p: V = [d[0] + u * ux[0] + v * uy[0], d[1] + u * ux[1] + v * uy[1], d[2] + u * ux[2] + v * uy[2]];
+    const l = Math.hypot(...p);
+    let [x, y, z] = rotar([p[0] / l, p[1] / l, p[2] / l], m);
+    if (z < 0) { const h = Math.hypot(x, y) || 1; x /= h; y /= h; }
+    return `${n(CX + R * x)} ${n(CY - R * y)}`;
+  }));
+  return `M${pts.join('L')}Z`;
+}
+
+/**
+ * Atributos de los dos ojos para una mirada, un párpado (1 abierto) y una alegría (1 = ojos ^ ^).
+ * Al parpadear el ojo no desaparece: se acorta hasta un círculo y acaba en una rayita más
+ * ancha que el ojo, como el Grok Bot. `filo` es el contorno del color de la cara.
+ */
 function pose(m: Mirada, abierto: number, feliz: number) {
   const mm = { yaw: m.yaw, pitch: m.pitch + 0.2 * feliz };
+  const a0 = OJO.w / 2 / R, b0 = OJO.h / 2 / R, filo = FILO_OJO / R;
+  const a = a0 * (1 + 0.4 * (1 - abierto)), b = Math.max(0.45 * a0, b0 * abierto);
   return [-1, 1].map((lado) => {
     const p = proyectar(mm, lado);
     const vis = visibilidad(p.z);
     return {
-      ojo: `${base(p)} scale(1 ${n(Math.max(0.05, abierto))})`,
-      ojoOp: n(abierto < 0.08 ? 0 : vis),
+      ojo: pildora(lado, mm, a, b),
+      filo: pildora(lado, mm, a + filo, b + filo),
+      // Feliz, los ojos dejan paso a los arcos ^ ^.
+      ojoOp: n(feliz > 0.05 ? 0 : vis),
       arco: `${base(p)} scale(${n(Math.max(0.001, feliz))})`,
       arcoOp: n(feliz < 0.02 ? 0 : vis),
     };
@@ -106,36 +192,31 @@ function pose(m: Mirada, abierto: number, feliz: number) {
 
 // ── El gorro quirúrgico: un casquete de tela sobre la esfera que gira con ella ──
 // Su eje va inclinado 10° hacia la nuca, así que tapa más por detrás que por la frente.
-// Todo en ángulo desde ese eje: el borde de la banda, el pliegue (arriba de la banda) y
-// el pespunte. Cada capa es una esfera propia (`Casco`), con el centro subido por el eje:
-// - la banda corta a la cabeza justo en su borde de abajo (ahí toca la piel, sin volar)
-//   y se va separando hacia arriba hasta su grosor en el pliegue;
-// - la tela, más abombada, nace EXACTAMENTE del pliegue de la banda —las dos esferas se
-//   cortan en ese anillo—, así que arriba sobresale (el volumen) y abajo se funde con la
-//   banda sin escalón ni hueco.
+// Todo en ángulo desde ese eje: el borde de la banda y su pliegue (arriba de la banda).
+// Cada capa es una esfera propia (`Casco`):
+// - la banda (centro subido por el eje) corta a la cabeza justo en su borde de abajo
+//   (ahí toca la piel, sin volar) y se separa hacia arriba hasta su grosor en el pliegue;
+// - la tela, concéntrica con la cabeza, nace EXACTAMENTE del pliegue de la banda —las dos
+//   esferas se cortan en ese anillo—: se funde con la banda sin escalón ni hueco y el
+//   gorro va al ras, así que el contorno de la figura es un círculo.
 // Los ángulos de cada capa se miden desde SU centro.
 const GRAD = Math.PI / 180;
 const INCL = 10 * GRAD;
 const EJE: V = [0, Math.cos(INCL), -Math.sin(INCL)];
 const FRENTE: V = [0, Math.sin(INCL), Math.cos(INCL)];
 type Casco = { h: number; r: number };
-/** El borde de la banda y su pliegue, como ángulos desde el centro de la cabeza. */
-const BORDE_CABEZA = 84 * GRAD, PLIEGUE_CABEZA = 73 * GRAD;
-/** Cuánto sube el centro de la banda: con 0,17 el pliegue queda a un 3 % de la piel. */
-const ALZA_BANDA = 0.17;
+/** El borde de la banda y su pliegue, como ángulos desde el centro de la cabeza: calado, el borde llega casi a los ojos. */
+const BORDE_CABEZA = 90 * GRAD, PLIEGUE_CABEZA = 74 * GRAD;
+/** Cuánto sube el centro de la banda: lo justo para que el pliegue quede a un 1,7 % de la piel (al ras). */
+const ALZA_BANDA = 0.017 / (Math.cos(PLIEGUE_CABEZA) - Math.cos(BORDE_CABEZA));
 const BANDA: Casco = { h: ALZA_BANDA, r: Math.sqrt(1 + ALZA_BANDA ** 2 - 2 * ALZA_BANDA * Math.cos(BORDE_CABEZA)) };
-/** Dónde corta la banda la dirección `th` (desde el centro de la cabeza): distancia y ángulo desde el centro de la banda. */
-function sobreBanda(th: number) {
-  const t = ALZA_BANDA * Math.cos(th) + Math.sqrt(BANDA.r ** 2 - (ALZA_BANDA * Math.sin(th)) ** 2);
-  return { t, ang: Math.atan2(t * Math.sin(th), t * Math.cos(th) - ALZA_BANDA) };
-}
+/** Dónde corta la banda la dirección del pliegue (desde el centro de la cabeza). */
+const T_PLIEGUE = ALZA_BANDA * Math.cos(PLIEGUE_CABEZA) + Math.sqrt(BANDA.r ** 2 - (ALZA_BANDA * Math.sin(PLIEGUE_CABEZA)) ** 2);
+const RADIO_ANILLO = T_PLIEGUE * Math.sin(PLIEGUE_CABEZA), ALTURA_ANILLO = T_PLIEGUE * Math.cos(PLIEGUE_CABEZA);
 const BORDE = Math.atan2(Math.sin(BORDE_CABEZA), Math.cos(BORDE_CABEZA) - ALZA_BANDA);
-const PLIEGUE_B = sobreBanda(PLIEGUE_CABEZA);
-const PLIEGUE = PLIEGUE_B.ang, PESPUNTE = sobreBanda(78.5 * GRAD).ang;
-/** Cuánto sube el centro de la tela: más alto, más abombada por arriba. */
-const ALZA_TELA = 0.1;
-const RADIO_ANILLO = PLIEGUE_B.t * Math.sin(PLIEGUE_CABEZA), ALTURA_ANILLO = PLIEGUE_B.t * Math.cos(PLIEGUE_CABEZA) - ALZA_TELA;
-const TELA: Casco = { h: ALZA_TELA, r: Math.hypot(RADIO_ANILLO, ALTURA_ANILLO) };
+/** La franja de la banda sube 1,5° por debajo de la tela: si sólo se tocaran, el suavizado dejaría una raya clara entre las dos. */
+const SOLAPE = Math.atan2(RADIO_ANILLO, ALTURA_ANILLO - ALZA_BANDA) - 1.5 * GRAD;
+const TELA: Casco = { h: 0, r: Math.hypot(RADIO_ANILLO, ALTURA_ANILLO) };
 /** El pliegue visto desde el centro de la tela: ahí la tela toca la banda. */
 const UNION = Math.atan2(RADIO_ANILLO, ALTURA_ANILLO);
 
@@ -150,60 +231,74 @@ const dot = (a: V, b: V) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 const anillo = (th: number, pasos: number) => Array.from({ length: pasos }, (_, k) => enGorro(th, (2 * Math.PI * k) / pasos));
 /** Los anillos con 96 puntos para las figuras grandes y con 40 para las pequeñas (no se nota y cuesta menos). */
 const ANILLOS = {
-  fino: { borde: anillo(BORDE, 96), pliegue: anillo(PLIEGUE, 96), union: anillo(UNION, 96), pespunte: anillo(PESPUNTE, 96) },
-  basto: { borde: anillo(BORDE, 40), pliegue: anillo(PLIEGUE, 40), union: anillo(UNION, 40), pespunte: [] as V[] },
+  fino: { borde: anillo(BORDE, 96), solape: anillo(SOLAPE, 96), union: anillo(UNION, 96) },
+  basto: { borde: anillo(BORDE, 40), solape: anillo(SOLAPE, 40), union: anillo(UNION, 40) },
 };
-/** Dónde da la luz en el gorro (arriba a la izquierda de la frente): gira con la cabeza, y con ella el brillo y la sombra. */
-const LUZ = enGorro(40 * GRAD, -45 * GRAD);
 
-/** Una costura de panel: de la frente a la nuca por la coronilla, en el plano a `x` del centro. */
-const costura = (x: number) => {
-  const r = Math.sqrt(1 - x * x);
-  return Array.from({ length: 41 }, (_, k): V => {
-    const a = -1.2 + (2.4 * k) / 40;
-    return comb(x, [1, 0, 0], r * Math.cos(a), EJE, r * Math.sin(a), FRENTE);
-  }).filter((p) => dot(p, EJE) >= Math.cos(UNION - 2 * GRAD));
-};
-/**
- * Las dos costuras de los paneles, a ±0,24 del centro. Cada una es una hendidura (la
- * línea oscura), su filo iluminado del lado de la luz y un pespunte paralelo.
- */
-const COSTURAS = [-0.24, 0.24].map((x) => costura(x));
-const COSTURAS_FILO = [-0.24, 0.24].map((x) => costura(x - 0.013));
-const COSTURAS_PESPUNTE = [-0.24, 0.24].map((x) => costura(x + 0.032));
+/** Los colores del gorro: la banda un tono más clara que la tela y el revés de las cintas, más oscuro. */
+const COLOR = { tela: '#133169', banda: '#1d4287', tira: '#1d4287', reves: '#102859', pliegue: '#0b1d40' };
 
-/**
- * Los frunces de la tela al juntarse con la banda: cada uno es un pliegue que sube desde
- * la unión y se afina hasta desaparecer, con una cara en sombra y otra con luz. Largos
- * distintos, para que no parezca una regla.
- */
-const FRUNCES = Array.from({ length: 22 }, (_, k) => {
-  const lam = (k * (360 / 22) + 6) * GRAD;
-  const largo = (8 + ((k * 7) % 5) * 1.4) * GRAD;
-  const pasos = 8;
-  const centro: V[] = [], izq: V[] = [], der: V[] = [];
-  for (let j = 0; j <= pasos; j++) {
-    const u = j / pasos;
-    const th = UNION - 0.6 * GRAD - u * largo;
-    const l = lam + Math.sin(u * 2.6 + k) * 1.1 * GRAD; // un poco ondulado
-    // Ancho abajo y lados cóncavos: un pliegue suave que se pierde en la tela, no un diente.
-    const ancho = 3.4 * GRAD * Math.pow(1 - u, 1.7);
-    centro.push(enGorro(th, l)); izq.push(enGorro(th, l - ancho)); der.push(enGorro(th, l + ancho));
-  }
-  return { sombra: [...izq, ...centro.slice().reverse()], luz: [...centro, ...der.slice().reverse()] };
-});
-
-/**
- * Las cintas atadas en la nuca. Cada cola sale de la nuca hacia atrás (eso gira con la
- * cabeza) y cae por gravedad (eso no): así, al girar de lado, las dos asoman por detrás
- * de la esfera, y nunca cuelgan por debajo de la cara. Por cola: el punto de control y la
- * punta, cada uno como [hacia atrás, en la cabeza] + [caída, en la escena].
- */
+// ── Las cintas de la nuca ──
+/** El nudo de la nuca, un poco por encima del borde de la banda. */
 const NUDO = punto(enGorro(BORDE_CABEZA - 4 * GRAD, Math.PI), 1.03);
-const COLAS: [V, number][][] = [-1, 1].map((lado) => [
-  [[lado * 0.07, 0, -0.22], 0.2],
-  [[lado * 0.13, 0, -0.42], 0.4],
-]);
+const RADIO_NUDO = 3.8;
+/**
+ * Las dos cintas (izquierda, derecha): de dos largos, con su `onda` (cuánto serpentean) y
+ * su `giro` (medias vueltas a lo largo: en ellas enseñan el revés).
+ */
+type Cinta = { largo: number; grosor: number; onda: number; giro: number };
+const CINTAS: [Cinta, Cinta] = [{ largo: 0.86, grosor: 5.2, onda: 0.04, giro: 1 }, { largo: 0.76, grosor: 5.2, onda: 0, giro: 0.7 }];
+/** Muestras de la línea central de una cinta. */
+const PASOS_CINTA = 14;
+/**
+ * La línea central de una cinta en la escena: sale de la nuca hacia su lado y un poco
+ * hacia atrás (gira con la cabeza; así, de frente, asoman por los dos lados), serpentea
+ * (`onda`), cuelga cada vez más por gravedad (eso no gira) y se queda atrás cuando la
+ * cabeza se mueve (`vaiven`).
+ */
+function lineaCinta(nudo: V, m: Mirada, lado: number, largo: number, onda: number, vaiven: readonly [number, number]): V[] {
+  return Array.from({ length: PASOS_CINTA + 1 }, (_, j): V => {
+    const u = j / PASOS_CINTA;
+    const w = rotar([lado * (1.22 * Math.pow(u, 0.62) + onda * Math.sin(1.6 * Math.PI * u)), 0.8 * onda * u * Math.sin(2 * Math.PI * u), -0.3 * Math.pow(u, 0.8)], m);
+    const arrastre = u * u;
+    return [nudo[0] + largo * w[0] + vaiven[0] * arrastre, nudo[1] + largo * (w[1] - 0.66 * Math.pow(u, 2.6)) + vaiven[1] * arrastre, nudo[2] + largo * w[2]];
+  });
+}
+
+/**
+ * La cinta en pantalla, como dos regiones: el anverso y los tramos en que se ha dado la
+ * vuelta y enseña el revés. En cada media vuelta se estrecha (se ve de canto); nace
+ * estrecha bajo el nudo y acaba con un corte en diagonal.
+ */
+function contornoCinta(linea: V[], cinta: Cinta) {
+  const S = linea.map((p) => [CX + R * p[0], CY - R * p[1]]);
+  const N = S.length - 1;
+  let tx = 0, ty = 1;
+  const pts = S.map((s, j) => {
+    const a = S[Math.max(0, j - 1)], b = S[Math.min(N, j + 1)];
+    const l = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    if (l > 1e-6) { tx = (b[0] - a[0]) / l; ty = (b[1] - a[1]) / l; }
+    const u = j / N, vuelta = Math.cos(cinta.giro * Math.PI * u);
+    const h = (cinta.grosor / 2) * Math.min(1, 0.45 + 3 * u) * Math.max(0.2, Math.abs(vuelta));
+    return { x: s[0], y: s[1], tx, ty, h, reves: vuelta < 0 };
+  });
+  type P = (typeof pts)[number];
+  /** Un punto a `f` del centro hacia la izquierda de la cinta y `g` hacia delante. */
+  const en2 = (p: P, f: number, g: number) => `${n(p.x - p.ty * f + p.tx * g)} ${n(p.y + p.tx * f + p.ty * g)}`;
+  // Se parte en tramos por la cara que enseña; dos tramos vecinos comparten la muestra del cambio.
+  const cortes = [0];
+  for (let j = 1; j < N; j++) if (pts[j].reves !== pts[j - 1].reves) cortes.push(j);
+  cortes.push(N);
+  let anverso = '', reves = '';
+  for (let k = 0; k + 1 < cortes.length; k++) {
+    const tramo = pts.slice(cortes[k], cortes[k + 1] + 1);
+    const fin = pts[N];
+    const corte = cortes[k + 1] === N ? [en2(fin, fin.h, fin.h * 0.75), en2(fin, -fin.h, -fin.h * 0.35)] : [];
+    const d = `M${[...tramo.map((p) => en2(p, p.h, 0)), ...corte, ...tramo.reverse().map((p) => en2(p, -p.h, 0))].join('L')}Z`;
+    if (pts[cortes[k]].reves) reves += d; else anverso += d;
+  }
+  return { anverso, reves };
+}
 
 /** Un punto de la escena (en radios de la cabeza) en el SVG. */
 const pantalla = (p: V) => `${n(CX + R * p[0])} ${n(CY - R * p[1])}`;
@@ -258,98 +353,78 @@ function casquete(th: number, ring: V[], m: Mirada, casco: Casco) {
   while (delta <= 0) delta += 2 * Math.PI; // sentido antihorario
   if (!dentro(a0 + delta / 2)) delta -= 2 * Math.PI; // el otro sentido
   a1 = a0 + delta;
-  const pasos = Math.max(2, Math.ceil(Math.abs(delta) / (5 * GRAD)));
-  for (let j = 1; j < pasos; j++) {
-    const a = a0 + (delta * j) / pasos;
-    pts.push([Math.cos(a), Math.sin(a), 0]);
+  // El arco se muestrea en ángulos fijos (múltiplos de 5°), no repartidos entre sus extremos:
+  // la banda resta dos casquetes cuyos contornos de arriba son el mismo arco, y sólo con los
+  // mismos puntos se anulan del todo; con puntos distintos quedaba una tirita de la banda
+  // rodeando el gorro por encima de la tela.
+  const paso = 5 * GRAD, sentido = delta > 0 ? 1 : -1;
+  for (let k = sentido > 0 ? Math.floor(a0 / paso) + 1 : Math.ceil(a0 / paso) - 1; sentido > 0 ? k * paso < a1 : k * paso > a1; k += sentido) {
+    pts.push([Math.cos(k * paso), Math.sin(k * paso), 0]);
   }
   return `M${pts.map((p) => pantalla(en(c0, casco, p))).join('L')}Z`;
 }
 
-/** Una mancha pequeña de un casco (un frunce): sólo si está entera de frente, para que no se corte en el borde. */
-function mancha(locales: V[], m: Mirada, casco: Casco) {
-  const w = locales.map((p) => rotar(p, m));
-  if (w.some((p) => p[2] < 0.04)) return '';
-  const c0 = punto(rotar(EJE, m), casco.h);
-  return `M${w.map((p) => pantalla(en(c0, casco, p))).join('L')}Z`;
-}
-
-const CORONA_REPOSO = en(punto(EJE, TELA.h), TELA, EJE);
-/** Dónde cae el brillo con la cabeza de frente: a eso vuelve cuando el punto de luz se va detrás. */
-const LUZ_FIJA = ((p: V) => [CX + R * p[0], CY - R * p[1]])(en(punto(EJE, TELA.h), TELA, LUZ));
-
 /**
- * Todo lo que se dibuja del gorro para una mirada. Sin `detalle` (figuras pequeñas) sólo
- * salen banda, tela, pliegue, sombras, brillo y cintas, con anillos de menos puntos:
- * costuras, frunces, pespunte y trama no se distinguen a ese tamaño.
+ * La luz del gorro, muy tenue y quieta en la escena (arriba a la izquierda): el gorro gira
+ * por debajo de ella, así que el brillo no sigue a la cabeza en las animaciones.
  */
-function gorro(m: Mirada, detalle: boolean) {
-  const an = detalle ? ANILLOS.fino : ANILLOS.basto;
-  const c0 = punto(rotar(EJE, m), TELA.h);
-  // El brillo sigue a un punto de la tela; cuando ese punto se va detrás (en la vuelta
-  // entera), vuelve hacia donde está la luz, para no brillar a través de la cabeza.
-  const luzW = rotar(LUZ, m), luz = en(c0, TELA, luzW);
-  const peso = Math.min(1, Math.max(0, (luzW[2] + 0.1) / 0.5));
-  const luzX = LUZ_FIJA[0] + (CX + R * luz[0] - LUZ_FIJA[0]) * peso;
-  const luzY = LUZ_FIJA[1] + (CY - R * luz[1] - LUZ_FIJA[1]) * peso;
-  // La trama de la tela se desliza con la coronilla, para que se vea girar con la cabeza.
-  const corona = en(c0, TELA, rotar(EJE, m));
+const LUZ = ((p: V) => [CX + R * p[0], CY - R * p[1]])(enGorro(40 * GRAD, -45 * GRAD));
+
+/** Todo lo que se dibuja del gorro para una mirada. `fino` usa anillos con más puntos (figuras grandes). */
+function gorro(m: Mirada, fino: boolean, vaiven: readonly [number, number] = [0, 0]) {
+  const an = fino ? ANILLOS.fino : ANILLOS.basto;
   const nudo = rotar(NUDO, m);
   // Con la nuca de frente (en la vuelta), las cintas pasan por delante de la cabeza.
   const delante = nudo[2] > 0;
-  const colas = COLAS.map((cola) => {
-    // Si la punta fuera a asomar por DEBAJO de la cara (mirando arriba, la nuca baja), la
-    // cola se acorta hasta quedar detrás: por los lados sí asoma, por abajo parecerían patas.
-    let largo = 1, b: V = nudo, e: V = nudo;
-    for (; largo > 0.25; largo -= 0.1) {
-      [b, e] = cola.map(([atras, caida]) => comb(1, nudo, largo, rotar(atras, m), -caida * largo, [0, 1, 0]));
-      if (delante || Math.hypot(e[0], e[1]) < 0.97 || e[1] > 0 || Math.abs(e[0]) > 0.55 * -e[1]) break;
+  const cintas = CINTAS.map((cinta, k) => {
+    // Si la cinta fuera a asomar por DEBAJO de la cara (mirando arriba, la nuca baja), se
+    // acorta hasta quedar detrás: por los lados sí asoma, por abajo parecería una pata.
+    const margen = cinta.grosor / (2 * R);
+    const debajo = (p: V) => Math.hypot(p[0], p[1]) >= 0.97 - margen && p[1] <= 0 && Math.abs(p[0]) <= 0.85 * -p[1];
+    let linea: V[] = [nudo, nudo, nudo];
+    for (let largo = cinta.largo; largo > 0.25; largo -= 0.1) {
+      linea = lineaCinta(nudo, m, 2 * k - 1, largo, cinta.onda, vaiven);
+      if (delante || !linea.some(debajo)) break;
     }
-    return `M${pantalla(nudo)}Q${pantalla(b)} ${pantalla(e)}`;
-  }).join('');
+    return contornoCinta(linea, cinta);
+  });
   return {
-    banda: casquete(BORDE, an.borde, m, BANDA),
+    // La banda es sólo la franja del borde al pliegue (se pinta con evenodd): por encima del
+    // pliegue su esfera asomaría sobre la tela como un filo alrededor de la cúpula.
+    banda: casquete(BORDE, an.borde, m, BANDA) + casquete(SOLAPE, an.solape, m, BANDA),
     tela: casquete(UNION, an.union, m, TELA),
     borde: tramos(an.borde, m, BANDA, true),
-    // La unión de la tela con la banda: una costura suave, no un corte.
+    // La unión de la tela con la banda: una línea de sombra, el doblez.
     pliegue: tramos(an.union, m, TELA, true),
-    pespunte: detalle ? tramos(an.pespunte, m, BANDA, true) : '',
-    frunceSombra: detalle ? FRUNCES.map((f) => mancha(f.sombra, m, TELA)).join('') : '',
-    frunceLuz: detalle ? FRUNCES.map((f) => mancha(f.luz, m, TELA)).join('') : '',
-    costuras: detalle ? COSTURAS.map((c3) => tramos(c3, m, TELA, false)).join('') : '',
-    costurasFilo: detalle ? COSTURAS_FILO.map((c3) => tramos(c3, m, TELA, false)).join('') : '',
-    costurasPespunte: detalle ? COSTURAS_PESPUNTE.map((c3) => tramos(c3, m, TELA, false)).join('') : '',
-    colas: delante ? '' : colas,
-    colasDelante: delante ? colas : '',
+    cola0: delante ? '' : cintas[0].anverso,
+    cola1: delante ? '' : cintas[1].anverso,
+    cola0r: delante ? '' : cintas[0].reves,
+    cola1r: delante ? '' : cintas[1].reves,
+    colaDelante0: delante ? cintas[0].anverso : '',
+    colaDelante1: delante ? cintas[1].anverso : '',
+    colaDelante0r: delante ? cintas[0].reves : '',
+    colaDelante1r: delante ? cintas[1].reves : '',
     nudo: delante ? 'scale(0)' : `translate(${pantalla(nudo)})`,
     nudoDelante: delante ? `translate(${pantalla(nudo)})` : 'scale(0)',
-    luz: [n(luzX), n(luzY)] as const,
-    trama: `translate(${n(R * (corona[0] - CORONA_REPOSO[0]))} ${n(-R * (corona[1] - CORONA_REPOSO[1]))})`,
   };
 }
 type Gorro = ReturnType<typeof gorro>;
-type Trazo = Exclude<keyof Gorro, 'nudo' | 'nudoDelante' | 'luz' | 'trama'>;
-const TRAZOS: Trazo[] = ['banda', 'tela', 'borde', 'pliegue', 'pespunte', 'frunceSombra', 'frunceLuz', 'costuras', 'costurasFilo', 'costurasPespunte', 'colas', 'colasDelante'];
-/**
- * Las piezas del gorro en el SVG. `brillo`, `brilloBanda` y `tejido` repiten la forma de
- * `tela`/`banda` con el degradado de luz o la trama; `luz` y `trama` son el degradado y el
- * patrón, que se mueven con la cabeza.
- */
-type Capa = Partial<Record<Trazo | 'nudo' | 'nudoDelante' | 'brillo' | 'brilloBanda' | 'tejido' | 'luz' | 'trama', SVGElement | null>>;
+type Trazo = Exclude<keyof Gorro, 'nudo' | 'nudoDelante'>;
+const TRAZOS: Trazo[] = ['banda', 'tela', 'borde', 'pliegue', 'cola0', 'cola1', 'cola0r', 'cola1r', 'colaDelante0', 'colaDelante1', 'colaDelante0r', 'colaDelante1r'];
+/** Las piezas del gorro en el SVG. `brillo` y `brilloBanda` repiten la forma de `tela`/`banda` con la luz. */
+type Capa = Partial<Record<Trazo | 'nudo' | 'nudoDelante' | 'brillo' | 'brilloBanda', SVGElement | null>>;
 
 function ponerGorro(capa: Capa, g: Gorro) {
   for (const k of TRAZOS) capa[k]?.setAttribute('d', g[k]);
   capa.nudo?.setAttribute('transform', g.nudo);
   capa.nudoDelante?.setAttribute('transform', g.nudoDelante);
   capa.brillo?.setAttribute('d', g.tela);
-  capa.tejido?.setAttribute('d', g.tela);
   capa.brilloBanda?.setAttribute('d', g.banda);
-  capa.luz?.setAttribute('cx', g.luz[0]);
-  capa.luz?.setAttribute('cy', g.luz[1]);
-  capa.trama?.setAttribute('patternTransform', g.trama);
 }
 
 const suave = (u: number) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2);
+/** Curva de 5.º grado: sale y llega con velocidad y aceleración cero, así el movimiento nunca pega un tirón. */
+const fluido = (u: number) => u * u * u * (u * (6 * u - 15) + 10);
 const rebote = (u: number) => 1 + 2.2 * Math.pow(u - 1, 3) + 1.2 * Math.pow(u - 1, 2);
 
 export default function Mascota({ pausado, cls, guion, mirada, silueta = false, detalle = 0 }: {
@@ -358,29 +433,27 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
   guion?: keyof typeof GUIONES;
   mirada?: Mirada;
   silueta?: boolean;
-  /** 0: gorro simple (figuras diminutas) · 1: con costuras, frunces, pespunte y cintas · 2: además la trama de la tela (figuras grandes). */
-  detalle?: 0 | 1 | 2;
+  /** 0: anillos del gorro con pocos puntos (figuras diminutas) · 1: con más puntos (figuras grandes). */
+  detalle?: 0 | 1;
 }) {
   const host = useRef<HTMLSpanElement>(null);
-  const ojos = useRef<(SVGRectElement | null)[]>([]);
+  const ojos = useRef<(SVGPathElement | null)[]>([]);
   const arcos = useRef<(SVGPathElement | null)[]>([]);
   const capa = useRef<Capa>({});
   const todo = useRef<SVGGElement>(null);
   const pausadoRef = useRef(pausado);
   const sincronizar = useRef<() => void>(() => {});
   const id = `dot-${useId().replace(/:/g, '')}`;
-  const clip = `${id}-c`, luz = `${id}-l`, trama = `${id}-t`;
+  const clip = `${id}-c`, luz = `${id}-l`;
   const reposo = mirada ?? (guion ? REPOSO_GUION : REPOSO_CURSOR);
   const inicial = pose(reposo, 1, 0);
-  const fino = !silueta && detalle >= 1, conTrama = fino && detalle === 2;
+  const fino = !silueta && detalle >= 1;
   const g0 = gorro(reposo, fino);
   /** Cada pieza del gorro, con su forma de reposo y su ref para animarla. */
   const pieza = (k: keyof Capa) => ({
     ref: (el: SVGElement | null) => { capa.current[k] = el; },
     ...(k === 'nudo' || k === 'nudoDelante' ? { transform: g0[k] }
-      : k === 'luz' ? { cx: g0.luz[0], cy: g0.luz[1] }
-        : k === 'trama' ? { patternTransform: g0.trama }
-          : { d: k === 'brillo' || k === 'tejido' ? g0.tela : k === 'brilloBanda' ? g0.banda : g0[k] }),
+      : { d: k === 'brillo' ? g0.tela : k === 'brilloBanda' ? g0.banda : g0[k] }),
   });
 
   useEffect(() => {
@@ -389,6 +462,7 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
     const reducido = matchMedia('(prefers-reduced-motion: reduce)');
     const boton = el.closest('button');
     const reposoM = guion ? REPOSO_GUION : REPOSO_CURSOR;
+    const vivo = !!guion && VIVOS.has(guion);
     let frame = 0, visible = true, destruido = false, antes = 0;
     let temporizador = 0, ocio = 0;
     let actual = { ...reposoM }, objetivo = { ...reposoM };
@@ -396,22 +470,50 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
     // El guion en curso (el propio, o el vistazo de la del cursor) y su paso.
     let pasos: Paso[] | null = guion ? GUIONES[guion] : null;
     let i = 0, t0 = 0, desde = { ...actual };
-    // El saltito de la vuelta entera (0 en el suelo, 1 en lo más alto).
-    let salto = 0, saltoPintado = 0;
+    // El brinco en curso (−1 sin brinco) y el muelle que sigue a la mirada en los guiones vivos.
+    let salto = -1;
+    let muelle = { ...actual }, velMuelle = [0, 0], metaAntes: Mirada | null = null;
     const activo = () => !destruido && !pausadoRef.current && !reducido.matches && !document.hidden && visible;
 
-    let ultima: Mirada | null = null;
-    const pintar = (m: Mirada, abierto: number, feliz: number) => {
-      // El gorro sólo cambia con la mirada: un parpadeo con la cabeza quieta no lo recalcula.
-      if (!ultima || ultima.yaw !== m.yaw || ultima.pitch !== m.pitch) {
-        ponerGorro(capa.current, gorro(m, fino));
-        ultima = { ...m };
+    // Las cintas se quedan atrás cuando la nuca se mueve y vuelven con un vaivén: un
+    // muelle amortiguado cuyo reposo es la velocidad del nudo, a la contra.
+    const conVaiven = !silueta;
+    let vaiven: [number, number] = [0, 0], velVaiven = [0, 0], nudoAntes: number[] | null = null;
+    const mecer = (dt: number, m: Mirada) => {
+      const p = rotar(NUDO, m), x = p[0], y = p[1];
+      if (nudoAntes && dt > 0) {
+        const v = [(x - nudoAntes[0]) / dt, (y - nudoAntes[1]) / dt];
+        for (let falta = dt; falta > 0; falta -= 16) {
+          const h = Math.min(16, falta);
+          for (const k of [0, 1]) {
+            velVaiven[k] += (0.00011 * (-26 * v[k] - vaiven[k]) - 0.0075 * velVaiven[k]) * h;
+            vaiven[k] = Math.max(-0.3, Math.min(0.3, vaiven[k] + velVaiven[k] * h));
+          }
+        }
       }
+      nudoAntes = [x, y];
+    };
+    const meciendo = () => conVaiven && Math.abs(vaiven[0]) + Math.abs(vaiven[1]) + 60 * (Math.abs(velVaiven[0]) + Math.abs(velVaiven[1])) > 0.001;
+
+    let ultima: Mirada | null = null, vaivenPintado = [0, 0], cuerpoPintado = '';
+    const pintar = (m: Mirada, abierto: number, feliz: number, escala = 1, salto = -1) => {
+      // El gorro sólo cambia con la mirada (o con el vaivén): un parpadeo con la cabeza quieta no lo recalcula.
+      if (!ultima || ultima.yaw !== m.yaw || ultima.pitch !== m.pitch || vaiven[0] !== vaivenPintado[0] || vaiven[1] !== vaivenPintado[1]) {
+        ponerGorro(capa.current, gorro(m, fino, vaiven));
+        ultima = { ...m };
+        vaivenPintado = [...vaiven];
+      }
+      const forma = cuerpo(m, escala, salto);
+      if (forma !== cuerpoPintado) { todo.current?.setAttribute('transform', forma); cuerpoPintado = forma; }
+      // Cada ojo y cada arco van dos veces: el filo del color de la cara y, encima, el ojo.
       pose(m, abierto, feliz).forEach((p, k) => {
-        ojos.current[k]?.setAttribute('transform', p.ojo);
-        ojos.current[k]?.setAttribute('opacity', p.ojoOp);
-        arcos.current[k]?.setAttribute('transform', p.arco);
-        arcos.current[k]?.setAttribute('opacity', p.arcoOp);
+        ojos.current[2 * k]?.setAttribute('d', p.filo);
+        ojos.current[2 * k + 1]?.setAttribute('d', p.ojo);
+        for (const o of [ojos.current[2 * k], ojos.current[2 * k + 1]]) o?.setAttribute('opacity', p.ojoOp);
+        for (const a of [arcos.current[2 * k], arcos.current[2 * k + 1]]) {
+          a?.setAttribute('transform', p.arco);
+          a?.setAttribute('opacity', p.arcoOp);
+        }
       });
     };
 
@@ -431,7 +533,7 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
 
     /** Avanza el guion hasta `ahora` y devuelve la mirada que toca. */
     const reproducir = (ahora: number): Mirada | null => {
-      salto = 0;
+      salto = -1;
       while (pasos) {
         const p = pasos[i];
         if (p.t === 'parpadeo' || p.t === 'feliz') {
@@ -440,14 +542,13 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
           const u = Math.min(1, (ahora - t0) / p.ms);
           if (u < 1) {
             if (p.t === 'pausa') return desde;
-            if (p.t === 'mirar') {
-              const k = suave(u);
-              return { yaw: desde.yaw + (p.yaw - desde.yaw) * k, pitch: desde.pitch + (p.pitch - desde.pitch) * k };
-            }
-            salto = Math.sin(Math.PI * u);
-            return { yaw: desde.yaw + 2 * Math.PI * suave(u), pitch: desde.pitch };
+            if (p.t === 'salto') { salto = u; return desde; }
+            // Arranca y frena sin tirones (velocidad y aceleración nulas en los extremos).
+            const k = fluido(u);
+            const hasta = p.t === 'vuelta' ? p.yaw - 2 * Math.PI : p.yaw;
+            return { yaw: desde.yaw + (hasta - desde.yaw) * k, pitch: desde.pitch + (p.pitch - desde.pitch) * k };
           }
-          if (p.t === 'mirar') desde = { yaw: p.yaw, pitch: p.pitch };
+          if (p.t === 'mirar' || p.t === 'vuelta') desde = { yaw: p.yaw, pitch: p.pitch };
           t0 += p.ms;
         }
         i += 1;
@@ -470,13 +571,27 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
         const k = 1 - Math.exp(-dt / 110);
         actual = { yaw: actual.yaw + (objetivo.yaw - actual.yaw) * k, pitch: actual.pitch + (objetivo.pitch - actual.pitch) * k };
       }
-      const { a, f } = parpados(ahora);
-      pintar(actual, a, f);
-      if (salto !== saltoPintado) {
-        todo.current?.setAttribute('transform', salto ? `translate(0 ${n(-7 * salto)})` : '');
-        saltoPintado = salto;
+      // Los guiones vivos nunca se quedan quietos: la deriva y la respiración van encima del
+      // guion, y la mirada lo sigue con un muelle (llega con un pequeño rebote).
+      const s = ahora / 1000;
+      let vista = actual;
+      if (vivo) {
+        const d = derivaViva(s), meta = { yaw: actual.yaw + d.yaw, pitch: actual.pitch + d.pitch };
+        // Al acabar una vuelta el guion salta 2π (la misma pose): el muelle salta con él.
+        if (metaAntes && Math.abs(meta.yaw - metaAntes.yaw) > Math.PI) muelle.yaw += 2 * Math.PI * Math.round((meta.yaw - metaAntes.yaw) / (2 * Math.PI));
+        metaAntes = meta;
+        for (let falta = dt; falta > 0; falta -= 16) {
+          const h = Math.min(16, falta);
+          velMuelle[0] += (MUELLE.k * (meta.yaw - muelle.yaw) - MUELLE.c * velMuelle[0]) * h;
+          velMuelle[1] += (MUELLE.k * (meta.pitch - muelle.pitch) - MUELLE.c * velMuelle[1]) * h;
+          muelle = { yaw: muelle.yaw + velMuelle[0] * h, pitch: muelle.pitch + velMuelle[1] * h };
+        }
+        vista = muelle;
       }
-      const quieto = !pasos && !parpado && Math.abs(objetivo.yaw - actual.yaw) + Math.abs(objetivo.pitch - actual.pitch) < 0.002;
+      if (conVaiven) mecer(dt, vista);
+      const { a, f } = parpados(ahora);
+      pintar(vista, a, f, vivo ? respiracion(s) : 1, salto);
+      const quieto = !pasos && !parpado && !meciendo() && Math.abs(objetivo.yaw - actual.yaw) + Math.abs(objetivo.pitch - actual.pitch) < 0.002;
       if (!quieto) frame = requestAnimationFrame(dibujar);
       else antes = 0;
     };
@@ -517,7 +632,9 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
     const sync = () => {
       clearTimeout(temporizador); clearTimeout(ocio); cancelAnimationFrame(frame); frame = 0; antes = 0;
       parpado = null;
-      salto = 0; saltoPintado = 0; todo.current?.removeAttribute('transform');
+      ultima = null; cuerpoPintado = ''; salto = -1;
+      muelle = { ...reposoM }; velMuelle = [0, 0]; metaAntes = null;
+      vaiven = [0, 0]; velVaiven = [0, 0]; nudoAntes = null;
       actual = { ...reposoM }; objetivo = { ...reposoM };
       pasos = guion ? GUIONES[guion] : null; i = 0; t0 = performance.now(); desde = { ...reposoM };
       pintar(reposoM, 1, 0);
@@ -546,49 +663,54 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
       reducido.removeEventListener('change', sync);
       boton?.removeEventListener('click', alegrar);
     };
-  }, [guion, mirada, fino]);
+  }, [guion, mirada, fino]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => { pausadoRef.current = pausado; sincronizar.current(); }, [pausado]);
 
-  const ojo = (k: number) => (
-    <rect
-      ref={(r) => { ojos.current[k] = r; }}
-      x={-OJO.w / 2} y={-OJO.h / 2} width={OJO.w} height={OJO.h} rx={OJO.w / 2}
-      transform={inicial[k].ojo} opacity={inicial[k].ojoOp}
-      {...(silueta ? { fill: 'none', vectorEffect: 'non-scaling-stroke' } : { fill: 'var(--dot-ojo, #0e141b)' })}
+  /** Un ojo; con `filo`, su contorno del color de la cara, que va debajo y lo despega de la banda. */
+  const ojo = (k: number, filo = false) => (
+    <path
+      ref={(r) => { ojos.current[2 * k + (filo ? 0 : 1)] = r; }}
+      d={filo ? inicial[k].filo : inicial[k].ojo} opacity={inicial[k].ojoOp}
+      {...(silueta ? { fill: 'none', vectorEffect: 'non-scaling-stroke' } : { fill: filo ? 'var(--dot-cuerpo, #f3f5f8)' : 'var(--dot-ojo, #0e141b)' })}
     />
   );
-  const arco = (k: number) => (
+  const arco = (k: number, filo = false) => (
     <path
-      ref={(r) => { arcos.current[k] = r; }}
-      d="M-9 5Q0-11 9 5" fill="none" stroke={silueta ? 'currentColor' : 'var(--dot-ojo, #0e141b)'}
-      strokeWidth={silueta ? undefined : 6.5} strokeLinecap="round"
+      ref={(r) => { arcos.current[2 * k + (filo ? 0 : 1)] = r; }}
+      d="M-9 5Q0-11 9 5" fill="none" stroke={silueta ? 'currentColor' : filo ? 'var(--dot-cuerpo, #f3f5f8)' : 'var(--dot-ojo, #0e141b)'}
+      strokeWidth={silueta ? undefined : 6.5 + (filo ? 2 * FILO_OJO : 0)} strokeLinecap="round"
       transform={inicial[k].arco} opacity={inicial[k].arcoOp}
       {...(silueta ? { vectorEffect: 'non-scaling-stroke' } : {})}
     />
   );
+  /** Las dos cintas, por detrás de la esfera o (con la nuca de frente) por delante, cada una con su revés. */
+  const cintas = (delante: boolean) => {
+    const k0 = delante ? 'colaDelante0' : 'cola0', k1 = delante ? 'colaDelante1' : 'cola1';
+    return (
+      <g>
+        <path {...pieza(k0)} fill={COLOR.tira} />
+        <path {...pieza(`${k0}r` as const)} fill={COLOR.reves} />
+        <path {...pieza(k1)} fill={COLOR.tira} />
+        <path {...pieza(`${k1}r` as const)} fill={COLOR.reves} />
+      </g>
+    );
+  };
 
   return (
     <span ref={host} className={c(cls)} data-mascot="" aria-hidden="true">
       <svg className={c('dot-art')} viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
         <defs>
           <clipPath id={clip}><circle cx={CX} cy={CY} r={R} /></clipPath>
-          {/* Brillo y sombra del gorro: el centro sigue a un punto de la tela, así giran con la cabeza. */}
-          <radialGradient {...pieza('luz')} id={luz} gradientUnits="userSpaceOnUse" r="66">
-            <stop offset="0" stopColor="#fff" stopOpacity=".5" />
-            <stop offset=".42" stopColor="#fff" stopOpacity=".07" />
-            <stop offset=".72" stopColor="#021d4a" stopOpacity=".12" />
-            <stop offset="1" stopColor="#021d4a" stopOpacity=".42" />
+          {/* La luz del gorro: casi nada, y quieta (no gira con la cabeza). */}
+          <radialGradient id={luz} gradientUnits="userSpaceOnUse" cx={n(LUZ[0])} cy={n(LUZ[1])} r="66">
+            <stop offset="0" stopColor="#fff" stopOpacity=".1" />
+            <stop offset=".45" stopColor="#fff" stopOpacity=".02" />
+            <stop offset=".75" stopColor="#021d4a" stopOpacity=".04" />
+            <stop offset="1" stopColor="#021d4a" stopOpacity=".14" />
           </radialGradient>
-          {/* La trama de la tela, que se desliza con la coronilla */}
-          {conTrama && (
-            <pattern {...pieza('trama')} id={trama} patternUnits="userSpaceOnUse" width="2.6" height="2.6">
-              <path d="M0 2.6L2.6 0" stroke="#fff" strokeOpacity=".16" strokeWidth=".5" />
-              <path d="M0 0L2.6 2.6" stroke="#021d4a" strokeOpacity=".16" strokeWidth=".5" />
-            </pattern>
-          )}
         </defs>
-        <g ref={todo}>
+        <g ref={todo} transform={cuerpo(reposo)}>
         {silueta ? (
           <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
             <circle cx={CX} cy={CY} r={R} vectorEffect="non-scaling-stroke" />
@@ -598,34 +720,22 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
           </g>
         ) : (
           <>
-            {/* Las cintas van por detrás de la esfera: sólo asoman cuando gira de lado. Van en todos los tamaños. */}
-            <path {...pieza('colas')} fill="none" stroke="#1c5fc9" strokeWidth="4.4" strokeLinecap="round" />
-            <circle {...pieza('nudo')} r="3.6" fill="#164fae" />
+            {/* Las cintas van por detrás de la esfera: de frente asoman por los lados. */}
+            {cintas(false)}
+            <circle {...pieza('nudo')} r={RADIO_NUDO} fill={COLOR.tira} />
             <circle cx={CX} cy={CY} r={R} fill="var(--dot-cuerpo, #f3f5f8)" />
             {/* La sombra que la banda deja sobre la cara */}
             <path {...pieza('borde')} fill="none" stroke="#0a2a5e" strokeOpacity=".22" strokeWidth="3.2" strokeLinecap="round" />
-            <path {...pieza('banda')} fill="#2169d6" />
-            {fino && <path {...pieza('pespunte')} fill="none" stroke="#d4e9ff" strokeOpacity=".9" strokeWidth=".8" strokeDasharray="1.9 1.5" strokeLinecap="round" />}
-            <path {...pieza('brilloBanda')} fill={`url(#${luz})`} />
-            <path {...pieza('tela')} fill="#2a7ae6" />
-            {fino && (
-              <>
-                {conTrama && <path {...pieza('tejido')} fill={`url(#${trama})`} />}
-                {/* Frunces: la cara en sombra y la cara con luz de cada pliegue */}
-                <path {...pieza('frunceSombra')} fill="#0a3478" fillOpacity=".2" />
-                <path {...pieza('frunceLuz')} fill="#dcecff" fillOpacity=".13" />
-                {/* Costuras: la hendidura, su filo con luz y el pespunte de al lado */}
-                <path {...pieza('costuras')} fill="none" stroke="#0f4699" strokeOpacity=".75" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                <path {...pieza('costurasFilo')} fill="none" stroke="#cfe5ff" strokeOpacity=".35" strokeWidth=".7" strokeLinecap="round" strokeLinejoin="round" />
-                <path {...pieza('costurasPespunte')} fill="none" stroke="#d4e9ff" strokeOpacity=".6" strokeWidth=".6" strokeDasharray="1.3 1.2" strokeLinecap="round" />
-              </>
-            )}
-            <path {...pieza('pliegue')} fill="none" stroke="#13489a" strokeOpacity=".38" strokeWidth="1" strokeLinecap="round" />
+            <path {...pieza('banda')} fill={COLOR.banda} fillRule="evenodd" />
+            <path {...pieza('brilloBanda')} fill={`url(#${luz})`} fillRule="evenodd" />
+            <path {...pieza('tela')} fill={COLOR.tela} />
+            <path {...pieza('pliegue')} fill="none" stroke={COLOR.pliegue} strokeOpacity=".85" strokeWidth="1.3" strokeLinecap="round" />
             <path {...pieza('brillo')} fill={`url(#${luz})`} />
             {/* En la vuelta entera, con la nuca de frente, las cintas van por delante */}
-            <path {...pieza('colasDelante')} fill="none" stroke="#1c5fc9" strokeWidth="4.4" strokeLinecap="round" />
-            <circle {...pieza('nudoDelante')} r="3.6" fill="#164fae" />
-            <g clipPath={`url(#${clip})`}>{ojo(0)}{ojo(1)}{arco(0)}{arco(1)}</g>
+            {cintas(true)}
+            <circle {...pieza('nudoDelante')} r={RADIO_NUDO} fill={COLOR.tira} />
+            {/* Los ojos, por delante del gorro: primero su filo del color de la cara, luego el ojo. */}
+            <g clipPath={`url(#${clip})`}>{ojo(0, true)}{ojo(1, true)}{arco(0, true)}{arco(1, true)}{ojo(0)}{ojo(1)}{arco(0)}{arco(1)}</g>
           </>
         )}
         </g>

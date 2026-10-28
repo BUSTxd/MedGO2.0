@@ -108,7 +108,7 @@ export default function DemoEspacio({ parado, rutaDemo, biblioteca }: { parado: 
         {pagina === 'estudiar' && (
           <>
             <div className={c('m-context')}>
-              <span className={c('m-context-label')}>Tu ruta</span>
+              <span className={c('m-context-label')}>Tu meta</span>
               <span className={c('m-select m-select-ruta')}>{rutaDemo}<Ico id="i-chevron" /></span>
               <span className={c('m-divider')} />
               <span className={c('m-select')}>{CURSO_DEMO.name}<Ico id="i-chevron" /></span>
@@ -141,7 +141,7 @@ export default function DemoEspacio({ parado, rutaDemo, biblioteca }: { parado: 
                     </section>
                   ))}
                 </div>
-                <p className={c('m-temario-info')}><Ico id="i-info" />Según tu sílabo de Cayetano</p>
+                <p className={c('m-temario-info')}><Ico id="i-info" />Un ejemplo de ciencias básicas</p>
               </aside>
 
               <section className={c('m-study')} aria-label="Clase de ejemplo">

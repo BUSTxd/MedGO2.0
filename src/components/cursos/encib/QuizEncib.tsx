@@ -3,12 +3,16 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { fetchExam, type ExamOption, type ExamQuestion } from '@/lib/examen/payload';
+import { claveSesionEncib, combinarPreguntasEncib, vistaPreguntasEncib } from '@/lib/examen/encib-sesion';
 import { FiguraAmpliable, VisorImagen, figurasDe, type Ampliada } from '@/components/examen/FiguraAmpliable';
 import LockedContent, { useCandadoCerrado } from '@/components/LockedContent';
+import Desplegable from '@/components/estudio/Desplegable';
 import type { PlanKey, ProfilePlan } from '@/lib/plans';
+import { REQ_ENCIB } from '@/lib/acceso';
+import type { SesionExamen } from '@/lib/estudio/examenes';
 import s from '@/styles/quizEncib.module.css';
 
 export interface AreaEncibLite { codigo: string; nombre: string; color: string }
@@ -24,11 +28,11 @@ interface Props {
 }
 
 /** El JSON del ENCIB añade `n` y `codigo` (tema `ÁREA-sub.tema`) a la pregunta común. */
-type Q = ExamQuestion & { n?: number; codigo?: string };
+type Q = ExamQuestion & { n?: number; codigo?: string; anio?: number };
 
 const LETRAS = 'ABCDE';
 const MUELLE = { type: 'spring', stiffness: 260, damping: 24, mass: 0.9 } as const;
-const llave = (anio: number) => `medgo:encib:${anio}`;
+const llave = (anio: number | string) => `medgo:encib:${anio}`;
 
 /* ── Barajado estable ─────────────────────────────────────────────────────── */
 
@@ -62,20 +66,24 @@ function barajar(q: Q, anio: number): ExamOption[] {
 
 /* ── Persistencia ─────────────────────────────────────────────────────────── */
 
-interface Guardado { r: Record<string, string>; id: string | null }
+interface Guardado { r: Record<string, string>; id: string | null; agrupada?: boolean; area?: string | null }
 
-function leer(anio: number): Guardado {
+function leer(anio: number | string): Guardado {
   try {
     const raw = localStorage.getItem(llave(anio));
     if (raw) {
       const g = JSON.parse(raw) as Guardado;
-      if (g && typeof g.r === 'object' && g.r) return { r: g.r, id: g.id ?? null };
+      if (g && typeof g.r === 'object' && g.r && !Array.isArray(g.r)) return {
+        r: g.r, id: typeof g.id === 'string' ? g.id : null,
+        agrupada: typeof g.agrupada === 'boolean' ? g.agrupada : undefined,
+        area: typeof g.area === 'string' ? g.area : null,
+      };
     }
   } catch {}
   return { r: {}, id: null };
 }
 
-function guardar(anio: number, g: Guardado) {
+function guardar(anio: number | string, g: Guardado) {
   try { localStorage.setItem(llave(anio), JSON.stringify(g)); } catch {}
 }
 
@@ -161,6 +169,7 @@ export default function QuizEncib({ anios, areas, dif, planState, isAuthed, requ
 
       <LockedContent
         requiredPlan={requiredPlan}
+        requisito={REQ_ENCIB}
         planState={planState}
         isAuthed={isAuthed}
         titulo="Banco de preguntas del ENCIB"
@@ -177,6 +186,19 @@ function Juego({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
   const cerrado = useCandadoCerrado();
   if (cerrado) return <Muestra />;
   return <JuegoReal key={anio} anio={anio} areas={areas} />;
+}
+
+/** El configurador de /estudio reutiliza el mismo motor y el mismo control de acceso. */
+export function PracticaEncib({ sesion, areas, planState, isAuthed, requiredPlan }: Omit<Props, 'anios' | 'dif'> & { sesion: SesionExamen }) {
+  return (
+    <div className={`${s.raiz} ${s.practica}`}>
+    <LockedContent requiredPlan={requiredPlan} requisito={REQ_ENCIB} planState={planState} isAuthed={isAuthed} preview={false}
+      titulo="Banco de exámenes del ENCIB"
+      descripcion="Accede a las preguntas de 2025, 2024 y 2021 con sus explicaciones. Tu selección se conserva al desbloquear el banco.">
+      <JuegoReal anio={sesion.anios[0]} areas={areas} sesion={sesion} />
+    </LockedContent>
+    </div>
+  );
 }
 
 function Muestra() {
@@ -206,7 +228,10 @@ function Muestra() {
 
 /* ── El juego ─────────────────────────────────────────────────────────────── */
 
-function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
+function JuegoReal({ anio, areas, sesion }: { anio: number; areas: AreaEncibLite[]; sesion?: SesionExamen }) {
+  const idCurso = useId();
+  const claveGuardado = sesion ? claveSesionEncib(sesion) : anio;
+  const titulo = sesion ? 'Práctica ENCIB' : `ENCIB ${anio}`;
   const reducido = !!useReducedMotion();
   const [estado, setEstado] = useState<'cargando' | 'error' | 'ok'>('cargando');
   const [mensaje, setMensaje] = useState('');
@@ -216,6 +241,7 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
   const [idx, setIdx] = useState(0);
   const [dir, setDir] = useState<1 | -1>(1);
   const [area, setArea] = useState<string | null>(null);
+  const [agrupada, setAgrupada] = useState(!sesion);
   const [revision, setRevision] = useState<string[] | null>(null);
   const [fin, setFin] = useState(false);
   const [ampliada, setAmpliada] = useState<Ampliada | null>(null);
@@ -227,32 +253,40 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
   useEffect(() => {
     let vivo = true;
     setEstado('cargando');
-    fetchExam(`encib/${anio}`)
-      .then(({ payload }) => {
+    Promise.all((sesion?.anios ?? [anio]).map(async (y) => {
+      const { payload } = await fetchExam(`encib/${y}`);
+      return { anio: y, preguntas: payload.questions as Q[] };
+    }))
+      .then((grupos) => {
         if (!vivo) return;
-        const qs = payload.questions as Q[];
-        const g = leer(anio);
-        const ids = new Set(qs.map((q) => q.id));
+        const qs = sesion ? combinarPreguntasEncib(grupos, sesion.codigos) : grupos.flatMap((g) => g.preguntas);
+        const g = leer(claveGuardado);
+        const validas = new Map(qs.map((q) => [q.id, new Set(q.options.map((o) => o.id))]));
         const r: Record<string, string> = {};
-        for (const [k, v] of Object.entries(g.r)) if (ids.has(k)) r[k] = v;
-        const pos = g.id ? qs.findIndex((q) => q.id === g.id) : -1;
+        for (const [k, v] of Object.entries(g.r)) if (validas.get(k)?.has(v)) r[k] = v;
+        const agrupada = g.agrupada ?? !sesion;
+        const area = agrupada && qs.some((q) => q.codigo?.split('-')[0] === g.area) ? g.area ?? null : null;
+        const vista = vistaPreguntasEncib(qs, agrupada, area, areas);
+        const pos = g.id ? vista.findIndex((q) => q.id === g.id) : -1;
         setPreguntas(qs);
         setResp(r);
-        setIdx(pos >= 0 ? pos : Math.max(0, qs.findIndex((q) => !r[q.id])));
+        setAgrupada(agrupada);
+        setArea(area);
+        setIdx(pos >= 0 ? pos : Math.max(0, vista.findIndex((q) => !r[q.id])));
         setEstado('ok');
       })
       .catch((e: unknown) => {
         if (!vivo) return;
-        setMensaje(e instanceof Error ? e.message : 'Error cargando el examen.');
+        setMensaje(e instanceof Error ? e.message : 'No pudimos cargar las preguntas. Vuelve a intentarlo.');
         setEstado('error');
       });
     return () => { vivo = false; };
-  }, [anio, intento]);
+  }, [anio, sesion, claveGuardado, intento, areas]);
 
   /* Alternativas barajadas una vez por pregunta. */
   const opciones = useMemo(() => {
     const m = new Map<string, ExamOption[]>();
-    for (const q of preguntas) m.set(q.id, barajar(q, anio));
+    for (const q of preguntas) m.set(q.id, barajar(q, q.anio ?? anio));
     return m;
   }, [preguntas, anio]);
 
@@ -266,9 +300,8 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
 
   const mazo = useMemo(() => {
     if (revision) return preguntas.filter((q) => revision.includes(q.id));
-    if (area) return preguntas.filter((q) => areaDe(q) === area);
-    return preguntas;
-  }, [preguntas, revision, area, areaDe]);
+    return vistaPreguntasEncib(preguntas, agrupada, area, areas);
+  }, [preguntas, revision, agrupada, area, areas]);
 
   const i = Math.max(0, Math.min(idx, mazo.length - 1));
   const actual = mazo[i];
@@ -278,13 +311,15 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
   /* Guardado. */
   useEffect(() => {
     if (estado !== 'ok') return;
-    guardar(anio, { r: resp, id: actual?.id ?? null });
-  }, [estado, anio, resp, actual?.id]);
+    guardar(claveGuardado, { r: resp, id: actual?.id ?? null, agrupada, area });
+  }, [estado, claveGuardado, resp, actual?.id, agrupada, area]);
 
   const total = preguntas.length;
   const hechas = preguntas.filter((q) => resp[q.id] !== undefined).length;
   const aciertos = preguntas.filter((q) => resp[q.id] !== undefined && esCorrecta(q)).length;
   const falladas = preguntas.filter((q) => resp[q.id] !== undefined && !esCorrecta(q));
+  const hechasVista = area ? mazo.filter((q) => resp[q.id] !== undefined).length : hechas;
+  const aciertosVista = area ? mazo.filter((q) => resp[q.id] !== undefined && esCorrecta(q)).length : aciertos;
 
   const ir = useCallback((j: number) => {
     if (j < 0 || j >= mazo.length) return;
@@ -308,9 +343,19 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
     setArea(a);
     setDir(1);
     setFin(false);
-    const lista = a ? preguntas.filter((q) => areaDe(q) === a) : preguntas;
+    const lista = vistaPreguntasEncib(preguntas, agrupada, a, areas);
     const primeraPend = lista.findIndex((q) => resp[q.id] === undefined);
     setIdx(Math.max(0, primeraPend));
+  };
+
+  const cambiarAgrupacion = (valor: boolean) => {
+    const lista = vistaPreguntasEncib(preguntas, valor, null, areas);
+    const pos = lista.findIndex((q) => q.id === actual?.id);
+    setAgrupada(valor);
+    setArea(null);
+    setRevision(null);
+    setIdx(Math.max(0, pos));
+    setConfirmar(false);
   };
 
   const empezarRevision = () => {
@@ -322,7 +367,7 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
   };
 
   const reiniciar = () => {
-    guardar(anio, { r: {}, id: null });
+    guardar(claveGuardado, { r: {}, id: null });
     setResp({});
     setRevision(null);
     setArea(null);
@@ -341,13 +386,13 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
       if (c.ampliada || c.fin || !c.actual) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       const t = e.target as HTMLElement | null;
-      if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+      if (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable || t.closest('[role="listbox"], [aria-haspopup="listbox"]'))) return;
       const k = e.key;
       const lista = c.opciones.get(c.actual.id) ?? [];
       const n = /^[1-5]$/.test(k) ? Number(k) - 1 : /^[a-eA-E]$/.test(k) ? k.toLowerCase().charCodeAt(0) - 97 : -1;
       if (n >= 0 && n < lista.length) { e.preventDefault(); c.responder(lista[n].id); return; }
       if (k === 'Enter' && c.respondida) {
-        if (t && t.tagName === 'A') return;
+        if (t?.closest('a, button, summary, [role="combobox"]')) return;
         e.preventDefault(); c.siguiente();
       } else if (k === 'ArrowRight') { c.ir(c.i + 1); }
       else if (k === 'ArrowLeft') { c.ir(c.i - 1); }
@@ -408,6 +453,7 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
     return (
       <Resultado
         anio={anio}
+        titulo={titulo}
         total={total}
         hechas={hechas}
         aciertos={aciertos}
@@ -418,15 +464,19 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
         reducido={reducido}
         onRevisar={empezarRevision}
         onVolver={() => setFin(false)}
-        onReiniciar={reiniciar}
+        onReiniciar={sesion ? () => { setFin(false); setConfirmar(true); } : reiniciar}
       />
     );
   }
 
-  const color = actual ? metaArea.get(areaDe(actual))?.color ?? '#5445d8' : '#5445d8';
+  const color = sesion ? 'var(--acento)' : actual ? metaArea.get(areaDe(actual))?.color ?? '#5445d8' : '#5445d8';
   const variantes = reducido
     ? { ini: { opacity: 1 }, entra: { opacity: 1 }, sale: { opacity: 0, transition: { duration: 0 } } }
-    : {
+    : sesion ? {
+        ini: (d: number) => ({ opacity: 0, x: d * 18 }),
+        entra: { opacity: 1, x: 0 },
+        sale: (d: number) => ({ opacity: 0, x: d * -12, transition: { duration: 0.12 } }),
+      } : {
         ini: (d: number) => ({ opacity: 0, y: 56, scale: 0.9, rotate: d * 4 }),
         entra: { opacity: 1, y: 0, scale: 1, rotate: 0 },
         sale: (d: number) => ({ opacity: 0, x: d * -420, rotate: d * -10, scale: 0.94, transition: { duration: 0.3, ease: [0.4, 0, 0.8, 0.4] as const } }),
@@ -437,7 +487,24 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
 
   return (
     <>
-      <div className={s.chips} role="group" aria-label="Filtrar por área">
+      {sesion ? (
+        <div className={s.vista}>
+          <div className={s.vistaTexto}><strong>Organiza tu práctica</strong><span>Cambia la vista sin perder tus respuestas.</span></div>
+          <label className={s.separar}><input type="checkbox" checked={agrupada} onChange={(e) => cambiarAgrupacion(e.target.checked)} />Separar por cursos</label>
+          {agrupada && <div className={s.cursoSelector}>
+            <label htmlFor={idCurso}>Curso</label>
+            <Desplegable id={idCurso} etiqueta="Curso" variante="campo" icono="book" valor={area ?? ''}
+              onCambiar={(valor) => filtrarArea(valor || null)}
+              opciones={[
+                { value: '', label: 'Todos, agrupados', simbolo: 'layers', etiqueta: `${total} preg.` },
+                ...areas.filter((a) => areasConteo.has(a.codigo)).map((a) => ({
+                  value: a.codigo, label: a.nombre, simbolo: 'book' as const, etiqueta: `${areasConteo.get(a.codigo)} preg.`,
+                })),
+              ]} />
+          </div>}
+          {revision && <button type="button" className={s.btnTexto} onClick={() => filtrarArea(null)}>Salir del repaso de errores</button>}
+        </div>
+      ) : <div className={s.chips} role="group" aria-label="Filtrar por área">
         <button type="button" className={`${s.chip} ${!area && !revision ? s.chipOn : ''}`} aria-pressed={!area && !revision} onClick={() => filtrarArea(null)}>
           Todas <em>{total}</em>
         </button>
@@ -447,13 +514,13 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
             <i aria-hidden />{a.nombre} <em>{areasConteo.get(a.codigo)}</em>
           </button>
         ))}
-      </div>
+      </div>}
 
       <div className={s.herramientas}>
         <p className={s.aviso}>
           {revision
-            ? <>Revisando tus <strong>{revision.length}</strong> falladas.</>
-            : <><strong>{aciertos}</strong> aciertos de <strong>{hechas}</strong> respondidas</>}
+            ? <><strong>{revision.length}</strong> {revision.length === 1 ? 'pregunta para repasar.' : 'preguntas para repasar.'}</>
+            : <><strong>{aciertosVista}</strong> aciertos de <strong>{hechasVista}</strong> respondidas{area ? ' en este curso' : ''}</>}
         </p>
         <span style={{ display: 'inline-flex', gap: 8 }}>
           {hechas > 0 && (
@@ -461,11 +528,11 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
           )}
           {confirmar ? (
             <>
-              <button type="button" className={`${s.btnTexto} ${s.btnPeligro}`} onClick={reiniciar}>Sí, reiniciar {anio}</button>
+              <button type="button" className={`${s.btnTexto} ${s.btnPeligro}`} onClick={reiniciar}>Sí, reiniciar {sesion ? 'práctica' : anio}</button>
               <button type="button" className={s.btnTexto} onClick={() => setConfirmar(false)}>Cancelar</button>
             </>
           ) : (
-            <button type="button" className={s.btnTexto} onClick={() => setConfirmar(true)} disabled={hechas === 0}>Reiniciar año</button>
+            <button type="button" className={s.btnTexto} onClick={() => setConfirmar(true)} disabled={hechas === 0}>Reiniciar {sesion ? 'práctica' : 'año'}</button>
           )}
         </span>
       </div>
@@ -494,10 +561,10 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
                 initial="ini"
                 animate="entra"
                 exit="sale"
-                transition={reducido ? { duration: 0 } : MUELLE}
+                transition={reducido ? { duration: 0 } : sesion ? { duration: 0.2, ease: 'easeOut' } : MUELLE}
               >
                 <div className={s.top}>
-                  <span className={s.numero}>Pregunta <strong>{actual.n ?? preguntas.indexOf(actual) + 1}</strong> · {anio}</span>
+                  <span className={s.numero}>Pregunta <strong>{actual.n ?? preguntas.indexOf(actual) + 1}</strong> · {actual.anio ?? anio}</span>
                   {metaArea.get(areaDe(actual)) && (
                     <span className={s.areaPill}><i aria-hidden />{metaArea.get(areaDe(actual))!.nombre}</span>
                   )}
@@ -547,7 +614,9 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
                       animate={{ height: 'auto', opacity: 1 }}
                       transition={reducido ? { duration: 0 } : { duration: 0.35, ease: 'easeOut' }}
                     >
-                      {actual.explanation && (
+                      {actual.explanationDetail ? (
+                        <ExplicacionEncib pregunta={actual} opciones={lista} elegida={elegida} />
+                      ) : actual.explanation && (
                         <div className={s.explic} aria-live="polite">
                           <span className={s.explicTitulo}>{actual.options.find((o) => o.id === elegida)?.correct ? 'Correcto' : 'Explicación'}</span>
                           <ReactMarkdown>{conSaltos(actual.explanation)}</ReactMarkdown>
@@ -555,7 +624,7 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
                       )}
                       {actual.reviewNote && (
                         <div className={s.revisar}>
-                          <strong>Pendiente a revisión</strong>
+                          <strong>Observación del cuadernillo</strong>
                           <span>{actual.reviewNote}</span>
                         </div>
                       )}
@@ -582,7 +651,11 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
             </button>
             <div className={s.progreso}>
               <span className={s.contador} aria-live="polite"><strong>{i + 1}</strong> / {mazo.length} <em>· {hechas}/{total} respondidas</em></span>
-              <div className={s.rastro} onClick={saltarRastro} role="progressbar" aria-valuemin={1} aria-valuemax={mazo.length} aria-valuenow={i + 1} aria-label="Avance. Toca para saltar a una pregunta">
+              <div className={s.rastro} onClick={saltarRastro} role="slider" tabIndex={0} aria-valuemin={1} aria-valuemax={mazo.length} aria-valuenow={i + 1} aria-valuetext={`Pregunta ${i + 1} de ${mazo.length}`} aria-label="Ir a una pregunta" onKeyDown={(e) => {
+                if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+                e.preventDefault(); e.stopPropagation();
+                ir(e.key === 'Home' ? 0 : e.key === 'End' ? mazo.length - 1 : i + (e.key === 'ArrowRight' ? 1 : -1));
+              }}>
                 {mazo.map((q, k) => {
                   const r = resp[q.id];
                   const c = [r === undefined ? '' : esCorrecta(q) ? s.mOk : s.mMal, k === i ? s.mActual : ''].join(' ');
@@ -602,12 +675,36 @@ function JuegoReal({ anio, areas }: { anio: number; areas: AreaEncibLite[] }) {
   );
 }
 
+function ExplicacionEncib({ pregunta, opciones, elegida }: { pregunta: Q; opciones: ExamOption[]; elegida?: string }) {
+  const detalle = pregunta.explanationDetail!;
+  const correcta = opciones.find((o) => o.correct);
+  const acierto = correcta?.id === elegida;
+  return (
+    <section className={s.razonamiento} aria-label="Explicación de la respuesta">
+      <p className={`${s.feedback} ${acierto ? s.feedbackOk : s.feedbackMal}`} role="status">
+        {acierto ? <IconoOk /> : <IconoMal />}
+        <span>{pregunta.reviewNote ? acierto ? 'Coincide con la clave del cuadernillo' : 'Revisemos la clave del cuadernillo' : acierto ? 'Respuesta correcta' : 'Vamos a entenderla'}<strong>{correcta?.text}</strong></span>
+      </p>
+      <div className={s.fundamento}><h3>{pregunta.reviewNote ? 'Fundamento y límites de la clave' : 'Por qué es correcta'}</h3><ReactMarkdown>{detalle.fundamento}</ReactMarkdown></div>
+      <details key={pregunta.id} className={s.descartes}>
+        <summary>Por qué las otras opciones no corresponden <span>{detalle.descartes.length}</span></summary>
+        <dl>{opciones.filter((o) => !o.correct).map((o) => {
+          const descarte = detalle.descartes.find((d) => d.optionId === o.id);
+          if (!descarte) return null;
+          return <div key={o.id}><dt>{LETRAS[opciones.indexOf(o)]}. {o.text}{o.id === elegida && <small>Tu respuesta</small>}</dt><dd><ReactMarkdown>{descarte.texto}</ReactMarkdown></dd></div>;
+        })}</dl>
+      </details>
+      <aside className={s.datoClave}><span aria-hidden>↳</span><div><h3>Dato clave</h3><ReactMarkdown>{detalle.datoClave}</ReactMarkdown></div></aside>
+    </section>
+  );
+}
+
 /* ── Pantalla de resultado ────────────────────────────────────────────────── */
 
 function Resultado({
-  anio, total, hechas, aciertos, falladas, areas, areasConteo, porArea, reducido, onRevisar, onVolver, onReiniciar,
+  anio, titulo, total, hechas, aciertos, falladas, areas, areasConteo, porArea, reducido, onRevisar, onVolver, onReiniciar,
 }: {
-  anio: number; total: number; hechas: number; aciertos: number; falladas: number;
+  anio: number; titulo?: string; total: number; hechas: number; aciertos: number; falladas: number;
   areas: AreaEncibLite[]; areasConteo: Map<string, number>; porArea: (cod: string) => number;
   reducido: boolean; onRevisar: () => void; onVolver: () => void; onReiniciar: () => void;
 }) {
@@ -626,7 +723,7 @@ function Resultado({
         <div className={s.finCabeza}>
           <div className={s.nota} aria-label={`${aciertos} aciertos de ${total}`}>{n}<small> / {total}</small></div>
           <div className={s.finTexto}>
-            <strong>ENCIB {anio}</strong>
+            <strong>{titulo ?? `ENCIB ${anio}`}</strong>
             <span>Nota vigesimal: <b>{vigesimal.toFixed(1)}</b> / 20</span>
             <span>{hechas} respondidas{pendientes > 0 ? `, ${pendientes} sin responder` : ''}</span>
           </div>
@@ -654,9 +751,9 @@ function Resultado({
         </ul>
 
         <div className={s.finAcciones}>
-          {falladas > 0 && <button type="button" className={s.btn} onClick={onRevisar}>Revisar las {falladas} falladas</button>}
+          {falladas > 0 && <button type="button" className={s.btn} onClick={onRevisar}>{falladas === 1 ? 'Revisar la pregunta fallada' : `Revisar las ${falladas} falladas`}</button>}
           <button type="button" className={`${s.btn} ${s.btnSec}`} onClick={onVolver}>{pendientes > 0 ? 'Seguir respondiendo' : 'Volver al mazo'}</button>
-          <button type="button" className={`${s.btn} ${s.btnSec}`} onClick={onReiniciar}>Reiniciar {anio}</button>
+          <button type="button" className={`${s.btn} ${s.btnSec}`} onClick={onReiniciar}>Reiniciar {titulo === 'Práctica ENCIB' ? 'práctica' : anio}</button>
         </div>
       </article>
     </motion.div>

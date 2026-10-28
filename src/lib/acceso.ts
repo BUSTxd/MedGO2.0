@@ -1,4 +1,4 @@
-import { PLANS, planUnlocks, type PlanKey, type PlanState, type Track } from '@/lib/plans';
+import { PLANS, planUnlocks, type PlanKey, type PlanState, type Requisito, type Track } from '@/lib/plans';
 import { CURSOS, LABORATORIOS } from '@/lib/data/aportes';
 
 /**
@@ -52,6 +52,26 @@ export function requiredPlanDeLab(slug: string): PlanKey {
   return PLAN_DE_TRACK[trackDeLab(slug)];
 }
 
+/**
+ * Lo que pide cada cosa con los planes nuevos (`Requisito`). Las clases y
+ * resúmenes son lo base; los laboratorios y las metas de examen, lo completo.
+ * Los `requiredPlanDe…` de arriba siguen diciendo qué plan legado ofrecer en
+ * las tarjetas del dashboard clásico.
+ */
+export function requisitoDeCurso(slug: string): Requisito {
+  return { tramo: trackDeCurso(slug), nivel: 'base' };
+}
+
+export function requisitoDeLab(slug: string): Requisito {
+  return { tramo: trackDeLab(slug), nivel: 'completo' };
+}
+
+/** El banqueo del ENCIB: meta de examen. Entre los legados, lo abre la Facultad (como siempre). */
+export const REQ_ENCIB: Requisito = { tramo: 'medicina', nivel: 'completo' };
+
+/** Preclínicos no tiene tramo: solo lo abren los planes nuevos. */
+export const REQ_PRECLINICOS: Requisito = { nivel: 'base' };
+
 const LABS_VISTAZO = new Set(LABORATORIOS.filter((l) => l.vistazo).map((l) => l.slug));
 
 /** Laboratorio con una parte gratis (flag `vistazo` en `LABORATORIOS`); el resto lo cierra su `page.tsx`. */
@@ -92,7 +112,7 @@ export function cursoEsGratis(slug: string): boolean {
  */
 export function tieneAccesoA(
   plan: Pick<PlanState, 'plan' | 'isActive' | 'allAccess'>,
-  required: PlanKey,
+  required: PlanKey | Requisito,
 ): boolean {
   return !!plan.allAccess || (plan.isActive && planUnlocks(plan.plan, required));
 }
@@ -108,5 +128,6 @@ export function trackDelUsuario(
 ): Track | null {
   if (plan.allAccess) return 'medicina';
   if (plan.plan === 'free' || !plan.isActive) return null;
-  return PLANS[plan.plan].track;
+  // Los planes nuevos no tienen tramo: la rejilla sale en el orden de la carrera.
+  return PLANS[plan.plan].track ?? null;
 }

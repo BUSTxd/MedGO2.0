@@ -71,6 +71,12 @@ export interface ExamQuestion {
   extraImages?: { src: string; alt?: string; w?: number; h?: number }[];
   options: ExamOption[];
   explanation?: string;
+  /** Explicación editorial del ENCIB; los descartes siguen el id, aunque se barajen las opciones. */
+  explanationDetail?: {
+    fundamento: string;
+    descartes: { optionId: string; texto: string }[];
+    datoClave: string;
+  };
   explanationImage?: string;
   explanationImageAlt?: string;
   explanationImageCaption?: string;
@@ -243,7 +249,11 @@ export async function fetchExam(key: string): Promise<{ payload: ExamPayload; mu
     writeUrlCache(key, data);
     entry = data;
   }
-  const jsonRes = await fetch(entry.url);
+  // El ENCIB conserva la URL firmada en sesión; versionar la descarga evita
+  // reutilizar el JSON anterior después de una actualización editorial.
+  const urlContenido = new URL(entry.url);
+  if (key.startsWith('encib/')) urlContenido.searchParams.set('revision', '2026-10-23');
+  const jsonRes = await fetch(urlContenido.href);
   if (!jsonRes.ok) throw new Error('No se pudo descargar el contenido.');
   return { payload: (await jsonRes.json()) as ExamPayload, premiumDesde: entry.premiumDesde };
 }

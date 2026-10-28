@@ -5,7 +5,7 @@ import { tokenDePresencia } from '@/lib/presencia';
 import { CURSOS, LABORATORIOS } from '@/lib/data/aportes';
 import { cargarResumenCursos, cargarResumenLabs, type CursoDeUsuario } from '@/lib/actividad-usuario';
 
-export type AdminPlan = 'free' | 'interno' | 'residente' | 'ufbi' | 'ufbi-anual';
+export type AdminPlan = 'free' | 'interno' | 'residente' | 'ufbi' | 'ufbi-anual' | 'visitante' | 'residente-12' | 'especialista-24';
 export type AdminSubStatus = 'pending' | 'authorized' | 'paused' | 'cancelled';
 
 export interface AdminRow {

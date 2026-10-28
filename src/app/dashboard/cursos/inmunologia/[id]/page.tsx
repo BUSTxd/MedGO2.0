@@ -24,7 +24,7 @@ export default async function ActividadPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ examen?: string; resumen?: string; tarjetas?: string }>;
+  searchParams: Promise<{ examen?: string; resumen?: string; tarjetas?: string; tema?: string; seccion?: string }>;
 }) {
   const { id } = await params;
   const sp = await searchParams;
@@ -62,6 +62,9 @@ export default async function ActividadPage({
           titulo={act.titulo}
           backHref={`/dashboard/cursos/inmunologia/${id}`}
           resumen={resumen}
+          /* La práctica por tema o subtítulo del planificador de /estudio. */
+          filtroTema={sp.tema}
+          filtroSeccion={sp.seccion}
         />
       </div>
     );

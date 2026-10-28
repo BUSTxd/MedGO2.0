@@ -3,7 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { getPublicUrl } from '@/lib/supabase/storage';
 import { createClient } from '@/lib/supabase/server';
 import { getCachedPlanState } from '@/lib/plans-server';
-import { requiredPlanDeLab, tieneAccesoA } from '@/lib/acceso';
+import { requisitoDeLab, tieneAccesoA } from '@/lib/acceso';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,7 +32,7 @@ export async function GET() {
   const auth = await createClient();
   const { data: { user } } = await auth.auth.getUser();
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
-  if (!tieneAccesoA(await getCachedPlanState(), requiredPlanDeLab('atlas-micologia'))) {
+  if (!tieneAccesoA(await getCachedPlanState(), requisitoDeLab('atlas-micologia'))) {
     return NextResponse.json({ error: 'forbidden' }, { status: 403 });
   }
   const supabase = createAdminClient();

@@ -1,3 +1,5 @@
+import { registrarIntentoLocal } from '@/lib/estudio/intentos-locales';
+
 /**
  * Eventos de actividad que registramos en Supabase (tabla analytics_events).
  * El backend (/api/track) tiene la misma whitelist; cualquier nombre fuera de
@@ -32,6 +34,8 @@ export function trackEvent(
   opts: { path?: string; beacon?: boolean } = {},
 ): void {
   if (typeof window === 'undefined') return;
+  // El planificador de /estudio cuenta los banqueos terminados también desde aquí.
+  if (event === 'examen_completado') registrarIntentoLocal(props);
   try {
     const body = JSON.stringify({ event, props, path: opts.path ?? window.location.pathname });
     if (opts.beacon && navigator.sendBeacon?.('/api/track', new Blob([body], { type: 'application/json' }))) return;

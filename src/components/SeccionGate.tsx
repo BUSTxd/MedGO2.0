@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { getCachedPlanState } from '@/lib/plans-server';
-import { labEsGratis, requiredPlanDeLab, tieneAccesoA } from '@/lib/acceso';
-import type { PlanKey } from '@/lib/plans';
+import { labEsGratis, requiredPlanDeLab, requisitoDeLab, tieneAccesoA } from '@/lib/acceso';
+import type { PlanKey, Requisito } from '@/lib/plans';
 import LockedContent from './LockedContent';
 
 /**
@@ -24,19 +24,24 @@ import LockedContent from './LockedContent';
  */
 export default async function SeccionGate({
   required,
+  requisito,
   children,
 }: {
+  /** El plan legado que ofrece la tarjeta. */
   required: PlanKey;
+  /** Lo que pide la sección, si no basta con `required` (un laboratorio es nivel completo). */
+  requisito?: Requisito;
   children: React.ReactNode;
 }) {
   const [planState, supabase] = await Promise.all([getCachedPlanState(), createClient()]);
 
-  if (tieneAccesoA(planState, required)) return <>{children}</>;
+  if (tieneAccesoA(planState, requisito ?? required)) return <>{children}</>;
 
   const { data: { user } } = await supabase.auth.getUser();
   return (
     <LockedContent
       requiredPlan={required}
+      requisito={requisito}
       planState={planState}
       isAuthed={!!user}
       preview={false}
@@ -53,5 +58,5 @@ export default async function SeccionGate({
  */
 export function LabGate({ slug, children }: { slug: string; children: React.ReactNode }) {
   if (labEsGratis(slug)) return <>{children}</>;
-  return <SeccionGate required={requiredPlanDeLab(slug)}>{children}</SeccionGate>;
+  return <SeccionGate required={requiredPlanDeLab(slug)} requisito={requisitoDeLab(slug)}>{children}</SeccionGate>;
 }

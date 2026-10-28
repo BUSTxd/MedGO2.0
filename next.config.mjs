@@ -36,6 +36,11 @@ const nextConfig = {
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       },
       {
+        // Imágenes de la landing nueva (llevan _vN en el nombre, como las anteriores).
+        source: '/assets/landing/:archivo*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+      {
         // Ninguna web ajena puede enmarcar las páginas (clickjacking sobre Mi
         // cuenta o el modal de pago). Los iframes propios (simulaciones) son del
         // mismo origen y siguen funcionando.

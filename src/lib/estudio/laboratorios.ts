@@ -1,6 +1,6 @@
 import 'server-only';
 import { LAB_TOPICS } from '@/lib/data/laboratorio-catalogo';
-import { labEsGratis, labTieneVistazo, requiredPlanDeCurso, requiredPlanDeLab, tieneAccesoA, trackDeCurso, trackDelUsuario } from '@/lib/acceso';
+import { labEsGratis, labTieneVistazo, requiredPlanDeCurso, requisitoDeLab, tieneAccesoA, trackDeCurso, trackDelUsuario } from '@/lib/acceso';
 import type { PlanState } from '@/lib/plans';
 import { iconoDe } from './cursos';
 import { rutaEnEstudio } from './rutas';
@@ -72,7 +72,8 @@ export function tarjetasLaboratorio(plan: Plan, deCayetano: boolean): TarjetaLab
       if (previa) { previa.cursos.push(curso); continue; }
 
       const slug = exp.href.startsWith(LAB) ? exp.href.slice(LAB.length).split('?')[0] : null;
-      const required = slug ? requiredPlanDeLab(slug) : requiredPlanDeCurso(tema.id);
+      // Un laboratorio es nivel completo; lo que no es laboratorio (los módulos de Física) es material del curso.
+      const required = slug ? requisitoDeLab(slug) : requiredPlanDeCurso(tema.id);
       const abierto = tieneAccesoA(plan, required);
       const acceso: TarjetaLab['acceso'] = abierto ? 'abierto'
         : slug && labEsGratis(slug) ? 'gratis'

@@ -1,5 +1,6 @@
 'use client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { RutaEstudio } from '@/lib/estudio/tipos';
 
 /**
  * Lo que el alumno marca en la interfaz (guardadas, estudiadas, visitadas, tamaño
@@ -8,7 +9,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
  */
 const CLAVE = 'medgo-estudio-marcas-v1';
 
-export interface Guardada { title: string; curso: string; cursoNombre: string }
+/** `ruta` falta en lo guardado antes de la ruta ENCIB: era UPCH. */
+export interface Guardada { title: string; curso: string; cursoNombre: string; ruta?: RutaEstudio }
 
 interface Persistido {
   saved: Record<string, Guardada>;
@@ -33,7 +35,11 @@ const VACIO: Persistido = { saved: {}, completed: [], visited: [], fontSize: 16 
 function leer(): Persistido {
   try {
     const raw = localStorage.getItem(CLAVE);
-    return raw ? { ...VACIO, ...JSON.parse(raw) } : VACIO;
+    if (!raw) return VACIO;
+    const p: Persistido = { ...VACIO, ...JSON.parse(raw) };
+    // Preclínicos se llamaba «Ciencias básicas» (segmento `ciencias-basicas`); los ids no cambiaron.
+    for (const g of Object.values(p.saved)) if ((g.ruta as string) === 'ciencias-basicas') g.ruta = 'preclinicos';
+    return p;
   } catch {
     return VACIO;
   }

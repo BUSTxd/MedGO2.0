@@ -41,6 +41,8 @@ export async function POST(req: Request) {
 
   const plan = getPlan(planKey);
   if (!plan) return NextResponse.json({ error: 'invalid plan' }, { status: 400 });
+  // Los legados los conservan quienes ya pagan, pero ya no se venden.
+  if (!plan.aLaVenta) return NextResponse.json({ error: 'not_for_sale' }, { status: 400 });
 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();

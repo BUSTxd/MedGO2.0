@@ -1,26 +1,57 @@
 
-export type PlanKey = 'interno' | 'residente' | 'ufbi' | 'ufbi-anual';
+/** Los planes de antes (por tramo de Cayetano), que conservan quienes ya los pagan. */
+export type PlanLegado = 'interno' | 'residente' | 'ufbi' | 'ufbi-anual';
+/** Los tres de ahora, para cualquier país: Visitante (mensual), Residente (12 cuotas) y Especialista (24 cuotas). */
+export type PlanNuevo = 'visitante' | 'residente-12' | 'especialista-24';
+export type PlanKey = PlanLegado | PlanNuevo;
 export type ProfilePlan = 'free' | PlanKey;
 
 /**
- * Los dos tramos de la carrera, que se cursan en facultades distintas:
+ * Los dos tramos de la carrera en Cayetano, que se cursan en facultades distintas:
  *  - `basico`   → 1.er año en UFBI (Ciencias Básicas): los 6 cursos del ciclo.
  *  - `medicina` → 2.º a 7.º año en la Facultad de Medicina Humana.
  *
- * No son niveles de un mismo escalafón: un plan de un tramo NUNCA desbloquea
- * cursos del otro. Por eso el acceso se decide con `planUnlocks()` y no
- * comparando `planRank()` a secas.
+ * Solo cuentan para los planes legados: uno de un tramo NUNCA abre el otro.
+ * Los planes nuevos no tienen tramo (abren por `nivel`).
  */
 export type Track = 'basico' | 'medicina';
+
+/**
+ * Lo que abre un plan nuevo. `base`: Preclínicos y la meta de su universidad.
+ * `completo`: además las metas de examen (ENCIB…), la IA y los laboratorios.
+ */
+export type Nivel = 'base' | 'completo';
+
+/**
+ * Lo que pide un contenido para abrirse. `tramo` solo lo leen los planes
+ * legados (abren lo de su tramo, como siempre); lo que no tiene tramo
+ * (Preclínicos) solo lo abren los planes nuevos.
+ */
+export interface Requisito {
+  tramo?: Track;
+  nivel: Nivel;
+}
 
 export interface PlanCatalogEntry {
   key: PlanKey;
   label: string;
+  /** La cuota que se cobra cada `durationDays`, en soles (Mercado Pago). La
+   *  segunda pasarela (resto del mundo) añadirá aquí su precio en dólares. */
   amount: number;
   currency: 'PEN';
   durationDays: number;
   mpPlanIdEnv: string;
-  track: Track;
+  /** Solo en los legados. */
+  track?: Track;
+  /** Solo en los nuevos: qué abren. */
+  nivel?: Nivel;
+  legado?: true;
+  /** Se puede comprar hoy. Los nuevos, cuando existan sus planes en Mercado Pago. */
+  aLaVenta: boolean;
+  /** La cinta de la tarjeta («MÁS ELEGIDO»). */
+  destacado?: string;
+  /** Posición en las tarjetas de los planes nuevos. */
+  orden?: number;
   /**
    * Compromiso mínimo en meses: nº de cobros consecutivos que el usuario acepta
    * antes de poder cancelar. Lo llevan los **mensuales** de los dos tramos; los
@@ -44,6 +75,8 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
     mpPlanIdEnv: 'MP_PLAN_INTERNO_ID',
     track: 'medicina',
     commitmentMonths: 3,
+    legado: true,
+    aLaVenta: false,
   },
   residente: {
     key: 'residente',
@@ -53,6 +86,8 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
     durationDays: 365,
     mpPlanIdEnv: 'MP_PLAN_RESIDENTE_ID',
     track: 'medicina',
+    legado: true,
+    aLaVenta: false,
   },
   ufbi: {
     key: 'ufbi',
@@ -63,6 +98,8 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
     mpPlanIdEnv: 'MP_PLAN_UFBI_ID',
     track: 'basico',
     commitmentMonths: 3,
+    legado: true,
+    aLaVenta: false,
   },
   // Anual del tramo básico — el análogo de `residente` en Medicina. 189 son
   // exactamente el 80 % de 12 × 19.70 (236.40), de ahí el «20 % de descuento»
@@ -75,16 +112,73 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
     durationDays: 365,
     mpPlanIdEnv: 'MP_PLAN_UFBI_ANUAL_ID',
     track: 'basico',
+    legado: true,
+    aLaVenta: false,
+  },
+  // Los tres nuevos se cobran cada mes; lo que cambia es la permanencia
+  // (`commitmentMonths`), como las cuotas de SanarFlix. Las cuotas guardan su
+  // proporción: Residente ≈ 77 % y Especialista ≈ 72 % de Visitante.
+  visitante: {
+    key: 'visitante',
+    label: 'Visitante',
+    amount: 39.90,
+    currency: 'PEN',
+    durationDays: 30,
+    mpPlanIdEnv: 'MP_PLAN_VISITANTE_ID',
+    nivel: 'base',
+    aLaVenta: true,
+    orden: 3,
+  },
+  'residente-12': {
+    key: 'residente-12',
+    label: 'Residente',
+    amount: 29.90,
+    currency: 'PEN',
+    durationDays: 30,
+    mpPlanIdEnv: 'MP_PLAN_RESIDENTE_12_ID',
+    commitmentMonths: 12,
+    nivel: 'completo',
+    aLaVenta: true,
+    destacado: 'MÁS ELEGIDO',
+    orden: 1,
+  },
+  'especialista-24': {
+    key: 'especialista-24',
+    label: 'Especialista',
+    amount: 27.90,
+    currency: 'PEN',
+    durationDays: 30,
+    mpPlanIdEnv: 'MP_PLAN_ESPECIALISTA_24_ID',
+    commitmentMonths: 24,
+    nivel: 'completo',
+    aLaVenta: true,
+    orden: 2,
   },
 };
 
 export function isPlanKey(value: string): value is PlanKey {
-  return (
-    value === 'interno' ||
-    value === 'residente' ||
-    value === 'ufbi' ||
-    value === 'ufbi-anual'
-  );
+  return Object.prototype.hasOwnProperty.call(PLANS, value);
+}
+
+/** Los planes nuevos en el orden de sus tarjetas (Residente, Especialista, Visitante). */
+export const PLANES_NUEVOS: PlanCatalogEntry[] = (Object.values(PLANS) as PlanCatalogEntry[])
+  .filter((p) => !p.legado)
+  .sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0));
+
+/**
+ * Lo que se le ofrece a quien choca con un contenido que pide `required`: el
+ * propio plan mientras siga a la venta; si es un legado retirado, los planes
+ * nuevos desde su cuota más baja (`nombre: null`, «Desde S/ …/mes»). Lo leen
+ * los avisos del dashboard, que siguen declarando la clave legada de su tramo.
+ */
+export function ofertaPara(required: PlanKey): {
+  nombre: string | null;
+  amount: number;
+  unidad: 'mes' | 'año';
+} {
+  const p = PLANS[required];
+  if (p.aLaVenta) return { nombre: p.label, amount: p.amount, unidad: p.durationDays === 30 ? 'mes' : 'año' };
+  return { nombre: null, amount: Math.min(...PLANES_NUEVOS.map((n) => n.amount)), unidad: 'mes' };
 }
 
 export function getPlan(planKey: string): (PlanCatalogEntry & { mpPlanId: string }) | null {
@@ -124,8 +218,9 @@ export interface PlanState {
 
 
 /**
- * Jerarquía *dentro de un mismo tramo*. Solo tiene sentido comparar rangos de
- * planes que comparten `track` — para decidir acceso usa `planUnlocks()`.
+ * Jerarquía de los legados *dentro de un mismo tramo*. Solo tiene sentido
+ * comparar rangos de planes que comparten `track` — para decidir acceso usa
+ * `planUnlocks()`.
  */
 export function planRank(plan: ProfilePlan): number {
   if (plan === 'free') return 0;
@@ -135,16 +230,35 @@ export function planRank(plan: ProfilePlan): number {
   return 1; // interno y ufbi: primer escalón de su respectivo tramo
 }
 
+const RANGO_NIVEL: Record<Nivel, number> = { base: 1, completo: 2 };
+
+/**
+ * El requisito que expresa una clave de plan. Una clave legada (`'interno'`,
+ * `'ufbi'`) es «lo base de su tramo»: así las páginas del dashboard que
+ * declaran el mensual de su tramo siguen funcionando sin tocarlas.
+ */
+export function requisitoDe(required: PlanKey | Requisito): Requisito {
+  if (typeof required !== 'string') return required;
+  const p = PLANS[required];
+  return p.legado ? { tramo: p.track, nivel: 'base' } : { nivel: p.nivel ?? 'base' };
+}
+
 /**
  * ¿El plan que tiene el usuario da acceso a contenido que exige `required`?
  *
- * Regla clave: los tramos están separados. Un `ufbi` no abre cursos de la
- * Facultad de Medicina, y un `interno`/`residente` no abre los del ciclo
- * básico. Dentro de cada tramo sí se mantiene el orden anual ≥ mensual
- * (residente ≥ interno, ufbi-anual ≥ ufbi).
+ *  - **Plan nuevo**: por nivel (`completo` abre lo `base`). El tramo no importa.
+ *  - **Plan legado**: la regla de siempre. Abre lo de su tramo (base o
+ *    completo: ya tenían sus laboratorios, y los de Facultad el ENCIB) y nunca
+ *    lo del otro tramo ni lo que no tiene tramo (Preclínicos).
  */
-export function planUnlocks(plan: ProfilePlan, required: PlanKey): boolean {
+export function planUnlocks(plan: ProfilePlan, required: PlanKey | Requisito): boolean {
   if (plan === 'free') return false;
-  if (PLANS[plan].track !== PLANS[required].track) return false;
-  return planRank(plan) >= planRank(required);
+  const p = PLANS[plan];
+  // Un legado que exige un legado: además, anual ≥ mensual dentro del tramo.
+  if (p.legado && typeof required === 'string' && PLANS[required].legado) {
+    return p.track === PLANS[required].track && planRank(plan) >= planRank(required);
+  }
+  const req = requisitoDe(required);
+  if (p.legado) return !!req.tramo && req.tramo === p.track;
+  return RANGO_NIVEL[p.nivel ?? 'base'] >= RANGO_NIVEL[req.nivel];
 }
