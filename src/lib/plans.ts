@@ -63,6 +63,13 @@ export interface PlanCatalogEntry {
    * sitios donde ya se desincronizó una vez.
    */
   commitmentMonths?: number;
+  /**
+   * Precio fuera del Perú (Creem, merchant of record, en dólares). Creem no
+   * tiene permanencia, así que los planes con permanencia se pagan por
+   * adelantado: `meses` es cada cuánto cobra (1, 12 o 24). Los productos se
+   * crean con `scripts/creem/crear-productos.mjs`; su id va en `productoEnv`.
+   */
+  creem?: { usd: number; meses: number; productoEnv: string };
 }
 
 export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
@@ -125,6 +132,7 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
     currency: 'PEN',
     durationDays: 30,
     mpPlanIdEnv: 'MP_PLAN_VISITANTE_ID',
+    creem: { usd: 10.99, meses: 1, productoEnv: 'CREEM_PRODUCT_VISITANTE_ID' },
     nivel: 'base',
     aLaVenta: true,
     orden: 3,
@@ -136,6 +144,7 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
     currency: 'PEN',
     durationDays: 30,
     mpPlanIdEnv: 'MP_PLAN_RESIDENTE_12_ID',
+    creem: { usd: 99, meses: 12, productoEnv: 'CREEM_PRODUCT_RESIDENTE_12_ID' },
     commitmentMonths: 12,
     nivel: 'completo',
     aLaVenta: true,
@@ -149,6 +158,7 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
     currency: 'PEN',
     durationDays: 30,
     mpPlanIdEnv: 'MP_PLAN_ESPECIALISTA_24_ID',
+    creem: { usd: 179, meses: 24, productoEnv: 'CREEM_PRODUCT_ESPECIALISTA_24_ID' },
     commitmentMonths: 24,
     nivel: 'completo',
     aLaVenta: true,

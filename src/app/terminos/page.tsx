@@ -15,6 +15,9 @@ export const metadata: Metadata = {
 const PLANES = Object.values(PLANS).filter((p) => p.aLaVenta).sort(
   (a, b) => (a.orden ?? 0) - (b.orden ?? 0) || a.durationDays - b.durationDays,
 );
+/** Los que se venden también con Creem (fuera del Perú), en dólares. */
+const CON_CREEM = PLANES.filter((p) => p.creem);
+const cadaCreem = (meses: number) => (meses === 1 ? 'Cada mes' : meses === 12 ? 'Cada año, por adelantado' : `Cada ${meses / 12} años, por adelantado`);
 /** Los que llevan permanencia mínima, para la sección 7. */
 const CON_COMPROMISO = PLANES.filter((p) => p.commitmentMonths);
 const SIN_COMPROMISO = PLANES.filter((p) => !p.commitmentMonths);
@@ -155,18 +158,48 @@ export default function TerminosPage() {
             </a>
             . El acceso al contenido y el soporte los presta MedGO.
           </p>
+          {CON_CREEM.length > 0 && (
+            <>
+              <p className={styles.p}>
+                Con Creem, los precios están en dólares estadounidenses (USD) e incluyen los
+                impuestos. Como Creem no admite permanencia, los planes con permanencia se pagan
+                por adelantado por todo su periodo:
+              </p>
+              <table className={styles.priceTable}>
+                <thead>
+                  <tr>
+                    <th>Plan</th>
+                    <th>Precio (USD)</th>
+                    <th>Cobro</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {CON_CREEM.map((p) => (
+                    <tr key={p.key}>
+                      <td>{p.label}</td>
+                      <td>US$ {p.creem!.usd.toFixed(2)}</td>
+                      <td>{cadaCreem(p.creem!.meses)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          )}
         </section>
 
         <section className={styles.callout}>
           <h2 className={styles.h2}>7. Permanencia mínima</h2>
           <p className={styles.calloutBody}>
-            Los planes con permanencia se cobran cada mes, y al contratarlos el usuario acepta un
+            En los pagos en soles con Mercado Pago, los planes con permanencia se cobran cada
+            mes, y al contratarlos el usuario acepta un
             número mínimo de <strong>cobros mensuales consecutivos</strong>. El botón de
             &quot;Cancelar suscripción&quot; en Mi cuenta se habilitará al cumplirse ese número de
             meses, contados desde la fecha de la primera autorización del pago. Antes de esa fecha
             la suscripción no es cancelable a través de la plataforma. No existe devolución parcial
             ni total de los cobros realizados dentro de ese periodo. Cumplida la permanencia, la
             suscripción sigue cobrándose cada mes al mismo precio hasta que el usuario la cancele.
+            En los pagos con Creem no hay cobros mensuales con permanencia: el periodo completo se
+            paga por adelantado y se renueva al terminar, hasta que el usuario lo cancele.
           </p>
           <ul className={styles.calloutList}>
             {CON_COMPROMISO.map((p) => (

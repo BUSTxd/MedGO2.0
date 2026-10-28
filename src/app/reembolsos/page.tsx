@@ -34,6 +34,13 @@ export default function ReembolsosPage() {
             <a className={styles.link} href="/terminos">Términos y condiciones</a>. Al cancelar no
             se hacen más cobros y el acceso se mantiene hasta el final del periodo ya pagado.
           </p>
+          <p className={styles.p}>
+            Si pagaste con <strong>Creem</strong> (fuera del Perú), los planes Residente y
+            Especialista se pagan por adelantado por uno o dos años y puedes cancelar la renovación
+            en cualquier momento desde el enlace de gestión de la suscripción que Creem te envía por
+            correo, o escribiéndonos. Al cancelar no se cobra el siguiente periodo y mantienes el
+            acceso hasta que termine el que ya pagaste.
+          </p>
         </section>
 
         <section className={styles.section}>
