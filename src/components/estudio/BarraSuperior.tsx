@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useDarkMode } from '@/components/DarkModeContext';
 import { ultimaClase } from '@/lib/estudio/rutas';
@@ -38,7 +39,7 @@ export default function BarraSuperior({ page, onPagina, onBuscar }: {
   const etiquetaLuna = darkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
   return (
     <header className={cx('topbar')}>
-      <button className={cx('brand')} aria-label="MedGO, ir a Estudiar" onClick={() => ir('study')}><span className={cx('brand-lockup')} aria-hidden="true" /></button>
+      <Link className={cx('brand')} href="/" aria-label="MedGO, ir a la portada"><span className={cx('brand-lockup')} aria-hidden="true" /></Link>
       <nav className={cx('main-nav')} aria-label="Navegación principal">
         {enlace('study', 'Estudiar', 'book')}{enlace('exams', 'Exámenes', 'quiz')}{enlace('labs', 'Laboratorio virtual', 'flask')}{enlace('progress', 'Mi progreso', 'chart')}
       </nav>
