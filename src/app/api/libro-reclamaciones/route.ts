@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { CORREO } from '@/lib/contacto';
+import { enviarCorreo, escHtml } from '@/lib/correo';
 import { PROVEEDOR } from '@/lib/proveedor';
 import {
   DEFINICIONES,
@@ -17,8 +18,7 @@ export const dynamic = 'force-dynamic';
 /** Hojas por correo y hora: frena el abuso sin estorbar a quien reclama de verdad. */
 const MAX_POR_HORA = 5;
 
-const esc = (s: string) =>
-  s.replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]!);
+const esc = escHtml;
 
 function htmlHoja(h: HojaReclamacion, codigo: string, fecha: string): string {
   const fila = (k: string, v: string) =>
@@ -46,33 +46,14 @@ ${fila('Pedido', h.pedido)}
 </div>`;
 }
 
-/**
- * Copia de la hoja al consumidor y al buzón de MedGO. Necesita `RESEND_API_KEY`
- * (y un remitente verificado en `RESEND_FROM`); sin ellos no envía y la hoja se
- * registra igual: el consumidor la guarda o imprime en pantalla.
- */
-async function enviarCopia(h: HojaReclamacion, codigo: string, fecha: string): Promise<boolean> {
-  const key = process.env.RESEND_API_KEY;
-  if (!key) return false;
-  try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        from: process.env.RESEND_FROM ?? `MedGO <${CORREO}>`,
-        to: [h.email.trim()],
-        bcc: [CORREO],
-        reply_to: CORREO,
-        subject: `Libro de Reclamaciones de MedGO · ${codigo}`,
-        html: htmlHoja(h, codigo, fecha),
-      }),
-    });
-    if (!res.ok) console.error('[libro-reclamaciones] Resend', res.status, await res.text());
-    return res.ok;
-  } catch (err) {
-    console.error('[libro-reclamaciones] Resend', err);
-    return false;
-  }
+/** Copia de la hoja al consumidor, con copia oculta al buzón de MedGO. */
+function enviarCopia(h: HojaReclamacion, codigo: string, fecha: string): Promise<boolean> {
+  return enviarCorreo({
+    to: h.email,
+    bcc: CORREO,
+    subject: `Libro de Reclamaciones de MedGO · ${codigo}`,
+    html: htmlHoja(h, codigo, fecha),
+  });
 }
 
 export async function POST(req: Request) {

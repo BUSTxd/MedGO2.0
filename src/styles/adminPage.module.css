@@ -593,3 +593,38 @@ button.descargar {
   .valPregunta .valEnunciado { grid-column: 2 / -1; }
   .valPregunta .valBarra { grid-column: 1 / 3; }
 }
+
+/* ─── Libro de Reclamaciones (ReclamosAdmin) ─── */
+.reclamos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.reclamo { border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+:global(body.dark-mode) .reclamo { border-color: #334155; }
+.reclamoCabeza {
+  width: 100%; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px;
+  padding: 10px 14px; background: transparent; border: 0; color: inherit; font: inherit;
+  text-align: left; cursor: pointer;
+}
+.reclamoCabeza:hover { background: #f8fafc; }
+:global(body.dark-mode) .reclamoCabeza:hover { background: #0f172a; }
+.reclamoCodigo { font-weight: 800; font-variant-numeric: tabular-nums; }
+.reclamoTipo { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #e0e7ff; color: #3730a3; }
+:global(body.dark-mode) .reclamoTipo { background: #312e81; color: #c7d2fe; }
+.reclamoNombre { flex: 1 1 220px; min-width: 0; overflow-wrap: anywhere; }
+.reclamoEstado { font-size: 12.5px; font-weight: 700; color: #b45309; }
+:global(body.dark-mode) .reclamoEstado { color: #fbbf24; }
+.reclamoUrgente { color: #dc2626; }
+:global(body.dark-mode) .reclamoUrgente { color: #f87171; }
+.reclamoOk { color: #15803d; }
+:global(body.dark-mode) .reclamoOk { color: #4ade80; }
+.reclamoCuerpo { padding: 4px 14px 14px; border-top: 1px solid #e2e8f0; }
+:global(body.dark-mode) .reclamoCuerpo { border-color: #334155; }
+.reclamoDatos { margin: 10px 0 12px; display: grid; gap: 6px; }
+.reclamoDatos div { display: grid; grid-template-columns: 110px 1fr; gap: 10px; }
+.reclamoDatos dt { color: #64748b; font-size: 13px; }
+.reclamoDatos dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.reclamoRespuesta { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; }
+.reclamoRespuesta textarea {
+  padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(20, 22, 40, 0.14);
+  background: transparent; color: inherit; font: inherit; font-weight: 400; resize: vertical;
+}
+:global(body.dark-mode) .reclamoRespuesta textarea { border-color: rgba(255, 255, 255, 0.14); }
+@media (max-width: 600px) { .reclamoDatos div { grid-template-columns: 1fr; gap: 2px; } }

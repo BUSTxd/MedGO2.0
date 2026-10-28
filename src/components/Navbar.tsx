@@ -55,10 +55,10 @@ export default function Navbar() {
       </a>
 
       <div className={`${styles.links} ${menuOpen ? styles.open : ''}`}>
-        <a href="#solucion" onClick={() => setMenuOpen(false)}>Cómo funciona</a>
-        <a href="#precios" onClick={() => setMenuOpen(false)}>Precios</a>
-        <a href="#nosotros" onClick={() => setMenuOpen(false)}>Sobre Nosotros</a>
-        <a href="#contacto" onClick={() => setMenuOpen(false)}>FAQ</a>
+        {/* Secciones de la portada: la barra solo vive en las páginas legales. */}
+        <a href="/#recursos" onClick={() => setMenuOpen(false)}>Cómo funciona</a>
+        <a href="/#planes" onClick={() => setMenuOpen(false)}>Planes</a>
+        <a href="/#preguntas" onClick={() => setMenuOpen(false)}>Preguntas frecuentes</a>
         <div className={styles.mobileLogin} onClick={() => setMenuOpen(false)}>
           {user ? (
             <button className={styles.btnNav} onClick={handleSignOut}>Cerrar sesión</button>

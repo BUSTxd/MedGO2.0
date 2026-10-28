@@ -5,6 +5,7 @@ import UsuarioFicha from './UsuarioFicha';
 import { useEnLinea } from './Presencia';
 import ValoracionesAdmin from './ValoracionesAdmin';
 import IAAdmin from './IAAdmin';
+import ReclamosAdmin from './ReclamosAdmin';
 import { BandejaMensajes, BotonMensaje, EnviarMensaje, type Destinatario } from './MensajesAdmin';
 import styles from '@/styles/adminPage.module.css';
 import accountStyles from '@/styles/accountPage.module.css';
@@ -276,6 +277,8 @@ export default function AdminPanel({ data }: { data: AdminData }) {
       </div>
 
       <BandejaMensajes emails={emails} />
+
+      <ReclamosAdmin />
 
       <CursosObjetivo ranking={data.rankingCursos} />
 
