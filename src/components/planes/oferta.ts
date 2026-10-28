@@ -17,7 +17,8 @@ export const INCLUYE_BASE = [
 export const INCLUYE_COMPLETO = [
   'Metas de examen: ENCIB, y pronto USMLE Step 1',
   'Laboratorio virtual con sus animaciones',
-  'MedGO IA, tu tutor',
+  // Sin lanzar (IA_ABIERTA): venderla como incluida sería anunciar algo que no existe.
+  'MedGO IA, tu tutor (muy pronto)',
 ];
 
 /** «29.90», «39.90»: los céntimos sólo cuando los hay (como en el resto de la web). */
