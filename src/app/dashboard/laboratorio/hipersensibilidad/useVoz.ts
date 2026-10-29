@@ -1,8 +1,13 @@
 'use client';
-// Voz grabada de un capítulo: un solo audio que suena DE CORRIDO mientras el
-// capítulo se reproduce entero, sin cortarse entre pasos. Solo salta a la marca
-// de un paso (`marcas`) cuando el alumno cambia de sitio a mano: anterior,
-// siguiente, la barra de tiempo, reiniciar o encender la voz a mitad.
+// Voz grabada de un capítulo: un solo audio atado a la animación PASO A PASO.
+// La voz lee más rápido o más lento que lo que dura la animación de cada paso
+// (el tipo II: 99,9 s de voz para 124,7 s de animación), así que de corrido se
+// adelantaba. Ahora la frase de un paso acaba en la marca del siguiente
+// (`marcas`, sacadas de las pausas del audio): si la voz llega antes, se apaga
+// con un fundido en esa pausa y espera a que la animación entre al paso
+// siguiente; si llega después, el paso no encadena hasta que la voz llega.
+// Cambiar de sitio a mano (anterior, siguiente, barra, reiniciar, encender la
+// voz a mitad) la lleva a la marca del paso más lo que lleve animado.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Narracion } from '@/lib/data/hipersensibilidad/tipos';
@@ -12,6 +17,15 @@ import { useGrimiVoz } from '@/components/estudio/grimiVoz';
 const CLAVE = 'medgo-hiper-voz';
 /** Lo más que se espera a que cargue la voz antes de arrancar sin ella (ms). */
 const ESPERA_MAX = 5000;
+/** La voz se apaga este rato (s) antes de la marca: las marcas caen ~50 ms
+ *  antes de que empiece la frase siguiente, al final de la pausa. */
+const CORTE_ANTES = 0.02;
+/** Fundidos (ms): al callar entre frases, al retomar y al pausar a mano. */
+const FUNDIDO_SALIDA = 140;
+const FUNDIDO_ENTRADA = 60;
+const FUNDIDO_PAUSA = 90;
+/** Si el reloj del audio no avanza en este rato (ms), el paso deja de esperarlo. */
+const ATASCO_MAX = 1500;
 
 export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
   const [activa, setActiva] = useState(true);
@@ -30,9 +44,34 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
   const [bloqueada, setBloqueada] = useState(false);
   // Ya sonó una vez este audio: los arranques siguientes no esperan.
   const arrancado = useRef(false);
+  // Paso cuya frase ya se dijo entera: la voz calla hasta que la animación pase al siguiente.
+  const callado = useRef<number | null>(null);
+  // El paso está esperando a la voz (espejo de `rep.retener`, para no repetir el aviso).
+  const retenido = useRef(false);
+  const fundido = useRef(0);
 
   useEffect(() => {
     try { if (localStorage.getItem(CLAVE) === '0') setActiva(false); } catch { /* sin almacenamiento */ }
+  }, []);
+
+  const retener = useCallback((r: boolean) => {
+    if (retenido.current === r) return;
+    retenido.current = r;
+    repRef.current.retener(r);
+  }, []);
+
+  /** Lleva el volumen a `hasta` en `ms`: sin cortes secos al callar o retomar
+   *  (en iOS el volumen es de solo lectura y queda el corte, siempre en una pausa). */
+  const fundir = useCallback((a: HTMLAudioElement, hasta: number, ms: number, alAcabar?: () => void) => {
+    cancelAnimationFrame(fundido.current);
+    const desde = a.volume, t0 = performance.now();
+    const paso = (ahora: number) => {
+      const k = Math.min(1, Math.max(0, (ahora - t0) / ms));
+      a.volume = desde + (hasta - desde) * k;
+      if (k < 1) fundido.current = requestAnimationFrame(paso);
+      else alAcabar?.();
+    };
+    fundido.current = requestAnimationFrame(paso);
   }, []);
 
   // Deja el capítulo quieto hasta que la voz SUENA: hasta que su reloj (`currentTime`)
@@ -42,6 +81,8 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
   // Al recargar no pasaba porque, hasta el clic, el audio ya se había bajado entero.
   const esperarVoz = useCallback((a: HTMLAudioElement) => {
     if (espera.current) return;
+    cancelAnimationFrame(fundido.current);
+    a.volume = 1;
     const desde = a.currentTime;
     let raf = 0, t = 0;
     const soltar = () => {
@@ -80,27 +121,63 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
     a.src = a.canPlayType('audio/webm; codecs=opus') ? narracion.webm : narracion.mp3;
     audio.current = a;
     arrancado.current = false;
-    const habla = () => grimi?.(true);
-    const calla = () => grimi?.(false);
+    callado.current = null;
+    let raf = 0, ultimoT = -1, desdeT = 0;
+    // Mientras suena: ¿ya dijo la frase de este paso? ¿o la animación tiene que esperarla?
+    const vigilar = () => {
+      raf = 0;
+      if (a.paused || a.ended) { retener(false); return; }
+      const r = repRef.current;
+      const limite = narracion.marcas[r.paso + 1];
+      if (limite === undefined || r.arrastrando || callado.current !== null) retener(false);
+      else if (a.currentTime >= limite - CORTE_ANTES - (FUNDIDO_SALIDA / 1000) * a.playbackRate) {
+        retener(false);
+        // La animación ya acabó el paso y está por encadenar: la voz sigue sin cortarse.
+        // Si no, se apaga en la pausa y espera a que la animación llegue.
+        if (!(r.auto && r.terminado)) {
+          callado.current = r.paso;
+          fundir(a, 0, FUNDIDO_SALIDA, () => a.pause());
+        }
+      } else {
+        const ahora = performance.now();
+        if (a.currentTime !== ultimoT) { ultimoT = a.currentTime; desdeT = ahora; }
+        retener(ahora - desdeT < ATASCO_MAX);
+      }
+      raf = requestAnimationFrame(vigilar);
+    };
+    const habla = () => {
+      grimi?.('habla');
+      ultimoT = -1;
+      if (!raf) raf = requestAnimationFrame(vigilar);
+    };
+    // Callada entre dos frases, GRIMI cierra la boca pero no se pone a seguir al puntero.
+    const calla = () => grimi?.(callado.current !== null && repRef.current.reproduciendo ? 'espera' : false);
     // La voz se corta a mitad por falta de datos: la animación la espera.
     const atasco = () => {
       calla();
       if (!a.paused && repRef.current.reproduciendo && !repRef.current.arrastrando) esperarVoz(a);
     };
+    // Con la pestaña oculta la animación se congela (requestAnimationFrame) y la voz seguiría sola.
+    const oculta = () => { if (document.hidden) repRef.current.pausar(); };
     a.addEventListener('playing', habla);
     a.addEventListener('pause', calla);
     a.addEventListener('ended', calla);
     a.addEventListener('waiting', atasco);
+    document.addEventListener('visibilitychange', oculta);
     return () => {
       espera.current?.();
+      cancelAnimationFrame(raf);
+      cancelAnimationFrame(fundido.current);
+      retener(false);
       a.removeEventListener('playing', habla);
       a.removeEventListener('pause', calla);
       a.removeEventListener('ended', calla);
       a.removeEventListener('waiting', atasco);
+      document.removeEventListener('visibilitychange', oculta);
       a.pause(); a.removeAttribute('src'); a.load(); audio.current = null;
-      calla();
+      grimi?.(false);
     };
-  }, [narracion, activa, grimi, esperarVoz]);
+  }, [narracion, activa, grimi, esperarVoz, fundir, retener]);
 
   const enInicio = rep.t === 0;
   useEffect(() => {
@@ -108,16 +185,32 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
     const p = previo.current;
     previo.current = { paso: rep.paso, arrastrando: rep.arrastrando };
     if (!a || !narracion) return;
-    if (!activa || !rep.reproduciendo || rep.arrastrando) { if (!espera.current) a.pause(); return; }
+    if (!activa || !rep.reproduciendo || rep.arrastrando) {
+      if (!espera.current && !a.paused) fundir(a, 0, FUNDIDO_PAUSA, () => a.pause());
+      else if (a.paused) grimi?.(false);
+      return;
+    }
     a.playbackRate = rep.velocidad;
-    const objetivo = narracion.marcas[rep.paso] + tRef.current / 1000;
-    // De corrido = el capítulo avanza solo al paso siguiente (o se retoma tras
-    // una pausa): el audio sigue donde iba aunque vaya por delante o por detrás.
+    // De corrido = el capítulo avanza solo al paso siguiente (o se retoma tras una pausa).
     const deCorrido = rep.auto && !p.arrastrando && (rep.paso === p.paso || rep.paso === p.paso + 1);
+    // La frase de este paso ya se dijo: sigue callada hasta que la animación pase al siguiente.
+    if (deCorrido && callado.current === rep.paso) return;
+    const objetivo = narracion.marcas[rep.paso] + tRef.current / 1000;
+    const limite = narracion.marcas[rep.paso + 1];
     const reinicio = enInicio && rep.paso === 0 && a.currentTime > (narracion.marcas[1] ?? 1);
     const recien = a.currentTime === 0 && objetivo > 0.5;
-    if (!deCorrido || reinicio || recien) a.currentTime = objetivo;
-    else if (a.ended) return;
+    if (!deCorrido || reinicio || recien || callado.current !== null) {
+      callado.current = null;
+      // La animación va más allá de lo que dura la frase del paso: la voz espera al siguiente.
+      if (limite !== undefined && objetivo >= limite - CORTE_ANTES) {
+        callado.current = rep.paso;
+        if (!a.paused) fundir(a, 0, FUNDIDO_PAUSA, () => a.pause());
+        return;
+      }
+      cancelAnimationFrame(fundido.current);
+      if (arrancado.current) a.volume = 0;
+      a.currentTime = objetivo;
+    } else if (a.ended) return;
     // Primer arranque del audio (al entrar al capítulo) o sin datos para sonar ya: si
     // la animación no esperase, cualquier demora del navegador (bajarlo, decodificarlo,
     // arrancar el sonido) sería un retraso de la voz durante todo el capítulo.
@@ -125,12 +218,13 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
       esperarVoz(a);
       return;
     }
+    fundir(a, 1, FUNDIDO_ENTRADA);
     a.play().catch((e: DOMException) => {
       if (e.name !== 'NotAllowedError') return;
       repRef.current.pausar();
       setBloqueada(true);
     });
-  }, [narracion, activa, rep.reproduciendo, rep.arrastrando, rep.paso, rep.auto, rep.velocidad, enInicio, esperarVoz]);
+  }, [narracion, activa, rep.reproduciendo, rep.arrastrando, rep.paso, rep.auto, rep.velocidad, enInicio, esperarVoz, fundir, grimi]);
 
   /** Llamarlo DENTRO del clic que va a reproducir: el navegador da permiso al audio
    *  (Safari lo exige en el propio gesto) y el efecto de arriba lo arranca donde toca. */

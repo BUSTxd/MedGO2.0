@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import Mascota, { type OrdenMascota } from '@/components/landing-nueva/Mascota';
 import { ASISTENTE } from '@/components/landing-nueva/datos';
 import type { ChatIA, AccionIA } from '@/components/ia/useChatIA';
+import type { VozGrimi } from './grimiVoz';
 import s from '@/styles/estudio/grimi.module.css';
 
 /**
@@ -42,8 +43,8 @@ export default function Grimi({ subir = false, sobreBarra = false, chat = null, 
   chat?: ChatIA | null;
   /** Cada pedido nuevo desde el lector la sube: GRIMI abre su globo con la respuesta. */
   llamada?: number;
-  /** Suena una voz grabada (narración de un laboratorio): pone cara de hablar. */
-  voz?: boolean;
+  /** Una voz grabada (narración de un laboratorio): habla con ella y, entre frases, sigue mirando al frente. */
+  voz?: VozGrimi;
 }) {
   const [fase, setFase] = useState<Fase>('cerrado');
   const [vista, setVista] = useState<'saludo' | 'respuesta'>('saludo');
@@ -115,11 +116,11 @@ export default function Grimi({ subir = false, sobreBarra = false, chat = null, 
 
   const diciendoSaludo = fase === 'abierto' && vista === 'saludo' && letras < texto.length;
   const diciendoRespuesta = enCurso && largo > 0;
-  const hablando = diciendoSaludo || diciendoRespuesta || voz;
+  const hablando = diciendoSaludo || diciendoRespuesta || voz === 'habla';
   // Cada letra re-renderiza el globo: la mascota sólo cuando cambia lo que se le pide.
   const mascota = useMemo(
     // Con la voz de un laboratorio mira al frente y solo habla: nada de vueltas ni de seguir al puntero.
-    () => <Mascota pausado={false} cls={s.mascota} detalle={1} ratos orden={orden} hablando={hablando} alFrente={voz} />,
+    () => <Mascota pausado={false} cls={s.mascota} detalle={1} ratos orden={orden} hablando={hablando} alFrente={!!voz} />,
     [orden, hablando, voz],
   );
 

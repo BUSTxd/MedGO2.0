@@ -56,6 +56,9 @@ export type Reproductor = {
   buscar: (tGlobal: number) => void;
   empezarArrastre: () => void;
   terminarArrastre: () => void;
+  /** La voz aún no llegó a la marca del paso siguiente: en continua, el paso
+   *  terminado espera en su último fotograma en vez de encadenar. */
+  retener: (r: boolean) => void;
 };
 
 export function useReproductor(c: EscenarioCompilado, inicial = 0, opciones: { autoInicial?: boolean } = {}): Reproductor {
@@ -69,6 +72,7 @@ export function useReproductor(c: EscenarioCompilado, inicial = 0, opciones: { a
   // al soltar se retoma lo que había).
   const [arrastre, setArrastre] = useState<boolean | null>(null);
   const arrastrando = arrastre !== null;
+  const [retenido, setRetenido] = useState(false);
   const pc = c.pasos[paso];
   const terminado = t >= pc.duracion;
   const ultimo = c.pasos.length - 1;
@@ -116,11 +120,12 @@ export function useReproductor(c: EscenarioCompilado, inicial = 0, opciones: { a
   useEffect(() => {
     if (!auto || !terminado || pausado || arrastrando) return;
     if (paso >= c.pasos.length - 1) { setAuto(false); return; }
+    if (retenido) return;
     // Sin pausa entre pasos: lo que deja uno se desvanece (`despedir`) mientras entra
     // lo del siguiente. Una espera aquí cortaba la fisiología en cada capítulo.
     setPaso((p) => p + 1);
     setT(0);
-  }, [auto, terminado, pausado, arrastrando, paso, c.pasos.length]);
+  }, [auto, terminado, pausado, arrastrando, retenido, paso, c.pasos.length]);
 
   const irA = useCallback((i: number, animar = true) => {
     const j = Math.min(Math.max(0, i), c.pasos.length - 1);
@@ -197,5 +202,6 @@ export function useReproductor(c: EscenarioCompilado, inicial = 0, opciones: { a
   return {
     paso, t, escena, terminado, auto, pausado, reproduciendo, velocidad, inicios, duracionTotal, tGlobal, arrastrando,
     irA, siguiente, anterior, alternar, pausar, reiniciar, setVelocidad, buscar, empezarArrastre, terminarArrastre,
+    retener: setRetenido,
   };
 }
