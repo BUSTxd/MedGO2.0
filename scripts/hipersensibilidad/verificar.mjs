@@ -58,6 +58,11 @@ function analizar(a) {
 }
 
 for (const esc of partes) {
+  const voz = esc.narracion;
+  if (voz) {
+    if (voz.marcas.length !== esc.pasos.length) err(esc.id, `la narración tiene ${voz.marcas.length} marcas y el capítulo ${esc.pasos.length} pasos`);
+    if (voz.marcas.some((m, i) => i > 0 && m <= voz.marcas[i - 1])) err(esc.id, "las marcas de la narración no van en orden creciente");
+  }
   for (const [k, d] of Object.entries(esc.actores)) {
     if (d.forma !== 'ancla' && !FICHAS[d.info ?? k]) err(esc.id, `el actor «${k}» no tiene ficha («${d.info ?? k}»)`);
     if (d.img && !IMAGENES[d.img] && !IMG_LINF[d.img]) err(esc.id, `el actor «${k}» usa la imagen «${d.img}», que no existe`);

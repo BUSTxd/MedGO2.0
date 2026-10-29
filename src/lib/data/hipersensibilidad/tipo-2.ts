@@ -8,6 +8,7 @@ import { H } from './colores';
 const IgG = (n: number) => Object.fromEntries(Array.from({ length: n }, (_, i) => [`igg${i + 1}`, { forma: 'anticuerpo' as const, ab: 'IgG' as const, label: 'IgG', d: 34, color: H.igg, info: 'igg' }]));
 const AntiMbg = Object.fromEntries(Array.from({ length: 6 }, (_, i) => [`mbg${i + 1}`, { forma: 'anticuerpo' as const, ab: 'IgG' as const, label: 'Anti-MBG', d: 34, color: H.igg, info: 'anti_mbg' }]));
 const ANG_MBG = [-150, -100, -40, 20, 80, 140];
+const VOZ = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/laboratorio-img/hipersensibilidad/narracion-tipo-2_v1`;
 
 const tipo2: Parte = {
   id: 'tipo-2',
@@ -20,6 +21,13 @@ const tipo2: Parte = {
   pregunta: '¿De cuántas maneras un anticuerpo puede dañar a la célula a la que se pega?',
   resumen: 'Opsonización, complemento y MAC, ADCC, Rh y fármacos; Goodpasture y pénfigo; miastenia y Graves.',
   fondo: 'sangre',
+  // Voz de Cristian Cornejo (ElevenLabs v4, velocidad 1,1). Marcas sacadas de
+  // las pausas del audio: si un paso corta o adelanta la voz, se corrige aquí.
+  narracion: {
+    webm: `${VOZ}.webm`,
+    mp3: `${VOZ}.mp3`,
+    marcas: [0, 3.42, 9.43, 15.13, 20.42, 25.91, 30.86, 39.81, 45.35, 50.39, 55.21, 62.27, 67.18, 71.5, 74.97, 78.34, 81.62, 85.01, 91.09, 95.54],
+  },
   actores: {
     rbc1: { forma: 'dibujo', dibujo: 'eritrocito', label: 'Hematíe', sub: 'con autoanticuerpos', d: 62, color: H.eritrocito, info: 'eritrocito' },
     rbc2: { forma: 'dibujo', dibujo: 'eritrocito', label: 'Hematíe', d: 62, color: H.eritrocito, info: 'eritrocito' },

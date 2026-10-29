@@ -11,6 +11,7 @@ import BarraTiempo from './BarraTiempo';
 import TextoAnimado from '../maduracion-linfocitos/TextoAnimado';
 import { FichaActor } from './Ficha';
 import { useReproductor, VELOCIDADES } from './useReproductor';
+import { useVoz } from './useVoz';
 import { useModo } from '../maduracion-linfocitos/useModo';
 import c from '@/styles/cicloCelular.module.css';
 import s from '@/styles/linfocitos.module.css';
@@ -24,7 +25,9 @@ type Props = {
   onVolver: () => void;
 };
 
-export function Controles({ rep, total }: { rep: ReturnType<typeof useReproductor>; total: number }) {
+type Voz = ReturnType<typeof useVoz>;
+
+export function Controles({ rep, total, voz }: { rep: ReturnType<typeof useReproductor>; total: number; voz?: Voz }) {
   return (
     <div className={c.controles}>
       <button type="button" className={c.btnIcono} onClick={rep.anterior} disabled={rep.paso === 0 && rep.t < 400} aria-label="Paso anterior" title="Anterior (←)">
@@ -41,6 +44,16 @@ export function Controles({ rep, total }: { rep: ReturnType<typeof useReproducto
       <button type="button" className={c.btnIcono} onClick={rep.reiniciar} aria-label="Reiniciar" title="Reiniciar (R)">
         <svg viewBox="0 0 20 20" aria-hidden><path d="M4.5 10a5.5 5.5 0 1 0 1.8-4.1M4.5 4v3.5H8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
       </button>
+      {voz?.hay && (
+        <button type="button" className={`${c.btnIcono} ${voz.activa ? '' : h.vozApagada}`} onClick={voz.alternar} aria-pressed={voz.activa} aria-label={voz.activa ? 'Silenciar la voz' : 'Activar la voz'} title={voz.activa ? 'Silenciar la voz' : 'Activar la voz'}>
+          <svg viewBox="0 0 20 20" aria-hidden>
+            <path d="M3.5 7.5h3l4-3.5v12l-4-3.5h-3z" fill="currentColor" />
+            {voz.activa
+              ? <path d="M13.5 7a4 4 0 0 1 0 6M15.5 5a7 7 0 0 1 0 10" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              : <path d="M13.5 7.5l4 5M17.5 7.5l-4 5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />}
+          </svg>
+        </button>
+      )}
       <div className={c.velocidad} role="group" aria-label="Velocidad">
         {VELOCIDADES.map((v) => (
           <button key={v} type="button" className={rep.velocidad === v ? c.velActiva : ''} onClick={() => rep.setVelocidad(v)} aria-pressed={rep.velocidad === v}>{String(v).replace('.', ',')}×</button>
@@ -95,6 +108,7 @@ export default function Explorar({ parte, pasoInicial = 0, onPaso, onSiguiente, 
   const modo = useModo(zona);
   const compilado = useMemo(() => compilar(parte, modo), [parte, modo]);
   const rep = useReproductor(compilado, pasoInicial, { autoInicial: pasoInicial === 0 });
+  const voz = useVoz(parte.narracion, rep);
   const [visto, setVisto] = useState<Set<number>>(() => new Set([pasoInicial]));
   const [ficha, setFicha] = useState<string | null>(null);
   const [reset, setReset] = useState(0);
@@ -152,7 +166,7 @@ export default function Explorar({ parte, pasoInicial = 0, onPaso, onSiguiente, 
       <div className={c.pie}>
         <BarraTiempo rep={rep} escenario={parte} visto={visto} />
         <div className={c.pieFila}>
-          <Controles rep={rep} total={total} />
+          <Controles rep={rep} total={total} voz={voz} />
           <Narracion parte={parte} indice={rep.paso} />
         </div>
       </div>

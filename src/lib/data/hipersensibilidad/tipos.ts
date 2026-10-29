@@ -186,6 +186,16 @@ export type Parte = Escenario & {
   lugar: string;
   color: string;
   pregunta: string;
+  /** Voz grabada del capítulo (un solo audio). `marcas`: segundo del audio en
+   *  que empieza el texto de cada paso, en el orden de `pasos`. */
+  narracion?: Narracion;
+};
+
+export type Narracion = {
+  /** WebM con Opus; `mp3` para el navegador que no lo lea. */
+  webm: string;
+  mp3: string;
+  marcas: number[];
 };
 
 export type Ficha = {
