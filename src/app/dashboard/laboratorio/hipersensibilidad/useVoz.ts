@@ -10,6 +10,8 @@ import type { Reproductor } from './useReproductor';
 import { useGrimiVoz } from '@/components/estudio/grimiVoz';
 
 const CLAVE = 'medgo-hiper-voz';
+/** Lo más que se espera a que cargue la voz antes de arrancar sin ella (ms). */
+const ESPERA_MAX = 5000;
 
 export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
   const [activa, setActiva] = useState(true);
@@ -19,6 +21,10 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
   const previo = useRef({ paso: rep.paso, arrastrando: false });
   // En `/estudio`, GRIMI habla mientras suena la voz (en `/dashboard` no hay GRIMI).
   const grimi = useGrimiVoz();
+  const repRef = useRef(rep);
+  repRef.current = rep;
+  // El capítulo en pausa a la espera de que cargue la voz: quita la espera y lo retoma.
+  const espera = useRef<null | (() => void)>(null);
 
   useEffect(() => {
     try { if (localStorage.getItem(CLAVE) === '0') setActiva(false); } catch { /* sin almacenamiento */ }
@@ -38,6 +44,7 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
     a.addEventListener('ended', calla);
     a.addEventListener('waiting', calla);
     return () => {
+      espera.current?.();
       a.removeEventListener('playing', habla);
       a.removeEventListener('pause', calla);
       a.removeEventListener('ended', calla);
@@ -53,7 +60,7 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
     const p = previo.current;
     previo.current = { paso: rep.paso, arrastrando: rep.arrastrando };
     if (!a || !narracion) return;
-    if (!activa || !rep.reproduciendo || rep.arrastrando) { a.pause(); return; }
+    if (!activa || !rep.reproduciendo || rep.arrastrando) { if (!espera.current) a.pause(); return; }
     a.playbackRate = rep.velocidad;
     const objetivo = narracion.marcas[rep.paso] + tRef.current / 1000;
     // De corrido = el capítulo avanza solo al paso siguiente (o se retoma tras
@@ -63,6 +70,25 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
     const recien = a.currentTime === 0 && objetivo > 0.5;
     if (!deCorrido || reinicio || recien) a.currentTime = objetivo;
     else if (a.ended) return;
+    // Sin datos para sonar ya (al entrar al capítulo, el audio aún se está bajando): la
+    // animación espera a la voz. Si no, la voz arrancaría tarde e iría con retraso.
+    if (a.readyState < HTMLMediaElement.HAVE_FUTURE_DATA) {
+      if (espera.current) return;
+      repRef.current.pausar();
+      let t = 0;
+      const listo = () => {
+        clearTimeout(t);
+        a.removeEventListener('canplay', listo);
+        a.removeEventListener('error', listo);
+        espera.current = null;
+        if (!repRef.current.reproduciendo) repRef.current.alternar();
+      };
+      espera.current = listo;
+      a.addEventListener('canplay', listo);
+      a.addEventListener('error', listo);
+      t = window.setTimeout(listo, ESPERA_MAX);
+      return;
+    }
     a.play().catch(() => { /* el navegador exige un gesto: el próximo «Reproducir» lo da */ });
   }, [narracion, activa, rep.reproduciendo, rep.arrastrando, rep.paso, rep.auto, rep.velocidad, enInicio]);
 

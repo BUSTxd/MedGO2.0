@@ -118,8 +118,9 @@ export default function Grimi({ subir = false, sobreBarra = false, chat = null, 
   const hablando = diciendoSaludo || diciendoRespuesta || voz;
   // Cada letra re-renderiza el globo: la mascota sólo cuando cambia lo que se le pide.
   const mascota = useMemo(
-    () => <Mascota pausado={false} cls={s.mascota} detalle={1} ratos orden={orden} hablando={hablando} />,
-    [orden, hablando],
+    // Con la voz de un laboratorio mira al frente y solo habla: nada de vueltas ni de seguir al puntero.
+    () => <Mascota pausado={false} cls={s.mascota} detalle={1} ratos orden={orden} hablando={hablando} alFrente={voz} />,
+    [orden, hablando, voz],
   );
 
   // Lo ya dicho en tinta y el resto invisible: el globo tiene su tamaño final desde el principio.

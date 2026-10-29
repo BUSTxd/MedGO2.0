@@ -144,6 +144,8 @@ const cuerpo = (m: Mirada, escala = 1, salto = -1) => {
   return `translate(${n(dx)} ${n(dy)}) rotate(${n(giro)} ${CX} ${CY}) translate(${CX} ${CY + R}) scale(${(b.sx * escala).toFixed(4)} ${(b.sy * escala).toFixed(4)}) translate(${-CX} ${-(CY + R)})`;
 };
 const REPOSO_CURSOR: Mirada = { yaw: 0, pitch: -0.06 };
+/** De frente, a los ojos de quien la mira (`alFrente`). */
+const DE_FRENTE: Mirada = { yaw: 0, pitch: 0 };
 const REPOSO_GUION: Mirada = { yaw: 0, pitch: 0 };
 
 type V = [number, number, number];
@@ -459,7 +461,7 @@ const suave = (u: number) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2,
 const fluido = (u: number) => u * u * u * (u * (6 * u - 15) + 10);
 const rebote = (u: number) => 1 + 2.2 * Math.pow(u - 1, 3) + 1.2 * Math.pow(u - 1, 2);
 
-export default function Mascota({ pausado, cls, guion, mirada, silueta = false, detalle = 0, ratos = false, orden, hablando = false }: {
+export default function Mascota({ pausado, cls, guion, mirada, silueta = false, detalle = 0, ratos = false, orden, hablando = false, alFrente = false }: {
   pausado: boolean;
   cls: string;
   guion?: keyof typeof GUIONES;
@@ -473,6 +475,10 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
   orden?: OrdenMascota;
   /** Habla: asiente y late con las sílabas mientras sea `true`. */
   hablando?: boolean;
+  /** Modo cursor: mira al frente y no se mueve por su cuenta (ni puntero, ni vistazos,
+   *  ni ratos, ni órdenes, ni deriva); solo parpadea y, si habla, asiente. Al quitarlo
+   *  vuelve a donde esté el puntero. Para cuando narra una voz grabada. */
+  alFrente?: boolean;
 }) {
   const host = useRef<HTMLSpanElement>(null);
   const ojos = useRef<(SVGPathElement | null)[]>([]);
@@ -484,6 +490,8 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
   const hablandoRef = useRef(hablando);
   const ordenar = useRef<(pasos: Paso[]) => void>(() => {});
   const despertarRef = useRef<() => void>(() => {});
+  const alFrenteRef = useRef(alFrente);
+  const frenteRef = useRef<(si: boolean) => void>(() => {});
   const conOrden = orden !== undefined;
   const id = `dot-${useId().replace(/:/g, '')}`;
   const clip = `${id}-c`, luz = `${id}-l`;
@@ -513,6 +521,8 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
     // La mirada va siempre con el muelle si hay ratos u órdenes: así entrar y salir de un rato no da saltos.
     const conMuelle = vivo || ratos || conOrden;
     let actual = { ...reposoM }, objetivo = { ...reposoM };
+    // A dónde mira el puntero (con `alFrente` se guarda para cuando se quite).
+    let puntero = { ...reposoM };
     let parpado: null | { tipo: 'parpadeo' | 'feliz'; t0: number; ms: number } = null;
     // El guion en curso (el propio, o el vistazo de la del cursor) y su paso.
     let pasos: Paso[] | null = guion ? GUIONES[guion] : null;
@@ -632,7 +642,7 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
       if (!hablaYa && habla < 0.002) habla = 0;
       let vista = actual;
       if (conMuelle) {
-        const peso = vivo ? 1 : mezcla;
+        const peso = alFrenteRef.current ? 0 : vivo ? 1 : mezcla;
         const d = derivaViva(s);
         // Al hablar asiente un poco, a ritmo de frase.
         const meta = { yaw: actual.yaw + d.yaw * peso, pitch: actual.pitch + d.pitch * peso + 0.05 * habla * Math.sin(2 * Math.PI * 2.2 * s) };
@@ -662,9 +672,9 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
 
     const planearOcio = () => {
       clearTimeout(ocio);
-      if (guion || !activo()) return;
+      if (guion || !activo() || alFrenteRef.current) return;
       ocio = window.setTimeout(() => {
-        if (!activo() || episodio) return;
+        if (!activo() || episodio || alFrenteRef.current) return;
         pasos = OCIOSO; i = 0; t0 = performance.now(); desde = { ...actual };
         despertar();
       }, 7000);
@@ -680,17 +690,31 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
       if (!ratos || guion || !activo()) return;
       rato = window.setTimeout(() => {
         if (!activo()) return;
-        if (episodio || hablandoRef.current) planearRato();
+        if (episodio || hablandoRef.current || alFrenteRef.current) planearRato();
         else empezar(RATOS[Math.floor(Math.random() * RATOS.length)]);
       }, 14000 + Math.random() * 12000);
     }
-    ordenar.current = (p) => { if (!guion && activo()) empezar(p); };
+    ordenar.current = (p) => { if (!guion && activo() && !alFrenteRef.current) empezar(p); };
+    frenteRef.current = (si) => {
+      if (guion) return;
+      if (si) {
+        // Si lo pilla a media vuelta, que vuelva por el camino corto (el guion deja el yaw en −2π…).
+        const vueltas = actual.yaw - Math.atan2(Math.sin(actual.yaw), Math.cos(actual.yaw));
+        actual = { ...actual, yaw: actual.yaw - vueltas };
+        muelle = { ...muelle, yaw: muelle.yaw - vueltas }; metaAntes = null;
+        pasos = null; episodio = false; clearTimeout(ocio); objetivo = { ...DE_FRENTE };
+      }
+      else { objetivo = { ...puntero }; planearOcio(); planearRato(); }
+      despertar();
+    };
     despertarRef.current = despertar;
     const mover = (e: PointerEvent) => {
       if (guion || !activo() || e.pointerType === 'touch') return;
       const r = el.getBoundingClientRect();
       const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
-      objetivo = { yaw: 0.85 * Math.tanh(dx / 380), pitch: Math.max(-0.6, Math.min(0.55, -0.65 * Math.tanh(dy / 320))) };
+      puntero = { yaw: 0.85 * Math.tanh(dx / 380), pitch: Math.max(-0.6, Math.min(0.55, -0.65 * Math.tanh(dy / 320))) };
+      if (alFrenteRef.current) return;
+      objetivo = { ...puntero };
       if (episodio) return; // a lo suyo: sigue mirando lo que toca, y al acabar irá a donde esté el puntero
       if (pasos) { pasos = null; } // el puntero manda sobre el vistazo
       planearOcio();
@@ -716,7 +740,7 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
       ultima = null; cuerpoPintado = ''; salto = -1;
       muelle = { ...reposoM }; velMuelle = [0, 0]; metaAntes = null;
       vaiven = [0, 0]; velVaiven = [0, 0]; nudoAntes = null;
-      actual = { ...reposoM }; objetivo = { ...reposoM };
+      actual = { ...reposoM }; objetivo = alFrenteRef.current && !guion ? { ...DE_FRENTE } : { ...reposoM };
       pasos = guion ? GUIONES[guion] : null; i = 0; t0 = performance.now(); desde = { ...reposoM };
       pintar(reposoM, 1, 0);
       if (!activo()) return;
@@ -749,6 +773,11 @@ export default function Mascota({ pausado, cls, guion, mirada, silueta = false, 
 
   useEffect(() => { pausadoRef.current = pausado; sincronizar.current(); }, [pausado]);
   useEffect(() => { hablandoRef.current = hablando; despertarRef.current(); }, [hablando]);
+  useEffect(() => {
+    if (alFrenteRef.current === alFrente) return;
+    alFrenteRef.current = alFrente;
+    frenteRef.current(alFrente);
+  }, [alFrente]);
   useEffect(() => { if (orden?.n) ordenar.current(ORDENES[orden.tipo]); }, [orden?.n]); // eslint-disable-line react-hooks/exhaustive-deps
 
   /** Un ojo; con `filo`, su contorno del color de la cara, que va debajo y lo despega de la banda. */
