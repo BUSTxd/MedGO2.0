@@ -28,6 +28,8 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
   // El navegador no deja sonar sin un gesto (p. ej. al recargar la página, que arranca
   // el capítulo solo): el capítulo queda en pausa hasta que el alumno pulse.
   const [bloqueada, setBloqueada] = useState(false);
+  // Ya sonó una vez este audio: los arranques siguientes no esperan.
+  const arrancado = useRef(false);
 
   useEffect(() => {
     try { if (localStorage.getItem(CLAVE) === '0') setActiva(false); } catch { /* sin almacenamiento */ }
@@ -40,6 +42,7 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
     a.preload = 'auto';
     a.src = a.canPlayType('audio/webm; codecs=opus') ? narracion.webm : narracion.mp3;
     audio.current = a;
+    arrancado.current = false;
     const habla = () => grimi?.(true);
     const calla = () => grimi?.(false);
     a.addEventListener('playing', habla);
@@ -73,28 +76,39 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
     const recien = a.currentTime === 0 && objetivo > 0.5;
     if (!deCorrido || reinicio || recien) a.currentTime = objetivo;
     else if (a.ended) return;
-    // Sin datos para sonar ya (al entrar al capítulo, el audio aún se está bajando): la
-    // animación espera a la voz. Si no, la voz arrancaría tarde e iría con retraso.
-    if (a.readyState < HTMLMediaElement.HAVE_FUTURE_DATA) {
+    // Primer arranque del audio (al entrar al capítulo) o sin datos para sonar ya: la
+    // animación se queda quieta hasta que la voz SUENA de verdad (`playing`, no
+    // `canplay`): si no, cualquier demora del navegador (bajarlo, decodificarlo,
+    // arrancar el sonido) se vuelve un retraso de la voz durante todo el capítulo.
+    if (!arrancado.current || a.readyState < HTMLMediaElement.HAVE_FUTURE_DATA) {
       if (espera.current) return;
       repRef.current.pausar();
       let t = 0;
-      const listo = () => {
+      const soltar = () => {
         clearTimeout(t);
-        a.removeEventListener('canplay', listo);
+        a.removeEventListener('playing', listo);
         a.removeEventListener('error', listo);
         espera.current = null;
-        if (!repRef.current.reproduciendo) repRef.current.alternar();
       };
+      function listo() {
+        soltar();
+        arrancado.current = true;
+        if (!repRef.current.reproduciendo) repRef.current.alternar();
+      }
       espera.current = listo;
-      a.addEventListener('canplay', listo);
+      a.addEventListener('playing', listo);
       a.addEventListener('error', listo);
       t = window.setTimeout(listo, ESPERA_MAX);
+      a.play().catch((e: DOMException) => {
+        if (e.name !== 'NotAllowedError') return;
+        // El navegador pide un gesto: sin voz no avanza, y al pulsar arrancan juntas.
+        soltar();
+        setBloqueada(true);
+      });
       return;
     }
     a.play().catch((e: DOMException) => {
       if (e.name !== 'NotAllowedError') return;
-      // Sin voz no avanza: así, al pulsar, voz y animación arrancan juntas.
       repRef.current.pausar();
       setBloqueada(true);
     });
