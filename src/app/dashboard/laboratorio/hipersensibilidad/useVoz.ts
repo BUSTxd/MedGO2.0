@@ -25,6 +25,9 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
   repRef.current = rep;
   // El capítulo en pausa a la espera de que cargue la voz: quita la espera y lo retoma.
   const espera = useRef<null | (() => void)>(null);
+  // El navegador no deja sonar sin un gesto (p. ej. al recargar la página, que arranca
+  // el capítulo solo): el capítulo queda en pausa hasta que el alumno pulse.
+  const [bloqueada, setBloqueada] = useState(false);
 
   useEffect(() => {
     try { if (localStorage.getItem(CLAVE) === '0') setActiva(false); } catch { /* sin almacenamiento */ }
@@ -89,8 +92,23 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
       t = window.setTimeout(listo, ESPERA_MAX);
       return;
     }
-    a.play().catch(() => { /* el navegador exige un gesto: el próximo «Reproducir» lo da */ });
+    a.play().catch((e: DOMException) => {
+      if (e.name !== 'NotAllowedError') return;
+      // Sin voz no avanza: así, al pulsar, voz y animación arrancan juntas.
+      repRef.current.pausar();
+      setBloqueada(true);
+    });
   }, [narracion, activa, rep.reproduciendo, rep.arrastrando, rep.paso, rep.auto, rep.velocidad, enInicio]);
+
+  /** Llamarlo DENTRO del clic que va a reproducir: el navegador da permiso al audio
+   *  (Safari lo exige en el propio gesto) y el efecto de arriba lo arranca donde toca. */
+  const desbloquear = useCallback(() => {
+    setBloqueada(false);
+    const a = audio.current;
+    if (!a || !a.paused) return;
+    a.play().catch(() => { /* lo interrumpe el pause de abajo */ });
+    a.pause();
+  }, []);
 
   const alternar = useCallback(() => {
     setActiva((v) => {
@@ -99,5 +117,5 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
     });
   }, []);
 
-  return { hay: !!narracion, activa, alternar };
+  return { hay: !!narracion, activa, alternar, desbloquear, bloqueada: bloqueada && activa };
 }

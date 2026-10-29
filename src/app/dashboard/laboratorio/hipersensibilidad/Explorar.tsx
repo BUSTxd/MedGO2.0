@@ -33,7 +33,7 @@ export function Controles({ rep, total, voz }: { rep: ReturnType<typeof useRepro
       <button type="button" className={c.btnIcono} onClick={rep.anterior} disabled={rep.paso === 0 && rep.t < 400} aria-label="Paso anterior" title="Anterior (←)">
         <svg viewBox="0 0 20 20" aria-hidden><path d="M12.5 4.5L7 10l5.5 5.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
       </button>
-      <button type="button" className={`${c.btnIcono} ${c.btnPlay}`} onClick={rep.alternar} aria-label={rep.reproduciendo ? 'Pausar' : 'Reproducir'} title="Reproducir / pausar (espacio)">
+      <button type="button" className={`${c.btnIcono} ${c.btnPlay}`} onClick={() => { if (!rep.reproduciendo) voz?.desbloquear(); rep.alternar(); }} aria-label={rep.reproduciendo ? 'Pausar' : 'Reproducir'} title="Reproducir / pausar (espacio)">
         {rep.reproduciendo
           ? <svg viewBox="0 0 20 20" aria-hidden><rect x="5.5" y="4.5" width="3" height="11" rx="1" fill="currentColor" /><rect x="11.5" y="4.5" width="3" height="11" rx="1" fill="currentColor" /></svg>
           : <svg viewBox="0 0 20 20" aria-hidden><path d="M7 4.5v11l9-5.5z" fill="currentColor" /></svg>}
@@ -128,12 +128,12 @@ export default function Explorar({ parte, pasoInicial = 0, onPaso, onSiguiente, 
       if (el?.getAttribute?.('role') === 'slider') return;
       if (e.key === 'ArrowRight') { e.preventDefault(); rep.siguiente(); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); rep.anterior(); }
-      else if (e.key === ' ' && el?.tagName !== 'BUTTON') { e.preventDefault(); rep.alternar(); }
+      else if (e.key === ' ' && el?.tagName !== 'BUTTON') { e.preventDefault(); if (!rep.reproduciendo) voz.desbloquear(); rep.alternar(); }
       else if (e.key === 'r' || e.key === 'R') rep.reiniciar();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [rep]);
+  }, [rep, voz]);
 
   return (
     <div className={`${c.vista} ${c.vistaAncha}`}>
@@ -153,6 +153,11 @@ export default function Explorar({ parte, pasoInicial = 0, onPaso, onSiguiente, 
         {ficha && (
           <div className={c.fichaPanel}>
             <FichaActor escenario={parte} actor={ficha} onCerrar={() => setFicha(null)} />
+          </div>
+        )}
+        {voz.bloqueada && !rep.reproduciendo && (
+          <div className={c.cierre} role="region" aria-label="Empezar con voz">
+            <button type="button" className={c.btnPrim} onClick={() => { voz.desbloquear(); rep.alternar(); }}>▶ Reproducir con voz</button>
           </div>
         )}
         {ultimo && (
