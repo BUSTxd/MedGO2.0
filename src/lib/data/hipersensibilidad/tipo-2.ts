@@ -21,8 +21,8 @@ const tipo2: Parte = {
   pregunta: '¿De cuántas maneras un anticuerpo puede dañar a la célula a la que se pega?',
   resumen: 'Opsonización, complemento y MAC, ADCC, Rh y fármacos; Goodpasture y pénfigo; miastenia y Graves.',
   fondo: 'sangre',
-  // Voz de Cristian Cornejo (ElevenLabs v4, velocidad 1,1). Marcas sacadas de
-  // las pausas del audio: si un paso corta o adelanta la voz, se corrige aquí.
+  // Voz de Cristian Cornejo (ElevenLabs v4, velocidad 1,1), de corrido. Las
+  // marcas (sacadas de las pausas del audio) solo sirven al saltar a un paso.
   narracion: {
     webm: `${VOZ}.webm`,
     mp3: `${VOZ}.mp3`,
