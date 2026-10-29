@@ -35,6 +35,43 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
     try { if (localStorage.getItem(CLAVE) === '0') setActiva(false); } catch { /* sin almacenamiento */ }
   }, []);
 
+  // Deja el capítulo quieto hasta que la voz SUENA: hasta que su reloj (`currentTime`)
+  // avanza de verdad. Ni `canplay` ni `playing` bastan: al pasar de Anafilaxia al tipo II
+  // el audio se crea y se arranca a la vez, `playing` llega con el primer trozo y el
+  // sonido se queda enseguida esperando datos (`waiting`) mientras la barra seguía sola.
+  // Al recargar no pasaba porque, hasta el clic, el audio ya se había bajado entero.
+  const esperarVoz = useCallback((a: HTMLAudioElement) => {
+    if (espera.current) return;
+    const desde = a.currentTime;
+    let raf = 0, t = 0;
+    const soltar = () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(t);
+      a.removeEventListener('error', listo);
+      espera.current = null;
+    };
+    function listo() {
+      soltar();
+      arrancado.current = true;
+      if (!repRef.current.reproduciendo) repRef.current.alternar();
+    }
+    const mirar = () => {
+      if (!a.paused && a.currentTime > desde + 0.03) listo();
+      else raf = requestAnimationFrame(mirar);
+    };
+    espera.current = listo;
+    repRef.current.pausar();
+    a.addEventListener('error', listo);
+    t = window.setTimeout(listo, ESPERA_MAX);
+    raf = requestAnimationFrame(mirar);
+    a.play().catch((e: DOMException) => {
+      if (e.name !== 'NotAllowedError') return;
+      // El navegador pide un gesto: sin voz no avanza, y al pulsar arrancan juntas.
+      soltar();
+      setBloqueada(true);
+    });
+  }, []);
+
   // Solo se baja con la voz encendida (es lo que más pesa del capítulo).
   useEffect(() => {
     if (!narracion || !activa) return;
@@ -45,20 +82,25 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
     arrancado.current = false;
     const habla = () => grimi?.(true);
     const calla = () => grimi?.(false);
+    // La voz se corta a mitad por falta de datos: la animación la espera.
+    const atasco = () => {
+      calla();
+      if (!a.paused && repRef.current.reproduciendo && !repRef.current.arrastrando) esperarVoz(a);
+    };
     a.addEventListener('playing', habla);
     a.addEventListener('pause', calla);
     a.addEventListener('ended', calla);
-    a.addEventListener('waiting', calla);
+    a.addEventListener('waiting', atasco);
     return () => {
       espera.current?.();
       a.removeEventListener('playing', habla);
       a.removeEventListener('pause', calla);
       a.removeEventListener('ended', calla);
-      a.removeEventListener('waiting', calla);
+      a.removeEventListener('waiting', atasco);
       a.pause(); a.removeAttribute('src'); a.load(); audio.current = null;
       calla();
     };
-  }, [narracion, activa, grimi]);
+  }, [narracion, activa, grimi, esperarVoz]);
 
   const enInicio = rep.t === 0;
   useEffect(() => {
@@ -76,35 +118,11 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
     const recien = a.currentTime === 0 && objetivo > 0.5;
     if (!deCorrido || reinicio || recien) a.currentTime = objetivo;
     else if (a.ended) return;
-    // Primer arranque del audio (al entrar al capítulo) o sin datos para sonar ya: la
-    // animación se queda quieta hasta que la voz SUENA de verdad (`playing`, no
-    // `canplay`): si no, cualquier demora del navegador (bajarlo, decodificarlo,
-    // arrancar el sonido) se vuelve un retraso de la voz durante todo el capítulo.
+    // Primer arranque del audio (al entrar al capítulo) o sin datos para sonar ya: si
+    // la animación no esperase, cualquier demora del navegador (bajarlo, decodificarlo,
+    // arrancar el sonido) sería un retraso de la voz durante todo el capítulo.
     if (!arrancado.current || a.readyState < HTMLMediaElement.HAVE_FUTURE_DATA) {
-      if (espera.current) return;
-      repRef.current.pausar();
-      let t = 0;
-      const soltar = () => {
-        clearTimeout(t);
-        a.removeEventListener('playing', listo);
-        a.removeEventListener('error', listo);
-        espera.current = null;
-      };
-      function listo() {
-        soltar();
-        arrancado.current = true;
-        if (!repRef.current.reproduciendo) repRef.current.alternar();
-      }
-      espera.current = listo;
-      a.addEventListener('playing', listo);
-      a.addEventListener('error', listo);
-      t = window.setTimeout(listo, ESPERA_MAX);
-      a.play().catch((e: DOMException) => {
-        if (e.name !== 'NotAllowedError') return;
-        // El navegador pide un gesto: sin voz no avanza, y al pulsar arrancan juntas.
-        soltar();
-        setBloqueada(true);
-      });
+      esperarVoz(a);
       return;
     }
     a.play().catch((e: DOMException) => {
@@ -112,7 +130,7 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
       repRef.current.pausar();
       setBloqueada(true);
     });
-  }, [narracion, activa, rep.reproduciendo, rep.arrastrando, rep.paso, rep.auto, rep.velocidad, enInicio]);
+  }, [narracion, activa, rep.reproduciendo, rep.arrastrando, rep.paso, rep.auto, rep.velocidad, enInicio, esperarVoz]);
 
   /** Llamarlo DENTRO del clic que va a reproducir: el navegador da permiso al audio
    *  (Safari lo exige en el propio gesto) y el efecto de arriba lo arranca donde toca. */
