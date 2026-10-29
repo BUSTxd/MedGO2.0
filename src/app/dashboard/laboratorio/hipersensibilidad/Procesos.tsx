@@ -254,41 +254,356 @@ function Cinetica({ d, p }: { d: Extract<DatosProceso, { clase: 'cinetica' }>; p
 }
 
 // ─── Vía clásica del complemento ─────────────────────────────────────────────
+// Una sola cascada dibujada según su avance global `G` (0 → 6): cada etapa
+// ocupa una unidad (C1 · C4 y C2 · C3 · C5 · MAC · lisis). Cada fase de los
+// datos anima la suya con lo anterior ya hecho, así la lupa sigue abierta de un
+// paso al siguiente sin saltos; `rapida` corre de C1 a C5b de un tirón (IgM).
+// Abajo, un rótulo numerado dice qué pasa ahora; arriba, el riel de etapas.
 
-function Complemento({ d, p }: { d: Extract<DatosProceso, { clase: 'complemento' }>; p: number }) {
-  const ym = 196;
-  const c1 = easeOut(tramo(p, 0.02, 0.16)), conv = tramo(p, 0.16, 0.3), c3 = easeInOut(tramo(p, 0.3, 0.48)), c5 = easeInOut(tramo(p, 0.48, 0.62)), mac = easeInOut(tramo(p, 0.62, 0.86)), agua = tramo(p, 0.86, 1);
-  const msg = { opsonina: 'C3b cubre la célula: el fagocito la reconoce', mac: 'El MAC perfora la membrana: lisis osmótica', inflamacion: 'C5a y C3a llaman neutrófilos y abren los vasos' }[d.enfasis];
+type FaseC = Extract<DatosProceso, { clase: 'complemento' }>['fase'];
+type Pt = { x: number; y: number };
+
+const ETAPA: Record<FaseC, [number, number]> = { c1: [0, 1], c4c2: [1, 2], c3: [2, 3], c5: [3, 4], mac: [4, 5], agua: [5, 6], rapida: [0, 4] };
+const RIEL = ['C1', 'C3 convertasa', 'C3b', 'C5 convertasa', 'MAC', 'Lisis'];
+const YM = 212; // borde de arriba de la bicapa
+const C1X = 81;
+const AB_X = [64, 98];
+const C4B: Pt = { x: 130, y: YM - 13 };
+const C2A: Pt = { x: 154, y: YM - 11 };
+const C3B_CONV: Pt = { x: 142, y: YM - 33 };
+const C3B_X = [205, 235, 265, 295, 325, 352];
+const C3A_P: Pt[] = [{ x: 318, y: 104 }, { x: 340, y: 116 }, { x: 362, y: 102 }, { x: 384, y: 114 }, { x: 406, y: 103 }, { x: 428, y: 115 }];
+const C5A_P: Pt = { x: 250, y: 124 };
+const MAC_X = 470;
+const C5B: Pt = { x: 440, y: YM - 12 };
+const C6: Pt = { x: 421, y: YM - 10 };
+const C7: Pt = { x: 433, y: YM - 31 };
+const ANILLO: Pt = { x: 538, y: 116 };
+const CC = { c1q: H.complemento, c1r: '#5E9CD3', c1s: '#D9567E', c4: '#B4507E', c2: '#7C5CD6', c3: '#C0397A', c3a: '#E5484D', c5: '#8A4FCF', c5b: '#5B3FB0', c6: '#6E5BC4', c7: '#4F7FC2', c8: '#3E6FA8', c9: '#7C5CD6', agua: '#2C8FD6', hb: '#C0392B' };
+
+type Rotulo = { g: number; t: string; ok?: boolean };
+const ROTULOS: Rotulo[] = [
+  { g: 0, t: '① El C1 circula inactivo y encuentra los Fc' },
+  { g: 0.36, t: '② Su cabeza, el C1q, agarra dos Fc vecinos a la vez' },
+  { g: 0.46, t: '③ Eso activa al C1r…' },
+  { g: 0.62, t: '④ …y el C1r activa al C1s, una proteasa' },
+  { g: 0.86, t: 'C1 activo: el C1s ya puede cortar', ok: true },
+  { g: 1, t: '① El C1s corta el C4' },
+  { g: 1.33, t: '② El C4a se va; el C4b se pega a la membrana' },
+  { g: 1.52, t: '③ El C2 se une al C4b y el C1s también lo corta' },
+  { g: 1.76, t: '④ El C2b se va; el C2a queda junto al C4b' },
+  { g: 1.88, t: 'C4b2a: la C3 convertasa, fija sobre la célula', ok: true },
+  { g: 2, t: '① La C3 convertasa parte cada C3 que llega' },
+  { g: 2.2, t: '② El C3a sale al plasma; el C3b se pega a la membrana' },
+  { g: 2.62, t: '③ Una sola convertasa repite el corte cientos de veces' },
+  { g: 2.88, t: 'La célula queda cubierta de C3b: opsonizada', ok: true },
+  { g: 3, t: '① Un C3b se suma a la C3 convertasa' },
+  { g: 3.22, t: '② Ahora es C4b2a3b, la C5 convertasa: corta el C5' },
+  { g: 3.5, t: '③ El C5a sale al plasma; el C5b se queda' },
+  { g: 3.88, t: 'C5a llama neutrófilos; C5b empieza el poro', ok: true },
+  { g: 4, t: '① El C5b recoge al C6' },
+  { g: 4.18, t: '② Se suma el C7 y el complejo se hunde en la bicapa' },
+  { g: 4.4, t: '③ El C8 la atraviesa: abre un poro pequeño' },
+  { g: 4.53, t: '④ Llegan 10 a 16 C9 y cierran un anillo' },
+  { g: 4.9, t: 'MAC (C5b-C9): un canal a través de la membrana', ok: true },
+  { g: 5, t: '① Por el poro entran agua y Na⁺' },
+  { g: 5.35, t: '② La célula se hincha: la membrana se estira' },
+  { g: 5.62, t: '③ Revienta: la hemoglobina sale al plasma' },
+  { g: 5.88, t: 'Lisis osmótica: hemólisis intravascular', ok: true },
+];
+const ROTULOS_IGM: Rotulo[] = [
+  { g: 0, t: '① Una IgM sobre el hematíe: con una sola basta' },
+  { g: 0.9, t: '② El C1s corta C4 y C2: C3 convertasa' },
+  { g: 1.9, t: '③ La convertasa cubre la célula de C3b' },
+  { g: 2.9, t: '④ C5 convertasa: el C5a sale, el C5b se queda' },
+  { g: 3.82, t: 'Esta vez la cascada sigue hasta el final', ok: true },
+];
+
+const mezcla = (a: Pt, b: Pt, k: number): Pt => ({ x: a.x + (b.x - a.x) * k, y: a.y + (b.y - a.y) * k });
+/** Igual que `mezcla`, pero subiendo en arco (`alto` px por encima de la recta). */
+const arco = (a: Pt, b: Pt, k: number, alto: number): Pt => { const m = mezcla(a, b, k); return { x: m.x, y: m.y - Math.sin(Math.PI * k) * alto }; };
+
+/** Destello de un corte de proteasa. */
+function Corte({ x, y, k }: { x: number; y: number; k: number }) {
+  if (k <= 0 || k >= 1) return null;
+  const s = Math.sin(Math.PI * k);
+  return (
+    <g transform={`translate(${x},${y}) scale(${0.4 + 0.8 * s}) rotate(${k * 90})`} opacity={s}>
+      <path d="M0,-13 L3,-3 L13,0 L3,3 L0,13 L-3,3 L-13,0 L-3,-3 Z" fill="#FFD23F" stroke="#E0A21E" strokeWidth={1} />
+    </g>
+  );
+}
+
+/** Fragmento pequeño con su nombre al lado (no cabe dentro). */
+function Frag({ p, r, color, nombre, op, dx = 9, dy = -8 }: { p: Pt; r: number; color: string; nombre?: string; op: number; dx?: number; dy?: number }) {
+  if (op <= 0.01) return null;
+  return (
+    <g opacity={op}>
+      <circle cx={p.x} cy={p.y} r={r} fill={color} stroke="#fff" strokeWidth={1.2} />
+      {nombre && <text x={p.x + dx} y={p.y + dy} className={s.protChico}>{nombre}</text>}
+    </g>
+  );
+}
+
+function Membrana({ grieta, hinchazon }: { grieta: number; hinchazon: number }) {
+  const gx = 528;
+  const tramos: [number, number][] = grieta > 0.5 ? [[10, gx - grieta / 2], [gx + grieta / 2, 570]] : [[10, 570]];
   return (
     <g>
-      <Titulo texto="Vía clásica del complemento" sub="La activa la IgM o dos IgG juntas sobre la célula" />
-      <rect x={10} y={ym} width={560} height={14} className={s.bicapa} />
-      {[90, 128].map((x) => <g key={x} transform={`translate(${x},${ym - 22}) rotate(180)`}><Anticuerpo ab="IgG" d={40} /></g>)}
-      {/* C1q: ramillete que se apoya en los Fc */}
-      <g opacity={c1} transform={`translate(109,${ym - 64 - (1 - c1) * 40})`}>
-        {[-24, -12, 0, 12, 24].map((x, i) => <g key={i}><line x1={0} y1={-26} x2={x} y2={0} stroke={H.complemento} strokeWidth={2.4} /><circle cx={x} cy={2} r={5} fill={H.complemento} /></g>)}
-        <rect x={-10} y={-44} width={20} height={20} rx={4} fill={H.complemento} />
-        <text x={16} y={-34} className={ls.lupaNota}>C1q</text>
+      <rect x={10} y={YM + 14} width={560} height={LUPA_H - YM - 20} rx={10} className={s.citoplasmaLupa} opacity={0.55 + 0.45 * hinchazon} />
+      {tramos.map(([a, b]) => (
+        <g key={a}>
+          <rect x={a} y={YM} width={b - a} height={14} className={s.bicapa} />
+          {Array.from({ length: Math.max(0, Math.floor((b - a - 4) / 8)) }, (_, i) => a + 5 + i * 8).map((x) => (
+            <g key={x}><circle cx={x} cy={YM + 2.6} r={2.6} className={s.bicapaCabeza} /><circle cx={x} cy={YM + 11.4} r={2.6} className={s.bicapaCabeza} /></g>
+          ))}
+        </g>
+      ))}
+    </g>
+  );
+}
+
+function Riel({ G }: { G: number }) {
+  // La etapa en curso sigue marcada hasta que empieza la siguiente.
+  const cur = Math.min(RIEL.length - 1, Math.max(0, Math.ceil(G) - 1));
+  let x = 18;
+  return (
+    <g>
+      {RIEL.map((t, i) => {
+        const w = 18 + t.length * 6.4;
+        const hecho = i < cur;
+        const actual = i === cur;
+        const el = (
+          <g key={t} transform={`translate(${x},64)`}>
+            {i > 0 && <text x={-8} y={10} dy="0.35em" textAnchor="middle" className={s.rielTxt}>›</text>}
+            <rect width={w} height={20} rx={10} className={actual ? s.rielActual : hecho ? s.rielHecho : s.rielPend} />
+            <text x={w / 2} y={10} dy="0.35em" textAnchor="middle" className={actual ? s.rielTxtActual : s.rielTxt}>{t}</text>
+          </g>
+        );
+        x += w + 16;
+        return el;
+      })}
+    </g>
+  );
+}
+
+/** IgM en «grapa» sobre la membrana: los cinco Fc arriba, los Fab abajo. */
+function IgMGrapa() {
+  const xs = [-26, -13, 0, 13, 26];
+  return (
+    <g transform={`translate(${C1X},0)`}>
+      {xs.map((x) => <path key={x} d={`M${x},${YM - 40} L${x - 6},${YM - 2} M${x},${YM - 40} L${x + 6},${YM - 2}`} stroke={H.igm} strokeWidth={3} strokeLinecap="round" fill="none" />)}
+      <rect x={-31} y={YM - 46} width={62} height={8} rx={4} fill={H.igm} />
+      <circle cy={YM - 42} r={4} fill="#fff" stroke={H.igm} strokeWidth={1.5} />
+    </g>
+  );
+}
+
+/** C1: el C1q (seis cabezas sobre tallos que se juntan) con el C1r₂s₂ entre los tallos. */
+function C1({ dy, op, unido, c1r, chispa, c1s, pulso }: { dy: number; op: number; unido: number; c1r: number; chispa: number; c1s: number; pulso: number }) {
+  if (op <= 0.01) return null;
+  const cabezas = [-30, -18, -6, 6, 18, 30];
+  return (
+    <g transform={`translate(${C1X},${dy})`} opacity={op}>
+      <rect x={-6} y={YM - 110} width={12} height={26} rx={5} fill={CC.c1q} />
+      {cabezas.map((x) => (
+        <g key={x}>
+          <path d={`M0,${YM - 86} Q${x * 0.5},${YM - 74} ${x},${YM - 54}`} stroke={CC.c1q} strokeWidth={2.4} fill="none" />
+          <circle cx={x} cy={YM - 50} r={5.5} fill={CC.c1q} />
+          {unido > 0 && Math.abs(x) <= 30 && <circle cx={x} cy={YM - 50} r={8} fill="none" stroke="#FFD23F" strokeWidth={2} opacity={unido * (1 - 0.6 * c1s)} />}
+        </g>
+      ))}
+      {[-8, 8].map((x) => (
+        <g key={x}>
+          <ellipse cx={x} cy={YM - 80} rx={6} ry={4} fill={CC.c1r} />
+          {c1r > 0 && <ellipse cx={x} cy={YM - 80} rx={9} ry={7} fill="none" stroke="#FFD23F" strokeWidth={1.8} opacity={c1r * (1 - 0.5 * c1s)} />}
+        </g>
+      ))}
+      {[-17, 17].map((x) => (
+        <g key={x}>
+          <ellipse cx={x} cy={YM - 68} rx={7} ry={4.5} fill={CC.c1s} />
+          {c1s > 0 && <ellipse cx={x} cy={YM - 68} rx={10 + pulso} ry={7.5 + pulso} fill="none" stroke="#FFD23F" strokeWidth={2} opacity={c1s} />}
+        </g>
+      ))}
+      {chispa > 0 && chispa < 1 && [-1, 1].map((sg) => { const q = mezcla({ x: 8 * sg, y: YM - 80 }, { x: 17 * sg, y: YM - 68 }, chispa); return <circle key={sg} cx={q.x} cy={q.y} r={3.5} fill="#FFD23F" />; })}
+      <text x={36} y={YM - 98} className={s.protChico}>C1q</text>
+    </g>
+  );
+}
+
+function Complemento({ d, p }: { d: Extract<DatosProceso, { clase: 'complemento' }>; p: number }) {
+  const [g0, g1] = ETAPA[d.fase];
+  const G = g0 + (g1 - g0) * p;
+  const igm = d.ab === 'IgM';
+  /** Avance local de la etapa `e` entre `a` y `b` (0–1). */
+  const L = (e: number, a: number, b: number) => tramo(G - e, a, b);
+  /** Rótulo que aparece en la etapa `e` (desde `a`) y se va al empezar la siguiente. */
+  const vis = (e: number, a: number) => L(e, a, a + 0.1) * (1 - L(e, 1, 1.12));
+  const pulso = Math.sin(G * 26) * 1.2;
+
+  // ── Etapa 0: C1
+  const c1Baja = easeOut(L(0, 0.08, 0.36));
+  const unido = L(0, 0.36, 0.44), c1r = L(0, 0.46, 0.58), chispa = L(0, 0.58, 0.68), c1s = L(0, 0.66, 0.76);
+  const c1sCorta = (k: number) => k > 0 && k < 1;
+  const C1S: Pt = { x: C1X + 17, y: YM - 68 };
+
+  // ── Etapa 1: C4 y C2
+  const c4Llega = easeInOut(L(1, 0.04, 0.24)), c4Corte = L(1, 0.24, 0.34), c4Sep = L(1, 0.33, 0.5), c4aVa = L(1, 0.33, 0.62), c4Pega = L(1, 0.48, 0.56);
+  const c2Llega = easeInOut(L(1, 0.52, 0.68)), c2Corte = L(1, 0.68, 0.78), c2bVa = L(1, 0.76, 0.96);
+  const C4_JUNTO: Pt = { x: 128, y: YM - 62 };
+  const conv3 = L(1, 0.84, 0.94);
+
+  // ── Etapa 2: C3 (seis cortes) + amplificación
+  const c3s = C3B_X.map((_, i) => { const a = 0.04 + i * 0.12; return { llega: easeInOut(L(2, a, a + 0.08)), corte: L(2, a + 0.08, a + 0.1), sep: easeInOut(L(2, a + 0.1, a + 0.18)) }; });
+  const ampli = L(2, 0.7, 0.95);
+  const PUNTO_CORTE3: Pt = { x: 166, y: YM - 34 };
+
+  // ── Etapa 3: C5
+  const c3bSube = easeInOut(L(3, 0.04, 0.22)), conv5 = L(3, 0.18, 0.28), c5Llega = easeInOut(L(3, 0.22, 0.42)), c5Corte = L(3, 0.42, 0.5), c5Sep = L(3, 0.5, 0.85);
+  const C5_JUNTO: Pt = { x: 198, y: YM - 42 };
+
+  // ── Etapa 4: MAC
+  const c6 = easeInOut(L(4, 0.04, 0.18)), c7 = easeInOut(L(4, 0.18, 0.3)), hunde = easeInOut(L(4, 0.3, 0.4)), c8 = easeInOut(L(4, 0.4, 0.5));
+  const c9 = Array.from({ length: 12 }, (_, i) => easeOut(L(4, 0.52 + i * 0.03, 0.6 + i * 0.03)));
+  const nubes = 1 - L(4, 0, 0.3); // C3a y C5a ya se fueron al plasma
+
+  // ── Etapa 5: agua y lisis
+  const flujo = L(5, 0.02, 0.7), hinchazon = L(5, 0.3, 0.62), grieta = easeOut(L(5, 0.62, 0.78)) * 40, hb = L(5, 0.64, 0.98);
+  const anilloOp = 1 - L(5, 0, 0.25);
+
+  // Paredes del poro en corte: C8 + C9 a la izquierda, C9 a la derecha.
+  const paredes = [
+    { x: MAC_X - 13, k: c8, col: CC.c8 }, { x: MAC_X - 18.5, k: c9[0], col: CC.c9 }, { x: MAC_X - 24, k: c9[2], col: CC.c9 },
+    { x: MAC_X + 8.5, k: c9[1], col: CC.c9 }, { x: MAC_X + 14, k: c9[3], col: CC.c9 }, { x: MAC_X + 19.5, k: c9[5], col: CC.c9 },
+  ];
+  const lista = igm && d.fase === 'rapida' ? ROTULOS_IGM : ROTULOS.filter((r) => r.g >= g0 - 1e-6 && r.g < g1 - 1e-6);
+  let rot: Rotulo | null = null;
+  for (const r of lista) if (r.g <= G + 1e-6) rot = r;
+  const rotOp = rot ? easeOut(tramo(G - rot.g, 0, 0.06 * (g1 - g0))) : 0;
+
+  return (
+    <g>
+      <Titulo texto="Vía clásica del complemento" sub={igm ? 'La IgM la dispara sola; dos IgG tienen que estar juntas' : 'Cada paso activa al siguiente, sobre la membrana de la célula'} />
+      <Riel G={G} />
+      <Membrana grieta={grieta} hinchazon={hinchazon} />
+
+      {/* Anticuerpos sobre la célula */}
+      {igm ? <IgMGrapa /> : AB_X.map((x) => <g key={x} transform={`translate(${x},${YM - 22}) rotate(180)`}><Anticuerpo ab="IgG" d={40} /></g>)}
+      {!igm && <text x={AB_X[1] + 16} y={YM - 40} className={s.protChico} opacity={L(0, 0, 0.08) * (1 - L(0, 0.3, 0.4))}>Fc</text>}
+
+      {/* Una IgG sola no basta: el C1q baja, no se queda y se va */}
+      {d.fase === 'c1' && !igm && (() => {
+        const op = L(0, 0.06, 0.14) * (1 - L(0, 0.86, 1));
+        const baja = easeOut(L(0, 0.1, 0.3)), sube = easeInOut(L(0, 0.34, 0.52));
+        const dy = -40 * (1 - baja) - 45 * sube;
+        return (
+          <g opacity={op}>
+            <g transform={`translate(330,${YM - 22}) rotate(180)`}><Anticuerpo ab="IgG" d={40} /></g>
+            <g transform={`translate(330,${dy})`} opacity={0.55 * (1 - sube)}>
+              {[-30, -18, -6, 6, 18, 30].map((x) => <g key={x}><path d={`M0,${YM - 86} Q${x * 0.5},${YM - 74} ${x},${YM - 54}`} stroke={CC.c1q} strokeWidth={2} fill="none" strokeDasharray="3 3" /><circle cx={x} cy={YM - 50} r={5} fill="none" stroke={CC.c1q} strokeWidth={1.8} /></g>)}
+            </g>
+            <text x={366} y={YM - 30} className={s.protChico} opacity={L(0, 0.34, 0.44)}>Una IgG sola:</text>
+            <text x={366} y={YM - 16} className={s.protChico} opacity={L(0, 0.34, 0.44)}>el C1q no se queda</text>
+          </g>
+        );
+      })()}
+
+      {/* C1 */}
+      <C1 dy={-(1 - c1Baja) * 45} op={c1Baja} unido={unido} c1r={c1r} chispa={chispa} c1s={c1s} pulso={pulso * L(0, 0.66, 0.76)} />
+      <g opacity={vis(0, 0.46)}>
+        <text x={18} y={YM - 77} className={s.protChico} style={{ fill: CC.c1r }}>C1r</text>
+        <line x1={40} y1={YM - 81} x2={C1X - 15} y2={YM - 80} stroke={CC.c1r} strokeWidth={1.2} />
+        <text x={18} y={YM - 61} className={s.protChico} style={{ fill: CC.c1s }}>C1s</text>
+        <line x1={40} y1={YM - 65} x2={C1X - 24} y2={YM - 68} stroke={CC.c1s} strokeWidth={1.2} />
       </g>
-      <Prot x={190} y={ym - 16} r={18} color="#B4507E" nombre="C4b2a" op={conv} esc={easeBack(Math.min(1, conv))} />
-      {conv > 0.6 && <text x={164} y={ym - 42} className={ls.lupaNota} opacity={conv}>C3 convertasa</text>}
-      {/* C3 → C3a (se va) + C3b (se pega) */}
-      {c3 > 0 && <circle cx={190 + 40 * c3} cy={ym - 70 - 60 * c3} r={7} fill="#E5484D" opacity={1 - tramo(c3, 0.8, 1) * 0.3} />}
-      {c3 > 0.3 && <text x={238} y={ym - 128} className={ls.lupaNota} opacity={tramo(c3, 0.3, 0.6)}>C3a: anafilatoxina</text>}
-      {[230, 262, 296, 330].map((x, i) => { const k = tramo(c3, 0.2 + i * 0.15, 0.45 + i * 0.15); return k > 0 ? <circle key={x} cx={x} cy={ym - 6} r={7 * easeBack(k)} fill="#C0397A" stroke="#fff" strokeWidth={1.5} /> : null; })}
-      {c3 > 0.7 && <text x={234} y={ym + 38} className={ls.lupaNota} opacity={tramo(c3, 0.7, 1)}>C3b: opsonina (se pega a la célula)</text>}
-      {/* C5 → C5a (quimiotaxis) */}
-      {c5 > 0 && <circle cx={350 + 30 * c5} cy={ym - 30 - 90 * c5} r={8} fill="#8A4FCF" />}
-      {c5 > 0.4 && <text x={392} y={ym - 116} className={ls.lupaNota} opacity={tramo(c5, 0.4, 0.8)}>C5a: atrae neutrófilos</text>}
-      {/* MAC: C5b-C9, poro en la bicapa */}
-      {mac > 0 && (
-        <g transform={`translate(480,${ym + 7})`}>
-          {Array.from({ length: 8 }, (_, i) => { const k = tramo(mac, i * 0.1, 0.3 + i * 0.1); return <rect key={i} x={-26 + i * 6.5} y={-30 * k} width={5.5} height={46 * k} rx={2.5} fill={i < 4 ? '#7C5CD6' : '#5B3FB0'} opacity={k} />; })}
-          {mac > 0.8 && <text x={-30} y={-42} className={ls.lupaNota}>MAC (C5b-C9)</text>}
-          {agua > 0 && [0, 1, 2].map((i) => <path key={i} d={`M${-12 + i * 10},${-60 + agua * 60} l0,14 m-4,-5 l4,5 l4,-5`} stroke="#2C8FD6" strokeWidth={2.2} fill="none" opacity={1 - agua * 0.5} />)}
+
+      {/* C4 → C4a + C4b; C2 → C2b + C2a */}
+      {c1sCorta(c4Corte) && <line x1={C1S.x} y1={C1S.y} x2={C4_JUNTO.x} y2={C4_JUNTO.y} stroke={CC.c1s} strokeWidth={2} strokeDasharray="4 3" opacity={Math.sin(Math.PI * c4Corte)} />}
+      {c4Llega > 0 && c4Sep <= 0 && <Prot {...mezcla({ x: 250, y: 98 }, C4_JUNTO, c4Llega)} r={15} color={CC.c4} nombre="C4" />}
+      <Corte x={C4_JUNTO.x - 6} y={C4_JUNTO.y - 2} k={c4Corte} />
+      {c4Sep > 0 && <Frag p={arco(C4_JUNTO, { x: 232, y: 106 }, c4aVa, 20)} r={5} color={CC.c4} nombre="C4a" op={1 - tramo(c4aVa, 0.7, 1)} />}
+      {c4Sep > 0 && <Prot {...mezcla(C4_JUNTO, C4B, easeInOut(c4Sep))} r={13} color={CC.c4} nombre="C4b" />}
+      <Corte x={C4B.x} y={YM} k={c4Pega} />
+      {c1sCorta(c2Corte) && <line x1={C1S.x} y1={C1S.y} x2={C2A.x} y2={C2A.y - 6} stroke={CC.c1s} strokeWidth={2} strokeDasharray="4 3" opacity={Math.sin(Math.PI * c2Corte)} />}
+      {c2Llega > 0 && <Prot {...mezcla({ x: 268, y: 118 }, C2A, c2Llega)} r={c2Corte >= 0.5 ? 11 : 12} color={CC.c2} nombre={c2Corte >= 0.5 ? 'C2a' : 'C2'} />}
+      <Corte x={C2A.x + 6} y={C2A.y - 10} k={c2Corte} />
+      {c2Corte >= 0.5 && <Frag p={arco({ x: C2A.x + 4, y: C2A.y - 10 }, { x: 252, y: 132 }, c2bVa, 18)} r={4.5} color={CC.c2} nombre="C2b" op={1 - tramo(c2bVa, 0.7, 1)} />}
+      {conv3 > 0 && <rect x={C4B.x - 18} y={YM - 30} width={C2A.x - C4B.x + 34} height={30} rx={14} fill="none" stroke="#FFD23F" strokeWidth={2} strokeDasharray="5 4" opacity={conv3 * (1 - L(3, 0.1, 0.25))} />}
+      <text x={C4B.x - 8} y={YM - 36} className={s.protChico} opacity={vis(1, 0.86)}>C3 convertasa</text>
+
+      {/* C3 → C3a + C3b, seis veces, y luego cientos */}
+      {c3s.map((c, i) => {
+        const desde = { x: 236 + i * 12, y: 96 };
+        const destino = { x: C3B_X[i], y: YM - 9 };
+        const esConv = i === 0 && c3bSube > 0;
+        return (
+          <g key={i}>
+            {c.llega > 0 && c.sep <= 0 && <Prot {...mezcla(desde, PUNTO_CORTE3, c.llega)} r={11} color={CC.c3} nombre="C3" />}
+            <Corte x={PUNTO_CORTE3.x + 4} y={PUNTO_CORTE3.y - 6} k={c.corte} />
+            {c.sep > 0 && <Frag p={arco(PUNTO_CORTE3, C3A_P[i], c.sep, 16)} r={5} color={CC.c3a} op={0.9 * nubes} />}
+            {c.sep > 0 && <Prot {...(esConv ? mezcla(destino, C3B_CONV, c3bSube) : mezcla(PUNTO_CORTE3, destino, c.sep))} r={9} color={CC.c3} nombre="C3b" />}
+          </g>
+        );
+      })}
+      {ampli > 0 && Array.from({ length: 6 }, (_, i) => { const k = easeBack(tramo(ampli, i * 0.12, 0.3 + i * 0.12)); return k > 0 ? <circle key={i} cx={368 + i * 8} cy={YM - 4} r={3.4 * k} fill={CC.c3} stroke="#fff" strokeWidth={1} /> : null; })}
+      <text x={366} y={YM - 14} className={s.protChico} opacity={vis(2, 0.72)}>×100</text>
+      <text x={318} y={134} className={s.protChico} style={{ fill: CC.c3a }} opacity={vis(2, 0.3) * nubes}>C3a: anafilatoxina</text>
+      <text x={196} y={YM - 26} className={s.protChico} style={{ fill: CC.c3 }} opacity={vis(2, 0.82)}>C3b: opsonina</text>
+
+      {/* C5 → C5a + C5b; la C5 convertasa es C4b2a3b */}
+      {conv5 > 0 && <rect x={C4B.x - 18} y={YM - 48} width={C2A.x - C4B.x + 34} height={48} rx={16} fill="none" stroke="#FFD23F" strokeWidth={2} strokeDasharray="5 4" opacity={conv5 * (1 - L(4, 0, 0.2))} />}
+      <text x={C4B.x - 8} y={YM - 54} className={s.protChico} opacity={vis(3, 0.2)}>C5 convertasa</text>
+      {c5Llega > 0 && c5Sep <= 0 && <Prot {...mezcla({ x: 262, y: 96 }, C5_JUNTO, c5Llega)} r={13} color={CC.c5} nombre="C5" />}
+      <Corte x={C5_JUNTO.x - 4} y={C5_JUNTO.y + 4} k={c5Corte} />
+      {c5Sep > 0 && <Frag p={arco(C5_JUNTO, C5A_P, easeInOut(tramo(c5Sep, 0, 0.6)), 14)} r={6} color={CC.c5} op={nubes} />}
+      <text x={C5A_P.x - 28} y={C5A_P.y + 22} className={s.protChico} style={{ fill: CC.c5 }} opacity={L(3, 0.62, 0.72) * nubes}>C5a: atrae neutrófilos</text>
+
+      {/* MAC: C5b recoge C6 y C7, se hunde, entra C8 y los C9 cierran el anillo */}
+      {paredes.map((w, i) => w.k > 0 ? <rect key={i} x={w.x} y={YM - 26 - (1 - w.k) * 34} width={4.6} height={44} rx={2.2} fill={w.col} opacity={w.k} /> : null)}
+      {c6 > 0 && <Prot {...mezcla({ x: 400, y: 98 }, { x: C6.x, y: C6.y + hunde * 7 }, c6)} r={9} color={CC.c6} nombre="C6" />}
+      {c7 > 0 && <Prot {...mezcla({ x: 470, y: 96 }, { x: C7.x, y: C7.y + hunde * 7 }, c7)} r={9} color={CC.c7} nombre="C7" />}
+      {c5Sep > 0 && <Prot {...(c5Sep < 1 ? arco(C5_JUNTO, C5B, easeInOut(c5Sep), 46) : { x: C5B.x, y: C5B.y + hunde * 7 })} r={11} color={CC.c5b} nombre="C5b" />}
+      {c8 > 0 && c8 < 1 && <Prot {...mezcla({ x: 500, y: 96 }, { x: MAC_X - 11, y: YM - 22 }, c8)} r={8} color={CC.c8} nombre="C8" />}
+      <text x={MAC_X - 66} y={YM - 50} className={s.protChico} opacity={vis(4, 0.9)}>MAC (C5b-C9)</text>
+
+      {/* El anillo visto desde arriba */}
+      {G > 4.5 && (
+        <g transform={`translate(${ANILLO.x},${ANILLO.y})`} opacity={L(4, 0.5, 0.56) * anilloOp}>
+          <circle r={11} className={s.citoplasmaLupa} />
+          {Array.from({ length: 13 }, (_, i) => {
+            const k = i === 0 ? c8 : c9[i - 1];
+            const a = (i / 13) * 360 - 90;
+            return k > 0 ? <rect key={i} x={-3} y={-24} width={6} height={12} rx={3} fill={i === 0 ? CC.c8 : CC.c9} opacity={k} transform={`rotate(${a + 90})`} /> : null;
+          })}
+          <text y={40} textAnchor="middle" className={s.protChico}>desde arriba</text>
         </g>
       )}
-      {p > 0.9 && <text x={LUPA_W / 2} y={LUPA_H - 12} textAnchor="middle" className={ls.lupaOk} opacity={tramo(p, 0.9, 1)}>{msg}</text>}
+
+      {/* Agua y Na⁺ que entran; hemoglobina que sale */}
+      {flujo > 0 && flujo < 1 && Array.from({ length: 7 }, (_, i) => {
+        const f = (flujo * 3 + i / 7) % 1;
+        const y = YM - 64 + f * 92;
+        const op = Math.sin(Math.PI * f) * (1 - tramo(flujo, 0.85, 1));
+        return i % 3 === 2
+          ? <text key={i} x={MAC_X + 1} y={y} textAnchor="middle" className={s.protChico} style={{ fill: '#B48A1E' }} opacity={op}>Na⁺</text>
+          : <path key={i} d={`M${MAC_X + 2},${y - 6} q5,7 0,10 q-5,-3 0,-10 Z`} fill={CC.agua} opacity={op} />;
+      })}
+      {/* El agua que entra se reparte por el interior */}
+      {flujo > 0.15 && Array.from({ length: 16 }, (_, i) => {
+        const k = tramo(flujo, 0.15 + i * 0.04, 0.25 + i * 0.04) * (1 - tramo(hb, 0, 0.3));
+        if (k <= 0) return null;
+        const x = MAC_X + (i % 2 ? 1 : -1) * (12 + i * 17), y = YM + 21 + (i % 3) * 4;
+        return x > 16 && x < 564 ? <path key={i} d={`M${x},${y - 4} q3.5,5 0,7 q-3.5,-2 0,-7 Z`} fill={CC.agua} opacity={0.7 * k} /> : null;
+      })}
+      {hb > 0 && Array.from({ length: 9 }, (_, i) => {
+        const k = tramo(hb, i * 0.06, 0.5 + i * 0.05);
+        if (k <= 0) return null;
+        const ang = -Math.PI / 2 + (i - 4) * 0.13;
+        return <circle key={i} cx={528 + Math.cos(ang) * 70 * k} cy={YM + 6 + Math.sin(ang) * 100 * k} r={3.6} fill={CC.hb} opacity={1 - tramo(k, 0.85, 1) * 0.4} />;
+      })}
+      <text x={512} y={100} textAnchor="end" className={s.protChico} style={{ fill: CC.hb }} opacity={L(5, 0.74, 0.84)}>hemoglobina</text>
+
+      {rot && <text x={LUPA_W / 2} y={LUPA_H - 10} textAnchor="middle" className={rot.ok ? ls.lupaOk : s.pasoLupa} opacity={rotOp}>{rot.t}</text>}
     </g>
   );
 }

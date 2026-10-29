@@ -19,7 +19,7 @@ export const ENFERMEDADES: FilaEnfermedad[] = [
   { nombre: 'Urticaria', tipo: 'Tipo I', blanco: 'Alimentos, fármacos, físicos', manifestacion: 'Habones por edema de la dermis', destino: { parte: 'fase-inmediata', paso: 'm-3' } },
   { nombre: 'Alergia alimentaria', tipo: 'Tipo I', blanco: 'Maní, mariscos, leche, huevo', manifestacion: 'Más peristaltismo; puede dar anafilaxia', destino: { parte: 'anafilaxia', paso: 'a-3' } },
   { nombre: 'Anemia hemolítica autoinmune', tipo: 'Tipo II', blanco: 'Proteínas del hematíe (Rh, antígeno I)', manifestacion: 'Hemólisis, anemia', destino: { parte: 'tipo-2', paso: 'd-1' } },
-  { nombre: 'Reacción transfusional ABO', tipo: 'Tipo II', blanco: 'Antígenos A/B del donante', manifestacion: 'Hemólisis intravascular, hemoglobinuria', destino: { parte: 'tipo-2', paso: 'd-3' } },
+  { nombre: 'Reacción transfusional ABO', tipo: 'Tipo II', blanco: 'Antígenos A/B del donante', manifestacion: 'Hemólisis intravascular, hemoglobinuria', destino: { parte: 'tipo-2', paso: 'd-igm' } },
   { nombre: 'Enfermedad hemolítica del recién nacido', tipo: 'Tipo II', blanco: 'Rh (D) del hematíe fetal', manifestacion: 'Anemia, ictericia, hidrops', destino: { parte: 'tipo-2', paso: 'd-5' } },
   { nombre: 'Púrpura trombocitopénica autoinmune', tipo: 'Tipo II', blanco: 'GpIIb/IIIa plaquetaria', manifestacion: 'Sangrado', destino: { parte: 'tipo-2', paso: 'd-10' } },
   { nombre: 'Síndrome de Goodpasture', tipo: 'Tipo II', blanco: 'Membrana basal de glomérulo y alvéolo', manifestacion: 'Nefritis, hemorragia pulmonar', destino: { parte: 'tipo-2', paso: 'd-7' } },

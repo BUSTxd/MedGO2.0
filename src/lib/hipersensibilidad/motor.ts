@@ -585,7 +585,10 @@ function aplicar(e: Escena, a: Accion, p: number, m: Memo) {
     case 'proceso': {
       if (!e.actores[a.cerca]) return;
       const i = e.procesos.findIndex((x) => x.id === a.id);
-      const st: ProcesoSt = { id: a.id, cerca: a.cerca, lado: a.lado ?? 'der', datos: a.datos, p, op: easeOut(tramo(p, 0, 0.08)), persist: !!a.persist };
+      // Una lupa que sigue abierta del paso anterior (`persist`) no se apaga y
+      // vuelve a encender: continúa con la etapa siguiente en el mismo sitio.
+      const sigue = i !== -1 && !e.procesos[i].saliendo;
+      const st: ProcesoSt = { id: a.id, cerca: a.cerca, lado: a.lado ?? 'der', datos: a.datos, p, op: sigue ? 1 : easeOut(tramo(p, 0, 0.08)), persist: !!a.persist };
       if (i === -1) e.procesos.push(st); else e.procesos[i] = st;
       return;
     }

@@ -85,20 +85,31 @@ o propios. Cada capítulo empieza donde terminó el anterior.
 
 | # | Paso | Contenido |
 |---|---|---|
-| 0 | El anticuerpo apunta a la célula | IgG/IgM contra antígenos de la superficie o la matriz: propios o exógenos unidos (fármacos, microbios). Destruye, inflama o altera la función. |
-| 1 | Opsonización | IgG reconocida por FcγR del fagocito; C3b/C4b por sus receptores → fagocitosis. [C] Bazo: hemólisis extravascular. |
-| 2 | Vía clásica | IgM o IgG activan C1q → C3b (opsonina), C3a, C5a, MAC (lupa). |
-| 3 | MAC: lisis | Poros en la bicapa → lisis osmótica (solo células de pared delgada). [C] Transfusión ABO: hemólisis intravascular. |
-| 4 | ADCC | NK y macrófagos por FcγR: lisis sin fagocitosis; papel incierto. |
-| 5 | Rh | Enfermedad hemolítica del feto y recién nacido: IgG materna cruza la placenta. [C] Inmunoglobulina anti-D. |
-| 6 | Fármacos | El fármaco se une a la membrana (hapteno) o cambia la conformación del antígeno. |
-| 7 | Goodpasture: el depósito | Anticuerpos contra la membrana basal de glomérulos y alvéolos; [C] NC1 del colágeno IV α3, IF lineal. |
-| 8 | Goodpasture: la inflamación | C5a atrae neutrófilos; FcR y C3b los activan: proteasas, ROS → nefritis y hemorragia pulmonar. |
-| 9 | Pénfigo | Anticuerpos contra desmogleínas: proteasas, se sueltan los queratinocitos → ampollas. |
-| 10 | Más inflamación por anticuerpos | Fiebre reumática (mimetismo estreptococo–miocardio), vasculitis ANCA, rechazo vascular (tabla 6.3). |
-| 11 | Miastenia gravis | Anticuerpos contra el AChR bloquean la transmisión y bajan los receptores: debilidad. |
-| 12 | Graves | Anticuerpos contra el receptor de TSH lo estimulan: hipertiroidismo. |
-| 13 | Resumen | Destrucción, inflamación, disfunción; anemia perniciosa (factor intrínseco, B₁₂). |
+| 0 | El anticuerpo apunta a la célula | IgG/IgM contra antígenos de la superficie o la matriz: propios o exógenos unidos (fármacos, microbios). Fab sobre el antígeno, Fc hacia fuera. Hoja de ruta: destruye, inflama o altera la función. |
+| 1 | Vía clásica, 1: C1 | [C] El C1q necesita dos Fc a la vez (dos IgG vecinas o una IgM); una IgG sola no lo retiene. C1r se autoactiva y activa al C1s (proteasa). C1-INH; angioedema hereditario. |
+| 2 | Vía clásica, 2: C3 convertasa | [C] C1s corta C4 (C4a se va, C4b se pega por tioéster) y C2 (C2b se va, C2a queda): C4b2a. Nota de nomenclatura C4b2b. |
+| 3 | Vía clásica, 3: C3b | [C] La convertasa parte cientos de C3: C3a (anafilatoxina) al plasma, C3b a la membrana (opsonina). Amplificación por la vía alternativa. Coombs anti-C3. |
+| 4 | Vía clásica, 4: C5 convertasa | [C] C3b + C4b2a = C4b2a3b; corta C5: C5a (quimiotaxis) sale, C5b queda. Anuncia las tres consecuencias: opsonización, MAC, inflamación. |
+| 5 | Consecuencia 1: fagocitosis | El macrófago del bazo se adhiere por FcγR y CR1, la rodea, la encierra en el fagosoma: hemólisis extravascular, esferocitos. [C] AHAI caliente. |
+| 6 | Con IgM, la cascada llega al final | [C] Transfusión ABO: anti-A/anti-B son IgM; una sola (en grapa) fija el C1q. La cascada corre de C1 a C5b de un tirón. |
+| 7 | Consecuencia 2: el MAC | [C] C5b + C6 + C7 (se hunde en la bicapa) + C8 (poro pequeño) + 10–16 C9 en anillo. CD59 y DAF; HPN; déficit C5–C9 y Neisseria. |
+| 8 | Entra agua y revienta | Poros → entran agua y Na⁺ → se hincha → revienta → hemoglobina libre: hemólisis intravascular, hemoglobinuria. |
+| 9 | ADCC | Sin complemento: NK por CD16 → perforina y granzimas → apoptosis; papel incierto. |
+| 10 | Rh | Primer embarazo: sensibilización en el parto; siguiente: IgG anti-D cruza la placenta y opsoniza. [C] Inmunoglobulina anti-D. |
+| 11 | Fármacos | La penicilina se pega a la membrana (hapteno) → IgG contra el complejo; o el fármaco cambia la conformación del antígeno. |
+| 12 | Goodpasture: el depósito | Antígeno fijo en el tejido: membrana basal de glomérulos y alvéolos; [C] NC1 del colágeno IV α3, IF lineal. |
+| 13 | Consecuencia 3: el C5a llama neutrófilos | La vía clásica sobre la membrana basal: C5a difunde, atrae neutrófilos, que se pegan por FcγR y CR1. |
+| 14 | Goodpasture: fagocitosis frustrada | No pueden englobar la membrana: vierten proteasas y ROS → rotura → proteinuria, hematuria, hemorragia pulmonar. |
+| 15 | Pénfigo | Anticuerpos contra desmogleínas → proteasas → se sueltan los queratinocitos → ampolla suprabasal. |
+| 16 | Más inflamación por anticuerpos | Fiebre reumática (mimetismo estreptococo–miocardio), vasculitis ANCA, rechazo vascular (tabla 6.3). |
+| 17 | Miastenia gravis | Tercera manera: anticuerpos contra el AChR bloquean la transmisión y bajan los receptores: debilidad. |
+| 18 | Graves | Anticuerpos contra el receptor de TSH lo estimulan: hipertiroidismo. |
+| 19 | Resumen | Destrucción, inflamación, disfunción; anemia perniciosa (factor intrínseco, B₁₂). |
+
+La vía clásica (pasos 1–4 y 6–8) es una sola lupa que sigue abierta de un paso al siguiente
+(`persist`): cada paso anima su etapa con las anteriores ya hechas, un riel arriba marca en qué
+etapa va (C1 → C3 convertasa → C3b → C5 convertasa → MAC → Lisis) y un rótulo numerado abajo
+dice qué pasa ahora.
 
 ## 6 · Tipo III — Complejos inmunitarios (arteriola → glomérulo → arteriola)
 

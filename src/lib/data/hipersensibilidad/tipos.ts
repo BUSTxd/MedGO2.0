@@ -82,6 +82,10 @@ export type Particula =
   | 'histamina' | 'lipido' | 'citocina' | 'quimiocina' | 'alarmina' | 'il4' | 'il5' | 'il13' | 'ifn' | 'il17'
   | 'ige' | 'igg' | 'complemento' | 'ros' | 'enzima' | 'mbp' | 'ach' | 'hormona' | 'perforina' | 'plasma' | 'hemoglobina';
 
+/** Etapa de la vía clásica que anima la lupa (las anteriores ya están hechas).
+ *  `rapida` recorre de C1 a C5b de un tirón: la IgM, cuando ya se vio despacio. */
+export type FaseComplemento = 'c1' | 'c4c2' | 'c3' | 'c5' | 'mac' | 'agua' | 'rapida';
+
 /** Datos de cada proceso de la lupa. */
 export type DatosProceso =
   // Reutilizados del laboratorio de linfocitos
@@ -93,7 +97,7 @@ export type DatosProceso =
   | { clase: 'araquidonico' }
   | { clase: 'mediadores' }
   | { clase: 'cinetica'; marca?: 'antihistaminico' | 'corticoide' }
-  | { clase: 'complemento'; enfasis: 'opsonina' | 'mac' | 'inflamacion' }
+  | { clase: 'complemento'; fase: FaseComplemento; ab?: 'IgG' | 'IgM' }
   | { clase: 'receptor'; caso: 'miastenia' | 'graves' }
   | { clase: 'precipitacion' }
   | { clase: 'suero' }
