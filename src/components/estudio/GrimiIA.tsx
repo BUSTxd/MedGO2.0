@@ -3,6 +3,7 @@ import { createContext, useCallback, useContext, useMemo, useRef, useState } fro
 import dynamic from 'next/dynamic';
 import { useChatIA, type PedidoIA } from '@/components/ia/useChatIA';
 import { IAProvider } from '@/components/ia/IAContext';
+import { GrimiVozContext } from './grimiVoz';
 
 // La mascota trae la hoja de estilos de la landing: baja aparte, cuando ya se pintó la interfaz.
 const Grimi = dynamic(() => import('./Grimi'), { ssr: false });
@@ -43,6 +44,8 @@ export default function GrimiIA({ puedeUsar, subir, sobreBarra, children }: {
   const claseRef = useRef<string | null>(null);
   // Cada pedido nuevo abre el globo de GRIMI.
   const [llamada, setLlamada] = useState(0);
+  // Una voz grabada sonando (la narración de un laboratorio): GRIMI habla con ella.
+  const [voz, setVoz] = useState(false);
 
   const pedir = useCallback((p: PedidoIA, claseId: string) => {
     const c = chatRef.current;
@@ -59,10 +62,12 @@ export default function GrimiIA({ puedeUsar, subir, sobreBarra, children }: {
 
   return (
     <GrimiContext.Provider value={valor}>
-      <IAProvider value={ia}>
-        {children}
-        <Grimi subir={subir} sobreBarra={sobreBarra} chat={puedeUsar ? chat : null} llamada={llamada} />
-      </IAProvider>
+      <GrimiVozContext.Provider value={setVoz}>
+        <IAProvider value={ia}>
+          {children}
+          <Grimi subir={subir} sobreBarra={sobreBarra} chat={puedeUsar ? chat : null} llamada={llamada} voz={voz} />
+        </IAProvider>
+      </GrimiVozContext.Provider>
     </GrimiContext.Provider>
   );
 }

@@ -33,7 +33,7 @@ const ACCION: Partial<Record<AccionIA, string>> = {
 
 type Fase = 'cerrado' | 'abierto' | 'saliendo';
 
-export default function Grimi({ subir = false, sobreBarra = false, chat = null, llamada = 0 }: {
+export default function Grimi({ subir = false, sobreBarra = false, chat = null, llamada = 0, voz = false }: {
   /** El aviso de respuestas del admin ocupa la esquina: GRIMI sube encima. */
   subir?: boolean;
   /** Exámenes en el teléfono: hay una barra fija abajo. */
@@ -42,6 +42,8 @@ export default function Grimi({ subir = false, sobreBarra = false, chat = null, 
   chat?: ChatIA | null;
   /** Cada pedido nuevo desde el lector la sube: GRIMI abre su globo con la respuesta. */
   llamada?: number;
+  /** Suena una voz grabada (narración de un laboratorio): pone cara de hablar. */
+  voz?: boolean;
 }) {
   const [fase, setFase] = useState<Fase>('cerrado');
   const [vista, setVista] = useState<'saludo' | 'respuesta'>('saludo');
@@ -113,7 +115,7 @@ export default function Grimi({ subir = false, sobreBarra = false, chat = null, 
 
   const diciendoSaludo = fase === 'abierto' && vista === 'saludo' && letras < texto.length;
   const diciendoRespuesta = enCurso && largo > 0;
-  const hablando = diciendoSaludo || diciendoRespuesta;
+  const hablando = diciendoSaludo || diciendoRespuesta || voz;
   // Cada letra re-renderiza el globo: la mascota sólo cuando cambia lo que se le pide.
   const mascota = useMemo(
     () => <Mascota pausado={false} cls={s.mascota} detalle={1} ratos orden={orden} hablando={hablando} />,
