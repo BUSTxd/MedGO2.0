@@ -882,6 +882,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        resumen: resumenHtml('pat-tbl-5'),
       },
     ],
   },
