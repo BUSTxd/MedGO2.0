@@ -1,0 +1,443 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Laboratorio «Lupus eritematoso sistémico» (dashboard/laboratorio/lupus)
+
+   Comparte la cáscara del ciclo celular (cicloCelular.module.css), la de
+   «Maduración de linfocitos» (linfocitos.module.css: fondo blanco, rótulos,
+   portada) y la de «Hipersensibilidad» (muro de pago, candado, voz). Aquí van
+   las láminas propias (las infografías del capítulo 0) y las células dibujadas.
+   En oscuro, gris casi negro neutro y los mismos acentos, como maduración.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.fondo {
+  pointer-events: none;
+  --lp-rojo: #C2385A;
+  --lp-fantasma: #8A93A6;
+  --lp-luz-vaso: #FCEDEB;
+  --lp-pared: #F1D0CC;
+}
+:global(.dark-mode) .fondo { --lp-rojo: #F07A95; --lp-luz-vaso: #2E1D20; --lp-pared: #4A2E2C; }
+
+/* ─── Texto de las láminas ─────────────────────────────────────────────────── */
+.tituloGrande { font-family: var(--sans); font-size: 124px; font-weight: 800; letter-spacing: -0.02em; fill: var(--texto); }
+.palabraCol { font-family: var(--sans); font-size: 76px; font-weight: 800; letter-spacing: -0.015em; fill: var(--texto); }
+.palabraLupus { fill: var(--lp-rojo); }
+.palabra { fill: var(--texto); }
+.textoLupus { fill: var(--lp-rojo); }
+.significado { font-family: var(--sans); font-size: 30px; font-weight: 600; fill: var(--texto); }
+.lSub { font-family: var(--sans); font-size: 23px; font-weight: 500; fill: var(--texto-2); }
+.lEtiqueta { font-family: var(--sans); font-size: 22px; font-weight: 700; fill: var(--texto); }
+.lEtiquetaMayus { font-family: var(--sans); font-size: 17px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; fill: var(--texto-2); }
+.lEtiquetaRoja { font-family: var(--sans); font-size: 22px; font-weight: 800; letter-spacing: 0.04em; fill: #E5484D; }
+.lEtiquetaVerde { font-family: var(--sans); font-size: 22px; font-weight: 800; letter-spacing: 0.04em; fill: #1F9A6A; }
+.subrayado { stroke: var(--lp-rojo); stroke-width: 6; stroke-linecap: round; }
+.guia { stroke: var(--texto-2); stroke-width: 1.6; stroke-dasharray: 5 6; opacity: 0.7; fill: none; }
+.eje { stroke: var(--texto-2); stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Pastillas y tarjetas */
+.chip { fill: var(--campo-3); stroke: var(--linea); stroke-width: 1.5; filter: drop-shadow(0 4px 10px rgba(23, 27, 38, 0.08)); }
+.chipTxt { font-family: var(--sans); font-size: 23px; font-weight: 700; fill: var(--texto); }
+.chipPista { fill: #FBEEF1; stroke: #C2385A; stroke-width: 2; }
+:global(.dark-mode) .chipPista { fill: #3A1F28; stroke: #F07A95; }
+.tarjeta { fill: var(--campo-3); stroke: var(--linea); stroke-width: 1.5; filter: drop-shadow(0 6px 16px rgba(23, 27, 38, 0.07)); }
+.tarjetaTitulo { font-family: var(--sans); font-size: 30px; font-weight: 800; fill: var(--texto); }
+.discoIcono { fill: var(--campo-2); stroke: var(--linea); stroke-width: 1.5; }
+.etiquetaOrgano { fill: var(--campo-2); stroke: var(--linea); stroke-width: 1; }
+.etiquetaOrganoTxt { font-family: var(--sans); font-size: 18px; font-weight: 700; fill: var(--texto-2); }
+.sello { fill: none; stroke: var(--lp-rojo); stroke-width: 5; }
+.selloTxt { font-family: var(--sans); font-size: 36px; font-weight: 900; letter-spacing: 0.14em; fill: var(--lp-rojo); }
+:global(.dark-mode) .chip, :global(.dark-mode) .tarjeta { filter: none; }
+
+/* Iconos de órganos */
+.icoLinea { fill: none; stroke: rgba(23, 27, 38, 0.45); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.icoBrillo { fill: none; stroke: #FFFFFF; stroke-width: 5; stroke-linecap: round; opacity: 0.55; }
+.icoBrillo2 { fill: #FFFFFF; opacity: 0.4; }
+.icoHueso { fill: #F2EBDD; stroke: #C9B99A; stroke-width: 2; }
+.icoOjo { fill: #3A2A2A; }
+.icoBurbuja { fill: #FFFFFF; opacity: 0.75; }
+:global(.dark-mode) .icoHueso { fill: #4A4438; stroke: #6E6450; }
+
+/* ─── 1 · El nombre y el rostro ────────────────────────────────────────────── */
+.rostro { fill: none; stroke: var(--texto); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.85; }
+.pelo { fill: var(--campo-2); stroke: var(--trazo); stroke-width: 2; }
+.mordida { fill: none; stroke: #8C4A3E; stroke-width: 3.5; stroke-linecap: round; }
+.rayo { stroke: var(--lp-rojo); stroke-width: 2.5; stroke-dasharray: 3 9; stroke-linecap: round; }
+:global(.dark-mode) .mordida { stroke: #C98A7E; }
+
+/* ─── 2 · El vaso ──────────────────────────────────────────────────────────── */
+.luzVaso { fill: var(--lp-luz-vaso); }
+.paredVaso { fill: var(--lp-pared); }
+.endotelio { fill: #F2C6C1; stroke: #C77D75; stroke-width: 1.2; }
+.hematie { fill: #E06A5E; stroke: #B84E44; stroke-width: 1.3; }
+.hematieCentro { fill: #F4A39A; opacity: 0.8; }
+.deposito { fill: #2C3E9E; stroke: #FFFFFF; stroke-width: 1; }
+:global(.dark-mode) .endotelio { fill: #5A3533; stroke: #8A5650; }
+:global(.dark-mode) .hematie { fill: #B9483F; stroke: #8E352E; }
+:global(.dark-mode) .hematieCentro { fill: #D06A60; }
+:global(.dark-mode) .deposito { fill: #7F95F0; stroke: #1B1E26; }
+
+/* ─── 3 · Brotes ───────────────────────────────────────────────────────────── */
+.curva { fill: none; stroke: var(--lp-rojo); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.areaCurva { fill: var(--lp-rojo); opacity: 0.08; }
+.puntaCurva { fill: var(--campo-3); stroke: var(--lp-rojo); stroke-width: 4; }
+.bandaRemision { fill: #1F9A6A; opacity: 0.08; }
+.bandaBrote { fill: #E5484D; opacity: 0.08; }
+.rielEspectro { fill: var(--campo-2); stroke: var(--linea); stroke-width: 1; }
+.stopLeve { stop-color: #F6D7DE; }
+:global(.dark-mode) .stopLeve { stop-color: #3A2A2E; }
+.libro { font-family: var(--sans); font-size: 38px; font-weight: 600; fill: var(--texto-2); }
+.tachado { stroke: var(--texto-2); stroke-width: 4; stroke-linecap: round; }
+.suLupus { font-family: var(--sans); font-size: 76px; font-weight: 800; letter-spacing: -0.01em; fill: var(--lp-rojo); }
+
+/* ─── 4 · A quién le da ────────────────────────────────────────────────────── */
+.razon { font-family: var(--sans); font-size: 150px; font-weight: 800; }
+.razonSep { fill: var(--texto-2); }
+.bandaEdad { fill: #C2385A; opacity: 0.07; stroke: #C2385A; stroke-width: 2; stroke-dasharray: 8 8; stroke-opacity: 0.5; }
+.bandaEdadBorde { fill: none; stroke: #C2385A; stroke-width: 4; }
+.curvaVaron { fill: none; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ─── 5 · El gran imitador ─────────────────────────────────────────────────── */
+.cuerpoSil { fill: #F4E6DE; stroke: none; }
+.cuerpoMiembro { fill: none; stroke: #F4E6DE; stroke-width: 46; stroke-linecap: round; stroke-linejoin: round; }
+.pielBrillo { fill: none; stroke: #E0A487; stroke-width: 7; opacity: 0.85; }
+.organoFantasma { opacity: 0.16; filter: grayscale(1); }
+.haloOrgano { fill: none; stroke: var(--lp-rojo); stroke-width: 5; }
+.vasos { fill: none; stroke: #D33A44; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; opacity: 0.85; }
+:global(.dark-mode) .cuerpoSil { fill: #3A3230; }
+:global(.dark-mode) .cuerpoMiembro { stroke: #3A3230; }
+
+/* ─── 6 · La ruta ──────────────────────────────────────────────────────────── */
+.rutaBase { fill: none; stroke: var(--campo-2); stroke-width: 44; stroke-linecap: round; }
+.rutaColor { fill: none; stroke: url(#lp-ruta); stroke-width: 44; stroke-linecap: round; opacity: 0.35; }
+.rutaLinea { fill: none; stroke: var(--trazo); stroke-width: 3; stroke-dasharray: 16 14; stroke-linecap: round; }
+.paradaAro { fill: none; stroke: var(--campo-3); stroke-width: 5; }
+.paradaNum { font-family: var(--sans); font-size: 24px; font-weight: 800; fill: #FFFFFF; }
+.paradaTitulo { font-family: var(--sans); font-size: 30px; font-weight: 800; }
+.paradaCap { font-family: var(--sans); font-size: 20px; font-weight: 500; fill: var(--texto-2); }
+.paradaCapRinon { font-family: var(--sans); font-size: 20px; font-weight: 800; fill: #1F8F8A; }
+.pulsoAqui { fill: none; stroke: #D9881E; stroke-width: 4; opacity: 0.7; }
+.chipAqui { fill: #D9881E; }
+.chipAquiTxt { font-family: var(--sans); font-size: 24px; font-weight: 800; fill: #FFFFFF; }
+:global(.dark-mode) .rutaBase { stroke: #22252C; }
+:global(.dark-mode) .paradaCapRinon { fill: #4FC6BF; }
+
+/* ─── Célula nucleada ──────────────────────────────────────────────────────── */
+.citoplasma { fill: #FBE7EC; stroke: #D98AA0; stroke-width: 3; }
+.membranaInterna { fill: none; stroke: #F3C4D1; stroke-width: 1.5; }
+.mitocondria { fill: #F4C9A8; stroke: #D69468; stroke-width: 1.5; }
+.vesicula { fill: #F6D3DD; stroke: #D98AA0; stroke-width: 1; }
+.reticulo { fill: none; stroke: #E9B2C2; stroke-width: 2; stroke-dasharray: 10 6; }
+.nucleo { fill: #D9C9EE; stroke: #7A5BB0; stroke-width: 3; }
+.eucromatina { fill: none; stroke: #9A80C9; stroke-width: 2; opacity: 0.6; }
+.cromatina { fill: #6A4A9E; opacity: 0.75; }
+.nucleolo { fill: #4E3380; }
+.poroNuclear { fill: #FFFFFF; stroke: #7A5BB0; stroke-width: 1; }
+.reflejo { fill: #FFFFFF; opacity: 0.35; }
+:global(.dark-mode) .citoplasma { fill: #3A2530; stroke: #A0607A; }
+:global(.dark-mode) .membranaInterna { stroke: #5A3444; }
+:global(.dark-mode) .mitocondria { fill: #5A4030; stroke: #8E6444; }
+:global(.dark-mode) .vesicula { fill: #4A2E3A; stroke: #8A5468; }
+:global(.dark-mode) .reticulo { stroke: #6A3E50; }
+:global(.dark-mode) .nucleo { fill: #2E2648; stroke: #8E70C9; }
+:global(.dark-mode) .cromatina { fill: #A88AE0; }
+:global(.dark-mode) .nucleolo { fill: #C9B2F0; }
+:global(.dark-mode) .poroNuclear { fill: #1B1E26; }
+:global(.dark-mode) .reflejo { opacity: 0.08; }
+
+/* ─── Capítulo 1 · la cerradura y sus apartados ───────────────────────────── */
+.candadoCuerpo { fill: #EDEFF4; stroke: #9AA3B5; stroke-width: 5; }
+.candadoArco { fill: none; stroke: #9AA3B5; stroke-width: 22; stroke-linecap: round; }
+.ojoCerradura { fill: #4A5263; }
+.candadoTxt { font-family: var(--sans); font-size: 27px; font-weight: 800; fill: var(--texto-2); }
+.chipTxtBlanco { font-family: var(--sans); font-size: 21px; font-weight: 800; fill: #FFFFFF; }
+.tituloSeccion { font-family: var(--sans); font-size: 34px; font-weight: 800; fill: var(--texto); }
+.respuesta { font-family: var(--sans); font-size: 52px; font-weight: 800; fill: var(--lp-rojo); }
+.razonChica { font-family: var(--sans); font-size: 46px; font-weight: 800; }
+.lSubChico { font-family: var(--sans); font-size: 18px; font-weight: 500; fill: var(--texto-2); }
+.chipVerde { fill: #E6F5EE; stroke: #1F9A6A; stroke-width: 2; }
+.tarjetaVerde { fill: #E6F5EE; stroke: #1F9A6A; stroke-width: 2.5; }
+.burbuja { fill: var(--campo-3); stroke: var(--linea); stroke-width: 2; }
+.tachadoRojo { stroke: #E5484D; stroke-width: 5; stroke-linecap: round; }
+.cruz { fill: none; stroke: #E5484D; stroke-width: 9; stroke-linecap: round; }
+.lineaCien { stroke: var(--texto-2); stroke-width: 2.5; stroke-dasharray: 7 7; }
+.cromosoma { fill: #E3DCF2; stroke: #7B4FC9; stroke-width: 2.5; }
+.bandaCromosoma { fill: #B9A6E0; opacity: 0.7; }
+.cromosomaX { fill: #E3DCF2; stroke: #7B4FC9; stroke-width: 2.5; }
+.cadena { stroke: var(--texto-2); stroke-width: 2; }
+.plato { fill: var(--campo-2); stroke: var(--texto-2); stroke-width: 2.5; }
+.poste { stroke: var(--texto-2); stroke-width: 9; stroke-linecap: round; }
+.pivote { fill: var(--campo-3); stroke: var(--texto-2); stroke-width: 4; }
+.cornea { fill: #EFE3D2; stroke: #D3BFA2; stroke-width: 1.5; }
+.dermis { fill: #FBF2EE; }
+.basal { stroke: #C9A2B8; stroke-width: 3; }
+.queratinocito { fill: #F8DCD0; stroke: #D9A693; stroke-width: 1.5; }
+.queratinocitoApo { fill: #E9B3B9; stroke: #B86A78; stroke-width: 1.5; }
+.nucleoQueratinocito { fill: #A98BC9; opacity: 0.8; }
+.nucleoPicnotico { fill: #4E3380; }
+.blebPiel { fill: #F3C9CF; stroke: #B86A78; stroke-width: 1.2; }
+.sol { fill: #F6C43A; stroke: #E0A11E; stroke-width: 3; }
+.rayoSol { stroke: #F0B429; stroke-width: 6; stroke-linecap: round; }
+.rayoUv { fill: none; stroke: #8A4FCF; stroke-width: 3.5; stroke-linejoin: round; stroke-linecap: round; }
+.lEtiquetaUv { font-family: var(--sans); font-size: 24px; font-weight: 800; fill: #8A4FCF; }
+.virusEnvoltura { fill: #EDE4F7; stroke: #8A4FCF; stroke-width: 3; }
+.virusCapside { fill: #D4C2EE; stroke: #6A3EAE; stroke-width: 3; }
+.adnVirus { fill: none; stroke: #4E3380; stroke-width: 4; stroke-linecap: round; }
+.espiculaVirus { stroke: #8A4FCF; stroke-width: 3; }
+.botonVirus { fill: #8A4FCF; }
+.haloMimetismo { fill: none; stroke: #E8B21E; stroke-width: 5; stroke-dasharray: 10 7; }
+.parecido { font-family: var(--sans); font-size: 64px; font-weight: 800; fill: #E8B21E; }
+.segmento { fill: var(--campo-2); stroke: var(--linea); stroke-width: 2; }
+.humo { fill: none; stroke: var(--texto-2); stroke-width: 3; stroke-linecap: round; opacity: 0.5; }
+.cigarroPapel { fill: #FFFFFF; stroke: #C4CAD4; stroke-width: 2; }
+.cigarroFiltro { fill: #E0A46A; stroke: #C4864E; stroke-width: 2; }
+.picoHierro { fill: none; stroke: #6B7385; stroke-width: 10; stroke-linecap: round; }
+.picoMango { stroke: #A97A4E; stroke-width: 9; stroke-linecap: round; }
+.polvo { fill: #B9BFCB; }
+.flechaComun { fill: none; stroke: var(--texto-2); stroke-width: 3; stroke-linecap: round; opacity: 0.75; }
+.cajaComun { fill: #FBEEF1; stroke: #C2385A; stroke-width: 2.5; }
+.cajaResultado { fill: var(--campo-3); stroke: var(--lp-rojo); stroke-width: 2; }
+.frasco { fill: #FFFFFF; stroke: #C4CAD4; stroke-width: 3; }
+/* Cuerpo apoptótico */
+.citoplasmaApo { fill: #F2C9D3; stroke: #C77C92; stroke-width: 2.5; }
+.bleb { fill: #F7DCE3; stroke: #C77C92; stroke-width: 1.5; }
+.fragmentoNuclear { fill: #4E3380; }
+:global(.dark-mode) .candadoCuerpo { fill: #2A2F38; stroke: #5A6375; }
+:global(.dark-mode) .candadoArco { stroke: #5A6375; }
+:global(.dark-mode) .ojoCerradura { fill: #C4CAD4; }
+:global(.dark-mode) .chipVerde, :global(.dark-mode) .tarjetaVerde { fill: #12302A; }
+:global(.dark-mode) .cromosoma, :global(.dark-mode) .cromosomaX { fill: #2E2648; stroke: #A88AE0; }
+:global(.dark-mode) .bandaCromosoma { fill: #5A4E8E; }
+:global(.dark-mode) .cornea { fill: #3E362C; stroke: #5E5242; }
+:global(.dark-mode) .dermis { fill: #221C1E; }
+:global(.dark-mode) .queratinocito { fill: #4A3430; stroke: #7A5650; }
+:global(.dark-mode) .queratinocitoApo { fill: #5A2A34; stroke: #9A5A68; }
+:global(.dark-mode) .blebPiel, :global(.dark-mode) .bleb { fill: #4A2A34; stroke: #9A5A68; }
+:global(.dark-mode) .nucleoPicnotico, :global(.dark-mode) .fragmentoNuclear { fill: #C9B2F0; }
+:global(.dark-mode) .virusEnvoltura { fill: #2E2648; }
+:global(.dark-mode) .virusCapside { fill: #3E3266; stroke: #A88AE0; }
+:global(.dark-mode) .adnVirus { stroke: #C9B2F0; }
+:global(.dark-mode) .cigarroPapel, :global(.dark-mode) .frasco { fill: #22252C; stroke: #4A5263; }
+:global(.dark-mode) .cajaComun { fill: #3A1F28; stroke: #F07A95; }
+:global(.dark-mode) .citoplasmaApo { fill: #4A2A34; stroke: #9A5A68; }
+
+/* ─── Capítulo 2 · epidermis y ciudad ─────────────────────────────────────── */
+.dermisFondo { fill: #FBF2EE; }
+.huecoQueratinocito { fill: #FBF2EE; }
+.colageno { fill: none; stroke: #EBD6CE; stroke-width: 2.2; }
+.fibroblasto { fill: #F3D9D0; stroke: #D7A898; stroke-width: 1.2; }
+.nucleoFibro { fill: #A9798A; }
+.capilarPiel { fill: none; stroke: #E39A92; stroke-width: 9; stroke-linecap: round; opacity: 0.6; }
+.membranaBasal { fill: none; stroke: #C9A2B8; stroke-width: 3.5; }
+.escama { fill: none; stroke: #D3BFA2; stroke-width: 9; stroke-linecap: round; opacity: 0.85; }
+.granulosa { fill: #F3D6C6; stroke: #CFA08B; stroke-width: 1.5; }
+.granuloQh { fill: #6E4A7E; }
+.nucleoBasal { fill: #7E64AE; }
+.tinteUv { fill: #8A4FCF; opacity: 0.07; }
+.chipCapa { fill: var(--campo-3); stroke: var(--linea); stroke-width: 1; opacity: 0.92; }
+.etiquetaCapa { font-family: var(--sans); font-size: 18px; font-weight: 700; fill: var(--texto-2); }
+.hiloLupa { stroke: var(--texto-2); stroke-width: 2; stroke-dasharray: 6 6; }
+.anilloLupaL { fill: none; stroke: var(--texto-2); stroke-width: 3; }
+.lupaBorde { fill: none; stroke: #9AA3B5; stroke-width: 9; }
+.lupaFondo { fill: #FFF7F4; stroke: var(--linea); stroke-width: 1.5; }
+.auraCalma { fill: #1F9A6A; fill-opacity: 0.1; stroke: #1F9A6A; stroke-width: 3; stroke-dasharray: 8 8; stroke-opacity: 0.5; }
+.barrera { fill: #E5484D; }
+.barreraRota { fill: #E5484D; opacity: 0.35; }
+.chispa { stroke: #E8B21E; stroke-width: 7; stroke-linecap: round; }
+.respuestaMorada { font-family: var(--sans); font-size: 52px; font-weight: 800; fill: #7B4FC9; }
+.edificio { fill: #E9ECF2; }
+.ventana { fill: #D3D9E4; }
+.vereda { fill: #D9DDE5; }
+.asfalto { fill: #A9B0BE; }
+.lineaCalle { fill: #F5F6F8; }
+.bolsa { fill: #4E5A4A; stroke: #39433A; stroke-width: 2; }
+.bolsaNudo { fill: none; stroke: #39433A; stroke-width: 4; stroke-linecap: round; }
+.contenedor { fill: #3E8E41; stroke: #2E6E31; stroke-width: 2; }
+.camionCaja { fill: #3E8E41; stroke: #2E6E31; stroke-width: 2; }
+.camionCabina { fill: #F0F2F6; stroke: #9AA3B5; stroke-width: 2; }
+.rueda { fill: #2A2F38; }
+.rin { fill: #C4CAD4; }
+.patrulla { fill: #F0F2F6; stroke: #2F6FD0; stroke-width: 3; }
+.ondaLlamada { fill: none; stroke: #2F6FD0; stroke-width: 4; stroke-linecap: round; }
+.histonaNuc { fill: #B9A0E6; stroke: #7B4FC9; stroke-width: 2; }
+.adnNuc { fill: none; stroke: #2F6FD0; stroke-width: 5; stroke-linecap: round; }
+.histonaOx { fill: #D9A0B4; stroke: #A8466A; stroke-width: 2; }
+.adnOx { fill: none; stroke: #A8466A; stroke-width: 5; stroke-linecap: round; stroke-dasharray: 14 6; }
+.auraOx { fill: #E8B21E; opacity: 0.18; }
+.marcaOx { stroke: #E0892E; stroke-width: 3; stroke-linecap: round; }
+:global(.dark-mode) .dermisFondo, :global(.dark-mode) .huecoQueratinocito { fill: #221C1E; }
+:global(.dark-mode) .colageno { stroke: #3A2E30; }
+:global(.dark-mode) .fibroblasto { fill: #4A3436; stroke: #6A4E50; }
+:global(.dark-mode) .granulosa { fill: #4A3830; stroke: #6E5446; }
+:global(.dark-mode) .lupaFondo { fill: #2A2224; }
+:global(.dark-mode) .edificio { fill: #262A33; }
+:global(.dark-mode) .ventana { fill: #343A46; }
+:global(.dark-mode) .vereda { fill: #2E333C; }
+:global(.dark-mode) .asfalto { fill: #1A1D23; }
+:global(.dark-mode) .lineaCalle { fill: #4A5263; }
+:global(.dark-mode) .camionCabina, :global(.dark-mode) .patrulla { fill: #2A2F38; }
+:global(.dark-mode) .histonaNuc { fill: #4A3A6E; }
+:global(.dark-mode) .histonaOx { fill: #5A2A3A; }
+
+/* ─── Piezas genéricas: caja, texto, icono ─────────────────────────────────── */
+.cajaActor { fill: var(--campo-3); stroke-width: 2.2; filter: drop-shadow(0 4px 12px rgba(23, 27, 38, 0.08)); }
+.cajaHalo { fill: none; stroke-width: 5; }
+.cajaTitulo { font-family: var(--sans); font-size: 23px; font-weight: 800; fill: var(--texto); }
+.cajaSub { font-family: var(--sans); font-size: 18px; font-weight: 500; fill: var(--texto-2); }
+.textoActor { font-family: var(--sans); font-weight: 800; fill: var(--texto); }
+:global(.dark-mode) .cajaActor { filter: none; }
+
+/* ─── Capítulo 3 · endosoma, firma, red ───────────────────────────────────── */
+.citoplasmaGrande { fill: #F6EEFB; stroke: #B79AD9; stroke-width: 4; }
+.reticuloGrande { fill: none; stroke: #D9C6EE; stroke-width: 3; }
+.endosomaMem { fill: none; stroke: #8A4FCF; stroke-width: 6; }
+.endosomaLuz { fill: #FBE4EC; }
+.endosomaAlcalino { fill: #DCEBFA; }
+.etiquetaTlr7 { font-family: var(--sans); font-size: 26px; font-weight: 800; fill: #C0396E; }
+.etiquetaTlr9 { font-family: var(--sans); font-size: 26px; font-weight: 800; fill: #2F6FD0; }
+.vesiculaEntrada { fill: #FBE4EC; stroke: #8A4FCF; stroke-width: 3; stroke-dasharray: 8 6; }
+.haloTroya { fill: none; stroke: #E8B21E; stroke-width: 6; }
+.virusFantasma { fill: none; stroke: var(--texto-2); stroke-width: 3; stroke-dasharray: 6 6; }
+.caminoSenal { fill: none; stroke: #E0892E; stroke-width: 3; stroke-dasharray: 6 8; }
+.adnLinea { stroke: #7A5BB0; stroke-width: 5; stroke-linecap: round; }
+.textoIfn { fill: #C2410C; }
+.genTxt { font-family: var(--sans); font-size: 18px; font-weight: 700; fill: var(--texto-2); }
+.endotelioDanado { fill: #E5484D; opacity: 0.5; }
+.hebraNet { fill: none; stroke: #2F6FD0; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: 0.8; }
+.restoNeutrofilo { fill: #E9D3F0; stroke: #B67AC7; stroke-width: 3; stroke-dasharray: 6 5; }
+.bacteria { fill: #4CB848; stroke: #2E7D2A; stroke-width: 1.5; }
+.citoplasmaPdc { fill: #EFE6FA; stroke: #8A4FCF; stroke-width: 3; }
+.reticuloPdc { fill: none; stroke: #C9B2EC; stroke-width: 2.5; }
+:global(.dark-mode) .citoplasmaGrande, :global(.dark-mode) .citoplasmaPdc { fill: #2A2238; stroke: #7A5BB0; }
+:global(.dark-mode) .reticuloGrande, :global(.dark-mode) .reticuloPdc { stroke: #4A3A66; }
+:global(.dark-mode) .endosomaLuz, :global(.dark-mode) .vesiculaEntrada { fill: #3A2230; }
+:global(.dark-mode) .restoNeutrofilo { fill: #3A2A40; }
+
+/* ─── Capítulo 4 · selección y centro germinal ────────────────────────────── */
+.regionMedula { fill: #F7F1FB; stroke: #B79AD9; stroke-width: 2.5; stroke-dasharray: 10 8; }
+.regionPeriferia { fill: #EEF5FB; stroke: #8DB5DE; stroke-width: 2.5; stroke-dasharray: 10 8; }
+.linfoManto { fill: #C7D3EE; }
+.zonaClara { fill: #F3F6FC; stroke: #9DB0E0; stroke-width: 2; }
+.zonaOscura { fill: #DCE3F5; }
+.centroblasto { fill: #8FA6DE; }
+.centrocito { fill: #B9C8EC; }
+:global(.dark-mode) .regionMedula { fill: #241E2E; stroke: #6A5A8E; }
+:global(.dark-mode) .regionPeriferia { fill: #1C232E; stroke: #4E6A8E; }
+:global(.dark-mode) .linfoManto { fill: #33405A; }
+:global(.dark-mode) .zonaClara { fill: #1C2230; stroke: #4E5E8E; }
+:global(.dark-mode) .zonaOscura { fill: #262E44; }
+
+/* ─── Capítulos 5 y 6 · termómetro y tubo ────────────────────────────────── */
+.tuboVidrio { fill: none; stroke: var(--texto-2); stroke-width: 5; }
+.tuboTapa { fill: #9AA3B5; }
+.reloj { fill: var(--campo-3); stroke: var(--texto-2); stroke-width: 5; }
+
+/* ─── Capítulo 7 · manos, boca, torso, discoide ───────────────────────────── */
+.piel7 { fill: #F4E1D6; stroke: #D9AE98; stroke-width: 2.5; }
+.articulacion { fill: none; stroke: #C9A595; stroke-width: 6; }
+.una { fill: none; stroke: #D9AE98; stroke-width: 3; }
+.hueso { fill: #E9EEF6; stroke: #B9C4D6; stroke-width: 2; }
+.placaRx { fill: #1E2633; stroke: #3A4558; stroke-width: 2; }
+.erosion { fill: #1E2633; stroke: #E5484D; stroke-width: 2.5; }
+.labio { fill: #D97A80; }
+.bocaInterior { fill: #7A2F3A; }
+.paladar { fill: #E9A0A6; }
+.diente { fill: #FBF8F2; stroke: #D9D2C4; stroke-width: 1.5; }
+.lengua { fill: #D9707A; }
+.ulcera { fill: #F6EBC8; stroke: #E0C47A; stroke-width: 2; }
+.halo7 { fill: #E5484D; opacity: 0.35; }
+.linterna { fill: #FFF6C8; fill-opacity: 0.15; stroke: #E8B21E; stroke-width: 4; stroke-dasharray: 10 8; }
+.anillo { fill: none; stroke: #C2385A; stroke-width: 7; }
+.placaPsor { fill: #D98A90; stroke: #F3E3DA; stroke-width: 4; stroke-dasharray: 3 5; }
+.caraLibre { fill: none; stroke: #1F9A6A; stroke-width: 5; stroke-dasharray: 10 8; }
+.bordePigmento { fill: #8C5A4A; }
+.placaDisco { fill: #D9707A; stroke: #B8505A; stroke-width: 3; }
+.atrofia { fill: #F6EDE6; }
+.tapon { fill: #6E4A3E; }
+.escamaDisco { stroke: #F3E3DA; stroke-width: 5; stroke-linecap: round; }
+.pielCuero { fill: #F2DDD0; }
+.cabello { stroke: #4A3A30; stroke-width: 2.5; stroke-linecap: round; }
+.panelIf { fill: #0E1410; stroke: #2A3A2E; stroke-width: 2; }
+.bandaIf { fill: none; stroke: #6FE08A; stroke-width: 12; stroke-linecap: round; stroke-dasharray: 2 6; }
+.etiquetaIf { font-family: var(--sans); font-size: 18px; font-weight: 700; fill: #9FD9AE; }
+:global(.dark-mode) .piel7 { fill: #4A3A34; stroke: #6E5446; }
+:global(.dark-mode) .atrofia { fill: #5A4A44; }
+:global(.dark-mode) .pielCuero { fill: #4A3A34; }
+
+/* ─── Capítulo 8 · válvula, coronaria, tórax, bazo, pulmón ────────────────── */
+.marcaMitral { fill: none; stroke: var(--texto-2); stroke-width: 3; stroke-dasharray: 6 5; }
+.lupaFondoCorazon { fill: #FBEFF1; stroke: var(--linea); stroke-width: 1.5; }
+.valvaMitral { fill: none; stroke: #E9A8B8; stroke-width: 26; stroke-linecap: round; }
+.cuerda { fill: none; stroke: #D9AE98; stroke-width: 3; }
+.vegetacion { fill: #F3D9A6; stroke: #C99A4A; stroke-width: 2.5; }
+.trayectoEmbolo { fill: none; stroke: #E5484D; stroke-width: 3; stroke-dasharray: 8 7; }
+.paredArteria { fill: #F1D0CC; stroke: #D9A8A2; stroke-width: 3; }
+.luzArteria { fill: #FCEDEB; }
+.placaAtero { fill: #F2E2A6; stroke: #C9AE5A; stroke-width: 2.5; }
+.toraxPared { fill: #FBF3EF; stroke: #D9C2B6; stroke-width: 3; }
+.pulmonGrande { fill: #F7D9DF; stroke: #E0A3B0; stroke-width: 3; }
+.corazonGrande { fill: #E0526E; opacity: 0.85; }
+.diafragma { stroke: #D9C2B6; stroke-width: 4; }
+.serosaInflamada { fill: none; stroke: #E5484D; stroke-width: 9; stroke-opacity: 0.75; }
+.derrame { fill: #9CCBEA; opacity: 0.75; }
+.derrameCardio { fill: none; stroke: #9CCBEA; stroke-width: 22; stroke-opacity: 0.7; }
+.bazo { fill: #B5475A; opacity: 0.85; }
+.pulpaBazo { fill: #F6E3E6; stroke: var(--linea); stroke-width: 1.5; }
+.capaCebolla { fill: none; stroke: #C77D8C; stroke-width: 7; opacity: 0.85; }
+.reticular { fill: none; stroke: #B8505A; stroke-width: 2.5; opacity: 0.75; }
+.arteriaPulmonar { fill: #6E8FD6; stroke: #4A6AB0; stroke-width: 3; }
+.ventriculoDerecho { fill: #B9475A; stroke: #8E2E40; stroke-width: 3; }
+:global(.dark-mode) .lupaFondoCorazon, :global(.dark-mode) .pulpaBazo { fill: #2A2224; }
+:global(.dark-mode) .toraxPared { fill: #221C1E; stroke: #4A3A34; }
+:global(.dark-mode) .pulmonGrande { fill: #4A2A34; stroke: #7A4A56; }
+:global(.dark-mode) .paredArteria { fill: #4A2E2C; stroke: #6A4A44; }
+:global(.dark-mode) .luzArteria { fill: #2E1D20; }
+
+/* ─── Capítulo 9 · glomérulo ──────────────────────────────────────────────── */
+.espacioUrinario { fill: #FBF7F4; }
+.mesangio { fill: #E6D8EE; stroke: #B79AD9; stroke-width: 2; }
+.nucleoMes { fill: #8E70C9; }
+.pedicelo { fill: #CFE3D6; stroke: #7FB396; stroke-width: 1.5; }
+.podocito { fill: #DCEFE3; stroke: #7FB396; stroke-width: 2; }
+.mbg { fill: none; stroke: #8A4FCF; stroke-width: 12; }
+.mbgGruesa { fill: none; stroke: #6A3EAE; stroke-width: 22; opacity: 0.6; }
+.luzCapilar { fill: #FCEDEB; }
+.endotelioFen { fill: none; stroke: #E39A92; stroke-width: 6; stroke-dasharray: 18 6; }
+.depositoG { fill: #2C3E9E; stroke: #FFFFFF; stroke-width: 1.2; }
+.etiquetaDep { font-family: var(--sans); font-size: 22px; font-weight: 800; fill: #2C3E9E; }
+.esclerosisG { fill: #C4CAD4; }
+.bowman { fill: #FBF7F4; stroke: #C9B2A6; stroke-width: 4; }
+.ovilloG { fill: #F6E3E6; }
+.asaG { fill: #FCEDEB; stroke: #E39A92; stroke-width: 3; }
+.asaAlambre { fill: #FCEDEB; stroke: #E0526E; stroke-width: 9; }
+.tromboHialino { fill: #F6C9D6; stroke: #D24E80; stroke-width: 2; }
+.depositoAnillo { fill: none; stroke: #2C3E9E; stroke-width: 4; stroke-dasharray: 3 4; }
+.semiluna { fill: #E8C2A6; stroke: #C9875A; stroke-width: 2; }
+.panelPlata { fill: #F4EEDD; stroke: #C9B98A; stroke-width: 2; }
+.mbgPlata { fill: none; stroke: #2A2A2A; stroke-width: 6; stroke-linecap: round; }
+:global(.dark-mode) .espacioUrinario, :global(.dark-mode) .bowman { fill: #1C1A1C; }
+:global(.dark-mode) .ovilloG, :global(.dark-mode) .luzCapilar, :global(.dark-mode) .asaG, :global(.dark-mode) .asaAlambre { fill: #2E1D20; }
+:global(.dark-mode) .mesangio { fill: #2E2648; }
+:global(.dark-mode) .podocito, :global(.dark-mode) .pedicelo { fill: #1E3026; }
+:global(.dark-mode) .depositoG { fill: #7F95F0; stroke: #1B1E26; }
+:global(.dark-mode) .etiquetaDep { fill: #9FB0F5; }
+
+/* ─── Capítulo 10 · pruebas y criterios ───────────────────────────────────── */
+.tituloSeccionChico { font-family: var(--sans); font-size: 26px; font-weight: 800; fill: var(--texto); }
+.puntaje { font-family: var(--sans); font-size: 120px; font-weight: 800; fill: var(--texto); }
+.lineaUmbral { stroke: var(--texto); stroke-width: 4; stroke-dasharray: 5 4; }
+.letraSoap { font-family: var(--sans); font-size: 44px; font-weight: 800; fill: #FFFFFF; }
+.letraSoapSub { font-family: var(--sans); font-size: 12.5px; font-weight: 700; fill: #FFFFFF; }
+
+/* ─── Portada y lab ────────────────────────────────────────────────────────── */
+.sobretitulo { color: #C2385A; }
+:global(.dark-mode) .sobretitulo { color: #F07A95; }
+.etqPronto {
+  display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 999px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em; vertical-align: 2px;
+  color: var(--texto-2); background: var(--campo-2); border: 1px dashed var(--linea);
+}
+/* Capítulo aún sin animar: las clases de dentro son de linfocitos.module.css
+   (otro hash), así que se atenúa el botón entero. */
+.capPronto { cursor: default; opacity: 0.55; }
+.capPronto:hover { background: none; }
+.parteProxima { opacity: 0.45; cursor: default; }
+.duracionCap { font-variant-numeric: tabular-nums; }

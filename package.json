@@ -16,7 +16,8 @@
     "verificar:ciclo": "node --experimental-strip-types --no-warnings scripts/ciclo-celular/verificar.mjs",
     "verificar:vias-nfkb": "node --experimental-strip-types --no-warnings scripts/vias-nfkb/verificar.mjs",
     "verificar:linfocitos": "node --experimental-strip-types --no-warnings scripts/linfocitos/verificar.mjs",
-    "verificar:hipersensibilidad": "node --experimental-strip-types --no-warnings scripts/hipersensibilidad/verificar.mjs"
+    "verificar:hipersensibilidad": "node --experimental-strip-types --no-warnings scripts/hipersensibilidad/verificar.mjs",
+    "verificar:lupus": "node --experimental-strip-types --no-warnings scripts/lupus/verificar.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.134.0",
