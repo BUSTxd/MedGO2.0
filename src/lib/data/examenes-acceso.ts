@@ -116,11 +116,11 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey | Requisi
   'epidemiologia/parcial-1-pasos': { muestra: 27 },
   // Segundo examen, un banqueo por tema: la primera mitad abierta y el resto con
   // plan. El JSON fuente vive en data/epidemiologia-u2/ (fuera de git).
-  'epidemiologia/parcial-2-mci-nino-joven': { muestra: 14 },
-  'epidemiologia/parcial-2-mci-adulto-gestante': { muestra: 12 },
-  'epidemiologia/parcial-2-paifam': { muestra: 17 },
-  'epidemiologia/parcial-2-esn-generales': { muestra: 19 },
-  'epidemiologia/parcial-2-esn-danos': { muestra: 15 },
+  'epidemiologia/parcial-2-mci-nino-joven': { muestra: 34 },
+  'epidemiologia/parcial-2-mci-adulto-gestante': { muestra: 32 },
+  'epidemiologia/parcial-2-paifam': { muestra: 38 },
+  'epidemiologia/parcial-2-esn-generales': { muestra: 33 },
+  'epidemiologia/parcial-2-esn-danos': { muestra: 29 },
   // Psicología Médica (de pago, tramo Facultad): el parcial 2022-II abierto
   // como muestra; el 2021-I y el de repaso, detrás del plan.
   'psicologia-medica/parcial-2022-2': { free: true },
