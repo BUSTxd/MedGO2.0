@@ -114,13 +114,15 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey | Requisi
   'epidemiologia/parcial-1-susti': {},
   'epidemiologia/parcial-1-kahoot': {},
   'epidemiologia/parcial-1-pasos': { muestra: 27 },
-  // Segundo examen, un banqueo por tema: la primera mitad abierta y el resto con
-  // plan. El JSON fuente vive en data/epidemiologia-u2/ (fuera de git).
-  'epidemiologia/parcial-2-mci-nino-joven': { muestra: 34 },
-  'epidemiologia/parcial-2-mci-adulto-gestante': { muestra: 32 },
-  'epidemiologia/parcial-2-paifam': { muestra: 38 },
-  'epidemiologia/parcial-2-esn-generales': { muestra: 33 },
-  'epidemiologia/parcial-2-esn-danos': { muestra: 29 },
+  // Segundo examen, un banqueo por tema. El JSON fuente vive en
+  // data/epidemiologia-u2/ (fuera de git). TEMPORAL: abiertos enteros por pedido de
+  // BUST (2026-10-31). Para volver al cobro, cambiar cada `free: true` por su
+  // `muestra`, la primera mitad: 34, 32, 38, 33 y 29, en este orden.
+  'epidemiologia/parcial-2-mci-nino-joven': { free: true },
+  'epidemiologia/parcial-2-mci-adulto-gestante': { free: true },
+  'epidemiologia/parcial-2-paifam': { free: true },
+  'epidemiologia/parcial-2-esn-generales': { free: true },
+  'epidemiologia/parcial-2-esn-danos': { free: true },
   // Psicología Médica (de pago, tramo Facultad): el parcial 2022-II abierto
   // como muestra; el 2021-I y el de repaso, detrás del plan.
   'psicologia-medica/parcial-2022-2': { free: true },
