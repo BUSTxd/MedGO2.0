@@ -10,7 +10,7 @@ import { NARRACION } from './narracion';
 
 const ocultar = (at: number, ...ks: string[]) => ks.map((actor) => ({ at, duration: 600, tipo: 'hide' as const, actor }));
 const apagar = (at: number, ...ps: Parameters<typeof param>[0][]) => ps.map((p) => param(p, 0, at, 600));
-function param(p: 'panel' | 'candado' | 'llave1' | 'llave2' | 'llave3' | 'abierta' | 'foco' | 'anticuerpos' | 'ninguna' | 'tresllaves'
+function param(p: 'panel' | 'candado' | 'llave1' | 'llave2' | 'llave3' | 'abierta' | 'foco' | 'anticuerpos' | 'salen' | 'ninguna' | 'tresllaves'
   | 'hla' | 'gemelos' | 'cien' | 'tituloC' | 'duda' | 'pues' | 'faltan' | 'riesgoC1q' | 'limpieza'
   | 'nueve' | 'balanza' | 'testo' | 'ojo' | 'xx' | 'sol' | 'rayos' | 'apoptosisUV' | 'antigenosUV' | 'playa' | 'fps'
   | 'virus' | 'mimetismo' | 'epitopos' | 'tabaco' | 'silice' | 'comun' | 'expuesto'
@@ -37,10 +37,10 @@ const causas: Parte = {
     dc: { forma: 'celula', img: 'dendritica', label: 'Célula dendrítica', sub: 'HLA-DR2 · DR3', d: 170, color: '#8A4FCF', info: 'dendritica' },
     t: { forma: 'celula', img: 't_cd4', label: 'Linfocito T CD4', sub: 'autorreactivo', d: 150, color: '#D24E80', info: 't_cd4' },
     pep: { forma: 'molecula', label: 'Autoantígeno', d: 30, color: L.adn, info: 'autoantigeno' },
-    c1q: { forma: 'proteina', label: 'C1q', d: 76, color: '#C0397A', info: 'c1q' },
+    c1q: { forma: 'dibujo', dibujo: 'c1q', label: 'C1q', d: 92, color: '#C0397A', info: 'c1q' },
     c2: { forma: 'proteina', label: 'C2', d: 76, color: '#A0478F', info: 'c2' },
     c4: { forma: 'proteina', label: 'C4', d: 76, color: '#8A4FCF', info: 'c4' },
-    c1qb: { forma: 'proteina', label: 'C1q', d: 50, color: '#C0397A', info: 'c1q' },
+    c1qb: { forma: 'dibujo', dibujo: 'c1q', label: 'C1q', d: 62, color: '#C0397A', info: 'c1q' },
     mac: { forma: 'celula', img: 'macrofago', label: 'Macrófago', sub: 'retira lo que muere', d: 200, color: '#E8A06A', info: 'macrofago' },
     ap1: { ...AP, label: 'Cuerpo apoptótico' },
     ap2: AP, ap3: AP, ap4: AP, ap5: AP,
@@ -75,7 +75,9 @@ const causas: Parte = {
         param('llave3', 1, 14000, 900),
         param('abierta', 1, 15000, 1000),
         param('anticuerpos', 1, 15800, 2600),
+        param('ninguna', 0, 16300, 700),
         param('tresllaves', 1, 19400, 1000),
+        param('salen', 1, 21000, 2400),
       ],
     },
     {
@@ -88,10 +90,13 @@ const causas: Parte = {
       protagonistas: ['dc', 't'],
       encuadre: 'all',
       acciones: [
-        param('panel', 1, 0, 1400),
-        ...apagar(0, 'abierta', 'anticuerpos', 'llave1', 'llave2', 'llave3', 'ninguna', 'tresllaves'),
-        param('llave1', 0.5, 1200, 700),
-        param('foco', 1, 1200, 600),
+        // Primero se cierra, en el centro; después salen las llaves y se va a la izquierda.
+        param('abierta', 0, 0, 800),
+        ...apagar(0, 'anticuerpos', 'ninguna', 'tresllaves'),
+        ...apagar(600, 'llave1', 'llave2', 'llave3'),
+        param('panel', 1, 700, 1300),
+        param('llave1', 0.5, 2000, 600),
+        param('foco', 1, 2000, 600),
         param('hla', 0.5, 2300, 1200),
         param('hla', 1, 6000, 900),
         { at: 10100, duration: 900, tipo: 'appear', actor: 'dc', pos: { col: 7, row: 6.5 }, from: 'grow' },

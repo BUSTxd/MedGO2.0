@@ -1,243 +1,170 @@
 'use client';
-// Voz grabada de un capítulo (copia del `useVoz` de «Hipersensibilidad»). Aquí
-// cada paso ya dura lo que su frase (el motor toma las marcas como reloj), así
-// que voz y animación van juntas por construcción; lo de abajo queda como red
-// para lo que la construcción no cubre: la latencia al arrancar el audio, un
-// atasco de red, cambiar de sitio a mano. La frase de un paso acaba en la marca del siguiente
-// (`marcas`, sacadas de las pausas del audio): si la voz llega antes, se apaga
-// con un fundido en esa pausa y espera a que la animación entre al paso
-// siguiente; si llega después, el paso no encadena hasta que la voz llega.
-// Cambiar de sitio a mano (anterior, siguiente, barra, reiniciar, encender la
-// voz a mitad) la lleva a la marca del paso más lo que lleve animado.
+// Voz grabada de un capítulo. Aquí la voz va primero (cada paso dura lo que su
+// frase: `duracionesVoz` del motor), así que el audio y la animación son la misma
+// línea de tiempo y EL AUDIO ES EL RELOJ: mientras suena, el instante de la escena
+// se lee de `currentTime`, no se cuenta aparte. Por eso no hay nada que resincronizar:
+// si la red atasca la voz o tarda en arrancar, la animación espera sola; si un
+// fotograma tarda, no se queda atrás. Mover la barra, saltar de paso o reiniciar
+// mueve los dos a la vez (`saltar`, en el propio gesto). Sin voz (apagada o rota),
+// el reproductor vuelve a su reloj de siempre.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Narracion } from '@/lib/data/lupus/tipos';
 import type { Reproductor } from './useReproductor';
 import { useGrimiVoz } from '@/components/estudio/grimiVoz';
+import { useVolumen } from '../hipersensibilidad/useVolumen';
 import { ANTES_DEL_FINAL, liberarVoz, precargarVoz, tomarVoz } from './vozCarga';
 
 const CLAVE = 'medgo-lupus-voz';
-/** Lo más que se espera a que cargue la voz antes de arrancar sin ella (ms). */
+/** Sin avanzar este rato (ms) la voz se da por perdida y la animación sigue sin ella. */
 const ESPERA_MAX = 5000;
-/** La voz se apaga este rato (s) antes de la marca: las marcas caen ~50 ms
- *  antes de que empiece la frase siguiente, al final de la pausa. */
-const CORTE_ANTES = 0.02;
-/** Fundidos (ms): al callar entre frases, al retomar y al pausar a mano. */
-const FUNDIDO_SALIDA = 140;
+/** Cuánto (ms) tiene que durar una espera para avisar: las breves no se avisan. */
+const AVISO_CARGA = 350;
+/** Fundidos (ms): al arrancar y al pausar, para que no suene un corte seco. */
 const FUNDIDO_ENTRADA = 60;
 const FUNDIDO_PAUSA = 90;
-/** Si el reloj del audio no avanza en este rato (ms), el paso deja de esperarlo. */
-const ATASCO_MAX = 1500;
 
 /** `siguiente`: la voz del capítulo que viene (si está abierto), para precargarla. */
 export function useVoz(narracion: Narracion | undefined, rep: Reproductor, siguiente?: Narracion) {
   const [activa, setActiva] = useState(true);
   const audio = useRef<HTMLAudioElement | null>(null);
-  const tRef = useRef(rep.t);
-  tRef.current = rep.t;
-  const previo = useRef({ paso: rep.paso, arrastrando: false });
+  const { volumen, ajustable, ganancia, aplicar, cambiar, restaurar } = useVolumen(audio);
   // En `/estudio`, GRIMI habla mientras suena la voz (en `/dashboard` no hay GRIMI).
   const grimi = useGrimiVoz();
   const repRef = useRef(rep);
   repRef.current = rep;
-  // El capítulo en pausa a la espera de que cargue la voz: quita la espera y lo retoma.
-  const espera = useRef<null | (() => void)>(null);
   // El navegador no deja sonar sin un gesto (p. ej. al recargar la página, que arranca
   // el capítulo solo): el capítulo queda en pausa hasta que el alumno pulse.
   const [bloqueada, setBloqueada] = useState(false);
-  // Ya sonó una vez este audio: los arranques siguientes no esperan.
-  const arrancado = useRef(false);
-  // Paso cuya frase ya se dijo entera: la voz calla hasta que la animación pase al siguiente.
-  const callado = useRef<number | null>(null);
-  // El paso está esperando a la voz (espejo de `rep.retener`, para no repetir el aviso).
-  const retenido = useRef(false);
+  // La voz tiene que sonar y no puede (bajando o buscando): la animación la está esperando.
+  const [cargando, setCargando] = useState(false);
+  // Lo que el reproductor pide ahora: distingue una pausa nuestra de una ajena.
+  const debeSonar = useRef(false);
+  // Desde cuándo no avanza el audio (ms); se reinicia cada vez que debe sonar.
+  const quieto = useRef(0);
   const fundido = useRef(0);
+  const siguienteRef = useRef(siguiente);
+  siguienteRef.current = siguiente;
 
   useEffect(() => {
     try { if (localStorage.getItem(CLAVE) === '0') setActiva(false); } catch { /* sin almacenamiento */ }
   }, []);
 
-  const retener = useCallback((r: boolean) => {
-    if (retenido.current === r) return;
-    retenido.current = r;
-    repRef.current.retener(r);
-  }, []);
-
-  /** Lleva el volumen a `hasta` en `ms`: sin cortes secos al callar o retomar
-   *  (en iOS el volumen es de solo lectura y queda el corte, siempre en una pausa). */
+  /** Lleva el volumen a `hasta` en `ms`: sin cortes secos al pausar o retomar
+   *  (en iOS el volumen es de solo lectura y queda el corte). */
   const fundir = useCallback((a: HTMLAudioElement, hasta: number, ms: number, alAcabar?: () => void) => {
     cancelAnimationFrame(fundido.current);
-    const desde = a.volume, t0 = performance.now();
+    const desde = ganancia.current, t0 = performance.now();
     const paso = (ahora: number) => {
       const k = Math.min(1, Math.max(0, (ahora - t0) / ms));
-      a.volume = desde + (hasta - desde) * k;
+      aplicar(a, desde + (hasta - desde) * k);
       if (k < 1) fundido.current = requestAnimationFrame(paso);
       else alAcabar?.();
     };
     fundido.current = requestAnimationFrame(paso);
-  }, []);
-
-  // Deja el capítulo quieto hasta que la voz SUENA: hasta que su reloj (`currentTime`)
-  // avanza de verdad. Ni `canplay` ni `playing` bastan: al pasar de Anafilaxia al tipo II
-  // el audio se crea y se arranca a la vez, `playing` llega con el primer trozo y el
-  // sonido se queda enseguida esperando datos (`waiting`) mientras la barra seguía sola.
-  // Al recargar no pasaba porque, hasta el clic, el audio ya se había bajado entero.
-  const esperarVoz = useCallback((a: HTMLAudioElement) => {
-    if (espera.current) return;
-    cancelAnimationFrame(fundido.current);
-    a.volume = 1;
-    const desde = a.currentTime;
-    let raf = 0, t = 0;
-    const soltar = () => {
-      cancelAnimationFrame(raf);
-      clearTimeout(t);
-      a.removeEventListener('error', listo);
-      espera.current = null;
-    };
-    function listo() {
-      soltar();
-      arrancado.current = true;
-      if (!repRef.current.reproduciendo) repRef.current.alternar();
-    }
-    const mirar = () => {
-      if (!a.paused && a.currentTime > desde + 0.03) listo();
-      else raf = requestAnimationFrame(mirar);
-    };
-    espera.current = listo;
-    repRef.current.pausar();
-    a.addEventListener('error', listo);
-    t = window.setTimeout(listo, ESPERA_MAX);
-    raf = requestAnimationFrame(mirar);
-    a.play().catch((e: DOMException) => {
-      if (e.name !== 'NotAllowedError') return;
-      // El navegador pide un gesto: sin voz no avanza, y al pulsar arrancan juntas.
-      soltar();
-      setBloqueada(true);
-    });
-  }, []);
-
-  const siguienteRef = useRef(siguiente);
-  siguienteRef.current = siguiente;
+  }, [aplicar, ganancia]);
 
   // Solo se baja con la voz encendida (es lo que más pesa del capítulo), y solo la
   // de este capítulo: la del siguiente se pide cuando faltan ANTES_DEL_FINAL s (vozCarga.ts).
   useEffect(() => {
     if (!narracion || !activa) return;
     const a = tomarVoz(narracion);
+    aplicar(a, 1);
     audio.current = a;
-    let precargada = false;
-    const avanza = () => {
-      if (precargada || narracion.duracion - a.currentTime > ANTES_DEL_FINAL) return;
-      precargada = true;
-      precargarVoz(siguienteRef.current);
+    const r0 = repRef.current;
+    a.currentTime = narracion.marcas[r0.paso] + r0.t / 1000;
+    let ultimoT = a.currentTime;
+    // La voz se dio por perdida y la animación sigue sola: al volver, se pone a su altura.
+    let perdida = false;
+    const fijar = (paso: number, t: number) => {
+      a.currentTime = narracion.marcas[paso] + t / 1000;
+      ultimoT = a.currentTime;
+      quieto.current = performance.now();
     };
-    arrancado.current = false;
-    callado.current = null;
-    let raf = 0, ultimoT = -1, desdeT = 0;
-    // Mientras suena: ¿ya dijo la frase de este paso? ¿o la animación tiene que esperarla?
-    const vigilar = () => {
-      raf = 0;
-      if (a.paused || a.ended) { retener(false); return; }
-      const r = repRef.current;
-      const limite = narracion.marcas[r.paso + 1];
-      if (limite === undefined || r.arrastrando || callado.current !== null) retener(false);
-      else if (a.currentTime >= limite - CORTE_ANTES - (FUNDIDO_SALIDA / 1000) * a.playbackRate) {
-        retener(false);
-        // La animación ya acabó el paso y está por encadenar: la voz sigue sin cortarse.
-        // Si no, se apaga en la pausa y espera a que la animación llegue.
-        if (!(r.auto && r.terminado)) {
-          callado.current = r.paso;
-          fundir(a, 0, FUNDIDO_SALIDA, () => a.pause());
-        }
-      } else {
+    r0.reloj.current = {
+      saltar: (paso, t) => { perdida = false; fijar(paso, t); },
+      enPaso: (paso) => {
+        if (a.error) return null;
+        if (a.ended) return Infinity;
         const ahora = performance.now();
-        if (a.currentTime !== ultimoT) { ultimoT = a.currentTime; desdeT = ahora; }
-        retener(ahora - desdeT < ATASCO_MAX);
-      }
-      raf = requestAnimationFrame(vigilar);
+        if (a.currentTime !== ultimoT) {
+          ultimoT = a.currentTime;
+          quieto.current = ahora;
+          if (perdida) { perdida = false; const r = repRef.current; fijar(r.paso, r.t); }
+        } else if (ahora - quieto.current > ESPERA_MAX) perdida = true;
+        return perdida ? null : (a.currentTime - narracion.marcas[paso]) * 1000;
+      },
     };
-    const habla = () => {
-      grimi?.('habla');
-      ultimoT = -1;
-      if (!raf) raf = requestAnimationFrame(vigilar);
+    let aviso = 0;
+    const espera = () => {
+      clearTimeout(aviso);
+      grimi?.('espera');
+      aviso = window.setTimeout(() => { if (debeSonar.current) setCargando(true); }, AVISO_CARGA);
     };
-    // Callada entre dos frases, GRIMI cierra la boca pero no se pone a seguir al puntero.
-    const calla = () => grimi?.(callado.current !== null && repRef.current.reproduciendo ? 'espera' : false);
-    // La voz se corta a mitad por falta de datos: la animación la espera.
-    const atasco = () => {
-      calla();
-      if (!a.paused && repRef.current.reproduciendo && !repRef.current.arrastrando) esperarVoz(a);
+    const yaSuena = () => { clearTimeout(aviso); setCargando(false); };
+    const habla = () => { yaSuena(); grimi?.('habla'); };
+    const calla = () => {
+      yaSuena();
+      grimi?.(false);
+      // La pausó otro (el sistema, unos audífonos que se quitan): la animación no se queda sola.
+      if (a.paused && !a.ended && debeSonar.current) repRef.current.pausar();
+    };
+    const avanza = () => {
+      if (narracion.duracion - a.currentTime <= ANTES_DEL_FINAL) precargarVoz(siguienteRef.current);
     };
     // Con la pestaña oculta la animación se congela (requestAnimationFrame) y la voz seguiría sola.
     const oculta = () => { if (document.hidden) repRef.current.pausar(); };
     a.addEventListener('playing', habla);
     a.addEventListener('pause', calla);
     a.addEventListener('ended', calla);
-    a.addEventListener('waiting', atasco);
+    a.addEventListener('waiting', espera);
+    a.addEventListener('seeking', espera);
+    a.addEventListener('seeked', yaSuena);
     a.addEventListener('timeupdate', avanza);
     document.addEventListener('visibilitychange', oculta);
     return () => {
-      espera.current?.();
-      cancelAnimationFrame(raf);
+      clearTimeout(aviso);
       cancelAnimationFrame(fundido.current);
-      retener(false);
+      r0.reloj.current = null;
+      setCargando(false);
       a.removeEventListener('playing', habla);
       a.removeEventListener('pause', calla);
       a.removeEventListener('ended', calla);
-      a.removeEventListener('waiting', atasco);
+      a.removeEventListener('waiting', espera);
+      a.removeEventListener('seeking', espera);
+      a.removeEventListener('seeked', yaSuena);
       a.removeEventListener('timeupdate', avanza);
       document.removeEventListener('visibilitychange', oculta);
       liberarVoz(a); audio.current = null;
       grimi?.(false);
     };
-  }, [narracion, activa, grimi, esperarVoz, fundir, retener]);
+  }, [narracion, activa, grimi, aplicar]);
 
-  const enInicio = rep.t === 0;
+  // Suena solo mientras la escena corre y nadie tiene agarrada la barra.
+  const suena = rep.reproduciendo && !rep.arrastrando;
   useEffect(() => {
     const a = audio.current;
-    const p = previo.current;
-    previo.current = { paso: rep.paso, arrastrando: rep.arrastrando };
-    if (!a || !narracion) return;
-    if (!activa || !rep.reproduciendo || rep.arrastrando) {
-      if (!espera.current && !a.paused) fundir(a, 0, FUNDIDO_PAUSA, () => a.pause());
-      else if (a.paused) grimi?.(false);
-      return;
-    }
+    debeSonar.current = suena;
+    if (!a) return;
     a.playbackRate = rep.velocidad;
-    // De corrido = el capítulo avanza solo al paso siguiente (o se retoma tras una pausa).
-    const deCorrido = rep.auto && !p.arrastrando && (rep.paso === p.paso || rep.paso === p.paso + 1);
-    // La frase de este paso ya se dijo: sigue callada hasta que la animación pase al siguiente.
-    if (deCorrido && callado.current === rep.paso) return;
-    const objetivo = narracion.marcas[rep.paso] + tRef.current / 1000;
-    const limite = narracion.marcas[rep.paso + 1];
-    const reinicio = enInicio && rep.paso === 0 && a.currentTime > (narracion.marcas[1] ?? 1);
-    const recien = a.currentTime === 0 && objetivo > 0.5;
-    if (!deCorrido || reinicio || recien || callado.current !== null) {
-      callado.current = null;
-      // La animación va más allá de lo que dura la frase del paso: la voz espera al siguiente.
-      if (limite !== undefined && objetivo >= limite - CORTE_ANTES) {
-        callado.current = rep.paso;
-        if (!a.paused) fundir(a, 0, FUNDIDO_PAUSA, () => a.pause());
-        return;
-      }
-      cancelAnimationFrame(fundido.current);
-      if (arrancado.current) a.volume = 0;
-      a.currentTime = objetivo;
-    } else if (a.ended) return;
-    // Primer arranque del audio (al entrar al capítulo) o sin datos para sonar ya: si
-    // la animación no esperase, cualquier demora del navegador (bajarlo, decodificarlo,
-    // arrancar el sonido) sería un retraso de la voz durante todo el capítulo.
-    if (!arrancado.current || a.readyState < HTMLMediaElement.HAVE_FUTURE_DATA) {
-      esperarVoz(a);
+    if (!suena) {
+      setCargando(false);
+      // Con la pestaña oculta no hay fotogramas: un fundido no acabaría nunca.
+      if (document.hidden) { cancelAnimationFrame(fundido.current); a.pause(); }
+      else if (!a.paused) fundir(a, 0, FUNDIDO_PAUSA, () => a.pause());
       return;
     }
+    quieto.current = performance.now();
+    if (!a.paused) { fundir(a, 1, FUNDIDO_ENTRADA); return; }
+    cancelAnimationFrame(fundido.current);
+    aplicar(a, 0);
     fundir(a, 1, FUNDIDO_ENTRADA);
     a.play().catch((e: DOMException) => {
       if (e.name !== 'NotAllowedError') return;
       repRef.current.pausar();
       setBloqueada(true);
     });
-  }, [narracion, activa, rep.reproduciendo, rep.arrastrando, rep.paso, rep.auto, rep.velocidad, enInicio, esperarVoz, fundir, grimi]);
+  }, [narracion, activa, suena, rep.velocidad, fundir, aplicar]);
 
   /** Llamarlo DENTRO del clic que va a reproducir: el navegador da permiso al audio
    *  (Safari lo exige en el propio gesto) y el efecto de arriba lo arranca donde toca. */
@@ -250,11 +177,22 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor, sigui
   }, []);
 
   const alternar = useCallback(() => {
+    // Con la barra en cero el altavoz devuelve el volumen, no apaga una voz que ya no se oye.
+    if (restaurar()) return;
     setActiva((v) => {
       try { localStorage.setItem(CLAVE, v ? '0' : '1'); } catch { /* sin almacenamiento */ }
       return !v;
     });
-  }, []);
+  }, [restaurar]);
 
-  return { hay: !!narracion, activa, alternar, desbloquear, bloqueada: bloqueada && activa };
+  // Subir la barra con la voz apagada la enciende.
+  const cambiarVolumen = useCallback((v: number) => {
+    cambiar(v);
+    if (v > 0 && !activa) {
+      setActiva(true);
+      try { localStorage.setItem(CLAVE, '1'); } catch { /* sin almacenamiento */ }
+    }
+  }, [cambiar, activa]);
+
+  return { hay: !!narracion, activa, alternar, desbloquear, bloqueada: bloqueada && activa, cargando: cargando && activa, volumen: activa ? volumen : 0, volumenAjustable: ajustable, cambiarVolumen };
 }

@@ -2,8 +2,10 @@
 // Reloj de la escena (copia del de «Hipersensibilidad», con el motor
 // de este laboratorio). Solo guarda (paso, t): la escena sale de `evaluar`, así
 // que retroceder o saltar no deja actores a medio camino por construcción.
+// Mientras hay voz, el instante lo manda el audio (`reloj`, ver `useVoz`): cuenta
+// por su cuenta solo sin voz.
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject } from 'react';
 import { evaluar, type EscenarioCompilado, type Escena } from '@/lib/lupus/motor';
 
 export const VELOCIDADES = [0.5, 1, 1.5, 2] as const;
@@ -23,6 +25,14 @@ export function useMovimientoReducido(): boolean {
 /** Largo mínimo de un paso en la línea global: un paso sin acciones dura 0 ms
  *  y, sin piso, sería un segmento invisible imposible de alcanzar. */
 export const LARGO_MIN = 600;
+
+/** Lo que da la voz al reproductor mientras está encendida. */
+export type RelojVoz = {
+  /** Ms transcurridos en `paso` según el audio; `null` si ahora no manda (voz rota). */
+  enPaso: (paso: number) => number | null;
+  /** Mueve el audio a ese instante: se llama en el mismo gesto que mueve la escena. */
+  saltar: (paso: number, t: number) => void;
+};
 
 export type Reproductor = {
   paso: number;
@@ -56,9 +66,8 @@ export type Reproductor = {
   buscar: (tGlobal: number) => void;
   empezarArrastre: () => void;
   terminarArrastre: () => void;
-  /** La voz aún no llegó a la marca del paso siguiente: en continua, el paso
-   *  terminado espera en su último fotograma en vez de encadenar. */
-  retener: (r: boolean) => void;
+  /** Lo rellena `useVoz` mientras la voz está encendida. */
+  reloj: MutableRefObject<RelojVoz | null>;
 };
 
 export function useReproductor(c: EscenarioCompilado, inicial = 0, opciones: { autoInicial?: boolean } = {}): Reproductor {
@@ -72,7 +81,6 @@ export function useReproductor(c: EscenarioCompilado, inicial = 0, opciones: { a
   // al soltar se retoma lo que había).
   const [arrastre, setArrastre] = useState<boolean | null>(null);
   const arrastrando = arrastre !== null;
-  const [retenido, setRetenido] = useState(false);
   const pc = c.pasos[paso];
   const terminado = t >= pc.duracion;
   const ultimo = c.pasos.length - 1;
@@ -94,6 +102,9 @@ export function useReproductor(c: EscenarioCompilado, inicial = 0, opciones: { a
   // evento, antes de que React vuelva a pintar).
   const tRef = useRef(t);
   tRef.current = t;
+  const pasoRef = useRef(paso);
+  pasoRef.current = paso;
+  const reloj = useRef<RelojVoz | null>(null);
   const arrastreRef = useRef(arrastre);
   arrastreRef.current = arrastre;
   const reproduciendoRef = useRef(reproduciendo);
@@ -102,12 +113,14 @@ export function useReproductor(c: EscenarioCompilado, inicial = 0, opciones: { a
   // Bucle: avanza t mientras no esté terminado, pausado ni agarrado.
   useEffect(() => {
     if (terminado || pausado || arrastrando) return;
-    if (reducido) { setT(pc.duracion); return; }
     let raf = 0, prev = performance.now();
     const tick = (now: number) => {
       const dt = Math.min(64, now - prev);
       prev = now;
-      const nt = Math.min(pc.duracion, tRef.current + dt * velocidad);
+      const voz = reloj.current?.enPaso(paso) ?? null;
+      // Sin voz, con movimiento reducido, la escena va directo al final del paso.
+      const nt = voz !== null ? Math.max(0, Math.min(pc.duracion, voz)) : reducido ? pc.duracion : Math.min(pc.duracion, tRef.current + dt * velocidad);
+      tRef.current = nt;
       setT(nt);
       if (nt < pc.duracion) raf = requestAnimationFrame(tick);
     };
@@ -120,17 +133,21 @@ export function useReproductor(c: EscenarioCompilado, inicial = 0, opciones: { a
   useEffect(() => {
     if (!auto || !terminado || pausado || arrastrando) return;
     if (paso >= c.pasos.length - 1) { setAuto(false); return; }
-    if (retenido) return;
     // Sin pausa entre pasos: lo que deja uno se desvanece (`despedir`) mientras entra
     // lo del siguiente. Una espera aquí cortaba la fisiología en cada capítulo.
-    setPaso((p) => p + 1);
-    setT(0);
-  }, [auto, terminado, pausado, arrastrando, retenido, paso, c.pasos.length]);
+    // El paso siguiente entra donde ya va la voz, no en su 0.
+    setPaso(paso + 1);
+    setT(Math.max(0, reloj.current?.enPaso(paso + 1) ?? 0));
+  }, [auto, terminado, pausado, arrastrando, paso, c.pasos.length]);
 
   const irA = useCallback((i: number, animar = true) => {
     const j = Math.min(Math.max(0, i), c.pasos.length - 1);
+    const tt = animar ? 0 : c.pasos[j].duracion;
+    tRef.current = tt;
+    pasoRef.current = j;
+    reloj.current?.saltar(j, tt);
     setPaso(j);
-    setT(animar ? 0 : c.pasos[j].duracion);
+    setT(tt);
     setPausado(false);
   }, [c.pasos]);
 
@@ -173,6 +190,9 @@ export function useReproductor(c: EscenarioCompilado, inicial = 0, opciones: { a
     while (j < inicios.length - 1 && inicios[j + 1] <= x) j++;
     const tt = Math.min(x - inicios[j], c.pasos[j].duracion);
     tRef.current = tt;
+    pasoRef.current = j;
+    // Con la barra agarrada la voz está callada: se mueve al soltar, una sola vez.
+    if (arrastreRef.current === null) reloj.current?.saltar(j, tt);
     setPaso(j);
     setT(tt);
     // Buscar (con teclado) sin estar reproduciendo deja el fotograma quieto:
@@ -191,17 +211,18 @@ export function useReproductor(c: EscenarioCompilado, inicial = 0, opciones: { a
     if (era === null) return;
     arrastreRef.current = null;
     setArrastre(null);
+    reloj.current?.saltar(pasoRef.current, tRef.current);
     // Como YouTube: si se reproducía, sigue desde ahí (encadenando pasos);
     // si no, se queda en pausa en ese fotograma.
     if (era) { setPausado(false); setAuto(true); }
     else setPausado(true);
   }, []);
 
-  const escena = useMemo(() => evaluar(pc, t), [pc, t]);
+  // Con voz y movimiento reducido el tiempo corre con el audio, pero sin animar.
+  const escena = useMemo(() => evaluar(pc, reducido ? pc.duracion : t), [pc, t, reducido]);
 
   return {
     paso, t, escena, terminado, auto, pausado, reproduciendo, velocidad, inicios, duracionTotal, tGlobal, arrastrando,
-    irA, siguiente, anterior, alternar, pausar, reiniciar, setVelocidad, buscar, empezarArrastre, terminarArrastre,
-    retener: setRetenido,
+    irA, siguiente, anterior, alternar, pausar, reiniciar, setVelocidad, buscar, empezarArrastre, terminarArrastre, reloj,
   };
 }

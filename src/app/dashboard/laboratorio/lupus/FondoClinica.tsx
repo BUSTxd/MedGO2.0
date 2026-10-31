@@ -10,6 +10,7 @@
 
 import { memo } from 'react';
 import { clamp, easeBack, easeInOut, easeOut, tramo, v, type T } from './laminas';
+import { Retrato } from './Retrato';
 import s from '@/styles/lupus.module.css';
 
 const hash = (i: number, k = 0) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
@@ -29,26 +30,58 @@ function Chip({ x, y, w, txt, k, clase = s.chip }: { x: number; y: number; w: nu
 /** Dedos de una mano derecha vista por el dorso: [x base, largo, ángulo]. */
 const DEDOS: [number, number, number][] = [[-78, 150, -8], [-30, 190, -2], [16, 205, 2], [60, 185, 6], [104, 120, 38]];
 
+/** Dedo que se afina hacia la yema, con la uña y los pliegues de los nudillos. */
+function Dedo({ l, pulgar }: { l: number; pulgar: boolean }) {
+  const w0 = pulgar ? 22 : 20, w1 = pulgar ? 17 : 15;
+  return (
+    <g>
+      {/* El contorno queda abierto por abajo: el dedo nace del dorso, sin un corte recto. */}
+      <path d={`M${-w0},24 C${-w0},${-l * 0.4} ${-w1 - 1},${-l * 0.7} ${-w1},${-l + 18} C${-w1},${-l - 2} ${w1},${-l - 2} ${w1},${-l + 18} C${w1 + 1},${-l * 0.7} ${w0},${-l * 0.4} ${w0},24 C${w0},46 ${-w0},46 ${-w0},24 Z`} fill="url(#lp-mano)" />
+      <path d={`M${-w0},2 C${-w0},${-l * 0.4} ${-w1 - 1},${-l * 0.7} ${-w1},${-l + 18} C${-w1},${-l - 2} ${w1},${-l - 2} ${w1},${-l + 18} C${w1 + 1},${-l * 0.7} ${w0},${-l * 0.4} ${w0},2`} fill="none" className={s.manoTrazo} />
+      {/* Uña */}
+      <path d={`M${-w1 + 4},${-l + 26} C${-w1 + 3},${-l + 6} ${w1 - 3},${-l + 6} ${w1 - 4},${-l + 26} C${w1 - 8},${-l + 30} ${-w1 + 8},${-l + 30} ${-w1 + 4},${-l + 26} Z`} className={s.manoUna} />
+      {/* Pliegues */}
+      {(pulgar ? [0.45] : [0.42, 0.68]).map((f) => (
+        <g key={f} className={s.manoPliegue}>
+          <path d={`M-11,${-l * f - 4} Q0,${-l * f - 8} 11,${-l * f - 4}`} />
+          <path d={`M-10,${-l * f + 3} Q0,${-l * f} 10,${-l * f + 3}`} />
+        </g>
+      ))}
+    </g>
+  );
+}
+
+const MANO_DORSO = 'M-98,6 C-104,60 -96,120 -66,176 C-60,196 -62,224 -66,300 L74,300 C70,224 68,196 74,176 C94,140 126,120 132,84 C130,62 116,42 108,10 C70,-16 -60,-16 -98,6 Z';
+
 function Mano({ cx, cy, espejo, artic, desvio }: { cx: number; cy: number; espejo: boolean; artic: number; desvio: number }) {
   const sx = espejo ? -1 : 1;
+  const inflama = artic > 0.05 ? { stroke: '#E5484D' } : undefined;
   return (
     <g transform={`translate(${cx},${cy}) scale(${sx},1)`}>
-      <rect x={-110} y={-20} width={230} height={200} rx={70} className={s.piel7} />
-      <rect x={-70} y={170} width={150} height={120} rx={40} className={s.piel7} />
+      <defs>
+        <linearGradient id="lp-mano" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" className={s.manoStop1} /><stop offset="0.5" className={s.manoStop2} /><stop offset="1" className={s.manoStop3} />
+        </linearGradient>
+      </defs>
+      {/* Dorso y muñeca, con los tendones extensores */}
+      <path d={MANO_DORSO} fill="url(#lp-mano)" className={s.manoTrazo} />
+      <g className={s.manoPliegue}>
+        <path d="M-74,12 C-60,70 -30,130 -6,178 M-28,6 C-20,70 -12,130 -2,178 M16,6 C14,70 8,130 2,178 M60,8 C50,70 28,130 8,178" opacity={0.55} />
+        <path d="M-60,212 Q6,222 72,212 M-60,226 Q6,236 72,226" opacity={0.6} />
+      </g>
       {DEDOS.map(([x, l, a], i) => {
         const pulgar = i === 4;
         const giro = a + (pulgar ? 0 : desvio * 22);
         return (
           <g key={i} transform={`translate(${x},${pulgar ? 60 : 0}) rotate(${giro})`}>
-            <rect x={-19} y={-l} width={38} height={l + 20} rx={19} className={s.piel7} />
-            {[0, pulgar ? 0.55 : 0.45].map((f, j) => (
-              <circle key={j} cy={-l * f} r={15} className={s.articulacion} opacity={0.25 + 0.75 * artic} style={artic > 0.05 ? { stroke: '#E5484D' } : undefined} />
+            <Dedo l={l} pulgar={pulgar} />
+            {[0, pulgar ? 0.45 : 0.42].map((f, j) => (
+              <circle key={j} cy={-l * f} r={16} className={s.articulacion} opacity={0.2 + 0.8 * artic} style={inflama} />
             ))}
-            {!pulgar && <path d={`M-10,${-l + 14} a10,10 0 0 1 20,0`} className={s.una} />}
           </g>
         );
       })}
-      <ellipse cx={4} cy={210} rx={64} ry={20} className={s.articulacion} opacity={0.25 + 0.75 * artic} style={artic > 0.05 ? { stroke: '#E5484D' } : undefined} />
+      <ellipse cx={4} cy={218} rx={70} ry={20} className={s.articulacion} opacity={0.2 + 0.8 * artic} style={inflama} />
     </g>
   );
 }
@@ -109,8 +142,10 @@ export function FondoManos({ t }: { t: T }) {
             const col = ['#F4F1EC', '#6E8FD6', '#E0526E'][j];
             return (
               <g key={j} transform={`translate(${(j - 1) * 150},0)`} opacity={0.25 + 0.75 * fase}>
-                <rect x={-34} y={-190} width={68} height={260} rx={34} className={s.piel7} />
-                <rect x={-34} y={-190} width={68} height={130} rx={34} fill={col} opacity={fase} />
+                <path d="M-34,70 C-34,-40 -30,-120 -28,-160 C-26,-200 26,-200 28,-160 C30,-120 34,-40 34,70 Z" className={s.piel7} />
+                <path d="M-31,-60 C-30,-100 -29,-130 -28,-160 C-26,-200 26,-200 28,-160 C29,-130 30,-100 31,-60 Q0,-48 -31,-60 Z" fill={col} opacity={fase} />
+                <path d="M-18,-152 C-18,-180 18,-180 18,-152 C14,-146 -14,-146 -18,-152 Z" className={s.manoUna} />
+                <path d="M-20,-90 Q0,-94 20,-90 M-22,-20 Q0,-24 22,-20" className={s.icoLinea} opacity={0.4} />
                 <text y={110} textAnchor="middle" className={s.lEtiqueta}>{['blanco', 'azul', 'rojo'][j]}</text>
               </g>
             );
@@ -153,16 +188,26 @@ export function FondoBoca({ t }: { t: T }) {
 
 // ─── Torso (lupus cutáneo subagudo) ───────────────────────────────────────────
 
+/** Cuello, hombros y escote: la zona fotoexpuesta. La cara, igual que en el resto del lab. */
 const TorsoFijo = memo(function TorsoFijo() {
   return (
     <g>
-      <path d="M340,660 C240,670 170,720 150,800 L120,1000 L920,1000 L890,800 C870,720 800,670 700,660 Z" className={s.piel7} />
-      <path d="M150,800 L60,1000 L130,1000 Z M890,800 L980,1000 L910,1000 Z" className={s.piel7} />
-      <rect x={470} y={560} width={100} height={120} className={s.piel7} />
-      <ellipse cx={520} cy={420} rx={130} ry={160} className={s.piel7} />
-      <path d="M390,400 C380,260 660,260 650,400 C640,330 400,330 390,400 Z" className={s.pelo} />
-      <circle cx={472} cy={430} r={7} className={s.icoOjo} /><circle cx={568} cy={430} r={7} className={s.icoOjo} />
-      <path d="M490,520 Q520,536 550,520" className={s.icoLinea} />
+      <defs>
+        <linearGradient id="lp-torso" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stopColor="#E0AE8E" /><stop offset="0.4" stopColor="#EFCBB0" /><stop offset="0.75" stopColor="#E3B497" /><stop offset="1" stopColor="#C48D70" />
+        </linearGradient>
+        <linearGradient id="lp-bata" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="920" y2="1000">
+          <stop offset="0" stopColor="#C5D2DC" /><stop offset="1" stopColor="#8FA3B3" />
+        </linearGradient>
+      </defs>
+      <path d="M478,600 C472,640 430,660 350,680 C250,704 176,746 150,824 C132,880 108,950 90,1000 L950,1000 C932,950 908,880 890,824 C864,746 790,704 690,680 C610,660 568,640 562,600 Z" fill="url(#lp-torso)" />
+      {/* Clavículas, hueco supraesternal y el pliegue de la axila */}
+      <path d="M498,716 C450,694 370,690 290,716 M542,716 C590,694 670,690 750,716" className={s.torsoRelieve} />
+      <path d="M204,840 C214,890 222,950 224,1000 M836,840 C826,890 818,950 816,1000" className={s.torsoRelieve} />
+      <ellipse cx={520} cy={724} rx={18} ry={14} fill="#A9745A" opacity={0.28} />
+      {/* Bata bajada hasta el pecho */}
+      <path d="M224,936 C350,952 690,952 816,936 L836,1000 L204,1000 Z" fill="url(#lp-bata)" />
+      <g transform="translate(520,119) scale(0.62)"><Retrato id="torso" peinado="recogido" soloCabeza /></g>
     </g>
   );
 });
@@ -189,8 +234,8 @@ export function FondoTorso({ t }: { t: T }) {
       })}
       {ca > 0.001 && (
         <g opacity={ca}>
-          <ellipse cx={520} cy={430} rx={150} ry={180} className={s.caraLibre} />
-          <text x={520} y={210} textAnchor="middle" className={s.lEtiquetaVerde}>la cara, respetada</text>
+          <ellipse cx={520} cy={405} rx={138} ry={190} className={s.caraLibre} />
+          <text x={520} y={190} textAnchor="middle" className={s.lEtiquetaVerde}>la cara, respetada</text>
         </g>
       )}
     </g>

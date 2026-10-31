@@ -12,9 +12,9 @@ import { PARTICULA } from '@/lib/data/hipersensibilidad/colores';
 import { ALTO, ANCHO, CELDA, LUPA_H, LUPA_W, cajaActor, hash, posAbs, posLupa, rotAbs, type ActorSt, type Caja, type ConectorSt, type DesenlaceSt, type EfectoSt, type Escena as EscenaSt, type MarcadorSt, type ProcesoSt } from '@/lib/lupus/motor';
 import { trazoEntre, type Punto, type Trazo } from '@/lib/ciclo-celular/geometria';
 import { DefsCelulas } from '../maduracion-linfocitos/Celulas';
-import { Anticuerpo, Complejo, DefsPropias, DibujoCelula } from './Celulas';
+import { Anticuerpo, ComplejoRed, DefsPropias, DibujoCelula, IgG, IgM } from './Celulas';
 import { FondoDe } from './Fondos';
-import { IconoOrgano, type Icono } from './laminas';
+import { FlechaSuave, IconoOrgano, trazoGlobo, type Cola, type Icono } from './laminas';
 import lp from '@/styles/lupus.module.css';
 import { FuentesImagen, medidasImagen, srcImagen } from '../hipersensibilidad/imagenes';
 
@@ -86,12 +86,24 @@ function Cuerpo({ a, img, dibujo }: { a: ActorSt; img?: string; dibujo?: Dibujo 
     const w = a.w ?? 300, h = a.h ?? 90;
     const lineas = (a.sub ?? '').split('\n').filter(Boolean);
     const y0 = -((lineas.length * 24) / 2) + (lineas.length ? -2 : 0);
+    if (a.ajusta) {
+      const y1 = lineas.length ? -((lineas.length * 26) / 2) - 2 : 0;
+      return (
+        <g>
+          <rect x={-w / 2 + 6} y={-h / 2 + 8} width={w} height={h} rx={20} className={lp.globoSombra} />
+          <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={20} className={lp.cajaActor} style={{ stroke: a.color }} />
+          <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={20} fill={a.color} opacity={0.09} />
+          <text y={lineas.length ? y1 - 4 : 0} textAnchor="middle" dy="0.35em" className={lp.cajaTituloG}>{a.label}</text>
+          {lineas.map((l, i) => <text key={i} y={y1 + 25 + i * 26} textAnchor="middle" dy="0.35em" className={lp.cajaSubG}>{l}</text>)}
+        </g>
+      );
+    }
     return (
       <g>
-        <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={18} className={lp.cajaActor} style={{ stroke: a.color }} />
-        <rect x={-w / 2} y={-h / 2} width={8} height={h} rx={4} fill={a.color} />
-        <text x={4} y={lineas.length ? y0 - 6 : 0} textAnchor="middle" dy="0.35em" className={lp.cajaTitulo}>{a.label}</text>
-        {lineas.map((l, i) => <text key={i} x={4} y={y0 + 24 + i * 24} textAnchor="middle" dy="0.35em" className={lp.cajaSub}>{l}</text>)}
+        <rect x={-w / 2 + 6} y={-h / 2 + 8} width={w} height={h} rx={22} className={lp.globoSombra} />
+        <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={22} className={lp.cajaActor} style={{ stroke: a.color }} />
+        <text y={lineas.length ? y0 - 6 : 0} textAnchor="middle" dy="0.35em" className={lp.cajaTitulo}>{a.label}</text>
+        {lineas.map((l, i) => <text key={i} y={y0 + 24 + i * 24} textAnchor="middle" dy="0.35em" className={lp.cajaSub}>{l}</text>)}
       </g>
     );
   }
@@ -104,8 +116,11 @@ function Cuerpo({ a, img, dibujo }: { a: ActorSt; img?: string; dibujo?: Dibujo 
     );
   }
   if (a.forma === 'icono') return <g><circle r={d * 0.58} className={lp.discoIcono} /><IconoOrgano i={(a.icono ?? 'rinon') as Icono} x={0} y={0} k={d / 120} /></g>;
-  if (a.forma === 'anticuerpo') return <Anticuerpo ab={a.ab ?? 'IgG'} d={d} />;
-  if (a.forma === 'complejo') return <Complejo n={a.n ?? 4} d={d} />;
+  if (a.forma === 'anticuerpo') {
+    const ab = a.ab ?? 'IgG';
+    return ab === 'IgG' ? <IgG x={0} y={0} k={d / 46} /> : ab === 'IgM' ? <IgM x={0} y={0} k={d / 108} /> : <Anticuerpo ab={ab} d={d} />;
+  }
+  if (a.forma === 'complejo') return <ComplejoRed n={a.n ?? 4} d={d} />;
   if (a.forma === 'proteina') {
     return (
       <g>
@@ -209,7 +224,7 @@ function Rotulos({ a, pos, tx, bajar = 0 }: { a: ActorSt; pos: Punto; tx: number
 
 // ─── Conectores, efectos, notas, desenlaces ───────────────────────────────────
 
-const COLOR_CON: Record<string, string> = { activa: '#1F9A6A', inhibe: '#E5484D', migra: '#8A93A6', secreta: '#2CA9BC', une: '#5B6475' };
+const COLOR_CON: Record<string, string> = { activa: '#35AB88', inhibe: '#E5484D', migra: '#8A93A6', secreta: '#2CA9BC', une: '#5B6475' };
 
 function Conector({ cn, tr, tx = 1 }: { cn: ConectorSt; tr: Trazo; tx?: number }) {
   const col = COLOR_CON[cn.type];
@@ -221,10 +236,14 @@ function Conector({ cn, tr, tx = 1 }: { cn: ConectorSt; tr: Trazo; tx?: number }
   const kp = Math.min(1, (cn.prog - 0.8) / 0.2);
   return (
     <g opacity={cn.op}>
-      <path d={dPath} fill="none" stroke={col} strokeWidth={cn.type === 'une' ? 2.5 : 3.5} strokeDasharray={dash} strokeLinecap="round" />
-      {kp > 0 && cn.type !== 'une' && (
+      {cn.type === 'activa'
+        ? <FlechaSuave a={tr.ini} c={tr.ctrl} b={tr.fin} k={t} color={col} />
+        : <path d={dPath} fill="none" stroke={col} strokeWidth={cn.type === 'une' ? 3 : 4} strokeDasharray={dash} strokeLinecap="round" />}
+      {kp > 0 && cn.type !== 'une' && cn.type !== 'activa' && (
         <g transform={`translate(${tr.fin.x},${tr.fin.y}) rotate(${(tr.angFin * 180) / Math.PI}) scale(${kp})`}>
-          {cn.type === 'inhibe' ? <line x1={0} y1={-11} x2={0} y2={11} stroke={col} strokeWidth={5} strokeLinecap="round" /> : <path d="M2,0 L-16,-9 L-12,0 L-16,9 Z" fill={col} />}
+          {cn.type === 'inhibe'
+            ? <line x1={0} y1={-13} x2={0} y2={13} stroke={col} strokeWidth={6.5} strokeLinecap="round" />
+            : <path d="M3,0 C-3,2.5 -10,7.5 -18,11 C-15,5 -15,-5 -18,-11 C-10,-7.5 -3,-2.5 3,0 Z" fill={col} stroke={col} strokeWidth={2} strokeLinejoin="round" />}
         </g>
       )}
       {cn.label && cn.prog > 0.6 && (
@@ -335,16 +354,17 @@ function Desenlace({ d, tx, vista }: { d: DesenlaceSt; tx: number; vista: Caja }
   const x = vista.w > 2 * m ? Math.max(vista.x + m, Math.min(vista.x + vista.w - m, d.x)) : d.x;
   return (
     <g transform={`translate(${x},${d.y}) scale(${(0.9 + 0.1 * d.op) * tx})`} opacity={d.op}>
-      <rect x={-W / 2} y={-Hh / 2} width={W} height={Hh} rx={16} className={ls.desenlaceCaja} stroke={col} />
-      <circle cx={-W / 2 + 34} r={14} fill={col} opacity={0.2} />
-      <path d={d.kind === 'muere' || d.kind === 'lesion' ? 'M-6,-6 L6,6 M6,-6 L-6,6' : 'M-8,0 H6 M0,-7 L7,0 L0,7'} transform={`translate(${-W / 2 + 34},0)`} stroke={col} strokeWidth={3.5} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      <text x={-W / 2 + 60} dy="0.35em" className={ls.desenlaceTxt}>{d.texto}</text>
+      <path d={trazoGlobo(W, Hh)} transform="translate(6,8)" className={lp.globoSombra} />
+      <path d={trazoGlobo(W, Hh)} className={lp.globoCuerpo} style={{ stroke: col }} />
+      <circle cx={-W / 2 + 36} r={20} fill={col} />
+      <path d={d.kind === 'muere' || d.kind === 'lesion' ? 'M-7,-7 L7,7 M7,-7 L-7,7' : 'M-9,0 H7 M0,-8 L8,0 L0,8'} transform={`translate(${-W / 2 + 36},0)`} stroke="#FFF" strokeWidth={3.8} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <text x={-W / 2 + 68} dy="0.35em" className={lp.globoNotaTxt}>{d.texto}</text>
     </g>
   );
 }
 
 function Nota({ texto, caja, side, op, tx, vista }: { texto: string; caja: Caja; side: string; op: number; tx: number; vista: Caja }) {
-  const w0 = Math.min(480, texto.length * 10.4 + 30), h0 = 40;
+  const w0 = Math.min(520, texto.length * 10 + 36), h0 = 46;
   const w = w0 * tx, h = h0 * tx;
   let x = caja.x + caja.w / 2 - w / 2, y = caja.y - h - 18;
   if (side === 'bottom') y = caja.y + caja.h + 64;
@@ -352,11 +372,19 @@ function Nota({ texto, caja, side, op, tx, vista }: { texto: string; caja: Caja;
   if (side === 'left') { x = caja.x - w - 18; y = caja.y + caja.h / 2 - h / 2; }
   x = Math.max(8, vista.x + 8, Math.min(ANCHO - w - 8, vista.x + vista.w - w - 8, x));
   y = Math.max(8, Math.min(ALTO - h - 8, y));
+  // Globo de texto: la cola sale hacia lo que señala, aunque el globo se haya corrido
+  // para no salirse de la vista.
+  const cola: Cola = side === 'right' ? 'izq' : side === 'left' ? 'der' : side === 'bottom' ? 'arriba' : 'abajo';
+  const horizontal = side === 'top' || side === 'bottom';
+  const lim = (horizontal ? w0 : h0) / 2 - 24;
+  const off = horizontal ? Math.max(-lim, Math.min(lim, (caja.x + caja.w / 2 - (x + w / 2)) / tx)) : 0;
+  const d = trazoGlobo(w0, h0, cola, off, 18, horizontal ? 12 : 9, 14);
   return (
     <g opacity={op}>
       <g transform={`translate(${x + w / 2},${y + h / 2}) scale(${tx})`}>
-        <rect x={-w0 / 2} y={-h0 / 2} width={w0} height={h0} rx={12} className={ls.notaCaja} />
-        <text textAnchor="middle" dy="0.35em" className={ls.notaTxt}>{texto}</text>
+        <path d={d} transform="translate(5,7)" className={lp.globoSombra} />
+        <path d={d} className={lp.globoCuerpo} />
+        <text textAnchor="middle" dy="0.35em" className={lp.globoNotaTxt}>{texto}</text>
       </g>
     </g>
   );

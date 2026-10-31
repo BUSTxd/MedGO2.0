@@ -12,6 +12,7 @@ import TextoAnimado from '../maduracion-linfocitos/TextoAnimado';
 import { FichaActor } from './Ficha';
 import { useReproductor, VELOCIDADES } from './useReproductor';
 import { useVoz } from './useVoz';
+import ControlVoz from './ControlVoz';
 import { useModo } from '../maduracion-linfocitos/useModo';
 import c from '@/styles/cicloCelular.module.css';
 import s from '@/styles/linfocitos.module.css';
@@ -44,16 +45,7 @@ export function Controles({ rep, total, voz }: { rep: ReturnType<typeof useRepro
       <button type="button" className={c.btnIcono} onClick={rep.reiniciar} aria-label="Reiniciar" title="Reiniciar (R)">
         <svg viewBox="0 0 20 20" aria-hidden><path d="M4.5 10a5.5 5.5 0 1 0 1.8-4.1M4.5 4v3.5H8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
       </button>
-      {voz?.hay && (
-        <button type="button" className={`${c.btnIcono} ${voz.activa ? '' : h.vozApagada}`} onClick={voz.alternar} aria-pressed={voz.activa} aria-label={voz.activa ? 'Silenciar la voz' : 'Activar la voz'} title={voz.activa ? 'Silenciar la voz' : 'Activar la voz'}>
-          <svg viewBox="0 0 20 20" aria-hidden>
-            <path d="M3.5 7.5h3l4-3.5v12l-4-3.5h-3z" fill="currentColor" />
-            {voz.activa
-              ? <path d="M13.5 7a4 4 0 0 1 0 6M15.5 5a7 7 0 0 1 0 10" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-              : <path d="M13.5 7.5l4 5M17.5 7.5l-4 5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />}
-          </svg>
-        </button>
-      )}
+      {voz?.hay && <ControlVoz voz={voz} />}
       <div className={c.velocidad} role="group" aria-label="Velocidad">
         {VELOCIDADES.map((v) => (
           <button key={v} type="button" className={rep.velocidad === v ? c.velActiva : ''} onClick={() => rep.setVelocidad(v)} aria-pressed={rep.velocidad === v}>{String(v).replace('.', ',')}×</button>

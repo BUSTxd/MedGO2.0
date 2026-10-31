@@ -9,6 +9,7 @@
 
 import { memo } from 'react';
 import { IconoOrgano, dibujar, easeBack, easeOut, tramo, v, type T } from './laminas';
+import { ARTERIA, CONTORNO, Corazon, Globulo, Pulmones, Tubo, VENA } from './Anatomia';
 import s from '@/styles/lupus.module.css';
 
 const hash = (i: number, k = 0) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
@@ -25,13 +26,13 @@ export function FondoValva({ t }: { t: T }) {
       {co > 0.001 && (
         <g opacity={co}>
           <IconoOrgano i="corazon" x={300} y={500} k={3.4 * (0.85 + 0.15 * easeBack(co))} />
-          <circle cx={318} cy={470} r={34} className={s.marcaMitral} />
+          <circle cx={340} cy={482} r={34} className={s.marcaMitral} />
           <text x={300} y={720} textAnchor="middle" className={s.lEtiqueta}>válvula mitral</text>
         </g>
       )}
       {va > 0.001 && (
         <g opacity={va}>
-          <line x1={350} y1={470} x2={VZ.cx - VZ.r * 0.9} y2={VZ.cy - 90} className={s.hiloLupa} />
+          <line x1={372} y1={476} x2={VZ.cx - VZ.r * 0.9} y2={VZ.cy - 90} className={s.hiloLupa} />
           <circle cx={VZ.cx} cy={VZ.cy} r={VZ.r + 7} className={s.lupaBorde} />
           <circle cx={VZ.cx} cy={VZ.cy} r={VZ.r} className={s.lupaFondoCorazon} />
           <g transform={`translate(${VZ.cx},${VZ.cy + 30})`}>
@@ -77,7 +78,7 @@ export function FondoCoronaria({ t }: { t: T }) {
       <rect x={120} y={420} width={1360} height={160} rx={80} className={s.luzArteria} />
       <path d={`M${560},420 C${640},${420 + 90 * k} ${880},${420 + 90 * k} ${960},420 Z`} className={s.placaAtero} />
       <path d={`M${640},580 C${720},${580 - 50 * k} ${860},${580 - 50 * k} ${920},580 Z`} className={s.placaAtero} />
-      {Array.from({ length: 8 }, (_, i) => { const x = ((i * 190) % 1300) + 180; return <g key={i} transform={`translate(${x},${500 + ((i % 3) - 1) * 30})`}><ellipse rx={22} ry={16} className={s.hematie} /></g>; })}
+      {Array.from({ length: 8 }, (_, i) => { const x = ((i * 190) % 1300) + 180; return <Globulo key={i} x={x} y={500 + ((i % 3) - 1) * 30} r={24} rot={i * 37} ky={0.66} />; })}
       <text x={800} y={350} textAnchor="middle" className={s.lEtiquetaMayus}>Arteria coronaria</text>
       {pl > 0.5 && <text x={760} y={690} textAnchor="middle" className={s.lEtiquetaRoja} opacity={tramo(pl, 0.5, 1)}>placa de ateroma</text>}
     </g>
@@ -86,14 +87,26 @@ export function FondoCoronaria({ t }: { t: T }) {
 
 // ─── Tórax (serosas) ──────────────────────────────────────────────────────────
 
+/** Medidas compartidas: pulmones reales y corazón real, en sus sitios. */
+const TX = { x: 490, y: 500, k: 3.6 };
+const CZ = { x: 516, y: 540, k: 1.3 };
+const enPulmones = `translate(${TX.x},${TX.y}) scale(${TX.k * 0.96}) translate(0,4)`;
+const enCorazon = `translate(${CZ.x},${CZ.y}) scale(${CZ.k * 0.92}) translate(0,6)`;
+
 const ToraxFijo = memo(function ToraxFijo() {
   return (
     <g>
-      <path d="M150,180 C150,120 830,120 830,180 L870,880 L110,880 Z" className={s.toraxPared} />
-      <path d="M200,230 C260,190 400,200 430,260 L440,800 C360,830 240,830 180,790 C160,600 170,400 200,230 Z" className={s.pulmonGrande} />
-      <path d="M780,230 C720,190 580,200 550,260 L540,800 C620,830 740,830 800,790 C820,600 810,400 780,230 Z" className={s.pulmonGrande} />
-      <path d="M490,420 C420,400 380,470 400,540 C420,620 490,680 540,700 C600,660 640,600 640,530 C640,460 590,420 540,440 C520,420 505,418 490,420 Z" className={s.corazonGrande} />
-      <path d="M180,860 L800,860" className={s.diafragma} />
+      <path d="M140,150 C260,104 720,104 840,150 C880,320 890,650 870,880 L110,880 C90,650 100,320 140,150 Z" className={s.toraxPared} />
+      {/* Costillas, apenas insinuadas detrás */}
+      {Array.from({ length: 8 }, (_, i) => (
+        <g key={i} className={s.costilla}>
+          <path d={`M470,${220 + i * 76} C380,${200 + i * 78} 230,${232 + i * 80} 150,${320 + i * 74}`} />
+          <path d={`M510,${220 + i * 76} C600,${200 + i * 78} 750,${232 + i * 80} 830,${320 + i * 74}`} />
+        </g>
+      ))}
+      <path d="M180,862 C300,812 420,842 490,870 C560,842 680,812 800,862" className={s.diafragma} />
+      <g transform={`translate(${TX.x},${TX.y}) scale(${TX.k})`}><Pulmones /></g>
+      <g transform={`translate(${CZ.x},${CZ.y}) scale(${CZ.k})`}><Corazon /></g>
     </g>
   );
 });
@@ -104,16 +117,27 @@ export function FondoTorax({ t }: { t: T }) {
     <g opacity={tx}>
       <ToraxFijo />
       {pl > 0.001 && (
-        <g opacity={pl}>
-          <path d="M190,225 C255,180 410,192 440,256 L452,806 C365,840 236,840 170,796 C148,600 160,400 190,225 Z" className={s.serosaInflamada} />
-          <path d="M790,225 C725,180 570,192 540,256 L528,806 C615,840 744,840 810,796 C832,600 820,400 790,225 Z" className={s.serosaInflamada} />
+        <g opacity={pl} transform={enPulmones}>
+          <path d={CONTORNO.pulmonD} className={s.serosaInflamada} vectorEffect="non-scaling-stroke" />
+          <path d={CONTORNO.pulmonI} className={s.serosaInflamada} vectorEffect="non-scaling-stroke" />
         </g>
       )}
-      {dp > 0.001 && <path d={`M180,${800 - 120 * dp} Q300,${780 - 110 * dp} 440,${800 - 100 * dp} L440,820 C360,840 240,840 175,800 Z`} className={s.derrame} />}
-      {pc > 0.001 && <path d="M482,404 C400,384 356,466 382,548 C404,632 486,700 540,722 C610,676 660,610 658,528 C656,450 600,404 540,426 C520,404 500,402 482,404 Z" className={s.serosaInflamada} opacity={pc} />}
-      {dc > 0.001 && <path d="M482,404 C400,384 356,466 382,548 C404,632 486,700 540,722 C610,676 660,610 658,528 C656,450 600,404 540,426 C520,404 500,402 482,404 Z" className={s.derrameCardio} opacity={dc} />}
-      {pl > 0.5 && <text x={160} y={150} className={s.lEtiquetaRoja} opacity={tramo(pl, 0.5, 1)}>pleura</text>}
-      {pc > 0.5 && <text x={520} y={385} textAnchor="middle" className={s.lEtiquetaRoja} opacity={tramo(pc, 0.5, 1)}>pericardio</text>}
+      {/* Derrame pleural: se acumula en la base del pulmón, con el menisco arriba */}
+      {dp > 0.001 && (
+        <g transform={enPulmones} clipPath="url(#an-c-pulmond)">
+          <path d={`M-100,${86 - 44 * dp} Q-50,${80 - 40 * dp} 0,${86 - 44 * dp} L0,100 L-100,100 Z`} className={s.derrame} />
+        </g>
+      )}
+      {pc > 0.001 && <g transform={enCorazon} opacity={pc}><path d={CONTORNO.corazon} transform="scale(1.13)" className={s.serosaInflamada} vectorEffect="non-scaling-stroke" /></g>}
+      {dc > 0.001 && <g transform={enCorazon} opacity={dc}><path d={CONTORNO.corazon} transform="scale(1.13)" className={s.derrameCardio} vectorEffect="non-scaling-stroke" /></g>}
+      {pl > 0.5 && <text x={170} y={120} className={s.lEtiquetaRoja} opacity={tramo(pl, 0.5, 1)}>pleura</text>}
+      {pc > 0.5 && (
+        <g opacity={tramo(pc, 0.5, 1)}>
+          <line x1={690} y1={560} x2={730} y2={440} className={s.guia} />
+          <rect x={658} y={402} width={146} height={36} rx={18} className={s.chip} />
+          <text x={731} y={420} dy="0.35em" textAnchor="middle" className={s.lEtiquetaRoja}>pericardio</text>
+        </g>
+      )}
     </g>
   );
 }
@@ -126,7 +150,17 @@ export function FondoCebolla({ t }: { t: T }) {
   const C = { x: 680, y: 560 };
   return (
     <g opacity={ba}>
-      <path d="M200,220 C260,140 420,150 470,240 C510,320 470,420 400,450 C320,480 220,450 190,380 C170,330 175,260 200,220 Z" className={s.bazo} />
+      <defs>
+        <radialGradient id="lp-bazo" cx="0.36" cy="0.3" r="0.85">
+          <stop offset="0" stopColor="#B4586E" /><stop offset="0.6" stopColor="#8E3A54" /><stop offset="1" stopColor="#5C2238" />
+        </radialGradient>
+      </defs>
+      {/* El bazo: cara con muescas en el borde superior e hilio con sus vasos */}
+      <Tubo d="M398,330 C430,352 462,372 500,388" w={12} tono={VENA} />
+      <Tubo d="M404,308 C436,328 470,348 506,364" w={9} tono={ARTERIA} />
+      <path d="M196,226 C210,196 236,176 262,170 L270,186 L286,164 C330,152 384,170 420,208 C448,240 450,288 428,330 C412,344 402,352 396,372 C376,420 318,456 262,444 C214,434 180,392 176,338 C172,296 180,258 196,226 Z" fill="url(#lp-bazo)" stroke="#4A1A2C" strokeWidth={2} />
+      <path d="M262,170 L270,186 L252,214 M286,164 L300,190" fill="none" stroke="#4A1A2C" strokeWidth={2.2} opacity={0.6} />
+      <ellipse cx={258} cy={266} rx={56} ry={34} fill="url(#an-brillo)" opacity={0.42} transform="rotate(-30 258 266)" />
       <text x={330} y={510} textAnchor="middle" className={s.lEtiqueta}>bazo</text>
       <circle cx={420} cy={330} r={22} className={s.marcaMitral} />
       <line x1={438} y1={344} x2={C.x - 250} y2={C.y - 140} className={s.hiloLupa} />
@@ -148,24 +182,33 @@ export function FondoPulmon({ t }: { t: T }) {
     <g opacity={pu}>
       <ToraxFijo />
       {it > 0.001 && (
-        <g opacity={it}>
-          {Array.from({ length: 70 }, (_, i) => {
-            const izq = i % 2 === 0;
-            const x = (izq ? 220 : 570) + hash(i, 1) * 190, y = 300 + hash(i, 2) * 480;
-            return <path key={i} d={`M${x},${y} l${(hash(i, 3) - 0.5) * 50},${(hash(i, 4) - 0.5) * 50} l${(hash(i, 5) - 0.5) * 50},${(hash(i, 6) - 0.5) * 50}`} className={s.reticular} />;
-          })}
-          <text x={490} y={150} textAnchor="middle" className={s.lEtiquetaRoja}>intersticio inflamado</text>
+        <g opacity={it} transform={enPulmones}>
+          {[['an-c-pulmond', -46], ['an-c-pulmoni', 50]].map(([id, cx]) => (
+            <g key={id} clipPath={`url(#${id})`}>
+              {Array.from({ length: 46 }, (_, i) => {
+                const x = (cx as number) - 36 + hash(i, 1) * 72, y = -60 + hash(i, 2) * 138;
+                return <path key={i} d={`M${x},${y} l${(hash(i, 3) - 0.5) * 16},${(hash(i, 4) - 0.5) * 16} l${(hash(i, 5) - 0.5) * 16},${(hash(i, 6) - 0.5) * 16}`} className={s.reticular} vectorEffect="non-scaling-stroke" />;
+              })}
+            </g>
+          ))}
         </g>
       )}
+      {it > 0.001 && <text x={490} y={86} textAnchor="middle" className={s.lEtiquetaRoja} opacity={it}>intersticio inflamado</text>}
       {hp > 0.001 && (
         <g opacity={hp}>
-          <path d="M520,430 C520,360 560,320 600,300 L640,330 C610,350 590,380 590,440 Z" className={s.arteriaPulmonar} transform={`scale(${1 + 0.15 * hp})`} style={{ transformOrigin: '560px 380px' }} />
-          <path d="M480,560 C430,600 440,680 520,700 L540,600 Z" className={s.ventriculoDerecho} />
-          <text x={650} y={290} className={s.lEtiquetaRoja}>arteria pulmonar dilatada</text>
-          <text x={300} y={720} className={s.lEtiquetaRoja}>ventrículo derecho</text>
+          <g transform={enCorazon}>
+            {/* El ventrículo derecho, que carga con la presión, y la pulmonar que se ensancha */}
+            <path d="M-30,-14 C-44,0 -50,24 -36,52 C-14,68 8,76 28,88 C16,60 8,30 8,-6 C4,-20 -16,-24 -30,-14 Z" className={s.ventriculoDerecho} />
+            <Tubo d="M14,-24 C14,-44 20,-58 32,-66 C50,-72 66,-72 84,-68" w={21 + 11 * hp} tono={VENA} />
+          </g>
+          <line x1={640} y1={395} x2={690} y2={320} className={s.guia} />
+          <rect x={626} y={282} width={304} height={36} rx={18} className={s.chip} />
+          <text x={778} y={300} dy="0.35em" textAnchor="middle" className={s.lEtiquetaRoja}>arteria pulmonar dilatada</text>
+          <line x1={470} y1={620} x2={350} y2={724} className={s.guia} />
+          <rect x={226} y={724} width={224} height={36} rx={18} className={s.chip} />
+          <text x={338} y={742} dy="0.35em" textAnchor="middle" className={s.lEtiquetaRoja}>ventrículo derecho</text>
         </g>
       )}
     </g>
   );
 }
-

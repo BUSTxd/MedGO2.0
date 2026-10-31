@@ -19,7 +19,7 @@ const NUC: ActorDecl = { forma: 'dibujo', dibujo: 'nucleosoma', label: '', d: 66
 /** Dónde cae cada cuerpo apoptótico en la dermis (y luego su nucleosoma). */
 const SITIO: Record<string, Pos> = {
   ap2: { col: 7.3, row: 6.3 }, ap3: { col: 8.5, row: 7.8 }, ap4: { col: 9.5, row: 6.4 },
-  ap5: { col: 10.3, row: 7.9 }, ap6: { col: 7.6, row: 8.5 }, ap7: { col: 9.1, row: 8.8 },
+  ap5: { col: 10.2, row: 8.6 }, ap6: { col: 7.6, row: 8.5 }, ap7: { col: 9.1, row: 8.8 },
 };
 /** De qué queratinocito sale (en la epidermis). */
 const ORIGEN: Record<string, Pos> = {
@@ -44,11 +44,11 @@ const basura: Parte = {
     mac: { forma: 'celula', img: 'macrofago', label: 'Macrófago', sub: 'equipo de limpieza', d: 200, color: '#E8A06A', info: 'macrofago' },
     ap1: { ...AP, label: 'Cuerpo apoptótico' },
     ap2: AP, ap3: AP, ap4: AP, ap5: AP, ap6: AP, ap7: AP,
-    c1q: { forma: 'proteina', label: 'C1q', d: 52, color: '#C0397A', info: 'c1q' },
+    c1q: { forma: 'dibujo', dibujo: 'c1q', label: 'C1q', d: 62, color: '#C0397A', info: 'c1q' },
     nuc2: { ...NUC, label: 'Nucleosoma' }, nuc3: NUC, nuc4: NUC, nuc5: NUC, nuc6: NUC, nuc7: NUC,
-    adn: { forma: 'proteina', label: 'ADN', d: 60, color: L.adn, info: 'adn' },
-    arn: { forma: 'proteina', label: 'ARN', d: 60, color: L.rnp, info: 'arn' },
-    his: { forma: 'proteina', label: 'Histonas', d: 74, color: L.histona, info: 'histonas' },
+    adn: { forma: 'dibujo', dibujo: 'fragadn', label: 'ADN', d: 100, color: L.adn, info: 'adn' },
+    arn: { forma: 'dibujo', dibujo: 'fragarn', label: 'ARN', d: 90, color: L.rnp, info: 'arn' },
+    his: { forma: 'dibujo', dibujo: 'octamero', label: 'Histonas', d: 84, color: L.histona, info: 'histonas' },
     lin: { forma: 'celula', img: 'linfocito_b', label: 'Linfocito autorreactivo', sub: 'escapó a la tolerancia', d: 130, color: '#5E9CD3', info: 'linfocito_b' },
   },
   pasos: [

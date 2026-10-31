@@ -7,10 +7,9 @@
 import type { ActorDecl, Parte } from './tipos';
 import { L } from './colores';
 import { NARRACION } from './narracion';
-import { caja, desenlace, desgrana, encender, icono, mover, nota, ocultar, p, segrega, texto, une, ver } from './acciones';
+import { cajaJusta, desenlace, desgrana, encender, icono, mover, nota, ocultar, p, segrega, texto, une, ver } from './acciones';
 
 const COM = (d: number, n: number, label = ''): ActorDecl => ({ forma: 'complejo', n, label, d, color: L.complejo, info: 'complejo' });
-const PROT = (label: string, color: string): ActorDecl => ({ forma: 'proteina', label, d: 80, color, info: 'complemento' });
 const NEU: ActorDecl = { forma: 'celula', img: 'neutrofilo', label: 'Neutrófilo', d: 130, color: '#B67AC7', info: 'neutrofilo' };
 
 const tipo3: Parte = {
@@ -27,25 +26,24 @@ const tipo3: Parte = {
   narracion: NARRACION[5],
   actores: {
     com1: COM(70, 6, 'Inmunocomplejo'), com2: COM(64, 5), com3: COM(70, 6),
-    kEj1: caja('ADN + anti-ADN de doble cadena', 'IgG e IgM', L.adn, 520, 90),
-    kEj2: caja('Antígeno Smith + anti-Smith', 'IgG e IgM', L.rnp, 520, 90),
-    kTipo: caja('Hipersensibilidad tipo III', 'mediada por inmunocomplejos', L.dano, 520, 96),
-    sz1: { forma: 'complejo', n: 3, label: 'Pequeño', sub: 'circula', d: 46, color: L.complejo, info: 'complejo' },
-    sz2: { forma: 'complejo', n: 7, label: 'Intermedio', sub: 'se deposita', d: 78, color: L.complejo, info: 'complejo' },
-    sz3: { forma: 'complejo', n: 12, label: 'Grande', sub: 'lo retira el bazo', d: 112, color: L.complejo, info: 'complejo' },
+    kEj1: cajaJusta('ADN + anti-ADN', 'de doble cadena · IgG e IgM', L.adn),
+    kEj2: cajaJusta('Sm + anti-Sm', 'antígeno Smith · IgG e IgM', L.rnp),
+    kTipo: cajaJusta('Hipersensibilidad tipo III', 'mediada por inmunocomplejos', L.dano),
+    sz1: { forma: 'complejo', n: 3, label: 'Pequeño', sub: 'circula', d: 62, color: L.complejo, info: 'complejo' },
+    sz2: { forma: 'complejo', n: 7, label: 'Intermedio', sub: 'se deposita', d: 104, color: L.complejo, info: 'complejo' },
+    sz3: { forma: 'complejo', n: 14, label: 'Grande', sub: 'lo retira el bazo', d: 150, color: L.complejo, info: 'complejo' },
     iVaso: icono('sangre', 'Vasos', 86), iGlom: icono('rinon', 'Glomérulo', 86), iPiel: icono('piel', 'Piel', 86), iSer: icono('pulmon', 'Serosas', 86),
-    q1: PROT('C1q', '#C0397A'), q2: PROT('C4·C2', '#A0478F'), q3: PROT('C3 conv.', '#8A4FCF'), q4: PROT('C3b', '#6A3EAE'),
-    kHiper: caja('Igual que el tipo II de Hipersensibilidad', '…pero sobre un depósito en la pared', '#C0397A', 560, 100),
+    kHiper: cajaJusta('Igual que el tipo II', '…pero sobre un depósito en la pared', '#C0397A'),
     dep: { forma: 'ancla', label: 'depósito', d: 10 },
     neu1: NEU, neu2: NEU,
     tFrus: texto('Fagocitosis frustrada', 40, L.lupus),
-    kParad: caja('La paradoja', 'el daño lo produce la defensa', L.lupus, 480, 96),
-    kFib: caja('Necrosis fibrinoide', 'rosado intenso y homogéneo, como vidrio\nproteínas del plasma + fibrina + restos', '#D24E80', 560, 130),
-    kPiensa: caja('Necrosis fibrinoide en una lámina', '→ piensa en complejos inmunes', L.lupus, 560, 96),
-    s1: caja('Complejos que se depositan', '', L.complejo, 520, 76),
-    s2: caja('Complemento que se consume', '', '#C0397A', 520, 76),
-    s3: caja('Neutrófilos que liberan enzimas', '', '#B67AC7', 520, 76),
-    s4: caja('Una pared que se necrosa', '', '#D24E80', 520, 76),
+    kParad: cajaJusta('La paradoja', 'el daño lo produce la defensa', L.lupus),
+    kFib: cajaJusta('Necrosis fibrinoide', 'rosado intenso y homogéneo, como vidrio\nproteínas del plasma + fibrina + restos', '#D24E80'),
+    kPiensa: cajaJusta('Si la ves en una lámina', '→ piensa en complejos inmunes', L.lupus),
+    s1: cajaJusta('Complejos que se depositan', '', L.complejo),
+    s2: cajaJusta('Complemento que se consume', '', '#C0397A'),
+    s3: cajaJusta('Neutrófilos que liberan enzimas', '', '#B67AC7'),
+    s4: cajaJusta('Una pared que se necrosa', '', '#D24E80'),
   },
   pasos: [
     {
@@ -60,9 +58,9 @@ const tipo3: Parte = {
       acciones: [
         ver('com1', 5, 4.2, 3000), ver('com2', 6.8, 5.6, 3600), ver('com3', 5.4, 6.8, 4200),
         mover('com1', 6.4, 3.6, 5000, 9000), mover('com2', 5.6, 4.6, 5400, 9000), mover('com3', 7, 6.4, 5800, 9000),
-        ver('kEj1', 13.2, 3, 5000, 'right'),
-        ver('kEj2', 13.2, 4.6, 8500, 'right'),
-        ver('kTipo', 13.2, 7, 15200, 'right'),
+        ver('kEj1', 13.4, 3.2, 5000, 'right'), p('md1', 1, 5000, 700),
+        ver('kEj2', 13.4, 4.8, 8500, 'right'), p('md2', 1, 8500, 700),
+        ver('kTipo', 13, 7, 15200, 'right'),
         encender('kTipo', 16500),
       ],
     },
@@ -77,7 +75,8 @@ const tipo3: Parte = {
       encuadre: 'all',
       acciones: [
         ...ocultar(0, 'kEj1', 'kEj2', 'kTipo'),
-        ver('sz1', 11.6, 2.4, 600), ver('sz2', 13.2, 2.4, 1200), ver('sz3', 14.8, 2.4, 1800),
+        p('md1', 0, 0, 500), p('md2', 0, 0, 500),
+        ver('sz1', 11.4, 2.6, 600), ver('sz2', 12.9, 2.6, 1200), ver('sz3', 14.7, 2.6, 1800),
         encender('sz2', 4000),
         p('deposito', 1, 9000, 3000),
         mover('com1', 2.95, 4.6, 9200, 2200), mover('com3', 3.05, 6.1, 9500, 2200),
@@ -97,13 +96,11 @@ const tipo3: Parte = {
       acciones: [
         ...ocultar(0, 'sz1', 'sz2', 'sz3', 'iVaso', 'iGlom', 'iPiel', 'iSer'),
         nota('Expone su Fc: lo reconoce el complemento', 'com1', 600, 'right'),
-        ver('q1', 11.4, 3.4, 5200), ver('q2', 12.7, 3.4, 6800), une('qa', 'q1', 'q2', 7200),
-        ver('q3', 14, 3.4, 8600), une('qb', 'q2', 'q3', 9000),
-        ver('q4', 15.3, 3.4, 10600), une('qc', 'q3', 'q4', 11000),
+        p('cas1', 1, 5000, 1100), p('cas2', 1, 6700, 1500), p('cas3', 1, 8500, 1300), p('cas4', 1, 10400, 1800),
         p('complemento', 1, 6000, 5000),
-        ver('kHiper', 13.3, 6.4, 13800, 'right'),
+        ver('kHiper', 13.3, 8, 13800, 'right'),
         encender('kHiper', 18500),
-        encender('q1', 19500), encender('q4', 20500),
+        p('casBrillo', 1, 19500, 900),
       ],
     },
     {
@@ -117,7 +114,8 @@ const tipo3: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'q1', 'q2', 'q3', 'q4', 'kHiper'),
+        ...ocultar(0, 'kHiper'),
+        p('cas1', 0, 0, 600), p('cas2', 0, 0, 600), p('cas3', 0, 0, 600), p('cas4', 0, 0, 600), p('casBrillo', 0, 0, 600),
         p('consumo', 1, 3100, 4000),
         p('termometro', 0.5, 14700, 900),
         p('recupera', 1, 19300, 2500),
@@ -137,12 +135,14 @@ const tipo3: Parte = {
         ...apagarTermo(0),
         ver('dep', 2.9, 5.3, 0, 'fade', 100),
         segrega('dep', 300, 'complemento', undefined, 'C3a · C5a', 3000, 22),
+        p('quimio', 1, 300, 1500),
         ver('neu1', 8, 3.4, 5500, 'right'), ver('neu2', 8.2, 7, 5900, 'right'),
         mover('neu1', 3.9, 4.5, 8000, 3600), mover('neu2', 3.9, 6.4, 8300, 3600),
         nota('C5a los atrae en masa', 'neu1', 8800, 'right'),
         nota('No puede comerse un complejo pegado a la pared', 'neu2', 13000, 'right'),
         encender('neu1', 18600), encender('neu2', 18800),
-        ver('tFrus', 13.2, 5, 18600, 'fade'),
+        ver('tFrus', 13.3, 2.5, 18600, 'fade'),
+        p('frus', 1, 18600, 1000),
       ],
     },
     {
@@ -156,11 +156,13 @@ const tipo3: Parte = {
       encuadre: 'all',
       acciones: [
         ...ocultar(0, 'tFrus'),
+        p('quimio', 0, 0, 800),
+        p('vuelca', 1, 800, 3500),
         desgrana('neu1', 0, 'enzima', ['dep']),
         desgrana('neu2', 900, 'ros', ['dep']),
         p('necrosis', 0.55, 6500, 3500),
         nota('Enzimas y ROS digieren la pared', 'neu2', 7000, 'right'),
-        ver('kParad', 13.2, 5, 15400, 'right'),
+        ver('kParad', 13.3, 2.5, 15400, 'right'),
         encender('kParad', 16600),
       ],
     },
@@ -175,9 +177,10 @@ const tipo3: Parte = {
       encuadre: 'all',
       acciones: [
         ...ocultar(0, 'kParad', 'neu1', 'neu2'),
+        p('frus', 0, 0, 700), p('vuelca', 0, 0, 700),
         p('necrosis', 1, 0, 2500), p('vasculitis', 1, 500, 2500),
-        ver('kFib', 13.2, 4.2, 3100, 'right'),
-        ver('kPiensa', 13.2, 7, 16800, 'right'),
+        ver('kFib', 13.3, 2.7, 3100, 'right'), p('hne', 1, 3100, 1100),
+        ver('kPiensa', 13.3, 8.8, 16800, 'right'),
         encender('kPiensa', 17800),
       ],
     },
@@ -192,10 +195,11 @@ const tipo3: Parte = {
       encuadre: 'all',
       acciones: [
         ...ocultar(0, 'kFib', 'kPiensa', 'com1', 'com2', 'com3'),
-        ver('s1', 12.8, 2.2, 5600, 'right'),
-        ver('s2', 12.8, 3.9, 6700, 'right'), une('sa', 's1', 's2', 7000),
-        ver('s3', 12.8, 5.6, 8000, 'right'), une('sb', 's2', 's3', 8300),
-        ver('s4', 12.8, 7.3, 9500, 'right'), une('sc', 's3', 's4', 9800),
+        p('hne', 0, 0, 700),
+        ver('s1', 12.1, 2.2, 5600, 'right'), p('sm1', 1, 5600, 600),
+        ver('s2', 12.1, 3.9, 6700, 'right'), une('sa', 's1', 's2', 7000, 'activa', undefined, 0.32), p('sm2', 1, 6700, 600),
+        ver('s3', 12.1, 5.6, 8000, 'right'), une('sb', 's2', 's3', 8300, 'activa', undefined, -0.32), p('sm3', 1, 8000, 600),
+        ver('s4', 12.1, 7.3, 9500, 'right'), une('sc', 's3', 's4', 9800, 'activa', undefined, 0.32), p('sm4', 1, 9500, 600),
         nota('En el riñón: lo mismo, dentro del glomérulo', 's4', 12100, 'bottom'),
         desenlace('Siguiente: anticuerpos contra las células de la sangre', 17600, 'sale', 10.6, 9.6),
       ],

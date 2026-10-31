@@ -13,6 +13,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Narracion } from '@/lib/data/hipersensibilidad/tipos';
 import type { Reproductor } from './useReproductor';
 import { useGrimiVoz } from '@/components/estudio/grimiVoz';
+import { useVolumen } from './useVolumen';
 
 const CLAVE = 'medgo-hiper-voz';
 /** Lo más que se espera a que cargue la voz antes de arrancar sin ella (ms). */
@@ -30,6 +31,7 @@ const ATASCO_MAX = 1500;
 export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
   const [activa, setActiva] = useState(true);
   const audio = useRef<HTMLAudioElement | null>(null);
+  const { volumen, ajustable, ganancia, aplicar, cambiar, restaurar } = useVolumen(audio);
   const tRef = useRef(rep.t);
   tRef.current = rep.t;
   const previo = useRef({ paso: rep.paso, arrastrando: false });
@@ -64,15 +66,15 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
    *  (en iOS el volumen es de solo lectura y queda el corte, siempre en una pausa). */
   const fundir = useCallback((a: HTMLAudioElement, hasta: number, ms: number, alAcabar?: () => void) => {
     cancelAnimationFrame(fundido.current);
-    const desde = a.volume, t0 = performance.now();
+    const desde = ganancia.current, t0 = performance.now();
     const paso = (ahora: number) => {
       const k = Math.min(1, Math.max(0, (ahora - t0) / ms));
-      a.volume = desde + (hasta - desde) * k;
+      aplicar(a, desde + (hasta - desde) * k);
       if (k < 1) fundido.current = requestAnimationFrame(paso);
       else alAcabar?.();
     };
     fundido.current = requestAnimationFrame(paso);
-  }, []);
+  }, [aplicar, ganancia]);
 
   // Deja el capítulo quieto hasta que la voz SUENA: hasta que su reloj (`currentTime`)
   // avanza de verdad. Ni `canplay` ni `playing` bastan: al pasar de Anafilaxia al tipo II
@@ -82,7 +84,7 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
   const esperarVoz = useCallback((a: HTMLAudioElement) => {
     if (espera.current) return;
     cancelAnimationFrame(fundido.current);
-    a.volume = 1;
+    aplicar(a, 1);
     const desde = a.currentTime;
     let raf = 0, t = 0;
     const soltar = () => {
@@ -111,7 +113,7 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
       soltar();
       setBloqueada(true);
     });
-  }, []);
+  }, [aplicar]);
 
   // Solo se baja con la voz encendida (es lo que más pesa del capítulo).
   useEffect(() => {
@@ -119,6 +121,7 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
     const a = new Audio();
     a.preload = 'auto';
     a.src = a.canPlayType('audio/webm; codecs=opus') ? narracion.webm : narracion.mp3;
+    aplicar(a, 1);
     audio.current = a;
     arrancado.current = false;
     callado.current = null;
@@ -177,7 +180,7 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
       a.pause(); a.removeAttribute('src'); a.load(); audio.current = null;
       grimi?.(false);
     };
-  }, [narracion, activa, grimi, esperarVoz, fundir, retener]);
+  }, [narracion, activa, grimi, esperarVoz, fundir, retener, aplicar]);
 
   const enInicio = rep.t === 0;
   useEffect(() => {
@@ -208,7 +211,7 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
         return;
       }
       cancelAnimationFrame(fundido.current);
-      if (arrancado.current) a.volume = 0;
+      if (arrancado.current) aplicar(a, 0);
       a.currentTime = objetivo;
     } else if (a.ended) return;
     // Primer arranque del audio (al entrar al capítulo) o sin datos para sonar ya: si
@@ -224,7 +227,7 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
       repRef.current.pausar();
       setBloqueada(true);
     });
-  }, [narracion, activa, rep.reproduciendo, rep.arrastrando, rep.paso, rep.auto, rep.velocidad, enInicio, esperarVoz, fundir, grimi]);
+  }, [narracion, activa, rep.reproduciendo, rep.arrastrando, rep.paso, rep.auto, rep.velocidad, enInicio, esperarVoz, fundir, grimi, aplicar]);
 
   /** Llamarlo DENTRO del clic que va a reproducir: el navegador da permiso al audio
    *  (Safari lo exige en el propio gesto) y el efecto de arriba lo arranca donde toca. */
@@ -237,11 +240,22 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor) {
   }, []);
 
   const alternar = useCallback(() => {
+    // Con la barra en cero el altavoz devuelve el volumen, no apaga una voz que ya no se oye.
+    if (restaurar()) return;
     setActiva((v) => {
       try { localStorage.setItem(CLAVE, v ? '0' : '1'); } catch { /* sin almacenamiento */ }
       return !v;
     });
-  }, []);
+  }, [restaurar]);
 
-  return { hay: !!narracion, activa, alternar, desbloquear, bloqueada: bloqueada && activa };
+  // Subir la barra con la voz apagada la enciende.
+  const cambiarVolumen = useCallback((v: number) => {
+    cambiar(v);
+    if (v > 0 && !activa) {
+      setActiva(true);
+      try { localStorage.setItem(CLAVE, '1'); } catch { /* sin almacenamiento */ }
+    }
+  }, [cambiar, activa]);
+
+  return { hay: !!narracion, activa, alternar, desbloquear, bloqueada: bloqueada && activa, volumen: activa ? volumen : 0, volumenAjustable: ajustable, cambiarVolumen };
 }

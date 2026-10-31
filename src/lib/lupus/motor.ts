@@ -53,7 +53,7 @@ export type ActorSt = {
   fago: number;
   marcadores: MarcadorSt[];
   /** Caja: ancho y alto; icono: cuál. */
-  w?: number;
+  ajusta?: boolean; w?: number;
   h?: number;
   icono?: string;
   anclado: { host: string; dx: number; dy: number; rot?: number } | null;
@@ -698,7 +698,7 @@ export function escenaVacia(esc: Escenario, modo: Modo = MODO_ESCRITORIO): Escen
       key, forma: d.forma, img: d.img, dibujo: d.dibujo, prev: null, mezcla: 1, color: d.color ?? '#7FA7D9', d: diametroDecl(d),
       label: d.label, sub: d.sub, ab: d.ab, n: d.n, x: ANCHO / 2, y: ALTO / 2, esc: 1, rot: 0, op: 0, vis: false, halo: 0, gris: 0, surco: 0,
       apoptosis: 0, granulos: 0, lisis: 0, fago: 0, marcadores: [], anclado: null, ex: 0, ey: 0,
-      ...(d.forma === 'caja' ? { w: d.w ?? 300, h: d.h ?? 90 } : {}), icono: d.icono,
+      ...(d.forma === 'caja' ? { w: d.w ?? 300, h: d.h ?? 90, ajusta: d.ajusta } : {}), icono: d.icono,
     };
   }
   const camara = modo.movil ? encuadre({ col: 0, row: 0, w: ANCHO / CELDA, h: ALTO / CELDA }, modo.asp) : { ...CAMARA_TODO };

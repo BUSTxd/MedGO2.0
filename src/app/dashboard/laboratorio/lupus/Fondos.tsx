@@ -13,15 +13,18 @@
 // iconos son saturados y valen en los dos temas.
 
 import { memo, type ReactNode } from 'react';
-import { COLOR_ICONO, IconoOrgano, clamp, dibujar, easeBack, easeOut, tramo, v, type Icono, type T } from './laminas';
+import { IconoOrgano, clamp, dibujar, easeBack, easeOut, tramo, v, type Icono, type T } from './laminas';
+import { DefsAnatomia, Globulo } from './Anatomia';
+import { ARTICULACIONES, Articulaciones, CX, CorazonEn, Figurita, PulmonesEn, RinonesEn, Silueta, Sistema, Vasos } from './Cuerpo';
+import { PACIENTES_TEZ, Retrato, TRAZOS_RETRATO } from './Retrato';
 import FondoCausas from './FondoCausas';
 import { FondoEular, FondoPruebas } from './FondoDiagnostico';
 import { FondoCapas, FondoClases, FondoFullHouse } from './FondoNefritis';
 import { FondoCebolla, FondoCoronaria, FondoPulmon, FondoTorax, FondoValva } from './FondoOrganos';
 import { FondoBoca, FondoDiscoide, FondoManos, FondoTorso } from './FondoClinica';
 import { FondoGlomeruloLupus, FondoSangreLupus, FondoVasoLupus } from './FondoHiper';
-import { FondoGerminal, FondoSeleccion } from './FondoAdaptativa';
-import { FondoEndosoma, FondoFirma, FondoRed } from './FondoInterferon';
+import { FondoCircuito, FondoEfectoras, FondoFreno, FondoGerminal, FondoIntersticio, FondoPeriferia, FondoPuente, FondoSeleccion } from './FondoAdaptativa';
+import { FondoCirculo, FondoEndosoma, FondoEspacio, FondoFirma, FondoRed } from './FondoInterferon';
 import { FondoCiudad, FondoEpidermis } from './FondoBasura';
 import type { Fondo } from '@/lib/data/lupus/tipos';
 import { L } from '@/lib/data/lupus/colores';
@@ -32,8 +35,12 @@ import s from '@/styles/lupus.module.css';
 
 const DefsFondo = memo(function DefsFondo() {
   return (
+    <>
+    <DefsAnatomia />
     <defs>
-      <filter id="lp-suave" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" /></filter>
+      <radialGradient id="lp-malar">
+        <stop offset="0" stopColor={L.eritema} stopOpacity={0.62} /><stop offset="0.6" stopColor={L.eritema} stopOpacity={0.42} /><stop offset="1" stopColor={L.eritema} stopOpacity={0} />
+      </radialGradient>
       <filter id="lp-halo" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14" /></filter>
       <linearGradient id="lp-espectro" x1="0" x2="1" y1="0" y2="0">
         <stop offset="0%" className={s.stopLeve} />
@@ -51,6 +58,7 @@ const DefsFondo = memo(function DefsFondo() {
         <stop offset="100%" stopColor="#E5484D" stopOpacity={0} />
       </radialGradient>
     </defs>
+    </>
   );
 });
 
@@ -58,23 +66,7 @@ const DefsFondo = memo(function DefsFondo() {
 
 const R_C = { x: 430, y: 520 };
 
-/** Rostro de frente, en trazo fino (se dibuja con `k`). */
-const TRAZOS_ROSTRO = [
-  // contorno, orejas y cuello
-  'M430,250 C540,250 605,340 605,470 C605,600 540,720 430,760 C320,720 255,600 255,470 C255,340 320,250 430,250 Z',
-  'M256,462 C236,458 234,522 262,530', 'M604,462 C624,458 626,522 598,530',
-  'M375,742 L370,830 C330,836 292,852 268,900', 'M485,742 L490,830 C530,836 568,852 592,900',
-  // cejas, ojos, nariz, surcos nasogenianos y boca
-  'M340,438 Q375,422 408,436', 'M452,436 Q485,422 520,438',
-  'M350,470 Q375,452 400,470 Q375,484 350,470 Z', 'M460,470 Q485,452 510,470 Q485,484 460,470 Z',
-  'M430,478 L419,574 Q430,586 443,577', 'M410,580 Q402,588 412,592', 'M450,580 Q458,588 448,592',
-  'M402,588 Q378,610 380,642', 'M458,588 Q482,610 480,642',
-  'M404,660 Q430,670 456,660', 'M410,662 Q430,680 450,662',
-];
-const PELO = 'M250,486 C228,318 322,212 434,214 C562,216 640,318 612,486 C600,380 540,318 430,316 C324,318 266,380 250,486 Z';
-const ALA_IZQ = 'M427,522 C400,505 368,506 340,516 C312,527 300,556 306,585 C313,611 340,619 365,609 C385,599 401,586 413,576 C421,566 425,546 427,522 Z';
-const ALA_DER = 'M433,522 C460,505 492,506 520,516 C548,527 560,556 554,585 C547,611 520,619 495,609 C475,599 459,586 447,576 C439,566 435,546 433,522 Z';
-const MORDIDAS: [number, number, number][] = [[342, 556, -20], [366, 588, 10], [520, 552, 25], [494, 590, -15], [356, 528, 40]];
+const MORDIDAS: [number, number, number][] = [[338, 548, -20], [366, 582, 10], [522, 546, 25], [494, 584, -15], [356, 522, 40]];
 const ORGANOS_RAYO: { i: Icono; x: number; y: number; txt: string }[] = [
   { i: 'cerebro', x: 150, y: 250, txt: 'Cerebro' },
   { i: 'corazon', x: 100, y: 520, txt: 'Corazón' },
@@ -126,14 +118,14 @@ function Nombre({ t }: { t: T }) {
         );
       })}
 
-      {/* Rostro */}
+      {/* Rostro: entra a lápiz y se le pone el color encima */}
       {ro > 0.001 && (
-        <g>
-          <path d={PELO} className={s.pelo} opacity={tramo(ro, 0.5, 1)} />
-          {TRAZOS_ROSTRO.map((d, j) => <path key={j} d={d} className={s.rostro} {...dibujar(tramo(ro, j * 0.03, 0.55 + j * 0.03))} />)}
+        <g transform={`translate(${R_C.x},0)`}>
+          {ro < 0.999 && <g transform="translate(0,486) scale(1,0.92) translate(0,-486)" opacity={1 - tramo(ro, 0.55, 1)}>{TRAZOS_RETRATO.map((d, j) => <path key={j} d={d} className={s.rostro} {...dibujar(tramo(ro, j * 0.03, 0.55 + j * 0.03))} />)}</g>}
+          <g opacity={tramo(ro, 0.32, 0.92)}><Retrato /></g>
           {/* Mordidas: lo que describían en la Edad Media */}
           {mo > 0.001 && (
-            <g opacity={mo * (1 - 0.9 * er)}>
+            <g opacity={mo * (1 - 0.9 * er)} transform={`translate(${-R_C.x},0)`}>
               {MORDIDAS.map(([x, y, a], j) => (
                 <g key={j} transform={`translate(${x},${y}) rotate(${a}) scale(${0.6 + 0.4 * tramo(mo, j * 0.12, 0.5 + j * 0.12)})`}>
                   <path d="M-16,0 Q0,-14 16,0" className={s.mordida} />
@@ -142,18 +134,21 @@ function Nombre({ t }: { t: T }) {
               ))}
             </g>
           )}
-          {/* Eritema malar en alas de mariposa (respeta los surcos nasogenianos) */}
+          {/* Eritema malar en alas de mariposa: mejillas y dorso de la nariz, sin tocar los surcos nasogenianos */}
           {er > 0.001 && (
-            <g opacity={er} filter="url(#lp-suave)">
-              <path d={ALA_IZQ} fill={L.eritema} opacity={0.62} />
-              <path d={ALA_DER} fill={L.eritema} opacity={0.62} />
-              <ellipse cx={430} cy={524} rx={14} ry={26} fill={L.eritema} opacity={0.5} />
+            <g opacity={er}>
+              <ellipse cx={-76} cy={544} rx={66} ry={38} fill="url(#lp-malar)" transform="rotate(-14 -76 544)" />
+              <ellipse cx={76} cy={544} rx={66} ry={38} fill="url(#lp-malar)" transform="rotate(14 76 544)" />
+              <ellipse cx={0} cy={528} rx={21} ry={26} fill="url(#lp-malar)" />
             </g>
           )}
           {er > 0.5 && (
             <g opacity={tramo(er, 0.5, 1)}>
-              <line x1={300} y1={600} x2={262} y2={660} className={s.guia} />
-              <text x={256} y={684} textAnchor="end" className={s.lEtiqueta}>eritema malar</text>
+              <line x1={-96} y1={566} x2={-158} y2={640} className={s.guiaClara} />
+              <g transform="translate(-200,664)">
+                <rect x={-88} y={-22} width={176} height={44} rx={22} className={s.chip} />
+                <text textAnchor="middle" dy="0.35em" className={s.lEtiqueta}>eritema malar</text>
+              </g>
             </g>
           )}
         </g>
@@ -182,56 +177,100 @@ function Nombre({ t }: { t: T }) {
 // ─── 2 · Contra el propio núcleo: el vaso al que llegan los complejos ─────────
 
 const VASO = { x0: 1070, x1: 1350 };
+const hashV = (i: number, k = 0) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
 
-const VasoFijo = memo(function VasoFijo() {
-  const endo = Array.from({ length: 9 }, (_, i) => 40 + i * 118);
+/** Una pared del vaso, de la luz hacia afuera (`l` = 1 crece a la derecha):
+ *  endotelio → lámina elástica interna → media con su músculo liso en corte → adventicia. */
+const Pared = memo(function Pared({ x, l }: { x: number; l: 1 | -1 }) {
+  const ondas = Array.from({ length: 27 }, (_, i) => `${i ? 'L' : 'M'}${(x + l * (15 + (i % 2) * 3.4)).toFixed(1)},${-20 + i * 40}`).join(' ');
   return (
     <g>
-      <rect x={VASO.x0} y={-20} width={VASO.x1 - VASO.x0} height={1040} className={s.luzVaso} />
-      {[VASO.x0, VASO.x1].map((x, k) => (
-        <g key={x}>
-          <rect x={k ? x : x - 22} y={-20} width={22} height={1040} className={s.paredVaso} />
-          {endo.map((y, j) => <ellipse key={j} cx={k ? x - 5 : x + 5} cy={y + (k ? 50 : 0)} rx={6} ry={30} className={s.endotelio} />)}
-        </g>
-      ))}
-      <text x={1470} y={64} textAnchor="middle" className={s.lEtiquetaMayus}>Tejido</text>
+      {/* Adventicia: tejido conectivo con fibras y algún fibroblasto */}
+      <rect x={l > 0 ? x + 58 : x - 98} y={-20} width={40} height={1040} className={s.adventicia} />
+      {Array.from({ length: 22 }, (_, i) => <path key={i} d={`M${x + l * 60},${i * 48 - 10} C${x + l * 72},${i * 48 + 10} ${x + l * 86},${i * 48 - 8} ${x + l * 97},${i * 48 + 14}`} className={s.fibraAdv} />)}
+      {/* Media: músculo liso, células en huso con su núcleo en bastón */}
+      <rect x={l > 0 ? x + 18 : x - 58} y={-20} width={40} height={1040} className={s.mediaVaso} />
+      {Array.from({ length: 44 }, (_, i) => {
+        const col = i % 2, y = i * 24 + (col ? 6 : -6) - 10;
+        return (
+          <g key={i} transform={`translate(${x + l * (28 + col * 19)},${y}) rotate(${l * (col ? 7 : -7)})`}>
+            <path d="M-19,0 C-10,-5.6 10,-5.6 19,0 C10,5.6 -10,5.6 -19,0 Z" className={s.fibraLisa} />
+            <ellipse rx={7.4} ry={2.2} className={s.nucleoLiso} />
+          </g>
+        );
+      })}
+      {/* Lámina elástica interna, ondulada */}
+      <path d={ondas} className={s.elastica} />
+      {/* Endotelio: células planas, el núcleo abombado hacia la luz */}
+      <rect x={l > 0 ? x : x - 14} y={-20} width={14} height={1040} className={s.endotelioBase} />
+      {Array.from({ length: 13 }, (_, i) => {
+        const y = 28 + i * 80 + (l > 0 ? 38 : 0);
+        return (
+          <g key={i}>
+            <path d={`M${x + l * 14},${y - 40} L${x},${y - 40}`} className={s.uniones} />
+            <ellipse cx={x + l * 1.5} cy={y} rx={6.2} ry={19} className={s.endotelio} />
+          </g>
+        );
+      })}
+    </g>
+  );
+});
+
+const VasoFijo = memo(function VasoFijo() {
+  return (
+    <g>
+      <defs>
+        <linearGradient id="lp-luz" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" className={s.luzStop2} /><stop offset="0.5" className={s.luzStop1} /><stop offset="1" className={s.luzStop2} />
+        </linearGradient>
+      </defs>
+      <rect x={VASO.x0} y={-20} width={VASO.x1 - VASO.x0} height={1040} fill="url(#lp-luz)" />
+      <Pared x={VASO.x0} l={-1} />
+      <Pared x={VASO.x1} l={1} />
+      <text x={1490} y={64} textAnchor="middle" className={s.lEtiquetaMayus}>Tejido</text>
       <text x={430} y={64} textAnchor="middle" className={s.lEtiquetaMayus}>Célula del propio cuerpo</text>
     </g>
   );
 });
 
+/** Lo que circula: hematíes, algún leucocito y plaquetas, a la velocidad de la sangre. */
 function Nucleo({ t, reloj }: { t: T; reloj: number }) {
   const de = v(t, 'deposito'), inf = v(t, 'inflama');
-  const hem = Array.from({ length: 9 }, (_, i) => {
-    const y = ((i * 137 + reloj * 0.07) % 1180) - 90;
-    return { x: VASO.x0 + 60 + ((i * 53) % 160), y, rot: (i * 47) % 180 };
-  });
+  const baja = (i: number, vel: number) => ((i * 137 + reloj * vel) % 1180) - 90;
   return (
     <g>
-      {inf > 0.001 && <ellipse cx={VASO.x1 + 90} cy={500} rx={190 * (0.7 + 0.3 * inf)} ry={420} fill="url(#lp-inflama)" opacity={inf} />}
+      {inf > 0.001 && <ellipse cx={VASO.x1 + 110} cy={500} rx={190 * (0.7 + 0.3 * inf)} ry={420} fill="url(#lp-inflama)" opacity={inf} />}
       <VasoFijo />
-      {hem.map((h, i) => (
-        <g key={i} transform={`translate(${h.x.toFixed(1)},${h.y.toFixed(1)}) rotate(${h.rot})`}>
-          <ellipse rx={28} ry={24} className={s.hematie} />
-          <ellipse rx={13} ry={10} className={s.hematieCentro} />
+      {Array.from({ length: 5 }, (_, i) => (
+        <g key={`p${i}`} transform={`translate(${VASO.x0 + 40 + hashV(i, 4) * 200},${baja(i + 3, 0.09).toFixed(1)}) rotate(${i * 60})`}>
+          <path d="M-8,-1 C-5,-7 4,-7 8,-3 C9,1 4,7 -1,5 C-5,5 -9,3 -8,-1 Z" className={s.plaqueta} />
         </g>
       ))}
+      {Array.from({ length: 10 }, (_, i) => (
+        <g key={i} transform={`scale(0.5)`}>
+          <Globulo x={(VASO.x0 + 50 + hashV(i, 1) * 180) * 2} y={baja(i, 0.07) * 2} r={52} rot={(i * 47) % 180} ky={0.62 + hashV(i, 2) * 0.32} />
+        </g>
+      ))}
+      <g transform={`translate(${VASO.x0 + 200},${baja(4, 0.05).toFixed(1)})`}>
+        <circle r={36} className={s.leucoVaso} />
+        <path d="M-16,-8 C-10,-20 6,-16 4,-6 C14,-12 22,2 10,8 C14,18 -2,22 -6,12 C-14,18 -24,6 -16,-8 Z" className={s.nucleoLeuco} />
+      </g>
       {de > 0.001 && (
         <g>
           {Array.from({ length: 26 }, (_, i) => {
             const y = [330, 650][i % 2] + ((i * 37) % 120) - 60;
             const k = tramo(de, (i / 26) * 0.6, (i / 26) * 0.6 + 0.4);
-            return k > 0 ? <circle key={i} cx={VASO.x1 - 8 + ((i * 13) % 14)} cy={y} r={5 * k} className={s.deposito} /> : null;
+            return k > 0 ? <circle key={i} cx={VASO.x1 + 3 + ((i * 13) % 18)} cy={y} r={5 * k} className={s.deposito} /> : null;
           })}
-          <text x={VASO.x1 + 40} y={500} className={s.lEtiqueta} opacity={de}>depósitos</text>
-          <text x={VASO.x1 + 40} y={528} className={s.lSub} opacity={de}>en la pared</text>
+          <text x={VASO.x1 + 110} y={500} className={s.lEtiqueta} opacity={de}>depósitos</text>
+          <text x={VASO.x1 + 110} y={528} className={s.lSub} opacity={de}>en la pared</text>
         </g>
       )}
       <g transform={`translate(${(VASO.x0 + VASO.x1) / 2},58)`}>
         <rect x={-92} y={-20} width={184} height={40} rx={20} className={s.chip} />
         <text textAnchor="middle" dy="0.35em" className={s.lEtiquetaMayus}>Vaso pequeño</text>
       </g>
-      {inf > 0.3 && <text x={1470} y={860} textAnchor="middle" className={s.lEtiquetaRoja} opacity={tramo(inf, 0.3, 1)}>inflamación</text>}
+      {inf > 0.3 && <text x={1490} y={860} textAnchor="middle" className={s.lEtiquetaRoja} opacity={tramo(inf, 0.3, 1)}>inflamación</text>}
     </g>
   );
 }
@@ -352,14 +391,9 @@ function Brotes({ t }: { t: T }) {
 // ─── 4 · A quién le da ────────────────────────────────────────────────────────
 
 function Persona({ x, y, mujer, k }: { x: number; y: number; mujer: boolean; k: number }) {
-  const c = mujer ? L.mujer : L.varon;
   return (
     <g transform={`translate(${x},${y}) scale(${0.6 + 0.4 * easeBack(k)})`} opacity={Math.min(1, k * 1.4)}>
-      <circle cy={-46} r={15} fill={c} />
-      {mujer
-        ? <path d="M-11,-28 L11,-28 L24,22 L-24,22 Z" fill={c} />
-        : <rect x={-15} y={-28} width={30} height={46} rx={7} fill={c} />}
-      <path d={mujer ? 'M-8,22 L-8,52 M8,22 L8,52' : 'M-8,18 L-8,52 M8,18 L8,52'} stroke={c} strokeWidth={8} strokeLinecap="round" />
+      <Figurita mujer={mujer} c={mujer ? L.mujer : L.varon} />
     </g>
   );
 }
@@ -448,102 +482,71 @@ function Quien({ t, reloj }: { t: T; reloj: number }) {
 
 // ─── 5 · El gran imitador ─────────────────────────────────────────────────────
 
-const B = { x: 400 };
-const CuerpoFijo = memo(function CuerpoFijo() {
-  return (
-    <g>
-      <g className={s.cuerpoSil}>
-        <ellipse cx={B.x} cy={140} rx={48} ry={58} />
-        <rect x={B.x - 18} y={190} width={36} height={40} />
-        <path d="M318,232 C350,222 450,222 482,232 C505,240 512,262 510,300 L500,420 C496,470 498,520 505,560 L295,560 C302,520 304,470 300,420 L290,300 C288,262 295,240 318,232 Z" />
-      </g>
-      <g className={s.cuerpoMiembro}>
-        <polyline points="312,250 282,420 262,585" />
-        <polyline points="488,250 518,420 538,585" />
-        <polyline points="350,555 345,760 342,925" />
-        <polyline points="450,555 455,760 458,925" />
-      </g>
-      <g className={s.cuerpoSil}>
-        <circle cx={258} cy={606} r={18} />
-        <circle cx={542} cy={606} r={18} />
-        <ellipse cx={334} cy={944} rx={30} ry={14} />
-        <ellipse cx={466} cy={944} rx={30} ry={14} />
-      </g>
-    </g>
-  );
-});
-
 /** Los órganos, en el orden en que la voz los nombra. */
 const ORGANOS: { txt: string; lado: 'izq' | 'der'; ly: number; ax: number; ay: number }[] = [
-  { txt: 'Piel', lado: 'izq', ly: 260, ax: 300, ay: 270 },
-  { txt: 'Articulaciones', lado: 'izq', ly: 600, ax: 262, ay: 590 },
-  { txt: 'Riñón', lado: 'izq', ly: 440, ax: 360, ay: 432 },
-  { txt: 'Sangre', lado: 'der', ly: 520, ax: 415, ay: 510 },
-  { txt: 'Corazón', lado: 'izq', ly: 340, ax: 412, ay: 326 },
-  { txt: 'Pulmón', lado: 'der', ly: 290, ax: 452, ay: 300 },
-  { txt: 'Sistema nervioso', lado: 'der', ly: 130, ax: 440, ay: 130 },
+  { txt: 'Piel', lado: 'izq', ly: 215, ax: 318, ay: 246 },
+  { txt: 'Articulaciones', lado: 'izq', ly: 470, ax: 214, ay: 530 },
+  { txt: 'Riñón', lado: 'izq', ly: 400, ax: 338, ay: 432 },
+  { txt: 'Sangre', lado: 'der', ly: 520, ax: 440, ay: 540 },
+  { txt: 'Corazón', lado: 'der', ly: 350, ax: 434, ay: 346 },
+  { txt: 'Pulmón', lado: 'izq', ly: 300, ax: 346, ay: 312 },
+  { txt: 'Sistema nervioso', lado: 'der', ly: 130, ax: 436, ay: 130 },
 ];
 
 /** Orden de pintado (índices de ORGANOS): piel, pulmón, vasos, riñón, corazón, articulaciones, SNC. */
 const ORDEN_DIBUJO = [0, 5, 3, 2, 4, 1, 6];
 
-function Organo({ i, k, pulso }: { i: number; k: number; pulso: number }) {
-  // Fantasma gris hasta que se enciende; luego su color.
-  const fant = (n: ReactNode) => <g className={s.organoFantasma}>{n}</g>;
-  const vivo = (n: ReactNode) => <g opacity={k}>{n}</g>;
-  const capa = (n: ReactNode) => <g>{k < 0.999 && fant(n)}{k > 0.001 && vivo(n)}</g>;
+function OrganoCuerpo({ i, k, pulso }: { i: number; k: number; pulso: number }) {
+  // Fantasma hasta que se enciende; luego su color.
+  const capa = (n: ReactNode) => <g>{k < 0.999 && <g className={s.organoFantasma}>{n}</g>}{k > 0.001 && <g opacity={k}>{n}</g>}</g>;
   const halo = pulso > 0.001 ? (cx: number, cy: number, r: number) => <circle cx={cx} cy={cy} r={r * (1 + 0.15 * pulso)} className={s.haloOrgano} opacity={pulso} /> : () => null;
   switch (i) {
     case 0:
-      return k > 0.001 ? (
-        <g opacity={k}>
-          <g className={s.pielBrillo}>
-            <ellipse cx={B.x} cy={140} rx={48} ry={58} />
-            <path d="M318,232 C350,222 450,222 482,232 C505,240 512,262 510,300 L500,420 C496,470 498,520 505,560 L295,560 C302,520 304,470 300,420 L290,300 C288,262 295,240 318,232 Z" />
-          </g>
-          {halo(B.x, 112, 40)}
-        </g>
-      ) : null;
+      return k > 0.001 ? <g opacity={k}><Silueta2 />{halo(CX, 112, 40)}</g> : null;
     case 1:
       return (
         <g>
-          {[[262, 590], [538, 590], [282, 420], [518, 420], [345, 760], [455, 760]].map(([x, y], j) => (
-            <g key={j}>
-              {halo(x, y, 22)}
-              {capa(<circle cx={x} cy={y} r={15} fill="none" stroke={COLOR_ICONO.articulacion} strokeWidth={7} />)}
-            </g>
-          ))}
+          {ARTICULACIONES.flatMap(([x, y, q], j) => [-1, 1].map((l) => <g key={`${j}${l}`}>{halo(CX + x * l, y, 100 * q + 6)}</g>))}
+          {capa(<Articulaciones />)}
         </g>
       );
     case 2:
-      return <g>{capa(<><IconoOrgano i="rinon" x={366} y={432} k={0.36} /><g transform="translate(800,0) scale(-1,1)"><IconoOrgano i="rinon" x={366} y={432} k={0.36} /></g></>)}</g>;
+      return capa(<RinonesEn />);
     case 3:
-      return (
-        <g>
-          {halo(B.x + 15, 500, 30)}
-          {capa(<path d="M412,330 L404,540 M404,540 L350,600 L346,900 M404,540 L452,600 L456,900 M412,300 L330,260 L284,420 L262,580 M412,300 L470,260 L516,420 L538,580" className={s.vasos} />)}
-        </g>
-      );
+      return <g>{halo(CX + 15, 500, 30)}{capa(<Vasos />)}</g>;
     case 4:
-      return <g>{halo(412, 326, 28)}{capa(<IconoOrgano i="corazon" x={412} y={326} k={0.42} />)}</g>;
+      return <g>{halo(CX + 16, 334, 42)}{capa(<CorazonEn />)}</g>;
     case 5:
-      return <g>{capa(<IconoOrgano i="pulmon" x={B.x} y={300} k={1.15} color="#EFA9BA" />)}</g>;
+      return capa(<PulmonesEn />);
     case 6:
-      return (
-        <g>
-          {halo(B.x, 130, 46)}
-          {capa(<><IconoOrgano i="cerebro" x={B.x} y={128} k={0.66} /><line x1={B.x} y1={182} x2={B.x} y2={540} stroke={COLOR_ICONO.cerebro} strokeWidth={6} strokeLinecap="round" /></>)}
-        </g>
-      );
+      return <g>{halo(CX, 130, 50)}{capa(<Sistema />)}</g>;
   }
   return null;
 }
 
-const PACIENTES = [
-  { titulo: 'Paciente 1 · 20 años', sintomas: 'dolor de muñecas · caída del cabello', etiquetas: ['Articulaciones', 'Piel'], organos: [0, 1], param: 'paciente1' },
-  { titulo: 'Paciente 2', sintomas: 'anemia · moretones', etiquetas: ['Sangre'], organos: [3], param: 'paciente2' },
-  { titulo: 'Paciente 3', sintomas: 'convulsiones', etiquetas: ['Sistema nervioso'], organos: [6], param: 'paciente3' },
+/** El contorno encendido cuando entra «piel». */
+const Silueta2 = memo(function Silueta2() {
+  return <g className={s.pielEncendida}><Silueta /></g>;
+});
+
+const PACIENTES: { titulo: string; sub: string; sintomas: string; etiquetas: { t: string; i: Icono }[]; organos: number[]; param: string; tono: string; fondo: string }[] = [
+  { titulo: 'Paciente 1', sub: '20 años', sintomas: 'dolor de muñecas · caída del cabello', etiquetas: [{ t: 'Articulaciones', i: 'articulacion' }, { t: 'Piel', i: 'piel' }], organos: [0, 1], param: 'paciente1', tono: '#C2385A', fondo: s.panelP1 },
+  { titulo: 'Paciente 2', sub: '', sintomas: 'anemia · moretones', etiquetas: [{ t: 'Sangre', i: 'sangre' }], organos: [3], param: 'paciente2', tono: '#7B4FC9', fondo: s.panelP2 },
+  { titulo: 'Paciente 3', sub: '', sintomas: 'convulsiones', etiquetas: [{ t: 'Sistema nervioso', i: 'cerebro' }], organos: [6], param: 'paciente3', tono: '#3E8E6A', fondo: s.panelP3 },
 ];
+
+/** La foto de cada paciente, que no cambia nunca. */
+const Foto = memo(function Foto({ j, y }: { j: number; y: number }) {
+  return (
+    <g>
+      <clipPath id={`lp-foto-${j}`}><rect x={840} y={y} width={156} height={205} rx={22} /></clipPath>
+      <g clipPath={`url(#lp-foto-${j})`}>
+        <rect x={840} y={y} width={156} height={205} className={PACIENTES[j].fondo} />
+        <g transform={`translate(918,${y + 16}) scale(0.34) translate(0,-226)`}><Retrato id={`pac-${j}`} {...PACIENTES_TEZ[j]} /></g>
+      </g>
+    </g>
+  );
+});
 
 function Imitador({ t }: { t: T }) {
   const cu = v(t, 'cuerpo'), og = v(t, 'organos'), tr = v(t, 'tres'), pe = v(t, 'pensar');
@@ -554,13 +557,13 @@ function Imitador({ t }: { t: T }) {
     <g>
       {cu > 0.001 && (
         <g opacity={cu}>
-          <CuerpoFijo />
+          <Silueta />
           {/* De atrás hacia delante: el pulmón no tapa al corazón. */}
-          {ORDEN_DIBUJO.map((i) => <Organo key={ORGANOS[i].txt} i={i} k={clamp(og - i)} pulso={pulso(i)} />)}
+          {ORDEN_DIBUJO.map((i) => <OrganoCuerpo key={ORGANOS[i].txt} i={i} k={clamp(og - i)} pulso={pulso(i)} />)}
           {ORGANOS.map((o, i) => {
             const k = clamp(og - i);
             if (k <= 0.001) return null;
-            const lx = o.lado === 'izq' ? 170 : 630;
+            const lx = o.lado === 'izq' ? 160 : 640;
             return (
               <g key={`r${o.txt}`} opacity={k}>
                 <line x1={o.lado === 'izq' ? lx + 12 : lx - 12} y1={o.ly} x2={o.ax} y2={o.ay} className={s.guia} />
@@ -577,19 +580,27 @@ function Imitador({ t }: { t: T }) {
         const y = 120 + j * 245;
         return (
           <g key={p.titulo} opacity={k} transform={`translate(${40 * (1 - easeOut(k))},0)`}>
-            <rect x={840} y={y} width={680} height={205} rx={22} className={s.tarjeta} />
-            <circle cx={920} cy={y + 102} r={50} className={s.discoIcono} />
-            <Persona x={920} y={y + 116} mujer k={1} />
-            <text x={1000} y={y + 66} className={s.tarjetaTitulo}>{p.titulo}</text>
-            <text x={1000} y={y + 106} className={s.significado}>{p.sintomas}</text>
-            {p.etiquetas.map((e, n) => (
-              <g key={e} transform={`translate(${1000 + n * 200},${y + 150})`}>
-                <rect width={e.length * 11 + 30} height={34} rx={17} className={s.etiquetaOrgano} />
-                <text x={15} y={17} dy="0.35em" className={s.etiquetaOrganoTxt}>{e}</text>
-              </g>
-            ))}
+            {/* Sombra en una capa aparte: sin `filter` */}
+            <rect x={844} y={y + 8} width={680} height={205} rx={24} className={s.tarjetaSombra} />
+            <rect x={840} y={y} width={680} height={205} rx={22} className={s.tarjetaPaciente} />
+            <Foto j={j} y={y} />
+            <rect x={840} y={y} width={680} height={205} rx={22} className={s.tarjetaFilo} />
+            <text x={1022} y={y + 50} className={s.tarjetaEyebrow} style={{ fill: p.tono }}>{p.titulo}{p.sub && <tspan className={s.tarjetaEdad}> · {p.sub}</tspan>}</text>
+            <text x={1022} y={y + 94} className={s.tarjetaSintoma}>{p.sintomas}</text>
+            <line x1={1022} y1={y + 118} x2={1490} y2={y + 118} className={s.tarjetaLinea} />
+            {p.etiquetas.map((e, n) => {
+              const x0 = p.etiquetas.slice(0, n).reduce((a, o) => a + o.t.length * 10.4 + 74, 1022);
+              const w = e.t.length * 10.4 + 60;
+              return (
+                <g key={e.t} transform={`translate(${x0},${y + 138})`}>
+                  <rect width={w} height={44} rx={22} className={s.etiquetaOrgano} />
+                  <IconoOrgano i={e.i} x={24} y={22} k={0.34} />
+                  <text x={46} y={22} dy="0.35em" className={s.etiquetaOrganoTxt}>{e.t}</text>
+                </g>
+              );
+            })}
             {tr > 0.001 && (
-              <g opacity={tr} transform={`translate(1420,${y + 152}) rotate(-10) scale(${(1.3 - 0.3 * easeOut(tr)) * 0.85})`}>
+              <g opacity={tr} transform={`translate(1432,${y + 152}) rotate(-10) scale(${(1.3 - 0.3 * easeOut(tr)) * 0.85})`}>
                 <rect x={-82} y={-30} width={164} height={60} rx={10} className={s.sello} />
                 <text textAnchor="middle" dy="0.35em" className={s.selloTxt}>LUPUS</text>
               </g>
@@ -693,10 +704,18 @@ const FONDOS: Record<Fondo, (p: { t: T; reloj: number }) => ReactNode> = {
   epidermis: ({ t, reloj }) => <FondoEpidermis t={t} reloj={reloj} />,
   ciudad: ({ t, reloj }) => <FondoCiudad t={t} reloj={reloj} />,
   'endosoma': ({ t, reloj }) => <FondoEndosoma t={t} reloj={reloj} />,
-  'firma': ({ t, reloj }) => <FondoFirma t={t} />,
+  'espacio': ({ t, reloj }) => <FondoEspacio t={t} reloj={reloj} />,
+  'circulo': ({ t, reloj }) => <FondoCirculo t={t} reloj={reloj} />,
+  'firma': ({ t, reloj }) => <FondoFirma t={t} reloj={reloj} />,
   'red': ({ t, reloj }) => <FondoRed t={t} reloj={reloj} />,
   'seleccion': ({ t, reloj }) => <FondoSeleccion t={t} />,
-  'germinal': ({ t, reloj }) => <FondoGerminal t={t} />,
+  'germinal': ({ t, reloj }) => <FondoGerminal t={t} reloj={reloj} />,
+  'periferia': ({ t, reloj }) => <FondoPeriferia t={t} reloj={reloj} />,
+  'efectoras': ({ t, reloj }) => <FondoEfectoras t={t} reloj={reloj} />,
+  'freno': ({ t, reloj }) => <FondoFreno t={t} reloj={reloj} />,
+  'intersticio': ({ t, reloj }) => <FondoIntersticio t={t} reloj={reloj} />,
+  'circuito': ({ t, reloj }) => <FondoCircuito t={t} reloj={reloj} />,
+  'puente': ({ t }) => <FondoPuente t={t} />,
   'h-vaso': ({ t, reloj }) => <FondoVasoLupus t={t} reloj={reloj} />,
   'h-sangre': ({ t, reloj }) => <FondoSangreLupus t={t} reloj={reloj} />,
   'h-glomerulo': ({ t, reloj }) => <FondoGlomeruloLupus t={t} reloj={reloj} />,

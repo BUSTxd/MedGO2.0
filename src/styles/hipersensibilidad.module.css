@@ -204,6 +204,83 @@
 .credito { max-width: calc(100% - 24px); }
 /* Botón de la voz grabada, apagado */
 .vozApagada { opacity: 0.55; }
+/* Barra de volumen: sale hacia arriba, sobre la escena, sin mover los controles.
+   El relleno de abajo de .vozBarra une la barra con el botón: sin él, el mouse
+   la cerraría al cruzar el hueco. */
+.voz { position: relative; display: inline-flex; }
+.vozBarra {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  z-index: 30;
+  padding-bottom: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 6px);
+  transform-origin: bottom center;
+  transition: opacity 0.14s ease, transform 0.14s ease, visibility 0.14s;
+}
+@media (hover: hover) {
+  .voz:hover .vozBarra { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+}
+.voz:has(:focus-visible) .vozBarra,
+.voz:active .vozBarra,
+.vozAbierta .vozBarra { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+.vozBarra input {
+  display: block;
+  box-sizing: border-box;
+  width: 34px;
+  height: 128px;
+  margin: 0;
+  padding: 12px 0;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  background: var(--campo-3);
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.35);
+  /* Vertical con el estándar: 0 abajo, 1 arriba. */
+  writing-mode: vertical-lr;
+  direction: rtl;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  touch-action: none;
+}
+.vozBarra input:focus-visible { outline: 2px solid var(--dapi); outline-offset: 2px; }
+.vozBarra input::-webkit-slider-runnable-track {
+  width: 5px;
+  border-radius: 3px;
+  background: linear-gradient(to top, var(--dapi) var(--v), var(--linea) var(--v));
+}
+.vozBarra input::-moz-range-track {
+  width: 5px;
+  border-radius: 3px;
+  background: var(--linea);
+}
+.vozBarra input::-moz-range-progress {
+  width: 5px;
+  border-radius: 3px;
+  background: var(--dapi);
+}
+.vozBarra input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  /* Centra la bola sobre el riel de 5 px, que es lo que Chrome toma de referencia. */
+  margin-left: -5px;
+  border: none;
+  border-radius: 50%;
+  background: var(--dapi);
+}
+.vozBarra input::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border: none;
+  border-radius: 50%;
+  background: var(--dapi);
+}
+@media (prefers-reduced-motion: reduce) {
+  .vozBarra { transition: none; }
+}
 .sobretitulo { color: #1F9AAE; }
 .tipoNombre { border: none; background: none; padding: 0; font-family: inherit; font-size: 14px; font-weight: 800; cursor: pointer; text-align: left; display: grid; gap: 2px; }
 .tipoNombre span { font-size: 12px; font-weight: 600; color: var(--texto-2); }

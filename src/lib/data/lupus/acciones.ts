@@ -47,5 +47,11 @@ export const lupa = (id: string, cerca: string, at: number, titulo: string, item
 // ─── Declaraciones de actores ─────────────────────────────────────────────────
 
 export const caja = (label: string, sub = '', color = '#5B6475', w = 420, h = 96): ActorDecl => ({ forma: 'caja', label, sub, color, w, h });
+/** Caja medida para su texto: sin relleno de sobra y con la letra más grande. */
+export const cajaJusta = (label: string, sub = '', color = '#5B6475'): ActorDecl => {
+  const lineas = sub.split('\n').filter(Boolean);
+  const w = Math.max(label.length * 14.4, ...lineas.map((l) => l.length * 10.8)) + 48;
+  return { forma: 'caja', label, sub, color, ajusta: true, w: Math.round(w), h: lineas.length ? 40 + lineas.length * 26 : 60 };
+};
 export const texto = (label: string, d = 34, color = 'var(--texto)', sub?: string): ActorDecl => ({ forma: 'texto', label, d, color, ...(sub ? { sub } : {}) });
 export const icono = (icono: string, label: string, d = 100): ActorDecl => ({ forma: 'icono', icono, label, d });
