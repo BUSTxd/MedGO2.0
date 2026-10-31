@@ -19,4 +19,11 @@ export const temasEpidemiologia: TablaTemas = {
   'referencia':         { label: 'Referencia y contrarreferencia',             clases: [{ ...C.t3, seccion: 'III. Proceso de Referencia' }] },
   'cartera':            { label: 'Cartera de servicios',                       clases: [{ ...C.t4, seccion: 'I. Cartera de servicios' }] },
   'modalidades-oferta': { label: 'Modalidades de oferta',                      clases: [{ ...C.t4, seccion: 'II. Modalidades de oferta' }] },
+  // Segundo examen: T5-T9 no tienen resumen publicado, así que el informe dice
+  // qué tema se falló sin recomendar clase. Al publicarlos se rellenan `clases`.
+  'mci-nino-joven':      { label: 'MCI: niño, adolescente y joven',                  clases: [] },
+  'mci-adulto-gestante': { label: 'MCI: adulto y gestante',                          clases: [] },
+  'paifam':              { label: 'PAIFAM: familia y comunidad',                     clases: [] },
+  'esn-generales':       { label: 'ESN: nutrición, inmunizaciones y salud ocular',   clases: [] },
+  'esn-danos':           { label: 'ESN: no transmisibles, TB, metaxénicas y SSR',    clases: [] },
 };

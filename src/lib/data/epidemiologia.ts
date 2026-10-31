@@ -370,6 +370,31 @@ export const semanas: Semana[] = [
         subtemas: ['Módulo II · semanas 6 – 11'],
         docentes: [],
         nota: 'Examen presencial.',
+        // Un banqueo por tema, sin `dePago`: todos son muestra, se piden y el
+        // servidor los recorta (`examenes-acceso.ts`).
+        examen: {
+          key: 'epidemiologia/parcial-2-mci-nino-joven',
+          groups: [
+            'epidemiologia/parcial-2-mci-adulto-gestante',
+            'epidemiologia/parcial-2-paifam',
+            'epidemiologia/parcial-2-esn-generales',
+            'epidemiologia/parcial-2-esn-danos',
+          ],
+          labels: {
+            'epidemiologia/parcial-2-mci-nino-joven': 'MCI: niño a joven',
+            'epidemiologia/parcial-2-mci-adulto-gestante': 'MCI: adulto y gestante',
+            'epidemiologia/parcial-2-paifam': 'PAIFAM',
+            'epidemiologia/parcial-2-esn-generales': 'ESN: nutrición, vacunas, ocular',
+            'epidemiologia/parcial-2-esn-danos': 'ESN: ENT, TB, metaxénicas, SSR',
+          },
+          hints: {
+            'epidemiologia/parcial-2-mci-nino-joven': 'Preguntas de exámenes pasados y nuevas según el resumen',
+            'epidemiologia/parcial-2-mci-adulto-gestante': 'Preguntas de exámenes pasados y nuevas según el resumen y la norma del MINSA',
+            'epidemiologia/parcial-2-paifam': 'Preguntas de exámenes pasados y nuevas según el resumen',
+            'epidemiologia/parcial-2-esn-generales': 'Preguntas de exámenes pasados y nuevas según el resumen',
+            'epidemiologia/parcial-2-esn-danos': 'Preguntas de exámenes pasados y nuevas según el resumen',
+          },
+        },
       },
     ],
   },

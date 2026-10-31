@@ -34,6 +34,8 @@ const CURSOS = [
     silabo: path.join(RAIZ, 'src', 'lib', 'data', 'epidemiologia.ts'),
     // Los ids de clase ya llevan el prefijo (`epi-t-2`) y el resumen usa el mismo.
     prefijoResumen: '',
+    // Temas del Segundo examen: sus clases (T5-T9) aún no tienen resumen publicado.
+    temasSinClase: new Set(['mci-nino-joven', 'mci-adulto-gestante', 'paifam', 'esn-generales', 'esn-danos']),
   },
   {
     slug: 'patologia',
@@ -83,7 +85,7 @@ function verificarTabla(curso, tabla, silabo) {
     const donde = `${curso.slug} · tema «${temaId}»`;
 
     if (!tema.label || !tema.label.trim()) err(`${donde}: sin label.`);
-    if (curso.sinClases && Array.isArray(tema.clases) && tema.clases.length === 0) continue;
+    if ((curso.sinClases || curso.temasSinClase?.has(temaId)) && Array.isArray(tema.clases) && tema.clases.length === 0) continue;
     if (!Array.isArray(tema.clases) || tema.clases.length === 0) {
       err(`${donde}: no tiene ninguna clase asignada; todo tema debe recomendar al menos una.`);
       continue;
