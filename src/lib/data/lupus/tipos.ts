@@ -17,14 +17,14 @@ export type ParteId =
   | 'tipo-2' | 'piel' | 'corazon' | 'nefritis' | 'diagnostico' | 'tratamiento';
 
 /** Lámina de fondo; un paso la cambia con la acción `fondo` (con fundido). */
-export type Fondo = 'blanco' | 'nombre' | 'nucleo' | 'brotes' | 'quien' | 'imitador' | 'ruta' | 'causas' | 'epidermis' | 'ciudad' | 'espacio' | 'endosoma' | 'firma' | 'red' | 'circulo' | 'seleccion' | 'periferia' | 'germinal' | 'efectoras' | 'freno' | 'intersticio' | 'circuito' | 'puente' | 'h-vaso' | 'h-sangre' | 'h-glomerulo' | 'manos' | 'boca' | 'torso' | 'discoide' | 'valva' | 'coronaria' | 'torax' | 'cebolla' | 'pulmon' | 'capas' | 'fullhouse' | 'clases' | 'pruebas' | 'eular';
+export type Fondo = 'blanco' | 'nombre' | 'nucleo' | 'brotes' | 'quien' | 'imitador' | 'ruta' | 'causas' | 'epidermis' | 'ciudad' | 'espacio' | 'endosoma' | 'firma' | 'red' | 'circulo' | 'seleccion' | 'periferia' | 'germinal' | 'efectoras' | 'freno' | 'intersticio' | 'circuito' | 'puente' | 'h-vaso' | 'h-sangre' | 'saf' | 'h-glomerulo' | 'sintomas' | 'cutaneos' | 'malar' | 'neuro' | 'manos' | 'boca' | 'torso' | 'discoide' | 'valva' | 'coronaria' | 'torax' | 'cebolla' | 'pulmon' | 'mecanismos' | 'capas' | 'fullhouse' | 'clases' | 'clinicaN' | 'txCompl' | 'txCircuito' | 'endosomaTx' | 'txFarmacos' | 'txFin' | 'dxInicio' | 'pruebas' | 'dxAfl' | 'eular';
 
 /** Parámetros de la lámina que se animan (0 = nada, 1 = entero). Cada fondo lee los suyos. */
 /** Parámetro de una lámina (0 = nada, 1 = entero). Los que lee cada lámina están en
  *  `PARAMETROS` (zonas.ts) y el verificador caza el que no exista. */
 export type ParamTejido = string;
 
-export type DibujoPropio = 'nucleada' | 'apoptotico' | 'nucleosoma' | 'nucleosomaox' | 'pdc' | 'c1q' | 'fragadn' | 'fragarn' | 'octamero' | 'complejoadn' | 'complejoarn' | 'tdn';
+export type DibujoPropio = 'leucocito' | 'nucleada' | 'apoptotico' | 'nucleosoma' | 'nucleosomaox' | 'pdc' | 'c1q' | 'fragadn' | 'fragarn' | 'octamero' | 'complejoadn' | 'complejoarn' | 'tdn';
 export type Dibujo = DibujoPropio | DibujoHiper;
 
 export type Forma = 'celula' | 'dibujo' | 'proteina' | 'molecula' | 'anticuerpo' | 'complejo' | 'ancla'

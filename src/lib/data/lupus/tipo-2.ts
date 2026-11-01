@@ -1,19 +1,21 @@
-// Capítulo 6 — El daño, 2: tipo II y antifosfolípidos. En la sangre (el tejido
-// de «Hipersensibilidad»): anticuerpos contra hematíes, plaquetas y leucocitos;
-// las tres muertes de la célula opsonizada; la firma de laboratorio de la
-// hemólisis; trombocitopenia y leucopenia; los antifosfolípidos, la paradoja
-// del «anticoagulante» lúpico y el síndrome antifosfolipídico. Guion §6.
+// Capítulo 6 — El daño, 2: tipo II y antifosfolípidos. En la sangre (un vaso
+// entero en corte): anticuerpos contra hematíes, plaquetas y leucocitos; las tres
+// muertes de la célula opsonizada; la firma de laboratorio de la hemólisis;
+// trombocitopenia y leucopenia; los antifosfolípidos, la paradoja del
+// «anticoagulante» lúpico y el síndrome antifosfolipídico. Guion §6.
+// `at` = hora de cada palabra en el audio (ms desde el inicio del paso), medida
+// con marcas por palabra sobre la narración.
 
 import type { ActorDecl, Parte } from './tipos';
 import { L } from './colores';
 import { NARRACION } from './narracion';
-import { cambia, caja, come, desenlace, desgrana, encender, fondo, lisa, muere, nota, ocultar, p, pegar, texto, ver } from './acciones';
+import { apagar, come, desgrana, expresa, fondo, lisa, mover, ocultar, p, pegar, texto, ver } from './acciones';
 
 const AB: ActorDecl = { forma: 'anticuerpo', ab: 'IgG', label: 'IgG', d: 46, color: L.ana, info: 'ana' };
 const RBC: ActorDecl = { forma: 'dibujo', dibujo: 'eritrocito', label: 'Hematíe', d: 110, color: '#D9574F', info: 'eritrocito' };
-const PLT: ActorDecl = { forma: 'dibujo', dibujo: 'plaqueta', label: '', d: 64, color: '#D9A72E', info: 'plaqueta' };
-const LEU: ActorDecl = { forma: 'dibujo', dibujo: 'linfocito', label: 'Leucocito', d: 110, color: '#9AA3B8', info: 'leucocito' };
-const LAB = (label: string, sub: string, color = L.dano) => caja(label, sub, color, 292, 110);
+
+/** En el teléfono el encuadre automático recortaría la lámina: se ve siempre entera. */
+const ENTERA = { at: 0, duration: 1000, tipo: 'camera', box: 'all' } as const;
 
 const tipo2: Parte = {
   id: 'tipo-2',
@@ -28,42 +30,15 @@ const tipo2: Parte = {
   fondo: 'h-sangre',
   narracion: NARRACION[6],
   actores: {
-    kT2: caja('Hipersensibilidad tipo II', 'el anticuerpo se pega a la propia célula', '#E0892E', 600, 90),
-    rbc: { ...RBC, label: 'Hematíe' },
-    ab1: AB, ab2: AB, ab3: AB, ab4: AB, ab5: AB, ab6: AB, ab7: AB,
-    plt: { ...PLT, label: 'Plaqueta' },
-    leu: LEU,
-    tTres: texto('Tres maneras de morir', 34),
-    rbc2: RBC, rbc3: RBC,
-    mac: { forma: 'celula', img: 'macrofago', label: 'Macrófago', sub: 'del bazo y el hígado', d: 180, color: '#E8A06A', info: 'macrofago' },
-    nk: { forma: 'celula', img: 'nk', label: 'Célula NK', sub: 'ADCC', d: 130, color: '#4F9FC2', info: 'nk' },
-    kAhai: caja('Anemia hemolítica autoinmune', '', '#D9574F', 600, 80),
-    l1: LAB('Coombs directo', 'positivo\nanticuerpo en el hematíe'),
-    l2: LAB('Reticulocitos', 'suben\nla médula compensa'),
-    l3: LAB('LDH', 'sube\nse rompen hematíes'),
-    l4: LAB('Bilirrubina indirecta', 'sube\nse rompen hematíes'),
-    l5: LAB('Haptoglobina', 'baja\natrapa la hemoglobina'),
-    kTromb: caja('Trombocitopenia autoinmune', 'petequias, moretones, sangrado de encías', '#D9A72E', 600, 100),
-    p1: PLT, p2: PLT, p3: PLT, p4: PLT, p5: PLT,
-    kLeuc: caja('Leucopenia', 'muy frecuente en el lupus', '#5B6475', 460, 100),
-    le1: LEU, le2: LEU,
-    kPerla: caja('Leucopenia o linfopenia + dolor articular en una mujer joven', '→ piensa en lupus antes que en un virus', L.lupus, 900, 100),
-    kAfl: caja('Antifosfolípidos', 'en el 20 a 40 % de los pacientes', L.dano, 520, 90),
-    a1: caja('Anticoagulante lúpico', '', L.dano, 460, 66),
-    a2: caja('Anticardiolipina', '', L.dano, 460, 66),
-    a3: caja('Anti-β2-glicoproteína I', '', L.dano, 460, 66),
-    kEfe: caja('Activan endotelio y plaquetas', 'alteran la coagulación\ny las vías anticoagulantes', '#E5484D', 500, 110),
-    kHiper: caja('Hipercoagulabilidad', '', L.lupus, 460, 70),
+    rbc: { ...RBC, d: 150 },
+    ab1: AB, ab2: AB, ab3: AB, ab4: AB, ab5: AB, ab6: AB, ab7: AB, ab8: AB, ab9: AB,
+    plt: { forma: 'dibujo', dibujo: 'plaqueta', label: 'Plaqueta', d: 96, color: '#A57BD6', info: 'plaqueta' },
+    leu: { forma: 'dibujo', dibujo: 'leucocito', label: 'Leucocito', d: 150, color: '#B592C8', info: 'leucocito' },
+    rbc2: { ...RBC, label: '' }, rbc3: { ...RBC, label: '' },
+    mac: { forma: 'celula', img: 'macrofago', label: 'Macrófago', d: 230, color: '#E8A06A', info: 'macrofago' },
+    nk: { forma: 'celula', img: 'nk', label: 'Célula NK', d: 150, color: '#4F9FC2', info: 'nk' },
     tA1: texto('Se llama «anticoagulante lúpico»…', 30),
     tA2: texto('…pero produce trombosis', 34, L.lupus),
-    kCuerpo: caja('En el cuerpo: trombosis', '', L.lupus, 440, 70),
-    kRegla: caja('TTPa prolongado + trombosis', '→ antifosfolípidos, no un problema de sangrado', '#E0892E', 600, 100),
-    kNo: caja('Tener los anticuerpos ≠ tener el síndrome', '', L.dano, 640, 80),
-    tPct: texto('5 a 10 %', 70, L.lupus, 'desarrolla un síndrome antifosfolipídico'),
-    c1: caja('Trombosis venosa o arterial', '', '#E5484D', 560, 76),
-    c2: caja('Morbilidad obstétrica', 'abortos del primer trimestre', '#E5484D', 560, 92),
-    c3: caja('+ anticuerpos que persisten', 'en pruebas repetidas', '#E5484D', 560, 92),
-    kEmb: caja('Mujer con lupus que planea un embarazo', '→ buscar antifosfolípidos a tiempo', L.tratamiento, 720, 100),
   },
   pasos: [
     {
@@ -76,13 +51,19 @@ const tipo2: Parte = {
       protagonistas: ['rbc'],
       encuadre: 'all',
       acciones: [
-        ver('kT2', 8, 1.2, 0, 'top'),
-        ver('rbc', 4, 5, 5700),
-        ver('ab1', 5.4, 3.6, 6200, 'right'), ver('ab2', 2.6, 3.8, 6400, 'left'), ver('ab3', 4, 7, 6600, 'bottom'),
-        pegar('ab1', 'rbc', 6800, -50, { apunta: 'fab' }), pegar('ab2', 'rbc', 7000, -130, { apunta: 'fab' }), pegar('ab3', 'rbc', 7200, 90, { apunta: 'fab' }),
-        nota('Se pega a un antígeno de su superficie', 'rbc', 8800, 'bottom'),
-        ver('plt', 8, 5, 12700), ver('ab4', 9, 3.8, 13000, 'right'), pegar('ab4', 'plt', 13600, -60, { apunta: 'fab' }),
-        ver('leu', 12, 5, 13600), ver('ab5', 13.2, 3.8, 13900, 'right'), pegar('ab5', 'leu', 14500, -60, { apunta: 'fab' }),
+        ENTERA,
+        p('capas', 1, 300, 2200),
+        ver('rbc', 2.6, 4.9, 900),
+        p('t2', 1, 3300, 1500),
+        p('noViaja', 1, 5900, 800), p('noViaja', 0, 8500, 500),
+        ver('ab1', 3.9, 3.2, 8300, 'right'), ver('ab2', 1.2, 3.3, 8450, 'left'), ver('ab3', 2.6, 2.8, 8600, 'top'),
+        pegar('ab1', 'rbc', 8800, -35, { apunta: 'fab' }), pegar('ab2', 'rbc', 8950, -145, { apunta: 'fab' }), pegar('ab3', 'rbc', 9100, -90, { apunta: 'fab' }),
+        p('zoomAg', 1, 10100, 1600),
+        p('b1', 1, 15200, 1200),
+        ver('plt', 9.2, 4.9, 16200), ver('ab4', 10.4, 3.6, 16300, 'right'), pegar('ab4', 'plt', 16700, -50, { apunta: 'fab' }),
+        p('b2', 1, 16300, 1200),
+        ver('leu', 13, 4.9, 17300), ver('ab5', 14.4, 3.4, 17400, 'right'), pegar('ab5', 'leu', 17800, -50, { apunta: 'fab' }),
+        p('b3', 1, 17500, 1200),
       ],
     },
     {
@@ -95,21 +76,40 @@ const tipo2: Parte = {
       protagonistas: ['rbc', 'mac', 'nk'],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'kT2', 'plt', 'leu', 'ab4', 'ab5'),
-        { at: 0, duration: 1200, tipo: 'move', actor: 'rbc', to: { col: 3, row: 5 } },
-        ver('tTres', 8, 1.2, 4000, 'fade'),
-        nota('Complemento → MAC → lisis', 'rbc', 7600, 'top'),
-        lisa('rbc', 8300, 1700),
-        ver('rbc2', 9.4, 5, 9800), ver('ab6', 9.4, 3.6, 9800, 'top'), pegar('ab6', 'rbc2', 10000, -90, { apunta: 'fab' }),
-        ver('mac', 7.2, 5.2, 10200),
-        come('mac', 'rbc2', 11400, 2200),
-        nota('Macrófagos del bazo e hígado (receptor Fc)', 'mac', 12000, 'bottom'),
-        ver('rbc3', 13.8, 5, 14800), ver('ab7', 13.8, 3.6, 14800, 'top'), pegar('ab7', 'rbc3', 15000, -90, { apunta: 'fab' }),
-        ver('nk', 11.8, 5.2, 15300),
-        desgrana('nk', 16300, 'perforina', ['rbc3']),
-        lisa('rbc3', 18300, 1500),
-        nota('NK: citotoxicidad dependiente de anticuerpos', 'nk', 16600, 'bottom'),
-        desenlace('Resultado: baja el recuento de esa célula', 21500, 'lesion', 8, 9.3),
+        ENTERA,
+        ...ocultar(0, 'plt', 'leu', 'ab4', 'ab5'),
+        ...apagar(0, 'capas', 't2', 'b1', 'b2', 'b3', 'zoomAg'),
+        p('quieto', 0.5, 0, 1500),
+        mover('rbc', 2.9, 5, 0, 1000),
+        ver('ab8', 4.2, 6.2, 1100, 'right'), ver('ab9', 1.6, 6.2, 1300, 'left'),
+        pegar('ab8', 'rbc', 1500, 30, { apunta: 'fab' }), pegar('ab9', 'rbc', 1700, 150, { apunta: 'fab' }),
+        p('opso', 1, 2800, 900), p('opso', 0, 6000, 500),
+        p('tTres', 1, 6200, 1200),
+        // 1 · Complemento: el actor pasa el relevo a la lámina, que le abre los poros
+        p('est1', 1, 7000, 600),
+        ...ocultar(7100, 'rbc', 'ab1', 'ab2', 'ab3', 'ab8', 'ab9'),
+        p('m1', 1, 7600, 1300),
+        p('lis1', 1, 7900, 4600),
+        p('hemolisis', 0.45, 10000, 3000),
+        // 2 · Macrófago del bazo y del hígado
+        ver('mac', 8, 4.9, 10500), p('m2', 1, 10500, 1300),
+        ver('rbc2', 10.6, 3.7, 10700), ver('ab6', 10.6, 2.8, 10700, 'top'), pegar('ab6', 'rbc2', 11000, -90, { apunta: 'fab' }),
+        come('mac', 'rbc2', 11800, 2200),
+        ...ocultar(13300, 'ab6'),
+        p('baz', 1, 12100, 800), p('hig', 1, 12800, 800),
+        expresa('mac', 13500, { id: 'fc1', tipo: 'fcgr', label: '', ang: -40, color: '#2C8FD6' }),
+        expresa('mac', 13700, { id: 'fc2', tipo: 'fcgr', label: '', ang: 20, color: '#2C8FD6' }),
+        expresa('mac', 13900, { id: 'fc3', tipo: 'fcgr', label: 'FcγR', ang: -100, color: '#2C8FD6' }),
+        // 3 · Célula NK
+        ver('nk', 12.1, 5, 16000), p('m3', 1, 16000, 1300),
+        ver('rbc3', 14.2, 4.5, 16200), ver('ab7', 14.2, 3.3, 16200, 'top'), pegar('ab7', 'rbc3', 16600, -90, { apunta: 'fab' }),
+        expresa('nk', 17600, { id: 'cd16', tipo: 'fcgr', label: 'CD16', ang: -30, color: '#2C8FD6' }),
+        desgrana('nk', 18400, 'perforina', ['rbc3'], 1800),
+        lisa('rbc3', 19800, 1400),
+        p('fan3', 1, 20400, 900),
+        // El resultado
+        p('tTres', 0, 21300, 500),
+        p('baja', 1, 21600, 2000),
       ],
     },
     {
@@ -122,16 +122,20 @@ const tipo2: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'mac', 'nk', 'tTres', 'rbc2', 'ab1', 'ab2', 'ab3', 'ab6', 'ab7'),
+        ENTERA,
+        ...ocultar(0, 'mac', 'nk', 'rbc2', 'ab7'),
+        ...apagar(0, 'est1', 'lis1', 'fan3', 'm1', 'm2', 'm3', 'baz', 'hig', 'baja'),
         p('hemolisis', 1, 0, 3000),
-        ver('kAhai', 8, 1.2, 0, 'top'),
-        ver('l1', 1.9, 8.9, 6300, 'bottom'),
-        ver('l2', 5, 8.9, 10700, 'bottom'),
-        ver('l3', 8.1, 8.9, 14300, 'bottom'),
-        ver('l4', 11.2, 8.9, 15600, 'bottom'),
-        ver('l5', 14.3, 8.9, 19300, 'bottom'),
-        cambia('kAhai', 23400, { label: 'La firma de la hemólisis', sub: 'te la van a preguntar' }),
-        encender('l1', 23600), encender('l2', 23900), encender('l3', 24200), encender('l4', 24500), encender('l5', 24800),
+        p('quieto', 0.85, 0, 1500),
+        p('ahai', 1, 900, 1500),
+        p('lab1', 1, 6400, 2000),
+        p('lab2', 1, 10800, 2000),
+        p('lab3', 1, 14400, 1500),
+        p('lab4', 1, 15800, 2000),
+        p('lab5', 1, 19500, 2200),
+        // El repaso: la lente que se nombra se enciende
+        p('rec', 1, 23300, 4500, 'lineal'),
+        p('labTodo', 1, 28800, 1400),
       ],
     },
     {
@@ -144,16 +148,16 @@ const tipo2: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'kAhai', 'l1', 'l2', 'l3', 'l4', 'l5'),
-        p('hemolisis', 0, 0, 1500),
-        ver('kTromb', 4.6, 1.3, 0, 'top'),
-        ver('p1', 2.4, 5, 600), ver('p2', 3.6, 4.4, 800), ver('p3', 4.8, 5.4, 1000), ver('p4', 6, 4.6, 1200), ver('p5', 7, 5.6, 1400),
-        muere('p2', 3000), muere('p4', 3800), muere('p5', 4600),
-        ver('kLeuc', 11.6, 1.3, 8100, 'top'),
-        ver('le1', 10.6, 5, 8400), ver('le2', 12.8, 5, 8600),
-        muere('le2', 10200),
-        ver('kPerla', 8, 8.9, 12700, 'bottom'),
-        encender('kPerla', 16500),
+        ENTERA,
+        ...apagar(0, 'ahai', 'lab1', 'lab2', 'lab3', 'lab4', 'lab5', 'rec', 'labTodo'),
+        p('hemolisis', 0.15, 0, 1800),
+        p('lTromb', 1, 750, 1300),
+        p('plaq', 1, 1500, 1300), p('plaqLow', 1, 3300, 2000),
+        p('s1', 1, 5200, 800), p('s2', 1, 6000, 800), p('s3', 1, 6700, 800),
+        p('lLeuc', 1, 8900, 1300),
+        p('leuc', 1, 9900, 1300), p('leucLow', 1, 10700, 2000),
+        p('pm', 1, 16000, 800), p('pa', 1, 16900, 800),
+        p('lPerla', 1, 18500, 1500),
       ],
     },
     {
@@ -166,15 +170,17 @@ const tipo2: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'kTromb', 'kLeuc', 'kPerla', 'p1', 'p3', 'le1'),
+        ENTERA,
         fondo('h-vaso'),
-        ver('kAfl', 13.3, 2.25, 4600, 'right'),
-        ver('a1', 13.3, 3.55, 8300, 'right'),
-        ver('a2', 13.3, 4.5, 9800, 'right'),
-        ver('a3', 13.3, 5.45, 11300, 'right'),
-        p('trombo', 1, 15100, 7000),
-        ver('kEfe', 13.2, 6.9, 15100, 'right'),
-        ver('kHiper', 13.2, 8.6, 22200, 'right'),
+        p('aflT', 1, 2800, 1400),
+        p('aflD', 1, 4900, 1800),
+        p('aflE1', 1, 9100, 1000), p('aflE2', 1, 10500, 1000), p('aflE3', 1, 12700, 1000),
+        p('aflF', 1, 14900, 1400),
+        p('aflA', 1, 15100, 1600),
+        p('aflP', 1, 16400, 6000), p('aflPL', 1, 16400, 1400), p('trombo', 1, 16400, 7000),
+        p('aflC', 1, 17600, 3000),
+        p('aflB', 1, 19100, 2200),
+        p('aflG', 1, 23700, 1400),
       ],
     },
     {
@@ -187,12 +193,17 @@ const tipo2: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'kAfl', 'a1', 'a2', 'a3', 'kEfe', 'kHiper'),
-        ver('tA1', 13.3, 2.2, 2800, 'fade'),
-        ver('tA2', 13.3, 2.95, 5300, 'fade'),
-        p('tubo', 1, 6800, 1600),
-        ver('kCuerpo', 13.2, 7.5, 13100, 'right'),
-        ver('kRegla', 12.6, 8.9, 16400, 'right'),
+        ENTERA,
+        ...apagar(0, 'aflT', 'aflD', 'aflE1', 'aflE2', 'aflE3', 'aflF', 'aflA', 'aflB', 'aflC', 'aflG', 'aflPL'),
+        ver('tA1', 13.35, 0.62, 2650, 'fade'),
+        ver('tA2', 13.35, 1.12, 5150, 'fade'),
+        p('tubo', 1, 8000, 1600),
+        p('crono', 1, 8800, 3600),
+        p('cuerp', 1, 12900, 1500),
+        p('cuerpoL', 1, 14500, 1500),
+        p('eq1', 1, 17300, 900), p('eq2', 1, 19100, 900),
+        p('noSang', 1, 19700, 1000),
+        p('eq3', 1, 22400, 1300),
       ],
     },
     {
@@ -205,14 +216,15 @@ const tipo2: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'tA1', 'tA2', 'kCuerpo', 'kRegla'),
-        fondo('blanco'),
-        ver('kNo', 8, 1.6, 1500, 'top'),
-        ver('tPct', 4, 4.4, 4100, 'fade'),
-        ver('c1', 11.2, 3.4, 9700, 'right'),
-        ver('c2', 11.2, 4.8, 12000, 'right'),
-        ver('c3', 11.2, 6.3, 15500, 'right'),
-        ver('kEmb', 8, 8.6, 19100, 'bottom'),
+        ENTERA,
+        ...ocultar(0, 'tA1', 'tA2'),
+        fondo('saf'),
+        p('neq', 1, 1400, 1500),
+        p('pct', 1, 4400, 900),
+        p('pic', 1, 4800, 2200), p('picSaf', 1, 6800, 2600),
+        p('crit1', 1, 10200, 1100), p('crit2', 1, 12000, 1100), p('crit3', 1, 15000, 1100),
+        p('llave', 1, 17200, 1600),
+        p('emb', 1, 19600, 1600),
       ],
     },
   ],

@@ -7,11 +7,13 @@
 import type { Parte } from './tipos';
 import { L } from './colores';
 import { NARRACION } from './narracion';
-import { caja, encender, fondo, icono, mover, ocultar, p, segrega, ver } from './acciones';
+import { apagar, fondo, mover, ocultar, p, segrega, ver } from './acciones';
 
-const CLASE = (label: string, sub: string, color: string = L.rinon, h = 110) => caja(label, sub, color, 640, h);
 /** Rasgos del glomérulo grande a cero (antes de pintar la clase siguiente). */
-const limpiar = (at: number) => ['gMes', 'gDep', 'gSub', 'gEpi', 'gAsas', 'gTrombos', 'gSemiluna', 'gEscl', 'gGruesa', 'spikes'].map((x) => p(x, 0, at, 700));
+const limpiar = (at: number) => ['gMes', 'gSub', 'gEpi', 'gAsas', 'gTrombos', 'gSemiluna', 'gEscl', 'gGruesa', 'spikes'].map((x) => p(x, 0, at, 700));
+
+/** En el teléfono el encuadre automático recortaría la ilustración: se ve siempre entera. */
+const ENTERA = { at: 0, duration: 1000, tipo: 'camera', box: 'all' } as const;
 
 const nefritis: Parte = {
   id: 'nefritis',
@@ -29,27 +31,6 @@ const nefritis: Parte = {
     com1: { forma: 'complejo', n: 6, label: '', d: 60, color: L.complejo, info: 'complejo' },
     com2: { forma: 'complejo', n: 5, label: '', d: 54, color: L.complejo, info: 'complejo' },
     neu1: { forma: 'celula', img: 'neutrofilo', label: 'Neutrófilo', d: 110, color: '#B67AC7', info: 'neutrofilo' },
-    g1: caja('Complemento y leucocitos', 'proliferación · mesangio expandido\nparedes y membrana basal engrosadas', '#C0397A', 560, 120),
-    g2: caja('Linfocitos B y T, interferón I', 'amplifican la inflamación en el riñón', '#7B4FC9', 560, 96),
-    g3: caja('Glomerulonefritis', 'después túbulos e intersticio → esclerosis', L.lupus, 560, 96),
-    c1: CLASE('Clase I · mesangial mínima', 'microscopio de luz normal\ndepósitos solo en IF o ME · asintomática'),
-    c1b: caja('Pronóstico excelente', '', '#1F9A6A', 400, 70),
-    c2: CLASE('Clase II · mesangial proliferativa', 'más células y matriz en el mesangio\nhematuria y proteinuria leves'),
-    c34: caja('Depósitos subendoteliales', 'las clases graves', '#E5484D', 480, 90),
-    c3: CLASE('Clase III · focal', 'menos del 50 % de los glomérulos', '#E5484D', 90),
-    c4: CLASE('Clase IV · difusa', '50 % o más de los glomérulos', '#E5484D', 90),
-    c4b: caja('La IV: la más frecuente y la más grave', '', L.lupus, 640, 70),
-    i1: caja('Necrosis fibrinoide y semilunas', '→ insuficiencia renal rápidamente progresiva', L.lupus, 640, 96),
-    c5: CLASE('Clase V · membranosa', 'depósitos subepiteliales\nmembranas engrosadas · «spikes» con plata', '#2F6FD0'),
-    c5b: caja('Síndrome nefrótico', '', '#2F6FD0', 400, 70),
-    c6: CLASE('Clase VI · esclerosis avanzada', '≥ 90 % de los glomérulos con esclerosis global', '#5B6475', 96),
-    c6b: caja('Enfermedad renal crónica avanzada', 'daño irreversible: ya no hay mucho que tratar', '#5B6475', 640, 96),
-    c6c: caja('El objetivo del seguimiento: no llegar aquí', '', L.tratamiento, 640, 70),
-    k0: caja('Puede ser silenciosa…', 'proteinuria · hematuria microscópica · cilindros\nedema · hipertensión · creatinina que sube', '#5B6475', 760, 120),
-    kNef: caja('Clases III y IV → nefrítico', 'hematuria dismórfica · cilindros eritrocitarios\nhipertensión · azoemia', '#E5484D', 600, 130),
-    kNeo: caja('Clase V → nefrótico', 'más de 3,5 g de proteína al día\nhipoalbuminemia · edema · hiperlipidemia', '#2F6FD0', 600, 130),
-    iOri: icono('orina', '', 130),
-    kOri: caja('Examen de orina en cada control', 'el riñón puede enfermar sin dar síntomas', L.tratamiento, 640, 96),
   },
   pasos: [
     {
@@ -62,6 +43,7 @@ const nefritis: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
+        ENTERA,
         p('capilar', 1, 4300, 900),
         p('endotelioL', 1, 6400, 800),
         p('mbgL', 1, 9100, 800),
@@ -80,11 +62,12 @@ const nefritis: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
+        ENTERA,
         p('pregunta', 0, 0, 700),
-        ver('com1', 5.3, 4.8, 600, 'fade'), ver('com2', 5.9, 5.6, 1000, 'fade'),
-        mover('com1', 3.2, 5, 9200, 1600),
+        ver('com1', 4.4, 4.6, 600, 'fade'), ver('com2', 5, 5.6, 1000, 'fade'),
+        mover('com1', 2.05, 5.1, 9200, 1600),
         p('mesangial', 1, 10000, 1800),
-        mover('com2', 6.5, 6.6, 12000, 1400),
+        mover('com2', 5.9, 6.3, 12000, 1400),
         p('subendotelial', 1, 13000, 1800),
         ...ocultar(15500, 'com1', 'com2'),
         p('subepitelial', 1, 16200, 1800),
@@ -102,13 +85,14 @@ const nefritis: Parte = {
       protagonistas: ['neu1'],
       encuadre: 'all',
       acciones: [
+        ENTERA,
         ...['lado', 'capilar', 'endotelioL', 'mbgL', 'podoL', 'mesangioL'].map((x) => p(x, 0, 0, 700)),
-        ver('neu1', 5.6, 4.4, 600),
+        ver('neu1', 4.7, 4.1, 600),
         p('inflamaG', 1, 3900, 3000),
-        ver('g1', 12.2, 2.6, 3900, 'right'),
-        ver('g2', 12.2, 4.4, 10200, 'right'),
-        segrega('neu1', 10500, 'enzima', [3.2, 5], undefined, 2000),
-        ver('g3', 12.2, 6, 16500, 'right'),
+        p('g1', 1, 3900, 1100),
+        p('g2', 1, 10200, 1100),
+        segrega('neu1', 10500, 'enzima', [2.05, 5.1], undefined, 2000),
+        p('g3', 1, 16500, 1100),
         p('esclerosisG', 1, 18500, 3500),
       ],
     },
@@ -122,7 +106,9 @@ const nefritis: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'neu1', 'g1', 'g2', 'g3'),
+        ENTERA,
+        ...ocultar(0, 'neu1'),
+        ...apagar(0, 'g1', 'g2', 'g3'),
         fondo('fullhouse'),
         p('fh', 1, 6900, 600), p('fh', 2, 7900, 600), p('fh', 3, 8900, 600), p('fh', 4, 9800, 600), p('fh', 5, 10800, 600),
         p('viaClasica', 1, 11800, 1000),
@@ -139,16 +125,16 @@ const nefritis: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
+        ENTERA,
         fondo('clases'),
         p('grande', 1, 500, 1200),
         p('clase1', 1, 2700, 700), p('focoClase', 1, 2700, 600),
-        p('gDep', 1, 3200, 1500),
-        ver('c1', 12.2, 5, 2900, 'right'),
-        ver('c1b', 12.2, 6.4, 11500, 'right'),
+        p('c1', 1, 2900, 1200),
+        p('c1b', 1, 11500, 1000),
         p('clase2', 1, 14800, 700), p('focoClase', 2, 14800, 600),
         p('gMes', 1, 15300, 1800),
-        ver('c2', 12.2, 7.8, 15000, 'right'),
-        encender('c2', 21700),
+        p('c2', 1, 15000, 1200),
+        p('c2b', 1, 21700, 900),
       ],
     },
     {
@@ -161,15 +147,16 @@ const nefritis: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'c1', 'c1b', 'c2'),
+        ENTERA,
+        ...apagar(0, 'c1', 'c1b', 'c2', 'c2b'),
         p('clase3', 1, 300, 700), p('clase4', 1, 900, 700), p('focoClase', 3.5, 300, 700),
         p('gSub', 1, 4300, 1800),
-        ver('c34', 12.2, 4.8, 4300, 'right'),
-        ver('c3', 12.2, 6.1, 9000, 'right'),
+        p('c34', 1, 4300, 1000),
+        p('c3', 1, 9000, 1500),
         p('focoClase', 3, 9000, 500),
-        ver('c4', 12.2, 7.3, 12600, 'right'),
+        p('c4', 1, 12600, 1500),
         p('focoClase', 4, 12600, 500),
-        ver('c4b', 12.2, 8.5, 17300, 'right'),
+        p('c4b', 1, 17300, 1000),
       ],
     },
     {
@@ -182,11 +169,12 @@ const nefritis: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'c34', 'c3', 'c4', 'c4b'),
+        ENTERA,
+        ...apagar(0, 'c34', 'c3', 'c4', 'c4b'),
         p('gAsas', 1, 2600, 2500),
         p('gTrombos', 1, 11400, 2000),
         p('gSemiluna', 1, 15800, 2200),
-        ver('i1', 12.2, 6.4, 17000, 'right'),
+        p('i1', 1, 17000, 1000),
       ],
     },
     {
@@ -199,14 +187,14 @@ const nefritis: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'i1'),
+        ENTERA,
+        ...apagar(0, 'i1'),
         ...limpiar(0),
         p('clase5', 1, 600, 700), p('focoClase', 5, 600, 600),
         p('gEpi', 1, 2100, 2200), p('gGruesa', 1, 3000, 1800),
-        ver('c5', 12.2, 5, 2300, 'right'),
+        p('c5', 1, 2300, 1100),
         p('spikes', 1, 8100, 2200),
-        ver('c5b', 12.2, 6.5, 14900, 'right'),
-        encender('c5b', 16200),
+        p('c5b', 1, 14900, 1000),
       ],
     },
     {
@@ -219,13 +207,14 @@ const nefritis: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'c5', 'c5b'),
+        ENTERA,
+        ...apagar(0, 'c5', 'c5b'),
         ...limpiar(0),
         p('clase6', 1, 300, 700), p('focoClase', 6, 300, 600),
         p('gEscl', 1, 800, 2500),
-        ver('c6', 12.2, 5, 1000, 'right'),
-        ver('c6b', 12.2, 6.5, 8300, 'right'),
-        ver('c6c', 12.2, 7.9, 15100, 'right'),
+        p('c6', 1, 1000, 1600),
+        p('c6b', 1, 8300, 1100),
+        p('c6c', 1, 15100, 1000),
       ],
     },
     {
@@ -238,14 +227,13 @@ const nefritis: Parte = {
       protagonistas: [],
       encuadre: 'all',
       acciones: [
-        ...ocultar(0, 'c6', 'c6b', 'c6c'),
-        fondo('blanco'),
-        ver('k0', 8, 1.8, 1500, 'top'),
-        ver('kNef', 4.6, 4.8, 11100, 'left'),
-        ver('kNeo', 11.4, 4.8, 19300, 'right'),
-        ver('iOri', 4.4, 7.9, 26700),
-        ver('kOri', 9.6, 7.9, 27000, 'right'),
-        encender('kOri', 29000),
+        ENTERA,
+        fondo('clinicaN'),
+        p('k0', 1, 1500, 9000, 'lineal'),
+        p('kNef', 1, 11100, 3000),
+        p('kNeo', 1, 19300, 3500),
+        p('iOri', 1, 26700, 2200),
+        p('kOri', 1, 27000, 1000),
       ],
     },
   ],

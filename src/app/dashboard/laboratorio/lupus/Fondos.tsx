@@ -18,12 +18,14 @@ import { DefsAnatomia, Globulo } from './Anatomia';
 import { ARTICULACIONES, Articulaciones, CX, CorazonEn, Figurita, PulmonesEn, RinonesEn, Silueta, Sistema, Vasos } from './Cuerpo';
 import { PACIENTES_TEZ, Retrato, TRAZOS_RETRATO } from './Retrato';
 import FondoCausas from './FondoCausas';
-import { FondoEular, FondoPruebas } from './FondoDiagnostico';
-import { FondoCapas, FondoClases, FondoFullHouse } from './FondoNefritis';
-import { FondoCebolla, FondoCoronaria, FondoPulmon, FondoTorax, FondoValva } from './FondoOrganos';
-import { FondoBoca, FondoDiscoide, FondoManos, FondoTorso } from './FondoClinica';
+import { FondoDxAfl, FondoDxInicio, FondoEular, FondoPruebas } from './FondoDiagnostico';
+import { FondoCapas, FondoClases, FondoClinicaN, FondoFullHouse } from './FondoNefritis';
+import { FondoCebolla, FondoCoronaria, FondoPulmon, FondoTorax, FondoMecanismos, FondoValva } from './FondoOrganos';
+import { FondoBoca, FondoCutaneos, FondoDiscoide, FondoMalar, FondoManos, FondoNeuro, FondoSintomas, FondoTorso } from './FondoClinica';
+import { FondoSaf } from './FondoDano2';
 import { FondoGlomeruloLupus, FondoSangreLupus, FondoVasoLupus } from './FondoHiper';
 import { FondoCircuito, FondoEfectoras, FondoFreno, FondoGerminal, FondoIntersticio, FondoPeriferia, FondoPuente, FondoSeleccion } from './FondoAdaptativa';
+import { FondoEndosomaTx, FondoTxCircuito, FondoTxCompl, FondoTxFarmacos, FondoTxFin } from './FondoTratamiento';
 import { FondoCirculo, FondoEndosoma, FondoEspacio, FondoFirma, FondoRed } from './FondoInterferon';
 import { FondoCiudad, FondoEpidermis } from './FondoBasura';
 import type { Fondo } from '@/lib/data/lupus/tipos';
@@ -718,21 +720,35 @@ const FONDOS: Record<Fondo, (p: { t: T; reloj: number }) => ReactNode> = {
   'puente': ({ t }) => <FondoPuente t={t} />,
   'h-vaso': ({ t, reloj }) => <FondoVasoLupus t={t} reloj={reloj} />,
   'h-sangre': ({ t, reloj }) => <FondoSangreLupus t={t} reloj={reloj} />,
+  'saf': ({ t, reloj }) => <FondoSaf t={t} reloj={reloj} />,
   'h-glomerulo': ({ t, reloj }) => <FondoGlomeruloLupus t={t} reloj={reloj} />,
-  'manos': ({ t, reloj }) => <FondoManos t={t} />,
-  'boca': ({ t, reloj }) => <FondoBoca t={t} />,
-  'torso': ({ t, reloj }) => <FondoTorso t={t} />,
-  'discoide': ({ t, reloj }) => <FondoDiscoide t={t} />,
-  'valva': ({ t, reloj }) => <FondoValva t={t} />,
-  'coronaria': ({ t, reloj }) => <FondoCoronaria t={t} />,
-  'torax': ({ t, reloj }) => <FondoTorax t={t} />,
-  'cebolla': ({ t, reloj }) => <FondoCebolla t={t} />,
-  'pulmon': ({ t, reloj }) => <FondoPulmon t={t} />,
-  'capas': ({ t, reloj }) => <FondoCapas t={t} />,
-  'fullhouse': ({ t, reloj }) => <FondoFullHouse t={t} />,
-  'clases': ({ t, reloj }) => <FondoClases t={t} />,
-  'pruebas': ({ t, reloj }) => <FondoPruebas t={t} />,
-  'eular': ({ t, reloj }) => <FondoEular t={t} />,
+  'sintomas': ({ t, reloj }) => <FondoSintomas t={t} reloj={reloj} />,
+  'cutaneos': ({ t, reloj }) => <FondoCutaneos t={t} reloj={reloj} />,
+  'malar': ({ t, reloj }) => <FondoMalar t={t} reloj={reloj} />,
+  'neuro': ({ t, reloj }) => <FondoNeuro t={t} reloj={reloj} />,
+  'manos': ({ t, reloj }) => <FondoManos t={t} reloj={reloj} />,
+  'boca': ({ t, reloj }) => <FondoBoca t={t} reloj={reloj} />,
+  'torso': ({ t, reloj }) => <FondoTorso t={t} reloj={reloj} />,
+  'discoide': ({ t, reloj }) => <FondoDiscoide t={t} reloj={reloj} />,
+  'valva': ({ t, reloj }) => <FondoValva t={t} reloj={reloj} />,
+  'coronaria': ({ t, reloj }) => <FondoCoronaria t={t} reloj={reloj} />,
+  'torax': ({ t, reloj }) => <FondoTorax t={t} reloj={reloj} />,
+  'cebolla': ({ t, reloj }) => <FondoCebolla t={t} reloj={reloj} />,
+  'pulmon': ({ t, reloj }) => <FondoPulmon t={t} reloj={reloj} />,
+  'mecanismos': ({ t, reloj }) => <FondoMecanismos t={t} reloj={reloj} />,
+  'capas': ({ t, reloj }) => <FondoCapas t={t} reloj={reloj} />,
+  'fullhouse': ({ t, reloj }) => <FondoFullHouse t={t} reloj={reloj} />,
+  'clases': ({ t, reloj }) => <FondoClases t={t} reloj={reloj} />,
+  'clinicaN': ({ t, reloj }) => <FondoClinicaN t={t} reloj={reloj} />,
+  'txCompl': ({ t, reloj }) => <FondoTxCompl t={t} reloj={reloj} />,
+  'txCircuito': ({ t, reloj }) => <FondoTxCircuito t={t} reloj={reloj} />,
+  'endosomaTx': ({ t, reloj }) => <FondoEndosomaTx t={t} reloj={reloj} />,
+  'txFarmacos': ({ t, reloj }) => <FondoTxFarmacos t={t} reloj={reloj} />,
+  'txFin': ({ t, reloj }) => <FondoTxFin t={t} reloj={reloj} />,
+  'dxInicio': ({ t, reloj }) => <FondoDxInicio t={t} reloj={reloj} />,
+  'pruebas': ({ t, reloj }) => <FondoPruebas t={t} reloj={reloj} />,
+  'dxAfl': ({ t, reloj }) => <FondoDxAfl t={t} reloj={reloj} />,
+  'eular': ({ t, reloj }) => <FondoEular t={t} reloj={reloj} />,
 };
 
 export const FondoDe = memo(function FondoDe({ f, t, reloj }: { f: Fondo; t: T; reloj: number }) {

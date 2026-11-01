@@ -643,9 +643,6 @@
 :global(.dark-mode) .etiquetaCitocina { fill: #F07AA5; }
 
 /* ─── Capítulos 5 y 6 · termómetro y tubo ────────────────────────────────── */
-.tuboVidrio { fill: none; stroke: var(--texto-2); stroke-width: 5; }
-.tuboTapa { fill: #9AA3B5; }
-.reloj { fill: var(--campo-3); stroke: var(--texto-2); stroke-width: 5; }
 
 /* ─── Capítulo 7 · manos, boca, torso, discoide ───────────────────────────── */
 .piel7 { fill: #F4E1D6; stroke: #D9AE98; stroke-width: 2.5; }
@@ -792,3 +789,81 @@
 .capPronto:hover { background: none; }
 .parteProxima { opacity: 0.45; cursor: default; }
 .duracionCap { font-variant-numeric: tabular-nums; }
+
+/* Capítulo 6: el vaso entero en corte (tejido, pared y plasma) con los dos temas */
+.sgAdv1 { stop-color: #FCE6D2; } .sgAdv2 { stop-color: #F4C7AE; }
+.sgMed1 { stop-color: #D8707F; } .sgMed2 { stop-color: #B5486A; }
+.sgMus1 { stop-color: #F9B9B0; } .sgMus2 { stop-color: #E07F87; }
+.sgEnd1 { stop-color: #FFF0E8; } .sgEnd2 { stop-color: #F8C7BC; }
+.sgInt1 { stop-color: #FBD5C9; } .sgInt2 { stop-color: #EFA8A4; }
+.sgP0 { stop-color: #C4614F; } .sgP1 { stop-color: #F2A77E; } .sgP2 { stop-color: #FFE3B4; } .sgP3 { stop-color: #FFF3D6; }
+.sgGra1 { stop-color: #FFF4BE; } .sgGra2 { stop-color: #F2C65A; }
+.sgLen1 { stop-color: #FFFDF6; } .sgLen2 { stop-color: #FBE7CE; }
+.safA { stop-color: #FCE6D2; } .safB { stop-color: #F0C9C4; }
+.sgPer1 { stop-color: #C3CBDA; } .sgPer2 { stop-color: #8E98AD; }
+:global(.dark-mode) .sgAdv1 { stop-color: #2E2022; } :global(.dark-mode) .sgAdv2 { stop-color: #1E1517; }
+:global(.dark-mode) .sgMed1 { stop-color: #6E2A3C; } :global(.dark-mode) .sgMed2 { stop-color: #471A2B; }
+:global(.dark-mode) .sgMus1 { stop-color: #A85263; } :global(.dark-mode) .sgMus2 { stop-color: #7C3648; }
+:global(.dark-mode) .sgEnd1 { stop-color: #A67C78; } :global(.dark-mode) .sgEnd2 { stop-color: #76504F; }
+:global(.dark-mode) .sgInt1 { stop-color: #56303A; } :global(.dark-mode) .sgInt2 { stop-color: #40222C; }
+:global(.dark-mode) .sgP0 { stop-color: #12070A; } :global(.dark-mode) .sgP1 { stop-color: #33191A; } :global(.dark-mode) .sgP2 { stop-color: #4A2C1E; } :global(.dark-mode) .sgP3 { stop-color: #553620; }
+:global(.dark-mode) .sgGra1 { stop-color: #B6983E; } :global(.dark-mode) .sgGra2 { stop-color: #7A6020; }
+:global(.dark-mode) .sgLen1 { stop-color: #3F3230; } :global(.dark-mode) .sgLen2 { stop-color: #2A2020; }
+:global(.dark-mode) .safA { stop-color: #2E2022; } :global(.dark-mode) .safB { stop-color: #241A26; }
+:global(.dark-mode) .sgPer1 { stop-color: #5A6478; } :global(.dark-mode) .sgPer2 { stop-color: #3C4456; }
+.sgColA { fill: none; stroke: #F9DEC8; stroke-linecap: round; }
+.sgColB { fill: none; stroke: #E9B299; stroke-linecap: round; opacity: 0.55; }
+.sgEla { fill: none; stroke: #C07B8C; stroke-width: 1.3; opacity: 0.6; }
+.sgFib { fill: #F6CDB7; stroke: #BE8870; stroke-width: 0.9; }
+.sgFibN { fill: #7D4E86; }
+.sgGraF { stroke: #C99A3C; stroke-width: 1.1; }
+.sgGraN { fill: #A07A2C; }
+.sgPeri { fill: #F8DFB8; stroke: #B98D4C; stroke-width: 3; }
+.sgAxon { fill: #FFF6DE; stroke: #C79E5C; stroke-width: 2.2; }
+.sgMusF { stroke: #A84A5F; stroke-width: 0.8; }
+.sgMusN { fill: #5E2F7E; }
+.sgEndF { stroke: #C47A7C; stroke-width: 0.9; }
+.sgEndN { fill: #6E3F9E; }
+.sgIel { fill: none; stroke: #FFEBC2; stroke-width: 3.6; stroke-linejoin: round; }
+.sgIelS { fill: none; stroke: #8E3A52; stroke-width: 5.6; opacity: 0.5; }
+.sgEel { fill: none; stroke: #F6D7A8; stroke-width: 2.4; opacity: 0.85; }
+.sgFantasma { fill: #FFF; fill-opacity: 0.32; stroke: #B3474F; stroke-opacity: 0.6; stroke-width: 1.3; stroke-dasharray: 4 3.4; }
+.sgEstela { fill: none; stroke: #FFF; stroke-width: 2.6; stroke-linecap: round; opacity: 0.4; }
+.sgEspec { fill: #FFF; opacity: 0.55; }
+.campoSello { fill: #FFF8EE; opacity: 0.86; }
+:global(.dark-mode) .sgColA { stroke: #46302F; opacity: 0.7; }
+:global(.dark-mode) .sgColB { stroke: #5A3C38; }
+:global(.dark-mode) .sgEla { stroke: #7A4A5A; }
+:global(.dark-mode) .sgFib { fill: #5A3E3C; stroke: #7C5A54; }
+:global(.dark-mode) .sgFibN { fill: #A583B8; }
+:global(.dark-mode) .sgGraF { stroke: #5C4818; }
+:global(.dark-mode) .sgPeri { fill: #4E3C22; stroke: #80663A; }
+:global(.dark-mode) .sgAxon { fill: #8C7648; stroke: #5C4A28; }
+:global(.dark-mode) .sgMusF { stroke: #4E1E2E; }
+:global(.dark-mode) .sgMusN { fill: #2E1540; }
+:global(.dark-mode) .sgEndF { stroke: #4E3232; }
+:global(.dark-mode) .sgEndN { fill: #3A1F5C; }
+:global(.dark-mode) .sgIel { stroke: #B8955E; }
+:global(.dark-mode) .sgEel { stroke: #80683E; }
+:global(.dark-mode) .sgFantasma { fill-opacity: 0.1; stroke: #E58A8E; }
+:global(.dark-mode) .sgEstela { opacity: 0.12; }
+:global(.dark-mode) .sgEspec { opacity: 0.2; }
+:global(.dark-mode) .campoSello { fill: #1C1518; }
+.sgNum { font-family: var(--sans); font-size: 62px; font-weight: 800; letter-spacing: -0.01em; }
+.sgPill { font-family: var(--sans); font-size: 21px; font-weight: 800; fill: #FFFFFF; letter-spacing: 0.02em; }
+.sgNombre { font-family: var(--sans); font-size: 26px; font-weight: 800; fill: var(--texto); }
+.sgMini { font-family: var(--sans); font-size: 15px; font-weight: 700; fill: var(--texto); }
+.pruebaPal { font-family: var(--sans); font-size: 27px; font-weight: 800; }
+.tarjTit { font-family: var(--sans); font-size: 21px; font-weight: 800; fill: #20252E; }
+.safGrande { font-family: var(--sans); font-size: 36px; font-weight: 900; fill: #FFFFFF; letter-spacing: 0.02em; }
+.safSigno { font-family: var(--sans); font-size: 32px; font-weight: 800; fill: var(--texto); }
+
+/* Capítulo 8: el esqueleto del tórax, discreto */
+.ctHueso { stroke: #EFE6D8; }
+.ctHuesoFilo { stroke: #D9CDB9; }
+.ctBrillo { stroke: #FBF7EF; opacity: 0.8; }
+.ctVertebra { fill: #EADFCE; stroke: #D9CDB9; stroke-width: 1.4; }
+:global(.dark-mode) .ctHueso { stroke: #3A3438; }
+:global(.dark-mode) .ctHuesoFilo { stroke: #2A2528; }
+:global(.dark-mode) .ctBrillo { stroke: #4A4348; }
+:global(.dark-mode) .ctVertebra { fill: #332E32; stroke: #2A2528; }

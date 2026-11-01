@@ -429,7 +429,76 @@ export function ComplejoNuc({ r, tipo = 'adn' }: { r: number; tipo?: 'adn' | 'ar
   );
 }
 
+/** Hematíe: disco bicóncavo. El reborde recibe la luz arriba a la izquierda y la
+ *  concavidad al revés (sombra arriba, luz abajo): eso es lo que lo hunde. */
+export function Eritrocito({ r }: { r: number }) {
+  const arco = (R: number, a0: number, a1: number) => {
+    const p = (a: number) => `${f1(Math.cos(a) * R)},${f1(Math.sin(a) * R)}`;
+    return `M${p(a0)} A${f1(R)},${f1(R)} 0 0 1 ${p(a1)}`;
+  };
+  return (
+    <g>
+      <defs>
+        <radialGradient id="lc-eri"><stop offset="0" stopColor="#D8453F" /><stop offset="0.5" stopColor="#CF3236" /><stop offset="0.74" stopColor="#F0604F" /><stop offset="0.9" stopColor="#D23236" /><stop offset="1" stopColor="#8A161E" /></radialGradient>
+        <linearGradient id="lc-eri-c" x1="0.15" y1="0.1" x2="0.85" y2="0.9"><stop offset="0" stopColor="#8E1820" stopOpacity="0.62" /><stop offset="0.55" stopColor="#D8453F" stopOpacity="0" /><stop offset="1" stopColor="#FFB7A4" stopOpacity="0.72" /></linearGradient>
+      </defs>
+      <circle r={r} fill="url(#lc-eri)" stroke="#62101A" strokeWidth={Math.max(0.8, r * 0.035)} />
+      <circle r={r * 0.54} fill="url(#lc-eri-c)" />
+      <path d={arco(r * 0.8, 3.5, 4.7)} fill="none" stroke="#FFF" strokeWidth={r * 0.07} strokeLinecap="round" opacity={0.55} />
+    </g>
+  );
+}
+
+/** Contorno de blob con `n` salientes (seudópodos) de largo variable. */
+function blob(r: number, n: number, amp: number, semilla: number): string {
+  const pts = Array.from({ length: n }, (_, i) => {
+    const a = (i / n) * TAU, k = 1 + amp * (fijo(i, semilla) - 0.4) * 1.6;
+    return [Math.cos(a) * r * k, Math.sin(a) * r * k] as const;
+  });
+  const m = (i: number) => pts[(i + n) % n];
+  let d = `M${f1((m(0)[0] + m(n - 1)[0]) / 2)},${f1((m(0)[1] + m(n - 1)[1]) / 2)}`;
+  for (let i = 0; i < n; i++) d += ` Q${f1(m(i)[0])},${f1(m(i)[1])} ${f1((m(i)[0] + m(i + 1)[0]) / 2)},${f1((m(i)[1] + m(i + 1)[1]) / 2)}`;
+  return d + ' Z';
+}
+
+/** Plaqueta: fragmento lila con seudópodos, gránulos y un centro más oscuro. */
+export function PlaquetaDet({ r }: { r: number }) {
+  return (
+    <g>
+      <defs>
+        <radialGradient id="lc-plq" cx="0.38" cy="0.3" r="0.85"><stop offset="0" stopColor="#E6D3F7" /><stop offset="0.6" stopColor="#B791E0" /><stop offset="1" stopColor="#7F52B8" /></radialGradient>
+      </defs>
+      <path d={blob(r * 0.78, 9, 0.5, 4)} fill="url(#lc-plq)" stroke="#5E3A93" strokeWidth={Math.max(1, r * 0.05)} strokeLinejoin="round" />
+      <path d={blob(r * 0.4, 7, 0.2, 9)} fill="#8C5DC4" opacity={0.55} />
+      {Array.from({ length: 11 }, (_, i) => { const a = fijo(i, 3) * TAU, q = Math.sqrt(fijo(i, 5)) * 0.55; return <circle key={i} cx={Math.cos(a) * r * q} cy={Math.sin(a) * r * q} r={Math.max(0.9, r * 0.07)} fill={i % 3 ? '#6A3FA0' : '#D9A0E8'} />; })}
+      <ellipse cx={-r * 0.28} cy={-r * 0.3} rx={r * 0.24} ry={r * 0.1} fill="#FFF" opacity={0.5} transform={`rotate(-30 ${f1(-r * 0.28)} ${f1(-r * 0.3)})`} />
+    </g>
+  );
+}
+
+/** Leucocito (neutrófilo): membrana ondulada, gránulos finos y núcleo multilobulado. */
+export function Leucocito({ r }: { r: number }) {
+  const lobos: [number, number, number][] = [[-0.34, -0.16, 0.25], [-0.04, -0.4, 0.23], [0.3, -0.12, 0.25], [0.2, 0.26, 0.23], [-0.2, 0.26, 0.2]];
+  return (
+    <g>
+      <defs>
+        <radialGradient id="lc-leu" cx="0.4" cy="0.3" r="0.85"><stop offset="0" stopColor="#FBF1F8" /><stop offset="0.6" stopColor="#EBD2E8" /><stop offset="1" stopColor="#C79BC4" /></radialGradient>
+        <radialGradient id="lc-leun" cx="0.38" cy="0.3" r="0.8"><stop offset="0" stopColor="#8E63C8" /><stop offset="1" stopColor="#3B2570" /></radialGradient>
+      </defs>
+      <path d={blob(r * 0.94, 16, 0.12, 2)} fill="url(#lc-leu)" stroke="#9A6FA0" strokeWidth={Math.max(1, r * 0.04)} strokeLinejoin="round" />
+      {Array.from({ length: 30 }, (_, i) => { const a = fijo(i, 1) * TAU, q = 0.35 + Math.sqrt(fijo(i, 2)) * 0.55; return <circle key={i} cx={Math.cos(a) * r * q} cy={Math.sin(a) * r * q} r={Math.max(0.8, r * 0.035)} fill={i % 2 ? '#E8A6D0' : '#C98AB8'} opacity={0.8} />; })}
+      <path d={lobos.map(([x, y], i) => { const [x2, y2] = lobos[(i + 1) % lobos.length]; return `M${f1(x * r)},${f1(y * r)} L${f1(x2 * r)},${f1(y2 * r)}`; }).join(' ')} stroke="#4A2D80" strokeWidth={r * 0.07} strokeLinecap="round" fill="none" />
+      {lobos.map(([x, y, q], i) => <circle key={i} cx={x * r} cy={y * r} r={q * r} fill="url(#lc-leun)" stroke="#2A1855" strokeWidth={Math.max(0.8, r * 0.02)} />)}
+      {lobos.map(([x, y, q], i) => <ellipse key={i} cx={(x - q * 0.35) * r} cy={(y - q * 0.4) * r} rx={q * r * 0.35} ry={q * r * 0.18} fill="#FFF" opacity={0.3} />)}
+      <ellipse cx={-r * 0.45} cy={-r * 0.62} rx={r * 0.26} ry={r * 0.1} fill="#FFF" opacity={0.55} transform={`rotate(-30 ${f1(-r * 0.45)} ${f1(-r * 0.62)})`} />
+    </g>
+  );
+}
+
 export function DibujoCelula({ dibujo, d, color, vacio = 0 }: { dibujo: Dibujo; d: number; color?: string; vacio?: number }) {
+  if (dibujo === 'eritrocito') return <Eritrocito r={d / 2} />;
+  if (dibujo === 'plaqueta') return <PlaquetaDet r={d / 2} />;
+  if (dibujo === 'leucocito') return <Leucocito r={d / 2} />;
   if (dibujo === 'nucleada') return <Nucleada r={d / 2} />;
   if (dibujo === 'apoptotico') return <Apoptotico r={d / 2} />;
   if (dibujo === 'c1q') return <C1q r={d / 2} color={color ?? '#C0397A'} />;

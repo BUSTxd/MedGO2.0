@@ -18,6 +18,8 @@ const TEZ_BASE: Tez = {
 };
 
 const CARA = 'M0,262 C90,262 155,330 160,440 C164,500 158,560 138,620 C122,668 75,738 40,755 C20,765 -20,765 -40,755 C-75,738 -122,668 -138,620 C-158,560 -164,500 -160,440 C-155,330 -90,262 0,262 Z';
+/** La cara con la mandíbula bajada `d`: mismo contorno, solo se mueve lo de abajo. */
+const caraCon = (d: number) => !d ? CARA : `M0,262 C90,262 155,330 160,440 C164,500 158,560 138,620 C122,${(668 + 0.3 * d).toFixed(1)} 75,${(738 + 0.85 * d).toFixed(1)} 40,${(755 + d).toFixed(1)} C20,${(765 + d).toFixed(1)} -20,${(765 + d).toFixed(1)} -40,${(755 + d).toFixed(1)} C-75,${(738 + 0.85 * d).toFixed(1)} -122,${(668 + 0.3 * d).toFixed(1)} -138,620 C-158,560 -164,500 -160,440 C-155,330 -90,262 0,262 Z`;
 const OJO = 'M-116,488 C-100,466 -66,460 -38,490 C-58,504 -96,506 -116,488 Z';
 /** La cabeza se aprieta un poco a lo alto respecto a los ojos (la cara quedaba larga). */
 const CABEZA = 'translate(0,486) scale(1,0.92) translate(0,-486)';
@@ -35,7 +37,7 @@ export const TRAZOS_RETRATO = [
   'M132,446 C110,420 70,416 34,436',
 ];
 
-function Defs({ id, tez }: { id: string; tez: Tez }) {
+function Defs({ id, tez, cara }: { id: string; tez: Tez; cara: string }) {
   const { piel, pelo, iris, labio, ropa } = tez;
   return (
     <defs>
@@ -82,7 +84,7 @@ function Defs({ id, tez }: { id: string; tez: Tez }) {
         <stop offset="0" stopColor={piel[1]} /><stop offset="1" stopColor={piel[1]} stopOpacity="0" />
       </linearGradient>
       <mask id={`${id}-funde`}><rect x={-300} y={200} width={600} height={800} fill={`url(#${id}-hombro)`} /></mask>
-      <clipPath id={`${id}-c-cara`}><path d={CARA} /></clipPath>
+      <clipPath id={`${id}-c-cara`}><path d={cara} /></clipPath>
       <clipPath id={`${id}-c-ojo`}><path d={OJO} /></clipPath>
       <clipPath id={`${id}-c-cuello`}><path d={CUELLO} /></clipPath>
     </defs>
@@ -149,13 +151,51 @@ function PeloDelante({ id, peinado }: { id: string; peinado: Peinado }) {
   );
 }
 
-type Props = { id?: string; tez?: Tez; peinado?: Peinado; soloCabeza?: boolean };
-
-/** El retrato completo (x = 0 en el eje de la cara). */
-export const Retrato = memo(function Retrato({ id = 'rt', tez = TEZ_BASE, peinado = 'largo', soloCabeza = false }: Props) {
+/** La boca abierta, sobre la propia cara: el labio de arriba se queda, el de abajo baja con
+ *  la mandíbula. `h` es cuánto se separan los labios (en las coordenadas del retrato). */
+function BocaAbierta({ id, tez, h }: { id: string; tez: Tez; h: number }) {
+  const w = 46 - 2 * (h / 54);
+  const borde = `C${-w * 0.62},655 ${-w * 0.24},652 0,655 C${w * 0.24},652 ${w * 0.62},655 ${w},660`;
+  const fondo = `C${w * 0.86},${660 + h * 0.7} ${w * 0.44},${660 + h} 0,${660 + h} C${-w * 0.44},${660 + h} ${-w * 0.86},${660 + h * 0.7} ${-w},660`;
+  const interior = `M${-w},660 ${borde} ${fondo} Z`;
   return (
     <g>
-      <Defs id={id} tez={tez} />
+      <defs>
+        <clipPath id={`${id}-c-abre`}><path d={interior} /></clipPath>
+        <radialGradient id={`${id}-garganta`} cx="0.5" cy="0.42" r="0.62"><stop offset="0" stopColor="#3A0E18" /><stop offset="0.7" stopColor="#6E1E2E" /><stop offset="1" stopColor="#8E3040" /></radialGradient>
+        <linearGradient id={`${id}-lengua`} x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#EE929C" /><stop offset="1" stopColor="#C05A6A" /></linearGradient>
+      </defs>
+      <path d={interior} fill={`url(#${id}-garganta)`} />
+      <g clipPath={`url(#${id}-c-abre)`}>
+        {/* Úvula al fondo, lengua abajo */}
+        {h > 26 && <path d={`M-6,${660 + h * 0.18} C-6,${660 + h * 0.34} -3,${660 + h * 0.46} 0,${660 + h * 0.48} C3,${660 + h * 0.46} 6,${660 + h * 0.34} 6,${660 + h * 0.18} Z`} fill="#D87484" opacity={Math.min(1, (h - 26) / 16)} />}
+        <ellipse cx={0} cy={660 + h + 8} rx={w * 0.84} ry={h * 0.44 + 4} fill={`url(#${id}-lengua)`} />
+        <path d={`M0,${660 + h * 0.62} V${660 + h}`} stroke="#A8455C" strokeWidth={1.8} strokeLinecap="round" opacity={0.55} />
+        {/* Dientes de arriba */}
+        {Array.from({ length: 8 }, (_, i) => {
+          const q = (i + 0.5) / 8 * 2 - 1, x = q * w * 0.92, tw = (w * 2 * 0.92) / 8 - 0.6, y = 650 + q * q * 7;
+          return <path key={i} d={`M${(x - tw / 2).toFixed(1)},${y} V${y + 14} Q${x.toFixed(1)},${y + 16.5} ${(x + tw / 2).toFixed(1)},${y + 14} V${y} Z`} fill="#FFFDF4" stroke="#CFC6AE" strokeWidth={0.7} />;
+        })}
+      </g>
+      {/* Labio de arriba */}
+      <path d={`M${-w},660 C-30,651 -16,644 -7,645 Q0,649 7,645 C16,644 30,651 ${w},660 C${w * 0.62},655 ${w * 0.24},652 0,655 C${-w * 0.24},652 ${-w * 0.62},655 ${-w},660 Z`} fill={tez.labio[1]} />
+      {/* Labio de abajo */}
+      <path d={`M${-w},660 C${-w * 0.86},${660 + h * 0.7} ${-w * 0.44},${660 + h} 0,${660 + h} C${w * 0.44},${660 + h} ${w * 0.86},${660 + h * 0.7} ${w},660 C${w * 1.02},${668 + h * 0.8} ${w * 0.52},${682 + h} 0,${686 + h} C${-w * 0.52},${682 + h} ${-w * 1.02},${668 + h * 0.8} ${-w},660 Z`} fill={`url(#${id}-labio)`} />
+      <ellipse cx={-6} cy={675 + h} rx={15} ry={4.4} fill="#FFF" opacity={0.22} />
+      <path d={interior} fill="none" stroke="#6E3A36" strokeWidth={1.2} opacity={0.45} />
+    </g>
+  );
+}
+
+/** `abre`: 0 con la boca cerrada; 1 con la boca abierta, sin deformar el resto de la cara. */
+type Props = { id?: string; tez?: Tez; peinado?: Peinado; soloCabeza?: boolean; abre?: number };
+
+/** El retrato completo (x = 0 en el eje de la cara). */
+export const Retrato = memo(function Retrato({ id = 'rt', tez = TEZ_BASE, peinado = 'largo', soloCabeza = false, abre = 0 }: Props) {
+  const h = abre * 54, d = h * 0.62, cara = caraCon(d);
+  return (
+    <g>
+      <Defs id={id} tez={tez} cara={cara} />
       <g transform={CABEZA}><PeloDetras id={id} peinado={peinado} /></g>
       {soloCabeza ? (
         <g>
@@ -167,7 +207,7 @@ export const Retrato = memo(function Retrato({ id = 'rt', tez = TEZ_BASE, peinad
         <path d={CUELLO} fill={`url(#${id}-cuello)`} />
         <g clipPath={`url(#${id}-c-cuello)`}>
           {/* Sombra de la barbilla sobre el cuello */}
-          <ellipse cx={8} cy={742} rx={92} ry={60} fill={`url(#${id}-sombra)`} opacity={0.95} />
+          <ellipse cx={8} cy={742 + d} rx={92} ry={60} fill={`url(#${id}-sombra)`} opacity={0.95} />
           <path d="M-22,862 C-52,850 -84,850 -106,856 M22,862 C52,850 84,850 106,856" fill="none" stroke="#A36F56" strokeWidth={3} strokeLinecap="round" opacity={0.42} />
           <ellipse cx={0} cy={872} rx={13} ry={10} fill={`url(#${id}-sombra)`} opacity={0.8} />
           {/* Blusa de cuello en V */}
@@ -178,9 +218,9 @@ export const Retrato = memo(function Retrato({ id = 'rt', tez = TEZ_BASE, peinad
       )}
       {/* Cara */}
       <g transform={CABEZA}>
-      <path d={CARA} fill={`url(#${id}-piel)`} />
+      <path d={cara} fill={`url(#${id}-piel)`} />
       <g clipPath={`url(#${id}-c-cara)`}>
-        <path d={CARA} fill={`url(#${id}-borde)`} />
+        <path d={cara} fill={`url(#${id}-borde)`} />
         <rect x={-170} y={250} width={340} height={130} fill={`url(#${id}-frente)`} />
         <ellipse cx={-28} cy={378} rx={92} ry={50} fill={`url(#${id}-luz)`} opacity={0.62} />
         <ellipse cx={-98} cy={562} rx={44} ry={38} fill={`url(#${id}-rubor)`} />
@@ -197,18 +237,22 @@ export const Retrato = memo(function Retrato({ id = 'rt', tez = TEZ_BASE, peinad
         <ellipse cx={0} cy={612} rx={20} ry={10} fill={`url(#${id}-sombra)`} opacity={0.6} />
         {/* Filtrum, bajo el labio y barbilla */}
         <path d="M-7,614 L-8,638 M7,614 L8,638" stroke="#A36F56" strokeWidth={1.8} strokeLinecap="round" opacity={0.25} />
-        <ellipse cx={0} cy={700} rx={30} ry={8} fill={`url(#${id}-sombra)`} opacity={0.62} />
-        <ellipse cx={-6} cy={734} rx={26} ry={13} fill={`url(#${id}-luz)`} opacity={0.42} />
+        <ellipse cx={0} cy={700 + h} rx={30} ry={8} fill={`url(#${id}-sombra)`} opacity={0.62} />
+        <ellipse cx={-6} cy={734 + d} rx={26} ry={13} fill={`url(#${id}-luz)`} opacity={0.42} />
       </g>
       <Mitad id={id} />
       <g transform="scale(-1,1)"><Mitad id={id} /></g>
       {/* Punta de la nariz */}
       <path d="M-26,602 Q-12,611 0,607 Q12,611 26,602" fill="none" stroke="#8E5A44" strokeWidth={2} strokeLinecap="round" opacity={0.6} />
       {/* Boca */}
+      {h > 0.5 ? <BocaAbierta id={id} tez={tez} h={h} /> : (
+      <g>
       <path d="M-46,660 C-30,651 -16,644 -7,645 Q0,649 7,645 C16,644 30,651 46,660 C26,663 12,661 0,664 C-12,661 -26,663 -46,660 Z" fill={tez.labio[1]} />
       <path d="M-46,660 C-26,663 -12,661 0,664 C12,661 26,663 46,660 C34,678 16,686 0,686 C-16,686 -34,678 -46,660 Z" fill={`url(#${id}-labio)`} />
       <path d="M-46,660 C-26,665 -12,663 0,665 C12,663 26,665 46,660" fill="none" stroke="#6E3A36" strokeWidth={1.8} strokeLinecap="round" opacity={0.7} />
       <ellipse cx={-6} cy={673} rx={15} ry={5} fill="#FFF" opacity={0.2} />
+      </g>
+      )}
       <PeloDelante id={id} peinado={peinado} />
       </g>
     </g>

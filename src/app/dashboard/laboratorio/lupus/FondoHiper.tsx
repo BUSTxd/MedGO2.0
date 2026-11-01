@@ -6,13 +6,14 @@
 //   capítulo 5: la vía clásica paso a paso (C1q, C4 y C2, convertasa, C3), los
 //   termómetros del complemento (C3, C4 y CH50 que caen con el consumo y suben al
 //   mejorar), la lupa de la fagocitosis frustrada y la necrosis fibrinoide en H&E.
-//   Y el tubo de ensayo del anticoagulante lúpico (capítulo 6).
+//   El capítulo 6 pone encima su `CapaAfl`.
 // Los parámetros propios del tejido los dibuja el fondo de Hipersensibilidad.
 
 import { memo, type ReactNode } from 'react';
 import { FondoDe as FondoHipersensibilidad } from '../hipersensibilidad/Fondos';
 import { L } from '@/lib/data/lupus/colores';
 import { ComplejoNuc, DibujoCelula, IgG } from './Celulas';
+import { CapaAfl, CapaSangre } from './FondoDano2';
 import { Medalla } from './FondoInterferon';
 import { clamp, easeBack, easeOut, FlechaSuave, Globo, tramo, v, type T } from './laminas';
 import h from '@/styles/hipersensibilidad.module.css';
@@ -296,23 +297,6 @@ function Medallas({ t }: { t: T }) {
   );
 }
 
-function Tubo({ k }: { k: number }) {
-  if (k <= 0.001) return null;
-  return (
-    <g opacity={k} transform="translate(1250,470)">
-      <path d="M-40,-150 L-40,120 A40,40 0 0 0 40,120 L40,-150" className={s.tuboVidrio} />
-      <path d={`M-36,${10} L-36,120 A36,36 0 0 0 36,120 L36,10 Z`} fill="#E8B21E" opacity={0.5} />
-      <rect x={-50} y={-162} width={100} height={18} rx={6} className={s.tuboTapa} />
-      <g transform="translate(160,-40)">
-        <circle r={62} className={s.reloj} />
-        <path d={`M0,0 L0,-46 M0,0 L${(Math.sin(easeOut(k) * Math.PI * 1.6) * 40).toFixed(1)},${(-Math.cos(easeOut(k) * Math.PI * 1.6) * 40).toFixed(1)}`} stroke={L.lupus} strokeWidth={6} strokeLinecap="round" />
-      </g>
-      <text x={80} y={190} textAnchor="middle" className={s.lEtiqueta}>En el tubo: alarga el TTPa</text>
-      <text x={80} y={220} textAnchor="middle" className={s.lSub}>parece un anticoagulante</text>
-    </g>
-  );
-}
-
 export function FondoVasoLupus({ t, reloj }: { t: T; reloj: number }) {
   const qu = v(t, 'quimio'), hne = v(t, 'hne');
   return (
@@ -338,13 +322,14 @@ export function FondoVasoLupus({ t, reloj }: { t: T; reloj: number }) {
         </g>
       )}
       <Medallas t={t} />
-      <Tubo k={v(t, 'tubo')} />
+      <CapaAfl t={t} reloj={reloj} />
     </g>
   );
 }
 
+/** La sangre del capítulo 6 ya no reutiliza la franja de «Hipersensibilidad»: el corte entero es propio. */
 export function FondoSangreLupus({ t, reloj }: { t: T; reloj: number }) {
-  return <FondoHipersensibilidad f="sangre" t={t} reloj={reloj} />;
+  return <CapaSangre t={t} reloj={reloj} />;
 }
 
 export function FondoGlomeruloLupus({ t, reloj }: { t: T; reloj: number }) {

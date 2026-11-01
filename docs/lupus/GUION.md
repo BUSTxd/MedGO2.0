@@ -108,6 +108,17 @@ aunque la voz las diga completas.
 | 5 | La paradoja del nombre | Anticoagulante lúpico: alarga el TTPa in vitro, trombosis in vivo. | Tubo de ensayo «tiempo ↑» frente a vaso con trombo. |
 | 6 | SAF | 5–10 % con SAF clínico: trombosis y/o morbilidad obstétrica + aPL persistentes; buscarlos antes del embarazo. | Esquema de trombosis venosa/arterial y placenta; rótulo «persistentes en pruebas repetidas». |
 
+**Capas visuales del capítulo 6** (`lupus/FondoDano2.tsx`, al nivel de «La basura nuclear»). Los tiempos salen de marcas por palabra sobre el audio (transcripción con faster-whisper). Verificado: `verificar:lupus`, tipos y render a imagen en Edge sin ventana, claro, oscuro y teléfono vertical. Sin verificar: el navegador real con la voz, la fluidez y la revisión de BUST.
+- Pantalla más ancha que la lámina: fondo, pared, plasma, colágeno y vasos siguen como color o trazo liso hasta ±800; las células detalladas solo van dentro de la lámina. Lo que corre por la luz da la vuelta en x = −480…2080 y se desvanece en los últimos 180 (medido: opacidad ≤ 0,05 al saltar); el hematíe se funde con su fantasma al romperse.
+- Lámina `h-sangre`: ya no usa la franja de «Hipersensibilidad». Vaso en corte longitudinal de borde a borde: adventicia (colágeno, grasa, vasa vasorum, nervio, fibroblastos), media con fibras lisas, lámina elástica, endotelio y plasma amarillo paja. Flujo laminar con hematíes que giran a tres profundidades; la hemólisis tiñe el plasma y deja fantasmas.
+- Paso 0: reglas de capas; complejo tachado («no forma complejos que viajan»); lupa sobre la membrana (Fab sobre la proteína Rh); hematíe, plaqueta y leucocito cuando se nombran.
+- Paso 1: sello «OPSONIZADA»; 1) poros MAC, la hemoglobina se escapa y queda un fantasma; 2) macrófago con FcγR que engulle, medallones de bazo e hígado; 3) NK con CD16 y perforina, queda la membrana perforada. Letrero «BAJA EL RECUENTO».
+- Paso 2: cinco lentes de acero con nivel de vidrio: Coombs (hematíes aglutinados), reticulocitos (red de ARN), LDH (tetrámeros que salen del hematíe roto), bilirrubina (suero amarillo), haptoglobina (pinzas que se llevan la hemoglobina). En el repaso de la voz se enciende la lente que se nombra.
+- Paso 3: dos campos del microscopio con el conteo que cae, petequias, moretón, encías, mujer joven + articulación, letrero de la perla.
+- Paso 4 (vaso del capítulo 5, sin tocar): anillo del 20-40 %, tres anticuerpos, IgG sobre la pared, endotelio encendido, trombo que crece, lupa sobre la membrana (β2-GPI con IgG; proteína C y anexina V tachadas), balanza de latón, sello.
+- Paso 5: tubo en gradilla con el reactivo ocupado y cronómetro (verde lo normal, rojo lo que se alarga), letrero «EN EL CUERPO», ecuación TTPa largo + trombosis → antifosfolípidos. La corrección con exceso de fosfolípido queda solo en «Profundiza»: la voz no la dice.
+- Paso 6: lámina `saf` con el mismo tejido: ≠, 100 pacientes en cuadrícula, tres lentes (trombo con líneas de Zahn, útero con placenta infartada, dos muestras a 12 semanas), llave hacia el sello «SAF», letrero del embarazo.
+
 ## 7 · Piel, mucosas, articulaciones y sistema nervioso · ≈ 4,3 min
 
 | # | Paso | Contenido | En pantalla |
@@ -122,6 +133,8 @@ aunque la voz las diga completas.
 | 7 | Otras pistas | Alopecia no cicatricial, Raynaud (blanco → azul → rojo), telangiectasias periungueales, urticaria. | Dedos que cambian de color; cabello que se ralea. |
 | 8 | Neuropsiquiátrico | Cefalea, ánimo, delirio, psicosis, convulsiones; descartar infección, metabolismo, corticoides. | Cerebro con zonas que se encienden; tres alternativas a descartar. |
 
+**Capas visuales del capítulo 7** (`lupus/FondoClinica.tsx`). Pedido de BUST: sin fondo, sin tarjetas rectangulares y con poco texto; cada dato es una imagen y el texto queda en segundo plano. Las horas de la voz son las de antes. Láminas: `sintomas` (batería, termómetro, báscula; persona agotada ≠ informe normal), `cutaneos` (tres lentes, siluetas con lo que toca cada forma, dos cuñas), `malar` (retrato, lupus frente a rosácea), `boca` (la paciente abre la boca y la lupa muestra el paladar), `torso`, `discoide` (rótulos sobre la lente, tubo negativo y 10 personas), `manos` (en «otras pistas», tres manos con el Raynaud) y `neuro`. Verificado: `verificar:lupus`, tipos y render a imagen. Sin verificar: el navegador con la voz.
+
 ## 8 · Corazón, serosas, bazo y pulmón · ≈ 2,8 min
 
 | # | Paso | Contenido | En pantalla |
@@ -132,6 +145,8 @@ aunque la voz las diga completas.
 | 3 | Bazo: hojas de cebolla | Hiperplasia concéntrica de las arterias peniciliares. | Corte de arteria peniciliar con capas concéntricas que se van sumando. |
 | 4 | Pulmón | Intersticial (disnea, tos seca, difusión) e hipertensión pulmonar (VD). | Alvéolos con intersticio engrosado; ventrículo derecho dilatado. |
 | 5 | Resumen | Todo se explica por complejos + antifosfolípidos; paso al riñón. | Mapa de órganos marcado; transición al glomérulo. |
+
+**Capas visuales del capítulo 8** (`lupus/FondoOrganos.tsx`). Sin tarjetas; las horas de la voz son las de antes. Lente de la mitral en corte (aurícula, ventrículo, cuerdas, músculos papilares, verrugas a ambos lados, escala de 1 a 3 mm) y émbolo hasta el cerebro; coronaria con grasa epicárdica, pared en capas y placa con núcleo lipídico, colesterol, espumosas y calcio, con la corriente que se aprieta; costillas discretas y texto con flechas en la serositis; bazo con pulpa y lente en H&E, hojas que crecen, cebolla real y sello; alvéolos en lente, manómetro y corazón con el ventrículo derecho; lámina `mecanismos` con el complejo inmune, el trombo y el riñón. Verificado: `verificar:lupus`, tipos y render a imagen. Sin verificar: el navegador con la voz.
 
 ## 9 · Nefritis lúpica (glomérulo) · ≈ 4,9 min
 
@@ -148,6 +163,8 @@ aunque la voz las diga completas.
 | 8 | Clase VI | ≥ 90 % esclerosis global; ERC avanzada, irreversible. | Glomérulos que se vuelven ovillos escleróticos. |
 | 9 | La clínica | Silente o proteinuria, hematuria, cilindros, edema, HTA, creatinina; III/IV nefrítico, V nefrótico; orina en cada control. | Dos columnas nefrítico/nefrótico; tira de orina y cilindro eritrocitario. |
 
+**Capas visuales del capítulo 9** (`lupus/FondoNefritis.tsx`). Sin tarjetas y con las mismas horas de voz. Capilar en corte con capilar vecino, mesangio y podocitos; lente con la barrera que se monta capa a capa (endotelio, membrana basal, pedicelos) y donde caen los depósitos; inflamación con leucocitos. Cinco campos de IF con patrón granular, «la casa llena» y la cadena C1q → C3. Clases: glomérulos en H&E y un campo con túbulos; **la clase I se ve normal a la luz** y sus depósitos solo en una lente de IF; III y IV con diez glomérulos (4 y 8 enfermos, ilustración); lentes de asa de alambre, trombo hialino, semiluna, barrera subepitelial y plata con «spikes»; clase VI con riñón cicatrizal. Lámina `clinicaN`: seis signos, sedimento con cilindro y hematíes dismórficos, nefrótico y tira de orina. Verificado: `verificar:lupus`, tipos y render a imagen. Sin verificar: el navegador con la voz.
+
 ## 10 · Cómo se diagnostica · ≈ 4,3 min
 
 | # | Paso | Contenido | En pantalla |
@@ -160,6 +177,8 @@ aunque la voz las diga completas.
 | 5 | Actividad | C3/C4 ↓, VSG ↑ inespecífica; PCR muy alta → infección; orina y cociente proteína/creatinina. | Tablero de laboratorio de actividad. |
 | 6 | EULAR/ACR 2019 | ANA ≥ 1:80 + ≥ 1 criterio clínico + ≥ 10 puntos; solo el mayor de cada dominio; dominios. | Tabla de dominios (calculadora sin marcar). |
 | 7 | Un caso | ANA 1:320; artritis 6; úlceras 2 → malar 6; C3+C4 bajos 4; anti-dsDNA 6 = 22; SOAP BRAIN MD. | La calculadora se llena sola con el caso; contador hasta 22; nemotecnia letra a letra. |
+
+**Capas visuales del capítulo 10** (`lupus/FondoDiagnostico.tsx`). Sin tarjetas y con las horas de voz de antes. Láminas: `dxInicio` (tubo tachado, rompecabezas clínica + laboratorio + exclusión, silueta con órganos, cuatro sospechosos que se tachan, sacabocados en la piel y aguja en el riñón), `pruebas` (células HEp-2, diales de sensibilidad y especificidad, curva del anti-ADN, partícula Sm), `dxAfl` (tres tubos, trombo y útero; columnas de C3 y C4, pipeta de VSG, perla y diales de PCR, sedimento y cociente) y `eular` (puerta, silueta, moneda del 10, balanza, dominios con icono, caso con tubo de puntos y SOAP BRAIN MD con iconos). Los valores de los diales son una ilustración; el texto solo dice alta, media o baja. Verificado: `verificar:lupus`, tipos y render a imagen. Sin verificar: el navegador con la voz.
 
 ## 11 · Complicaciones y tratamiento · ≈ 5,5 min
 
@@ -174,6 +193,9 @@ aunque la voz las diga completas.
 | 6 | Azatioprina y micofenolato | 6-MP y purinas; IMPDH → guanosina; micofenolato en nefritis; citopenias, diarrea, teratógeno. | Linfocitos que no se dividen; vía de purinas bloqueada. |
 | 7 | Calcineurina y monoclonales | Ciclosporina/tacrolimus → NFAT → IL-2; ciclosporina nefrotóxica, HTA, hipertricosis. [C] Belimumab (BAFF), anifrolumab (receptor de IFN-I), rituximab (CD20). | Cada fármaco se coloca sobre su punto del circuito (acción `farmaco`). |
 | 8 | Cierre | Recapitulación del circuito; con diagnóstico temprano, larga vida; «ahora ya eres uno». | El circuito completo con todos los fármacos encima; vuelta a la cara del principio. |
+
+
+**Capas visuales del capítulo 11** (`lupus/FondoTratamiento.tsx`). Sin tarjetas y con las horas de voz de antes. La lámina del endosoma (paso 4) es la del capítulo 3 sin cambios: `endosomaTx` solo le pone encima las citocinas, el reloj de arena y la retina. El resto es propio: microbios alrededor del paciente, bifurcación brote o infección, ganglio y fémur, circuito con la hidroxicloroquina, llama que baja, gotero, curva de dosis, linfocito que no se divide, célula T con NFAT, monoclonales sobre su blanco y la cadena final. Verificado: `verificar:lupus`, tipos y render a imagen. Sin verificar: el navegador con la voz.
 
 ---
 
