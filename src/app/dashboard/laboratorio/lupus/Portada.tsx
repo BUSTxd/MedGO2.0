@@ -20,7 +20,7 @@ import l from '@/styles/lupus.module.css';
 
 const minutos = (sg: number) => `${Math.max(1, Math.round(sg / 60))} min`;
 
-export default function Portada({ onParte }: { onParte: (id: ParteId) => void }) {
+export default function Portada({ onParte, onAnticipar }: { onParte: (id: ParteId) => void; onAnticipar: (id: ParteId) => void }) {
   const { indice, partes, completo } = useContenido();
   const zona = useRef<HTMLDivElement>(null);
   const modo = useModo(zona);
@@ -58,6 +58,7 @@ export default function Portada({ onParte }: { onParte: (id: ParteId) => void })
                   type="button"
                   className={`${s.capitulo} ${bloqueado ? h.capBloqueado : ''} ${p.listo ? '' : l.capPronto}`}
                   style={{ ['--parte' as string]: p.color }}
+                  onPointerEnter={() => onAnticipar(p.id)}
                   onClick={() => onParte(p.id)}
                   disabled={!p.listo}
                   aria-disabled={!p.listo}

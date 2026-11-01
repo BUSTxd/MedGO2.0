@@ -12,6 +12,10 @@
 // 5. Con ahorro de datos o red 2G no se precarga nada: solo el capítulo abierto.
 // 6. Solo se precargan capítulos que el alumno puede abrir: el servidor no manda la
 //    narración de los cerrados (vistazo gratis).
+// 7. Al cerrar un capítulo su audio se guarda si ya bajó entero: reabrirlo no hace ningún
+//    pedido, ni siquiera con la caché apagada. Si estaba a medias se corta la descarga.
+//    `next dev` monta cada efecto dos veces: por eso el corte espera a la vuelta siguiente
+//    de la cola; si no, allí cada audio se pediría dos veces (en producción no pasa).
 // Los archivos llevan caché de un año (versión en el nombre): volver a un capítulo
 // ya escuchado no vuelve a bajarlo.
 
@@ -19,7 +23,7 @@ import type { Narracion } from '@/lib/data/lupus/tipos';
 
 /** Segundos antes del final del capítulo en que se precarga el siguiente. */
 export const ANTES_DEL_FINAL = 45;
-/** Audios guardados a la vez como mucho (el que suena y el siguiente). */
+/** Audios guardados a la vez como mucho (el último cerrado y el siguiente). */
 const MAX = 2;
 
 const guardados = new Map<string, HTMLAudioElement>();
@@ -32,7 +36,7 @@ export function fuenteVoz(n: Narracion): string {
 }
 
 /** Red lenta o ahorro de datos: solo se baja lo que suena. */
-function redCorta(): boolean {
+export function redCorta(): boolean {
   const c = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
   return !!c && (!!c.saveData || /(^|-)2g$/.test(c.effectiveType ?? ''));
 }
@@ -61,8 +65,24 @@ export function tomarVoz(n: Narracion): HTMLAudioElement {
   return crear(src, redCorta() ? 'metadata' : 'auto');
 }
 
+/** Ya bajó entero (un solo tramo, de punta a punta). */
+function completo(a: HTMLAudioElement): boolean {
+  const b = a.buffered;
+  return b.length === 1 && b.start(0) <= 0.5 && b.end(0) >= a.duration - 0.5;
+}
+
+/** El capítulo se cierra: su audio se queda para reabrirlo, salvo que siga bajando. */
+export function devolverVoz(n: Narracion, a: HTMLAudioElement) {
+  a.pause();
+  const src = fuenteVoz(n);
+  if (a.error || guardados.has(src)) { liberarVoz(a); return; }
+  while (guardados.size >= MAX) soltar(guardados.keys().next().value!);
+  guardados.set(src, a);
+  setTimeout(() => { if (guardados.get(src) === a && !completo(a)) soltar(src); }, 0);
+}
+
 /** Corta la descarga y libera el audio. */
-export function liberarVoz(a: HTMLAudioElement) {
+function liberarVoz(a: HTMLAudioElement) {
   a.pause();
   a.removeAttribute('src');
   a.load();

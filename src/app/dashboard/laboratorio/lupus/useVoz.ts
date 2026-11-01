@@ -13,7 +13,7 @@ import type { Narracion } from '@/lib/data/lupus/tipos';
 import type { Reproductor } from './useReproductor';
 import { useGrimiVoz } from '@/components/estudio/grimiVoz';
 import { useVolumen } from '../hipersensibilidad/useVolumen';
-import { ANTES_DEL_FINAL, liberarVoz, precargarVoz, tomarVoz } from './vozCarga';
+import { ANTES_DEL_FINAL, devolverVoz, precargarVoz, tomarVoz } from './vozCarga';
 
 const CLAVE = 'medgo-lupus-voz';
 /** Sin avanzar este rato (ms) la voz se da por perdida y la animación sigue sin ella. */
@@ -135,7 +135,7 @@ export function useVoz(narracion: Narracion | undefined, rep: Reproductor, sigui
       a.removeEventListener('seeked', yaSuena);
       a.removeEventListener('timeupdate', avanza);
       document.removeEventListener('visibilitychange', oculta);
-      liberarVoz(a); audio.current = null;
+      devolverVoz(narracion, a); audio.current = null;
       grimi?.(false);
     };
   }, [narracion, activa, grimi, aplicar]);

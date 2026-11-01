@@ -19,6 +19,8 @@ import type { Contenido, ResumenParte } from '@/lib/lupus/contenido';
 import { ContenidoLab } from './ContenidoLab';
 import { Rueda } from './Cargando';
 import { srcImagen } from '../hipersensibilidad/imagenes';
+import { cargarLaminasDe } from './Fondos';
+import { redCorta } from './vozCarga';
 import Portada from './Portada';
 import Explorar from './Explorar';
 import MuroPago from './MuroPago';
@@ -95,17 +97,39 @@ export default function LupusLab({ contenido, plan, prueba }: { contenido: Conte
   useEffect(() => {
     let vigente = true;
     const primera = inicio.vista.v === 'parte' ? abiertas[inicio.vista.id] : undefined;
-    precargar(primera ? imagenesDe(primera) : []).then(() => { if (vigente) setListo(true); });
+    // Enlace directo a un capítulo: entra con sus láminas ya bajadas (con el mismo tope).
+    const laminas = primera ? Promise.race([cargarLaminasDe(primera), new Promise<void>((r) => setTimeout(r, 6000))]) : null;
+    Promise.all([precargar(primera ? imagenesDe(primera) : []), laminas]).then(() => { if (vigente) setListo(true); });
     return () => { vigente = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => { escribirUrl(vista, prueba); }, [vista, prueba]);
 
+  // Las láminas del capítulo siguiente, sin prisa, para que el paso de capítulo no las espere.
+  const abierto = vista.v === 'parte' ? vista.id : null;
+  useEffect(() => {
+    if (!abierto || redCorta()) return;
+    const sig = indiceRef.current[indiceRef.current.findIndex((p) => p.id === abierto) + 1];
+    const parte = sig && abiertasRef.current[sig.id];
+    if (!parte) return;
+    const espera = setTimeout(() => { void cargarLaminasDe(parte); }, 3000);
+    return () => clearTimeout(espera);
+  }, [abierto]);
+
+  /** El dedo o el ratón ya va hacia un capítulo: que empiece a bajar sus láminas. */
+  const anticipar = useCallback((id: ParteId) => {
+    const parte = abiertasRef.current[id];
+    if (parte && !redCorta()) void cargarLaminasDe(parte);
+  }, []);
+
   const portada = useCallback(() => setVista({ v: 'portada' }), []);
   const abrir = useCallback((id: ParteId, paso = 0) => {
     if (!indiceRef.current.find((p) => p.id === id)?.listo) return;
-    if (!abiertasRef.current[id]) { setMuro(id); return; }
+    const elegida = abiertasRef.current[id];
+    if (!elegida) { setMuro(id); return; }
+    // Sin esperarlas: el audio tiene que arrancar dentro del clic (Safari lo exige).
+    void cargarLaminasDe(elegida);
     setMuro(null);
     setVista((v) => ({ v: 'parte', id, paso, n: (v.v === 'parte' ? v.n : 0) + 1 }));
   }, []);
@@ -158,7 +182,7 @@ export default function LupusLab({ contenido, plan, prueba }: { contenido: Conte
     return (
       <ContenidoLab.Provider value={contenido}>
         <div className={`${c.lab} ${h.aparece}`}>
-          <Portada onParte={(id) => abrir(id)} />
+          <Portada onParte={(id) => abrir(id)} onAnticipar={anticipar} />
           {capaMuro}
         </div>
       </ContenidoLab.Provider>
@@ -189,6 +213,7 @@ export default function LupusLab({ contenido, plan, prueba }: { contenido: Conte
                   style={{ ['--parte' as string]: p.color }}
                   aria-current={p.id === parte.id ? 'page' : undefined}
                   disabled={!p.listo}
+                  onPointerEnter={() => anticipar(p.id)}
                   onClick={() => abrir(p.id)}
                   title={!p.listo ? `${p.nombre} (pronto)` : cerrado ? `${p.nombre} (de pago)` : p.nombre}
                 >

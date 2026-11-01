@@ -12,26 +12,17 @@
 // (`lupus.module.css`), con su versión oscura; los rellenos de órganos e
 // iconos son saturados y valen en los dos temas.
 
-import { memo, type ReactNode } from 'react';
+import { createElement, memo, useEffect, useState, type ComponentType, type ReactNode } from 'react';
 import { IconoOrgano, clamp, dibujar, easeBack, easeOut, tramo, v, type Icono, type T } from './laminas';
 import { DefsAnatomia, Globulo } from './Anatomia';
 import { ARTICULACIONES, Articulaciones, CX, CorazonEn, Figurita, PulmonesEn, RinonesEn, Silueta, Sistema, Vasos } from './Cuerpo';
 import { PACIENTES_TEZ, Retrato, TRAZOS_RETRATO } from './Retrato';
-import FondoCausas from './FondoCausas';
-import { FondoDxAfl, FondoDxInicio, FondoEular, FondoPruebas } from './FondoDiagnostico';
-import { FondoCapas, FondoClases, FondoClinicaN, FondoFullHouse } from './FondoNefritis';
-import { FondoCebolla, FondoCoronaria, FondoPulmon, FondoTorax, FondoMecanismos, FondoValva } from './FondoOrganos';
-import { FondoBoca, FondoCutaneos, FondoDiscoide, FondoMalar, FondoManos, FondoNeuro, FondoSintomas, FondoTorso } from './FondoClinica';
-import { FondoSaf } from './FondoDano2';
-import { FondoGlomeruloLupus, FondoSangreLupus, FondoVasoLupus } from './FondoHiper';
-import { FondoCircuito, FondoEfectoras, FondoFreno, FondoGerminal, FondoIntersticio, FondoPeriferia, FondoPuente, FondoSeleccion } from './FondoAdaptativa';
-import { FondoEndosomaTx, FondoTxCircuito, FondoTxCompl, FondoTxFarmacos, FondoTxFin } from './FondoTratamiento';
-import { FondoCirculo, FondoEndosoma, FondoEspacio, FondoFirma, FondoRed } from './FondoInterferon';
-import { FondoCiudad, FondoEpidermis } from './FondoBasura';
-import type { Fondo } from '@/lib/data/lupus/tipos';
+import type { Escenario, Fondo } from '@/lib/data/lupus/tipos';
 import { L } from '@/lib/data/lupus/colores';
 import { INDICE } from '@/lib/data/lupus/indice';
 import s from '@/styles/lupus.module.css';
+
+type PropsLamina = { t: T; reloj: number };
 
 // ─── Defs comunes ─────────────────────────────────────────────────────────────
 
@@ -694,7 +685,8 @@ export function Ruta({ t, reloj }: { t: T; reloj: number }) {
 
 // ─── Registro ─────────────────────────────────────────────────────────────────
 
-const FONDOS: Record<Fondo, (p: { t: T; reloj: number }) => ReactNode> = {
+// Las láminas del capítulo 0 viven aquí: la portada las pinta nada más entrar.
+const PROPIOS = {
   blanco: () => null,
   nombre: ({ t }) => <Nombre t={t} />,
   nucleo: ({ t, reloj }) => <Nucleo t={t} reloj={reloj} />,
@@ -702,60 +694,125 @@ const FONDOS: Record<Fondo, (p: { t: T; reloj: number }) => ReactNode> = {
   quien: ({ t, reloj }) => <Quien t={t} reloj={reloj} />,
   imitador: ({ t }) => <Imitador t={t} />,
   ruta: ({ t, reloj }) => <Ruta t={t} reloj={reloj} />,
-  causas: ({ t, reloj }) => <FondoCausas t={t} reloj={reloj} />,
-  epidermis: ({ t, reloj }) => <FondoEpidermis t={t} reloj={reloj} />,
-  ciudad: ({ t, reloj }) => <FondoCiudad t={t} reloj={reloj} />,
-  'endosoma': ({ t, reloj }) => <FondoEndosoma t={t} reloj={reloj} />,
-  'espacio': ({ t, reloj }) => <FondoEspacio t={t} reloj={reloj} />,
-  'circulo': ({ t, reloj }) => <FondoCirculo t={t} reloj={reloj} />,
-  'firma': ({ t, reloj }) => <FondoFirma t={t} reloj={reloj} />,
-  'red': ({ t, reloj }) => <FondoRed t={t} reloj={reloj} />,
-  'seleccion': ({ t, reloj }) => <FondoSeleccion t={t} />,
-  'germinal': ({ t, reloj }) => <FondoGerminal t={t} reloj={reloj} />,
-  'periferia': ({ t, reloj }) => <FondoPeriferia t={t} reloj={reloj} />,
-  'efectoras': ({ t, reloj }) => <FondoEfectoras t={t} reloj={reloj} />,
-  'freno': ({ t, reloj }) => <FondoFreno t={t} reloj={reloj} />,
-  'intersticio': ({ t, reloj }) => <FondoIntersticio t={t} reloj={reloj} />,
-  'circuito': ({ t, reloj }) => <FondoCircuito t={t} reloj={reloj} />,
-  'puente': ({ t }) => <FondoPuente t={t} />,
-  'h-vaso': ({ t, reloj }) => <FondoVasoLupus t={t} reloj={reloj} />,
-  'h-sangre': ({ t, reloj }) => <FondoSangreLupus t={t} reloj={reloj} />,
-  'saf': ({ t, reloj }) => <FondoSaf t={t} reloj={reloj} />,
-  'h-glomerulo': ({ t, reloj }) => <FondoGlomeruloLupus t={t} reloj={reloj} />,
-  'sintomas': ({ t, reloj }) => <FondoSintomas t={t} reloj={reloj} />,
-  'cutaneos': ({ t, reloj }) => <FondoCutaneos t={t} reloj={reloj} />,
-  'malar': ({ t, reloj }) => <FondoMalar t={t} reloj={reloj} />,
-  'neuro': ({ t, reloj }) => <FondoNeuro t={t} reloj={reloj} />,
-  'manos': ({ t, reloj }) => <FondoManos t={t} reloj={reloj} />,
-  'boca': ({ t, reloj }) => <FondoBoca t={t} reloj={reloj} />,
-  'torso': ({ t, reloj }) => <FondoTorso t={t} reloj={reloj} />,
-  'discoide': ({ t, reloj }) => <FondoDiscoide t={t} reloj={reloj} />,
-  'valva': ({ t, reloj }) => <FondoValva t={t} reloj={reloj} />,
-  'coronaria': ({ t, reloj }) => <FondoCoronaria t={t} reloj={reloj} />,
-  'torax': ({ t, reloj }) => <FondoTorax t={t} reloj={reloj} />,
-  'cebolla': ({ t, reloj }) => <FondoCebolla t={t} reloj={reloj} />,
-  'pulmon': ({ t, reloj }) => <FondoPulmon t={t} reloj={reloj} />,
-  'mecanismos': ({ t, reloj }) => <FondoMecanismos t={t} reloj={reloj} />,
-  'capas': ({ t, reloj }) => <FondoCapas t={t} reloj={reloj} />,
-  'fullhouse': ({ t, reloj }) => <FondoFullHouse t={t} reloj={reloj} />,
-  'clases': ({ t, reloj }) => <FondoClases t={t} reloj={reloj} />,
-  'clinicaN': ({ t, reloj }) => <FondoClinicaN t={t} reloj={reloj} />,
-  'txCompl': ({ t, reloj }) => <FondoTxCompl t={t} reloj={reloj} />,
-  'txCircuito': ({ t, reloj }) => <FondoTxCircuito t={t} reloj={reloj} />,
-  'endosomaTx': ({ t, reloj }) => <FondoEndosomaTx t={t} reloj={reloj} />,
-  'txFarmacos': ({ t, reloj }) => <FondoTxFarmacos t={t} reloj={reloj} />,
-  'txFin': ({ t, reloj }) => <FondoTxFin t={t} reloj={reloj} />,
-  'dxInicio': ({ t, reloj }) => <FondoDxInicio t={t} reloj={reloj} />,
-  'pruebas': ({ t, reloj }) => <FondoPruebas t={t} reloj={reloj} />,
-  'dxAfl': ({ t, reloj }) => <FondoDxAfl t={t} reloj={reloj} />,
-  'eular': ({ t, reloj }) => <FondoEular t={t} reloj={reloj} />,
+} satisfies Partial<Record<Fondo, (p: PropsLamina) => ReactNode>>;
+
+// Las de los demás capítulos bajan cuando hacen falta, no al entrar al laboratorio:
+// son el grueso del código y quien solo ve un capítulo no tiene por qué pagar los doce.
+const CARGAS = {
+  causas: () => import('./FondoCausas'),
+  basura: () => import('./FondoBasura'),
+  interferon: () => import('./FondoInterferon'),
+  adaptativa: () => import('./FondoAdaptativa'),
+  hiper: () => import('./FondoHiper'),
+  dano2: () => import('./FondoDano2'),
+  clinica: () => import('./FondoClinica'),
+  organos: () => import('./FondoOrganos'),
+  nefritis: () => import('./FondoNefritis'),
+  diagnostico: () => import('./FondoDiagnostico'),
+  tratamiento: () => import('./FondoTratamiento'),
+};
+type Grupo = keyof typeof CARGAS;
+
+/** Dónde vive cada lámina; el compilador comprueba que el módulo la exporte. */
+const de = <G extends Grupo>(grupo: G, nombre: keyof Awaited<ReturnType<(typeof CARGAS)[G]>>) => [grupo, nombre as string] as const;
+
+const LAMINAS: Record<Exclude<Fondo, keyof typeof PROPIOS>, readonly [Grupo, string]> = {
+  causas: de('causas', 'default'),
+  epidermis: de('basura', 'FondoEpidermis'),
+  ciudad: de('basura', 'FondoCiudad'),
+  endosoma: de('interferon', 'FondoEndosoma'),
+  espacio: de('interferon', 'FondoEspacio'),
+  circulo: de('interferon', 'FondoCirculo'),
+  firma: de('interferon', 'FondoFirma'),
+  red: de('interferon', 'FondoRed'),
+  seleccion: de('adaptativa', 'FondoSeleccion'),
+  germinal: de('adaptativa', 'FondoGerminal'),
+  periferia: de('adaptativa', 'FondoPeriferia'),
+  efectoras: de('adaptativa', 'FondoEfectoras'),
+  freno: de('adaptativa', 'FondoFreno'),
+  intersticio: de('adaptativa', 'FondoIntersticio'),
+  circuito: de('adaptativa', 'FondoCircuito'),
+  puente: de('adaptativa', 'FondoPuente'),
+  'h-vaso': de('hiper', 'FondoVasoLupus'),
+  'h-sangre': de('hiper', 'FondoSangreLupus'),
+  'h-glomerulo': de('hiper', 'FondoGlomeruloLupus'),
+  saf: de('dano2', 'FondoSaf'),
+  sintomas: de('clinica', 'FondoSintomas'),
+  cutaneos: de('clinica', 'FondoCutaneos'),
+  malar: de('clinica', 'FondoMalar'),
+  neuro: de('clinica', 'FondoNeuro'),
+  manos: de('clinica', 'FondoManos'),
+  boca: de('clinica', 'FondoBoca'),
+  torso: de('clinica', 'FondoTorso'),
+  discoide: de('clinica', 'FondoDiscoide'),
+  valva: de('organos', 'FondoValva'),
+  coronaria: de('organos', 'FondoCoronaria'),
+  torax: de('organos', 'FondoTorax'),
+  cebolla: de('organos', 'FondoCebolla'),
+  pulmon: de('organos', 'FondoPulmon'),
+  mecanismos: de('organos', 'FondoMecanismos'),
+  capas: de('nefritis', 'FondoCapas'),
+  fullhouse: de('nefritis', 'FondoFullHouse'),
+  clases: de('nefritis', 'FondoClases'),
+  clinicaN: de('nefritis', 'FondoClinicaN'),
+  txCompl: de('tratamiento', 'FondoTxCompl'),
+  txCircuito: de('tratamiento', 'FondoTxCircuito'),
+  endosomaTx: de('tratamiento', 'FondoEndosomaTx'),
+  txFarmacos: de('tratamiento', 'FondoTxFarmacos'),
+  txFin: de('tratamiento', 'FondoTxFin'),
+  dxInicio: de('diagnostico', 'FondoDxInicio'),
+  pruebas: de('diagnostico', 'FondoPruebas'),
+  dxAfl: de('diagnostico', 'FondoDxAfl'),
+  eular: de('diagnostico', 'FondoEular'),
 };
 
+const laminaDe = (f: Fondo): readonly [Grupo, string] | undefined => LAMINAS[f as keyof typeof LAMINAS];
+
+/** Módulos ya bajados: pintarlos no espera a nada, ni un fotograma. */
+const listos: Partial<Record<Grupo, Record<string, ComponentType<PropsLamina>>>> = {};
+const pedidos: Partial<Record<Grupo, Promise<void>>> = {};
+
+function cargarGrupo(g: Grupo): Promise<void> {
+  return pedidos[g] ??= CARGAS[g]().then(
+    (m) => { listos[g] = m as unknown as Record<string, ComponentType<PropsLamina>>; },
+    // Sin red: la lámina queda en blanco, la voz sigue y al reabrir el capítulo se reintenta.
+    () => { delete pedidos[g]; },
+  );
+}
+
+/** Deja bajadas las láminas de un capítulo. Nunca falla: mira qué fondos nombra
+ *  (el suyo y los de las acciones `fondo`), como `imagenesDe` con las imágenes. */
+export function cargarLaminasDe(esc: Escenario): Promise<void> {
+  const grupos = new Set<Grupo>();
+  const ver = (o: unknown) => {
+    if (Array.isArray(o)) o.forEach(ver);
+    else if (o && typeof o === 'object') {
+      for (const [k, val] of Object.entries(o)) {
+        if (k === 'fondo' && typeof val === 'string') { const l = laminaDe(val as Fondo); if (l) grupos.add(l[0]); }
+        else ver(val);
+      }
+    }
+  };
+  ver(esc);
+  return Promise.all([...grupos].map(cargarGrupo)).then(() => undefined);
+}
+
 export const FondoDe = memo(function FondoDe({ f, t, reloj }: { f: Fondo; t: T; reloj: number }) {
+  const lamina = laminaDe(f);
+  const grupo = lamina?.[0];
+  const [, avisar] = useState(0);
+  // Red de seguridad: lo normal es que `cargarLaminasDe` ya lo haya bajado al abrir el capítulo.
+  useEffect(() => {
+    if (!grupo || listos[grupo]) return;
+    let vivo = true;
+    void cargarGrupo(grupo).then(() => { if (vivo) avisar((n) => n + 1); });
+    return () => { vivo = false; };
+  }, [grupo]);
+  const componente = lamina && listos[lamina[0]]?.[lamina[1]];
   return (
     <g className={s.fondo}>
       <DefsFondo />
-      {FONDOS[f]({ t, reloj })}
+      {lamina ? componente && createElement(componente, { t, reloj }) : PROPIOS[f as keyof typeof PROPIOS]({ t, reloj })}
     </g>
   );
 });
