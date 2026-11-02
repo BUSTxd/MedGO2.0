@@ -93,14 +93,18 @@ src/middleware.ts             Protege rutas y cierra cursos de Cayetano
 
 ### Planes a la venta (`PLANS`, `src/lib/plans.ts`)
 
-Se cobran cada mes y **ninguno termina solo**: la permanencia solo marca desde cuándo se puede cancelar.
+Todos abren lo mismo y ninguno tiene permanencia; solo cambia cada cuánto se cobra. **Los tres se renuevan solos hasta que el alumno cancela**, con las dos pasarelas.
 
-| Plan | Clave | Perú (MP) | Fuera (Creem, por adelantado) | Permanencia | `nivel` |
+| Plan | Clave | Perú (MP) | Fuera (Creem) | `durationDays` | `nivel` |
 |---|---|---|---|---|---|
-| Residente («MÁS ELEGIDO», primero) | `residente-12` | S/ 29.90/mes | US$ 99/año | 12 meses | `completo` |
-| Especialista | `especialista-24` | S/ 27.90/mes | US$ 179/2 años | 24 meses | `completo` |
-| Visitante (al final, apagado) | `visitante` | S/ 39.90/mes | US$ 10,99/mes | — | `base` |
+| Mensual | `visitante` | S/ 22.90/mes | US$ 6,99/mes | 30 | `completo` |
+| Ciclo (destacado) | `especialista-24` | S/ 79.90/6 meses | US$ 23,99/6 meses | 180 | `completo` |
+| Anual | `residente-12` | S/ 129.90/año | US$ 38,99/año | 365 | `completo` |
 
+- **Las claves no coinciden con el nombre a propósito:** son los planes que ya existían en MP y Creem, editados el 2026-11-02 sin cambiar sus IDs. El alumno solo ve `label`.
+- **El precio que se ve sale de `PLANS`, pero el que se cobra sale del plan de MP o el producto de Creem:** al cambiar un importe, desplegar y editar enseguida el plan en el panel de MP (`mercadopago.com.pe/subscription-plans/plans`, sin clave) o con `scripts/mercadopago/actualizar-planes.mjs --aplicar`, y el producto con `scripts/creem/actualizar-productos.mjs --aplicar`.
+- **Creem apagado (`CREEM_COBROS_ACTIVOS = false`) hasta editar sus productos:** siguen con los precios de antes (US$ 10,99, US$ 99/año y US$ 179/2 años). Encenderlo solo después de `actualizar-productos.mjs --aplicar`.
+- 6 meses porque un ciclo de Cayetano dura de 3,4 a 4,3 meses y el panel de MP no deja elegir 5. Dos ciclos cuestan más que el anual a propósito.
 - `base` = Preclínicos + su universidad. `completo` = además metas de examen, laboratorio e IA.
 - **Legados** (`free`, `ufbi`, `ufbi-anual`, `interno`, `residente`; `aLaVenta: false`): quien paga los conserva y abren su tramo. Las páginas siguen declarando `'interno'`/`'ufbi'`; `SubscribeModal` con un plan que no se vende abre `ElegirPlan`.
 
@@ -256,7 +260,8 @@ Solo el admin mientras `IA_ABIERTA` no sea `1`. **La API key nunca va en repo ni
 
 - **Planificador sin tablas en producción:** `planes_estudio` y `planes_tareas_hechas` (migración `0011`) **no existen** en Supabase, aunque el código las usa. Hay que aplicarla para que el plan se guarde.
 - **Seguridad en el panel de Supabase:** la protección contra contraseñas filtradas sigue **desactivada** (advisor). «Confirm email» sigue pendiente según nota; el registro con contraseña no verifica el correo.
-- **Plan vivo con clave legada:** Hipersensibilidad, Lupus y el examen 3D comprueban `planUnlocks(vivo.plan, plan)` en cliente con la clave legada; un Visitante vería candado tras pagar hasta el `refresh`.
+- **Plan vivo con clave legada:** Hipersensibilidad, Lupus y el examen 3D comprueban `planUnlocks(vivo.plan, plan)` en cliente con la clave legada; un plan nuevo podría ver candado tras pagar hasta el `refresh`.
+- **Sin aviso de renovación:** Ciclo y Anual cobran solos cada 6 y 12 meses, y MedGO aún no envía un correo antes del cobro.
 - **Hipersensibilidad, barra y voz:** según nota, mover la barra puede desfasar la voz; su arreglo es resincronizar al dar play y al buscar (no puede copiar el reloj de Lupus).
 - **Creem:** según nota, sin aprobar la cuenta una compra sin código responde «Live payments are not enabled». Confirmar el estado; mientras, el modal deja pasar a Mercado Pago.
 - **Otros países con MP:** exige empresa en cada país; una cuenta de Perú solo cobra en PEN.

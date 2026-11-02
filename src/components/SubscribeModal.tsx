@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import { usePathname, useRouter } from 'next/navigation';
 import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react';
 import dynamic from 'next/dynamic';
-import { PLANS, requisitoDe, type PlanKey } from '@/lib/plans';
+import { PLANS, mesesDe, periodoDe, requisitoDe, type PlanKey } from '@/lib/plans';
 import { usePlan } from './PlanProvider';
 import { usePasarela } from './planes/usePasarela';
 import { CREEM_COBROS_ACTIVOS } from '@/lib/pasarela';
@@ -125,6 +125,7 @@ function PasarelaMP({ open, planKey, onClose, onCambiar }: Props) {
   // lo llevan los dos mensuales (Interno y UFBI) pero ninguno de los anuales.
   const esMensual = plan.durationDays === 30;
   const meses = plan.commitmentMonths ?? 0;
+  const periodo = periodoDe(mesesDe(plan));
   // El compromiso se dice en el subtítulo y en la casilla de términos, y el
   // desglose con el importe vive en /terminos. Un tercer aviso repetía la misma
   // frase al lado del formulario de pago, donde además el total se leía como si
@@ -223,7 +224,7 @@ function PasarelaMP({ open, planKey, onClose, onCambiar }: Props) {
             <h3 className={styles.title}>Suscribirme al plan {plan.label}</h3>
             <p className={styles.subtitle}>
               {!esMensual
-                ? 'Pago anual. Cancela el próximo cobro cuando quieras.'
+                ? `Pago cada ${periodo}. Se renueva solo; cancela el próximo cobro cuando quieras.`
                 : tieneLock
                   ? `Pago mensual. Compromiso mínimo de ${meses} meses.`
                   : 'Pago mensual. Cancela cuando quieras.'}
@@ -237,7 +238,7 @@ function PasarelaMP({ open, planKey, onClose, onCambiar }: Props) {
             <div className={styles.priceRow}>
               <span className={styles.priceMain}>S/ {plan.amount.toFixed(2)}</span>
               <span className={styles.priceUnit}>
-                / {plan.durationDays === 30 ? 'mes' : 'año'}
+                / {periodo}
               </span>
             </div>
 
@@ -266,8 +267,8 @@ function PasarelaMP({ open, planKey, onClose, onCambiar }: Props) {
                     </>
                   ) : (
                     <>
-                      . Puedo cancelar el próximo cobro {esMensual ? 'mensual' : 'anual'} cuando
-                      quiera; no hay devoluciones del periodo en curso.
+                      . El plan se renueva cada <strong>{periodo}</strong> hasta que lo cancele. Puedo
+                      cancelar el próximo cobro cuando quiera; no hay devoluciones del periodo en curso.
                     </>
                   )}
                 </span>
@@ -342,7 +343,7 @@ function PasarelaMP({ open, planKey, onClose, onCambiar }: Props) {
                 </>
               ) : (
                 <>
-                  Puedes cancelar el próximo cobro {esMensual ? 'mensual' : 'anual'} en cualquier
+                  Tu plan se renueva cada {periodo}. Puedes cancelar el próximo cobro en cualquier
                   momento desde <strong>Mi cuenta</strong>. No hay devoluciones del periodo en curso.
                 </>
               )}

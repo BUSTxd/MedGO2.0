@@ -1,5 +1,5 @@
-/* Elegir plan: las tres tarjetas de los planes nuevos (Residente, Especialista,
-   Visitante). Va por portal a <body>, así que trae su propia fuente y colores.
+/* Elegir plan: las tres tarjetas de los planes (Mensual, Ciclo, Anual). Va por
+   portal a <body>, así que trae su propia fuente y colores.
    Sin backdrop-filter (regla de la app: deja fondos en blanco al cerrar). */
 
 .velo {
@@ -100,7 +100,7 @@
   background: var(--ep-fondo);
 }
 
-/* Residente: la que se elige. Un poco más alta y con la cinta encima. */
+/* Ciclo: la destacada. Un poco más alta y con la cinta encima. */
 .destacada {
   padding-top: 34px;
   border: 2px solid var(--ep-acento);
@@ -109,7 +109,7 @@
   transform: translateY(-8px);
 }
 
-/* Visitante: al final y apagado; nadie quiere ser visita. */
+/* Para un plan que abriera menos: hoy los tres abren lo mismo. */
 .apagada {
   background: var(--ep-apagada);
   opacity: 0.78;

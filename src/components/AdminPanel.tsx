@@ -49,7 +49,7 @@ function planBadgeClass(plan: AdminRow['plan']): string {
   // label ya distingue cuál de los dos es.
   if (plan === 'ufbi')       return `${styles.planBadge} ${styles.planUfbi}`;
   if (plan === 'ufbi-anual') return `${styles.planBadge} ${styles.planUfbi}`;
-  // Los nuevos: el mensual con el color de Interno; los de permanencia, con el de Residente.
+  // Los nuevos: el mensual con el color de Interno; los de varios meses, con el de Residente.
   if (plan === 'visitante')  return `${styles.planBadge} ${styles.planInterno}`;
   if (plan === 'residente-12' || plan === 'especialista-24') return `${styles.planBadge} ${styles.planResidente}`;
   return `${styles.planBadge} ${styles.planFree}`;
@@ -60,10 +60,10 @@ function planLabel(plan: AdminRow['plan']): string {
   if (plan === 'residente')  return 'Residente';
   if (plan === 'ufbi')       return 'UFBI';
   if (plan === 'ufbi-anual') return 'UFBI Anual';
-  // El nuevo Residente lleva sus cuotas para no confundirse con el legado.
-  if (plan === 'visitante')  return 'Visitante';
-  if (plan === 'residente-12') return 'Residente · 12';
-  if (plan === 'especialista-24') return 'Especialista · 24';
+  // Las claves son las de antes; el alumno ve Mensual, Ciclo y Anual.
+  if (plan === 'visitante')  return 'Mensual';
+  if (plan === 'residente-12') return 'Anual';
+  if (plan === 'especialista-24') return 'Ciclo';
   return 'Free';
 }
 

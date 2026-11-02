@@ -1,3 +1,4 @@
+// HISTÓRICO: para cambiar los importes de los tres planes a la venta, usar `actualizar-planes.mjs`. Este script no conoce el plan de 6 meses.
 // Crea en Mercado Pago, por API, los preapproval_plan de los planes que están
 // en `PLANS` (src/lib/plans.ts) y todavía no existen en la cuenta del token.
 //

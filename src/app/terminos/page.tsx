@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { PLANS } from '@/lib/plans';
+import { PLANS, mesesDe } from '@/lib/plans';
 import { CORREO } from '@/lib/contacto';
 import { PROVEEDOR } from '@/lib/proveedor';
 import styles from '@/styles/legal.module.css';
@@ -17,10 +17,7 @@ const PLANES = Object.values(PLANS).filter((p) => p.aLaVenta).sort(
 );
 /** Los que se venden también con Creem (fuera del Perú), en dólares. */
 const CON_CREEM = PLANES.filter((p) => p.creem);
-const cadaCreem = (meses: number) => (meses === 1 ? 'Cada mes' : meses === 12 ? 'Cada año, por adelantado' : `Cada ${meses / 12} años, por adelantado`);
-/** Los que llevan permanencia mínima, para la sección 7. */
-const CON_COMPROMISO = PLANES.filter((p) => p.commitmentMonths);
-const SIN_COMPROMISO = PLANES.filter((p) => !p.commitmentMonths);
+const cadaCuanto = (meses: number) => (meses === 1 ? 'Cada mes' : meses === 12 ? 'Cada año, por adelantado' : `Cada ${meses} meses, por adelantado`);
 
 export default function TerminosPage() {
   return (
@@ -29,7 +26,7 @@ export default function TerminosPage() {
       <main className={styles.wrap}>
         <div className={styles.hero}>
           <h1 className={styles.pageTitle}>Términos y Condiciones</h1>
-          <p className={styles.lastUpdated}>Última actualización: 28 de octubre de 2026</p>
+          <p className={styles.lastUpdated}>Última actualización: 2 de noviembre de 2026</p>
         </div>
 
         <section className={styles.section}>
@@ -112,9 +109,7 @@ export default function TerminosPage() {
                   <td>{p.label}</td>
                   <td>S/ {p.amount.toFixed(2)}</td>
                   <td>
-                    {p.durationDays === 30
-                      ? 'Mensual (cobro cada 30 días)'
-                      : 'Anual (cobro cada 365 días)'}
+                    {cadaCuanto(mesesDe(p))}
                   </td>
                   <td>{p.commitmentMonths ? `${p.commitmentMonths} meses` : 'Sin permanencia'}</td>
                 </tr>
@@ -122,20 +117,14 @@ export default function TerminosPage() {
             </tbody>
           </table>
           <p className={styles.p}>
-            Sin un plan activo el usuario solo puede ver el temario. Todos los planes dan acceso a
-            Preclínicos y al contenido de la universidad del usuario;{' '}
-            {PLANES.filter((p) => p.nivel === 'completo').map((p, i, l) => (
-              <span key={p.key}>
-                {i > 0 && (i === l.length - 1 ? ' y ' : ', ')}
-                <strong>{p.label}</strong>
-              </span>
-            ))}{' '}
-            dan acceso, además, a las metas de examen (como el ENCIB), al laboratorio virtual y a
-            MedGO IA cuando esté disponible.
+            Sin un plan activo el usuario solo puede ver el temario. Todos los planes dan el mismo
+            acceso: Preclínicos, el contenido de la universidad del usuario, las metas de examen
+            (como el ENCIB), el laboratorio virtual y MedGO IA cuando esté disponible. El material
+            de Preclínicos se publica de forma progresiva.
           </p>
           <p className={styles.p}>
-            Quien contrató un plan anterior (UFBI, Interno o Residente anual) lo conserva con su
-            precio, su acceso y sus condiciones mientras no lo cancele.
+            Quien contrató un plan anterior lo conserva con su precio, su acceso y sus condiciones
+            mientras no lo cancele.
           </p>
           <p className={styles.p}>
             Los precios están expresados en soles peruanos (PEN) e incluyen los impuestos
@@ -162,8 +151,8 @@ export default function TerminosPage() {
             <>
               <p className={styles.p}>
                 Con Creem, los precios están en dólares estadounidenses (USD) e incluyen los
-                impuestos. Como Creem no admite permanencia, los planes con permanencia se pagan
-                por adelantado por todo su periodo:
+                impuestos. Se cobran por adelantado y se renuevan al terminar cada periodo, hasta
+                que el usuario los cancele:
               </p>
               <table className={styles.priceTable}>
                 <thead>
@@ -178,7 +167,7 @@ export default function TerminosPage() {
                     <tr key={p.key}>
                       <td>{p.label}</td>
                       <td>US$ {p.creem!.usd.toFixed(2)}</td>
-                      <td>{cadaCreem(p.creem!.meses)}</td>
+                      <td>{cadaCuanto(p.creem!.meses)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -190,41 +179,23 @@ export default function TerminosPage() {
         <section className={styles.callout}>
           <h2 className={styles.h2}>7. Permanencia mínima</h2>
           <p className={styles.calloutBody}>
-            En los pagos en soles con Mercado Pago, los planes con permanencia se cobran cada
-            mes, y al contratarlos el usuario acepta un
-            número mínimo de <strong>cobros mensuales consecutivos</strong>. El botón de
-            &quot;Cancelar suscripción&quot; en Mi cuenta se habilitará al cumplirse ese número de
-            meses, contados desde la fecha de la primera autorización del pago. Antes de esa fecha
-            la suscripción no es cancelable a través de la plataforma. No existe devolución parcial
-            ni total de los cobros realizados dentro de ese periodo. Cumplida la permanencia, la
-            suscripción sigue cobrándose cada mes al mismo precio hasta que el usuario la cancele.
-            En los pagos con Creem no hay cobros mensuales con permanencia: el periodo completo se
-            paga por adelantado y se renueva al terminar, hasta que el usuario lo cancele.
+            Los planes a la venta <strong>no tienen permanencia</strong>. Quien contrató un plan
+            anterior con permanencia en soles con Mercado Pago aceptó un número mínimo de{' '}
+            <strong>cobros mensuales consecutivos</strong>: el botón de &quot;Cancelar
+            suscripción&quot; en Mi cuenta se habilita al cumplirse ese número de meses, contados
+            desde la primera autorización del pago, y antes de esa fecha la suscripción no es
+            cancelable a través de la plataforma. No existe devolución parcial ni total de los cobros
+            realizados dentro de ese periodo.
           </p>
-          <ul className={styles.calloutList}>
-            {CON_COMPROMISO.map((p) => (
-              <li key={p.key}>
-                <strong>{p.label}</strong>: S/ {p.amount.toFixed(2)} × {p.commitmentMonths} ={' '}
-                S/ {(p.amount * (p.commitmentMonths ?? 0)).toFixed(2)} durante el periodo de
-                permanencia.
-              </li>
-            ))}
-          </ul>
         </section>
 
         <section className={styles.section}>
-          <h2 className={styles.h2}>8. Planes sin permanencia</h2>
+          <h2 className={styles.h2}>8. Renovación y cancelación</h2>
           <p className={styles.p}>
-            {SIN_COMPROMISO.length > 1 ? 'Los planes' : 'El plan'}{' '}
-            {SIN_COMPROMISO.map((p, i) => (
-              <span key={p.key}>
-                {i > 0 && (i === SIN_COMPROMISO.length - 1 ? ' y ' : ', ')}
-                <strong>{p.label}</strong>
-              </span>
-            ))}{' '}
-            {SIN_COMPROMISO.length > 1 ? 'son' : 'es'} <strong>cancelable{SIN_COMPROMISO.length > 1 ? 's' : ''} en
-            cualquier momento</strong> desde Mi cuenta. La cancelación detiene la renovación, pero el
-            usuario mantiene el acceso hasta el final del periodo pagado.{' '}
+            Todos los planes a la venta <strong>se renuevan automáticamente</strong> al terminar cada
+            periodo, por el mismo importe, hasta que el usuario los cancele. Son cancelables en{' '}
+            <strong>cualquier momento</strong> desde Mi cuenta. La cancelación detiene la renovación,
+            pero el usuario mantiene el acceso hasta el final del periodo pagado.{' '}
             <strong>No existen devoluciones del periodo en curso.</strong>
           </p>
         </section>
@@ -284,8 +255,8 @@ export default function TerminosPage() {
             </a>
             . La eliminación implica el borrado de sus datos personales y de progreso, salvo
             registros contables que MedGO esté obligado a conservar por ley. La eliminación
-            de la cuenta no exime al usuario de los cobros pendientes derivados del permanencia
-            mínima de su plan.
+            de la cuenta no exime al usuario de los cobros pendientes derivados de la permanencia
+            mínima de su plan, si la tiene.
           </p>
         </section>
 

@@ -127,9 +127,9 @@
 .site-footer .brand,.site-footer .brand-mark{width:64px}.site-footer .brand-mark{height:38px}
 @media(max-width:720px){.site-header .brand,.site-header .brand-mark{width:68px}.site-header .brand-mark{height:40px}}
 
-/* ── Planes: Visitante, Residente y Especialista, como en SanarFlix ──
-   Residente va primero, destacado y con la cinta «MÁS ELEGIDO»; Visitante al final y
-   apagado (nadie quiere ser visita). Lo que Visitante no trae sale tachado. */
+/* ── Planes: Mensual, Ciclo y Anual ──
+   Ciclo va destacado y con su cinta. `data-apagado` y lo tachado quedan para un
+   plan que abriera menos: hoy los tres abren lo mismo. */
 .plans-grid{align-items:start;margin-top:12px}
 .plan-card{position:relative;min-height:0}
 .plan-card[data-destacado]{background:#1b2633;border:1.5px solid #6fb1e4;box-shadow:0 18px 48px #3b9edd26;transform:translateY(-8px)}

@@ -1,5 +1,5 @@
 import { createAdminClient } from '@/lib/supabase/admin';
-import { PLANS, isPlanKey } from '@/lib/plans';
+import { PLANS, isPlanKey, mesesDe } from '@/lib/plans';
 import { countActiveDevicesByUser } from '@/lib/sessions';
 import { isAdminEmail } from '@/lib/admin';
 import { tokenDePresencia } from '@/lib/presencia';
@@ -105,7 +105,7 @@ function mensualEnSoles(sub: SubRow): number {
   const importe = sub.amount ?? p?.amount ?? 0;
   const meses = sub.proveedor === 'creem'
     ? p?.creem?.meses ?? 1
-    : p && p.durationDays >= 365 ? 12 : 1;
+    : p ? mesesDe(p) : 1;
   const soles = sub.currency === 'USD' ? importe * SOLES_POR_USD : importe;
   return soles / meses;
 }

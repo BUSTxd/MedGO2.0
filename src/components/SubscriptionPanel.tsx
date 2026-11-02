@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { PLANS, unlockDateFor, type PlanKey, type ProfilePlan } from '@/lib/plans';
+import { PLANS, mesesDe, periodoDe, unlockDateFor, type PlanKey, type ProfilePlan } from '@/lib/plans';
 import styles from '@/styles/accountPage.module.css';
 
 interface SubRow {
@@ -59,13 +59,12 @@ export default function SubscriptionPanel({
   // Cadencia del cobro leída del catálogo, no del nombre del plan: hay un
   // anual por tramo ('residente' y 'ufbi-anual') y comparar nombres deja al
   // siguiente mostrando «S/ 189.00/mes».
-  // Con Creem el ciclo es el del producto (1, 12 o 24 meses, pagados por adelantado).
+  // Con Creem el ciclo es el del producto (1, 5, 12 o 24 meses, pagados por adelantado).
   const deCreem = subscription?.proveedor === 'creem';
-  const mesesCreem = deCreem ? PLANS[subscription!.plan_key].creem?.meses ?? 1 : 0;
-  const esAnual = subscription
-    ? (deCreem ? mesesCreem >= 12 : PLANS[subscription.plan_key].durationDays >= 365)
-    : false;
-  const unidad = deCreem && mesesCreem === 24 ? '2 años' : esAnual ? 'año' : 'mes';
+  const planContratado = subscription ? PLANS[subscription.plan_key] : null;
+  const unidad = planContratado
+    ? periodoDe(deCreem ? planContratado.creem?.meses ?? 1 : mesesDe(planContratado))
+    : 'mes';
   const moneda = subscription?.currency === 'USD' ? 'US$' : 'S/';
   // Meses de compromiso del plan contratado (Interno y UFBI: 3). El texto usa
   // este número, así que cambiarlo en el catálogo actualiza también los avisos.

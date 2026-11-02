@@ -21,23 +21,23 @@ export default function ReembolsosPage() {
       <main className={styles.wrap}>
         <div className={styles.hero}>
           <h1 className={styles.pageTitle}>Política de Reembolsos</h1>
-          <p className={styles.lastUpdated}>Última actualización: 28 de octubre de 2026</p>
+          <p className={styles.lastUpdated}>Última actualización: 2 de noviembre de 2026</p>
         </div>
 
         <section className={styles.section}>
           <h2 className={styles.h2}>1. Cancelar la suscripción</h2>
           <p className={styles.p}>
-            Las suscripciones de MedGO se renuevan cada mes hasta que el usuario las cancela. Se
-            cancelan desde <strong>Mi cuenta</strong>: el plan Visitante en cualquier momento, y
-            los planes con permanencia (Residente y Especialista) una vez cumplido el número de
-            meses indicado en los{' '}
-            <a className={styles.link} href="/terminos">Términos y condiciones</a>. Al cancelar no
-            se hacen más cobros y el acceso se mantiene hasta el final del periodo ya pagado.
+            Las suscripciones de MedGO se renuevan solas al terminar cada periodo (un mes en
+            Mensual, seis meses en Ciclo y un año en Anual) hasta que el usuario las cancela. Se
+            cancelan desde <strong>Mi cuenta</strong>, en cualquier momento. Al cancelar no se hacen
+            más cobros y el acceso se mantiene hasta el final del periodo ya pagado. Si contrataste
+            un plan anterior con permanencia, se cancela una vez cumplido el número de meses
+            indicado en los{' '}
+            <a className={styles.link} href="/terminos">Términos y condiciones</a>.
           </p>
           <p className={styles.p}>
-            Si pagaste con <strong>Creem</strong> (fuera del Perú), los planes Residente y
-            Especialista se pagan por adelantado por uno o dos años y puedes cancelar la renovación
-            en cualquier momento desde el enlace de gestión de la suscripción que Creem te envía por
+            Si pagaste con <strong>Creem</strong> (fuera del Perú), puedes cancelar la renovación en
+            cualquier momento desde el enlace de gestión de la suscripción que Creem te envía por
             correo, o escribiéndonos. Al cancelar no se cobra el siguiente periodo y mantienes el
             acceso hasta que termine el que ya pagaste.
           </p>

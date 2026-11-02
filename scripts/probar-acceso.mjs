@@ -23,7 +23,7 @@ const ESPERADO = {
   'ufbi-anual': ['cursoUfbi', 'labUfbi', 'ufbi'],
   interno: ['cursoFacultad', 'labFacultad', 'encib', 'interno'],
   residente: ['cursoFacultad', 'labFacultad', 'encib', 'interno', 'residente'],
-  visitante: ['cursoUfbi', 'cursoFacultad', 'preclinicos', 'ufbi', 'interno', 'residente'],
+  visitante: Object.keys(REQ),
   'residente-12': Object.keys(REQ),
   'especialista-24': Object.keys(REQ),
 };

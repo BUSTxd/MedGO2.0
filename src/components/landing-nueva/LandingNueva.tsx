@@ -24,7 +24,7 @@ const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ss
 /**
  * La landing nueva de MedGO (port del prototipo `prototipos/espacio-estudio/landing`),
  * en ruta provisional. Los CTA llevan al espacio de estudio (`/estudio`, que pide
- * sesión) y los planes son los nuevos (Visitante, Residente, Especialista): importes
+ * sesión) y los planes son los nuevos (Mensual, Ciclo, Anual): importes
  * de `PLANS`, textos de `components/planes/oferta.ts` y la compra de siempre
  * (`SubscribeModal`, Mercado Pago) en cuanto cada plan esté `aLaVenta`.
  */

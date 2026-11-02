@@ -1,3 +1,4 @@
+// HISTÓRICO: creó los productos el 2026-10-28, con sus precios de entonces. Para cambiarlos, usar `actualizar-productos.mjs`.
 // Crea en Creem (merchant of record, pagos fuera del Perú) los tres planes de
 // MedGO. Como Creem no tiene permanencia, Residente y Especialista se cobran
 // por adelantado: un cobro al año y uno cada dos años (decisión de BUST,

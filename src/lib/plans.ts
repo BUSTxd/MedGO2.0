@@ -1,7 +1,12 @@
 
 /** Los planes de antes (por tramo de Cayetano), que conservan quienes ya los pagan. */
 export type PlanLegado = 'interno' | 'residente' | 'ufbi' | 'ufbi-anual';
-/** Los tres de ahora, para cualquier país: Visitante (mensual), Residente (12 cuotas) y Especialista (24 cuotas). */
+/**
+ * Los tres de ahora, para cualquier país, con todo incluido. Las claves son las de
+ * los planes que ya existían en Mercado Pago y Creem, que se editaron en vez de
+ * crear otros: `visitante` es Mensual, `especialista-24` es Ciclo y `residente-12`
+ * es Anual. El alumno solo ve la etiqueta.
+ */
 export type PlanNuevo = 'visitante' | 'residente-12' | 'especialista-24';
 export type PlanKey = PlanLegado | PlanNuevo;
 export type ProfilePlan = 'free' | PlanKey;
@@ -64,10 +69,9 @@ export interface PlanCatalogEntry {
    */
   commitmentMonths?: number;
   /**
-   * Precio fuera del Perú (Creem, merchant of record, en dólares). Creem no
-   * tiene permanencia, así que los planes con permanencia se pagan por
-   * adelantado: `meses` es cada cuánto cobra (1, 12 o 24). Los productos se
-   * crean con `scripts/creem/crear-productos.mjs`; su id va en `productoEnv`.
+   * Precio fuera del Perú (Creem, merchant of record, en dólares). `meses` es
+   * cada cuánto cobra (1, 5, 12 o 24), por adelantado. Los productos se crean con
+   * `scripts/creem/crear-productos.mjs`; su id va en `productoEnv`.
    */
   creem?: { usd: number; meses: number; productoEnv: string };
 }
@@ -122,47 +126,48 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
     legado: true,
     aLaVenta: false,
   },
-  // Los tres nuevos se cobran cada mes; lo que cambia es la permanencia
-  // (`commitmentMonths`), como las cuotas de SanarFlix. Las cuotas guardan su
-  // proporción: Residente ≈ 77 % y Especialista ≈ 72 % de Visitante.
+  // Los tres a la venta (decisión de BUST, 2026-11-02): todos abren lo mismo, solo
+  // cambia cada cuánto se cobra, y los tres se renuevan solos hasta que el alumno
+  // cancela, sin permanencia. Un ciclo de Cayetano dura de 3,4 a 4,3 meses: 6 meses
+  // lo cubren entero, y es lo más cercano que deja elegir el panel de MP. Los importes
+  // tienen que ser los del plan de MP, que es lo que se cobra de verdad (se editan en
+  // su panel o con `actualizar-planes.mjs`). Dos ciclos cuestan más que el anual a propósito.
   visitante: {
     key: 'visitante',
-    label: 'Visitante',
-    amount: 39.90,
+    label: 'Mensual',
+    amount: 22.90,
     currency: 'PEN',
     durationDays: 30,
     mpPlanIdEnv: 'MP_PLAN_VISITANTE_ID',
-    creem: { usd: 10.99, meses: 1, productoEnv: 'CREEM_PRODUCT_VISITANTE_ID' },
-    nivel: 'base',
-    aLaVenta: true,
-    orden: 3,
-  },
-  'residente-12': {
-    key: 'residente-12',
-    label: 'Residente',
-    amount: 29.90,
-    currency: 'PEN',
-    durationDays: 30,
-    mpPlanIdEnv: 'MP_PLAN_RESIDENTE_12_ID',
-    creem: { usd: 99, meses: 12, productoEnv: 'CREEM_PRODUCT_RESIDENTE_12_ID' },
-    commitmentMonths: 12,
+    creem: { usd: 6.99, meses: 1, productoEnv: 'CREEM_PRODUCT_VISITANTE_ID' },
     nivel: 'completo',
     aLaVenta: true,
-    destacado: 'MÁS ELEGIDO',
     orden: 1,
   },
   'especialista-24': {
     key: 'especialista-24',
-    label: 'Especialista',
-    amount: 27.90,
+    label: 'Ciclo',
+    amount: 79.90,
     currency: 'PEN',
-    durationDays: 30,
+    durationDays: 180,
     mpPlanIdEnv: 'MP_PLAN_ESPECIALISTA_24_ID',
-    creem: { usd: 179, meses: 24, productoEnv: 'CREEM_PRODUCT_ESPECIALISTA_24_ID' },
-    commitmentMonths: 24,
+    creem: { usd: 23.99, meses: 6, productoEnv: 'CREEM_PRODUCT_ESPECIALISTA_24_ID' },
     nivel: 'completo',
     aLaVenta: true,
+    destacado: 'PARA TU CICLO',
     orden: 2,
+  },
+  'residente-12': {
+    key: 'residente-12',
+    label: 'Anual',
+    amount: 129.90,
+    currency: 'PEN',
+    durationDays: 365,
+    mpPlanIdEnv: 'MP_PLAN_RESIDENTE_12_ID',
+    creem: { usd: 38.99, meses: 12, productoEnv: 'CREEM_PRODUCT_RESIDENTE_12_ID' },
+    nivel: 'completo',
+    aLaVenta: true,
+    orden: 3,
   },
 };
 
@@ -170,10 +175,20 @@ export function isPlanKey(value: string): value is PlanKey {
   return Object.prototype.hasOwnProperty.call(PLANS, value);
 }
 
-/** Los planes nuevos en el orden de sus tarjetas (Residente, Especialista, Visitante). */
+/** Los planes a la venta en el orden de sus tarjetas (Mensual, Ciclo, Anual). */
 export const PLANES_NUEVOS: PlanCatalogEntry[] = (Object.values(PLANS) as PlanCatalogEntry[])
-  .filter((p) => !p.legado)
+  .filter((p) => p.aLaVenta)
   .sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0));
+
+/** Cuántos meses cubre cada cobro de un plan: 30 días → 1, 150 → 5, 365 → 12. */
+export const mesesDe = (p: Pick<PlanCatalogEntry, 'durationDays'>) => Math.round(p.durationDays / 30);
+
+/** Cómo se lee un periodo de `meses` en un precio: «mes», «5 meses», «año», «2 años». */
+export function periodoDe(meses: number): string {
+  if (meses === 1) return 'mes';
+  if (meses % 12 === 0) return meses === 12 ? 'año' : `${meses / 12} años`;
+  return `${meses} meses`;
+}
 
 /**
  * Lo que se le ofrece a quien choca con un contenido que pide `required`: el

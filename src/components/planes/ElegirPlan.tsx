@@ -13,9 +13,8 @@ import styles from './elegirPlan.module.css';
 const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ssr: false });
 
 /**
- * Los tres planes como en SanarFlix: Residente primero y destacado («MÁS
- * ELEGIDO»), Especialista al medio y Visitante al final, apagado. Con
- * `requisito`, el plan que no abre lo que el alumno quiso ver sale
+ * Los tres planes: Mensual, Ciclo (destacado) y Anual. Todos abren lo mismo; si
+ * un plan futuro no abriera lo que el alumno quiso ver (`requisito`), saldría
  * deshabilitado («No incluye esto»).
  *
  * Mientras un plan no esté a la venta (`aLaVenta`, cuando existan sus planes en

@@ -81,7 +81,7 @@ export default function PagoCreem({
         <h3 className={styles.title}>Suscribirme al plan {plan.label}</h3>
         <p className={styles.subtitle}>
           {cada > 1
-            ? `Pago por adelantado de ${cada === 12 ? '1 año' : '2 años'}. Cancela la renovación cuando quieras.`
+            ? `Pago por adelantado de ${cada} meses. Cancela la renovación cuando quieras.`
             : 'Pago mensual. Cancela cuando quieras.'}
         </p>
         <button type="button" className={styles.cambiar} onClick={onCambiar}>
