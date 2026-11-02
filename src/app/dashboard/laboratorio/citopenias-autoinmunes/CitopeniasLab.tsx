@@ -20,6 +20,7 @@ import { cargarLaminas } from './Lienzo';
 import Portada from './Portada';
 import Explorar from './Explorar';
 import MuroPago from './MuroPago';
+import PanelTabla from './Tabla';
 import c from '@/styles/cicloCelular.module.css';
 import s from '@/styles/linfocitos.module.css';
 import h from '@/styles/hipersensibilidad.module.css';
@@ -62,6 +63,7 @@ export default function CitopeniasLab({ contenido, plan, prueba }: { contenido: 
   const [muro, setMuro] = useState<ParteId | null>(inicio.muro);
   const [pagando, setPagando] = useState(false);
   const [listo, setListo] = useState(false);
+  const [tabla, setTabla] = useState(false);
 
   useEffect(() => {
     let vigente = true;
@@ -117,6 +119,7 @@ export default function CitopeniasLab({ contenido, plan, prueba }: { contenido: 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
+      if (tabla) { setTabla(false); return; }
       if (muro) { if (!pagando) setMuro(null); return; }
       if (vista.v === 'portada') return;
       if (document.querySelector('[role="dialog"][data-bloquea-esc]')) return;
@@ -124,7 +127,7 @@ export default function CitopeniasLab({ contenido, plan, prueba }: { contenido: 
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [vista.v, muro, pagando, portada]);
+  }, [vista.v, muro, pagando, portada, tabla]);
 
   if (!listo) return <Rueda />;
 
@@ -133,12 +136,17 @@ export default function CitopeniasLab({ contenido, plan, prueba }: { contenido: 
     <MuroPago parte={resumenMuro} plan={plan} dePago={indice.filter((p) => !p.gratis).length} pagando={pagando} onPagar={setPagando} onCerrar={() => setMuro(null)} />
   );
 
+  // Sin el plan, la tabla no ha llegado: el botón lleva al muro, como un capítulo de pago.
+  const abrirTabla = () => { if (contenido.tabla) setTabla(true); else setMuro('caliente'); };
+  const capaTabla = tabla && contenido.tabla && <PanelTabla nota={contenido.tabla} onCerrar={() => setTabla(false)} />;
+
   const parte = vista.v === 'parte' ? abiertas[vista.id] : undefined;
   if (vista.v === 'portada' || !parte) {
     return (
       <div className={`${c.lab} ${h.aparece}`}>
-        <Portada contenido={contenido} onParte={(id) => abrir(id)} onAnticipar={anticipar} />
+        <Portada contenido={contenido} onParte={(id) => abrir(id)} onAnticipar={anticipar} onTabla={abrirTabla} />
         {capaMuro}
+        {capaTabla}
       </div>
     );
   }
@@ -173,6 +181,7 @@ export default function CitopeniasLab({ contenido, plan, prueba }: { contenido: 
             );
           })}
         </nav>
+        <button type="button" className={c.btnFlot} onClick={abrirTabla}>Tabla</button>
       </header>
       <div key={`${vista.id}-${vista.n}`} className={c.entrada}>
         <Explorar
@@ -182,9 +191,11 @@ export default function CitopeniasLab({ contenido, plan, prueba }: { contenido: 
           onSiguiente={sig ? () => abrir(sig.id) : null}
           onVolver={portada}
           vozSiguiente={sig ? abiertas[sig.id]?.narracion : undefined}
+          detener={tabla || !!muro}
         />
       </div>
       {capaMuro}
+      {capaTabla}
     </div>
   );
 }

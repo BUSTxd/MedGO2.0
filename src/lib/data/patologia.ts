@@ -29,6 +29,7 @@ import type { ExamenRef } from './examen';
 export type { ExamenRef };
 
 export interface Actividad {
+  simulacion?: { href?: string; desc?: string };
   id: string;
   tipo: TipoActividad;
   unidad: Unidad;
@@ -897,6 +898,7 @@ export const semanas: Semana[] = [
         unidad: 'UNIDAD_3',
         codigo: 'AI17',
         titulo: 'AI17 — Citopenias autoinmunes',
+        simulacion: { href: '/dashboard/laboratorio/citopenias-autoinmunes', desc: 'La anemia hemolítica y la púrpura trombocitopénica, animadas y narradas' },
         fecha: '2 nov',
         hora: '—',
         subtemas: ['Anemia hemolítica autoinmune', 'PTI'],

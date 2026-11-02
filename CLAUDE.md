@@ -167,6 +167,8 @@ Fragmento en bucket privado `resumenes`, figuras en público `resumenes-img/<cur
 | `.doc-paginas` | `upload-resumen-doc.mjs`, `diapositivas-pdf-a-html.py` | `%`+`cqw`; su `fitTypography` se porta |
 | `.doc-hojas` | `upload-resumen-doc.mjs`, skill local `pptx-a-html` | ≥ 2 páginas fijas; `fit`/`fitLines` |
 
+**Notas de clase (pestaña «Notas» de `/estudio`):** el resumen práctico en recuadros. Una entrada en `src/lib/data/notas/index.ts`, por id de la clase, y la pestaña sale sola en esa clase. Solo en el servidor, con la regla de `puedeVerResumen`: sin el plan no viaja. La clase necesita estar registrada en `acceso-resumen.ts` si su material es de pago, como `pat-ai-17`.
+
 **Antes de tocar el visor:** `resumen/DocumentoResumen.tsx` y `resumenHtml.module.css` afectan a todos los envases y a los dos sitios de lectura (`HtmlFullscreenModal` y lector de `/estudio`).
 - El objeto de `dangerouslySetInnerHTML` va **memoizado**: sin él, React rehace el documento y salta el scroll.
 - Las clases son genéricas (`.figure`, `.page`): acotarlas con `:where(...)`, nunca colgadas de `.sheet`.

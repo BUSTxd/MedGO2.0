@@ -21,6 +21,8 @@ const PdfFullscreenModal = dynamic(() => import('@/components/PdfFullscreenModal
 const ElegirPlan = dynamic(() => import('@/components/planes/ElegirPlan'), { ssr: false });
 // react-pdf (~2 MB) sólo baja si la clase abierta tiene el resumen en PDF.
 const PdfViewer = dynamic(() => import('@/components/PdfViewer'), { ssr: false });
+// La animación de la tarjeta solo baja en la clase que la lleva.
+const VistaCitopenias = dynamic(() => import('@/app/dashboard/laboratorio/citopenias-autoinmunes/VistaPrevia'), { ssr: false });
 
 interface EntradaIndice { el: HTMLElement; titulo: string; nivel: number; grupo?: boolean }
 
@@ -115,9 +117,9 @@ export function TarjetaLaboratorio({ lab }: { lab: LabRecomendado }) {
   const router = useRouter();
   return (
     <div className={cx('related-card')}>
-      <div className={cx('related-art')}>
+      <div className={cx('related-art', lab.animacion && 'related-animada')}>
         <span className={cx('related-tag')}>{lab.etiqueta}</span>
-        {lab.icono ? <img src={lab.icono} alt="" /> : <Icono n="flask" />}
+        {lab.animacion ? <VistaCitopenias /> : lab.icono ? <img src={lab.icono} alt="" /> : <Icono n="flask" />}
       </div>
       <div className={cx('related-card-body')}>
         <h3>{lab.titulo}</h3>
@@ -139,6 +141,11 @@ export function BarraLector({ ctx }: { ctx: Contexto }) {
         <button id="practice-tab" className={cx('study-tab', st.tab === 'practice' && 'active')} role="tab" aria-selected={st.tab === 'practice'} aria-controls="study-content" onClick={() => set(() => ({ tab: 'practice' }))}>
           <Icono n="quiz" />Práctica
         </button>
+        {(ctx.lesson.notas || ctx.lesson.notasBloqueadas) && (
+          <button id="notes-tab" className={cx('study-tab', st.tab === 'notes' && 'active')} role="tab" aria-selected={st.tab === 'notes'} aria-controls="study-content" onClick={() => set(() => ({ tab: 'notes' }))}>
+            <Icono n={ctx.lesson.notas ? 'bulb' : 'lock'} />Notas
+          </button>
+        )}
       </div>
       <div className={cx('reading-tools')}>
         <label className={cx('reading-view-switch')} title="Comparar el resumen con y sin hoja">

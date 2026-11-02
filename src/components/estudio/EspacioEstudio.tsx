@@ -10,6 +10,7 @@ import { norm, veces } from './texto';
 import BarraSuperior, { type Pagina } from './BarraSuperior';
 import Lector, { BarraLector } from './Lector';
 import { Practica, ZonaPractica } from './Practica';
+import Notas from './Notas';
 import Progreso from './Progreso';
 import { Buscador } from './Dialogos';
 import { useMarcas, type Marcas } from './marcas';
@@ -20,7 +21,7 @@ import type { Tarea } from '@/lib/estudio/planificador';
 export type { Pagina, Ruta };
 export interface EstadoEstudio {
   /** Dentro de un curso sólo hay dos vistas; el Laboratorio tiene su propia ruta. */
-  page: Exclude<Pagina, 'labs' | 'exams'>; route: Ruta; tab: 'summary' | 'practice'; filter: string; collapsed: Set<string>;
+  page: Exclude<Pagina, 'labs' | 'exams'>; route: Ruta; tab: 'summary' | 'practice' | 'notes'; filter: string; collapsed: Set<string>;
   readingSheet: boolean; focus: boolean;
   /** Una tarea del plan abrió la clase: el lector elige ese resumen y salta a ese subtítulo. */
   destino: { resumenId: string; seccion?: string } | null;
@@ -135,6 +136,11 @@ export default function EspacioEstudio({ cursos, curso, rutas = ['Cayetano'], ch
     visitar(lesson.id);
     recordarUltima(`${base}/${lesson.id}`);
   }, [base, lesson?.id, visitar]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Volver con el historial a una clase sin notas no puede dejar abierta esa pestaña.
+  const tieneNotas = !!(lesson?.notas || lesson?.notasBloqueadas);
+  useEffect(() => {
+    if (st.tab === 'notes' && !tieneNotas) set(() => ({ tab: 'summary' }));
+  }, [st.tab, tieneNotas, set]);
   // Entrar (o volver con el historial) a un banqueo abre su pestaña.
   useEffect(() => {
     if (practicaAbierta) set(() => ({ page: 'study', tab: 'practice' }));
@@ -236,6 +242,7 @@ export default function EspacioEstudio({ cursos, curso, rutas = ['Cayetano'], ch
                 <BarraLector ctx={ctx} />
                 {st.tab === 'summary' && <Lector ctx={ctx} />}
                 {st.tab === 'practice' && !practicaAbierta && <Practica ctx={ctx} />}
+                {st.tab === 'notes' && tieneNotas && <Notas ctx={ctx} />}
                 {practicaAbierta && <ZonaPractica ctx={ctx} oculta={st.tab !== 'practice'}>{children}</ZonaPractica>}
               </section>
             </main>

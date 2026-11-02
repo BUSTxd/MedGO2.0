@@ -1125,6 +1125,37 @@ div.wrapper .topbar {
 @media (prefers-reduced-motion: reduce) { .cuenta-panel { animation: none; } }
 
 /* «Llévalo a la práctica» en el cuerpo de la clase: sólo cuando el panel lateral se oculta. */
+/* Pestaña «Notas»: recuadros del resumen práctico. Los dos tonos valen en claro y oscuro. */
+.nota-a { --nota: #D92D4A; --nota-suave: rgba(217, 45, 74, .09); }
+.nota-b { --nota: #6D4FD8; --nota-suave: rgba(109, 79, 216, .1); }
+.notas h1 { margin-bottom: 8px; }
+.nota-seccion { margin: 30px 0 0; }
+.nota-seccion > h2 { font-size: 18px; font-weight: 650; color: var(--ink); margin: 0 0 14px; }
+.nota-rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.nota-recuadro { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 8px 22px #29315c0d; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.nota-ancho { grid-column: 1 / -1; }
+.nota-recuadro h3 { font-size: 16px; font-weight: 650; color: var(--ink); margin: 0; }
+.nota-lados { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-self: stretch; }
+.nota-lado { background: var(--nota-suave); border-radius: 11px; padding: 10px 11px 12px; }
+.nota-lado p { margin: 8px 0 0; font-size: 14px; line-height: 1.4; font-weight: 600; color: var(--ink); }
+.nota-lado ul { margin: 8px 0 0; padding-left: 16px; font-size: 13px; line-height: 1.45; color: var(--ink); }
+.nota-rotulo { display: inline-block; background: var(--nota); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+.nota-clave { display: flex; gap: 8px; margin: 0; font-size: 13px; line-height: 1.5; color: var(--secondary); }
+.nota-clave .icon { flex-shrink: 0; width: 16px; height: 16px; color: #D98A0B; margin-top: 2px; }
+.nota-texto { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink); }
+.nota-flujo { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px 30px; align-self: stretch; }
+.nota-flujo li { position: relative; flex: 1 1 150px; background: var(--soft-fill); border-radius: 10px; padding: 10px 12px; font-size: 13px; line-height: 1.4; font-weight: 550; color: var(--ink); }
+.nota-flujo li:not(:last-child)::after { content: "→"; position: absolute; right: -22px; top: 50%; transform: translateY(-50%); font-size: 17px; font-weight: 700; color: var(--secondary); }
+@media (max-width: 760px) {
+  .nota-flujo { flex-direction: column; gap: 22px; }
+  .nota-flujo li { flex: none; }
+  .nota-flujo li:not(:last-child)::after { content: "↓"; right: auto; left: 18px; top: auto; bottom: -22px; transform: none; }
+}
+/* La tarjeta con animación en vivo pide algo más de alto que un icono. */
+.related-art.related-animada { height: 132px; padding: 4px; }
+.related-art.related-animada svg { display: block; }
+.related-animada .related-tag { z-index: 1; }
+
 .lab-reco { display: none; margin: 28px 0 0; }
 .lab-reco > .eyebrow { color: var(--secondary); font-size: 9px; letter-spacing: 1.2px; margin-bottom: 12px; }
 .lab-reco .related-card { max-width: 420px; }

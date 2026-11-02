@@ -1,3 +1,4 @@
+import type { NotaClase } from '@/lib/data/notas/tipos';
 /** Lo que el servidor le pasa a la interfaz de estudio: sólo el curso abierto, ya resuelto. */
 import type { Requisito } from '@/lib/plans';
 
@@ -24,6 +25,9 @@ export interface ClaseEstudio {
   bloqueada: boolean;
   /** El laboratorio que el sílabo enlaza a esta clase («Llévalo a la práctica»). */
   laboratorio?: LabRecomendado;
+  /** El resumen práctico (pestaña «Notas»). Sin el plan no viaja: solo `notasBloqueadas`. */
+  notas?: NotaClase;
+  notasBloqueadas?: boolean;
   /** Los banqueos de la clase (pestaña «Práctica»), en el orden en que se ofrecen. */
   practica: PracticaEstudio[];
   /** Sólo en la ruta ENCIB: la clase es un tema de la tabla oficial. */
@@ -69,6 +73,8 @@ export interface LabRecomendado {
   etiqueta: string;
   href: string;
   icono: string | null;
+  /** Lleva una animación en vivo en lugar del icono del curso. */
+  animacion?: 'citopenias';
 }
 
 export interface SemanaEstudio {

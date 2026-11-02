@@ -4,6 +4,7 @@
 
 import type { Parte } from '@/lib/data/citopenias/tipos';
 import type { MetaParte } from '@/lib/data/citopenias/indice';
+import type { NotaClase } from '@/lib/data/notas/tipos';
 
 export type ResumenParte = MetaParte & {
   nPasos: number;
@@ -20,4 +21,6 @@ export type Contenido = {
   indice: ResumenParte[];
   /** Solo los capítulos abiertos, con sus pasos y su voz. */
   partes: Parte[];
+  /** La tabla resumen; sin el plan no viaja. */
+  tabla?: NotaClase;
 };

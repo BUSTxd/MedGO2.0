@@ -27,6 +27,8 @@ type Props = {
   onVolver: () => void;
   /** Voz del capítulo siguiente (si está abierto): se precarga al final de este. */
   vozSiguiente?: Voz;
+  /** Hay algo encima (la tabla, el muro): la voz no sigue sola detrás. */
+  detener?: boolean;
 };
 
 type VozCtl = ReturnType<typeof useVoz>;
@@ -72,7 +74,7 @@ function Narracion({ parte, indice }: { parte: Parte; indice: number }) {
   );
 }
 
-export default function Explorar({ parte, pasoInicial = 0, onPaso, onSiguiente, onVolver, vozSiguiente }: Props) {
+export default function Explorar({ parte, pasoInicial = 0, onPaso, onSiguiente, onVolver, vozSiguiente, detener }: Props) {
   const zona = useRef<HTMLDivElement>(null);
   const modo = useModo(zona);
   const compilado = useMemo(() => compilar(parte, modo), [parte, modo]);
@@ -81,6 +83,9 @@ export default function Explorar({ parte, pasoInicial = 0, onPaso, onSiguiente, 
   const [visto, setVisto] = useState<Set<number>>(() => new Set([pasoInicial]));
   const total = compilado.pasos.length;
   const ultimo = rep.paso === total - 1 && rep.terminado;
+
+  const pausar = rep.pausar;
+  useEffect(() => { if (detener) pausar(); }, [detener, pausar]);
 
   useEffect(() => {
     onPaso?.(rep.paso);

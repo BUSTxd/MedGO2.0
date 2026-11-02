@@ -9,6 +9,7 @@ import { CAPITULOS } from '@/lib/data/citopenias/capitulos';
 import { INDICE } from '@/lib/data/citopenias/indice';
 import { NARRACION } from '@/lib/data/citopenias/narracion';
 import { VISTAZO } from '@/lib/data/citopenias/vistazo';
+import { HEMOLISIS } from '@/lib/data/notas';
 import type { Contenido, ResumenParte } from './contenido';
 
 export function contenidoDelLab(completo: boolean): Contenido {
@@ -19,5 +20,5 @@ export function contenidoDelLab(completo: boolean): Contenido {
     segundos: Math.round(NARRACION[m.numero]?.duracion ?? 0),
     gratis: VISTAZO.includes(m.id),
   }));
-  return { completo, indice, partes };
+  return { completo, indice, partes, ...(completo ? { tabla: HEMOLISIS } : {}) };
 }

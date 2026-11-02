@@ -48,6 +48,7 @@ export function laboratorioDeClase(
     etiqueta: /[?&]examen=1/.test(deDashboard) ? 'Examen práctico 3D' : (slug && TIPO[slug]) || 'Simulación',
     href,
     icono: iconoDe(curso),
+    ...(slug === 'citopenias-autoinmunes' ? { animacion: 'citopenias' as const } : {}),
   };
 }
 
