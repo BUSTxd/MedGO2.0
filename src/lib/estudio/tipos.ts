@@ -54,7 +54,7 @@ export interface TemaEncibEstudio {
  * Cómo se practica una clase. Los cuatro primeros son el runner del dashboard que
  * su `[id]/page.tsx` monta con `?<tipo>=1`; los propuestos son documentos del visor.
  */
-export type TipoPractica = 'examen' | 'banco' | 'tarjetas' | 'solucionario' | 'propuestos';
+export type TipoPractica = 'examen' | 'banco' | 'tarjetas' | 'solucionario' | 'propuestos' | 'casos';
 
 export interface PracticaEstudio {
   tipo: TipoPractica;
@@ -64,6 +64,8 @@ export interface PracticaEstudio {
   chips: string[];
   /** Sólo los propuestos: cada documento, con el acceso de `/api/resumen` ya resuelto. */
   documentos?: (ResumenEstudio & { bloqueado: boolean })[];
+  /** Solo los casos clínicos: su clave en el bucket de exámenes. */
+  examKey?: string;
 }
 
 export interface LabRecomendado {

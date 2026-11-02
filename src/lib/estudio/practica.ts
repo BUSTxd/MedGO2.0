@@ -41,6 +41,7 @@ export interface ActPractica {
   tipo: string;
   examen?: ExamenRef;
   tarjetas?: TarjetasRef;
+  casos?: { key: string; desc: string; chips?: string[] };
   propuestos?: {
     tipo?: string; claseId?: string; desc?: string; formato?: FormatoResumen;
     opciones?: { id: string; label?: string; formato?: FormatoResumen }[];
@@ -59,6 +60,11 @@ export function practicaDeClase(curso: string, a: ActPractica, plan: Plan): Prac
   const conRunner = curso in PAGINA_DE_CLASE;
   const etiqueta = banqueoLabelDe(curso, a.tipo);
   const lista: PracticaEstudio[] = [];
+
+  // Los casos clínicos son de la propia interfaz: no pasan por la página del dashboard.
+  if (a.casos) {
+    lista.push({ tipo: 'casos', titulo: 'Casos clínicos', desc: a.casos.desc, chips: a.casos.chips ?? [], examKey: a.casos.key });
+  }
 
   if (conRunner && a.examen) {
     const anios = aniosDe(a.examen);

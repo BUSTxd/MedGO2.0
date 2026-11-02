@@ -1590,3 +1590,152 @@ button.session-badge:hover { border-color: #245b8f; color: #245b8f; }
 /* Laboratorio: el texto del buscador y la chapita del conteo, vacía pero del mismo tamaño. */
 .esq-placeholder { font-size: 13px; }
 .esq-vacio { color: transparent !important; }
+
+/* ── Casos clínicos: práctica propia de la interfaz (components/estudio/CasosClinicos) ── */
+.casos {
+  --bueno: #0e7a5b; --bueno-suave: rgba(14, 122, 91, .09);
+  --malo: #c42f47; --malo-suave: rgba(196, 47, 71, .08);
+  --boleta: var(--surface);
+}
+:global(.dark-mode) .casos {
+  --bg: #0f1622; --shell: #0f1622; --support: #1b2638; --surface: #151d2c; --paper: #151d2c; --ink: #e7eef8; --text: #e7eef8;
+  --secondary: #abbdd2; --muted: #abbdd2; --border: #35445a; --line: #35445a; --soft-fill: #1e2a3d;
+  --action: #8fbde9; --action-ink: #a9cdf0; --accent: #2f6ea8; --accent-hover: #3a7dba; --control-line: #5a6b82;
+  --bueno: #4fcea6; --bueno-suave: rgba(79, 206, 166, .12);
+  --malo: #ff8496; --malo-suave: rgba(255, 132, 150, .11);
+  --boleta: #1b2638;
+}
+.casos-inner { max-width: 1080px; margin: auto; container-type: inline-size; color: var(--ink); }
+.casos-espera { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 80px 0; color: var(--secondary); font-size: 14px; text-align: center; }
+.casos-espera p { margin: 0; }
+
+.caso-salir { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 550; color: var(--secondary); padding: 6px 8px 6px 0; }
+.caso-salir:hover { color: var(--action-ink); }
+.caso-salir .icon { width: 16px; height: 16px; }
+.casos-a-lista { margin-bottom: 18px; }
+
+/* Inicio */
+.casos-inicio { max-width: 760px; margin: 0 auto; }
+.casos-inicio h1 { font-size: 30px; font-weight: 600; letter-spacing: -.7px; margin: 0 0 10px; }
+.casos-entrada { font-size: 16px; line-height: 1.55; color: var(--secondary); margin: 0; max-width: 620px; }
+.casos-seguir { margin-top: 20px; }
+.casos-eleccion { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 30px; }
+.casos-opcion { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 20px 18px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; text-align: left; font-family: inherit; color: var(--ink); transition: border-color .15s, background .15s, transform .15s; }
+.casos-opcion:hover { border-color: var(--action); background: var(--soft-fill); transform: translateY(-2px); }
+.casos-opcion strong { font-size: 19px; font-weight: 650; margin-top: 8px; }
+.casos-opcion-dice { font-size: 13px; line-height: 1.4; color: var(--secondary); }
+.casos-opcion small { font-size: 12px; font-weight: 600; color: var(--action-ink); margin-top: 8px; }
+.casos-flota { display: inline-flex; flex-direction: column; align-items: center; width: 54px; }
+.casos-flota-dibujo { display: block; width: 54px; height: 54px; animation-name: casos-levita; animation-duration: 4.2s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+.casos-flota-dibujo svg { width: 100%; height: 100%; }
+.casos-flota-sombra { display: block; width: 34px; height: 6px; margin-top: 3px; border-radius: 50%; background: #1c2d43; opacity: .16; }
+:global(.dark-mode) .casos-flota-sombra { background: #000; opacity: .45; }
+.casos-par { display: inline-flex; gap: 6px; }
+.casos-par .casos-flota:last-child .casos-flota-dibujo { animation-delay: -1.8s; }
+@keyframes casos-levita { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+.casos-muestra { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--secondary); margin: 18px 0 0; }
+.casos-muestra .icon { width: 15px; height: 15px; }
+.casos-nota-origen { font-size: 12px; line-height: 1.5; color: var(--secondary); margin: 18px 0 0; }
+
+/* Barra del caso */
+.caso-barra { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+.caso-cuenta { font-size: 13px; font-weight: 600; white-space: nowrap; }
+.caso-tiras { flex: 1 1 0%; min-width: 0; display: flex; gap: 3px; }
+.caso-tira { flex: 1 1 0%; min-width: 0; max-width: 22px; height: 20px; padding: 7px 0; background-color: var(--border); background-clip: content-box; border-radius: 3px; transition: background-color .15s; }
+.caso-tira:hover { background-color: var(--secondary); }
+.tira-bien { background-color: var(--bueno); }
+.tira-mal { background-color: var(--malo); }
+.tira-actual { padding: 4px 0; background-color: var(--action); }
+.tira-actual.tira-bien { background-color: var(--bueno); }
+.tira-actual.tira-mal { background-color: var(--malo); }
+
+/* El paciente y la decisión */
+.caso-cuerpo { display: grid; gap: 28px; }
+@container (min-width: 860px) {
+  .caso-cuerpo { grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: 44px; align-items: start; }
+  .caso-historia { position: sticky; top: 0; }
+}
+.caso-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 13px; color: var(--secondary); margin-bottom: 14px; }
+.caso-rotulo { background: #245b8f; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .3px; padding: 3px 8px; border-radius: 4px; }
+.rotulo-ahai { background: #D92D4A; }
+.rotulo-pti { background: #6D4FD8; }
+.caso-relato { font-size: 16px; line-height: 1.6; margin: 0 0 18px; }
+.caso-boleta { position: relative; background: var(--boleta); padding: 13px 16px 12px; border-radius: 8px 8px 0 0; margin-bottom: 20px; }
+.caso-boleta::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 6px; background: linear-gradient(135deg, var(--boleta) 50%, transparent 50%) 0 -6px / 12px 12px repeat-x, linear-gradient(225deg, var(--boleta) 50%, transparent 50%) 0 -6px / 12px 12px repeat-x; }
+.caso-boleta-titulo { font-size: 10px; font-weight: 650; letter-spacing: 1.4px; text-transform: uppercase; color: var(--secondary); margin-bottom: 8px; }
+.caso-boleta dl { margin: 0; }
+.caso-dato { display: flex; align-items: baseline; gap: 6px; padding: 3px 0; font-size: 14px; }
+.caso-dato dt { color: var(--secondary); }
+.caso-dato > span { flex: 1 1 0%; min-width: 12px; border-bottom: 1px dotted var(--control-line); transform: translateY(-3px); }
+.caso-dato dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; font-weight: 500; }
+.dato-alerta dd { color: var(--malo); font-weight: 700; }
+.caso-origen { font-size: 12px; color: var(--secondary); margin: 0; }
+
+.caso-decision h2 { font-size: 19px; line-height: 1.35; font-weight: 620; letter-spacing: -.2px; margin: 0 0 16px; }
+.caso-opciones { display: flex; flex-direction: column; gap: 8px; }
+.caso-op { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px; align-items: start; width: 100%; padding: 11px 14px 11px 12px; text-align: left; font-family: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-radius: 12px; transition: border-color .15s, background .15s; }
+.caso-op:not(:disabled):hover { border-color: var(--action); background: var(--soft-fill); }
+.caso-letra { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--soft-fill); color: var(--action-ink); font-size: 13px; font-weight: 650; }
+.caso-letra .icon { width: 15px; height: 15px; stroke-width: 2.6; }
+.caso-op-texto { display: flex; flex-direction: column; gap: 5px; min-width: 0; padding-top: 3px; }
+.caso-op-t { font-size: 15px; line-height: 1.4; font-weight: 500; }
+.caso-porque { font-size: 13px; line-height: 1.5; color: var(--secondary); animation-name: caso-entra; animation-duration: .28s; animation-timing-function: ease-out; }
+.op-correcta { background: var(--bueno-suave); border-color: var(--bueno); }
+.op-correcta .caso-letra { background: var(--bueno); color: #fff; }
+.op-correcta .caso-porque { color: var(--ink); }
+.op-error { background: var(--malo-suave); border-color: var(--malo); }
+.op-error .caso-letra { background: var(--malo); color: #fff; }
+.op-otra .caso-op-t { color: var(--secondary); font-weight: 450; }
+:global(.dark-mode) .op-correcta .caso-letra, :global(.dark-mode) .op-error .caso-letra { color: #0f1622; }
+:global(.dark-mode) .casos .button:not(.secondary) { background: #2f6ea8; border-color: #2f6ea8; color: #fff; }
+:global(.dark-mode) .casos .button:not(.secondary):hover { background: #3a7dba; }
+@keyframes caso-entra { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.caso-despues { margin-top: 24px; }
+.caso-veredicto { font-size: 17px; font-weight: 650; margin: 0 0 16px; }
+.veredicto-bien { color: var(--bueno); }
+.veredicto-mal { color: var(--malo); }
+.caso-despues h3 { font-size: 13px; font-weight: 650; color: var(--secondary); margin: 0 0 12px; }
+.caso-camino { list-style: none; margin: 0; padding: 0; }
+.caso-camino li { position: relative; padding: 0 0 15px 22px; font-size: 14px; line-height: 1.45; animation-name: caso-entra; animation-duration: .3s; animation-timing-function: ease-out; animation-fill-mode: both; }
+.caso-camino li::before { content: ""; position: absolute; left: 3px; top: 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--action); }
+.caso-camino li:not(:last-child)::after { content: ""; position: absolute; left: 6px; top: 18px; bottom: 1px; width: 1px; background: var(--control-line); }
+.caso-camino li:last-child { padding-bottom: 0; font-weight: 620; }
+.caso-acciones { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.caso-acciones .button:only-child { margin-left: auto; }
+.caso-al-lab { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 550; color: var(--action-ink); }
+.caso-al-lab:hover { text-decoration: underline; text-underline-offset: 3px; }
+.caso-al-lab .icon { width: 17px; height: 17px; }
+
+/* Resultado */
+.casos-informe { max-width: 680px; margin: 0 auto; }
+.casos-informe h2 { font-size: 15px; font-weight: 650; margin: 32px 0 12px; }
+.informe-nota { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+.informe-nota strong { font-size: 68px; line-height: 1; font-weight: 600; letter-spacing: -2px; }
+.informe-nota span { font-size: 20px; color: var(--secondary); }
+.informe-temas, .informe-fallados { list-style: none; margin: 0; padding: 0; }
+.informe-temas li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(70px, 34%) 34px; align-items: center; gap: 12px; padding: 7px 0; font-size: 14px; }
+.informe-temas small { font-size: 13px; color: var(--secondary); font-variant-numeric: tabular-nums; text-align: right; }
+.tema-barra { display: block; height: 7px; border-radius: 4px; background: var(--border); overflow: hidden; }
+.tema-barra span { display: block; height: 100%; background: var(--bueno); border-radius: inherit; }
+.tema-flojo > span:first-child { font-weight: 620; }
+.tema-flojo .tema-barra span { background: var(--malo); }
+.informe-fallados li + li { border-top: 1px solid var(--border); }
+.informe-fallados button { display: flex; align-items: center; justify-content: space-between; gap: 14px; width: 100%; padding: 11px 0; text-align: left; font-family: inherit; font-size: 14px; line-height: 1.4; color: var(--ink); }
+.informe-fallados button:hover { color: var(--action-ink); }
+.informe-fallados .icon { width: 16px; height: 16px; color: var(--secondary); flex-shrink: 0; }
+.informe-acciones { margin-top: 30px; }
+.informe-plan { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--border); font-size: 14px; }
+.informe-plan p { margin: 0; }
+
+@media (max-width: 640px) {
+  .caso-barra { flex-wrap: wrap; gap: 6px 12px; }
+  .caso-tiras { flex-basis: 100%; }
+  .casos-inicio h1 { font-size: 26px; }
+  .caso-acciones { flex-direction: column-reverse; align-items: stretch; }
+  .caso-al-lab { justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .casos-flota-dibujo, .caso-porque, .caso-camino li { animation-name: none; }
+  .casos-opcion:hover { transform: none; }
+}

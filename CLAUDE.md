@@ -141,6 +141,7 @@ Cada clase de `src/lib/data/<curso>.ts` tiene `id`, `titulo`, `resumen`/`hasResu
 - **Muestra (`muestra: N`):** el recorte se hace **en el servidor**; ocultarlo en cliente no sirve porque el JSON estaría en la pestaña Red. El JSON se ordena para que la parte gratis cubra todos los temas.
 - `ExamenRef` admite `groups`, `labels`, `hints`, `dePago`, `suscripcion.avisoCada`, `porTemas`. La pregunta admite `variante`, `multiple`, `ordenFijo`, `image`/`extraImages`, `duration_min`, `tema`, `seccion`, `flujo`, `nivel`.
 - Imágenes de examen: bucket público `examenes-img`.
+- **Casos clínicos (`casos` en la actividad):** práctica nativa de `/estudio`, sin ExamRunner ni el panel del dashboard (`components/estudio/CasosClinicos.tsx`). Banco fuera de git en `data/<x>/`; se sube y registra en `EXAMENES` como cualquier banqueo. Piloto: AI17 de Patología (`data/citopenias/banco.mjs` mide el sesgo y escribe `banco.json`; se sube a `patologia/ai17-casos.json`).
 
 ### Temas y planificador
 

@@ -17,11 +17,11 @@ const PdfFullscreenModal = dynamic(() => import('@/components/PdfFullscreenModal
 const ElegirPlan = dynamic(() => import('@/components/planes/ElegirPlan'), { ssr: false });
 
 const ICONO: Record<TipoPractica, NombreIcono> = {
-  examen: 'quiz', banco: 'grid', tarjetas: 'layers', solucionario: 'bulb', propuestos: 'document',
+  examen: 'quiz', banco: 'grid', tarjetas: 'layers', solucionario: 'bulb', propuestos: 'document', casos: 'heart',
 };
 const RUBRO: Record<TipoPractica, string> = {
   examen: 'Preguntas tipo examen', banco: 'Banco por temas', tarjetas: 'Repaso activo',
-  solucionario: 'Paso a paso', propuestos: 'Para resolver',
+  solucionario: 'Paso a paso', propuestos: 'Para resolver', casos: 'Razonamiento clínico',
 };
 
 /** La lista de banqueos de la clase. Cada runner se abre con `?practica=<tipo>`. */

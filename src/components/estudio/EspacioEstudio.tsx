@@ -1,6 +1,7 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import type { ClaseEstudio, CursoEstudio, CursoListado, SemanaEstudio } from '@/lib/estudio/tipos';
 import { RUTAS, RUTA_DE_SEGMENTO, opcionRuta, useCambiarRuta, type Ruta } from './ruta';
@@ -17,6 +18,9 @@ import { useMarcas, type Marcas } from './marcas';
 import Desplegable from './Desplegable';
 import { usePlanEstudio, type PlanEstudio } from './plan/usePlanEstudio';
 import type { Tarea } from '@/lib/estudio/planificador';
+
+// Solo baja en la clase que tiene casos clínicos.
+const CasosClinicos = dynamic(() => import('./CasosClinicos'), { ssr: false });
 
 export type { Pagina, Ruta };
 export interface EstadoEstudio {
@@ -243,7 +247,9 @@ export default function EspacioEstudio({ cursos, curso, rutas = ['Cayetano'], ch
                 {st.tab === 'summary' && <Lector ctx={ctx} />}
                 {st.tab === 'practice' && !practicaAbierta && <Practica ctx={ctx} />}
                 {st.tab === 'notes' && tieneNotas && <Notas ctx={ctx} />}
-                {practicaAbierta && <ZonaPractica ctx={ctx} oculta={st.tab !== 'practice'}>{children}</ZonaPractica>}
+                {practicaAbierta?.tipo === 'casos' && practicaAbierta.examKey
+                  ? <CasosClinicos key={lesson.id} ctx={ctx} examKey={practicaAbierta.examKey} oculta={st.tab !== 'practice'} />
+                  : practicaAbierta && <ZonaPractica ctx={ctx} oculta={st.tab !== 'practice'}>{children}</ZonaPractica>}
               </section>
             </main>
           </>

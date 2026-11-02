@@ -30,6 +30,8 @@ export type { ExamenRef };
 
 export interface Actividad {
   simulacion?: { href?: string; desc?: string };
+  /** Casos clínicos propios de /estudio (components/estudio/CasosClinicos). */
+  casos?: { key: string; desc: string; chips?: string[] };
   id: string;
   tipo: TipoActividad;
   unidad: Unidad;
@@ -898,6 +900,7 @@ export const semanas: Semana[] = [
         unidad: 'UNIDAD_3',
         codigo: 'AI17',
         titulo: 'AI17 — Citopenias autoinmunes',
+        casos: { key: 'patologia/ai17-casos', desc: 'Decide con el paciente y sus análisis delante: qué tiene, qué pedir y qué hacer', chips: ['AHAI', 'PTI', '30 casos'] },
         simulacion: { href: '/dashboard/laboratorio/citopenias-autoinmunes', desc: 'La anemia hemolítica y la púrpura trombocitopénica, animadas y narradas' },
         fecha: '2 nov',
         hora: '—',

@@ -53,6 +53,7 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey | Requisi
   // primero se entrega recortado (la mitad, en oro el resto) como el final 2023
   // de Inmunología; los demás son de pago. Lo arma
   // scripts/patologia-u2/ensamblar.mjs; las fuentes no van a git.
+  'patologia/ai17-casos': { muestra: 6 },
   'patologia/parcial-2-m1': { muestra: 20 },
   'patologia/parcial-2-m2': {},
   'patologia/parcial-2-m3': {},
