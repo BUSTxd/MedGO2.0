@@ -40,7 +40,7 @@ Next.js App Router (TypeScript) · Supabase (auth, datos, storage; `src/lib/supa
 npm run dev | build | lint
 npm run probar:acceso | probar:planificador
 npm run verificar:temas | verificar:catalogo | verificar:banco
-npm run verificar:ciclo | verificar:vias-nfkb | verificar:linfocitos | verificar:hipersensibilidad | verificar:lupus
+npm run verificar:ciclo | verificar:vias-nfkb | verificar:linfocitos | verificar:hipersensibilidad | verificar:lupus | verificar:citopenias
 ```
 
 ---
@@ -199,6 +199,7 @@ Ciclo celular, NF-κB, linfocitos, Hipersensibilidad y Lupus comparten el patró
 - **Primero el guion** (`docs/<lab>/GUION.md`); un cambio de contenido va en los dos. El verificador caza actor usado antes de aparecer, fichas o imágenes que faltan, y posiciones fuera del lienzo.
 - `Vistazo`: el servidor (`contenidoDelLab`) manda solo los capítulos abiertos; **ningún componente de cliente importa datos de un capítulo**.
 - **Voz:** en Lupus **manda el audio** (cada paso dura su frase, `currentTime` es el reloj; 95 pasos, 41 min, flujo en `docs/lupus/`). En Hipersensibilidad la animación manda (`retener`/`callado`) y solo el tipo II tiene narración.
+- **Citopenias autoinmunes** (clase AI17; 61 pasos, 16,6 min) usa **el motor y el reproductor de Lupus sin copiarlos**, para tener su mismo reloj de audio. Su dibujo sí es propio: láminas planas, sin actores del motor (`laminas/c<capítulo>.tsx`, `Piezas.tsx`), cuyos parámetros `tejido` llevan el prefijo «capítulo.paso.» y entran en la palabra que los nombra. Las dos referencias de BUST: capas planas sin contorno, rótulo de color sólido con texto blanco, y fondo menta en claro o azul marino con partículas desenfocadas en oscuro.
 - Estilo de Lupus: lámina médica, sin `filter` (se recalcula en cada fotograma); órganos en `lupus/Anatomia.tsx`, flechas `FlechaSuave`, mensajes `Globo`.
 - **Revisión sin navegador:** render con `react-dom/server` + sharp, o Edge sin ventana para degradados y máscaras.
 

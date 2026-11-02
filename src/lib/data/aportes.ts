@@ -195,5 +195,6 @@ export const LABORATORIOS: LaboratorioMeta[] = [
   { slug: 'maduracion-linfocitos',   nombre: 'Maduración de linfocitos',     track: 'medicina', autor: 'bust', pesado: true },
   { slug: 'hipersensibilidad',       nombre: 'Hipersensibilidad',            track: 'medicina', autor: 'bust', pesado: true, vistazo: true },
   { slug: 'lupus',                   nombre: 'Lupus eritematoso sistémico',  track: 'medicina', autor: 'bust', pesado: true, vistazo: true },
+  { slug: 'citopenias-autoinmunes',  nombre: 'Citopenias autoinmunes',       track: 'medicina', autor: 'bust', pesado: true, vistazo: true },
   { slug: 'atlas-3d',                nombre: 'Atlas 3D (miembros)', track: 'medicina', autor: 'bust', pesado: true },
 ];

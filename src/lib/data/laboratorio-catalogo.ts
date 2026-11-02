@@ -123,6 +123,7 @@ export const LAB_TOPICS: TemaLab[] = [
       { name: 'Maduración de linfocitos', desc: 'De la célula madre a la plasmática: recombinación V(D)J, selección en el timo, centro germinal y el origen de cada leucemia y linfoma', color: '#2CA9BC', href: '/dashboard/laboratorio/maduracion-linfocitos' },
       { name: 'Hipersensibilidad', desc: 'Los tipos I a IV animados como fisiología: el mastocito que desgranula, la vénula que se abre, el complemento que perfora, los complejos en el vaso y el granuloma', color: '#2CA9BC', href: '/dashboard/laboratorio/hipersensibilidad' },
       { name: 'Lupus eritematoso sistémico', desc: 'Doce capítulos narrados: del núcleo propio que queda a la vista al interferón, los linfocitos que no se apagan, los complejos que dañan el riñón, el diagnóstico y el tratamiento', color: '#C2385A', href: '/dashboard/laboratorio/lupus' },
+      { name: 'Citopenias autoinmunes', desc: 'Diez capítulos narrados: la anemia hemolítica autoinmune caliente y fría, y la púrpura trombocitopénica inmune, del anticuerpo al tratamiento', color: '#E5324C', href: '/dashboard/laboratorio/citopenias-autoinmunes' },
     ],
   },
   {

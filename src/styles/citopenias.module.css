@@ -1,0 +1,45 @@
+/* Laboratorio «Citopenias autoinmunes»: estilo de infografía plana.
+   En claro, un degradado suave de menta a celeste. En oscuro, azul marino profundo
+   con partículas desenfocadas de fondo. Los objetos usan colores saturados que valen
+   en los dos temas; aquí solo cambia lo que va sobre el fondo. */
+
+.lienzo {
+  --cit-fondo-a: #F4FCFA;
+  --cit-fondo-b: #DFF3F4;
+  --cit-texto: #17324F;
+  --cit-texto-2: #3F5D78;
+  --cit-flecha: #39597A;
+  --cit-base: #17324F;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(170deg, var(--cit-fondo-a), var(--cit-fondo-b));
+}
+:global(.dark-mode) .lienzo {
+  --cit-fondo-a: #071338;
+  --cit-fondo-b: #0B1C4D;
+  --cit-texto: #F1F6FF;
+  --cit-texto-2: #B9CAE6;
+  --cit-flecha: #9DBCE8;
+  --cit-base: #2F5FB0;
+}
+
+.svg { width: 100%; height: 100%; display: block; user-select: none; }
+
+/* Las partículas de fondo solo se ven en el tema oscuro. */
+.bokeh { display: none; }
+:global(.dark-mode) .bokeh { display: block; }
+
+.rotulo { fill: #FFF; font-weight: 700; font-family: inherit; }
+.sobre { font-weight: 700; font-family: inherit; text-anchor: middle; }
+/* En oscuro, la palabra de encima no hereda el color del rótulo: se perdería sobre el azul marino. */
+:global(.dark-mode) .sobre { fill: #F1F6FF !important; }
+.txtFuerte { fill: var(--cit-texto); font-weight: 700; font-family: inherit; }
+.txt { fill: var(--cit-texto-2); font-weight: 500; font-family: inherit; }
+.gelTxt { fill: #17324F; font-weight: 700; font-family: inherit; }
+
+.flecha { stroke: var(--cit-flecha); fill: var(--cit-flecha); }
+
+/* Portada: la columna del menú conserva sus clases; esto es la lámina de la izquierda. */
+.sobretitulo { color: #0E8F9B; }
+:global(.dark-mode) .sobretitulo { color: #4FD8DE; }
