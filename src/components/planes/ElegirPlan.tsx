@@ -22,7 +22,7 @@ const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ss
  */
 export default function ElegirPlan({ requisito, onClose }: { requisito?: Requisito; onClose: () => void }) {
   const [comprar, setComprar] = useState<PlanKey | null>(null);
-  const [elegida] = usePasarela();
+  const [elegida, , zona] = usePasarela();
   const pasarela = CREEM_COBROS_ACTIVOS ? elegida : 'mercadopago';
   const [pronto, setPronto] = useState(false);
   const caja = useRef<HTMLDivElement>(null);
@@ -53,7 +53,7 @@ export default function ElegirPlan({ requisito, onClose }: { requisito?: Requisi
         <h2 id="elegir-plan-titulo" className={styles.titulo}>Elige tu plan</h2>
         <p className={styles.sub}>Todo MedGO se abre con un plan. Cuanto más tiempo te quedas, menos pagas al mes.</p>
         <div className={styles.rejilla}>
-          {ofertasPara(pasarela ?? 'mercadopago').map((o) => {
+          {ofertasPara(pasarela ?? 'mercadopago', zona).map((o) => {
             const p = o.plan;
             const noAbre = !!requisito && !planUnlocks(p.key, requisito);
             return (

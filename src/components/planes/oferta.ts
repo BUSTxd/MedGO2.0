@@ -1,5 +1,5 @@
-import { PLANES_NUEVOS, mesesDe, periodoDe, type PlanCatalogEntry } from '@/lib/plans';
-import type { Pasarela } from '@/lib/pasarela';
+import { PLANES_NUEVOS, mesesDe, periodoDe, usdCreem, type PlanCatalogEntry } from '@/lib/plans';
+import type { Pasarela, Zona } from '@/lib/pasarela';
 
 /**
  * El texto de las tarjetas de los planes, compartido por el selector de
@@ -45,10 +45,10 @@ export interface Oferta {
  * con Creem (resto del mundo). En los dos casos el periodo se paga por adelantado
  * y se renueva solo hasta que el alumno cancela, sin permanencia.
  */
-export function ofertaDe(plan: PlanCatalogEntry, pasarela: Pasarela = 'mercadopago'): Oferta {
+export function ofertaDe(plan: PlanCatalogEntry, pasarela: Pasarela = 'mercadopago', zona: Zona = 'general'): Oferta {
   const enDolares = pasarela === 'creem' && !!plan.creem;
   const cada = enDolares ? plan.creem!.meses : mesesDe(plan);
-  const precio = enDolares ? plan.creem!.usd : plan.amount;
+  const precio = enDolares ? usdCreem(plan, zona) : plan.amount;
   const moneda = enDolares ? 'US$' : 'S/';
   return {
     plan,
@@ -64,8 +64,8 @@ export function ofertaDe(plan: PlanCatalogEntry, pasarela: Pasarela = 'mercadopa
 }
 
 /** Las tres tarjetas, en su orden (Mensual, Ciclo, Anual), para una pasarela. */
-export const ofertasPara = (pasarela: Pasarela = 'mercadopago'): Oferta[] =>
-  PLANES_NUEVOS.map((p) => ofertaDe(p, pasarela));
+export const ofertasPara = (pasarela: Pasarela = 'mercadopago', zona: Zona = 'general'): Oferta[] =>
+  PLANES_NUEVOS.map((p) => ofertaDe(p, pasarela, zona));
 
 /** Las de Mercado Pago (soles), para lo que se pinta sin saber el país. */
 export const OFERTAS: Oferta[] = ofertasPara('mercadopago');

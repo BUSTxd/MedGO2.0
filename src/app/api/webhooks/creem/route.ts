@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { PLANS, isPlanKey, type PlanKey } from '@/lib/plans';
+import { PLANS, isPlanKey, type PlanCatalogEntry, type PlanKey } from '@/lib/plans';
 import { CreemError, estadoPropio, firmaValida, getSuscripcion, idDe } from '@/lib/creem';
 
 export const runtime = 'nodejs';
@@ -25,9 +25,15 @@ const db = () => createAdminClient() as unknown as SupabaseClient;
 function planDeProducto(productId: string | null): PlanKey | null {
   if (!productId) return null;
   for (const p of Object.values(PLANS)) {
-    if (p.creem && process.env[p.creem.productoEnv] === productId) return p.key;
+    if (p.creem && (process.env[p.creem.productoEnv] === productId || p.creem.europa?.producto === productId)) return p.key;
   }
   return null;
+}
+
+/** Lo que cuesta en dólares el producto que se compró: el de Europa tiene su propio precio. */
+function usdDeProducto(plan: PlanCatalogEntry, productId: string | null): number {
+  if (productId && plan.creem?.europa?.producto === productId) return plan.creem.europa.usd;
+  return plan.creem?.usd ?? plan.amount;
 }
 
 /**
@@ -73,7 +79,7 @@ async function sincronizar(subId: string, pista: { userId?: string; planKey?: st
       proveedor: 'creem',
       creem_subscription_id: subId,
       plan_key: plan.key,
-      amount: plan.creem?.usd ?? plan.amount,
+      amount: usdDeProducto(plan, idDe(sub.product)),
       currency: 'USD',
     });
     // Dos entregas del mismo evento a la vez: la otra ya insertó la fila.

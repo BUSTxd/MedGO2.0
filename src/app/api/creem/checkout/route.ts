@@ -4,6 +4,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { isPlanKey, PLANS } from '@/lib/plans';
 import { bloqueoDeCompra } from '@/lib/suscripciones-server';
 import { crearCheckout } from '@/lib/creem';
+import { zonaDePais } from '@/lib/pasarela';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -19,7 +20,9 @@ export async function POST(req: Request) {
   if (!planKey || !isPlanKey(planKey)) return NextResponse.json({ error: 'invalid plan' }, { status: 400 });
   const plan = PLANS[planKey];
   if (!plan.aLaVenta || !plan.creem) return NextResponse.json({ error: 'not_for_sale' }, { status: 400 });
-  const productId = process.env[plan.creem.productoEnv];
+  // La zona la decide el servidor por la IP, igual que el precio que se mostró.
+  const zona = zonaDePais(req.headers.get('x-vercel-ip-country'));
+  const productId = (zona === 'europa' ? plan.creem.europa?.producto : undefined) ?? process.env[plan.creem.productoEnv];
   if (!productId || !process.env.CREEM_API_KEY) {
     return NextResponse.json({ error: 'creem_no_configurado' }, { status: 503 });
   }

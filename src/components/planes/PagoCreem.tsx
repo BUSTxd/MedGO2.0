@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { PLANS, periodoDe, type PlanKey } from '@/lib/plans';
+import { PLANS, periodoDe, usdCreem, type PlanKey } from '@/lib/plans';
 import { ofertaDe, soles } from './oferta';
+import { usePasarela } from './usePasarela';
 import styles from '@/styles/subscribeModal.module.css';
 
 /**
@@ -23,6 +24,7 @@ export default function PagoCreem({
   onCambiar: () => void;
 }) {
   const [tos, setTos] = useState(false);
+  const [, , zona] = usePasarela();
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -39,7 +41,7 @@ export default function PagoCreem({
 
   if (!open) return null;
   const plan = PLANS[planKey];
-  const o = ofertaDe(plan, 'creem');
+  const o = ofertaDe(plan, 'creem', zona);
   const cada = plan.creem?.meses ?? 1;
 
   async function pagar() {
@@ -89,7 +91,7 @@ export default function PagoCreem({
         </button>
 
         <div className={styles.priceRow}>
-          <span className={styles.priceMain}>US$ {soles(plan.creem?.usd ?? 0)}</span>
+          <span className={styles.priceMain}>US$ {soles(usdCreem(plan, zona))}</span>
           <span className={styles.priceUnit}>/ {periodoDe(cada)}</span>
         </div>
         {cada > 1 && <p className={styles.subtitle}>{o.cobro}</p>}

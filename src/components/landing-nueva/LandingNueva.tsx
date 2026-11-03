@@ -103,7 +103,7 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
   const { user } = useAuth();
   const [planActual, setPlanActual] = useState<{ plan: ProfilePlan; isActive: boolean } | null>(null);
   const [comprar, setComprar] = useState<PlanKey | null>(null);
-  const [elegida] = usePasarela();
+  const [elegida, , zona] = usePasarela();
   const pasarela = CREEM_COBROS_ACTIVOS ? elegida : 'mercadopago';
   const [pronto, setPronto] = useState(false);
   useEffect(() => {
@@ -356,7 +356,7 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
             <p>Todo MedGO se abre con un plan. Cuanto más tiempo te quedas, menos pagas al mes.</p>
           </div>
           <div className={c('plans-grid')}>
-            {ofertasPara(pasarela ?? 'mercadopago').map((o) => {
+            {ofertasPara(pasarela ?? 'mercadopago', zona).map((o) => {
               const p = o.plan;
               const bloqueo = estadoCompra(p.key);
               return (

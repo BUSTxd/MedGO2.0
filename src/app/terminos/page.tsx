@@ -159,6 +159,7 @@ export default function TerminosPage() {
                   <tr>
                     <th>Plan</th>
                     <th>Precio (USD)</th>
+                    <th>En Europa (USD)</th>
                     <th>Cobro</th>
                   </tr>
                 </thead>
@@ -167,11 +168,17 @@ export default function TerminosPage() {
                     <tr key={p.key}>
                       <td>{p.label}</td>
                       <td>US$ {p.creem!.usd.toFixed(2)}</td>
+                      <td>{p.creem!.europa ? `US$ ${p.creem!.europa.usd.toFixed(2)}` : '—'}</td>
                       <td>{cadaCuanto(p.creem!.meses)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              <p className={styles.p}>
+                Los precios de Europa rigen para quien se conecta desde la Unión Europea, el Reino
+                Unido, Noruega, Islandia, Liechtenstein o Suiza, donde el impuesto que se aplica al
+                precio es mayor.
+              </p>
             </>
           )}
         </section>

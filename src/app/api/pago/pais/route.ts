@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { CREEM_COBROS_ACTIVOS, pasarelaDePais } from '@/lib/pasarela';
+import { CREEM_COBROS_ACTIVOS, pasarelaDePais, zonaDePais } from '@/lib/pasarela';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,7 +12,7 @@ export function GET(req: Request) {
   const pais = req.headers.get('x-vercel-ip-country');
   const creemListo = CREEM_COBROS_ACTIVOS && !!process.env.CREEM_API_KEY && !!process.env.CREEM_PRODUCT_VISITANTE_ID;
   return NextResponse.json(
-    { pais: pais ?? null, pasarela: creemListo ? pasarelaDePais(pais) : 'mercadopago' },
+    { pais: pais ?? null, pasarela: creemListo ? pasarelaDePais(pais) : 'mercadopago', zona: zonaDePais(pais) },
     { headers: { 'Cache-Control': 'private, no-store' } },
   );
 }

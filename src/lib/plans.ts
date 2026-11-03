@@ -1,4 +1,6 @@
 
+import type { Zona } from './pasarela';
+
 /** Los planes de antes (por tramo de Cayetano), que conservan quienes ya los pagan. */
 export type PlanLegado = 'interno' | 'residente' | 'ufbi' | 'ufbi-anual';
 /**
@@ -70,10 +72,18 @@ export interface PlanCatalogEntry {
   commitmentMonths?: number;
   /**
    * Precio fuera del Perú (Creem, merchant of record, en dólares). `meses` es
-   * cada cuánto cobra (1, 5, 12 o 24), por adelantado. Los productos se crean con
-   * `scripts/creem/crear-productos.mjs`; su id va en `productoEnv`.
+   * cada cuánto cobra (1, 6, 12 o 24), por adelantado; el id del producto va en
+   * `productoEnv`. `europa` es el producto aparte para la zona Europa (ver
+   * `zonaDePais`): allí Creem descuenta un IVA del 19-25 % de lo cobrado, así que
+   * el precio sube para dejar lo mismo que Mercado Pago. Su id va escrito aquí
+   * porque no es secreto y así no depende de una variable más en Vercel.
    */
-  creem?: { usd: number; meses: number; productoEnv: string };
+  creem?: { usd: number; meses: number; productoEnv: string; europa?: { usd: number; producto: string } };
+}
+
+/** El precio en dólares de un plan con Creem, según la zona del visitante. */
+export function usdCreem(plan: PlanCatalogEntry, zona: Zona): number {
+  return (zona === 'europa' ? plan.creem?.europa?.usd : undefined) ?? plan.creem?.usd ?? 0;
 }
 
 export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
@@ -139,7 +149,7 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
     currency: 'PEN',
     durationDays: 30,
     mpPlanIdEnv: 'MP_PLAN_VISITANTE_ID',
-    creem: { usd: 6.99, meses: 1, productoEnv: 'CREEM_PRODUCT_VISITANTE_ID' },
+    creem: { usd: 6.99, meses: 1, productoEnv: 'CREEM_PRODUCT_VISITANTE_ID', europa: { usd: 8.99, producto: 'prod_6swHt8CrNUyKBA5StIW1aB' } },
     nivel: 'completo',
     aLaVenta: true,
     orden: 1,
@@ -151,7 +161,7 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
     currency: 'PEN',
     durationDays: 180,
     mpPlanIdEnv: 'MP_PLAN_ESPECIALISTA_24_ID',
-    creem: { usd: 23.99, meses: 6, productoEnv: 'CREEM_PRODUCT_ESPECIALISTA_24_ID' },
+    creem: { usd: 23.99, meses: 6, productoEnv: 'CREEM_PRODUCT_ESPECIALISTA_24_ID', europa: { usd: 28.99, producto: 'prod_1ozJdwsE6SxcRJGqx46Olr' } },
     nivel: 'completo',
     aLaVenta: true,
     destacado: 'PARA TU CICLO',
@@ -164,7 +174,7 @@ export const PLANS: Record<PlanKey, PlanCatalogEntry> = {
     currency: 'PEN',
     durationDays: 365,
     mpPlanIdEnv: 'MP_PLAN_RESIDENTE_12_ID',
-    creem: { usd: 38.99, meses: 12, productoEnv: 'CREEM_PRODUCT_RESIDENTE_12_ID' },
+    creem: { usd: 38.99, meses: 12, productoEnv: 'CREEM_PRODUCT_RESIDENTE_12_ID', europa: { usd: 46.99, producto: 'prod_1mcFDD4T9O9rroP87TMPRy' } },
     nivel: 'completo',
     aLaVenta: true,
     orden: 3,
