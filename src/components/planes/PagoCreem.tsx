@@ -111,7 +111,7 @@ export default function PagoCreem({
         </div>
 
         <button type="button" className={styles.continueBtn} disabled={!tos || enviando} onClick={pagar}>
-          {enviando ? 'Abriendo el pago seguro…' : `Continuar al pago · US$ ${o.importe}`}
+          {enviando ? 'Abriendo el pago seguro…' : `Continuar al pago · US$ ${soles(usdCreem(plan, zona))}`}
         </button>
 
         {error && <div className={styles.error}>{error}</div>}
