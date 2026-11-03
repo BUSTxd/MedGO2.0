@@ -9,14 +9,11 @@ export type Pasarela = 'mercadopago' | 'creem';
 /**
  * ¿Se ofrece Creem fuera del Perú? Con `false`, todos van a Mercado Pago.
  *
- * Apagado desde el 2026-11-02: sus productos siguen con los precios de antes
- * (hasta US$ 179 cada 2 años) y la web mostraría otros. Encender solo después de
- * `scripts/creem/actualizar-productos.mjs --aplicar`. Su equipo prueba la compra
- * con un código de descuento del 100 % durante la revisión de la cuenta, y para eso
- * tiene que llegar a su checkout desde la web; hasta la aprobación, una compra sin
- * código responde «Live payments are not enabled».
+ * Encendido de nuevo el 2026-11-03, tras editar sus 3 productos en el panel de
+ * Creem: US$ 6,99/mes, 23,99 cada 6 meses y 38,99/año, igual que `PLANS`. Si se
+ * cambia un precio aquí, hay que cambiarlo también allí, o apagarlo mientras tanto.
  */
-export const CREEM_COBROS_ACTIVOS = false;
+export const CREEM_COBROS_ACTIVOS = true;
 
 export function pasarelaDePais(pais: string | null | undefined): Pasarela {
   // Sin país (en local no hay cabecera de Vercel) se queda en Mercado Pago.

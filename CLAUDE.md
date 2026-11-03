@@ -103,7 +103,7 @@ Todos abren lo mismo y ninguno tiene permanencia; solo cambia cada cuánto se co
 
 - **Las claves no coinciden con el nombre a propósito:** son los planes que ya existían en MP y Creem, editados el 2026-11-02 sin cambiar sus IDs. El alumno solo ve `label`.
 - **El precio que se ve sale de `PLANS`, pero el que se cobra sale del plan de MP o el producto de Creem:** al cambiar un importe, desplegar y editar enseguida el plan en el panel de MP (`mercadopago.com.pe/subscription-plans/plans`, sin clave) o con `scripts/mercadopago/actualizar-planes.mjs --aplicar`, y el producto con `scripts/creem/actualizar-productos.mjs --aplicar`.
-- **Creem apagado (`CREEM_COBROS_ACTIVOS = false`) hasta editar sus productos:** siguen con los precios de antes (US$ 10,99, US$ 99/año y US$ 179/2 años). Encenderlo solo después de `actualizar-productos.mjs --aplicar`.
+- **Creem:** sus 3 productos se editaron en su panel (`creem.io/dashboard/products`) el 2026-11-03 con los precios de `PLANS`. Si un precio cambia, editar también el producto o poner `CREEM_COBROS_ACTIVOS = false` mientras tanto.
 - 6 meses porque un ciclo de Cayetano dura de 3,4 a 4,3 meses y el panel de MP no deja elegir 5. Dos ciclos cuestan más que el anual a propósito.
 - `base` = Preclínicos + su universidad. `completo` = además metas de examen, laboratorio e IA.
 - **Legados** (`free`, `ufbi`, `ufbi-anual`, `interno`, `residente`; `aLaVenta: false`): quien paga los conserva y abren su tramo. Las páginas siguen declarando `'interno'`/`'ufbi'`; `SubscribeModal` con un plan que no se vende abre `ElegirPlan`.
