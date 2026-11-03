@@ -22,16 +22,21 @@ export const soles = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed
 
 export interface Oferta {
   plan: PlanCatalogEntry;
-  /** «Sin permanencia». */
+  /** «Cancela cuando quieras»: no hay un mínimo de meses antes de poder cancelar. */
   acceso: string;
   /** «cobro mensual» o «cobro cada 6 meses». */
   tipo: string;
-  /** Cuánto equivale al mes y cada cuánto se renueva. */
+  /** Cada cuánto se renueva. */
   cobro: string;
-  /** El precio grande de la tarjeta: «S/» + «79.90» + «6 meses». */
+  /**
+   * El precio grande de la tarjeta, siempre por mes: «S/» + «13.32» + «mes». En
+   * los planes de varios meses es lo que equivale al mes; lo que se cobra va en `total`.
+   */
   moneda: 'S/' | 'US$';
   importe: string;
   periodo: string;
+  /** Lo que se cobra de verdad, debajo del precio: «S/ 79.90 cada 6 meses». `null` en el mensual. */
+  total: string | null;
   incluye: { texto: string; incluido: boolean }[];
 }
 
@@ -48,13 +53,12 @@ export function ofertaDe(plan: PlanCatalogEntry, pasarela: Pasarela = 'mercadopa
   return {
     plan,
     moneda,
-    importe: soles(precio),
-    periodo: periodoDe(cada),
-    acceso: 'Sin permanencia',
+    importe: cada === 1 ? soles(precio) : (precio / cada).toFixed(2),
+    periodo: 'mes',
+    total: cada === 1 ? null : `${moneda} ${soles(precio)} cada ${periodoDe(cada)}`,
+    acceso: 'Cancela cuando quieras',
     tipo: cada === 1 ? 'cobro mensual' : `cobro cada ${cada} meses`,
-    cobro: cada === 1
-      ? 'Se renueva cada mes hasta que canceles. Cancela cuando quieras.'
-      : `Equivale a ${moneda} ${(precio / cada).toFixed(2)} al mes. Se renueva cada ${periodoDe(cada)} hasta que canceles.`,
+    cobro: `Se renueva cada ${periodoDe(cada)} hasta que canceles.`,
     incluye: INCLUYE.map((texto) => ({ texto, incluido: true })),
   };
 }

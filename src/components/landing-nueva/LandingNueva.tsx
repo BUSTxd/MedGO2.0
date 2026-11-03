@@ -370,6 +370,7 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
                   <p className={c('plan-price')}>
                     <span className={c('plan-currency')}>{o.moneda}</span><span>{o.importe}</span><span className={c('plan-period')}>/ {o.periodo}</span>
                   </p>
+                  {o.total && <p className={c('plan-total')}>Pagas {o.total}</p>}
                   <div className={c('plan-billing')}><p>{o.cobro}</p></div>
                   <button className={c('button primary plan-action')} disabled={!!bloqueo} onClick={() => suscribirme(p.key)}>{bloqueo ?? 'Empieza ahora'}</button>
                   <ul className={c('plan-features')}>

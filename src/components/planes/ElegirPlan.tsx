@@ -66,6 +66,7 @@ export default function ElegirPlan({ requisito, onClose }: { requisito?: Requisi
                 <h3 id={`plan-${p.key}`} className={styles.nombre}>{p.label}</h3>
                 <p className={styles.acceso}>{o.acceso} <span>({o.tipo})</span></p>
                 <p className={styles.precio}><strong>{o.moneda} {o.importe}</strong><span>/{o.periodo}</span></p>
+                {o.total && <p className={styles.total}>Pagas {o.total}</p>}
                 <p className={styles.cobro}>{o.cobro}</p>
                 <ul className={styles.lista}>
                   {o.incluye.map((i) => (

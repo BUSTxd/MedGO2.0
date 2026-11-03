@@ -140,6 +140,8 @@
 .plan-acceso{margin-top:4px;font-size:12px;line-height:18px;color:#b5c1cf}
 .plan-acceso span{color:#8f9dad}
 .plan-card[data-destacado] .plan-price{color:#8cc8f2}
+/* Lo que se cobra de verdad en los planes de varios meses, bajo el precio por mes. */
+.plan-total{margin-top:2px;font-size:13px;line-height:18px;font-weight:550;color:#e6edf5}
 .plan-features{margin-top:24px}
 .plan-features li[data-no]{color:#5d6b7b;text-decoration:line-through}
 .plan-features li[data-no] .icon{color:#4e5b6a;transform:rotate(45deg)}

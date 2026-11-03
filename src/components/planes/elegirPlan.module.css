@@ -158,6 +158,14 @@
 .precio span { color: var(--ep-suave); font-size: 15px; }
 .destacada .precio strong { color: var(--ep-acento); }
 
+/* Lo que se cobra de verdad en los planes de varios meses, justo bajo el precio por mes. */
+.total {
+  margin: 2px 0 0;
+  color: var(--ep-tinta);
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .cobro {
   margin: 2px 0 0;
   color: var(--ep-suave);

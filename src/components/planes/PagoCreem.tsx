@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { PLANS, type PlanKey } from '@/lib/plans';
-import { ofertaDe } from './oferta';
+import { PLANS, periodoDe, type PlanKey } from '@/lib/plans';
+import { ofertaDe, soles } from './oferta';
 import styles from '@/styles/subscribeModal.module.css';
 
 /**
@@ -89,8 +89,8 @@ export default function PagoCreem({
         </button>
 
         <div className={styles.priceRow}>
-          <span className={styles.priceMain}>US$ {o.importe}</span>
-          <span className={styles.priceUnit}>/ {o.periodo}</span>
+          <span className={styles.priceMain}>US$ {soles(plan.creem?.usd ?? 0)}</span>
+          <span className={styles.priceUnit}>/ {periodoDe(cada)}</span>
         </div>
         {cada > 1 && <p className={styles.subtitle}>{o.cobro}</p>}
 
