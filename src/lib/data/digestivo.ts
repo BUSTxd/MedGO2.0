@@ -746,6 +746,9 @@ compartirResumenes(semanas, {
   'anat-4': ['clase-10'],
   'anat-5': ['clase-12'],
   'anat-6': ['clase-15'],
+  // El resumen de «Digestión y absorción» también trata vitaminas (hidrosolubles,
+  // B12 y factor intrínseco) y el sitio de absorción de vitaminas y minerales.
+  'clase-13': ['clase-9'],
   // La magistral de histología junta lo que las prácticas 2 y 3 ven por separado.
   'clase-4': [['histo-2', 'Estómago e intestinos'], ['histo-3', 'Hígado, páncreas y vesícula']],
 });
