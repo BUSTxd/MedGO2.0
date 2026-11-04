@@ -61,16 +61,6 @@ export const semanas: Semana[] = [
     fechas: '11 – 15 ago',
     actividades: [
       {
-        id: 'clase-1',
-        tipo: 'MAGISTRAL',
-        unidad: 'ERITROCITOS',
-        titulo: 'Clase 1 — Bienvenida e Introducción al curso',
-        fecha: '11 ago',
-        hora: '07:00–08:00',
-        subtemas: ['Presentación del curso', 'Metodología y evaluación'],
-        docentes: ['Dra. Evelyn Mejía Gil'],
-      },
-      {
         id: 'clase-2',
         tipo: 'MAGISTRAL',
         unidad: 'ERITROCITOS',

@@ -1,3 +1,5 @@
+import { compartirResumenes } from './resumen-compartido.ts';
+
 /**
  * Sistema Respiratorio — sílabo REFERENCIAL.
  *
@@ -43,6 +45,8 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
+  /** Recibe el resumen de su magistral (`resumen-compartido.ts`): deja de ser libre. */
+  resumenCompartido?: boolean;
   /** Módulo interactivo de la práctica: en las prácticas «Video» pasa a «Simulación». */
   simulacion?: { href?: string; desc?: string };
 }
@@ -91,7 +95,8 @@ const html = (id: string) => ({
 });
 
 /** Las prácticas (anatomía e histología) son libres; el resto pide el plan. */
-export const esPractica = (a: Pick<Actividad, 'tipo'>) => a.tipo === 'ANATOMIA' || a.tipo === 'HISTOLOGIA';
+export const esPractica = (a: Pick<Actividad, 'tipo' | 'resumenCompartido'>) =>
+  (a.tipo === 'ANATOMIA' || a.tipo === 'HISTOLOGIA') && !a.resumenCompartido;
 
 const SIN_FECHA = { fecha: 'Por confirmar', hora: '—', docentes: [] as string[] };
 
@@ -314,3 +319,15 @@ export function findActividad(id: string): { actividad: Actividad; semana: Seman
   }
   return null;
 }
+
+/**
+ * Prácticas que comparten el resumen de la magistral de su mismo tema: el
+ * sílabo las separa, pero el contenido es el mismo. Ver `resumen-compartido.ts`.
+ */
+compartirResumenes(semanas, {
+  'resp-pa-1': [['resp-anat-1', 'Nariz y fosas nasales'], ['resp-anat-2', 'Faringe y laringe']],
+  'resp-pa-2': [['resp-anat-3', 'Osteología del tórax'], ['resp-anat-4', 'Músculos del tórax']],
+  'resp-pa-3': [['resp-anat-5', 'Pleura y pulmones'], ['resp-anat-6', 'Árbol tráqueo-bronquial']],
+  'resp-ph-1': ['resp-histo'],
+  'resp-ph-2': ['resp-histo'],
+});

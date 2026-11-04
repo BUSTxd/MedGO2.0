@@ -81,7 +81,8 @@ export default async function DigestivoPage() {
               const borderColor = UNIDAD_COLOR[act.unidad];
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
               // Las prácticas (anatomía e histología) son libres.
-              const isPractica = act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA';
+              const isPractica =
+                (act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA') && !act.resumenCompartido;
               // Si la card redirige a otra sección, no la bloqueamos:
               // el destino maneja su propio acceso.
               const isLocked = !isPractica && !act.linkOverride && !hasAcceso;

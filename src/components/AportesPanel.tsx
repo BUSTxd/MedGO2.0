@@ -1,563 +1,409 @@
 import type { ReactNode } from 'react';
+import Link from 'next/link';
 import type {
-  TrackStats,
   AporteColaborador,
+  Avance,
   CursoStats,
-  Lanzamiento,
+  EscritoTramo,
   Pendiente,
   SlotStats,
 } from '@/lib/aportes-stats';
+import RefrescoAlVolver from '@/components/RefrescoAlVolver';
+import s from '@/styles/avance.module.css';
 import styles from '@/styles/aportes.module.css';
 
 interface Props {
-  lanzamiento: Lanzamiento;
-  tracks: TrackStats[];
+  avance: Avance;
   aportes: AporteColaborador[];
   /** Registro interactivo de autoría; lo monta la página, que tiene la sesión. */
   registro: ReactNode;
+  /** Hora de esta carga, ya formateada en hora de Lima. */
+  actualizado: string;
 }
-
-const ACC: Record<string, string> = {
-  basico:   '59, 158, 221',
-  medicina: '139, 92, 246',
-};
-
-/** Verde del banqueo: la métrica que manda, con el mismo color en todo el panel. */
-const ACC_BANQUEO = '45, 201, 154';
-
-/** Cuántas actividades pendientes se listan antes de resumir el resto. */
-const MAX_PENDIENTES = 24;
 
 const plural = (n: number, uno: string, varios: string) => (n === 1 ? uno : varios);
+const total = (slot: SlotStats) => slot.listo + slot.falta;
 
 /**
- * Avance sobre lo exigible: el relleno es lo publicado y el resto el hueco. Las
- * tarjetas que no aplican (entregables, labs sin banqueo) quedan fuera del
- * total, así el porcentaje no castiga lo que nunca debía existir.
- *
- * Mide sólo si el material está: quién lo subió y si lo armó o lo consiguió no
- * se deduce del sílabo, se declara en «Quién subió qué».
+ * Barra de avance invertida: el tramo que falta va en naranja y lo publicado
+ * en un verde apagado. El ojo cae en el hueco, no en lo hecho.
  */
-function Barra({ slot, acc }: { slot: SlotStats; acc: string }) {
-  const total = slot.listo + slot.falta;
-  const ancho = total === 0 ? 100 : (slot.listo / total) * 100;
+function Barra({ slot, grande }: { slot: SlotStats; grande?: boolean }) {
+  const ancho = total(slot) === 0 ? 100 : (slot.listo / total(slot)) * 100;
   return (
-    <div className={styles.barra}>
-      <span
-        className={styles.barraFill}
-        style={{ width: `${ancho}%`, background: `rgb(${acc})` }}
-      />
-    </div>
+    <span
+      className={grande ? s.barraGrande : s.barra}
+      role="img"
+      aria-label={`${slot.listo} de ${total(slot)} publicadas, faltan ${slot.falta}`}
+    >
+      <span className={s.barraHecho} style={{ width: `${ancho}%` }} />
+    </span>
   );
 }
 
-/** Barra con su nombre, su porcentaje y la fracción cruda al lado. */
-function BarraFila({
-  etiqueta,
-  slot,
-  acc,
-  fuerte,
-}: {
-  etiqueta: string;
-  slot: SlotStats;
-  acc: string;
-  fuerte?: boolean;
-}) {
-  return (
-    <div className={fuerte ? styles.filaFuerte : styles.fila}>
-      <span className={styles.filaTag}>{etiqueta}</span>
-      <Barra slot={slot} acc={acc} />
-      <span className={styles.filaPct}>{slot.cobertura}%</span>
-      <span className={styles.filaFrac}>
-        {slot.listo}/{slot.listo + slot.falta}
-      </span>
-    </div>
-  );
+/** «3 magistrales · 2 laboratorios»: de qué está hecho el hueco, sin abrir la lista. */
+function porTipo(pendientes: Pendiente[]): string {
+  const cuenta = new Map<string, number>();
+  for (const p of pendientes) cuenta.set(p.tipoLabel, (cuenta.get(p.tipoLabel) ?? 0) + 1);
+  return [...cuenta.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    // «Magistral» → «magistral», pero las siglas (SGP, TBL, EFI Games) se quedan.
+    .map(([tipo, n]) => `${n} ${/^[A-Z]{2}/.test(tipo) ? tipo : tipo.toLowerCase()}`)
+    .join(' · ');
 }
 
-type Tono = 'examen' | 'bloqueante' | 'deseable';
+/** Cuántas de las que faltan ya tienen PDF: pasarlas a HTML cuesta menos que escribirlas. */
+const enPdf = (pendientes: Pendiente[]) =>
+  pendientes.filter((p) => p.faltaResumen && p.soloPdf).length;
 
-const CLASE_GRUPO: Record<Tono, string> = {
-  examen:     styles.grupoExamen,
-  bloqueante: styles.grupoBloq,
-  deseable:   styles.grupoDes,
-};
-
-/**
- * Un bloque de pendientes. Se separan por lo que falta, no por unidad del
- * sílabo: en un curso al 0% todas las filas dirían lo mismo y el listado
- * dejaría de informar.
- */
-function GrupoPendientes({
-  titulo,
-  descripcion,
-  items,
-  tono,
-}: {
-  titulo: string;
-  descripcion: string;
-  items: Pendiente[];
-  tono: Tono;
-}) {
-  if (items.length === 0) return null;
-  const visibles = items.slice(0, MAX_PENDIENTES);
-  const ocultos = items.length - visibles.length;
-
+function CursoEscrito({ curso, abierto }: { curso: CursoStats; abierto: boolean }) {
+  const faltan = curso.pendientes.filter((p) => p.faltaResumen);
+  const pdf = enPdf(faltan);
   return (
-    <div className={styles.grupo}>
-      <p className={CLASE_GRUPO[tono]}>
-        {titulo}
-        <span className={styles.grupoCount}>{items.length}</span>
-        <span className={styles.grupoDesc}>{descripcion}</span>
-      </p>
-      <ul className={styles.lista}>
-        {visibles.map((p) => (
-          <li key={p.id} className={styles.item}>
-            {p.codigo && <span className={styles.itemCodigo}>{p.codigo}</span>}
-            <span className={styles.itemTitulo}>{p.titulo}</span>
-            {/* En un examen importa más de qué evaluación se trata que en qué
-                semana cae: «Examen final» ordena la lista, «Semana 14» no. */}
-            {tono === 'examen' ? (
-              <span className={styles.itemCategoria}>{p.examenLabel}</span>
-            ) : (
-              <span className={styles.itemBloque}>{p.bloque}</span>
-            )}
-            <span className={styles.itemChips}>
-              {tono === 'examen' && (
-                <span className={styles.faltaExamen}>{p.faltaBanqueo}</span>
-              )}
-              {tono === 'bloqueante' && (
-                <>
-                  <span className={styles.faltaResumen}>{p.faltaResumen}</span>
-                  {p.faltaBanqueo && (
-                    <span className={styles.faltaBanqueo}>{p.faltaBanqueo}</span>
-                  )}
-                </>
-              )}
-              {tono === 'deseable' && (
-                <span className={styles.faltaBanqueo}>{p.faltaBanqueo}</span>
-              )}
-            </span>
-          </li>
-        ))}
-      </ul>
-      {ocultos > 0 && (
-        <p className={styles.masItems}>
-          y {ocultos} actividad{ocultos === 1 ? '' : 'es'} más en la misma situación
-        </p>
-      )}
-    </div>
-  );
-}
-
-function CursoCard({
-  curso,
-  aportes,
-  acc,
-  orden,
-}: {
-  curso: CursoStats;
-  aportes: AporteColaborador[];
-  acc: string;
-  orden?: number;
-}) {
-  const { resumen, banqueo, examenes } = curso;
-  const completo = resumen.falta === 0 && banqueo.falta === 0;
-
-  // Un examen nunca pide resumen (no es contenido), así que los tres grupos no
-  // se solapan: examen sin banqueo · clase sin material escrito · clase a la
-  // que sólo le falta el banqueo.
-  const examenesSinBanqueo = curso.pendientes.filter((p) => p.esExamen && p.faltaBanqueo);
-  const sinEscrito = curso.pendientes.filter((p) => p.faltaResumen);
-  const soloBanqueo = curso.pendientes.filter(
-    (p) => !p.esExamen && !p.faltaResumen && p.faltaBanqueo,
-  );
-
-  // El chip nombra el hueco más caro que le queda al curso, no una sola métrica.
-  const estado = completo
-    ? { texto: 'Completo', clase: styles.estadoOk }
-    : examenes.falta > 0
-      ? {
-          texto: `${examenes.falta} ${plural(examenes.falta, 'examen', 'exámenes')}`,
-          clase: styles.estadoExamen,
-        }
-      : resumen.falta > 0
-        ? { texto: `faltan ${resumen.falta}`, clase: styles.estadoFalta }
-        : {
-            texto: `${banqueo.falta} ${plural(banqueo.falta, 'banqueo', 'banqueos')}`,
-            clase: styles.estadoFalta,
-          };
-
-  return (
-    <details className={styles.curso} style={{ ['--acc' as string]: acc }}>
-      <summary className={styles.cursoSummary}>
-        {orden !== undefined && <span className={styles.rank}>{orden}</span>}
-        <span className={styles.cursoNombre}>{curso.nombre}</span>
-
-        <span className={styles.cursoBarras}>
-          <BarraFila etiqueta="Banqueo" slot={banqueo} acc={ACC_BANQUEO} fuerte />
-          <BarraFila etiqueta="Escrito" slot={resumen} acc={acc} />
+    <details className={s.curso} open={abierto}>
+      <summary className={s.cursoSummary}>
+        <span className={s.cursoFaltan}>
+          <strong>{curso.resumen.falta}</strong>
+          <span>{plural(curso.resumen.falta, 'falta', 'faltan')}</span>
         </span>
-
-        <span className={estado.clase}>{estado.texto}</span>
-
-        <span className={styles.chevron} aria-hidden="true">
+        <span className={s.cursoTexto}>
+          <span className={s.cursoNombre}>{curso.nombre}</span>
+          <span className={s.cursoTipos}>
+            {pdf > 0 && (
+              <span className={s.cursoPdf}>
+                {pdf === faltan.length ? 'todas' : pdf} en PDF
+              </span>
+            )}
+            {porTipo(faltan)}
+          </span>
+        </span>
+        <span className={s.cursoAvance}>
+          <Barra slot={curso.resumen} />
+          <span className={s.cursoFrac}>
+            {curso.resumen.listo}/{total(curso.resumen)}
+          </span>
+        </span>
+        <span className={s.chevron} aria-hidden="true">
           ▾
         </span>
       </summary>
 
-      <div className={styles.cursoBody}>
-        <div className={styles.miniKpis}>
-          <div className={styles.miniKpiFuerte}>
-            <span className={styles.miniKpiLabel}>Banqueo</span>
-            <span className={styles.miniKpiNum}>
-              {banqueo.listo}
-              <span className={styles.miniKpiDe}> / {banqueo.listo + banqueo.falta}</span>
-            </span>
-          </div>
-          <div className={examenes.falta > 0 ? styles.miniKpiAlerta : styles.miniKpiFuerte}>
-            <span className={styles.miniKpiLabel}>Exámenes con banqueo</span>
-            <span className={styles.miniKpiNum}>
-              {examenes.listo}
-              <span className={styles.miniKpiDe}> / {examenes.listo + examenes.falta}</span>
-            </span>
-          </div>
-          <div className={styles.miniKpi}>
-            <span className={styles.miniKpiLabel}>Material escrito</span>
-            <span className={styles.miniKpiNum}>
-              {resumen.listo}
-              <span className={styles.miniKpiDe}> / {resumen.listo + resumen.falta}</span>
-            </span>
-          </div>
-          <div className={styles.miniKpi}>
-            <span className={styles.miniKpiLabel}>Simulaciones</span>
-            <span className={styles.miniKpiNum}>{curso.simulaciones}</span>
-          </div>
-          <div className={styles.miniKpi}>
-            <span className={styles.miniKpiLabel}>No aplica</span>
-            <span className={styles.miniKpiNum}>{resumen.noAplica}</span>
-          </div>
-          {curso.invitaciones > 0 && (
-            <div className={styles.miniKpi}>
-              <span className={styles.miniKpiLabel}>Invitación</span>
-              <span className={styles.miniKpiNum}>{curso.invitaciones}</span>
-            </div>
-          )}
-        </div>
-
-        {curso.materialDe.length > 0 && (
-          <p className={styles.autoresLinea}>
-            <span className={styles.autoresLabel}>Material de</span>
-            {curso.materialDe.map((m) => {
-              const p = aportes.find((a) => a.colaborador === m);
-              return (
-                <span
-                  key={m}
-                  className={styles.chip}
-                  style={{ color: p?.color, background: `${p?.color}1f` }}
-                >
-                  {p?.nombre ?? m}
+      <ul className={s.lista}>
+        {faltan.map((p) => (
+          <li key={p.id}>
+            <Link href={p.href} className={s.item} prefetch={false}>
+              {p.codigo && <span className={s.itemCodigo}>{p.codigo}</span>}
+              <span className={s.itemTitulo}>{p.titulo}</span>
+              {p.soloPdf && (
+                <span className={s.itemPdf} title="Tiene resumen en PDF: falta pasarlo a HTML">
+                  PDF
                 </span>
-              );
-            })}
-          </p>
-        )}
-
-        {curso.pendientes.length === 0 ? (
-          <p className={styles.todoListo}>
-            Todo el material exigible de este curso está publicado.
-          </p>
-        ) : (
-          <div className={styles.pendientes}>
-            <GrupoPendientes
-              titulo="Exámenes sin banqueo"
-              descripcion="lo que el alumno busca para prepararlos; no hay resumen que lo sustituya"
-              items={examenesSinBanqueo}
-              tono="examen"
-            />
-            <GrupoPendientes
-              titulo="Sin material escrito"
-              descripcion="la clase no sirve sin él"
-              items={sinEscrito}
-              tono="bloqueante"
-            />
-            <GrupoPendientes
-              titulo="Clases sin banqueo"
-              descripcion="el material escrito ya está publicado"
-              items={soloBanqueo}
-              tono="deseable"
-            />
-          </div>
-        )}
-      </div>
+              )}
+              <span className={s.itemTipo}>{p.tipoLabel}</span>
+              <span className={s.itemBloque}>{p.bloque}</span>
+              <span className={s.itemIr} aria-hidden="true">
+                →
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </details>
   );
 }
 
-export default function AportesPanel({ lanzamiento, tracks, aportes, registro }: Props) {
+/** Lista de pendientes de un tramo. Lo completo se resume en una línea. */
+function CursosDelTramo({ tramo, abiertos }: { tramo: EscritoTramo; abiertos: boolean }) {
+  return (
+    <>
+      {tramo.sinSilabo.length > 0 && (
+        <p className={s.sinSilabo}>
+          <strong>Sin sílabo cargado:</strong>{' '}
+          {tramo.sinSilabo.map((c) => c.nombre).join(', ')}. No se puede medir qué
+          les falta hasta tener sus clases.
+        </p>
+      )}
+
+      <div className={s.cursos}>
+        {tramo.conFalta.map((c) => (
+          <CursoEscrito key={c.slug} curso={c} abierto={abiertos} />
+        ))}
+      </div>
+
+      {tramo.completos.length > 0 && (
+        <p className={s.completos}>
+          <span className={s.check} aria-hidden="true">
+            ✓
+          </span>
+          Con todo el material escrito: {tramo.completos.map((c) => c.nombre).join(', ')}
+        </p>
+      )}
+    </>
+  );
+}
+
+/** El banqueo, en una franja: cuánto falta y, si se pide, dónde. */
+function BanqueoCompacto({ banqueo }: { banqueo: Avance['banqueo'] }) {
+  return (
+    <section className={s.banqueo} aria-labelledby="titulo-banqueo">
+      <div className={s.banqueoFila}>
+        <h3 id="titulo-banqueo" className={s.banqueoTitulo}>
+          Banqueo
+        </h3>
+        <Barra slot={banqueo.banqueo} />
+        <span className={s.banqueoPct}>{banqueo.banqueo.cobertura}%</span>
+        <span className={s.banqueoDatos}>
+          <span className={s.banqueoDato}>
+            <strong>{banqueo.examenes.falta}</strong>{' '}
+            {plural(banqueo.examenes.falta, 'examen', 'exámenes')} sin banqueo
+          </span>
+          <span className={s.banqueoDato}>
+            <strong>{banqueo.faltanClase}</strong>{' '}
+            {plural(banqueo.faltanClase, 'clase', 'clases')} sin banqueo
+          </span>
+        </span>
+      </div>
+
+      {banqueo.cursos.length > 0 && (
+        <details className={s.banqueoDetalle}>
+          <summary className={s.banqueoSummary}>Ver por curso</summary>
+          <ul className={s.banqueoLista}>
+            {banqueo.cursos.map((c) => {
+              const examenes = c.pendientes.filter((p) => p.esExamen && p.faltaBanqueo);
+              const clases = c.banqueo.falta - examenes.length;
+              return (
+                <li key={c.slug} className={s.banqueoCurso}>
+                  <span className={s.banqueoCursoNombre}>{c.nombre}</span>
+                  <span className={s.banqueoCursoCuenta}>
+                    {examenes.length > 0 &&
+                      `${examenes.length} ${plural(examenes.length, 'examen', 'exámenes')}`}
+                    {examenes.length > 0 && clases > 0 && ' · '}
+                    {clases > 0 && `${clases} ${plural(clases, 'clase', 'clases')}`}
+                  </span>
+                  {examenes.length > 0 && (
+                    <span className={s.banqueoExamenes}>
+                      {examenes.map((p) => (
+                        <Link key={p.id} href={p.href} prefetch={false} className={s.banqueoExamen}>
+                          {p.codigo ?? p.examenLabel}
+                        </Link>
+                      ))}
+                    </span>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </details>
+      )}
+    </section>
+  );
+}
+
+export default function AportesPanel({ avance, aportes, registro, actualizado }: Props) {
+  const { facultad, ufbi, banqueo } = avance;
+  const pdfFacultad = facultad.conFalta.reduce((n, c) => n + enPdf(c.pendientes), 0);
+  const pdfUfbi = ufbi.conFalta.reduce((n, c) => n + enPdf(c.pendientes), 0);
   const activos = aportes.filter(
     (a) => a.resumenes > 0 || a.banqueos > 0 || a.laboratorios > 0 || a.histologia > 0,
   );
 
-  const totalBanqueo = lanzamiento.banqueo.listo + lanzamiento.banqueo.falta;
-
   return (
-    <div className={styles.wrapper}>
-      <h2 className={styles.title}>Avance y aportes</h2>
-      <p className={styles.sub}>
-        Se lee de los sílabos en cada carga: al añadir un banqueo, un resumen o
-        una simulación a un curso, este panel lo refleja solo. Si algo no aparece
-        aquí, no está en la web.
-      </p>
+    <div className={s.wrapper}>
+      <RefrescoAlVolver />
 
-      {/* ── Titular: qué falta para lanzar ── */}
-      <section className={styles.lanzamiento}>
-        <header className={styles.lanzHead}>
-          <div>
-            <h3 className={styles.lanzTitulo}>Listo para lanzar</h3>
-            <p className={styles.lanzSub}>
-              Sólo los {lanzamiento.cursos.length} cursos prioritarios. Cuentan
-              dos cosas: el <strong>banqueo</strong> —exámenes, parciales,
-              finales y PCs resueltos, lo que el alumno viene a buscar— y el{' '}
-              <strong>material escrito</strong> (la tarjeta Resumen). El video
-              queda para después y nunca baja el porcentaje.
-            </p>
-          </div>
-          <div className={styles.lanzNumeros}>
-            <span className={styles.lanzPct}>{lanzamiento.banqueo.cobertura}%</span>
-            <span className={styles.lanzFrac}>
-              banqueo · {lanzamiento.banqueo.listo} / {totalBanqueo} actividades
-            </span>
-          </div>
-        </header>
-
-        <div className={styles.lanzBarras}>
-          <BarraFila
-            etiqueta="Banqueo"
-            slot={lanzamiento.banqueo}
-            acc={ACC_BANQUEO}
-            fuerte
-          />
-          <BarraFila
-            etiqueta="Material escrito"
-            slot={lanzamiento.resumen}
-            acc="59, 158, 221"
-          />
+      <header className={s.cabecera}>
+        <div>
+          <h2 className={s.titulo}>Qué falta por escribir</h2>
+          <p className={s.sub}>
+            El resumen en HTML de cada clase de Cayetano; un PDF no cuenta. Se lee de
+            los sílabos: al publicar el HTML, su clase sale sola de esta lista.
+          </p>
         </div>
-
-        <div className={styles.lanzKpis}>
-          <div
-            className={
-              lanzamiento.faltanExamen > 0 ? styles.lanzKpiAlerta : styles.lanzKpi
-            }
-          >
-            <span className={styles.lanzKpiNum}>{lanzamiento.faltanExamen}</span>
-            <span className={styles.lanzKpiLabel}>
-              Exámenes sin banqueo · de{' '}
-              {lanzamiento.examenes.listo + lanzamiento.examenes.falta}
-            </span>
-          </div>
-          <div className={styles.lanzKpi}>
-            <span className={styles.lanzKpiNum}>{lanzamiento.faltanBanqueoClase}</span>
-            <span className={styles.lanzKpiLabel}>Clases sin banqueo</span>
-          </div>
-          <div className={styles.lanzKpi}>
-            <span className={styles.lanzKpiNum}>{lanzamiento.faltanResumen}</span>
-            <span className={styles.lanzKpiLabel}>Sin material escrito</span>
-          </div>
-          <div className={styles.lanzKpi}>
-            <span className={styles.lanzKpiNum}>
-              {lanzamiento.cursosListos} / {lanzamiento.cursos.length}
-            </span>
-            <span className={styles.lanzKpiLabel}>
-              Cursos completos · {lanzamiento.cursosConEscrito} con todo el escrito
-            </span>
-          </div>
-        </div>
-
-        <div className={styles.prioridadLista}>
-          {lanzamiento.cursos.map((c, i) => (
-            <CursoCard
-              key={c.slug}
-              curso={c}
-              aportes={aportes}
-              acc={ACC[c.track]}
-              orden={i + 1}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* ── Cobertura completa por tramo ── */}
-      {tracks.map((t) => {
-        const acc = ACC[t.track];
-        const resto = t.cursos.filter((c) => c.prioridad === null);
-        return (
-          <section key={t.track} className={styles.trackCard} style={{ ['--acc' as string]: acc }}>
-            <header className={styles.trackHead}>
-              <h3 className={styles.trackTitle}>{t.etiqueta}</h3>
-              <span className={styles.trackMeta}>
-                {t.cursos.length} cursos · {t.actividades} actividades · {t.laboratorios} labs
-              </span>
-            </header>
-
-            <div className={styles.kpis}>
-              <div className={styles.kpi}>
-                <span className={styles.kpiNum}>{t.banqueo.cobertura}%</span>
-                <span className={styles.kpiLabel}>Banqueo</span>
-                <span className={styles.kpiFrac}>
-                  {t.banqueo.listo} / {t.banqueo.listo + t.banqueo.falta} exigibles
-                </span>
-              </div>
-              <div className={styles.kpi}>
-                <span className={styles.kpiNum}>{t.examenes.cobertura}%</span>
-                <span className={styles.kpiLabel}>Exámenes con banqueo</span>
-                <span className={styles.kpiFrac}>
-                  {t.examenes.listo} / {t.examenes.listo + t.examenes.falta} evaluaciones
-                </span>
-              </div>
-              <div className={styles.kpi}>
-                <span className={styles.kpiNum}>{t.resumen.cobertura}%</span>
-                <span className={styles.kpiLabel}>Material escrito</span>
-                <span className={styles.kpiFrac}>
-                  {t.resumen.listo} / {t.resumen.listo + t.resumen.falta} exigibles
-                </span>
-              </div>
-            </div>
-
-            {resto.length > 0 && (
-              <>
-                <p className={styles.restoLabel}>
-                  Cursos que no bloquean el lanzamiento
-                </p>
-                <div className={styles.prioridadLista}>
-                  {resto.map((c) => (
-                    <CursoCard key={c.slug} curso={c} aportes={aportes} acc={acc} />
-                  ))}
-                </div>
-              </>
-            )}
-          </section>
-        );
-      })}
-
-      {/* ── Quién subió qué: lo único que no se deduce del repo ── */}
-      {registro}
-
-      {/* ── Registro de aportes por persona ── */}
-      <section className={styles.trackCard} style={{ ['--acc' as string]: '45, 201, 154' }}>
-        <header className={styles.trackHead}>
-          <h3 className={styles.trackTitle}>Aportes por persona</h3>
-          <span className={styles.trackMeta}>
-            Manda lo marcado arriba; un material firmado por dos cuenta la mitad
-            para cada uno
-          </span>
-        </header>
-
-        <div className={styles.personas}>
-          {activos.map((a) => (
-            <article key={a.colaborador} className={styles.persona}>
-              <span className={styles.personaDot} style={{ background: a.color }} />
-              <div className={styles.personaHead}>
-                <strong className={styles.personaNombre}>{a.nombre}</strong>
-                <span className={styles.personaRol}>{a.rol}</span>
-              </div>
-              <dl className={styles.personaStats}>
-                <div>
-                  <dt>Resúmenes</dt>
-                  <dd>{a.resumenes}</dd>
-                </div>
-                <div>
-                  <dt>Banqueos</dt>
-                  <dd>
-                    {a.banqueos}
-                    {a.banqueosRecolectados > 0 && (
-                      <span className={styles.recolectados}>
-                        {' '}
-                        · {a.banqueosRecolectados} PDF
-                      </span>
-                    )}
-                  </dd>
-                </div>
-                <div>
-                  <dt>Laboratorios</dt>
-                  <dd>
-                    {a.laboratorios}
-                    {a.labsPesados > 0 && (
-                      <span className={styles.pesados}> · {a.labsPesados} 3D</span>
-                    )}
-                  </dd>
-                </div>
-                <div>
-                  <dt>Histología</dt>
-                  <dd>{a.histologia}</dd>
-                </div>
-                <div>
-                  <dt>Cursos con material</dt>
-                  <dd>{a.cursosConMaterial}</dd>
-                </div>
-              </dl>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Leyenda: qué cuenta y qué no ── */}
-      <div className={styles.leyenda}>
-        <p className={styles.leyendaTitulo}>Cómo se cuenta</p>
-        <ul className={styles.leyendaLista}>
-          <li>
-            <strong>Banqueo</strong> — banco de preguntas, solucionario paso a paso o
-            PDF de práctica: los propuestos de las clases teóricas de Física, las PCs
-            de años anteriores de Química Orgánica. Es la métrica que manda: se exige
-            en todas las clases y en todas las evaluaciones.
-          </li>
-          <li>
-            <strong>Armado vs. recolectado</strong> — el mismo banqueo, dos costos
-            distintos. <em>Armado</em> es lo que alguien hizo: transcribir el banco de
-            preguntas, resolver el solucionario, elaborar los ejercicios propuestos.
-            <em> Recolectado</em> es conseguir la PC o el examen de otro año en PDF y
-            subirlo tal cual. Esto <strong>no</strong> se deduce del sílabo —el mismo
-            PDF puede ser trabajo propio o una descarga—, así que lo elige cada persona
-            al marcar su círculo abajo, y de ahí salen el ámbar y el recuento por
-            persona. Las barras de arriba no lo distinguen: sólo miden si el material
-            está o no está.
-          </li>
-          <li>
-            <strong>Exámenes con banqueo</strong> — el banqueo de las evaluaciones que
-            el alumno rinde: exámenes, parciales, finales, prácticas calificadas,
-            sustitutorios y pasos. Se cuenta aparte porque ahí el banqueo es el único
-            material posible —un examen no lleva resumen— y es justo lo que se busca
-            para prepararlo.
-          </li>
-          <li>
-            <strong>Material escrito</strong> — la tarjeta Resumen. Se exige en las
-            clases, no en las evaluaciones.
-          </li>
-          <li>
-            <strong>Video / Simulación</strong> — material a futuro. Las simulaciones
-            publicadas se cuentan aparte; los videos que faltan nunca bajan el
-            porcentaje.
-          </li>
-          <li>
-            <strong>No aplica</strong> — el material escrito de las evaluaciones (no son
-            contenido), el banqueo de los laboratorios que no lo llevan y las entregas
-            de trabajos, que no se banquean. Salen del denominador; si igual reciben
-            material, se suman como listos.
-          </li>
-          <li>
-            <strong>Invitación</strong> — actividades sin material propio y sin
-            planes de tenerlo, como los talleres científicos de Química Orgánica:
-            muestran la mascota y los contactos para que alguien lo aporte. No son
-            un hueco pendiente.
-          </li>
-        </ul>
-        <p className={styles.nota}>
-          Este panel mide <strong>unidades publicadas</strong>, no horas ni esfuerzo.
-          La plataforma, los costos de infraestructura y las redes no aparecen como
-          unidades contables — hay que valorarlos aparte al negociar la parte fija.
+        <p className={s.actualizado}>
+          <span className={s.vivo} aria-hidden="true" />
+          Actualizado a las {actualizado}
         </p>
-      </div>
+      </header>
+
+      {/* ── Lo que manda: Facultad ── */}
+      <section className={s.principal} aria-labelledby="titulo-facultad">
+        <div className={s.hero}>
+          <div className={s.heroNumero}>
+            <strong>{facultad.resumen.falta}</strong>
+            <span>
+              {plural(facultad.resumen.falta, 'clase', 'clases')} sin HTML
+            </span>
+          </div>
+          <div className={s.heroTexto}>
+            <h3 id="titulo-facultad" className={s.heroTitulo}>
+              {facultad.etiqueta}
+            </h3>
+            <p className={s.heroSub}>
+              {facultad.resumen.listo} de {total(facultad.resumen)} clases ya tienen
+              resumen en HTML ({facultad.resumen.cobertura} %)
+              {pdfFacultad > 0 && (
+                <>
+                  {' '}
+                  · <strong className={s.heroPdf}>{pdfFacultad}</strong> de las que
+                  faltan ya están en PDF
+                </>
+              )}{' '}
+              · {facultad.conFalta.length}{' '}
+              {plural(facultad.conFalta.length, 'curso', 'cursos')} con pendientes, de
+              menos a más
+            </p>
+            <Barra slot={facultad.resumen} grande />
+          </div>
+        </div>
+
+        <CursosDelTramo tramo={facultad} abiertos />
+      </section>
+
+      {/* ── Segundo plano: UFBI ── */}
+      <details className={s.secundario}>
+        <summary className={s.secundarioSummary}>
+          <span className={s.secundarioTitulo}>{ufbi.etiqueta}</span>
+          <span className={s.secundarioDato}>
+            <strong>{ufbi.resumen.falta}</strong>{' '}
+            {plural(ufbi.resumen.falta, 'clase', 'clases')} sin HTML
+            {pdfUfbi > 0 && ` (${pdfUfbi} en PDF)`} · {ufbi.resumen.cobertura} %
+          </span>
+          <span className={s.chevron} aria-hidden="true">
+            ▾
+          </span>
+        </summary>
+        <div className={s.secundarioCuerpo}>
+          <CursosDelTramo tramo={ufbi} abiertos={false} />
+        </div>
+      </details>
+
+      <BanqueoCompacto banqueo={banqueo} />
+
+      {/* ── Segundo plano: el reparto del equipo ── */}
+      <details className={s.secundario}>
+        <summary className={s.secundarioSummary}>
+          <span className={s.secundarioTitulo}>Aportes del equipo</span>
+          <span className={s.secundarioDato}>Quién subió qué y recuento por persona</span>
+          <span className={s.chevron} aria-hidden="true">
+            ▾
+          </span>
+        </summary>
+        <div className={s.secundarioCuerpo}>
+          {registro}
+
+          <h4 className={s.subtitulo}>Aportes por persona</h4>
+          <p className={s.nota}>
+            Manda lo marcado en el registro; un material firmado por dos cuenta la
+            mitad para cada uno.
+          </p>
+          <div className={styles.personas}>
+            {activos.map((a) => (
+              <article key={a.colaborador} className={styles.persona}>
+                <span className={styles.personaDot} style={{ background: a.color }} />
+                <div className={styles.personaHead}>
+                  <strong className={styles.personaNombre}>{a.nombre}</strong>
+                  <span className={styles.personaRol}>{a.rol}</span>
+                </div>
+                <dl className={styles.personaStats}>
+                  <div>
+                    <dt>Resúmenes</dt>
+                    <dd>{a.resumenes}</dd>
+                  </div>
+                  <div>
+                    <dt>Banqueos</dt>
+                    <dd>
+                      {a.banqueos}
+                      {a.banqueosRecolectados > 0 && (
+                        <span className={styles.recolectados}>
+                          {' '}
+                          · {a.banqueosRecolectados} PDF
+                        </span>
+                      )}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Laboratorios</dt>
+                    <dd>
+                      {a.laboratorios}
+                      {a.labsPesados > 0 && (
+                        <span className={styles.pesados}> · {a.labsPesados} 3D</span>
+                      )}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Histología</dt>
+                    <dd>{a.histologia}</dd>
+                  </div>
+                  <div>
+                    <dt>Cursos con material</dt>
+                    <dd>{a.cursosConMaterial}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+          </div>
+        </div>
+      </details>
+
+      {/* ── Ayuda: qué cuenta y qué no ── */}
+      <details className={s.secundario}>
+        <summary className={s.secundarioSummary}>
+          <span className={s.secundarioTitulo}>Cómo se cuenta</span>
+          <span className={s.secundarioDato}>Qué entra en cada número</span>
+          <span className={s.chevron} aria-hidden="true">
+            ▾
+          </span>
+        </summary>
+        <div className={s.secundarioCuerpo}>
+          <ul className={styles.leyendaLista}>
+            <li>
+              <strong>Material escrito</strong>: la tarjeta Resumen de una clase,{' '}
+              <strong>sólo si está en HTML</strong> (flujo, páginas, hojas o capas). Se
+              exige en las clases con tema propio.
+            </li>
+            <li>
+              <strong>Fuera del porcentaje</strong>: parciales, finales, PC y demás
+              evaluaciones (también los portafolios), las entregas y los refuerzos
+              (tipo «Repaso», o un título que empieza por «Repaso» o «Revisión
+              general»), aunque tengan resumen.
+            </li>
+            <li>
+              <strong>Resumen compartido</strong>: la práctica de anatomía o histología
+              que el sílabo separa de su magistral muestra el resumen de esa magistral
+              y cuenta como lista. El reparto vive al final de cada sílabo
+              (<code>compartirResumenes</code>).
+            </li>
+            <li>
+              <strong>PDF</strong>: la clase lo muestra al alumno, pero aquí sigue
+              faltando; sale marcada «PDF» porque basta con pasarla a HTML. El crédito
+              por persona del registro sí cuenta los PDF.
+            </li>
+            <li>
+              <strong>Sin sílabo</strong>: un curso sin clases cargadas no cuenta como
+              completo; sale aparte hasta tener su sílabo.
+            </li>
+            <li>
+              <strong>Banqueo</strong>: banco de preguntas, tarjetas, solucionario o PDF
+              de práctica. Se exige en las clases y en todas las evaluaciones; los
+              exámenes cuentan aparte porque ahí es el único material posible.
+            </li>
+            <li>
+              <strong>No cuenta</strong>: el video (material a futuro), los labs que no
+              llevan banqueo y las actividades con invitación a colaborar, como los
+              talleres científicos de Química Orgánica.
+            </li>
+            <li>
+              <strong>Armado o recolectado</strong>: si un banqueo se hizo a mano o se
+              consiguió en PDF no se deduce del sílabo; lo declara cada persona al
+              marcar su círculo en el registro.
+            </li>
+          </ul>
+          <p className={s.nota}>
+            Mide unidades publicadas, no horas. La plataforma, la infraestructura y las
+            redes se valoran aparte al negociar la parte fija.
+          </p>
+        </div>
+      </details>
     </div>
   );
 }

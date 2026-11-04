@@ -84,7 +84,7 @@ export default async function CardiovascularPage() {
               const badge = TIPO_BADGE[act.tipo];
               const borderColor = UNIDAD_COLOR[act.unidad];
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
-              const isLab = act.tipo === 'LAB-HISTO' || act.tipo === 'LAB-ANAT';
+              const isLab = (act.tipo === 'LAB-HISTO' || act.tipo === 'LAB-ANAT') && !act.resumenCompartido;
               const isLocked = !isLab && !hasAcceso;
 
               return (

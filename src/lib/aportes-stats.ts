@@ -31,18 +31,59 @@ export interface Pendiente {
   codigo?: string;
   /** Bloque del sílabo al que pertenece (unidad o semana). */
   bloque: string;
-  /** Nombre de la tarjeta de material escrito que falta, o null si ya está. */
+  /** Nombre de la tarjeta de material escrito que falta, o null si ya está en HTML. */
   faltaResumen: string | null;
+  /** Tiene resumen, pero sólo en PDF: hay que pasarlo a HTML, no escribirlo de cero. */
+  soloPdf: boolean;
   /** Nombre de la tarjeta de práctica que falta, o null si ya está / no aplica. */
   faltaBanqueo: string | null;
   /** Es una evaluación (examen, parcial, final, PC, paso). */
   esExamen: boolean;
   /** Categoría legible de la evaluación («Examen final»), sólo si `esExamen`. */
   examenLabel?: string;
+  /** Tipo de actividad tal como lo nombra el sílabo, en palabras («Lab. de anatomía»). */
+  tipoLabel: string;
+  /** Página de la clase en el dashboard, para ir directo a completarla. */
+  href: string;
 }
+
+/**
+ * Los tipos del sílabo en palabras. El código crudo (`LAB-ANAT`, `AULA-INV`) es
+ * jerga de los archivos de datos; quien planifica qué escribir piensa en «Lab.
+ * de anatomía». Un tipo nuevo sin entrada cae en su código, sin romper nada.
+ */
+const TIPO_LABEL: Record<string, string> = {
+  MAGISTRAL: 'Magistral',
+  TEORIA: 'Teoría',
+  SGP: 'SGP',
+  TBL: 'TBL',
+  ABP: 'ABP',
+  ACP: 'ACP',
+  LAB: 'Laboratorio',
+  'LAB-ANAT': 'Lab. de anatomía',
+  'LAB-HISTO': 'Lab. de histología',
+  ANATOMIA: 'Anatomía',
+  HISTOLOGIA: 'Histología',
+  TALLER: 'Taller',
+  'TALLER-INT': 'Taller integrador',
+  'TALLER-FIS': 'Taller de fisiología',
+  SEMINARIO: 'Seminario',
+  PRACTICA: 'Práctica',
+  REPASO: 'Repaso',
+  'AULA-INV': 'Aula invertida',
+  'AULA-VIRTUAL': 'Aula virtual',
+  'REV-VIRTUAL': 'Revisión virtual',
+  ICONOGRAFIA: 'Iconografía',
+  AUTOAPRENDIZAJE: 'Autoaprendizaje',
+  INTEGRACION: 'Integración',
+  'EFI-GAMES': 'EFI Games',
+};
+
+export const tipoLabel = (tipo: string) => TIPO_LABEL[tipo] ?? tipo;
 
 export interface CursoStats extends CursoMeta {
   actividades: number;
+  /** Material escrito en HTML; los PDF cuentan como `falta`. */
   resumen: SlotStats;
   banqueo: SlotStats;
   /**
@@ -76,33 +117,32 @@ export interface AporteColaborador {
   cursosConMaterial: number;
 }
 
-export interface TrackStats {
+/** Material escrito de un tramo de Cayetano: lo que falta va primero. */
+export interface EscritoTramo {
   track: Track;
   etiqueta: string;
-  cursos: CursoStats[];
-  actividades: number;
+  /** Sólo de los cursos con sílabo. */
   resumen: SlotStats;
-  banqueo: SlotStats;
-  examenes: SlotStats;
-  laboratorios: number;
+  /** Cursos con clases sin resumen, de menos a más pendientes. */
+  conFalta: CursoStats[];
+  /** Cursos con todo su material escrito publicado. */
+  completos: CursoStats[];
+  /** Cursos sin sílabo cargado: no se puede medir qué les falta. */
+  sinSilabo: CursoStats[];
 }
 
-/** Titular del panel: lo que falta para poder lanzar. */
-export interface Lanzamiento {
-  cursos: CursoStats[];
-  resumen: SlotStats;
-  banqueo: SlotStats;
-  examenes: SlotStats;
-  /** Evaluaciones de los cursos prioritarios sin banqueo: la deuda más cara. */
-  faltanExamen: number;
-  /** Clases (no evaluaciones) de los cursos prioritarios sin banqueo. */
-  faltanBanqueoClase: number;
-  /** Actividades de los cursos prioritarios sin material escrito. */
-  faltanResumen: number;
-  /** Cursos prioritarios sin ningún hueco de banqueo ni de material escrito. */
-  cursosListos: number;
-  /** Cursos prioritarios con todo el material escrito, aunque les falte banqueo. */
-  cursosConEscrito: number;
+/** Titular del panel: lo que falta para cubrir todos los temas de Cayetano. */
+export interface Avance {
+  facultad: EscritoTramo;
+  ufbi: EscritoTramo;
+  banqueo: {
+    banqueo: SlotStats;
+    examenes: SlotStats;
+    /** Clases (no evaluaciones) sin banqueo. */
+    faltanClase: number;
+    /** Cursos con algún banqueo pendiente, los de más exámenes sin banqueo primero. */
+    cursos: CursoStats[];
+  };
 }
 
 const pct = (n: number, total: number) => (total === 0 ? 100 : Math.round((n / total) * 100));
@@ -153,22 +193,26 @@ function statsDeCurso(meta: CursoMeta): CursoStats {
       actividades++;
       const plan: PlanActividad = planDeActividad(meta.slug, act);
 
-      acumular(resumen, plan.resumen);
+      // El material escrito del panel sólo cuenta el HTML: un PDF es un hueco.
+      acumular(resumen, plan.escrito);
       acumular(banqueo, plan.banqueo);
       if (plan.esExamen) acumular(examenes, plan.banqueo);
       if (plan.apoyo.estado === 'listo') simulaciones++;
       if (plan.invitacion) invitaciones++;
 
-      if (plan.resumen.estado === 'falta' || plan.banqueo.estado === 'falta') {
+      if (plan.escrito.estado === 'falta' || plan.banqueo.estado === 'falta') {
         pendientes.push({
           id: plan.id,
           titulo: plan.titulo,
           codigo: plan.codigo,
           bloque: semana.titulo,
-          faltaResumen: plan.resumen.estado === 'falta' ? plan.resumen.label : null,
+          faltaResumen: plan.escrito.estado === 'falta' ? plan.escrito.label : null,
+          soloPdf: plan.escrito.soloPdf,
           faltaBanqueo: plan.banqueo.estado === 'falta' ? plan.banqueo.label : null,
           esExamen: plan.esExamen,
           examenLabel: plan.examenLabel,
+          tipoLabel: tipoLabel(plan.tipo),
+          href: `/dashboard/cursos/${meta.slug}/${plan.id}`,
         });
       }
     }
@@ -189,52 +233,57 @@ function statsDeCurso(meta: CursoMeta): CursoStats {
   };
 }
 
-/** Se calcula una sola vez por render y se comparte entre las tres vistas. */
+/** Se calcula una sola vez por carga y se reparte entre las vistas. */
 function todosLosCursos(): CursoStats[] {
   return CURSOS.map(statsDeCurso);
 }
 
-export function getTrackStats(): TrackStats[] {
-  const todos = todosLosCursos();
-
-  return (['basico', 'medicina'] as Track[]).map((track) => {
-    const cursos = todos.filter((c) => c.track === track);
-    return {
-      track,
-      etiqueta: track === 'basico' ? 'UFBI · 1.er año' : 'Facultad de Medicina · 2.º–7.º',
-      cursos,
-      actividades: cursos.reduce((s, c) => s + c.actividades, 0),
-      resumen: sumar(cursos.map((c) => c.resumen)),
-      banqueo: sumar(cursos.map((c) => c.banqueo)),
-      examenes: sumar(cursos.map((c) => c.examenes)),
-      laboratorios: LABORATORIOS.filter((l) => l.track === track).length,
-    };
-  });
+function escritoDe(track: Track, todos: CursoStats[]): EscritoTramo {
+  const cursos = todos.filter((c) => c.track === track);
+  // Un curso sin actividades no está completo: no tiene sílabo cargado, y
+  // contarlo como «listo» escondería el hueco más grande de todos.
+  const sinSilabo = cursos.filter((c) => c.actividades === 0);
+  const conSilabo = cursos.filter((c) => c.actividades > 0);
+  return {
+    track,
+    etiqueta: track === 'basico' ? 'UFBI · 1.er año' : 'Facultad de Medicina · 2.º–7.º',
+    resumen: sumar(conSilabo.map((c) => c.resumen)),
+    // De menos a más pendientes: arriba lo que se cierra con poco trabajo.
+    conFalta: conSilabo
+      .filter((c) => c.resumen.falta > 0)
+      .sort((a, b) => a.resumen.falta - b.resumen.falta || a.nombre.localeCompare(b.nombre)),
+    completos: conSilabo.filter((c) => c.resumen.falta === 0),
+    sinSilabo,
+  };
 }
 
 /**
- * Cobertura de los cursos que sí bloquean el lanzamiento, en el orden declarado
- * en `PRIORIDAD_LANZAMIENTO`.
+ * Lo que falta para cubrir todo Cayetano: el material escrito manda, el
+ * banqueo va aparte y en pequeño. Se calcula de los sílabos en cada carga.
  */
-export function getLanzamiento(): Lanzamiento {
+export function getAvance(): Avance {
   const todos = todosLosCursos();
-  const cursos = PRIORIDAD_LANZAMIENTO.map((slug) => todos.find((c) => c.slug === slug)).filter(
-    (c): c is CursoStats => !!c,
-  );
-
-  const examenes = sumar(cursos.map((c) => c.examenes));
-  const banqueo = sumar(cursos.map((c) => c.banqueo));
+  const conSilabo = todos.filter((c) => c.actividades > 0);
+  const banqueo = sumar(conSilabo.map((c) => c.banqueo));
+  const examenes = sumar(conSilabo.map((c) => c.examenes));
 
   return {
-    cursos,
-    resumen: sumar(cursos.map((c) => c.resumen)),
-    banqueo,
-    examenes,
-    faltanExamen: examenes.falta,
-    faltanBanqueoClase: banqueo.falta - examenes.falta,
-    faltanResumen: cursos.reduce((s, c) => s + c.resumen.falta, 0),
-    cursosListos: cursos.filter((c) => c.resumen.falta === 0 && c.banqueo.falta === 0).length,
-    cursosConEscrito: cursos.filter((c) => c.resumen.falta === 0).length,
+    facultad: escritoDe('medicina', todos),
+    ufbi: escritoDe('basico', todos),
+    banqueo: {
+      banqueo,
+      examenes,
+      faltanClase: banqueo.falta - examenes.falta,
+      // Primero los cursos con más exámenes sin banqueo: es lo que más se busca.
+      cursos: conSilabo
+        .filter((c) => c.banqueo.falta > 0)
+        .sort(
+          (a, b) =>
+            b.examenes.falta - a.examenes.falta ||
+            b.banqueo.falta - a.banqueo.falta ||
+            a.nombre.localeCompare(b.nombre),
+        ),
+    },
   };
 }
 

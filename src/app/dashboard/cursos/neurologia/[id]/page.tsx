@@ -35,7 +35,7 @@ export default async function NeurologiaActividadPage({
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
 
-  const isLab = ['LAB-ANAT','LAB-HISTO','TALLER-FIS','AULA-VIRTUAL','ICONOGRAFIA','REV-VIRTUAL'].includes(act.tipo);
+  const isLab = ['LAB-ANAT','LAB-HISTO','TALLER-FIS','AULA-VIRTUAL','ICONOGRAFIA','REV-VIRTUAL'].includes(act.tipo) && !act.resumenCompartido;
   const isFreeExam = act.examen?.free === true;
   const isFreeAccess = isLab || isFreeExam;
   const [user, planState] = await Promise.all([

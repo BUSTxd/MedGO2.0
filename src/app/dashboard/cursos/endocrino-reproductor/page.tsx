@@ -83,7 +83,8 @@ export default async function EndocrinoPage() {
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
               // Las prácticas (anatomía, histología y el taller) son libres.
               const isPractica =
-                act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA' || act.tipo === 'TALLER';
+                (act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA' || act.tipo === 'TALLER') &&
+                !act.resumenCompartido;
               // Si la card redirige a otra sección, no la bloqueamos:
               // el destino maneja su propio acceso.
               const isLocked = !isPractica && !act.linkOverride && !hasAcceso;

@@ -1,7 +1,7 @@
 import { notFound, redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { canVerAportes, isAdminEmail } from '@/lib/admin';
-import { getTrackStats, getAportes, getLanzamiento } from '@/lib/aportes-stats';
+import { getAportes, getAvance } from '@/lib/aportes-stats';
 import {
   getRegistroCursos,
   getRegistroLabs,
@@ -37,8 +37,12 @@ export default async function AportesPage() {
 
   return (
     <AportesPanel
-      lanzamiento={getLanzamiento()}
-      tracks={getTrackStats()}
+      avance={getAvance()}
+      actualizado={new Date().toLocaleTimeString('es-PE', {
+        timeZone: 'America/Lima',
+        hour: '2-digit',
+        minute: '2-digit',
+      })}
       aportes={getAportes(marcas)}
       registro={
         <RegistroAportes

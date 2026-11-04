@@ -1,0 +1,685 @@
+/* ═══════════════════════════════════════════════════════════════
+   PANEL DE AVANCE — «Qué falta por escribir»
+
+   Jerarquía: lo que falta manda (naranja, cifras grandes, lista
+   abierta); lo hecho se resume en una línea; banqueo, UFBI y aportes
+   quedan abajo y plegados.
+   ═══════════════════════════════════════════════════════════════ */
+
+.wrapper {
+  --tinta: #0f172a;
+  --tinta-2: #475569;
+  --tenue: #64748b;
+  --borde: #e2e8f0;
+  --fondo: #ffffff;
+  --fondo-2: #f8fafc;
+  --falta: #ea580c;
+  --falta-tinta: #c2410c;
+  --falta-fondo: rgba(234, 88, 12, 0.1);
+  --falta-pista: rgba(234, 88, 12, 0.22);
+  --hecho: rgba(45, 201, 154, 0.55);
+  --ok: #0f8f6c;
+  --hover: rgba(15, 23, 42, 0.04);
+
+  max-width: 1180px;
+  color: var(--tinta);
+}
+
+:global(body.dark-mode) .wrapper {
+  --tinta: #f1f5f9;
+  --tinta-2: #cbd5e1;
+  --tenue: #94a3b8;
+  --borde: #334155;
+  --fondo: #1e293b;
+  --fondo-2: #0f172a;
+  --falta: #fb923c;
+  --falta-tinta: #fdba74;
+  --falta-fondo: rgba(251, 146, 60, 0.13);
+  --falta-pista: rgba(251, 146, 60, 0.26);
+  --hecho: rgba(78, 224, 179, 0.45);
+  --ok: #4ee0b3;
+  --hover: rgba(241, 245, 249, 0.05);
+}
+
+/* ─── Cabecera ─── */
+.cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-bottom: 22px;
+}
+
+.titulo {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0 0 6px;
+  color: var(--tinta);
+}
+
+.sub {
+  font-size: 14px;
+  color: var(--tenue);
+  margin: 0;
+  max-width: 64ch;
+  line-height: 1.5;
+}
+
+.actualizado {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--tenue);
+  margin: 4px 0 0;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.vivo {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2dc99a;
+  box-shadow: 0 0 0 3px rgba(45, 201, 154, 0.2);
+}
+
+/* ─── Barra: el hueco en naranja, lo hecho apagado ─── */
+.barra,
+.barraGrande {
+  position: relative;
+  display: block;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--falta-pista);
+  overflow: hidden;
+}
+
+.barraGrande {
+  height: 10px;
+}
+
+.barraHecho {
+  display: block;
+  height: 100%;
+  background: var(--hecho);
+  border-radius: 999px;
+}
+
+/* ─── Bloque principal ─── */
+.principal {
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  /* Una clase gana al `section { padding: 100px 48px }` de globals.css. */
+  padding: 22px 24px 24px;
+  margin-bottom: 18px;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 18px 28px;
+  margin-bottom: 20px;
+}
+
+.heroNumero {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.heroNumero strong {
+  font-size: 52px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -2px;
+  color: var(--falta);
+  font-variant-numeric: tabular-nums;
+}
+
+.heroNumero span {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--falta-tinta);
+  margin-top: 4px;
+}
+
+.heroTexto {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.heroTitulo {
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.2px;
+  color: var(--tinta);
+}
+
+.heroSub {
+  font-size: 13px;
+  color: var(--tenue);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ─── Curso con pendientes ─── */
+.cursos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.curso {
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  background: var(--fondo-2);
+  overflow: hidden;
+}
+
+.cursoSummary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 14px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.cursoSummary::-webkit-details-marker {
+  display: none;
+}
+
+.cursoSummary:hover {
+  background: var(--hover);
+}
+
+.cursoSummary:focus-visible,
+.secundarioSummary:focus-visible,
+.banqueoSummary:focus-visible,
+.item:focus-visible,
+.banqueoExamen:focus-visible {
+  outline: 2px solid var(--falta);
+  outline-offset: -2px;
+}
+
+/* La cifra va primero y en grande: es lo que se busca al recorrer la lista. */
+.cursoFaltan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  flex-shrink: 0;
+  padding: 5px 0;
+  border-radius: 10px;
+  background: var(--falta-fondo);
+  color: var(--falta-tinta);
+  line-height: 1;
+}
+
+.cursoFaltan strong {
+  font-size: 20px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.cursoFaltan span {
+  font-size: 10px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.cursoTexto {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cursoNombre {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--tinta);
+}
+
+.cursoTipos {
+  font-size: 12px;
+  color: var(--tenue);
+  line-height: 1.4;
+}
+
+/* Ya tiene PDF: es un hueco más barato (pasarlo a HTML), así que se nombra. */
+.cursoPdf {
+  font-weight: 700;
+  color: var(--falta-tinta);
+}
+
+.cursoPdf::after {
+  content: ' · ';
+  font-weight: 400;
+  color: var(--tenue);
+}
+
+.itemPdf {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--falta-tinta);
+  border: 1px dashed var(--falta);
+  padding: 0 6px;
+  border-radius: 999px;
+  line-height: 16px;
+}
+
+.heroPdf {
+  color: var(--falta-tinta);
+}
+
+.cursoAvance {
+  display: grid;
+  grid-template-columns: 110px auto;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cursoFrac {
+  font-size: 11.5px;
+  color: var(--tenue);
+  font-variant-numeric: tabular-nums;
+  min-width: 38px;
+  text-align: right;
+}
+
+.chevron {
+  font-size: 11px;
+  color: var(--tenue);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+details[open] > summary .chevron {
+  transform: rotate(180deg);
+}
+
+/* ─── Clases que faltan: dos columnas en pantalla ancha ─── */
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 6px 8px 10px;
+  border-top: 1px solid var(--borde);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  column-gap: 12px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 13px;
+  min-height: 34px;
+}
+
+.item:hover {
+  background: var(--hover);
+}
+
+.itemCodigo {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--falta-tinta);
+  font-variant-numeric: tabular-nums;
+  min-width: 34px;
+}
+
+.itemTitulo {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--tinta);
+}
+
+.itemTipo {
+  flex-shrink: 0;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--tinta-2);
+  background: var(--hover);
+  border: 1px solid var(--borde);
+  padding: 1px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.itemBloque {
+  flex-shrink: 0;
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  color: var(--tenue);
+}
+
+.itemIr {
+  flex-shrink: 0;
+  color: var(--tenue);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.item:hover .itemIr,
+.item:focus-visible .itemIr {
+  opacity: 1;
+}
+
+/* ─── Lo hecho y lo que no se puede medir: una línea cada uno ─── */
+.completos {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 14px 2px 0;
+  font-size: 12.5px;
+  color: var(--tenue);
+  line-height: 1.5;
+}
+
+.check {
+  color: var(--ok);
+  font-weight: 800;
+}
+
+.sinSilabo {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px dashed var(--falta-pista);
+  background: var(--falta-fondo);
+  font-size: 12.5px;
+  color: var(--tinta-2);
+  line-height: 1.5;
+}
+
+.sinSilabo strong {
+  color: var(--falta-tinta);
+}
+
+/* ─── Bloques plegados: UFBI, aportes, ayuda ─── */
+.secundario {
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background: var(--fondo);
+  margin-bottom: 12px;
+  overflow: visible;
+}
+
+.secundarioSummary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  padding: 14px 18px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  border-radius: 14px;
+}
+
+.secundarioSummary::-webkit-details-marker {
+  display: none;
+}
+
+.secundarioSummary:hover {
+  background: var(--hover);
+}
+
+.secundarioTitulo {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--tinta);
+}
+
+.secundarioDato {
+  flex: 1;
+  font-size: 12.5px;
+  color: var(--tenue);
+}
+
+.secundarioDato strong {
+  color: var(--falta-tinta);
+}
+
+.secundarioCuerpo {
+  padding: 4px 18px 18px;
+}
+
+/* El registro trae su propia tarjeta; dentro del plegable sobra el marco. */
+.secundarioCuerpo > section,
+:global(body.dark-mode) .secundarioCuerpo > section {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 8px 0 0;
+  margin-bottom: 0;
+}
+
+.subtitulo {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 24px 0 4px;
+  color: var(--tinta);
+}
+
+.nota {
+  font-size: 12.5px;
+  color: var(--tenue);
+  line-height: 1.55;
+  margin: 0 0 12px;
+  max-width: 82ch;
+}
+
+/* ─── Banqueo: una franja pequeña ─── */
+.banqueo {
+  padding: 0;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background: var(--fondo);
+  margin-bottom: 12px;
+}
+
+.banqueoFila {
+  display: grid;
+  grid-template-columns: auto minmax(80px, 180px) auto 1fr;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 12px 18px;
+}
+
+.banqueoTitulo {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--tinta);
+}
+
+.banqueoPct {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--tinta-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.banqueoDato {
+  font-size: 12.5px;
+  color: var(--tenue);
+  white-space: nowrap;
+}
+
+.banqueoDatos {
+  justify-self: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+.banqueoDato strong {
+  color: var(--falta-tinta);
+  font-variant-numeric: tabular-nums;
+}
+
+.banqueoDetalle {
+  border-top: 1px solid var(--borde);
+}
+
+.banqueoSummary {
+  padding: 9px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tenue);
+  cursor: pointer;
+}
+
+.banqueoSummary:hover {
+  color: var(--tinta);
+}
+
+.banqueoLista {
+  list-style: none;
+  margin: 0;
+  padding: 0 18px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.banqueoCurso {
+  display: grid;
+  grid-template-columns: 190px 150px 1fr;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 7px 0;
+  border-top: 1px solid var(--borde);
+  font-size: 12.5px;
+}
+
+.banqueoCurso:first-child {
+  border-top: none;
+}
+
+.banqueoCursoNombre {
+  font-weight: 600;
+  color: var(--tinta);
+}
+
+.banqueoCursoCuenta {
+  color: var(--tenue);
+  font-variant-numeric: tabular-nums;
+}
+
+.banqueoExamenes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.banqueoExamen {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 999px;
+  color: var(--falta-tinta);
+  background: var(--falta-fondo);
+  text-decoration: none;
+}
+
+.banqueoExamen:hover {
+  text-decoration: underline;
+}
+
+/* ─── Teléfono ─── */
+@media (max-width: 900px) {
+  .itemBloque {
+    display: none;
+  }
+  .lista {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .principal {
+    padding: 18px 14px 16px;
+  }
+  .hero {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .heroNumero strong {
+    font-size: 44px;
+  }
+  .cursoSummary {
+    gap: 10px;
+    padding: 10px;
+  }
+  .cursoAvance {
+    display: none;
+  }
+  .item {
+    flex-wrap: wrap;
+    row-gap: 3px;
+  }
+  .itemTitulo {
+    white-space: normal;
+    flex-basis: calc(100% - 50px);
+  }
+  .itemTipo {
+    margin-left: 43px;
+  }
+  .itemIr {
+    display: none;
+  }
+  .banqueoFila {
+    grid-template-columns: auto 1fr auto;
+  }
+  .banqueoDatos {
+    justify-self: start;
+    grid-column: span 3;
+  }
+  .banqueoCurso {
+    grid-template-columns: 1fr auto;
+  }
+  .banqueoExamenes {
+    grid-column: span 2;
+  }
+  .secundarioSummary,
+  .secundarioCuerpo {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron,
+  .itemIr {
+    transition: none;
+  }
+}

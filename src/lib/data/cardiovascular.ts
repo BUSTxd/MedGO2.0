@@ -1,3 +1,5 @@
+import { compartirResumenes } from './resumen-compartido.ts';
+
 export type TipoActividad =
   | 'MAGISTRAL'
   | 'TBL'
@@ -39,6 +41,8 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
+  /** Recibe el resumen de su magistral (`resumen-compartido.ts`): deja de ser libre. */
+  resumenCompartido?: boolean;
 }
 
 export interface Semana {
@@ -626,3 +630,16 @@ export function findActividad(id: string): { actividad: Actividad; semana: Seman
   }
   return null;
 }
+
+/**
+ * Prácticas que comparten el resumen de la magistral de su mismo tema: el
+ * sílabo las separa, pero el contenido es el mismo. Ver `resumen-compartido.ts`.
+ */
+compartirResumenes(semanas, {
+  'cv-p1-anat': ['cv-t1-mediastino'],
+  'cv-p2-anat': ['cv-t2-pericardio'],
+  'cv-p3-anat': ['cv-t3-morfologia'],
+  'cv-p4-anat': ['cv-t4-mediastino-post'],
+  'cv-histo-lab-1': ['cv-histo-clase'],
+  'cv-histo-lab-2': ['cv-histo-clase'],
+});

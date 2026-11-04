@@ -116,7 +116,8 @@ Todos abren lo mismo y ninguno tiene permanencia; solo cambia cada cuánto se co
 - **El gate va en el `page.tsx` de servidor, nunca en `layout.tsx`:** un layout no impide que el segmento viaje al navegador. Patrón: `page.tsx` mínimo + `Pagina.tsx` de cliente dentro de `LabGate`/`SeccionGate`.
 - **Los `children` de `LockedContent` viajan al navegador aunque no se pinten.** Material de pago: el servidor decide con `tieneAccesoA` y pasa `null`. El candado de la interfaz es señal; la cerradura es el servidor (`api/examen`, `acceso-resumen.ts`).
 - **`acceso-resumen.ts`:** `LIBRE` calca la condición de cada `[id]/page.tsx`. Si una página cambia qué abre, cambiarlo aquí también.
-- Excepciones por clase: `gratis`, `premium`, `esLibre` (Locomotor), `SIEMPRE_DE_PAGO`. Labs: `gratis` (coagulación) y `vistazo` (Hipersensibilidad, Lupus: el servidor manda solo lo abierto).
+- Excepciones por clase: `gratis`, `premium`, `esLibre` (Locomotor), `resumenCompartido`, `SIEMPRE_DE_PAGO`.
+- **Resumen compartido** (`src/lib/data/resumen-compartido.ts`): la práctica que el sílabo separa de su magistral (misma región o mismo tejido) recibe su resumen con `compartirResumenes(semanas, {...})` al final del sílabo (Cardiovascular, Neurología, Excretor, Digestivo, Endocrino, Respiratorio; Locomotor usa su propio `RESUMEN_DE_MAGISTRAL`). La práctica marcada `resumenCompartido` **deja de ser libre** en su página, su índice y `acceso-resumen.ts`; si no, el resumen de pago se bajaría gratis. Los sílabos importan con extensión `.ts` (`allowImportingTsExtensions`) porque los scripts los cargan con Node. Labs: `gratis` (coagulación) y `vistazo` (Hipersensibilidad, Lupus: el servidor manda solo lo abierto).
 - La duración sale de `durationDays` y el compromiso de `commitmentMonths`, nunca del nombre. `unlockDateFor` la comparten botón y API de cancelación (423).
 - Añadir un plan: ampliar los CHECK de `profiles_plan_check` y `subscriptions_plan_key_check` y los `Record<ProfilePlan, …>`.
 
@@ -191,7 +192,7 @@ Fragmento en bucket privado `resumenes`, figuras en público `resumenes-img/<cur
 | **EVAs de anatomía** | `components/AnatExam.tsx` | A nombrar → B detalle; un EVA nuevo es copiar `eva-3/` |
 | **Solucionarios** | `SolucionarioRunner.tsx`, `lib/data/solucionarios/` | PDF del enunciado + explicación a la vez, en bloques tipados |
 | **ENCIB** | `lib/data/encib/`, `QuizEncib`, `scripts/encib/` | Temario y clasificación generados; solo códigos en git; claves propuestas por MedGO (los cuadernillos no las traen) |
-| **Avance y Aportes** | `lib/material-plan.ts`, `aportes-stats.ts`, `AportesPanel.tsx` | Mide material leyendo sílabos; banqueo protagonista; marcas en `aportes_marcas`. Una regla nueva de curso va en `REGLAS` |
+| **Avance y Aportes** | `lib/material-plan.ts`, `aportes-stats.ts`, `AportesPanel.tsx` | Mide material leyendo sílabos; manda «Qué falta por escribir» (resúmenes de Facultad, abiertos y de menos a más; **solo cuenta el HTML**, un PDF sale como hueco marcado «PDF» vía `escrito`/`resumenEsHtml` de `material-plan.ts`, mientras candado y crédito por persona siguen leyendo `resumen`; parciales, finales, portafolios y refuerzos/repasos quedan fuera del porcentaje, `esClaseConTema`); UFBI, banqueo y aportes van plegados debajo; un curso sin sílabo sale aparte, nunca como completo; marcas en `aportes_marcas`. Una regla nueva de curso va en `REGLAS` |
 | **MedGO IA** | `lib/ia/`, `components/ia/`, `api/ia/chat` | Ver abajo |
 | **GRIMI** | `landing-nueva/Mascota.tsx`, `components/estudio/Grimi*.tsx` | Mascota y cara de la IA; nombre en `ASISTENTE` |
 | **Investigación** | `lib/investigacion/`, `components/investigacion/` | 14 niveles; un nivel nuevo es un `tema-NN.ts`, no toca el motor |

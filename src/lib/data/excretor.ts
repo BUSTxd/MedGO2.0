@@ -25,6 +25,7 @@ export interface ResumenOpcion {
 }
 
 import type { ExamenRef } from './examen';
+import { compartirResumenes } from './resumen-compartido.ts';
 export type { ExamenRef };
 
 export interface Actividad {
@@ -38,6 +39,8 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
+  /** Recibe el resumen de su magistral (`resumen-compartido.ts`): deja de ser libre. */
+  resumenCompartido?: boolean;
   examen?: ExamenRef;
   qbank?: ExamenRef;
 }
@@ -508,3 +511,17 @@ export function findActividad(id: string): { actividad: Actividad; semana: Seman
   }
   return null;
 }
+
+/**
+ * Prácticas que comparten el resumen de la magistral de su mismo tema: el
+ * sílabo las separa, pero el contenido es el mismo. Ver `resumen-compartido.ts`.
+ */
+compartirResumenes(semanas, {
+  'exc-p1-anat': ['exc-t1-pared'],
+  'exc-p2-anat': [['exc-t2-rinones', 'Riñones y vías urinarias'], ['exc-t3-vejiga', 'Vejiga y uretra']],
+  'exc-p3-anat': [['exc-t3-vejiga', 'Vejiga y uretra'], ['exc-t4-aorta', 'Vasos y nervios de la pared posterior']],
+  'exc-p4-anat': ['exc-t4-aorta'],
+  'exc-histo-lab-1': ['exc-clase-1-histo'],
+  'exc-histo-lab-2': ['exc-clase-1-histo'],
+  'exc-histo-lab-3': ['exc-clase-1-histo'],
+});

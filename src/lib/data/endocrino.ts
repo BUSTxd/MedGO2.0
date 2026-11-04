@@ -1,3 +1,5 @@
+import { compartirResumenes } from './resumen-compartido.ts';
+
 export type TipoActividad =
   | 'MAGISTRAL'
   | 'INVERTIDA'
@@ -37,6 +39,8 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
+  /** Recibe el resumen de su magistral (`resumen-compartido.ts`): deja de ser libre. */
+  resumenCompartido?: boolean;
   /**
    * Módulo interactivo de la práctica. En las actividades de práctica la tarjeta
    * «Video» se sustituye por «Simulación»; sin `href` queda como próximamente.
@@ -114,16 +118,6 @@ export const semanas: Semana[] = [
         docentes: ['Dr. Marcos De La Cruz'],
       },
       {
-        id: 'bienvenida',
-        tipo: 'MAGISTRAL',
-        unidad: 'ENDOCRINA',
-        titulo: 'Bienvenida al curso',
-        fecha: '24 nov',
-        hora: '11:00–11:15',
-        subtemas: ['Presentación del curso', 'Metodología y sistema de evaluación'],
-        docentes: ['Dr. Víctor Noriega'],
-      },
-      {
         id: 'clase-3',
         tipo: 'MAGISTRAL',
         unidad: 'ENDOCRINA',
@@ -164,16 +158,6 @@ export const semanas: Semana[] = [
         ],
         docentes: ['Profesores de Anatomía'],
         nota: 'La misma práctica se repite por grupos y mesas. Revisa tu subgrupo en el cronograma oficial.',
-      },
-      {
-        id: 'laminas-1',
-        tipo: 'HISTOLOGIA',
-        unidad: 'ENDOCRINA',
-        titulo: 'Revisión de láminas 1',
-        fecha: '24 nov',
-        hora: '21:00–22:00',
-        subtemas: ['Repaso guiado de las láminas de la semana'],
-        docentes: ['Dra. Amparo Coico'],
       },
       {
         id: 'histo-1',
@@ -347,16 +331,6 @@ export const semanas: Semana[] = [
         docentes: ['Profesores de Anatomía'],
       },
       {
-        id: 'laminas-2',
-        tipo: 'HISTOLOGIA',
-        unidad: 'REPRODUCTOR',
-        titulo: 'Revisión de láminas 2',
-        fecha: '1 dic',
-        hora: '21:00–22:00',
-        subtemas: ['Repaso guiado de las láminas de la semana'],
-        docentes: ['Dra. Mery Revilla'],
-      },
-      {
         id: 'histo-2',
         tipo: 'HISTOLOGIA',
         unidad: 'REPRODUCTOR',
@@ -484,16 +458,6 @@ export const semanas: Semana[] = [
     titulo: 'Semana 3 — Reproductor femenino y respuesta al estrés',
     fechas: '8 – 13 dic',
     actividades: [
-      {
-        id: 'laminas-3',
-        tipo: 'HISTOLOGIA',
-        unidad: 'REPRODUCTOR',
-        titulo: 'Revisión de láminas 3',
-        fecha: '8 dic',
-        hora: '21:00–22:00',
-        subtemas: ['Repaso guiado de las láminas de la semana'],
-        docentes: ['Dra. Shirley Alva'],
-      },
       {
         id: 'histo-3',
         tipo: 'HISTOLOGIA',
@@ -666,16 +630,6 @@ export const semanas: Semana[] = [
         docentes: ['Profesores de Anatomía'],
       },
       {
-        id: 'laminas-4',
-        tipo: 'HISTOLOGIA',
-        unidad: 'REPRODUCTOR',
-        titulo: 'Revisión de láminas 4',
-        fecha: '15 dic',
-        hora: '21:00–22:00',
-        subtemas: ['Repaso guiado de todas las láminas del curso'],
-        docentes: ['Dra. Mónica Calisaya'],
-      },
-      {
         id: 'histo-4',
         tipo: 'HISTOLOGIA',
         unidad: 'REPRODUCTOR',
@@ -776,3 +730,16 @@ export function findActividad(id: string): { actividad: Actividad; semana: Seman
   }
   return null;
 }
+
+/**
+ * Prácticas que comparten el resumen de la magistral de su mismo tema: el
+ * sílabo las separa, pero el contenido es el mismo. Ver `resumen-compartido.ts`.
+ */
+compartirResumenes(semanas, {
+  'anat-1': ['clase-2'],
+  'anat-2': ['clase-4'],
+  'anat-3': ['clase-9'],
+  'anat-4': ['clase-11'],
+  'anat-5': ['clase-15'],
+  'anat-6': ['clase-20'],
+});

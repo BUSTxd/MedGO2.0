@@ -35,7 +35,8 @@ export default async function ActividadPage({
   // son libres; las clases magistrales / invertidas / TBL / SGP / repasos /
   // exámenes están detrás del plan Interno.
   const isPractica =
-    act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA' || act.tipo === 'TALLER';
+    (act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA' || act.tipo === 'TALLER') &&
+    !act.resumenCompartido;
   const [user, planState] = await Promise.all([
     getUser(),
     isPractica

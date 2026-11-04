@@ -31,6 +31,7 @@ export interface ResumenOpcion {
 }
 
 import type { ExamenRef } from './examen';
+import { compartirResumenes } from './resumen-compartido.ts';
 export type { ExamenRef };
 
 export interface Actividad {
@@ -44,6 +45,8 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
+  /** Recibe el resumen de su magistral (`resumen-compartido.ts`): deja de ser libre. */
+  resumenCompartido?: boolean;
   examen?: ExamenRef;
 }
 
@@ -88,22 +91,6 @@ export const semanas: Semana[] = [
     titulo: 'Semana 1',
     fechas: '01 – 07 jun',
     actividades: [
-      {
-        id: 't01',
-        tipo: 'MAGISTRAL',
-        unidad: 'UNIDAD_1',
-        titulo: 'Bienvenida al Curso',
-        fecha: '01 jun · lun',
-        hora: '07:00-08:00',
-        docentes: ['Dr. Martín Tipismana B.'],
-        subtemas: [
-          'Presentación del equipo docente',
-          'Estructura y objetivos del curso',
-          'Metodologías: clases, ABP, TBL, prácticas e iconografía',
-          'Sistema de evaluación y criterios de aprobación',
-          'Cronograma general',
-        ],
-      },
       {
         id: 't02',
         resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t02', label: 'Resumen', formato: 'html' }] },
@@ -185,19 +172,6 @@ export const semanas: Semana[] = [
           'Ramos terminales del nervio facial (VII)',
           'Región parotídea y conducto parotídeo',
           'Correlaciones clínicas: parálisis facial, traumatismos',
-        ],
-      },
-      {
-        id: 'rev1',
-        tipo: 'REV-VIRTUAL',
-        unidad: 'UNIDAD_2',
-        titulo: 'Revisión Virtual de Láminas 1',
-        fecha: '01 jun · lun',
-        hora: '20:00-21:00',
-        docentes: ['Dra. Alva'],
-        subtemas: [
-          'Revisión de láminas histológicas del SNC',
-          'Preparación para el paso corto de PH01',
         ],
       },
       {
@@ -358,19 +332,6 @@ export const semanas: Semana[] = [
           'Nervios craneales en la órbita',
           'Cadena osicular y laberinto óseo',
           'Visualización de imágenes radiológicas del oído',
-        ],
-      },
-      {
-        id: 'rev2',
-        tipo: 'REV-VIRTUAL',
-        unidad: 'UNIDAD_2',
-        titulo: 'Revisión Virtual de Láminas 2',
-        fecha: '08 jun · lun',
-        hora: '20:00-21:00',
-        docentes: ['Dr. Portugal'],
-        subtemas: [
-          'Revisión de láminas histológicas SNP',
-          'Preparación para el paso corto de PH02',
         ],
       },
       {
@@ -570,19 +531,6 @@ export const semanas: Semana[] = [
         ],
       },
       {
-        id: 'rev3',
-        tipo: 'REV-VIRTUAL',
-        unidad: 'UNIDAD_2',
-        titulo: 'Revisión Virtual de Láminas 3',
-        fecha: '15 jun · lun',
-        hora: '20:00-21:00',
-        docentes: ['Dra. Coico'],
-        subtemas: [
-          'Revisión de láminas de piel',
-          'Preparación para el paso corto de PH03',
-        ],
-      },
-      {
         id: 'ph03',
         tipo: 'LAB-HISTO',
         unidad: 'UNIDAD_2',
@@ -771,19 +719,6 @@ export const semanas: Semana[] = [
           'Cerebelo: vermis, hemisferios, fisuras',
           'Pedúnculos cerebrales, protuberanciales y cerebelosos',
           'Cuarto ventrículo: techo y suelo',
-        ],
-      },
-      {
-        id: 'rev4',
-        tipo: 'REV-VIRTUAL',
-        unidad: 'UNIDAD_2',
-        titulo: 'Revisión Virtual de Láminas 4',
-        fecha: '22 jun · lun',
-        hora: '20:00-21:00',
-        docentes: ['Dra. Calasaya'],
-        subtemas: [
-          'Revisión general de láminas SNC, SNP y piel',
-          'Preparación para portafolio de histología',
         ],
       },
       {
@@ -1096,19 +1031,6 @@ export const semanas: Semana[] = [
         ],
       },
       {
-        id: 'rev5',
-        tipo: 'REV-VIRTUAL',
-        unidad: 'UNIDAD_2',
-        titulo: 'Revisión Virtual de Láminas 5',
-        fecha: '06 jul · lun',
-        hora: '20:00-21:00',
-        docentes: ['Dra. Revilla'],
-        subtemas: [
-          'Revisión final de láminas histológicas',
-          'Consolidación para el examen final',
-        ],
-      },
-      {
         id: 't27',
         resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'neu-t27', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
@@ -1202,3 +1124,30 @@ export function findActividad(id: string): { actividad: Actividad; semana: Seman
   }
   return null;
 }
+
+/**
+ * Prácticas que comparten el resumen de la magistral de su mismo tema: el
+ * sílabo las separa, pero el contenido es el mismo. Ver `resumen-compartido.ts`.
+ */
+compartirResumenes(semanas, {
+  // Prácticas de anatomía ↔ magistral de la misma región (CT1–CT10).
+  pa01: ['t03'],
+  pa02: ['t04'],
+  pa03: ['t07'],
+  pa04: ['t09'],
+  pa05: ['t12'],
+  pa06: ['t14'],
+  pa07: ['t17'],
+  pa08: ['t19'],
+  pa09: ['t22'],
+  pa10: ['t25'],
+  // Prácticas de histología ↔ su magistral.
+  ph01: ['t02'],
+  ph02: ['t02'],
+  ph03: ['t06'],
+  // Aulas virtuales: repasan en línea las regiones de las magistrales.
+  av01: ['t04'],
+  av02: [['t09', 'Región orbitaria'], ['t12', 'Oído']],
+  av03: [['t14', 'Columna y médula espinal'], ['t17', 'Tronco encefálico']],
+  av04: ['t19', ['t22', 'Hemisferios (morfología interna)'], 't25'],
+});

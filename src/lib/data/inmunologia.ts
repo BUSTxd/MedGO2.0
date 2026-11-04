@@ -95,16 +95,6 @@ export const semanas: Semana[] = [
     fechas: '1 – 5 set',
     actividades: [
       {
-        id: 'orientacion',
-        tipo: 'MAGISTRAL',
-        unidad: 'INNATA',
-        titulo: 'Presentación del curso y sílabo',
-        fecha: '1 set',
-        hora: '—',
-        subtemas: ['Metodología del curso', 'Sistema de evaluación', 'Bibliografía'],
-        docentes: [],
-      },
-      {
         id: 't-1',
         tipo: 'INVERTIDA',
         unidad: 'INNATA',

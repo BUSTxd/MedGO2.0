@@ -33,7 +33,8 @@ export default async function ActividadPage({
   // Gating: las prácticas (anatomía e histología) son libres; las clases
   // magistrales / invertidas / TBL / SGP / repasos / exámenes están detrás del
   // plan Interno.
-  const isPractica = act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA';
+  const isPractica =
+    (act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA') && !act.resumenCompartido;
   const [user, planState] = await Promise.all([
     getUser(),
     isPractica

@@ -1,3 +1,5 @@
+import { compartirResumenes } from './resumen-compartido.ts';
+
 export type TipoActividad =
   | 'MAGISTRAL'
   | 'INVERTIDA'
@@ -36,6 +38,8 @@ export interface Actividad {
   docentes: string[];
   nota?: string;
   resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
+  /** Recibe el resumen de su magistral (`resumen-compartido.ts`): deja de ser libre. */
+  resumenCompartido?: boolean;
   /**
    * Módulo interactivo de la práctica. En las actividades de práctica la tarjeta
    * «Video» se sustituye por «Simulación»; sin `href` queda como próximamente.
@@ -88,16 +92,6 @@ export const semanas: Semana[] = [
     titulo: 'Semana 1 — Cavidad oral, esófago y pared abdominal',
     fechas: '27 – 31 oct',
     actividades: [
-      {
-        id: 'bienvenida',
-        tipo: 'MAGISTRAL',
-        unidad: 'FISIOLOGIA',
-        titulo: 'Bienvenida al curso',
-        fecha: '27 oct',
-        hora: '07:00–07:30',
-        subtemas: ['Presentación del curso', 'Metodología y sistema de evaluación'],
-        docentes: ['Dr. Alvaro Bellido Caparó'],
-      },
       {
         id: 'clase-1',
         tipo: 'MAGISTRAL',
@@ -169,17 +163,6 @@ export const semanas: Semana[] = [
         ],
         docentes: ['Profesores de Anatomía'],
         nota: 'La misma práctica se repite por mesas (A1–A18 / B1–B18). Revisa tu grupo en el cronograma oficial.',
-      },
-      {
-        id: 'laminas-1',
-        tipo: 'HISTOLOGIA',
-        unidad: 'ESTRUCTURA',
-        titulo: 'Revisión virtual de láminas 1',
-        fecha: '27 oct',
-        hora: '21:00–22:00',
-        subtemas: ['Repaso guiado de las láminas de la semana'],
-        docentes: ['Dra. Mery Revilla', 'Dra. Shirley Alva'],
-        resumen: { tipo: 'pdf', opciones: [{ id: 'dig-histo-1', label: 'Resumen' }] },
       },
       {
         id: 'histo-1',
@@ -300,17 +283,6 @@ export const semanas: Semana[] = [
           'Aula virtual: canal inguinal, esófago y estómago',
         ],
         docentes: ['Profesores de Anatomía'],
-      },
-      {
-        id: 'laminas-2',
-        tipo: 'HISTOLOGIA',
-        unidad: 'ESTRUCTURA',
-        titulo: 'Revisión virtual de láminas 2',
-        fecha: '3 nov',
-        hora: '21:00–22:00',
-        subtemas: ['Repaso guiado de las láminas de la semana'],
-        docentes: ['Dra. Mery Revilla', 'Dra. Shirley Alva'],
-        resumen: { tipo: 'pdf', opciones: [{ id: 'dig-histo-2', label: 'Resumen' }] },
       },
       {
         id: 'histo-2',
@@ -485,17 +457,6 @@ export const semanas: Semana[] = [
         docentes: ['Profesores de Anatomía'],
       },
       {
-        id: 'laminas-3',
-        tipo: 'HISTOLOGIA',
-        unidad: 'ESTRUCTURA',
-        titulo: 'Revisión virtual de láminas 3',
-        fecha: '10 nov',
-        hora: '21:00–22:00',
-        subtemas: ['Repaso guiado de las láminas de la semana'],
-        docentes: ['Dra. Mery Revilla', 'Dra. Shirley Alva'],
-        resumen: { tipo: 'pdf', opciones: [{ id: 'dig-histo-3', label: 'Resumen' }] },
-      },
-      {
         id: 'histo-3',
         tipo: 'HISTOLOGIA',
         unidad: 'ESTRUCTURA',
@@ -641,26 +602,6 @@ export const semanas: Semana[] = [
         docentes: ['Profesores de Anatomía'],
       },
       {
-        id: 'laminas-4',
-        tipo: 'HISTOLOGIA',
-        unidad: 'ESTRUCTURA',
-        titulo: 'Revisión virtual de láminas 4',
-        fecha: '17 nov',
-        hora: '21:00–22:00',
-        subtemas: ['Repaso guiado de todas las láminas del curso'],
-        docentes: ['Dra. Mery Revilla', 'Dra. Shirley Alva'],
-        // Repaso: no tiene PDF propio, reutiliza los 3 resúmenes de histo-1/2/3
-        // vía picker (2+ opciones abre selector en vez de cargar directo).
-        resumen: {
-          tipo: 'pdf',
-          opciones: [
-            { id: 'dig-histo-1', label: 'Práctica 1 — Boca a esófago' },
-            { id: 'dig-histo-2', label: 'Práctica 2 — Estómago e intestinos' },
-            { id: 'dig-histo-3', label: 'Práctica 3 — Hígado, páncreas y vesícula' },
-          ],
-        },
-      },
-      {
         id: 'histo-4',
         tipo: 'HISTOLOGIA',
         unidad: 'ESTRUCTURA',
@@ -793,3 +734,18 @@ export function findActividad(id: string): { actividad: Actividad; semana: Seman
   }
   return null;
 }
+
+/**
+ * Prácticas que comparten el resumen de la magistral de su mismo tema: el
+ * sílabo las separa, pero el contenido es el mismo. Ver `resumen-compartido.ts`.
+ */
+compartirResumenes(semanas, {
+  'anat-1': ['clase-2'],
+  'anat-2': ['clase-3'],
+  'anat-3': ['clase-7'],
+  'anat-4': ['clase-10'],
+  'anat-5': ['clase-12'],
+  'anat-6': ['clase-15'],
+  // La magistral de histología junta lo que las prácticas 2 y 3 ven por separado.
+  'clase-4': [['histo-2', 'Estómago e intestinos'], ['histo-3', 'Hígado, páncreas y vesícula']],
+});

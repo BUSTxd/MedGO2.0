@@ -72,6 +72,27 @@ export interface PlanActividad {
   apoyo: Slot;
   banqueo: Slot;
   resumen: Slot;
+  /**
+   * Material escrito que cuenta para el panel de avance: sólo el resumen en
+   * HTML. Un PDF abre la tarjeta (`resumen` sigue en «listo», y con él el
+   * candado y el crédito por persona), pero aquí es un hueco: hay que pasarlo
+   * a HTML. `soloPdf` distingue ese hueco del de una clase sin nada.
+   */
+  escrito: Slot & { soloPdf: boolean };
+}
+
+/**
+ * El resumen abre en el visor HTML. Misma precedencia que `StudyMaterialSection`:
+ * manda el `formato` de cada opción; si no lo declara, el de la tarjeta; sin
+ * nada, es PDF. Basta con que una opción sea HTML (Te4 de Biología Celular se
+ * ofrece en los dos envases).
+ */
+export function resumenEsHtml(resumen: unknown): boolean {
+  if (!resumen || typeof resumen !== 'object') return false;
+  const r = resumen as { formato?: string; opciones?: { formato?: string }[] };
+  const opciones = r.opciones ?? [];
+  if (opciones.length === 0) return r.formato === 'html';
+  return opciones.some((o) => (o.formato ?? r.formato) === 'html');
 }
 
 /**
@@ -102,6 +123,28 @@ const TIPOS_EXAMEN = new Set([
  * nada que banquear ni que resumir: ninguna de las tres tarjetas aplica.
  */
 const TIPOS_ENTREGA = new Set(['ENTREGABLE', 'PRODUCTO']);
+
+/**
+ * Refuerzos: sesiones de repaso de lo ya visto. No traen tema nuevo, así que no
+ * piden material escrito propio. Unos sílabos les dan tipo `REPASO`; otros los
+ * dejan con el tipo de la sesión y lo dicen en el título («P5 — Repaso libre de
+ * Anatomía», «Fisiología: Repaso Final»). «Tejido muscular y repaso» no entra:
+ * ahí el repaso es un añadido a un tema.
+ */
+const TIPOS_REFUERZO = new Set(['REPASO', 'REFUERZO']);
+const RE_REFUERZO = /(^|[—:]\s*)(repaso|refuerzo|revisi[oó]n general)\b/i;
+
+/**
+ * Evaluaciones que el sílabo registra como sesión: «Portafolio de Histología
+ * (Evaluación Final)», «Sesión 3: Presentación de Portafolio».
+ */
+const RE_EVALUACION = /evaluaci[oó]n (final|parcial)|examen (final|parcial)|portafolio/i;
+
+/** Ni refuerzo ni parcial ni final: una clase con tema propio que escribir. */
+export function esClaseConTema(act: Pick<ActividadLike, 'tipo' | 'titulo'>): boolean {
+  if (TIPOS_EXAMEN.has(act.tipo) || TIPOS_REFUERZO.has(act.tipo)) return false;
+  return !RE_REFUERZO.test(act.titulo) && !RE_EVALUACION.test(act.titulo);
+}
 
 /** Nombre legible del tipo de evaluación, para el listado de pendientes. */
 const ETIQUETA_EXAMEN: Record<string, string> = {
@@ -193,6 +236,13 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
   // Los exámenes sí exigen banqueo; los entregables no tienen nada que banquear.
   const banqueoNoAplica =
     invitacion || esEntrega || (reglas.sinBanqueoEn?.includes(act.tipo) ?? false);
+  const resumenNoAplica = invitacion || esEvaluacion;
+  const html = resumenEsHtml(act.resumen);
+  // El porcentaje del panel sólo mide clases con tema propio: parciales,
+  // finales y refuerzos quedan fuera aunque tengan resumen, y un PDF en ellas
+  // no se pide pasar a HTML.
+  const escritoEstado: SlotEstado =
+    resumenNoAplica || !esClaseConTema(act) ? 'no-aplica' : html ? 'listo' : 'falta';
 
   return {
     id: act.id,
@@ -215,7 +265,13 @@ export function planDeActividad(slug: string, act: ActividadLike): PlanActividad
     resumen: {
       kind: 'resumen',
       label: 'Resumen',
-      estado: act.resumen ? 'listo' : invitacion || esEvaluacion ? 'no-aplica' : 'falta',
+      estado: act.resumen ? 'listo' : resumenNoAplica ? 'no-aplica' : 'falta',
+    },
+    escrito: {
+      kind: 'resumen',
+      label: 'Resumen en HTML',
+      estado: escritoEstado,
+      soloPdf: escritoEstado === 'falta' && !!act.resumen,
     },
   };
 }

@@ -139,7 +139,7 @@ export default async function NeurologiaPage() {
                 const badge = TIPO_BADGE[act.tipo];
                 const borderColor = UNIDAD_COLOR[act.unidad];
                 const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
-                const isLab = ['LAB-ANAT','LAB-HISTO','TALLER-FIS','AULA-VIRTUAL','ICONOGRAFIA','REV-VIRTUAL'].includes(act.tipo);
+                const isLab = ['LAB-ANAT','LAB-HISTO','TALLER-FIS','AULA-VIRTUAL','ICONOGRAFIA','REV-VIRTUAL'].includes(act.tipo) && !act.resumenCompartido;
                 const isLocked = !isLab && !hasAcceso;
 
                 return (

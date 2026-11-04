@@ -35,7 +35,7 @@ export default async function ExcretorActividadPage({
   const borderColor = UNIDAD_COLOR[act.unidad];
   const unidadLabel = UNIDAD_LABEL[act.unidad];
 
-  const isLab = act.tipo === 'LAB-HISTO' || act.tipo === 'LAB-ANAT';
+  const isLab = (act.tipo === 'LAB-HISTO' || act.tipo === 'LAB-ANAT') && !act.resumenCompartido;
   const isFreeExam = act.examen?.free === true;
   const isFreeAccess = isLab || isFreeExam;
   const [user, planState] = await Promise.all([

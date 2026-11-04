@@ -22,6 +22,7 @@ interface Act {
   premium?: boolean;
   examen?: { free?: boolean };
   resumen?: { opciones?: { id: string }[] };
+  resumenCompartido?: boolean;
   propuestos?: { tipo?: string; claseId?: string; opciones?: { id: string }[] };
 }
 
@@ -72,6 +73,9 @@ const LIBRE: Record<string, (a: Act) => boolean> = {
 function claseLibre(curso: string, a: Act): boolean {
   // Curso gratis: todo abierto salvo lo marcado `premium` (Epidemiología T2-T4).
   if (cursoEsGratis(curso) && !a.premium) return true;
+  // Práctica con el resumen de su magistral (`resumen-compartido.ts`): de pago,
+  // o ese resumen se descargaría gratis desde la práctica.
+  if (a.resumenCompartido) return false;
   return LIBRE[curso]?.(a) ?? false;
 }
 
