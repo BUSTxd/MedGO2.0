@@ -20,8 +20,7 @@ export const viewport: Viewport = { themeColor: '#0c1015' };
  * que la demo diga la cifra real sin bajarse el catálogo. Un laboratorio nuevo suma solo.
  */
 function cuentaBiblioteca(): CuentaBiblioteca {
-  // Como cuenta de fuera de Cayetano: Física (sus 14 módulos) todavía no se enseña en la landing.
-  const labs = tarjetasLaboratorio({ plan: 'free', isActive: false }, false);
+  const labs = tarjetasLaboratorio({ plan: 'free', isActive: false });
   const de = (tipo: string) => labs.filter((l) => l.tipo === tipo).length;
   return { Todos: labs.length, 'Simulación': de('Simulación'), 'Modelo 3D': de('Modelo 3D'), Atlas: de('Atlas') };
 }

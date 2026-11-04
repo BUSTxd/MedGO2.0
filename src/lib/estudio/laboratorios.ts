@@ -29,15 +29,15 @@ const sinQuery = (href: string) => href.split(/[?#]/)[0];
 
 /**
  * El laboratorio que el sílabo enlaza a una clase: `simulacion.href` (la
- * Evaluación 1 de Locomotor → el examen 3D, las prácticas de Hematología) o
- * `modulo` (las clases de Física). Nombre y descripción salen del catálogo; la
- * descripción del sílabo, si la trae, manda porque habla de esa clase.
+ * Evaluación 1 de Locomotor → el examen 3D, las prácticas de Hematología).
+ * Nombre y descripción salen del catálogo; la descripción del sílabo, si la
+ * trae, manda porque habla de esa clase.
  */
 export function laboratorioDeClase(
   curso: string,
-  act: { id: string; simulacion?: { href?: string; desc?: string }; modulo?: boolean },
+  act: { id: string; simulacion?: { href?: string; desc?: string } },
 ): LabRecomendado | undefined {
-  const deDashboard = act.simulacion?.href ?? (act.modulo ? `/dashboard/cursos/${curso}/modulo/${act.id}` : null);
+  const deDashboard = act.simulacion?.href ?? null;
   const href = deDashboard ? rutaEnEstudio(deDashboard) : null;
   if (!deDashboard || !href) return undefined;
   const exp = LAB_TOPICS.flatMap((t) => t.experiments).find((e) => e.href && sinQuery(e.href) === sinQuery(deDashboard));
@@ -56,14 +56,12 @@ export function laboratorioDeClase(
  * Las tarjetas del Laboratorio: los laboratorios publicados del catálogo (los
  * que tienen `href`), una vez cada uno aunque los compartan dos cursos, más
  * Investigación. Primero los del tramo del alumno, como en el dashboard.
- * Física es un curso de Cayetano: sin cuenta de Cayetano no aparece.
  */
-export function tarjetasLaboratorio(plan: Plan, deCayetano: boolean): TarjetaLab[] {
+export function tarjetasLaboratorio(plan: Plan): TarjetaLab[] {
   const propio = trackDelUsuario(plan);
   const porHref = new Map<string, TarjetaLab & { track: string }>();
 
   for (const tema of LAB_TOPICS) {
-    if (tema.id === 'fisica-medicina' && !deCayetano) continue;
     const curso = tema.title.replace(/\s*\|.*$/, '');
     for (const exp of tema.experiments) {
       if (!exp.href) continue;
@@ -73,7 +71,7 @@ export function tarjetasLaboratorio(plan: Plan, deCayetano: boolean): TarjetaLab
       if (previa) { previa.cursos.push(curso); continue; }
 
       const slug = exp.href.startsWith(LAB) ? exp.href.slice(LAB.length).split('?')[0] : null;
-      // Un laboratorio es nivel completo; lo que no es laboratorio (los módulos de Física) es material del curso.
+      // Un laboratorio es nivel completo; lo que no cuelga de `laboratorio/` es material del curso.
       const required = slug ? requisitoDeLab(slug) : requiredPlanDeCurso(tema.id);
       const abierto = tieneAccesoA(plan, required);
       const acceso: TarjetaLab['acceso'] = abierto ? 'abierto'

@@ -47,7 +47,7 @@ const etiquetaTipo = (t: string) => TIPO[t] ?? t.charAt(0) + t.slice(1).toLowerC
 
 interface ActCruda extends ActPractica {
   id: string; tipo: string; titulo: string; fecha?: string; hora?: string; subtemas?: string[];
-  docentes?: string[]; nota?: string; simulacion?: { href?: string; desc?: string }; modulo?: boolean;
+  docentes?: string[]; nota?: string; simulacion?: { href?: string; desc?: string };
   resumen?: { formato?: FormatoResumen; opciones?: { id: string; label?: string; formato?: FormatoResumen }[] };
 }
 

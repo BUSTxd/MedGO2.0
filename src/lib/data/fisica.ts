@@ -37,17 +37,6 @@ export interface Actividad {
    * en el Examen final, que junta varios documentos de banqueo.
    */
   propuestos?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
-  /**
-   * Material interactivo de la clase (`/cursos/fisica-medicina/modulo/{id}`).
-   * Sustituye la tarjeta «Video» por «Simulación».
-   *
-   * Aquí sólo se declara que existe: QUÉ se abre lo decide
-   * `src/lib/data/fisica-modulos/index.ts` — el módulo completo de teoría si la
-   * clase lo tiene, y si no el laboratorio con su menú de temas. Las catorce
-   * clases lo llevan, así que el sílabo sigue siendo la única fuente de qué
-   * material tiene cada actividad sin tener que saber de qué tipo es.
-   */
-  modulo?: boolean;
   /** ISO date YYYY-MM-DD; usado para "Próximos exámenes" en el home. */
   fechaISO?: string;
   /** Sobreescribe el destino del card en el sílabo. */
@@ -125,7 +114,6 @@ export const semanas: Semana[] = [
         docentes: ['Dr. Erwin Haya Enríquez'],
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
-        modulo: true,
       },
       {
         id: 'fis-c-2',
@@ -144,7 +132,6 @@ export const semanas: Semana[] = [
         docentes: [],
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
-        modulo: true,
       },
       {
         id: 'fis-c-3',
@@ -161,7 +148,6 @@ export const semanas: Semana[] = [
         docentes: [],
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
-        modulo: true,
       },
       {
         id: 'fis-c-4',
@@ -178,7 +164,6 @@ export const semanas: Semana[] = [
         docentes: [],
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
-        modulo: true,
       },
       {
         id: 'fis-c-5',
@@ -197,7 +182,6 @@ export const semanas: Semana[] = [
         docentes: [],
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
-        modulo: true,
       },
     ],
   },
@@ -223,7 +207,6 @@ export const semanas: Semana[] = [
           'Sonido y oído',
         ],
         docentes: [],
-        modulo: true,
         resumen: {
           tipo: 'pdf',
           opciones: [
@@ -249,7 +232,6 @@ export const semanas: Semana[] = [
         docentes: [],
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
-        modulo: true,
       },
       {
         id: 'fis-c-8',
@@ -267,7 +249,6 @@ export const semanas: Semana[] = [
         docentes: [],
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
-        modulo: true,
       },
     ],
   },
@@ -294,7 +275,6 @@ export const semanas: Semana[] = [
         docentes: [],
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
-        modulo: true,
       },
       {
         id: 'fis-c-10',
@@ -318,7 +298,6 @@ export const semanas: Semana[] = [
           ],
         },
         propuestos: { tipo: 'pdf' },
-        modulo: true,
       },
       {
         id: 'fis-c-11',
@@ -337,7 +316,6 @@ export const semanas: Semana[] = [
         docentes: [],
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
-        modulo: true,
       },
       {
         id: 'fis-c-12',
@@ -358,7 +336,6 @@ export const semanas: Semana[] = [
         docentes: [],
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
-        modulo: true,
       },
     ],
   },
@@ -385,7 +362,6 @@ export const semanas: Semana[] = [
         docentes: [],
         resumen: { tipo: 'pdf' },
         propuestos: { tipo: 'pdf' },
-        modulo: true,
       },
       {
         id: 'fis-c-14',
@@ -401,7 +377,6 @@ export const semanas: Semana[] = [
           'Física nuclear y radiación en medicina',
         ],
         docentes: [],
-        modulo: true,
       },
     ],
   },

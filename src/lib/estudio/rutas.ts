@@ -7,7 +7,6 @@
 const MAPA: [string, string][] = [
   ['/dashboard/laboratorio', '/estudio/laboratorio'],
   ['/dashboard/investigacion', '/estudio/laboratorio/investigacion'],
-  ['/dashboard/cursos/fisica-medicina/modulo', '/estudio/laboratorio/fisica'],
   ['/dashboard/cuenta', '/estudio/cuenta'],
   ['/dashboard/aportes', '/estudio/aportes'],
   ['/dashboard/admin', '/estudio/admin'],

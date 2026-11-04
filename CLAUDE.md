@@ -195,7 +195,6 @@ Fragmento en bucket privado `resumenes`, figuras en público `resumenes-img/<cur
 | **MedGO IA** | `lib/ia/`, `components/ia/`, `api/ia/chat` | Ver abajo |
 | **GRIMI** | `landing-nueva/Mascota.tsx`, `components/estudio/Grimi*.tsx` | Mascota y cara de la IA; nombre en `ASISTENTE` |
 | **Investigación** | `lib/investigacion/`, `components/investigacion/` | 14 niveles; un nivel nuevo es un `tema-NN.ts`, no toca el motor |
-| **Física** | `lib/data/fisica-modulos/`, `components/fisica/sims/` | 18 sims; la plantilla de fórmula es exactamente lo que resuelve la escena, en SI; arrastre con la escala congelada al empezar el gesto |
 | **Tu esfuerzo** | `TuEsfuerzo.tsx`, `CursorCelula.tsx` | Invocación con racha ≥ 20; cerradura en `api/esfuerzo/invocar`; sprites versionados `immutable` |
 | **Modelado 3D** | `dashboard/modelado` | Editor R3F, solo admin |
 

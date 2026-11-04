@@ -6,7 +6,6 @@ import { PLANS } from '@/lib/plans';
 import KidneyIcon from '@/components/icons/KidneyIcon';
 import MicroscopeIcon from '@/components/icons/MicroscopeIcon';
 import ConstruccionIcon from '@/components/icons/ConstruccionIcon';
-import FisicaIcon from '@/components/icons/FisicaIcon';
 import LocomotorIcon from '@/components/icons/LocomotorIcon';
 import styles from '@/styles/dashboardPages.module.css';
 import { LAB_TOPICS as CATALOGO, type TemaLab } from '@/lib/data/laboratorio-catalogo';
@@ -61,7 +60,6 @@ const ICONOS: Record<string, ReactNode> = {
   ),
   'patologia': <MicroscopeIcon size={26} />,
   'aparato-locomotor': <LocomotorIcon size={26} color="#ffffff" colorDark="rgba(255,255,255,0.7)" />,
-  'fisica-medicina': <FisicaIcon size={26} white />,
 };
 
 const LAB_TOPICS: Topic[] = CATALOGO.map((t) => ({ ...t, icon: ICONOS[t.id] }));

@@ -6,5 +6,5 @@ export const metadata = { title: 'Laboratorio virtual · MedGO' };
 
 export default async function LaboratorioEstudioPage() {
   const s = await prepararSesionApp();
-  return <IndiceLaboratorio tarjetas={tarjetasLaboratorio(s.planState, s.deCayetano)} />;
+  return <IndiceLaboratorio tarjetas={tarjetasLaboratorio(s.planState)} />;
 }
