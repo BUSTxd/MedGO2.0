@@ -31,8 +31,7 @@ import { fileURLToPath, pathToFileURL } from 'url';
 import sharp from 'sharp';
 
 const AQUI = dirname(fileURLToPath(import.meta.url));
-const FONDO_FIGURAS = '#fbf7ee';   // = .lightboxImg en src/styles/resumenHtml.module.css
-const ALTO_DIBUJO = 530;   // px de alto de un dibujo apaisado (ajuste a mano de BUST, 2026-11-05)
+import { anchoObjetivo, FONDO_FIGURAS, KERNEL } from './tamano.mjs';
 const RAIZ = resolve(AQUI, '..', '..');
 
 const [fase, ...resto] = process.argv.slice(2);
@@ -222,6 +221,17 @@ async function aplicar() {
   const lista = args.aceptar === 'todas' ? null : String(args.aceptar ?? '').split(',').map((s) => s.trim()).filter(Boolean);
   if (lista !== null && !lista.length) throw new Error('Falta --aceptar todas|a.png,b.png');
   mkdirSync(join(S, 'originales'), { recursive: true });
+  // líneas de texto de cada figura de Codex (entran en la regla de tamano.mjs)
+  const lineas = new Map();
+  const conCodex = plan.imagenes.filter((i) => i.codex?.resultado);
+  if (conCodex.length) {
+    const tmp = join(S, 'lineas');
+    rmSync(tmp, { recursive: true, force: true });
+    mkdirSync(join(tmp, 'img'), { recursive: true });
+    for (const i of conCodex) copyFileSync(i.codex.resultado, join(tmp, 'img', i.nombre));
+    await correr('py', ['-3', '-I', join(AQUI, 'analizar.py'), join(tmp, 'img'), join(tmp, 'an'), join(tmp, 'sin-logos')]);
+    for (const a of JSON.parse(readFileSync(join(tmp, 'an', 'analisis.json'), 'utf8'))) lineas.set(a.nombre, a.texto?.lineas ?? 0);
+  }
   let n = 0;
   for (const im of plan.imagenes) {
     const nuevo = im.codex?.resultado ?? im.logo?.limpio;
@@ -230,25 +240,15 @@ async function aplicar() {
     const copia = join(S, 'originales', im.nombre);
     mkdirSync(dirname(copia), { recursive: true });
     if (!existsSync(copia)) copyFileSync(destino, copia);
-    // Codex devuelve 1500-2200 px (~2 MB en PNG). Mandadas así, la web medgo-imgflow
-    // las bajaba sólo hasta 700 KB y el resumen pesaba 4 veces más. La regla sale del
-    // ajuste a mano de BUST (2026-11-05, Hematopoyesis: 24 figuras → 645 KB por la web
-    // y «todo se ve bien sin ningún truco»): piensa en ANCHOS REDONDOS.
-    //   · dibujo: el alto queda en ~ALTO_DIBUJO px (ancho = alto × proporción),
-    //     redondeado a la centena, entre 800 y 1700 px: las apaisadas quedan en
-    //     800-1000, las panorámicas 3:1 en 1600 y las verticales en 800 de ancho.
-    //   · foto: el lado corto en ~460 px, redondeado a la centena (700-800 de ancho).
-    // Nunca más que lo de Codex. Sin filtros (la mediana ablandaba la letra) y sin
-    // reglas de letra ni de ancho visible: BUST no las sigue y «se veía peor».
+    // Codex devuelve 1500-2200 px (~2 MB en PNG): mandadas así, la web medgo-imgflow
+    // las bajaba sólo hasta 700 KB y el resumen pesaba 4 veces más. El tamaño lo
+    // decide tamano.mjs (la regla del ajuste a mano de BUST). Sin filtros: la mediana
+    // ablandaba la letra.
     const mNuevo = await sharp(nuevo).metadata();
-    const proporcion = mNuevo.width / mNuevo.height;
-    const centena = (x) => Math.round(x / 100) * 100;
-    const ancho = im.codex?.tipo === 'foto'
-      ? centena(460 * Math.max(1, proporcion))
-      : Math.min(1700, Math.max(800, centena(ALTO_DIBUJO * proporcion)));
+    const ancho = anchoObjetivo({ W: mNuevo.width, H: mNuevo.height, tipo: im.codex?.tipo ?? 'dibujo', lineas: lineas.get(im.nombre) ?? 0 });
     const escala = Math.min(1, ancho / mNuevo.width);
     // mismo nombre y extensión: el HTML del export lo referencia así
-    let img = sharp(nuevo).resize(Math.round(mNuevo.width * escala), Math.round(mNuevo.height * escala), { kernel: 'lanczos3' });
+    let img = sharp(nuevo).resize(Math.round(mNuevo.width * escala), Math.round(mNuevo.height * escala), { kernel: KERNEL });
     // Fondo crema, el mismo papel de la figura ampliada (resumenHtml.module.css,
     // .lightboxImg). La transparencia era el 40 % del peso del AVIF (lo guarda como
     // un plano aparte, y la de GPT Image venía con ruido: «opaco» en 249-254 y una
