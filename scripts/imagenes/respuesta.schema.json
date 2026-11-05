@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tipo", "accion", "rotulos", "nota"],
+  "properties": {
+    "tipo": { "type": "string", "enum": ["foto", "dibujo"] },
+    "accion": { "type": "string", "enum": ["rediseno", "resolucion", "ninguna"] },
+    "rotulos": { "type": "array", "items": { "type": "string" } },
+    "nota": { "type": "string", "description": "Una frase: qué hiciste o por qué no hiciste nada." }
+  }
+}

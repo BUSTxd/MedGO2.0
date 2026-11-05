@@ -1,9 +1,12 @@
 export type TipoActividad = 'MAGISTRAL' | 'TBL' | 'SGP' | 'LAB' | 'REPASO' | 'EXAMEN-T' | 'EXAMEN-L';
 export type Unidad = 'ERITROCITOS' | 'HEMOSTASIA' | 'LEUCOCITOS' | 'EVALUACION';
 
+export type ResumenFormato = 'pdf' | 'html';
+
 export interface ResumenOpcion {
   id: string;
   label: string;
+  formato?: ResumenFormato;
 }
 
 export interface Actividad {
@@ -16,7 +19,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   /**
    * Módulo interactivo de la práctica. En las actividades LAB la tarjeta
    * «Video» se sustituye por «Simulación»; sin `href` queda como próximamente.
@@ -73,7 +76,7 @@ export const semanas: Semana[] = [
           'Eritropoyesis',
         ],
         docentes: [],
-        resumen: { tipo: 'pdf', opciones: [{ id: 'hem-2', label: 'Resumen' }] },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'hem-2', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-3',

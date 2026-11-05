@@ -23,7 +23,8 @@ const ALLOWED = new Set([
   'far-19', 'far-19.2',
   'far-23', 'far-24', 'far-25',
   // Hematología (prefijo `hem-` evita colisión con clase-* de otros cursos)
-  'hem-2', 'hem-3', 'hem-4', 'hem-5', 'hem-6',
+  // hem-2 pasó a HTML el 2026-11-04 (src/lib/resumen-html.ts); su PDF se borró
+  'hem-3', 'hem-4', 'hem-5', 'hem-6',
   'hem-7', 'hem-8', 'hem-10', 'hem-11', 'hem-12',
   'hem-tbl-1', 'hem-sgp-1', 'hem-tbl-2', 'hem-sgp-3',
   'hem-sgp-2', 'hem-9',
@@ -136,7 +137,6 @@ const FILE_ALIAS: Record<string, string> = {
   'far-24':   'farmacologia/clase-24.v2',
   'far-25':   'farmacologia/clase-25.v2',
   // Hematología — subcarpeta hematologia/
-  'hem-2':    'hematologia/clase-2',
   'hem-3':    'hematologia/clase-3',
   'hem-4':    'hematologia/clase-4',
   'hem-5':    'hematologia/clase-5',

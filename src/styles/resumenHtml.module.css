@@ -717,6 +717,13 @@
   width: auto;
   height: auto;
   object-fit: contain;
+  /* Papel crema para la figura ampliada: las transparentes se perdían sobre el
+     velo oscuro. Es el mismo crema que llevan horneado las figuras rediseñadas
+     (FONDO_FIGURAS en scripts/imagenes/mejorar.mjs): si cambia uno, cambiar el
+     otro, o se vería un marco de otro tono alrededor de la imagen. */
+  box-sizing: border-box;
+  padding: 18px;
+  background: #fbf7ee;
   border-radius: 10px;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
   animation: lightboxZoom 0.18s ease-out;

@@ -37,6 +37,8 @@ export const ALLOWED = new Set([
   'dig-clase-2',
   'dig-clase-3',
   'dig-clase-5',
+  // Hematología: Clase 2 (Hematopoyesis) pasó de PDF a HTML el 2026-11-04 con el mismo id
+  'hem-2',
   'dig-clase-6',
   'dig-clase-7',
   'dig-clase-8',
@@ -221,6 +223,7 @@ export const FILE_ALIAS: Record<string, string> = {
   'bcm-te-4-html': 'biologia-celular/bcm-te-4-html',
   'bcm-te-8': 'biologia-celular/bcm-te-8',
   'dig-clase-1': 'digestivo/dig-clase-1',
+  'hem-2': 'hematologia/hem-2',
   'dig-clase-2': 'digestivo/dig-clase-2',
   'dig-clase-3': 'digestivo/dig-clase-3',
   'dig-clase-5': 'digestivo/dig-clase-5',

@@ -39,4 +39,6 @@ data/encib/
 data/patologia-u2/
 data/epidemiologia-u2/
 data/citopenias/
+# logos de terceros que scripts/imagenes/analizar.py borra de las figuras
+data/logos/
 public/lab-hipersensibilidad/

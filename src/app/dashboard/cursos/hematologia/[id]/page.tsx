@@ -95,6 +95,8 @@ export default async function ActividadPage({
           claseId={act.id}
           hasResumen={act.resumen?.tipo === 'pdf'}
           resumenOpciones={act.resumen?.opciones}
+          resumenFormato={act.resumen?.formato}
+          resumenTitulo={act.titulo}
           /* En las prácticas de laboratorio la primera tarjeta es «Simulación». */
           simulacion={isLab ? (act.simulacion ?? {}) : undefined}
           /* Los labs de Hematología nunca van a tener banco de preguntas: sólo
