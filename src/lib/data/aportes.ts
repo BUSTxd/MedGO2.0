@@ -196,5 +196,6 @@ export const LABORATORIOS: LaboratorioMeta[] = [
   { slug: 'hipersensibilidad',       nombre: 'Hipersensibilidad',            track: 'medicina', autor: 'bust', pesado: true, vistazo: true },
   { slug: 'lupus',                   nombre: 'Lupus eritematoso sistémico',  track: 'medicina', autor: 'bust', pesado: true, vistazo: true },
   { slug: 'citopenias-autoinmunes',  nombre: 'Citopenias autoinmunes',       track: 'medicina', autor: 'bust', pesado: true, vistazo: true },
+  { slug: 'vasculitis-anca',  nombre: 'Vasculitis de vasos medianos y pequeños y ANCA', track: 'medicina', autor: 'bust', pesado: true, vistazo: true },
   { slug: 'atlas-3d',                nombre: 'Atlas 3D (miembros)', track: 'medicina', autor: 'bust', pesado: true },
 ];

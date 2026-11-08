@@ -1,0 +1,50 @@
+/* Laboratorio «Vasculitis de vasos medianos y pequeños y ANCA»: el estilo de las
+   referencias de BUST (infografía plana, colores saturados, sin contorno).
+   En claro, un pastel de crema a rosa. En oscuro, violeta índigo con partículas
+   desenfocadas. Define también las variables `--cit-*` porque los textos y rótulos
+   que se importan de Citopenias (`Txt`, `Rotulo`) las leen. */
+
+.lienzo {
+  --vas-fondo-a: #FFF8DA;
+  --vas-fondo-b: #FCE1F1;
+  --vas-pantalla: #3A1466;
+  --vas-pantalla-2: #4A1C80;
+  --vas-cuerpo: #6B3FC8;
+  --vas-cuerpo-borde: #E040C8;
+  --vas-suave: rgba(130, 60, 160, 0.12);
+  --cit-texto: #2B1250;
+  --cit-texto-2: #5A3D7E;
+  --cit-flecha: #5B3A86;
+  --cit-base: #3B1A6E;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(165deg, var(--vas-fondo-a), var(--vas-fondo-b));
+}
+:global(.dark-mode) .lienzo {
+  --vas-fondo-a: #1B0A3D;
+  --vas-fondo-b: #2D1060;
+  --vas-pantalla: #2A0D52;
+  --vas-pantalla-2: #3A1470;
+  --vas-cuerpo: #5A33B8;
+  --vas-cuerpo-borde: #F05BD8;
+  --vas-suave: rgba(220, 170, 255, 0.10);
+  --cit-texto: #F6EEFF;
+  --cit-texto-2: #CDB8EE;
+  --cit-flecha: #C6A8F5;
+  --cit-base: #7A4BE0;
+}
+
+.svg { width: 100%; height: 100%; display: block; user-select: none; }
+
+/* Partículas: blancas y suaves en claro, de color en oscuro. */
+.bokehOscuro { display: none; }
+:global(.dark-mode) .bokehOscuro { display: block; }
+:global(.dark-mode) .bokehClaro { display: none; }
+
+.txtPantalla { fill: #DFFFE6; font-weight: 700; font-family: inherit; }
+.credito { fill: var(--cit-texto-2); font-weight: 500; font-family: inherit; }
+
+/* Portada. */
+.sobretitulo { color: #B8237A; }
+:global(.dark-mode) .sobretitulo { color: #F58BD3; }

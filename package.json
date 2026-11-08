@@ -18,7 +18,8 @@
     "verificar:linfocitos": "node --experimental-strip-types --no-warnings scripts/linfocitos/verificar.mjs",
     "verificar:hipersensibilidad": "node --experimental-strip-types --no-warnings scripts/hipersensibilidad/verificar.mjs",
     "verificar:lupus": "node --experimental-strip-types --no-warnings scripts/lupus/verificar.mjs",
-    "verificar:citopenias": "node --experimental-strip-types --no-warnings scripts/citopenias/verificar.mjs"
+    "verificar:citopenias": "node --experimental-strip-types --no-warnings scripts/citopenias/verificar.mjs",
+    "verificar:vasculitis": "node --experimental-strip-types --no-warnings scripts/vasculitis/verificar.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.134.0",

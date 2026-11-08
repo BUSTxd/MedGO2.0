@@ -3,9 +3,8 @@
 // (`useReproductor`, `useVoz`, `BarraTiempo`): mientras suena, el instante de la escena
 // se lee del audio (`currentTime`), así que la animación no puede desincronizarse.
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import type { Narracion as Voz } from '@/lib/data/lupus/tipos';
-import type { Parte } from '@/lib/data/citopenias/tipos';
+import { useEffect, useMemo, useRef, useState, type ComponentType } from 'react';
+import type { Escenario, Narracion as Voz } from '@/lib/data/lupus/tipos';
 import { compilado as compilar } from '@/lib/lupus/contenido';
 import BarraTiempo from '../lupus/BarraTiempo';
 import { useReproductor, VELOCIDADES } from '../lupus/useReproductor';
@@ -13,7 +12,12 @@ import { useVoz } from '../lupus/useVoz';
 import TextoAnimado from '../maduracion-linfocitos/TextoAnimado';
 import ControlVoz from '../hipersensibilidad/ControlVoz';
 import { useModo } from '../maduracion-linfocitos/useModo';
-import Lienzo from './Lienzo';
+import LienzoCitopenias from './Lienzo';
+
+/** Lo que el Explorar necesita de un capítulo (Citopenias y Vasculitis comparten este Explorar). */
+type Parte = Escenario & { numero: number };
+/** Lienzo de láminas de un laboratorio (el de Citopenias por defecto). */
+export type LienzoLab = ComponentType<{ cap: number; paso: number; t: number; tejido: Record<string, number>; reloj: number }>;
 import c from '@/styles/cicloCelular.module.css';
 import s from '@/styles/linfocitos.module.css';
 import h from '@/styles/hipersensibilidad.module.css';
@@ -29,6 +33,9 @@ type Props = {
   vozSiguiente?: Voz;
   /** Hay algo encima (la tabla, el muro): la voz no sigue sola detrás. */
   detener?: boolean;
+  /** Otro laboratorio con láminas: su lienzo y su línea de crédito. */
+  lienzo?: LienzoLab;
+  credito?: string;
 };
 
 type VozCtl = ReturnType<typeof useVoz>;
@@ -74,7 +81,7 @@ function Narracion({ parte, indice }: { parte: Parte; indice: number }) {
   );
 }
 
-export default function Explorar({ parte, pasoInicial = 0, onPaso, onSiguiente, onVolver, vozSiguiente, detener }: Props) {
+export default function Explorar({ parte, pasoInicial = 0, onPaso, onSiguiente, onVolver, vozSiguiente, detener, lienzo: Lienzo = LienzoCitopenias, credito = 'Láminas dibujadas con código · Basado en el resumen de la clase AI17 de Patología' }: Props) {
   const zona = useRef<HTMLDivElement>(null);
   const modo = useModo(zona);
   const compilado = useMemo(() => compilar(parte, modo), [parte, modo]);
@@ -123,7 +130,7 @@ export default function Explorar({ parte, pasoInicial = 0, onPaso, onSiguiente, 
             <button type="button" className={c.btnSec} onClick={onVolver}>Volver a los capítulos</button>
           </div>
         )}
-        <p className={`${s.credito} ${h.credito}`}>Láminas dibujadas con código · Basado en el resumen de la clase AI17 de Patología</p>
+        <p className={`${s.credito} ${h.credito}`}>{credito}</p>
       </div>
       <div className={c.pie}>
         <BarraTiempo rep={rep} escenario={parte} visto={visto} />
