@@ -567,10 +567,10 @@ const BiopsiaGpa: Lamina = ({ p }) => {
       <Txt x={DX} y={DY + 336} txt="y células gigantes" t={22} p={p('gigantes')} />
       <Llamada x={1300} y={226} a={[DX + 220 * D, DY - 40 * D]} txt="vaso con necrosis fibrinoide" p={p('fibrinoide')} t={20} />
       {/* En la foto: solo lo que de verdad se ve en ella */}
-      <Llamada x={40} y={250} a={ph(120, 190)} txt="sangre en los alvéolos" p={tramo(fo, 0.4, 1)} />
-      <Llamada x={40} y={660} a={ph(405, 575)} txt="vaso inflamado" p={p('vaso')} />
-      <Llamada x={600} y={140} a={ph(600, 230)} txt="infiltrado de neutrófilos" p={p('neutros')} />
-      <Bandera x={800} y={950} txt="Granuloma + vasculitis: su firma" color={V.turquesa[0]} p={p('firma')} t={28} />
+      <Llamada x={40} y={250} a={ph(138, 200)} txt="sangre en los alvéolos" p={tramo(fo, 0.4, 1)} halo />
+      <Llamada x={40} y={660} a={ph(405, 575)} txt="vaso inflamado" p={p('vaso')} halo />
+      <Llamada x={600} y={140} a={ph(600, 230)} txt="infiltrado de neutrófilos" p={p('neutros')} halo />
+      <Bandera x={800} y={915} txt="Granuloma + vasculitis: su firma" color={V.turquesa[0]} p={p('firma')} t={28} />
     </g>
   );
 };
@@ -608,9 +608,9 @@ const BiopsiaGepa: Lamina = ({ p }) => {
       <FotoLente x={360} y={380} R={250} foto="gepa-vaso" o={clamp(p('biopsia') + p('foto'))} />
       <Portaobjetos x={830} y={530} k={0.9} o={tramo(p('biopsia'), 0.2, 0.8)} organo="VASO" tincion="H-E" caso="GEPA" />
       <Txt x={830} y={462} txt="lámina de un vaso, teñida con H-E" t={18} p={p('foto')} fuerte={false} />
-      <Llamada x={680} y={180} a={ph(420, 290)} txt="pared con necrosis fibrinoide" p={p('eos')} t={24} />
-      <Llamada x={680} y={235} a={ph(170, 170)} txt="infiltrado rico en eosinófilos" p={tramo(p('eos'), 0.3, 1)} t={24} />
-      <Llamada x={680} y={290} a={ph(320, 400)} txt="la luz, con hematíes" p={tramo(p('eos'), 0.5, 1)} t={22} />
+      <Llamada x={680} y={180} a={ph(420, 290)} txt="pared con necrosis fibrinoide" p={p('eos')} t={24} halo />
+      <Llamada x={680} y={235} a={ph(170, 170)} txt="infiltrado rico en eosinófilos" p={tramo(p('eos'), 0.3, 1)} t={24} halo />
+      <Llamada x={680} y={290} a={ph(320, 400)} txt="la luz, con hematíes" p={tramo(p('eos'), 0.5, 1)} t={22} halo />
       <Txt x={1080} y={360} txt="también en pulmón y miocardio" t={22} p={p('eos')} ancla="start" fuerte={false} />
       <Txt x={1080} y={410} txt="granulomas, si los hay, fuera del vaso" t={22} p={p('extravascular')} ancla="start" />
       <LineaTiempo x={800} y={800} w={1300} p={f} tramos={[{ txt: 'Alérgica', color: '#2F6FD8', p: p('alergica') }, { txt: 'Eosinofílica', color: V.eos[0], p: p('eosinofilica') }, { txt: 'Vasculítica', color: V.sangre[0], p: p('vasculitica') }]} />

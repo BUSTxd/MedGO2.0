@@ -873,13 +873,15 @@ export function Pista({ x, y, p = 1, nombre, sub, dy = 70, t = 20, children }: {
 }
 
 /** Llamada fina: texto pequeño y una línea con punto hasta lo que señala. */
-export function Llamada({ x, y, a, txt, p, ancla = 'start', t = 22 }: { x: number; y: number; a: [number, number]; txt: string; p: number; ancla?: 'start' | 'end'; t?: number }) {
+/** `halo`: línea blanca debajo, para que se lea sobre una foto. */
+export function Llamada({ x, y, a, txt, p, ancla = 'start', t = 22, halo = false }: { x: number; y: number; a: [number, number]; txt: string; p: number; ancla?: 'start' | 'end'; t?: number; halo?: boolean }) {
   if (p <= 0.002) return null;
   const ancho = txt.length * t * 0.54;
   const x0 = a[0] > x + ancho / 2 ? x + ancho + 10 : x - 10;
   const q = easeOut(clamp(p * 1.4));
   return (
     <g>
+      {halo && <path d={`M${x0},${y} L${lerp(x0, a[0], q)},${lerp(y, a[1], q)}`} stroke="#FFFFFF" strokeWidth={6} strokeLinecap="round" opacity={0.75} fill="none" />}
       <path d={`M${x0},${y} L${lerp(x0, a[0], q)},${lerp(y, a[1], q)}`} stroke="var(--cit-flecha)" strokeWidth={2.5} strokeDasharray="5 5" fill="none" />
       <circle cx={a[0]} cy={a[1]} r={6 * q} fill="#FFD23F" stroke={V.sangre[0]} strokeWidth={2} />
       <Txt x={x + (ancla === 'start' ? 0 : -ancho)} y={y} txt={txt} t={t} p={p} ancla="start" />

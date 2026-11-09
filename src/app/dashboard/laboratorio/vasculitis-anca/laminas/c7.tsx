@@ -99,9 +99,9 @@ const Semiluna: Lamina = ({ p }) => {
       <Txt x={1200} y={290} txt="llegan monocitos y macrófagos" t={26} p={p('monocitos')} />
       <Txt x={1200} y={420} txt="semiluna" t={42} color="#D46A9E" p={p('semiluna')} />
       <Txt x={1200} y={520} txt="llena el espacio de Bowman y aplasta el ovillo" t={24} p={p('aplasta')} />
-      <Llamada x={960} y={650} a={[560 + (200 - 360) * 0.917, 510 + (230 - 360) * 0.917]} txt="semiluna: capa gruesa de células" p={p('pas')} t={22} />
-      <Llamada x={960} y={760} a={[560 + (72 - 360) * 0.917, 510 + (400 - 360) * 0.917]} txt="cápsula de Bowman (magenta con PAS)" p={tramo(p('pas'), 0.25, 1)} t={22} />
-      <Llamada x={960} y={705} a={[560 + (450 - 360) * 0.917, 510 + (420 - 360) * 0.917]} txt="ovillo aplastado" p={tramo(p('pas'), 0.5, 1)} t={22} />
+      <Llamada x={960} y={650} a={[560 + (200 - 360) * 0.917, 510 + (230 - 360) * 0.917]} txt="semiluna: capa gruesa de células" p={p('pas')} t={22} halo />
+      <Llamada x={960} y={760} a={[560 + (72 - 360) * 0.917, 510 + (400 - 360) * 0.917]} txt="cápsula de Bowman (magenta con PAS)" p={tramo(p('pas'), 0.25, 1)} t={22} halo />
+      <Llamada x={960} y={705} a={[560 + (450 - 360) * 0.917, 510 + (420 - 360) * 0.917]} txt="ovillo aplastado" p={tramo(p('pas'), 0.5, 1)} t={22} halo />
       <Portaobjetos x={1330} y={890} k={0.9} o={tramo(p('pas'), 0.2, 0.8)} organo="RIÑÓN" tincion="PAS" caso="biopsia renal" tejido="#D9539C" />
     </g>
   );

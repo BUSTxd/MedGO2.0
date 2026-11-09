@@ -140,7 +140,7 @@ const Fisiologia: Lamina = ({ p, reloj }) => {
       <Sale p={p('dias')} x={1060} y={600} k={0.4}><Macrofago /></Sale>
       <FotoLente x={1360} y={590} R={140} foto="hemosiderofagos" o={tramo(p('hemosiderina'), 0, 0.6)} credito="arriba" />
       {[0, 1, 2, 3, 4].map((i) => <circle key={i} cx={1020 + (i % 3) * 30} cy={590 + Math.floor(i / 3) * 30} r={10} fill="#8A6A3E" opacity={tramo(p('hemosiderina'), i * 0.1, 0.5 + i * 0.1)} />)}
-      <Llamada x={900} y={790} a={[1360 + (355 - 360) * 0.389, 590 + (435 - 360) * 0.389]} txt="en 2 o 3 días, macrófagos con hemosiderina" p={p('hemosiderina')} t={22} />
+      <Llamada x={900} y={790} a={[1360 + (355 - 360) * 0.389, 590 + (435 - 360) * 0.389]} txt="en 2 o 3 días, macrófagos con hemosiderina" p={p('hemosiderina')} t={22} halo />
       <Portaobjetos x={1360} y={890} k={0.7} o={tramo(p('hemosiderina'), 0.2, 0.8)} organo="PULMÓN" tincion="H-E" caso="hemorragia" />
     </g>
   );

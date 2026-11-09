@@ -66,7 +66,7 @@ const Fibrinoide: Lamina = ({ p }) => {
       <Llamada x={960} y={300} a={[700, 420]} txt="entra la fibrina del plasma" p={p('fibrina')} t={24} />
       <Txt x={1200} y={380} txt="se mezclan con células muertas" t={24} p={p('mezclan')} />
       <Txt x={1200} y={430} txt="y a veces con inmunocomplejos" t={24} p={p('complejos')} fuerte={false} />
-      <Llamada x={960} y={560} a={[520 + (461 - 360), 500 + (498 - 360)]} txt="en H-E: banda rosada intensa, sin forma" p={p('banda')} t={24} />
+      <Llamada x={960} y={560} a={[520 + (461 - 360), 500 + (498 - 360)]} txt="en H-E: banda rosada intensa, sin forma" p={p('banda')} t={24} halo />
       <Txt x={1200} y={660} txt="recuerda a la fibrina: de ahí su nombre" t={24} p={p('nombre')} />
     </g>
   );
@@ -78,10 +78,10 @@ const Leucocitoclastica: Lamina = ({ p }) => {
       <FotoLente x={460} y={500} R={340} foto="leucocitoclastica" o={clamp(p('piel') + p('foto'))} />
       <Portaobjetos x={150} y={930} k={0.8} o={tramo(p('piel'), 0.2, 0.8)} organo="PIEL" tincion="H-E" caso="púrpura" />
       <Bandera x={460} y={100} txt="Piel: vasculitis leucocitoclástica" color="#E0338A" p={p('leucocitoclastica')} t={28} />
-      <Llamada x={900} y={150} a={[460 + (360 - 360) * 0.944, 500 + (40 - 360) * 0.944]} txt="epidermis" p={p('foto')} t={22} />
-      <Llamada x={900} y={230} a={[460 + (255 - 360) * 0.944, 500 + (520 - 360) * 0.944]} txt="neutrófilos en la pared del vaso" p={p('neutros')} t={24} />
-      <Llamada x={900} y={320} a={[460 + (390 - 360) * 0.944, 500 + (600 - 360) * 0.944]} txt="se rompen: polvo nuclear" p={p('polvo')} t={24} />
-      <Llamada x={900} y={410} a={[460 + (300 - 360) * 0.944, 500 + (190 - 360) * 0.944]} txt="glóbulos rojos en la dermis" p={p('rojos')} t={24} />
+      <Llamada x={900} y={150} a={[460 + (360 - 360) * 0.944, 500 + (40 - 360) * 0.944]} txt="epidermis" p={p('foto')} t={22} halo />
+      <Llamada x={900} y={230} a={[460 + (255 - 360) * 0.944, 500 + (520 - 360) * 0.944]} txt="neutrófilos en la pared del vaso" p={p('neutros')} t={24} halo />
+      <Llamada x={900} y={320} a={[460 + (390 - 360) * 0.944, 500 + (600 - 360) * 0.944]} txt="se rompen: polvo nuclear" p={p('polvo')} t={24} halo />
+      <Llamada x={900} y={410} a={[460 + (300 - 360) * 0.944, 500 + (190 - 360) * 0.944]} txt="glóbulos rojos en la dermis" p={p('rojos')} t={24} halo />
       <Lente x={1180} y={700} R={190} id="c6-pac" o={tramo(p('paciente'), 0, 0.4)}>
         <rect x={-200} y={-200} width={400} height={400} fill="#FFF3C4" />
         {Array.from({ length: 9 }, (_, i) => <circle key={i} cx={(i % 3 - 1) * 130} cy={(Math.floor(i / 3) - 1) * 130} r={58} fill="#FFFBE6" stroke="#F2D7A0" strokeWidth={6} />)}
@@ -194,13 +194,13 @@ const Necrotizante: Lamina = ({ p }) => {
       <FotoLente x={460} y={480} R={330} foto="gpa-granuloma" o={clamp(p('gpa') + p('foto'))} />
       <Portaobjetos x={130} y={220} k={0.7} o={tramo(p('gpa'), 0.2, 0.8)} organo="PULMÓN" tincion="H-E" caso="GPA" />
       <Txt x={460} y={95} txt="GPA: granuloma necrotizante" t={28} color={V.turquesa[0]} p={p('gpa')} />
-      <Llamada x={40} y={880} a={[460 + (450 - 360) * 0.917, 480 + (260 - 360) * 0.917]} txt="necrosis geográfica" p={p('necrotizante')} t={22} />
-      <Llamada x={40} y={925} a={[460 + (520 - 360) * 0.917, 480 + (470 - 360) * 0.917]} txt="restos basófilos" p={p('basofilos')} t={22} />
-      <Llamada x={40} y={970} a={[460 + (330 - 360) * 0.917, 480 + (300 - 360) * 0.917]} txt="histiocitos en empalizada" p={p('empalizada')} t={22} />
+      <Llamada x={40} y={850} a={[460 + (450 - 360) * 0.917, 480 + (260 - 360) * 0.917]} txt="necrosis geográfica" p={p('necrotizante')} t={22} halo />
+      <Llamada x={40} y={892} a={[460 + (520 - 360) * 0.917, 480 + (470 - 360) * 0.917]} txt="restos basófilos" p={p('basofilos')} t={22} halo />
+      <Llamada x={40} y={934} a={[460 + (330 - 360) * 0.917, 480 + (300 - 360) * 0.917]} txt="histiocitos en empalizada" p={p('empalizada')} t={22} halo />
       <Txt x={700} y={925} txt="dentro o fuera del vaso" t={22} p={p('dentro')} fuerte={false} />
       <FotoLente x={1200} y={480} R={260} foto="gepa-eosinofilos" o={tramo(p('gepa'), 0, 0.4)} />
       <Portaobjetos x={1490} y={250} k={0.7} o={tramo(p('gepa'), 0.2, 0.8)} organo="BIOPSIA" tincion="H-E" caso="GEPA" />
-      <Llamada x={960} y={150} a={[1200 + (340 - 360) * 0.722, 480 + (420 - 360) * 0.722]} txt="eosinófilos: gránulos rojos" p={tramo(p('gepa'), 0.3, 1)} t={22} />
+      <Llamada x={960} y={150} a={[1200 + (340 - 360) * 0.722, 480 + (420 - 360) * 0.722]} txt="eosinófilos: gránulos rojos" p={tramo(p('gepa'), 0.3, 1)} t={22} halo />
       <Txt x={1200} y={840} txt="GEPA: ricos en eosinófilos" t={26} color={V.ambar[0]} p={p('gepa')} />
       <Txt x={1200} y={895} txt="suelen ser extravasculares" t={22} p={p('extravascular')} />
     </g>
