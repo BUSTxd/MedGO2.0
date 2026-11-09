@@ -4,7 +4,7 @@
 import type { Lamina } from '../Lienzo';
 import { Pastilla, BolsaSangre } from '../../citopenias-autoinmunes/Piezas';
 import { Visto } from '../../citopenias-autoinmunes/laminas/Comun';
-import { Anca, Bandera, En, Flecha, FLECHA, Glomerulo, IgG, Neutrofilo, Pantalla, Pulmones, Sale, Txt, TxtPantalla, V, clamp, easeOut, tramo } from '../Piezas';
+import { Anca, Bandera, En, Pr3, Flecha, FLECHA, Glomerulo, IgG, Neutrofilo, Pantalla, Pulmones, Sale, Txt, TxtPantalla, V, clamp, easeOut, tramo, Portaobjetos, FotoLente } from '../Piezas';
 
 const VERDE_IF = ['#0E7A2A', '#3BE35C', '#C9FFD4'];
 
@@ -32,6 +32,45 @@ const QueHay: Lamina = ({ p }) => {
   );
 };
 
+/** Red de colágeno IV de la membrana basal (triples hélices en malla), con anticuerpos pegados de forma continua. */
+function ColagenoIV({ ig = 0 }: { ig?: number }) {
+  const nodos: [number, number][] = [[-120, -20], [-60, 20], [0, -20], [60, 20], [120, -20]];
+  return (
+    <g>
+      {nodos.slice(0, -1).map(([x1, y1], i) => { const [x2, y2] = nodos[i + 1]; return [0, 1, 2].map((j) => <path key={i + '-' + j} d={'M' + x1 + ',' + (y1 + j * 4 - 4) + ' Q' + ((x1 + x2) / 2) + ',' + ((y1 + y2) / 2 + (j - 1) * 10) + ' ' + x2 + ',' + (y2 + j * 4 - 4)} fill="none" stroke={['#E5A32E', '#F2C230', '#C99300'][j]} strokeWidth={3.5} strokeLinecap="round" />); })}
+      {nodos.map(([x, y], i) => <circle key={i} cx={x} cy={y} r={8} fill="#C99300" />)}
+      {[-90, -30, 30, 90].map((x, i) => <g key={i} opacity={tramo(ig, i * 0.15, 0.5 + i * 0.15)}><Anca x={x} y={i % 2 ? 10 : -50} r={i % 2 ? 180 : 0} k={0.9} /></g>)}
+    </g>
+  );
+}
+
+/** Estreptococo: cadena de cocos (glomerulonefritis postinfecciosa). */
+function Estrepto() {
+  return <g>{[0, 1, 2, 3, 4].map((i) => <g key={i}><circle cx={-48 + i * 24} cy={Math.sin(i) * 8} r={12} fill="#1F6FB2" /><circle cx={-51 + i * 24} cy={Math.sin(i) * 8 - 3} r={9} fill="#3B9EDD" /></g>)}</g>;
+}
+
+/** Eritema en alas de mariposa (lupus). */
+function Mariposa() {
+  return (
+    <g>
+      <circle r={42} fill="#E9A58A" />
+      <path d="M0,4 C-10,-10 -36,-12 -38,2 C-40,16 -20,22 -2,14 Z M0,4 C10,-10 36,-12 38,2 C40,16 20,22 2,14 Z" fill="#E0338A" opacity={0.8} />
+      <circle cx={-14} cy={-10} r={3.5} fill="#3A1342" /><circle cx={14} cy={-10} r={3.5} fill="#3A1342" />
+    </g>
+  );
+}
+
+/** IgA dimérica: dos anticuerpos unidos por la cadena J. */
+function IgAdimero() {
+  return (
+    <g>
+      <Anca x={-16} y={-8} r={-60} k={1.1} />
+      <Anca x={16} y={-8} r={60} k={1.1} />
+      <circle cx={0} cy={8} r={7} fill="#0C9E9A" />
+    </g>
+  );
+}
+
 const Lineal: Lamina = ({ p }) => {
   const c = p('cinta');
   return (
@@ -40,15 +79,18 @@ const Lineal: Lamina = ({ p }) => {
         <TxtPantalla x={0} y={-340} txt="Patrón lineal" t={36} p={p('lineal')} />
         <En k={1.05} o={tramo(c, 0, 0.6)}><Glomerulo brillo="lineal" /></En>
         <En k={1.05} o={1 - tramo(c, 0, 0.6)}><Glomerulo brillo="pauci" /></En>
-        <TxtPantalla x={0} y={330} txt="una cinta fina y continua en cada asa" t={26} p={c} />
+        <FotoLente x={0} y={-10} R={270} foto="if-igg" o={tramo(p('entero'), 0, 0.6)} aro={V.verde[0]} tinta="#BFF5CB" />
+        <Portaobjetos x={-345} y={350} k={0.55} o={tramo(p('entero'), 0.2, 0.8)} organo="RIÑÓN" tincion="IF · IgG" caso="biopsia renal" tejido="#2A3A2A" />
+        <TxtPantalla x={60} y={360} txt="una cinta fina y continua en cada asa" t={24} p={c} />
       </Pantalla>
-      <Bandera x={1300} y={220} txt="Anti colágeno IV (cadena α3)" color={V.verde[0]} p={p('colageno')} t={22} />
-      <Txt x={1300} y={290} txt="el antígeno es la propia membrana" t={22} p={p('continuo')} />
-      <Txt x={1300} y={340} txt="repartido de forma continua" t={22} p={p('continuo')} fuerte={false} />
+      <Sale p={p('colageno')} x={1300} y={190} k={1}><ColagenoIV ig={p('continuo')} /></Sale>
+      <Txt x={1300} y={262} txt="anticuerpos contra el colágeno IV (cadena α3)" t={20} p={p('colageno')} />
+      <Txt x={1300} y={310} txt="el antígeno es la propia membrana" t={22} p={p('continuo')} />
+      <Txt x={1300} y={345} txt="repartido de forma continua" t={20} p={p('continuo')} fuerte={false} />
       <Txt x={1300} y={450} txt="brilla entero, como un ovillo de cintas" t={22} p={p('entero')} />
-      <Bandera x={1300} y={560} txt="Enfermedad anti membrana basal" color="#2F6FD8" p={p('antimbg')} t={22} />
+      <Txt x={1300} y={560} txt="enfermedad anti membrana basal" t={26} color="#2F6FD8" p={p('antimbg')} />
       <Sale p={p('pulmon')} x={1300} y={720} k={0.5}><Pulmones sangre={p('goodpasture')} /></Sale>
-      <Bandera x={1300} y={900} txt="Si sangra el pulmón: Goodpasture" color={V.sangre[0]} p={p('goodpasture')} t={22} />
+      <Txt x={1300} y={900} txt="si sangra el pulmón: Goodpasture" t={24} color={V.sangre[1]} p={p('goodpasture')} />
     </g>
   );
 };
@@ -65,8 +107,9 @@ const Granular: Lamina = ({ p }) => {
       </Pantalla>
       {ej.map(([n, txt, sub, s2], i) => (
         <g key={n}>
-          <Bandera x={1300} y={250 + i * 220} txt={txt} color={['#2F6FD8', '#8A4FE0', '#0C9E9A'][i]} p={p(n)} t={24} />
-          <Txt x={1300} y={320 + i * 220} txt={sub} t={22} p={p(s2)} />
+          <Sale p={p(n)} x={1180} y={250 + i * 220} k={1.4}>{i === 0 ? <Estrepto /> : i === 1 ? <Mariposa /> : <IgAdimero />}</Sale>
+          <Txt x={1280} y={232 + i * 220} txt={["postinfecciosa", "nefritis lúpica", "nefropatía por IgA"][i]} t={24} p={p(n)} ancla="start" />
+          <Txt x={1280} y={268 + i * 220} txt={sub} t={20} p={p(s2)} ancla="start" fuerte={false} />
         </g>
       ))}
     </g>
@@ -84,7 +127,7 @@ const Pauci: Lamina = ({ p, reloj }) => {
       <Sale p={p('paradoja')} x={1300} y={300} k={0.6}><Glomerulo semiluna={0.9} necrosis={1} /></Sale>
       <Txt x={1300} y={490} txt="necrosado y lleno de semilunas…" t={22} p={p('paradoja')} />
       <Txt x={1300} y={530} txt="…pero la inmunofluorescencia sale vacía" t={22} p={p('paradoja')} />
-      <Bandera x={1300} y={640} txt="Ese vacío es el diagnóstico" color={V.verde[0]} p={p('vacio')} t={26} />
+      <Txt x={1300} y={640} txt="ese vacío es el diagnóstico" t={28} color={V.verde[0]} p={p('vacio')} />
       <Sale p={p('neutrofilo')} x={1300} y={820} k={1}><Neutrofilo cebado={1} activo={0.5 + 0.5 * Math.sin(reloj / 400) ** 2} /><Anca x={80} y={-50} r={-50} /></Sale>
       <Txt x={1300} y={930} txt="destruye sin dejar depósitos" t={22} p={p('neutrofilo')} />
     </g>
@@ -96,14 +139,15 @@ const Caso: Lamina = ({ p }) => {
   return (
     <g>
       <Bandera x={800} y={80} txt="Volvamos al caso" color={V.ambar[0]} p={p('caso')} t={30} punta="no" />
-      <Bandera x={420} y={200} txt="Anti-PR3 positivo" color={V.pr3[0]} p={p('pr3')} t={26} />
+      <En x={300} y={190} o={tramo(p('pr3'), 0, 0.4)}><Anca y={-6} k={1.8} /><Pr3 y={-22} k={1.3} /></En>
+      <Txt x={360} y={190} txt="anti-PR3 positivo" t={26} p={p('pr3')} ancla="start" />
       <Sale p={p('semilunas')} x={420} y={440} k={0.65}><Glomerulo semiluna={0.9} /></Sale>
       <Txt x={420} y={630} txt="biopsia con semilunas" t={24} p={p('semilunas')} />
       <Txt x={1150} y={220} txt="¿hace falta la inmunofluorescencia?" t={32} p={p('hacefalta')} />
       <Visto x={1150} y={320} k={1.3} p={p('si')} />
       <Txt x={1150} y={420} txt="al microscopio de luz, las tres pueden verse iguales" t={22} p={p('iguales')} />
       {[0, 1, 2].map((i) => <En key={i} x={960 + i * 190} y={560} k={0.28} o={tramo(p('iguales'), i * 0.15, 0.5 + i * 0.15)}><Glomerulo semiluna={0.9} /></En>)}
-      <Bandera x={1150} y={760} txt="Un ANCA positivo no descarta anti-MBG" color="#2F6FD8" p={dob} t={24} />
+      <Txt x={1150} y={760} txt="un ANCA positivo no descarta anti-MBG" t={26} color="#2F6FD8" p={dob} />
       <Txt x={1150} y={830} txt="hay pacientes con los dos a la vez" t={22} p={dob} />
     </g>
   );
@@ -113,17 +157,19 @@ const Tratamiento: Lamina = ({ p }) => {
   return (
     <g>
       <Bandera x={800} y={80} txt="El patrón cambia el tratamiento" color="var(--cit-base)" p={p('tratamiento')} t={30} punta="no" />
-      <Bandera x={400} y={220} txt="Anti membrana basal" color="#2F6FD8" p={p('mbg')} t={26} />
+      <Sale p={p('mbg')} x={250} y={185} k={0.42}><Pantalla w={300} h={300}><Glomerulo brillo="lineal" R={120} /></Pantalla></Sale>
+      <Txt x={330} y={185} txt="anti membrana basal" t={26} p={p('mbg')} ancla="start" />
       <Sale p={p('plasma')} x={400} y={460} k={1.3}><BolsaSangre /></Sale>
       {[0, 1, 2].map((i) => <IgG key={i} x={560 + i * 50} y={lerp3(460, 300, p('plasma'), i)} k={1.2} r={i * 40} o={1 - tramo(p('plasma'), 0.6, 1)} />)}
       <Txt x={400} y={720} txt="recambio plasmático: sacar el anticuerpo" t={24} p={p('plasma')} />
-      <Bandera x={1200} y={220} txt="Pauciinmune" color={V.verde[0]} p={p('pauci')} t={26} />
+      <Sale p={p('pauci')} x={1070} y={185} k={0.42}><Pantalla w={300} h={300}><Glomerulo brillo="pauci" R={120} /></Pantalla></Sale>
+      <Txt x={1150} y={185} txt="pauciinmune" t={26} p={p('pauci')} ancla="start" />
       <Sale p={p('rituximab')} x={1080} y={430} k={1.2}><Pastilla color={['#5B3CC4', '#8460E8', '#B39BFF']} /></Sale>
       <Txt x={1080} y={520} txt="rituximab" t={24} p={p('rituximab')} />
       <Sale p={p('ciclofosfamida')} x={1320} y={430} k={1.2}><Pastilla color={['#C2410C', '#F97316', '#FFC48A']} /></Sale>
       <Txt x={1320} y={520} txt="o ciclofosfamida" t={24} p={p('ciclofosfamida')} />
       <Txt x={1200} y={600} txt="frenar a los linfocitos B, más corticoides" t={24} p={p('corticoides')} />
-      <Bandera x={800} y={850} txt="La inmunofluorescencia caracteriza cualquier glomerulonefritis" color={V.verde[0]} p={p('fundamental')} t={26} />
+      <Txt x={800} y={850} txt="la inmunofluorescencia caracteriza cualquier glomerulonefritis" t={28} color={V.verde[0]} p={p('fundamental')} />
     </g>
   );
 };
@@ -137,7 +183,7 @@ const Resumen: Lamina = ({ p }) => {
       {filas.map(([n, b, txt], i) => (
         <g key={n}>
           <Sale p={p(n)} x={300} y={250 + i * 210} k={0.32}><Pantalla w={560} h={560}><Glomerulo brillo={b} R={230} /></Pantalla></Sale>
-          <Bandera x={560} y={250 + i * 210} txt={['Lineal', 'Granular', 'Pauciinmune'][i]} color={V.verde[0]} p={p(n)} t={28} ancla="izq" punta="izq" />
+          <Txt x={470} y={250 + i * 210} txt={['lineal', 'granular', 'pauciinmune'][i]} t={30} color={V.verde[0]} p={p(n)} ancla="start" />
           <Txt x={820} y={250 + i * 210} txt={txt} t={26} p={p(n)} ancla="start" />
         </g>
       ))}

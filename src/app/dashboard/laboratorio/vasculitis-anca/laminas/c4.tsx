@@ -6,7 +6,7 @@ import type { Lamina } from '../Lienzo';
 import { Medula, Pastilla } from '../../citopenias-autoinmunes/Piezas';
 import { Barra, Cruz, Lente } from '../../citopenias-autoinmunes/laminas/Comun';
 import { Anca, Bandera, Bola, C5a, CelEndo, CelGigante, Complejo, Corazon, En, Eosinofilo, Epitelioide, Flecha, FLECHA, Foco, Glomerulo, Granuloma, Hematie, IgG, Linfocito, Macrofago, Mpo, Net, Neutrofilo, Plasmatica, Pr3, Sale, Txt, V, blob, clamp, easeOut, hash, lerp, tramo } from '../Piezas';
-import { Basal, Endo, Intersticio, Union } from '../Fisio';
+import { Basal, Endo, Intersticio, Tallo, Union } from '../Fisio';
 
 /** Pared vista de canto: endotelio sobre la basal, de x0 a x1. */
 function Pared({ y = 640, x0 = 80, x1 = 1520, w = 180, o = 1, rota = 0, tono }: { y?: number; x0?: number; x1?: number; w?: number; o?: number; rota?: number; tono?: string[] }) {
@@ -110,7 +110,7 @@ const Depositados: Lamina = ({ p }) => {
       <Bandera x={800} y={80} txt="Depositados: activan el complemento por la vía clásica" color="#2F6FD8" p={p('depositados')} t={28} punta="no" />
       <Pared y={700} o={tramo(p('depositados'), 0, 0.4)} />
       {[0, 1, 2, 3, 4].map((i) => <Complejo key={i} x={520 + i * 140} y={652} k={1.05} r={i * 30} o={tramo(p('depositados'), 0.2 + i * 0.05, 0.5 + i * 0.05)} />)}
-      {[0, 1, 2, 3, 4, 5].map((i) => <Bola key={`a${i}`} x={500 + i * 120} y={lerp(640, 460 - (i % 2) * 60, easeOut(tramo(p('c3a'), i * 0.06, 0.7)))} R={12} tono={V.ambar} o={tramo(p('c3a'), i * 0.06, 0.3)} />)}
+      {[0, 1, 2, 3, 4, 5].map((i) => <C5a key={`a${i}`} x={500 + i * 120} y={lerp(640, 460 - (i % 2) * 60, easeOut(tramo(p('c3a'), i * 0.06, 0.7)))} k={0.95} tono={V.ambar} o={tramo(p('c3a'), i * 0.06, 0.3)} />)}
       {[0, 1, 2, 3, 4].map((i) => <C5a key={`c${i}`} x={560 + i * 130} y={lerp(640, 380 - (i % 2) * 70, easeOut(tramo(p('c5a'), i * 0.06, 0.7)))} k={1.2} o={tramo(p('c5a'), i * 0.06, 0.3)} />)}
       <Bandera x={300} y={420} txt="C3a" color={V.ambar[0]} p={p('c3a')} t={28} />
       <Bandera x={300} y={500} txt="C5a" color={V.c5a[0]} p={p('c5a')} t={28} />
@@ -418,21 +418,90 @@ const Interleucinas: Lamina = ({ p }) => {
   );
 };
 
-const Migra: Lamina = ({ p }) => {
+/** Integrina α4β1 sobre su membrana: pierna y cabeza α (violeta) y β (turquesa). */
+function Integrina41({ x, y, k = 1, o = 1 }: { x: number; y: number; k?: number; o?: number }) {
+  return (
+    <En x={x} y={y} k={k} o={o}>
+      <rect x={-46} y={-4} width={92} height={14} rx={7} fill="#F07BB0" />
+      <path d="M-10,0 C-12,-24 -18,-40 -16,-60" fill="none" stroke={V.violeta[0]} strokeWidth={10} strokeLinecap="round" />
+      <path d="M10,0 C12,-22 16,-38 12,-58" fill="none" stroke={V.turquesa[0]} strokeWidth={10} strokeLinecap="round" />
+      <circle cx={-16} cy={-72} r={17} fill={V.violeta[0]} /><circle cx={-18} cy={-74} r={14} fill={V.violeta[1]} />
+      {[0, 1, 2, 3, 4].map((i) => { const a = (i / 5) * Math.PI * 2; return <path key={i} d={`M-18,-74 L${-18 + Math.cos(a) * 11},${-74 + Math.sin(a) * 11}`} stroke={V.violeta[2]} strokeWidth={2} opacity={0.7} />; })}
+      <ellipse cx={12} cy={-70} rx={13} ry={15} fill={V.turquesa[0]} /><ellipse cx={10} cy={-72} rx={10} ry={12} fill={V.turquesa[1]} />
+      <circle cx={-23} cy={-80} r={3.5} fill="#FFF" opacity={0.8} />
+    </En>
+  );
+}
+
+/** Gránulo específico del eosinófilo con su núcleo cristaloide de proteína básica mayor. */
+function GranuloMbp({ x, y, k = 1, o = 1 }: { x: number; y: number; k?: number; o?: number }) {
+  return (
+    <En x={x} y={y} k={k} o={o}>
+      <ellipse rx={40} ry={32} fill={V.eos[0]} transform="translate(3,3)" />
+      <ellipse rx={38} ry={30} fill={V.eos[1]} />
+      <path d="M-16,-8 L0,-18 L16,-8 L16,10 L0,20 L-16,10 Z" fill="#5A2A9E" />
+      <path d="M-10,-6 L0,-12 L10,-6" fill="none" stroke="#B79BFF" strokeWidth={2.5} />
+      <circle cx={-22} cy={-14} r={4} fill="#FFF" opacity={0.75} />
+    </En>
+  );
+}
+
+/** Proteína catiónica eosinofílica: proteína con cargas positivas que abre un poro en una membrana. */
+function Ecp({ x, y, k = 1, o = 1 }: { x: number; y: number; k?: number; o?: number }) {
+  return (
+    <En x={x} y={y} k={k} o={o}>
+      <rect x={-60} y={14} width={46} height={14} rx={7} fill="#E9A58A" /><rect x={14} y={14} width={46} height={14} rx={7} fill="#E9A58A" />
+      <circle cy={-4} r={22} fill="#B23A86" /><circle cx={-2} cy={-6} r={19} fill="#E0338A" />
+      {[[-26, -24], [24, -26], [-30, 8], [28, 6]].map(([cx, cy], i) => <g key={i}><circle cx={cx} cy={cy} r={8} fill="#FFF" opacity={0.9} /><path d={`M${cx - 4},${cy} L${cx + 4},${cy} M${cx},${cy - 4} L${cx},${cy + 4}`} stroke="#B23A86" strokeWidth={2.4} strokeLinecap="round" /></g>)}
+      <circle cx={-9} cy={-13} r={4} fill="#FFF" opacity={0.75} />
+    </En>
+  );
+}
+
+/** Peroxidasa eosinofílica: enzima con su grupo hemo que suelta oxidantes. */
+function Epo({ x, y, k = 1, o = 1, reloj = 0 }: { x: number; y: number; k?: number; o?: number; reloj?: number }) {
+  return (
+    <En x={x} y={y} k={k} o={o}>
+      <path d={blob(8, 26, 0.12, 3)} fill="#1F7A4A" transform="translate(3,3)" />
+      <path d={blob(8, 26, 0.12, 3)} fill="#2FAE6A" />
+      <rect x={-9} y={-9} width={18} height={18} rx={3} fill="#C2142E" transform="rotate(45)" /><circle r={4} fill="#FFD23F" />
+      {[0, 1, 2].map((i) => { const f = ((reloj / 900 + i / 3) % 1); return <path key={i} d="M0,-7 L2,-2 L7,0 L2,2 L0,7 L-2,2 L-7,0 L-2,-2 Z" fill="#FFD23F" transform={`translate(${26 + f * 30},${-20 - i * 10 - f * 14}) scale(${1.2 - f * 0.6})`} opacity={1 - f} />; })}
+      <circle cx={-12} cy={-12} r={4} fill="#FFF" opacity={0.75} />
+    </En>
+  );
+}
+
+const Migra: Lamina = ({ p, reloj }) => {
   const cr = p('cruza');
   return (
     <g>
       <Bandera x={800} y={70} txt="Para salir de la sangre, el eosinófilo…" color={V.eos[0]} p={p('salir')} t={28} punta="no" />
       <Pared y={460} />
+      {[620, 760, 900].map((tx, i) => <Tallo key={tx} x={tx} y={488} n={7} color="#F29A2E" claro="#FFD9A0" p={tramo(p('vcam'), i * 0.15, 0.6 + i * 0.15)} k={0.9} />)}
       {Array.from({ length: 6 }, (_, i) => <circle key={i} cx={1100 + i * 70} cy={640 + i * 40} r={6 + i * 3} fill="#E0338A" opacity={tramo(p('eotaxinas'), i / 8, i / 8 + 0.4)} />)}
-      <Bandera x={1280} y={900} txt="Eotaxinas · CCL11" color="#B8237A" p={p('eotaxinas')} t={24} />
+      <Txt x={1440} y={900} txt="eotaxinas (CCL11)" t={22} color="#E0338A" p={p('eotaxinas')} />
       <Eosinofilo x={lerp(600, 1000, easeOut(p('tejido')))} y={lerp(330, 720, easeOut(cr))} k={1.25} degranula={p('degranula')} />
-      <Bandera x={300} y={260} txt="Integrina α4β1 → VCAM-1" color={V.violeta[0]} p={p('integrina')} t={24} />
-      <Txt x={300} y={330} txt="se pega al endotelio" t={22} p={p('vcam')} fuerte={false} />
-      <Txt x={300} y={700} txt="cruza y migra al tejido" t={26} p={cr} />
-      <Bandera x={330} y={800} txt="Proteína básica mayor" color={V.eos[0]} p={p('mbp')} t={22} />
-      <Bandera x={330} y={870} txt="Proteína catiónica eosinofílica" color={V.eos[0]} p={p('ecp')} t={22} />
-      <Bandera x={330} y={940} txt="Peroxidasa eosinofílica" color={V.eos[0]} p={p('epo')} t={22} />
+      {/* Integrina α4β1 → VCAM-1: dibujo, nombre pequeño y flecha */}
+      <Integrina41 x={170} y={300} k={1.5} o={tramo(p('integrina'), 0, 0.4)} />
+      <Txt x={170} y={350} txt="integrina α4β1" t={22} p={p('integrina')} />
+      <Flecha a={[250, 220]} b={[400, 220]} p={p('vcam')} color={FLECHA} w={6} />
+      <En x={480} y={300} o={tramo(p('vcam'), 0, 0.4)}><rect x={-60} y={-6} width={120} height={18} rx={9} fill={V.endo[1]} /></En>
+      <Tallo x={480} y={300} n={7} color="#F29A2E" claro="#FFD9A0" p={p('vcam')} k={1.6} />
+      <Txt x={480} y={350} txt="VCAM-1" t={22} p={p('vcam')} />
+      <Txt x={325} y={395} txt="se pega al endotelio" t={20} p={p('vcam')} fuerte={false} />
+      <Txt x={330} y={650} txt="cruza y migra al tejido" t={26} p={cr} />
+      {/* Lo que suelta: tres proteínas de sus gránulos */}
+      {([['mbp', 'proteína básica', 'mayor'], ['ecp', 'proteína catiónica', 'eosinofílica'], ['epo', 'peroxidasa', 'eosinofílica']] as const).map(([n, l1, l2], i) => {
+        const ix = 700 + i * 240;
+        return (
+          <g key={n}>
+            <Flecha a={[lerp(940, 1060, i / 2), 790]} b={[ix, 828]} p={tramo(p(n), 0, 0.5)} color={V.eos[1]} w={4} />
+            {i === 0 ? <GranuloMbp x={ix} y={862} k={1.2} o={tramo(p(n), 0, 0.4)} /> : i === 1 ? <Ecp x={ix} y={862} k={1.2} o={tramo(p(n), 0, 0.4)} /> : <Epo x={ix} y={862} k={1.2} o={tramo(p(n), 0, 0.4)} reloj={reloj} />}
+            <Txt x={ix} y={922} txt={l1} t={18} p={p(n)} />
+            <Txt x={ix} y={946} txt={l2} t={18} p={p(n)} />
+          </g>
+        );
+      })}
     </g>
   );
 };

@@ -2,17 +2,34 @@
 // Capítulo 9 · Nariz, pulmón y riñón: el síndrome pulmón-riñón y el cierre de los dos casos.
 
 import type { Lamina } from '../Lienzo';
+import { TuboOrina } from '../../citopenias-autoinmunes/Piezas';
 import { Barra, Lente, Visto } from '../../citopenias-autoinmunes/laminas/Comun';
-import { Alveolos, Anca, Bandera, Bola, Eosinofilo, En, Flecha, FLECHA, Glomerulo, Granuloma, Hematie, IgG, Macrofago, Neutrofilo, Paciente, Pulmones, Rinon, Sale, Tarjeta, Txt, V, blob, clamp, easeOut, hash, lerp, tramo } from '../Piezas';
+import { Alveolos, Anca, Bandera, Cuerpo, Llamada, Mpo, Perfil, Pista, Pr3, FotoLente, Bola, Eosinofilo, En, Flecha, FLECHA, Glomerulo, Granuloma, Hematie, IgG, Macrofago, Neutrofilo, Paciente, Pulmones, Rinon, Sale, Tarjeta, Txt, V, blob, clamp, easeOut, hash, lerp, tramo, Portaobjetos, FotoCuadro } from '../Piezas';
+
+/** Cara con el eritema en alas de mariposa (lupus). */
+function Lupus() {
+  return (
+    <g>
+      <circle r={34} fill="#E9A58A" />
+      <path d="M0,4 C-8,-8 -30,-10 -31,2 C-32,13 -16,18 -2,12 Z M0,4 C8,-8 30,-10 31,2 C32,13 16,18 2,12 Z" fill="#E0338A" opacity={0.8} />
+      <circle cx={-11} cy={-8} r={3} fill="#3A1342" /><circle cx={11} cy={-8} r={3} fill="#3A1342" />
+    </g>
+  );
+}
 
 const PulmonRinon: Lamina = ({ p }) => {
-  const causas: [string, string, string][] = [['gpa', 'Granulomatosis con poliangeítis', V.turquesa[0]], ['pam', 'Poliangeítis microscópica', '#B8237A'], ['mbg', 'Anti membrana basal', '#2F6FD8'], ['lupus', 'Lupus', '#8A4FE0']];
+  const causas: [string, string, string][] = [['gpa', 'Granulomatosis con poliangeítis', V.turquesa[1]], ['pam', 'Poliangeítis microscópica', '#E0338A'], ['mbg', 'Anti membrana basal', '#3B9EDD'], ['lupus', 'Lupus', '#9A6BF2']];
   return (
     <g>
       <Sale p={p('sangra')} x={330} y={330} k={0.8}><Pulmones sangre={p('sangra')} /></Sale>
-      <Sale p={p('pierde')} x={330} y={720} k={0.8}><Rinon x={-110} /><Rinon x={110} r={180} /></Sale>
+      <Sale p={p('pierde')} x={330} y={720} k={0.8}><Rinon x={-110} /><g transform="translate(110,0) scale(-1,1)"><Rinon /></g></Sale>
       <Bandera x={800} y={90} txt="Síndrome pulmón-riñón: una urgencia" color={V.sangre[0]} p={p('urgencia')} t={30} punta="no" />
-      {causas.map(([n, txt, c], i) => <Bandera key={n} x={1050} y={250 + i * 90} txt={txt} color={c} p={p(n)} t={24} />)}
+      {causas.map(([n, txt, c], i) => (
+        <g key={n}>
+          <Sale p={p(n)} x={830} y={260 + i * 105} k={1}>{i === 0 ? <Perfil quien="el" hundida={0.7} costras={1} k={0.2} y={8} /> : i === 1 ? <g><Anca y={-4} k={1.6} /><Mpo y={-18} k={1.1} /></g> : i === 2 ? <g><circle r={40} fill="#0E1F14" /><Glomerulo brillo="lineal" k={0.14} /></g> : <Lupus />}</Sale>
+          <Txt x={900} y={260 + i * 105} txt={txt.toLowerCase().replace('anti membrana basal', 'enfermedad anti membrana basal')} t={24} color={c} p={p(n)} ancla="start" />
+        </g>
+      ))}
       <Txt x={1050} y={190} txt="sus causas principales" t={24} p={p('causas')} />
       <Sale p={p('capilares')} x={900} y={820} k={0.38}><Alveolos /></Sale>
       <Txt x={1060} y={820} txt="=" t={60} p={p('capilares')} />
@@ -53,7 +70,7 @@ const NarizEl: Lamina = ({ p }) => {
       <Granuloma x={1300} y={260} k={0.32} p={p('granulomas')} necrosis={1} />
       <Txt x={1150} y={380} txt="neutrófilos activados y granulomas invasores" t={22} p={p('granulomas')} />
       <Txt x={1150} y={470} txt="la mucosa se queda sin sangre y se ulcera" t={22} p={p('ulcera')} />
-      <Bandera x={1150} y={570} txt="Costras: moco, sangre y tejido necrótico" color="#5A2A1A" p={p('moco')} t={22} />
+      <Llamada x={1000} y={570} a={[760, 480]} txt="costras: moco, sangre y tejido necrótico" p={p('moco')} t={22} />
       <Sale p={p('perfora')} x={1150} y={780} k={0.9}>
         <rect x={-200} y={-80} width={400} height={160} rx={30} fill={V.piel[1]} />
         <rect x={-30} y={-80} width={60} height={160} fill="#F2E4C4" />
@@ -71,11 +88,11 @@ const NarizElla: Lamina = ({ p }) => {
       <Lente x={430} y={500} R={330} id="c9-rino2" o={tramo(p('polipos'), 0, 0.4)}>
         <Rinoscopia tipo="polipos" polipo={clamp(p('edema') * 0.5 + p('masa') * 0.5)} eos={p('eos')} />
       </Lente>
-      <Bandera x={1150} y={200} txt="Manda la respuesta tipo 2" color={V.eos[0]} p={p('tipo2')} t={26} />
+      <Txt x={1150} y={200} txt="manda la respuesta tipo 2" t={28} color={V.eos[1]} p={p('tipo2')} />
       <Txt x={1150} y={280} txt="IL-5 y eotaxinas traen eosinófilos" t={24} p={p('il5')} />
       <Txt x={1150} y={330} txt="dañan el epitelio y abren los vasos" t={22} p={p('eos')} fuerte={false} />
       <Txt x={1150} y={430} txt="edema y fibroblastos que proliferan" t={24} p={p('fibroblastos')} />
-      <Bandera x={1150} y={520} txt="Una masa blanda que tapa la nariz" color="#8A9A1E" p={p('masa')} t={24} />
+      <Llamada x={960} y={520} a={[430, 600]} txt="una masa blanda que tapa la nariz" p={p('masa')} t={24} />
       {[0, 1, 2, 3].map((i) => <Bola key={i} x={lerp(1400, 1180, easeOut(tramo(p('olfato'), i * 0.1, 0.8)))} y={700 + (i % 2) * 40} R={12} tono={V.moco} o={tramo(p('olfato'), i * 0.1, 0.3)} />)}
       <rect x={1140} y={650} width={20} height={130} rx={10} fill="#F1EFC2" opacity={tramo(p('olfato'), 0, 0.3)} />
       <Txt x={1150} y={840} txt="los olores no llegan a la mucosa olfatoria" t={22} p={p('olfato')} />
@@ -86,11 +103,14 @@ const NarizElla: Lamina = ({ p }) => {
 const Capilaritis: Lamina = ({ p }) => {
   return (
     <g>
-      <Sale p={p('pulmon')} x={500} y={500} k={1.35}><Alveolos sangre={p('llenos')} /></Sale>
-      {[0, 1, 2, 3, 4].map((i) => <Neutrofilo key={i} x={500 + [-120, 60, 190, -10, -170][i] * 1.35} y={500 + [-110, -110, 40, 130, 90][i] * 1.35} k={0.42} cebado={1} activo={p('rompe')} o={tramo(p('capilaritis'), i * 0.1, 0.5 + i * 0.1)} />)}
-      <Bandera x={1200} y={200} txt="Capilaritis" color={V.nucleo[1]} p={p('capilaritis')} t={30} />
+      <Sale p={p('pulmon')} x={520} y={440} k={1.2}><Alveolos sangre={p('llenos')} /></Sale>
+      {[0, 1, 2, 3, 4].map((i) => <Neutrofilo key={i} x={520 + [-120, 60, 190, -10, -170][i] * 1.2} y={440 + [-110, -110, 40, 130, 90][i] * 1.2} k={0.42} cebado={1} activo={p('rompe')} o={tramo(p('capilaritis'), i * 0.1, 0.5 + i * 0.1)} />)}
+      <Llamada x={1100} y={200} a={[724, 266]} txt="capilaritis" p={p('capilaritis')} t={30} />
       <Txt x={1200} y={280} txt="la barrera alveolocapilar se rompe" t={24} p={p('rompe')} />
-      <Bandera x={1200} y={380} txt="Hemorragia alveolar difusa" color={V.sangre[0]} p={p('hemorragia')} t={26} />
+      <Txt x={1200} y={380} txt="hemorragia alveolar difusa" t={28} color={V.sangre[1]} p={p('hemorragia')} />
+      <FotoCuadro x={215} y={860} w={270} h={180} foto="pulmon-goodpasture" o={tramo(p('hemorragia'), 0, 0.5)} />
+      <Txt x={385} y={850} txt="pieza real:" t={18} p={p('hemorragia')} fuerte={false} ancla="start" />
+      <Txt x={385} y={878} txt="hemorragia difusa en ambos pulmones" t={18} p={p('hemorragia')} ancla="start" />
       <Txt x={1200} y={480} txt="hemoptisis… pero no siempre" t={24} p={p('hemoptisis')} />
       <Barra x={1000} y={620} w={400} val={1 - 0.45 * p('hb')} color={V.sangre[1]} txt="hemoglobina" p={p('hb')} />
       <Sale p={p('vidrio')} x={1200} y={820} k={0.8}>
@@ -113,13 +133,15 @@ const Fisiologia: Lamina = ({ p, reloj }) => {
       <Txt x={420} y={150} txt="sigue recibiendo flujo…" t={26} p={p('flujo')} />
       {[0, 1, 2].map((i) => <Bola key={i} x={lerp(160, 260, Math.abs(Math.sin(reloj / 500 + i)))} y={300 + i * 50} R={14} tono={['#3F86FF', '#7DB2FF', '#CFE0FF']} o={tramo(p('aire'), 0, 0.4)} />)}
       <Txt x={420} y={780} txt="…pero ya no recibe aire" t={26} p={p('aire')} />
-      <Bandera x={420} y={870} txt="Hipoxemia y disnea" color="#2F6FD8" p={p('hipoxemia')} t={28} />
+      <Txt x={420} y={870} txt="hipoxemia y disnea" t={30} color="#2F6FD8" p={p('hipoxemia')} />
       <Txt x={1150} y={220} txt="un dato curioso:" t={26} p={p('curioso')} />
-      <Bandera x={1150} y={300} txt="La DLCO aumenta" color={V.verde[0]} p={p('dlco')} t={28} />
+      <Txt x={1150} y={300} txt="la DLCO aumenta ↑" t={30} color={V.verde[0]} p={p('dlco')} />
       <Txt x={1150} y={370} txt="la hemoglobina derramada capta el CO" t={22} p={p('dlco')} fuerte={false} />
-      <Sale p={p('dias')} x={1150} y={600} k={0.4}><Macrofago /></Sale>
-      {[0, 1, 2, 3, 4].map((i) => <circle key={i} cx={1110 + (i % 3) * 30} cy={590 + Math.floor(i / 3) * 30} r={10} fill="#8A6A3E" opacity={tramo(p('hemosiderina'), i * 0.1, 0.5 + i * 0.1)} />)}
-      <Txt x={1150} y={780} txt="en 2 o 3 días, macrófagos con hemosiderina" t={22} p={p('hemosiderina')} />
+      <Sale p={p('dias')} x={1060} y={600} k={0.4}><Macrofago /></Sale>
+      <FotoLente x={1360} y={590} R={140} foto="hemosiderofagos" o={tramo(p('hemosiderina'), 0, 0.6)} credito="arriba" />
+      {[0, 1, 2, 3, 4].map((i) => <circle key={i} cx={1020 + (i % 3) * 30} cy={590 + Math.floor(i / 3) * 30} r={10} fill="#8A6A3E" opacity={tramo(p('hemosiderina'), i * 0.1, 0.5 + i * 0.1)} />)}
+      <Llamada x={900} y={790} a={[1360 + (355 - 360) * 0.389, 590 + (435 - 360) * 0.389]} txt="en 2 o 3 días, macrófagos con hemosiderina" p={p('hemosiderina')} t={22} />
+      <Portaobjetos x={1360} y={890} k={0.7} o={tramo(p('hemosiderina'), 0.2, 0.8)} organo="PULMÓN" tincion="H-E" caso="hemorragia" />
     </g>
   );
 };
@@ -146,9 +168,9 @@ const Radiografia: Lamina = ({ p }) => {
       </Sale>
       <Txt x={1230} y={470} txt="el centro se licúa, drena por un bronquio: cavidad" t={22} p={cav} />
       <Txt x={1230} y={590} txt="la sangre llega por dos caminos:" t={26} p={p('caminos')} />
-      <Bandera x={1050} y={680} txt="Granuloma que erosiona un vaso" color={V.violeta[0]} p={p('caminos')} t={22} />
-      <Bandera x={1410} y={760} txt="Capilaritis" color={V.nucleo[1]} p={tramo(p('caminos'), 0.3, 1)} t={22} />
-      <Bandera x={1230} y={880} txt="La cavitación se confirma con tomografía" color="#2F6FD8" p={p('tomografia')} t={22} />
+      <Txt x={1050} y={680} txt="1 · un granuloma erosiona un vaso" t={22} p={p('caminos')} />
+      <Txt x={1050} y={730} txt="2 · capilaritis" t={22} p={tramo(p('caminos'), 0.3, 1)} />
+      <Txt x={1230} y={880} txt="la cavitación se confirma con tomografía" t={22} color="#2F6FD8" p={p('tomografia')} />
     </g>
   );
 };
@@ -170,7 +192,7 @@ const AsmaElla: Lamina = ({ p, reloj }) => {
       <Txt x={400} y={860} txt="al espirar, el aire pasa por vías estrechas y silba" t={22} p={p('silba')} />
       <Txt x={1200} y={200} txt="¿y sus opacidades?" t={28} p={p('opacidades')} />
       <Sale p={p('eos')} x={1200} y={480} k={0.95}><Alveolos eos={p('eos')} /></Sale>
-      <Bandera x={1200} y={780} txt="Neumonía eosinofílica" color={V.eos[0]} p={p('neumonia')} t={26} />
+      <Txt x={1200} y={780} txt="neumonía eosinofílica" t={28} color={V.eos[1]} p={p('neumonia')} />
       <Txt x={1200} y={850} txt="aparece y desaparece" t={22} p={p('neumonia')} />
     </g>
   );
@@ -182,9 +204,10 @@ const ElRinon: Lamina = ({ p }) => {
       <Sale p={p('rinon')} x={380} y={460} k={0.95}><Glomerulo semiluna={0.9} necrosis={1} /></Sale>
       <Txt x={380} y={760} txt="GN necrotizante pauciinmune con semilunas" t={22} p={p('lesion')} />
       <Sale p={p('noduele')} x={860} y={330} k={1.2}><Rinon /></Sale>
-      <Bandera x={1300} y={250} txt="El riñón no duele" color={V.rinon[1]} p={p('noduele')} t={28} />
+      <Txt x={1320} y={250} txt="el riñón no duele" t={32} color={V.rinon[1]} p={p('noduele')} />
       <Txt x={1320} y={330} txt="pierde la mitad del filtrado en silencio" t={22} p={p('silencio')} />
-      <Bandera x={1100} y={560} txt="Examen de orina desde el primer día" color="#C99300" p={p('orina')} t={26} />
+      <Sale p={p('orina')} x={900} y={560} k={0.45}><TuboOrina oscuro={0.6} /></Sale>
+      <Txt x={970} y={560} txt="examen de orina desde el primer día" t={26} p={p('orina')} ancla="start" />
       <Visto x={900} y={730} k={0.9} p={p('normal')} />
       <Txt x={960} y={730} txt="segunda paciente: orina y creatinina normales" t={22} p={p('normal')} ancla="start" />
       <Txt x={1100} y={830} txt="en la GEPA, el riñón se afecta menos" t={24} p={p('menos')} />
@@ -224,7 +247,7 @@ const AntiMbg: Lamina = ({ p }) => {
         <circle cx={-130} cy={0} r={10} fill="#FF7A1A" />
       </Sale>
       <Txt x={1200} y={780} txt="tabaco, infección o un inhalante lo lesionan" t={22} p={p('tabaco')} />
-      <Bandera x={1200} y={880} txt="Entonces, el pulmón también sangra" color={V.sangre[0]} p={p('sangra')} t={26} />
+      <Txt x={1200} y={880} txt="entonces, el pulmón también sangra" t={28} color={V.sangre[1]} p={p('sangra')} />
     </g>
   );
 };
@@ -236,11 +259,18 @@ const Cierre: Lamina = ({ p }) => {
   return (
     <g>
       <Sale p={p('el')} x={200} y={260} k={0.5}><Tarjeta w={460} h={500} /><En y={-20}><Paciente quien="el" /></En></Sale>
-      {el.map((t, i) => <Bandera key={t} x={400} y={150 + i * 70} txt={t} color={V.turquesa[0]} p={tramo(p('el'), i * 0.15, 0.5 + i * 0.15)} t={22} ancla="izq" punta="no" />)}
+      {el.map((t, i) => <g key={t}><circle cx={400} cy={150 + i * 70} r={8 * tramo(p('el'), i * 0.15, 0.5 + i * 0.15)} fill={V.turquesa[0]} /><Txt x={420} y={150 + i * 70} txt={t} t={24} p={tramo(p('el'), i * 0.15, 0.5 + i * 0.15)} ancla="start" /></g>)}
       <Sale p={p('ella')} x={1400} y={260} k={0.5}><Tarjeta w={460} h={500} color="#FFF1F6" /><En y={-20}><Paciente quien="ella" /></En></Sale>
-      {ella.map((t, i) => <Bandera key={t} x={1200} y={150 + i * 70} txt={t} color={V.ambar[0]} p={tramo(p('ella'), i * 0.15, 0.5 + i * 0.15)} t={22} ancla="der" punta="no" />)}
+      {ella.map((t, i) => <g key={t}><circle cx={1200} cy={150 + i * 70} r={8 * tramo(p('ella'), i * 0.15, 0.5 + i * 0.15)} fill={V.ambar[0]} /><Txt x={1180} y={150 + i * 70} txt={t} t={24} p={tramo(p('ella'), i * 0.15, 0.5 + i * 0.15)} ancla="end" /></g>)}
       <Bandera x={800} y={560} txt="El mismo vaso, dos armas distintas" color="var(--cit-base)" p={p('vaso')} t={32} />
-      {preg.map(([n, t], i) => <Bandera key={n} x={230 + i * 380} y={760} txt={t} color={[V.sangre[0], V.nucleo[1], V.verde[0], V.rinon[1]][i]} p={p(n)} t={24} punta="no" />)}
+      {preg.map(([n, t], i) => (
+        <Pista key={n} x={230 + i * 380} y={740} p={p(n)} nombre={t} dy={90} t={24}>
+          {i === 0 ? <g>{[34, 22, 12].map((R, j) => <g key={j}><circle cx={-50 + j * 46} r={R} fill={V.pared[2]} /><circle cx={-50 + j * 46} r={R * 0.6} fill={V.sangre[1]} /></g>)}</g>
+            : i === 1 ? <g><Anca x={-24} y={-10} k={1.6} /><Pr3 x={-24} y={-26} k={1.1} /><Anca x={24} y={-10} k={1.6} /><Mpo x={24} y={-26} k={1.1} /></g>
+            : i === 2 ? <g><circle r={50} fill="#0E1F14" /><Glomerulo brillo="granular" k={0.17} /></g>
+            : <Cuerpo k={0.2} y={-6} />}
+        </Pista>
+      ))}
       <Txt x={800} y={900} txt="ahí está el diagnóstico" t={34} p={p('preguntas')} />
     </g>
   );

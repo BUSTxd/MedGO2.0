@@ -9,9 +9,10 @@
 // (linfocito, macrófago, plasmática, plaqueta, IgG) son los de Citopenias, sin copiarlos.
 
 import { memo, useContext, useId, type ReactNode } from 'react';
-import { C as CC, En, IgG, TxCtx, blob, clamp, easeBack, easeOut, hash, lerp, tramo } from '../citopenias-autoinmunes/Piezas';
+import { C as CC, En, IgG, Txt, TxCtx, blob, clamp, easeBack, easeOut, hash, lerp, tramo } from '../citopenias-autoinmunes/Piezas';
 import s from '@/styles/citopenias.module.css';
 import v from '@/styles/vasculitis.module.css';
+import { FOTOS, urlFoto, type FotoId } from '@/lib/data/vasculitis/fotos';
 
 export { En, Sale, Flecha, Txt, Rotulo, IgG, Linfocito, Macrofago, Plasmatica, Plaqueta, Esfera, clamp, tramo, lerp, easeOut, easeBack, hash, blob } from '../citopenias-autoinmunes/Piezas';
 export { Barra, Lente, viaje, FLECHA, Cruz, Visto } from '../citopenias-autoinmunes/laminas/Comun';
@@ -56,21 +57,42 @@ export function Bola({ x = 0, y = 0, R, tono, o = 1, brillo = true }: { x?: numb
   );
 }
 
-/** Banderita de la referencia: rectángulo de color sólido con punta, texto blanco. */
-export function Bandera({ x, y, txt, color = V.violeta[1], p = 1, t = 30, punta = 'der', ancla = 'centro' }: { x: number; y: number; txt: string; color?: string; p?: number; t?: number; punta?: 'der' | 'izq' | 'abajo' | 'no'; ancla?: 'centro' | 'izq' | 'der' }) {
+/** Rótulo. Por defecto alterna entre cuatro diseños (elegido de forma fija por su texto) para no repetir siempre la misma
+ *  banderita: bandera con punta, píldora, texto subrayado con barra de color y marbete con ojal. `punta` 'izq' o 'abajo'
+ *  (señala algo) y 'no' (títulos) conservan su forma; `estilo` fuerza uno. */
+export type EstiloRotulo = 'bandera' | 'pildora' | 'subrayado' | 'marbete';
+export function Bandera({ x, y, txt, color = V.violeta[1], p = 1, t = 30, punta, ancla = 'centro', estilo }: { x: number; y: number; txt: string; color?: string; p?: number; t?: number; punta?: 'der' | 'izq' | 'abajo' | 'no'; ancla?: 'centro' | 'izq' | 'der'; estilo?: EstiloRotulo }) {
   const tx = useContext(TxCtx);
   if (p <= 0.002) return null;
+  const ESTILOS: EstiloRotulo[] = ['bandera', 'pildora', 'subrayado', 'marbete'];
+  const e: EstiloRotulo = estilo ?? (punta ? 'bandera' : ESTILOS[Math.floor(hash(txt.length * 7 + txt.charCodeAt(0) + txt.charCodeAt(txt.length - 1) * 3, 4) * 4) % 4]);
+  const pt = punta ?? 'der';
   const w = txt.length * t * 0.56 + t * 1.2, h = t * 1.8, pk = h * 0.42;
   const dx = ancla === 'izq' ? w / 2 : ancla === 'der' ? -w / 2 : 0;
   const media = (w * tx) / 2 + pk + 8;
   const xx = Math.min(1600 - media, Math.max(media, x + dx * tx));
-  const forma = punta === 'der' ? `M${-w / 2},${-h / 2} L${w / 2},${-h / 2} L${w / 2 + pk},0 L${w / 2},${h / 2} L${-w / 2},${h / 2} Z`
-    : punta === 'izq' ? `M${-w / 2},${-h / 2} L${w / 2},${-h / 2} L${w / 2},${h / 2} L${-w / 2},${h / 2} L${-w / 2 - pk},0 Z`
-    : punta === 'abajo' ? `M${-w / 2},${-h / 2} L${w / 2},${-h / 2} L${w / 2},${h / 2} L${pk * 0.7},${h / 2} L0,${h / 2 + pk * 0.8} L${-pk * 0.7},${h / 2} L${-w / 2},${h / 2} Z`
+  const esc = tx * (0.86 + 0.14 * easeBack(clamp(p)));
+  if (e === 'subrayado') {
+    const ws = txt.length * t * 0.56;
+    return (
+      <En x={xx} y={y} k={esc} o={tramo(p, 0, 0.5)}>
+        <rect x={-ws / 2 - 4} y={t * 0.42} width={(ws + 8) * easeOut(clamp(p * 1.3))} height={t * 0.34} rx={t * 0.17} fill={color} />
+        <circle cx={-ws / 2 - t * 0.6} cy={0} r={t * 0.22} fill={color} />
+        <text dy="0.35em" textAnchor="middle" fill="var(--cit-texto)" style={{ fontSize: t, fontWeight: 800 }}>{txt}</text>
+      </En>
+    );
+  }
+  const forma = e === 'pildora' ? null
+    : e === 'marbete' ? `M${-w / 2},${-h / 2 + 6} Q${-w / 2},${-h / 2} ${-w / 2 + 6},${-h / 2} L${w / 2 - 2},${-h / 2} Q${w / 2 + pk},0 ${w / 2 - 2},${h / 2} L${-w / 2 + 6},${h / 2} Q${-w / 2},${h / 2} ${-w / 2},${h / 2 - 6} Z`
+    : pt === 'der' ? `M${-w / 2},${-h / 2} L${w / 2},${-h / 2} L${w / 2 + pk},0 L${w / 2},${h / 2} L${-w / 2},${h / 2} Z`
+    : pt === 'izq' ? `M${-w / 2},${-h / 2} L${w / 2},${-h / 2} L${w / 2},${h / 2} L${-w / 2},${h / 2} L${-w / 2 - pk},0 Z`
+    : pt === 'abajo' ? `M${-w / 2},${-h / 2} L${w / 2},${-h / 2} L${w / 2},${h / 2} L${pk * 0.7},${h / 2} L0,${h / 2 + pk * 0.8} L${-pk * 0.7},${h / 2} L${-w / 2},${h / 2} Z`
     : `M${-w / 2},${-h / 2} L${w / 2},${-h / 2} L${w / 2},${h / 2} L${-w / 2},${h / 2} Z`;
   return (
-    <En x={xx} y={y} k={tx * (0.86 + 0.14 * easeBack(clamp(p)))} o={tramo(p, 0, 0.5)}>
-      <path d={forma} fill={color} />
+    <En x={xx} y={y} k={esc} o={tramo(p, 0, 0.5)}>
+      {forma ? <path d={forma} fill={color} /> : <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={h / 2} fill={color} />}
+      {e === 'marbete' && <circle cx={w / 2 - pk * 0.15} cy={0} r={t * 0.16} fill="#FFF" opacity={0.85} />}
+      {e === 'pildora' && <rect x={-w / 2 + h * 0.3} y={-h / 2 + 4} width={w * 0.35} height={h * 0.16} rx={h * 0.08} fill="#FFF" opacity={0.28} />}
       <text dy="0.35em" textAnchor="middle" className={s.rotulo} style={{ fontSize: t }}>{txt}</text>
     </En>
   );
@@ -262,8 +284,18 @@ export function Complejo({ x = 0, y = 0, k = 1, o = 1, r = 0, n = 3 }: { x?: num
 }
 
 /** C5a: anafilatoxina, gota naranja. */
-export function C5a({ x = 0, y = 0, k = 1, o = 1 }: { x?: number; y?: number; k?: number; o?: number }) {
-  return <En x={x} y={y} k={k} o={o}><path d="M0,-14 C8,-4 12,2 12,7 A12,12 0 1 1 -12,7 C-12,2 -8,-4 0,-14 Z" fill={V.c5a[0]} /><path d="M-2,-10 C4,-2 8,3 8,7 A9,9 0 1 1 -10,7 C-10,2 -7,-3 -2,-10 Z" fill={V.c5a[1]} /><circle cx={-4} cy={4} r={2.6} fill="#FFF" /></En>;
+export function C5a({ x = 0, y = 0, k = 1, o = 1, tono = V.c5a }: { x?: number; y?: number; k?: number; o?: number; tono?: string[] }) {
+  // Anafilatoxina: proteína pequeña de cuatro hélices (un lóbulo cada una) y su cola C-terminal, la que activa el receptor.
+  const lob: [number, number, number][] = [[-6, -5, 8.5], [6, -6, 8], [-5, 6, 8], [7, 5, 8.5]];
+  return (
+    <En x={x} y={y} k={k} o={o}>
+      <path d="M11,10 Q16,12 15,17 Q14,21 18,22" fill="none" stroke={tono[0]} strokeWidth={2.6} strokeLinecap="round" />
+      {lob.map(([lx, ly, r], i) => <circle key={`s${i}`} cx={lx + 1.6} cy={ly + 1.6} r={r} fill={tono[0]} />)}
+      {lob.map(([lx, ly, r], i) => <circle key={`c${i}`} cx={lx} cy={ly} r={r - 0.8} fill={tono[1]} />)}
+      {lob.map(([lx, ly, r], i) => <path key={`h${i}`} d={`M${lx - r * 0.5},${ly - r * 0.15} q${r * 0.25},${-r * 0.4} ${r * 0.5},0 t${r * 0.5},0`} fill="none" stroke={tono[0]} strokeWidth={1.6} strokeLinecap="round" opacity={0.7} />)}
+      <circle cx={-8} cy={-8} r={2.4} fill="#FFF" opacity={0.85} />
+    </En>
+  );
 }
 
 /** NET: red de ADN con PR3 y MPO prendidas. `p` cuánto se ha desplegado. */
@@ -478,38 +510,69 @@ export function Punto({ x, y, p = 1, color = '#FF3B3B' }: { x: number; y: number
   return <En x={x} y={y} k={0.5 + 0.5 * easeBack(clamp(p))} o={tramo(p, 0, 0.4)}><circle r={16} fill="#1A0B24" /><circle r={16} fill="none" stroke={color} strokeWidth={6} /></En>;
 }
 
-/** Riñón plano con su hilio. */
-export function Rinon({ x = 0, y = 0, k = 1, o = 1, r = 0 }: { x?: number; y?: number; k?: number; o?: number; r?: number }) {
+/** Riñón en corte frontal: corteza, pirámides, cálices y pelvis, y en el hilio la arteria, la vena y el uréter.
+ *  `palido` 0-1 lo apaga (menos flujo). */
+export function Rinon({ x = 0, y = 0, k = 1, o = 1, r = 0, palido = 0 }: { x?: number; y?: number; k?: number; o?: number; r?: number; palido?: number }) {
+  const pl = clamp(palido);
+  const ext = 'M-30,-120 C40,-128 90,-70 90,0 C90,72 40,128 -30,120 C-80,114 -96,70 -70,44 C-50,24 -50,-24 -70,-44 C-96,-70 -80,-114 -30,-120 Z';
+  const pir = [-115, -78, -40, 0, 40, 78, 115].map((g) => {
+    const a = (g * Math.PI) / 180, bx = 12 + Math.cos(a) * 66, by = Math.sin(a) * 80, ax = lerp(bx, -36, 0.5), ay = lerp(by, 0, 0.5);
+    const nx = -Math.sin(a) * 17, ny = Math.cos(a) * 17;
+    return `M${(bx + nx).toFixed(1)},${(by + ny).toFixed(1)} Q${(bx + Math.cos(a) * 6).toFixed(1)},${(by + Math.sin(a) * 6).toFixed(1)} ${(bx - nx).toFixed(1)},${(by - ny).toFixed(1)} L${ax.toFixed(1)},${ay.toFixed(1)} Z`;
+  });
   return (
     <En x={x} y={y} k={k} o={o} r={r}>
-      <path d="M-30,-120 C40,-128 90,-70 90,0 C90,72 40,128 -30,120 C-80,114 -96,70 -70,44 C-50,24 -50,-24 -70,-44 C-96,-70 -80,-114 -30,-120 Z" fill={V.rinon[0]} />
-      <path d="M-34,-110 C30,-116 76,-64 76,0 C76,60 32,108 -30,106 C-70,104 -80,70 -60,48 C-38,24 -38,-24 -60,-48 C-80,-70 -72,-106 -34,-110 Z" fill={V.rinon[1]} />
-      <path d="M-20,-86 C30,-86 56,-46 58,-6" fill="none" stroke={V.rinon[2]} strokeWidth={10} strokeLinecap="round" />
+      <path d="M-62,-14 C-90,-16 -110,-22 -138,-20" fill="none" stroke={V.sangre[0]} strokeWidth={13} strokeLinecap="round" />
+      <path d="M-62,-14 C-90,-16 -110,-22 -138,-20" fill="none" stroke={V.sangre[1]} strokeWidth={8} strokeLinecap="round" />
+      <path d="M-62,10 C-92,12 -112,8 -140,12" fill="none" stroke="#2F3FA0" strokeWidth={15} strokeLinecap="round" />
+      <path d="M-62,10 C-92,12 -112,8 -140,12" fill="none" stroke="#5468D8" strokeWidth={10} strokeLinecap="round" />
+      <path d="M-58,36 C-74,70 -78,110 -74,150" fill="none" stroke="#D9B04A" strokeWidth={10} strokeLinecap="round" />
+      <path d={ext} fill={V.rinon[0]} transform="translate(5,5)" />
+      <path d={ext} fill={V.rinon[1]} />
+      <path d="M-26,-104 C30,-110 72,-62 74,0 C74,60 32,104 -26,104 C-58,102 -66,72 -52,52 C-34,26 -34,-26 -52,-52 C-66,-74 -58,-102 -26,-104 Z" fill="#D8607E" />
+      {pir.map((d, i) => <path key={i} d={d} fill={V.rinon[0]} />)}
+      {pir.map((d, i) => <path key={`l${i}`} d={d} fill="none" stroke="#E98AA2" strokeWidth={1.5} strokeDasharray="2 5" opacity={0.7} />)}
+      <path d="M-56,-40 C-30,-52 -12,-30 -16,-14 C-6,-8 -6,8 -16,14 C-12,30 -30,52 -56,40 C-44,20 -44,-20 -56,-40 Z" fill="#F3D28A" />
+      <path d="M-50,-30 C-34,-36 -26,-24 -28,-14" fill="none" stroke="#FFF2C4" strokeWidth={4} strokeLinecap="round" />
+      <path d="M-20,-100 C30,-100 60,-56 62,-14" fill="none" stroke={V.rinon[2]} strokeWidth={8} strokeLinecap="round" opacity={0.8} />
+      {pl > 0.01 && <path d={ext} fill="#E9E2EE" opacity={0.55 * pl} />}
     </En>
   );
 }
 
-/** Pulmones planos. */
-export function Pulmones({ x = 0, y = 0, k = 1, o = 1, sangre = 0 }: { x?: number; y?: number; k?: number; o?: number; sangre?: number }) {
-  const lobulo = 'M-20,-150 C-70,-150 -120,-60 -126,40 C-130,110 -110,150 -60,150 C-30,150 -16,120 -16,80 L-14,-130 C-14,-144 -16,-150 -20,-150 Z';
+/** Pulmones de frente: tráquea con sus anillos, carina, bronquios y su árbol, cisuras (dos a la derecha, una a la izquierda)
+ *  y la escotadura cardíaca del izquierdo. `sangre` llena alvéolos de rojo. */
+export function Pulmones({ x = 0, y = 0, k = 1, o = 1, sangre = 0, nodulos = 0, infiltrados = 0 }: { x?: number; y?: number; k?: number; o?: number; sangre?: number; nodulos?: number; infiltrados?: number }) {
+  const der = 'M-22,-150 C-62,-162 -122,-84 -132,30 C-138,112 -120,160 -72,162 C-44,162 -24,144 -22,116 L-20,-20 C-20,-60 -22,-110 -22,-150 Z';
+  const izq = 'M22,-150 C62,-162 122,-84 132,30 C138,112 120,160 72,162 C52,162 40,150 42,128 C62,110 64,70 44,42 C30,22 22,4 22,-24 Z';
+  const arbol = (sx: number) => (
+    <g transform={`scale(${sx},1)`} fill="none" strokeLinecap="round">
+      <path d="M-4,-112 C-24,-96 -40,-80 -56,-60" stroke="#F7E3EC" strokeWidth={10} />
+      <path d="M-56,-60 C-70,-86 -78,-104 -80,-120 M-56,-60 C-80,-40 -92,-10 -98,20 M-56,-60 C-62,-20 -66,30 -70,90 M-98,20 C-108,50 -110,80 -108,110 M-70,90 C-76,110 -84,124 -92,134 M-70,90 C-60,110 -52,124 -46,136" stroke="#F7E3EC" strokeWidth={4.5} opacity={0.9} />
+      <path d="M-80,-120 L-92,-130 M-80,-120 L-70,-136 M-98,20 L-114,10 M-108,110 L-120,120 M-66,30 L-50,40" stroke="#F7E3EC" strokeWidth={2.5} opacity={0.8} />
+    </g>
+  );
   return (
     <En x={x} y={y} k={k} o={o}>
-      <rect x={-9} y={-210} width={18} height={90} rx={9} fill="#D9A0C4" />
-      {[-1, 1].map((sx) => (
-        <g key={sx} transform={`translate(${sx * 12},0) scale(${sx},1)`}>
-          <path d={lobulo} fill={V.pulmon[0]} />
-          <path d={lobulo} fill={V.pulmon[1]} transform="translate(4,-6) scale(0.94)" />
-          {sangre > 0.01 && [[-70, -20], [-90, 50], [-50, 90], [-60, -80]].map(([cx, cy], i) => <circle key={i} cx={cx} cy={cy} r={22 * tramo(sangre, i * 0.15, 0.5 + i * 0.15)} fill={V.sangre[1]} opacity={0.85} />)}
-          <path d="M-40,-120 C-80,-100 -100,-40 -104,10" fill="none" stroke={V.pulmon[2]} strokeWidth={9} strokeLinecap="round" />
-        </g>
-      ))}
+      <path d={der} fill={V.pulmon[0]} transform="translate(5,5)" /><path d={izq} fill={V.pulmon[0]} transform="translate(5,5)" />
+      <path d={der} fill={V.pulmon[1]} /><path d={izq} fill={V.pulmon[1]} />
+      <path d="M-44,-60 C-76,0 -104,60 -124,112 M-124,22 C-106,20 -84,16 -54,12" fill="none" stroke={V.pulmon[0]} strokeWidth={3.5} strokeLinecap="round" opacity={0.75} />
+      <path d="M40,-80 C74,-20 102,56 124,104" fill="none" stroke={V.pulmon[0]} strokeWidth={3.5} strokeLinecap="round" opacity={0.75} />
+      {sangre > 0.01 && [[-70, -20], [-90, 50], [-50, 100], [-60, -80], [80, -40], [96, 60], [70, 120]].map(([cx, cy], i) => <circle key={i} cx={cx} cy={cy} r={22 * tramo(sangre, i * 0.1, 0.5 + i * 0.1)} fill={V.sangre[1]} opacity={0.85} />)}
+      {infiltrados > 0.01 && [[-84, 40, 0], [-60, 110, 1], [88, 70, 2], [72, -20, 3]].map(([cx, cy, i]) => <path key={i} d={blob(8, 30, 0.3, i + 11)} transform={`translate(${cx},${cy})`} fill="#FFF1F7" opacity={0.75 * tramo(infiltrados, i * 0.15, 0.5 + i * 0.15)} />)}
+      {arbol(1)}{arbol(-1)}
+      {nodulos > 0.01 && [[-84, -40, 22], [-64, 84, 18], [86, 10, 24], [70, -96, 16]].map(([cx, cy, r], i) => { const q = tramo(nodulos, i * 0.15, 0.5 + i * 0.15); return <g key={i} opacity={q}><circle cx={cx + 2} cy={cy + 2} r={r * q} fill="#7A1E4A" /><circle cx={cx} cy={cy} r={r * q} fill="#C2457E" /><circle cx={cx + 2} cy={cy - 2} r={r * 0.45 * q} fill="#3A0F2A" /><circle cx={cx - r * 0.4} cy={cy - r * 0.4} r={r * 0.15} fill="#FFC3E0" /></g>; })}
+      <rect x={-13} y={-224} width={26} height={116} rx={11} fill="#E7A9C6" />
+      {Array.from({ length: 7 }, (_, i) => <rect key={i} x={-13} y={-216 + i * 15} width={26} height={7} rx={3.5} fill="#FBE3EE" />)}
+      <path d="M-50,-130 C-80,-108 -100,-70 -110,-20" fill="none" stroke={V.pulmon[2]} strokeWidth={8} strokeLinecap="round" opacity={0.85} />
+      <path d="M54,-130 C80,-108 98,-76 106,-40" fill="none" stroke={V.pulmon[2]} strokeWidth={8} strokeLinecap="round" opacity={0.6} />
     </En>
   );
 }
 
 /** Glomérulo: cápsula de Bowman, ovillo de asas y arteriolas.
  *  `necrosis` rompe un asa; `fibrina` la llena de amarillo; `semiluna` 0→1 la hace crecer; `cicatriz` la vuelve fibrosa. */
-export function Glomerulo({ x = 0, y = 0, k = 1, o = 1, necrosis = 0, fibrina = 0, semiluna = 0, cicatriz = 0, brillo, R = 260 }: { x?: number; y?: number; k?: number; o?: number; necrosis?: number; fibrina?: number; semiluna?: number; cicatriz?: number; brillo?: 'lineal' | 'granular' | 'pauci'; R?: number }) {
+export function Glomerulo({ x = 0, y = 0, k = 1, o = 1, necrosis = 0, fibrina = 0, semiluna = 0, cicatriz = 0, brillo, R = 260, tubulo = false }: { x?: number; y?: number; k?: number; o?: number; necrosis?: number; fibrina?: number; semiluna?: number; cicatriz?: number; brillo?: 'lineal' | 'granular' | 'pauci'; R?: number; tubulo?: boolean }) {
   const sl = clamp(semiluna), ci = clamp(cicatriz);
   const ovK = 1 - 0.28 * sl;
   const asas: [number, number, number][] = [[-70, -60, 62], [30, -86, 58], [96, -10, 56], [56, 80, 58], [-40, 86, 56], [-98, 14, 54], [0, 0, 50]];
@@ -519,8 +582,13 @@ export function Glomerulo({ x = 0, y = 0, k = 1, o = 1, necrosis = 0, fibrina = 
     <En x={x} y={y} k={k} o={o}>
       {!pantalla && <rect x={-R * 1.1} y={-30} width={R * 0.5} height={44} rx={22} fill={V.sangre[0]} transform="rotate(-20)" />}
       {!pantalla && <rect x={R * 0.62} y={-24} width={R * 0.5} height={36} rx={18} fill={V.sangre[0]} transform="rotate(20)" />}
+      {!pantalla && tubulo && <g transform="rotate(115)">
+        <path d={`M${R - 20},0 C${R + 30},${-R * 0.25} ${R + 50},${R * 0.2} ${R + 90},${-R * 0.05} C${R + 120},${-R * 0.2} ${R + 130},${R * 0.1} ${R + 150},${R * 0.05}`} fill="none" stroke="#F4B9CF" strokeWidth={R * 0.2} strokeLinecap="round" />
+        <path d={`M${R - 20},0 C${R + 30},${-R * 0.25} ${R + 50},${R * 0.2} ${R + 90},${-R * 0.05} C${R + 120},${-R * 0.2} ${R + 130},${R * 0.1} ${R + 150},${R * 0.05}`} fill="none" stroke="#FFF1F6" strokeWidth={R * 0.08} strokeLinecap="round" />
+      </g>}
       <circle r={R} fill={pantalla ? '#0E1F14' : '#F4B9CF'} />
       <circle r={R - 18} fill={pantalla ? '#081209' : '#FFF1F6'} />
+      {!pantalla && Array.from({ length: 22 }, (_, i) => { const a = (i / 22) * Math.PI * 2, cx = Math.cos(a) * (R - 22), cy = Math.sin(a) * (R - 22); return <ellipse key={i} cx={cx} cy={cy} rx={9} ry={3.2} transform={`rotate(${((a * 180) / Math.PI + 90).toFixed(1)} ${cx.toFixed(1)} ${cy.toFixed(1)})`} fill="#E58FB5" />; })}
       {sl > 0.01 && (
         <path d={`M${-(R - 18)},0 A${R - 18},${R - 18} 0 0 1 ${R - 18},0 A${R - 18},${(R - 18) * (1 - 0.55 * sl)} 0 0 0 ${-(R - 18)},0 Z`} transform="rotate(-150)" fill={ci > 0.5 ? '#E7C9A6' : '#D46A9E'} opacity={0.95} />
       )}
@@ -537,11 +605,23 @@ export function Glomerulo({ x = 0, y = 0, k = 1, o = 1, necrosis = 0, fibrina = 
             <g key={i}>
               <circle cx={ax} cy={ay} r={ar} fill={pantalla ? '#0E2A16' : '#C2305A'} />
               <circle cx={ax} cy={ay} r={ar - 11} fill={pantalla ? '#0A1A0E' : '#FFDCE5'} />
-              {!pantalla && <circle cx={ax + ar * 0.2} cy={ay + ar * 0.15} r={ar * 0.3} fill={colAsa} />}
+              {!pantalla && [[0.22, 0.12], [-0.25, -0.18]].map(([fx, fy], j) => <g key={j}><circle cx={ax + ar * fx} cy={ay + ar * fy} r={ar * 0.24} fill={colAsa} /><circle cx={ax + ar * fx} cy={ay + ar * fy} r={ar * 0.1} fill={V.sangre[2]} /></g>)}
               {brillo === 'lineal' && <circle cx={ax} cy={ay} r={ar - 6} fill="none" stroke={V.verde[1]} strokeWidth={7} />}
               {brillo === 'granular' && Array.from({ length: 9 }, (_, j) => { const a = (j / 9) * Math.PI * 2 + i; return <circle key={j} cx={ax + Math.cos(a) * (ar - 6)} cy={ay + Math.sin(a) * (ar - 6)} r={6 + hash(i * 9 + j, 2) * 5} fill={V.verde[1]} />; })}
               {brillo === 'pauci' && i % 3 === 0 && <circle cx={ax + 10} cy={ay - 8} r={4} fill={V.verde[1]} opacity={0.5} />}
               {rota && <path d={`M${ax - 30},${ay - ar + 6} A${ar},${ar} 0 0 1 ${ax + 30},${ay - ar + 6}`} fill="none" stroke="#5A0A2A" strokeWidth={18 * clamp(necrosis)} strokeLinecap="round" />}
+            </g>
+          );
+        })}
+        {!pantalla && [[-20, -30], [44, -40], [34, 44], [-52, 36], [-4, 62]].map(([mx, my], i) => <ellipse key={`m${i}`} cx={mx} cy={my} rx={7} ry={5} fill="#8A2363" opacity={0.75} />)}
+        {!pantalla && asas.map(([ax, ay, ar], i) => {
+          if (Math.hypot(ax, ay) < 30) return null;
+          const a = Math.atan2(ay, ax), px = ax + Math.cos(a) * (ar + 6), py = ay + Math.sin(a) * (ar + 6);
+          return (
+            <g key={`p${i}`}>
+              {[-0.7, -0.35, 0, 0.35, 0.7].map((d, j) => <path key={j} d={`M${(ax + Math.cos(a + d) * (ar + 1)).toFixed(1)},${(ay + Math.sin(a + d) * (ar + 1)).toFixed(1)} L${(ax + Math.cos(a + d) * (ar + 9)).toFixed(1)},${(ay + Math.sin(a + d) * (ar + 9)).toFixed(1)}`} stroke="#7A45E6" strokeWidth={4} strokeLinecap="round" />)}
+              <ellipse cx={px} cy={py} rx={15} ry={11} transform={`rotate(${((a * 180) / Math.PI + 90).toFixed(1)} ${px.toFixed(1)} ${py.toFixed(1)})`} fill="#7A45E6" />
+              <circle cx={px} cy={py} r={5.5} fill="#3F1680" />
             </g>
           );
         })}
@@ -593,25 +673,78 @@ export function LineaTiempo({ x = 0, y = 0, w = 1300, tramos, p = 1, t = 28 }: {
   );
 }
 
-/** Corazón plano (miocarditis, aneurisma coronario). */
-export function Corazon({ x = 0, y = 0, k = 1, o = 1 }: { x?: number; y?: number; k?: number; o?: number }) {
+/** Corazón en vista anterior: ventrículos con el surco interventricular (descendente anterior y grasa), aurículas y orejuelas,
+ *  vena cava superior, aorta con sus tres ramas y tronco pulmonar. `aneurisma` 0-1 dilata las coronarias proximales (Kawasaki). */
+export function Corazon({ x = 0, y = 0, k = 1, o = 1, aneurisma = 0 }: { x?: number; y?: number; k?: number; o?: number; aneurisma?: number }) {
+  const mus = ['#7E1530', '#C2364E', '#EC6A80'];
+  const azul = ['#2F3FA0', '#5468D8', '#9FB0FF'];
+  const ven = 'M-92,-26 C-112,30 -62,96 40,128 C70,138 94,120 100,88 C112,40 112,-10 92,-46 C60,-72 -60,-72 -92,-26 Z';
+  const tubo = (d: string, w: number, t: string[]) => (
+    <g>
+      <path d={d} fill="none" stroke={t[0]} strokeWidth={w} strokeLinecap="round" transform="translate(3,3)" />
+      <path d={d} fill="none" stroke={t[1]} strokeWidth={w - 4} strokeLinecap="round" />
+    </g>
+  );
+  const an = clamp(aneurisma);
   return (
     <En x={x} y={y} k={k} o={o}>
-      <path d="M0,110 C-70,60 -130,10 -130,-50 C-130,-100 -90,-124 -56,-124 C-28,-124 -8,-108 0,-88 C8,-108 28,-124 56,-124 C90,-124 130,-100 130,-50 C130,10 70,60 0,110 Z" fill={V.sangre[0]} />
-      <path d="M0,96 C-62,52 -116,8 -116,-46 C-116,-90 -84,-110 -54,-110 C-28,-110 -10,-94 0,-74 C10,-94 28,-110 54,-110 C84,-110 116,-90 116,-46 C116,8 62,52 0,96 Z" fill={V.sangre[1]} transform="translate(-6,-6)" />
-      <path d="M-86,-70 Q-74,-92 -50,-96" fill="none" stroke={V.sangre[3]} strokeWidth={10} strokeLinecap="round" />
+      {/* Grandes vasos */}
+      {tubo('M-82,-150 L-82,-70', 32, azul)}
+      {tubo('M-40,-100 L106,-100', 18, azul)}
+      {[6, 32, 58].map((bx, i) => <g key={bx}>{tubo(`M${bx},-138 L${bx + (i - 1) * 6},-186`, 13, [mus[0], V.sangre[1]])}</g>)}
+      {tubo('M-14,-50 C-18,-118 6,-150 40,-150 C76,-150 96,-126 96,-84', 36, [V.sangre[0], V.sangre[1]])}
+      <path d="M-8,-110 C-6,-132 10,-142 30,-144" fill="none" stroke={V.sangre[3]} strokeWidth={6} strokeLinecap="round" opacity={0.8} />
+      {tubo('M20,-40 C20,-78 34,-98 58,-104', 32, azul)}
+      <path d="M14,-56 C14,-74 22,-88 36,-96" fill="none" stroke={azul[2]} strokeWidth={5} strokeLinecap="round" opacity={0.8} />
+      {/* Aurícula derecha y orejuelas */}
+      <ellipse cx={-86} cy={-40} rx={42} ry={46} fill={mus[0]} transform="translate(3,3)" />
+      <ellipse cx={-86} cy={-40} rx={40} ry={44} fill="#B23048" />
+      <path d="M84,-64 C104,-78 126,-62 116,-42 C110,-30 96,-34 86,-42 Z" fill="#A42A44" />
+      {/* Ventrículos */}
+      <path d={ven} fill={mus[0]} transform="translate(6,6)" />
+      <path d={ven} fill={mus[1]} />
+      <path d="M30,-56 C38,0 48,70 66,128 C80,130 96,118 100,88 C112,40 112,-10 92,-46 C72,-60 50,-60 30,-56 Z" fill="#A82C45" opacity={0.55} />
+      <path d="M-80,-10 C-84,30 -50,70 -6,96" fill="none" stroke={mus[2]} strokeWidth={10} strokeLinecap="round" opacity={0.75} />
+      {/* Surco coronario y surco interventricular anterior con su grasa y sus arterias */}
+      <path d="M-94,-26 C-40,-60 40,-64 94,-46" fill="none" stroke="#F2C24B" strokeWidth={13} strokeLinecap="round" opacity={0.9} />
+      <path d="M26,-52 C34,0 44,70 64,126" fill="none" stroke="#F2C24B" strokeWidth={12} strokeLinecap="round" opacity={0.9} />
+      <path d="M-58,-50 C-78,-20 -80,30 -62,82" fill="none" stroke="#E3203F" strokeWidth={5} strokeLinecap="round" />
+      <path d="M26,-52 C34,0 44,70 64,126" fill="none" stroke="#E3203F" strokeWidth={5} strokeLinecap="round" />
+      {[[34, -6, 76, 12], [40, 40, 86, 60], [30, 10, -10, 40]].map(([x1, y1, x2, y2], i) => <path key={i} d={`M${x1},${y1} Q${(x1 + x2) / 2},${y1 + 4} ${x2},${y2}`} fill="none" stroke="#E3203F" strokeWidth={3} strokeLinecap="round" opacity={0.85} />)}
+      {/* Orejuela derecha por delante de la raíz aórtica */}
+      <path d="M-74,-78 C-54,-98 -26,-92 -28,-68 C-40,-60 -58,-62 -74,-78 Z" fill="#B23048" />
+      <path d="M-66,-80 C-54,-90 -40,-88 -36,-78" fill="none" stroke={mus[2]} strokeWidth={4} strokeLinecap="round" opacity={0.7} />
+      {an > 0.01 && <>
+        <circle cx={30} cy={-24} r={6 + 14 * an} fill="#9E0B2E" /><circle cx={27} cy={-27} r={4 + 11 * an} fill="#E3203F" /><circle cx={24} cy={-31} r={2 + 3 * an} fill="#FFA3AB" />
+        <circle cx={-82} cy={-10} r={5 + 11 * an} fill="#9E0B2E" /><circle cx={-84} cy={-12} r={3 + 9 * an} fill="#E3203F" />
+      </>}
     </En>
   );
 }
 
-/** Nervio con su vasa nervorum; `isquemia` lo apaga. */
+/** Nervio periférico de lado: epineuro, tres fascículos con axones ondulados y su vasa nervorum, que entra con ramas cortas.
+ *  `isquemia` 0-1 ocluye la arteria (coágulo oscuro) y apaga los fascículos desde ahí. */
 export function Nervio({ x = 0, y = 0, k = 1, o = 1, isquemia = 0, w = 900 }: { x?: number; y?: number; k?: number; o?: number; isquemia?: number; w?: number }) {
-  const q = clamp(isquemia);
+  const q = clamp(isquemia), W = w / 2, oc = -W * 0.15;
+  const onda = (yy: number, f: number) => { let d = `M${-W + 30},${yy}`; for (let xx = -W + 30; xx < W - 30; xx += 20) d += ` q5,${f} 10,0 t10,0`; return d; };
+  const ramas = Array.from({ length: Math.floor(w / 140) }, (_, i) => -W + 90 + i * 140);
   return (
     <En x={x} y={y} k={k} o={o}>
-      <rect x={-w / 2} y={-46} width={w} height={92} rx={46} fill={q > 0.5 ? '#8E86A8' : '#F2C230'} />
-      {[-24, 0, 24].map((dy) => <rect key={dy} x={-w / 2 + 20} y={dy - 7} width={w - 40} height={14} rx={7} fill={q > 0.5 ? '#B5AFC8' : '#FFE27A'} />)}
-      <path d={`M${-w / 2},-62 C${-w / 4},-90 ${w / 4},-40 ${w / 2},-70`} fill="none" stroke={V.sangre[1]} strokeWidth={12} strokeLinecap="round" strokeDasharray={q > 0.01 ? `${(1 - q) * 900} 2000` : undefined} />
+      <rect x={-W} y={-50} width={w} height={100} rx={50} fill="#C99A3A" transform="translate(4,4)" />
+      <rect x={-W} y={-50} width={w} height={100} rx={50} fill="#F7E1A8" />
+      {[-26, 0, 26].map((dy, i) => (
+        <g key={dy}>
+          <rect x={-W + 22} y={dy - 11} width={w - 44} height={22} rx={11} fill="#FFF3CE" stroke="#D9A23A" strokeWidth={2.5} />
+          <path d={onda(dy, i % 2 ? 4 : -4)} fill="none" stroke="#F2C230" strokeWidth={3} />
+        </g>
+      ))}
+      {q > 0.01 && <rect x={oc} y={-48} width={(W - oc) * easeOut(q)} height={96} rx={20} fill="#9C95B5" opacity={0.75} />}
+      {ramas.map((rx, i) => <path key={i} d={`M${rx},-66 C${rx + 10},-56 ${rx + 18},-50 ${rx + 30},-36`} fill="none" stroke={rx > oc && q > 0.5 ? '#9C95B5' : V.sangre[1]} strokeWidth={5} strokeLinecap="round" />)}
+      <path d={`M${-W},-66 L${W},-66`} fill="none" stroke={V.sangre[0]} strokeWidth={14} strokeLinecap="round" />
+      <path d={`M${-W},-66 L${oc + (W - oc) * (q > 0.01 ? 0 : 1)},-66`} fill="none" stroke={V.sangre[1]} strokeWidth={9} strokeLinecap="round" />
+      {q > 0.01 && <path d={`M${oc},-66 L${W},-66`} fill="none" stroke="#B5AFC8" strokeWidth={9} strokeLinecap="round" opacity={q} />}
+      {q > 0.01 && <ellipse cx={oc} cy={-66} rx={16 * q} ry={11 * q} fill="#3A1342" />}
+      <path d={`M${-W + 40},-38 L${-W + w * 0.4},-38`} stroke="#FFF9E6" strokeWidth={5} strokeLinecap="round" opacity={0.7} />
     </En>
   );
 }
@@ -621,4 +754,188 @@ export function Foco({ x, y, R, p, color = '#FFD23F', w = 8 }: { x: number; y: n
   if (p <= 0.002) return null;
   const L = 2 * Math.PI * R;
   return <circle cx={x} cy={y} r={R} fill="none" stroke={color} strokeWidth={w} strokeDasharray={`${L * easeOut(clamp(p))} ${L}`} strokeLinecap="round" transform={`rotate(-90 ${x} ${y})`} />;
+}
+
+/** Microscopio óptico: base con lámpara, brazo, platina con portaobjetos, revólver con tres objetivos, cabezal binocular y perillas de enfoque. `luz` 0-1 enciende la lámpara. */
+export function Microscopio({ luz = 1, reloj = 0 }: { luz?: number; reloj?: number }) {
+  const cu = ['#A99CCB', '#E9E3F6', '#FFFFFF'];
+  const os = ['#24104A', '#3B1A6E', '#5B3A86'];
+  const brilla = luz * (0.85 + 0.15 * Math.sin(reloj / 260));
+  const brazo = 'M38,66 C38,22 70,4 70,-40 C70,-82 50,-108 28,-130 L-2,-110 C22,-86 36,-64 36,-40 C36,-8 8,22 8,66 Z';
+  const ocular = (dx: number, tono: string[]) => (
+    <g transform={`translate(${dx},0)`}>
+      <rect x={-12} y={-76} width={24} height={46} rx={5} fill={tono[0]} />
+      <rect x={-12} y={-76} width={16} height={46} rx={5} fill={tono[1]} />
+      <rect x={-16} y={-90} width={32} height={16} rx={6} fill={os[0]} />
+      <rect x={-13} y={-88} width={10} height={5} rx={2.5} fill={os[2]} />
+    </g>
+  );
+  return (
+    <g>
+      <ellipse cx={0} cy={116} rx={130} ry={12} fill="#1C0A3E" opacity={0.18} />
+      {/* Base */}
+      <path d="M-112,66 Q-112,58 -100,58 L100,58 Q112,58 112,66 L120,100 Q122,112 108,112 L-108,112 Q-122,112 -120,100 Z" fill={os[0]} />
+      <path d="M-108,66 Q-108,62 -98,62 L98,62 Q108,62 108,66 L114,94 Q115,100 106,100 L-106,100 Q-115,100 -114,94 Z" fill={os[1]} />
+      <rect x={-96} y={66} width={70} height={7} rx={3.5} fill={os[2]} />
+      {/* Lámpara y haz de luz hasta la muestra */}
+      {brilla > 0.01 && <path d="M-34,52 L-6,52 L2,14 L-42,14 Z" fill="#FFE27A" opacity={0.35 * brilla} />}
+      <path d="M-40,60 Q-40,40 -20,40 Q0,40 0,60 Z" fill={os[2]} />
+      <ellipse cx={-20} cy={42} rx={24 * (0.9 + 0.1 * brilla)} ry={10} fill="#FFD23F" opacity={0.3 * brilla} />
+      <ellipse cx={-20} cy={44} rx={13} ry={5} fill={brilla > 0.01 ? '#FFE27A' : '#8C7BB0'} />
+      {/* Brazo */}
+      <path d={brazo} fill={cu[0]} transform="translate(6,3)" />
+      <path d={brazo} fill={cu[1]} />
+      <path d="M30,-118 C46,-98 58,-74 60,-46" fill="none" stroke={cu[2]} strokeWidth={6} strokeLinecap="round" opacity={0.8} />
+      {/* Perillas de enfoque: macrométrica y micrométrica */}
+      <circle cx={58} cy={22} r={25} fill={os[0]} />
+      {Array.from({ length: 14 }, (_, i) => { const a = (i / 14) * Math.PI * 2; return <circle key={i} cx={58 + Math.cos(a) * 24} cy={22 + Math.sin(a) * 24} r={3.2} fill={os[1]} />; })}
+      <circle cx={56} cy={20} r={19} fill={os[1]} />
+      <circle cx={58} cy={22} r={10} fill={os[2]} />
+      <circle cx={55} cy={18} r={3.5} fill="#FFFFFF" opacity={0.6} />
+      {/* Condensador */}
+      <rect x={-40} y={16} width={40} height={18} rx={5} fill={os[1]} />
+      <rect x={-36} y={18} width={14} height={5} rx={2.5} fill={os[2]} />
+      {/* Platina, portaobjetos con su corte teñido y pinzas */}
+      <rect x={8} y={-8} width={34} height={26} rx={6} fill={os[1]} />
+      <rect x={-126} y={-4} width={162} height={18} rx={5} fill={os[0]} />
+      <rect x={-126} y={-6} width={162} height={14} rx={5} fill={os[1]} />
+      <rect x={-104} y={-14} width={96} height={9} rx={2} fill="#CFEFFF" opacity={0.95} />
+      <ellipse cx={-22} cy={-9.5} rx={14} ry={3.5} fill="#E0338A" />
+      <ellipse cx={-26} cy={-10.5} rx={5} ry={1.4} fill="#7A45E6" />
+      <rect x={-98} y={-17} width={26} height={6} rx={3} fill={os[2]} />
+      <rect x={-56} y={-17} width={26} height={6} rx={3} fill={os[2]} />
+      {/* Revólver con tres objetivos (anillo rojo, amarillo y azul) */}
+      {([[-14, -48, '#3B9EDD', 30], [0, -20, '#FFD23F', 44], [14, 8, '#E3203F', 30]] as const).map(([r, dx, anillo, h]) => (
+        <g key={r} transform={`translate(${dx},-96) rotate(${r})`}>
+          <rect x={-9} y={0} width={18} height={h} rx={4} fill={cu[0]} />
+          <rect x={-9} y={0} width={12} height={h} rx={4} fill={cu[1]} />
+          <rect x={-9.5} y={h * 0.45} width={19} height={5} fill={anillo} />
+          <rect x={-6} y={h - 2} width={12} height={9} rx={3} fill={os[1]} />
+        </g>
+      ))}
+      <ellipse cx={-20} cy={-98} rx={44} ry={13} fill={os[0]} />
+      <ellipse cx={-22} cy={-101} rx={38} ry={9} fill={os[2]} />
+      {/* Cabezal y tubo binocular inclinado */}
+      <path d="M-62,-104 L36,-104 Q46,-104 44,-116 L38,-140 Q36,-148 26,-148 L-48,-148 Q-60,-148 -62,-136 Z" fill={cu[0]} transform="translate(5,3)" />
+      <path d="M-62,-104 L36,-104 Q46,-104 44,-116 L38,-140 Q36,-148 26,-148 L-48,-148 Q-60,-148 -62,-136 Z" fill={cu[1]} />
+      <rect x={-46} y={-140} width={60} height={6} rx={3} fill={cu[2]} opacity={0.8} />
+      <g transform="translate(-34,-146) rotate(-32)">
+        <rect x={-38} y={-34} width={76} height={36} rx={8} fill={cu[0]} />
+        <rect x={-38} y={-34} width={64} height={30} rx={8} fill={cu[1]} />
+        {ocular(-20, [os[0], os[1]])}
+        {ocular(20, [os[1], os[2]])}
+      </g>
+    </g>
+  );
+}
+
+/** Foto real de histología dentro de una lente, con su crédito (autor · licencia) pegado al aro. */
+export function FotoLente({ x, y, R, foto, o = 1, credito = 'abajo', aro = '#2B3A52', tinta = 'var(--cit-texto-2)' }: { x: number; y: number; R: number; foto: FotoId; o?: number; credito?: 'arriba' | 'abajo'; aro?: string; tinta?: string }) {
+  const id = useId().replace(/:/g, '');
+  if (o <= 0.002) return null;
+  const f = FOTOS[foto];
+  const t = R < 160 ? 14 : 17;
+  const cy = credito === 'abajo' ? R + 14 + t : -R - 20;
+  return (
+    <En x={x} y={y} o={o}>
+      <clipPath id={`foto-${id}`}><circle r={R} /></clipPath>
+      <circle r={R + 12} fill={aro} />
+      <image href={urlFoto(foto)} x={-R} y={-R} width={R * 2} height={R * 2} preserveAspectRatio="xMidYMid slice" clipPath={`url(#foto-${id})`} />
+      <text y={cy} textAnchor="middle" style={{ fontSize: t, fontWeight: 600 }} fill={tinta} opacity={0.85}>{`Foto: ${f.autor} · ${f.licencia} · Wikimedia Commons`}</text>
+    </En>
+  );
+}
+
+/** Inhalador de rescate (asma): cartucho, boquilla y una nube de spray. */
+export function Inhalador({ x = 0, y = 0, k = 1, o = 1, spray = 0 }: { x?: number; y?: number; k?: number; o?: number; spray?: number }) {
+  return (
+    <En x={x} y={y} k={k} o={o}>
+      <rect x={-18} y={-70} width={36} height={80} rx={12} fill="#1F6FB2" transform="translate(3,3)" />
+      <rect x={-18} y={-70} width={36} height={80} rx={12} fill="#3B9EDD" />
+      <rect x={-12} y={-64} width={8} height={56} rx={4} fill="#9FD3F5" opacity={0.8} />
+      <path d="M-24,4 L24,4 L24,30 L50,30 Q60,30 60,40 L60,54 L-14,54 Q-24,54 -24,44 Z" fill="#E9EEF7" />
+      <path d="M-24,4 L24,4 L24,16 L-24,16 Z" fill="#C9D3E6" />
+      {spray > 0.01 && [0, 1, 2].map((i) => <circle key={i} cx={74 + i * 16} cy={42 - i * 3} r={(8 + i * 3) * spray} fill="#CFEAFF" opacity={0.8 - i * 0.2} />)}
+    </En>
+  );
+}
+
+/** Pista visual: un dibujo con su nombre pequeño debajo (y un subtítulo opcional). Sustituye a un rótulo. */
+export function Pista({ x, y, p = 1, nombre, sub, dy = 70, t = 20, children }: { x: number; y: number; p?: number; nombre: string; sub?: string; dy?: number; t?: number; children: ReactNode }) {
+  if (p <= 0.002) return null;
+  return (
+    <g>
+      <En x={x} y={y} o={tramo(p, 0, 0.4)} k={0.85 + 0.15 * easeBack(clamp(p))}>{children}</En>
+      <Txt x={x} y={y + dy} txt={nombre} t={t} p={tramo(p, 0.1, 0.6)} />
+      {sub && <Txt x={x} y={y + dy + t * 1.25} txt={sub} t={t * 0.85} p={tramo(p, 0.2, 0.7)} fuerte={false} />}
+    </g>
+  );
+}
+
+/** Llamada fina: texto pequeño y una línea con punto hasta lo que señala. */
+export function Llamada({ x, y, a, txt, p, ancla = 'start', t = 22 }: { x: number; y: number; a: [number, number]; txt: string; p: number; ancla?: 'start' | 'end'; t?: number }) {
+  if (p <= 0.002) return null;
+  const ancho = txt.length * t * 0.54;
+  const x0 = a[0] > x + ancho / 2 ? x + ancho + 10 : x - 10;
+  const q = easeOut(clamp(p * 1.4));
+  return (
+    <g>
+      <path d={`M${x0},${y} L${lerp(x0, a[0], q)},${lerp(y, a[1], q)}`} stroke="var(--cit-flecha)" strokeWidth={2.5} strokeDasharray="5 5" fill="none" />
+      <circle cx={a[0]} cy={a[1]} r={6 * q} fill="#FFD23F" stroke={V.sangre[0]} strokeWidth={2} />
+      <Txt x={x + (ancla === 'start' ? 0 : -ancho)} y={y} txt={txt} t={t} p={p} ancla="start" />
+    </g>
+  );
+}
+
+
+/** Manómetro: la aguja sube hacia el rojo con `val`. */
+export function Manometro({ x, y, k = 1, o = 1, val = 0 }: { x: number; y: number; k?: number; o?: number; val?: number }) {
+  const ang = lerp(-120, 70, clamp(val));
+  return (
+    <En x={x} y={y} k={k} o={o}>
+      <circle r={44} fill="#3B1A6E" /><circle r={37} fill="#FFFFFF" />
+      <path d="M-26,22 A34,34 0 0 1 -30,-14" fill="none" stroke="#3FD467" strokeWidth={7} />
+      <path d="M-30,-14 A34,34 0 0 1 14,-30" fill="none" stroke="#FFB21E" strokeWidth={7} />
+      <path d="M14,-30 A34,34 0 0 1 30,16" fill="none" stroke="#E5324C" strokeWidth={7} />
+      <g transform={`rotate(${ang.toFixed(1)})`}><path d="M-3,0 L0,-30 L3,0 Z" fill="#3B1A6E" /></g>
+      <circle r={6} fill="#3B1A6E" />
+      <path d="M0,44 L0,64 Q0,74 12,74 L40,74" fill="none" stroke="#3B1A6E" strokeWidth={6} strokeLinecap="round" />
+      <ellipse cx={52} cy={74} rx={14} ry={18} fill="#E5324C" />
+    </En>
+  );
+}
+
+
+/** Portaobjetos de vidrio con el corte teñido y su etiqueta esmerilada: dice de qué es la lámina que se mira. */
+export function Portaobjetos({ x, y, k = 1, o = 1, organo, tincion, caso, tejido = '#E58FB5' }: { x: number; y: number; k?: number; o?: number; organo: string; tincion: string; caso: string; tejido?: string }) {
+  return (
+    <En x={x} y={y} k={k} o={o}>
+      <rect x={-146} y={-40} width={300} height={88} rx={8} fill="#000000" opacity={0.12} />
+      <rect x={-150} y={-44} width={300} height={88} rx={8} fill="#D8F0F8" />
+      <rect x={-150} y={-44} width={300} height={10} rx={5} fill="#FFFFFF" opacity={0.6} />
+      <rect x={-142} y={-36} width={104} height={72} rx={5} fill="#F7F4EC" />
+      <rect x={-142} y={-36} width={104} height={14} rx={5} fill="#2E78F2" />
+      <text x={-90} y={-25} textAnchor="middle" style={{ fontSize: 11, fontWeight: 700 }} fill="#FFFFFF">{tincion}</text>
+      <text x={-90} y={0} textAnchor="middle" style={{ fontSize: Math.min(17, 96 / (organo.length * 0.66)), fontWeight: 800 }} fill="#2B1250">{organo}</text>
+      <text x={-90} y={22} textAnchor="middle" style={{ fontSize: Math.min(13, 98 / (caso.length * 0.56)), fontWeight: 600 }} fill="#5A3D7E">{caso}</text>
+      <path d="M8,-18 C34,-34 78,-30 104,-14 C126,0 122,26 96,32 C64,40 26,34 10,20 C-4,8 -6,-8 8,-18 Z" fill={tejido} opacity={0.85} />
+      <path d="M30,-10 C50,-20 80,-16 94,-4 C104,6 96,20 76,22 C54,24 34,18 26,8 C20,2 22,-6 30,-10 Z" fill="#B94C8A" opacity={0.45} />
+      <rect x={-20} y={-34} width={160} height={68} rx={4} fill="#FFFFFF" opacity={0.18} />
+    </En>
+  );
+}
+
+/** Foto que no es un zoom (una pieza entera): marco redondeado en vez de lente, con su crédito debajo. */
+export function FotoCuadro({ x, y, w, h, foto, o = 1, tinta = 'var(--cit-texto-2)' }: { x: number; y: number; w: number; h: number; foto: FotoId; o?: number; tinta?: string }) {
+  const id = useId().replace(/:/g, '');
+  if (o <= 0.002) return null;
+  const f = FOTOS[foto];
+  return (
+    <En x={x} y={y} o={o}>
+      <clipPath id={`cuadro-${id}`}><rect x={-w / 2} y={-h / 2} width={w} height={h} rx={18} /></clipPath>
+      <rect x={-w / 2 - 8} y={-h / 2 - 8} width={w + 16} height={h + 16} rx={24} fill="#2B3A52" />
+      <image href={urlFoto(foto)} x={-w / 2} y={-h / 2} width={w} height={h} preserveAspectRatio="xMidYMid slice" clipPath={`url(#cuadro-${id})`} />
+      <text y={h / 2 + 30} textAnchor="middle" style={{ fontSize: 14, fontWeight: 600 }} fill={tinta} opacity={0.85}>{`Foto: ${f.autor} · ${f.licencia} · Wikimedia Commons`}</text>
+    </En>
+  );
 }

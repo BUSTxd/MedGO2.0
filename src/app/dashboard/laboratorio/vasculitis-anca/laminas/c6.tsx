@@ -3,7 +3,7 @@
 
 import type { Lamina } from '../Lienzo';
 import { Cruz, Lente, Visto } from '../../citopenias-autoinmunes/laminas/Comun';
-import { Bandera, CelGigante, Complejo, En, Eosinofilo, Epitelioide, Flecha, FLECHA, Glomerulo, Granuloma, Hematie, Perfil, Plaqueta, Sale, Txt, V, blob, clamp, easeOut, hash, lerp, tramo } from '../Piezas';
+import { Bandera, CelGigante, FotoLente, Llamada, Pista, Pulmones, Rinon, Anca, Complejo, En, Epitelioide, Flecha, FLECHA, Glomerulo, Granuloma, Hematie, Perfil, Plaqueta, Sale, Txt, V, blob, clamp, easeOut, hash, lerp, tramo, Portaobjetos } from '../Piezas';
 
 /** Arteriola en corte H-E. `fib` la pared se vuelve banda rosada; `neu` neutrófilos; `polvo` cariorrexis; `eos` eosinófilos; `rojos` extravasación. */
 function Arteriola({ fib = 0, neu = 0, polvo = 0, eos = 0, rojos = 0, fibrina = 0, gruesa = 0 }: { fib?: number; neu?: number; polvo?: number; eos?: number; rojos?: number; fibrina?: number; gruesa?: number }) {
@@ -39,10 +39,12 @@ const DosPatrones: Lamina = ({ p }) => {
   return (
     <g>
       <Bandera x={800} y={80} txt="Casi todas dejan uno de dos patrones" color="var(--cit-base)" p={p('patrones')} t={30} punta="no" />
-      <Lente x={420} y={470} R={260} id="c6-a" o={tramo(p('fibrinoide'), 0, 0.4)}><En k={0.65}><Arteriola fib={1} neu={1} polvo={1} /></En></Lente>
+      <FotoLente x={420} y={470} R={260} foto="pan-fibrinoide" o={tramo(p('fibrinoide'), 0, 0.4)} credito="arriba" />
+      <Portaobjetos x={130} y={700} k={0.62} o={tramo(p('fibrinoide'), 0.2, 0.6)} organo="PIEL" tincion="H-E" caso="PAN cutánea" />
       <Bandera x={420} y={780} txt="Necrosis fibrinoide" color="#E0338A" p={p('fibrinoide')} t={28} />
       <Txt x={420} y={870} txt="«la pared se rompió»" t={28} p={p('rompio')} />
-      <Lente x={1180} y={470} R={260} id="c6-b" o={tramo(p('granulomatosa'), 0, 0.4)}><En k={0.62}><GranulomaHE /></En></Lente>
+      <FotoLente x={1180} y={470} R={260} foto="gpa-granuloma" o={tramo(p('granulomatosa'), 0, 0.4)} credito="arriba" />
+      <Portaobjetos x={1470} y={700} k={0.62} o={tramo(p('granulomatosa'), 0.2, 0.6)} organo="PULMÓN" tincion="H-E" caso="GPA" />
       <Bandera x={1180} y={780} txt="Inflamación granulomatosa" color={V.violeta[0]} p={p('granulomatosa')} t={28} />
       <Txt x={1180} y={870} txt="«intentó encerrar algo que no pudo destruir»" t={24} p={p('encerrar')} />
     </g>
@@ -56,11 +58,15 @@ const Fibrinoide: Lamina = ({ p }) => {
         <En k={0.85}><Arteriola fibrina={clamp(p('proteinas') + p('fibrina'))} fib={p('he')} /></En>
         {p('mezclan') > 0.01 && Array.from({ length: 8 }, (_, i) => { const a = (i / 8) * Math.PI * 2; return <Complejo key={i} x={Math.cos(a) * 130} y={Math.sin(a) * 130} k={0.6} o={tramo(p('complejos'), i / 12, i / 12 + 0.3)} />; })}
       </Lente>
+      {/* Cuando la voz llega a la H-E, la foto real (PAN cutánea) reemplaza al dibujo: 1 px de la foto = 1 px del lienzo */}
+      <FotoLente x={520} y={500} R={360} foto="pan-fibrinoide" o={tramo(p('he'), 0, 0.6)} />
+      <Portaobjetos x={1250} y={850} k={0.9} o={tramo(p('he'), 0.2, 0.8)} organo="PIEL" tincion="H-E" caso="PAN cutánea" />
+      <Txt x={1250} y={785} txt="lámina de piel, teñida con H-E" t={18} p={p('he')} fuerte={false} />
       <Txt x={1200} y={200} txt="el endotelio se lesiona" t={28} p={p('lesiona')} />
-      <Bandera x={1200} y={300} txt="Entran proteínas del plasma: fibrina" color="#C99300" p={p('fibrina')} t={24} />
+      <Llamada x={960} y={300} a={[700, 420]} txt="entra la fibrina del plasma" p={p('fibrina')} t={24} />
       <Txt x={1200} y={380} txt="se mezclan con células muertas" t={24} p={p('mezclan')} />
       <Txt x={1200} y={430} txt="y a veces con inmunocomplejos" t={24} p={p('complejos')} fuerte={false} />
-      <Bandera x={1200} y={560} txt="H-E: banda rosada intensa, sin forma" color="#E0338A" p={p('banda')} t={24} />
+      <Llamada x={960} y={560} a={[520 + (461 - 360), 500 + (498 - 360)]} txt="en H-E: banda rosada intensa, sin forma" p={p('banda')} t={24} />
       <Txt x={1200} y={660} txt="recuerda a la fibrina: de ahí su nombre" t={24} p={p('nombre')} />
     </g>
   );
@@ -69,13 +75,13 @@ const Fibrinoide: Lamina = ({ p }) => {
 const Leucocitoclastica: Lamina = ({ p }) => {
   return (
     <g>
-      <Lente x={460} y={500} R={340} id="c6-leu" o={tramo(p('piel'), 0, 0.4)}>
-        <En k={0.8}><Arteriola fib={0.7} neu={p('neutros')} polvo={p('polvo')} rojos={p('rojos')} /></En>
-      </Lente>
+      <FotoLente x={460} y={500} R={340} foto="leucocitoclastica" o={clamp(p('piel') + p('foto'))} />
+      <Portaobjetos x={150} y={930} k={0.8} o={tramo(p('piel'), 0.2, 0.8)} organo="PIEL" tincion="H-E" caso="púrpura" />
       <Bandera x={460} y={100} txt="Piel: vasculitis leucocitoclástica" color="#E0338A" p={p('leucocitoclastica')} t={28} />
-      <Bandera x={1180} y={230} txt="Neutrófilos en la pared" color={V.nucleo[1]} p={p('neutros')} t={24} />
-      <Bandera x={1180} y={320} txt="Se rompen: polvo nuclear" color="#3A1660" p={p('polvo')} t={24} />
-      <Bandera x={1180} y={410} txt="Glóbulos rojos en la dermis" color={V.sangre[0]} p={p('rojos')} t={24} />
+      <Llamada x={900} y={150} a={[460 + (360 - 360) * 0.944, 500 + (40 - 360) * 0.944]} txt="epidermis" p={p('foto')} t={22} />
+      <Llamada x={900} y={230} a={[460 + (255 - 360) * 0.944, 500 + (520 - 360) * 0.944]} txt="neutrófilos en la pared del vaso" p={p('neutros')} t={24} />
+      <Llamada x={900} y={320} a={[460 + (390 - 360) * 0.944, 500 + (600 - 360) * 0.944]} txt="se rompen: polvo nuclear" p={p('polvo')} t={24} />
+      <Llamada x={900} y={410} a={[460 + (300 - 360) * 0.944, 500 + (190 - 360) * 0.944]} txt="glóbulos rojos en la dermis" p={p('rojos')} t={24} />
       <Lente x={1180} y={700} R={190} id="c6-pac" o={tramo(p('paciente'), 0, 0.4)}>
         <rect x={-200} y={-200} width={400} height={400} fill="#FFF3C4" />
         {Array.from({ length: 9 }, (_, i) => <circle key={i} cx={(i % 3 - 1) * 130} cy={(Math.floor(i / 3) - 1) * 130} r={58} fill="#FFFBE6" stroke="#F2D7A0" strokeWidth={6} />)}
@@ -86,28 +92,79 @@ const Leucocitoclastica: Lamina = ({ p }) => {
   );
 };
 
-const Destinos: Lamina = ({ p }) => {
-  const tr = p('trombo'), an = p('aneurisma'), fi = p('fibrosis');
+/** Estetoscopio: la clínica. */
+function Estetoscopio() {
+  return (
+    <g>
+      <path d="M-26,-44 C-30,0 -10,20 0,20 C10,20 30,0 26,-44" fill="none" stroke="#7A45E6" strokeWidth={7} strokeLinecap="round" />
+      <path d="M0,20 C0,44 30,50 40,30" fill="none" stroke="#7A45E6" strokeWidth={7} strokeLinecap="round" />
+      <circle cx={-26} cy={-46} r={6} fill="#8E86A8" /><circle cx={26} cy={-46} r={6} fill="#8E86A8" />
+      <circle cx={42} cy={22} r={16} fill="#8E86A8" /><circle cx={42} cy={22} r={10} fill="#D9D3EA" />
+    </g>
+  );
+}
+
+/** Arteria de lado (segmento): adventicia, media muscular y su luz. */
+function Segmento({ w = 380 }: { w?: number }) {
+  const W = w / 2;
+  return (
+    <g>
+      <rect x={-W} y={-80} width={w} height={160} rx={30} fill="#F2B8CB" />
+      <rect x={-W} y={-64} width={w} height={128} rx={24} fill={V.pared[2]} />
+      {Array.from({ length: Math.floor(w / 24) }, (_, i) => [-54, 54].map((yy) => <ellipse key={`${i}${yy}`} cx={-W + 14 + i * 24} cy={yy} rx={4} ry={7} fill={V.pared[3]} opacity={0.8} />))}
+    </g>
+  );
+}
+
+const Destinos: Lamina = ({ p, reloj }) => {
+  const tr = p('trombo'), an = p('aneurisma'), fi = p('fibrosis'), inf = p('infarto'), ro = p('rompe'), es = p('estrecha');
+  const corre = (reloj / 30) % 60;
   return (
     <g>
       <Bandera x={800} y={80} txt="La pared necrosada tiene tres destinos" color="var(--cit-base)" p={p('destinos')} t={30} punta="no" />
-      {[300, 800, 1300].map((x, i) => (
-        <Sale key={x} p={[tr, an, fi][i]} x={x} y={430}>
-          <rect x={-200} y={-90} width={400} height={180} rx={0} fill={V.pared[2]} />
-          <rect x={-200} y={i === 2 ? -30 - 20 * (1 - p('estrecha')) : -60} width={400} height={i === 2 ? 60 + 40 * (1 - p('estrecha')) : 120} fill={V.sangre[1]} />
-          {i === 1 && <ellipse cx={0} cy={-80} rx={90 * easeOut(an)} ry={80 * easeOut(an)} fill={V.sangre[1]} stroke={V.pared[2]} strokeWidth={14} />}
-          {i === 2 && <><rect x={-200} y={-90} width={400} height={30 + 30 * p('estrecha')} fill="#E7C9A6" /><rect x={-200} y={60 - 30 * p('estrecha')} width={400} height={30 + 30 * p('estrecha')} fill="#E7C9A6" /></>}
-        </Sale>
-      ))}
-      {tr > 0.01 && <path d={blob(9, 60, 0.25, 3, 1.6)} transform="translate(300,430)" fill="#8A1A2E" opacity={tramo(tr, 0.2, 0.6)} />}
-      {tr > 0.01 && [0, 1, 2, 3].map((i) => <Plaqueta key={i} x={250 + i * 34} y={400 + (i % 2) * 40} k={0.45} o={tramo(tr, 0.2, 0.6)} />)}
-      <Bandera x={300} y={640} txt="Trombo" color="#8A1A2E" p={tr} t={28} />
-      <Txt x={300} y={710} txt="isquemia e infarto" t={24} p={p('infarto')} />
-      <Bandera x={800} y={640} txt="Aneurisma" color={V.sangre[0]} p={an} t={28} />
-      <Txt x={800} y={710} txt="puede romperse" t={24} p={p('rompe')} />
-      {[0, 1, 2].map((i) => <Hematie key={i} x={780 + i * 30} y={lerp(340, 220 - i * 20, easeOut(p('rompe')))} k={0.4} o={tramo(p('rompe'), 0, 0.3)} />)}
-      <Bandera x={1300} y={640} txt="Fibrosis de la íntima" color="#B07A2E" p={fi} t={26} />
-      <Txt x={1300} y={710} txt="la luz queda estrecha para siempre" t={22} p={p('estrecha')} />
+      {/* 1 · Trombo: la luz se tapa y el tejido de después se infarta */}
+      <Sale p={tr} x={300} y={380}>
+        <Segmento />
+        <rect x={-190} y={-44} width={380} height={88} rx={20} fill={V.sangre[1]} />
+        <rect x={20} y={-44} width={170} height={88} fill="#E7B3C2" opacity={tramo(tr, 0.4, 1)} />
+        {Array.from({ length: 5 }, (_, i) => <Hematie key={i} x={-180 + ((corre * 2 + i * 40) % 150)} y={(hash(i, 3) - 0.5) * 50} k={0.32} r={i * 50} />)}
+        <path d={blob(9, 50, 0.2, 3, 1.1)} fill="#8A1A2E" />
+        {Array.from({ length: 7 }, (_, i) => <path key={i} d={`M${-40 + i * 12},-40 L${-30 + i * 10},40`} stroke="#FFD23F" strokeWidth={2.5} opacity={0.85} />)}
+        {[[-20, -14], [10, 10], [-6, 22], [22, -18]].map(([px, py], i) => <Plaqueta key={i} x={px} y={py} k={0.35} />)}
+      </Sale>
+      <Sale p={inf} x={420} y={555} k={0.9}>
+        <path d="M0,-100 L0,-40" stroke={V.sangre[1]} strokeWidth={12} strokeLinecap="round" />
+        <rect x={-110} y={-44} width={220} height={100} rx={26} fill="#E9A0B5" />
+        {Array.from({ length: 14 }, (_, i) => <circle key={i} cx={-90 + (i % 7) * 30} cy={-18 + Math.floor(i / 7) * 44} r={9} fill="#C2457E" opacity={0.6} />)}
+        <path d="M-110,-18 Q-110,-44 -84,-44 L84,-44 Q110,-44 110,-18 L110,30 Q110,56 84,56 L10,56 Z" fill="#9C95B5" opacity={0.85 * tramo(inf, 0.2, 1)} />
+      </Sale>
+      <Txt x={240} y={650} txt="trombo" t={28} p={tr} />
+      <Txt x={240} y={690} txt="isquemia e infarto" t={22} p={inf} fuerte={false} />
+      {/* 2 · Aneurisma: la pared débil se abomba y puede romperse */}
+      <Sale p={an} x={800} y={400}>
+        <circle cx={0} cy={-80} r={92 * easeOut(an)} fill="#C2457E" />
+        <circle cx={0} cy={-80} r={82 * easeOut(an)} fill={V.sangre[1]} />
+        <Segmento />
+        <rect x={-190} y={-44} width={380} height={88} rx={20} fill={V.sangre[1]} />
+        <rect x={-60} y={-70} width={120} height={40} fill={V.sangre[1]} />
+        {ro > 0.01 && <path d="M-14,-168 L0,-150 L-8,-138 L8,-120" fill="none" stroke="#3A1342" strokeWidth={5} strokeLinecap="round" opacity={ro} />}
+        <circle cx={-30} cy={-110} r={14} fill={V.sangre[3]} opacity={0.6} />
+      </Sale>
+      {[0, 1, 2, 3, 4].map((i) => <Hematie key={i} x={lerp(812, 880 + i * 18, easeOut(tramo(ro, i * 0.1, 0.6 + i * 0.1)))} y={lerp(262, 250 + i * 26, easeOut(tramo(ro, i * 0.1, 0.6 + i * 0.1)))} k={0.38} r={i * 60} o={tramo(ro, i * 0.1, 0.3 + i * 0.1)} />)}
+      <Txt x={800} y={650} txt="aneurisma" t={28} p={an} />
+      <Txt x={800} y={690} txt="puede romperse" t={22} p={ro} fuerte={false} />
+      {/* 3 · Fibrosis de la íntima: capas en catáfila que estrechan la luz */}
+      <Sale p={fi} x={1300} y={400}>
+        <circle r={150} fill="#F2B8CB" /><circle r={128} fill={V.pared[2]} />
+        {Array.from({ length: 36 }, (_, i) => { const a = (i / 36) * Math.PI * 2; return <ellipse key={i} cx={Math.cos(a) * 112} cy={Math.sin(a) * 112} rx={4} ry={8} transform={`rotate(${(a * 180) / Math.PI + 90} ${Math.cos(a) * 112} ${Math.sin(a) * 112})`} fill={V.pared[3]} />; })}
+        <circle r={98} fill="#FFD23F" />
+        <circle r={95} fill="#E7C9A6" />
+        {[0, 1, 2, 3].map((j) => <circle key={j} r={92 - j * 14 * (0.3 + 0.7 * es)} fill="none" stroke="#C9A27A" strokeWidth={2.5} />)}
+        <circle r={lerp(88, 30, es)} fill={V.sangre[1]} />
+        <circle cx={-lerp(88, 30, es) * 0.35} cy={-lerp(88, 30, es) * 0.35} r={lerp(88, 30, es) * 0.18} fill={V.sangre[3]} opacity={0.8} />
+      </Sale>
+      <Txt x={1300} y={650} txt="fibrosis de la íntima" t={28} p={fi} />
+      <Txt x={1300} y={690} txt="la luz queda estrecha para siempre" t={22} p={es} fuerte={false} />
     </g>
   );
 };
@@ -118,15 +175,15 @@ const Granulomatoso: Lamina = ({ p }) => {
       <Lente x={480} y={500} R={360} id="c6-gr" o={tramo(p('granulomatoso'), 0, 0.4)}>
         <En k={0.85}><GranulomaHE p={clamp(p('epitelioides') + p('collar') * 0.5)} langhans={p('langhans')} /></En>
       </Lente>
-      <Bandera x={1180} y={180} txt="Histiocitos epitelioides" color="#4A3FB8" p={p('epitelioides')} t={24} />
-      <Bandera x={1180} y={270} txt="Células gigantes multinucleadas" color={V.violeta[0]} p={p('gigantes')} t={24} />
-      <Bandera x={1180} y={360} txt="Collar de linfocitos" color={V.turquesa[0]} p={p('collar')} t={24} />
+      <Llamada x={900} y={180} a={[620, 420]} txt="histiocitos epitelioides" p={p('epitelioides')} t={24} />
+      <Llamada x={900} y={270} a={[355, 615]} txt="células gigantes multinucleadas" p={p('gigantes')} t={24} />
+      <Llamada x={900} y={360} a={[690, 600]} txt="collar de linfocitos" p={p('collar')} t={24} />
       <Sale p={p('fusionan')} x={1100} y={560} k={0.5}><Epitelioide x={-60} /><Epitelioide x={60} r={30} /></Sale>
       <Flecha a={[1180, 560]} b={[1260, 560]} p={p('fusionan')} color={FLECHA} w={6} />
       <Sale p={p('langhans')} x={1380} y={560} k={0.5}><CelGigante langhans={1} /></Sale>
       <Txt x={1300} y={670} txt="núcleos en herradura: Langhans" t={22} p={p('langhans')} />
       <Txt x={1180} y={800} txt="busca encerrar un antígeno que no puede eliminar" t={22} p={p('encerrar')} />
-      <Bandera x={1180} y={880} txt="…y en el camino, destruye la pared" color={V.sangre[0]} p={p('destruye')} t={24} />
+      <Txt x={1180} y={880} txt="…y en el camino, destruye la pared" t={26} color={V.sangre[1]} p={p('destruye')} />
     </g>
   );
 };
@@ -134,21 +191,18 @@ const Granulomatoso: Lamina = ({ p }) => {
 const Necrotizante: Lamina = ({ p }) => {
   return (
     <g>
-      <Lente x={460} y={480} R={330} id="c6-nec" o={tramo(p('gpa'), 0, 0.4)}>
-        <En k={0.8}><GranulomaHE necrosis={p('necrotizante')} /></En>
-        {Array.from({ length: 30 }, (_, i) => <circle key={i} cx={(hash(i, 3) - 0.5) * 200} cy={(hash(i, 4) - 0.5) * 120} r={3 + hash(i, 5) * 3} fill="#2A1660" opacity={tramo(p('basofilos'), i / 40, i / 40 + 0.3)} />)}
-      </Lente>
-      <Bandera x={460} y={90} txt="GPA: granuloma necrotizante" color={V.turquesa[0]} p={p('gpa')} t={28} />
-      <Txt x={460} y={870} txt="necrosis geográfica, restos basófilos, empalizada" t={22} p={p('empalizada')} />
-      <Txt x={460} y={920} txt="dentro o fuera del vaso" t={22} p={p('dentro')} fuerte={false} />
-      <Lente x={1200} y={480} R={260} id="c6-eos" o={tramo(p('gepa'), 0, 0.4)}>
-        <rect x={-300} y={-300} width={600} height={600} fill="#F6D6E6" />
-        <Granuloma k={0.6} x={60} p={1} necrosis={0.6} />
-        {Array.from({ length: 12 }, (_, i) => <Eosinofilo key={i} x={(hash(i, 6) - 0.5) * 420} y={(hash(i, 7) - 0.5) * 420} k={0.32} />)}
-        <circle cx={-150} cy={-120} r={46} fill="#E591BF" /><circle cx={-150} cy={-120} r={22} fill="#FBEFF5" />
-      </Lente>
-      <Bandera x={1200} y={810} txt="GEPA: ricos en eosinófilos" color={V.ambar[0]} p={p('gepa')} t={26} />
-      <Txt x={1200} y={880} txt="suelen ser extravasculares" t={22} p={p('extravascular')} />
+      <FotoLente x={460} y={480} R={330} foto="gpa-granuloma" o={clamp(p('gpa') + p('foto'))} />
+      <Portaobjetos x={130} y={220} k={0.7} o={tramo(p('gpa'), 0.2, 0.8)} organo="PULMÓN" tincion="H-E" caso="GPA" />
+      <Txt x={460} y={95} txt="GPA: granuloma necrotizante" t={28} color={V.turquesa[0]} p={p('gpa')} />
+      <Llamada x={40} y={880} a={[460 + (450 - 360) * 0.917, 480 + (260 - 360) * 0.917]} txt="necrosis geográfica" p={p('necrotizante')} t={22} />
+      <Llamada x={40} y={925} a={[460 + (520 - 360) * 0.917, 480 + (470 - 360) * 0.917]} txt="restos basófilos" p={p('basofilos')} t={22} />
+      <Llamada x={40} y={970} a={[460 + (330 - 360) * 0.917, 480 + (300 - 360) * 0.917]} txt="histiocitos en empalizada" p={p('empalizada')} t={22} />
+      <Txt x={700} y={925} txt="dentro o fuera del vaso" t={22} p={p('dentro')} fuerte={false} />
+      <FotoLente x={1200} y={480} R={260} foto="gepa-eosinofilos" o={tramo(p('gepa'), 0, 0.4)} />
+      <Portaobjetos x={1490} y={250} k={0.7} o={tramo(p('gepa'), 0.2, 0.8)} organo="BIOPSIA" tincion="H-E" caso="GEPA" />
+      <Llamada x={960} y={150} a={[1200 + (340 - 360) * 0.722, 480 + (420 - 360) * 0.722]} txt="eosinófilos: gránulos rojos" p={tramo(p('gepa'), 0.3, 1)} t={22} />
+      <Txt x={1200} y={840} txt="GEPA: ricos en eosinófilos" t={26} color={V.ambar[0]} p={p('gepa')} />
+      <Txt x={1200} y={895} txt="suelen ser extravasculares" t={22} p={p('extravascular')} />
     </g>
   );
 };
@@ -163,7 +217,9 @@ const DosSitios: Lamina = ({ p }) => {
       <Sale p={p('glomerulo')} x={1180} y={420} k={0.8}><Glomerulo necrosis={1} /></Sale>
       <Txt x={1180} y={700} txt="necrosis fibrinoide en el capilar glomerular" t={24} p={p('glomerulo')} />
       <Txt x={760} y={800} txt="la biopsia nasal puede ser inespecífica…" t={24} p={p('inespecifica')} />
-      <Bandera x={1100} y={880} txt="…el riñón o el pulmón dan el diagnóstico" color={V.turquesa[0]} p={p('diagnostico')} t={24} />
+      <Sale p={p('diagnostico')} x={1330} y={880} k={0.42}><Rinon /></Sale>
+      <Sale p={tramo(p('diagnostico'), 0.2, 1)} x={1480} y={880} k={0.28}><Pulmones /></Sale>
+      <Txt x={980} y={880} txt="…el riñón o el pulmón dan el diagnóstico" t={24} p={p('diagnostico')} />
     </g>
   );
 };
@@ -199,10 +255,11 @@ const Respuesta: Lamina = ({ p }) => {
       ))}
       <Visto x={170} y={600} k={1} p={p('seguro')} />
       <Txt x={240} y={590} txt="Lo único seguro:" t={30} p={p('seguro')} ancla="start" />
-      <Bandera x={240} y={660} txt="la lesión vascular coexiste con inflamación eosinofílica" color={V.verde[0]} p={p('coexiste')} t={24} ancla="izq" punta="no" />
-      <Bandera x={300} y={850} txt="Inmunofluorescencia" color={V.verde[0]} p={p('resto')} t={26} ancla="izq" punta="no" />
-      <Bandera x={760} y={850} txt="ANCA" color={V.anca[1]} p={tramo(p('resto'), 0.2, 1)} t={26} ancla="izq" punta="no" />
-      <Bandera x={960} y={850} txt="Clínica" color={V.ambar[0]} p={tramo(p('resto'), 0.4, 1)} t={26} ancla="izq" punta="no" />
+      <Txt x={240} y={660} txt="la lesión vascular coexiste con inflamación eosinofílica" t={26} color={V.verde[0]} p={p('coexiste')} ancla="start" />
+      <Txt x={240} y={760} txt="el resto lo dicen:" t={24} p={p('resto')} ancla="start" fuerte={false} />
+      <Pista x={420} y={860} p={p('resto')} nombre="inmunofluorescencia" dy={80}><circle r={56} fill="#0E1F14" /><Glomerulo brillo="granular" k={0.18} /></Pista>
+      <Pista x={720} y={860} p={tramo(p('resto'), 0.2, 1)} nombre="ANCA" dy={80}><Anca k={2.2} y={-30} /></Pista>
+      <Pista x={1000} y={860} p={tramo(p('resto'), 0.4, 1)} nombre="la clínica" dy={80}><Estetoscopio /></Pista>
     </g>
   );
 };

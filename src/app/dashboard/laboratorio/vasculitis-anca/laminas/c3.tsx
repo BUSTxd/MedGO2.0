@@ -2,9 +2,10 @@
 // Capítulo 3 · Ordenar las vasculitis: tamaño del vaso (Chapel Hill 2012) y mecanismo.
 
 import type { Lamina } from '../Lienzo';
-import { Pastilla, TuboOrina, Termometro } from '../../citopenias-autoinmunes/Piezas';
+import { Pastilla, TuboOrina, Termometro, Virus } from '../../citopenias-autoinmunes/Piezas';
+import { Chip } from '../Fisio';
 import { Bateria, Cruz } from '../../citopenias-autoinmunes/laminas/Comun';
-import { Alveolos, Anca, Bandera, Complejo, Cuerpo, En, Flecha, FLECHA, Glomerulo, Granuloma, Linfocito, Neutrofilo, PiernaPurpura, Punto, Rinon, Sale, Txt, V, Vaso, clamp, easeOut, lerp, tramo } from '../Piezas';
+import { Alveolos, Anca, Bandera, Complejo, Cuerpo, En, Flecha, FLECHA, Glomerulo, Granuloma, Linfocito, Microscopio, Neutrofilo, Paciente, PiernaPurpura, Punto, Rinon, Sale, Txt, V, Vaso, clamp, easeOut, lerp, tramo } from '../Piezas';
 
 const Definicion: Lamina = ({ p, reloj }) => {
   const d = p('dano');
@@ -105,33 +106,66 @@ const Familias: Lamina = ({ p }) => {
   );
 };
 
-/** Cajón de un mueble, con su tirador y su etiqueta. */
-function Cajon({ x, y, txt, ej, color, p }: { x: number; y: number; txt: string; ej: string; color: string; p: number }) {
+/** Corte de un vaso inflamado: anillo de pared con halo naranja que late. */
+function Inflamado({ x, y, R, reloj, p }: { x: number; y: number; R: number; reloj: number; p: number }) {
   if (p <= 0.002) return null;
-  const sale = easeOut(clamp(p * 1.4)) * 40;
+  const late = 1 + 0.06 * Math.sin(reloj / 220 + R);
   return (
-    <En x={x} y={y + sale * 0.3} o={tramo(p, 0, 0.3)}>
-      <rect x={-300} y={-80} width={600} height={160} rx={18} fill="#6B3A1E" />
-      <rect x={-286} y={-70 + sale * 0.2} width={572} height={140} rx={14} fill={color} />
-      <rect x={-60} y={-28} width={120} height={20} rx={10} fill="#FFF" opacity={0.85} />
-      <text x={0} y={22} dy="0.35em" textAnchor="middle" fill="#FFF" style={{ fontSize: 26, fontWeight: 700 }}>{txt}</text>
-      <text x={0} y={56} dy="0.35em" textAnchor="middle" fill="#FFF" opacity={0.85} style={{ fontSize: 21, fontWeight: 500 }}>{ej}</text>
-    </En>
+    <Sale p={p} x={x} y={y}>
+      <circle r={R * 1.35 * late} fill="#FF8A2B" opacity={0.22} />
+      <circle r={R} fill={V.pared[2]} />
+      <circle r={R * 0.78} fill={V.endo[0]} />
+      <circle r={R * 0.68} fill={V.sangre[0]} />
+      <circle cx={-R * 0.22} cy={-R * 0.22} r={R * 0.14} fill={V.sangre[3]} opacity={0.7} />
+      {Array.from({ length: 6 }, (_, i) => { const a = (i / 6) * Math.PI * 2 + 0.3; return <circle key={i} cx={Math.cos(a) * R * 0.9} cy={Math.sin(a) * R * 0.9} r={Math.max(3, R * 0.09)} fill="#5A2A9E" />; })}
+    </Sale>
   );
 }
 
-const Cajones: Lamina = ({ p }) => {
+/** Rostro con eritema malar en alas de mariposa (lupus). */
+function Mariposa({ p }: { p: number }) {
+  return (
+    <Sale p={p} x={0} y={0} k={0.62}>
+      <Paciente quien="ella" />
+      <path d="M0,12 C-18,-8 -60,-12 -70,10 C-74,30 -44,40 -6,24 Z M0,12 C18,-8 60,-12 70,10 C74,30 44,40 6,24 Z" fill="#E0338A" opacity={0.75 * tramo(p, 0.4, 1)} />
+    </Sale>
+  );
+}
+
+const Cajones: Lamina = ({ p, reloj }) => {
+  const flota = (i: number) => Math.sin(reloj / 400 + i) * 8;
   return (
     <g>
-      <Bandera x={800} y={70} txt="Hay más cajones" color="var(--cit-base)" p={p('cajones')} t={32} punta="no" />
-      <Cajon x={440} y={240} txt="De vaso variable" ej="Behçet" color="#8A4FE0" p={p('variable')} />
-      <Cajon x={1160} y={240} txt="De un solo órgano" ej="angeítis cutánea" color="#C2307A" p={p('organo')} />
-      <Cajon x={440} y={460} txt="Asociada a una enfermedad sistémica" ej="lupus, artritis reumatoide" color="#2F6FD8" p={p('sistemica')} />
-      <Cajon x={1160} y={460} txt="Con causa probable" ej="infecciones y fármacos" color="#D9480F" p={p('causa')} />
-      <Bandera x={420} y={720} txt="Hepatitis C → crioglobulinemia" color={V.ambar[0]} p={p('vhc')} t={24} />
-      <Bandera x={420} y={810} txt="Hepatitis B → poliarteritis nodosa" color={V.ambar[0]} p={p('vhb')} t={24} />
-      <Bandera x={1160} y={720} txt="Hidralazina · propiltiouracilo" color="#B8237A" p={p('farmacos')} t={24} />
-      <Bandera x={1160} y={810} txt="Cocaína con levamisol" color="#B8237A" p={p('cocaina')} t={24} />
+      <Bandera x={800} y={60} txt="Hay más cajones" color="var(--cit-base)" p={p('cajones')} t={30} punta="no" />
+      {/* De vaso variable: Behçet inflama vasos de todos los tamaños a la vez */}
+      <Inflamado x={260} y={300} R={95} reloj={reloj} p={p('variable')} />
+      <Inflamado x={420} y={300} R={58} reloj={reloj} p={tramo(p('variable'), 0.2, 1)} />
+      <Inflamado x={520} y={300} R={30} reloj={reloj} p={tramo(p('variable'), 0.4, 1)} />
+      <Chip x={390} y={450} txt="De vaso variable · Behçet" color="#8A4FE0" p={p('variable')} t={22} />
+      {/* De un solo órgano: la piel */}
+      <Sale p={p('organo')} x={1200} y={290} k={0.5}><PiernaPurpura p={p('organo')} /></Sale>
+      <Chip x={1200} y={450} txt="De un solo órgano · angeítis cutánea" color="#C2307A" p={p('organo')} t={22} />
+      {/* Asociada a una enfermedad sistémica: lupus, artritis reumatoide */}
+      <En x={300} y={680}><Mariposa p={p('sistemica')} /></En>
+      <Sale p={tramo(p('sistemica'), 0.3, 1)} x={500} y={700} k={0.9}>
+        {[0, 1, 2, 3].map((i) => <g key={i}><rect x={-46 + i * 26} y={-70} width={20} height={70} rx={10} fill={V.piel[1]} /><circle cx={-36 + i * 26} cy={-24} r={13} fill="#E5324C" opacity={0.85} /></g>)}
+        <rect x={-54} y={-10} width={110} height={60} rx={24} fill={V.piel[1]} />
+      </Sale>
+      <Chip x={400} y={840} txt="Asociada a enfermedad sistémica · lupus, AR" color="#2F6FD8" p={p('sistemica')} t={22} />
+      {/* Con causa probable: virus y fármacos */}
+      <Chip x={1200} y={560} txt="Con causa probable" color="#D9480F" p={p('causa')} t={24} />
+      <Virus x={1000} y={680 + flota(1)} k={0.8} o={tramo(p('vhc'), 0, 0.4)} tono={['#C2410C', '#F97316', '#FFC48A']} />
+      <Chip x={1000} y={790} txt="VHC → crioglobulinemia" color="#C2410C" p={p('vhc')} t={18} />
+      <Virus x={1140} y={680 + flota(2)} k={0.8} o={tramo(p('vhb'), 0, 0.4)} tono={['#B8741A', '#E5A32E', '#F7D683']} />
+      <Chip x={1140} y={850} txt="VHB → poliarteritis nodosa" color="#B8741A" p={p('vhb')} t={18} />
+      <Sale p={p('farmacos')} x={1290} y={670}><Pastilla k={1.3} r={-20} /><Pastilla x={34} y={30} k={1.1} r={30} color={['#C2307A', '#E0338A', '#FF9ACB']} /></Sale>
+      <Chip x={1300} y={790} txt="hidralazina · propiltiouracilo" color="#B8237A" p={p('farmacos')} t={18} />
+      <Sale p={p('cocaina')} x={1450} y={690}>
+        <path d="M-60,20 Q0,-28 60,20 Z" fill="#F4F2F8" />
+        <path d="M-36,20 Q0,-10 36,20 Z" fill="#FFFFFF" />
+        <rect x={-70} y={20} width={140} height={10} rx={5} fill="#B9B4C8" />
+      </Sale>
+      <Chip x={1450} y={850} txt="cocaína + levamisol" color="#6E6A86" p={p('cocaina')} t={18} />
     </g>
   );
 };
@@ -167,7 +201,7 @@ const Predice: Lamina = ({ p, reloj }) => {
   );
 };
 
-const DosPreguntas: Lamina = ({ p }) => {
+const DosPreguntas: Lamina = ({ p, reloj }) => {
   return (
     <g>
       <Bandera x={800} y={80} txt="Frente a cualquier vasculitis, dos preguntas" color="var(--cit-base)" p={p('preguntas')} t={30} punta="no" />
@@ -179,18 +213,13 @@ const DosPreguntas: Lamina = ({ p }) => {
         <Punto x={-50} y={-40} p={tramo(p('buscar'), 0.4, 1)} />
       </Cuerpo>
       <Txt x={420} y={940} txt="dónde buscar" t={30} p={p('buscar')} />
-      <Sale p={p('patologo')} x={940} y={500} k={0.9}>
-        <rect x={-14} y={-110} width={28} height={110} rx={10} fill="#5B3A86" transform="rotate(-20)" />
-        <rect x={-50} y={10} width={100} height={20} rx={10} fill="#5B3A86" />
-        <path d="M40,-80 Q90,-20 40,30" fill="none" stroke="#5B3A86" strokeWidth={16} />
-        <rect x={-80} y={30} width={160} height={24} rx={12} fill="#3B1A6E" />
-      </Sale>
+      <Sale p={p('patologo')} x={930} y={470} k={0.82}><Microscopio luz={tramo(p('patologo'), 0.5, 1)} reloj={reloj} /></Sale>
       <Txt x={940} y={640} txt="qué verá el patólogo" t={22} p={p('patologo')} />
       <Sale p={p('sangre')} x={1180} y={490} k={0.7}><TuboOrina oscuro={0} /></Sale>
       <Txt x={1180} y={700} txt="qué saldrá en la sangre" t={22} p={p('sangre')} />
       <Sale p={p('tratamiento')} x={1420} y={500} k={1.3}><Pastilla /></Sale>
       <Txt x={1420} y={640} txt="qué tratamiento funciona" t={22} p={p('tratamiento')} />
-      {[940, 1180, 1420].map((x, i) => <Flecha key={x} a={[1180, 280]} b={[x, 390]} p={p(['patologo', 'sangre', 'tratamiento'][i])} color={FLECHA} w={6} />)}
+      {([[1020, 330], [1180, 390], [1420, 390]] as const).map(([x, y], i) => <Flecha key={x} a={[1180, 280]} b={[x, y]} p={p(['patologo', 'sangre', 'tratamiento'][i])} color={FLECHA} w={6} />)}
     </g>
   );
 };

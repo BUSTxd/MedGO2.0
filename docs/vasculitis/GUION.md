@@ -6,7 +6,7 @@ Laboratorio `/dashboard/laboratorio/vasculitis-anca` (clase `pat-acp-11` de `src
 - **Tiempos:** cada parámetro entra en la palabra que lo nombra (faster-whisper, `scripts/vasculitis/palabras.py`). `npm run verificar:vasculitis` comprueba marcas, láminas y parámetros.
 - **Estilo (referencias de BUST):** infografía plana de colores saturados, sin contorno; cada pieza con sombra interior en media luna y un brillo; banderitas de color sólido con punta y texto blanco; fondo crema-rosa en claro y violeta índigo con partículas desenfocadas en oscuro. Sin paneles blancos con reborde y sin `filter`.
 - **Vistazo gratis:** capítulos 0 y 1.
-- **Histología:** dibujada con código; las fotos con licencia libre quedan pendientes.
+- **Histología:** dibujada con código, y 12 fotos reales de Wikimedia Commons (CC BY y CC BY-SA, `src/lib/data/vasculitis/fotos.ts`, `FotoLente` con su crédito): leucocitoclástica, granuloma de GPA (pulmón y de cerca), GEPA (vaso y eosinófilos), semiluna con PAS, c-ANCA, p-ANCA, hemosiderófagos, necrosis fibrinoide en PAN cutánea, IF de IgG en las asas y un pulmón con hemorragia difusa (pieza entera, en marco y no en lente). Cada foto lleva su portaobjetos rotulado; en las biopsias la foto entra al empezar el paso y las llamadas señalan lo que se ve en ella. Donde la foto sigue a un dibujo animado, entra con el parámetro `foto`. Sin foto libre: inmunofluorescencia granular (sigue dibujada).
 - Lo marcado [C] en la narración (no viene de la clase) sigue sin revisar en esta versión.
 
 ## 0 · Dos pacientes, un vaso roto · ≈ 1,0 min · **vistazo gratis**

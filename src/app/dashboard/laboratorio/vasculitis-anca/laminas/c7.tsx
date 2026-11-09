@@ -3,7 +3,7 @@
 
 import type { Lamina } from '../Lienzo';
 import { Barra, Lente } from '../../citopenias-autoinmunes/laminas/Comun';
-import { Anca, Bandera, C5a, En, Flecha, FLECHA, Foco, Glomerulo, Hematie, Macrofago, Net, Neutrofilo, Sale, Txt, V, blob, clamp, easeOut, lerp, tramo } from '../Piezas';
+import { Anca, Bandera, FotoLente, Llamada, Manometro, PiernaPurpura, Pista, C5a, En, Flecha, FLECHA, Foco, Glomerulo, Hematie, Macrofago, Net, Neutrofilo, Sale, Txt, V, blob, clamp, easeOut, lerp, tramo, Portaobjetos } from '../Piezas';
 
 /** Glomérulo pequeño para contar: 0 normal, 1 semiluna celular, 2 cicatriz. */
 function MiniGlom({ x, y, tipo, o = 1 }: { x: number; y: number; tipo: 0 | 1 | 2; o?: number }) {
@@ -23,7 +23,8 @@ const Anatomia: Lamina = ({ p }) => {
     <g>
       <Sale p={p('ovillo')} x={330} y={500} k={1}><Glomerulo /></Sale>
       <Txt x={360} y={120} txt="un ovillo de capilares entre dos arteriolas" t={26} p={p('arteriolas')} />
-      <Bandera x={360} y={880} txt="La presión más alta de todos los capilares" color={V.sangre[0]} p={p('presion')} t={24} />
+      <Manometro x={120} y={850} k={0.8} val={p('presion')} o={tramo(p('presion'), 0, 0.4)} />
+      <Txt x={190} y={870} txt="la presión más alta de todos los capilares" t={24} p={p('presion')} ancla="start" />
       <Foco x={400} y={440} R={60} p={b} />
       <Flecha a={[460, 420]} b={[680, 360]} p={b} color={FLECHA} w={6} cabeza={false} />
       <Lente x={960} y={450} R={290} id="c7-bar" o={tramo(b, 0, 0.4)}>
@@ -41,7 +42,7 @@ const Anatomia: Lamina = ({ p }) => {
       <Txt x={1270} y={440} txt="podocitos" t={22} p={p('podocitos')} ancla="start" />
       <Txt x={1270} y={575} txt="espacio de Bowman" t={22} p={p('bowman')} ancla="start" />
       <Txt x={1270} y={665} txt="epitelio parietal" t={22} p={p('bowman')} ancla="start" fuerte={false} />
-      <Bandera x={960} y={860} txt="Retén ese espacio" color={V.ambar[0]} p={p('reten')} t={28} />
+      <Txt x={960} y={860} txt="retén ese espacio" t={30} color={V.ambar[0]} p={p('reten')} />
     </g>
   );
 };
@@ -78,8 +79,8 @@ const Fibrina: Lamina = ({ p }) => {
       <Txt x={1200} y={260} txt="por la ruptura: glóbulos rojos y plasma" t={26} p={p('rojos')} />
       <Txt x={1200} y={320} txt="con el plasma, fibrinógeno" t={26} p={p('fibrinogeno')} />
       <Txt x={1200} y={420} txt="en el espacio de Bowman…" t={26} p={p('bowman')} />
-      <Bandera x={1200} y={500} txt="…se convierte en fibrina" color="#C99300" p={p('fibrina')} t={28} />
-      <Bandera x={1200} y={700} txt="La señal clave" color={V.ambar[0]} p={p('clave')} t={32} />
+      <Txt x={1200} y={500} txt="…se convierte en fibrina" t={28} color="#C99300" p={p('fibrina')} />
+      <Txt x={1200} y={700} txt="la señal clave" t={34} color={V.ambar[0]} p={p('clave')} />
     </g>
   );
 };
@@ -88,14 +89,20 @@ const Semiluna: Lamina = ({ p }) => {
   const sl = clamp(p('proliferan') * 0.5 + p('semiluna') * 0.5);
   return (
     <g>
-      <Sale p={p('proliferan')} x={560} y={510} k={1.4}><Glomerulo semiluna={sl} fibrina={1 - sl} necrosis={1} /></Sale>
-      <Sale p={p('monocitos')} x={280} y={250} k={0.22}><Macrofago /></Sale>
-      <Sale p={p('monocitos')} x={320} y={400} k={0.18}><Macrofago /></Sale>
+      <g opacity={1 - tramo(p('pas'), 0.3, 0.8)}>
+        <Sale p={p('proliferan')} x={560} y={510} k={1.4}><Glomerulo semiluna={sl} fibrina={1 - sl} necrosis={1} /></Sale>
+        <Sale p={p('monocitos')} x={280} y={250} k={0.22}><Macrofago /></Sale>
+        <Sale p={p('monocitos')} x={320} y={400} k={0.18}><Macrofago /></Sale>
+      </g>
+      <FotoLente x={560} y={510} R={330} foto="semiluna-pas" o={tramo(p('pas'), 0, 0.5)} />
       <Txt x={1200} y={230} txt="prolifera el epitelio parietal" t={26} p={p('proliferan')} />
       <Txt x={1200} y={290} txt="llegan monocitos y macrófagos" t={26} p={p('monocitos')} />
-      <Bandera x={1200} y={420} txt="Semiluna" color="#D46A9E" p={p('semiluna')} t={36} />
+      <Txt x={1200} y={420} txt="semiluna" t={42} color="#D46A9E" p={p('semiluna')} />
       <Txt x={1200} y={520} txt="llena el espacio de Bowman y aplasta el ovillo" t={24} p={p('aplasta')} />
-      <Bandera x={1200} y={700} txt="Con PAS: capa gruesa de células pegada a la cápsula" color="#B8237A" p={p('pas')} t={22} />
+      <Llamada x={960} y={650} a={[560 + (200 - 360) * 0.917, 510 + (230 - 360) * 0.917]} txt="semiluna: capa gruesa de células" p={p('pas')} t={22} />
+      <Llamada x={960} y={760} a={[560 + (72 - 360) * 0.917, 510 + (400 - 360) * 0.917]} txt="cápsula de Bowman (magenta con PAS)" p={tramo(p('pas'), 0.25, 1)} t={22} />
+      <Llamada x={960} y={705} a={[560 + (450 - 360) * 0.917, 510 + (420 - 360) * 0.917]} txt="ovillo aplastado" p={tramo(p('pas'), 0.5, 1)} t={22} />
+      <Portaobjetos x={1330} y={890} k={0.9} o={tramo(p('pas'), 0.2, 0.8)} organo="RIÑÓN" tincion="PAS" caso="biopsia renal" tejido="#D9539C" />
     </g>
   );
 };
@@ -109,7 +116,7 @@ const Evolucion: Lamina = ({ p }) => {
       {est.map(([n, txt, ci, x]) => (
         <g key={n}>
           <Sale p={p(n)} x={x} y={320} k={0.62}><Glomerulo semiluna={1} cicatriz={ci} /></Sale>
-          <Bandera x={x} y={520} txt={txt} color={ci > 0.7 ? '#B07A2E' : ci > 0.3 ? '#C2307A' : '#D46A9E'} p={p(n)} t={26} />
+          <Txt x={x} y={520} txt={txt.toLowerCase()} t={26} color={ci > 0.7 ? '#B07A2E' : ci > 0.3 ? '#C2307A' : '#D46A9E'} p={p(n)} />
         </g>
       ))}
       <Flecha a={[400, 320]} b={[500, 320]} p={p('fibrocelular')} color={FLECHA} w={7} />
@@ -128,17 +135,18 @@ const Hematuria: Lamina = ({ p }) => {
     <g>
       <Bandera x={800} y={80} txt="El primer hallazgo: hematuria" color={V.sangre[0]} p={p('hematuria')} t={30} punta="no" />
       <Sale p={p('hematuria')} x={800} y={420}>
-        <path d="M-700,-60 L-200,-60 C-100,-60 -60,60 40,60 L700,60" fill="none" stroke="#F4B9CF" strokeWidth={130} strokeLinecap="round" />
-        <path d="M-700,-60 L-200,-60 C-100,-60 -60,60 40,60 L700,60" fill="none" stroke="#FFF1F6" strokeWidth={96} strokeLinecap="round" />
+        <path d="M-560,-60 L-200,-60 C-100,-60 -60,60 40,60 L700,60" fill="none" stroke="#F4B9CF" strokeWidth={130} strokeLinecap="round" />
+        <path d="M-560,-60 L-200,-60 C-100,-60 -60,60 40,60 L700,60" fill="none" stroke="#FFF1F6" strokeWidth={96} strokeLinecap="round" />
       </Sale>
       {[0, 1, 2, 3, 4].map((i) => {
         const t = clamp(d * 1.2 - i * 0.12), x = lerp(-560, 600, t), y = x < -200 ? -60 : x < 40 ? lerp(-60, 60, (x + 200) / 240) : 60;
         return <Hematie key={i} x={800 + x} y={420 + y} k={0.75} vesiculas={tramo(t, 0.2, 0.8)} o={tramo(p('hematuria'), 0, 0.4)} />;
       })}
+      <Sale p={p('hematuria')} x={170} y={360} k={0.42}><Glomerulo necrosis={1} /></Sale>
       <Txt x={420} y={580} txt="al atravesar la ruptura" t={24} p={d} />
       <Txt x={1100} y={580} txt="y el túbulo: osmolaridad y pH" t={24} p={p('tubulo')} />
       <Sale p={p('acantocitos')} x={520} y={780} k={1.8}><Hematie vesiculas={1} /></Sale>
-      <Bandera x={900} y={740} txt="Dismórficos: acantocitos" color={V.sangre[0]} p={p('dismorficos')} t={28} ancla="izq" punta="izq" />
+      <Llamada x={900} y={740} a={[600, 760]} txt="dismórficos: acantocitos (con vesículas)" p={p('dismorficos')} t={26} />
       <Txt x={900} y={830} txt="un glóbulo rojo deformado viene del glomérulo" t={24} p={p('glomerulo')} ancla="start" />
     </g>
   );
@@ -155,17 +163,28 @@ const Cilindros: Lamina = ({ p }) => {
         {Array.from({ length: 22 }, (_, i) => <path key={i} d={`M${-600 + i * 56},-60 q20,${30 + (i % 3) * 10} 0,120`} fill="none" stroke="#A8C9F0" strokeWidth={7} opacity={tramo(p('uromodulina'), i / 30, i / 30 + 0.3)} />)}
         {[0, 1, 2, 3, 4, 5].map((i) => <Hematie key={i} x={lerp(-600 + i * 40, -200 + i * 90, easeOut(at))} y={(i % 2 ? 1 : -1) * 22} k={0.55} vesiculas={0.6} o={tramo(at, 0, 0.3)} />)}
       </Sale>
-      <Bandera x={420} y={560} txt="Uromodulina (Tamm-Horsfall)" color="#4A8AD8" p={p('uromodulina')} t={24} />
+      <Llamada x={180} y={560} a={[300, 440]} txt="uromodulina (Tamm-Horsfall)" p={p('uromodulina')} t={24} />
       <Sale p={p('cilindros')} x={1080} y={640} k={1}>
         <rect x={-180} y={-46} width={360} height={92} rx={46} fill="#C9DDF5" />
         {[0, 1, 2, 3, 4].map((i) => <circle key={i} cx={-130 + i * 65} cy={(i % 2 ? 1 : -1) * 12} r={24} fill={V.sangre[1]} />)}
       </Sale>
-      <Bandera x={1080} y={760} txt="Cilindros hemáticos" color={V.sangre[0]} p={p('cilindros')} t={28} />
+      <Txt x={1080} y={760} txt="cilindros hemáticos" t={30} color={V.sangre[1]} p={p('cilindros')} />
       <Txt x={1080} y={840} txt="la firma de una glomerulonefritis" t={24} p={p('firma')} />
       <Txt x={420} y={760} txt="proteinuria, pero suele ser subnefrótica" t={24} p={p('proteinuria')} fuerte={false} />
     </g>
   );
 };
+
+/** Pocas gotas de orina: oliguria. */
+function Gotas() {
+  return (
+    <g>
+      <path d="M-34,-40 L34,-40 L28,44 Q26,54 16,54 L-16,54 Q-26,54 -28,44 Z" fill="#E9EEF7" />
+      <path d="M-30,30 L30,30 L28,44 Q26,52 16,52 L-16,52 Q-26,52 -28,44 Z" fill="#F2C230" />
+      {[-30, -8].map((y, i) => <path key={i} d={'M0,' + (y - 14) + ' C8,' + (y - 2) + ' 8,' + (y + 6) + ' 0,' + (y + 6) + ' C-8,' + (y + 6) + ' -8,' + (y - 2) + ' 0,' + (y - 14) + ' Z'} fill="#F2C230" opacity={0.7 - i * 0.3} />)}
+    </g>
+  );
+}
 
 const Filtrado: Lamina = ({ p }) => {
   const cae = p('filtrado'), cr = p('paciente');
@@ -178,8 +197,9 @@ const Filtrado: Lamina = ({ p }) => {
       <Barra x={720} y={420} w={420} val={0.3 + 0.5 * p('creatinina')} color={V.sangre[1]} txt="creatinina y urea" p={p('creatinina')} />
       <Txt x={930} y={560} txt={`creatinina ${lerp(0.9, 1.9, easeOut(cr)).toFixed(1).replace('.', ',')} mg/dL`} t={40} p={cr} />
       <Txt x={930} y={630} txt="perdió cerca de la mitad de su filtrado" t={24} p={p('mitad')} />
-      <Bandera x={600} y={820} txt="Oliguria · retención de sodio" color={V.violeta[0]} p={p('oliguria')} t={24} />
-      <Bandera x={1100} y={820} txt="Hipertensión y edema" color={V.sangre[0]} p={p('edema')} t={24} />
+      <Pista x={600} y={830} p={p('oliguria')} nombre="oliguria, retiene sodio" dy={80}><Gotas /></Pista>
+      <Pista x={900} y={830} p={p('edema')} nombre="hipertensión" dy={80}><Manometro x={0} y={-10} k={0.7} val={p('edema')} /></Pista>
+      <Pista x={1160} y={820} p={tramo(p('edema'), 0.1, 1)} nombre="edema" dy={90}><g transform="scale(0.2)"><PiernaPurpura p={0} /></g><circle cx={-4} cy={34} r={7} fill="#C9806A" opacity={0.8} /></Pista>
     </g>
   );
 };
@@ -204,8 +224,8 @@ const Clasificacion: Lamina = ({ p }) => {
       <Txt x={1380} y={360} txt="> 50 % semilunas celulares" t={22} p={p('crescentica')} />
       <Txt x={1380} y={510} txt="> 50 % cicatriz" t={22} p={p('esclerotica')} />
       <Txt x={1380} y={660} txt="no domina ninguno" t={22} p={p('mixta')} />
-      <Bandera x={520} y={830} txt="Focal: mejor pronóstico" color={V.verde[0]} p={p('pronostico')} t={24} />
-      <Bandera x={1080} y={830} txt="Esclerótica: el peor" color={V.sangre[0]} p={p('pronostico')} t={24} />
+      <Txt x={520} y={830} txt="focal: mejor pronóstico" t={26} color={V.verde[0]} p={p('pronostico')} />
+      <Txt x={1080} y={830} txt="esclerótica: el peor" t={26} color={V.sangre[1]} p={p('pronostico')} />
       <Txt x={800} y={930} txt="cada semana sin tratar son nefronas que no vuelven" t={26} p={p('semana')} />
     </g>
   );
