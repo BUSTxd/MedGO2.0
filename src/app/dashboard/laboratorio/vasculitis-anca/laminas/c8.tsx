@@ -4,7 +4,7 @@
 import type { Lamina } from '../Lienzo';
 import { Pastilla, BolsaSangre } from '../../citopenias-autoinmunes/Piezas';
 import { Visto } from '../../citopenias-autoinmunes/laminas/Comun';
-import { Anca, Bandera, En, Pr3, Flecha, FLECHA, Glomerulo, IgG, Neutrofilo, Pantalla, Pulmones, Sale, Txt, TxtPantalla, V, clamp, easeOut, tramo, Portaobjetos, FotoLente, Llamada } from '../Piezas';
+import { Anca, Bandera, En, Pr3, Flecha, FLECHA, Glomerulo, IgG, Neutrofilo, Pantalla, Pulmones, Sale, Txt, TxtPantalla, V, clamp, easeOut, tramo, Portaobjetos, FotoLente, FotoCuadro, Llamada } from '../Piezas';
 
 const VERDE_IF = ['#0E7A2A', '#3BE35C', '#C9FFD4'];
 
@@ -108,7 +108,7 @@ const Granular: Lamina = ({ p }) => {
         <En x={-235} y={0} k={0.7} o={1 - tramo(p('grumos'), 0, 0.6)}><Glomerulo brillo="pauci" /></En>
         <TxtPantalla x={235} y={-238} txt="foto real" t={20} p={p('granular')} />
         <FotoLente x={235} y={-10} R={200} foto="if-granular" o={p('granular')} aro={V.verde[0]} tinta="#BFF5CB" />
-        <Portaobjetos x={235} y={292} k={0.55} o={tramo(p('granular'), 0.3, 1)} organo="RIÑÓN" tincion="IF · C3" caso="nefritis lúpica" tejido="#2A3A2A" />
+        <Portaobjetos x={235} y={292} k={0.55} o={tramo(p('granular'), 0.3, 1)} organo="RIÑÓN" tincion="IF · IgA" caso="nefropatía IgA" tejido="#2A3A2A" />
         <TxtPantalla x={0} y={370} txt="complejos en puntos sueltos: un collar de grumos" t={24} p={p('puntos')} />
       </Pantalla>
       {ej.map(([n, txt, sub, s2], i) => (
@@ -127,8 +127,14 @@ const Pauci: Lamina = ({ p, reloj }) => {
     <g>
       <Pantalla x={560} y={500} w={980} h={860} p={p('pauci')}>
         <TxtPantalla x={0} y={-340} txt="Patrón pauciinmune" t={36} p={p('pauci')} />
-        <En k={1.05}><Glomerulo brillo="pauci" /></En>
-        <TxtPantalla x={0} y={330} txt="casi a oscuras: poca IgG, poco C3" t={26} p={p('oscuras')} />
+        <TxtPantalla x={-235} y={-238} txt="dibujo" t={20} p={p('pauci')} />
+        <En x={-235} y={0} k={0.7}><Glomerulo brillo="pauci" /></En>
+        <TxtPantalla x={235} y={-238} txt="foto real" t={20} p={p('pauci')} />
+        {/* Ocho tinciones del mismo glomérulo: todo apagado salvo el fibrinógeno de la necrosis */}
+        <FotoCuadro x={235} y={-2} w={281} h={420} foto="if-pauci" o={p('pauci')} tinta="#BFF5CB" />
+        <Portaobjetos x={235} y={292} k={0.55} o={tramo(p('pauci'), 0.3, 1)} organo="RIÑÓN" tincion="IF directa" caso="GN por ANCA" tejido="#2A3A2A" />
+        <TxtPantalla x={0} y={345} txt="casi a oscuras: poca IgG, poco C3" t={26} p={p('oscuras')} />
+        <TxtPantalla x={0} y={381} txt="solo brilla el fibrinógeno de la necrosis" t={20} p={p('oscuras')} />
       </Pantalla>
       {/* Foto real desde el principio (centro 1340,300, R 140: 1 px de la foto = 0,389) */}
       <FotoLente x={1340} y={300} R={140} foto="anca-gn-fibrinoide" o={p('pauci')} credito="arriba" />
