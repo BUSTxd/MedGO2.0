@@ -4,7 +4,7 @@
 import type { Lamina } from '../Lienzo';
 import { Pastilla, BolsaSangre } from '../../citopenias-autoinmunes/Piezas';
 import { Visto } from '../../citopenias-autoinmunes/laminas/Comun';
-import { Anca, Bandera, En, Pr3, Flecha, FLECHA, Glomerulo, IgG, Neutrofilo, Pantalla, Pulmones, Sale, Txt, TxtPantalla, V, clamp, easeOut, tramo, Portaobjetos, FotoLente } from '../Piezas';
+import { Anca, Bandera, En, Pr3, Flecha, FLECHA, Glomerulo, IgG, Neutrofilo, Pantalla, Pulmones, Sale, Txt, TxtPantalla, V, clamp, easeOut, tramo, Portaobjetos, FotoLente, Llamada } from '../Piezas';
 
 const VERDE_IF = ['#0E7A2A', '#3BE35C', '#C9FFD4'];
 
@@ -77,11 +77,13 @@ const Lineal: Lamina = ({ p }) => {
     <g>
       <Pantalla x={560} y={500} w={980} h={860} p={p('lineal')}>
         <TxtPantalla x={0} y={-340} txt="Patrón lineal" t={36} p={p('lineal')} />
-        <En k={1.05} o={tramo(c, 0, 0.6)}><Glomerulo brillo="lineal" /></En>
-        <En k={1.05} o={1 - tramo(c, 0, 0.6)}><Glomerulo brillo="pauci" /></En>
-        <FotoLente x={0} y={-10} R={270} foto="if-igg" o={tramo(p('entero'), 0, 0.6)} aro={V.verde[0]} tinta="#BFF5CB" />
-        <Portaobjetos x={-345} y={350} k={0.55} o={tramo(p('entero'), 0.2, 0.8)} organo="RIÑÓN" tincion="IF · IgG" caso="biopsia renal" tejido="#2A3A2A" />
-        <TxtPantalla x={60} y={360} txt="una cinta fina y continua en cada asa" t={24} p={c} />
+        <TxtPantalla x={-235} y={-238} txt="dibujo" t={20} p={p('lineal')} />
+        <En x={-235} y={0} k={0.7} o={tramo(c, 0, 0.6)}><Glomerulo brillo="lineal" /></En>
+        <En x={-235} y={0} k={0.7} o={1 - tramo(c, 0, 0.6)}><Glomerulo brillo="pauci" /></En>
+        <TxtPantalla x={235} y={-238} txt="foto real" t={20} p={p('lineal')} />
+        <FotoLente x={235} y={-10} R={200} foto="if-igg" o={p('lineal')} aro={V.verde[0]} tinta="#BFF5CB" />
+        <Portaobjetos x={235} y={292} k={0.55} o={tramo(p('lineal'), 0.3, 1)} organo="RIÑÓN" tincion="IF · IgG" caso="biopsia renal" tejido="#2A3A2A" />
+        <TxtPantalla x={0} y={370} txt="una cinta fina y continua en cada asa" t={24} p={c} />
       </Pantalla>
       <Sale p={p('colageno')} x={1300} y={190} k={1}><ColagenoIV ig={p('continuo')} /></Sale>
       <Txt x={1300} y={262} txt="anticuerpos contra el colágeno IV (cadena α3)" t={20} p={p('colageno')} />
@@ -101,9 +103,13 @@ const Granular: Lamina = ({ p }) => {
     <g>
       <Pantalla x={560} y={500} w={980} h={860} p={p('granular')}>
         <TxtPantalla x={0} y={-340} txt="Patrón granular" t={36} p={p('granular')} />
-        <En k={1.05} o={tramo(p('grumos'), 0, 0.6)}><Glomerulo brillo="granular" /></En>
-        <En k={1.05} o={1 - tramo(p('grumos'), 0, 0.6)}><Glomerulo brillo="pauci" /></En>
-        <TxtPantalla x={0} y={330} txt="complejos en puntos sueltos: un collar de grumos" t={24} p={p('puntos')} />
+        <TxtPantalla x={-235} y={-238} txt="dibujo" t={20} p={p('granular')} />
+        <En x={-235} y={0} k={0.7} o={tramo(p('grumos'), 0, 0.6)}><Glomerulo brillo="granular" /></En>
+        <En x={-235} y={0} k={0.7} o={1 - tramo(p('grumos'), 0, 0.6)}><Glomerulo brillo="pauci" /></En>
+        <TxtPantalla x={235} y={-238} txt="foto real" t={20} p={p('granular')} />
+        <FotoLente x={235} y={-10} R={200} foto="if-granular" o={p('granular')} aro={V.verde[0]} tinta="#BFF5CB" />
+        <Portaobjetos x={235} y={292} k={0.55} o={tramo(p('granular'), 0.3, 1)} organo="RIÑÓN" tincion="IF · C3" caso="nefritis lúpica" tejido="#2A3A2A" />
+        <TxtPantalla x={0} y={370} txt="complejos en puntos sueltos: un collar de grumos" t={24} p={p('puntos')} />
       </Pantalla>
       {ej.map(([n, txt, sub, s2], i) => (
         <g key={n}>
@@ -124,8 +130,11 @@ const Pauci: Lamina = ({ p, reloj }) => {
         <En k={1.05}><Glomerulo brillo="pauci" /></En>
         <TxtPantalla x={0} y={330} txt="casi a oscuras: poca IgG, poco C3" t={26} p={p('oscuras')} />
       </Pantalla>
-      <Sale p={p('paradoja')} x={1300} y={300} k={0.6}><Glomerulo semiluna={0.9} necrosis={1} /></Sale>
-      <Txt x={1300} y={490} txt="necrosado y lleno de semilunas…" t={22} p={p('paradoja')} />
+      {/* Foto real desde el principio (centro 1340,300, R 140: 1 px de la foto = 0,389) */}
+      <FotoLente x={1340} y={300} R={140} foto="anca-gn-fibrinoide" o={p('pauci')} credito="arriba" />
+      <Llamada x={1060} y={300} a={[1340 + (267 - 360) * 0.389, 300 + (278 - 360) * 0.389]} txt="necrosis" p={p('paradoja')} t={20} halo />
+      <Portaobjetos x={1340} y={585} k={0.55} o={tramo(p('pauci'), 0.3, 1)} organo="RIÑÓN" tincion="H-E" caso="GN por ANCA" />
+      <Txt x={1300} y={490} txt="necrosado, con semilunas…" t={22} p={p('paradoja')} />
       <Txt x={1300} y={530} txt="…pero la inmunofluorescencia sale vacía" t={22} p={p('paradoja')} />
       <Txt x={1300} y={640} txt="ese vacío es el diagnóstico" t={28} color={V.verde[0]} p={p('vacio')} />
       <Sale p={p('neutrofilo')} x={1300} y={820} k={1}><Neutrofilo cebado={1} activo={0.5 + 0.5 * Math.sin(reloj / 400) ** 2} /><Anca x={80} y={-50} r={-50} /></Sale>

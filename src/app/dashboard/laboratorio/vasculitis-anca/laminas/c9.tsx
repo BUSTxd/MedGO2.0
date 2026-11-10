@@ -108,9 +108,9 @@ const Capilaritis: Lamina = ({ p }) => {
       <Llamada x={1100} y={200} a={[724, 266]} txt="capilaritis" p={p('capilaritis')} t={30} />
       <Txt x={1200} y={280} txt="la barrera alveolocapilar se rompe" t={24} p={p('rompe')} />
       <Txt x={1200} y={380} txt="hemorragia alveolar difusa" t={28} color={V.sangre[1]} p={p('hemorragia')} />
-      <FotoCuadro x={215} y={860} w={270} h={180} foto="pulmon-goodpasture" o={tramo(p('hemorragia'), 0, 0.5)} />
-      <Txt x={385} y={850} txt="pieza real:" t={18} p={p('hemorragia')} fuerte={false} ancla="start" />
-      <Txt x={385} y={878} txt="hemorragia difusa en ambos pulmones" t={18} p={p('hemorragia')} ancla="start" />
+      <FotoCuadro x={215} y={860} w={270} h={180} foto="pulmon-goodpasture" o={p('pulmon')} />
+      <Txt x={385} y={850} txt="pieza real:" t={18} p={p('pulmon')} fuerte={false} ancla="start" />
+      <Txt x={385} y={878} txt="hemorragia difusa en ambos pulmones (Goodpasture)" t={18} p={p('pulmon')} ancla="start" />
       <Txt x={1200} y={480} txt="hemoptisis… pero no siempre" t={24} p={p('hemoptisis')} />
       <Barra x={1000} y={620} w={400} val={1 - 0.45 * p('hb')} color={V.sangre[1]} txt="hemoglobina" p={p('hb')} />
       <Sale p={p('vidrio')} x={1200} y={820} k={0.8}>
@@ -138,10 +138,10 @@ const Fisiologia: Lamina = ({ p, reloj }) => {
       <Txt x={1150} y={300} txt="la DLCO aumenta ↑" t={30} color={V.verde[0]} p={p('dlco')} />
       <Txt x={1150} y={370} txt="la hemoglobina derramada capta el CO" t={22} p={p('dlco')} fuerte={false} />
       <Sale p={p('dias')} x={1060} y={600} k={0.4}><Macrofago /></Sale>
-      <FotoLente x={1360} y={590} R={140} foto="hemosiderofagos" o={tramo(p('hemosiderina'), 0, 0.6)} credito="arriba" />
+      <FotoLente x={1360} y={590} R={140} foto="hemosiderofagos" o={p('flujo')} credito="arriba" />
       {[0, 1, 2, 3, 4].map((i) => <circle key={i} cx={1020 + (i % 3) * 30} cy={590 + Math.floor(i / 3) * 30} r={10} fill="#8A6A3E" opacity={tramo(p('hemosiderina'), i * 0.1, 0.5 + i * 0.1)} />)}
       <Llamada x={900} y={790} a={[1360 + (355 - 360) * 0.389, 590 + (435 - 360) * 0.389]} txt="en 2 o 3 días, macrófagos con hemosiderina" p={p('hemosiderina')} t={22} halo />
-      <Portaobjetos x={1360} y={890} k={0.7} o={tramo(p('hemosiderina'), 0.2, 0.8)} organo="PULMÓN" tincion="H-E" caso="hemorragia" />
+      <Portaobjetos x={1360} y={890} k={0.7} o={tramo(p('flujo'), 0.3, 1)} organo="PULMÓN" tincion="H-E" caso="hemorragia" />
     </g>
   );
 };

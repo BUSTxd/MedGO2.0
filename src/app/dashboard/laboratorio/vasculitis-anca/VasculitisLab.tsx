@@ -185,7 +185,7 @@ export default function VasculitisLab({ contenido, plan, prueba }: { contenido: 
           vozSiguiente={sig ? abiertas[sig.id]?.narracion : undefined}
           detener={!!muro}
           lienzo={Lienzo}
-          credito="Láminas con código · Fotos: Wikimedia Commons (CC BY/BY-SA) · Clase ACP 11"
+          credito="Láminas con código · Fotos con licencia CC BY/BY-SA (autor en cada una) · Clase ACP 11"
         />
       </div>
       {capaMuro}

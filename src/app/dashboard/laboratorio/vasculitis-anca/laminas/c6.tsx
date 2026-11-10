@@ -39,12 +39,12 @@ const DosPatrones: Lamina = ({ p }) => {
   return (
     <g>
       <Bandera x={800} y={80} txt="Casi todas dejan uno de dos patrones" color="var(--cit-base)" p={p('patrones')} t={30} punta="no" />
-      <FotoLente x={420} y={470} R={260} foto="pan-fibrinoide" o={tramo(p('fibrinoide'), 0, 0.4)} credito="arriba" />
-      <Portaobjetos x={130} y={700} k={0.62} o={tramo(p('fibrinoide'), 0.2, 0.6)} organo="PIEL" tincion="H-E" caso="PAN cutánea" />
+      <FotoLente x={420} y={470} R={260} foto="pan-fibrinoide" o={p('patrones')} credito="arriba" />
+      <Portaobjetos x={130} y={700} k={0.62} o={tramo(p('patrones'), 0.3, 1)} organo="PIEL" tincion="H-E" caso="PAN cutánea" />
       <Bandera x={420} y={780} txt="Necrosis fibrinoide" color="#E0338A" p={p('fibrinoide')} t={28} />
       <Txt x={420} y={870} txt="«la pared se rompió»" t={28} p={p('rompio')} />
-      <FotoLente x={1180} y={470} R={260} foto="gpa-granuloma" o={tramo(p('granulomatosa'), 0, 0.4)} credito="arriba" />
-      <Portaobjetos x={1470} y={700} k={0.62} o={tramo(p('granulomatosa'), 0.2, 0.6)} organo="PULMÓN" tincion="H-E" caso="GPA" />
+      <FotoLente x={1180} y={470} R={260} foto="gpa-granuloma" o={tramo(p('patrones'), 0.15, 1)} credito="arriba" />
+      <Portaobjetos x={1470} y={700} k={0.62} o={tramo(p('patrones'), 0.4, 1)} organo="PULMÓN" tincion="H-E" caso="GPA" />
       <Bandera x={1180} y={780} txt="Inflamación granulomatosa" color={V.violeta[0]} p={p('granulomatosa')} t={28} />
       <Txt x={1180} y={870} txt="«intentó encerrar algo que no pudo destruir»" t={24} p={p('encerrar')} />
     </g>
@@ -52,22 +52,27 @@ const DosPatrones: Lamina = ({ p }) => {
 };
 
 const Fibrinoide: Lamina = ({ p }) => {
+  // Foto real desde el principio (centro 440,470, R 300: 1 px de la foto = 0,833); el proceso, dibujado a la derecha.
+  const ph = (px: number, py: number): [number, number] => [440 + (px - 360) * 0.833, 470 + (py - 360) * 0.833];
+  const DX = 1250, DY = 400, D = 0.583;
   return (
     <g>
-      <Lente x={520} y={500} R={360} id="c6-fib" o={tramo(p('empieza'), 0, 0.4)}>
-        <En k={0.85}><Arteriola fibrina={clamp(p('proteinas') + p('fibrina'))} fib={p('he')} /></En>
-        {p('mezclan') > 0.01 && Array.from({ length: 8 }, (_, i) => { const a = (i / 8) * Math.PI * 2; return <Complejo key={i} x={Math.cos(a) * 130} y={Math.sin(a) * 130} k={0.6} o={tramo(p('complejos'), i / 12, i / 12 + 0.3)} />; })}
+      <FotoLente x={440} y={470} R={300} foto="pan-fibrinoide" o={p('empieza')} />
+      <Txt x={170} y={848} txt="lámina de piel, teñida con H-E" t={18} p={p('empieza')} fuerte={false} />
+      <Portaobjetos x={170} y={900} k={0.85} o={tramo(p('empieza'), 0.3, 1)} organo="PIEL" tincion="H-E" caso="PAN cutánea" />
+      <Lente x={DX} y={DY} R={210} id="c6-fib" o={p('lesiona')}>
+        <g transform={`scale(${D})`}>
+          <En k={0.85}><Arteriola fibrina={clamp(p('proteinas') + p('fibrina'))} fib={p('he')} /></En>
+          {p('mezclan') > 0.01 && Array.from({ length: 8 }, (_, i) => { const a = (i / 8) * Math.PI * 2; return <Complejo key={i} x={Math.cos(a) * 130} y={Math.sin(a) * 130} k={0.6} o={tramo(p('complejos'), i / 12, i / 12 + 0.3)} />; })}
+        </g>
       </Lente>
-      {/* Cuando la voz llega a la H-E, la foto real (PAN cutánea) reemplaza al dibujo: 1 px de la foto = 1 px del lienzo */}
-      <FotoLente x={520} y={500} R={360} foto="pan-fibrinoide" o={tramo(p('he'), 0, 0.6)} />
-      <Portaobjetos x={1250} y={850} k={0.9} o={tramo(p('he'), 0.2, 0.8)} organo="PIEL" tincion="H-E" caso="PAN cutánea" />
-      <Txt x={1250} y={785} txt="lámina de piel, teñida con H-E" t={18} p={p('he')} fuerte={false} />
-      <Txt x={1200} y={200} txt="el endotelio se lesiona" t={28} p={p('lesiona')} />
-      <Llamada x={960} y={300} a={[700, 420]} txt="entra la fibrina del plasma" p={p('fibrina')} t={24} />
-      <Txt x={1200} y={380} txt="se mezclan con células muertas" t={24} p={p('mezclan')} />
-      <Txt x={1200} y={430} txt="y a veces con inmunocomplejos" t={24} p={p('complejos')} fuerte={false} />
-      <Llamada x={960} y={560} a={[520 + (461 - 360), 500 + (498 - 360)]} txt="en H-E: banda rosada intensa, sin forma" p={p('banda')} t={24} halo />
-      <Txt x={1200} y={660} txt="recuerda a la fibrina: de ahí su nombre" t={24} p={p('nombre')} />
+      <Txt x={DX} y={140} txt="el endotelio se lesiona" t={26} p={p('lesiona')} />
+      <Txt x={DX} y={652} txt="el mismo proceso, dibujado" t={18} p={p('lesiona')} fuerte={false} />
+      <Llamada x={790} y={210} a={[DX + 180 * D, DY - 80 * D]} txt="entra la fibrina del plasma" p={p('fibrina')} t={22} />
+      <Txt x={DX} y={700} txt="se mezclan con células muertas" t={22} p={p('mezclan')} />
+      <Txt x={DX} y={738} txt="y a veces con inmunocomplejos" t={20} p={p('complejos')} fuerte={false} />
+      <Llamada x={800} y={820} a={ph(461, 498)} txt="en H-E: banda rosada intensa, sin forma" p={p('banda')} t={22} halo />
+      <Txt x={1030} y={890} txt="recuerda a la fibrina: de ahí su nombre" t={24} p={p('nombre')} />
     </g>
   );
 };
@@ -198,9 +203,9 @@ const Necrotizante: Lamina = ({ p }) => {
       <Llamada x={40} y={892} a={[460 + (520 - 360) * 0.917, 480 + (470 - 360) * 0.917]} txt="restos basófilos" p={p('basofilos')} t={22} halo />
       <Llamada x={40} y={934} a={[460 + (330 - 360) * 0.917, 480 + (300 - 360) * 0.917]} txt="histiocitos en empalizada" p={p('empalizada')} t={22} halo />
       <Txt x={700} y={925} txt="dentro o fuera del vaso" t={22} p={p('dentro')} fuerte={false} />
-      <FotoLente x={1200} y={480} R={260} foto="gepa-eosinofilos" o={tramo(p('gepa'), 0, 0.4)} />
-      <Portaobjetos x={1490} y={250} k={0.7} o={tramo(p('gepa'), 0.2, 0.8)} organo="BIOPSIA" tincion="H-E" caso="GEPA" />
-      <Llamada x={960} y={150} a={[1200 + (340 - 360) * 0.722, 480 + (420 - 360) * 0.722]} txt="eosinófilos: gránulos rojos" p={tramo(p('gepa'), 0.3, 1)} t={22} halo />
+      <FotoLente x={1200} y={480} R={260} foto="gepa-eosinofilos" o={tramo(p('gpa'), 0.15, 1)} />
+      <Portaobjetos x={1490} y={250} k={0.7} o={tramo(p('gpa'), 0.4, 1)} organo="BIOPSIA" tincion="H-E" caso="GEPA" />
+      <Llamada x={960} y={150} a={[1200 + (325 - 360) * 0.722, 480 + (370 - 360) * 0.722]} txt="eosinófilos: gránulos rojos" p={tramo(p('gepa'), 0.3, 1)} t={22} halo />
       <Txt x={1200} y={840} txt="GEPA: ricos en eosinófilos" t={26} color={V.ambar[0]} p={p('gepa')} />
       <Txt x={1200} y={895} txt="suelen ser extravasculares" t={22} p={p('extravascular')} />
     </g>

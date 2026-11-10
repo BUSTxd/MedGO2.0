@@ -831,17 +831,18 @@ export function Microscopio({ luz = 1, reloj = 0 }: { luz?: number; reloj?: numb
 
 /** Foto real de histología dentro de una lente, con su crédito (autor · licencia) pegado al aro. */
 export function FotoLente({ x, y, R, foto, o = 1, credito = 'abajo', aro = '#2B3A52', tinta = 'var(--cit-texto-2)' }: { x: number; y: number; R: number; foto: FotoId; o?: number; credito?: 'arriba' | 'abajo'; aro?: string; tinta?: string }) {
+  const e = easeOut(clamp(o)); // entra subiendo y creciendo, no de golpe
   const id = useId().replace(/:/g, '');
   if (o <= 0.002) return null;
   const f = FOTOS[foto];
   const t = R < 160 ? 14 : 17;
   const cy = credito === 'abajo' ? R + 14 + t : -R - 20;
   return (
-    <En x={x} y={y} o={o}>
+    <En x={x} y={y + (1 - e) * 46} k={0.9 + 0.1 * e} o={e}>
       <clipPath id={`foto-${id}`}><circle r={R} /></clipPath>
       <circle r={R + 12} fill={aro} />
       <image href={urlFoto(foto)} x={-R} y={-R} width={R * 2} height={R * 2} preserveAspectRatio="xMidYMid slice" clipPath={`url(#foto-${id})`} />
-      <text y={cy} textAnchor="middle" style={{ fontSize: t, fontWeight: 600 }} fill={tinta} opacity={0.85}>{`Foto: ${f.autor} · ${f.licencia} · Wikimedia Commons`}</text>
+      <text y={cy} textAnchor="middle" style={{ fontSize: t, fontWeight: 600 }} fill={tinta} opacity={0.85}>{`Foto: ${f.autor} · ${f.licencia} · ${f.origen ?? 'Wikimedia Commons'}`}</text>
     </En>
   );
 }
@@ -910,8 +911,9 @@ export function Manometro({ x, y, k = 1, o = 1, val = 0 }: { x: number; y: numbe
 
 /** Portaobjetos de vidrio con el corte teñido y su etiqueta esmerilada: dice de qué es la lámina que se mira. */
 export function Portaobjetos({ x, y, k = 1, o = 1, organo, tincion, caso, tejido = '#E58FB5' }: { x: number; y: number; k?: number; o?: number; organo: string; tincion: string; caso: string; tejido?: string }) {
+  const e = easeOut(clamp(o)); // entra subiendo y creciendo, no de golpe
   return (
-    <En x={x} y={y} k={k} o={o}>
+    <En x={x} y={y + (1 - e) * 30} k={k * (0.9 + 0.1 * e)} o={e}>
       <rect x={-146} y={-40} width={300} height={88} rx={8} fill="#000000" opacity={0.12} />
       <rect x={-150} y={-44} width={300} height={88} rx={8} fill="#D8F0F8" />
       <rect x={-150} y={-44} width={300} height={10} rx={5} fill="#FFFFFF" opacity={0.6} />
@@ -929,15 +931,16 @@ export function Portaobjetos({ x, y, k = 1, o = 1, organo, tincion, caso, tejido
 
 /** Foto que no es un zoom (una pieza entera): marco redondeado en vez de lente, con su crédito debajo. */
 export function FotoCuadro({ x, y, w, h, foto, o = 1, tinta = 'var(--cit-texto-2)' }: { x: number; y: number; w: number; h: number; foto: FotoId; o?: number; tinta?: string }) {
+  const e = easeOut(clamp(o)); // entra subiendo y creciendo, no de golpe
   const id = useId().replace(/:/g, '');
   if (o <= 0.002) return null;
   const f = FOTOS[foto];
   return (
-    <En x={x} y={y} o={o}>
+    <En x={x} y={y + (1 - e) * 46} k={0.9 + 0.1 * e} o={e}>
       <clipPath id={`cuadro-${id}`}><rect x={-w / 2} y={-h / 2} width={w} height={h} rx={18} /></clipPath>
       <rect x={-w / 2 - 8} y={-h / 2 - 8} width={w + 16} height={h + 16} rx={24} fill="#2B3A52" />
       <image href={urlFoto(foto)} x={-w / 2} y={-h / 2} width={w} height={h} preserveAspectRatio="xMidYMid slice" clipPath={`url(#cuadro-${id})`} />
-      <text y={h / 2 + 30} textAnchor="middle" style={{ fontSize: 14, fontWeight: 600 }} fill={tinta} opacity={0.85}>{`Foto: ${f.autor} · ${f.licencia} · Wikimedia Commons`}</text>
+      <text y={h / 2 + 30} textAnchor="middle" style={{ fontSize: 14, fontWeight: 600 }} fill={tinta} opacity={0.85}>{`Foto: ${f.autor} · ${f.licencia} · ${f.origen ?? 'Wikimedia Commons'}`}</text>
     </En>
   );
 }

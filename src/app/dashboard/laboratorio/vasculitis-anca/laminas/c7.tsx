@@ -89,20 +89,18 @@ const Semiluna: Lamina = ({ p }) => {
   const sl = clamp(p('proliferan') * 0.5 + p('semiluna') * 0.5);
   return (
     <g>
-      <g opacity={1 - tramo(p('pas'), 0.3, 0.8)}>
-        <Sale p={p('proliferan')} x={560} y={510} k={1.4}><Glomerulo semiluna={sl} fibrina={1 - sl} necrosis={1} /></Sale>
-        <Sale p={p('monocitos')} x={280} y={250} k={0.22}><Macrofago /></Sale>
-        <Sale p={p('monocitos')} x={320} y={400} k={0.18}><Macrofago /></Sale>
-      </g>
-      <FotoLente x={560} y={510} R={330} foto="semiluna-pas" o={tramo(p('pas'), 0, 0.5)} />
-      <Txt x={1200} y={230} txt="prolifera el epitelio parietal" t={26} p={p('proliferan')} />
-      <Txt x={1200} y={290} txt="llegan monocitos y macrófagos" t={26} p={p('monocitos')} />
-      <Txt x={1200} y={420} txt="semiluna" t={42} color="#D46A9E" p={p('semiluna')} />
-      <Txt x={1200} y={520} txt="llena el espacio de Bowman y aplasta el ovillo" t={24} p={p('aplasta')} />
-      <Llamada x={960} y={650} a={[560 + (200 - 360) * 0.917, 510 + (230 - 360) * 0.917]} txt="semiluna: capa gruesa de células" p={p('pas')} t={22} halo />
-      <Llamada x={960} y={760} a={[560 + (72 - 360) * 0.917, 510 + (400 - 360) * 0.917]} txt="cápsula de Bowman (magenta con PAS)" p={tramo(p('pas'), 0.25, 1)} t={22} halo />
-      <Llamada x={960} y={705} a={[560 + (450 - 360) * 0.917, 510 + (420 - 360) * 0.917]} txt="ovillo aplastado" p={tramo(p('pas'), 0.5, 1)} t={22} halo />
-      <Portaobjetos x={1330} y={890} k={0.9} o={tramo(p('pas'), 0.2, 0.8)} organo="RIÑÓN" tincion="PAS" caso="biopsia renal" tejido="#D9539C" />
+      <FotoLente x={560} y={510} R={330} foto="semiluna-pas" o={p('proliferan')} />
+      <Sale p={p('proliferan')} x={1260} y={330} k={0.58}><Glomerulo semiluna={sl} fibrina={1 - sl} necrosis={1} /></Sale>
+      <Sale p={p('monocitos')} x={1120} y={200} k={0.12}><Macrofago /></Sale>
+      <Sale p={p('monocitos')} x={1135} y={290} k={0.1}><Macrofago /></Sale>
+      <Txt x={1260} y={530} txt="prolifera el epitelio parietal" t={22} p={p('proliferan')} />
+      <Txt x={1260} y={568} txt="llegan monocitos y macrófagos" t={22} p={p('monocitos')} />
+      <Txt x={1260} y={625} txt="semiluna" t={36} color="#D46A9E" p={p('semiluna')} />
+      <Txt x={1260} y={665} txt="llena el espacio de Bowman y aplasta el ovillo" t={20} p={p('aplasta')} />
+      <Llamada x={960} y={745} a={[560 + (200 - 360) * 0.917, 510 + (230 - 360) * 0.917]} txt="semiluna: capa gruesa de células" p={p('pas')} t={22} halo />
+      <Llamada x={960} y={790} a={[560 + (450 - 360) * 0.917, 510 + (420 - 360) * 0.917]} txt="ovillo aplastado" p={tramo(p('pas'), 0.25, 1)} t={22} halo />
+      <Llamada x={960} y={835} a={[560 + (72 - 360) * 0.917, 510 + (400 - 360) * 0.917]} txt="cápsula de Bowman (magenta con PAS)" p={tramo(p('pas'), 0.5, 1)} t={22} halo />
+      <Portaobjetos x={1330} y={925} k={0.75} o={tramo(p('proliferan'), 0.3, 1)} organo="RIÑÓN" tincion="PAS" caso="anti-MBG" tejido="#D9539C" />
     </g>
   );
 };

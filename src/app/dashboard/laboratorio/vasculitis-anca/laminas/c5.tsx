@@ -767,13 +767,13 @@ const AncaLab: Lamina = ({ p }) => {
       <Pantalla x={800} y={520} w={1400} h={820} p={p('detalle')}>
         <TxtPantalla x={0} y={-320} txt="Inmunofluorescencia en neutrófilos fijados con etanol" t={30} p={p('etanol')} />
         <NeutroIF x={-330} y={-75} tipo="c" p={p('pr3')} />
-        <FotoLente x={-330} y={-75} R={140} foto="c-anca" o={p('canca')} credito="arriba" aro={V.verde[0]} tinta="#BFF5CB" />
-        <Portaobjetos x={-330} y={255} k={0.85} o={p('canca')} organo="NEUTRÓFILOS" tincion="IFI · FITC" caso="suero anti-PR3" tejido="#DCE8F0" />
+        <FotoLente x={-330} y={-75} R={140} foto="c-anca" o={p('detalle')} credito="arriba" aro={V.verde[0]} tinta="#BFF5CB" />
+        <Portaobjetos x={-330} y={255} k={0.85} o={tramo(p('detalle'), 0.3, 1)} organo="NEUTRÓFILOS" tincion="IFI · FITC" caso="suero anti-PR3" tejido="#DCE8F0" />
         <TxtPantalla x={-330} y={110} txt="PR3: se queda en los gránulos" t={24} p={p('pr3')} />
         <TxtPantalla x={-330} y={170} txt="c-ANCA · granular citoplasmático" t={30} p={p('canca')} />
         <NeutroIF x={330} y={-75} tipo="p" p={p('mpo')} />
-        <FotoLente x={330} y={-75} R={140} foto="p-anca" o={p('panca')} credito="arriba" aro={V.verde[0]} tinta="#BFF5CB" />
-        <Portaobjetos x={330} y={255} k={0.85} o={p('panca')} organo="NEUTRÓFILOS" tincion="IFI · FITC" caso="suero anti-MPO" tejido="#DCE8F0" />
+        <FotoLente x={330} y={-75} R={140} foto="p-anca" o={tramo(p('detalle'), 0.15, 1)} credito="arriba" aro={V.verde[0]} tinta="#BFF5CB" />
+        <Portaobjetos x={330} y={255} k={0.85} o={tramo(p('detalle'), 0.4, 1)} organo="NEUTRÓFILOS" tincion="IFI · FITC" caso="suero anti-MPO" tejido="#DCE8F0" />
         <TxtPantalla x={330} y={110} txt="MPO: carga +, se corre al núcleo" t={24} p={p('mpo')} />
         <TxtPantalla x={330} y={170} txt="p-ANCA · perinuclear" t={30} p={p('panca')} />
         <TxtPantalla x={0} y={350} txt="después se confirma midiendo cada anticuerpo" t={26} p={p('confirma')} />
