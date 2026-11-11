@@ -8,6 +8,8 @@ import 'server-only';
 import { CAPITULOS } from '@/lib/data/gramnegativas/capitulos';
 import { INDICE } from '@/lib/data/gramnegativas/indice';
 import { NARRACION } from '@/lib/data/gramnegativas/narracion';
+import { TABLAS } from '@/lib/data/gramnegativas/tablas';
+import { GRUPOS } from '@/lib/data/gramnegativas/tablas-indice';
 import { VISTAZO } from '@/lib/data/gramnegativas/vistazo';
 import type { Contenido, ResumenParte } from './contenido';
 
@@ -19,5 +21,7 @@ export function contenidoDelLab(completo: boolean): Contenido {
     segundos: Math.round(NARRACION[m.numero]?.duracion ?? 0),
     gratis: VISTAZO.includes(m.id),
   }));
-  return { completo, indice, partes };
+  // Las tablas condensan toda la clase: sin el plan solo sale la pestaña gratis (la del vistazo).
+  const tablas = GRUPOS.map((g) => ({ ...g, ...(completo || g.gratis ? { tablas: TABLAS[g.id] } : {}) }));
+  return { completo, indice, partes, tablas };
 }

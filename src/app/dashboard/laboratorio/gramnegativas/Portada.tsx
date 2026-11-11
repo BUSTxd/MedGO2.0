@@ -15,7 +15,7 @@ import vas from '@/styles/gramnegativas.module.css';
 
 const minutos = (sg: number) => `${Math.max(1, Math.round(sg / 60))} min`;
 
-export default function Portada({ contenido, onParte, onAnticipar }: { contenido: Contenido; onParte: (id: ParteId) => void; onAnticipar: (id: ParteId) => void }) {
+export default function Portada({ contenido, onParte, onAnticipar, onTabla }: { contenido: Contenido; onParte: (id: ParteId) => void; onAnticipar: (id: ParteId) => void; onTabla: () => void }) {
   const { indice, completo } = contenido;
   const total = indice.reduce((a, p) => a + p.segundos, 0);
   return (
@@ -57,6 +57,7 @@ export default function Portada({ contenido, onParte, onAnticipar }: { contenido
         </ol>
         <div className={s.menuAcciones}>
           <button type="button" className={c.btnPrim} onClick={() => onParte('pacientes')}>Empezar: {indice[0].nombre}</button>
+          <button type="button" className={c.btnSec} onClick={onTabla}>Tablas resumen de la clase</button>
         </div>
       </div>
     </div>

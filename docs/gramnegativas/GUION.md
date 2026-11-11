@@ -177,6 +177,20 @@ Moco, microbiota y epitelio; luego disbiosis y pérdida del moco.
 | 10 | Volver a la paciente `[C]` | Sepsis por *E. coli* desde un intestino sin barrera: moco, disbiosis, uniones, endotoxina y SOFA. |
 | 11 | Volver al paciente `[C]` | *Pseudomonas* pulmonar: T3SS, LasB, bacteriemia y por qué el foco importa. Cierre. |
 
+## Tablas resumen (botón «Tablas»)
+
+Panel como el de Hipersensibilidad, con una pestaña por grupo. Cada fila lleva al paso donde se anima (el «#» de las tablas de arriba). Contenido en `src/lib/data/gramnegativas/tablas.ts`, copiado del resumen AI18 (sección en cada tabla) sin añadir datos; las de Farmacología repiten los pasos `[F]`. **La pestaña gratis es la del vistazo (capítulos 0 y 1); las demás solo viajan con el plan.** Un cambio de contenido en un paso se refleja aquí a mano.
+
+| Pestaña | Tablas (destino: capítulo · paso) |
+|---|---|
+| Conceptos y puertas · **gratis** | Cinco palabras que no son sinónimos (0·2) · Las tres fases de una bacteriemia (1·4) · Cuatro puertas de entrada (1·5) |
+| Moco y uniones | Cómo ataca el patógeno al moco (2·5, 2·6) · Cinco tipos de unión (3·0) · Dos rutas de cruce (3·1) · Cuatro formas de romper una unión (3·2 a 3·5) |
+| Invasión y reparación | Cómo invaden y alteran al enterocito (4·0 a 4·3) · Dos modelos de regeneración (7·1) · Cómo interfieren los patógenos con la reparación (7·3) |
+| Toxinas y sepsis | Endotoxina frente a exotoxinas (5·6, 5·5) · Seis toxinas y efectores (5·5) · Sepsis-3 de un vistazo (6·7, 6·8) |
+| Especies | Cuatro especies, cuatro estrategias (8·1, 8·5, 8·8, 8·11) · *Klebsiella*: cuatro perfiles (8·5) · Otras especies y complejos (8·13) |
+| Resistencia y evidencia | Patógenos entéricos, lado a lado (9·0) · Resistencia: cinco ideas (9·2) · Modelos experimentales y su límite (9·6) |
+| Fármacos (repaso de Farmacología, `[F]`) | Un fármaco, un obstáculo, por tema (1·6, 2·8, 3·7, 4·7, 5·9, 6·9, 6·10, 7·5) · Ronda de fármacos por especie (8·14 a 8·17) · Cada mecanismo, un fármaco que falla (9·4) |
+
 ## Para revisar con Farmacología (`[F]`)
 
 Datos que no vienen del AI18 y que BUST debe confirmar antes de publicar:
@@ -192,3 +206,5 @@ Datos que no vienen del AI18 y que BUST debe confirmar antes de publicar:
 9. Tabla mecanismo ↔ fármaco que falla y mensaje «mecanismo, no receta» (cap. 9, pasos 4 y 5).
 
 Y los dos casos `[C]` (cap. 0 pasos 0 y 1; cap. 9 pasos 10 y 11).
+
+Si se corrige un dato `[F]`, cambiarlo también en la pestaña «Fármacos» de las tablas (`tablas.ts`).

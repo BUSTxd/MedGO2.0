@@ -19,6 +19,9 @@ function resolverRuta(base) {
 }
 
 export async function resolve(especificador, contexto, siguiente) {
+  // `next/dynamic` (lo usa `MuroPago`, de donde sale el candado de las tablas) no se resuelve fuera de
+  // Next: un hueco vale, porque el muro de pago no se pinta en estas revisiones.
+  if (especificador === 'next/dynamic') return { url: 'data:text/javascript,export default function dynamic() { return function Dinamico() { return null; }; }', shortCircuit: true };
   let base = null;
   if (especificador.startsWith('@/')) base = path.join(SRC, especificador.slice(2));
   else if ((especificador.startsWith('./') || especificador.startsWith('../')) && contexto.parentURL?.startsWith('file:')) base = path.resolve(path.dirname(fileURLToPath(contexto.parentURL)), especificador);

@@ -1,9 +1,11 @@
 'use client';
 // Vista raíz del laboratorio «Infecciones bacterianas por gramnegativas» (la misma
-// forma que Citopenias, sin su tabla).
+// forma que Citopenias y que Hipersensibilidad: con su panel de tablas resumen).
 //
 //   portada ──capítulo──▶ explorar ──siguiente──▶ …
-//                └─ de pago y sin plan ─▶ muro (encima)
+//      │  └─ de pago y sin plan ─▶ muro (encima)
+//      └──── «Tablas resumen» (o «Tablas» en el encabezado) ─▶ panel encima; una fila
+//            lleva al paso donde se anima, una pestaña de pago sin plan lleva al muro
 //
 // El estado va en la URL (`?parte=mecanismos&paso=3`). Qué capítulos están abiertos lo
 // decide el servidor. Al pagar, `SubscribeModal` refresca la página, `contenido` llega
@@ -13,7 +15,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { usePlan } from '@/components/PlanProvider';
 import { planUnlocks, type PlanKey } from '@/lib/plans';
-import type { Parte, ParteId } from '@/lib/data/gramnegativas/tipos';
+import type { Destino, Parte, ParteId } from '@/lib/data/gramnegativas/tipos';
 import type { Contenido, ResumenParte } from '@/lib/gramnegativas/contenido';
 import { Rueda } from '../lupus/Cargando';
 import { redCorta } from '../lupus/vozCarga';
@@ -21,6 +23,7 @@ import Lienzo, { cargarLaminas } from './Lienzo';
 import Portada from './Portada';
 import Explorar from '../citopenias-autoinmunes/Explorar';
 import MuroPago from './MuroPago';
+import PanelTablas from './Tablas';
 import c from '@/styles/cicloCelular.module.css';
 import s from '@/styles/linfocitos.module.css';
 import h from '@/styles/hipersensibilidad.module.css';
@@ -63,6 +66,7 @@ export default function GramnegativasLab({ contenido, plan, prueba }: { contenid
   const [muro, setMuro] = useState<ParteId | null>(inicio.muro);
   const [pagando, setPagando] = useState(false);
   const [listo, setListo] = useState(false);
+  const [tabla, setTabla] = useState(false);
 
   useEffect(() => {
     let vigente = true;
@@ -93,12 +97,17 @@ export default function GramnegativasLab({ contenido, plan, prueba }: { contenid
   const portada = useCallback(() => setVista({ v: 'portada' }), []);
   const abrir = useCallback((id: ParteId, paso = 0) => {
     const elegida = abiertasRef.current[id];
-    if (!elegida) { setMuro(id); return; }
+    if (!elegida) { setTabla(false); setMuro(id); return; }
     // Sin esperarlas: el audio tiene que arrancar dentro del clic (Safari lo exige).
     void cargarLaminas(elegida.numero);
     setMuro(null);
     setVista((v) => ({ v: 'parte', id, paso, n: (v.v === 'parte' ? v.n : 0) + 1 }));
   }, []);
+  // Una fila de las tablas: cierra el panel y abre el capítulo en el paso que anima esa fila.
+  const irDestino = useCallback((d: Destino) => {
+    setTabla(false);
+    abrir(d.cap, d.paso);
+  }, [abrir]);
   const onPaso = useCallback((i: number) => setVista((v) => (v.v === 'parte' && v.paso !== i ? { ...v, paso: i } : v)), []);
 
   // Pagó y el servidor ya mandó los capítulos: se abre el que había pedido.
@@ -119,13 +128,14 @@ export default function GramnegativasLab({ contenido, plan, prueba }: { contenid
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
       if (muro) { if (!pagando) setMuro(null); return; }
+      if (tabla) { setTabla(false); return; }
       if (vista.v === 'portada') return;
       if (document.querySelector('[role="dialog"][data-bloquea-esc]')) return;
       portada();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [vista.v, muro, pagando, portada]);
+  }, [vista.v, muro, pagando, portada, tabla]);
 
   if (!listo) return <Rueda />;
 
@@ -133,12 +143,23 @@ export default function GramnegativasLab({ contenido, plan, prueba }: { contenid
   const capaMuro = resumenMuro && (
     <MuroPago parte={resumenMuro} plan={plan} dePago={indice.filter((p) => !p.gratis).length} pagando={pagando} onPagar={setPagando} onCerrar={() => setMuro(null)} />
   );
+  // El panel se abre en la pestaña del capítulo en curso; una pestaña de pago sin plan lleva al muro.
+  const capaTabla = tabla && (
+    <PanelTablas
+      contenido={contenido}
+      desde={vista.v === 'parte' ? vista.id : null}
+      onCerrar={() => setTabla(false)}
+      onIr={irDestino}
+      onMuro={(id) => { setTabla(false); setMuro(id); }}
+    />
+  );
 
   const parte = vista.v === 'parte' ? abiertas[vista.id] : undefined;
   if (vista.v === 'portada' || !parte) {
     return (
       <div className={`${c.lab} ${h.aparece}`}>
-        <Portada contenido={contenido} onParte={(id) => abrir(id)} onAnticipar={anticipar} />
+        <Portada contenido={contenido} onParte={(id) => abrir(id)} onAnticipar={anticipar} onTabla={() => setTabla(true)} />
+        {capaTabla}
         {capaMuro}
       </div>
     );
@@ -174,6 +195,7 @@ export default function GramnegativasLab({ contenido, plan, prueba }: { contenid
             );
           })}
         </nav>
+        <button type="button" className={c.btnFlot} onClick={() => setTabla(true)}>Tablas</button>
       </header>
       <div key={`${vista.id}-${vista.n}`} className={c.entrada}>
         <Explorar
@@ -183,11 +205,12 @@ export default function GramnegativasLab({ contenido, plan, prueba }: { contenid
           onSiguiente={sig ? () => abrir(sig.id) : null}
           onVolver={portada}
           vozSiguiente={sig ? abiertas[sig.id]?.narracion : undefined}
-          detener={!!muro}
+          detener={tabla || !!muro}
           lienzo={Lienzo}
           credito="Láminas con código · Basado en la clase AI18 de Patología · Casos ilustrativos y fármacos: repaso de Farmacología"
         />
       </div>
+      {capaTabla}
       {capaMuro}
     </div>
   );

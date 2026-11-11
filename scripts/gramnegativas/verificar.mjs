@@ -7,7 +7,10 @@
  * animación puede terminar después del final de la frase de su paso. Además caza lo
  * que no rompe la compilación: un parámetro que su lámina lee y nadie anima (el dibujo
  * no saldría nunca) o que se anima y ninguna lámina lee, y una lámina de más o de menos.
- * Compila cada capítulo con el motor de Lupus buscando NaN. ERRORES → código 1.
+ * Compila cada capítulo con el motor de Lupus buscando NaN. Revisa también las tablas
+ * resumen (`tablas.ts`): que cada fila lleve a un paso que existe, que la pestaña gratis solo
+ * apunte al vistazo y que las celdas encajen con sus columnas (`--tablas` imprime a qué paso
+ * lleva cada fila, para comprobar a ojo que es el que toca). ERRORES → código 1.
  */
 
 import { readFileSync } from 'node:fs';
@@ -23,6 +26,8 @@ const { CAPITULOS } = await cargar('lib/data/gramnegativas/capitulos.ts');
 const { INDICE } = await cargar('lib/data/gramnegativas/indice.ts');
 const { NARRACION } = await cargar('lib/data/gramnegativas/narracion.ts');
 const { VISTAZO } = await cargar('lib/data/gramnegativas/vistazo.ts');
+const { GRUPOS } = await cargar('lib/data/gramnegativas/tablas-indice.ts');
+const { TABLAS } = await cargar('lib/data/gramnegativas/tablas.ts');
 const motor = await cargar('lib/lupus/motor.ts');
 
 // `--caps 0,1,2`: solo esos capítulos (para ir verificando por lotes mientras se anima).
@@ -85,6 +90,50 @@ for (const [c, esc] of CAPITULOS.entries()) {
   });
 }
 
+// ─── Tablas resumen ──────────────────────────────────────────────────────────
+let nTablas = 0, nFilas = 0;
+const mapaTablas = [];
+const idsGrupo = new Set();
+for (const gr of GRUPOS) {
+  if (idsGrupo.has(gr.id)) err('tablas', `pestaña «${gr.id}» repetida`);
+  idsGrupo.add(gr.id);
+  for (const cap of gr.capitulos) if (!INDICE.some((m) => m.id === cap)) err(`tablas · ${gr.id}`, `«${cap}» no es un capítulo`);
+  const tablas = TABLAS[gr.id];
+  if (!tablas?.length) { err(`tablas · ${gr.id}`, 'la pestaña no tiene tablas'); continue; }
+  const idsTabla = new Set();
+  for (const t of tablas) {
+    const donde = `tablas · ${gr.id} · ${t.id}`;
+    nTablas++;
+    if (idsTabla.has(t.id)) err(donde, 'id de tabla repetido');
+    idsTabla.add(t.id);
+    if (t.columnas.length < 2) err(donde, 'menos de dos columnas');
+    if (t.farmacologia && gr.gratis) err(donde, 'repaso de Farmacología en la pestaña gratis');
+    const destinos = t.destino ? [[t.titulo, t.destino]] : [];
+    const nombres = new Set();
+    for (const f of t.filas) {
+      nFilas++;
+      if (nombres.has(f.nombre)) err(donde, `fila «${f.nombre}» repetida`);
+      nombres.add(f.nombre);
+      if (f.celdas.length !== t.columnas.length - 1) err(donde, `«${f.nombre}»: ${f.celdas.length} celdas para ${t.columnas.length - 1} columnas`);
+      for (const cel of f.celdas) if (!(Array.isArray(cel) ? cel.length > 0 && cel.every((x) => x.trim()) : cel.trim())) err(donde, `«${f.nombre}» tiene una celda vacía`);
+      if (!f.destino && !t.destino) err(donde, `«${f.nombre}» no lleva a ningún paso`);
+      if (f.destino) destinos.push([f.nombre, f.destino]);
+    }
+    for (const [que, dst] of destinos) {
+      const meta = INDICE.find((m) => m.id === dst.cap);
+      const paso = meta ? CAPITULOS[meta.numero]?.pasos[dst.paso] : undefined;
+      if (!paso) { err(donde, `«${que}» lleva a «${dst.cap}» paso ${dst.paso}, que no existe`); continue; }
+      if (gr.gratis && !VISTAZO.includes(dst.cap)) err(donde, `«${que}» está en la pestaña gratis y lleva a «${dst.cap}», que es de pago`);
+      mapaTablas.push(`  ${gr.id} · ${t.id} · ${que.replaceAll('*', '').slice(0, 44).padEnd(44)} → cap. ${meta.numero} paso ${dst.paso} «${paso.titulo}»`);
+    }
+    for (const x of [t.titulo, t.nota ?? '', ...t.filas.flatMap((f) => [f.nombre, ...f.celdas.flat()])]) {
+      if (x.split('*').length % 2 === 0) err(donde, `asteriscos sin pareja en «${x.slice(0, 50)}…»`);
+    }
+  }
+}
+for (const id of Object.keys(TABLAS)) if (!idsGrupo.has(id)) err('tablas', `hay tablas de «${id}» y ninguna pestaña con ese id`);
+if (process.argv.includes('--tablas')) console.log(`${mapaTablas.join('\n')}\n`);
+
 let fotogramas = 0;
 for (const [c, esc] of CAPITULOS.entries()) {
   if (!toca(c)) continue;
@@ -103,7 +152,7 @@ for (const [c, esc] of CAPITULOS.entries()) {
 const elegidos = CAPITULOS.filter((_, c) => toca(c));
 const pasos = elegidos.reduce((n, p) => n + p.pasos.length, 0);
 const min = elegidos.reduce((n, p) => n + p.narracion.duracion, 0) / 60;
-console.log(`Gramnegativas · ${elegidos.length} capítulos · ${pasos} pasos · ${min.toFixed(1)} min de voz · ${fotogramas} fotogramas evaluados`);
+console.log(`Gramnegativas · ${elegidos.length} capítulos · ${pasos} pasos · ${min.toFixed(1)} min de voz · ${fotogramas} fotogramas evaluados · ${GRUPOS.length} pestañas de tablas, ${nTablas} tablas, ${nFilas} filas`);
 for (const a of avisos) console.log(`  aviso  ${a}`);
 for (const e of errores) console.log(`  ERROR  ${e}`);
 if (errores.length) { console.log(`\n${errores.length} error(es).`); process.exit(1); }

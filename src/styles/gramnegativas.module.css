@@ -70,3 +70,56 @@
 /* Portada. */
 .sobretitulo { color: #B8237A; }
 :global(.dark-mode) .sobretitulo { color: #F58BD3; }
+
+/* Panel de tablas resumen: va dentro de `.lab` (cicloCelular), de donde salen --campo, --linea,
+   --texto, --texto-2 y --dapi en claro y en oscuro, y comparte `panelNeo` y `tablaNeo` con
+   Hipersensibilidad. Aquí solo lo que le falta: las pestañas y la cabecera de cada tabla. */
+.pestanas { display: flex; gap: 6px; margin-top: 12px; padding-bottom: 2px; overflow-x: auto; flex: none; scrollbar-width: thin; }
+.pestana {
+  flex: none; display: inline-flex; align-items: center; gap: 5px; min-height: 34px; padding: 6px 12px;
+  font-family: inherit; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer;
+  color: var(--texto-2); background: transparent; border: 1px solid var(--linea); border-radius: 999px;
+}
+.pestana:hover { color: var(--texto); border-color: var(--dapi); }
+.pestanaOn, .pestanaOn:hover { color: #fff; background: var(--dapi); border-color: var(--dapi); }
+.pestanaCerrada { border-style: dashed; opacity: 0.75; }
+
+.panelCuerpo { padding-right: 2px; }
+.tablaCab { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin: 22px 0 6px; }
+.panelCuerpo > section:first-child .tablaCab { margin-top: 4px; }
+.tablaTitulo { margin: 0; font-size: 15px; font-weight: 700; color: var(--texto); }
+.tablaFuente { font-size: 12px; color: var(--texto-2); }
+.pildora { font-size: 11.5px; font-weight: 700; color: #fff; background: #6D3FD8; border-radius: 999px; padding: 2px 9px; }
+.ver {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+  font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
+  color: var(--texto); background: transparent; border: 1px solid var(--linea); border-radius: 999px;
+}
+.ver:hover { border-color: var(--dapi); }
+.punto { width: 9px; height: 9px; border-radius: 50%; flex: none; display: inline-block; }
+
+.tabla3 { min-width: 560px; }
+.tabla4 { min-width: 780px; }
+.panelCuerpo td:first-child { width: 22%; min-width: 140px; }
+.filaBtn { display: grid; gap: 3px; padding: 0; font-family: inherit; text-align: left; cursor: pointer; color: var(--texto); background: none; border: none; }
+.filaNombre { font-size: 13.5px; font-weight: 800; color: var(--texto); }
+.filaBtn:hover .filaNombre { text-decoration: underline; text-underline-offset: 3px; }
+.filaDestino { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; line-height: 1.3; color: var(--texto-2); }
+.item + .item { margin-top: 5px; }
+.tablaNota { margin: 8px 2px 0; font-size: 12.5px; line-height: 1.45; color: var(--texto-2); }
+
+/* El panel es un elemento de rejilla (`.velo`): sin esto, una tabla ancha lo ensancha más que la pantalla. */
+.panel { min-width: 0; }
+
+/* Pantallas estrechas: cada fila se apila (el nombre arriba y cada celda con el título de su
+   columna) en vez de obligar a deslizar la tabla de lado. */
+@media (max-width: 860px) {
+  .tabla3, .tabla4 { min-width: 0; }
+  .panelCuerpo .tabla thead { display: none; }
+  .panelCuerpo .tabla, .panelCuerpo .tabla tbody, .panelCuerpo .tabla tr, .panelCuerpo .tabla td { display: block; width: 100%; }
+  .panelCuerpo .tabla tr { padding: 10px 0; border-bottom: 1px solid var(--linea); }
+  .panelCuerpo .tabla td { padding: 3px 4px; border: none; }
+  .panelCuerpo .tabla td:first-child { width: 100%; min-width: 0; }
+  .panelCuerpo .tabla td[data-label]::before { content: attr(data-label); display: block; margin-bottom: 1px; font-size: 11.5px; font-weight: 700; color: var(--texto-2); }
+  .ver { margin-left: 0; }
+}

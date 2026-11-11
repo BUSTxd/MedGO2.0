@@ -2,7 +2,7 @@
 // (según el plan, ver `contenidoDelLab` en ./registro.ts). Sin datos de capítulos:
 // este archivo sí llega al navegador.
 
-import type { Parte } from '@/lib/data/gramnegativas/tipos';
+import type { GrupoTablas, Parte } from '@/lib/data/gramnegativas/tipos';
 import type { MetaParte } from '@/lib/data/gramnegativas/indice';
 
 export type ResumenParte = MetaParte & {
@@ -20,4 +20,6 @@ export type Contenido = {
   indice: ResumenParte[];
   /** Solo los capítulos abiertos, con sus pasos y su voz. */
   partes: Parte[];
+  /** Las pestañas de las tablas resumen, todas; el contenido (`tablas`) solo de las abiertas. */
+  tablas: GrupoTablas[];
 };
