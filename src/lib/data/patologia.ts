@@ -818,6 +818,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Tipos I – IV'],
         docentes: [],
+        resumen: resumenHtml('pat-ai-15'),
       },
       {
         id: 'pat-acp-9',
@@ -874,6 +875,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        resumen: resumenHtml('pat-c-7'),
       },
       {
         id: 'pat-tbl-5',
@@ -906,6 +908,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Anemia hemolítica autoinmune', 'PTI'],
         docentes: [],
+        resumen: resumenHtml('pat-ai-17'),
       },
       {
         id: 'pat-c-8',
@@ -941,6 +944,7 @@ export const semanas: Semana[] = [
         subtemas: [],
         docentes: [],
         nota: NOTA_ACP,
+        resumen: resumenHtml('pat-acp-11'),
       },
       {
         id: 'pat-acp-12',
@@ -953,6 +957,7 @@ export const semanas: Semana[] = [
         subtemas: [],
         docentes: [],
         nota: NOTA_ACP,
+        resumen: resumenHtml('pat-acp-12'),
       },
       {
         id: 'pat-lab-8',
@@ -996,6 +1001,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        resumen: resumenHtml('pat-ai-18'),
       },
       {
         id: 'pat-c-11',
@@ -1019,6 +1025,7 @@ export const semanas: Semana[] = [
         subtemas: [],
         docentes: [],
         nota: NOTA_ACP,
+        resumen: resumenHtml('pat-acp-13'),
       },
     ],
   },
@@ -1090,6 +1097,7 @@ export const semanas: Semana[] = [
         subtemas: [],
         docentes: [],
         nota: NOTA_ACP,
+        resumen: resumenHtml('pat-acp-14'),
       },
     ],
   },
