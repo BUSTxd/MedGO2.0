@@ -36,6 +36,9 @@ const EDGE = ['C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', 'C
   .find((p) => existsSync(p));
 if (!EDGE) { console.error('No encuentro Microsoft Edge.'); process.exit(1); }
 const DESCARGAS = join(homedir(), 'Downloads');
+// El tar de Windows (bsdtar): desde Git Bash, «tar» es el GNU de MSYS, que lee «C:» como un
+// servidor remoto («Cannot connect to C: resolve failed») y no sabe hacer .zip con -a.
+const TAR = [join(process.env.SystemRoot ?? 'C:/Windows', 'System32', 'tar.exe')].find((p) => existsSync(p)) ?? 'tar';
 const dormir = (ms) => new Promise((r) => setTimeout(r, ms));
 const correr = (cmd, argv) => new Promise((ok, mal) => {
   const p = spawn(cmd, argv, { stdio: ['ignore', 'pipe', 'pipe'] });
@@ -60,7 +63,7 @@ for (const f of readdirSync(args.dir)) {
   if (['.html', '.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg'].includes(ext) && statSync(join(args.dir, f)).isFile()) copyFileSync(join(args.dir, f), join(carpetaZip, f));
 }
 const zipEntrada = join(trabajo, `${nombre}.zip`);
-await correr('tar', ['-a', '-cf', zipEntrada, '-C', trabajo, nombre]);
+await correr(TAR, ['-a', '-cf', zipEntrada, '-C', trabajo, nombre]);
 console.log(`ZIP armado: ${(statSync(zipEntrada).size / 1048576).toFixed(1)} MB`);
 
 // ─── 2. Edge sin ventana + DevTools Protocol ─────────────────────────────
@@ -152,7 +155,7 @@ try {
   salida = resolve(args.salida ?? join(DESCARGAS, `${nombre} (imgflow)`));
   rmSync(salida, { recursive: true, force: true });
   mkdirSync(salida, { recursive: true });
-  await correr('tar', ['-xf', zipSalida, '-C', salida]);
+  await correr(TAR, ['-xf', zipSalida, '-C', salida]);
 } finally {
   ws.close();
   edge.kill();
