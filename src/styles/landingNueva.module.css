@@ -554,3 +554,30 @@
 .cuenta-landing-menu a,.cuenta-landing-menu button{display:block;width:100%;padding:10px 12px;margin-top:2px;border:0;border-radius:9px;background:transparent;color:var(--ink);font:inherit;font-size:14px;text-align:left;text-decoration:none;cursor:pointer}
 .cuenta-landing-menu a:hover,.cuenta-landing-menu a:focus-visible,.cuenta-landing-menu button:hover,.cuenta-landing-menu button:focus-visible{background:var(--raised)}
 .cuenta-landing-menu button{color:#f1a4a4}
+
+/* Trazo de EKG detrás del título del hero (TrazoEkg.tsx). La máscara lo corta en
+   el borde de la cabeza de cada silueta (GRIMI es el paciente) y abre un hueco
+   bajo «Conoce MedGO», medido en em para que siga al título en cada tamaño; un
+   latido brillante lo recorre en 4,2 s cada 7 s. Cada capa del barrido (cola, cuerpo,
+   cabeza) lleva su keyframe con números fijos: con var() dentro del keyframe
+   Chrome no interpola y el barrido salta del inicio al final sin verse. Cada uno
+   va de L a L−118 (L = largo de la capa, en % del trazo), y así las tres
+   avanzan alineadas por la cabeza. */
+.hero h1{position:relative}
+.ekg{position:absolute;left:50%;top:50%;width:2400px;height:70px;margin:-40px 0 0 -1200px;z-index:-1;pointer-events:none;
+  /* Medidos por TrazoEkg: --ini/--fin, borde de la cabeza de cada silueta (sin él, los
+     bordes de la pantalla); --tit-a/--tit-b, extremos del título (sin él, ±4,3 em). */
+  --a:var(--ini,calc(1200px - 50vw));--b:var(--fin,calc(1200px + 50vw));
+  --ta:var(--tit-a,calc(50% - 4.3em));--tb:var(--tit-b,calc(50% + 4.3em));
+  --hueco:linear-gradient(to right,transparent var(--a),#000 calc(var(--a) + 4px),#000 calc(var(--ta) - 44px),transparent calc(var(--ta) - 22px),transparent calc(var(--tb) + 22px),#000 calc(var(--tb) + 44px),#000 calc(var(--b) - 4px),transparent var(--b));
+  -webkit-mask-image:var(--hueco);mask-image:var(--hueco)}
+.ekg svg{display:block}
+.ekg-fondo{stroke:#54718d;stroke-width:1.4;opacity:.3}
+.ekg-barrido{animation-duration:7s;animation-timing-function:linear;animation-iteration-count:infinite}
+.ekg-cola{stroke:#3b9edd;stroke-width:2;opacity:.28;stroke-dasharray:18 200;stroke-dashoffset:-100;animation-name:ekg-cola}
+.ekg-cuerpo{stroke:#62b8f0;stroke-width:2.2;opacity:.7;stroke-dasharray:6 200;stroke-dashoffset:-112;animation-name:ekg-cuerpo}
+.ekg-cabeza{stroke:#e6f4ff;stroke-width:2.8;stroke-dasharray:1.2 200;stroke-dashoffset:-116.8;animation-name:ekg-cabeza}
+@keyframes ekg-cola{0%{stroke-dashoffset:18}60%,100%{stroke-dashoffset:-100}}
+@keyframes ekg-cuerpo{0%{stroke-dashoffset:6}60%,100%{stroke-dashoffset:-112}}
+@keyframes ekg-cabeza{0%{stroke-dashoffset:1.2}60%,100%{stroke-dashoffset:-116.8}}
+[data-motion=paused] .ekg-barrido{animation-play-state:paused}

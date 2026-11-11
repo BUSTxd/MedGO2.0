@@ -12,6 +12,7 @@ import Footer from '@/components/Footer';
 import MenuCuenta from './MenuCuenta';
 import { c } from './estilos';
 import Mascota from './Mascota';
+import TrazoEkg from './TrazoEkg';
 import DemoEspacio from './DemoEspacio';
 import ExploraHipersensibilidad from './ExploraHipersensibilidad';
 import ConectaRed from './ConectaRed';
@@ -173,6 +174,7 @@ export default function LandingNueva({ biblioteca, resumenes }: { biblioteca: Cu
               <strong>Preclínicos de medicina</strong><span>Conoce MedGO</span><span className={c('announcement-arrow')} aria-hidden="true">↗</span>
             </a>
             <h1 id="hero-title" aria-label="Conoce MedGO">
+              <TrazoEkg />
               <span>Conoce</span>
               <button className={c('title-mascot mascot-button')} aria-label={`Saludar a ${ASISTENTE}, la mascota de MedGO`} onClick={saludar}><Mascota pausado={parado} cls="" detalle={1} /></button>
               <span>MedGO</span>
