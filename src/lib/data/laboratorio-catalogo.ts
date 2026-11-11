@@ -125,6 +125,7 @@ export const LAB_TOPICS: TemaLab[] = [
       { name: 'Lupus eritematoso sistémico', desc: 'Doce capítulos narrados: del núcleo propio que queda a la vista al interferón, los linfocitos que no se apagan, los complejos que dañan el riñón, el diagnóstico y el tratamiento', color: '#C2385A', href: '/dashboard/laboratorio/lupus' },
       { name: 'Citopenias autoinmunes', desc: 'Diez capítulos narrados: la anemia hemolítica autoinmune caliente y fría, y la púrpura trombocitopénica inmune, del anticuerpo al tratamiento', color: '#E5324C', href: '/dashboard/laboratorio/citopenias-autoinmunes' },
       { name: 'Vasculitis de vasos medianos y pequeños y ANCA', desc: 'Diez capítulos narrados: del endotelio sano al neutrófilo que rompe el vaso, la GPA, la GEPA y la PAM, la biopsia, el glomérulo y la inmunofluorescencia', color: '#D6287F', href: '/dashboard/laboratorio/vasculitis-anca' },
+      { name: 'Infecciones bacterianas por gramnegativas', desc: 'Diez capítulos narrados: la barrera intestinal y cómo se rompe, el cruce, la endotoxina y las exotoxinas, la sepsis, las cuatro especies y la resistencia, con los fármacos de cada tema', color: '#16A085', href: '/dashboard/laboratorio/gramnegativas' },
     ],
   },
   {

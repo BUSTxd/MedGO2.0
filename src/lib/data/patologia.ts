@@ -997,6 +997,7 @@ export const semanas: Semana[] = [
         unidad: 'UNIDAD_4',
         codigo: 'AI18',
         titulo: 'AI18 — Infecciones bacterianas: gramnegativas',
+        simulacion: { href: '/dashboard/laboratorio/gramnegativas', desc: 'La barrera intestinal, el cruce, las toxinas, la sepsis y la resistencia, animados y narrados' },
         fecha: '11 nov',
         hora: '—',
         subtemas: [],
