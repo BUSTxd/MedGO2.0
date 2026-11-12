@@ -110,6 +110,83 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 2
     }
   },
+  "patologia/pat-acp-11": {
+    "curso": "patologia",
+    "clase": "pat-acp-11",
+    "notas": {
+      "titulo": "Vasculitis de vasos pequeños y ANCA"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-acp-11",
+      "titulo": "Casos clínicos",
+      "desc": "La GPA de la nariz al riñón y la GEPA del asma a la púrpura",
+      "chips": [
+        "Granulomatosis con poliangeítis",
+        "GEPA",
+        "14 casos"
+      ],
+      "total": 14,
+      "muestra": 3
+    }
+  },
+  "patologia/pat-acp-12": {
+    "curso": "patologia",
+    "clase": "pat-acp-12",
+    "notas": {
+      "titulo": "Vasculitis por complejos inmunes y de vasos grandes"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-acp-12",
+      "titulo": "Casos clínicos",
+      "desc": "Del niño con púrpura tras una faringitis a la mujer mayor que pierde la vista",
+      "chips": [
+        "Vasculitis por IgA",
+        "Arteritis de células gigantes",
+        "12 casos"
+      ],
+      "total": 12,
+      "muestra": 2
+    }
+  },
+  "patologia/pat-acp-13": {
+    "curso": "patologia",
+    "clase": "pat-acp-13",
+    "notas": {
+      "titulo": "Sepsis"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-acp-13",
+      "titulo": "Casos clínicos",
+      "desc": "Del choque séptico y el endotelio roto a la meningococcemia, el SDRA y la inmunoparálisis",
+      "chips": [
+        "El mecanismo de la sepsis",
+        "Meningococcemia",
+        "Neumonía, SDRA e inmunoparálisis",
+        "20 casos"
+      ],
+      "total": 20,
+      "muestra": 4
+    }
+  },
+  "patologia/pat-acp-14": {
+    "curso": "patologia",
+    "clase": "pat-acp-14",
+    "notas": {
+      "titulo": "VIH y sífilis"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-acp-14",
+      "titulo": "Casos clínicos",
+      "desc": "Del síndrome retroviral agudo y el fallo del tratamiento al chancro, el exantema y la serología de la sífilis",
+      "chips": [
+        "VIH",
+        "Sífilis",
+        "18 casos"
+      ],
+      "total": 18,
+      "muestra": 4
+    }
+  },
   "patologia/pat-ai-1": {
     "curso": "patologia",
     "clase": "pat-ai-1",
@@ -250,6 +327,26 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 2
     }
   },
+  "patologia/pat-ai-14": {
+    "curso": "patologia",
+    "clase": "pat-ai-14",
+    "notas": {
+      "titulo": "Inmunidad y cáncer: vigilancia, escape e inmunoterapia"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-ai-14",
+      "titulo": "Casos clínicos",
+      "desc": "Cómo el sistema inmune vigila un tumor, cómo este se escapa y qué hacen los inhibidores de los puntos de control",
+      "chips": [
+        "Vigilancia inmunológica",
+        "Escape tumoral",
+        "Inmunoterapia",
+        "15 casos"
+      ],
+      "total": 15,
+      "muestra": 3
+    }
+  },
   "patologia/pat-ai-15": {
     "curso": "patologia",
     "clase": "pat-ai-15",
@@ -303,6 +400,26 @@ export const REGISTRO_CLASES: RegistroClases = {
       ],
       "total": 30,
       "muestra": 6
+    }
+  },
+  "patologia/pat-ai-18": {
+    "curso": "patologia",
+    "clase": "pat-ai-18",
+    "notas": {
+      "titulo": "Infecciones bacterianas por gramnegativas"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-ai-18",
+      "titulo": "Casos clínicos",
+      "desc": "De la barrera intestinal y las toxinas a la sepsis y a las especies que más resisten",
+      "chips": [
+        "La barrera y las toxinas",
+        "Bacteriemia y sepsis",
+        "Especies y resistencia",
+        "19 casos"
+      ],
+      "total": 19,
+      "muestra": 4
     }
   },
   "patologia/pat-c-1": {
