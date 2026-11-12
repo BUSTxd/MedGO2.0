@@ -1125,9 +1125,13 @@ div.wrapper .topbar {
 @media (prefers-reduced-motion: reduce) { .cuenta-panel { animation: none; } }
 
 /* «Llévalo a la práctica» en el cuerpo de la clase: sólo cuando el panel lateral se oculta. */
-/* Pestaña «Notas»: recuadros del resumen práctico. Los dos tonos valen en claro y oscuro. */
+/* Pestaña «Notas»: la plantilla del resumen práctico (components/estudio/Notas). Un tono
+   por columna de la comparación (a-d) y el neutro para las claves sin columna. */
 .nota-a { --nota: #D92D4A; --nota-suave: rgba(217, 45, 74, .09); }
 .nota-b { --nota: #6D4FD8; --nota-suave: rgba(109, 79, 216, .1); }
+.nota-c { --nota: #0E7A5B; --nota-suave: rgba(14, 122, 91, .09); }
+.nota-d { --nota: #B45309; --nota-suave: rgba(180, 83, 9, .09); }
+.nota-n { --nota: #245B8F; --nota-suave: rgba(36, 91, 143, .09); }
 .notas h1 { margin-bottom: 8px; }
 .nota-seccion { margin: 30px 0 0; }
 .nota-seccion > h2 { font-size: 18px; font-weight: 650; color: var(--ink); margin: 0 0 14px; }
@@ -1136,6 +1140,8 @@ div.wrapper .topbar {
 .nota-ancho { grid-column: 1 / -1; }
 .nota-recuadro h3 { font-size: 16px; font-weight: 650; color: var(--ink); margin: 0; }
 .nota-lados { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-self: stretch; }
+.nota-lados-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.nota-lados-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .nota-lado { background: var(--nota-suave); border-radius: 11px; padding: 10px 11px 12px; }
 .nota-lado p { margin: 8px 0 0; font-size: 14px; line-height: 1.4; font-weight: 600; color: var(--ink); }
 .nota-lado ul { margin: 8px 0 0; padding-left: 16px; font-size: 13px; line-height: 1.45; color: var(--ink); }
@@ -1150,7 +1156,31 @@ div.wrapper .topbar {
   .nota-flujo { flex-direction: column; gap: 22px; }
   .nota-flujo li { flex: none; }
   .nota-flujo li:not(:last-child)::after { content: "↓"; right: auto; left: 18px; top: auto; bottom: -22px; transform: none; }
+  .nota-lados-3, .nota-lados-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+.nota-espera { margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: var(--secondary); }
+.nota-espera p { margin: 0; }
+.nota-espera .button { margin-top: 14px; }
+.nota-pronto { margin: 24px 0 0; }
+/* En oscuro, como los casos clínicos: la zona de las notas redefine la paleta. */
+:global(.dark-mode) .notas-zona {
+  --bg: #0f1622; --shell: #0f1622; --support: #1b2638; --surface: #151d2c; --paper: #151d2c; --ink: #e7eef8; --text: #e7eef8;
+  --secondary: #abbdd2; --muted: #abbdd2; --border: #35445a; --line: #35445a; --soft-fill: #1e2a3d;
+  --action: #8fbde9; --action-ink: #a9cdf0; --accent: #2f6ea8; --accent-hover: #3a7dba; --control-line: #5a6b82;
+  --explore: #7fd3c7; --explore-soft: #17302e; --art-surface: #1b2638; --art-glow: #26394f;
+  /* El color heredado viene resuelto de .wrapper (el del claro): se vuelve a declarar aquí. */
+  color: var(--ink);
+  color-scheme: dark;
+}
+:global(.dark-mode) .notas-zona .nota-recuadro { box-shadow: none; }
+:global(.dark-mode) .notas-zona .button:not(.secondary) { background: #2f6ea8; border-color: #2f6ea8; color: #fff; }
+:global(.dark-mode) .notas-zona .button:not(.secondary):hover { background: #3a7dba; }
+:global(.dark-mode) .notas-zona .nota-a { --nota-suave: rgba(240, 98, 122, .15); }
+:global(.dark-mode) .notas-zona .nota-b { --nota-suave: rgba(150, 124, 240, .17); }
+:global(.dark-mode) .notas-zona .nota-c { --nota-suave: rgba(79, 206, 166, .13); }
+:global(.dark-mode) .notas-zona .nota-d { --nota-suave: rgba(240, 160, 80, .14); }
+:global(.dark-mode) .notas-zona .nota-n { --nota-suave: rgba(120, 170, 225, .15); }
+:global(.dark-mode) div.wrapper .notas-zona .related-art { background: radial-gradient(ellipse at 70% 10%, #26394f, transparent 75%), #1b2638; }
 /* La tarjeta con animación en vivo pide algo más de alto que un icono. */
 .related-art.related-animada { height: 132px; padding: 4px; }
 .related-art.related-animada svg { display: block; }
@@ -1619,6 +1649,8 @@ button.session-badge:hover { border-color: #245b8f; color: #245b8f; }
 .casos-inicio h1 { font-size: 30px; font-weight: 600; letter-spacing: -.7px; margin: 0 0 10px; }
 .casos-entrada { font-size: 16px; line-height: 1.55; color: var(--secondary); margin: 0; max-width: 620px; }
 .casos-seguir { margin-top: 20px; }
+.casos-empezar { margin-top: 26px; }
+.casos-seguir + .casos-empezar { margin: 20px 0 0 10px; }
 .casos-eleccion { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 30px; }
 .casos-opcion { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 20px 18px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; text-align: left; font-family: inherit; color: var(--ink); transition: border-color .15s, background .15s, transform .15s; }
 .casos-opcion:hover { border-color: var(--action); background: var(--soft-fill); transform: translateY(-2px); }
@@ -1657,8 +1689,11 @@ button.session-badge:hover { border-color: #245b8f; color: #245b8f; }
 }
 .caso-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 13px; color: var(--secondary); margin-bottom: 14px; }
 .caso-rotulo { background: #245b8f; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .3px; padding: 3px 8px; border-radius: 4px; }
-.rotulo-ahai { background: #D92D4A; }
-.rotulo-pti { background: #6D4FD8; }
+/* Un tono por bloque, en su orden (los de las notas); un caso de varios bloques va en el neutro. */
+.rotulo-0 { background: #D92D4A; }
+.rotulo-1 { background: #6D4FD8; }
+.rotulo-2 { background: #0E7A5B; }
+.rotulo-3 { background: #B45309; }
 .caso-relato { font-size: 16px; line-height: 1.6; margin: 0 0 18px; }
 .caso-boleta { position: relative; background: var(--boleta); padding: 13px 16px 12px; border-radius: 8px 8px 0 0; margin-bottom: 20px; }
 .caso-boleta::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 6px; background: linear-gradient(135deg, var(--boleta) 50%, transparent 50%) 0 -6px / 12px 12px repeat-x, linear-gradient(225deg, var(--boleta) 50%, transparent 50%) 0 -6px / 12px 12px repeat-x; }

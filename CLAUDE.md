@@ -40,6 +40,7 @@ Next.js App Router (TypeScript) · Supabase (auth, datos, storage; `src/lib/supa
 npm run dev | build | lint
 npm run probar:acceso | probar:planificador
 npm run verificar:temas | verificar:catalogo | verificar:banco
+npm run publicar:clase -- <curso>/<clase> [--subir] | verificar:clases
 npm run verificar:ciclo | verificar:vias-nfkb | verificar:linfocitos | verificar:hipersensibilidad | verificar:lupus | verificar:citopenias | verificar:vasculitis | verificar:gramnegativas
 ```
 
@@ -147,7 +148,7 @@ Cada clase de `src/lib/data/<curso>.ts` tiene `id`, `titulo`, `resumen`/`hasResu
 - **Muestra (`muestra: N`):** el recorte se hace **en el servidor**; ocultarlo en cliente no sirve porque el JSON estaría en la pestaña Red. El JSON se ordena para que la parte gratis cubra todos los temas.
 - `ExamenRef` admite `groups`, `labels`, `hints`, `dePago`, `suscripcion.avisoCada`, `porTemas`. La pregunta admite `variante`, `multiple`, `ordenFijo`, `image`/`extraImages`, `duration_min`, `tema`, `seccion`, `flujo`, `nivel`.
 - Imágenes de examen: bucket público `examenes-img`.
-- **Casos clínicos (`casos` en la actividad):** práctica nativa de `/estudio`, sin ExamRunner ni el panel del dashboard (`components/estudio/CasosClinicos.tsx`). Banco fuera de git en `data/<x>/`; se sube y registra en `EXAMENES` como cualquier banqueo. Piloto: AI17 de Patología (`data/citopenias/banco.mjs` mide el sesgo y escribe `banco.json`; se sube a `patologia/ai17-casos.json`).
+- **Casos clínicos:** práctica nativa de `/estudio` (`components/estudio/CasosClinicos.tsx`), sin ExamRunner. Es parte de la **plantilla de clase** (abajo): no lleva código por clase.
 
 ### Temas y planificador
 
@@ -174,7 +175,7 @@ Fragmento en bucket privado `resumenes`, figuras en público `resumenes-img/<cur
 | `.doc-paginas` | `upload-resumen-doc.mjs`, `diapositivas-pdf-a-html.py` | `%`+`cqw`; su `fitTypography` se porta |
 | `.doc-hojas` | `upload-resumen-doc.mjs`, skill local `pptx-a-html` | ≥ 2 páginas fijas; `fit`/`fitLines` |
 
-**Notas de clase (pestaña «Notas» de `/estudio`):** el resumen práctico en recuadros. Una entrada en `src/lib/data/notas/index.ts`, por id de la clase, y la pestaña sale sola en esa clase. Solo en el servidor, con la regla de `puedeVerResumen`: sin el plan no viaja. La clase necesita estar registrada en `acceso-resumen.ts` si su material es de pago, como `pat-ai-17`.
+**Plantilla de clase: Notas y Casos clínicos** (guía completa en `docs/clases/PLANTILLA.md`). Toda clase con resumen tiene las tres pestañas de la AI17: Resumen, Práctica y Notas. El diseño es uno; cada clase aporta **solo contenido**, en `data/clases/<curso>/<clase>.json` (fuera de git: lleva respuestas). Notas = secciones `comparacion` (2-4 columnas) y `claves` (texto o `flujo`); casos = bloques y preguntas **guiadas por el MIR del tema** (datos conservados, redacción propia, `origen`). `npm run publicar:clase -- <curso>/<clase> --subir` valida (incluido el sesgo de largo), sube a `examenes/<curso>/notas|casos/<clase>.json` y regenera `src/lib/data/clases/registro.ts` (generado, en git): **commit y deploy** para que la clase lo estrene. Sin notas, la pestaña dice «pronto». Las notas se entregan por `/api/estudio/notas/<curso>/<clase>` con la regla del resumen de su clase; los casos, por `/api/examen` con su `muestra` (por defecto 1 de cada 5). `scripts/clases/vista.mjs` las pinta sin navegador. La tabla del lab de Citopenias (`src/lib/data/citopenias/tabla.ts`) repite las notas de la AI17.
 
 **Antes de tocar el visor:** `resumen/DocumentoResumen.tsx` y `resumenHtml.module.css` afectan a todos los envases y a los dos sitios de lectura (`HtmlFullscreenModal` y lector de `/estudio`).
 - El objeto de `dangerouslySetInnerHTML` va **memoizado**: sin él, React rehace el documento y salta el scroll.
@@ -272,6 +273,7 @@ Solo el admin mientras `IA_ABIERTA` no sea `1`. **La API key nunca va en repo ni
 ### Por implementar
 
 - **Preclínicos:** resúmenes, práctica y plan (solo tiene temario). Es el producto central.
+- **Plantilla de clase, contenido** (2026-11-11): de 372 clases con resumen, solo la AI17 tiene notas y casos; el resto muestra «pronto». Se llena curso por curso con `data/clases/` (casos guiados por el MIR del tema).
 - **USMLE Step 1:** toda la meta.
 - **ENCIB:** enlazar cada tema y pregunta con su resumen; resúmenes y práctica en `/estudio`. Las otras dos tarjetas de exámenes están en «Próximamente».
 - **`/estudio`:** modo oscuro, Histología, imágenes de vista previa de labs, racha en Mi progreso.

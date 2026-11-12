@@ -1,8 +1,13 @@
-import type { NotaClase } from '@/lib/data/notas/tipos';
 /** Lo que el servidor le pasa a la interfaz de estudio: sólo el curso abierto, ya resuelto. */
 import type { Requisito } from '@/lib/plans';
 
 export type FormatoResumen = 'pdf' | 'html';
+
+/**
+ * La pestaña «Notas»: `abiertas` las pide a `/api/estudio/notas`; `bloqueadas`, el
+ * plan no las abre; `pronto`, la clase tiene resumen y sus notas aún no se escriben.
+ */
+export type EstadoNotas = 'abiertas' | 'bloqueadas' | 'pronto';
 
 export interface ResumenEstudio {
   id: string;
@@ -25,9 +30,8 @@ export interface ClaseEstudio {
   bloqueada: boolean;
   /** El laboratorio que el sílabo enlaza a esta clase («Llévalo a la práctica»). */
   laboratorio?: LabRecomendado;
-  /** El resumen práctico (pestaña «Notas»). Sin el plan no viaja: solo `notasBloqueadas`. */
-  notas?: NotaClase;
-  notasBloqueadas?: boolean;
+  /** El resumen práctico (pestaña «Notas»); sin él, la clase no tiene esa pestaña. */
+  notas?: EstadoNotas;
   /** Los banqueos de la clase (pestaña «Práctica»), en el orden en que se ofrecen. */
   practica: PracticaEstudio[];
   /** Sólo en la ruta ENCIB: la clase es un tema de la tabla oficial. */

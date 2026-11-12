@@ -2,10 +2,10 @@ import 'server-only';
 import { SILABOS } from '@/lib/data/silabos';
 import { CURSOS } from '@/lib/data/aportes';
 import { puedeVerResumen } from '@/lib/acceso-resumen';
-import { NOTAS } from '@/lib/data/notas';
 import { cursoEsGratis, requiredPlanDeCurso, requisitoDeCurso, tieneAccesoA, trackDelUsuario } from '@/lib/acceso';
 import type { PlanState } from '@/lib/plans';
 import { laboratorioDeClase } from './laboratorios';
+import { estadoNotas } from './notas';
 import { practicaDeClase, type ActPractica } from './practica';
 import type { ClaseEstudio, CursoEstudio, CursoListado, FormatoResumen, ResumenEstudio } from './tipos';
 
@@ -61,8 +61,7 @@ function resumenesDe(a: ActCruda): ResumenEstudio[] {
 function clase(a: ActCruda, plan: Plan, curso: string): ClaseEstudio {
   const resumenes = resumenesDe(a);
   const laboratorio = laboratorioDeClase(curso, a);
-  const notas = NOTAS[a.id];
-  const conNotas = !!notas && puedeVerResumen(plan, a.id);
+  const notas = estadoNotas(plan, curso, a);
   return {
     id: a.id,
     title: a.titulo,
@@ -75,7 +74,7 @@ function clase(a: ActCruda, plan: Plan, curso: string): ClaseEstudio {
     resumenes,
     bloqueada: resumenes.length > 0 && !resumenes.some((r) => puedeVerResumen(plan, r.id)),
     ...(laboratorio ? { laboratorio } : {}),
-    ...(notas ? (conNotas ? { notas } : { notasBloqueadas: true }) : {}),
+    ...(notas ? { notas } : {}),
     practica: practicaDeClase(curso, a, plan),
   };
 }

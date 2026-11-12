@@ -39,6 +39,9 @@ data/encib/
 data/patologia-u2/
 data/epidemiologia-u2/
 data/citopenias/
+# Contenido de cada clase (notas y casos clínicos de la plantilla de /estudio): lleva
+# las respuestas. Se publica con scripts/clases/publicar.mjs.
+data/clases/
 # logos de terceros que scripts/imagenes/analizar.py borra de las figuras
 data/logos/
 public/lab-hipersensibilidad/

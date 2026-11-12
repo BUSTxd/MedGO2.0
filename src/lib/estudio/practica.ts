@@ -3,6 +3,7 @@ import type { ExamenRef } from '@/lib/data/examen';
 import type { TarjetasRef } from '@/lib/data/tarjetas';
 import { findBanco } from '@/lib/data/banco';
 import { findSolucionario } from '@/lib/data/solucionarios';
+import { REGISTRO_CLASES } from '@/lib/data/clases/registro';
 import { banqueoLabelDe } from '@/lib/material-plan';
 import { puedeVerResumen } from '@/lib/acceso-resumen';
 import type { PlanState } from '@/lib/plans';
@@ -41,7 +42,6 @@ export interface ActPractica {
   tipo: string;
   examen?: ExamenRef;
   tarjetas?: TarjetasRef;
-  casos?: { key: string; desc: string; chips?: string[] };
   propuestos?: {
     tipo?: string; claseId?: string; desc?: string; formato?: FormatoResumen;
     opciones?: { id: string; label?: string; formato?: FormatoResumen }[];
@@ -61,9 +61,11 @@ export function practicaDeClase(curso: string, a: ActPractica, plan: Plan): Prac
   const etiqueta = banqueoLabelDe(curso, a.tipo);
   const lista: PracticaEstudio[] = [];
 
-  // Los casos clínicos son de la propia interfaz: no pasan por la página del dashboard.
-  if (a.casos) {
-    lista.push({ tipo: 'casos', titulo: 'Casos clínicos', desc: a.casos.desc, chips: a.casos.chips ?? [], examKey: a.casos.key });
+  // Los casos clínicos (plantilla de clase) son de la propia interfaz: no pasan por la
+  // página del dashboard, así que valen también en un curso sin runner.
+  const casos = REGISTRO_CLASES[`${curso}/${a.id}`]?.casos;
+  if (casos) {
+    lista.push({ tipo: 'casos', titulo: casos.titulo, desc: casos.desc, chips: casos.chips, examKey: casos.key });
   }
 
   if (conRunner && a.examen) {

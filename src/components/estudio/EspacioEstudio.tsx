@@ -141,7 +141,7 @@ export default function EspacioEstudio({ cursos, curso, rutas = ['Cayetano'], ch
     recordarUltima(`${base}/${lesson.id}`);
   }, [base, lesson?.id, visitar]); // eslint-disable-line react-hooks/exhaustive-deps
   // Volver con el historial a una clase sin notas no puede dejar abierta esa pestaña.
-  const tieneNotas = !!(lesson?.notas || lesson?.notasBloqueadas);
+  const tieneNotas = !!lesson?.notas;
   useEffect(() => {
     if (st.tab === 'notes' && !tieneNotas) set(() => ({ tab: 'summary' }));
   }, [st.tab, tieneNotas, set]);

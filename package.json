@@ -20,7 +20,9 @@
     "verificar:lupus": "node --experimental-strip-types --no-warnings scripts/lupus/verificar.mjs",
     "verificar:citopenias": "node --experimental-strip-types --no-warnings scripts/citopenias/verificar.mjs",
     "verificar:vasculitis": "node --experimental-strip-types --no-warnings scripts/vasculitis/verificar.mjs",
-    "verificar:gramnegativas": "node --experimental-strip-types --no-warnings scripts/gramnegativas/verificar.mjs"
+    "verificar:gramnegativas": "node --experimental-strip-types --no-warnings scripts/gramnegativas/verificar.mjs",
+    "publicar:clase": "node --experimental-strip-types --no-warnings scripts/clases/publicar.mjs",
+    "verificar:clases": "node --experimental-strip-types --no-warnings scripts/clases/publicar.mjs --verificar"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.134.0",

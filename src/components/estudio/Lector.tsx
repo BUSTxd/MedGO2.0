@@ -141,9 +141,9 @@ export function BarraLector({ ctx }: { ctx: Contexto }) {
         <button id="practice-tab" className={cx('study-tab', st.tab === 'practice' && 'active')} role="tab" aria-selected={st.tab === 'practice'} aria-controls="study-content" onClick={() => set(() => ({ tab: 'practice' }))}>
           <Icono n="quiz" />Práctica
         </button>
-        {(ctx.lesson.notas || ctx.lesson.notasBloqueadas) && (
+        {ctx.lesson.notas && (
           <button id="notes-tab" className={cx('study-tab', st.tab === 'notes' && 'active')} role="tab" aria-selected={st.tab === 'notes'} aria-controls="study-content" onClick={() => set(() => ({ tab: 'notes' }))}>
-            <Icono n={ctx.lesson.notas ? 'bulb' : 'lock'} />Notas
+            <Icono n={ctx.lesson.notas === 'bloqueadas' ? 'lock' : 'bulb'} />Notas
           </button>
         )}
       </div>

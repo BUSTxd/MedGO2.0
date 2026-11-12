@@ -9,7 +9,7 @@ import { CAPITULOS } from '@/lib/data/citopenias/capitulos';
 import { INDICE } from '@/lib/data/citopenias/indice';
 import { NARRACION } from '@/lib/data/citopenias/narracion';
 import { VISTAZO } from '@/lib/data/citopenias/vistazo';
-import { HEMOLISIS } from '@/lib/data/notas';
+import { HEMOLISIS } from '@/lib/data/citopenias/tabla';
 import type { Contenido, ResumenParte } from './contenido';
 
 export function contenidoDelLab(completo: boolean): Contenido {

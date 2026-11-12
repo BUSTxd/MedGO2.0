@@ -1,4 +1,6 @@
 import type { PlanKey, Requisito } from '@/lib/plans';
+// Relativo y con extensión: los scripts cargan este archivo con Node.
+import { REGISTRO_CLASES } from './clases/registro.ts';
 
 /** El ENCIB es una meta de examen: nivel completo (entre los legados, lo abre la Facultad). Igual que `REQ_ENCIB` de `acceso.ts`. */
 const ENCIB: Requisito = { tramo: 'medicina', nivel: 'completo' };
@@ -53,7 +55,6 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey | Requisi
   // primero se entrega recortado (la mitad, en oro el resto) como el final 2023
   // de Inmunología; los demás son de pago. Lo arma
   // scripts/patologia-u2/ensamblar.mjs; las fuentes no van a git.
-  'patologia/ai17-casos': { muestra: 6 },
   'patologia/parcial-2-m1': { muestra: 20 },
   'patologia/parcial-2-m2': {},
   'patologia/parcial-2-m3': {},
@@ -129,4 +130,9 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey | Requisi
   'psicologia-medica/parcial-2022-2': { free: true },
   'psicologia-medica/parcial-2021-1': {},
   'psicologia-medica/parcial-repaso': {},
+  // Casos clínicos de la plantilla de clase (`<curso>/casos/<clase>`): los registra
+  // scripts/clases/publicar.mjs en `clases/registro.ts`, con su muestra.
+  ...Object.fromEntries(Object.values(REGISTRO_CLASES).flatMap(({ casos }) => (
+    casos ? [[casos.key, casos.libre ? { free: true } : { muestra: casos.muestra }]] : []
+  ))),
 };

@@ -1,14 +1,13 @@
-// Notas de cada clase, por id del sílabo. Una clase con notas estrena la pestaña
-// «Notas» en /estudio. Solo en el servidor: `cursos.ts` y el registro del laboratorio
-// las mandan únicamente a quien tiene el plan, como un resumen.
+// La tabla del laboratorio «Citopenias autoinmunes»: intravascular frente a
+// extravascular. Solo en el servidor (`contenidoDelLab` la manda con el plan). Las
+// notas de la clase AI17 dicen lo mismo con la plantilla de clase
+// (data/clases/patologia/pat-ai-17.json): si se corrige una, corregir la otra.
 
 import 'server-only';
-import type { NotaClase } from './tipos';
+import type { TablaLab } from './tipos';
 
-/** Clase AI17 de Patología. También es la tabla del laboratorio «Citopenias autoinmunes». */
-export const HEMOLISIS: NotaClase = {
+export const HEMOLISIS: TablaLab = {
   titulo: 'Hemólisis intravascular y extravascular',
-  entrada: 'Lo que vas a encontrar en cada una, de un vistazo.',
   comparacion: {
     titulo: 'En la sangre',
     columnas: ['Intravascular', 'Extravascular'],
@@ -67,8 +66,4 @@ export const HEMOLISIS: NotaClase = {
       },
     ],
   },
-};
-
-export const NOTAS: Record<string, NotaClase> = {
-  'pat-ai-17': HEMOLISIS,
 };

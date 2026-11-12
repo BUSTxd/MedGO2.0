@@ -2,18 +2,18 @@
 // La tabla del laboratorio (como la de Hipersensibilidad): intravascular frente a
 // extravascular. El contenido lo manda el servidor solo con el plan (`contenidoDelLab`).
 
-import type { LadoNota, NotaClase } from '@/lib/data/notas/tipos';
+import type { LadoTabla, TablaLab } from '@/lib/data/citopenias/tipos';
 import c from '@/styles/cicloCelular.module.css';
 import ls from '@/styles/linfocitos.module.css';
 import h from '@/styles/hipersensibilidad.module.css';
 
 const COLOR = ['#D92D4A', '#6D4FD8'] as const;
 
-function Celda({ v }: { v: LadoNota }) {
+function Celda({ v }: { v: LadoTabla }) {
   return <td>{Array.isArray(v) ? v.map((x) => <div key={x}>{x}</div>) : v}</td>;
 }
 
-export default function PanelTabla({ nota, onCerrar }: { nota: NotaClase; onCerrar: () => void }) {
+export default function PanelTabla({ nota, onCerrar }: { nota: TablaLab; onCerrar: () => void }) {
   const { comparacion: k, claves: u } = nota;
   return (
     <div className={c.velo} role="dialog" aria-label={nota.titulo} data-bloquea-esc onClick={(e) => { if (e.target === e.currentTarget) onCerrar(); }}>

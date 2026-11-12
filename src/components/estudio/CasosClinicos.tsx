@@ -1,43 +1,58 @@
 'use client';
-// Casos clínicos: la práctica propia de /estudio, sin ExamRunner ni el panel del
-// dashboard. El caso se lee como una historia con su boleta de laboratorio, y al
+// Casos clínicos: la plantilla de práctica de /estudio, sin ExamRunner ni el panel
+// del dashboard. El caso se lee como una historia con su boleta de laboratorio, y al
 // responder cada alternativa dice por qué sirve o por qué falla.
 //
-// El servidor decide qué casos llegan (`/api/examen/<clave>`): sin el plan, solo la
-// muestra. Las vistas son puras para poder revisarlas sin navegador.
+// El diseño es uno; cada clase aporta su banco (`data/clases/<curso>/<clase>.json`,
+// docs/clases/PLANTILLA.md): sus bloques, sus casos y el paso del laboratorio de la
+// clase que muestra cada uno. El servidor decide qué casos llegan
+// (`/api/examen/<clave>`): sin el plan, solo la muestra. Las vistas son puras para
+// poder revisarlas sin navegador.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
+import type { BancoCasos, BloqueCasos, CasoClinico, DibujoBloque } from '@/lib/data/clases/tipos';
 import { cx, Icono } from './Icono';
 import type { Contexto } from './EspacioEstudio';
 
 const ElegirPlan = dynamic(() => import('@/components/planes/ElegirPlan'), { ssr: false });
 
-export type Bloque = 'AHAI' | 'PTI' | 'Ambas';
-export type OpcionCaso = { t: string; porque: string; correcta?: boolean };
-export type Caso = {
-  id: string;
-  bloque: Bloque;
-  tema: string;
-  origen: string;
-  caso: string;
-  datos: { k: string; v: string; alerta?: boolean }[];
-  pregunta: string;
-  opciones: OpcionCaso[];
-  camino: string[];
-  lab?: { parte: string; paso: number };
-};
-export type Filtro = 'todos' | 'AHAI' | 'PTI';
+type Caso = CasoClinico;
+/** `todos` o el id de un bloque. */
+export type Filtro = string;
 export type Muestra = { mostradas: number; total: number };
+/** El banco ya leído: sus bloques siempre resueltos. */
+type Banco = { titulo: string; entrada: string; bloques: BloqueCasos[]; casos: Caso[] };
 
 const LETRAS = 'ABCDE';
-const LAB = '/estudio/laboratorio/citopenias-autoinmunes';
 const PROPORCION_FLOJA = 0.6;
+const TITULO = 'Casos clínicos';
+const ENTRADA = 'Tienes al paciente y sus análisis delante, y debes decidir qué pasa o qué hacer. Al responder, cada alternativa te dice por qué sirve o por qué falla.';
 
-const entraEn = (c: Caso, f: Filtro) => f === 'todos' || c.bloque === f || c.bloque === 'Ambas';
+/** Los bloques de un caso. `Ambas` es el banco viejo de la AI17: todos los bloques. */
+function bloquesDe(c: Caso, bloques: BloqueCasos[]): string[] {
+  if (c.bloque === 'Ambas') return bloques.map((b) => b.id);
+  return c.bloque === undefined ? [] : Array.isArray(c.bloque) ? c.bloque : [c.bloque];
+}
+
+/** Sin bloques declarados, los que nombran los casos (sin descripción ni dibujo). */
+export function leerBanco(b: BancoCasos): Banco {
+  const bloques = [...(b.bloques ?? [])];
+  const ids = new Set(bloques.map((x) => x.id));
+  for (const c of b.questions) {
+    if (c.bloque === undefined || c.bloque === 'Ambas') continue;
+    for (const id of [c.bloque].flat()) {
+      if (!ids.has(id)) { ids.add(id); bloques.push({ id, nombre: id }); }
+    }
+  }
+  return { titulo: b.titulo ?? TITULO, entrada: b.entrada ?? ENTRADA, bloques, casos: b.questions };
+}
+
+const nCasos = (n: number) => `${n} ${n === 1 ? 'caso' : 'casos'}`;
+const entraEn = (c: Caso, f: Filtro, bloques: BloqueCasos[]) => f === 'todos' || bloquesDe(c, bloques).includes(f);
 const acerto = (c: Caso, elegida: number | undefined) => elegida !== undefined && !!c.opciones[elegida]?.correcta;
 
 /** El orden de las alternativas: fijo en cada intento, para que al repetir no valga recordar el sitio. */
@@ -75,39 +90,68 @@ function Plaqueta() {
   );
 }
 
+/** Los dibujos que un bloque puede pedir por nombre (`dibujo` en el banco). */
+const DIBUJOS: Record<DibujoBloque, () => React.ReactNode> = { hematie: Hematie, plaqueta: Plaqueta };
+
 const Flotante = ({ children }: { children: React.ReactNode }) => (
   <span className={cx('casos-flota')}><span className={cx('casos-flota-dibujo')}>{children}</span><span className={cx('casos-flota-sombra')} /></span>
 );
 
-export function VistaInicio({ casos, muestra, seguir, onEmpezar }: {
-  casos: Caso[];
+function DibujoDe({ dibujo }: { dibujo: DibujoBloque }) {
+  const D = DIBUJOS[dibujo];
+  return D ? <Flotante><D /></Flotante> : null;
+}
+
+/** El tono de un caso: el de su bloque, o el neutro si es de varios o de ninguno. */
+function rotuloDe(caso: Caso, bloques: BloqueCasos[]) {
+  const suyos = bloquesDe(caso, bloques);
+  const i = suyos.length === 1 ? bloques.findIndex((b) => b.id === suyos[0]) : -1;
+  const nombres = suyos.map((id) => bloques.find((b) => b.id === id)?.nombre ?? id);
+  return { texto: nombres.join(' y '), clase: i >= 0 ? `rotulo-${i % 4}` : undefined };
+}
+
+export function VistaInicio({ banco, muestra, seguir, onEmpezar }: {
+  banco: Banco;
   muestra: Muestra | null;
   seguir?: { n: number; total: number; onSeguir: () => void } | null;
   onEmpezar: (f: Filtro) => void;
 }) {
+  const { casos, bloques } = banco;
   const adaptados = casos.filter((c) => c.origen.startsWith('MIR')).length;
-  const opciones: { f: Filtro; nombre: string; dice: string; dibujo: React.ReactNode }[] = [
-    { f: 'AHAI', nombre: 'AHAI', dice: 'Anemia hemolítica autoinmune', dibujo: <Flotante><Hematie /></Flotante> },
-    { f: 'PTI', nombre: 'PTI', dice: 'Trombocitopenia inmune', dibujo: <Flotante><Plaqueta /></Flotante> },
-    { f: 'todos', nombre: 'Las dos', dice: 'Mezcladas, como en el examen', dibujo: <span className={cx('casos-par')}><Flotante><Hematie /></Flotante><Flotante><Plaqueta /></Flotante></span> },
-  ];
+  // Con dos bloques o más se elige cuál practicar; con uno o ninguno, se empieza sin más.
+  const dibujos = bloques.flatMap((b) => (b.dibujo ? [b.dibujo] : []));
+  const opciones: { f: Filtro; nombre: string; dice?: string; dibujo: React.ReactNode }[] = bloques.length > 1 ? [
+    ...bloques.map((b) => ({ f: b.id, nombre: b.nombre, dice: b.dice, dibujo: b.dibujo ? <DibujoDe dibujo={b.dibujo} /> : null })),
+    {
+      f: 'todos', nombre: 'Todos', dice: 'Mezclados, como en el examen',
+      dibujo: dibujos.length === bloques.length && dibujos.length <= 3
+        ? <span className={cx('casos-par')}>{dibujos.map((d, i) => <DibujoDe key={i} dibujo={d} />)}</span>
+        : null,
+    },
+  ] : [];
   return (
     <div className={cx('casos-inicio')}>
-      <h1>Casos clínicos</h1>
-      <p className={cx('casos-entrada')}>Tienes al paciente y sus análisis delante, y debes decidir qué pasa o qué hacer. Al responder, cada alternativa te dice por qué sirve o por qué falla.</p>
+      <h1>{banco.titulo}</h1>
+      <p className={cx('casos-entrada')}>{banco.entrada}</p>
       {seguir && (
         <button className={cx('button', 'casos-seguir')} onClick={seguir.onSeguir}>Seguir en el caso {seguir.n} de {seguir.total}<Icono n="arrow" /></button>
       )}
-      <div className={cx('casos-eleccion')}>
-        {opciones.map((o) => (
-          <button key={o.f} className={cx('casos-opcion')} onClick={() => onEmpezar(o.f)}>
-            {o.dibujo}
-            <strong>{o.nombre}</strong>
-            <span className={cx('casos-opcion-dice')}>{o.dice}</span>
-            <small>{casos.filter((c) => entraEn(c, o.f)).length} casos</small>
-          </button>
-        ))}
-      </div>
+      {opciones.length > 0 ? (
+        <div className={cx('casos-eleccion')}>
+          {opciones.map((o) => (
+            <button key={o.f} className={cx('casos-opcion')} onClick={() => onEmpezar(o.f)}>
+              {o.dibujo}
+              <strong>{o.nombre}</strong>
+              {o.dice && <span className={cx('casos-opcion-dice')}>{o.dice}</span>}
+              <small>{nCasos(casos.filter((c) => entraEn(c, o.f, bloques)).length)}</small>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <button className={cx('button', seguir && 'secondary', 'casos-empezar')} onClick={() => onEmpezar('todos')}>
+          {seguir ? 'Empezar de nuevo' : casos.length === 1 ? 'Empezar el caso' : `Empezar los ${casos.length} casos`}<Icono n="arrow" />
+        </button>
+      )}
       {muestra && <p className={cx('casos-muestra')}><Icono n="lock" />Tu plan abre {muestra.mostradas} de los {muestra.total} casos.</p>}
       {adaptados > 0 && !muestra && (
         <p className={cx('casos-nota-origen')}>{adaptados} casos parten de exámenes MIR de España, con la redacción adaptada. Los otros {casos.length - adaptados} se escribieron para esta clase.</p>
@@ -116,8 +160,11 @@ export function VistaInicio({ casos, muestra, seguir, onEmpezar }: {
   );
 }
 
-export function VistaCaso({ caso, n, ronda, respuestas, orden, onResponder, onSiguiente, onSaltar, onSalir }: {
+export function VistaCaso({ caso, bloques, lab, n, ronda, respuestas, orden, onResponder, onSiguiente, onSaltar, onSalir }: {
   caso: Caso;
+  bloques: BloqueCasos[];
+  /** El laboratorio de la clase: a él lleva el `lab` de cada caso. */
+  lab?: string;
   n: number;
   ronda: Caso[];
   respuestas: Record<string, number>;
@@ -131,6 +178,8 @@ export function VistaCaso({ caso, n, ronda, respuestas, orden, onResponder, onSi
   const respondido = elegida !== undefined;
   const ultimo = n === ronda.length - 1;
   const bien = acerto(caso, elegida);
+  const rotulo = rotuloDe(caso, bloques);
+  const datos = caso.datos ?? [];
   return (
     <div className={cx('caso')}>
       <div className={cx('caso-barra')}>
@@ -151,15 +200,15 @@ export function VistaCaso({ caso, n, ronda, respuestas, orden, onResponder, onSi
       <div className={cx('caso-cuerpo')}>
         <section className={cx('caso-historia')} aria-label="El paciente">
           <div className={cx('caso-meta')}>
-            <span className={cx('caso-rotulo', caso.bloque === 'AHAI' && 'rotulo-ahai', caso.bloque === 'PTI' && 'rotulo-pti')}>{caso.bloque === 'Ambas' ? 'AHAI y PTI' : caso.bloque}</span>
+            {rotulo.texto && <span className={cx('caso-rotulo', rotulo.clase)}>{rotulo.texto}</span>}
             <span>{caso.tema}</span>
           </div>
           <p className={cx('caso-relato')}>{caso.caso}</p>
-          {caso.datos.length > 0 && (
+          {datos.length > 0 && (
             <div className={cx('caso-boleta')}>
               <div className={cx('caso-boleta-titulo')}>Resultados</div>
               <dl>
-                {caso.datos.map((d) => (
+                {datos.map((d) => (
                   <div key={d.k} className={cx('caso-dato', d.alerta && 'dato-alerta')}>
                     <dt>{d.k}</dt><span aria-hidden="true" /><dd>{d.v}</dd>
                   </div>
@@ -197,8 +246,8 @@ export function VistaCaso({ caso, n, ronda, respuestas, orden, onResponder, onSi
                 {caso.camino.map((paso, i) => <li key={paso} style={{ animationDelay: `${i * 90}ms` }}>{paso}</li>)}
               </ol>
               <div className={cx('caso-acciones')}>
-                {caso.lab && (
-                  <Link className={cx('caso-al-lab')} href={`${LAB}?parte=${caso.lab.parte}${caso.lab.paso ? `&paso=${caso.lab.paso}` : ''}`}>
+                {caso.lab && lab && (
+                  <Link className={cx('caso-al-lab')} href={`${lab}?parte=${encodeURIComponent(caso.lab.parte)}${caso.lab.paso ? `&paso=${caso.lab.paso}` : ''}`}>
                     <Icono n="flask" />Verlo en el laboratorio
                   </Link>
                 )}
@@ -212,10 +261,11 @@ export function VistaCaso({ caso, n, ronda, respuestas, orden, onResponder, onSi
   );
 }
 
-export function VistaInforme({ ronda, respuestas, muestra, onRepetir, onDeNuevo, onVer, onPlanes }: {
+export function VistaInforme({ ronda, respuestas, muestra, conLab, onRepetir, onDeNuevo, onVer, onPlanes }: {
   ronda: Caso[];
   respuestas: Record<string, number>;
   muestra: Muestra | null;
+  conLab: boolean;
   onRepetir: () => void;
   onDeNuevo: () => void;
   onVer: (i: number) => void;
@@ -236,7 +286,7 @@ export function VistaInforme({ ronda, respuestas, muestra, onRepetir, onDeNuevo,
   const fallados = ronda.map((c, i) => ({ c, i })).filter(({ c }) => !acerto(c, respuestas[c.id]));
   const dice = proporcion >= 0.8 ? 'Razonas bien estos cuadros.'
     : proporcion >= PROPORCION_FLOJA ? 'Vas bien. Repasa los temas marcados.'
-    : 'Vuelve al laboratorio y repite los que fallaste.';
+    : `Vuelve ${conLab ? 'al laboratorio' : 'al resumen'} y repite los que fallaste.`;
 
   return (
     <div className={cx('casos-informe')}>
@@ -282,7 +332,7 @@ export function VistaInforme({ ronda, respuestas, muestra, onRepetir, onDeNuevo,
 
 type Fase = 'inicio' | 'caso' | 'informe';
 type Guardado = { fase: Fase; ronda: string[]; pos: number; respuestas: Record<string, number>; intento: number };
-type Carga = { estado: 'cargando' } | { estado: 'error'; motivo: string } | { estado: 'listo'; casos: Caso[]; muestra: Muestra | null };
+type Carga = { estado: 'cargando' } | { estado: 'error'; motivo: string } | { estado: 'listo'; banco: Banco; muestra: Muestra | null };
 
 const VACIO: Guardado = { fase: 'inicio', ronda: [], pos: 0, respuestas: {}, intento: 0 };
 
@@ -313,15 +363,15 @@ export default function CasosClinicos({ ctx, examKey, oculta }: { ctx: Contexto;
         setCarga({ estado: 'error', motivo: r.status === 401 ? 'Tu sesión terminó. Vuelve a entrar para ver los casos.' : 'No pudimos traer los casos.' });
         return;
       }
-      const j = await r.json() as { url?: string; payload?: { questions?: Caso[] }; muestra?: Muestra };
-      const payload = j.payload ?? (j.url ? await (await fetch(j.url, { signal: corte.signal })).json() as { questions?: Caso[] } : null);
-      const casos = payload?.questions ?? [];
+      const j = await r.json() as { url?: string; payload?: Partial<BancoCasos>; muestra?: Muestra };
+      const payload = j.payload ?? (j.url ? await (await fetch(j.url, { signal: corte.signal })).json() as Partial<BancoCasos> : null);
+      const banco = leerBanco({ ...payload, questions: payload?.questions ?? [] });
       // Lo guardado puede nombrar casos que ya no llegan (un plan vencido, un banco nuevo).
-      const hay = new Set(casos.map((x) => x.id));
+      const hay = new Set(banco.casos.map((x) => x.id));
       const previo = leerGuardado(clave);
       const ronda = previo.ronda.filter((id) => hay.has(id));
       setG(ronda.length ? { ...previo, ronda, pos: Math.min(previo.pos, ronda.length - 1) } : VACIO);
-      setCarga({ estado: 'listo', casos, muestra: j.muestra ? { mostradas: j.muestra.mostradas, total: j.muestra.total } : null });
+      setCarga({ estado: 'listo', banco, muestra: j.muestra ? { mostradas: j.muestra.mostradas, total: j.muestra.total } : null });
     })().catch((e: unknown) => {
       if ((e as { name?: string }).name !== 'AbortError') setCarga({ estado: 'error', motivo: 'No pudimos traer los casos.' });
     });
@@ -333,7 +383,10 @@ export default function CasosClinicos({ ctx, examKey, oculta }: { ctx: Contexto;
     try { localStorage.setItem(clave, JSON.stringify(g)); } catch { /* sin almacenamiento, el avance dura lo que la pestaña */ }
   }, [g, clave, carga.estado]);
 
-  const casos = carga.estado === 'listo' ? carga.casos : [];
+  const banco = carga.estado === 'listo' ? carga.banco : null;
+  const casos = useMemo(() => banco?.casos ?? [], [banco]);
+  const bloques = useMemo(() => banco?.bloques ?? [], [banco]);
+  const lab = l.laboratorio?.href;
   const ronda = useMemo(() => {
     const porId = new Map(casos.map((x) => [x.id, x]));
     return g.ronda.map((id) => porId.get(id)).filter((x): x is Caso => !!x);
@@ -342,9 +395,9 @@ export default function CasosClinicos({ ctx, examKey, oculta }: { ctx: Contexto;
 
   const arriba = () => raiz.current?.scrollTo({ top: 0 });
   const empezar = useCallback((f: Filtro) => {
-    setG((p) => ({ fase: 'caso', ronda: casos.filter((x) => entraEn(x, f)).map((x) => x.id), pos: 0, respuestas: {}, intento: p.intento + 1 }));
+    setG((p) => ({ fase: 'caso', ronda: casos.filter((x) => entraEn(x, f, bloques)).map((x) => x.id), pos: 0, respuestas: {}, intento: p.intento + 1 }));
     arriba();
-  }, [casos]);
+  }, [casos, bloques]);
   const saltar = useCallback((i: number) => { setG((p) => ({ ...p, fase: 'caso', pos: i })); arriba(); }, []);
   const responder = useCallback((i: number) => {
     if (!actual) return;
@@ -411,17 +464,17 @@ export default function CasosClinicos({ ctx, examKey, oculta }: { ctx: Contexto;
             {g.fase === 'inicio' && (
               <>
                 <button className={cx('caso-salir', 'casos-a-lista')} onClick={aLaLista}><Icono n="arrowLeft" />Práctica</button>
-                <VistaInicio casos={casos} muestra={carga.muestra} onEmpezar={empezar}
+                <VistaInicio banco={carga.banco} muestra={carga.muestra} onEmpezar={empezar}
                   seguir={pendiente >= 0 ? { n: pendiente + 1, total: ronda.length, onSeguir: () => saltar(pendiente) } : null} />
               </>
             )}
             {actual && (
-              <VistaCaso key={`${actual.id}-${g.intento}`} caso={actual} n={g.pos} ronda={ronda} respuestas={g.respuestas} orden={orden}
+              <VistaCaso key={`${actual.id}-${g.intento}`} caso={actual} bloques={bloques} lab={lab} n={g.pos} ronda={ronda} respuestas={g.respuestas} orden={orden}
                 onResponder={responder} onSiguiente={siguiente} onSaltar={saltar}
                 onSalir={() => setG((p) => ({ ...p, fase: 'inicio' }))} />
             )}
             {g.fase === 'informe' && (
-              <VistaInforme ronda={ronda} respuestas={g.respuestas} muestra={carga.muestra}
+              <VistaInforme ronda={ronda} respuestas={g.respuestas} muestra={carga.muestra} conLab={!!lab}
                 onRepetir={repetir} onDeNuevo={() => setG((p) => ({ ...p, fase: 'inicio' }))}
                 onVer={saltar} onPlanes={() => setComprar(true)} />
             )}
