@@ -73,6 +73,43 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 2
     }
   },
+  "patologia/pat-acp-9": {
+    "curso": "patologia",
+    "clase": "pat-acp-9",
+    "notas": {
+      "titulo": "Alergia en la clínica: asma, anafilaxia y su diagnóstico"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-acp-9",
+      "titulo": "Casos clínicos",
+      "desc": "Pruebas de alergia, espirometría y anafilaxia: cómo se confirma y cómo se trata",
+      "chips": [
+        "10 casos"
+      ],
+      "total": 10,
+      "muestra": 2
+    }
+  },
+  "patologia/pat-acp-10": {
+    "curso": "patologia",
+    "clase": "pat-acp-10",
+    "notas": {
+      "titulo": "Fiebre reumática, miastenia y dermatitis de contacto"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-acp-10",
+      "titulo": "Casos clínicos",
+      "desc": "Del estreptococo a la válvula, de la placa motora al timo y del guante a la piel",
+      "chips": [
+        "Fiebre reumática",
+        "Miastenia",
+        "Dermatitis de contacto",
+        "11 casos"
+      ],
+      "total": 11,
+      "muestra": 2
+    }
+  },
   "patologia/pat-ai-1": {
     "curso": "patologia",
     "clase": "pat-ai-1",
@@ -206,6 +243,23 @@ export const REGISTRO_CLASES: RegistroClases = {
       "key": "patologia/casos/pat-ai-13",
       "titulo": "Casos clínicos",
       "desc": "Estadio, efectos locales y síndromes paraneoplásicos: qué tumor se esconde detrás del cuadro",
+      "chips": [
+        "11 casos"
+      ],
+      "total": 11,
+      "muestra": 2
+    }
+  },
+  "patologia/pat-ai-15": {
+    "curso": "patologia",
+    "clase": "pat-ai-15",
+    "notas": {
+      "titulo": "Las cuatro hipersensibilidades"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-ai-15",
+      "titulo": "Casos clínicos",
+      "desc": "Del habón al glomérulo: qué tipo de hipersensibilidad es y qué la explica",
       "chips": [
         "11 casos"
       ],
