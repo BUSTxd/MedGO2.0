@@ -267,6 +267,25 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 2
     }
   },
+  "patologia/pat-ai-16": {
+    "curso": "patologia",
+    "clase": "pat-ai-16",
+    "notas": {
+      "titulo": "Graves y Hashimoto"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-ai-16",
+      "titulo": "Casos clínicos",
+      "desc": "Hormonas, anticuerpos y ecografía: Graves o Hashimoto, en qué fase y cómo se trata",
+      "chips": [
+        "Hashimoto",
+        "Graves",
+        "10 casos"
+      ],
+      "total": 10,
+      "muestra": 2
+    }
+  },
   "patologia/pat-ai-17": {
     "curso": "patologia",
     "clase": "pat-ai-17",
@@ -330,6 +349,23 @@ export const REGISTRO_CLASES: RegistroClases = {
       "key": "patologia/casos/pat-c-6",
       "titulo": "Casos clínicos",
       "desc": "Ganglios que no se van: reactivo o linfoma, en qué estadio y de qué tipo",
+      "chips": [
+        "10 casos"
+      ],
+      "total": 10,
+      "muestra": 2
+    }
+  },
+  "patologia/pat-c-7": {
+    "curso": "patologia",
+    "clase": "pat-c-7",
+    "notas": {
+      "titulo": "Introducción a las enfermedades autoinmunes"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-c-7",
+      "titulo": "Casos clínicos",
+      "desc": "Tolerancia, clasificación y riesgo: cuándo una respuesta contra lo propio es enfermedad",
       "chips": [
         "10 casos"
       ],
@@ -406,6 +442,23 @@ export const REGISTRO_CLASES: RegistroClases = {
         "10 casos"
       ],
       "total": 10,
+      "muestra": 2
+    }
+  },
+  "patologia/pat-tbl-5": {
+    "curso": "patologia",
+    "clase": "pat-tbl-5",
+    "notas": {
+      "titulo": "Lupus eritematoso sistémico"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-tbl-5",
+      "titulo": "Casos clínicos",
+      "desc": "Del exantema al riñón: cómo se diagnostica el lupus y qué hace en cada órgano",
+      "chips": [
+        "11 casos"
+      ],
+      "total": 11,
       "muestra": 2
     }
   }
