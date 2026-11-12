@@ -54,6 +54,25 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 2
     }
   },
+  "patologia/pat-acp-8": {
+    "curso": "patologia",
+    "clase": "pat-acp-8",
+    "notas": {
+      "titulo": "Linfadenopatía persistente: Hodgkin y no Hodgkin"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-acp-8",
+      "titulo": "Casos clínicos",
+      "desc": "Del ganglio que no se va a la biopsia: qué linfoma es, en qué estadio y si se transformó",
+      "chips": [
+        "Hodgkin",
+        "No Hodgkin",
+        "10 casos"
+      ],
+      "total": 10,
+      "muestra": 2
+    }
+  },
   "patologia/pat-ai-1": {
     "curso": "patologia",
     "clase": "pat-ai-1",
@@ -230,6 +249,40 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 2
     }
   },
+  "patologia/pat-c-5": {
+    "curso": "patologia",
+    "clase": "pat-c-5",
+    "notas": {
+      "titulo": "Leucemias: conceptos y clasificación"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-c-5",
+      "titulo": "Casos clínicos",
+      "desc": "Del hemograma al tipo de leucemia: aguda o crónica, mieloide o linfoide, y sus vecinas",
+      "chips": [
+        "10 casos"
+      ],
+      "total": 10,
+      "muestra": 2
+    }
+  },
+  "patologia/pat-c-6": {
+    "curso": "patologia",
+    "clase": "pat-c-6",
+    "notas": {
+      "titulo": "Linfomas: conceptos y clasificación"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-c-6",
+      "titulo": "Casos clínicos",
+      "desc": "Ganglios que no se van: reactivo o linfoma, en qué estadio y de qué tipo",
+      "chips": [
+        "10 casos"
+      ],
+      "total": 10,
+      "muestra": 2
+    }
+  },
   "patologia/pat-lab-6": {
     "curso": "patologia",
     "clase": "pat-lab-6",
@@ -280,6 +333,25 @@ export const REGISTRO_CLASES: RegistroClases = {
         "11 casos"
       ],
       "total": 11,
+      "muestra": 2
+    }
+  },
+  "patologia/pat-tbl-4": {
+    "curso": "patologia",
+    "clase": "pat-tbl-4",
+    "notas": {
+      "titulo": "Leucemias agudas y crónicas: diagnóstico y tratamiento"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-tbl-4",
+      "titulo": "Casos clínicos",
+      "desc": "Del frotis y la citometría al tratamiento: qué leucemia es, en qué fase y qué la controla",
+      "chips": [
+        "Agudas",
+        "LMC",
+        "10 casos"
+      ],
+      "total": 10,
       "muestra": 2
     }
   }
