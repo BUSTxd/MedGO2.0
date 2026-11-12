@@ -37,6 +37,23 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 2
     }
   },
+  "patologia/pat-acp-6": {
+    "curso": "patologia",
+    "clase": "pat-acp-6",
+    "notas": {
+      "titulo": "VPH: de la infección al cáncer de cérvix"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-acp-6",
+      "titulo": "Casos clínicos",
+      "desc": "Citología, prueba de VPH y biopsia: qué grado es, qué hace el virus y qué sigue",
+      "chips": [
+        "11 casos"
+      ],
+      "total": 11,
+      "muestra": 2
+    }
+  },
   "patologia/pat-ai-1": {
     "curso": "patologia",
     "clase": "pat-ai-1",
@@ -143,6 +160,40 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 2
     }
   },
+  "patologia/pat-ai-12": {
+    "curso": "patologia",
+    "clase": "pat-ai-12",
+    "notas": {
+      "titulo": "Los rasgos distintivos del cáncer"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-ai-12",
+      "titulo": "Casos clínicos",
+      "desc": "Del gen alterado al rasgo del cáncer: qué capacidad ganó el tumor y cómo se ataca",
+      "chips": [
+        "10 casos"
+      ],
+      "total": 10,
+      "muestra": 2
+    }
+  },
+  "patologia/pat-ai-13": {
+    "curso": "patologia",
+    "clase": "pat-ai-13",
+    "notas": {
+      "titulo": "Manifestaciones clínicas y evaluación de las neoplasias"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-ai-13",
+      "titulo": "Casos clínicos",
+      "desc": "Estadio, efectos locales y síndromes paraneoplásicos: qué tumor se esconde detrás del cuadro",
+      "chips": [
+        "11 casos"
+      ],
+      "total": 11,
+      "muestra": 2
+    }
+  },
   "patologia/pat-ai-17": {
     "curso": "patologia",
     "clase": "pat-ai-17",
@@ -209,6 +260,23 @@ export const REGISTRO_CLASES: RegistroClases = {
       "chips": [
         "Neumonía",
         "Derrame pleural",
+        "11 casos"
+      ],
+      "total": 11,
+      "muestra": 2
+    }
+  },
+  "patologia/pat-tbl-3": {
+    "curso": "patologia",
+    "clase": "pat-tbl-3",
+    "notas": {
+      "titulo": "Cáncer de mama"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-tbl-3",
+      "titulo": "Casos clínicos",
+      "desc": "Mamografía, biopsia e inmunohistoquímica: qué lesión es, qué subtipo y cómo se trata",
+      "chips": [
         "11 casos"
       ],
       "total": 11,
