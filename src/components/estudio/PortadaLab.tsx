@@ -303,11 +303,11 @@ function TuboEnsayo({ x, y, rot = 0, liq, nivel = -4, ancho = 15, alto = 44 }: {
 /* ─────────────────────────── portadas ─────────────────────────── */
 
 const PORTADAS: Record<string, () => ReactNode> = {
-  /* Estreptococos: cadena de cocos grampositivos (violeta) en S, agrupados de dos en dos,
-     con su pared gruesa, el nucleoide, las fibrillas de proteína M en los flancos y
-     algunos en plena división con su tabique. El tamaño cambia para dar profundidad. */
+  /* Estreptococos: cadena de cocos grampositivos (violeta) en una S suave, de dos en dos
+     (cada par todavía unido por su tabique de división). La luz no gira con la cadena:
+     siempre arriba a la izquierda. El tamaño cambia apenas para dar profundidad. */
   'atlas-microbiologia': () => {
-    const P = [[18, 72], [72, 134], [128, -6], [204, 58]];
+    const P = [[20, 86], [74, 132], [136, 4], [202, 50]];
     const bez = (t: number): [number, number] => {
       const u = 1 - t;
       const k = [u * u * u, 3 * u * u * t, 3 * u * t * t, t * t * t];
@@ -320,32 +320,35 @@ const PORTADAS: Record<string, () => ReactNode> = {
       const i = Math.max(1, acum.findIndex((a) => a >= s));
       return { x: m[i][0], y: m[i][1], ang: (Math.atan2(m[i][1] - m[i - 1][1], m[i][0] - m[i - 1][0]) * 180) / Math.PI };
     };
-    const tam = (i: number) => 0.86 + 0.22 * Math.sin(i * 0.55 + 0.6);
-    const cocos: { x: number; y: number; ang: number; k: number; i: number }[] = [];
-    for (let i = 0, pos = 9; pos < acum[acum.length - 1] - 8; i++) {
-      const k = tam(i);
-      cocos.push({ ...en(pos), k, i });
-      pos += ((k + tam(i + 1)) / 2) * (i % 2 === 0 ? 15 : 18.5);
+    const L = acum[acum.length - 1];
+    const R = 10.4;
+    const pares: { a: ReturnType<typeof en>; b: ReturnType<typeof en>; r: number; n: number }[] = [];
+    for (let n = 0, pos = R; ; n++) {
+      const r = R * (0.92 + 0.1 * Math.sin(n * 0.9 + 0.4));
+      if (pos + 1.6 * r + r > L) break;
+      pares.push({ a: en(pos), b: en(pos + 1.6 * r), r, n });
+      pos += 1.6 * r + 2.16 * r;
     }
-    const fibrillas = [55, 75, 95, 115, 135, 235, 255, 275, 295, 315];
+    const f = (v: number) => v.toFixed(1);
     return (
       <>
-        <Suelo rx={94} />
-        {[...cocos].sort((a, b) => a.k - b.k).map(({ x, y, ang, k, i }) => (
-          <g key={i} transform={`translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(1)}) scale(${k.toFixed(3)})`}>
-            {fibrillas.map((a) => {
-              const [x1, y1] = polar(0, 0, 9.6, a);
-              const [x2, y2] = polar(0, 0, 12.2, a + (a < 180 ? 6 : -6));
-              return <path key={a} d={`M${x1.toFixed(1)} ${y1.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}`} stroke={C.morado[2]} strokeWidth={0.7} strokeLinecap="round" opacity={0.6} />;
-            })}
-            <ellipse rx={8.4} ry={10.2} fill={C.morado[0]} />
-            <ellipse cx={-0.6} cy={-0.9} rx={7.4} ry={9.1} fill={C.morado[1]} />
-            <ellipse cx={-0.4} cy={-0.5} rx={5.6} ry={7.2} fill={C.morado[0]} opacity={0.16} />
-            <path d="M-2.6 2 C-1.6 -1.6 0.6 3.4 1.4 -0.6 C2 -2.8 3 -0.4 3.4 -2" stroke={C.morado[0]} strokeWidth={1.1} fill="none" strokeLinecap="round" opacity={0.55} />
-            {i % 4 === 3 && <path d="M0 -9.6 Q1.6 0 0 9.6" stroke={C.morado[0]} strokeWidth={1.4} fill="none" strokeLinecap="round" />}
-            <ellipse cx={-3} cy={-4.6} rx={2.4} ry={1.4} fill={BLANCO} opacity={0.85} transform="rotate(-35 -3 -4.6)" />
-          </g>
-        ))}
+        <Suelo rx={92} />
+        {[...pares].sort((p, q) => p.r - q.r).map(({ a, b, r, n }) => {
+          const [mx, my] = [(a.x + b.x) / 2, (a.y + b.y) / 2];
+          const ang = rad(a.ang + 90);
+          const [tx, ty] = [Math.cos(ang) * r * 0.5, Math.sin(ang) * r * 0.5];
+          return (
+            <g key={n}>
+              {[a, b].map((c, i) => <circle key={i} cx={f(c.x)} cy={f(c.y)} r={f(r)} fill={C.morado[0]} />)}
+              {[a, b].map((c, i) => <circle key={i} cx={f(c.x - r * 0.1)} cy={f(c.y - r * 0.12)} r={f(r * 0.86)} fill={C.morado[1]} />)}
+              {[a, b].map((c, i) => <circle key={i} cx={f(c.x - r * 0.24)} cy={f(c.y - r * 0.28)} r={f(r * 0.5)} fill={C.morado[2]} opacity={0.32} />)}
+              <path d={`M${f(mx - tx)} ${f(my - ty)} L${f(mx + tx)} ${f(my + ty)}`} stroke={C.morado[0]} strokeWidth={1.3} strokeLinecap="round" opacity={0.75} />
+              {[a, b].map((c, i) => (
+                <ellipse key={i} cx={f(c.x - r * 0.4)} cy={f(c.y - r * 0.44)} rx={f(r * 0.24)} ry={f(r * 0.14)} fill={BLANCO} opacity={0.88} transform={`rotate(-40 ${f(c.x - r * 0.4)} ${f(c.y - r * 0.44)})`} />
+              ))}
+            </g>
+          );
+        })}
       </>
     );
   },
@@ -480,9 +483,9 @@ const PORTADAS: Record<string, () => ReactNode> = {
     );
   },
 
-  /* Esporas de hongos: una grande de pared doble, con verrugas que asoman del borde, gotas
-     de lípido, núcleo y poro germinal; alrededor, una cadena de conidios, una espora que
-     germina con su tubo tabicado, una equinulada, una bicelular y otras lisas. */
+  /* Tres esporas de hongos: una grande de pared doble, con verrugas que asoman del borde,
+     gotas de lípido, núcleo y poro germinal; una equinulada y una que germina con su tubo
+     tabicado. */
   'atlas-micologia': () => {
     const espora = (x: number, y: number, rx: number, ry: number, rot: number, c: Tono) => (
       <g transform={`translate(${x} ${y}) rotate(${rot})`}>
@@ -497,36 +500,22 @@ const PORTADAS: Record<string, () => ReactNode> = {
     const espinas = Array.from({ length: 16 }, (_, i) => i * (360 / 16));
     return (
       <>
-        <Suelo rx={90} />
-        {/* Cadena de conidios */}
-        <path d="M30 40 L66 28" stroke={C.cian[0]} strokeWidth={2.4} strokeLinecap="round" />
-        {espora(31, 40, 7.4, 6.6, -18, C.cian)}
-        {espora(46, 35, 7, 6.2, -18, C.cian)}
-        {espora(60, 30.5, 6.4, 5.8, -18, C.cian)}
-        {/* Espora que germina, con su tubo germinativo tabicado */}
-        <Tubo d="M50 90 C58 86 64 92 70 98 C74 102 80 104 86 103" w={4.6} c={C.verde} />
-        <path d="M66 92 l-3 3.4 M78 101.4 l-1 4" stroke={C.verde[0]} strokeWidth={1.1} strokeLinecap="round" />
-        {espora(42, 92, 10, 8, 10, C.verde)}
+        <Suelo x={112} rx={88} />
         {/* Espora equinulada */}
         <g>
           {espinas.map((a) => {
-            const [x1, y1] = polar(170, 30, 8.4, a);
-            const [x2, y2] = polar(170, 30, 11, a);
-            return <path key={a} d={`M${x1.toFixed(1)} ${y1.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}`} stroke={C.azul[0]} strokeWidth={1.2} strokeLinecap="round" />;
+            const [x1, y1] = polar(176, 36, 12.6, a);
+            const [x2, y2] = polar(176, 36, 16.4, a);
+            return <path key={a} d={`M${x1.toFixed(1)} ${y1.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}`} stroke={C.cian[0]} strokeWidth={1.7} strokeLinecap="round" />;
           })}
-          {espora(170, 30, 9, 9, 0, C.azul)}
+          {espora(176, 36, 13.4, 13.4, 0, C.cian)}
         </g>
-        {/* Espora bicelular */}
-        <g>
-          {espora(186, 84, 13, 7.6, -28, C.cian)}
-          <path d={`M${(186 - 3.6).toFixed(1)} ${(84 - 6.4).toFixed(1)} Q186 84 ${(186 + 3.6).toFixed(1)} ${(84 + 6.4).toFixed(1)}`} stroke={C.cian[0]} strokeWidth={1.6} fill="none" strokeLinecap="round" />
-        </g>
-        {/* Esporas lisas */}
-        {espora(200, 50, 6.4, 5, 10, C.verde)}
-        {espora(146, 108, 7, 5.6, -10, C.azul)}
-        {espora(122, 112, 4.6, 3.8, 20, C.verde)}
+        {/* Espora que germina, con su tubo germinativo tabicado */}
+        <Tubo d="M160 94 C168 86 176 96 184 101 C190 105 198 105 206 100" w={5.6} c={C.verde} />
+        <path d="M177 94.6 l-2.4 4.4 M195 102.6 l-0.6 4.8" stroke={C.verde[0]} strokeWidth={1.2} strokeLinecap="round" />
+        {espora(150, 96, 13, 10.4, 12, C.verde)}
         {/* Espora grande */}
-        <g transform="translate(108 60) rotate(-15)">
+        <g transform="translate(78 62) rotate(-15) scale(1.22)">
           {verrugas.map((a) => (
             <circle key={a} cx={Math.cos(rad(a)) * 27.6} cy={Math.sin(rad(a)) * 17.6} r={1.9} fill={C.azul[0]} />
           ))}
