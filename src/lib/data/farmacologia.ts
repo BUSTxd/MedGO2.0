@@ -16,9 +16,12 @@ export type Unidad =
   | 'ANTIBIOTICOS'
   | 'EVALUACION';
 
+export type ResumenFormato = 'pdf' | 'html';
+
 export interface ResumenOpcion {
   id: string;
   label: string;
+  formato?: ResumenFormato;
 }
 
 export interface Actividad {
@@ -31,7 +34,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
 }
 
 export interface Semana {
@@ -78,6 +81,7 @@ export const semanas: Semana[] = [
         hora: '14:00–15:00',
         subtemas: ['Clase inaugural', 'Hitos en la historia de la farmacología', 'Aportes peruanos'],
         docentes: ['Dra. Yolanda Viguria', 'Dr. J. Sánchez'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-1', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-2',
@@ -88,6 +92,7 @@ export const semanas: Semana[] = [
         hora: '15:00–16:00',
         subtemas: ['Definiciones de farmacología', 'Conceptos generales'],
         docentes: ['Dr. J. Sánchez'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-2', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-3',
@@ -98,6 +103,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Absorción', 'Vías de administración'],
         docentes: ['Dr. A. Zavaleta'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-3', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'practica-1',
@@ -128,6 +134,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Distribución', 'Unión a proteínas plasmáticas', 'Volumen de distribución'],
         docentes: ['Dra. Y. Viguria'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-4', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-5',
@@ -138,6 +145,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Metabolismo de fase I y II', 'Citocromo P450', 'Inductores e inhibidores'],
         docentes: ['Dra. Y. Viguria'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-5', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-6',
@@ -148,6 +156,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Eliminación renal y biliar', 'Vida media', 'Aclaramiento'],
         docentes: ['Dra. Y. Viguria'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-6', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'practica-2',
@@ -178,6 +187,7 @@ export const semanas: Semana[] = [
         subtemas: ['Mecanismos de acción'],
         docentes: ['Dr. Sánchez (A)', 'Dra. Viguria (B)'],
         nota: 'Aula G102 · turnos separados A y B.',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-7', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-8',
@@ -188,6 +198,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Clasificación de receptores', 'Receptores tipo canal iónico'],
         docentes: ['Dr. E. Moncada'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-8', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'taller-int-1',
@@ -251,6 +262,14 @@ export const semanas: Semana[] = [
         subtemas: ['Receptores enzimáticos', 'Receptores acoplados a proteína G', 'Insulina'],
         docentes: ['Dr. Sánchez (A)', 'Dra. Viguria (B)'],
         nota: 'Aula G102 · turnos separados A y B.',
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [
+            { id: 'far-9', label: 'Receptores acoplados a proteína G', formato: 'html' },
+            { id: 'far-9.2', label: 'Receptores enzimáticos', formato: 'html' },
+          ],
+        },
       },
       {
         id: 'clase-10',
@@ -261,6 +280,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Clasificación de receptores nucleares', 'Corticoides'],
         docentes: ['Dr. A. Bautista'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-10', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'seminario-1',
@@ -325,7 +345,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Receptores colinérgicos', 'Agonistas colinérgicos'],
         docentes: ['Dra. Y. Viguria'],
-        resumen: { tipo: 'pdf', opciones: [{ id: 'far-14', label: 'Resumen' }] },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-14', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'practica-5',
@@ -356,6 +376,7 @@ export const semanas: Semana[] = [
         subtemas: ['Antagonistas colinérgicos', 'Intoxicación por organofosforados'],
         docentes: ['Dra. V. Cuba'],
         nota: 'Aula G102 · turnos separados A y B. Taller formativo.',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-14', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-16',
@@ -396,6 +417,16 @@ export const semanas: Semana[] = [
           'Tema 9: Receptores de glutamato',
         ],
         docentes: [],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [
+            { id: 'far-sem-sodio', label: 'Canales de sodio', formato: 'html' },
+            { id: 'far-sem-calcio', label: 'Canales de calcio', formato: 'html' },
+            { id: 'far-sem-dopamina', label: 'Receptores dopaminérgicos', formato: 'html' },
+            { id: 'far-sem-gaba', label: 'Receptores GABA', formato: 'html' },
+          ],
+        },
       },
     ],
   },
@@ -416,7 +447,7 @@ export const semanas: Semana[] = [
         subtemas: ['Histamina · agonistas y antagonistas', 'AINES', 'COXIB'],
         docentes: ['Dra. Viguria', 'Dra. Cuba'],
         nota: 'Taller formativo.',
-        resumen: { tipo: 'pdf', opciones: [{ id: 'far-18', label: 'Receptores de Histamina' }] },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-18', label: 'Receptores de Histamina', formato: 'html' }] },
       },
       {
         id: 'clase-19',
@@ -430,9 +461,10 @@ export const semanas: Semana[] = [
         nota: 'A: aula G101 · B: aula G102. Taller formativo.',
         resumen: {
           tipo: 'pdf',
+          formato: 'html',
           opciones: [
-            { id: 'far-19',   label: 'Biológicos y biosimilares' },
-            { id: 'far-19.2', label: 'Terapia génica' },
+            { id: 'far-19', label: 'Biológicos y biosimilares', formato: 'html' },
+            { id: 'far-19.2', label: 'Terapia génica', formato: 'html' },
           ],
         },
       },
@@ -496,6 +528,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Interacciones farmacológicas', 'Interacciones con alimentos'],
         docentes: ['Dr. J. Sánchez'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-20', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-21',
@@ -506,6 +539,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Farmacología clínica', 'Mecanismos de acción de antibióticos'],
         docentes: ['Dra. L. Mori'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-21', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-22',
@@ -546,7 +580,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Penicilinas', 'Cefalosporinas', 'Carbapenems'],
         docentes: ['Dra. C. García'],
-        resumen: { tipo: 'pdf', opciones: [{ id: 'far-23', label: 'Resumen' }] },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-23', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-24',
@@ -557,7 +591,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Fluoroquinolonas', 'Aminoglucósidos', 'Macrólidos'],
         docentes: ['Dr. F. Álvarez'],
-        resumen: { tipo: 'pdf', opciones: [{ id: 'far-24', label: 'Resumen' }] },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-24', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-25',
@@ -568,7 +602,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Clindamicina', 'Vancomicina', 'TMP-SMX'],
         docentes: ['Dra. C. García'],
-        resumen: { tipo: 'pdf', opciones: [{ id: 'far-25', label: 'Resumen' }] },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-25', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'sgp-1',
@@ -596,6 +630,18 @@ export const semanas: Semana[] = [
           'Tema 15: Sistema endocannabinoide · Cannabis medicinal',
         ],
         docentes: [],
+        resumen: {
+          tipo: 'pdf',
+          formato: 'html',
+          opciones: [
+            { id: 'far-sem-serotonina', label: 'Receptores de serotonina', formato: 'html' },
+            { id: 'far-18', label: 'Receptores de histamina', formato: 'html' },
+            { id: 'far-sem-opioides', label: 'Receptores de opioides', formato: 'html' },
+            { id: 'far-sem-estimulantes', label: 'Coca, cocaína y anfetaminas', formato: 'html' },
+            { id: 'far-sem-depresoras', label: 'Drogas sintéticas depresoras', formato: 'html' },
+            { id: 'far-sem-cannabis', label: 'Sistema endocannabinoide', formato: 'html' },
+          ],
+        },
       },
     ],
   },
@@ -616,6 +662,7 @@ export const semanas: Semana[] = [
         subtemas: ['Metronidazol', 'Doxiciclina', 'Colistina', 'Nitrofurantoína'],
         docentes: ['Dr. F. Álvarez'],
         nota: 'Lunes 29 jun es feriado (San Pedro y San Pablo).',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-26', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-27',
@@ -665,6 +712,7 @@ export const semanas: Semana[] = [
         hora: '14:00–16:00',
         subtemas: ['Equinocandinas', 'Anfotericina', 'Azoles', 'Discusión de casos clínicos'],
         docentes: ['Dra. L. Mori'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'far-28', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'taller-int-3',

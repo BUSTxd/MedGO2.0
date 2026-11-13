@@ -19,9 +19,8 @@ const ALLOWED = new Set([
   'practica-8', 'practica-9', 'practica-10',
   'practica-11', 'practica-12', 'practica-13',
   // Farmacología (prefijo `far-` evita colisión con clase-* de Microbiología)
-  'far-14', 'far-16', 'far-17', 'far-18',
-  'far-19', 'far-19.2',
-  'far-23', 'far-24', 'far-25',
+  // far-14, 18, 19, 19.2, 23, 24 y 25 pasaron a HTML el 2026-11-13 (src/lib/resumen-html.ts); sus PDF siguen en Storage
+  'far-16', 'far-17',
   // Hematología (prefijo `hem-` evita colisión con clase-* de otros cursos)
   // hem-2 pasó a HTML el 2026-11-04 (src/lib/resumen-html.ts); su PDF se borró
   'hem-3', 'hem-4', 'hem-5', 'hem-6',
@@ -127,15 +126,8 @@ const FILE_ALIAS: Record<string, string> = {
   // JPEG → pdfjs renderizaba garbage. .v2 se generó con page.replace_image() que
   // actualiza filter/colorspace correctamente. Path nuevo invalida el cache
   // immutable instantáneamente para todos los usuarios.
-  'far-14':   'farmacologia/clase-14.v2',
   'far-16':   'farmacologia/clase-16.v2',
   'far-17':   'farmacologia/clase-17.v2',
-  'far-18':   'farmacologia/clase-18.v2',
-  'far-19':   'farmacologia/clase-19.v2',
-  'far-19.2': 'farmacologia/clase-19.2.v2',
-  'far-23':   'farmacologia/clase-23.v2',
-  'far-24':   'farmacologia/clase-24.v2',
-  'far-25':   'farmacologia/clase-25.v2',
   // Hematología — subcarpeta hematologia/
   'hem-3':    'hematologia/clase-3',
   'hem-4':    'hematologia/clase-4',

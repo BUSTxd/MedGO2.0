@@ -15,7 +15,7 @@
  *
  * Uso:
  *   node scripts/imagenes/mejorar.mjs analizar --dir "<export>" [--salida <carpeta>]
- *   node scripts/imagenes/mejorar.mjs codex    --salida <carpeta> [--paralelo 2] [--esfuerzo low] [--solo a.png,b.png]
+ *   node scripts/imagenes/mejorar.mjs codex    --salida <carpeta> [--paralelo 2] [--esfuerzo low] [--solo a.png,b.png] [--modo calidad]
  *   node scripts/imagenes/mejorar.mjs aplicar  --salida <carpeta> --dir "<export>" --aceptar todas|a.png,b.png
  *   node scripts/imagenes/mejorar.mjs comprimir --salida <carpeta> --dir "<export>"
  *
@@ -110,13 +110,27 @@ function codexJs() {
   return js;
 }
 
-async function unaImagen(im, S, plantilla, esfuerzo) {
+async function unaImagen(im, S, plantilla, esfuerzo, modo) {
   const stem = basename(im.nombre, extname(im.nombre));
   const trabajo = join(S, 'codex', 'trabajo', stem);
   rmSync(trabajo, { recursive: true, force: true });
   mkdirSync(trabajo, { recursive: true });
   await sharp(im.logo?.limpio ?? im.ruta).png().toFile(join(trabajo, 'entrada.png'));
   // BUST (2026-11-04): las fotos y micrografías se mejoran siempre; la imagen debe ser la misma.
+  // MODO CALIDAD (BUST, 2026-11-13): sin rediseño ni JSON. Se le dice a Codex, tal cual y sin rodeos,
+  // el prompt de prompt-calidad.md («dale mas calidad a esta imagen para que se vea mejor, que no
+  // cambie nada pero se vea mejor»). La misma imagen, más nítida. Nada de datos medidos ni esquema.
+  if (modo === 'calidad') {
+    const t0c = Date.now();
+    await correr(process.execPath, [codexJs(), 'exec', '-C', trabajo, '--skip-git-repo-check', '-s', 'workspace-write',
+      '-c', `model_reasoning_effort=${esfuerzo}`, '-o', join(trabajo, 'respuesta.txt'), '-i', join(trabajo, 'entrada.png')],
+    { entrada: readFileSync(join(AQUI, 'prompt-calidad.md'), 'utf8'), limite: 15 * 60 * 1000 });
+    const gen = join(trabajo, 'salida.png');
+    let res = null;
+    if (existsSync(gen)) { res = join(S, 'codex', `${stem}.png`); copyFileSync(gen, res); }
+    const nota = existsSync(join(trabajo, 'respuesta.txt')) ? readFileSync(join(trabajo, 'respuesta.txt'), 'utf8').trim().slice(0, 300) : '';
+    return { tipo: im.foto.parece_foto ? 'foto' : 'dibujo', accion: 'resolucion', rotulos: [], nota, modo: 'calidad', resultado: res, segundos: Math.round((Date.now() - t0c) / 1000) };
+  }
   const accionFoto = 'MÁS CALIDAD, con tu herramienta de edición de imágenes: la imagen debe ser LA MISMA, pero verse de mayor calidad (más nítida, con más resolución y sin ruido ni artefactos de compresión). No añadas, quites ni muevas ninguna estructura (células, gránulos, bordes, flechas, rótulos), no cambies colores, encuadre, composición ni fondo; no la rediseñes. Responde accion «resolucion».';
   const datos = `- tamaño ${im.W}×${im.H} px; nota de calidad ${im.nota ?? '—'}/100 (${im.motivos.join('; ') || 'sin problemas'})\n- ${im.foto.parece_foto ? 'por números parece foto' : 'por números parece dibujo'} (puede fallar con escaneos)`;
   const prompt = plantilla.replace('{{DATOS}}', datos).replace('{{ACCION_FOTO}}', accionFoto);
@@ -147,14 +161,14 @@ async function codex() {
   const revisar = plan.imagenes.filter((i) => i.decision === 'revisar');
   if (revisar.length) console.log(`Aviso: ${revisar.length} siguen en «revisar» y no van a Codex.`);
   const plantilla = readFileSync(join(AQUI, 'prompt-codex.md'), 'utf8');
-  const paralelo = Number(args.paralelo ?? 2), esfuerzo = args.esfuerzo ?? 'low';
-  console.log(`Codex: ${pendientes.length} imágenes, ${paralelo} a la vez, razonamiento ${esfuerzo}.`);
+  const paralelo = Number(args.paralelo ?? 2), esfuerzo = args.esfuerzo ?? 'low', modo = args.modo ?? 'rediseno';
+  console.log(`Codex (${modo}): ${pendientes.length} imágenes, ${paralelo} a la vez, razonamiento ${esfuerzo}.`);
   let hechas = 0;
   const cola = [...pendientes];
   await Promise.all(Array.from({ length: paralelo }, async () => {
     for (let im; (im = cola.shift());) {
       try {
-        im.codex = await unaImagen(im, S, plantilla, esfuerzo);
+        im.codex = await unaImagen(im, S, plantilla, esfuerzo, modo);
         console.log(`  ✓ ${++hechas}/${pendientes.length} ${im.nombre}: ${im.codex.tipo} → ${im.codex.accion} (${im.codex.segundos} s)`);
       } catch (e) {
         im.codex = { error: e.message };
@@ -246,7 +260,10 @@ async function aplicar() {
     // ablandaba la letra.
     const mNuevo = await sharp(nuevo).metadata();
     const ancho = anchoObjetivo({ W: mNuevo.width, H: mNuevo.height, tipo: im.codex?.tipo ?? 'dibujo', lineas: lineas.get(im.nombre) ?? 0 });
-    const escala = Math.min(1, ancho / mNuevo.width);
+    // En modo calidad la imagen es la MISMA que la original: nunca la dejamos más chica que ella
+    // (la regla de tamano.mjs es para rediseños; una foto de 528 px saldría de 500 y perdería).
+    const anchoFinal = im.codex?.modo === 'calidad' ? Math.max(ancho, Math.min(im.W ?? 0, mNuevo.width)) : ancho;
+    const escala = Math.min(1, anchoFinal / mNuevo.width);
     // mismo nombre y extensión: el HTML del export lo referencia así
     let img = sharp(nuevo).resize(Math.round(mNuevo.width * escala), Math.round(mNuevo.height * escala), { kernel: KERNEL });
     // Fondo crema, el mismo papel de la figura ampliada (resumenHtml.module.css,
