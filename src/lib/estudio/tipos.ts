@@ -81,6 +81,8 @@ export interface LabRecomendado {
   icono: string | null;
   /** Lleva una animación en vivo en lugar del icono del curso. */
   animacion?: 'citopenias';
+  /** El dibujo del laboratorio (`PortadaLab`); sin él, el icono del curso. */
+  portada: string | null;
 }
 
 export interface SemanaEstudio {
@@ -129,6 +131,8 @@ export interface TarjetaLab {
   tipo: TipoLab;
   href: string;
   icono: string | null;
+  /** El dibujo del laboratorio (`PortadaLab`); sin él, el icono del curso. */
+  portada: string | null;
   /** abierto: lo abre su plan · gratis/vistazo/prueba: una parte sin plan · plan: candado. */
   acceso: 'abierto' | 'gratis' | 'vistazo' | 'prueba' | 'plan';
 }

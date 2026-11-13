@@ -149,6 +149,7 @@ div:where(.wrapper) { margin: 0px; background: var(--bg); color: var(--text); fo
 .related-art { height: 96px; background: radial-gradient(at 70% 35%, rgb(235, 232, 255), transparent 65%), rgb(247, 248, 252); display: grid; place-items: center; position: relative; }
 .related-art img { height: 82px; width: 105px; object-fit: contain; filter: drop-shadow(rgba(88, 80, 118, 0.08) 0px 5px 6px); }
 .related-art .icon { height: 44px; width: 44px; color: rgb(140, 128, 210); }
+.related-art .lab-portada { width: 88%; height: 86px; position: relative; }
 .related-tag { position: absolute; left: 9px; top: 9px; font-size: 8px; color: rgb(139, 127, 194); background: rgba(255, 255, 255, 0.6); padding: 3px 5px; border-radius: 4px; }
 .related-card-body { padding: 13px; }
 .related-card h3 { font-size: 12px; font-weight: 500; margin: 0px 0px 5px; }

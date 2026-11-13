@@ -9,6 +9,7 @@ import { cx, Icono, type NombreIcono } from './Icono';
 import { norm } from './texto';
 import BarraSuperior from './BarraSuperior';
 import Desplegable from './Desplegable';
+import PortadaLab from './PortadaLab';
 
 const CATEGORIAS: [TipoLab | 'Todos', string, NombreIcono][] = [
   ['Todos', 'Todos los recursos', 'layers'],
@@ -87,7 +88,7 @@ export default function IndiceLaboratorio({ tarjetas }: { tarjetas: TarjetaLab[]
                   <Link key={t.id} href={t.href} className={cx('lab-card', t.acceso === 'plan' && 'is-bloqueada')}>
                     <div className={cx('lab-card-art')}>
                       <span className={cx('lab-badge')}>{t.tipo}</span>
-                      {t.icono ? <img src={t.icono} alt="" /> : <Icono n={t.tipo === 'Investigación' ? 'target' : 'flask'} cls="lab-art-icono" />}
+                      {t.portada ? <PortadaLab clave={t.portada} className={cx('lab-portada')} /> : t.icono ? <img src={t.icono} alt="" /> : <Icono n={t.tipo === 'Investigación' ? 'target' : 'flask'} cls="lab-art-icono" />}
                       <span className={cx('lab-open')}><Icono n="arrow" /></span>
                     </div>
                     <div className={cx('lab-card-body')}>
@@ -111,7 +112,6 @@ export default function IndiceLaboratorio({ tarjetas }: { tarjetas: TarjetaLab[]
               </div>
             </section>
           </div>
-          <p className={cx('studio-demo')}><Icono n="info" />Las imágenes de vista previa de cada laboratorio llegan pronto.</p>
         </div>
       </main>
     </div>

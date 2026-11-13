@@ -12,6 +12,7 @@ import type { Contexto } from './EspacioEstudio';
 import { veces } from './texto';
 import { duracion, fechaLarga } from './plan/formato';
 import { useGrimi } from './GrimiIA';
+import PortadaLab from './PortadaLab';
 import BurbujaSeleccion from '@/components/ia/BurbujaSeleccion';
 import type { PedidoIA } from '@/components/ia/useChatIA';
 
@@ -119,7 +120,7 @@ export function TarjetaLaboratorio({ lab }: { lab: LabRecomendado }) {
     <div className={cx('related-card')}>
       <div className={cx('related-art', lab.animacion && 'related-animada')}>
         <span className={cx('related-tag')}>{lab.etiqueta}</span>
-        {lab.animacion ? <VistaCitopenias /> : lab.icono ? <img src={lab.icono} alt="" /> : <Icono n="flask" />}
+        {lab.animacion ? <VistaCitopenias /> : lab.portada ? <PortadaLab clave={lab.portada} className={cx('lab-portada')} /> : lab.icono ? <img src={lab.icono} alt="" /> : <Icono n="flask" />}
       </div>
       <div className={cx('related-card-body')}>
         <h3>{lab.titulo}</h3>

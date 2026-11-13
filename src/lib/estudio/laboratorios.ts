@@ -2,6 +2,7 @@ import 'server-only';
 import { LAB_TOPICS } from '@/lib/data/laboratorio-catalogo';
 import { labEsGratis, labTieneVistazo, requiredPlanDeCurso, requisitoDeLab, tieneAccesoA, trackDeCurso, trackDelUsuario } from '@/lib/acceso';
 import type { PlanState } from '@/lib/plans';
+import { claveDePortada } from '@/components/estudio/PortadaLab';
 import { iconoDe } from './cursos';
 import { rutaEnEstudio } from './rutas';
 import type { LabRecomendado, TarjetaLab, TipoLab } from './tipos';
@@ -48,6 +49,7 @@ export function laboratorioDeClase(
     etiqueta: /[?&]examen=1/.test(deDashboard) ? 'Examen práctico 3D' : (slug && TIPO[slug]) || 'Simulación',
     href,
     icono: iconoDe(curso),
+    portada: claveDePortada(deDashboard),
     ...(slug === 'citopenias-autoinmunes' ? { animacion: 'citopenias' as const } : {}),
   };
 }
@@ -89,6 +91,7 @@ export function tarjetasLaboratorio(plan: Plan): TarjetaLab[] {
         // Quien no tiene el plan pero sí la prueba gratis entra directo a ella.
         href: acceso === 'prueba' && exp.prueba ? rutaEnEstudio(exp.prueba) ?? href : href,
         icono: iconoDe(tema.id),
+        portada: claveDePortada(exp.href),
         acceso,
         track: trackDeCurso(tema.id),
       });
@@ -108,6 +111,7 @@ export function tarjetasLaboratorio(plan: Plan): TarjetaLab[] {
     tipo: 'Investigación',
     href: '/estudio/laboratorio/investigacion',
     icono: null,
+    portada: 'investigacion',
     acceso: tieneAccesoA(plan, 'interno') ? 'abierto' : 'plan',
   };
   return [investigacion, ...labs];
