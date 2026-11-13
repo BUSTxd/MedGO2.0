@@ -487,6 +487,7 @@ const PORTADAS: Record<string, () => ReactNode> = {
      gotas de lípido, núcleo y poro germinal; una equinulada y una que germina con su tubo
      tabicado. */
   'atlas-micologia': () => {
+    const T = C.cian; // un solo tono: tres matices la volvían muy colorida
     const espora = (x: number, y: number, rx: number, ry: number, rot: number, c: Tono) => (
       <g transform={`translate(${x} ${y}) rotate(${rot})`}>
         <ellipse rx={rx} ry={ry} fill={c[0]} />
@@ -506,30 +507,30 @@ const PORTADAS: Record<string, () => ReactNode> = {
           {espinas.map((a) => {
             const [x1, y1] = polar(176, 36, 12.6, a);
             const [x2, y2] = polar(176, 36, 16.4, a);
-            return <path key={a} d={`M${x1.toFixed(1)} ${y1.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}`} stroke={C.cian[0]} strokeWidth={1.7} strokeLinecap="round" />;
+            return <path key={a} d={`M${x1.toFixed(1)} ${y1.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}`} stroke={T[0]} strokeWidth={1.7} strokeLinecap="round" />;
           })}
-          {espora(176, 36, 13.4, 13.4, 0, C.cian)}
+          {espora(176, 36, 13.4, 13.4, 0, T)}
         </g>
         {/* Espora que germina, con su tubo germinativo tabicado */}
-        <Tubo d="M160 94 C168 86 176 96 184 101 C190 105 198 105 206 100" w={5.6} c={C.verde} />
-        <path d="M177 94.6 l-2.4 4.4 M195 102.6 l-0.6 4.8" stroke={C.verde[0]} strokeWidth={1.2} strokeLinecap="round" />
-        {espora(150, 96, 13, 10.4, 12, C.verde)}
+        <Tubo d="M160 94 C168 86 176 96 184 101 C190 105 198 105 206 100" w={5.6} c={T} />
+        <path d="M177 94.6 l-2.4 4.4 M195 102.6 l-0.6 4.8" stroke={T[0]} strokeWidth={1.2} strokeLinecap="round" />
+        {espora(150, 96, 13, 10.4, 12, T)}
         {/* Espora grande */}
         <g transform="translate(78 62) rotate(-15) scale(1.22)">
           {verrugas.map((a) => (
-            <circle key={a} cx={Math.cos(rad(a)) * 27.6} cy={Math.sin(rad(a)) * 17.6} r={1.9} fill={C.azul[0]} />
+            <circle key={a} cx={Math.cos(rad(a)) * 27.6} cy={Math.sin(rad(a)) * 17.6} r={1.9} fill={T[0]} />
           ))}
-          <ellipse rx={28} ry={18} fill={C.azul[0]} />
-          <ellipse cx={-1} cy={-1.2} rx={26.4} ry={16.4} fill={C.azul[1]} />
-          <ellipse rx={23} ry={13.6} fill="none" stroke={C.azul[2]} strokeWidth={1.1} opacity={0.75} />
-          <ellipse cx={-2} cy={-2} rx={19} ry={10} fill={C.azul[2]} opacity={0.3} />
-          <ellipse cx={8} cy={2.4} rx={5} ry={4} fill={C.azul[0]} opacity={0.45} />
-          <circle cx={7.4} cy={2} r={1.4} fill={C.azul[0]} opacity={0.6} />
+          <ellipse rx={28} ry={18} fill={T[0]} />
+          <ellipse cx={-1} cy={-1.2} rx={26.4} ry={16.4} fill={T[1]} />
+          <ellipse rx={23} ry={13.6} fill="none" stroke={T[2]} strokeWidth={1.1} opacity={0.75} />
+          <ellipse cx={-2} cy={-2} rx={19} ry={10} fill={T[2]} opacity={0.3} />
+          <ellipse cx={8} cy={2.4} rx={5} ry={4} fill={T[0]} opacity={0.45} />
+          <circle cx={7.4} cy={2} r={1.4} fill={T[0]} opacity={0.6} />
           {[[-9, 3, 2.2], [-3, -4, 1.6], [-14, -3, 1.3], [2, 6, 1.2], [-6, 8, 1]].map(([a, b, r], i) => (
-            <circle key={i} cx={a} cy={b} r={r} fill={BLANCO} opacity={0.55} />
+            <circle key={i} cx={a} cy={b} r={r} fill={T[2]} opacity={0.5} />
           ))}
           {/* Poro germinal */}
-          <ellipse cx={26.6} cy={0} rx={2} ry={3.6} fill={C.celeste[1]} />
+          <ellipse cx={26.6} cy={0} rx={2} ry={3.6} fill={T[2]} />
           <path d="M-20 -8 C-14 -13 -4 -15 6 -15" stroke={BLANCO} strokeWidth={2} fill="none" strokeLinecap="round" opacity={0.7} />
         </g>
       </>

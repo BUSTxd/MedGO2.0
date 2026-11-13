@@ -54,14 +54,32 @@ export function laboratorioDeClase(
   };
 }
 
+/** Los mejores laboratorios, que abren el índice en este orden (el `href` del catálogo). */
+const DESTACADOS = [
+  'vias-nfkb-jakstat',
+  'citopenias-autoinmunes',
+  'hipersensibilidad',
+  'lupus',
+  'atlas-3d?region=miembro-superior-derecho',
+  'atlas-3d?region=miembro-inferior-derecho',
+  'gramnegativas',
+  'biomecanica-extraocular',
+  'cascada-coagulacion',
+].map((s) => LAB + s);
+const puesto = (href: string) => {
+  const i = DESTACADOS.indexOf(href);
+  return i === -1 ? DESTACADOS.length : i;
+};
+
 /**
  * Las tarjetas del Laboratorio: los laboratorios publicados del catálogo (los
- * que tienen `href`), una vez cada uno aunque los compartan dos cursos, más
- * Investigación. Primero los del tramo del alumno, como en el dashboard.
+ * que tienen `href`), una vez cada uno aunque los compartan dos cursos, y al
+ * final Investigación. Primero los `DESTACADOS`; después, los del tramo del
+ * alumno, como en el dashboard.
  */
 export function tarjetasLaboratorio(plan: Plan): TarjetaLab[] {
   const propio = trackDelUsuario(plan);
-  const porHref = new Map<string, TarjetaLab & { track: string }>();
+  const porHref = new Map<string, TarjetaLab & { track: string; puesto: number }>();
 
   for (const tema of LAB_TOPICS) {
     const curso = tema.title.replace(/\s*\|.*$/, '');
@@ -94,13 +112,15 @@ export function tarjetasLaboratorio(plan: Plan): TarjetaLab[] {
         portada: claveDePortada(exp.href),
         acceso,
         track: trackDeCurso(tema.id),
+        puesto: puesto(exp.href),
       });
     }
   }
 
+  const delTramo = (t: { track: string }) => (propio === null || t.track === propio ? 0 : 1);
   const labs = [...porHref.values()]
-    .sort((a, b) => (propio === null ? 0 : (a.track === propio ? 0 : 1) - (b.track === propio ? 0 : 1)))
-    .map(({ track: _t, ...t }) => t); // eslint-disable-line @typescript-eslint/no-unused-vars
+    .sort((a, b) => a.puesto - b.puesto || delTramo(a) - delTramo(b))
+    .map(({ track: _t, puesto: _p, ...t }) => t); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   const investigacion: TarjetaLab = {
     id: '/estudio/laboratorio/investigacion',
@@ -114,5 +134,5 @@ export function tarjetasLaboratorio(plan: Plan): TarjetaLab[] {
     portada: 'investigacion',
     acceso: tieneAccesoA(plan, 'interno') ? 'abierto' : 'plan',
   };
-  return [investigacion, ...labs];
+  return [...labs, investigacion];
 }
