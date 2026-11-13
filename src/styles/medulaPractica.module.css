@@ -79,7 +79,6 @@
   min-height: 0;
   max-height: 100%;
   overflow-y: auto;
-  scrollbar-width: thin;
   padding: 16px 18px 18px;
   border-radius: 16px;
   border: 1px solid var(--mp-borde);
@@ -383,10 +382,40 @@
   background: var(--mp-fondo);
   color: var(--mp-texto);
   overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(43, 127, 184, 0.45) transparent;
 }
 :global(.dark-mode) .panel { background: #151b30; }
+
+/* ─── Barra de scroll minimalista (tarjeta y panel) ───
+   Fina, celeste del lab, sin flechas ni carril: solo el pulgar. Chrome/Edge
+   recientes usan scrollbar-color; el resto, los pseudoelementos WebKit. */
+.tarjeta, .panel {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 158, 221, 0.4) transparent;
+}
+.tarjeta:hover, .panel:hover { scrollbar-color: rgba(59, 158, 221, 0.7) transparent; }
+.tarjeta::-webkit-scrollbar, .panel::-webkit-scrollbar { width: 6px; }
+.tarjeta::-webkit-scrollbar-button, .panel::-webkit-scrollbar-button { display: none; height: 0; }
+.tarjeta::-webkit-scrollbar-track, .panel::-webkit-scrollbar-track { background: transparent; }
+.tarjeta::-webkit-scrollbar-thumb, .panel::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(59, 158, 221, 0.4);
+}
+.tarjeta::-webkit-scrollbar-thumb:hover, .panel::-webkit-scrollbar-thumb:hover { background: rgba(59, 158, 221, 0.75); }
+:global(.dark-mode) .tarjeta, :global(.dark-mode) .panel { scrollbar-color: rgba(91, 180, 236, 0.35) transparent; }
+:global(.dark-mode) .tarjeta:hover, :global(.dark-mode) .panel:hover { scrollbar-color: rgba(91, 180, 236, 0.65) transparent; }
+:global(.dark-mode) .tarjeta::-webkit-scrollbar-thumb, :global(.dark-mode) .panel::-webkit-scrollbar-thumb { background: rgba(91, 180, 236, 0.35); }
+
+/* ─── Palabra clave resaltada en las explicaciones ─── */
+.clave {
+  padding: 0 3px;
+  border-radius: 4px;
+  background: rgba(59, 158, 221, 0.14);
+  color: inherit;
+  font-weight: 700;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+:global(.dark-mode) .clave { background: rgba(91, 180, 236, 0.2); color: #e6f3fc; }
 @media (max-width: 1180px) {
   .panel { width: 360px; }
 }

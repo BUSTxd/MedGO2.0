@@ -6,6 +6,7 @@ import { CATEGORIAS_MP, TIPOS_MP, type TipoMP } from '@/lib/medula-practica/tipo
 import { PREGUNTAS_POR_RONDA, progreso } from '@/lib/medula-practica/sesion';
 import type { Practica } from './usePractica';
 import { pistaDe, textoRespuesta } from './texto';
+import Resaltado from './Resaltado';
 import s from '@/styles/medulaPractica.module.css';
 
 const OPCIONES_TIPO: Array<{ label: string; tipos: TipoMP[] }> = [
@@ -96,7 +97,7 @@ export default function PanelPractica({ pr, onSalir }: { pr: Practica; onSalir: 
                       </summary>
                       <div className={s.repasoDetalle}>
                         <p><strong>Respuesta:</strong> {textoRespuesta(q)}</p>
-                        <p>{q.explicacion}</p>
+                        <p><Resaltado texto={q.explicacion} prioridad={textoRespuesta(q)} /></p>
                       </div>
                     </details>
                   ) : (
@@ -139,7 +140,7 @@ export default function PanelPractica({ pr, onSalir }: { pr: Practica; onSalir: 
               {falladas.map((r) => (
                 <li key={r.pregunta.id}>
                   <strong>{r.pregunta.enunciado}</strong>
-                  <span>{r.pregunta.explicacion}</span>
+                  <span><Resaltado texto={r.pregunta.explicacion} prioridad={textoRespuesta(r.pregunta)} /></span>
                 </li>
               ))}
             </ul>

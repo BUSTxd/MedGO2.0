@@ -10,6 +10,7 @@ import { LEVELS } from '../engine/anatomy';
 import { LETRAS, nombre, textoRespuesta } from './texto';
 import { CATEGORIAS_MP } from '@/lib/medula-practica/tipos';
 import type { Practica } from './usePractica';
+import Resaltado from './Resaltado';
 import s from '@/styles/medulaPractica.module.css';
 
 const VIAJE_MS = 620;
@@ -185,7 +186,7 @@ export default function TarjetaPractica({ pr }: { pr: Practica }) {
 
               <div className={s.porque}>
                 <span className={s.porqueTitulo}>¿Por qué?</span>
-                <p>{p.explicacion}</p>
+                <p><Resaltado texto={p.explicacion} prioridad={respuestaTxt} /></p>
               </div>
 
               <footer className={s.pieTarjeta}>
