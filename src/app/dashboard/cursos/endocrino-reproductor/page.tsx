@@ -81,10 +81,11 @@ export default async function EndocrinoPage() {
               const badge = TIPO_BADGE[act.tipo];
               const borderColor = UNIDAD_COLOR[act.unidad];
               const docStr = act.docentes.length > 0 ? act.docentes.join(', ') : null;
-              // Las prácticas (anatomía, histología y el taller) son libres.
+              // Las prácticas (anatomía, histología y el taller) son libres, salvo
+              // las que llevan resumen (propio o de su magistral): ese es de pago.
               const isPractica =
                 (act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA' || act.tipo === 'TALLER') &&
-                !act.resumenCompartido;
+                !act.resumenCompartido && !act.resumen;
               // Si la card redirige a otra sección, no la bloqueamos:
               // el destino maneja su propio acceso.
               const isLocked = !isPractica && !act.linkOverride && !hasAcceso;

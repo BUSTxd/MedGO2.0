@@ -36,7 +36,7 @@ export default async function ActividadPage({
   // exámenes están detrás del plan Interno.
   const isPractica =
     (act.tipo === 'ANATOMIA' || act.tipo === 'HISTOLOGIA' || act.tipo === 'TALLER') &&
-    !act.resumenCompartido;
+    !act.resumenCompartido && !act.resumen;  // con resumen propio (Histología 1-4) es de pago
   const [user, planState] = await Promise.all([
     getUser(),
     isPractica

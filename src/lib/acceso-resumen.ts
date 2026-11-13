@@ -63,7 +63,8 @@ const LIBRE: Record<string, (a: Act) => boolean> = {
   // resumen se descargaría gratis desde la práctica. Ver `esLibre` del sílabo.
   'aparato-locomotor':     (a) => esTipo('ANATOMIA', 'HISTOLOGIA')(a) && !a.resumen,
   'digestivo':             esTipo('ANATOMIA', 'HISTOLOGIA'),
-  'endocrino-reproductor': esTipo('ANATOMIA', 'HISTOLOGIA', 'TALLER'),
+  // Igual que Locomotor: la práctica con resumen propio (Histología 1-4) es de pago.
+  'endocrino-reproductor': (a) => esTipo('ANATOMIA', 'HISTOLOGIA', 'TALLER')(a) && !a.resumen,
   // A diferencia de Endocrino, aquí los talleres (Espirometría, AGA) llevan
   // resumen y son de pago: libres sólo las prácticas. Ver `esPractica`.
   'respiratorio':          esTipo('ANATOMIA', 'HISTOLOGIA'),

@@ -127,8 +127,24 @@ if (/class="(?:image-layer|text-layer|pdf-text)"/.test(html) || (paginasFijas.le
    CERO imágenes y, como el texto sí se ve, parece que "sólo faltan figuras".
    Aquí se resuelve cada referencia contra lo que hay de verdad en la carpeta. */
 const RE_SRC = /src="([^"]+\.(?:png|jpe?g|webp|avif|svg))"/gi;
-const refs = [...new Set([...html.matchAll(RE_SRC)].map(m => m[1]))];
-if (!refs.length) { console.error('✗ El documento no referencia ninguna imagen.'); process.exit(1); }
+/* Una figura que ya está publicada en otro resumen (un repaso que reúne
+   diapositivas de otras clases, como Histo 4 de Endocrino) llega con su URL
+   pública absoluta: se deja tal cual y no se vuelve a subir. Sólo se aceptan
+   URLs de este mismo bucket, y se comprueba que existan antes de subir nada. */
+const esAjena = (ref) => /^https?:\/\//i.test(ref);
+const todas = [...new Set([...html.matchAll(RE_SRC)].map(m => m[1]))];
+const reusadas = todas.filter(esAjena);
+const refs = todas.filter(r => !esAjena(r));
+if (!todas.length) { console.error('✗ El documento no referencia ninguna imagen.'); process.exit(1); }
+if (reusadas.length) {
+  const base = `${config.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${BUCKET_IMG}/`;
+  const fuera = reusadas.filter(u => !u.startsWith(base));
+  if (fuera.length) { console.error(`✗ ${fuera.length} URL(s) que no son de ${BUCKET_IMG}:`); fuera.forEach(u => console.error('   ' + u)); process.exit(1); }
+  const rotas = [];
+  for (const u of reusadas) { const r = await fetch(u, { method: 'HEAD' }); if (!r.ok) rotas.push(`${r.status} ${u}`); }
+  if (rotas.length) { console.error(`✗ ${rotas.length} figura(s) reusada(s) que no existen:`); rotas.forEach(u => console.error('   ' + u)); process.exit(1); }
+  console.log(`reusadas: ${reusadas.length} figuras ya publicadas (no se suben)`);
+}
 
 const real = new Map();      // ref del HTML → ruta relativa existente
 const faltan = [];
@@ -234,6 +250,7 @@ if (fallos.length) {
 // ─── 7. armar el fragmento ───────────────────────────────────────────────
 // rutas locales → CDN público, con la extensión que de verdad existe
 body = body.replace(RE_SRC, (tag, ref) => {
+  if (esAjena(ref)) return tag;   // figura reusada de otro resumen: ya es pública
   const r = real.get(ref) ?? ref;
   return `src="${BASE_PUB}/${PREFIX}/${r.split('/').pop()}"`;
 });

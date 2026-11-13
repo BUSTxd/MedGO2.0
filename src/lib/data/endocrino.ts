@@ -161,6 +161,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'histo-1',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-histo-1', label: 'Resumen', formato: 'html' }] },
         tipo: 'HISTOLOGIA',
         unidad: 'ENDOCRINA',
         titulo: 'Práctica de Histología 1 — Glándulas endocrinas',
@@ -332,6 +333,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'histo-2',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-histo-2', label: 'Resumen', formato: 'html' }] },
         tipo: 'HISTOLOGIA',
         unidad: 'REPRODUCTOR',
         titulo: 'Práctica de Histología 2 — Aparato genital masculino',
@@ -460,6 +462,7 @@ export const semanas: Semana[] = [
     actividades: [
       {
         id: 'histo-3',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-histo-3', label: 'Resumen', formato: 'html' }] },
         tipo: 'HISTOLOGIA',
         unidad: 'REPRODUCTOR',
         titulo: 'Práctica de Histología 3 — Aparato genital femenino',
@@ -631,6 +634,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'histo-4',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-histo-4', label: 'Resumen', formato: 'html' }] },
         tipo: 'HISTOLOGIA',
         unidad: 'REPRODUCTOR',
         titulo: 'Práctica de Histología 4 — Repaso',
