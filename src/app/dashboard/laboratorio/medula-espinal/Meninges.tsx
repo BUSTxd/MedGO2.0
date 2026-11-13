@@ -13,17 +13,16 @@ interface Props {
 }
 
 export default function Meninges({ level, visible }: Props) {
-  const cordR = LEVELS[level].gm.cordRadius;
+  const cordR = LEVELS[level].corte.rx;
 
+  // Cada anillo sigue el contorno ovalado del nivel, escalado.
   const rings = useMemo(() => {
     return MENINGE_LIST.map((m) => {
-      const inner = cordR * m.rMul;
-      const outer = inner + cordR * m.thickness;
-      const shape = createMeningeShape(inner, outer);
+      const shape = createMeningeShape(level, m.rMul, m.rMul + m.thickness);
       const geo = new THREE.ExtrudeGeometry(shape, EXTRUDE_FLAT);
       return { id: m.id, geo, color: m.color, opacity: m.opacity };
     });
-  }, [cordR]);
+  }, [level]);
 
   return (
     <group>

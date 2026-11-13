@@ -1,21 +1,36 @@
 'use client';
-// Panel de controles lateral: selector de modo, nivel vertebral,
-// listas de estructuras y panel de información.
+// Panel contextual (a la derecha del lienzo, de su misma altura): arriba la
+// ficha de lo elegido, siempre visible; debajo la lista de la vista activa, con
+// su propio scroll. Vista y nivel viven en la barra de herramientas
+// (BarraHerramientas), porque afectan a todo el lab.
+// Diseño revisado con las heurísticas de Nielsen
+// (auditorias-ux/nielsen-medula-espinal-2026-11-12.md): solo lo esencial.
 
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import {
   LAMINA_GROUP_LIST, TRACT_LIST, TRACT_GROUPS, MENINGE_LIST, LEVEL_LIST, SYNDROME_LIST,
-  LAMINA_GROUPS, TRACTS, MENINGES, SYNDROMES,
-  tractPresentAt, tractLayersAt,
+  LAMINA_GROUPS, TRACTS, SYNDROMES,
+  tractPresentAt, tractLayersAt, rangoNucleo,
   type LevelId, type LaminaGroupId, type TractId, type MeningeId, type SyndromeId,
 } from './engine/anatomy';
+import type { Senalado } from './SpinalCordSimulator';
 import styles from '@/styles/medulaEspinal.module.css';
 
 export type ViewMode = 'completa' | 'corte' | 'tractos' | 'meninges' | 'clinico';
 
+export const MODES: Array<{ key: ViewMode; label: string; desc: string }> = [
+  { key: 'completa', label: 'Médula', desc: 'La médula entera: regiones, intumescencias y cono' },
+  { key: 'corte', label: 'Corte', desc: 'Corte transversal y láminas de Rexed' },
+  { key: 'tractos', label: 'Tractos', desc: 'Vías ascendentes y descendentes del nivel' },
+  { key: 'meninges', label: 'Meninges', desc: 'Piamadre, aracnoides y duramadre' },
+  { key: 'clinico', label: 'Clínico', desc: 'Síndromes medulares y lo que dañan' },
+];
+
 interface Props {
   mode: ViewMode;
   level: LevelId;
+  /** El nivel se elige en la barra lateral (la vista flota sobre el modelo). */
+  onSelectLevel: (l: LevelId) => void;
   selectedLamina: LaminaGroupId | null;
   selectedTract: TractId | null;
   selectedSyndrome: SyndromeId | null;
@@ -24,7 +39,9 @@ interface Props {
   showDura: boolean;
   showRoots: boolean;
   onSwitchMode: (m: ViewMode) => void;
-  onSelectLevel: (l: LevelId) => void;
+  /** Núcleo elegido en la ficha de la región (se ilumina su tramo). */
+  selectedNucleo: string | null;
+  onSelectNucleo: (n: string | null) => void;
   onSelectLamina: (id: LaminaGroupId | null) => void;
   onSelectTract: (id: TractId | null) => void;
   onSelectSyndrome: (id: SyndromeId | null) => void;
@@ -32,285 +49,313 @@ interface Props {
   onToggleAllLaminae: () => void;
   onToggleDura: () => void;
   onToggleRoots: () => void;
+  /** Señala en el modelo lo que está bajo el puntero en la lista. */
+  onSenalar: (s: Senalado) => void;
 }
 
-const MODES: Array<{ key: ViewMode; label: string }> = [
-  { key: 'completa', label: 'Médula' },
-  { key: 'corte', label: 'Corte' },
-  { key: 'tractos', label: 'Tractos' },
-  { key: 'meninges', label: 'Meninges' },
-  { key: 'clinico', label: 'Clínico' },
-];
+const ROJO_DESC = '#E0322E';
+const AZUL_ASC = '#2E86DE';
 
 function Dot({ color, size = 10 }: { color: string; size?: number }) {
   return (
     <span
       className={styles.structureDot}
       style={{ background: color, width: size, height: size } as CSSProperties}
+      aria-hidden
     />
+  );
+}
+
+/** Fila con interruptor: toda la fila se puede pulsar. */
+function Interruptor({ activo, onCambio, etiqueta, color, detalle }: {
+  activo: boolean;
+  onCambio: () => void;
+  etiqueta: string;
+  color?: string;
+  detalle?: string;
+}) {
+  return (
+    <button type="button" role="switch" aria-checked={activo} onClick={onCambio} className={styles.toggleRow}>
+      <span className={styles.toggleLabel}>
+        {color && <Dot color={color} />}
+        <span className={styles.toggleTextos}>
+          <span className={styles.structureName}>{etiqueta}</span>
+          {detalle && <span className={styles.toggleDetalle}>{detalle}</span>}
+        </span>
+      </span>
+      <span className={`${styles.toggleSwitch} ${activo ? styles.toggleOn : ''}`} aria-hidden />
+    </button>
+  );
+}
+
+/** Ficha de lo elegido. */
+function Ficha({ color, titulo, sub, children }: { color?: string; titulo: string; sub?: string; children?: ReactNode }) {
+  return (
+    <div className={styles.info} role="region" aria-label={titulo}>
+      <div className={styles.infoHead}>
+        {color && <Dot color={color} size={12} />}
+        <h3 className={styles.infoTitle}>{titulo}</h3>
+      </div>
+      {sub && <p className={styles.infoSub}>{sub}</p>}
+      {children}
+    </div>
+  );
+}
+
+function Vacio({ children }: { children: ReactNode }) {
+  return <p className={styles.infoEmpty}>{children}</p>;
+}
+
+function BotonLista({ activo, onClick, onEnter, onLeave, children, disabled }: {
+  activo: boolean;
+  onClick: () => void;
+  onEnter?: () => void;
+  onLeave?: () => void;
+  children: ReactNode;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      disabled={disabled}
+      aria-pressed={activo}
+      className={`${styles.structureBtn} ${activo ? styles.structureActive : ''}`}
+      onClick={onClick}
+      onPointerEnter={onEnter}
+      onPointerLeave={onLeave}
+    >
+      {children}
+    </button>
   );
 }
 
 export default function ControlsPanel(props: Props) {
   const {
-    mode, level, selectedLamina, selectedTract, selectedSyndrome,
+    mode, level, onSelectLevel, selectedLamina, selectedTract, selectedSyndrome,
     meningesVisible, showAllLaminae, showDura, showRoots,
-    onSwitchMode, onSelectLevel, onSelectLamina, onSelectTract,
+    onSwitchMode, onSelectLamina, onSelectTract,
     onSelectSyndrome, onToggleMeninge, onToggleAllLaminae,
-    onToggleDura, onToggleRoots,
+    onToggleDura, onToggleRoots, onSenalar, selectedNucleo, onSelectNucleo,
   } = props;
 
   const lvl = LEVEL_LIST.find((l) => l.id === level)!;
+  const nivel = lvl.name.toLowerCase();
 
-  return (
-    <div className={styles.panel}>
-      {/* ── Selector de modo ── */}
-      <div className={styles.segmented}>
-        {MODES.map(({ key, label }) => (
-          <button
-            key={key}
-            className={`${styles.segBtnSm} ${mode === key ? styles.segActive : ''}`}
-            onClick={() => onSwitchMode(key)}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+  let cabeza: ReactNode = null; // fila fija sobre la ficha (leyenda)
+  let ficha: ReactNode = null;  // zona fija: lo elegido
+  let lista: ReactNode = null;  // zona con scroll: opciones
 
-      {/* ── Selector de nivel vertebral ── */}
-      <div className={styles.levelGrid}>
-        {LEVEL_LIST.map((l) => (
-          <button
-            key={l.id}
-            className={`${styles.levelBtn} ${level === l.id ? styles.levelActive : ''}`}
-            onClick={() => onSelectLevel(l.id)}
-          >
-            <span className={styles.levelName}>{l.name}</span>
-            <span className={styles.levelSeg}>{l.segment}</span>
-          </button>
-        ))}
-      </div>
-
-      {/* ── Info del nivel ── */}
-      <p className={styles.hint}>{lvl.shape} · {lvl.desc}</p>
-
-      {/* ── Contenido por modo ── */}
-
-      {mode === 'completa' && (
-        <>
-          <p className={styles.hint}>
-            Cordón completo: dos intumescencias, cono medular y cauda equina.
-            Selecciona una región (arriba o en el modelo) para ver sus núcleos.
-          </p>
-
-          <div className={styles.toggleRow}>
-            <div className={styles.toggleLabel}>
-              <Dot color="#7e8aa0" />
-              <span className={styles.structureName}>Saco dural (cisterna lumbar)</span>
-            </div>
-            <button
-              className={`${styles.toggleSwitch} ${showDura ? styles.toggleOn : ''}`}
-              onClick={onToggleDura}
-              aria-label="Toggle saco dural"
-            />
-          </div>
-          <div className={styles.toggleRow}>
-            <div className={styles.toggleLabel}>
-              <Dot color="#9aa3b8" />
-              <span className={styles.structureName}>Raíces nerviosas</span>
-            </div>
-            <button
-              className={`${styles.toggleSwitch} ${showRoots ? styles.toggleOn : ''}`}
-              onClick={onToggleRoots}
-              aria-label="Toggle raíces"
-            />
-          </div>
-
-          <div className={styles.info}>
-            <div className={styles.infoTitle}>Nivel {lvl.name} · {lvl.segment}</div>
-            <div className={styles.infoDesc}>{lvl.desc}</div>
-            {lvl.nuclei.map((n) => (
-              <div key={n.name} className={styles.infoDesc} style={{ marginTop: 6 }}>
-                <strong>{n.name}</strong><br />{n.desc}
-              </div>
-            ))}
-            <div className={styles.infoDesc} style={{ fontStyle: 'italic', marginTop: 6 }}>
-              {lvl.whiteNote}
-            </div>
-            <button
-              className={styles.segBtnSm}
-              style={{ width: '100%', marginTop: 10 }}
-              onClick={() => onSwitchMode('corte')}
-            >
-              Ver corte transversal →
-            </button>
-          </div>
-        </>
-      )}
-
-      {mode === 'corte' && (
-        <>
-          <button
-            className={`${styles.segBtnSm} ${showAllLaminae ? styles.segActive : ''}`}
-            style={{ width: '100%', marginBottom: 6 }}
-            onClick={onToggleAllLaminae}
-          >
-            {showAllLaminae ? '✦ Todas las láminas' : 'Mostrar todas las láminas'}
-          </button>
-
-          <div className={styles.structureList}>
-            {LAMINA_GROUP_LIST.map((g) => (
-              <button
-                key={g.id}
-                className={`${styles.structureBtn} ${selectedLamina === g.id ? styles.structureActive : ''}`}
-                onClick={() => onSelectLamina(selectedLamina === g.id ? null : g.id)}
-              >
-                <Dot color={g.color} />
-                <span className={styles.structureName}>{g.name}</span>
-              </button>
-            ))}
-          </div>
-
-          {selectedLamina && (() => {
-            const g = LAMINA_GROUPS[selectedLamina];
+  if (mode === 'completa') {
+    ficha = (
+      <Ficha titulo={`Región ${nivel} · ${lvl.segment}`}>
+        <p className={styles.infoDesc}>{lvl.desc}</p>
+        <span className={styles.grupoTitulo}>Núcleos · toca uno para verlo</span>
+        <ul className={styles.nucleos}>
+          {lvl.nuclei.map((n) => {
+            const r = rangoNucleo(n);
+            const activo = selectedNucleo === n.name;
             return (
-              <div className={styles.info}>
-                <div className={styles.infoTitle}>{g.name}</div>
-                {g.laminae.map((l) => (
-                  <div key={l.numeral} className={styles.infoDesc}>
-                    <strong>Lámina {l.numeral} — {l.name}</strong><br />
-                    {l.fn}
-                  </div>
-                ))}
-                <div className={styles.infoDesc} style={{ fontStyle: 'italic', marginTop: 6 }}>
-                  {g.summary}
-                </div>
-              </div>
-            );
-          })()}
-        </>
-      )}
-
-      {mode === 'tractos' && (
-        <>
-          <p className={styles.hint}>
-            Rojo = descendente (motor) · Azul = ascendente (sensitivo). Sólo se muestran
-            los tractos presentes en el nivel {lvl.name}.
-          </p>
-
-          {TRACT_GROUPS.map((group) => {
-            const tractos = TRACT_LIST.filter((t) => t.group === group);
-            return (
-              <div key={group} className={styles.listSection}>
-                <div className={styles.listTitle}>{group}</div>
-                <div className={styles.structureList}>
-                  {tractos.map((t) => {
-                    const present = tractPresentAt(t.id, level);
-                    return (
-                      <button
-                        key={t.id}
-                        className={`${styles.structureBtn} ${selectedTract === t.id ? styles.structureActive : ''}`}
-                        style={present ? undefined : { opacity: 0.32, pointerEvents: 'none' } as CSSProperties}
-                        onClick={() => onSelectTract(selectedTract === t.id ? null : t.id)}
-                      >
-                        <Dot color={t.color} />
-                        <span className={styles.structureName}>{t.name}</span>
-                        <span className={styles.structureDir}>
-                          {present ? (t.direction === 'ascendente' ? '↑' : '↓') : '—'}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+              <li key={n.name}>
+                <button
+                  type="button"
+                  aria-pressed={activo}
+                  className={`${styles.nucleoBtn} ${activo ? styles.nucleoActivo : ''}`}
+                  onClick={() => onSelectNucleo(activo ? null : n.name)}
+                >
+                  <span className={styles.nucleoCabeza}>
+                    <span className={styles.nucleoLuz} aria-hidden />
+                    <strong>{n.name}</strong>
+                  </span>
+                  <span className={styles.nucleoDesc}>{n.desc}</span>
+                  {activo && r && <span className={styles.nucleoRango}>Iluminado en el modelo: {r[0]} a {r[1]}</span>}
+                </button>
+              </li>
             );
           })}
+        </ul>
+        <button type="button" className={styles.ctaBtn} onClick={() => onSwitchMode('corte')}>
+          Ver su corte transversal →
+        </button>
+      </Ficha>
+    );
+    lista = (
+      <>
+        <span className={styles.grupoTitulo}>Mostrar en el modelo</span>
+        <Interruptor activo={showDura} onCambio={onToggleDura} etiqueta="Saco dural" color="#7e8aa0" />
+        <Interruptor activo={showRoots} onCambio={onToggleRoots} etiqueta="Raíces nerviosas" color="#9aa3b8" />
+      </>
+    );
+  }
 
-          {selectedTract && (() => {
-            const t = TRACTS[selectedTract];
-            const layers = tractLayersAt(t.id, level).filter((l) => l !== '*');
-            return (
-              <div className={styles.info}>
-                <div className={styles.infoTitle}>{t.name}</div>
-                <div className={styles.infoDesc}>{t.fn}</div>
-                <div className={styles.infoDesc}>
-                  <strong>Somatotopía:</strong> {t.somatotopy}
-                </div>
-                {layers.length > 0 && (
-                  <div className={styles.infoDesc}>
-                    <strong>Capas en {lvl.name}:</strong> {layers.join(' · ')}
-                  </div>
-                )}
-                <div className={styles.infoDesc} style={{ fontStyle: 'italic' }}>
-                  {t.direction === 'ascendente' ? '↑ Ascendente · aferente' : '↓ Descendente · eferente'} · {t.group}
-                </div>
-              </div>
-            );
-          })()}
-        </>
-      )}
-
-      {mode === 'meninges' && (
-        <>
-          <p className={styles.hint}>Activa o desactiva cada capa meníngea.</p>
-
-          {MENINGE_LIST.map((m) => (
-            <div key={m.id} className={styles.toggleRow}>
-              <div className={styles.toggleLabel}>
-                <Dot color={m.color} />
-                <span className={styles.structureName}>{m.name}</span>
-              </div>
-              <button
-                className={`${styles.toggleSwitch} ${meningesVisible[m.id] ? styles.toggleOn : ''}`}
-                onClick={() => onToggleMeninge(m.id)}
-                aria-label={`Toggle ${m.name}`}
-              />
-            </div>
+  if (mode === 'corte') {
+    const g = selectedLamina ? LAMINA_GROUPS[selectedLamina] : null;
+    ficha = g ? (
+      <Ficha color={g.color} titulo={g.name} sub={g.summary}>
+        <ul className={styles.infoLista}>
+          {g.laminae.map((l) => (
+            <li key={l.numeral}><strong>{l.numeral} · {l.name}.</strong> {l.fn}</li>
           ))}
+        </ul>
+      </Ficha>
+    ) : (
+      <Vacio>Toca una lámina en el modelo o en la lista.</Vacio>
+    );
+    lista = (
+      <>
+        <Interruptor activo={showAllLaminae} onCambio={onToggleAllLaminae} etiqueta="Colorear todas las láminas" />
+        <div className={styles.structureList}>
+          {LAMINA_GROUP_LIST.map((lg) => (
+            <BotonLista
+              key={lg.id}
+              activo={selectedLamina === lg.id}
+              onClick={() => onSelectLamina(selectedLamina === lg.id ? null : lg.id)}
+              onEnter={() => onSenalar({ kind: 'lamina', id: lg.id })}
+              onLeave={() => onSenalar(null)}
+            >
+              <Dot color={lg.color} />
+              <span className={styles.structureName}>{lg.name}</span>
+            </BotonLista>
+          ))}
+        </div>
+      </>
+    );
+  }
 
-          {(() => {
-            const active = MENINGE_LIST.find((m) => meningesVisible[m.id]);
-            return active ? (
-              <div className={styles.info}>
-                <div className={styles.infoTitle}>{active.name}</div>
-                <div className={styles.infoDesc}>{active.desc}</div>
+  if (mode === 'tractos') {
+    const t = selectedTract ? TRACTS[selectedTract] : null;
+    const capas = t ? tractLayersAt(t.id, level).filter((l) => l !== '*') : [];
+    const ausentes = TRACT_LIST.filter((x) => !tractPresentAt(x.id, level));
+    cabeza = (
+      <div className={styles.leyenda} aria-label="Leyenda de colores">
+        <span className={styles.leyendaItem}><Dot color={ROJO_DESC} /> ↓ Descendente</span>
+        <span className={styles.leyendaItem}><Dot color={AZUL_ASC} /> ↑ Ascendente</span>
+      </div>
+    );
+    ficha = t ? (
+      <Ficha color={t.color} titulo={t.name} sub={`${t.direction === 'ascendente' ? '↑ Ascendente' : '↓ Descendente'} · ${t.group}`}>
+        <p className={styles.infoDesc}>{t.fn}</p>
+        <p className={styles.infoDesc}>
+          <strong>Somatotopía:</strong> {t.somatotopy}
+          {capas.length > 0 && ' En el modelo, cada capa lleva su letra (S, L, T, C).'}
+        </p>
+      </Ficha>
+    ) : (
+      <Vacio>Toca un tracto en el modelo o en la lista.</Vacio>
+    );
+    lista = (
+      <>
+        {TRACT_GROUPS.map((group) => {
+          const tractos = TRACT_LIST.filter((x) => x.group === group && tractPresentAt(x.id, level));
+          if (tractos.length === 0) return null;
+          return (
+            <div key={group} className={styles.listSection}>
+              <div className={styles.listTitle}>{group}</div>
+              <div className={styles.structureList}>
+                {tractos.map((x) => (
+                  <BotonLista
+                    key={x.id}
+                    activo={selectedTract === x.id}
+                    onClick={() => onSelectTract(selectedTract === x.id ? null : x.id)}
+                    onEnter={() => onSenalar({ kind: 'tract', id: x.id })}
+                    onLeave={() => onSenalar(null)}
+                  >
+                    <Dot color={x.color} />
+                    <span className={styles.structureName}>{x.name}</span>
+                    <span className={styles.structureDir} aria-label={x.direction}>
+                      {x.direction === 'ascendente' ? '↑' : '↓'}
+                    </span>
+                  </BotonLista>
+                ))}
               </div>
-            ) : (
-              <div className={styles.infoEmpty}>Activa una capa para ver su descripción.</div>
-            );
-          })()}
-        </>
-      )}
+            </div>
+          );
+        })}
+        {ausentes.length > 0 && (
+          <p className={styles.notaPie}>
+            No existen en el nivel {nivel}: {ausentes.map((x) => x.name.toLowerCase()).join(', ')}.
+          </p>
+        )}
+      </>
+    );
+  }
 
-      {mode === 'clinico' && (
-        <>
-          <p className={styles.hint}>Selecciona un síndrome para visualizar las zonas afectadas.</p>
+  if (mode === 'meninges') {
+    lista = (
+      <>
+        <span className={styles.grupoTitulo}>De dentro hacia fuera</span>
+        {MENINGE_LIST.map((m) => (
+          <Interruptor
+            key={m.id}
+            activo={meningesVisible[m.id]}
+            onCambio={() => onToggleMeninge(m.id)}
+            etiqueta={m.name}
+            detalle={m.corto}
+            color={m.color}
+          />
+        ))}
+      </>
+    );
+  }
 
-          <div className={styles.syndromeGrid}>
-            {SYNDROME_LIST.map((s) => (
-              <button
-                key={s.id}
-                className={`${styles.structureBtn} ${selectedSyndrome === s.id ? styles.structureActive : ''}`}
-                onClick={() => onSelectSyndrome(selectedSyndrome === s.id ? null : s.id)}
-              >
-                <span className={styles.structureName}>{s.name}</span>
-              </button>
-            ))}
-          </div>
+  if (mode === 'clinico') {
+    const s = selectedSyndrome ? SYNDROMES[selectedSyndrome] : null;
+    ficha = s ? (
+      <Ficha titulo={s.name} sub={s.desc}>
+        <p className={styles.infoDesc}><strong>Mecanismo:</strong> {s.mechanism}</p>
+        <ul className={styles.chips} aria-label="Lo que daña">
+          {s.tracts.filter((id) => tractPresentAt(id, level)).map((id) => (
+            <li key={id} className={styles.chip}><Dot color={TRACTS[id].color} /> {TRACTS[id].name}</li>
+          ))}
+          {s.laminae.map((id) => (
+            <li key={id} className={styles.chip}><Dot color={LAMINA_GROUPS[id].color} /> {LAMINA_GROUPS[id].name}</li>
+          ))}
+        </ul>
+        {s.side === 'right' && (
+          <p className={styles.infoNota}>Violeta = lado de la lesión (ipsilateral).</p>
+        )}
+      </Ficha>
+    ) : (
+      <Vacio>Elige un síndrome: el modelo resalta lo que daña.</Vacio>
+    );
+    lista = (
+      <div className={styles.structureList}>
+        {SYNDROME_LIST.map((x) => (
+          <BotonLista
+            key={x.id}
+            activo={selectedSyndrome === x.id}
+            onClick={() => onSelectSyndrome(selectedSyndrome === x.id ? null : x.id)}
+          >
+            <span className={styles.structureName}>{x.name}</span>
+          </BotonLista>
+        ))}
+      </div>
+    );
+  }
 
-          {selectedSyndrome && (() => {
-            const s = SYNDROMES[selectedSyndrome];
-            return (
-              <div className={styles.info}>
-                <div className={styles.infoTitle}>{s.name}</div>
-                <div className={styles.infoDesc}><strong>Causa:</strong> {s.cause}</div>
-                <div className={styles.infoDesc}><strong>Mecanismo:</strong> {s.mechanism}</div>
-                <div className={styles.infoDesc} style={{ fontWeight: 600, marginTop: 6 }}>{s.desc}</div>
-              </div>
-            );
-          })()}
-        </>
-      )}
-    </div>
+  return (
+    <aside className={styles.panel} aria-label={`Panel de ${MODES.find((m) => m.key === mode)?.label ?? ''}`}>
+      {/* Nivel medular: arriba de la barra lateral, siempre visible */}
+      <div className={styles.panelNivel}>
+        <span className={styles.grupoTitulo} id="me-nivel">Nivel medular</span>
+        <div className={styles.niveles} role="group" aria-labelledby="me-nivel">
+          {LEVEL_LIST.map((l) => (
+            <button
+              key={l.id}
+              type="button"
+              title={`${l.name}, segmento ${l.segment}`}
+              aria-pressed={level === l.id}
+              className={level === l.id ? styles.nivelActivo : styles.nivel}
+              onClick={() => onSelectLevel(l.id)}
+            >
+              <strong>{l.name}</strong>
+              <span>{l.segment}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      {cabeza && <div className={styles.panelCabeza}>{cabeza}</div>}
+      {ficha && <div className={styles.panelFicha}>{ficha}</div>}
+      {lista && <div className={styles.panelLista}>{lista}</div>}
+    </aside>
   );
 }

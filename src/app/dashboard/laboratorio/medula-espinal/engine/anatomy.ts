@@ -46,12 +46,33 @@ export interface LaminaGroup {
   summary: string;
 }
 
-/** Ubicación de un tracto en el corte (lado derecho; se espeja al izquierdo). */
+/**
+ * Ubicación de un tracto en el corte (lado derecho; se espeja al izquierdo).
+ * Medida sobre «Medulla spinalis - tracts» de Polarlys (Commons, CC BY-SA 3.0;
+ * solo como referencia, sin copiar sus trazos) con
+ * `scripts/medula-espinal/medir-tractos.mjs`, con el ángulo desde dorsal.
+ */
 export type TractPlacement =
-  /** Sector anular entre rIn..rOut (fracción del radio) y a0..a1 (grados desde dorsal). */
+  /**
+   * Sector entre a0..a1 (grados) y rIn..rOut medidos en la banda blanca: 0 es
+   * el borde (suavizado) de la sustancia gris en ese ángulo y 1 la superficie.
+   * Así el sector se pega al asta como en la lámina y se adapta a cada nivel.
+   */
   | { kind: 'sector'; a0: number; a1: number; rIn: number; rOut: number; soma?: 'radial' | 'tangential' }
-  /** Óvalo a (ang°, rad) con semiejes rx, ry (fracciones del radio). */
-  | { kind: 'blob'; ang: number; rad: number; rx: number; ry: number };
+  /**
+   * Óvalo a (ang°, rad) con rad en fracción del contorno, y semiejes rx
+   * (tangente a la superficie) y ry (radial) en fracciones del semiancho. Si el
+   * gris de un nivel llega a ese sitio, se empuja hacia afuera. `mas` añade
+   * haces del mismo tracto.
+   */
+  | { kind: 'blob'; ang: number; rad: number; rx: number; ry: number; mas?: Array<{ ang: number; rad: number; rx: number; ry: number }> }
+  /** Óvalo pegado a la fisura media anterior; `pos` va del fondo (0) al labio (1). */
+  | { kind: 'fisura'; pos: number; rx: number; ry: number }
+  /**
+   * Franja del funículo posterior, entre el septo medio (0) y el asta
+   * posterior (1). `f1Solo` reemplaza a `f1` en los niveles sin cuneiforme.
+   */
+  | { kind: 'posterior'; f0: number; f1: number; f1Solo?: number; soma?: 'tangential' };
 
 export interface Tract {
   id: TractId;
@@ -76,22 +97,54 @@ export interface MeningealLayer {
   /** Grosor relativo al radio de la médula. */
   thickness: number;
   desc: string;
+  /** Lo esencial en una línea, para el panel. */
+  corto: string;
 }
 
-/** Parámetros geométricos de la sustancia gris (forma de H). */
-export interface GrayMatterParams {
-  cordRadius: number;
-  postHornLen: number;
-  postHornTipW: number;
-  postHornBaseW: number;
-  antHornLen: number;
-  antHornTipW: number;
-  antHornBaseW: number;
-  bodyW: number;
-  bodyH: number;
-  latHorn: boolean;
-  latHornLen: number;
-  latHornW: number;
+/** Punto [x, y] en fracciones del semiancho (x lateral derecho, y dorsal). */
+export type Pt = [number, number];
+
+/** Riel de un asta: puntos del borde, de la base a la punta. */
+export interface Asta {
+  /** Borde medial (sin el punto de base, que es la esquina de la comisura). */
+  medial: Pt[];
+  /** Borde lateral, desde su punto de base. */
+  lateral: Pt[];
+  /** Abombamiento de la tapa de la punta (× ancho de la punta). */
+  tapa: number;
+}
+
+/**
+ * Forma del corte transversal a un nivel, calcada de Gray's Anatomy fig. 666
+ * (dominio público) y medida sobre ella con `scripts/medula-espinal/vista.mjs`.
+ * Las coordenadas van en fracciones del semiancho `rx`, con el origen en el
+ * centro de la caja del corte; los surcos y la fisura siguen el esquema de
+ * Polarlys en Commons («Medulla spinalis - Section»), solo como guía.
+ */
+export interface CorteForma {
+  /** Semiancho en unidades de escena (escala del nivel). */
+  rx: number;
+  /** Semialto, en fracciones del semiancho. */
+  ry: number;
+  /** Exponente de superelipse de la mitad dorsal y de la ventral (2 = elipse). */
+  nD: number;
+  nV: number;
+  /** Fisura media anterior: y de su fondo y semiancho. */
+  fisura: { fondo: number; ancho: number };
+  /** Profundidad del surco medio posterior. */
+  surco: number;
+  gris: {
+    /** Comisura gris (lámina X): semiancho y bordes dorsal y ventral. */
+    comisura: { ancho: number; arriba: number; abajo: number };
+    dorsal: Asta;
+    ventral: Asta;
+    /** Borde lateral de la zona intermedia entre las bases de las dos astas (asta lateral incluida). */
+    intermedia: Pt[];
+    /** Fracciones del asta posterior donde terminan V-VI y III-IV. */
+    cortesDorsal: [number, number];
+    /** Fracciones del asta anterior donde termina VII (base) y VIII (medial). */
+    cortesVentral: [number, number];
+  };
 }
 
 export interface SpinalLevel {
@@ -100,8 +153,9 @@ export interface SpinalLevel {
   segment: string;
   shape: string;
   desc: string;
-  gm: GrayMatterParams;
-  nuclei: Array<{ name: string; desc: string }>;
+  corte: CorteForma;
+  /** Núcleos del nivel; `rango` (segmentos) si no va entre paréntesis en el nombre. */
+  nuclei: Array<{ name: string; desc: string; rango?: [string, string] }>;
   whiteNote: string;
 }
 
@@ -197,7 +251,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#2E86DE',
     fn: 'Propiocepción consciente, vibración y tacto discriminativo de MMII y tronco bajo (T7-S5). Asciende ipsilateral hasta el núcleo grácil del bulbo.',
     somatotopy: 'Medial→lateral: sacro, lumbar, torácico inferior.',
-    placement: { kind: 'sector', a0: 3, a1: 20, rIn: 0.10, rOut: 0.96, soma: 'tangential' },
+    placement: { kind: 'posterior', f0: 0, f1: 0.44, f1Solo: 0.95, soma: 'tangential' },
     presence: { cervical: ['S', 'L', 'T'], toracico: ['S', 'L', 'T'], lumbar: ['S', 'L'], sacro: ['S'] },
   },
   cuneiforme: {
@@ -205,7 +259,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#54A0E0',
     fn: 'Propiocepción consciente, vibración y tacto discriminativo de MMSS y tronco alto (C1-T6). Asciende ipsilateral al núcleo cuneiforme.',
     somatotopy: 'Componente cervical y torácico superior. Sólo C1–T6.',
-    placement: { kind: 'sector', a0: 22, a1: 40, rIn: 0.34, rOut: 0.96 },
+    placement: { kind: 'posterior', f0: 0.48, f1: 0.95 },
     presence: { cervical: ['C'], toracico: ['C'], lumbar: [], sacro: [] },
   },
   // ── Sistema anterolateral ──
@@ -214,7 +268,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#3b9edd',
     fn: 'Dolor y temperatura (termoalgesia). Decusan por la comisura blanca anterior y ascienden contralaterales.',
     somatotopy: 'Profundo→superficial: cervical, torácico, lumbar, sacro.',
-    placement: { kind: 'sector', a0: 112, a1: 138, rIn: 0.52, rOut: 0.93, soma: 'radial' },
+    placement: { kind: 'sector', a0: 105, a1: 132, rIn: 0.0, rOut: 0.52, soma: 'radial' },
     presence: { cervical: ['S', 'L', 'T', 'C'], toracico: ['S', 'L', 'T'], lumbar: ['S', 'L'], sacro: ['S'] },
   },
   'espinotalamico-ant': {
@@ -222,7 +276,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#5DADE2',
     fn: 'Tacto protopático (grueso) y presión. Decusa y asciende contralateral en el cordón anterior.',
     somatotopy: 'Núcleo del borde anteroexterno del cordón anterior.',
-    placement: { kind: 'blob', ang: 150, rad: 0.80, rx: 0.10, ry: 0.09 },
+    placement: { kind: 'blob', ang: 151, rad: 0.74, rx: 0.08, ry: 0.05 },
     presence: { cervical: ['*'], toracico: ['*'], lumbar: ['*'], sacro: ['*'] },
   },
   // ── Vías espinocerebelosas ──
@@ -231,7 +285,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#2E9BB5',
     fn: 'Propiocepción inconsciente del tronco y MI. Sinapsis en la columna de Clarke (C8–L2); asciende ipsilateral.',
     somatotopy: 'Banda periférica del cuadrante posterolateral.',
-    placement: { kind: 'sector', a0: 50, a1: 72, rIn: 0.86, rOut: 1.0 },
+    placement: { kind: 'sector', a0: 53, a1: 91, rIn: 0.64, rOut: 0.95 },
     presence: { cervical: ['*'], toracico: ['*'], lumbar: [], sacro: [] },
   },
   'espinocerebeloso-ant': {
@@ -239,7 +293,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#48C0D8',
     fn: 'Propiocepción inconsciente del MI. Doble decusación; corre por la periferia del cordón lateral (ecuador).',
     somatotopy: 'Banda periférica del ecuador lateral, bajo el posterior.',
-    placement: { kind: 'sector', a0: 78, a1: 100, rIn: 0.84, rOut: 1.0 },
+    placement: { kind: 'sector', a0: 103, a1: 130, rIn: 0.60, rOut: 0.95 },
     presence: { cervical: ['*'], toracico: ['*'], lumbar: ['*'], sacro: [] },
   },
   // ── Vías espinoolivares ──
@@ -248,7 +302,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#6FB8D8',
     fn: 'Información cutánea y propioceptiva hacia el complejo olivar inferior. Núcleo del cordón anterior, medial al espinotalámico anterior.',
     somatotopy: 'Pequeño núcleo basal del cordón anterior.',
-    placement: { kind: 'blob', ang: 158, rad: 0.62, rx: 0.08, ry: 0.09 },
+    placement: { kind: 'blob', ang: 134, rad: 0.90, rx: 0.05, ry: 0.045 },
     presence: { cervical: ['*'], toracico: ['*'], lumbar: [], sacro: [] },
   },
   // ── Vías piramidales ──
@@ -257,7 +311,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#E0322E',
     fn: 'Control motor voluntario fino de extremidades distales. Cruzado en la decusación piramidal; desciende contralateral.',
     somatotopy: 'Superficial→profundo: sacro, lumbar, torácico, cervical.',
-    placement: { kind: 'sector', a0: 46, a1: 70, rIn: 0.50, rOut: 0.84, soma: 'radial' },
+    placement: { kind: 'sector', a0: 59, a1: 92, rIn: 0.05, rOut: 0.58, soma: 'radial' },
     presence: { cervical: ['S', 'L', 'T', 'C'], toracico: ['S', 'L', 'T'], lumbar: ['S', 'L'], sacro: ['S'] },
   },
   'corticoespinal-ant': {
@@ -265,7 +319,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#F0664F',
     fn: 'Control de la musculatura axial y proximal del tronco. Desciende ipsilateral junto a la fisura media; decusa antes de sinaptar. Termina en niveles torácicos/lumbares altos.',
     somatotopy: 'Óvalo vertical adyacente a la fisura media anterior.',
-    placement: { kind: 'blob', ang: 171, rad: 0.50, rx: 0.09, ry: 0.16 },
+    placement: { kind: 'fisura', pos: 0.64, rx: 0.044, ry: 0.165 },
     presence: { cervical: ['*'], toracico: ['*'], lumbar: ['*'], sacro: [] },
   },
   // ── Vías extrapiramidales ──
@@ -274,7 +328,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#C0392B',
     fn: 'Facilita el tono flexor de las extremidades. Cruzado desde el núcleo rojo; profundo, por delante del corticoespinal lateral. Se reduce al descender.',
     somatotopy: 'Núcleo profundo, anterior al corticoespinal lateral.',
-    placement: { kind: 'blob', ang: 84, rad: 0.52, rx: 0.10, ry: 0.12 },
+    placement: { kind: 'blob', ang: 97, rad: 0.80, rx: 0.05, ry: 0.09 },
     presence: { cervical: ['*'], toracico: ['*'], lumbar: [], sacro: [] },
   },
   reticuloespinal: {
@@ -282,7 +336,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#D9534F',
     fn: 'Modula el tono muscular, los reflejos posturales y la marcha automática. Profundo, pegado a la base del asta anterior.',
     somatotopy: 'Núcleo profundo anterolateral, base del asta anterior.',
-    placement: { kind: 'blob', ang: 118, rad: 0.46, rx: 0.12, ry: 0.12 },
+    placement: { kind: 'blob', ang: 99, rad: 0.50, rx: 0.06, ry: 0.10, mas: [{ ang: 159, rad: 0.46, rx: 0.05, ry: 0.05 }] },
     presence: { cervical: ['*'], toracico: ['*'], lumbar: ['*'], sacro: ['*'] },
   },
   vestibuloespinal: {
@@ -290,7 +344,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#E8746A',
     fn: 'Equilibrio y facilitación del tono extensor postural. Desciende ipsilateral; por delante y fuera del reticuloespinal.',
     somatotopy: 'Núcleo anterolateral intermedio del cordón anterior.',
-    placement: { kind: 'blob', ang: 132, rad: 0.66, rx: 0.12, ry: 0.12 },
+    placement: { kind: 'blob', ang: 163, rad: 0.91, rx: 0.09, ry: 0.04 },
     presence: { cervical: ['*'], toracico: ['*'], lumbar: ['*'], sacro: [] },
   },
   olivoespinal: {
@@ -298,7 +352,7 @@ export const TRACTS: Record<TractId, Tract> = {
     color: '#F1948A',
     fn: 'Influencia de la oliva sobre la actividad motora segmentaria. Óvalo superficial del borde anterolateral. Desaparece bajo el nivel torácico.',
     somatotopy: 'Núcleo periférico anterolateral superficial.',
-    placement: { kind: 'blob', ang: 146, rad: 0.88, rx: 0.10, ry: 0.10 },
+    placement: { kind: 'blob', ang: 140, rad: 0.90, rx: 0.065, ry: 0.042 },
     presence: { cervical: ['*'], toracico: ['*'], lumbar: [], sacro: [] },
   },
 };
@@ -343,16 +397,19 @@ export const MENINGES: Record<MeningeId, MeningealLayer> = {
     id: 'piamadre', name: 'Piamadre', color: '#E88B8B', opacity: 0.5,
     rMul: 1.02, thickness: 0.03,
     desc: 'Membrana vascular interna, adherida directamente a la superficie de la médula. Emite los ligamentos dentados hacia la duramadre.',
+    corto: 'Pegada a la médula; forma los ligamentos dentados.',
   },
   aracnoides: {
     id: 'aracnoides', name: 'Aracnoides', color: '#B0C4DE', opacity: 0.25,
     rMul: 1.18, thickness: 0.03,
     desc: 'Membrana avascular intermedia. Bajo ella se abre el espacio subaracnoideo lleno de LCR (suspensión hidráulica).',
+    corto: 'Avascular; debajo, el LCR del espacio subaracnoideo.',
   },
   duramadre: {
     id: 'duramadre', name: 'Duramadre', color: '#5C6C80', opacity: 0.35,
     rMul: 1.30, thickness: 0.06,
     desc: 'Saco fibroso externo resistente. Se extiende del foramen magno a S2. Coraza mecánica del cordón espinal.',
+    corto: 'Saco fibroso del foramen magno a S2.',
   },
 };
 
@@ -368,12 +425,16 @@ export const LEVELS: Record<LevelId, SpinalLevel> = {
   cervical: {
     id: 'cervical', name: 'Cervical', segment: 'C5', shape: 'Ovalada',
     desc: 'Mayor cantidad de sustancia blanca. Astas anteriores anchas para la inervación del miembro superior (intumescencia cervical C3-C8).',
-    gm: {
-      cordRadius: 1.5,
-      postHornLen: 0.55, postHornTipW: 0.10, postHornBaseW: 0.09,
-      antHornLen: 0.60, antHornTipW: 0.42, antHornBaseW: 0.12,
-      bodyW: 0.09, bodyH: 0.12,
-      latHorn: false, latHornLen: 0, latHornW: 0,
+    corte: {
+      rx: 1.5, ry: 0.742, nD: 2.0, nV: 2.5,
+      fisura: { fondo: -0.31, ancho: 0.022 }, surco: 0.03,
+      gris: {
+        comisura: { ancho: 0.10, arriba: -0.15, abajo: -0.27 },
+        dorsal: { medial: [[0.16, 0.05], [0.25, 0.33], [0.35, 0.58]], lateral: [[0.25, -0.10], [0.27, 0.08], [0.34, 0.33], [0.42, 0.56]], tapa: 0.6 },
+        ventral: { medial: [[0.12, -0.37], [0.17, -0.45], [0.25, -0.50]], lateral: [[0.45, -0.17], [0.59, -0.22], [0.63, -0.32], [0.55, -0.45]], tapa: 0.45 },
+        intermedia: [[0.34, -0.09], [0.43, -0.12]],
+        cortesDorsal: [0.3, 0.68], cortesVentral: [0.15, 0.85],
+      },
     },
     nuclei: [
       { name: 'N. accesorio espinal (C1-C5)', desc: 'Fibras motoras para el NC XI → trapecio y esternocleidomastoideo.' },
@@ -384,12 +445,16 @@ export const LEVELS: Record<LevelId, SpinalLevel> = {
   toracico: {
     id: 'toracico', name: 'Torácico', segment: 'T5', shape: 'Circular pequeña',
     desc: 'Sección circular y pequeña. Sustancia gris reducida con asta lateral visible (sistema simpático).',
-    gm: {
-      cordRadius: 1.0,
-      postHornLen: 0.30, postHornTipW: 0.06, postHornBaseW: 0.05,
-      antHornLen: 0.25, antHornTipW: 0.13, antHornBaseW: 0.06,
-      bodyW: 0.05, bodyH: 0.07,
-      latHorn: true, latHornLen: 0.10, latHornW: 0.04,
+    corte: {
+      rx: 0.95, ry: 0.91, nD: 2.0, nV: 2.6,
+      fisura: { fondo: -0.50, ancho: 0.03 }, surco: 0.04,
+      gris: {
+        comisura: { ancho: 0.09, arriba: -0.24, abajo: -0.38 },
+        dorsal: { medial: [[0.12, -0.06], [0.22, 0.30], [0.33, 0.62]], lateral: [[0.20, -0.22], [0.24, -0.03], [0.30, 0.30], [0.40, 0.60]], tapa: 0.5 },
+        ventral: { medial: [[0.09, -0.50], [0.11, -0.66]], lateral: [[0.23, -0.38], [0.29, -0.50], [0.28, -0.65]], tapa: 0.5 },
+        intermedia: [[0.26, -0.23], [0.31, -0.26], [0.25, -0.32]],
+        cortesDorsal: [0.3, 0.68], cortesVentral: [0.15, 0.6],
+      },
     },
     nuclei: [
       { name: 'Columna de Clarke (C8-L2)', desc: 'Propiocepción inconsciente → tracto espinocerebeloso dorsal ipsilateral.' },
@@ -400,15 +465,19 @@ export const LEVELS: Record<LevelId, SpinalLevel> = {
   lumbar: {
     id: 'lumbar', name: 'Lumbar', segment: 'L4', shape: 'Circular robusta',
     desc: 'Gran volumen de sustancia gris (intumescencia lumbar). Astas anteriores muy anchas para la musculatura del MI.',
-    gm: {
-      cordRadius: 1.35,
-      postHornLen: 0.55, postHornTipW: 0.16, postHornBaseW: 0.11,
-      antHornLen: 0.65, antHornTipW: 0.46, antHornBaseW: 0.14,
-      bodyW: 0.11, bodyH: 0.14,
-      latHorn: false, latHornLen: 0, latHornW: 0,
+    corte: {
+      rx: 1.1, ry: 0.95, nD: 2.1, nV: 2.5,
+      fisura: { fondo: -0.14, ancho: 0.04 }, surco: 0.04,
+      gris: {
+        comisura: { ancho: 0.10, arriba: 0.0, abajo: -0.11 },
+        dorsal: { medial: [[0.15, 0.15], [0.23, 0.40], [0.36, 0.64]], lateral: [[0.30, 0.02], [0.39, 0.20], [0.46, 0.45], [0.50, 0.66]], tapa: 0.6 },
+        ventral: { medial: [[0.09, -0.25], [0.12, -0.45], [0.20, -0.62]], lateral: [[0.50, -0.12], [0.59, -0.30], [0.54, -0.50], [0.42, -0.63]], tapa: 0.5 },
+        intermedia: [[0.40, -0.02], [0.46, -0.08]],
+        cortesDorsal: [0.3, 0.68], cortesVentral: [0.15, 0.8],
+      },
     },
     nuclei: [
-      { name: 'N. propio (láminas III-IV)', desc: 'Muy desarrollado; recibe tacto discriminativo de dermatomas del MI.' },
+      { name: 'N. propio (láminas III-IV)', desc: 'Muy desarrollado; recibe tacto discriminativo de dermatomas del MI.', rango: ['C1', 'S5'] },
       { name: 'N. lumbosacro (L2-S1)', desc: 'Columna nuclear motora → plexo lumbosacro para cadera, muslo y pierna.' },
     ],
     whiteNote: 'Solo fascículo grácil en el cordón posterior. Sin espinocerebeloso posterior (ausencia de Clarke).',
@@ -416,12 +485,16 @@ export const LEVELS: Record<LevelId, SpinalLevel> = {
   sacro: {
     id: 'sacro', name: 'Sacro', segment: 'S3', shape: 'Cuadrangular',
     desc: 'Menor diámetro de toda la médula. Sustancia gris domina la sección; sustancia blanca reducida a un delgado anillo.',
-    gm: {
-      cordRadius: 0.8,
-      postHornLen: 0.33, postHornTipW: 0.16, postHornBaseW: 0.13,
-      antHornLen: 0.33, antHornTipW: 0.24, antHornBaseW: 0.13,
-      bodyW: 0.13, bodyH: 0.12,
-      latHorn: false, latHornLen: 0, latHornW: 0,
+    corte: {
+      rx: 0.9, ry: 0.922, nD: 2.7, nV: 2.9,
+      fisura: { fondo: -0.42, ancho: 0.025 }, surco: 0.03,
+      gris: {
+        comisura: { ancho: 0.08, arriba: 0.02, abajo: -0.08 },
+        dorsal: { medial: [[0.10, 0.20], [0.18, 0.42], [0.28, 0.62]], lateral: [[0.45, 0.0], [0.55, 0.20], [0.58, 0.45], [0.50, 0.66]], tapa: 0.7 },
+        ventral: { medial: [[0.07, -0.20], [0.10, -0.45], [0.18, -0.62]], lateral: [[0.66, -0.10], [0.68, -0.30], [0.60, -0.52], [0.42, -0.62]], tapa: 0.5 },
+        intermedia: [[0.60, -0.05]],
+        cortesDorsal: [0.3, 0.68], cortesVentral: [0.15, 0.8],
+      },
     },
     nuclei: [
       { name: 'N. de Onuf (S2-S4)', desc: 'Motoneuronas somáticas para esfínteres anal externo, uretral estriado, isquiocavernoso y bulbocavernoso.' },
@@ -430,6 +503,16 @@ export const LEVELS: Record<LevelId, SpinalLevel> = {
     whiteNote: 'Sustancia blanca en delgada banda periférica; solo un vestigio medial del fascículo grácil.',
   },
 };
+
+/**
+ * Segmentos que ocupa un núcleo: su `rango`, o el que lleva entre paréntesis
+ * en el nombre («Columna de Clarke (C8-L2)» → ['C8', 'L2']).
+ */
+export function rangoNucleo(n: { name: string; rango?: [string, string] }): [string, string] | null {
+  if (n.rango) return n.rango;
+  const m = n.name.match(/\(((?:[CTLS]\d+)|Co)-((?:[CTLS]\d+)|Co)\)/);
+  return m ? [m[1], m[2]] : null;
+}
 
 export const LEVEL_LIST: SpinalLevel[] = [
   LEVELS['cervical'],
@@ -537,7 +620,6 @@ export function cordRadiusAt(y: number): number {
 
 export const CORD_TOP = 5.0;
 export const CONUS_TIP = -4.6;       // vértice del cono medular
-export const FILUM_BOTTOM = -7.4;    // fin del filum terminale / saco dural
 
 export const REGIONS: CordRegion[] = [
   { id: 'cervical', label: 'Cervical',  feature: 'Intumescencia cervical (C4–T1)', segments: 'C1–C8', yHi: 5.0, yLo: 3.0, color: '#3b9edd' },

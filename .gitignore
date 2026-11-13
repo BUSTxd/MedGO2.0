@@ -30,6 +30,8 @@ scripts/atlas-3d/salida/
 # Examen 3D de miembro superior: el banco (respuestas) y lo extraído de los
 # resúmenes de pago no van a git (el repo es público). Se sube al bucket `examenes`.
 data/examen-ms/
+# Práctica del lab Médula Espinal 3D: preguntas con sus respuestas (bucket `examenes`).
+data/medula-practica/
 docs/examen-ms/*
 !docs/examen-ms/PLAN.md
 

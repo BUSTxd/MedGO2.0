@@ -18,6 +18,8 @@
     "verificar:linfocitos": "node --experimental-strip-types --no-warnings scripts/linfocitos/verificar.mjs",
     "verificar:hipersensibilidad": "node --experimental-strip-types --no-warnings scripts/hipersensibilidad/verificar.mjs",
     "verificar:lupus": "node --experimental-strip-types --no-warnings scripts/lupus/verificar.mjs",
+    "vista:medula": "node --experimental-strip-types --no-warnings scripts/medula-espinal/vista.mjs",
+    "practica:medula": "node --experimental-strip-types --no-warnings scripts/medula-espinal/practica/ensamblar.mjs",
     "verificar:citopenias": "node --experimental-strip-types --no-warnings scripts/citopenias/verificar.mjs",
     "verificar:vasculitis": "node --experimental-strip-types --no-warnings scripts/vasculitis/verificar.mjs",
     "verificar:gramnegativas": "node --experimental-strip-types --no-warnings scripts/gramnegativas/verificar.mjs",

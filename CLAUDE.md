@@ -42,6 +42,8 @@ npm run probar:acceso | probar:planificador
 npm run verificar:temas | verificar:catalogo | verificar:banco
 npm run publicar:clase -- <curso>/<clase> [--subir] | verificar:clases
 npm run verificar:ciclo | verificar:vias-nfkb | verificar:linfocitos | verificar:hipersensibilidad | verificar:lupus | verificar:citopenias | verificar:vasculitis | verificar:gramnegativas
+npm run vista:medula          # corte de Médula Espinal 3D contra Gray 666 y la lámina de tractos de Polarlys, sin navegador
+npm run practica:medula [-- --subir]   # banco de práctica del lab (fuente en data/medula-practica/, fuera de git): valida contra anatomy.ts, mide el sesgo de largo y sube a examenes/neurologia/medula-practica.json
 ```
 
 ---

@@ -1,5 +1,8 @@
 /* Simulador de médula espinal. Tema claro por defecto; el dark-mode lo
-   define este propio módulo (regla del proyecto: nada de dark-mode en globals). */
+   define este propio módulo (regla del proyecto: nada de dark-mode en globals).
+   Tamaños y contrastes revisados con las heurísticas de Nielsen
+   (auditorias-ux/nielsen-medula-espinal-2026-11-12.md): texto secundario con
+   opacidad ≥ 70 % y fichas a 14,5 px. */
 
 /* ─── INTRO ─── */
 .intro {
@@ -11,9 +14,10 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #3b9edd;
+  color: #2b7fb8;
   margin-bottom: 6px;
 }
+:global(.dark-mode) .kicker { color: #5fb4e8; }
 .h2 {
   font-size: 22px;
   font-weight: 700;
@@ -23,73 +27,173 @@
 }
 :global(.dark-mode) .h2 { color: #f0eeff; }
 .sub {
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.6;
-  color: rgba(26, 26, 46, 0.65);
+  color: rgba(26, 26, 46, 0.78);
   max-width: 720px;
   margin: 0;
 }
-:global(.dark-mode) .sub { color: rgba(240, 238, 255, 0.6); }
+:global(.dark-mode) .sub { color: rgba(240, 238, 255, 0.78); }
 .disclaimer {
   display: block;
   margin-top: 6px;
-  font-size: 12.5px;
-  color: rgba(26, 26, 46, 0.45);
+  font-size: 13px;
+  color: rgba(26, 26, 46, 0.7);
 }
-:global(.dark-mode) .disclaimer { color: rgba(240, 238, 255, 0.4); }
+:global(.dark-mode) .disclaimer { color: rgba(240, 238, 255, 0.7); }
 
-/* ─── LAYOUT ─── */
-.sim { padding: 14px 28px 28px; }
-
-.stageWrap {
-  display: grid;
-  grid-template-columns: 1fr 330px;
-  gap: 20px;
-  align-items: start;
-}
-
-@media (max-width: 860px) {
-  .stageWrap { grid-template-columns: 1fr; gap: 16px; }
-  .sim { padding: 12px 16px 24px; }
-  .intro { padding: 18px 16px 4px; }
-}
-
-/* ─── STAGE 3D ─── */
-.stage {
-  position: relative;
-  height: 480px;
-  border-radius: 14px;
-  overflow: hidden;
-  background: radial-gradient(circle at 50% 40%, #eef4ff 0%, #dde6f5 100%);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-}
-:global(.dark-mode) .stage {
-  background: radial-gradient(circle at 50% 40%, #11142b 0%, #070914 100%);
-  border-color: rgba(255, 255, 255, 0.08);
-}
-@media (max-width: 860px) {
-  .stage { height: 360px; }
-}
-
-/* Etiqueta de la estructura activa — esquina superior izquierda del recuadro */
-.structureTag {
+/* Solo para lector de pantalla */
+.srOnly {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ─── DISTRIBUCIÓN (como el atlas 3D del miembro superior) ───
+   El modelo ocupa toda la altura; la vista flota arriba a la izquierda y el
+   resto va en la barra lateral, más ancha porque el corte es pequeño. */
+.wrapper {
+  position: relative;
+  margin: -28px -28px -36px;
+  height: calc(100dvh - 48px);
+  min-height: 520px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #eef2f8;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding: 8px 12px;
+  /* La fuente de la app (como el atlas): la heredan el menú ☰ y los botones */
+  font-family: var(--font-outfit), system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+:global(.dark-mode) .wrapper { background: #0b0f1d; }
+.wrapper button, .wrapper kbd { font-family: inherit; }
+
+.lab {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.escenario {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  background: radial-gradient(ellipse at 50% 38%, #eef4ff 0%, #dde6f5 100%);
+}
+:global(.dark-mode) .escenario {
+  background: radial-gradient(ellipse at 50% 38%, #11142b 0%, #070914 100%);
+}
+
+/* Vista: arriba a la izquierda, sobre el modelo (como las vistas del atlas). */
+.vistas {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 5; /* sobre la tarjeta y el velo de la práctica: tocar una sale */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: calc(100% - 80px);
+  padding: 4px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #dde2ec;
+  box-shadow: 0 6px 22px rgba(20, 30, 60, 0.12);
+}
+:global(.dark-mode) .vistas {
+  background: #151b30;
+  border-color: #28324f;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.45);
+}
+.vista,
+.vistaActiva {
+  border: 0;
+  border-radius: 8px;
+  padding: 7px 11px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  background: transparent;
+  color: #5b6478;
+}
+.vista:hover { color: #1b2233; background: #f4f6fb; }
+.vistaActiva {
+  background: rgba(59, 158, 221, 0.12);
+  color: #3b9edd;
+  font-weight: 600;
+}
+:global(.dark-mode) .vista { color: #9aa6c2; }
+:global(.dark-mode) .vista:hover { color: #eef1fa; background: #1b2340; }
+:global(.dark-mode) .vistaActiva { background: rgba(91, 180, 236, 0.14); color: #5bb4ec; }
+
+/* Teléfono: modelo arriba, barra lateral debajo (como el atlas). */
+@media (max-width: 900px) {
+  .wrapper { height: auto; min-height: 0; }
+  .lab { flex-direction: column; }
+  .escenario { flex: none; height: 62dvh; min-height: 360px; }
+}
+@media (max-width: 600px) {
+  .wrapper { margin: -18px -16px -28px; border-radius: 14px; }
+  .vistas { top: 10px; left: 10px; right: 60px; max-width: none; flex-wrap: nowrap; overflow-x: auto; }
+  .vista, .vistaActiva { padding: 7px 9px; }
+}
+
+/* Carga del modelo y aviso sin WebGL */
+.stageEstado {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.8);
+}
+.stageEstado strong { font-size: 15px; color: #1a1a2e; }
+.stageEstado span { max-width: 420px; }
+:global(.dark-mode) .stageEstado { color: rgba(240, 238, 255, 0.8); }
+:global(.dark-mode) .stageEstado strong { color: #f0eeff; }
+.spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid rgba(59, 158, 221, 0.25);
+  border-top-color: #3b9edd;
+  animation: girar 0.9s linear infinite;
+}
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* Rótulo de lo señalado o elegido — esquina superior izquierda del lienzo */
+.structureTag {
+  position: absolute;
+  top: 66px; /* bajo la vista flotante */
+  left: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9px 13px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 14px rgba(26, 26, 46, 0.12);
   pointer-events: none;
-  max-width: 70%;
+  max-width: calc(100% - 70px);
 }
 :global(.dark-mode) .structureTag {
-  background: rgba(8, 10, 24, 0.6);
+  background: rgba(13, 11, 40, 0.92);
   border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 .structureTagRow {
   display: flex;
@@ -97,188 +201,334 @@
   gap: 8px;
 }
 .structureTagDot {
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 .structureTagName {
-  font-size: 12.5px;
+  font-size: 14px;
   color: #1a1a2e;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
-.structureTagName strong { font-weight: 800; letter-spacing: 0.02em; }
+.structureTagName strong { font-weight: 800; }
 :global(.dark-mode) .structureTagName { color: #f0eeff; }
+.structureTagSub {
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(26, 26, 46, 0.75);
+  padding-left: 19px;
+}
+:global(.dark-mode) .structureTagSub { color: rgba(240, 238, 255, 0.75); }
+
+/* Menú de la vista (☰) — esquina superior derecha: restablecer y etiquetas */
+.menuVista {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+}
+.menuBtn {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(26, 26, 46, 0.1);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.menuBtn:hover,
+.menuBtnAbierto { border-color: rgba(59, 158, 221, 0.55); background: #fff; }
+:global(.dark-mode) .menuBtn {
+  background: rgba(13, 11, 40, 0.92);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+:global(.dark-mode) .menuBtn:hover,
+:global(.dark-mode) .menuBtnAbierto { border-color: rgba(95, 180, 232, 0.6); }
+.menuRayas {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.menuRayas span {
+  display: block;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  background: #1a1a2e;
+}
+:global(.dark-mode) .menuRayas span { background: #f0eeff; }
+.menu {
+  position: absolute;
+  top: 46px;
+  right: 0;
+  min-width: 196px;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(26, 26, 46, 0.18);
+  animation: fadeUp 0.15s ease;
+}
+:global(.dark-mode) .menu {
+  background: #141235;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+}
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1a1a2e;
+  text-align: left;
+  cursor: pointer;
+}
+.menuItem:hover { background: rgba(59, 158, 221, 0.09); }
+:global(.dark-mode) .menuItem { color: #f0eeff; }
+:global(.dark-mode) .menuItem:hover { background: rgba(59, 158, 221, 0.14); }
+.menuIcono {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #5b6478;
+}
+:global(.dark-mode) .menuIcono { color: #9aa6c2; }
+/* Casilla para marcar */
+.menuCasilla {
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1.5px solid rgba(26, 26, 46, 0.4);
+  color: #fff;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+:global(.dark-mode) .menuCasilla { border-color: rgba(240, 238, 255, 0.45); }
+.menuCasillaOn,
+:global(.dark-mode) .menuCasillaOn {
+  background: #3b9edd;
+  border-color: #3b9edd;
+}
+
+@media (max-width: 480px) {
+  .structureTag { max-width: calc(100% - 64px); }
+}
 
 .zoomHint {
   position: absolute;
   bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 11px;
-  font-weight: 500;
-  color: rgba(26, 26, 46, 0.5);
-  background: rgba(255, 255, 255, 0.55);
-  padding: 3px 12px;
+  right: 12px;
+  max-width: calc(100% - 24px);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: rgba(26, 26, 46, 0.78);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 4px 12px;
   border-radius: 999px;
   pointer-events: none;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 :global(.dark-mode) .zoomHint {
-  color: rgba(240, 238, 255, 0.55);
-  background: rgba(0, 0, 0, 0.35);
+  color: rgba(240, 238, 255, 0.8);
+  background: rgba(8, 6, 26, 0.75);
 }
 
 /* ─── PANEL ─── */
+/* Barra lateral: ancha (el corte es pequeño y necesita las fichas al lado). */
 .panel {
+  width: 420px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  min-height: 0;
+  background: #ffffff;
+  border-left: 1px solid #dde2ec;
+  overflow: hidden;
 }
-
-/* Selector de modo (segmented) */
-.segmented, .segmentedSm {
+:global(.dark-mode) .panel {
+  background: #151b30;
+  border-left-color: #28324f;
+}
+@media (max-width: 1180px) {
+  .panel { width: 360px; }
+}
+/* Nivel medular, fijo arriba de la barra lateral */
+.panelNivel {
+  flex: none;
   display: flex;
-  gap: 4px;
-  padding: 4px;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.07);
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 14px 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
-:global(.dark-mode) .segmented,
-:global(.dark-mode) .segmentedSm {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.08);
-}
-
-.segBtn, .segBtnSm {
-  flex: 1;
-  padding: 9px 10px;
-  border: none;
-  border-radius: 9px;
-  background: transparent;
-  color: rgba(26, 26, 46, 0.6);
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.18s ease, color 0.18s ease;
-}
-.segBtnSm { font-size: 11.5px; padding: 7px 5px; white-space: nowrap; }
-:global(.dark-mode) .segBtn,
-:global(.dark-mode) .segBtnSm { color: rgba(240, 238, 255, 0.6); }
-
-.segActive {
-  background: #3b9edd;
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(59, 158, 221, 0.3);
-}
-:global(.dark-mode) .segActive { color: #fff; }
-
-.hint {
-  font-size: 12.5px;
-  line-height: 1.5;
-  color: rgba(26, 26, 46, 0.6);
-  margin: 0;
-}
-:global(.dark-mode) .hint { color: rgba(240, 238, 255, 0.6); }
-
-/* ─── LEVEL GRID (selección de nivel medular) ─── */
-.levelGrid {
+:global(.dark-mode) .panelNivel { border-bottom-color: rgba(255, 255, 255, 0.07); }
+.niveles {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 6px;
 }
-.levelBtn {
+.nivel,
+.nivelActivo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 10px 8px;
+  gap: 1px;
+  padding: 8px 4px;
   border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+  color: #1a1a2e;
   cursor: pointer;
-  text-align: center;
-  font-family: inherit;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
-:global(.dark-mode) .levelBtn {
-  border-color: rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
+.nivel strong, .nivelActivo strong { font-size: 13.5px; font-weight: 700; }
+.nivel span, .nivelActivo span { font-size: 11.5px; font-weight: 600; color: rgba(26, 26, 46, 0.68); }
+.nivel:hover { border-color: rgba(59, 158, 221, 0.5); background: rgba(59, 158, 221, 0.05); }
+.nivelActivo { border-color: #3b9edd; background: rgba(59, 158, 221, 0.12); color: #2b7fb8; }
+:global(.dark-mode) .nivel,
+:global(.dark-mode) .nivelActivo { border-color: rgba(255, 255, 255, 0.12); color: #f0eeff; }
+:global(.dark-mode) .nivel span,
+:global(.dark-mode) .nivelActivo span { color: rgba(240, 238, 255, 0.65); }
+:global(.dark-mode) .nivelActivo { border-color: #5bb4ec; background: rgba(91, 180, 236, 0.14); color: #5bb4ec; }
+/* Fila fija (leyenda), ficha fija y lista con scroll propio */
+.panelCabeza {
+  flex: none;
+  padding: 12px 14px 0;
 }
-.levelBtn:hover {
-  border-color: rgba(59, 158, 221, 0.3);
-  background: rgba(59, 158, 221, 0.04);
+/* La ficha toma la altura que necesita; si el panel no alcanza, se encoge
+   primero la lista (flex-shrink alto) y solo después la ficha hace scroll. */
+.panelFicha {
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
-.levelActive {
-  border-color: rgba(59, 158, 221, 0.55);
-  background: rgba(59, 158, 221, 0.12);
+:global(.dark-mode) .panelFicha { border-bottom-color: rgba(255, 255, 255, 0.07); }
+.panelLista {
+  flex: 1 100 auto;
+  min-height: min(150px, 100%);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px 14px;
 }
-.levelName {
-  font-size: 14px;
+.notaPie {
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(26, 26, 46, 0.72);
+}
+:global(.dark-mode) .notaPie { color: rgba(240, 238, 255, 0.72); }
+@media (max-width: 900px) {
+  .panel { width: auto; border-left: 0; border-top: 1px solid #dde2ec; overflow: visible; }
+  .panelFicha { overflow: visible; }
+  .panelLista { overflow: visible; }
+}
+.grupoTitulo {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 46, 0.72);
+}
+:global(.dark-mode) .grupoTitulo { color: rgba(240, 238, 255, 0.72); }
+
+/* ─── LEYENDA DE COLORES ─── */
+.leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+.leyendaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
   font-weight: 700;
   color: #1a1a2e;
 }
-:global(.dark-mode) .levelName { color: #f0eeff; }
-.levelSeg {
-  font-size: 11px;
-  color: rgba(26, 26, 46, 0.5);
-  font-weight: 600;
-}
-:global(.dark-mode) .levelSeg { color: rgba(240, 238, 255, 0.45); }
+:global(.dark-mode) .leyendaItem { color: #f0eeff; }
 
-/* ─── STRUCTURE LIST (láminas, tractos, meninges) ─── */
+/* ─── STRUCTURE LIST (láminas, tractos, síndromes) ─── */
 .listSection {
   margin-top: 4px;
 }
 .listTitle {
-  font-size: 10.5px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(26, 26, 46, 0.45);
+  color: rgba(26, 26, 46, 0.72);
   margin: 0 0 6px;
   padding: 0;
 }
-:global(.dark-mode) .listTitle { color: rgba(240, 238, 255, 0.4); }
+:global(.dark-mode) .listTitle { color: rgba(240, 238, 255, 0.72); }
 
 .structureList {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 .structureBtn {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
+  gap: 9px;
+  min-height: 36px;
+  padding: 7px 10px;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid transparent;
   background: transparent;
   cursor: pointer;
   font-family: inherit;
   text-align: left;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
-:global(.dark-mode) .structureBtn {
-  border-color: rgba(255, 255, 255, 0.06);
+.structureBtn:hover:not(:disabled) {
+  background: rgba(59, 158, 221, 0.07);
 }
-.structureBtn:hover {
-  border-color: rgba(59, 158, 221, 0.3);
-  background: rgba(59, 158, 221, 0.04);
-}
-:global(.dark-mode) .structureBtn:hover {
-  border-color: rgba(59, 158, 221, 0.35);
-  background: rgba(59, 158, 221, 0.06);
-}
-.structureActive {
-  border-color: rgba(59, 158, 221, 0.5);
+:global(.dark-mode) .structureBtn:hover:not(:disabled) {
   background: rgba(59, 158, 221, 0.1);
 }
-:global(.dark-mode) .structureActive {
-  border-color: rgba(59, 158, 221, 0.55);
-  background: rgba(59, 158, 221, 0.12);
+.structureBtn:disabled {
+  cursor: not-allowed;
+  border-style: dashed;
+}
+.structureBtn:disabled .structureName { color: rgba(26, 26, 46, 0.55); font-weight: 500; }
+:global(.dark-mode) .structureBtn:disabled .structureName { color: rgba(240, 238, 255, 0.5); }
+.structureActive,
+.structureActive:hover:not(:disabled) {
+  border-color: rgba(43, 127, 184, 0.55);
+  background: rgba(59, 158, 221, 0.13);
+}
+.structureActive .structureName { font-weight: 800; }
+:global(.dark-mode) .structureActive,
+:global(.dark-mode) .structureActive:hover:not(:disabled) {
+  border-color: #5fb4e8;
+  background: rgba(59, 158, 221, 0.16);
 }
 .structureDot {
   width: 10px;
@@ -287,113 +537,415 @@
   flex-shrink: 0;
 }
 .structureName {
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 600;
+  line-height: 1.35;
   color: #1a1a2e;
 }
 :global(.dark-mode) .structureName { color: #f0eeff; }
 .structureDir {
-  font-size: 10px;
-  color: rgba(26, 26, 46, 0.5);
-  font-weight: 500;
+  margin-left: auto;
+  font-size: 12px;
+  color: rgba(26, 26, 46, 0.72);
+  font-weight: 600;
+  white-space: nowrap;
 }
-:global(.dark-mode) .structureDir { color: rgba(240, 238, 255, 0.45); }
+:global(.dark-mode) .structureDir { color: rgba(240, 238, 255, 0.7); }
 
-/* ─── TOGGLE ROW (checkboxes de meninges, etc.) ─── */
+/* ─── TOGGLE ROW (interruptores: toda la fila se pulsa) ─── */
 .toggleRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 11px;
+  border-radius: 9px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
-:global(.dark-mode) .toggleRow {
-  border-color: rgba(255, 255, 255, 0.06);
-}
+.toggleRow:hover { border-color: rgba(59, 158, 221, 0.4); background: rgba(59, 158, 221, 0.04); }
+:global(.dark-mode) .toggleRow { border-color: rgba(255, 255, 255, 0.08); }
+:global(.dark-mode) .toggleRow:hover { border-color: rgba(59, 158, 221, 0.45); background: rgba(59, 158, 221, 0.07); }
 .toggleLabel {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 9px;
+  min-width: 0;
 }
+.toggleLabel .structureDot { margin-top: 4px; }
+.toggleTextos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.toggleDetalle {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(26, 26, 46, 0.72);
+}
+:global(.dark-mode) .toggleDetalle { color: rgba(240, 238, 255, 0.72); }
 .toggleSwitch {
-  width: 36px;
-  height: 20px;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.12);
-  border: none;
-  cursor: pointer;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 38px;
+  height: 22px;
+  border-radius: 11px;
+  background: rgba(0, 0, 0, 0.22);
   position: relative;
   transition: background 0.2s ease;
-  padding: 0;
 }
 :global(.dark-mode) .toggleSwitch {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.22);
 }
 .toggleSwitch::after {
   content: '';
   position: absolute;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: white;
   top: 2px;
   left: 2px;
   transition: transform 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
-.toggleOn {
-  background: #3b9edd;
-}
+.toggleOn,
 :global(.dark-mode) .toggleOn {
-  background: #3b9edd;
+  background: #2b7fb8;
 }
 .toggleOn::after {
   transform: translateX(16px);
 }
 
-/* ─── SYNDROME GRID ─── */
-.syndromeGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-
-/* ─── INFO BLOCK ─── */
+/* ─── FICHA DE INFORMACIÓN ─── */
 .info {
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(59, 158, 221, 0.25);
-  background: rgba(59, 158, 221, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   animation: fadeUp 0.25s ease;
 }
-:global(.dark-mode) .info {
-  border-color: rgba(59, 158, 221, 0.3);
-  background: rgba(59, 158, 221, 0.08);
+.infoHead {
+  display: flex;
+  align-items: center;
+  gap: 9px;
 }
 .infoTitle {
-  margin: 0 0 4px;
-  font-size: 15px;
-  font-weight: 700;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.3;
   color: #1a1a2e;
 }
 :global(.dark-mode) .infoTitle { color: #f0eeff; }
+.infoSub {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: rgba(26, 26, 46, 0.8);
+}
+:global(.dark-mode) .infoSub { color: rgba(240, 238, 255, 0.8); }
 .infoDesc {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(26, 26, 46, 0.86);
+}
+:global(.dark-mode) .infoDesc { color: rgba(240, 238, 255, 0.86); }
+.infoLista {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(26, 26, 46, 0.86);
+}
+:global(.dark-mode) .infoLista { color: rgba(240, 238, 255, 0.86); }
+.infoNota {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  font-style: italic;
+  color: rgba(26, 26, 46, 0.75);
+}
+:global(.dark-mode) .infoNota { color: rgba(240, 238, 255, 0.75); }
+.infoEmpty {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px dashed rgba(26, 26, 46, 0.22);
+  font-size: 13.5px;
   line-height: 1.55;
   color: rgba(26, 26, 46, 0.75);
 }
-:global(.dark-mode) .infoDesc { color: rgba(240, 238, 255, 0.78); }
-.infoEmpty {
-  font-size: 13px;
-  line-height: 1.55;
-  color: rgba(26, 26, 46, 0.5);
-  margin: 0;
+:global(.dark-mode) .infoEmpty {
+  border-color: rgba(240, 238, 255, 0.22);
+  color: rgba(240, 238, 255, 0.75);
 }
-:global(.dark-mode) .infoEmpty { color: rgba(240, 238, 255, 0.5); }
+.ctaBtn {
+  margin-top: 4px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #2b7fb8;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.ctaBtn:hover { background: #236a9c; }
+
+/* Clínico: lo que daña cada síndrome */
+.chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .chip {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f0eeff;
+}
+
+/* ─── FOCO Y MOVIMIENTO ─── */
+.vista:focus-visible,
+.vistaActiva:focus-visible,
+.nivel:focus-visible,
+.nivelActivo:focus-visible,
+.structureBtn:focus-visible,
+.toggleRow:focus-visible,
+.menuBtn:focus-visible,
+.menuItem:focus-visible,
+.ctaBtn:focus-visible {
+  outline: 2px solid #3b9edd;
+  outline-offset: 2px;
+}
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .info { animation: none; }
+  .spinner { animation-duration: 2.4s; }
+  .nivel, .nivelActivo, .structureBtn, .toggleRow, .toggleSwitch,
+  .toggleSwitch::after, .menuBtn, .ctaBtn { transition: none; }
+  .menu { animation: none; }
+}
+
+/* ─── NÚCLEOS DE LA REGIÓN (se pulsan para iluminar su tramo) ─── */
+.nucleos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.nucleoBtn {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  padding: 9px 11px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.nucleoBtn:hover { border-color: rgba(242, 182, 49, 0.6); background: rgba(255, 213, 107, 0.1); }
+:global(.dark-mode) .nucleoBtn { border-color: rgba(255, 255, 255, 0.1); }
+:global(.dark-mode) .nucleoBtn:hover { border-color: rgba(255, 213, 107, 0.55); background: rgba(255, 213, 107, 0.08); }
+.nucleoActivo,
+.nucleoActivo:hover {
+  border-color: #e3a81c;
+  background: rgba(255, 213, 107, 0.2);
+  box-shadow: 0 0 0 3px rgba(255, 213, 107, 0.22);
+}
+:global(.dark-mode) .nucleoActivo,
+:global(.dark-mode) .nucleoActivo:hover {
+  border-color: #f2c14e;
+  background: rgba(255, 213, 107, 0.14);
+}
+.nucleoCabeza {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .nucleoCabeza { color: #f0eeff; }
+/* «Bombilla»: apagada en gris, encendida en ámbar con halo */
+.nucleoLuz {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(26, 26, 46, 0.22);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+:global(.dark-mode) .nucleoLuz { background: rgba(240, 238, 255, 0.25); }
+.nucleoActivo .nucleoLuz,
+:global(.dark-mode) .nucleoActivo .nucleoLuz {
+  background: #f2b631;
+  box-shadow: 0 0 0 3px rgba(242, 182, 49, 0.28), 0 0 10px rgba(242, 182, 49, 0.8);
+}
+.nucleoDesc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(26, 26, 46, 0.78);
+  padding-left: 18px;
+}
+:global(.dark-mode) .nucleoDesc { color: rgba(240, 238, 255, 0.78); }
+.nucleoRango {
+  padding-left: 18px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #9a6a00;
+}
+:global(.dark-mode) .nucleoRango { color: #f2c14e; }
+.nucleoBtn:focus-visible { outline: 2px solid #3b9edd; outline-offset: 2px; }
+
+/* ─── BARRAS DE SCROLL (panel y vista flotante en el teléfono) ───
+   Finas, redondeadas y del color del tema; la pista no se ve. */
+.panelFicha,
+.panelLista,
+.vistas {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(43, 127, 184, 0.45) transparent;
+}
+:global(.dark-mode) .panelFicha,
+:global(.dark-mode) .panelLista,
+:global(.dark-mode) .vistas {
+  scrollbar-color: rgba(95, 180, 232, 0.45) transparent;
+}
+.panelFicha::-webkit-scrollbar,
+.panelLista::-webkit-scrollbar,
+.vistas::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.panelFicha::-webkit-scrollbar-track,
+.panelLista::-webkit-scrollbar-track,
+.vistas::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 6px 0;
+}
+.panelFicha::-webkit-scrollbar-thumb,
+.panelLista::-webkit-scrollbar-thumb,
+.vistas::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  background-color: rgba(43, 127, 184, 0.4);
+}
+.panelFicha::-webkit-scrollbar-thumb:hover,
+.panelLista::-webkit-scrollbar-thumb:hover,
+.vistas::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(43, 127, 184, 0.7);
+}
+:global(.dark-mode) .panelFicha::-webkit-scrollbar-thumb,
+:global(.dark-mode) .panelLista::-webkit-scrollbar-thumb,
+:global(.dark-mode) .vistas::-webkit-scrollbar-thumb {
+  background-color: rgba(95, 180, 232, 0.4);
+}
+:global(.dark-mode) .panelFicha::-webkit-scrollbar-thumb:hover,
+:global(.dark-mode) .panelLista::-webkit-scrollbar-thumb:hover,
+:global(.dark-mode) .vistas::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(95, 180, 232, 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nucleoBtn, .nucleoLuz { transition: none; }
+}
+
+/* ─── PRACTICAR (esquina inferior izquierda del lienzo) ───
+   Mismo diseño y color que «Iniciar examen» del atlas 3D (píldora, ícono,
+   celeste --acento y su sombra). Un sacudón cada 7 s recuerda que está ahí. */
+.practicarBtn {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 4; /* sobre la tarjeta y el velo de la práctica */
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #fff;
+  background: #3b9edd;
+  box-shadow: 0 6px 22px rgba(20, 30, 60, 0.12);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.practicarBtn:hover { background: #2f8ccb; }
+.practicarBtn:active { transform: scale(0.97); }
+.practicarBtn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; box-shadow: 0 0 0 4px #3b9edd; }
+:global(.dark-mode) .practicarBtn {
+  background: #5bb4ec;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.45);
+}
+:global(.dark-mode) .practicarBtn:hover { background: #4aa6e0; }
+/* En la práctica, el mismo sitio sirve para salir: como «Salir del examen»
+   del atlas 3D (píldora clara con borde; se pone roja al pasar), sin sacudón. */
+.practicarSalir {
+  padding: 8px 16px;
+  background: #ffffff;
+  border: 1px solid #dde2ec;
+  color: #5b6478;
+  box-shadow: 0 6px 22px rgba(20, 30, 60, 0.12);
+}
+.practicarSalir:hover { background: #ffffff; color: #d64545; border-color: rgba(214, 69, 69, 0.4); }
+:global(.dark-mode) .practicarSalir {
+  background: #151b30;
+  border-color: #28324f;
+  color: #9aa6c2;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.45);
+}
+:global(.dark-mode) .practicarSalir:hover { background: #151b30; color: #f07272; border-color: rgba(240, 114, 114, 0.4); }
+.practicarAviso { animation: recordatorio 7s ease-in-out 2.2s infinite; }
+@keyframes recordatorio {
+  0%, 86%, 100% { transform: none; }
+  88% { transform: rotate(-4deg) translateY(-4px); }
+  90% { transform: rotate(4deg) translateY(-4px); }
+  92% { transform: rotate(-3deg); }
+  94% { transform: rotate(2deg); }
+  96% { transform: rotate(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .practicarAviso { animation: none; }
+  .practicarBtn { transition: none; }
 }

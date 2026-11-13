@@ -77,6 +77,11 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey | Requisi
   // con las barajas 1 y 7 de prueba gratis para cualquier cuenta.
   // Lo arma scripts/examen-ms/ensamblar-banco.mjs; el JSON fuente no va a git.
   'aparato-locomotor/practico-ms': { barajasLibres: [1, 7] },
+  // Práctica del lab Médula Espinal 3D (corte, tractos y clínico): el mismo
+  // requisito que el lab (`requisitoDeLab('medula-espinal')`, escrito a mano
+  // porque los scripts cargan este archivo con Node). La arma
+  // scripts/medula-espinal/practica/ensamblar.mjs; la fuente no va a git.
+  'neurologia/medula-practica': { plan: { tramo: 'medicina', nivel: 'completo' } },
   // El mismo banco en tarjetas de memoria (Banqueo de la Evaluación 1), con
   // scripts/examen-ms/tarjetas.mjs. Mismo plan, sin muestra.
   'aparato-locomotor/practico-ms-tarjetas': {},
