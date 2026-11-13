@@ -68,6 +68,16 @@ const htmlPath = join(dir, htmls[0]);
 let html = readFileSync(htmlPath, 'utf8');
 const bytesOriginal = Buffer.byteLength(html, 'utf8');
 
+// Notion exporta un bloque de imagen VACÍO (nunca se le subió archivo) como una
+// <figure> con un GIF transparente de 1×1 incrustado (`data:image/gif;base64…`,
+// `width:1px`). No pinta nada, pero deja el margen de la figura y el script lo
+// buscaría como archivo en disco (Introducción a la Micología). Se descartan.
+const figurasVacias = html.match(/<figure[^>]*data-notion-image="data:image\/gif[^"]*"[^>]*>[\s\S]*?<\/figure>/g) || [];
+if (figurasVacias.length) {
+  html = html.replace(/<figure[^>]*data-notion-image="data:image\/gif[^"]*"[^>]*>[\s\S]*?<\/figure>/g, '');
+  console.log(`  descartadas ${figurasVacias.length} figuras vacías (GIF de 1×1 de Notion)`);
+}
+
 console.log(`\nHTML   : ${htmls[0]}  (${kb(bytesOriginal)})`);
 
 // ─── 2. rechazar exports rasterizados ────────────────────────────────────

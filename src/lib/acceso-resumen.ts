@@ -124,7 +124,7 @@ const CURSO_POR_PREFIJO: [string, string][] = [
   ['pat-', 'patologia'], ['epi-', 'epidemiologia'],
   ['cv-', 'cardiovascular'], ['neu-', 'neurologia'], ['endo-', 'endocrino-reproductor'],
   ['resp-', 'respiratorio'],
-  ['clase-', 'microbiologia'], ['practica-', 'microbiologia'],
+  ['clase-', 'microbiologia'], ['practica-', 'microbiologia'], ['mic-', 'microbiologia'],
 ];
 
 export function destinoDeResumen(id: string): Destino {

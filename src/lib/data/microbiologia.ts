@@ -1,9 +1,12 @@
 export type TipoActividad = 'MAGISTRAL' | 'TBL' | 'SGP' | 'LAB' | 'EXAMEN-T' | 'EXAMEN-L' | 'SUSTIT';
 export type Unidad = 'VIROLOGIA_MICOLOGIA' | 'PARASITOLOGIA' | 'BACTERIOLOGIA' | 'EVALUACION';
 
+export type ResumenFormato = 'pdf' | 'html';
+
 export interface ResumenOpcion {
   id: string;
   label: string;
+  formato?: ResumenFormato;
 }
 
 export interface Actividad {
@@ -16,7 +19,7 @@ export interface Actividad {
   subtemas: string[];
   docentes: string[];
   nota?: string;
-  resumen?: { tipo: 'pdf'; opciones?: ResumenOpcion[] };
+  resumen?: { tipo: 'pdf'; formato?: ResumenFormato; opciones?: ResumenOpcion[] };
   /** ISO date YYYY-MM-DD; usado para "Próximos exámenes" en el home. */
   fechaISO?: string;
   /** Sobreescribe el destino del card en el sílabo (p.ej. examen práctico → atlas). */
@@ -74,6 +77,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: [],
         docentes: ['Dr. Martin Montes'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-2', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-3',
@@ -84,6 +88,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Variación genética', 'Mutaciones', 'Transferencia de genes'],
         docentes: ['Dra. Patricia Sheen'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-3', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'practica-1',
@@ -115,7 +120,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Generalidades', 'Ciclo de Multiplicación', 'Receptores y co-receptores', 'Sistema Interferón'],
         docentes: ['Dr. Abraham Vaisberg'],
-        resumen: { tipo: 'pdf' },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-4', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-5',
@@ -126,7 +131,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Generalidades', 'Ciclos de Multiplicación y Lisogenia', 'Aplicaciones'],
         docentes: ['Dr. Abraham Vaisberg'],
-        resumen: { tipo: 'pdf' },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-5', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-6',
@@ -140,8 +145,8 @@ export const semanas: Semana[] = [
         resumen: {
           tipo: 'pdf',
           opciones: [
-            { id: 'clase-6',   label: 'Virus RNA' },
-            { id: 'clase-6.2', label: 'Retrovirus' },
+            { id: 'mic-6', label: 'Virus RNA', formato: 'html' },
+            { id: 'mic-6.2', label: 'Retrovirus', formato: 'html' },
           ],
         },
       },
@@ -198,7 +203,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Herpes virus', 'Papilomavirus', 'Viruela / Mpox', 'Hepatitis B'],
         docentes: ['Dr. Holger Maita'],
-        resumen: { tipo: 'pdf' },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-7', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-8',
@@ -209,7 +214,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Estructura celular', 'Morfología', 'Reproducción', 'Taxonomía convencional y molecular'],
         docentes: ['Edgard Neyra'],
-        resumen: { tipo: 'pdf' },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-8', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-9',
@@ -220,7 +225,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Filamentosos y levaduras', 'Respiración'],
         docentes: ['Edgard Neyra'],
-        resumen: { tipo: 'pdf' },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-9', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'practica-4',
@@ -267,7 +272,13 @@ export const semanas: Semana[] = [
           'Transferencia génica',
         ],
         docentes: ['Edgard Neyra'],
-        resumen: { tipo: 'pdf' },
+        resumen: {
+          tipo: 'pdf',
+          opciones: [
+            { id: 'mic-10', label: 'Interacción hongo–hospedero', formato: 'html' },
+            { id: 'mic-10.2', label: 'Antígenos fúngicos y mutaciones', formato: 'html' },
+          ],
+        },
       },
       {
         id: 'tbl-1',
@@ -278,6 +289,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Diversidad', 'Evolución', 'Factores de presencia'],
         docentes: ['Verástegui', 'Chile', 'Aguilar', 'Méndez', 'Coronel', 'Vallejos'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-tbl-1', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'practica-6',
@@ -288,6 +300,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Técnicas fisiológicas y bioquímicas', 'Filamentosos y levaduriformes'],
         docentes: [],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-practica-6', label: 'Técnicas de aislamiento', formato: 'html' }] },
       },
       {
         id: 'practica-7',
@@ -361,8 +374,8 @@ export const semanas: Semana[] = [
         resumen: {
           tipo: 'pdf',
           opciones: [
-            { id: 'clase-12',   label: 'Generalidades' },
-            { id: 'clase-12.2', label: 'Protozoos I · Metamonada' },
+            { id: 'clase-12', label: 'Generalidades', formato: 'pdf' },
+            { id: 'mic-12.2', label: 'Protozoos I · Metamonada', formato: 'html' },
           ],
         },
       },
@@ -383,8 +396,8 @@ export const semanas: Semana[] = [
         resumen: {
           tipo: 'pdf',
           opciones: [
-            { id: 'clase-13',   label: 'Protozoos II · Amoebozoa' },
-            { id: 'clase-13.2', label: 'Protozoos II · Ciliophora' },
+            { id: 'mic-13', label: 'Protozoos II · Amoebozoa', formato: 'html' },
+            { id: 'mic-13.2', label: 'Protozoos II · Ciliophora', formato: 'html' },
           ],
         },
       },
@@ -397,7 +410,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Cryptosporidium', 'Cyclospora cayetanensis', 'Cystoisospora belli', 'Toxoplasma gondii'],
         docentes: ['Dra. Verástegui', 'Dra. Calderón'],
-        resumen: { tipo: 'pdf' },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-14', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'practica-8',
@@ -439,7 +452,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Leishmania', 'Trypanosoma', 'Plasmodium'],
         docentes: ['Dr. Montes', 'Dra. Verástegui'],
-        resumen: { tipo: 'pdf' },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-15', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-16',
@@ -450,7 +463,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Ascaris', 'Enterobius', 'Trichuris', 'Strongyloides', 'Uncinaria', 'Anatomía, fisiología, ciclo de vida'],
         docentes: ['Dra. Chile', 'Dra. Verástegui'],
-        resumen: { tipo: 'pdf' },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-16', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-17',
@@ -464,8 +477,8 @@ export const semanas: Semana[] = [
         resumen: {
           tipo: 'pdf',
           opciones: [
-            { id: 'clase-17',   label: 'Céstodos' },
-            { id: 'clase-17.2', label: 'Tremátodos' },
+            { id: 'mic-17', label: 'Céstodos', formato: 'html' },
+            { id: 'mic-17.2', label: 'Tremátodos', formato: 'html' },
           ],
         },
       },
@@ -522,7 +535,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Generalidades', 'Clasificación', 'Ectoparásitos y endoparásitos', 'Piojos', 'Pulgas', 'Larvas de mosca', 'Ácaros'],
         docentes: ['MSc. Ventosilla', 'Dra. Chile'],
-        resumen: { tipo: 'pdf' },
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-18', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'tbl-2',
@@ -607,6 +620,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Curva de desarrollo', 'Interacción bacteriana con el medio ambiente'],
         docentes: ['Dra. Jasmín Hurtado'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-20', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-21',
@@ -627,6 +641,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: [],
         docentes: ['Mg. Ruth Cristóbal'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-22', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'practica-14',
@@ -676,6 +691,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: [],
         docentes: ['Dra. Fiorella Krapp'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-23', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-24',
@@ -686,6 +702,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: ['Staphylococcus', 'Streptococcus'],
         docentes: ['Dra. Theresa Ochoa'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-24', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'clase-25',
@@ -736,6 +753,7 @@ export const semanas: Semana[] = [
         hora: '09:00–11:00',
         subtemas: [],
         docentes: ['Dr. Pablo Tsukayama'],
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'mic-27', label: 'Resumen', formato: 'html' }] },
       },
       {
         id: 'practica-17',

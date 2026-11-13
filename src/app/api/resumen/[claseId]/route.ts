@@ -6,15 +6,10 @@ import { puedeVerResumen } from '@/lib/acceso-resumen';
 
 // Only these IDs have an associated PDF in Supabase Storage
 const ALLOWED = new Set([
-  // Microbiología — Virología/Micología
-  'clase-4', 'clase-5', 'clase-6', 'clase-6.2', 'clase-7', 'clase-8', 'clase-9', 'clase-10',
+  // Microbiología — clases 4-10, 12.2, 13-18 pasaron a HTML el 2026-11-13 (ids `mic-*`, src/lib/resumen-html.ts);
+  // sus PDF siguen en Storage. Aquí quedan las prácticas 1-3 y la clase 12 (Generalidades).
   'practica-1', 'practica-2', 'practica-3',
-  // Microbiología — Parasitología
-  'clase-12', 'clase-12.2',
-  'clase-13', 'clase-13.2',
-  'clase-14', 'clase-15', 'clase-16',
-  'clase-17', 'clase-17.2',
-  'clase-18',
+  'clase-12',
   // Microbiología — Prácticas Parasitología/Artrópodos
   'practica-8', 'practica-9', 'practica-10',
   'practica-11', 'practica-12', 'practica-13',
@@ -105,15 +100,6 @@ const FILE_ALIAS: Record<string, string> = {
   'practica-3':  'practica-2-3',
   // Parasitología — todos en subcarpeta
   'clase-12':    'parasitologia/clase-12',
-  'clase-12.2':  'parasitologia/clase-12.2',
-  'clase-13':    'parasitologia/clase-13',
-  'clase-13.2':  'parasitologia/clase-13.2',
-  'clase-14':    'parasitologia/clase-14',
-  'clase-15':    'parasitologia/clase-15',
-  'clase-16':    'parasitologia/clase-16',
-  'clase-17':    'parasitologia/clase-17',
-  'clase-17.2':  'parasitologia/clase-17.2',
-  'clase-18':    'parasitologia/clase-18',
   // Prácticas Parasitología/Artrópodos
   'practica-8':  'parasitologia/practica-8',
   'practica-9':  'parasitologia/practica-9',
