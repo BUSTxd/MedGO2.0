@@ -24,6 +24,8 @@ export interface RespuestaMP {
   elegida?: number;
   /** Estructura tocada (preguntas de señalar). */
   tocado?: string;
+  /** Se respondió después de ver la pista. */
+  pista?: boolean;
 }
 
 /** Lo que la escena tiene que pintar mientras se practica. */
@@ -52,6 +54,9 @@ export function usePractica(activa: boolean, reducido: boolean) {
   const [paso, setPaso] = useState<PasoPregunta>('volteo');
   const [respuestas, setRespuestas] = useState<RespuestaMP[]>([]);
   const [intento, setIntento] = useState(0);
+  /** Pista de la pregunta en curso: vista o no, y la alternativa tachada. */
+  const [pistaVista, setPistaVista] = useState(false);
+  const [descartada, setDescartada] = useState<number | null>(null);
 
   // ── Carga del banco al entrar ──
   useEffect(() => {
@@ -95,15 +100,18 @@ export function usePractica(activa: boolean, reducido: boolean) {
     setRonda(r);
     setI(0);
     setRespuestas([]);
+    setPistaVista(false);
+    setDescartada(null);
     setPaso('volteo');
     setFase('jugando');
   }, [pool]);
 
   const registrar = useCallback((r: RespuestaMP) => {
-    setRespuestas((prev) => { const n = [...prev]; n[i] = r; return n; });
+    const conPista = { ...r, pista: pistaVista };
+    setRespuestas((prev) => { const n = [...prev]; n[i] = conPista; return n; });
     setAvance(guardarResultado(r.pregunta.id, r.ok));
     setPaso('corregida');
-  }, [i]);
+  }, [i, pistaVista]);
 
   const responderOpcion = useCallback((elegida: number) => {
     if (!actual || actual.forma !== 'opciones' || paso !== 'responder') return;
@@ -119,8 +127,20 @@ export function usePractica(activa: boolean, reducido: boolean) {
     if (paso !== 'corregida') return;
     if (i + 1 >= ronda.length) { setFase('resultados'); return; }
     setI(i + 1);
+    setPistaVista(false);
+    setDescartada(null);
     setPaso('volteo');
   }, [paso, i, ronda.length]);
+
+  /** Pista: en las de alternativas tacha una incorrecta al azar. */
+  const verPista = useCallback(() => {
+    if (!actual || paso !== 'responder' || pistaVista) return;
+    setPistaVista(true);
+    if (actual.forma === 'opciones') {
+      const malas = actual.opciones.map((_, k) => k).filter((k) => k !== actual.correcta);
+      setDescartada(malas[Math.floor(Math.random() * malas.length)]);
+    }
+  }, [actual, paso, pistaVista]);
 
   const alInicio = useCallback(() => { setFase('inicio'); setRonda([]); setRespuestas([]); }, []);
   const reintentar = useCallback(() => setIntento((n) => n + 1), []);
@@ -155,6 +175,7 @@ export function usePractica(activa: boolean, reducido: boolean) {
 
   return {
     fase, error, banco, avance, filtro, pool, prog, ronda, i, paso, actual, respuesta, respuestas, escena,
+    pistaVista, descartada, verPista,
     empezar, responderOpcion, responderSenalar, siguiente, alInicio, reintentar,
     alternarCategoria, elegirTipos,
   };

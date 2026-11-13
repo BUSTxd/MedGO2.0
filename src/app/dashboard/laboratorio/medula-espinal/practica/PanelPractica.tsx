@@ -5,6 +5,7 @@
 import { CATEGORIAS_MP, TIPOS_MP, type TipoMP } from '@/lib/medula-practica/tipos';
 import { PREGUNTAS_POR_RONDA, progreso } from '@/lib/medula-practica/sesion';
 import type { Practica } from './usePractica';
+import { pistaDe, textoRespuesta } from './texto';
 import s from '@/styles/medulaPractica.module.css';
 
 const OPCIONES_TIPO: Array<{ label: string; tipos: TipoMP[] }> = [
@@ -38,6 +39,8 @@ export default function PanelPractica({ pr, onSalir }: { pr: Practica; onSalir: 
 
   if (fase === 'jugando') {
     const ok = pr.respuestas.filter((r) => r?.ok).length;
+    const p = pr.actual;
+    const puedePista = !!p && pr.paso === 'responder' && !pr.pistaVista;
     return (
       <aside className={s.panel}>
         <div className={s.bloque}>
@@ -51,13 +54,63 @@ export default function PanelPractica({ pr, onSalir }: { pr: Practica; onSalir: 
           </ol>
           <p className={s.marcador}><strong>{ok}</strong> correctas de {pr.respuestas.filter(Boolean).length} respondidas</p>
         </div>
-        <div className={s.bloque}>
-          <p className={s.ayuda}>
-            {pr.actual?.forma === 'senalar'
-              ? 'Toca la estructura en el corte. Al pasar el puntero se ilumina la zona, sin decir su nombre.'
-              : 'Elige una alternativa con el ratón o con las teclas 1 a 4.'}
-          </p>
+
+        {/* ── Pista: orienta sin dar la respuesta ── */}
+        {p && (
+          <div className={s.bloque}>
+            {pr.pistaVista ? (
+              <p className={s.pista} role="status">
+                <IconoPista />
+                <span><strong>Pista.</strong> {pistaDe(p)}</span>
+              </p>
+            ) : (
+              <button type="button" className={s.pistaBtn} disabled={!puedePista} onClick={pr.verPista}>
+                <IconoPista />
+                <span>
+                  <strong>Ver pista</strong>
+                  <small>{p.forma === 'senalar' ? 'Te dice en qué zona del corte está' : 'Tacha una alternativa incorrecta'}</small>
+                </span>
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* ── Repaso: las 10 de la ronda; las respondidas se despliegan ── */}
+        <div className={s.lista}>
+          <span className={s.etiqueta}>Esta ronda</span>
+          <ol className={s.repaso}>
+            {pr.ronda.map((q, k) => {
+              const r = pr.respuestas[k];
+              const actual = k === pr.i && pr.paso !== 'corregida';
+              const estado = r ? (r.ok ? s.circuloOk : s.circuloMal) : actual ? s.circuloActual : s.circuloPendiente;
+              const icono = r ? (r.ok ? <IconoBien /> : <IconoMal />) : k + 1;
+              const titulo = <span className={s.repasoTitulo}>{q.enunciado}</span>;
+              return (
+                <li key={q.id}>
+                  {r ? (
+                    <details className={s.repasoItem}>
+                      <summary>
+                        <span className={`${s.circulo} ${estado}`} aria-label={r.ok ? 'Correcta' : 'Incorrecta'}>{icono}</span>
+                        {titulo}
+                        {r.pista && <span className={s.conPista} title="Respondida con pista"><IconoPista /></span>}
+                      </summary>
+                      <div className={s.repasoDetalle}>
+                        <p><strong>Respuesta:</strong> {textoRespuesta(q)}</p>
+                        <p>{q.explicacion}</p>
+                      </div>
+                    </details>
+                  ) : (
+                    <div className={`${s.repasoItem} ${s.repasoFila} ${actual ? s.repasoActual : ''}`} aria-current={actual ? 'step' : undefined}>
+                      <span className={`${s.circulo} ${estado}`}>{icono}</span>
+                      {actual ? titulo : <span className={s.repasoTitulo}>Pregunta {k + 1}</span>}
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
         </div>
+
         <div className={s.pie}>
           <button type="button" className={s.secundario} onClick={pr.alInicio}>Terminar la ronda</button>
         </div>
@@ -176,5 +229,30 @@ export default function PanelPractica({ pr, onSalir }: { pr: Practica; onSalir: 
         )}
       </div>
     </aside>
+  );
+}
+
+// ── Íconos ──────────────────────────────────────────────────────────────────
+function IconoPista() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2V17h5v-1.2c.1-.8.5-1.5 1.1-2A6 6 0 0 0 12 3Z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function IconoBien() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function IconoMal() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 7l10 10M17 7 7 17" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+    </svg>
   );
 }

@@ -6,20 +6,15 @@
 // y la tarjeta se desliza y se encoge hasta su sitio en vez de saltar.
 
 import { useEffect, useLayoutEffect, useRef } from 'react';
-import { LAMINA_GROUPS, LEVELS, TRACTS, type LaminaGroupId, type TractId } from '../engine/anatomy';
+import { LEVELS } from '../engine/anatomy';
+import { LETRAS, nombre, textoRespuesta } from './texto';
 import { CATEGORIAS_MP } from '@/lib/medula-practica/tipos';
 import type { Practica } from './usePractica';
 import s from '@/styles/medulaPractica.module.css';
 
-const LETRAS = ['A', 'B', 'C', 'D'];
 const VIAJE_MS = 620;
 const CURVA = 'cubic-bezier(0.22, 0.9, 0.24, 1)';
 
-function nombre(id: string): string {
-  if (id in LAMINA_GROUPS) return LAMINA_GROUPS[id as LaminaGroupId].name;
-  if (id in TRACTS) return TRACTS[id as TractId].name;
-  return id;
-}
 
 export default function TarjetaPractica({ pr }: { pr: Practica }) {
   const { actual: p, paso, respuesta, i, ronda } = pr;
@@ -70,7 +65,7 @@ export default function TarjetaPractica({ pr }: { pr: Practica }) {
       if (paso === 'responder' && p.forma === 'opciones') {
         const k = e.key.toLowerCase();
         const n = '1234'.indexOf(k) >= 0 ? '1234'.indexOf(k) : 'abcd'.indexOf(k);
-        if (n >= 0 && n < p.opciones.length) { e.preventDefault(); pr.responderOpcion(n); }
+        if (n >= 0 && n < p.opciones.length && n !== pr.descartada) { e.preventDefault(); pr.responderOpcion(n); }
       } else if (paso === 'corregida' && (e.key === 'Enter' || e.key === 'ArrowRight')) {
         e.preventDefault();
         pr.siguiente();
@@ -87,9 +82,7 @@ export default function TarjetaPractica({ pr }: { pr: Practica }) {
   const total = ronda.length;
   const ultima = i + 1 >= total;
   const corregida = paso === 'corregida' && !!respuesta;
-  const respuestaTxt = p.forma === 'senalar'
-    ? p.objetivo.ids.map(nombre).join(' o ')
-    : `${LETRAS[p.correcta]}. ${p.opciones[p.correcta]}`;
+  const respuestaTxt = textoRespuesta(p);
   // ¿Hay algo marcado en el corte para mirar al corregir?
   const marcaEnModelo = p.forma === 'senalar' || !!p.resaltar;
 
@@ -145,12 +138,15 @@ export default function TarjetaPractica({ pr }: { pr: Practica }) {
               {p.opciones.map((o, k) => {
                 const esOk = corregida && k === p.correcta;
                 const esMal = corregida && respuesta?.elegida === k && !respuesta.ok;
+                // La pista tacha una incorrecta: no se puede elegir.
+                const tachada = !corregida && pr.descartada === k;
                 return (
                   <li key={k}>
                     <button
                       type="button"
-                      className={`${s.opcion} ${esOk ? s.opcionOk : ''} ${esMal ? s.opcionMal : ''} ${corregida && !esOk && !esMal ? s.opcionApagada : ''}`}
-                      disabled={paso !== 'responder'}
+                      className={`${s.opcion} ${esOk ? s.opcionOk : ''} ${esMal ? s.opcionMal : ''} ${corregida && !esOk && !esMal ? s.opcionApagada : ''} ${tachada ? s.opcionTachada : ''}`}
+                      disabled={paso !== 'responder' || tachada}
+                      title={tachada ? 'Descartada por la pista' : undefined}
                       onClick={() => pr.responderOpcion(k)}
                     >
                       <span className={s.letra}>{esOk ? <IconoCheck /> : esMal ? <IconoCruz /> : LETRAS[k]}</span>
@@ -172,12 +168,12 @@ export default function TarjetaPractica({ pr }: { pr: Practica }) {
 
               <ul className={s.respuestas}>
                 {!respuesta.ok && p.forma === 'senalar' && respuesta.tocado && (
-                  <li><span className={s.puntoMal} aria-hidden />Tocaste <strong>{nombre(respuesta.tocado)}</strong></li>
+                  <li><span className={s.marcaMal} aria-hidden />Tocaste <strong>{nombre(respuesta.tocado)}</strong></li>
                 )}
                 {!respuesta.ok && p.forma === 'opciones' && respuesta.elegida !== undefined && (
-                  <li><span className={s.puntoMal} aria-hidden />Elegiste <strong>{LETRAS[respuesta.elegida]}. {p.opciones[respuesta.elegida]}</strong></li>
+                  <li><span className={s.marcaMal} aria-hidden />Elegiste <strong>{LETRAS[respuesta.elegida]}. {p.opciones[respuesta.elegida]}</strong></li>
                 )}
-                <li><span className={s.puntoOk} aria-hidden />Respuesta: <strong>{respuestaTxt}</strong></li>
+                <li><span className={s.marcaOk} aria-hidden />Respuesta: <strong>{respuestaTxt}</strong></li>
               </ul>
 
               {marcaEnModelo && (

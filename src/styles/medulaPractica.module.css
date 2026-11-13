@@ -291,16 +291,16 @@
   font-size: 14px;
   line-height: 1.45;
 }
-/* Mismos colores que las marcas del corte */
-.puntoOk, .puntoMal {
+/* Mismos colores que las marcas del corte (no confundir con los puntos de la ronda del panel) */
+.marcaOk, .marcaMal {
   width: 10px;
   height: 10px;
   flex-shrink: 0;
   border-radius: 50%;
   transform: translateY(1px);
 }
-.puntoOk { background: #2DC99A; }
-.puntoMal { background: #E85B4A; }
+.marcaOk { background: #2DC99A; }
+.marcaMal { background: #E85B4A; }
 
 .enModelo {
   display: flex;
@@ -613,6 +613,124 @@
   .enunciado { font-size: 15px; }
 }
 
+
+/* ─── Pista (panel, durante la ronda) ─── */
+.pistaBtn {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 12px;
+  border: 1px dashed rgba(242, 182, 49, 0.7);
+  background: rgba(255, 213, 107, 0.1);
+  color: var(--mp-texto);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.pistaBtn svg { flex-shrink: 0; color: #c98a00; }
+:global(.dark-mode) .pistaBtn svg { color: #f2c14e; }
+.pistaBtn span { display: flex; flex-direction: column; gap: 1px; }
+.pistaBtn strong { font-size: 14px; }
+.pistaBtn small { font-size: 12.5px; color: var(--mp-suave); }
+.pistaBtn:hover:not(:disabled) { background: rgba(255, 213, 107, 0.2); border-style: solid; }
+.pistaBtn:disabled { opacity: 0.5; cursor: default; }
+.pista {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 11px 12px;
+  border-radius: 12px;
+  background: rgba(255, 213, 107, 0.16);
+  font-size: 14px;
+  line-height: 1.5;
+  animation: aparece 0.3s ease both;
+}
+.pista svg { flex-shrink: 0; margin-top: 2px; color: #c98a00; }
+:global(.dark-mode) .pista svg { color: #f2c14e; }
+
+/* ─── Repaso: las 10 preguntas de la ronda ─── */
+.repaso {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.repasoItem {
+  border-radius: 10px;
+}
+.repasoItem summary,
+.repasoFila {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  list-style: none;
+}
+.repasoItem summary { cursor: pointer; }
+.repasoItem summary::-webkit-details-marker { display: none; }
+.repasoItem summary:hover { background: var(--mp-tinte); }
+.repasoItem[open] summary { background: var(--mp-tinte); }
+.repasoActual { background: var(--mp-tinte); font-weight: 700; }
+.repasoTitulo {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.repasoItem[open] .repasoTitulo { white-space: normal; }
+.circulo {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+}
+.circuloOk { background: var(--mp-verde); color: #fff; }
+.circuloMal { background: var(--mp-rojo); color: #fff; }
+.circuloActual { background: var(--mp-azul); color: #fff; box-shadow: 0 0 0 3px rgba(59, 158, 221, 0.22); }
+.circuloPendiente { background: var(--mp-borde); color: var(--mp-suave); }
+.conPista { display: grid; place-items: center; color: #c98a00; }
+:global(.dark-mode) .conPista { color: #f2c14e; }
+.repasoDetalle {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px 10px 40px;
+  animation: aparece 0.25s ease both;
+}
+.repasoDetalle p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--mp-suave);
+}
+.repasoDetalle strong { color: var(--mp-texto); }
+
+/* Alternativa descartada por la pista */
+.opcionTachada {
+  opacity: 0.4;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+/* La mascota flotante de la plataforma ocupa la esquina inferior derecha:
+   el pie del panel le deja sitio para que no tape sus botones. */
+@media (min-width: 901px) {
+  .pie { padding-bottom: 84px; }
+}
+
 /* ─── Carga: el mismo mazo que el examen 3D del miembro superior ─── */
 .veloCarga {
   position: absolute;
@@ -675,5 +793,6 @@
   .cargandoMazo span { animation-duration: 3s; }
   .tocaPunto, .puntoActual { animation: none; }
   .spinner { animation-duration: 2.4s; }
-  .opcion, .categoria { transition: none; }
+  .opcion, .categoria, .pistaBtn { transition: none; }
+  .pista, .repasoDetalle { animation: none; }
 }
