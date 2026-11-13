@@ -746,6 +746,7 @@ export const semanas: Semana[] = [
         subtemas: ['Linfomas: estadificación de Ann Arbor-Lugano', 'Linfoma de Hodgkin', 'Linfoma no Hodgkin y transformación de Richter'],
         docentes: [],
         nota: NOTA_ACP,
+        simulacion: { href: '/dashboard/laboratorio/vias-nfkb-jakstat' },
         resumen: {
           tipo: 'pdf',
           formato: 'html',
@@ -816,6 +817,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: ['Tipos I – IV'],
         docentes: [],
+        simulacion: { href: '/dashboard/laboratorio/hipersensibilidad' },
         resumen: resumenHtml('pat-ai-15'),
       },
       {
@@ -829,6 +831,7 @@ export const semanas: Semana[] = [
         subtemas: [],
         docentes: [],
         nota: NOTA_ACP,
+        simulacion: { href: '/dashboard/laboratorio/hipersensibilidad' },
         resumen: resumenHtml('pat-acp-9'),
       },
       {
@@ -842,6 +845,7 @@ export const semanas: Semana[] = [
         subtemas: [],
         docentes: [],
         nota: NOTA_ACP,
+        simulacion: { href: '/dashboard/laboratorio/hipersensibilidad' },
         resumen: resumenHtml('pat-acp-10'),
       },
     ],
@@ -885,6 +889,7 @@ export const semanas: Semana[] = [
         hora: '—',
         subtemas: [],
         docentes: [],
+        simulacion: { href: '/dashboard/laboratorio/lupus' },
         resumen: resumenHtml('pat-tbl-5'),
       },
     ],

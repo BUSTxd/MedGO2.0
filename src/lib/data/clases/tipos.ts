@@ -40,8 +40,19 @@ export interface NotaClase {
 
 // ── Casos clínicos ───────────────────────────────────────────────────────────
 
-/** Los dibujos que puede llevar un bloque en la portada de los casos. */
-export type DibujoBloque = 'hematie' | 'plaqueta';
+/**
+ * Piezas tomadas de los laboratorios virtuales (components/estudio/DibujosLab.tsx).
+ * Lista repetida en scripts/clases/validar.mjs (DIBUJOS): si se añade una, allí también.
+ */
+export type DibujoLab =
+  | 'corazon' | 'higado' | 'linfocito' | 'plasmatica' | 'termometro' | 'igg' | 'plaqueta-lab'
+  | 'neutrofilo' | 'eosinofilo' | 'granuloma' | 'celula-gigante' | 'purpura' | 'pulmones' | 'alveolos' | 'rinon'
+  | 'bacilo' | 'enterocito'
+  | 'nk' | 'ganglio' | 'linfocito-b' | 'hsc' | 'mieloide' | 'anticuerpo'
+  | 'tirocito' | 'terminal-nerviosa' | 't-cd4' | 't-cd8' | 'mastocito' | 'celula-opsonizada' | 'complejo';
+
+/** Los dibujos que puede llevar un bloque en la portada de los casos: los dos de la AI17 o una pieza de laboratorio. */
+export type DibujoBloque = 'hematie' | 'plaqueta' | DibujoLab;
 
 /** Un grupo de casos que se puede practicar suelto (AHAI, PTI…). */
 export interface BloqueCasos {
@@ -76,6 +87,8 @@ export interface BancoCasos {
   titulo?: string;
   entrada?: string;
   bloques?: BloqueCasos[];
+  /** Sin tarjetas de bloque (uno o ninguno): de 1 a 3 dibujos que flotan sobre «Empezar». */
+  dibujos?: DibujoBloque[];
   questions: CasoClinico[];
 }
 

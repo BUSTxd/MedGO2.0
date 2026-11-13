@@ -4,7 +4,16 @@
  * Devuelve los errores (impiden publicar), los avisos y lo que se subiría.
  */
 
-export const DIBUJOS = ['hematie', 'plaqueta'];
+// Los dos propios de la AI17 y las piezas de laboratorio de components/estudio/DibujosLab.tsx
+// (mismo orden que `DibujoLab` en src/lib/data/clases/tipos.ts).
+export const DIBUJOS = [
+  'hematie', 'plaqueta',
+  'corazon', 'higado', 'linfocito', 'plasmatica', 'termometro', 'igg', 'plaqueta-lab',
+  'neutrofilo', 'eosinofilo', 'granuloma', 'celula-gigante', 'purpura', 'pulmones', 'alveolos', 'rinon',
+  'bacilo', 'enterocito',
+  'nk', 'ganglio', 'linfocito-b', 'hsc', 'mieloide', 'anticuerpo',
+  'tirocito', 'terminal-nerviosa', 't-cd4', 't-cd8', 'mastocito', 'celula-opsonizada', 'complejo',
+];
 export const TITULO_CASOS = 'Casos clínicos';
 /** Sin `muestra` en el contenido, se abre una de cada cinco preguntas (6 de 30 en la AI17). */
 export const muestraPorDefecto = (total) => Math.max(1, Math.round(total / 5));
@@ -68,6 +77,11 @@ function validarCasos(c, act, err, aviso) {
   if (!texto(c.desc)) err('casos.desc vacía (es la tarjeta de la pestaña Práctica)');
   for (const k of ['titulo', 'entrada']) if (c[k] !== undefined && !texto(c[k])) err(`casos.${k} vacío`);
   if (c.chips !== undefined && !listaDeTextos(c.chips)) err('casos.chips debe ser una lista de textos');
+  if (c.dibujos !== undefined) {
+    if (!Array.isArray(c.dibujos) || c.dibujos.length < 1 || c.dibujos.length > 3) err('casos.dibujos: de 1 a 3 nombres');
+    else for (const d of c.dibujos) if (!DIBUJOS.includes(d)) err(`casos.dibujos: «${d}» no existe (${DIBUJOS.join(', ')})`);
+    if ((c.bloques?.length ?? 0) > 1) aviso('casos.dibujos no se ve: con dos bloques o más, cada tarjeta lleva el suyo');
+  }
   if (c.muestra !== undefined && !(Number.isInteger(c.muestra) && c.muestra >= 0)) err('casos.muestra debe ser un entero');
   const bloques = c.bloques ?? [];
   const ids = new Set();
@@ -145,6 +159,7 @@ export function prepararClase(json, { curso, clase }) {
         ...(c.titulo ? { titulo: c.titulo } : {}),
         ...(c.entrada ? { entrada: c.entrada } : {}),
         ...(c.bloques?.length ? { bloques: c.bloques } : {}),
+        ...(c.dibujos?.length ? { dibujos: c.dibujos } : {}),
         questions: c.preguntas,
       },
     });

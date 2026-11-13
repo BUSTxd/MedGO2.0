@@ -179,6 +179,29 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
   const [indiceActivo, setIndiceActivo] = useState(0);
   const sheetRef = useRef<HTMLElement>(null);
   const cuerpoRef = useRef<HTMLDivElement>(null);
+  // El índice tiene su propio scroll (el laboratorio queda fijo debajo): sigue al título activo.
+  const tocRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const nav = tocRef.current;
+    const btn = nav?.querySelector<HTMLElement>('button.' + cx('active'));
+    if (!nav || !btn) return;
+    const arriba = btn.offsetTop - nav.offsetTop;
+    if (arriba < nav.scrollTop || arriba + btn.offsetHeight > nav.scrollTop + nav.clientHeight - 56) {
+      nav.scrollTo({ top: Math.max(0, arriba - nav.clientHeight / 3), behavior: 'smooth' });
+    }
+  }, [indiceActivo, tocActivo]);
+  // El degradado de abajo solo mientras queden títulos por debajo.
+  useEffect(() => {
+    const nav = tocRef.current;
+    if (!nav) return;
+    const medir = () => { nav.dataset.mas = nav.scrollTop + nav.clientHeight < nav.scrollHeight - 4 ? '1' : '0'; };
+    medir();
+    const ro = new ResizeObserver(medir);
+    ro.observe(nav);
+    for (const hijo of Array.from(nav.children)) ro.observe(hijo);
+    nav.addEventListener('scroll', medir, { passive: true });
+    return () => { ro.disconnect(); nav.removeEventListener('scroll', medir); };
+  });
   const guardada = !!marcas.saved[l.id];
   const estudiada = marcas.completed.has(l.id);
 
@@ -425,9 +448,9 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
           </footer>
         </article>
       </div>
-      <aside className={cx('reading-aside')} aria-label="Índice de la clase">
+      <aside className={cx('reading-aside', l.laboratorio && 'aside-con-lab')} aria-label="Índice de la clase">
         <div className={cx('eyebrow')}>En esta clase</div>
-        <nav className={cx('toc')} aria-label="Índice de la clase">
+        <nav ref={tocRef} className={cx('toc')} aria-label="Índice de la clase">
           {resumen
             ? indice.map((e, i) => (
               <button key={i} className={cx(indiceActivo === i && 'active', e.nivel > 2 && 'toc-sub', e.grupo && 'toc-grupo')} onClick={() => { e.el.scrollIntoView({ behavior: 'smooth', block: 'start' }); setIndiceActivo(i); }}>
@@ -444,7 +467,6 @@ export default function Lector({ ctx }: { ctx: Contexto }) {
             <TarjetaLaboratorio lab={l.laboratorio} />
           </>
         )}
-        <p className={cx('aside-note')}>Este espacio recuerda tu clase mientras exploras. Elige otro tema en el temario para seguir estudiando.</p>
       </aside>
 
       {abierto && (abierto.formato === 'html'

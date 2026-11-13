@@ -1193,6 +1193,25 @@ div.wrapper .topbar {
 @media (max-width: 1000px) { .lab-reco { display: block; } }
 .related-card button .icon { display: inline-block; }
 
+/* Columna derecha: el índice «En esta clase» tiene su propio scroll y ocupa casi toda la
+   altura; de «Llévalo a la práctica» solo asoma la parte de arriba (título y comienzo de
+   la animación), unos 135 px, para que el alumno baje por su cuenta. Al terminar el índice,
+   la rueda pasa a la columna y descubre la tarjeta entera. Un degradado abajo del índice
+   deja ver los siguientes títulos. Sin laboratorio, el índice llega hasta el fondo. */
+.reading-aside { display: flex; flex-direction: column; }
+.reading-aside > * { flex: none; }
+.reading-aside > .toc {
+  max-height: calc(100% - 34px); overflow-y: auto;
+  align-content: start; scrollbar-width: none;
+}
+.reading-aside.aside-con-lab > .toc { max-height: calc(100% - 136px); }
+.reading-aside > .toc[data-mas='1'] {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 72px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 72px), transparent);
+}
+.reading-aside > .toc::-webkit-scrollbar { display: none; }
+.reading-aside > .toc + .aside-divider { margin-top: 10px; }
+
 /* ── Pestaña «Práctica»: los banqueos de la clase ── */
 .practica-lista { display: grid; gap: 14px; }
 .practica-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 18px; padding: 20px 22px; background: var(--surface); border: 1px solid var(--border); border-radius: 13px; box-shadow: 0 6px 22px #29315c08; transition: border-color .15s, box-shadow .15s; }
@@ -1664,6 +1683,11 @@ button.session-badge:hover { border-color: #245b8f; color: #245b8f; }
 .casos-flota-sombra { display: block; width: 34px; height: 6px; margin-top: 3px; border-radius: 50%; background: #1c2d43; opacity: .16; }
 :global(.dark-mode) .casos-flota-sombra { background: #000; opacity: .45; }
 .casos-par { display: inline-flex; gap: 6px; }
+/* Portada sin tarjetas de bloque: los dibujos de la clase flotan sobre «Empezar». */
+.casos-portada { display: flex; margin: 6px 0 18px; }
+.casos-portada .casos-par { gap: 14px; }
+.casos-portada .casos-flota, .casos-portada .casos-flota-dibujo { width: 64px; }
+.casos-portada .casos-flota-dibujo { height: 64px; }
 .casos-par .casos-flota:last-child .casos-flota-dibujo { animation-delay: -1.8s; }
 @keyframes casos-levita { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 .casos-muestra { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--secondary); margin: 18px 0 0; }

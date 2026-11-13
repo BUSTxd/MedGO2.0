@@ -14,7 +14,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
-import type { BancoCasos, BloqueCasos, CasoClinico, DibujoBloque } from '@/lib/data/clases/tipos';
+import type { BancoCasos, BloqueCasos, CasoClinico, DibujoBloque, DibujoLab } from '@/lib/data/clases/tipos';
 import { cx, Icono } from './Icono';
 import type { Contexto } from './EspacioEstudio';
 
@@ -25,7 +25,7 @@ type Caso = CasoClinico;
 export type Filtro = string;
 export type Muestra = { mostradas: number; total: number };
 /** El banco ya leído: sus bloques siempre resueltos. */
-type Banco = { titulo: string; entrada: string; bloques: BloqueCasos[]; casos: Caso[] };
+type Banco = { titulo: string; entrada: string; bloques: BloqueCasos[]; dibujos: DibujoBloque[]; casos: Caso[] };
 
 const LETRAS = 'ABCDE';
 const PROPORCION_FLOJA = 0.6;
@@ -48,7 +48,7 @@ export function leerBanco(b: BancoCasos): Banco {
       if (!ids.has(id)) { ids.add(id); bloques.push({ id, nombre: id }); }
     }
   }
-  return { titulo: b.titulo ?? TITULO, entrada: b.entrada ?? ENTRADA, bloques, casos: b.questions };
+  return { titulo: b.titulo ?? TITULO, entrada: b.entrada ?? ENTRADA, bloques, dibujos: b.dibujos ?? [], casos: b.questions };
 }
 
 const nCasos = (n: number) => `${n} ${n === 1 ? 'caso' : 'casos'}`;
@@ -90,8 +90,9 @@ function Plaqueta() {
   );
 }
 
-/** Los dibujos que un bloque puede pedir por nombre (`dibujo` en el banco). */
-const DIBUJOS: Record<DibujoBloque, () => React.ReactNode> = { hematie: Hematie, plaqueta: Plaqueta };
+/** Los dibujos propios (AI17); el resto son piezas de los laboratorios, cargadas aparte. */
+const DIBUJOS: Partial<Record<DibujoBloque, () => React.ReactNode>> = { hematie: Hematie, plaqueta: Plaqueta };
+const DibujoDeLab = dynamic(() => import('./DibujosLab'), { ssr: false });
 
 const Flotante = ({ children }: { children: React.ReactNode }) => (
   <span className={cx('casos-flota')}><span className={cx('casos-flota-dibujo')}>{children}</span><span className={cx('casos-flota-sombra')} /></span>
@@ -99,7 +100,7 @@ const Flotante = ({ children }: { children: React.ReactNode }) => (
 
 function DibujoDe({ dibujo }: { dibujo: DibujoBloque }) {
   const D = DIBUJOS[dibujo];
-  return D ? <Flotante><D /></Flotante> : null;
+  return <Flotante>{D ? <D /> : <DibujoDeLab dibujo={dibujo as DibujoLab} />}</Flotante>;
 }
 
 /** El tono de un caso: el de su bloque, o el neutro si es de varios o de ninguno. */
@@ -147,11 +148,16 @@ export function VistaInicio({ banco, muestra, seguir, onEmpezar }: {
             </button>
           ))}
         </div>
-      ) : (
+      ) : (<>
+        {banco.dibujos.length > 0 && (
+          <div className={cx('casos-portada')}>
+            <span className={cx('casos-par')}>{banco.dibujos.slice(0, 3).map((d, i) => <DibujoDe key={i} dibujo={d} />)}</span>
+          </div>
+        )}
         <button className={cx('button', seguir && 'secondary', 'casos-empezar')} onClick={() => onEmpezar('todos')}>
           {seguir ? 'Empezar de nuevo' : casos.length === 1 ? 'Empezar el caso' : `Empezar los ${casos.length} casos`}<Icono n="arrow" />
         </button>
-      )}
+      </>)}
       {muestra && <p className={cx('casos-muestra')}><Icono n="lock" />Tu plan abre {muestra.mostradas} de los {muestra.total} casos.</p>}
       {adaptados > 0 && !muestra && (
         <p className={cx('casos-nota-origen')}>{adaptados} casos parten de exámenes MIR de España, con la redacción adaptada. Los otros {casos.length - adaptados} se escribieron para esta clase.</p>
