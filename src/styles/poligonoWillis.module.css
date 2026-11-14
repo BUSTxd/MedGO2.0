@@ -106,3 +106,53 @@
   .cuerpo { animation: none; }
   .pestana, .pestanaActiva, .chipBoton { transition: none; }
 }
+
+/* Atlas ↔ posición real: abajo a la izquierda del lienzo, con el mismo
+   aspecto que el selector de vistas de arriba. */
+.postura {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 4;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #dde2ec;
+  box-shadow: 0 6px 22px rgba(20, 30, 60, 0.12);
+}
+:global(.dark-mode) .postura {
+  background: #151b30;
+  border-color: #28324f;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.45);
+}
+.posturaBtn,
+.posturaActiva {
+  border: 0;
+  border-radius: 8px;
+  padding: 7px 11px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  background: transparent;
+  color: #5b6478;
+}
+.posturaBtn:hover { color: #1b2233; background: #f4f6fb; }
+.posturaActiva {
+  background: rgba(59, 158, 221, 0.12);
+  color: #3b9edd;
+  font-weight: 600;
+}
+:global(.dark-mode) .posturaBtn { color: #9aa6c2; }
+:global(.dark-mode) .posturaBtn:hover { color: #eef1fa; background: #1b2340; }
+:global(.dark-mode) .posturaActiva { background: rgba(91, 180, 236, 0.14); color: #5bb4ec; }
+.posturaBtn:focus-visible,
+.posturaActiva:focus-visible { outline: 2px solid #3b9edd; outline-offset: 2px; }
+/* Teléfono: botones más compactos. */
+@media (max-width: 600px) {
+  .postura { left: 10px; bottom: 10px; }
+  .posturaBtn, .posturaActiva { padding: 7px 9px; font-size: 12.5px; }
+}

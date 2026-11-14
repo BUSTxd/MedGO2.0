@@ -12,7 +12,7 @@
 // (0,1-0,6 %, Radiopaedia). El resto de frecuencias, sin verificar.
 
 export type ArteriaId =
-  | 'ica' | 'oftalmica' | 'pcom' | 'coroidea_ant'
+  | 'carotida_comun' | 'ica' | 'oftalmica' | 'pcom' | 'coroidea_ant'
   | 'a1' | 'acom' | 'a2' | 'heubner' | 'anteromediales'
   | 'm1' | 'm2' | 'lenticuloestriadas'
   | 'p1' | 'p2' | 'talamoperforantes'
@@ -52,7 +52,7 @@ export const GRUPOS: Array<{ id: GrupoId; nombre: string }> = [
 ];
 
 export const SISTEMAS: Array<{ id: SistemaId; nombre: string; sub: string; desc: string }> = [
-  { id: 'todo', nombre: 'Todo', sub: '23 arterias', desc: 'Todas las arterias del modelo' },
+  { id: 'todo', nombre: 'Todo', sub: '24 arterias', desc: 'Todas las arterias del modelo' },
   { id: 'anterior', nombre: 'Anterior', sub: 'carotídeo', desc: 'Carótidas internas y sus ramas' },
   { id: 'posterior', nombre: 'Posterior', sub: 'vertebrobasilar', desc: 'Vertebrales, basilar y sus ramas' },
   { id: 'anillo', nombre: 'Anillo', sub: '9 vasos', desc: 'Solo el polígono: ACI terminal, A1, ACoA, PCoA y P1' },
@@ -168,6 +168,27 @@ export const ARTERIAS: Record<ArteriaId, Arteria> = {
   },
 
   // ═══════════════ SISTEMA CAROTÍDEO ═══════════════
+  carotida_comun: {
+    id: 'carotida_comun',
+    nombre: 'Carótida común y bifurcación carotídea',
+    corto: 'Carótida común',
+    grupo: 'carotideo',
+    sistema: 'anterior',
+    territorio: 'conexion',
+    par: true,
+    resumen: 'Tronco del cuello que se divide en carótida interna (encéfalo y ojo) y externa (cara y cuello). Se ve en «Posición real».',
+    origen: 'Derecha: del tronco braquiocefálico, detrás de la articulación esternoclavicular. Izquierda: directamente del arco aórtico.',
+    trayecto: 'Sube vertical por la vaina carotídea, con la vena yugular interna por fuera y el nervio vago por detrás, sin dar ramas, hasta el borde superior del cartílago tiroides (C3-C4), donde se bifurca. La carótida interna sigue vertical hasta la base del cráneo, entra en el conducto carotídeo y se dobla casi en ángulo recto (porción petrosa, horizontal); vuelve a curvarse en el seno cavernoso (sifón) y sube junto al quiasma: así pasa de vertical a quedar bajo el cerebro.',
+    ramas: [
+      'Carótida interna: no da ninguna rama en el cuello',
+      'Carótida externa: tiroidea superior, faríngea ascendente, lingual, facial, occipital, auricular posterior, maxilar y temporal superficial',
+      'En la bifurcación: seno carotídeo (barorreceptor, inervado por el IX par) y cuerpo carotídeo (quimiorreceptor)',
+    ],
+    irriga: 'Por la carótida interna, la mayor parte del encéfalo y el ojo; por la externa, la cara, el cuero cabelludo, la lengua, la faringe, la tiroides y las meninges (meníngea media).',
+    clinica: 'La bifurcación es el sitio típico de la placa aterosclerótica: soplo carotídeo, AIT, amaurosis fugax e ictus de la cerebral media. Una estenosis sintomática de 70 % o más se trata con endarterectomía o stent. Masajear el seno carotídeo produce bradicardia: sirve para cortar algunas taquicardias supraventriculares y es peligroso si hay hipersensibilidad del seno.',
+    perla: 'Si da ramas en el cuello, es la carótida externa: la interna no da ninguna hasta entrar al cráneo.',
+    calibre: '≈ 6-8 mm',
+  },
   oftalmica: {
     id: 'oftalmica',
     nombre: 'Arteria oftálmica',

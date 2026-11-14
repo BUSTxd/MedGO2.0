@@ -13,6 +13,7 @@ import {
 } from './engine/anatomia';
 import { VARIANTES, SINDROMES, type VarianteId, type SindromeId, type Lado } from './engine/clinica';
 import styles from '@/styles/medulaEspinal.module.css';
+import ws from '@/styles/poligonoWillis.module.css';
 
 const WillisScene = dynamic(() => import('./WillisScene'), {
   ssr: false,
@@ -25,6 +26,8 @@ const WillisScene = dynamic(() => import('./WillisScene'), {
 });
 
 export type ModoWillis = 'arterias' | 'territorios' | 'variantes' | 'clinico';
+/** Vista de atlas (tronco tumbado, como en las láminas) o posición real. */
+export type Postura = 'atlas' | 'real';
 
 /** Lo elegido o señalado en el modelo o en la lista. */
 export type Elegido =
@@ -186,6 +189,7 @@ export default function WillisSimulator() {
   const [etiquetas, setEtiquetas] = useState(false);
   const [reinicio, setReinicio] = useState(0);
   const [encuadre, setEncuadre] = useState<'poligono' | 'encefalo'>('poligono');
+  const [postura, setPostura] = useState<Postura>('atlas');
   const [webgl, setWebgl] = useState<boolean | null>(null);
   const [tactil, setTactil] = useState(false);
 
@@ -270,13 +274,20 @@ export default function WillisSimulator() {
     if (mode === 'variantes' && variante !== 'completo') {
       return { color: '#f2b631', titulo: VARIANTES[variante].nombre, sub: 'Ámbar: lo que cambia respecto al polígono clásico' };
     }
+    if (postura === 'real') {
+      return {
+        color: '#3b9edd',
+        titulo: 'Posición real',
+        sub: 'Carótidas y vertebrales suben verticales por el cuello y se doblan en la base del cráneo para quedar bajo el cerebro',
+      };
+    }
     if (mode === 'territorios' && territorio) {
       const t = TERRITORIOS[territorio];
       const n = ARTERIA_LIST.filter((a) => a.territorio === territorio).length;
       return { color: t.color, titulo: `Territorio: ${t.nombre}`, sub: `${n} arteria${n === 1 ? '' : 's'} resaltada${n === 1 ? '' : 's'}` };
     }
     return null;
-  }, [senalado, elegido, mode, sindrome, variante, territorio]);
+  }, [senalado, elegido, mode, sindrome, variante, territorio, postura]);
 
   // ── Anuncio para lector de pantalla ──
   const anuncio = useMemo(() => {
@@ -291,8 +302,8 @@ export default function WillisSimulator() {
   }, [mode, elegido, territorio, variante, sindrome]);
 
   const ayudaGestos = tactil
-    ? 'Arrastra para girar · pellizca para acercar'
-    : 'Arrastra para girar · rueda para acercar';
+    ? 'Arrastra para girar · dos dedos para mover y acercar'
+    : 'Arrastra para girar · clic derecho para mover · rueda para acercar';
 
   return (
     <div className={styles.lab}>
@@ -319,6 +330,7 @@ export default function WillisSimulator() {
             etiquetas={etiquetas}
             reinicio={reinicio}
             encuadre={encuadre}
+            postura={postura}
             onElegir={elegir}
             onSenalar={setSenalado}
             onDeseleccionar={() => setElegido(null)}
@@ -347,6 +359,30 @@ export default function WillisSimulator() {
         />
 
         <VistasEscena mode={mode} onMode={cambiarModo} />
+
+        {/* Atlas ↔ posición real: el tronco se dobla y aparecen los vasos del cuello. */}
+        <div className={ws.postura} role="group" aria-label="Postura del modelo">
+          {([
+            ['atlas', 'Vista de atlas', 'Como en las láminas: el tronco tumbado en el plano de la base'],
+            ['real', 'Posición real', 'El tronco baja por el clivus y las arterias suben verticales por el cuello'],
+          ] as const).map(([clave, texto, desc]) => (
+            <button
+              key={clave}
+              type="button"
+              title={desc}
+              aria-pressed={postura === clave}
+              className={postura === clave ? ws.posturaActiva : ws.posturaBtn}
+              onClick={() => {
+                if (postura === clave) return;
+                setPostura(clave);
+                setEncuadre('poligono');
+                setReinicio((n) => n + 1);
+              }}
+            >
+              {texto}
+            </button>
+          ))}
+        </div>
 
         <span className={styles.zoomHint}>{ayudaGestos}</span>
       </div>

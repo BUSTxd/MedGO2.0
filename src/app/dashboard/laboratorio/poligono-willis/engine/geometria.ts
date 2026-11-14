@@ -19,7 +19,8 @@
 // A1 ≈ P1 > ...).
 
 import * as THREE from 'three';
-import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { mergeGeometries, mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { deformar, type ModoDoblez } from './doblez';
 import type { ArteriaId } from './anatomia';
 import type { ExtraId, Lado } from './clinica';
 
@@ -45,6 +46,14 @@ export interface Trazado {
    * destino no se alarga con la basilar.
    */
   final?: boolean;
+  /**
+   * Tramos del cuello, del lado izquierdo, que solo se ven en «Posición real»
+   * (coordenadas finales). Los de la carótida son fijos al cráneo; los de la
+   * vertebral se doblan con el tronco.
+   */
+  cuello?: Tramo[];
+  /** Tramos del cuello de línea media (espinal anterior por la médula). */
+  cuelloMedios?: Tramo[];
 }
 
 const espejo = (p: Pt): Pt => [-p[0], p[1], p[2]];
@@ -83,7 +92,21 @@ export const TRAZADOS: Record<ArteriaId, Trazado> = {
   ica: {
     // Petrosa → cavernosa (sifón) → clinoidea → supraclinoidea hasta la bifurcación.
     tramos: [{ pts: [[2.5, -1.0, 3.2], [2.15, -0.2, 2.55], [2.2, 1.0, 2.3], [2.35, 1.75, 1.65], [2.25, 1.5, 0.85], BIF], r0: 0.24, r1: 0.21 }],
+    // Cervical (vertical, desde el bulbo carotídeo) → codo al entrar en el
+    // conducto carotídeo → petrosa horizontal hasta el agujero rasgado, donde
+    // empieza el tramo de arriba. Así pasa de vertical a horizontal.
+    cuello: [{ pts: [[3.55, -1.6, 12.6], [3.55, -1.85, 10.0], [3.5, -2.0, 7.0], [3.5, -2.05, 4.6], [3.35, -2.0, 3.75], [2.95, -1.6, 3.4], [2.5, -1.0, 3.2]], r0: 0.3, r1: 0.24 }],
     etiqueta: 0.14,
+  },
+  carotida_comun: {
+    tramos: [],
+    // Común (desde abajo) hasta la bifurcación a la altura de C3-C4, y muñón
+    // de la carótida externa, anteromedial a la interna.
+    cuello: [
+      { pts: [[3.2, -0.6, 20.5], [3.45, -1.2, 16.0], [3.55, -1.6, 12.6]], r0: 0.34, r1: 0.32 },
+      { pts: [[3.55, -1.6, 12.6], [3.35, -0.9, 11.2], [3.1, -0.3, 9.0], [3.2, 0.2, 6.8]], r0: 0.2, r1: 0.15 },
+    ],
+    etiqueta: 0.4,
   },
   oftalmica: {
     tramos: [{ pts: [[2.3, 1.68, 1.32], [2.0, 2.4, 1.25], [1.85, 3.3, 1.15], [1.95, 4.3, 1.05]], r0: 0.07, r1: 0.05 }],
@@ -187,6 +210,10 @@ export const TRAZADOS: Record<ArteriaId, Trazado> = {
   },
   vertebral: {
     tramos: [{ pts: [[1.35, -8.3, 2.85], [1.25, -7.4, 2.55], [0.95, -6.4, 2.15], [0.5, -5.3, 1.65], VB], r0: 0.185, r1: 0.18 }],
+    // V3: sale del agujero transverso del atlas, rodea por detrás su masa
+    // lateral (el asa) y entra por el agujero magno; V2: sube por los agujeros
+    // transversos de C6 a C1; V1: desde la subclavia. Se dobla con el tronco.
+    cuello: [{ pts: [[1.35, -9.85, 2.85], [2.0, -10.4, 2.3], [3.0, -10.9, 1.3], [4.1, -11.4, 1.7], [4.6, -11.9, 2.8], [4.2, -12.6, 3.4], [3.6, -13.6, 3.6], [3.5, -17, 3.6], [3.4, -24, 3.6], [3.7, -26.5, 3.2], [4.8, -27.6, 2.6]], r0: 0.18, r1: 0.19 }],
     etiqueta: 0.3,
   },
   pica: {
@@ -199,6 +226,7 @@ export const TRAZADOS: Record<ArteriaId, Trazado> = {
   espinal_ant: {
     tramos: [{ pts: [[0.6, -5.55, 1.78], [0.3, -6.0, 1.9], [0, -6.5, 1.98]], r0: 0.035 }],
     medios: [{ pts: [[0, -6.5, 1.98], [0, -7.6, 2.22], [0, -8.85, 2.56]], r0: 0.04, r1: 0.035 }],
+    cuelloMedios: [{ pts: [[0, -10.4, 2.56], [0, -13, 2.56], [0, -27.3, 2.56]], r0: 0.035 }],
     etiqueta: 1,
   },
 };
@@ -281,26 +309,46 @@ export interface Pieza {
   arteria: ArteriaId;
   lado: Lado;
   tramos: Tramo[];
+  /** Solo se ve en «Posición real». */
+  cuello: boolean;
+  /** Cómo se mueve al pasar del atlas a la posición real. */
+  modo: ModoDoblez;
 }
+
+/** La ACP va al cerebro (no se dobla); las cerebelosas siguen al cerebelo. */
+function modoDe(id: ArteriaId, cuello: boolean): ModoDoblez {
+  if (id === 'p2' || id === 'carotida_comun' || (cuello && id === 'ica')) return 'fijo';
+  if (id === 'sca' || id === 'aica' || id === 'pica') return 'rama';
+  return 'tronco';
+}
+
+const izquierdaYDerecha = (id: ArteriaId, tramos: Tramo[], cuello: boolean): Pieza[] => [
+  { arteria: id, lado: 'i', tramos, cuello, modo: modoDe(id, cuello) },
+  { arteria: id, lado: 'd', tramos: tramos.map((tr) => ({ ...tr, pts: tr.pts.map(espejo) })), cuello, modo: modoDe(id, cuello) },
+];
 
 export const PIEZAS: Pieza[] = (Object.keys(TRAZADOS) as ArteriaId[]).flatMap((id) => {
   const t = TRAZADOS[id];
   const out: Pieza[] = [];
-  if (t.tramos.length) {
-    const izq = t.final ? t.tramos : t.tramos.map(estirarTramo);
-    out.push({ arteria: id, lado: 'i', tramos: izq });
-    out.push({ arteria: id, lado: 'd', tramos: izq.map((tr) => ({ ...tr, pts: tr.pts.map(espejo) })) });
-  }
-  if (t.medios?.length) out.push({ arteria: id, lado: 'm', tramos: t.medios.map(estirarTramo) });
+  if (t.tramos.length) out.push(...izquierdaYDerecha(id, t.final ? t.tramos : t.tramos.map(estirarTramo), false));
+  if (t.medios?.length) out.push({ arteria: id, lado: 'm', tramos: t.medios.map(estirarTramo), cuello: false, modo: modoDe(id, false) });
+  if (t.cuello?.length) out.push(...izquierdaYDerecha(id, t.cuello, true));
+  if (t.cuelloMedios?.length) out.push({ arteria: id, lado: 'm', tramos: t.cuelloMedios, cuello: true, modo: modoDe(id, true) });
   return out;
 });
 
-/** Punto donde se ancla la etiqueta de una arteria en el lado pedido. */
-export function anclaEtiqueta(id: ArteriaId, lado: Lado): THREE.Vector3 {
-  const t = TRAZADOS[id];
-  const tramo = t.tramos[0] ?? t.medios![0];
-  const p = curva(t.final ? tramo.pts : tramo.pts.map(estirar)).getPointAt(Math.min(1, Math.max(0, t.etiqueta)));
-  if (lado === 'd' && t.tramos.length) p.x = -p.x;
+/** ¿La arteria solo existe en el cuello (se ve únicamente en «Posición real»)? */
+export const soloCuello = (id: ArteriaId) => !TRAZADOS[id].tramos.length && !TRAZADOS[id].medios?.length;
+
+/** Punto donde se ancla la etiqueta de una arteria en el lado pedido y la postura t. */
+export function anclaEtiqueta(id: ArteriaId, lado: Lado, t = 0): THREE.Vector3 {
+  const tr = TRAZADOS[id];
+  const deCuello = soloCuello(id);
+  const tramo = tr.tramos[0] ?? tr.medios?.[0] ?? tr.cuello![0];
+  const pts = tr.final || deCuello ? tramo.pts : tramo.pts.map(estirar);
+  const p = curva(pts).getPointAt(Math.min(1, Math.max(0, tr.etiqueta)));
+  if (lado === 'd' && (tr.tramos.length || deCuello)) p.x = -p.x;
+  deformar(p, t, modoDe(id, deCuello));
   return p;
 }
 
@@ -444,8 +492,9 @@ function pisoHemisferio(ax: number, y: number): number {
   const frontal = -0.75;                                   // cara orbitaria
   const temporal = 0.15 + 2.55 * ss(1.9, 4.2, ax);         // uncus medial → fosa media
   let piso = frontal + (temporal - frontal) * ss(4.2, 0.9, y);
-  // Occipital: sobre la tienda, por encima del cerebelo.
-  piso += (-2.5 - piso) * ss(-6.0, -9.4, y);
+  // Occipital: el temporal sube en rampa hacia atrás, apoyado en la tienda
+  // del cerebelo (sin escalón: una pared vertical se vería como una lámina).
+  piso += (-1.7 - piso) * ss(-4.0, -12.5, y);
   return piso;
 }
 
@@ -478,36 +527,178 @@ function superelipsoide(
       idx.push(a, a + 1, b, a + 1, b + 1, b);
     }
   }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-  geo.setIndex(idx);
+  const crudo = new THREE.BufferGeometry();
+  crudo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  crudo.setIndex(idx);
+  // Suelda la costura y los polos (vértices repetidos) para que las normales
+  // no dejen una línea marcada en la silueta.
+  const geo = mergeVertices(crudo, 1e-4);
+  crudo.dispose();
   geo.computeVertexNormals();
   return geo;
 }
 
-/** Hemisferios cerebrales: silueta translúcida. */
+// ── Lóbulos, territorios y surcos (atributos por vértice de la silueta) ──
+//
+// Cada vértice del cerebro lleva tres atributos que el sombreador mezcla:
+//   lobulo (vec4): peso frontal, parietal, temporal, occipital
+//   terr   (vec3): peso de la cerebral anterior, media y posterior
+//   surco  (float): cercanía a un surco principal (Silvio, central,
+//                   parietooccipital), que se dibuja como una línea oscura
+// Los límites siguen la anatomía de superficie: la cisura de Silvio sube de
+// delante hacia atrás desde el polo temporal; el surco central baja desde el
+// vértice, algo por detrás de la mitad, hasta casi tocar Silvio; el surco
+// parietooccipital separa el occipital en la cara medial. Territorios: la
+// cerebral anterior lleva la cara medial y una franja de ≈ 2 cm del borde
+// superior; la posterior, el occipital y la cara inferior del temporal; la
+// media, el resto de la convexidad.
+
+/** Altura (z) de la cisura de Silvio en la cara lateral, según y. */
+const silvioZ = (y: number) => -1.2 - Math.max(0, 2.2 - y) * 0.5;
+/** Posición (y) del surco central según la altura z. */
+const centralY = (z: number) => Math.min(2.8, -1.0 + (z + 15.5) * 0.32);
+
+function atributosCerebro(geo: THREE.BufferGeometry) {
+  const pos = geo.attributes.position as THREE.BufferAttribute;
+  const nor = geo.attributes.normal as THREE.BufferAttribute;
+  const n = pos.count;
+  const lob = new Float32Array(n * 4);
+  const ter = new Float32Array(n * 3);
+  const sur = new Float32Array(n);
+  const gs = (d: number, w: number) => Math.exp(-((d / w) ** 2));
+  for (let i = 0; i < n; i++) {
+    const ax = Math.abs(pos.getX(i));
+    const y = pos.getY(i);
+    const z = pos.getZ(i);
+    // Orientación de la superficie: los surcos de la convexidad (Silvio,
+    // central) solo se dibujan donde la cara mira hacia fuera o hacia arriba,
+    // no en la cara basal.
+    const lateral = ss(0.45, 0.75, Math.abs(nor.getX(i)));
+    const noBasal = ss(0.35, 0.05, nor.getZ(i));
+    // Lóbulos
+    const temporal = ss(-0.6, 0.6, z - silvioZ(y)) * ss(1.2, 2.2, ax) * ss(-10.8, -9.2, y) * ss(4.4, 3.2, y);
+    const occipital = ss(-9.6, -11.2, y) * (1 - temporal);
+    const frontal = ss(-0.5, 0.5, y - centralY(z)) * (1 - temporal) * (1 - occipital);
+    const parietal = Math.max(0, 1 - temporal - occipital - frontal);
+    lob.set([frontal, parietal, temporal, occipital], i * 4);
+    // Territorios
+    const medial = ss(1.7, 0.7, ax);
+    const anteriorPO = ss(-10.4, -8.8, y); // por delante del surco parietooccipital
+    const franja = ss(4.6, 3.4, ax) * ss(-11.2, -12.6, z) * anteriorPO;
+    const aca = Math.min(1, Math.max(medial * anteriorPO, franja));
+    const basalPost = Math.max(ss(1.2, 2.2, z) * ss(1.5, -0.5, y) * ss(4.8, 3.2, ax), ss(-10.4, -12.0, y));
+    const acp = Math.min(1, Math.max(medial * (1 - anteriorPO), basalPost)) * (1 - aca);
+    ter.set([aca, Math.max(0, 1 - aca - acp), acp], i * 3);
+    // Surcos principales
+    const silvio = gs(z - silvioZ(y), 0.28) * ss(3.2, 4.6, ax) * ss(4.2, 2.6, y) * ss(-8.6, -7.0, y) * lateral;
+    const central = gs(y - centralY(z), 0.3) * ss(1.0, 2.2, ax) * ss(-0.4, -1.6, z - silvioZ(y)) * noBasal;
+    const po = gs(y + 10.3, 0.32) * ss(2.4, 0.8, ax);
+    // Cisura interhemisférica: a lo largo de toda la línea media.
+    const fisura = Math.abs(nor.getX(i)) > 0.98 ? 0 : 0.6 * gs(ax - RENDIJA, 0.55);
+    sur[i] = Math.max(silvio, central, po, fisura);
+  }
+  geo.setAttribute('lobulo', new THREE.BufferAttribute(lob, 4));
+  geo.setAttribute('terr', new THREE.BufferAttribute(ter, 3));
+  geo.setAttribute('surco', new THREE.BufferAttribute(sur, 1));
+}
+
+/** Hemisferios cerebrales con lóbulos, territorios y surcos principales. */
+//
+// Cada hemisferio es la mitad exacta de UN mismo encéfalo (superelipsoide
+// centrada en la línea media), cerrada por una cara medial plana: los dos
+// quedan pegados como en la pieza real. La separación se sugiere con el borde
+// medial redondeado (la cisura interhemisférica se ve como un surco a lo largo
+// de toda la línea media) y una rendija de 0,3 mm entre las caras mediales.
+
+const CEREBRO_C: Pt = [0, -0.4, -6.4];
+const CEREBRO_R: Pt = [12.55, 15.1, 9.2];
+const CEREBRO_E = 0.82;
+const RENDIJA = 0.03;
+
+/** Deforma un punto del medio encéfalo (x ≥ 0) y lo lleva a su lado. */
+function formaHemisferio(p: THREE.Vector3, lado: 1 | -1) {
+  let ax = p.x;
+  // Contorno basal: frontal más estrecho, máximo ancho en la región
+  // temporoparietal y occipital algo más estrecho.
+  ax *= 0.8 + 0.2 * Math.exp(-(((p.y + 3) / 9) ** 2)) - 0.06 * ss(-8, -15, p.y);
+  // Cara basal: se apoya en su piso.
+  p.z = smin(p.z, pisoHemisferio(ax, p.y), 0.9);
+  // Polo temporal y cisura de Silvio: el temporal se separa del frontal.
+  const silvio = Math.exp(-((p.y - 2.0) ** 2) / 1.2) * ss(3.0, 6.5, ax) * ss(-4.0, 0.5, p.z);
+  ax -= 1.7 * silvio;
+  // Borde medial redondeado: cerca de la línea media la superficie se retira
+  // hacia el centro, y así se dibuja la cisura interhemisférica.
+  const borde = 0.55 * (1 - ss(0, 1.1, ax)) ** 2;
+  const dy = p.y - CEREBRO_C[1];
+  const dz = p.z - CEREBRO_C[2];
+  const d = Math.hypot(dy, dz) || 1;
+  p.y -= (dy / d) * borde;
+  p.z -= (dz / d) * borde;
+  p.x = lado * (ax + RENDIJA);
+}
+
+/** Medio encéfalo con su cara medial plana. */
+function hemisferio(lado: 1 | -1, seg = 110, anillos = 120): THREE.BufferGeometry {
+  const [cx, cy, cz] = CEREBRO_C;
+  const [rx, ry, rz] = CEREBRO_R;
+  const pos: number[] = [];
+  const idx: number[] = [];
+  const p = new THREE.Vector3();
+  for (let i = 0; i <= anillos; i++) {
+    const v = -Math.PI / 2 + (i / anillos) * Math.PI;          // de inferior a superior
+    for (let j = 0; j <= seg; j++) {
+      const u = -Math.PI / 2 + (j / seg) * Math.PI;             // solo la mitad x ≥ 0
+      p.set(
+        cx + rx * spow(Math.cos(v), CEREBRO_E) * spow(Math.cos(u), CEREBRO_E),
+        cy + ry * spow(Math.cos(v), CEREBRO_E) * spow(Math.sin(u), CEREBRO_E),
+        cz - rz * spow(Math.sin(v), CEREBRO_E),
+      );
+      formaHemisferio(p, lado);
+      pos.push(p.x, p.y, p.z);
+    }
+  }
+  for (let i = 0; i < anillos; i++) {
+    for (let j = 0; j < seg; j++) {
+      const a = i * (seg + 1) + j;
+      const b = a + seg + 1;
+      idx.push(a, a + 1, b, a + 1, b + 1, b);
+    }
+  }
+  const crudo = new THREE.BufferGeometry();
+  crudo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  crudo.setIndex(idx);
+  const exterior = mergeVertices(crudo, 1e-4);
+  crudo.dispose();
+  exterior.computeVertexNormals();
+
+  // Cara medial: abanico desde su centro hasta el contorno (columna anterior
+  // de abajo arriba y posterior de arriba abajo). Lleva vértices propios con
+  // la normal plana, para que de frente sea casi invisible y de canto dibuje
+  // la línea de la cisura.
+  const contorno: number[] = [];
+  for (let i = 0; i <= anillos; i++) contorno.push(i * (seg + 1) + seg);
+  for (let i = anillos; i >= 0; i--) contorno.push(i * (seg + 1));
+  const cPos: number[] = [lado * RENDIJA, cy, cz + rz * 0.25];
+  for (const k of contorno) cPos.push(pos[k * 3], pos[k * 3 + 1], pos[k * 3 + 2]);
+  const cIdx: number[] = [];
+  // El contorno empieza y acaba en el mismo polo: el abanico queda cerrado.
+  for (let k = 1; k < contorno.length; k++) cIdx.push(0, k, k + 1);
+  const cara = new THREE.BufferGeometry();
+  cara.setAttribute('position', new THREE.Float32BufferAttribute(cPos, 3));
+  cara.setAttribute('normal', new THREE.Float32BufferAttribute(cPos.map((_, i) => (i % 3 === 0 ? lado : 0)), 3));
+  cara.setIndex(cIdx);
+
+  const geo = mergeGeometries([exterior, cara], false)!;
+  exterior.dispose();
+  cara.dispose();
+  return geo;
+}
+
 export function geometriaCerebro(): THREE.BufferGeometry {
-  const hemi = (lado: 1 | -1) => superelipsoide(
-    [lado * 6.35, -0.4, -6.4], [6.2, 15.1, 9.2], 0.82,
-    (p) => {
-      let ax = Math.abs(p.x);
-      // Contorno basal: frontal más estrecho, máximo ancho en la región
-      // temporoparietal y occipital algo más estrecho.
-      const ancho = 0.8 + 0.2 * Math.exp(-(((p.y + 3) / 9) ** 2)) - 0.06 * ss(-8, -15, p.y);
-      ax = 0.35 + Math.max(0, ax - 0.35) * ancho;
-      // Cara medial plana (cisura interhemisférica).
-      if (ax < 0.35) ax = 0.35 - (0.35 - ax) * 0.15;
-      p.x = lado * ax;
-      // Cara basal: se apoya en su piso.
-      p.z = smin(p.z, pisoHemisferio(Math.abs(p.x), p.y), 0.9);
-      // Polo temporal y cisura de Silvio: el temporal se separa del frontal.
-      const silvio = Math.exp(-((p.y - 2.0) ** 2) / 1.2) * ss(3.0, 6.5, ax) * ss(-4.0, 0.5, p.z);
-      p.x -= lado * 1.7 * silvio;
-    },
-  );
-  const partes = [hemi(1), hemi(-1)];
+  const partes = [hemisferio(1), hemisferio(-1)];
   const unido = mergeGeometries(partes, false)!;
   partes.forEach((g) => g.dispose());
+  atributosCerebro(unido);
   return unido;
 }
 
@@ -515,13 +706,51 @@ export function geometriaCerebro(): THREE.BufferGeometry {
 export function geometriaCerebelo(): THREE.BufferGeometry {
   const partes = [
     // ≈ 10 cm de ancho y 5 de largo; el bulbo queda en la vallécula, entre ambos.
-    superelipsoide([4.6, -10.8, 0.7], [4.2, 4.1, 2.5], 0.9, undefined, 56, 36),
-    superelipsoide([-4.6, -10.8, 0.7], [4.2, 4.1, 2.5], 0.9, undefined, 56, 36),
-    superelipsoide([0, -11.3, -0.4], [1.6, 3.4, 2.0], 0.9, undefined, 40, 28),
+    superelipsoide([4.6, -10.8, 0.7], [4.2, 4.1, 2.5], 0.9, undefined, 90, 60),
+    superelipsoide([-4.6, -10.8, 0.7], [4.2, 4.1, 2.5], 0.9, undefined, 90, 60),
+    superelipsoide([0, -11.3, -0.4], [1.6, 3.4, 2.0], 0.9, undefined, 56, 40),
   ];
   const unido = mergeGeometries(partes, false)!;
   partes.forEach((g) => g.dispose());
+  const n = unido.attributes.position.count;
+  unido.setAttribute('lobulo', new THREE.BufferAttribute(new Float32Array(n * 4), 4));
+  unido.setAttribute('terr', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+  unido.setAttribute('surco', new THREE.BufferAttribute(new Float32Array(n), 1));
   return unido;
+}
+
+/** Médula espinal cervical (solo en «Posición real»): sigue al bulbo hacia el cuello. */
+export function geometriaMedula(): THREE.BufferGeometry {
+  const ANILLO = 40;
+  const ARRIBA = -10.3;
+  const ABAJO = -27.5;
+  const PASO = 0.12;
+  const filas = Math.round((ARRIBA - ABAJO) / PASO) + 1;
+  const pos: number[] = [];
+  const idx: number[] = [];
+  for (let f = 0; f < filas; f++) {
+    const y = ARRIBA - f * PASO;
+    // Intumescencia cervical (C5-T1) hacia el final del tramo.
+    const rx = 0.6 + 0.12 * Math.exp(-(((y + 21) / 3.5) ** 2));
+    const rz = 0.5;
+    for (let j = 0; j < ANILLO; j++) {
+      const th = (j / ANILLO) * Math.PI * 2;
+      const fisura = 1 - 0.12 * Math.exp(-((Math.min(th, Math.PI * 2 - th) / 0.12) ** 2));
+      pos.push(rx * Math.sin(th) * fisura, y, 2.0 + rz * Math.cos(th) * fisura);
+    }
+  }
+  for (let f = 0; f < filas - 1; f++) {
+    for (let j = 0; j < ANILLO; j++) {
+      const a = f * ANILLO + j;
+      const b = f * ANILLO + ((j + 1) % ANILLO);
+      idx.push(a, a + ANILLO, b, b, a + ANILLO, b + ANILLO);
+    }
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  geo.setIndex(idx);
+  geo.computeVertexNormals();
+  return geo;
 }
 
 /** Encuadre: centro del conjunto y semiextensiones (alto, ancho). */
@@ -532,3 +761,14 @@ export const SEMI_ANCHO = 6.4;
 export const CENTRO_ENCEFALO: Pt = [0, -0.6, -2];
 export const SEMI_ALTO_ENCEFALO = 17.2;
 export const SEMI_ANCHO_ENCEFALO = 13.8;
+/**
+ * Encuadres de la «Posición real»: vista anterolateral izquierda, algo desde
+ * abajo, con lo superior hacia arriba en la pantalla (−z). La altura se mide
+ * en z (de la base del cerebro al cuello) y el ancho, sobre todo, en y.
+ */
+export const CENTRO_REAL: Pt = [0, -2.5, 7.5];
+export const SEMI_ALTO_REAL = 13.5;
+export const SEMI_ANCHO_REAL = 10;
+export const CENTRO_REAL_ENCEFALO: Pt = [0, -1, 3];
+export const SEMI_ALTO_REAL_ENCEFALO = 18;
+export const SEMI_ANCHO_REAL_ENCEFALO = 17;
