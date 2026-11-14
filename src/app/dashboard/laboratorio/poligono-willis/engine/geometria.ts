@@ -538,13 +538,14 @@ function superelipsoide(
   return geo;
 }
 
-// ── Lóbulos, territorios y surcos (atributos por vértice de la silueta) ──
+// ── Territorios, surcos y circunvoluciones (atributos por vértice) ──
 //
-// Cada vértice del cerebro lleva tres atributos que el sombreador mezcla:
-//   lobulo (vec4): peso frontal, parietal, temporal, occipital
-//   terr   (vec3): peso de la cerebral anterior, media y posterior
+// Cada vértice del cerebro lleva tres atributos, en bytes normalizados:
+//   terr   (vec3): peso de la cerebral anterior, media y posterior (solo se
+//                  pinta en la vista Territorios; en las demás es rosado)
 //   surco  (float): cercanía a un surco principal (Silvio, central,
-//                   parietooccipital), que se dibuja como una línea oscura
+//                   parietooccipital, interhemisférica): línea oscura
+//   giro   (float): campo cuyas curvas de nivel cero dibujan circunvoluciones
 // Los límites siguen la anatomía de superficie: la cisura de Silvio sube de
 // delante hacia atrás desde el polo temporal; el surco central baja desde el
 // vértice, algo por detrás de la mitad, hasta casi tocar Silvio; el surco
@@ -558,13 +559,45 @@ const silvioZ = (y: number) => -1.2 - Math.max(0, 2.2 - y) * 0.5;
 /** Posición (y) del surco central según la altura z. */
 const centralY = (z: number) => Math.min(2.8, -1.0 + (z + 15.5) * 0.32);
 
+// Dibujo de circunvoluciones: un campo ondulado (suma de ondas en varias
+// direcciones, con la posición algo retorcida) cuyas curvas de nivel cero
+// parecen surcos. Se calcula UNA vez por vértice al crear la malla; el
+// sombreador solo dibuja la línea donde el valor interpolado pasa por cero
+// (antes se calculaba ruido simplex en cada píxel de cada fotograma).
+const ONDAS: Array<[number, number, number, number, number, number]> = [
+  // dirección (x, y, z), frecuencia (rad/u: un giro mide ≈ 2-3 u ≈ 1-1,5 cm), fase, peso
+  [0.62, 0.71, -0.33, 2.3, 1.3, 1],
+  [-0.48, 0.35, 0.80, 2.55, 0.4, 1],
+  [0.20, -0.88, 0.43, 2.1, 2.1, 1],
+  [0.83, 0.12, 0.55, 2.9, 0.7, 0.7],
+  [-0.30, -0.52, -0.80, 2.7, 1.9, 0.7],
+];
+function giros(x: number, y: number, z: number): number {
+  // Retorcer el espacio para que los surcos serpenteen en vez de formar rejilla.
+  const wx = x + 0.75 * Math.sin(0.9 * y + 0.5) + 0.35 * Math.sin(1.7 * z + 2.2);
+  const wy = y + 0.75 * Math.sin(0.85 * z + 1.7) + 0.35 * Math.sin(1.6 * x + 0.9);
+  const wz = z + 0.75 * Math.sin(0.95 * x + 2.9) + 0.35 * Math.sin(1.8 * y + 1.4);
+  let s = 0;
+  let w = 0;
+  for (const [dx, dy, dz, f, fase, peso] of ONDAS) {
+    s += peso * Math.sin(f * (dx * wx + dy * wy + dz * wz) + fase);
+    w += peso;
+  }
+  return s / w;
+}
+
+const aByte = (v: number) => Math.round(Math.min(1, Math.max(0, v)) * 255);
+const aByteConSigno = (v: number) => Math.round(Math.min(1, Math.max(-1, v)) * 127);
+
 function atributosCerebro(geo: THREE.BufferGeometry) {
   const pos = geo.attributes.position as THREE.BufferAttribute;
   const nor = geo.attributes.normal as THREE.BufferAttribute;
   const n = pos.count;
-  const lob = new Float32Array(n * 4);
-  const ter = new Float32Array(n * 3);
-  const sur = new Float32Array(n);
+  // En bytes normalizados (0-255 → 0-1): la cuarta parte de memoria que en
+  // decimales, y la tarjeta gráfica los lee igual.
+  const ter = new Uint8Array(n * 3);
+  const sur = new Uint8Array(n);
+  const gir = new Int8Array(n);
   const gs = (d: number, w: number) => Math.exp(-((d / w) ** 2));
   for (let i = 0; i < n; i++) {
     const ax = Math.abs(pos.getX(i));
@@ -575,31 +608,29 @@ function atributosCerebro(geo: THREE.BufferGeometry) {
     // no en la cara basal.
     const lateral = ss(0.45, 0.75, Math.abs(nor.getX(i)));
     const noBasal = ss(0.35, 0.05, nor.getZ(i));
-    // Lóbulos
-    const temporal = ss(-0.6, 0.6, z - silvioZ(y)) * ss(1.2, 2.2, ax) * ss(-10.8, -9.2, y) * ss(4.4, 3.2, y);
-    const occipital = ss(-9.6, -11.2, y) * (1 - temporal);
-    const frontal = ss(-0.5, 0.5, y - centralY(z)) * (1 - temporal) * (1 - occipital);
-    const parietal = Math.max(0, 1 - temporal - occipital - frontal);
-    lob.set([frontal, parietal, temporal, occipital], i * 4);
     // Territorios
     const medial = ss(1.7, 0.7, ax);
     const anteriorPO = ss(-10.4, -8.8, y); // por delante del surco parietooccipital
     const franja = ss(4.6, 3.4, ax) * ss(-11.2, -12.6, z) * anteriorPO;
     const aca = Math.min(1, Math.max(medial * anteriorPO, franja));
-    const basalPost = Math.max(ss(1.2, 2.2, z) * ss(1.5, -0.5, y) * ss(4.8, 3.2, ax), ss(-10.4, -12.0, y));
+    // Cara inferomedial del temporal (fusiforme, parahipocampal) y occipital.
+    const basalPost = Math.max(ss(0.6, 1.6, z) * ss(1.5, -0.5, y) * ss(6.5, 4.8, ax), ss(-10.4, -12.0, y));
     const acp = Math.min(1, Math.max(medial * (1 - anteriorPO), basalPost)) * (1 - aca);
-    ter.set([aca, Math.max(0, 1 - aca - acp), acp], i * 3);
+    ter.set([aca, Math.max(0, 1 - aca - acp), acp].map(aByte), i * 3);
     // Surcos principales
     const silvio = gs(z - silvioZ(y), 0.28) * ss(3.2, 4.6, ax) * ss(4.2, 2.6, y) * ss(-8.6, -7.0, y) * lateral;
     const central = gs(y - centralY(z), 0.3) * ss(1.0, 2.2, ax) * ss(-0.4, -1.6, z - silvioZ(y)) * noBasal;
     const po = gs(y + 10.3, 0.32) * ss(2.4, 0.8, ax);
     // Cisura interhemisférica: a lo largo de toda la línea media.
     const fisura = Math.abs(nor.getX(i)) > 0.98 ? 0 : 0.6 * gs(ax - RENDIJA, 0.55);
-    sur[i] = Math.max(silvio, central, po, fisura);
+    sur[i] = aByte(Math.max(silvio, central, po, fisura));
+    // La cara medial plana (abanico de triángulos largos) no lleva dibujo:
+    // interpolado sobre ella saldría en rayas.
+    gir[i] = Math.abs(nor.getX(i)) > 0.98 ? 127 : aByteConSigno(giros(pos.getX(i), y, z));
   }
-  geo.setAttribute('lobulo', new THREE.BufferAttribute(lob, 4));
-  geo.setAttribute('terr', new THREE.BufferAttribute(ter, 3));
-  geo.setAttribute('surco', new THREE.BufferAttribute(sur, 1));
+  geo.setAttribute('terr', new THREE.BufferAttribute(ter, 3, true));
+  geo.setAttribute('surco', new THREE.BufferAttribute(sur, 1, true));
+  geo.setAttribute('giro', new THREE.BufferAttribute(gir, 1, true));
 }
 
 /** Hemisferios cerebrales con lóbulos, territorios y surcos principales. */
@@ -638,7 +669,7 @@ function formaHemisferio(p: THREE.Vector3, lado: 1 | -1) {
 }
 
 /** Medio encéfalo con su cara medial plana. */
-function hemisferio(lado: 1 | -1, seg = 110, anillos = 120): THREE.BufferGeometry {
+function hemisferio(lado: 1 | -1, seg: number, anillos: number): THREE.BufferGeometry {
   const [cx, cy, cz] = CEREBRO_C;
   const [rx, ry, rz] = CEREBRO_R;
   const pos: number[] = [];
@@ -667,8 +698,8 @@ function hemisferio(lado: 1 | -1, seg = 110, anillos = 120): THREE.BufferGeometr
   const crudo = new THREE.BufferGeometry();
   crudo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
   crudo.setIndex(idx);
-  const exterior = mergeVertices(crudo, 1e-4);
-  crudo.dispose();
+  // La mitad no da la vuelta en u, así que no hay costura que soldar.
+  const exterior = crudo;
   exterior.computeVertexNormals();
 
   // Cara medial: abanico desde su centro hasta el contorno (columna anterior
@@ -694,8 +725,10 @@ function hemisferio(lado: 1 | -1, seg = 110, anillos = 120): THREE.BufferGeometr
   return geo;
 }
 
-export function geometriaCerebro(): THREE.BufferGeometry {
-  const partes = [hemisferio(1), hemisferio(-1)];
+/** «ligero» en teléfonos: menos de la mitad de vértices, la silueta casi no cambia. */
+export function geometriaCerebro(ligero = false): THREE.BufferGeometry {
+  const [seg, anillos] = ligero ? [56, 64] : [84, 96];
+  const partes = [hemisferio(1, seg, anillos), hemisferio(-1, seg, anillos)];
   const unido = mergeGeometries(partes, false)!;
   partes.forEach((g) => g.dispose());
   atributosCerebro(unido);
@@ -706,16 +739,25 @@ export function geometriaCerebro(): THREE.BufferGeometry {
 export function geometriaCerebelo(): THREE.BufferGeometry {
   const partes = [
     // ≈ 10 cm de ancho y 5 de largo; el bulbo queda en la vallécula, entre ambos.
-    superelipsoide([4.6, -10.8, 0.7], [4.2, 4.1, 2.5], 0.9, undefined, 90, 60),
-    superelipsoide([-4.6, -10.8, 0.7], [4.2, 4.1, 2.5], 0.9, undefined, 90, 60),
-    superelipsoide([0, -11.3, -0.4], [1.6, 3.4, 2.0], 0.9, undefined, 56, 40),
+    superelipsoide([4.6, -10.8, 0.7], [4.2, 4.1, 2.5], 0.9, undefined, 72, 48),
+    superelipsoide([-4.6, -10.8, 0.7], [4.2, 4.1, 2.5], 0.9, undefined, 72, 48),
+    superelipsoide([0, -11.3, -0.4], [1.6, 3.4, 2.0], 0.9, undefined, 44, 32),
   ];
   const unido = mergeGeometries(partes, false)!;
   partes.forEach((g) => g.dispose());
-  const n = unido.attributes.position.count;
-  unido.setAttribute('lobulo', new THREE.BufferAttribute(new Float32Array(n * 4), 4));
-  unido.setAttribute('terr', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
-  unido.setAttribute('surco', new THREE.BufferAttribute(new Float32Array(n), 1));
+  const pos = unido.attributes.position as THREE.BufferAttribute;
+  const n = pos.count;
+  // Folias: arcos concéntricos alrededor del centro del cerebelo, algo ondulados.
+  const gir = new Int8Array(n);
+  for (let i = 0; i < n; i++) {
+    const y = pos.getY(i);
+    const z = pos.getZ(i);
+    const d = Math.hypot(y + 10.8, z - 0.7);
+    gir[i] = aByteConSigno(Math.sin(d * 5.4 + 0.9 * giros(pos.getX(i), y, z)));
+  }
+  unido.setAttribute('terr', new THREE.BufferAttribute(new Uint8Array(n * 3), 3, true));
+  unido.setAttribute('surco', new THREE.BufferAttribute(new Uint8Array(n), 1, true));
+  unido.setAttribute('giro', new THREE.BufferAttribute(gir, 1, true));
   return unido;
 }
 

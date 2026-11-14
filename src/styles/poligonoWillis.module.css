@@ -156,3 +156,204 @@
   .postura { left: 10px; bottom: 10px; }
   .posturaBtn, .posturaActiva { padding: 7px 9px; font-size: 12.5px; }
 }
+
+/* ─── FICHA DE LA ARTERIA: de lo central a lo accesorio ───
+   Revisado con Nielsen (auditorias-ux/nielsen-willis-barra-lateral-2026-11-14.md).
+   Los títulos de contenido van en frase y oscuros; los rótulos en versalitas
+   grises quedan para la barra (Sistema, grupos de la lista). */
+
+/* 1 · Cabecera fija: no se pierde al bajar por la ficha */
+.fichaCabeza {
+  position: sticky;
+  top: -12px; /* el relleno superior de .panelFicha */
+  z-index: 1;
+  margin: -12px -14px 0;
+  padding: 12px 14px 8px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+:global(.dark-mode) .fichaCabeza {
+  background: #151b30;
+  border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+.fichaFila {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.fichaTitulo {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .fichaTitulo { color: #f0eeff; }
+.sigla {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 1px 7px;
+  border-radius: 6px;
+  vertical-align: 2px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: #b3352e;
+}
+.fichaMeta {
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: rgba(26, 26, 46, 0.68);
+}
+:global(.dark-mode) .fichaMeta { color: rgba(240, 238, 255, 0.68); }
+.fichaPos { white-space: nowrap; }
+.fichaNav {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.navBtn {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #5b6478;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.navBtn:hover:not(:disabled) { background: #eef1f7; color: #1b2233; }
+.navBtn:disabled { opacity: 0.35; cursor: default; }
+:global(.dark-mode) .navBtn { color: #9aa6c2; }
+:global(.dark-mode) .navBtn:hover:not(:disabled) { background: #1d2644; color: #eef1fa; }
+
+/* Primera línea: qué es, en tamaño de lectura */
+.fichaLead {
+  margin: 2px 0 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(26, 26, 46, 0.88);
+}
+:global(.dark-mode) .fichaLead { color: rgba(240, 238, 255, 0.88); }
+
+/* 2 · Lo esencial: lista de definición, rótulo a la izquierda y dato a la
+   derecha, separados por líneas finas (no una tarjeta más). */
+.esencial {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.esencialFila {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+}
+.esencialFila:last-child { border-bottom: 1px solid rgba(0, 0, 0, 0.07); }
+:global(.dark-mode) .esencialFila,
+:global(.dark-mode) .esencialFila:last-child { border-color: rgba(255, 255, 255, 0.08); }
+.esencialFila dt {
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: rgba(26, 26, 46, 0.62);
+}
+.esencialFila dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .esencialFila dt { color: rgba(240, 238, 255, 0.62); }
+:global(.dark-mode) .esencialFila dd { color: #f0eeff; }
+
+/* Enlace discreto (territorio, «Ver todas») */
+.enlaceTerr {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: #2b7fb8;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: rgba(43, 127, 184, 0.35);
+  text-underline-offset: 3px;
+}
+.enlaceTerr:hover { text-decoration-color: currentColor; }
+:global(.dark-mode) .enlaceTerr { color: #5bb4ec; }
+
+/* 4 · Detalle: título de contenido (frase, oscuro), no rótulo de barra */
+.detalleTitulo,
+.apartadoTitulo {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: #1a1a2e;
+}
+.detalleTitulo { margin-top: 6px; font-size: 14px; }
+:global(.dark-mode) .detalleTitulo,
+:global(.dark-mode) .apartadoTitulo { color: #f0eeff; }
+
+/* ─── LISTA ─── */
+.buscador {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.buscadorLupa {
+  position: absolute;
+  left: 11px;
+  color: rgba(26, 26, 46, 0.5);
+  pointer-events: none;
+}
+:global(.dark-mode) .buscadorLupa { color: rgba(240, 238, 255, 0.5); }
+.buscadorCampo {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px 0 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #f6f8fc;
+  font-family: inherit;
+  font-size: 14px;
+  color: #1a1a2e;
+}
+.buscadorCampo::placeholder { color: rgba(26, 26, 46, 0.5); }
+.buscadorCampo:focus { outline: 2px solid #3b9edd; outline-offset: 1px; background: #fff; }
+:global(.dark-mode) .buscadorCampo {
+  background: #0f1426;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #f0eeff;
+}
+:global(.dark-mode) .buscadorCampo::placeholder { color: rgba(240, 238, 255, 0.45); }
+:global(.dark-mode) .buscadorCampo:focus { background: #0f1426; }
+.conteo {
+  margin-left: 4px;
+  font-weight: 700;
+  letter-spacing: 0;
+  opacity: 0.7;
+}
+/* La burbuja flotante del asistente no tapa la última fila de la lista. */
+.listaHolgura { padding-bottom: 76px; }
+
+.navBtn:focus-visible,
+.enlaceTerr:focus-visible { outline: 2px solid #3b9edd; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .navBtn { transition: none; }
+}

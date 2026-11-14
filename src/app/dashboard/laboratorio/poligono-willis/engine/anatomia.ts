@@ -748,3 +748,42 @@ export const REFERENCIAS: Record<ReferenciaId, Referencia> = {
 };
 
 export const REFERENCIA_LIST: Referencia[] = Object.values(REFERENCIAS);
+
+// ── Lo esencial de cada arteria (cabecera de la ficha) ──────────────────────
+//
+// Tres líneas que responden lo que el alumno necesita de un vistazo: de dónde
+// nace, qué irriga y qué pasa si se lesiona. El detalle (trayecto, ramas,
+// clínica completa) queda debajo, en las pestañas.
+
+export interface Esencial {
+  nace: string;
+  irriga: string;
+  lesion: string;
+}
+
+export const ESENCIAL: Record<ArteriaId, Esencial> = {
+  carotida_comun: { nace: 'Tronco braquiocefálico (der.) · arco aórtico (izq.)', irriga: 'Encéfalo y ojo (interna) · cara y cuello (externa)', lesion: 'Placa en la bifurcación: soplo, AIT, ictus' },
+  ica: { nace: 'Carótida común, a la altura de C3-C4', irriga: 'Ojo y casi todo el hemisferio (cerebral anterior y media)', lesion: 'Estenosis: AIT, amaurosis fugax, infarto de la cerebral media' },
+  oftalmica: { nace: 'Carótida interna, al salir del seno cavernoso', irriga: 'Retina y órbita', lesion: 'Ceguera monocular súbita (arteria central de la retina)' },
+  pcom: { nace: 'Carótida interna supraclinoidea', irriga: 'Tálamo anterior e hipotálamo (perforantes)', lesion: 'Aneurisma: parálisis del III con midriasis' },
+  coroidea_ant: { nace: 'Carótida interna, distal a la comunicante posterior', irriga: 'Cápsula interna posterior y cintilla óptica', lesion: 'Hemiplejia + hemihipoestesia + hemianopsia' },
+  a1: { nace: 'Bifurcación de la carótida interna', irriga: 'Quiasma e hipotálamo anterior', lesion: 'Si es hipoplásica: más aneurismas de la comunicante anterior' },
+  acom: { nace: 'Une las dos A1', irriga: 'Hipotálamo anterior y fórnix (perforantes)', lesion: 'Sitio más frecuente de aneurismas: hemorragia subaracnoidea' },
+  a2: { nace: 'Unión de la A1 con la comunicante anterior', irriga: 'Cara medial del hemisferio (pierna y pie)', lesion: 'Paresia de la pierna, abulia, incontinencia' },
+  heubner: { nace: 'A2 proximal', irriga: 'Cabeza del caudado y cápsula interna anterior', lesion: 'Debilidad de cara y brazo, disartria' },
+  anteromediales: { nace: 'Comunicante anterior y A1', irriga: 'Hipotálamo anterior y fórnix', lesion: 'Amnesia, confabulación, trastornos del sodio' },
+  m1: { nace: 'Bifurcación de la carótida interna', irriga: 'Ganglios basales y cápsula (lenticuloestriadas)', lesion: 'Hemiplejia de cara y brazo, afasia o negligencia' },
+  m2: { nace: 'Bifurcación de M1, en la ínsula', irriga: 'Convexidad: motor de cara y brazo, Broca y Wernicke', lesion: 'Afasia de Broca (tronco superior) o de Wernicke (inferior)' },
+  lenticuloestriadas: { nace: 'Cara superior de M1', irriga: 'Putamen y cápsula interna', lesion: 'Infartos lacunares y hemorragia hipertensiva' },
+  p1: { nace: 'Ápex de la basilar', irriga: 'Mesencéfalo y tálamo paramedianos', lesion: 'Síndrome de Weber (III + hemiplejia contralateral)' },
+  p2: { nace: 'Unión de P1 con la comunicante posterior', irriga: 'Occipital (visión), temporal inferomedial y tálamo', lesion: 'Hemianopsia homónima con respeto macular' },
+  talamoperforantes: { nace: 'P1 y ápex de la basilar', irriga: 'Tálamo medial y mesencéfalo rostral', lesion: 'Somnolencia, parálisis de la mirada vertical, amnesia' },
+  basilar: { nace: 'Unión de las dos vertebrales', irriga: 'Protuberancia, cerebelo y, por sus ramas, el occipital', lesion: 'Locked-in (porción media) o top de la basilar' },
+  pontinas: { nace: 'Todo el tronco de la basilar', irriga: 'Base y tegmento medial de la protuberancia', lesion: 'Lagunas pontinas, síndrome pontino medial' },
+  sca: { nace: 'Basilar, justo bajo su bifurcación', irriga: 'Cara superior del cerebelo', lesion: 'Ataxia del mismo lado; su asa causa neuralgia del trigémino' },
+  aica: { nace: 'Tercio inferior de la basilar', irriga: 'Protuberancia lateral, cerebelo anteroinferior y oído', lesion: 'Síndrome pontino lateral, con hipoacusia y parálisis facial' },
+  laberintica: { nace: 'AICA (a veces la basilar)', irriga: 'Oído interno', lesion: 'Hipoacusia súbita y vértigo' },
+  vertebral: { nace: 'Primera rama de la subclavia', irriga: 'Bulbo, cerebelo inferior y médula alta', lesion: 'Síndrome de Wallenberg; disección vertebral' },
+  pica: { nace: 'Vertebral intracraneal', irriga: 'Bulbo lateral y cara inferior del cerebelo', lesion: 'Síndrome de Wallenberg (bulbar lateral)' },
+  espinal_ant: { nace: 'Ramas de ambas vertebrales', irriga: 'Bulbo medial y 2/3 anteriores de la médula', lesion: 'Síndrome bulbar medial (Dejerine)' },
+};

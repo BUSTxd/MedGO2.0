@@ -82,9 +82,11 @@ function VistasEscena({ mode, onMode }: { mode: ModoWillis; onMode: (m: ModoWill
 }
 
 /** Menú ☰ de la vista: restablecer la cámara y mostrar u ocultar etiquetas. */
-function MenuVista({ etiquetas, onEtiquetas, onRestablecer, onEncefalo }: {
+function MenuVista({ etiquetas, onEtiquetas, cerebro, onCerebro, onRestablecer, onEncefalo }: {
   etiquetas: boolean;
   onEtiquetas: () => void;
+  cerebro: boolean;
+  onCerebro: () => void;
   onRestablecer: () => void;
   onEncefalo: () => void;
 }) {
@@ -169,6 +171,22 @@ function MenuVista({ etiquetas, onEtiquetas, onRestablecer, onEncefalo }: {
             </span>
             Etiquetas
           </button>
+          <button
+            type="button"
+            role="menuitemcheckbox"
+            aria-checked={cerebro}
+            className={styles.menuItem}
+            onClick={onCerebro}
+          >
+            <span className={`${styles.menuCasilla} ${cerebro ? styles.menuCasillaOn : ''}`} aria-hidden>
+              {cerebro && (
+                <svg width="12" height="12" viewBox="0 0 24 24">
+                  <path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              )}
+            </span>
+            Cerebro y cerebelo
+          </button>
         </div>
       )}
     </div>
@@ -233,6 +251,8 @@ export default function WillisSimulator() {
     setSistema('todo');
     cambiarModo('territorios');
   }, [cambiarModo]);
+
+  const cerrarFicha = useCallback(() => { setElegido(null); setSenalado(null); }, []);
 
   const elegirSindrome = useCallback((id: SindromeId | null) => {
     setSindrome(id);
@@ -350,6 +370,8 @@ export default function WillisSimulator() {
         <MenuVista
           etiquetas={etiquetas}
           onEtiquetas={() => setEtiquetas((v) => !v)}
+          cerebro={refs.cerebro}
+          onCerebro={() => setRefs((r) => ({ ...r, cerebro: !r.cerebro }))}
           onRestablecer={() => { setEncuadre('poligono'); setReinicio((n) => n + 1); }}
           onEncefalo={() => {
             setEncuadre('encefalo');
@@ -404,6 +426,7 @@ export default function WillisSimulator() {
         onSindrome={elegirSindrome}
         onRef={(id) => setRefs((r) => ({ ...r, [id]: !r[id] }))}
         onSenalar={setSenalado}
+        onCerrar={cerrarFicha}
       />
     </div>
   );

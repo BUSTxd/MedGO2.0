@@ -3,11 +3,18 @@
 // el selector fijo (aquí «Sistema» en lugar de «Nivel medular»), debajo la ficha
 // de lo elegido y al final la lista de la vista activa, con su propio scroll.
 // Las clases vienen del CSS de médula para que los dos labs sean idénticos; lo
-// propio de Willis (pestañas de la ficha, perla de examen) va en su módulo.
+// propio de Willis (cabecera fija de la ficha, «Lo esencial», pestañas, perla,
+// buscador) va en su módulo.
+//
+// Revisado con las heurísticas de Nielsen
+// (auditorias-ux/nielsen-willis-barra-lateral-2026-11-14.md): la ficha va de lo
+// central a lo accesorio (qué es → lo esencial → perla → detalle), su título no
+// se pierde al bajar, se cierra o se pasa a la arteria vecina sin volver a la
+// lista (‹ › ✕ y las flechas del teclado) y la lista tiene buscador.
 
-import { useState, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import {
-  ARTERIAS, ARTERIA_LIST, GRUPOS, SISTEMAS, TERRITORIOS, TERRITORIO_LIST, REFERENCIAS, REFERENCIA_LIST,
+  ARTERIAS, ARTERIA_LIST, GRUPOS, SISTEMAS, TERRITORIOS, TERRITORIO_LIST, REFERENCIAS, REFERENCIA_LIST, ESENCIAL,
   enSistema,
   type ArteriaId, type SistemaId, type TerritorioId, type ReferenciaId,
 } from './engine/anatomia';
@@ -47,6 +54,22 @@ interface Props {
   onSindrome: (id: SindromeId | null) => void;
   onRef: (id: ReferenciaId) => void;
   onSenalar: (e: Elegido) => void;
+  /** Cierra la ficha (deselecciona). */
+  onCerrar: () => void;
+}
+
+/** Sigla real (ACI, ACoA, M1…), no un nombre corto que repite el nombre. */
+const esSigla = (c: string) => /^([AMP]\d|[A-Z][A-Za-z]{1,3})$/.test(c);
+/** Para buscar sin tildes ni mayúsculas. */
+const normal = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+/** Íconos de trazo fino para los botones de la cabecera. */
+function Icono({ d }: { d: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden>
+      <path d={d} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
 }
 
 function Dot({ color, size = 10 }: { color: string; size?: number }) {
@@ -122,7 +145,7 @@ function BotonLista({ activo, onClick, onEnter, onLeave, children }: {
 function Apartado({ titulo, children }: { titulo: string; children: ReactNode }) {
   return (
     <div className={ws.apartado}>
-      <span className={styles.grupoTitulo}>{titulo}</span>
+      <h4 className={ws.apartadoTitulo}>{titulo}</h4>
       {children}
     </div>
   );
@@ -155,30 +178,83 @@ function ChipsArterias({ ids, color, onVer }: { ids: ArteriaId[]; color: string;
   );
 }
 
-function FichaArteria({ id, lado, pestana, onPestana, onVerTerritorio }: {
+function FichaArteria({ id, lado, pestana, onPestana, onVerTerritorio, posicion, onAnterior, onSiguiente, onCerrar }: {
   id: ArteriaId;
   lado: 'i' | 'd' | 'm';
   pestana: Pestana;
   onPestana: (p: Pestana) => void;
   onVerTerritorio: (t: TerritorioId) => void;
+  /** «3 de 24» en la lista visible (null si no está en ella). */
+  posicion: string | null;
+  onAnterior: (() => void) | null;
+  onSiguiente: (() => void) | null;
+  onCerrar: () => void;
 }) {
   const a = ARTERIAS[id];
+  const e = ESENCIAL[id];
   const terr = TERRITORIOS[a.territorio];
   const grupo = GRUPOS.find((g) => g.id === a.grupo)!.nombre;
-  const ladoTxt = a.par ? (lado === 'd' ? 'Lado derecho (es par)' : 'Lado izquierdo (es par)') : 'De línea media';
+  const ladoTxt = a.par ? (lado === 'd' ? 'lado derecho' : 'lado izquierdo') : 'línea media';
   const PESTANAS: Array<{ key: Pestana; label: string }> = [
     { key: 'anatomia', label: 'Anatomía' },
     { key: 'irrigacion', label: 'Irrigación' },
     { key: 'clinica', label: 'Clínica' },
   ];
   return (
-    <Ficha color={ROJO} titulo={a.nombre} sub={a.resumen}>
-      <ul className={styles.chips} aria-label="Datos">
-        <li className={styles.chip}>{grupo}</li>
-        <li className={styles.chip}>{ladoTxt}</li>
-        <li className={styles.chip}>Calibre {a.calibre}</li>
-      </ul>
+    <div className={styles.info} role="region" aria-label={a.nombre}>
+      {/* 1 · Qué es: cabecera fija, no se pierde al bajar */}
+      <header className={ws.fichaCabeza}>
+        <div className={ws.fichaFila}>
+          <h3 className={ws.fichaTitulo}>
+            {esSigla(a.corto) && <span className={ws.sigla}>{a.corto}</span>}
+            {/* Con la sigla en su etiqueta, el «(PICA)» del nombre sobra. */}
+            {esSigla(a.corto) ? a.nombre.replace(/\s*\([^)]*\)$/, '') : a.nombre}
+          </h3>
+          <div className={ws.fichaNav}>
+            <button type="button" className={ws.navBtn} onClick={onAnterior ?? undefined} disabled={!onAnterior} aria-label="Arteria anterior de la lista" title="Anterior (←)">
+              <Icono d="m15 6-6 6 6 6" />
+            </button>
+            <button type="button" className={ws.navBtn} onClick={onSiguiente ?? undefined} disabled={!onSiguiente} aria-label="Arteria siguiente de la lista" title="Siguiente (→)">
+              <Icono d="m9 6 6 6-6 6" />
+            </button>
+            <button type="button" className={ws.navBtn} onClick={onCerrar} aria-label="Cerrar la ficha" title="Cerrar (Esc)">
+              <Icono d="M6 6l12 12M18 6 6 18" />
+            </button>
+          </div>
+        </div>
+        <p className={ws.fichaMeta}>
+          {grupo} · {ladoTxt} · {a.calibre}{posicion ? <span className={ws.fichaPos}> · {posicion}</span> : null}
+        </p>
+      </header>
 
+      <p className={ws.fichaLead}>{a.resumen}</p>
+
+      {/* 2 · Lo esencial: lo que se pregunta, a la vista */}
+      <dl className={ws.esencial} aria-label="Lo esencial">
+        <div className={ws.esencialFila}>
+          <dt>Nace de</dt>
+          <dd>{e.nace}</dd>
+        </div>
+        <div className={ws.esencialFila}>
+          <dt>Irriga</dt>
+          <dd>
+            {e.irriga}{' '}
+            <button type="button" className={ws.enlaceTerr} onClick={() => onVerTerritorio(terr.id)} title="Ver su territorio en el modelo">
+              <Dot color={terr.color} size={8} /> {terr.nombre}
+            </button>
+          </dd>
+        </div>
+        <div className={ws.esencialFila}>
+          <dt>Si se lesiona</dt>
+          <dd>{e.lesion}</dd>
+        </div>
+      </dl>
+
+      {/* 3 · La idea para el examen */}
+      <Perla>{a.perla}</Perla>
+
+      {/* 4 · El detalle, para quien quiera profundizar */}
+      <h4 className={ws.detalleTitulo}>Más detalle</h4>
       <div className={ws.pestanas} role="tablist" aria-label="Apartados de la ficha">
         {PESTANAS.map((p) => (
           <button
@@ -213,7 +289,7 @@ function FichaArteria({ id, lado, pestana, onPestana, onVerTerritorio }: {
             <ul className={styles.chips}>
               <li>
                 <button type="button" className={`${styles.chip} ${ws.chipBoton}`} onClick={() => onVerTerritorio(terr.id)}>
-                  <Dot color={terr.color} /> {terr.nombre} →
+                  <Dot color={terr.color} /> Ver el territorio de la {terr.nombre.toLowerCase()} →
                 </button>
               </li>
             </ul>
@@ -224,19 +300,31 @@ function FichaArteria({ id, lado, pestana, onPestana, onVerTerritorio }: {
       {pestana === 'clinica' && (
         <div className={ws.cuerpo} role="tabpanel">
           <Apartado titulo="Patología"><p className={styles.infoDesc}>{a.clinica}</p></Apartado>
-          <Perla>{a.perla}</Perla>
         </div>
       )}
-    </Ficha>
+    </div>
   );
 }
 
 export default function ControlsPanel(props: Props) {
   const {
     mode, sistema, onSistema, elegido, territorio, variante, sindrome, refs,
-    onElegirArteria, onVerArteria, onTerritorio, onVerTerritorio, onVariante, onSindrome, onRef, onSenalar,
+    onElegirArteria, onVerArteria, onTerritorio, onVerTerritorio, onVariante, onSindrome, onRef, onSenalar, onCerrar,
   } = props;
   const [pestana, setPestana] = useState<Pestana>('anatomia');
+  const [busca, setBusca] = useState('');
+
+  // Lista visible de arterias, en el orden en que se pintan (grupo a grupo):
+  // la usan la lista, «‹ ›» y las flechas del teclado.
+  const grupos = useMemo(() => {
+    const q = normal(busca.trim());
+    return GRUPOS.map((g) => ({
+      ...g,
+      arts: ARTERIA_LIST.filter((a) => a.grupo === g.id && enSistema(a, sistema)
+        && (!q || normal(`${a.nombre} ${a.corto}`).includes(q))),
+    })).filter((g) => g.arts.length > 0);
+  }, [busca, sistema]);
+  const orden = useMemo(() => grupos.flatMap((g) => g.arts.map((a) => a.id)), [grupos]);
 
   let cabeza: ReactNode = null;
   let ficha: ReactNode = null;
@@ -244,6 +332,26 @@ export default function ControlsPanel(props: Props) {
 
   const arteriaElegida = elegido?.kind === 'arteria' ? elegido : null;
   const refElegida = elegido?.kind === 'ref' ? REFERENCIAS[elegido.id] : null;
+  const idx = arteriaElegida ? orden.indexOf(arteriaElegida.id) : -1;
+  const irA = (paso: number) => (idx >= 0 && orden[idx + paso] ? () => onElegirArteria(orden[idx + paso]) : null);
+  const anterior = irA(-1);
+  const siguiente = irA(1);
+
+  // Teclado en la vista Arterias: ← → pasan de arteria y Esc cierra la ficha
+  // (salvo que se esté escribiendo en el buscador).
+  useEffect(() => {
+    if (mode !== 'arterias' || !arteriaElegida) return;
+    const tecla = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      if (e.key === 'ArrowLeft' && anterior) { e.preventDefault(); anterior(); }
+      else if (e.key === 'ArrowRight' && siguiente) { e.preventDefault(); siguiente(); }
+      else if (e.key === 'Escape') onCerrar();
+    };
+    window.addEventListener('keydown', tecla);
+    return () => window.removeEventListener('keydown', tecla);
+  }, [mode, arteriaElegida, anterior, siguiente, onCerrar]);
 
   // En las otras vistas, tocar una arteria del modelo ofrece abrir su ficha.
   const irAFicha = arteriaElegida && mode !== 'arterias' ? (
@@ -266,36 +374,59 @@ export default function ControlsPanel(props: Props) {
         pestana={pestana}
         onPestana={setPestana}
         onVerTerritorio={onVerTerritorio}
+        posicion={idx >= 0 ? `${idx + 1} de ${orden.length}` : null}
+        onAnterior={anterior}
+        onSiguiente={siguiente}
+        onCerrar={onCerrar}
       />
     ) : fichaRef ?? (
-      <Vacio>Toca una arteria en el modelo o en la lista para ver su anatomía, lo que irriga y su patología.</Vacio>
+      <Vacio>Toca una arteria en el modelo o en la lista: verás de dónde nace, qué irriga y qué pasa si se lesiona.</Vacio>
     );
     lista = (
       <>
-        {GRUPOS.map((g) => {
-          const arts = ARTERIA_LIST.filter((a) => a.grupo === g.id && enSistema(a, sistema));
-          if (arts.length === 0) return null;
-          return (
-            <div key={g.id} className={styles.listSection}>
-              <div className={styles.listTitle}>{g.nombre}</div>
-              <div className={styles.structureList}>
-                {arts.map((a) => (
-                  <BotonLista
-                    key={a.id}
-                    activo={arteriaElegida?.id === a.id}
-                    onClick={() => onElegirArteria(a.id)}
-                    onEnter={() => onSenalar({ kind: 'arteria', id: a.id, lado: a.par ? 'i' : 'm' })}
-                    onLeave={() => onSenalar(null)}
-                  >
-                    <Dot color={ROJO} />
-                    <span className={styles.structureName}>{a.nombre}</span>
-                    <span className={styles.structureDir}>{a.corto}</span>
-                  </BotonLista>
-                ))}
-              </div>
+        {/* Buscador: por nombre o sigla, sin importar tildes ni mayúsculas */}
+        <div className={ws.buscador} role="search">
+          <svg className={ws.buscadorLupa} width="16" height="16" viewBox="0 0 24 24" aria-hidden>
+            <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2" />
+            <path d="m15.5 15.5 4.5 4.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          <input
+            type="search"
+            className={ws.buscadorCampo}
+            placeholder="Buscar arteria (PICA, basilar…)"
+            aria-label="Buscar arteria por nombre o sigla"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Escape') setBusca(''); }}
+          />
+        </div>
+        {grupos.length === 0 && (
+          <p className={styles.notaPie}>
+            Ninguna arteria coincide con «{busca}»{sistema !== 'todo' ? ' en este sistema' : ''}.{' '}
+            <button type="button" className={ws.enlaceTerr} onClick={() => { setBusca(''); onSistema('todo'); }}>Ver todas</button>
+          </p>
+        )}
+        {grupos.map((g) => (
+          <div key={g.id} className={styles.listSection}>
+            <div className={styles.listTitle}>
+              {g.nombre} <span className={ws.conteo}>{g.arts.length}</span>
             </div>
-          );
-        })}
+            <div className={styles.structureList}>
+              {g.arts.map((a) => (
+                <BotonLista
+                  key={a.id}
+                  activo={arteriaElegida?.id === a.id}
+                  onClick={() => onElegirArteria(a.id)}
+                  onEnter={() => onSenalar({ kind: 'arteria', id: a.id, lado: a.par ? 'i' : 'm' })}
+                  onLeave={() => onSenalar(null)}
+                >
+                  <span className={styles.structureName}>{a.nombre}</span>
+                  {esSigla(a.corto) && <span className={styles.structureDir}>{a.corto}</span>}
+                </BotonLista>
+              ))}
+            </div>
+          </div>
+        ))}
         <span className={`${styles.grupoTitulo} ${ws.separado}`}>Mostrar en el modelo</span>
         {REFERENCIA_LIST.map((r) => (
           <Interruptor key={r.id} activo={refs[r.id]} onCambio={() => onRef(r.id)} etiqueta={r.nombre} color={r.color} />
@@ -434,7 +565,7 @@ export default function ControlsPanel(props: Props) {
       </div>
       {cabeza && <div className={styles.panelCabeza}>{cabeza}</div>}
       {ficha && <div className={styles.panelFicha}>{ficha}</div>}
-      {lista && <div className={styles.panelLista}>{lista}</div>}
+      {lista && <div className={`${styles.panelLista} ${ws.listaHolgura}`}>{lista}</div>}
     </aside>
   );
 }
