@@ -109,11 +109,21 @@
 
 /* Atlas ↔ posición real: abajo a la izquierda del lienzo, con el mismo
    aspecto que el selector de vistas de arriba. */
-.postura {
+/* Fila de abajo a la izquierda: «Practicar» (o «Salir») y la postura. */
+.piso {
   position: absolute;
   left: 14px;
   bottom: 14px;
-  z-index: 4;
+  z-index: 4; /* sobre la tarjeta y el velo de la práctica */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100% - 28px);
+}
+/* El botón de médula es absoluto; aquí va en la fila. */
+.enFila { position: static; flex-shrink: 0; }
+
+.postura {
   display: flex;
   gap: 4px;
   padding: 4px;
@@ -153,7 +163,7 @@
 .posturaActiva:focus-visible { outline: 2px solid #3b9edd; outline-offset: 2px; }
 /* Teléfono: botones más compactos. */
 @media (max-width: 600px) {
-  .postura { left: 10px; bottom: 10px; }
+  .piso { left: 10px; bottom: 10px; gap: 6px; flex-wrap: wrap; }
   .posturaBtn, .posturaActiva { padding: 7px 9px; font-size: 12.5px; }
 }
 

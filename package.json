@@ -20,6 +20,7 @@
     "verificar:lupus": "node --experimental-strip-types --no-warnings scripts/lupus/verificar.mjs",
     "vista:medula": "node --experimental-strip-types --no-warnings scripts/medula-espinal/vista.mjs",
     "practica:medula": "node --experimental-strip-types --no-warnings scripts/medula-espinal/practica/ensamblar.mjs",
+    "practica:willis": "node --experimental-strip-types --no-warnings scripts/poligono-willis/practica/ensamblar.mjs",
     "verificar:citopenias": "node --experimental-strip-types --no-warnings scripts/citopenias/verificar.mjs",
     "verificar:vasculitis": "node --experimental-strip-types --no-warnings scripts/vasculitis/verificar.mjs",
     "verificar:gramnegativas": "node --experimental-strip-types --no-warnings scripts/gramnegativas/verificar.mjs",

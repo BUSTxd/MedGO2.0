@@ -12,7 +12,11 @@ import {
   type ArteriaId, type SistemaId, type TerritorioId, type ReferenciaId,
 } from './engine/anatomia';
 import { VARIANTES, SINDROMES, type VarianteId, type SindromeId, type Lado } from './engine/clinica';
+import { usePractica } from './practica/usePractica';
+import TarjetaPractica from './practica/TarjetaPractica';
+import PanelPractica from './practica/PanelPractica';
 import styles from '@/styles/medulaEspinal.module.css';
+import pstyles from '@/styles/medulaPractica.module.css';
 import ws from '@/styles/poligonoWillis.module.css';
 
 const WillisScene = dynamic(() => import('./WillisScene'), {
@@ -62,7 +66,8 @@ function hayWebGL(): boolean {
   }
 }
 
-function VistasEscena({ mode, onMode }: { mode: ModoWillis; onMode: (m: ModoWillis) => void }) {
+/** En la práctica ninguna vista queda marcada: tocar una sale de ella. */
+function VistasEscena({ mode, onMode }: { mode: ModoWillis | null; onMode: (m: ModoWillis) => void }) {
   return (
     <div className={styles.vistas} role="group" aria-label="Vista">
       {MODOS.map(({ key, label, desc }) => (
@@ -210,12 +215,31 @@ export default function WillisSimulator() {
   const [postura, setPostura] = useState<Postura>('atlas');
   const [webgl, setWebgl] = useState<boolean | null>(null);
   const [tactil, setTactil] = useState(false);
+  const [reducido, setReducido] = useState(false);
+  // Práctica (como la de Médula Espinal 3D): tarjeta sobre el lienzo y panel propio.
+  const [practicando, setPracticando] = useState(false);
+  const pr = usePractica(practicando, reducido);
 
   useEffect(() => {
     const m = cargarModo();
     if (m) setMode(m);
     setWebgl(hayWebGL());
     setTactil(window.matchMedia?.('(pointer: coarse)').matches ?? false);
+    setReducido(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false);
+  }, []);
+
+  const entrarPractica = useCallback(() => {
+    setElegido(null);
+    setSenalado(null);
+    setPracticando(true);
+    setEncuadre('poligono');
+    setReinicio((n) => n + 1);
+  }, []);
+  const salirPractica = useCallback(() => {
+    setPracticando(false);
+    setSenalado(null);
+    setEncuadre('poligono');
+    setReinicio((n) => n + 1);
   }, []);
 
   const cambiarModo = useCallback((m: ModoWillis) => {
@@ -266,6 +290,7 @@ export default function WillisSimulator() {
 
   // ── Rótulo del lienzo: lo señalado manda; si no, lo elegido o la vista ──
   const rotulo = useMemo(() => {
+    if (practicando) return null; // el nombre delataría la respuesta
     const desde = senalado ?? elegido;
     if (desde?.kind === 'arteria') {
       const a = ARTERIAS[desde.id];
@@ -307,7 +332,7 @@ export default function WillisSimulator() {
       return { color: t.color, titulo: `Territorio: ${t.nombre}`, sub: `${n} arteria${n === 1 ? '' : 's'} resaltada${n === 1 ? '' : 's'}` };
     }
     return null;
-  }, [senalado, elegido, mode, sindrome, variante, territorio, postura]);
+  }, [practicando, senalado, elegido, mode, sindrome, variante, territorio, postura]);
 
   // ── Anuncio para lector de pantalla ──
   const anuncio = useMemo(() => {
@@ -320,6 +345,16 @@ export default function WillisSimulator() {
     if (mode === 'clinico' && sindrome) partes.push(`síndrome: ${SINDROMES[sindrome].nombre}`);
     return partes.join(', ') + '.';
   }, [mode, elegido, territorio, variante, sindrome]);
+
+  // En la práctica, la escena la decide la pregunta en curso: vista Arterias,
+  // sin etiquetas ni selección, colores neutros y marcas verde/rojo al corregir.
+  const esc = practicando ? pr.escena : null;
+  const posturaVista: Postura = practicando ? (esc?.postura ?? 'atlas') : postura;
+  const responderSenalar = pr.responderSenalar;
+  const tocarEnPractica = useCallback((e: Elegido) => {
+    if (e?.kind === 'arteria' && esc?.interactivo) responderSenalar(e.id);
+  }, [esc, responderSenalar]);
+  const sinMarcas = useMemo(() => ({ ok: new Set<ArteriaId>(), mal: new Set<ArteriaId>() }), []);
 
   const ayudaGestos = tactil
     ? 'Arrastra para girar · dos dedos para mover y acercar'
@@ -339,21 +374,22 @@ export default function WillisSimulator() {
           </div>
         ) : (
           <WillisScene
-            mode={mode}
-            sistema={sistema}
-            elegido={elegido}
+            mode={practicando ? 'arterias' : mode}
+            sistema={practicando ? 'todo' : sistema}
+            elegido={practicando ? null : elegido}
             senalado={senalado}
-            territorio={territorio}
-            variante={mode === 'variantes' ? VARIANTES[variante] : null}
-            sindrome={mode === 'clinico' && sindrome ? SINDROMES[sindrome] : null}
+            territorio={practicando ? null : territorio}
+            variante={!practicando && mode === 'variantes' ? VARIANTES[variante] : null}
+            sindrome={!practicando && mode === 'clinico' && sindrome ? SINDROMES[sindrome] : null}
             refs={refs}
-            etiquetas={etiquetas}
+            etiquetas={practicando ? false : etiquetas}
             reinicio={reinicio}
             encuadre={encuadre}
-            postura={postura}
-            onElegir={elegir}
+            postura={posturaVista}
+            practica={practicando ? esc ?? sinMarcas : null}
+            onElegir={practicando ? tocarEnPractica : elegir}
             onSenalar={setSenalado}
-            onDeseleccionar={() => setElegido(null)}
+            onDeseleccionar={() => { if (!practicando) setElegido(null); }}
           />
         )}
 
@@ -380,9 +416,41 @@ export default function WillisSimulator() {
           }}
         />
 
-        <VistasEscena mode={mode} onMode={cambiarModo} />
+        <VistasEscena mode={practicando ? null : mode} onMode={(m) => { if (practicando) salirPractica(); cambiarModo(m); }} />
 
-        {/* Atlas ↔ posición real: el tronco se dobla y aparecen los vasos del cuello. */}
+        {practicando && pr.fase === 'jugando' && <TarjetaPractica pr={pr} />}
+
+        {/* Al entrar: el mismo mazo barajándose que la práctica de médula */}
+        {practicando && pr.fase === 'cargando' && (
+          <div className={pstyles.veloCarga}>
+            <div className={pstyles.cargando} role="status" aria-live="polite">
+              <div className={pstyles.cargandoMazo} aria-hidden>
+                <span /><span /><span />
+              </div>
+              <p>Preparando tu práctica…</p>
+            </div>
+          </div>
+        )}
+
+        {/* Abajo a la izquierda: Practicar (o Salir) y la postura del modelo. */}
+        <div className={ws.piso}>
+          <button
+            type="button"
+            className={`${styles.practicarBtn} ${ws.enFila} ${practicando ? styles.practicarSalir : styles.practicarAviso}`}
+            onClick={practicando ? salirPractica : entrarPractica}
+            title={practicando ? 'Volver al modelo' : 'Preguntas: señala la arteria en el modelo o elige la alternativa'}
+          >
+            {!practicando && (
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 4h6M10 4v3M14 4v3M6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+                <path d="m9 14 2 2 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
+            {practicando ? 'Salir' : 'Practicar'}
+          </button>
+
+          {/* Atlas ↔ posición real; en la práctica la postura la decide cada pregunta. */}
+          {!practicando && (
         <div className={ws.postura} role="group" aria-label="Postura del modelo">
           {([
             ['atlas', 'Vista de atlas', 'Como en las láminas: el tronco tumbado en el plano de la base'],
@@ -405,10 +473,15 @@ export default function WillisSimulator() {
             </button>
           ))}
         </div>
+          )}
+        </div>
 
         <span className={styles.zoomHint}>{ayudaGestos}</span>
       </div>
 
+      {practicando ? (
+        <PanelPractica pr={pr} onSalir={salirPractica} />
+      ) : (
       <ControlsPanel
         mode={mode}
         sistema={sistema}
@@ -428,6 +501,7 @@ export default function WillisSimulator() {
         onSenalar={setSenalado}
         onCerrar={cerrarFicha}
       />
+      )}
     </div>
   );
 }

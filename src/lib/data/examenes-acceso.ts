@@ -82,6 +82,10 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey | Requisi
   // porque los scripts cargan este archivo con Node). La arma
   // scripts/medula-espinal/practica/ensamblar.mjs; la fuente no va a git.
   'neurologia/medula-practica': { plan: { tramo: 'medicina', nivel: 'completo' } },
+  // Práctica del lab Polígono de Willis 3D (anatomía, territorios y clínico),
+  // con el mismo requisito que el lab. La arma
+  // scripts/poligono-willis/practica/ensamblar.mjs; la fuente no va a git.
+  'neurologia/willis-practica': { plan: { tramo: 'medicina', nivel: 'completo' } },
   // El mismo banco en tarjetas de memoria (Banqueo de la Evaluación 1), con
   // scripts/examen-ms/tarjetas.mjs. Mismo plan, sin muestra.
   'aparato-locomotor/practico-ms-tarjetas': {},

@@ -44,6 +44,11 @@ export interface SceneProps {
   encuadre: 'poligono' | 'encefalo';
   /** Vista de atlas (tronco tumbado) o posición real (tronco vertical, cuello). */
   postura: Postura;
+  /**
+   * Práctica: colores neutros y, al corregir, la respuesta en verde y lo tocado
+   * por error en rojo (null fuera de la práctica).
+   */
+  practica?: { ok: Set<ArteriaId>; mal: Set<ArteriaId> } | null;
   onElegir: (e: Elegido) => void;
   onSenalar: (e: Elegido) => void;
   onDeseleccionar: () => void;
@@ -53,6 +58,8 @@ const ROJO = '#b3352e';
 const AMBAR = '#f2b631';
 const VIOLETA = '#7c5cd6';
 const APAGADO = '#c7a5a0';
+const VERDE = '#1f9d55';
+const NEUTRO = '#b98f8c';
 const DURACION_DOBLEZ = 1.6; // s
 
 const labelStyle: CSSProperties = {
@@ -196,6 +203,15 @@ function aspectoPieza(p: Pieza, props: SceneProps) {
   let color = ROJO;
   let brillo = 0;
   let tono = '#ff4d2e';
+  if (props.practica) {
+    // Práctica: todas iguales (el color no puede delatar la respuesta); al
+    // corregir, la respuesta en verde y lo tocado por error en rojo.
+    const { ok, mal } = props.practica;
+    if (ok.has(p.arteria)) { color = VERDE; tono = VERDE; brillo = 0.45; }
+    else if (mal.has(p.arteria)) { color = '#e0322e'; tono = '#ff3b2a'; brillo = 0.45; }
+    else { color = NEUTRO; tono = '#ffffff'; brillo = esSenalada ? 0.22 : 0; }
+    return { color, tono, brillo, fantasma: false, oculta: false, escala: 1 };
+  }
   if (mode === 'territorios') {
     const terr = TERRITORIOS[a.territorio];
     color = territorio && territorio !== a.territorio ? '#b9b3c4' : terr.color;
