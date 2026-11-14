@@ -22,7 +22,7 @@ export type ArteriaId =
 export type GrupoId = 'anillo' | 'carotideo' | 'vertebrobasilar' | 'perforantes';
 export type SistemaId = 'todo' | 'anterior' | 'posterior' | 'anillo';
 export type TerritorioId = 'aca' | 'acm' | 'acp' | 'coroidea' | 'vb' | 'ojo' | 'conexion';
-export type ReferenciaId = 'tronco' | 'optico' | 'hipofisis' | 'nervio3';
+export type ReferenciaId = 'cerebro' | 'tronco' | 'optico' | 'hipofisis' | 'nervio3';
 
 export interface Arteria {
   id: ArteriaId;
@@ -694,6 +694,12 @@ export interface Referencia {
 }
 
 export const REFERENCIAS: Record<ReferenciaId, Referencia> = {
+  cerebro: {
+    id: 'cerebro',
+    nombre: 'Silueta del cerebro y el cerebelo',
+    color: '#d9a79a',
+    desc: 'Contorno translúcido del encéfalo a la misma escala que las arterias: el polígono es pequeño y se esconde en la base, en la cisterna supraselar, entre los lóbulos frontales, los temporales y el tronco. La cerebral media se mete en la cisura de Silvio, la cerebral anterior sube entre los hemisferios y la cerebral posterior va por encima del cerebelo hacia el occipital. Aléjate con la rueda para verlo entero.',
+  },
   tronco: {
     id: 'tronco',
     nombre: 'Tronco del encéfalo',

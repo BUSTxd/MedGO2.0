@@ -39,6 +39,12 @@ export interface Trazado {
   medios?: Tramo[];
   /** Dónde va la etiqueta: fracción del primer tramo (o del primer medio). */
   etiqueta: number;
+  /**
+   * Trazado escrito ya en las coordenadas finales (no pasa por estirarY):
+   * las arterias que salen del tronco hacia el cerebro y el cerebelo, cuyo
+   * destino no se alarga con la basilar.
+   */
+  final?: boolean;
 }
 
 const espejo = (p: Pt): Pt => [-p[0], p[1], p[2]];
@@ -136,12 +142,17 @@ export const TRAZADOS: Record<ArteriaId, Trazado> = {
     etiqueta: 0.55,
   },
   p2: {
+    // P2 rodea el pedúnculo cerebral pegada a él (cisterna ambiens), P3 pasa
+    // por detrás del mesencéfalo (cisterna cuadrigémina) y P4 corre hacia atrás
+    // por encima de la tienda del cerebelo hasta la cara medial del occipital,
+    // donde se abre en calcarina y parietooccipital (Gray 516, angio-RM).
     tramos: [
-      { pts: [P1_P2, [1.75, -1.4, 0.55], [2.2, -1.9, 0.3], [2.35, -2.8, -0.05], [2.1, -3.8, -0.45], [1.55, -4.75, -0.8], [0.85, -5.5, -1.0]], r0: 0.11, r1: 0.06 },
-      // Parietooccipital, desde el segmento P3.
-      { pts: [[2.1, -3.8, -0.45], [2.05, -4.4, -1.3], [1.7, -4.95, -2.1]], r0: 0.065, r1: 0.05 },
+      { pts: [P1_P2, [1.7, -1.45, 0.5], [1.95, -2.05, 0.1], [1.85, -2.75, -0.55], [1.4, -3.4, -1.3], [0.95, -5.0, -2.0], [0.65, -8.0, -2.6], [0.55, -11.3, -3.0], [0.65, -13.6, -3.2]], r0: 0.11, r1: 0.055 },
+      // Parietooccipital, desde P4.
+      { pts: [[0.8, -6.6, -2.35], [0.7, -8.3, -4.2], [0.6, -9.6, -6.2]], r0: 0.06, r1: 0.045 },
     ],
-    etiqueta: 0.3,
+    etiqueta: 0.12,
+    final: true,
   },
   talamoperforantes: {
     tramos: perforantes([[0.18, -1.43, 0.94], [0.45, -1.37, 0.9]], [-0.04, 0.2, -0.5], [-0.1, 0.45, -1.1]),
@@ -160,11 +171,14 @@ export const TRAZADOS: Record<ArteriaId, Trazado> = {
     etiqueta: 1,
   },
   sca: {
-    tramos: [{ pts: [[0.12, -1.85, 1.0], [0.7, -1.95, 0.98], [1.4, -2.05, 0.85], [2.05, -2.5, 0.55], [2.35, -3.2, 0.2], [2.3, -3.9, -0.1]], r0: 0.072, r1: 0.06 }],
-    etiqueta: 0.62,
+    // Rodea la unión mesencéfalo-protuberancia bajo el III par y sube a la
+    // cara superior del cerebelo, bajo la tienda.
+    tramos: [{ pts: [[0.12, -2.05, 1.0], [0.7, -2.15, 0.98], [1.45, -2.35, 0.8], [2.0, -2.9, 0.4], [2.3, -3.7, -0.25], [2.55, -5.0, -1.1], [2.9, -6.7, -1.6], [3.2, -8.5, -1.3]], r0: 0.072, r1: 0.055 }],
+    etiqueta: 0.3,
+    final: true,
   },
   aica: {
-    tramos: [{ pts: [[0.12, -4.1, 1.25], [0.8, -4.25, 1.25], [1.5, -4.35, 1.05], [2.1, -4.15, 0.75], [2.6, -4.4, 0.5], [2.9, -4.9, 0.2]], r0: 0.058, r1: 0.05 }],
+    tramos: [{ pts: [[0.12, -4.1, 1.25], [0.8, -4.25, 1.25], [1.5, -4.35, 1.05], [2.1, -4.15, 0.75], [2.6, -4.4, 0.5], [3.0, -5.0, 0.25], [3.3, -5.5, 0.4]], r0: 0.058, r1: 0.048 }],
     etiqueta: 0.55,
   },
   laberintica: {
@@ -176,9 +190,11 @@ export const TRAZADOS: Record<ArteriaId, Trazado> = {
     etiqueta: 0.3,
   },
   pica: {
-    // Asa caudal alrededor del bulbo y asa craneal junto a la amígdala.
-    tramos: [{ pts: [[1.0, -6.6, 2.22], [1.5, -7.1, 2.0], [1.75, -6.7, 1.3], [1.55, -7.3, 0.6], [1.3, -6.8, -0.1], [1.9, -6.3, -0.5], [2.7, -6.0, -0.6]], r0: 0.08, r1: 0.06 }],
-    etiqueta: 0.95,
+    // Rodea el bulbo, hace el asa caudal junto a la amígdala cerebelosa y sale
+    // a la cara inferior (suboccipital) del hemisferio cerebeloso.
+    tramos: [{ pts: [[1.0, -8.15, 2.22], [1.55, -8.65, 1.95], [1.75, -9.3, 1.3], [1.4, -9.7, 0.6], [1.75, -10.1, 1.45], [2.6, -10.45, 2.95], [3.6, -11.2, 3.2], [4.6, -12.2, 3.2]], r0: 0.08, r1: 0.055 }],
+    etiqueta: 0.75,
+    final: true,
   },
   espinal_ant: {
     tramos: [{ pts: [[0.6, -5.55, 1.78], [0.3, -6.0, 1.9], [0, -6.5, 1.98]], r0: 0.035 }],
@@ -271,7 +287,7 @@ export const PIEZAS: Pieza[] = (Object.keys(TRAZADOS) as ArteriaId[]).flatMap((i
   const t = TRAZADOS[id];
   const out: Pieza[] = [];
   if (t.tramos.length) {
-    const izq = t.tramos.map(estirarTramo);
+    const izq = t.final ? t.tramos : t.tramos.map(estirarTramo);
     out.push({ arteria: id, lado: 'i', tramos: izq });
     out.push({ arteria: id, lado: 'd', tramos: izq.map((tr) => ({ ...tr, pts: tr.pts.map(espejo) })) });
   }
@@ -283,7 +299,7 @@ export const PIEZAS: Pieza[] = (Object.keys(TRAZADOS) as ArteriaId[]).flatMap((i
 export function anclaEtiqueta(id: ArteriaId, lado: Lado): THREE.Vector3 {
   const t = TRAZADOS[id];
   const tramo = t.tramos[0] ?? t.medios![0];
-  const p = curva(tramo.pts.map(estirar)).getPointAt(Math.min(1, Math.max(0, t.etiqueta)));
+  const p = curva(t.final ? tramo.pts : tramo.pts.map(estirar)).getPointAt(Math.min(1, Math.max(0, t.etiqueta)));
   if (lado === 'd' && t.tramos.length) p.x = -p.x;
   return p;
 }
@@ -403,7 +419,116 @@ export function geometriaOculomotor(lado: 'i' | 'd'): THREE.BufferGeometry {
   return geometriaTramos([lado === 'i' ? s : { ...s, pts: s.pts.map(espejo) }]);
 }
 
+// ── Silueta del cerebro y del cerebelo ───────────────────────────────────────
+//
+// A la escala del modelo (1 u ≈ 5,4 mm, sale de la A1 de 13 mm y la M1 de
+// 16 mm): encéfalo de ≈ 165 × 135 mm, polo frontal ≈ 65 mm por delante de la
+// comunicante anterior y polo occipital por detrás del cerebelo. La cara basal
+// se modela con un «piso» (la z más inferior que puede tener cada punto): la
+// cara orbitaria del frontal queda alta, el lóbulo temporal baja a la fosa
+// media y el occipital se apoya en la tienda, por encima del cerebelo. El
+// polígono queda por fuera, en la cisterna, como en el cadáver.
+
+const ss = (a: number, b: number, x: number) => {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+};
+function smin(a: number, b: number, k: number): number {
+  const h = Math.max(k - Math.abs(a - b), 0) / k;
+  return Math.min(a, b) - h * h * k * 0.25;
+}
+const spow = (v: number, e: number) => Math.sign(v) * Math.pow(Math.abs(v), e);
+
+/** z más inferior del hemisferio en (|x|, y). */
+function pisoHemisferio(ax: number, y: number): number {
+  const frontal = -0.75;                                   // cara orbitaria
+  const temporal = 0.15 + 2.55 * ss(1.9, 4.2, ax);         // uncus medial → fosa media
+  let piso = frontal + (temporal - frontal) * ss(4.2, 0.9, y);
+  // Occipital: sobre la tienda, por encima del cerebelo.
+  piso += (-2.5 - piso) * ss(-6.0, -9.4, y);
+  return piso;
+}
+
+/** Superelipsoide muestreada en una malla UV, con una deformación por punto. */
+function superelipsoide(
+  c: Pt, r: Pt, e: number,
+  deformar?: (p: THREE.Vector3) => void,
+  seg = 72, anillos = 48,
+): THREE.BufferGeometry {
+  const pos: number[] = [];
+  const idx: number[] = [];
+  const p = new THREE.Vector3();
+  for (let i = 0; i <= anillos; i++) {
+    const v = -Math.PI / 2 + (i / anillos) * Math.PI;        // de inferior a superior
+    for (let j = 0; j <= seg; j++) {
+      const u = -Math.PI + (j / seg) * Math.PI * 2;
+      p.set(
+        c[0] + r[0] * spow(Math.cos(v), e) * spow(Math.cos(u), e),
+        c[1] + r[1] * spow(Math.cos(v), e) * spow(Math.sin(u), e),
+        c[2] - r[2] * spow(Math.sin(v), e),                  // v = -π/2 → z inferior (+)
+      );
+      deformar?.(p);
+      pos.push(p.x, p.y, p.z);
+    }
+  }
+  for (let i = 0; i < anillos; i++) {
+    for (let j = 0; j < seg; j++) {
+      const a = i * (seg + 1) + j;
+      const b = a + seg + 1;
+      idx.push(a, a + 1, b, a + 1, b + 1, b);
+    }
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  geo.setIndex(idx);
+  geo.computeVertexNormals();
+  return geo;
+}
+
+/** Hemisferios cerebrales: silueta translúcida. */
+export function geometriaCerebro(): THREE.BufferGeometry {
+  const hemi = (lado: 1 | -1) => superelipsoide(
+    [lado * 6.35, -0.4, -6.4], [6.2, 15.1, 9.2], 0.82,
+    (p) => {
+      let ax = Math.abs(p.x);
+      // Contorno basal: frontal más estrecho, máximo ancho en la región
+      // temporoparietal y occipital algo más estrecho.
+      const ancho = 0.8 + 0.2 * Math.exp(-(((p.y + 3) / 9) ** 2)) - 0.06 * ss(-8, -15, p.y);
+      ax = 0.35 + Math.max(0, ax - 0.35) * ancho;
+      // Cara medial plana (cisura interhemisférica).
+      if (ax < 0.35) ax = 0.35 - (0.35 - ax) * 0.15;
+      p.x = lado * ax;
+      // Cara basal: se apoya en su piso.
+      p.z = smin(p.z, pisoHemisferio(Math.abs(p.x), p.y), 0.9);
+      // Polo temporal y cisura de Silvio: el temporal se separa del frontal.
+      const silvio = Math.exp(-((p.y - 2.0) ** 2) / 1.2) * ss(3.0, 6.5, ax) * ss(-4.0, 0.5, p.z);
+      p.x -= lado * 1.7 * silvio;
+    },
+  );
+  const partes = [hemi(1), hemi(-1)];
+  const unido = mergeGeometries(partes, false)!;
+  partes.forEach((g) => g.dispose());
+  return unido;
+}
+
+/** Cerebelo: dos hemisferios y el vermis, bajo la tienda y detrás del tronco. */
+export function geometriaCerebelo(): THREE.BufferGeometry {
+  const partes = [
+    // ≈ 10 cm de ancho y 5 de largo; el bulbo queda en la vallécula, entre ambos.
+    superelipsoide([4.6, -10.8, 0.7], [4.2, 4.1, 2.5], 0.9, undefined, 56, 36),
+    superelipsoide([-4.6, -10.8, 0.7], [4.2, 4.1, 2.5], 0.9, undefined, 56, 36),
+    superelipsoide([0, -11.3, -0.4], [1.6, 3.4, 2.0], 0.9, undefined, 40, 28),
+  ];
+  const unido = mergeGeometries(partes, false)!;
+  partes.forEach((g) => g.dispose());
+  return unido;
+}
+
 /** Encuadre: centro del conjunto y semiextensiones (alto, ancho). */
 export const CENTRO: Pt = [0, -2.9, 0.6];
 export const SEMI_ALTO = 8.7;
 export const SEMI_ANCHO = 6.4;
+/** Encuadre del encéfalo entero (silueta): ≈ 165 × 135 mm. */
+export const CENTRO_ENCEFALO: Pt = [0, -0.6, -2];
+export const SEMI_ALTO_ENCEFALO = 17.2;
+export const SEMI_ANCHO_ENCEFALO = 13.8;

@@ -79,10 +79,11 @@ function VistasEscena({ mode, onMode }: { mode: ModoWillis; onMode: (m: ModoWill
 }
 
 /** Menú ☰ de la vista: restablecer la cámara y mostrar u ocultar etiquetas. */
-function MenuVista({ etiquetas, onEtiquetas, onRestablecer }: {
+function MenuVista({ etiquetas, onEtiquetas, onRestablecer, onEncefalo }: {
   etiquetas: boolean;
   onEtiquetas: () => void;
   onRestablecer: () => void;
+  onEncefalo: () => void;
 }) {
   const [abierto, setAbierto] = useState(false);
   const caja = useRef<HTMLDivElement>(null);
@@ -136,6 +137,21 @@ function MenuVista({ etiquetas, onEtiquetas, onRestablecer }: {
           </button>
           <button
             type="button"
+            role="menuitem"
+            className={styles.menuItem}
+            onClick={() => { onEncefalo(); setAbierto(false); }}
+          >
+            <span className={styles.menuIcono} aria-hidden>
+              {/* Alejar: lupa con un signo menos */}
+              <svg width="16" height="16" viewBox="0 0 24 24">
+                <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="1.9" />
+                <path d="M7.5 10.5h6M15.5 15.5 20 20" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+              </svg>
+            </span>
+            Ver el encéfalo entero
+          </button>
+          <button
+            type="button"
             role="menuitemcheckbox"
             aria-checked={etiquetas}
             className={styles.menuItem}
@@ -165,10 +181,11 @@ export default function WillisSimulator() {
   const [variante, setVariante] = useState<VarianteId>('completo');
   const [sindrome, setSindrome] = useState<SindromeId | null>(null);
   const [refs, setRefs] = useState<Record<ReferenciaId, boolean>>({
-    tronco: true, optico: true, hipofisis: false, nervio3: true,
+    cerebro: true, tronco: true, optico: true, hipofisis: false, nervio3: true,
   });
   const [etiquetas, setEtiquetas] = useState(false);
   const [reinicio, setReinicio] = useState(0);
+  const [encuadre, setEncuadre] = useState<'poligono' | 'encefalo'>('poligono');
   const [webgl, setWebgl] = useState<boolean | null>(null);
   const [tactil, setTactil] = useState(false);
 
@@ -301,6 +318,7 @@ export default function WillisSimulator() {
             refs={refs}
             etiquetas={etiquetas}
             reinicio={reinicio}
+            encuadre={encuadre}
             onElegir={elegir}
             onSenalar={setSenalado}
             onDeseleccionar={() => setElegido(null)}
@@ -320,7 +338,12 @@ export default function WillisSimulator() {
         <MenuVista
           etiquetas={etiquetas}
           onEtiquetas={() => setEtiquetas((v) => !v)}
-          onRestablecer={() => setReinicio((n) => n + 1)}
+          onRestablecer={() => { setEncuadre('poligono'); setReinicio((n) => n + 1); }}
+          onEncefalo={() => {
+            setEncuadre('encefalo');
+            setRefs((r) => ({ ...r, cerebro: true }));
+            setReinicio((n) => n + 1);
+          }}
         />
 
         <VistasEscena mode={mode} onMode={cambiarModo} />

@@ -16,8 +16,9 @@ import {
   type ArteriaId, type SistemaId, type TerritorioId, type ReferenciaId,
 } from './engine/anatomia';
 import {
-  PIEZAS, EXTRAS, CENTRO, SEMI_ALTO, SEMI_ANCHO,
+  PIEZAS, EXTRAS, CENTRO, SEMI_ALTO, SEMI_ANCHO, CENTRO_ENCEFALO, SEMI_ALTO_ENCEFALO, SEMI_ANCHO_ENCEFALO,
   geometriaTramos, geometriaTronco, geometriaOptico, geometriaHipofisis, geometriaOculomotor, anclaEtiqueta,
+  geometriaCerebro, geometriaCerebelo,
   type Pieza,
 } from './engine/geometria';
 import { efectoVariante, afectada, type Variante, type Sindrome, type Lado } from './engine/clinica';
@@ -34,6 +35,8 @@ export interface SceneProps {
   refs: Record<ReferenciaId, boolean>;
   etiquetas: boolean;
   reinicio: number;
+  /** Qué encuadra la cámara al restablecer: el polígono o el encéfalo entero. */
+  encuadre: 'poligono' | 'encefalo';
   onElegir: (e: Elegido) => void;
   onSenalar: (e: Elegido) => void;
   onDeseleccionar: () => void;
@@ -68,23 +71,25 @@ const elegidoStyle: CSSProperties = {
 // Reencuadra cámara y diana al montar y con «Restablecer vista». La vista
 // inicial es la basal de los atlas, con una leve inclinación para que se lea
 // la profundidad del sistema vertebrobasilar.
-function CameraRig({ reinicio }: { reinicio: number }) {
+function CameraRig({ reinicio, encuadre }: { reinicio: number; encuadre: 'poligono' | 'encefalo' }) {
   const { camera, controls, size } = useThree();
   const aspecto = size.width / Math.max(size.height, 1);
   useEffect(() => {
     const cam = camera as THREE.PerspectiveCamera;
     const t = Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
-    const dist = Math.max(SEMI_ALTO / t, SEMI_ANCHO / (t * aspecto)) * 1.02;
+    const todo = encuadre === 'encefalo';
+    const [alto, ancho, c] = todo ? [SEMI_ALTO_ENCEFALO, SEMI_ANCHO_ENCEFALO, CENTRO_ENCEFALO] : [SEMI_ALTO, SEMI_ANCHO, CENTRO];
+    const dist = Math.max(alto / t, ancho / (t * aspecto)) * 1.02;
     const dir = new THREE.Vector3(0.1, -0.24, 1).normalize();
     cam.up.set(0, 1, 0);
-    cam.position.set(CENTRO[0] + dir.x * dist, CENTRO[1] + dir.y * dist, CENTRO[2] + dir.z * dist);
+    cam.position.set(c[0] + dir.x * dist, c[1] + dir.y * dist, c[2] + dir.z * dist);
     cam.updateProjectionMatrix();
     const oc = controls as unknown as { target: THREE.Vector3; update: () => void } | null;
     if (oc) {
-      oc.target.set(...CENTRO);
+      oc.target.set(...c);
       oc.update();
     }
-  }, [reinicio, camera, controls, aspecto]);
+  }, [reinicio, encuadre, camera, controls, aspecto]);
   return null;
 }
 
@@ -192,8 +197,56 @@ function Saco({ centro, radio }: { centro: [number, number, number]; radio: numb
   );
 }
 
-/** Estructuras vecinas: tronco, vía óptica, hipófisis y III par. */
+// Silueta: casi transparente de frente y más opaca en el borde (efecto
+// Fresnel), para que se lea el contorno sin tapar las arterias.
+const SILUETA_VERT = /* glsl */ `
+  varying vec3 vN;
+  varying vec3 vV;
+  void main() {
+    vec4 mv = modelViewMatrix * vec4(position, 1.0);
+    vN = normalize(normalMatrix * normal);
+    vV = normalize(-mv.xyz);
+    gl_Position = projectionMatrix * mv;
+  }
+`;
+const SILUETA_FRAG = /* glsl */ `
+  uniform vec3 uColor;
+  uniform float uBase;
+  uniform float uBorde;
+  varying vec3 vN;
+  varying vec3 vV;
+  void main() {
+    float f = 1.0 - abs(dot(normalize(vN), normalize(vV)));
+    gl_FragColor = vec4(uColor, uBase + uBorde * pow(f, 2.6));
+  }
+`;
+
+function Silueta({ geo, color, base, borde }: { geo: THREE.BufferGeometry; color: string; base: number; borde: number }) {
+  const uniforms = useMemo(() => ({
+    uColor: { value: new THREE.Color(color) },
+    uBase: { value: base },
+    uBorde: { value: borde },
+  }), [color, base, borde]);
+  // Sin eventos: tocar «dentro» del cerebro debe seguir deseleccionando.
+  return (
+    <mesh geometry={geo} renderOrder={3}>
+      <shaderMaterial
+        vertexShader={SILUETA_VERT}
+        fragmentShader={SILUETA_FRAG}
+        uniforms={uniforms}
+        transparent
+        depthWrite={false}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  );
+}
+
+/** Estructuras vecinas: silueta del encéfalo, tronco, vía óptica, hipófisis y III par. */
 function Referencias(props: SceneProps) {
+  const cerebro = useMemo(() => geometriaCerebro(), []);
+  const cerebelo = useMemo(() => geometriaCerebelo(), []);
+  useEffect(() => () => { cerebro.dispose(); cerebelo.dispose(); }, [cerebro, cerebelo]);
   const tronco = useMemo(() => geometriaTronco(), []);
   const optico = useMemo(() => geometriaOptico(), []);
   const hipofisis = useMemo(() => geometriaHipofisis(), []);
@@ -236,6 +289,12 @@ function Referencias(props: SceneProps) {
 
   return (
     <group>
+      {refs.cerebro && (
+        <>
+          <Silueta geo={cerebro} color="#d9a196" base={0.025} borde={0.5} />
+          <Silueta geo={cerebelo} color="#c99a8e" base={0.035} borde={0.5} />
+        </>
+      )}
       {refs.tronco && (
         <mesh geometry={tronco} renderOrder={1} {...eventos('tronco', true)}>
           <meshPhysicalMaterial
@@ -329,7 +388,7 @@ function Scene(props: SceneProps) {
       <directionalLight position={[-7, 5, -6]} intensity={0.6} color="#dfe8ff" />
       <directionalLight position={[0, 8, 4]} intensity={0.3} />
 
-      <CameraRig reinicio={props.reinicio} />
+      <CameraRig reinicio={props.reinicio} encuadre={props.encuadre} />
 
       <group>
         {PIEZAS.map((p) => (
@@ -345,7 +404,7 @@ function Scene(props: SceneProps) {
       <OrbitControls
         enablePan={false}
         minDistance={4}
-        maxDistance={48}
+        maxDistance={110}
         makeDefault
       />
     </>
