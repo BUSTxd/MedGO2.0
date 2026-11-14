@@ -1150,4 +1150,7 @@ compartirResumenes(semanas, {
   av02: [['t09', 'Región orbitaria'], ['t12', 'Oído']],
   av03: [['t14', 'Columna y médula espinal'], ['t17', 'Tronco encefálico']],
   av04: ['t19', ['t22', 'Hemisferios (morfología interna)'], 't25'],
+  // Fisiología: Sistema Motor — el sílabo la partió en dos clases (t15 y t18),
+  // pero el resumen HTML ya trae todo el tema: la continuación apunta al mismo.
+  t18: ['t15'],
 });
