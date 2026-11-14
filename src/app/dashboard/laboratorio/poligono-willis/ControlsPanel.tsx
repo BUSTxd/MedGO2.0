@@ -15,10 +15,14 @@
 import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import {
   ARTERIAS, ARTERIA_LIST, GRUPOS, SISTEMAS, TERRITORIOS, TERRITORIO_LIST, REFERENCIAS, REFERENCIA_LIST, ESENCIAL,
+  ESENCIAL_TERRITORIO,
   enSistema,
   type ArteriaId, type SistemaId, type TerritorioId, type ReferenciaId,
 } from './engine/anatomia';
-import { VARIANTES, VARIANTE_LIST, SINDROMES, SINDROME_LIST, type VarianteId, type SindromeId } from './engine/clinica';
+import {
+  VARIANTES, VARIANTE_LIST, SINDROMES, SINDROME_LIST, ESENCIAL_VARIANTE, ESENCIAL_SINDROME,
+  type VarianteId, type SindromeId,
+} from './engine/clinica';
 import type { Elegido, ModoWillis } from './WillisSimulator';
 import styles from '@/styles/medulaEspinal.module.css';
 import ws from '@/styles/poligonoWillis.module.css';
@@ -30,7 +34,6 @@ export const MODOS: Array<{ key: ModoWillis; label: string; desc: string }> = [
   { key: 'clinico', label: 'Clínico', desc: 'Aneurismas e ictus: qué arteria y qué síntomas' },
 ];
 
-const ROJO = '#c0392b';
 const VIOLETA = '#7c5cd6';
 const AMBAR = '#f2b631';
 
@@ -163,32 +166,83 @@ function Perla({ children }: { children: ReactNode }) {
   );
 }
 
-/** Chips de arterias que llevan a su ficha. */
-function ChipsArterias({ ids, color, onVer }: { ids: ArteriaId[]; color: string; onVer: (id: ArteriaId) => void }) {
+/** Cómo moverse desde la ficha: anterior, siguiente y cerrar (null = no se puede). */
+interface Navegacion {
+  posicion: string | null;
+  onAnterior: (() => void) | null;
+  onSiguiente: (() => void) | null;
+  onCerrar: (() => void) | null;
+  /** «arteria», «territorio»… para los nombres accesibles de los botones. */
+  que: string;
+}
+
+/**
+ * 1 · Qué es: cabecera fija de toda ficha (no se pierde al bajar), con su
+ * insignia, el título, una línea de datos y ‹ › ✕.
+ */
+function CabezaFicha({ insignia, titulo, meta, nav }: { insignia?: ReactNode; titulo: string; meta: ReactNode; nav: Navegacion }) {
   return (
-    <ul className={styles.chips}>
-      {ids.map((id) => (
-        <li key={id}>
-          <button type="button" className={`${styles.chip} ${ws.chipBoton}`} onClick={() => onVer(id)} title={`Ver la ficha de ${ARTERIAS[id].nombre}`}>
-            <Dot color={color} /> {ARTERIAS[id].corto}
+    <header className={ws.fichaCabeza}>
+      <div className={ws.fichaFila}>
+        <h3 className={ws.fichaTitulo}>{insignia}{titulo}</h3>
+        <div className={ws.fichaNav}>
+          <button type="button" className={ws.navBtn} onClick={nav.onAnterior ?? undefined} disabled={!nav.onAnterior} aria-label={`${nav.que} anterior de la lista`} title="Anterior (←)">
+            <Icono d="m15 6-6 6 6 6" />
           </button>
-        </li>
-      ))}
-    </ul>
+          <button type="button" className={ws.navBtn} onClick={nav.onSiguiente ?? undefined} disabled={!nav.onSiguiente} aria-label={`${nav.que} siguiente de la lista`} title="Siguiente (→)">
+            <Icono d="m9 6 6 6-6 6" />
+          </button>
+          {nav.onCerrar && (
+            <button type="button" className={ws.navBtn} onClick={nav.onCerrar} aria-label="Cerrar la ficha" title="Cerrar (Esc)">
+              <Icono d="M6 6l12 12M18 6 6 18" />
+            </button>
+          )}
+        </div>
+      </div>
+      <p className={ws.fichaMeta}>
+        {meta}{nav.posicion ? <span className={ws.fichaPos}> · {nav.posicion}</span> : null}
+      </p>
+    </header>
   );
 }
 
-function FichaArteria({ id, lado, pestana, onPestana, onVerTerritorio, posicion, onAnterior, onSiguiente, onCerrar }: {
+/** 2 · Lo esencial: rótulo a la izquierda, dato a la derecha. */
+function Esencial({ filas }: { filas: Array<{ rotulo: string; valor: ReactNode }> }) {
+  return (
+    <dl className={ws.esencial} aria-label="Lo esencial">
+      {filas.map((f) => (
+        <div key={f.rotulo} className={ws.esencialFila}>
+          <dt>{f.rotulo}</dt>
+          <dd>{f.valor}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+/** Enlaces en línea a las fichas de varias arterias («M1 · M2 · Lenticuloestriadas»). */
+function EnlacesArterias({ ids, onVer }: { ids: ArteriaId[]; onVer: (id: ArteriaId) => void }) {
+  return (
+    <span className={ws.enlaces}>
+      {ids.map((id, k) => (
+        <span key={id}>
+          {k > 0 && <span className={ws.enlacesSep} aria-hidden> · </span>}
+          <button type="button" className={ws.enlaceTerr} onClick={() => onVer(id)} title={`Ver la ficha de ${ARTERIAS[id].nombre}`}>
+            {ARTERIAS[id].corto}
+          </button>
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function FichaArteria({ id, lado, pestana, onPestana, onVerTerritorio, nav }: {
   id: ArteriaId;
   lado: 'i' | 'd' | 'm';
   pestana: Pestana;
   onPestana: (p: Pestana) => void;
   onVerTerritorio: (t: TerritorioId) => void;
-  /** «3 de 24» en la lista visible (null si no está en ella). */
-  posicion: string | null;
-  onAnterior: (() => void) | null;
-  onSiguiente: (() => void) | null;
-  onCerrar: () => void;
+  nav: Navegacion;
 }) {
   const a = ARTERIAS[id];
   const e = ESENCIAL[id];
@@ -200,60 +254,37 @@ function FichaArteria({ id, lado, pestana, onPestana, onVerTerritorio, posicion,
     { key: 'irrigacion', label: 'Irrigación' },
     { key: 'clinica', label: 'Clínica' },
   ];
+  const sigla = esSigla(a.corto);
   return (
     <div className={styles.info} role="region" aria-label={a.nombre}>
-      {/* 1 · Qué es: cabecera fija, no se pierde al bajar */}
-      <header className={ws.fichaCabeza}>
-        <div className={ws.fichaFila}>
-          <h3 className={ws.fichaTitulo}>
-            {esSigla(a.corto) && <span className={ws.sigla}>{a.corto}</span>}
-            {/* Con la sigla en su etiqueta, el «(PICA)» del nombre sobra. */}
-            {esSigla(a.corto) ? a.nombre.replace(/\s*\([^)]*\)$/, '') : a.nombre}
-          </h3>
-          <div className={ws.fichaNav}>
-            <button type="button" className={ws.navBtn} onClick={onAnterior ?? undefined} disabled={!onAnterior} aria-label="Arteria anterior de la lista" title="Anterior (←)">
-              <Icono d="m15 6-6 6 6 6" />
-            </button>
-            <button type="button" className={ws.navBtn} onClick={onSiguiente ?? undefined} disabled={!onSiguiente} aria-label="Arteria siguiente de la lista" title="Siguiente (→)">
-              <Icono d="m9 6 6 6-6 6" />
-            </button>
-            <button type="button" className={ws.navBtn} onClick={onCerrar} aria-label="Cerrar la ficha" title="Cerrar (Esc)">
-              <Icono d="M6 6l12 12M18 6 6 18" />
-            </button>
-          </div>
-        </div>
-        <p className={ws.fichaMeta}>
-          {grupo} · {ladoTxt} · {a.calibre}{posicion ? <span className={ws.fichaPos}> · {posicion}</span> : null}
-        </p>
-      </header>
+      <CabezaFicha
+        insignia={sigla ? <span className={ws.sigla}>{a.corto}</span> : null}
+        // Con la sigla en su etiqueta, el «(PICA)» del nombre sobra.
+        titulo={sigla ? a.nombre.replace(/\s*\([^)]*\)$/, '') : a.nombre}
+        meta={<>{grupo} · {ladoTxt} · {a.calibre}</>}
+        nav={nav}
+      />
 
       <p className={ws.fichaLead}>{a.resumen}</p>
 
-      {/* 2 · Lo esencial: lo que se pregunta, a la vista */}
-      <dl className={ws.esencial} aria-label="Lo esencial">
-        <div className={ws.esencialFila}>
-          <dt>Nace de</dt>
-          <dd>{e.nace}</dd>
-        </div>
-        <div className={ws.esencialFila}>
-          <dt>Irriga</dt>
-          <dd>
-            {e.irriga}{' '}
-            <button type="button" className={ws.enlaceTerr} onClick={() => onVerTerritorio(terr.id)} title="Ver su territorio en el modelo">
-              <Dot color={terr.color} size={8} /> {terr.nombre}
-            </button>
-          </dd>
-        </div>
-        <div className={ws.esencialFila}>
-          <dt>Si se lesiona</dt>
-          <dd>{e.lesion}</dd>
-        </div>
-      </dl>
+      <Esencial filas={[
+        { rotulo: 'Nace de', valor: e.nace },
+        {
+          rotulo: 'Irriga',
+          valor: (
+            <>
+              {e.irriga}{' '}
+              <button type="button" className={ws.enlaceTerr} onClick={() => onVerTerritorio(terr.id)} title="Ver su territorio en el modelo">
+                <Dot color={terr.color} size={8} /> {terr.nombre}
+              </button>
+            </>
+          ),
+        },
+        { rotulo: 'Si se lesiona', valor: e.lesion },
+      ]} />
 
-      {/* 3 · La idea para el examen */}
       <Perla>{a.perla}</Perla>
 
-      {/* 4 · El detalle, para quien quiera profundizar */}
       <h4 className={ws.detalleTitulo}>Más detalle</h4>
       <div className={ws.pestanas} role="tablist" aria-label="Apartados de la ficha">
         {PESTANAS.map((p) => (
@@ -306,6 +337,127 @@ function FichaArteria({ id, lado, pestana, onPestana, onVerTerritorio, posicion,
   );
 }
 
+function FichaTerritorio({ id, extra, onVerArteria, nav }: {
+  id: TerritorioId;
+  extra: ReactNode;
+  onVerArteria: (a: ArteriaId) => void;
+  nav: Navegacion;
+}) {
+  const t = TERRITORIOS[id];
+  const e = ESENCIAL_TERRITORIO[id];
+  const arts = ARTERIA_LIST.filter((a) => a.territorio === id).map((a) => a.id);
+  return (
+    <div className={styles.info} role="region" aria-label={`Territorio: ${t.nombre}`}>
+      <CabezaFicha
+        insignia={<span className={ws.insigniaColor} style={{ background: t.color }} aria-hidden />}
+        titulo={t.nombre}
+        meta={<>Territorio arterial · {arts.length} arteria{arts.length === 1 ? '' : 's'}</>}
+        nav={nav}
+      />
+      <p className={ws.fichaLead}>{t.resumen}</p>
+      {extra}
+      <Esencial filas={[
+        { rotulo: 'Zona', valor: e.zona },
+        { rotulo: 'Función', valor: e.funcion },
+        { rotulo: 'Si se ocluye', valor: e.oclusion },
+        { rotulo: 'Arterias', valor: <EnlacesArterias ids={arts} onVer={onVerArteria} /> },
+      ]} />
+      <Perla>{e.perla}</Perla>
+      <h4 className={ws.detalleTitulo}>Más detalle</h4>
+      <div className={ws.cuerpo}>
+        <Apartado titulo="Qué irriga">
+          <ul className={styles.infoLista}>
+            {t.areas.map((x) => <li key={x}>{x}</li>)}
+          </ul>
+        </Apartado>
+        <Apartado titulo="Déficit al ocluirse"><p className={styles.infoDesc}>{t.deficit}</p></Apartado>
+      </div>
+    </div>
+  );
+}
+
+function FichaVariante({ id, extra, onVerArteria, nav }: {
+  id: VarianteId;
+  extra: ReactNode;
+  onVerArteria: (a: ArteriaId) => void;
+  nav: Navegacion;
+}) {
+  const v = VARIANTES[id];
+  const e = ESENCIAL_VARIANTE[id];
+  const cambiadas = [...new Set(v.cambios.map((c) => c.arteria))];
+  return (
+    <div className={styles.info} role="region" aria-label={v.nombre}>
+      <CabezaFicha
+        insignia={<span className={ws.insigniaColor} style={{ background: id === 'completo' ? '#c0392b' : AMBAR }} aria-hidden />}
+        titulo={v.nombre}
+        meta={<>Variante anatómica</>}
+        nav={nav}
+      />
+      <p className={ws.fichaLead}>{v.desc}</p>
+      {extra}
+      <Esencial filas={[
+        { rotulo: 'Frecuencia', valor: v.frecuencia },
+        { rotulo: 'Qué cambia', valor: e.cambia },
+        { rotulo: 'Por qué importa', valor: e.importa },
+        ...(cambiadas.length ? [{ rotulo: 'Arterias', valor: <EnlacesArterias ids={cambiadas} onVer={onVerArteria} /> }] : []),
+      ]} />
+      <Perla>{e.perla}</Perla>
+      <h4 className={ws.detalleTitulo}>Más detalle</h4>
+      <div className={ws.cuerpo}>
+        <Apartado titulo="Consecuencias"><p className={styles.infoDesc}>{v.importancia}</p></Apartado>
+      </div>
+    </div>
+  );
+}
+
+function FichaSindrome({ id, extra, onVerArteria, nav }: {
+  id: SindromeId;
+  extra: ReactNode;
+  onVerArteria: (a: ArteriaId) => void;
+  nav: Navegacion;
+}) {
+  const s = SINDROMES[id];
+  const e = ESENCIAL_SINDROME[id];
+  const aneurisma = s.tipo === 'aneurisma';
+  return (
+    <div className={styles.info} role="region" aria-label={s.nombre}>
+      <CabezaFicha
+        insignia={<span className={aneurisma ? ws.insigniaAneurisma : ws.insigniaIctus}>{aneurisma ? 'Aneurisma' : 'Ictus'}</span>}
+        titulo={s.nombre}
+        meta={<>{s.lado === 'i' ? 'Lado izquierdo en el modelo' : 'Ambos lados'}{s.frecuencia ? <> · {s.frecuencia.split(':')[0].replace(/\.$/, '')}</> : null}</>}
+        nav={nav}
+      />
+      <p className={ws.fichaLead}>{s.desc}</p>
+      {extra}
+      <Esencial filas={[
+        { rotulo: 'Arteria', valor: <EnlacesArterias ids={s.arterias} onVer={onVerArteria} /> },
+        { rotulo: 'Lesiona', valor: e.lesiona },
+        { rotulo: 'Signo clave', valor: e.signo },
+      ]} />
+      <Perla>{s.perla}</Perla>
+      <h4 className={ws.detalleTitulo}>Más detalle</h4>
+      <div className={ws.cuerpo}>
+        <Apartado titulo="Clínica">
+          <ul className={styles.infoLista}>
+            {s.clinica.map((x) => <li key={x}>{x}</li>)}
+          </ul>
+        </Apartado>
+        <Apartado titulo="Mecanismo"><p className={styles.infoDesc}>{s.mecanismo}</p></Apartado>
+        {s.frecuencia && <Apartado titulo="Frecuencia"><p className={styles.infoDesc}>{s.frecuencia}</p></Apartado>}
+      </div>
+    </div>
+  );
+}
+
+/** Arteria que se nombra en la lista cuando el síndrome afecta a varias. */
+const PRINCIPAL: Partial<Record<SindromeId, ArteriaId>> = { an_pcom: 'pcom', wallenberg: 'pica' };
+
+/** Lista de síndromes en el orden en que se pintan: aneurismas y luego ictus. */
+const ORDEN_SINDROMES: SindromeId[] = [
+  ...SINDROME_LIST.filter((x) => x.tipo === 'aneurisma'),
+  ...SINDROME_LIST.filter((x) => x.tipo === 'isquemia'),
+].map((x) => x.id);
+
 export default function ControlsPanel(props: Props) {
   const {
     mode, sistema, onSistema, elegido, territorio, variante, sindrome, refs,
@@ -332,32 +484,45 @@ export default function ControlsPanel(props: Props) {
 
   const arteriaElegida = elegido?.kind === 'arteria' ? elegido : null;
   const refElegida = elegido?.kind === 'ref' ? REFERENCIAS[elegido.id] : null;
-  const idx = arteriaElegida ? orden.indexOf(arteriaElegida.id) : -1;
-  const irA = (paso: number) => (idx >= 0 && orden[idx + paso] ? () => onElegirArteria(orden[idx + paso]) : null);
-  const anterior = irA(-1);
-  const siguiente = irA(1);
+  /** Anterior, siguiente y posición dentro de una lista. */
+  function navegar<T>(lista: T[], actual: T | null, ir: (x: T) => void, que: string, cerrar: (() => void) | null): Navegacion {
+    const i = actual === null ? -1 : lista.indexOf(actual);
+    return {
+      posicion: i >= 0 ? `${i + 1} de ${lista.length}` : null,
+      onAnterior: i > 0 ? () => ir(lista[i - 1]) : null,
+      onSiguiente: i >= 0 && i < lista.length - 1 ? () => ir(lista[i + 1]) : null,
+      onCerrar: cerrar,
+      que,
+    };
+  }
+  const nav: Navegacion | null =
+    mode === 'arterias' ? (arteriaElegida ? navegar(orden, arteriaElegida.id, onElegirArteria, 'Arteria', onCerrar) : null)
+      : mode === 'territorios' ? (territorio ? navegar(TERRITORIO_LIST.map((t) => t.id), territorio, onTerritorio, 'Territorio', () => onTerritorio(null)) : null)
+        : mode === 'variantes' ? navegar(VARIANTE_LIST.map((v) => v.id), variante, onVariante, 'Variante', variante !== 'completo' ? () => onVariante('completo') : null)
+          : sindrome ? navegar(ORDEN_SINDROMES, sindrome, onSindrome, 'Síndrome', () => onSindrome(null)) : null;
 
-  // Teclado en la vista Arterias: ← → pasan de arteria y Esc cierra la ficha
-  // (salvo que se esté escribiendo en el buscador).
+  // Teclado en las cuatro vistas: ← → pasan al elemento vecino de la lista y
+  // Esc cierra la ficha (salvo que se esté escribiendo en el buscador).
   useEffect(() => {
-    if (mode !== 'arterias' || !arteriaElegida) return;
+    if (!nav) return;
     const tecla = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement | null;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
-      if (e.key === 'ArrowLeft' && anterior) { e.preventDefault(); anterior(); }
-      else if (e.key === 'ArrowRight' && siguiente) { e.preventDefault(); siguiente(); }
-      else if (e.key === 'Escape') onCerrar();
+      if (e.key === 'ArrowLeft' && nav.onAnterior) { e.preventDefault(); nav.onAnterior(); }
+      else if (e.key === 'ArrowRight' && nav.onSiguiente) { e.preventDefault(); nav.onSiguiente(); }
+      else if (e.key === 'Escape' && nav.onCerrar) nav.onCerrar();
     };
     window.addEventListener('keydown', tecla);
     return () => window.removeEventListener('keydown', tecla);
-  }, [mode, arteriaElegida, anterior, siguiente, onCerrar]);
+  }, [nav]);
 
   // En las otras vistas, tocar una arteria del modelo ofrece abrir su ficha.
   const irAFicha = arteriaElegida && mode !== 'arterias' ? (
-    <button type="button" className={styles.ctaBtn} onClick={() => onVerArteria(arteriaElegida.id)}>
-      Ver la ficha de {ARTERIAS[arteriaElegida.id].corto} →
-    </button>
+    <p className={ws.tocaste}>
+      Tocaste <strong>{ARTERIAS[arteriaElegida.id].nombre}</strong>.{' '}
+      <button type="button" className={ws.enlaceTerr} onClick={() => onVerArteria(arteriaElegida.id)}>Ver su ficha →</button>
+    </p>
   ) : null;
 
   const fichaRef = refElegida ? (
@@ -374,10 +539,7 @@ export default function ControlsPanel(props: Props) {
         pestana={pestana}
         onPestana={setPestana}
         onVerTerritorio={onVerTerritorio}
-        posicion={idx >= 0 ? `${idx + 1} de ${orden.length}` : null}
-        onAnterior={anterior}
-        onSiguiente={siguiente}
-        onCerrar={onCerrar}
+        nav={nav!}
       />
     ) : fichaRef ?? (
       <Vacio>Toca una arteria en el modelo o en la lista: verás de dónde nace, qué irriga y qué pasa si se lesiona.</Vacio>
@@ -437,21 +599,8 @@ export default function ControlsPanel(props: Props) {
   }
 
   if (mode === 'territorios') {
-    const t = territorio ? TERRITORIOS[territorio] : null;
-    const arts = t ? ARTERIA_LIST.filter((a) => a.territorio === t.id).map((a) => a.id) : [];
-    ficha = t ? (
-      <Ficha color={t.color} titulo={`Territorio: ${t.nombre}`} sub={t.resumen}>
-        {irAFicha}
-        <Apartado titulo="Qué irriga">
-          <ul className={styles.infoLista}>
-            {t.areas.map((x) => <li key={x}>{x}</li>)}
-          </ul>
-        </Apartado>
-        <Apartado titulo="Si se ocluye"><p className={styles.infoDesc}>{t.deficit}</p></Apartado>
-        <Apartado titulo="Arterias de este territorio">
-          <ChipsArterias ids={arts} color={t.color} onVer={onVerArteria} />
-        </Apartado>
-      </Ficha>
+    ficha = territorio ? (
+      <FichaTerritorio id={territorio} extra={irAFicha} onVerArteria={onVerArteria} nav={nav!} />
     ) : fichaRef ?? (
       <Vacio>Toca un territorio o una arteria: el modelo resalta las arterias que lo irrigan.</Vacio>
     );
@@ -468,31 +617,18 @@ export default function ControlsPanel(props: Props) {
   }
 
   if (mode === 'variantes') {
-    const v = VARIANTES[variante];
     cabeza = (
       <div className={styles.leyenda} aria-label="Leyenda de colores">
         <span className={styles.leyendaItem}><Dot color={AMBAR} /> Lo que cambia respecto al polígono clásico</span>
       </div>
     );
-    const cambiadas = [...new Set(v.cambios.map((c) => c.arteria))];
-    ficha = (
-      <Ficha color={variante === 'completo' ? ROJO : AMBAR} titulo={v.nombre} sub={v.frecuencia}>
-        {irAFicha}
-        <p className={styles.infoDesc}>{v.desc}</p>
-        <Apartado titulo="Por qué importa"><p className={styles.infoDesc}>{v.importancia}</p></Apartado>
-        {cambiadas.length > 0 && (
-          <Apartado titulo="Arterias que cambian">
-            <ChipsArterias ids={cambiadas} color={AMBAR} onVer={onVerArteria} />
-          </Apartado>
-        )}
-      </Ficha>
-    );
+    ficha = <FichaVariante id={variante} extra={irAFicha} onVerArteria={onVerArteria} nav={nav!} />;
     lista = (
       <div className={styles.structureList}>
         {VARIANTE_LIST.map((x) => (
           <BotonLista key={x.id} activo={variante === x.id} onClick={() => onVariante(x.id)}>
-            <Dot color={x.id === 'completo' ? ROJO : AMBAR} />
             <span className={styles.structureName}>{x.nombre}</span>
+            <span className={styles.structureDir}>{ESENCIAL_VARIANTE[x.id].frecuencia}</span>
           </BotonLista>
         ))}
       </div>
@@ -508,20 +644,7 @@ export default function ControlsPanel(props: Props) {
       </div>
     );
     ficha = s ? (
-      <Ficha titulo={s.nombre} sub={s.desc}>
-        {irAFicha}
-        {s.frecuencia && <p className={styles.infoNota}>{s.frecuencia}</p>}
-        <Apartado titulo="Clínica">
-          <ul className={styles.infoLista}>
-            {s.clinica.map((x) => <li key={x}>{x}</li>)}
-          </ul>
-        </Apartado>
-        <Apartado titulo="Mecanismo"><p className={styles.infoDesc}>{s.mecanismo}</p></Apartado>
-        <Apartado titulo={s.lado === 'i' ? 'Arterias afectadas (lado izquierdo)' : 'Arterias afectadas'}>
-          <ChipsArterias ids={s.arterias} color={VIOLETA} onVer={onVerArteria} />
-        </Apartado>
-        <Perla>{s.perla}</Perla>
-      </Ficha>
+      <FichaSindrome id={s.id} extra={irAFicha} onVerArteria={onVerArteria} nav={nav!} />
     ) : fichaRef ?? (
       <Vacio>Elige un aneurisma o un síndrome: el modelo resalta la arteria afectada.</Vacio>
     );
@@ -534,6 +657,7 @@ export default function ControlsPanel(props: Props) {
               {SINDROME_LIST.filter((x) => x.tipo === tipo).map((x) => (
                 <BotonLista key={x.id} activo={sindrome === x.id} onClick={() => onSindrome(sindrome === x.id ? null : x.id)}>
                   <span className={styles.structureName}>{x.nombre}</span>
+                  <span className={styles.structureDir}>{ARTERIAS[PRINCIPAL[x.id] ?? x.arterias[0]].corto}</span>
                 </BotonLista>
               ))}
             </div>

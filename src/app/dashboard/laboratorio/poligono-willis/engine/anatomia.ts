@@ -787,3 +787,21 @@ export const ESENCIAL: Record<ArteriaId, Esencial> = {
   pica: { nace: 'Vertebral intracraneal', irriga: 'Bulbo lateral y cara inferior del cerebelo', lesion: 'Síndrome de Wallenberg (bulbar lateral)' },
   espinal_ant: { nace: 'Ramas de ambas vertebrales', irriga: 'Bulbo medial y 2/3 anteriores de la médula', lesion: 'Síndrome bulbar medial (Dejerine)' },
 };
+
+/** Lo esencial de cada territorio (cabecera de su ficha). */
+export interface EsencialTerritorio {
+  zona: string;
+  funcion: string;
+  oclusion: string;
+  perla: string;
+}
+
+export const ESENCIAL_TERRITORIO: Record<TerritorioId, EsencialTerritorio> = {
+  aca: { zona: 'Cara medial del hemisferio y su borde superior', funcion: 'Motor y sensibilidad de la pierna, micción e iniciativa', oclusion: 'Paresia de la pierna, incontinencia, abulia', perla: 'Pierna más que brazo: cerebral anterior.' },
+  acm: { zona: 'Convexidad lateral, ínsula y ganglios basales', funcion: 'Motor y sensibilidad de cara y brazo; lenguaje (dominante); atención espacial (no dominante)', oclusion: 'Hemiplejia de cara y brazo, afasia o negligencia, hemianopsia', perla: 'Es el territorio que más se infarta, sobre todo por embolias.' },
+  acp: { zona: 'Lóbulo occipital, temporal inferomedial y tálamo', funcion: 'Visión, memoria (hipocampo) y relevo sensitivo (tálamo)', oclusion: 'Hemianopsia con respeto macular; alexia sin agrafia', perla: 'Respeta la mácula porque el polo occipital recibe también ramas de la cerebral media.' },
+  coroidea: { zona: 'Cápsula interna posterior, cintilla óptica e hipocampo anterior', funcion: 'Paso de las vías motora, sensitiva y visual', oclusion: 'Hemiplejia + hemihipoestesia + hemianopsia', perla: 'Tres déficits contralaterales sin afasia ni negligencia.' },
+  vb: { zona: 'Tronco del encéfalo, cerebelo y oído interno', funcion: 'Pares craneales, vías largas, coordinación y conciencia', oclusion: 'Signos cruzados, vértigo, ataxia, coma', perla: 'Par craneal de un lado y vía larga del otro: lesión del tronco.' },
+  ojo: { zona: 'Retina, coroides y órbita', funcion: 'Visión del ojo del mismo lado', oclusion: 'Pérdida visual monocular (amaurosis)', perla: 'La amaurosis fugax avisa de una estenosis carotídea.' },
+  conexion: { zona: 'Sin corteza propia: unen lados y sistemas', funcion: 'Circulación colateral', oclusion: 'Suele no dar clínica si el polígono compensa', perla: 'Un polígono incompleto deja a un hemisferio sin colateral.' },
+};

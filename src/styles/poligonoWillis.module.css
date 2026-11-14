@@ -357,3 +357,41 @@
 @media (prefers-reduced-motion: reduce) {
   .navBtn { transition: none; }
 }
+
+/* ─── Insignias de las fichas de Territorios, Variantes y Clínico ─── */
+.insigniaColor {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 9px;
+  border-radius: 4px;
+  vertical-align: 1px;
+}
+.insigniaAneurisma,
+.insigniaIctus {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 1px 7px;
+  border-radius: 6px;
+  vertical-align: 2px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+.insigniaAneurisma { background: #c23a30; }
+.insigniaIctus { background: #6a4fc4; }
+
+/* Enlaces en línea a varias arterias («M1 · M2 · Lenticuloestriadas») */
+.enlaces { display: inline; }
+.enlacesSep { color: rgba(26, 26, 46, 0.4); }
+:global(.dark-mode) .enlacesSep { color: rgba(240, 238, 255, 0.4); }
+
+/* «Tocaste X. Ver su ficha →» al tocar una arteria fuera de la vista Arterias */
+.tocaste {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: rgba(26, 26, 46, 0.8);
+}
+:global(.dark-mode) .tocaste { color: rgba(240, 238, 255, 0.8); }

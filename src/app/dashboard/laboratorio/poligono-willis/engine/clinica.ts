@@ -392,3 +392,46 @@ export function afectada(s: Sindrome | null, arteria: ArteriaId, lado: Lado): bo
   if (!s || !s.arterias.includes(arteria)) return false;
   return s.lado === 'ambos' || lado === 'm' || lado === s.lado;
 }
+
+// ── Lo esencial de variantes y síndromes (cabecera de sus fichas) ───────────
+
+export interface EsencialVariante {
+  /** Frecuencia corta para la lista y la cabecera. */
+  frecuencia: string;
+  cambia: string;
+  importa: string;
+  perla: string;
+}
+
+export const ESENCIAL_VARIANTE: Record<VarianteId, EsencialVariante> = {
+  completo: { frecuencia: '≈ 30-50 %', cambia: 'Nada: las nueve piezas del anillo, de calibre parecido', importa: 'Compensa la oclusión lenta de una carótida o de una vertebral', perla: 'El polígono «de libro» es minoría.' },
+  pcom_hipo: { frecuencia: 'La más frecuente', cambia: 'Comunicantes posteriores muy finas (< 1 mm)', importa: 'Los sistemas anterior y posterior quedan casi aislados', perla: 'Sin comunicante posterior útil, una oclusión carotídea no se compensa desde atrás.' },
+  fetal: { frecuencia: '≈ 10-26 %', cambia: 'Comunicante posterior gruesa y P1 fina: la cerebral posterior depende de la carótida', importa: 'Un émbolo carotídeo puede infartar el occipital', perla: 'Infarto occipital con una carótida enferma: piensa en una cerebral posterior fetal.' },
+  a1_hipo: { frecuencia: '≈ 1-10 %', cambia: 'Una A1 muy fina y la comunicante anterior engrosada', importa: 'Más aneurismas de la comunicante anterior', perla: 'Flujo cruzado por la comunicante anterior = más estrés = aneurisma.' },
+  acom_hipo: { frecuencia: 'Poco frecuente', cambia: 'Comunicante anterior casi sin flujo', importa: 'No hay paso entre hemisferios', perla: 'La colateral queda en la comunicante posterior y la oftálmica.' },
+  vertebral_hipo: { frecuencia: '≈ 2-10 %', cambia: 'Vertebral derecha de menos de 2 mm', importa: 'Más ictus posterior; se confunde con una estenosis', perla: 'La vertebral izquierda suele ser la dominante.' },
+  trigeminal: { frecuencia: '≈ 0,1-0,6 %', cambia: 'Un puente entre la carótida cavernosa y la basilar', importa: 'Aneurismas, neuralgia del trigémino y émbolos al territorio posterior', perla: 'En la angiografía lateral dibuja la «tau griega».' },
+  percheron: { frecuencia: '≈ 4-12 %', cambia: 'Un solo tronco irriga los dos tálamos paramedianos', importa: 'Una sola oclusión infarta ambos tálamos', perla: 'Infarto talámico bilateral y simétrico: arteria de Percheron.' },
+};
+
+export interface EsencialSindrome {
+  lesiona: string;
+  signo: string;
+}
+
+export const ESENCIAL_SINDROME: Record<SindromeId, EsencialSindrome> = {
+  an_acom: { lesiona: 'Espacio subaracnoideo, al romperse', signo: 'Cefalea súbita «en trueno»' },
+  an_pcom: { lesiona: 'III par, por compresión', signo: 'Ptosis + midriasis + ojo abajo y afuera' },
+  an_acm: { lesiona: 'Cisura de Silvio y lóbulo temporal', signo: 'Hemorragia subaracnoidea con hematoma temporal' },
+  an_basilar: { lesiona: 'Fosa interpeduncular y mesencéfalo', signo: 'Hemorragia grave; puede comprimir el III par' },
+  acm: { lesiona: 'Convexidad lateral y ganglios basales', signo: 'Hemiplejia de cara y brazo + afasia o negligencia' },
+  aca: { lesiona: 'Cara medial del hemisferio', signo: 'Paresia de la pierna + incontinencia' },
+  acp: { lesiona: 'Lóbulo occipital y tálamo', signo: 'Hemianopsia con respeto macular' },
+  coroidea: { lesiona: 'Cápsula interna posterior', signo: 'Hemiplejia + hemihipoestesia + hemianopsia' },
+  lacunar: { lesiona: 'Cápsula interna (infarto < 15 mm)', signo: 'Hemiparesia motora pura, sin signos corticales' },
+  weber: { lesiona: 'Base del mesencéfalo', signo: 'III par de un lado + hemiplejia del otro' },
+  locked_in: { lesiona: 'Base de la protuberancia, a ambos lados', signo: 'Tetraplejia y anartria con conciencia intacta' },
+  aica: { lesiona: 'Protuberancia lateral inferior y oído interno', signo: 'Como Wallenberg + hipoacusia y parálisis facial' },
+  wallenberg: { lesiona: 'Bulbo lateral', signo: 'Disfagia, ronquera, Horner y sensibilidad cruzada' },
+  dejerine: { lesiona: 'Bulbo medial', signo: 'Lengua hacia la lesión + hemiplejia del otro lado' },
+};

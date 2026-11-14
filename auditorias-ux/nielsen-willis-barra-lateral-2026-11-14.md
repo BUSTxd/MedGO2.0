@@ -141,9 +141,13 @@ No hay errores que mostrar en el panel. ➖
 - **Qué:** buscador por nombre o sigla, sin tildes ni mayúsculas (`Esc` lo vacía; si no hay resultados, «Ver todas»); número de arterias por grupo; sigla solo cuando es una sigla real; sin puntos decorativos; 76 px de holgura al final para la burbuja del asistente; sin «(PICA)» repetido en el título.
 - **Comprobado:** render con «cereb»: 9 resultados en 3 grupos.
 
+#### M-4 · El mismo patrón en Territorios, Variantes y Clínico — resuelve H-01, H-03, H-04, H-05 en esas vistas (aplicada el mismo día)
+
+- **Qué:** las tres fichas usan las piezas compartidas `CabezaFicha` y `Esencial`: insignia (color del territorio, ámbar de la variante, «Aneurisma» / «Ictus»), título, línea de datos y ‹ › ✕; resumen; «Lo esencial» (Territorio: zona, función, si se ocluye, arterias · Variante: frecuencia, qué cambia, por qué importa, arterias · Síndrome: arteria, lesiona, signo clave); perla; «Más detalle». ← → y Esc en las cuatro vistas. La lista de variantes muestra la frecuencia y la de síndromes la arteria principal. Tocar una arteria fuera de Arterias muestra «Tocaste X. Ver su ficha →». Datos nuevos: `ESENCIAL_TERRITORIO` (`engine/anatomia.ts`), `ESENCIAL_VARIANTE` y `ESENCIAL_SINDROME` (`engine/clinica.ts`).
+- **Comprobado:** render de la ficha de la cerebral media, la ACP fetal (oscuro), Wallenberg y el aneurisma de la PCoA (oscuro).
+
 ### Siguiente
 
-- Aplicar la misma cabecera fija y el orden «lo esencial → detalle» a las fichas de Territorios, Variantes y Clínico (hoy comparten solo el nuevo estilo de títulos).
 - Llevar la ficha nueva al teléfono con una prueba real: allí el panel no tiene scroll propio y la cabecera se fija a la ventana.
 
 ## 6. Límites de esta evaluación
