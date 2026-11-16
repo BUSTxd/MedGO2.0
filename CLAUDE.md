@@ -244,6 +244,7 @@ Solo el admin mientras `IA_ABIERTA` no sea `1`. **La API key nunca va en repo ni
 
 - **Modo oscuro:** clase `dark-mode` en `<body>` (`localStorage('medgo-dark')`). **Nunca estilos de dark-mode en `globals.css`:** cada módulo usa `:global(.dark-mode) .x`. `.panel` redefine las variables para el modo claro. Siempre oscuros: sidebar (`#1a2557`), cáscara del visor, lente del microscopio.
 - **`section { padding: 100px 48px }` de `globals.css`** infla todo `<section>` del dashboard: bloque 100 px más abajo y columnas que no llenan. Poner `padding: 0`.
+- **Outfit va en el repo** (`src/app/fonts/outfit-latin.woff2`, `next/font/local` en `layout.tsx`). Con `next/font/google` el build de Vercel fallaba a ratos al bajarla («next/font/google queries have exactly one entry»: d15bee5, 8349fc1, ffdd306) sin cambio de código. No volver a `next/font/google`.
 - `url('/assets/…')` en un CSS Module no resuelve `public/`: usar estilo inline.
 - `<button>` propio necesita `font-family: inherit`.
 - **`backdrop-filter`:** evitarlo en overlays sobre resúmenes y figuras (ya dejó el documento en blanco al cerrar, con `transform` + `mix-blend-mode` de fondo).
