@@ -516,87 +516,116 @@ const enRuta = (pts: P2[], u: number): P2 => {
   return [lerp(pts[i][0], pts[i + 1][0], f), lerp(pts[i][1], pts[i + 1][1], f)];
 };
 
-// Portoenterostomía de Kasai en las coordenadas de `ViasBiliares`: un asa de yeyuno en Y de Roux sube por
-// delante, entre la vesícula y el duodeno, y se cose al hilio; abajo se une al yeyuno que sigue.
-const ASA = suave([[560, 412], [600, 480], [622, 570], [632, 670], [622, 770], [580, 860], [520, 905]]);
-const YEYUNO = suave([[250, 930], [400, 905], [520, 905], [640, 935], [720, 990]]);
+// Portoenterostomía de Kasai, en las coordenadas de `ViasBiliares`. Se quitan los conductos fibrosos y la vesícula;
+// el yeyuno se corta poco después del duodeno y su extremo distal sube (asa en Y de Roux) hasta el hilio, donde se
+// cose; el tramo que viene del duodeno (asa biliopancreática) desemboca más abajo en esa asa: la «Y».
+// El duodeno ya es intestino delgado: su continuación es la misma tripa, no otra.
+const JOTA: P2 = [744, 1112];
+/** Del final de la «C» del duodeno (ángulo duodenoyeyunal) hasta la unión en «Y». */
+const BILIOPANC = suave([[1070, 860], [1118, 806], [1170, 836], [1176, 940], [1110, 1040], [970, 1096], [790, 1112]]);
+/** Asa de Roux: del hilio baja por delante, entre el hígado y el duodeno, hasta la unión. */
+const ROUX = suave([[560, 412], [602, 482], [624, 572], [632, 680], [624, 800], [634, 920], [672, 1030], JOTA]);
+/** Lo que sigue después de la unión: el intestino común. */
+const COMUN = suave([JOTA, [784, 1190], [792, 1290]]);
 
-/** El asa de Kasai: tubo de intestino con sus pliegues, los puntos de la sutura en el hilio y la bilis que baja por dentro. */
-function AsaKasai({ kas, reloj }: { kas: number; reloj: number }) {
-  if (kas <= 0.01) return null;
-  const q = easeOut(tramo(kas, 0.1, 0.8));
-  const L = largo(ASA), LY = largo(YEYUNO);
-  const tubo = (pts: P2[], l: number, prog: number) => {
-    const d = pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
-    const da = `${prog * l} ${l + 10}`;
-    return (
-      <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-        <path d={d} stroke={B.sombra} strokeWidth={74} strokeDasharray={da} transform="translate(8,10)" />
-        <path d={d} stroke="#A3205A" strokeWidth={74} strokeDasharray={da} />
-        <path d={d} stroke="#E8689A" strokeWidth={58} strokeDasharray={da} />
-        <path d={d} stroke="#FFD6E4" strokeWidth={22} strokeDasharray={da} opacity={0.9} />
-        <path d={d} stroke="#FFFFFF" strokeWidth={6} strokeDasharray={da} opacity={0.5} transform="translate(-14,-8)" />
-      </g>
-    );
-  };
-  // Pliegues circulares: rayitas perpendiculares a lo largo del tubo.
-  const pliegues = (pts: P2[], prog: number) => pts.filter((_, i) => i % 4 === 2 && i / pts.length < prog).map(([x, y], k) => {
-    const j = pts.findIndex((pt) => pt[0] === x && pt[1] === y), a = pts[Math.max(0, j - 1)], b = pts[Math.min(pts.length - 1, j + 1)];
-    const ang = Math.atan2(b[1] - a[1], b[0] - a[0]) + Math.PI / 2;
-    return <path key={k} d={`M${x + Math.cos(ang) * 14},${y + Math.sin(ang) * 14} L${x + Math.cos(ang) * 27},${y + Math.sin(ang) * 27} M${x - Math.cos(ang) * 14},${y - Math.sin(ang) * 14} L${x - Math.cos(ang) * 27},${y - Math.sin(ang) * 27}`} stroke="#B5306A" strokeWidth={5} strokeLinecap="round" />;
-  });
-  const ruta = [...ASA, ...YEYUNO.filter((pt) => pt[0] > 525)];
-  const fluye = tramo(kas, 0.75, 1);
+/** Tubo de intestino delgado por una curva muestreada: pared, mucosa, luz y un brillo; `prog` lo traza. */
+function Tripa({ pts, prog = 1, desde = 'inicio' }: { pts: P2[]; prog?: number; desde?: 'inicio' | 'fin' }) {
+  const l = largo(pts);
+  const orden = desde === 'fin' ? [...pts].reverse() : pts;
+  const d = orden.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
+  const da = `${clamp(prog) * l} ${l + 10}`;
+  const pl = orden.filter((_, i) => i % 4 === 2 && i / orden.length < clamp(prog));
   return (
-    <g opacity={tramo(kas, 0, 0.3)}>
-      {tubo(YEYUNO, LY, q)}
-      {pliegues(YEYUNO, q)}
-      {tubo(ASA, L, q)}
-      {pliegues(ASA, q)}
-      {/* Sutura al hilio */}
-      {Array.from({ length: 10 }, (_, i) => {
-        const a = (i / 10) * Math.PI * 2;
-        return <path key={i} d={`M${560 + Math.cos(a) * 34},${412 + Math.sin(a) * 30} L${560 + Math.cos(a) * 46},${412 + Math.sin(a) * 42}`} stroke="#3A1250" strokeWidth={5} strokeLinecap="round" opacity={tramo(kas, 0.5, 0.8)} />;
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path d={d} stroke={B.sombra} strokeWidth={74} strokeDasharray={da} transform="translate(8,10)" />
+      <path d={d} stroke="#A3205A" strokeWidth={74} strokeDasharray={da} />
+      <path d={d} stroke="#E8689A" strokeWidth={58} strokeDasharray={da} />
+      <path d={d} stroke="#FFD6E4" strokeWidth={22} strokeDasharray={da} opacity={0.9} />
+      <path d={d} stroke="#FFFFFF" strokeWidth={6} strokeDasharray={da} opacity={0.5} transform="translate(-14,-8)" />
+      {/* Pliegues circulares de la mucosa */}
+      {pl.map(([x, y], k) => {
+        const j = orden.indexOf(pl[k]), a = orden[Math.max(0, j - 1)], b = orden[Math.min(orden.length - 1, j + 1)];
+        const ang = Math.atan2(b[1] - a[1], b[0] - a[0]) + Math.PI / 2, c = Math.cos(ang), s = Math.sin(ang);
+        return <path key={k} d={`M${x + c * 14},${y + s * 14} L${x + c * 27},${y + s * 27} M${x - c * 14},${y - s * 14} L${x - c * 27},${y - s * 27}`} stroke="#B5306A" strokeWidth={5} />;
       })}
-      {/* La bilis que por fin sale: corre por el centro del asa */}
-      {fluye > 0.01 && Array.from({ length: 9 }, (_, i) => {
-        const u = (reloj / 5200 + i / 9) % 1;
-        const [x, y] = enRuta(ruta, u);
-        return <g key={i} opacity={fluye * tramo(Math.min(u, 1 - u), 0, 0.06)}><circle cx={x} cy={y} r={10} fill={B.conjugada[0]} /><circle cx={x - 2} cy={y - 2} r={7} fill={B.conjugada[1]} /></g>;
+    </g>
+  );
+}
+
+/** Puntos de sutura en anillo. */
+function Sutura({ x, y, rx, ry, o }: { x: number; y: number; rx: number; ry: number; o: number }) {
+  if (o <= 0.01) return null;
+  return (
+    <g opacity={o}>
+      {Array.from({ length: 12 }, (_, i) => {
+        const a = (i / 12) * Math.PI * 2;
+        return <path key={i} d={`M${x + Math.cos(a) * rx},${y + Math.sin(a) * ry} L${x + Math.cos(a) * (rx + 12)},${y + Math.sin(a) * (ry + 12)}`} stroke="#3A1250" strokeWidth={5} strokeLinecap="round" />;
       })}
+    </g>
+  );
+}
+
+/** El intestino que sigue al duodeno (siempre) y, con `kas`, el asa de Roux cosida al hilio y la unión en «Y». */
+function Kasai({ kas, reloj }: { kas: number; reloj: number }) {
+  const q = easeOut(tramo(kas, 0.15, 0.8));
+  const fluye = tramo(kas, 0.75, 1);
+  const viaje = (pts: P2[], n: number, vel: number, tono: readonly string[], R: number, sem: number) => Array.from({ length: n }, (_, i) => {
+    const u = (reloj / vel + i / n + sem) % 1;
+    const [x, y] = enRuta(pts, u);
+    return <g key={`${sem}-${i}`} opacity={fluye * tramo(Math.min(u, 1 - u), 0, 0.06)}><circle cx={x} cy={y} r={R} fill={tono[0]} /><circle cx={x - 2} cy={y - 2} r={R * 0.7} fill={tono[1]} /></g>;
+  });
+  return (
+    <g>
+      {/* El duodeno sigue como yeyuno: está antes y después de operar */}
+      <Tripa pts={BILIOPANC} />
+      <Tripa pts={COMUN} />
+      {/* El asa de Roux sube desde la unión hasta el hilio */}
+      {kas > 0.01 && <Tripa pts={ROUX} prog={q} desde="fin" />}
+      <Sutura x={JOTA[0] + 22} y={JOTA[1]} rx={30} ry={34} o={tramo(kas, 0.6, 0.9)} />
+      <Sutura x={560} y={412} rx={34} ry={30} o={tramo(kas, 0.7, 1)} />
+      {/* Lo que corre: la bilis baja por el asa de Roux; lo del duodeno, por su tramo; los dos siguen juntos */}
+      {kas > 0.01 && viaje([...ROUX, ...COMUN.slice(1)], 8, 5400, B.conjugada, 10, 0)}
+      {kas > 0.01 && viaje([...BILIOPANC, ...COMUN.slice(1)], 5, 6200, ['#B89A6A', '#E8D4A8'], 8, 0.37)}
     </g>
   );
 }
 
 const Atresia: Lamina = ({ p, reloj }) => {
   const ob = p('obliterados'), kas = p('kasai');
+  // La escena va a escala 0.6 desde (40, 100): G pasa un punto de `ViasBiliares` al lienzo.
+  const G = (x: number, y: number): P2 => [40 + x * 0.6, 100 + y * 0.6];
+  const parte = (i: number) => tramo(kas, 0.2 + i * 0.18, 0.5 + i * 0.18);
   return (
     <g>
       <Bandera x={800} y={50} txt="un tema aparte: la atresia biliar" color="#D7263D" p={p('aparte')} t={28} punta="no" />
-      {/* Las vías del recién nacido, con los conductos hechos cordones; luego el asa de Kasai */}
-      <g transform="translate(20,120) scale(0.66)" opacity={tramo(p('atresia'), 0, 0.4)}>
+      {/* Las vías del recién nacido, con los conductos hechos cordones; luego la operación de Kasai */}
+      <g transform="translate(40,100) scale(0.6)" opacity={tramo(p('atresia'), 0, 0.4)}>
         <ViasBiliares reloj={reloj} atresia={ob} fluye={0.4 * (1 - ob)} pancreas={1} sinVias={tramo(kas, 0, 0.5)} />
-        <AsaKasai kas={kas} reloj={reloj} />
+        <Kasai kas={kas} reloj={reloj} />
       </g>
-      <Txt x={250} y={845} txt="conductos obliterados" t={26} p={ob} color={TXB.hemo} />
-      <Txt x={250} y={880} txt="la conjugada vuelve a la sangre" t={22} p={ob} fuerte={false} />
-      <Nombre x={1050} y={440} a={[437, 560]} txt="operación de Kasai" p={kas} t={26} color={TXB.hepato} />
-      <Txt x={1050} y={478} txt="se quitan los conductos y un asa de yeyuno" t={20} p={kas} ancla="start" fuerte={false} />
-      <Txt x={1050} y={506} txt="se cose al hilio del hígado: la bilis sale por ella" t={20} p={kas} ancla="start" fuerte={false} />
+      <Txt x={230} y={900} txt="conductos obliterados" t={26} p={ob * (1 - tramo(kas, 0, 0.4))} color={TXB.hemo} />
+      <Txt x={230} y={936} txt="la conjugada vuelve a la sangre" t={22} p={ob * (1 - tramo(kas, 0, 0.4))} fuerte={false} />
+      {/* La operación, parte por parte */}
+      <Txt x={970} y={370} txt="operación de Kasai (portoenterostomía)" t={28} p={kas} ancla="start" color={TXB.hepato} />
+      <Nombre x={970} y={430} a={G(560, 412)} txt="1 · se quitan los conductos y la vesícula" p={parte(0)} t={22} />
+      <Nombre x={970} y={500} a={G(628, 640)} txt="2 · el yeyuno se corta y su extremo sube al hilio" p={parte(1)} t={22} />
+      <Txt x={1002} y={530} txt="asa en Y de Roux: por ella sale la bilis" t={19} p={parte(1)} ancla="start" fuerte={false} />
+      <Nombre x={970} y={590} a={G(1172, 900)} txt="3 · el tramo que viene del duodeno" p={parte(2)} t={22} />
+      <Nombre x={970} y={660} a={G(JOTA[0] - 30, JOTA[1])} txt="4 · se une más abajo: la «Y»" p={parte(3)} t={22} />
       {/* El recién nacido amarillo */}
-      <Sale p={p('frecuente')} x={1270} y={260} k={0.5}>
+      <Sale p={p('frecuente')} x={1340} y={180} k={0.42}>
         <Bebe amarillo={0.85} reloj={reloj} />
         <rect x={-270} y={70} width={600} height={30} rx={15} fill="#C9B8F0" />
       </Sale>
-      <Txt x={1270} y={360} txt="la causa más frecuente de" t={22} p={p('frecuente')} fuerte={false} />
-      <Txt x={1270} y={394} txt="ictericia conjugada neonatal" t={24} p={p('frecuente')} />
-      <Sale p={p('meses')} x={1270} y={650} k={0.9}><HojaMes txt="< 2 m" color="#C2307A" /></Sale>
-      <Txt x={1270} y={750} txt="idealmente antes de los 2 meses; si no, trasplante" t={22} p={p('meses')} />
-      <Bandera x={800} y={920} txt="ictericia de más de 2 semanas: medir la directa" color="#D7263D" p={p('regla')} t={26} punta="no" />
+      <Txt x={1340} y={262} txt="la causa más frecuente de" t={20} p={p('frecuente')} fuerte={false} />
+      <Txt x={1340} y={292} txt="ictericia conjugada neonatal" t={22} p={p('frecuente')} />
+      <Sale p={p('meses')} x={1000} y={790} k={0.75}><HojaMes txt="< 2 m" color="#C2307A" /></Sale>
+      <Txt x={1080} y={775} txt="idealmente antes de los 2 meses;" t={22} p={p('meses')} ancla="start" />
+      <Txt x={1080} y={808} txt="si no, trasplante" t={22} p={p('meses')} ancla="start" />
+      <Bandera x={1000} y={930} txt="ictericia de más de 2 semanas: medir la directa" color="#D7263D" p={p('regla')} t={24} punta="no" />
     </g>
   );
 };
-
 
 const LAMINAS: Lamina[] = [LaFirma, Dubin, HigadoNegro, Rotor, Colestasis, Extra, Intra, VitaminaK, Dano, Atresia];
 export default LAMINAS;

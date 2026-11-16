@@ -514,7 +514,7 @@ export function ViasBiliares({ o = 1, reloj = 0, tonoHigado = TONO_HIGADO.normal
       {VB.intra.map((d, i) => <Conducto key={i} d={d} w={ancho(10 + (i % 2) * 4)} tono={tonoCond} />)}
       <Conducto d={VB.hepatico} w={ancho(26)} tono={tonoCond} o={1 - clamp(sinVias)} />
       <Conducto d={VB.cistico} w={ancho(18)} tono={tonoCond} o={1 - clamp(sinVias)} />
-      <VesiculaB x={440} y={560} r={-20} k={0.85} grande={grande} reloj={reloj} bilis={at > 0.5 ? ['#A89880', '#D8CCB8', '#F2EADC'] : B.bilis}
+      <VesiculaB x={440} y={560} r={-20} k={0.85} o={1 - clamp(sinVias)} grande={grande} reloj={reloj} bilis={at > 0.5 ? ['#A89880', '#D8CCB8', '#F2EADC'] : B.bilis}
         piedras={piedrasVes > 0.01 ? ([[-24, 40, 22], [20, 70, 18], [-10, 96, 20], [26, 20, 15], [-34, 80, 14]] as [number, number, number][]).slice(0, Math.ceil(5 * clamp(piedrasVes))) : []} />
       <Conducto d={VB.coledoco} w={ancho(30)} tono={tonoCond} o={1 - clamp(sinVias)} />
       {/* Duodeno en «C» con la ampolla */}
