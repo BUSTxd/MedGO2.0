@@ -1538,140 +1538,53 @@ const PORTADAS: Record<string, () => ReactNode> = {
     </>
   ),
 
-  /* Metabolismo de la bilirrubina, en el orden del laboratorio: el macrófago del bazo que
-     digiere un hematíe en su fagolisosoma y suelta el anillo de hemo (cuatro pirroles y el
-     hierro); la biliverdina verde, ya abierta, con el hierro libre; la bilirrubina libre
-     (ámbar, plegada) que viaja sobre la albúmina; el hígado con su ligamento falciforme, la
-     vena porta y la arteria hepática que entran por el hilio, la vesícula y el colédoco; la
-     lente al hepatocito, donde la bilirrubina se conjuga con sus dos glucurónidos junto al
-     canalículo biliar; y el intestino, donde las bacterias la vuelven parda (heces) y una gota
-     de urobilina va a la orina. Colores del laboratorio: cada pigmento conserva el suyo y el
-     enlace es la barra de menta de su molécula. */
+  /* Metabolismo de la bilirrubina, en tres piezas y con aire (estilo de «molécula compleja»
+     de las referencias de BUST): el hematíe que se rompe, la bilirrubina —cuatro pirroles
+     ámbar plegados «como un libro», con sus enlaces de menta— y el hígado con la vesícula,
+     que la recibe. Las demás paradas del laboratorio (macrófago, hemo, albúmina, intestino)
+     se quitaron a propósito: apretadas no se leían en la tarjeta. */
   bilirrubina: () => {
     type P = [number, number];
-    const hemo: Tono = ['#9E0B2E', '#E3203F', '#FFA3AB'];
-    const hierro: Tono = ['#B5480A', '#F07A1E', '#FFC48A'];
-    const verde: Tono = ['#0E7A34', '#2FC45A', '#B5F5C4'];
     const libre: Tono = ['#C46A00', '#FFAA1A', '#FFE08A'];
-    const conj: Tono = ['#9C8A00', '#EEDC2A', '#FFF8B0'];
-    const gluc: Tono = ['#C2186B', '#F25CA8', '#FFD0E8'];
-    const oxi: Tono = ['#B0123A', '#F0476A', '#FFC2CF'];
-    const alb: Tono = ['#1446B0', '#2E78F2', '#A8CCFF'];
-    const re: Tono = ['#5A2DB0', '#8A5AF0', '#D3C2FF'];
-    const hepato: Tono = ['#7A1460', '#C2307A', '#F58AC4'];
     const higado: Tono = ['#7E2A1E', '#A8432E', '#F2B9A0'];
     const bilis: Tono = ['#6E8A00', '#B4C82A', '#E6F29A'];
-    const bacteria: Tono = ['#0A7F86', '#16B9BE', '#7FEDE8'];
-    const parda: Tono = ['#5E3210', '#9A5A26', '#D99A64'];
-    const urobilina: Tono = ['#C9A400', '#FFE36A', '#FFF7C8'];
-    const intestino: Tono = ['#A8445E', '#DE7F92', '#F8C9CF'];
-    const enlace = (a: P, b: P, w = 3) => (
-      <path key={`${a}-${b}`} d={`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`} stroke="#7FE8C6" strokeWidth={w} strokeLinecap="round" opacity={0.8} />
-    );
-    const puntos = (d: string, c: string) => <path d={d} fill="none" stroke={c} strokeWidth={1.6} strokeLinecap="round" strokeDasharray="0.1 3.2" />;
-    const hex = (x: number, y: number, r: number) => Array.from({ length: 6 }, (_, i) => polar(x, y, r, i * 60 + 30).map((n) => n.toFixed(1)).join(',')).join(' ');
-    const macrofago = 'M6 42 C2 28 14 16 28 18 C40 16 50 24 49 36 C55 42 52 54 42 57 C34 64 18 63 11 56 C5 52 4 47 6 42Z';
-    // Hemo que sale del macrófago
-    const [hx, hy] = [57, 13];
-    const pirroles: P[] = [[hx - 5.5, hy - 5.5], [hx + 5.5, hy - 5.5], [hx + 5.5, hy + 5.5], [hx - 5.5, hy + 5.5]];
-    // Biliverdina abierta
-    const bv: P[] = [[11, 79], [20, 74.5], [30, 74.5], [39, 79]];
-    // Bilirrubina libre plegada sobre la albúmina
-    const bl: P[] = [[27, 87], [27, 94], [35, 94], [35, 87]];
-    // Hígado (dibujado a escala 0,86) y la lente al hepatocito
+    const puntos = (d: string, c: string) => <path d={d} fill="none" stroke={c} strokeWidth={2.2} strokeLinecap="round" strokeDasharray="0.1 5" />;
+    // Bilirrubina plegada: cuatro pirroles en arco
+    const R = 11.5;
+    const pir: P[] = [[82, 96], [94, 62], [126, 62], [138, 96]];
+    const junta = ([ax, ay]: P, [bx, by]: P): P => {
+      const l = Math.hypot(bx - ax, by - ay);
+      return [ax + ((bx - ax) / l) * R * 0.86, ay + ((by - ay) / l) * R * 0.86];
+    };
     const liver = 'M62 54 C60 40 80 31 106 32 C128 33 148 37 156 45 C160 51 154 57 144 61 C128 67 114 77 96 91 C86 98 72 99 66 89 C62 81 62 66 62 54Z';
     const vesicula = 'M0 -12 C6 -12 8 -4 7 4 C6 10 3 13 0 13 C-3 13 -6 10 -7 4 C-8 -4 -6 -12 0 -12Z';
-    const [LX, LY] = [184, 42];
-    const celdas: P[] = [[LX - 12, LY - 8], [LX + 12, LY - 8], [LX, LY + 13]];
-    const [mx, my] = [LX, LY - 6];
-    const A: P = [mx - 9, my - 14], Bp: P = [mx - 9, my + 3], Cp: P = [mx + 9, my + 3], D: P = [mx + 9, my - 14];
-    const o1: P = [mx - 11, my + 17], o2: P = [mx + 11, my + 17];
-    const g1: P = [mx - 17, my + 27], g2: P = [mx + 17, my + 27];
-    const tripa = 'M100 107 C118 98 132 117 150 109 C166 101 180 117 200 106';
     return (
       <>
-        <Suelo x={112} rx={100} />
-        {/* Macrófago del bazo con el hematíe en su fagolisosoma */}
-        <path d={macrofago} fill={re[0]} />
-        <path d={macrofago} fill={re[1]} transform="translate(28 40) scale(.93) translate(-29 -41)" />
-        <path d="M10 36 C12 26 20 21 28 21" fill="none" stroke={re[2]} strokeWidth={2} strokeLinecap="round" opacity={0.8} />
-        <g transform="rotate(-25 17 47)">
-          <ellipse cx={17} cy={47} rx={8} ry={5.4} fill={C.indigo[0]} />
-          <ellipse cx={16.4} cy={46.4} rx={7} ry={4.5} fill={C.indigo[1]} />
-          <circle cx={19} cy={50} r={2.6} fill={re[1]} />
-        </g>
-        {[[12, 30, 1.4], [44, 48, 1.6], [28, 54, 1.2], [40, 22, 1.1]].map(([x, y, r], i) => <circle key={i} cx={x} cy={y} r={r} fill={re[2]} />)}
-        <circle cx={34} cy={34} r={11} fill={re[2]} opacity={0.75} />
-        <Hematie x={34} y={35} r={7.6} rot={20} aplanado={0.86} />
-        {puntos('M42 26 C45 21 48 18 51 17', hemo[1])}
-        {/* Anillo de hemo con su hierro */}
-        {pirroles.map((p, i) => enlace(p, pirroles[(i + 1) % 4], 2.4))}
-        {pirroles.map((p) => enlace(p, [hx, hy], 1.6))}
-        <Bola x={hx} y={hy} r={3} c={hierro} brillo={false} />
-        {pirroles.map(([x, y], i) => <Bola key={i} x={x} y={y} r={3.8} c={hemo} />)}
-        {/* Biliverdina (abierta) y el hierro que queda libre */}
-        {puntos('M26 63 C26 66 25 68 25 70', verde[1])}
-        {bv.slice(1).map((p, i) => enlace(bv[i], p, 2.6))}
-        {bv.map(([x, y], i) => <Bola key={i} x={x} y={y} r={4.1} c={verde} />)}
-        <Bola x={50} y={70} r={3.2} c={hierro} />
-        {/* Bilirrubina libre (plegada) sobre la albúmina */}
-        {[[20, 111, 6.4], [31, 114, 7.2], [42, 110.5, 5.8], [25.5, 103, 5.2], [37, 102.5, 5]].map(([x, y, r], i) => <Bola key={i} x={x} y={y} r={r} c={alb} brillo={i === 1} />)}
-        {[[bl[0], bl[1]], [bl[1], bl[2]], [bl[2], bl[3]]].map(([a, b]) => enlace(a, b, 2.4))}
-        {bl.map(([x, y], i) => <Bola key={i} x={x} y={y} r={3.5} c={libre} />)}
-        {puntos('M48 100 C56 96 61 90 66 84', libre[1])}
-        {/* Hígado: vasos del hilio, lóbulos, ligamentos, vesícula y colédoco */}
-        <g transform="translate(66 30) scale(.86) translate(-62 -31)">
-          <Tubo d="M126 108 C122 98 116 88 112 78" w={5.6} c={C.azul} />
-          <Tubo d="M134 104 C128 96 122 86 116 78" w={3} c={C.rojo} luz={false} />
+        <Suelo x={112} rx={92} />
+        {/* Hematíe */}
+        <Hematie x={33} y={70} r={23} rot={-15} aplanado={0.92} />
+        {puntos('M50 90 C56 100 62 104 68 104', C.rojo[1])}
+        {/* Bilirrubina: enlaces anchos de menta con su junta rosa */}
+        {pir.slice(1).map((b, i) => (
+          <path key={i} d={`M${pir[i][0]} ${pir[i][1]} L${b[0]} ${b[1]}`} stroke="#7FE8C6" strokeWidth={8} strokeLinecap="round" opacity={0.75} />
+        ))}
+        {pir.map(([x, y], i) => <Bola key={i} x={x} y={y} r={R} c={libre} />)}
+        {pir.slice(1).flatMap((b, i) => [junta(pir[i], b), junta(b, pir[i])]).map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r={4.2} fill="#F7A8D8" opacity={0.7} />
+        ))}
+        {puntos('M152 100 C158 98 162 92 164 86', libre[1])}
+        {/* Hígado con la vesícula */}
+        <g transform="translate(152 40) scale(.66) translate(-62 -32)">
           <path d={liver} fill={higado[0]} />
           <path d={liver} fill={higado[1]} transform="translate(108 62) scale(.95) translate(-109.5 -63.5)" />
-          <path d="M112 33 C114 46 112 60 106 74" fill="none" stroke={higado[0]} strokeWidth={1.6} strokeLinecap="round" opacity={0.7} />
-          <path d="M113.5 34 C115.5 46 113.5 60 107.5 74" fill="none" stroke={higado[2]} strokeWidth={0.9} strokeLinecap="round" opacity={0.6} />
-          <path d="M70 48 C74 40 86 36 98 36" fill="none" stroke={higado[2]} strokeWidth={2.6} strokeLinecap="round" opacity={0.85} />
-          <path d="M120 38 C130 38 140 40 146 44" fill="none" stroke={higado[2]} strokeWidth={1.6} strokeLinecap="round" opacity={0.6} />
-          {[[80, 58], [92, 50], [100, 62], [86, 74], [76, 70], [124, 46], [134, 52], [118, 56], [96, 80]].map(([x, y], i) => (
-            <polygon key={i} points={hex(x, y, 3.4)} fill="none" stroke={higado[0]} strokeWidth={0.8} opacity={0.5} />
-          ))}
-          <Tubo d="M106 78 C108 90 110 102 114 116" w={4.6} c={bilis} />
-          <Tubo d="M93 96 C99 98 104 96 108 92" w={3.4} c={bilis} luz={false} />
-          <g transform="translate(88 100) rotate(-38)">
+          <path d="M70 50 C74 40 86 36 100 36" fill="none" stroke={higado[2]} strokeWidth={4} strokeLinecap="round" opacity={0.85} />
+          <Tubo d="M96 94 C102 98 108 96 112 90" w={5} c={bilis} luz={false} />
+          <g transform="translate(90 100) rotate(-38) scale(1.35)">
             <path d={vesicula} fill={bilis[0]} />
             <path d={vesicula} fill={bilis[1]} transform="translate(-0.6 -0.8) scale(.86)" />
             <ellipse cx={-2.4} cy={-4} rx={1.6} ry={3.4} fill={BLANCO} opacity={0.8} />
           </g>
         </g>
-        {/* Intestino: bacterias, heces pardas y la urobilina que va a la orina */}
-        <Tubo d={tripa} w={11} c={intestino} />
-        <path d={tripa} fill="none" stroke={conj[1]} strokeWidth={2.6} strokeLinecap="round" strokeDasharray="34 200" opacity={0.9} />
-        {[[136, 110, 25], [156, 106, -25], [170, 110, 20]].map(([x, y, r], i) => <Baston key={i} x={x} y={y} l={7.5} w={3.4} rot={r} c={bacteria} brillo={false} />)}
-        {[[186, 110], [194, 107.5]].map(([x, y], i) => <Bola key={i} x={x} y={y} r={3.2} c={parda} brillo={false} />)}
-        {puntos('M202 100 C204 96 206 94 207 91', urobilina[0])}
-        <path d="M207 79 C210 83 212 85.5 212 88 C212 91 209.8 92.6 207 92.6 C204.2 92.6 202 91 202 88 C202 85.5 204 83 207 79Z" fill={urobilina[0]} />
-        <path d="M207 80.6 C209.4 84 211 86 211 88 C211 90.6 209.2 91.6 207 91.6 C204.8 91.6 203 90.6 203 88 C203 86 204.6 84 207 80.6Z" fill={urobilina[1]} />
-        <path d="M204.6 88.4 Q204.6 86.2 205.8 84.8" fill="none" stroke={urobilina[2]} strokeWidth={1.1} strokeLinecap="round" />
-        {/* Lente al hepatocito: la conjugación */}
-        <circle cx={131} cy={46} r={5.5} fill="none" stroke="#9AA9C2" strokeWidth={1.3} />
-        <path d="M135.5 43 L151 30 M135.5 49 L151 54" stroke="#9AA9C2" strokeWidth={1.1} strokeLinecap="round" />
-        <Lente x={LX} y={LY} r={31}>
-          {celdas.map(([x, y], i) => (
-            <g key={i}>
-              <polygon points={hex(x, y, 12.5)} fill="#FBDDEB" stroke={hepato[1]} strokeWidth={1.2} strokeLinejoin="round" />
-              <circle cx={x + (x - LX) * 0.5} cy={y + (y - LY) * 0.45} r={2.8} fill={hepato[0]} opacity={0.75} />
-            </g>
-          ))}
-          <circle cx={LX} cy={LY - 1} r={2.4} fill={bilis[1]} stroke={bilis[0]} strokeWidth={0.8} />
-          {[[A, Bp], [Bp, Cp], [Cp, D], [Bp, o1], [Cp, o2], [o1, g1], [o2, g2]].map(([a, b]) => enlace(a, b, 2.8))}
-          {[[o1, A], [o2, D]].map(([a, b], i) => <path key={i} d={`M${a[0]} ${a[1]} L${b[0]} ${b[1]}`} stroke={BLANCO} strokeWidth={1.1} strokeDasharray="1.8 2.4" strokeLinecap="round" opacity={0.85} />)}
-          {[A, Bp, Cp, D].map(([x, y], i) => <Bola key={i} x={x} y={y} r={6} c={conj} />)}
-          {[o1, o2].map(([x, y], i) => <Bola key={i} x={x} y={y} r={3.2} c={oxi} brillo={false} />)}
-          {[g1, g2].map(([x, y], i) => (
-            <g key={i}>
-              <polygon points={hex(x + 0.7, y + 0.8, 5.8)} fill={gluc[0]} />
-              <polygon points={hex(x, y, 5.8)} fill={gluc[1]} />
-              <circle cx={x - 1.6} cy={y - 1.9} r={1.4} fill={gluc[2]} />
-            </g>
-          ))}
-        </Lente>
       </>
     );
   },

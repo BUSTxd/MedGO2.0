@@ -5,7 +5,7 @@
 
 import type { ReactNode } from 'react';
 import type { Lamina } from '../Lienzo';
-import { Albumina, B, Bandera, Cruz, Figurita, Flecha, Hematie, HematieRoto, Hepatocito, Maquina, Medula, Moreton, Pastilla, Poro, Reticulo, Rostro, Sale, Termometro, Tetrapirrol, Txt, TXB, Vaso, Visto, clamp, easeOut, hash, lerp, mezcla, tramo } from '../Piezas';
+import { Albumina, B, Bandera, Bazo, Cruz, Figurita, Flecha, Hematie, HematieRoto, Hepatocito, Maquina, Medula, Moreton, Pastilla, Poro, Reticulo, Rostro, Sale, Termometro, Tetrapirrol, Txt, TXB, Vaso, Visto, clamp, easeOut, hash, lerp, mezcla, tramo } from '../Piezas';
 import { IgG } from '../../citopenias-autoinmunes/Piezas';
 import { Lente } from '../../citopenias-autoinmunes/laminas/Comun';
 import { Bebe, Deposito, Grifo, HigadoB, Incubadora, Llave, Sube, Tubo, TuboSuero, FrascoOrina } from '../Escenas';
@@ -201,23 +201,14 @@ const Captar: Lamina = ({ p, reloj }) => {
         <Pastilla x={20} y={20} r={20} color={['#B5245E', '#F25CA8', '#FFC2DE']} />
         <Pastilla x={60} y={-20} r={60} color={['#C77800', '#FFB21E', '#FFE08A']} />
       </Sale>
-      {/* 2. Insuficiencia cardíaca: llega menos sangre al hígado */}
-      <Sale p={p('cardiaca')} x={800} y={790} k={0.9}>
-        <g transform={`scale(${1 + Math.max(0, Math.sin(reloj / 520)) * 0.03})`}><HeartSimple /></g>
+      {/* 2. Insuficiencia cardíaca: el corazón dilatado manda menos sangre al hígado (late débil y lento) */}
+      <Sale p={p('cardiaca')} x={790} y={800} k={0.62}>
+        <g transform={`scale(${1 + Math.max(0, Math.sin(reloj / 700)) * 0.018})`}><CorazonDilatado /></g>
       </Sale>
       <Txt x={800} y={920} txt="insuficiencia cardíaca" t={23} p={p('cardiaca')} />
-      {/* 3. Cortocircuito portosistémico: la sangre rodea el hígado */}
+      {/* 3. Cortocircuito portosistémico: la sangre de la porta se salta el hígado y va directo a la cava */}
       <g opacity={tramo(p('cortocircuitos'), 0, 0.4)}>
-        <HigadoB x={1300} y={760} k={0.34} />
-        <path d="M1110,880 C1110,820 1170,800 1220,800" fill="none" stroke="#2E4AA0" strokeWidth={22} strokeLinecap="round" />
-        <path d="M1110,880 C1110,970 1490,970 1490,830 L1490,690" fill="none" stroke="#2E4AA0" strokeWidth={22} strokeLinecap="round" strokeDasharray={`${easeOut(p('cortocircuitos')) * 700} 800`} />
-        <path d="M1110,880 C1110,970 1490,970 1490,830 L1490,690" fill="none" stroke="#6A8AF0" strokeWidth={12} strokeLinecap="round" strokeDasharray={`${easeOut(p('cortocircuitos')) * 700} 800`} />
-        {Array.from({ length: 4 }, (_, i) => {
-          const u = (reloj / 2400 + i / 4) % 1;
-          const pts: P2[] = [[1110, 880], [1200, 950], [1400, 950], [1490, 830], [1490, 690]];
-          const t = u * (pts.length - 1), j = Math.min(pts.length - 2, Math.floor(t)), fr = t - j;
-          return <circle key={i} cx={lerp(pts[j][0], pts[j + 1][0], fr)} cy={lerp(pts[j][1], pts[j + 1][1], fr)} r={8} fill={B.bilirrubina[1]} opacity={p('cortocircuitos')} />;
-        })}
+        <Cortocircuito p={p('cortocircuitos')} reloj={reloj} />
       </g>
       <Txt x={1300} y={660} txt="cortocircuito portosistémico" t={23} p={p('cortocircuitos')} />
       <Bandera x={800} y={970} txt="una causa poco frecuente" color="#6A4A5E" p={p('poco')} t={22} punta="no" />
@@ -225,17 +216,127 @@ const Captar: Lamina = ({ p, reloj }) => {
   );
 };
 
-/** Corazón dilatado y cansado (la insuficiencia), con la gota que no alcanza. */
-function HeartSimple() {
-  const d = 'M0,70 C-40,40 -96,4 -96,-40 C-96,-80 -60,-100 -30,-96 C-12,-94 0,-80 0,-66 C0,-80 12,-94 30,-96 C60,-100 96,-80 96,-40 C96,4 40,40 0,70 Z';
+type T3 = readonly [string, string, string];
+const MIO: T3 = ['#7A1028', '#C42E40', '#F07A84'];
+const ARTERIA: T3 = ['#8E0E26', '#E0283E', '#FF9AA4'];
+const CAVA: T3 = ['#1E2E78', '#3A5AC8', '#9AB4FF'];
+const PULMONAR: T3 = ['#2A2A8A', '#5552D8', '#B4B2FF'];
+const PORTA: T3 = ['#4A2A8A', '#7E58D6', '#CDB8FF'];
+const GRASA: T3 = ['#C08A1A', '#F2C14E', '#FFE7A6'];
+const TRIPA: T3 = ['#A8445E', '#E0809A', '#FFC9D4'];
+
+/** Vaso con volumen: borde oscuro, cuerpo y un hilo de luz arriba a la izquierda. */
+function Vaso3({ d, w, c, luz = true, dash }: { d: string; w: number; c: T3; luz?: boolean; dash?: string }) {
+  const comun = { d, fill: 'none', strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, strokeDasharray: dash };
   return (
     <g>
-      <path d={d} fill={B.sombra} transform="translate(8,10)" />
-      <path d={d} fill="#9E0B2E" />
-      <path d={d} fill="#D7263D" transform="translate(-4,-5) scale(0.93)" />
-      <path d="M-60,-60 Q-74,-30 -60,-4" fill="none" stroke="#FF8A96" strokeWidth={10} strokeLinecap="round" />
-      <path d="M-14,-96 L-14,-130 M14,-96 C14,-120 40,-130 60,-124" fill="none" stroke="#2E4AA0" strokeWidth={16} strokeLinecap="round" />
-      <path d="M-30,10 L-12,10 L-4,-12 L8,30 L16,4 L34,4" fill="none" stroke="#FFFFFF" strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" opacity={0.85} />
+      <path {...comun} stroke={c[0]} strokeWidth={w} />
+      <path {...comun} stroke={c[1]} strokeWidth={w * 0.66} transform={`translate(${-w * 0.06},${-w * 0.08})`} />
+      {luz && <path {...comun} stroke={c[2]} strokeWidth={Math.max(2, w * 0.16)} transform={`translate(${-w * 0.16},${-w * 0.2})`} opacity={0.85} />}
+    </g>
+  );
+}
+
+/** Corazón en vista anterior, dilatado (insuficiencia): aurícula derecha y orejuela izquierda, ventrículos con el
+ *  ápex abajo a la izquierda del paciente, cayado aórtico con sus tres ramas, tronco pulmonar que se divide, cavas,
+ *  coronarias y la grasa de los surcos. Centro en (0,0); va de y −220 a y 160. */
+function CorazonDilatado() {
+  const ventriculos = 'M-92,-34 C-60,-62 20,-70 78,-58 C128,-46 150,0 140,52 C130,104 100,140 70,158 C40,150 -10,132 -52,104 C-96,74 -122,20 -92,-34 Z';
+  const auricula = 'M-80,-96 C-120,-96 -140,-64 -136,-28 C-132,6 -114,30 -88,34 C-74,6 -70,-40 -60,-84 C-66,-92 -72,-96 -80,-96 Z';
+  const orejuela = 'M64,-66 C80,-86 112,-90 124,-74 C132,-62 120,-50 104,-48 C92,-46 76,-52 64,-66 Z';
+  const surco = 'M36,-56 C30,-6 44,70 70,152';
+  return (
+    <g>
+      <path d={ventriculos} fill={B.sombra} transform="translate(14,18)" />
+      {/* Detrás: cava superior, cava inferior y aorta descendente */}
+      <Vaso3 d="M-86,-40 L-86,-176" w={38} c={CAVA} />
+      <Vaso3 d="M-96,10 L-98,104" w={32} c={CAVA} />
+      <Vaso3 d="M104,-128 C116,-108 118,-90 116,-70" w={30} c={ARTERIA} luz={false} />
+      {/* Cayado aórtico con el tronco braquiocefálico, la carótida y la subclavia izquierdas */}
+      {[[-6, -170, -12, -210], [26, -182, 26, -220], [60, -170, 70, -206]].map(([x1, y1, x2, y2], i) => (
+        <Vaso3 key={i} d={`M${x1},${y1} L${x2},${y2}`} w={i === 0 ? 20 : 15} c={ARTERIA} />
+      ))}
+      <Vaso3 d="M-14,-56 C-24,-110 -20,-170 24,-178 C70,-186 100,-160 104,-126" w={44} c={ARTERIA} />
+      {/* Aurícula derecha */}
+      <path d={auricula} fill={MIO[0]} />
+      <path d={auricula} fill={MIO[1]} transform="translate(-4,-5) scale(0.95)" />
+      <path d="M-122,-56 C-126,-40 -124,-20 -116,-6" fill="none" stroke={MIO[2]} strokeWidth={8} strokeLinecap="round" opacity={0.8} />
+      {/* Orejuela izquierda */}
+      <path d={orejuela} fill={MIO[0]} />
+      <path d={orejuela} fill={MIO[1]} transform="translate(-2,-3) scale(0.94)" />
+      {/* Ventrículos, con la media luna de sombra abajo a la derecha */}
+      <path d={ventriculos} fill={MIO[0]} />
+      <path d={ventriculos} fill={MIO[1]} transform="translate(-5,-7) scale(0.95)" />
+      <path d="M140,52 C130,104 100,140 70,158 C40,150 -10,132 -52,104 C0,124 60,128 96,104 C122,86 136,70 140,52 Z" fill={MIO[0]} opacity={0.6} />
+      <path d="M-88,-16 C-96,10 -92,40 -76,64" fill="none" stroke={MIO[2]} strokeWidth={9} strokeLinecap="round" opacity={0.75} />
+      {/* Tronco pulmonar: sale del ventrículo derecho, delante de la aorta, y se divide */}
+      <Vaso3 d="M50,-126 C30,-140 6,-142 -12,-138" w={20} c={PULMONAR} luz={false} />
+      <Vaso3 d="M58,-124 C82,-136 112,-136 136,-128" w={22} c={PULMONAR} />
+      <Vaso3 d="M22,-48 C26,-86 40,-112 58,-124" w={40} c={PULMONAR} />
+      {/* Surco interventricular anterior: grasa, descendente anterior y vena cardíaca mayor */}
+      <path d={surco} fill="none" stroke={GRASA[0]} strokeWidth={17} strokeLinecap="round" opacity={0.55} />
+      <path d={surco} fill="none" stroke={GRASA[1]} strokeWidth={11} strokeLinecap="round" transform="translate(-2,-2)" opacity={0.8} />
+      <Vaso3 d={surco} w={9} c={ARTERIA} />
+      {[[34, -10, 70, 6], [36, 30, 74, 52], [44, 76, 82, 100], [33, 10, 2, 34], [38, 52, 8, 80]].map(([x1, y1, x2, y2], i) => (
+        <path key={i} d={`M${x1},${y1} Q${(x1 + x2) / 2},${y1 + 4} ${x2},${y2}`} fill="none" stroke={ARTERIA[1]} strokeWidth={4.5} strokeLinecap="round" />
+      ))}
+      <Vaso3 d="M52,-48 C46,0 58,70 80,140" w={6} c={CAVA} luz={false} />
+      {/* Surco coronario derecho con su coronaria */}
+      <path d="M-84,-40 C-98,0 -94,50 -60,100" fill="none" stroke={GRASA[1]} strokeWidth={11} strokeLinecap="round" opacity={0.6} />
+      <Vaso3 d="M-84,-42 C-98,0 -94,50 -60,100" w={8} c={ARTERIA} />
+      {[[-92, 10, -60, 22], [-80, 64, -48, 66]].map(([x1, y1, x2, y2], i) => (
+        <path key={i} d={`M${x1},${y1} Q${(x1 + x2) / 2},${y1 - 4} ${x2},${y2}`} fill="none" stroke={ARTERIA[1]} strokeWidth={4.5} strokeLinecap="round" />
+      ))}
+      <ellipse cx={-30} cy={-30} rx={26} ry={10} fill="#FFFFFF" opacity={0.28} transform="rotate(-20,-30,-30)" />
+    </g>
+  );
+}
+
+/** Cortocircuito portosistémico: el intestino manda su sangre por la porta al hígado, que la entrega por las
+ *  hepáticas a la cava; el puente porta → cava se lo salta. `p` dibuja el puente; casi toda la bilirrubina va por él. */
+function Cortocircuito({ p, reloj }: { p: number; reloj: number }) {
+  const largo = 300;
+  const sigue = (pts: P2[], u: number): P2 => {
+    const t = u * (pts.length - 1), j = Math.min(pts.length - 2, Math.floor(t)), fr = t - j;
+    return [lerp(pts[j][0], pts[j + 1][0], fr), lerp(pts[j][1], pts[j + 1][1], fr)];
+  };
+  return (
+    <g>
+      {/* Vena cava inferior y las hepáticas que llegan a ella */}
+      <Vaso3 d="M1510,980 L1510,712" w={40} c={CAVA} />
+      <Vaso3 d="M1420,754 C1450,750 1476,746 1500,744" w={20} c={CAVA} />
+      {/* Asas del intestino, que mandan su sangre a la porta */}
+      <Vaso3 d="M1084,960 C1060,930 1100,904 1124,930 C1146,954 1180,940 1176,912 C1172,886 1136,890 1140,914" w={30} c={TRIPA} />
+      {/* El bazo y su vena esplénica, que se une a la mesentérica para formar la porta */}
+      <Bazo x={1092} y={784} k={0.17} r={-20} corte={false} />
+      <Vaso3 d="M1112,808 C1150,828 1184,848 1212,872" w={16} c={PORTA} />
+      {/* Vena porta al hilio */}
+      <Vaso3 d="M1186,948 C1196,910 1222,880 1262,846" w={26} c={PORTA} />
+      <HigadoB x={1300} y={772} k={0.38} />
+      {/* El puente porta → cava */}
+      <Vaso3 d="M1218,902 C1300,926 1420,926 1500,900" w={22} c={PORTA} dash={`${easeOut(p) * largo} ${largo + 40}`} />
+      {/* Bilirrubina: casi toda toma el puente; poca entra al hígado */}
+      {Array.from({ length: 5 }, (_, i) => {
+        const u = (reloj / 2600 + i / 5) % 1;
+        const [x, y] = sigue([[1190, 940], [1218, 902], [1300, 922], [1420, 922], [1500, 900], [1510, 850], [1510, 790]], u);
+        const e = tramo(Math.min(u, 1 - u), 0, 0.08);
+        return e > 0.05 ? <circle key={i} cx={x} cy={y} r={9 * e} fill={B.bilirrubina[1]} stroke={B.bilirrubina[0]} strokeWidth={3 * e} opacity={p} /> : null;
+      })}
+      {Array.from({ length: 2 }, (_, i) => {
+        const u = (reloj / 2600 + i / 2 + 0.25) % 1;
+        const [x, y] = sigue([[1190, 940], [1222, 880], [1262, 846]], u);
+        const e = tramo(Math.min(u, 1 - u), 0, 0.1);
+        return e > 0.05 ? <circle key={`h${i}`} cx={x} cy={y} r={6 * e} fill={B.bilirrubina[1]} opacity={1 - p * 0.5} /> : null;
+      })}
+      <Txt x={1300} y={872} txt="porta" t={18} p={1} color={TXB.violeta} />
+      {/* Sentido del flujo en el atajo */}
+      {[1330, 1440].map((x) => (
+        <path key={x} d={`M${x - 9},${x === 1330 ? 908 : 906} l14,9 l-14,9`} fill="none" stroke="#FFFFFF" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" opacity={easeOut(p)} />
+      ))}
+      <Txt x={1560} y={740} txt="cava" t={18} p={1} />
+      <Txt x={1100} y={738} txt="bazo" t={18} p={1} />
+      <Txt x={1036} y={884} txt="intestino" t={18} p={1} />
+      <Txt x={1360} y={968} txt="el atajo: se salta el hígado" t={19} p={p} color={TXB.violeta} />
     </g>
   );
 }
