@@ -43,6 +43,7 @@ npm run verificar:temas | verificar:catalogo | verificar:banco
 npm run publicar:clase -- <curso>/<clase> [--subir] | verificar:clases
 npm run verificar:ciclo | verificar:vias-nfkb | verificar:linfocitos | verificar:hipersensibilidad | verificar:lupus | verificar:citopenias | verificar:vasculitis | verificar:gramnegativas
 npm run vista:medula          # corte de Médula Espinal 3D contra Gray 666 y la lámina de tractos de Polarlys, sin navegador
+npm run verificar:nefron [-- --perfiles] | vista:nefron   # datos y modelo del filtrado del Nefrón; sus escenas en claro y oscuro, sin navegador
 npm run practica:medula [-- --subir]   # banco de práctica del lab (fuente en data/medula-practica/, fuera de git): valida contra anatomy.ts, mide el sesgo de largo y sube a examenes/neurologia/medula-practica.json
 ```
 
@@ -232,6 +233,8 @@ Solo el admin mientras `IA_ABIERTA` no sea `1`. **La API key nunca va en repo ni
 
 ### Otros labs (`src/app/dashboard/laboratorio/<slug>`)
 
+**Nefrón interactivo** (`nefron-interactivo`, rehecho de cero el 2026-11-15): el marco de Willis y Médula 3D (`medulaEspinal.module.css`, piezas de ficha compartidas en `components/laboratorio/FichaLab.tsx`), pero **2D con código**: SVG + canvas, zoom continuo nefrón → células sobre la pared → vista de pared de una célula (luz arriba, sangre abajo, iones animados por cada transportador). Estilo plano de las referencias de medicina de BUST (sin bordes, sombra en media luna y brillo; rosa en claro, índigo en oscuro; poco texto en el dibujo): `docs/nefron/ESTILO.md`. Vistas Nefrón · Transporte · Hormonas · Fármacos · Clínico. Contenido reescrito en `src/lib/data/nefron/` (guion y lo supuesto en `docs/nefron/CONTENIDO.md`); el perfil del filtrado (`engine/flujo.ts`) es un balance orientativo, no una simulación, y `verificar:nefron` comprueba que 16 escenarios caigan en rango.
+
 `atlas-microbiologia` · `atlas-parasitologia` · `atlas-micologia` · `biomecanica-extraocular` · `cascada-coagulacion` · `electrocardiograma` (9 modos) · `eva-2` · `eva-3` · `frotis-sanguineo` · `hemograma` · `medula-espinal` · `microscopio` · `microscopio-hematologia` · `morfologia-globulos-rojos` · `nefron-interactivo` · `parametro-sangre-orina` · `poligono-willis` · `tronco-encefalico`.
 
 **Lab nuevo:** entrada en `src/lib/data/laboratorio-catalogo.ts` y `LABORATORIOS`, `page.tsx` con gate, línea en `estudio/laboratorio/(lab)/<slug>/page.tsx`. Si es HTML autocontenido: `src/simulaciones/` + `SIMULACIONES` + `outputFileTracingIncludes` (fuera de `public/`, o lo abre cualquiera).
@@ -287,7 +290,7 @@ Solo el admin mientras `IA_ABIERTA` no sea `1`. **La API key nunca va en repo ni
 - **Atlas 3D:** aorta y cava, ramas viscerales de la ilíaca interna, músculos pendientes (`faltan`), lado izquierdo si hiciera falta; correo de BUST a Open3DModel por su pelvis masculina.
 - **Sílabos incompletos:** Respiratorio es referencial; Psicología Médica solo tiene banqueo del parcial; Física C14 sin material.
 - **Hipersensibilidad:** narración de los demás capítulos.
-- **Nefrón:** fases de fármacos, enfermedades y ácido-base.
+- **Nefrón interactivo:** Práctica (como la de Willis) y revisión Nielsen; ácido-base como vista propia; sin revisión visual de BUST.
 - **Muñeca y mano 3D:** solo en la rama local `lab-muneca-mano-3d`, sin publicar.
 
 ### Falta revisar

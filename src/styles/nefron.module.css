@@ -1,0 +1,459 @@
+/* Nefrón interactivo (rehecho el 2026-11-15). El marco (lienzo a toda altura,
+   vistas flotantes, menú ☰, rótulo, barra lateral de 420 px) viene de
+   medulaEspinal.module.css y la ficha de poligonoWillis.module.css; aquí solo
+   va lo propio: los colores del dibujo, las migas, los controles de la
+   animación y las piezas de la ficha del nefrón. Dark-mode en este módulo. */
+
+/* ─── Lienzo y colores del dibujo ─── */
+.lienzo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  /* Estilo plano de docs/nefron/ESTILO.md: rosa en claro, índigo en oscuro. */
+  --nf-corteza: #fcd3e3;
+  --nf-medula-ext: #f8bdd6;
+  --nf-medula-int: #f4a6cb;
+  --nf-grad: #d6339b;
+  --nf-caliz: #e978b6;
+  --nf-capsula-renal: #c99be8;
+  --nf-bokeh: rgba(255, 255, 255, 0.34);
+  --nf-cortical: #c47ad8;
+  --nf-texto: #2a0f4a;
+  --nf-texto2: rgba(42, 15, 74, 0.66);
+  --nf-texto-zona: rgba(122, 28, 92, 0.5);
+  --nf-fondo-texto: rgba(252, 211, 227, 0.92);
+  --nf-luz: #22165f;
+  /* Vista de pared */
+  --nf-luz-celula: #fcc6dc;
+  --nf-citosol: #8e3cc8;
+  --nf-citosol-sombra: #6f2aa8;
+  --nf-citosol-vecina: #b072d8;
+  --nf-membrana: #e04aa8;
+  --nf-membrana-brillo: #f58fcf;
+  --nf-membrana-vecina: #d77ac0;
+  --nf-nucleo: #ffc23d;
+  --nf-nucleo-sombra: #d98a12;
+  --nf-nucleo-brillo: #ffdf73;
+  --nf-mito: #ff6a4d;
+  --nf-mito-sombra: #b8323e;
+  --nf-mito-cresta: #ffc1a8;
+  --nf-intersticio: #f39cc4;
+  --nf-capilar: #5c0f35;
+  --nf-capilar-pared: #a8153f;
+  --nf-sigla: #ffffff;
+  --nf-sigla-halo: #3a0f5c;
+}
+:global(.dark-mode) .lienzo {
+  --nf-corteza: #1c1460;
+  --nf-medula-ext: #24166a;
+  --nf-medula-int: #2d1872;
+  --nf-grad: #c2349a;
+  --nf-caliz: #3d1a7e;
+  --nf-capsula-renal: #4a2a8e;
+  --nf-bokeh: rgba(176, 150, 255, 0.09);
+  --nf-cortical: #7a4fb8;
+  --nf-texto: #f3eefe;
+  --nf-texto2: rgba(243, 238, 254, 0.7);
+  --nf-texto-zona: rgba(214, 196, 255, 0.45);
+  --nf-fondo-texto: rgba(24, 16, 80, 0.92);
+  --nf-luz: #0b0828;
+  --nf-luz-celula: #1a1258;
+  --nf-citosol: #6a2fb0;
+  --nf-citosol-sombra: #4f2190;
+  --nf-citosol-vecina: #3f2088;
+  --nf-membrana: #d23c9e;
+  --nf-membrana-brillo: #ee78c2;
+  --nf-membrana-vecina: #8e3a92;
+  --nf-nucleo: #ffc23d;
+  --nf-nucleo-sombra: #c97a0a;
+  --nf-nucleo-brillo: #ffdf73;
+  --nf-mito: #ff6a4d;
+  --nf-mito-sombra: #a52838;
+  --nf-mito-cresta: #ffc1a8;
+  --nf-intersticio: #23176a;
+  --nf-capilar: #3d0a27;
+  --nf-capilar-pared: #8c1236;
+  --nf-sigla: #ffffff;
+  --nf-sigla-halo: #1a0b40;
+}
+.lienzo:active { cursor: grabbing; }
+
+.capa {
+  position: absolute;
+  inset: 0;
+}
+.svg,
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.canvas { pointer-events: none; }
+.svgArriba { pointer-events: none; }
+.svgArriba .toca { pointer-events: visibleStroke; cursor: pointer; }
+.svgArriba .tocaArea { pointer-events: all; cursor: pointer; }
+.cuenta { cursor: pointer; }
+.cuenta:hover { filter: brightness(1.08); }
+
+/* Texto del dibujo */
+.t { fill: var(--nf-texto); font-family: var(--font-outfit), system-ui, sans-serif; }
+.tSuave { fill: var(--nf-texto2); font-family: var(--font-outfit), system-ui, sans-serif; }
+.tZona {
+  fill: var(--nf-texto-zona);
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.tSigla {
+  fill: var(--nf-sigla);
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  paint-order: stroke;
+  stroke: var(--nf-sigla-halo);
+  stroke-linejoin: round;
+}
+.tCel { fill: #ffffff; font-family: var(--font-outfit), system-ui, sans-serif; }
+.tEtiqueta { font-family: var(--font-outfit), system-ui, sans-serif; letter-spacing: 0.01em; }
+.halo {
+  paint-order: stroke;
+  stroke: var(--nf-fondo-texto);
+  stroke-linejoin: round;
+}
+
+/* ─── Migas: dónde estás (nefrón › segmento › célula) ─── */
+.migas {
+  position: absolute;
+  top: 66px;
+  left: 14px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  max-width: calc(100% - 80px);
+  padding: 4px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #dde2ec;
+  box-shadow: 0 6px 22px rgba(20, 30, 60, 0.12);
+  font-size: 13px;
+}
+:global(.dark-mode) .migas {
+  background: #151b30;
+  border-color: #28324f;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.45);
+}
+.miga {
+  border: 0;
+  background: transparent;
+  border-radius: 8px;
+  padding: 6px 9px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: #3b9edd;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.miga:hover { background: rgba(59, 158, 221, 0.1); }
+.miga:focus-visible { outline: 2px solid #3b9edd; outline-offset: 1px; }
+:global(.dark-mode) .miga { color: #5bb4ec; }
+.migaActual {
+  padding: 6px 9px;
+  font-weight: 600;
+  color: #1b2233;
+  white-space: nowrap;
+}
+:global(.dark-mode) .migaActual { color: #eef1fa; }
+.migaSep { color: rgba(26, 26, 46, 0.35); font-size: 12px; }
+:global(.dark-mode) .migaSep { color: rgba(240, 238, 255, 0.35); }
+
+/* ─── Piso: animación (▶/❚❚ y velocidad) ─── */
+.reproducir {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.icono16 { width: 16px; height: 16px; display: block; }
+.avisoHormonas {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px 6px 12px;
+  border-radius: 999px;
+  background: #fff6e0;
+  border: 1px solid #f2cf7a;
+  color: #7a5200;
+  font-size: 12.5px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(26, 26, 46, 0.1);
+}
+:global(.dark-mode) .avisoHormonas { background: #2f2610; border-color: #6b5214; color: #f4d27a; }
+.avisoBtn {
+  border: 0;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: #c48a00;
+  cursor: pointer;
+}
+.avisoBtn:focus-visible { outline: 2px solid #3b9edd; outline-offset: 2px; }
+
+/* ─── Barra lateral: selector de segmento ─── */
+.segmentos {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+}
+.seg,
+.segActivo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 7px 2px 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+  color: #1a1a2e;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.15;
+  text-align: center;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.seg:hover { border-color: rgba(59, 158, 221, 0.5); }
+.segActivo { border-color: #3b9edd; background: rgba(59, 158, 221, 0.1); color: #1f6fa8; }
+:global(.dark-mode) .seg { border-color: rgba(255, 255, 255, 0.12); color: #eef0fa; }
+:global(.dark-mode) .segActivo { border-color: #5bb4ec; background: rgba(91, 180, 236, 0.14); color: #8fd0f6; }
+.seg:focus-visible,
+.segActivo:focus-visible { outline: 2px solid #3b9edd; outline-offset: 2px; }
+.segPunto { width: 14px; height: 6px; border-radius: 3px; }
+
+/* ─── Hormonas: suprimida · basal · alta ─── */
+.hormona {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+.hormonaActiva { background: rgba(59, 158, 221, 0.08); border-color: rgba(59, 158, 221, 0.35); }
+:global(.dark-mode) .hormonaActiva { background: rgba(91, 180, 236, 0.1); border-color: rgba(91, 180, 236, 0.35); }
+.hormonaNombre {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  cursor: pointer;
+  text-align: left;
+}
+.hormonaNombre small { display: block; font-size: 12px; font-weight: 500; color: rgba(26, 26, 46, 0.65); }
+:global(.dark-mode) .hormonaNombre { color: #eef0fa; }
+:global(.dark-mode) .hormonaNombre small { color: rgba(238, 240, 250, 0.65); }
+.tri {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 10px;
+  background: #f1f3f8;
+}
+:global(.dark-mode) .tri { background: #1b2238; }
+.triBtn,
+.triActivo {
+  border: 0;
+  border-radius: 7px;
+  padding: 5px 8px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #5b6478;
+  background: transparent;
+  cursor: pointer;
+}
+.triBtn:hover { color: #1b2233; background: #fff; }
+.triActivo { background: #fff; color: #1b2233; box-shadow: 0 1px 4px rgba(20, 30, 60, 0.15); }
+.triBaja.triActivo { color: #2f6fb8; }
+.triAlta.triActivo { color: #b35c00; }
+:global(.dark-mode) .triBtn { color: #9aa6c2; }
+:global(.dark-mode) .triBtn:hover { color: #eef1fa; background: #26304d; }
+:global(.dark-mode) .triActivo { background: #2b3556; color: #eef1fa; }
+:global(.dark-mode) .triBaja.triActivo { color: #7fb6f0; }
+:global(.dark-mode) .triAlta.triActivo { color: #f4b860; }
+.triBtn:focus-visible,
+.triActivo:focus-visible { outline: 2px solid #3b9edd; outline-offset: 1px; }
+
+/* ─── Ficha: sustancias, consecuencias, tabla ─── */
+.mueve {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mueve li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px 3px 4px;
+  border-radius: 999px;
+  background: #f3f5fa;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+:global(.dark-mode) .mueve li { background: #1d2440; color: #eef0fa; }
+.bola {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 4px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #fff;
+}
+.bolaOscura { color: #1c2233; }
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+.tabla th,
+.tabla td {
+  text-align: left;
+  vertical-align: top;
+  padding: 7px 6px 7px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+.tabla th { font-weight: 700; color: #1a1a2e; white-space: nowrap; }
+.tabla td { color: rgba(26, 26, 46, 0.85); }
+.tabla td:nth-child(2) { font-weight: 600; color: #1a1a2e; white-space: nowrap; }
+:global(.dark-mode) .tabla th,
+:global(.dark-mode) .tabla td { border-color: rgba(255, 255, 255, 0.08); }
+:global(.dark-mode) .tabla th,
+:global(.dark-mode) .tabla td:nth-child(2) { color: #eef0fa; }
+:global(.dark-mode) .tabla td { color: rgba(238, 240, 250, 0.82); }
+
+.tendencias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tendencias li {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  background: #f3f5fa;
+  color: #1a1a2e;
+}
+.tendencias .sube { background: #fdecea; color: #a52a1f; }
+.tendencias .baja { background: #e8f1fd; color: #1f5fa8; }
+:global(.dark-mode) .tendencias li { background: #1d2440; color: #eef0fa; }
+:global(.dark-mode) .tendencias .sube { background: #3a1c1c; color: #ff9d92; }
+:global(.dark-mode) .tendencias .baja { background: #16264a; color: #93c1f5; }
+
+.listaCorta {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(26, 26, 46, 0.86);
+}
+.listaCorta li + li { margin-top: 2px; }
+:global(.dark-mode) .listaCorta { color: rgba(238, 240, 250, 0.86); }
+
+/* Leyenda de formas: mini glifos */
+.formas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12.5px;
+  color: rgba(26, 26, 46, 0.82);
+}
+.formas li { display: flex; align-items: center; gap: 8px; }
+.formas svg { flex-shrink: 0; }
+:global(.dark-mode) .formas { color: rgba(238, 240, 250, 0.82); }
+
+/* Orina en vivo, bajo la lista (también va en el lienzo) */
+.orina {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.orinaDato {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #f3f5fa;
+}
+.orinaDato strong { font-size: 15px; color: #1a1a2e; font-variant-numeric: tabular-nums; }
+.orinaDato span { font-size: 11.5px; color: rgba(26, 26, 46, 0.65); }
+:global(.dark-mode) .orinaDato { background: #1a2140; }
+:global(.dark-mode) .orinaDato strong { color: #eef0fa; }
+:global(.dark-mode) .orinaDato span { color: rgba(238, 240, 250, 0.62); }
+
+/* Insignia de transportador marcado en la lista */
+.marca {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+.marcaBloqueado { background: #fdecea; color: #b3261e; }
+.marcaActivado { background: #e6f6ec; color: #17733a; }
+.marcaAfectado { background: #efe9fb; color: #5b3fb5; }
+.marcaHormona { background: #fff3d6; color: #8a5f00; }
+:global(.dark-mode) .marcaBloqueado { background: #3a1c1c; color: #ff9d92; }
+:global(.dark-mode) .marcaActivado { background: #12321f; color: #7fdc9f; }
+:global(.dark-mode) .marcaAfectado { background: #2a2147; color: #c3b0f5; }
+:global(.dark-mode) .marcaHormona { background: #33280e; color: #f4d27a; }
+
+@media (max-width: 600px) {
+  .migas { top: 58px; left: 10px; max-width: calc(100% - 20px); }
+  .seg, .segActivo { font-size: 10.5px; padding: 6px 1px 5px; }
+  .orina { gap: 4px; }
+  .orinaDato { padding: 7px 8px; }
+  .hormona { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seg, .segActivo { transition: none; }
+}

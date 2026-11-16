@@ -12,7 +12,11 @@
 // se pierde al bajar, se cierra o se pasa a la arteria vecina sin volver a la
 // lista (‹ › ✕ y las flechas del teclado) y la lista tiene buscador.
 
-import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
+import {
+  Dot, Interruptor, Ficha, Vacio, BotonLista, Apartado, Perla, CabezaFicha, Esencial,
+  navegar, normal, useTecladoFicha, type Navegacion,
+} from '@/components/laboratorio/FichaLab';
 import {
   ARTERIAS, ARTERIA_LIST, GRUPOS, SISTEMAS, TERRITORIOS, TERRITORIO_LIST, REFERENCIAS, REFERENCIA_LIST, ESENCIAL,
   ESENCIAL_TERRITORIO,
@@ -63,163 +67,6 @@ interface Props {
 
 /** Sigla real (ACI, ACoA, M1…), no un nombre corto que repite el nombre. */
 const esSigla = (c: string) => /^([AMP]\d|[A-Z][A-Za-z]{1,3})$/.test(c);
-/** Para buscar sin tildes ni mayúsculas. */
-const normal = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-
-/** Íconos de trazo fino para los botones de la cabecera. */
-function Icono({ d }: { d: string }) {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden>
-      <path d={d} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function Dot({ color, size = 10 }: { color: string; size?: number }) {
-  return (
-    <span
-      className={styles.structureDot}
-      style={{ background: color, width: size, height: size } as CSSProperties}
-      aria-hidden
-    />
-  );
-}
-
-function Interruptor({ activo, onCambio, etiqueta, color, detalle }: {
-  activo: boolean;
-  onCambio: () => void;
-  etiqueta: string;
-  color?: string;
-  detalle?: string;
-}) {
-  return (
-    <button type="button" role="switch" aria-checked={activo} onClick={onCambio} className={styles.toggleRow}>
-      <span className={styles.toggleLabel}>
-        {color && <Dot color={color} />}
-        <span className={styles.toggleTextos}>
-          <span className={styles.structureName}>{etiqueta}</span>
-          {detalle && <span className={styles.toggleDetalle}>{detalle}</span>}
-        </span>
-      </span>
-      <span className={`${styles.toggleSwitch} ${activo ? styles.toggleOn : ''}`} aria-hidden />
-    </button>
-  );
-}
-
-function Ficha({ color, titulo, sub, children }: { color?: string; titulo: string; sub?: string; children?: ReactNode }) {
-  return (
-    <div className={styles.info} role="region" aria-label={titulo}>
-      <div className={styles.infoHead}>
-        {color && <Dot color={color} size={12} />}
-        <h3 className={styles.infoTitle}>{titulo}</h3>
-      </div>
-      {sub && <p className={styles.infoSub}>{sub}</p>}
-      {children}
-    </div>
-  );
-}
-
-function Vacio({ children }: { children: ReactNode }) {
-  return <p className={styles.infoEmpty}>{children}</p>;
-}
-
-function BotonLista({ activo, onClick, onEnter, onLeave, children }: {
-  activo: boolean;
-  onClick: () => void;
-  onEnter?: () => void;
-  onLeave?: () => void;
-  children: ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      aria-pressed={activo}
-      className={`${styles.structureBtn} ${activo ? styles.structureActive : ''}`}
-      onClick={onClick}
-      onPointerEnter={onEnter}
-      onPointerLeave={onLeave}
-    >
-      {children}
-    </button>
-  );
-}
-
-/** Título de un apartado de la ficha. */
-function Apartado({ titulo, children }: { titulo: string; children: ReactNode }) {
-  return (
-    <div className={ws.apartado}>
-      <h4 className={ws.apartadoTitulo}>{titulo}</h4>
-      {children}
-    </div>
-  );
-}
-
-/** El dato que más se pregunta, con su bombilla. */
-function Perla({ children }: { children: ReactNode }) {
-  return (
-    <p className={ws.perla}>
-      <svg className={ws.perlaIcono} width="18" height="18" viewBox="0 0 24 24" aria-hidden>
-        <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2V16h5v-.2c.1-.8.5-1.5 1.1-2A6 6 0 0 0 12 3Z" fill="currentColor" fillOpacity="0.18" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
-      </svg>
-      <span><strong>Para el examen.</strong> {children}</span>
-    </p>
-  );
-}
-
-/** Cómo moverse desde la ficha: anterior, siguiente y cerrar (null = no se puede). */
-interface Navegacion {
-  posicion: string | null;
-  onAnterior: (() => void) | null;
-  onSiguiente: (() => void) | null;
-  onCerrar: (() => void) | null;
-  /** «arteria», «territorio»… para los nombres accesibles de los botones. */
-  que: string;
-}
-
-/**
- * 1 · Qué es: cabecera fija de toda ficha (no se pierde al bajar), con su
- * insignia, el título, una línea de datos y ‹ › ✕.
- */
-function CabezaFicha({ insignia, titulo, meta, nav }: { insignia?: ReactNode; titulo: string; meta: ReactNode; nav: Navegacion }) {
-  return (
-    <header className={ws.fichaCabeza}>
-      <div className={ws.fichaFila}>
-        <h3 className={ws.fichaTitulo}>{insignia}{titulo}</h3>
-        <div className={ws.fichaNav}>
-          <button type="button" className={ws.navBtn} onClick={nav.onAnterior ?? undefined} disabled={!nav.onAnterior} aria-label={`${nav.que} anterior de la lista`} title="Anterior (←)">
-            <Icono d="m15 6-6 6 6 6" />
-          </button>
-          <button type="button" className={ws.navBtn} onClick={nav.onSiguiente ?? undefined} disabled={!nav.onSiguiente} aria-label={`${nav.que} siguiente de la lista`} title="Siguiente (→)">
-            <Icono d="m9 6 6 6-6 6" />
-          </button>
-          {nav.onCerrar && (
-            <button type="button" className={ws.navBtn} onClick={nav.onCerrar} aria-label="Cerrar la ficha" title="Cerrar (Esc)">
-              <Icono d="M6 6l12 12M18 6 6 18" />
-            </button>
-          )}
-        </div>
-      </div>
-      <p className={ws.fichaMeta}>
-        {meta}{nav.posicion ? <span className={ws.fichaPos}> · {nav.posicion}</span> : null}
-      </p>
-    </header>
-  );
-}
-
-/** 2 · Lo esencial: rótulo a la izquierda, dato a la derecha. */
-function Esencial({ filas }: { filas: Array<{ rotulo: string; valor: ReactNode }> }) {
-  return (
-    <dl className={ws.esencial} aria-label="Lo esencial">
-      {filas.map((f) => (
-        <div key={f.rotulo} className={ws.esencialFila}>
-          <dt>{f.rotulo}</dt>
-          <dd>{f.valor}</dd>
-        </div>
-      ))}
-    </dl>
-  );
-}
-
 /** Enlaces en línea a las fichas de varias arterias («M1 · M2 · Lenticuloestriadas»). */
 function EnlacesArterias({ ids, onVer }: { ids: ArteriaId[]; onVer: (id: ArteriaId) => void }) {
   return (
@@ -484,38 +331,14 @@ export default function ControlsPanel(props: Props) {
 
   const arteriaElegida = elegido?.kind === 'arteria' ? elegido : null;
   const refElegida = elegido?.kind === 'ref' ? REFERENCIAS[elegido.id] : null;
-  /** Anterior, siguiente y posición dentro de una lista. */
-  function navegar<T>(lista: T[], actual: T | null, ir: (x: T) => void, que: string, cerrar: (() => void) | null): Navegacion {
-    const i = actual === null ? -1 : lista.indexOf(actual);
-    return {
-      posicion: i >= 0 ? `${i + 1} de ${lista.length}` : null,
-      onAnterior: i > 0 ? () => ir(lista[i - 1]) : null,
-      onSiguiente: i >= 0 && i < lista.length - 1 ? () => ir(lista[i + 1]) : null,
-      onCerrar: cerrar,
-      que,
-    };
-  }
   const nav: Navegacion | null =
     mode === 'arterias' ? (arteriaElegida ? navegar(orden, arteriaElegida.id, onElegirArteria, 'Arteria', onCerrar) : null)
       : mode === 'territorios' ? (territorio ? navegar(TERRITORIO_LIST.map((t) => t.id), territorio, onTerritorio, 'Territorio', () => onTerritorio(null)) : null)
         : mode === 'variantes' ? navegar(VARIANTE_LIST.map((v) => v.id), variante, onVariante, 'Variante', variante !== 'completo' ? () => onVariante('completo') : null)
           : sindrome ? navegar(ORDEN_SINDROMES, sindrome, onSindrome, 'Síndrome', () => onSindrome(null)) : null;
 
-  // Teclado en las cuatro vistas: ← → pasan al elemento vecino de la lista y
-  // Esc cierra la ficha (salvo que se esté escribiendo en el buscador).
-  useEffect(() => {
-    if (!nav) return;
-    const tecla = (e: KeyboardEvent) => {
-      const t = e.target as HTMLElement | null;
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
-      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
-      if (e.key === 'ArrowLeft' && nav.onAnterior) { e.preventDefault(); nav.onAnterior(); }
-      else if (e.key === 'ArrowRight' && nav.onSiguiente) { e.preventDefault(); nav.onSiguiente(); }
-      else if (e.key === 'Escape' && nav.onCerrar) nav.onCerrar();
-    };
-    window.addEventListener('keydown', tecla);
-    return () => window.removeEventListener('keydown', tecla);
-  }, [nav]);
+  // Teclado en las cuatro vistas: ← → pasan al elemento vecino y Esc cierra la ficha.
+  useTecladoFicha(nav);
 
   // En las otras vistas, tocar una arteria del modelo ofrece abrir su ficha.
   const irAFicha = arteriaElegida && mode !== 'arterias' ? (
