@@ -153,8 +153,8 @@ export function Tubo({ pts, w = 46, reloj = 0, flujo = 1, tono = B.bilirrubina a
 
 /** Depósito de vidrio (la sangre) con su nivel de bilirrubina: superficie que ondula, burbujas y marcas. Centro arriba en (x, y). */
 export function Deposito({ x, y, w = 320, h = 360, nivel = 0.4, reloj = 0, o = 1, tono = B.bilirrubina as Tono, marca }: { x: number; y: number; w?: number; h?: number; nivel?: number; reloj?: number; o?: number; tono?: Tono; marca?: number }) {
-  if (o <= 0.002) return null;
   const id = useId().replace(/[^a-zA-Z0-9]/g, '');
+  if (o <= 0.002) return null;
   const W = w / 2, top = y, bot = y + h;
   const yl = bot - 14 - (h - 40) * clamp(nivel);
   const ola = (dy: number) => Array.from({ length: 13 }, (_, i) => `L${(x - W + 14 + (i * (w - 28)) / 12).toFixed(1)},${(yl + dy + Math.sin(i * 1.1 + reloj / 380) * 6).toFixed(1)}`).join(' ');
@@ -239,6 +239,7 @@ function CaraBebe({ piel, ojos, llora, antifaz, gorro, reloj, dormido }: { piel:
  *  `arco` 0-1 lo arquea hacia atrás con la cabeza extendida (opistótonos); `llora` 0-1 abre la boca;
  *  `antifaz` le pone el antifaz de la fototerapia; sin `ropa` queda solo con el pañal. Ocupa x −270…340. */
 export function Bebe({ x = 0, y = 0, k = 1, o = 1, amarillo = 0, flojo = 0, arco = 0, llora = 0, ojos = 0, antifaz = 0, ropa = true, reloj = 0, cateter = 0 }: { x?: number; y?: number; k?: number; o?: number; amarillo?: number; flojo?: number; arco?: number; llora?: number; ojos?: number; antifaz?: number; ropa?: boolean; reloj?: number; cateter?: number }) {
+  const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   if (o <= 0.002) return null;
   const am = clamp(amarillo), f = clamp(flojo), a = clamp(arco);
   const piel = [0, 1, 2].map((i) => mezcla(PIEL_BEBE[i], PIEL_ICT[i], am));
@@ -268,22 +269,51 @@ export function Bebe({ x = 0, y = 0, k = 1, o = 1, amarillo = 0, flojo = 0, arco
     const pie = pose([168, s * 140], [282, s * 182], [344, s * 52]);
     return { pts: [cadera, rodilla, pie] as P2[], pie };
   };
-  const tronco = `M-92,0 Q30,${lomo * 2} 150,0`;
+  // Espina del tronco (cuadrática de la cadera al hombro): puntos y normales; el contorno sale de ahí.
+  const h = 70 + resp * 0.5;
+  const espina = Array.from({ length: 15 }, (_, i) => {
+    const t = i / 14, mt = 1 - t;
+    const sx = mt * mt * -92 + 2 * mt * t * 30 + t * t * 150, sy = 2 * mt * t * lomo * 2;
+    const dx = 2 * mt * (30 + 92) + 2 * t * (150 - 30), dy = 2 * mt * lomo * 2 - 2 * t * lomo * 2;
+    const L = Math.hypot(dx, dy) || 1;
+    return [sx, sy, dy / L, -dx / L] as [number, number, number, number];
+  });
+  const arriba = espina.map(([sx, sy, nx, ny]) => [sx + nx * h, sy + ny * h] as P2);
+  const abajo = espina.map(([sx, sy, nx, ny]) => [sx - nx * h, sy - ny * h] as P2).reverse();
+  const troncoD = `${linea(arriba)} A${h},${h} 0 0 1 ${abajo[0][0].toFixed(1)},${abajo[0][1].toFixed(1)} ${abajo.slice(1).map(([px, py]) => `L${px.toFixed(1)},${py.toFixed(1)}`).join(" ")} A${h},${h} 0 0 1 ${arriba[0][0].toFixed(1)},${arriba[0][1].toFixed(1)} Z`;
+  const cintura: P2 = [espina[10][0], espina[10][1]];
+  const giroCintura = (Math.atan2(espina[10][2], -espina[10][3]) * 180) / Math.PI;
   return (
     <En x={x} y={y + resp * 0.3} k={k} o={o}>
       <g transform={`translate(${tiembla},0)`}>
         {/* Miembros de atrás (lado de arriba) */}
         {(() => { const b = brazo(-1); return <g>{miembro(b.pts, 40, 'ba')}<circle cx={b.mano[0]} cy={b.mano[1]} r={19} fill={piel[0]} /><circle cx={b.mano[0] - 2} cy={b.mano[1] - 2} r={15} fill={piel[1]} /></g>; })()}
         {(() => { const l = pierna(-1); return <g>{miembro(l.pts, 48, 'pa')}<ellipse cx={l.pie[0] + 6} cy={l.pie[1]} rx={26} ry={17} fill={piel[0]} /><ellipse cx={l.pie[0] + 4} cy={l.pie[1] - 2} rx={21} ry={13} fill={piel[1]} /></g>; })()}
-        {/* Tronco: body o piel, con el pañal */}
-        <path d={tronco} fill="none" stroke={ropa ? ropaT[0] : piel[0]} strokeWidth={142 + resp} strokeLinecap="round" />
-        <path d={tronco} fill="none" stroke={ropa ? ropaT[1] : piel[1]} strokeWidth={128 + resp} strokeLinecap="round" transform="translate(-3,-4)" />
-        {ropa && [-40, 10, 60].map((xx) => <circle key={xx} cx={xx} cy={-40 + lomo * 0.9} r={7} fill={ropaT[2]} opacity={0.8} />)}
-        {!ropa && <ellipse cx={20} cy={lomo * 0.95 + 6} rx={10} ry={8} fill={piel[0]} opacity={0.7} />}
-        {cateter > 0.01 && <g opacity={clamp(cateter)}><circle cx={20} cy={lomo * 0.95 + 8} r={12} fill="#FFFFFF" /><circle cx={20} cy={lomo * 0.95 + 8} r={6} fill="#C8123A" /></g>}
-        <path d={`M100,${-64 + lomo * 0.25} C170,${-74 + lomo * 0.2} 200,-20 196,0 C200,20 170,${74 + lomo * 0.2} 100,${64 + lomo * 0.25} Z`} fill="#E6EEF8" />
-        <path d={`M104,${-56 + lomo * 0.25} C164,${-64 + lomo * 0.2} 186,-18 184,0 C186,18 164,${64 + lomo * 0.2} 104,${56 + lomo * 0.25} Z`} fill="#FFFFFF" />
-        <circle cx={150} cy={-40 + lomo * 0.2} r={7} fill="#9FD8FF" /><circle cx={150} cy={40 + lomo * 0.2} r={7} fill="#9FD8FF" />
+        {/* Tronco: una sola forma rellena (body o piel). El pañal, su cintura, las cintas y los broches se recortan
+            con esa misma forma, así que respiran y se arquean juntos: nada se desfasa. */}
+        <clipPath id={`bebe-tronco-${uid}`}><path d={troncoD} /></clipPath>
+        <path d={troncoD} fill={sombra} transform="translate(6,9)" />
+        <path d={troncoD} fill={ropa ? ropaT[0] : piel[0]} />
+        <g clipPath={`url(#bebe-tronco-${uid})`}>
+          <path d={troncoD} fill={ropa ? ropaT[1] : piel[1]} transform="translate(-4,-7)" />
+          {/* Brillo a lo largo del lomo de arriba */}
+          <path d={linea(espina.slice(2, 9).map(([sx, sy, nx, ny]) => [sx + nx * (h - 20), sy + ny * (h - 20)] as P2))} fill="none" stroke={ropa ? ropaT[2] : piel[2]} strokeWidth={9} strokeLinecap="round" opacity={0.6} />
+          {/* Pañal: todo lo que queda a la derecha de la cintura */}
+          <path d={`M${cintura[0] - 8},-200 L400,-200 L400,200 L${cintura[0] - 8},200 Z`} fill="#F4F7FC" transform={`rotate(${giroCintura} ${cintura[0]} ${cintura[1]})`} />
+          <path d={`M${cintura[0] + 40},-200 L400,-200 L400,200 L${cintura[0] + 40},200 Z`} fill="#FFFFFF" transform={`rotate(${giroCintura} ${cintura[0]} ${cintura[1]})`} opacity={0.9} />
+          <rect x={cintura[0] - 8} y={-200} width={16} height={400} fill="#D3DEEE" transform={`rotate(${giroCintura} ${cintura[0]} ${cintura[1]})`} />
+          {/* Sombra en media luna del pañal, abajo */}
+          <path d={linea(espina.slice(10).map(([sx, sy, nx, ny]) => [sx - nx * (h - 6), sy - ny * (h - 6)] as P2))} fill="none" stroke="#C9D6EA" strokeWidth={16} strokeLinecap="round" />
+          {/* Cintas del pañal, arriba y abajo */}
+          {[1, -1].map((s) => {
+            const [sx, sy] = espina[11];
+            return <rect key={s} x={-16} y={-s * (h - 20) - 11} width={32} height={22} rx={8} fill="#7FC4F5" transform={`translate(${sx},${sy}) rotate(${giroCintura})`} />;
+          })}
+          {/* Broches del body sobre la línea del medio */}
+          {ropa && [3, 5, 7].map((i) => <circle key={i} cx={espina[i][0]} cy={espina[i][1] - 34} r={7} fill={ropaT[2]} opacity={0.85} />)}
+          {!ropa && <ellipse cx={espina[6][0]} cy={espina[6][1] + 6} rx={10} ry={8} fill={piel[0]} opacity={0.7} />}
+        </g>
+        {cateter > 0.01 && <g opacity={clamp(cateter)}><circle cx={espina[6][0]} cy={espina[6][1] + 8} r={12} fill="#FFFFFF" /><circle cx={espina[6][0]} cy={espina[6][1] + 8} r={6} fill="#C8123A" /></g>}
         {/* Miembros de delante (lado de abajo) */}
         {(() => { const l = pierna(1); return <g>{miembro(l.pts, 50, 'pd')}<ellipse cx={l.pie[0] + 6} cy={l.pie[1]} rx={27} ry={18} fill={piel[0]} /><ellipse cx={l.pie[0] + 4} cy={l.pie[1] - 2} rx={22} ry={14} fill={piel[1]} /></g>; })()}
         {(() => { const b = brazo(1); return <g>{miembro(b.pts, 42, 'bd')}<circle cx={b.mano[0]} cy={b.mano[1]} r={20} fill={piel[0]} /><circle cx={b.mano[0] - 2} cy={b.mano[1] - 2} r={16} fill={piel[1]} /></g>; })()}
