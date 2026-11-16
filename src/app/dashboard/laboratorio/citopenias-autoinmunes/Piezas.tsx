@@ -584,28 +584,98 @@ export function TuboOrina({ x = 0, y = 0, k = 1, o = 1, oscuro = 0 }: { x?: numb
   );
 }
 
-const CORAZON = 'M0,110 C-40,70 -120,20 -120,-50 C-120,-100 -80,-120 -48,-112 C-26,-106 -8,-90 0,-72 C8,-90 26,-106 48,-112 C80,-120 120,-100 120,-50 C120,20 40,70 0,110 Z';
+// Corazón anatómico en vista anterior, plano (tres tonos por pieza, sin contorno ni degradados):
+// cava superior, cayado de la aorta con sus tres ramas, tronco pulmonar por delante, orejuelas,
+// aurícula derecha, ventrículos con el surco interventricular, coronarias y grasa en los surcos.
+// Ocupa lo mismo que el corazón anterior (x ±120, y −160…112) para no mover las láminas que lo usan.
+const MIO = ['#7E1428', '#C0303F', '#EE7078'];
+const ART = ['#9E0B24', '#E3263E', '#FF8A96'];
+const VEN = ['#283A8E', '#4A66D0', '#A8B8FF'];
+const COR_CUERPO = 'M-72,-44 C-112,-22 -114,40 -84,74 C-52,104 18,120 74,112 C108,106 118,74 110,34 C102,-8 82,-42 44,-54 C8,-64 -40,-62 -72,-44 Z';
+/** Tubo plano: base oscura, cuerpo y un hilo de brillo. */
+function TuboCor({ d, w, t }: { d: string; w: number; t: string[] }) {
+  return (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path d={d} stroke={t[0]} strokeWidth={w} />
+      <path d={d} stroke={t[1]} strokeWidth={w * 0.72} />
+      <path d={d} stroke={t[2]} strokeWidth={w * 0.16} opacity={0.75} transform={`translate(${-w * 0.16},0)`} />
+    </g>
+  );
+}
 export const Corazon = memo(function Corazon({ x = 0, y = 0, k = 1, o = 1 }: { x?: number; y?: number; k?: number; o?: number }) {
   return (
     <En x={x} y={y} k={k} o={o}>
-      <rect x={-34} y={-146} width={28} height={50} rx={12} fill="#2F66DC" />
-      <rect x={6} y={-160} width={32} height={66} rx={14} fill="#D9344F" />
-      <path d={CORAZON} fill="#A81E3A" />
-      <path d={CORAZON} fill="#DC3A52" transform="translate(-3,-4) scale(0.93)" />
-      <path d="M-14,-76 C4,-30 -22,10 2,88" fill="none" stroke="#A81E3A" strokeWidth={7} strokeLinecap="round" />
-      <path d="M-92,-46 Q-82,-84 -48,-90" fill="none" stroke="#FFF" strokeWidth={11} strokeLinecap="round" opacity={0.8} />
+      {/* Detrás: cava superior y el cayado de la aorta con el tronco braquiocefálico, la carótida y la subclavia */}
+      <TuboCor d="M-56,-40 L-58,-150" w={34} t={VEN} />
+      <TuboCor d="M-22,-148 L-14,-112" w={14} t={ART} />
+      <TuboCor d="M8,-158 L8,-118" w={12} t={ART} />
+      <TuboCor d="M34,-150 L28,-114" w={13} t={ART} />
+      <TuboCor d="M-6,-46 C-14,-90 -8,-122 22,-124 C54,-126 70,-100 72,-66" w={38} t={ART} />
+      {/* Cuerpo */}
+      <path d={COR_CUERPO} fill={MIO[0]} transform="translate(6,7)" opacity={0.45} />
+      <path d={COR_CUERPO} fill={MIO[0]} />
+      <path d={COR_CUERPO} fill={MIO[1]} transform="translate(-4,-5) scale(0.95)" />
+      {/* Aurícula derecha, separada por su surco */}
+      <path d="M-72,-44 C-108,-30 -116,22 -94,54 C-80,34 -66,4 -58,-26 C-60,-38 -64,-42 -72,-44 Z" fill={MIO[0]} />
+      <path d="M-74,-36 C-102,-22 -108,18 -92,44 C-80,26 -70,2 -64,-24 Z" fill={MIO[1]} opacity={0.85} />
+      {/* Grasa en los surcos y la sombra en media luna del ventrículo izquierdo */}
+      <path d="M8,-48 C2,0 16,56 56,108" fill="none" stroke="#F2C66A" strokeWidth={16} strokeLinecap="round" opacity={0.7} />
+      <path d="M110,34 C116,76 104,104 74,112 C92,92 100,64 96,30 C92,4 82,-20 66,-40 C88,-26 104,2 110,34 Z" fill={MIO[0]} opacity={0.8} />
+      {/* Coronarias: descendente anterior en el surco, con sus ramas, y la derecha; la vena cardíaca a su lado */}
+      <path d="M2,-46 C-4,0 10,56 50,106" fill="none" stroke={VEN[1]} strokeWidth={5} strokeLinecap="round" />
+      <path d="M8,-48 C2,0 16,56 56,108" fill="none" stroke={ART[1]} strokeWidth={6} strokeLinecap="round" />
+      <path d="M10,0 C30,8 52,10 74,6 M18,40 C36,48 56,52 80,50" fill="none" stroke={ART[1]} strokeWidth={4} strokeLinecap="round" />
+      <path d="M-30,-50 C-58,-30 -74,6 -70,40 C-66,62 -48,80 -24,92" fill="none" stroke={ART[1]} strokeWidth={5} strokeLinecap="round" />
+      {/* Delante: tronco pulmonar y sus ramas */}
+      <TuboCor d="M18,-40 C20,-74 34,-92 58,-98 L92,-104" w={32} t={VEN} />
+      <TuboCor d="M50,-96 C44,-112 30,-120 10,-122" w={18} t={VEN} />
+      {/* Orejuelas */}
+      <path d="M-58,-40 C-52,-58 -30,-58 -20,-46 C-22,-40 -28,-40 -30,-44 C-32,-36 -40,-34 -44,-40 C-48,-32 -58,-34 -58,-40 Z" fill={MIO[2]} />
+      <path d="M44,-44 C58,-58 82,-52 84,-34 C80,-30 74,-32 72,-36 C70,-28 62,-26 58,-32 C54,-26 46,-30 44,-44 Z" fill={MIO[2]} />
+      {/* Brillo */}
+      <path d="M-62,-14 Q-56,-34 -34,-40" fill="none" stroke="#FFFFFF" strokeWidth={9} strokeLinecap="round" opacity={0.55} />
+      <ellipse cx={-18} cy={10} rx={22} ry={12} fill="#FFFFFF" opacity={0.18} transform="rotate(35 -18 10)" />
     </En>
   );
 });
 
-const CEREBRO = blob(18, 120, 0.09, 4, 1.22);
+// Cerebro anatómico en vista lateral izquierda (frontal a la izquierda), plano: hemisferio con sus lóbulos en tonos
+// vecinos, cisura de Silvio y surco central, circunvoluciones, lóbulo temporal, cerebelo con sus folias y tronco.
+// Ocupa lo mismo que el anterior (x ±150, y −125…140) para no mover las láminas que lo usan.
+const CER = ['#A8445E', '#E5839A', '#FFC6D2'];
+const CER_HEMI = 'M-142,8 C-152,-62 -100,-120 -20,-124 C62,-128 132,-92 148,-22 C154,18 142,50 114,60 C92,68 72,58 54,62 C32,66 10,80 -20,78 C-60,76 -100,70 -124,50 C-136,40 -142,26 -142,8 Z';
+const CER_TEMPORAL = 'M-98,40 C-82,10 -32,0 18,8 C48,12 70,30 54,62 C32,66 10,80 -20,78 C-60,76 -90,66 -98,40 Z';
+const CER_CEREBELO = 'M50,68 C62,48 112,46 138,60 C152,70 148,104 120,112 C90,120 56,108 50,88 Z';
+const CER_SURCOS = [
+  'M-120,-30 C-100,-50 -80,-40 -66,-62', 'M-110,6 C-90,-8 -70,4 -52,-14', 'M-86,-86 C-66,-72 -50,-92 -30,-80',
+  'M-60,-40 C-44,-24 -24,-46 -8,-30', 'M30,-104 C44,-84 64,-100 80,-82', 'M40,-50 C60,-36 78,-56 96,-40',
+  'M100,-70 C114,-52 126,-60 136,-40', 'M70,-8 C88,6 104,-6 120,10', 'M-60,52 C-40,40 -20,58 0,46', 'M-30,30 C-10,20 10,34 30,24',
+];
 /** Cerebro; `sangra` 0–1 dibuja una mancha oscura. */
 export function Cerebro({ x = 0, y = 0, k = 1, o = 1, sangra = 0 }: { x?: number; y?: number; k?: number; o?: number; sangra?: number }) {
   return (
     <En x={x} y={y} k={k} o={o}>
-      <path d={CEREBRO} fill="#D8748C" />
-      <path d={CEREBRO} fill="#F09CAC" transform="translate(-4,-5) scale(0.92)" />
-      {[[-92, -38, -30], [-42, -74, 20], [22, -80, -18], [84, -44, 26], [-64, 16, 30], [4, 0, -24], [66, 28, 18], [-14, 60, 8]].map(([cx, cy, r], i) => <path key={i} d="M-34,0 Q-16,-20 0,-2 Q16,18 34,0" fill="none" stroke="#C95C78" strokeWidth={8} strokeLinecap="round" transform={`translate(${cx},${cy}) rotate(${r})`} />)}
+      {/* Tronco del encéfalo, por detrás */}
+      <path d="M26,66 C34,90 34,118 40,140 L64,140 C60,118 60,92 62,72 Z" fill="#A04A64" />
+      <path d="M32,70 C38,92 38,116 44,136 L56,136 C54,116 54,92 56,74 Z" fill="#D0889C" />
+      {/* Cerebelo con sus folias */}
+      <path d={CER_CEREBELO} fill="#93345A" />
+      <path d={CER_CEREBELO} fill="#CB6E8C" transform="translate(-2,-3) scale(0.96)" />
+      {[0, 1, 2, 3].map((i) => <path key={i} d={`M${60 + i * 4},${70 + i * 11} C${84},${62 + i * 11} ${116},${64 + i * 11} ${142 - i * 3},${74 + i * 10}`} fill="none" stroke="#93345A" strokeWidth={3.5} strokeLinecap="round" opacity={0.8} />)}
+      {/* Hemisferio */}
+      <path d={CER_HEMI} fill={CER[0]} />
+      <path d={CER_HEMI} fill={CER[1]} transform="translate(-3,-4) scale(0.965)" />
+      {/* Lóbulos: parietal y occipital algo más lilas, temporal más cálido */}
+      <path d="M2,-124 C62,-128 132,-92 148,-22 C150,-4 148,12 144,24 C110,6 70,-6 40,-2 C30,-40 20,-90 2,-124 Z" fill="#DE88B2" opacity={0.55} />
+      <path d={CER_TEMPORAL} fill="#F0929C" opacity={0.85} />
+      {/* Circunvoluciones */}
+      {CER_SURCOS.map((d, i) => <path key={i} d={d} fill="none" stroke={CER[0]} strokeWidth={4.5} strokeLinecap="round" opacity={0.75} />)}
+      {/* Surco central y cisura de Silvio */}
+      <path d="M12,-122 C2,-84 20,-54 6,-10" fill="none" stroke={CER[0]} strokeWidth={7} strokeLinecap="round" />
+      <path d="M-96,36 C-56,8 -2,2 44,18" fill="none" stroke={CER[0]} strokeWidth={8} strokeLinecap="round" />
+      {/* Sombra en media luna y brillo */}
+      <path d="M-124,50 C-100,70 -60,76 -20,78 C10,80 32,66 54,62 C30,76 0,90 -30,88 C-70,86 -108,74 -124,50 Z" fill={CER[0]} opacity={0.7} />
+      <path d="M-118,-40 Q-100,-96 -40,-112" fill="none" stroke={CER[2]} strokeWidth={10} strokeLinecap="round" opacity={0.8} />
       {sangra > 0.01 && <path d={blob(9, 34 * sangra, 0.2, 5)} fill="#7A0F24" transform="translate(50,-30)" />}
       {sangra > 0.01 && <circle cx={42} cy={-38} r={8 * sangra} fill="#B51D3B" />}
     </En>

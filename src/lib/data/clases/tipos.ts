@@ -49,7 +49,8 @@ export type DibujoLab =
   | 'neutrofilo' | 'eosinofilo' | 'granuloma' | 'celula-gigante' | 'purpura' | 'pulmones' | 'alveolos' | 'rinon'
   | 'bacilo' | 'enterocito'
   | 'nk' | 'ganglio' | 'linfocito-b' | 'hsc' | 'mieloide' | 'anticuerpo'
-  | 'tirocito' | 'terminal-nerviosa' | 't-cd4' | 't-cd8' | 'mastocito' | 'celula-opsonizada' | 'complejo';
+  | 'tirocito' | 'terminal-nerviosa' | 't-cd4' | 't-cd8' | 'mastocito' | 'celula-opsonizada' | 'complejo'
+  | 'hemo' | 'bilirrubina' | 'conjugada' | 'bebe';
 
 /** Los dibujos que puede llevar un bloque en la portada de los casos: los dos de la AI17 o una pieza de laboratorio. */
 export type DibujoBloque = 'hematie' | 'plaqueta' | DibujoLab;

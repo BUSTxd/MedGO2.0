@@ -3,6 +3,27 @@
 import type { RegistroClases } from './tipos.ts';
 
 export const REGISTRO_CLASES: RegistroClases = {
+  "digestivo/tbl-2": {
+    "curso": "digestivo",
+    "clase": "tbl-2",
+    "notas": {
+      "titulo": "Metabolismo de la bilirrubina"
+    },
+    "casos": {
+      "key": "digestivo/casos/tbl-2",
+      "titulo": "Casos clínicos",
+      "desc": "Del hematoma a la tira de orina: en qué estación se atascó la bilirrubina y qué hacer",
+      "chips": [
+        "El viaje",
+        "Sube la indirecta",
+        "Sube la directa",
+        "Recién nacido",
+        "39 casos"
+      ],
+      "total": 39,
+      "muestra": 8
+    }
+  },
   "patologia/pat-acp-1": {
     "curso": "patologia",
     "clase": "pat-acp-1",

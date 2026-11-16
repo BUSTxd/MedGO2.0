@@ -1,7 +1,7 @@
 'use client';
 // Los dibujos de los bloques de «Casos clínicos» que no son los dos propios de la AI17:
 // piezas que ya existen en los laboratorios virtuales (Citopenias, Vasculitis,
-// Gramnegativas) e ilustraciones del bucket `laboratorio-img` (Linfocitos,
+// Gramnegativas, Bilirrubina) e ilustraciones del bucket `laboratorio-img` (Linfocitos,
 // Hipersensibilidad). No se dibuja nada nuevo: cada pieza se pinta sola y se encuadra
 // midiendo su contorno, porque vive en el lienzo de su laboratorio (1600 × 1000).
 // Se carga con `next/dynamic` desde CasosClinicos: el lector no paga estas piezas.
@@ -10,6 +10,7 @@ import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import * as CT from '@/app/dashboard/laboratorio/citopenias-autoinmunes/Piezas';
 import * as VS from '@/app/dashboard/laboratorio/vasculitis-anca/Piezas';
 import * as GN from '@/app/dashboard/laboratorio/gramnegativas/Piezas';
+import * as BI from '@/app/dashboard/laboratorio/bilirrubina/Piezas';
 import { srcImagen as linfocitos } from '@/lib/data/linfocitos/imagenes';
 import { srcPropia as hipersensibilidad } from '@/lib/data/hipersensibilidad/imagenes';
 import type { DibujoLab } from '@/lib/data/clases/tipos';
@@ -47,6 +48,10 @@ const PIEZAS: Record<DibujoLab, Pieza> = {
   mastocito: { img: hipersensibilidad('mastocito_activo') },
   'celula-opsonizada': { img: hipersensibilidad('celula_opsonizada') },
   complejo: { pieza: () => <VS.Complejo /> },
+  hemo: { pieza: () => <BI.Tetrapirrol abre={0} fe={1} tono={BI.B.hemo} /> },
+  bilirrubina: { pieza: () => <BI.Tetrapirrol plegada={1} /> },
+  conjugada: { pieza: () => <BI.Tetrapirrol colitas={2} tono={BI.B.conjugada} /> },
+  bebe: { pieza: () => <BI.Rostro quien="bebe" piel={['#D9A21E', '#F2C94C']} /> },
 };
 
 /** Una pieza del lienzo, encuadrada a su contorno real (con un margen). */

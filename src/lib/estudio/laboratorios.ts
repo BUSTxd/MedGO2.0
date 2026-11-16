@@ -63,6 +63,7 @@ const DESTACADOS = [
   'atlas-3d?region=miembro-superior-derecho',
   'atlas-3d?region=miembro-inferior-derecho',
   'gramnegativas',
+  'bilirrubina',
   'biomecanica-extraocular',
   'cascada-coagulacion',
 ].map((s) => LAB + s);

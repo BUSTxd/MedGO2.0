@@ -129,6 +129,15 @@ export const LAB_TOPICS: TemaLab[] = [
     ],
   },
   {
+    id: 'digestivo',
+    title: 'Digestivo | UPCH',
+    badge: 'Fisiología',
+    diff: ['medium'],
+    experiments: [
+      { name: 'Metabolismo de la bilirrubina', desc: 'Doce capítulos narrados: del hemo que se abre a la conjugación, la bilis, las bacterias del colon, el laboratorio, las ictericias, el kernícterus y el mapa final', color: '#D99A00', href: '/dashboard/laboratorio/bilirrubina' },
+    ],
+  },
+  {
     id: 'aparato-locomotor',
     title: 'Aparato Locomotor | UPCH',
     badge: 'Anatomía',

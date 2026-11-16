@@ -426,6 +426,7 @@ export const semanas: Semana[] = [
           formato: 'html',
           opciones: [{ id: 'dig-clase-11', label: 'Resumen', formato: 'html' }],
         },
+        simulacion: { href: '/dashboard/laboratorio/bilirrubina', desc: 'El metabolismo de la bilirrubina, del hemo al mapa de la ictericia, animado y narrado' },
       },
       {
         id: 'clase-12',
@@ -647,6 +648,7 @@ export const semanas: Semana[] = [
           formato: 'html',
           opciones: [{ id: 'dig-tbl-2', label: 'Resumen', formato: 'html' }],
         },
+        simulacion: { href: '/dashboard/laboratorio/bilirrubina', desc: 'Del hemo a la bilis, las bacterias y el laboratorio; las ictericias y el kernícterus, animados y narrados' },
       },
       {
         id: 'clase-18',

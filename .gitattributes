@@ -1,0 +1,3 @@
+# Voz Lab lee las narraciones con una expresión regular que solo acepta LF:
+# con core.autocrlf=true, un checkout nuevo las dejaría en CRLF y no leería ningún bloque.
+docs/**/NARRACION-ELEVENLABS.md text eol=lf

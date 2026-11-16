@@ -13,6 +13,7 @@ export const DIBUJOS = [
   'bacilo', 'enterocito',
   'nk', 'ganglio', 'linfocito-b', 'hsc', 'mieloide', 'anticuerpo',
   'tirocito', 'terminal-nerviosa', 't-cd4', 't-cd8', 'mastocito', 'celula-opsonizada', 'complejo',
+  'hemo', 'bilirrubina', 'conjugada', 'bebe',
 ];
 export const TITULO_CASOS = 'Casos clínicos';
 /** Sin `muestra` en el contenido, se abre una de cada cinco preguntas (6 de 30 en la AI17). */
