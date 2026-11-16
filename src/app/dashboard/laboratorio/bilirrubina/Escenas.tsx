@@ -199,17 +199,23 @@ function CaraBebe({ piel, ojos, llora, antifaz, gorro, reloj, dormido }: { piel:
       <path d="M-56,-40 Q-44,-64 -14,-70" fill="none" stroke={piel[2]} strokeWidth={10} strokeLinecap="round" opacity={0.75} />
       {gorro ? (
         <g>
-          <path d="M-78,-26 C-74,-96 74,-96 78,-26 C40,-44 -40,-44 -78,-26 Z" fill="#7FB8F0" />
-          <path d="M-80,-26 C-40,-46 40,-46 80,-26 L82,-12 C40,-32 -40,-32 -82,-12 Z" fill="#4A84D0" />
-          {[-50, -20, 10, 40].map((xx) => <path key={xx} d={`M${xx},-80 L${xx + 8},-40`} stroke="#A8D2FF" strokeWidth={5} strokeLinecap="round" opacity={0.7} />)}
-          <circle cy={-94} r={16} fill="#FFFFFF" /><circle cx={-4} cy={-98} r={6} fill="#E6F2FF" />
+          {/* Cúpula algo mayor que la cabeza (r 82): la tapa entera, sin que asome la piel */}
+          <path d="M-90,-18 A92,92 0 0 1 90,-18 C46,-40 -46,-40 -90,-18 Z" fill="#4A84D0" />
+          <path d="M-86,-20 A86,86 0 0 1 80,-30 C40,-44 -40,-44 -86,-20 Z" fill="#7FB8F0" />
+          {[-56, -26, 4, 34, 62].map((xx) => <path key={xx} d={`M${xx},${-80 + Math.abs(xx) * 0.32} L${xx + 6},-42`} stroke="#A8D2FF" strokeWidth={5} strokeLinecap="round" opacity={0.75} />)}
+          {/* Vuelta tejida del borde */}
+          <path d="M-92,-20 C-46,-44 46,-44 92,-20 L92,0 C46,-24 -46,-24 -92,0 Z" fill="#3A6EC0" />
+          <path d="M-92,-16 C-46,-40 46,-40 92,-16" fill="none" stroke="#7FB8F0" strokeWidth={4} opacity={0.8} />
+          {[-70, -42, -14, 14, 42, 70].map((xx) => <path key={`v${xx}`} d={`M${xx},${-26 - (1 - (xx / 92) ** 2) * 14} l0,14`} stroke="#5A8ADA" strokeWidth={4} strokeLinecap="round" />)}
+          <path d="M-50,-62 Q-34,-76 -10,-80" fill="none" stroke="#C8E2FF" strokeWidth={8} strokeLinecap="round" opacity={0.7} />
+          <circle cy={-100} r={17} fill="#DDE8F6" /><circle cx={-3} cy={-103} r={14} fill="#FFFFFF" /><circle cx={-7} cy={-107} r={5} fill="#E6F2FF" />
         </g>
       ) : (
         <path d="M-8,-78 C-18,-98 4,-112 20,-100 C10,-98 6,-90 10,-82" fill="none" stroke="#5A3A1A" strokeWidth={7} strokeLinecap="round" />
       )}
-      {/* Cejas finitas */}
-      <path d={`M-48,${-24 - ll * 4} Q-34,${-32 + ll * 4} -20,${-26 + ll * 6}`} fill="none" stroke="#7A4A2A" strokeWidth={4} strokeLinecap="round" />
-      <path d={`M20,${-26 + ll * 6} Q34,${-32 + ll * 4} 48,${-24 - ll * 4}`} fill="none" stroke="#7A4A2A" strokeWidth={4} strokeLinecap="round" />
+      {/* Cejas finitas (con gorro quedan bajo la vuelta) */}
+      {!gorro && <path d={`M-48,${-24 - ll * 4} Q-34,${-32 + ll * 4} -20,${-26 + ll * 6}`} fill="none" stroke="#7A4A2A" strokeWidth={4} strokeLinecap="round" />}
+      {!gorro && <path d={`M20,${-26 + ll * 6} Q34,${-32 + ll * 4} 48,${-24 - ll * 4}`} fill="none" stroke="#7A4A2A" strokeWidth={4} strokeLinecap="round" />}
       {/* Ojos: dormido (arcos), abiertos (macizos) o apretados al llorar */}
       {antifaz > 0.01 ? (
         <g opacity={clamp(antifaz)}>
