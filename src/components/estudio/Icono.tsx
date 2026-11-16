@@ -26,6 +26,8 @@ const TRAZOS = {
   info: 'M12 11v6 M12 7h.01 M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',
   bulb: 'M9 18h6 M9 21h6 M8 14a6 6 0 1 1 8 0c-1 1-1 2-1 3H9c0-1 0-2-1-3',
   cube: 'm12 3 9 5-9 5-9-5z M3 8v9l9 5 9-5V8 M12 13v9',
+  // Estetoscopio: olivas, los dos tubos que se unen, el tubo largo y la campana.
+  stethoscope: 'M5 2v2 M11 2v2 M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1 M8 15a6 6 0 0 0 12 0v-3 M22 10a2 2 0 1 1-4 0 2 2 0 0 1 4 0',
   heart: 'M20.8 4.6a5.5 5.5 0 0 0-7.8 0l-1 1-1-1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z',
   brain: 'M12 4c-4-4-8 1-6 4-5 1-4 7 0 7-1 5 5 7 6 3 M12 4c4-4 8 1 6 4 5 1 4 7 0 7 1 5-5 7-6 3 M12 4v14 M6 8l3 2 M18 8l-3 2 M6 15l3-2 M18 15l-3-2',
   menu: 'M4 6h16 M4 12h16 M4 18h16', target: 'M12 3v3 M12 18v3 M3 12h3 M18 12h3 M18 12a6 6 0 1 1-12 0 6 6 0 0 1 12 0',

@@ -195,7 +195,7 @@ div:where(.wrapper) { margin: 0px; background: var(--bg); color: var(--text); fo
 .practice-inner { max-width: 760px; margin: auto; }
 .practice-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 26px; }
 .practice-head h1 { font-size: 23px; font-weight: 550; letter-spacing: -0.6px; margin: 0px 0px 6px; }
-.practice-head p { font-size: 11px; color: var(--muted); margin: 0px; }
+.practice-head p { font-size: 13px; color: var(--muted); margin: 0px; }
 .segmented { padding: 4px; background: rgb(236, 236, 244); border-radius: 8px; display: flex; gap: 3px; }
 .segmented button { padding: 7px 13px; font-size: 11px; color: rgb(138, 142, 165); border-radius: 5px; }
 .segmented button.active { background: var(--paper); color: var(--accent); box-shadow: rgba(37, 48, 79, 0.027) 0px 1px 4px; }
@@ -1214,16 +1214,32 @@ div.wrapper .topbar {
 
 /* ── Pestaña «Práctica»: los banqueos de la clase ── */
 .practica-lista { display: grid; gap: 14px; }
-.practica-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 18px; padding: 20px 22px; background: var(--surface); border: 1px solid var(--border); border-radius: 13px; box-shadow: 0 6px 22px #29315c08; transition: border-color .15s, box-shadow .15s; }
+.practica-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 18px; padding: 20px 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 13px; box-shadow: 0 6px 22px #29315c08; transition: border-color .15s, box-shadow .15s; }
 .practica-item:hover { border-color: #b9cbe0; box-shadow: 0 10px 28px #29315c10; }
-.practica-icono { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 12px; background: var(--soft-fill); color: var(--action); }
-.practica-icono .icon { width: 22px; height: 22px; }
 .practica-cuerpo { min-width: 0; }
-.practica-cuerpo .eyebrow { color: var(--explore); font-size: 9px; letter-spacing: 1.2px; }
-.practica-cuerpo h2 { margin: 5px 0 4px; font-size: 17px; font-weight: 600; letter-spacing: -0.3px; color: var(--ink); }
-.practica-cuerpo p { margin: 0; font-size: 12px; line-height: 1.6; color: var(--secondary); }
-.practica-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-.practica-chips span { padding: 3px 9px; border-radius: 20px; background: var(--support); border: 1px solid var(--border); font-size: 10.5px; font-weight: 550; color: var(--action-ink); }
+/* El tipo de práctica se reconoce por el icono pegado al antetítulo: sin cuadro gris ni
+   columna propia, que dejaban el icono descuadrado frente a una tarjeta de varias líneas. */
+.practica-cuerpo .eyebrow { display: flex; align-items: center; gap: 7px; color: var(--explore); font-size: 10.5px; letter-spacing: 1.2px; }
+.practica-cuerpo .eyebrow .icon { width: 16px; height: 16px; stroke-width: 1.9; }
+.practica-cuerpo h2 { margin: 5px 0 4px; font-size: 18px; font-weight: 600; letter-spacing: -0.3px; color: var(--ink); }
+.practica-cuerpo p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--secondary); }
+/* Lo que trae dentro (bloques, años): etiquetas de texto, no pastillas, para que no parezcan botones. */
+.practica-chips { display: flex; flex-wrap: wrap; align-items: center; row-gap: 2px; margin-top: 9px; }
+.practica-chips span { font-size: 12px; font-weight: 550; color: var(--action-ink); }
+.practica-chips span + span::before { content: '·'; margin: 0 8px; color: var(--muted); font-weight: 400; }
+/* Cuántos casos hay y, sin plan, cuántos abre: antes de entrar, no al llegar. */
+.practica-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-top: 8px; font-size: 12px; color: var(--muted); }
+.practica-muestra { display: inline-flex; align-items: center; gap: 5px; color: var(--secondary); }
+.practica-muestra .icon { width: 13px; height: 13px; }
+/* Una ronda a medias o terminada: dónde quedó, con el botón «Seguir». */
+.practica-avance { display: flex; align-items: center; gap: 10px; margin-top: 11px; font-size: 12px; font-weight: 550; color: var(--action-ink); }
+.practica-barra { flex: 0 0 120px; height: 6px; border-radius: 6px; background: var(--support); overflow: hidden; }
+.practica-barra span { display: block; height: 100%; border-radius: inherit; background: var(--action); }
+/* Toda la tarjeta abre: el botón se estira por debajo y el anillo de foco rodea la tarjeta. */
+.practica-item-abre { position: relative; cursor: pointer; }
+.practica-item-abre .practica-abre::after { content: ''; position: absolute; inset: 0; border-radius: 13px; }
+.practica-item-abre:has(.practica-abre:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
+.practica-item-abre .practica-abre:focus-visible { outline: none; }
 .practica-acciones { display: flex; flex-direction: column; align-items: stretch; gap: 7px; }
 .practica-acciones .button { white-space: nowrap; padding: 10px 16px; }
 .practica-acciones .button:disabled { opacity: .7; cursor: progress; }
@@ -1233,7 +1249,7 @@ div.wrapper .topbar {
 .practica-lab .eyebrow { color: var(--secondary); margin-bottom: 10px; }
 .practica-lab .related-card { max-width: 340px; }
 @media (max-width: 720px) {
-  .practica-item { grid-template-columns: auto minmax(0, 1fr); padding: 17px; gap: 14px; }
+  .practica-item { grid-template-columns: minmax(0, 1fr); padding: 17px; gap: 14px; }
   .practica-acciones { grid-column: 1 / -1; }
 }
 @media (prefers-reduced-motion: reduce) { .practica-rueda { animation-duration: 2s; } }

@@ -70,6 +70,8 @@ export interface PracticaEstudio {
   documentos?: (ResumenEstudio & { bloqueado: boolean })[];
   /** Solo los casos clínicos: su clave en el bucket de exámenes. */
   examKey?: string;
+  /** Solo los casos clínicos: cuántos trae y cuántos abre el plan de quien mira (el servidor recorta igual). */
+  cuenta?: { total: number; abiertos: number };
 }
 
 export interface LabRecomendado {

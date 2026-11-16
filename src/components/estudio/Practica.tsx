@@ -17,7 +17,7 @@ const PdfFullscreenModal = dynamic(() => import('@/components/PdfFullscreenModal
 const ElegirPlan = dynamic(() => import('@/components/planes/ElegirPlan'), { ssr: false });
 
 const ICONO: Record<TipoPractica, NombreIcono> = {
-  examen: 'quiz', banco: 'grid', tarjetas: 'layers', solucionario: 'bulb', propuestos: 'document', casos: 'heart',
+  examen: 'quiz', banco: 'grid', tarjetas: 'layers', solucionario: 'bulb', propuestos: 'document', casos: 'stethoscope',
 };
 const RUBRO: Record<TipoPractica, string> = {
   examen: 'Preguntas tipo examen', banco: 'Banco por temas', tarjetas: 'Repaso activo',
@@ -53,34 +53,10 @@ export function Practica({ ctx }: { ctx: Contexto }) {
 
         {l.practica.length ? (
           <div className={cx('practica-lista')}>
-            {l.practica.map((p) => {
-              const cargando = pendiente && abriendo === p.tipo;
-              return (
-                <article key={p.tipo} className={cx('practica-item')}>
-                  <span className={cx('practica-icono')}><Icono n={ICONO[p.tipo]} /></span>
-                  <div className={cx('practica-cuerpo')}>
-                    <div className={cx('eyebrow')}>{RUBRO[p.tipo]}</div>
-                    <h2>{p.titulo}</h2>
-                    <p>{p.desc}</p>
-                    {p.chips.length > 0 && (
-                      <div className={cx('practica-chips')}>{p.chips.map((ch) => <span key={ch}>{ch}</span>)}</div>
-                    )}
-                  </div>
-                  <div className={cx('practica-acciones')}>
-                    {p.documentos ? p.documentos.map((d) => (
-                      <button key={d.id} className={cx('button', p.documentos!.length > 1 && 'secondary')} onClick={() => leer(d)}>
-                        <Icono n={d.bloqueado ? 'lock' : 'document'} />{p.documentos!.length > 1 ? d.label : 'Abrir'}
-                      </button>
-                    )) : (
-                      <button className={cx('button')} onClick={() => abrir(p)} disabled={pendiente} aria-busy={cargando || undefined}>
-                        {cargando ? <span className={cx('practica-rueda')} aria-hidden="true" /> : <Icono n="arrow" />}
-                        {cargando ? 'Abriendo…' : 'Empezar'}
-                      </button>
-                    )}
-                  </div>
-                </article>
-              );
-            })}
+            {l.practica.map((p) => (
+              <TarjetaPractica key={p.tipo} p={p} cargando={pendiente && abriendo === p.tipo} ocupado={pendiente}
+                onAbrir={() => abrir(p)} onLeer={leer} />
+            ))}
           </div>
         ) : (
           <div className={cx('sim-setup')}>
@@ -103,6 +79,87 @@ export function Practica({ ctx }: { ctx: Contexto }) {
         : <PdfFullscreenModal claseId={documento.id} onClose={() => setDocumento(null)} />)}
       {comprar && <ElegirPlan requisito={c.requisito} onClose={() => setComprar(false)} />}
     </div>
+  );
+}
+
+/** Lo que el alumno dejó en una ronda de casos (lo guarda `CasosClinicos` en este navegador). */
+type Avance = { fase: 'caso' | 'informe'; respondidos: number; total: number; pos: number };
+
+function useAvanceCasos(examKey?: string): Avance | null {
+  const [avance, setAvance] = useState<Avance | null>(null);
+  // Tras montar: el servidor no ve el `localStorage` y la primera pintura debe coincidir.
+  useEffect(() => {
+    if (!examKey) return;
+    try {
+      const g = JSON.parse(localStorage.getItem(`medgo:casos:v1:${examKey}`) ?? 'null') as
+        { fase?: string; ronda?: unknown; pos?: number; respuestas?: Record<string, number> } | null;
+      if (!g || !Array.isArray(g.ronda) || !g.ronda.length || (g.fase !== 'caso' && g.fase !== 'informe')) return;
+      const ronda = g.ronda as string[];
+      const respondidos = ronda.filter((id) => g.respuestas && id in g.respuestas).length;
+      setAvance({ fase: g.fase, respondidos, total: ronda.length, pos: Math.min(g.pos ?? 0, ronda.length - 1) });
+    } catch { /* sin almacenamiento: la tarjeta queda como nueva */ }
+  }, [examKey]);
+  return avance;
+}
+
+/**
+ * Una entrada de la lista de práctica. Toda la tarjeta abre el runner (el botón se
+ * estira por debajo con `::after`); los propuestos con varios documentos, no, porque
+ * cada botón abre uno distinto.
+ */
+function TarjetaPractica({ p, cargando, ocupado, onAbrir, onLeer }: {
+  p: PracticaEstudio;
+  cargando: boolean;
+  ocupado: boolean;
+  onAbrir: () => void;
+  onLeer: (d: NonNullable<PracticaEstudio['documentos']>[number]) => void;
+}) {
+  const avance = useAvanceCasos(p.tipo === 'casos' ? p.examKey : undefined);
+  const docs = p.documentos;
+  const entera = !docs || docs.length === 1;
+  const muestra = p.cuenta && p.cuenta.abiertos < p.cuenta.total ? p.cuenta : null;
+  const accion = avance?.fase === 'caso' ? 'Seguir' : avance?.fase === 'informe' ? 'Ver tu resultado' : 'Empezar';
+
+  return (
+    <article className={cx('practica-item', entera && 'practica-item-abre')}>
+      <div className={cx('practica-cuerpo')}>
+        <div className={cx('eyebrow')}><Icono n={ICONO[p.tipo]} />{RUBRO[p.tipo]}</div>
+        <h2>{p.titulo}</h2>
+        <p>{p.desc}</p>
+        {p.chips.length > 0 && (
+          <div className={cx('practica-chips')}>{p.chips.map((ch) => <span key={ch}>{ch}</span>)}</div>
+        )}
+        {p.cuenta && (
+          <div className={cx('practica-meta')}>
+            <span>{p.cuenta.total} casos</span>
+            {muestra && <span className={cx('practica-muestra')}><Icono n="lock" />Sin plan abres {muestra.abiertos} de {muestra.total}</span>}
+          </div>
+        )}
+        {avance && (
+          <div className={cx('practica-avance')}>
+            <span className={cx('practica-barra')} aria-hidden="true"><span style={{ width: `${(avance.respondidos / avance.total) * 100}%` }} /></span>
+            <span>
+              {avance.fase === 'caso'
+                ? `Vas por el caso ${avance.pos + 1} de ${avance.total}`
+                : `Terminaste una ronda de ${avance.total} ${avance.total === 1 ? 'caso' : 'casos'}`}
+            </span>
+          </div>
+        )}
+      </div>
+      <div className={cx('practica-acciones')}>
+        {docs ? docs.map((d) => (
+          <button key={d.id} className={cx('button', docs.length > 1 && 'secondary', entera && 'practica-abre')} onClick={() => onLeer(d)}>
+            <Icono n={d.bloqueado ? 'lock' : 'document'} />{docs.length > 1 ? d.label : 'Abrir'}
+          </button>
+        )) : (
+          <button className={cx('button', 'practica-abre')} onClick={onAbrir} disabled={ocupado} aria-busy={cargando || undefined}
+            aria-label={cargando ? undefined : `${accion}: ${p.titulo}`}>
+            {cargando ? <span className={cx('practica-rueda')} aria-hidden="true" /> : <Icono n="arrow" />}
+            {cargando ? 'Abriendo…' : accion}
+          </button>
+        )}
+      </div>
+    </article>
   );
 }
 

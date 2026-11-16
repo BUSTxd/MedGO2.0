@@ -6,6 +6,7 @@ import { findSolucionario } from '@/lib/data/solucionarios';
 import { REGISTRO_CLASES } from '@/lib/data/clases/registro';
 import { banqueoLabelDe } from '@/lib/material-plan';
 import { puedeVerResumen } from '@/lib/acceso-resumen';
+import { requiredPlanDeCurso, tieneAccesoA } from '@/lib/acceso';
 import type { PlanState } from '@/lib/plans';
 import type { FormatoResumen, PracticaEstudio, TipoPractica } from './tipos';
 
@@ -65,7 +66,14 @@ export function practicaDeClase(curso: string, a: ActPractica, plan: Plan): Prac
   // página del dashboard, así que valen también en un curso sin runner.
   const casos = REGISTRO_CLASES[`${curso}/${a.id}`]?.casos;
   if (casos) {
-    lista.push({ tipo: 'casos', titulo: casos.titulo, desc: casos.desc, chips: casos.chips, examKey: casos.key });
+    // La misma regla que `/api/examen`: sin el plan del curso, solo la muestra.
+    const todos = casos.libre || tieneAccesoA(plan, requiredPlanDeCurso(curso));
+    lista.push({
+      tipo: 'casos', titulo: casos.titulo, desc: casos.desc, examKey: casos.key,
+      // El total va aparte (`cuenta`): en los chips solo quedan los bloques.
+      chips: casos.chips.filter((ch) => ch !== `${casos.total} casos`),
+      cuenta: { total: casos.total, abiertos: todos ? casos.total : casos.muestra },
+    });
   }
 
   if (conRunner && a.examen) {
