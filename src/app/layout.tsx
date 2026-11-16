@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Outfit } from 'next/font/google';
+import localFont from 'next/font/local';
 import { Analytics } from '@vercel/analytics/next';
 import { AuthProvider } from '@/components/AuthProvider';
 import { ConsentProvider } from '@/components/ConsentProvider';
@@ -7,9 +7,12 @@ import CookieConsent from '@/components/CookieConsent';
 import AvisoPagoCreem from '@/components/planes/AvisoPagoCreem';
 import './globals.css';
 
-const outfit = Outfit({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
+// Outfit va en el repo (OFL; el subconjunto latino variable, 100-900, el mismo que servía
+// Google): con `next/font/google` el build de Vercel dependía de descargarla y desde el
+// 2026-11-15 fallaba ahí («next/font/google queries have exactly one entry»).
+const outfit = localFont({
+  src: './fonts/outfit-latin.woff2',
+  weight: '100 900',
   display: 'swap',
   variable: '--font-outfit',
 });
