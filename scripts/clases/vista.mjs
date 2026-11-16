@@ -79,6 +79,14 @@ if (json.casos) {
       onResponder: () => {}, onSiguiente: () => {}, onSaltar: () => {}, onSalir: () => {},
     }))),
   });
+  // Y sin responder: la boleta sin marcar, con el botón «Pista».
+  vistas.push({
+    nombre: `casos-${caso.id}-sin-responder`,
+    html: envolver(renderToStaticMarkup(h(VistaCaso, {
+      caso, bloques: banco.bloques, lab: '/estudio/laboratorio/x', n: 0, ronda: banco.casos, respuestas: {}, orden,
+      onResponder: () => {}, onSiguiente: () => {}, onSaltar: () => {}, onSalir: () => {},
+    }))),
+  });
 }
 
 const hechas = [];

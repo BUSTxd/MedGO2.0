@@ -186,6 +186,11 @@ export function VistaCaso({ caso, bloques, lab, n, ronda, respuestas, orden, onR
   const bien = acerto(caso, elegida);
   const rotulo = rotuloDe(caso, bloques);
   const datos = caso.datos ?? [];
+  // Los valores anormales no se marcan de entrada: el alumno los busca él solo, y la «Pista»
+  // los pinta de rojo. Al responder se marcan siempre (es parte de la explicación).
+  const [pista, setPista] = useState(false);
+  const conAlertas = datos.some((d) => d.alerta);
+  const marcar = pista || respondido;
   return (
     <div className={cx('caso')}>
       <div className={cx('caso-barra')}>
@@ -211,8 +216,15 @@ export function VistaCaso({ caso, bloques, lab, n, ronda, respuestas, orden, onR
           </div>
           <p className={cx('caso-relato')}>{caso.caso}</p>
           {datos.length > 0 && (
-            <div className={cx('caso-boleta')}>
-              <div className={cx('caso-boleta-titulo')}>Resultados</div>
+            <div className={cx('caso-boleta', marcar && 'boleta-pista')}>
+              <div className={cx('caso-boleta-titulo')}>
+                Resultados
+                {conAlertas && !respondido && (
+                  <button type="button" className={cx('boleta-pista-boton')} aria-pressed={pista} onClick={() => setPista((v) => !v)}>
+                    <Icono n="bulb" />{pista ? 'Ocultar pista' : 'Pista'}
+                  </button>
+                )}
+              </div>
               <dl>
                 {datos.map((d) => (
                   <div key={d.k} className={cx('caso-dato', d.alerta && 'dato-alerta')}>
