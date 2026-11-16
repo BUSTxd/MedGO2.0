@@ -226,13 +226,22 @@ const GRASA: T3 = ['#C08A1A', '#F2C14E', '#FFE7A6'];
 const TRIPA: T3 = ['#A8445E', '#E0809A', '#FFC9D4'];
 
 /** Vaso con volumen: borde oscuro, cuerpo y un hilo de luz arriba a la izquierda. */
-function Vaso3({ d, w, c, luz = true, dash }: { d: string; w: number; c: T3; luz?: boolean; dash?: string }) {
+function Vaso3({ d, w, c, luz = true, dash, flujo, solo = false }: { d: string; w: number; c: T3; luz?: boolean; dash?: string; flujo?: { reloj: number; o: number; vel?: number }; solo?: boolean }) {
   const comun = { d, fill: 'none', strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, strokeDasharray: dash };
+  const corre = flujo && flujo.o > 0.01;
   return (
     <g>
-      <path {...comun} stroke={c[0]} strokeWidth={w} />
-      <path {...comun} stroke={c[1]} strokeWidth={w * 0.66} transform={`translate(${-w * 0.06},${-w * 0.08})`} />
-      {luz && <path {...comun} stroke={c[2]} strokeWidth={Math.max(2, w * 0.16)} transform={`translate(${-w * 0.16},${-w * 0.2})`} opacity={0.85} />}
+      {!solo && <path {...comun} stroke={c[0]} strokeWidth={w} />}
+      {!solo && <path {...comun} stroke={c[1]} strokeWidth={w * 0.66} transform={`translate(${-w * 0.06},${-w * 0.08})`} />}
+      {/* El líquido por dentro: la luz del vaso, más honda, y reflejos que corren con la corriente */}
+      {corre && (
+        <g opacity={flujo.o}>
+          <path d={d} fill="none" stroke={c[0]} strokeWidth={w * 0.4} strokeLinecap="round" opacity={0.45} />
+          <path d={d} fill="none" stroke={c[2]} strokeWidth={w * 0.15} strokeLinecap="round"
+            strokeDasharray={`${w * 0.7} ${w * 1.3}`} strokeDashoffset={-(flujo.reloj * (flujo.vel ?? 0.04)) % (w * 2)} />
+        </g>
+      )}
+      {luz && !solo && <path {...comun} stroke={c[2]} strokeWidth={Math.max(2, w * 0.16)} transform={`translate(${-w * 0.16},${-w * 0.2})`} opacity={corre ? 0.5 : 0.85} />}
     </g>
   );
 }
@@ -296,43 +305,24 @@ function CorazonDilatado() {
  *  hepáticas a la cava; el puente porta → cava se lo salta. `p` dibuja el puente; casi toda la bilirrubina va por él. */
 function Cortocircuito({ p, reloj }: { p: number; reloj: number }) {
   const largo = 300;
-  const sigue = (pts: P2[], u: number): P2 => {
-    const t = u * (pts.length - 1), j = Math.min(pts.length - 2, Math.floor(t)), fr = t - j;
-    return [lerp(pts[j][0], pts[j + 1][0], fr), lerp(pts[j][1], pts[j + 1][1], fr)];
-  };
+  const f = easeOut(p);
   return (
     <g>
-      {/* Vena cava inferior y las hepáticas que llegan a ella */}
+      {/* Vena cava inferior y las hepáticas que llegan a ella; desde el atajo hacia arriba lleva la bilirrubina */}
       <Vaso3 d="M1510,980 L1510,712" w={40} c={CAVA} />
+      <Vaso3 d="M1510,900 L1510,716" w={40} c={CAVA} solo luz={false} flujo={{ reloj, o: tramo(p, 0.6, 1) }} />
       <Vaso3 d="M1420,754 C1450,750 1476,746 1500,744" w={20} c={CAVA} />
       {/* Asas del intestino, que mandan su sangre a la porta */}
       <Vaso3 d="M1084,960 C1060,930 1100,904 1124,930 C1146,954 1180,940 1176,912 C1172,886 1136,890 1140,914" w={30} c={TRIPA} />
       {/* El bazo y su vena esplénica, que se une a la mesentérica para formar la porta */}
       <Bazo x={1092} y={784} k={0.17} r={-20} corte={false} />
       <Vaso3 d="M1112,808 C1150,828 1184,848 1212,872" w={16} c={PORTA} />
-      {/* Vena porta al hilio */}
-      <Vaso3 d="M1186,948 C1196,910 1222,880 1262,846" w={26} c={PORTA} />
+      {/* Vena porta al hilio: la corriente se apaga cuando se abre el atajo */}
+      <Vaso3 d="M1186,948 C1196,910 1222,880 1262,846" w={26} c={PORTA} flujo={{ reloj, o: 1 - 0.7 * f }} />
       <HigadoB x={1300} y={772} k={0.38} />
-      {/* El puente porta → cava */}
-      <Vaso3 d="M1218,902 C1300,926 1420,926 1500,900" w={22} c={PORTA} dash={`${easeOut(p) * largo} ${largo + 40}`} />
-      {/* Bilirrubina: casi toda toma el puente; poca entra al hígado */}
-      {Array.from({ length: 5 }, (_, i) => {
-        const u = (reloj / 2600 + i / 5) % 1;
-        const [x, y] = sigue([[1190, 940], [1218, 902], [1300, 922], [1420, 922], [1500, 900], [1510, 850], [1510, 790]], u);
-        const e = tramo(Math.min(u, 1 - u), 0, 0.08);
-        return e > 0.05 ? <circle key={i} cx={x} cy={y} r={9 * e} fill={B.bilirrubina[1]} stroke={B.bilirrubina[0]} strokeWidth={3 * e} opacity={p} /> : null;
-      })}
-      {Array.from({ length: 2 }, (_, i) => {
-        const u = (reloj / 2600 + i / 2 + 0.25) % 1;
-        const [x, y] = sigue([[1190, 940], [1222, 880], [1262, 846]], u);
-        const e = tramo(Math.min(u, 1 - u), 0, 0.1);
-        return e > 0.05 ? <circle key={`h${i}`} cx={x} cy={y} r={6 * e} fill={B.bilirrubina[1]} opacity={1 - p * 0.5} /> : null;
-      })}
+      {/* El puente porta → cava: se dibuja y se llena */}
+      <Vaso3 d="M1218,902 C1300,926 1420,926 1500,900" w={22} c={PORTA} dash={`${f * largo} ${largo + 40}`} flujo={{ reloj, o: tramo(p, 0.5, 1) }} />
       <Txt x={1300} y={872} txt="porta" t={18} p={1} color={TXB.violeta} />
-      {/* Sentido del flujo en el atajo */}
-      {[1330, 1440].map((x) => (
-        <path key={x} d={`M${x - 9},${x === 1330 ? 908 : 906} l14,9 l-14,9`} fill="none" stroke="#FFFFFF" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" opacity={easeOut(p)} />
-      ))}
       <Txt x={1560} y={740} txt="cava" t={18} p={1} />
       <Txt x={1100} y={738} txt="bazo" t={18} p={1} />
       <Txt x={1036} y={884} txt="intestino" t={18} p={1} />
