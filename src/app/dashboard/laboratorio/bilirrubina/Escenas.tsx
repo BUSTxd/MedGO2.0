@@ -302,6 +302,61 @@ export function Bebe({ x = 0, y = 0, k = 1, o = 1, amarillo = 0, flojo = 0, arco
   );
 }
 
+/**
+ * Retrato del recién nacido para la portada de los casos clínicos («Recién nacido»): de frente,
+ * envuelto en su manta y con la piel algo amarilla. Copia las referencias de BUST «paciente calvo
+ * preocupado» y «hombre adulto»: cabeza grande, sombra en media luna de un solo tono, iris violeta
+ * con la pupila oscura arriba, brillos en pastilla, orejas con media luna interior y la manta
+ * turquesa con su lado oscuro. Centrado en el origen; ocupa unos 300 × 380.
+ */
+export function BebeRetrato({ amarillo = 0.55 }: { amarillo?: number }) {
+  const piel = [0, 1, 2].map((i) => mezcla(PIEL_BEBE[i], PIEL_ICT[i], clamp(amarillo)));
+  const manta = ['#0B6E78', '#2FB3AC', '#8FE3DA'];
+  return (
+    <g>
+      <ellipse cx={0} cy={252} rx={140} ry={17} fill={sombra} />
+      {/* La manta entera: capucha alrededor de la cara y un fardo que se estrecha hacia los pies.
+          El tono claro corrido a la izquierda deja la media luna de sombra a la derecha. */}
+      <path d="M0,-176 C116,-176 156,-82 146,24 C138,134 84,234 0,240 C-84,234 -138,134 -146,24 C-156,-82 -116,-176 0,-176 Z" fill={manta[0]} />
+      <path d="M-8,-170 C100,-170 138,-82 130,20 C122,124 74,220 -6,226 C-82,220 -132,128 -140,22 C-148,-80 -112,-170 -8,-170 Z" fill={manta[1]} />
+      <path d="M-104,-120 Q-82,-148 -46,-158" fill="none" stroke={manta[2]} strokeWidth={14} strokeLinecap="round" opacity={0.75} />
+      {/* El borde de la capucha, por detrás de la cara */}
+      <circle cx={0} cy={-40} r={106} fill={manta[0]} />
+      {/* Cabeza: tono oscuro debajo y el claro corrido a la izquierda = media luna de sombra a la derecha */}
+      <circle cx={0} cy={-40} r={94} fill={piel[0]} />
+      <circle cx={-10} cy={-45} r={85} fill={piel[1]} />
+      {/* Brillos en pastilla, como la referencia */}
+      <path d="M-56,-100 L-32,-114" stroke={piel[2]} strokeWidth={15} strokeLinecap="round" opacity={0.85} />
+      <path d="M-70,-72 L-67,-62" stroke={piel[2]} strokeWidth={11} strokeLinecap="round" opacity={0.7} />
+      {/* Rizo de pelo en la frente */}
+      <path d="M-10,-118 C-24,-142 8,-156 22,-136 C10,-138 4,-130 8,-120" fill="none" stroke="#4A2A16" strokeWidth={8} strokeLinecap="round" />
+      {/* Cejas finitas, un poco levantadas */}
+      <path d="M-62,-80 Q-46,-90 -28,-82" fill="none" stroke={piel[0]} strokeWidth={7} strokeLinecap="round" />
+      <path d="M22,-82 Q40,-90 56,-80" fill="none" stroke={piel[0]} strokeWidth={7} strokeLinecap="round" />
+      {/* Ojos: iris violeta y pupila oscura mirando arriba */}
+      {[-44, 40].map((ex) => (
+        <g key={ex}>
+          <circle cx={ex} cy={-48} r={19} fill="#B44CF0" />
+          <circle cx={ex + 4} cy={-53} r={12} fill="#4E0D66" />
+          <circle cx={ex + 8} cy={-57} r={4} fill="#FFFFFF" opacity={0.9} />
+        </g>
+      ))}
+      {/* Mejillas, nariz y boca */}
+      {[-70, 64].map((cx) => <ellipse key={cx} cx={cx} cy={-8} rx={20} ry={13} fill="#FF6F92" opacity={0.42} />)}
+      <ellipse cx={-2} cy={-18} rx={12} ry={9} fill={piel[0]} />
+      <ellipse cx={-2} cy={14} rx={14} ry={10} fill="#A8155A" />
+      <ellipse cx={-2} cy={19} rx={8} ry={4} fill="#FF8FB0" />
+      {/* La solapa que cruza el pecho, de la izquierda a la derecha, con su canto claro */}
+      <path d="M-138,40 C-70,72 40,52 140,6 C142,40 140,64 136,84 C60,120 -40,138 -126,116 C-132,92 -136,66 -138,40 Z" fill={manta[0]} opacity={0.5} />
+      <path d="M-138,40 C-70,72 40,52 140,6" fill="none" stroke={manta[2]} strokeWidth={9} strokeLinecap="round" opacity={0.85} />
+      {/* La otra solapa, de abajo, y un puñito que asoma por el borde */}
+      <path d="M118,120 C60,170 -10,196 -70,204" fill="none" stroke={manta[0]} strokeWidth={8} strokeLinecap="round" opacity={0.55} />
+      <circle cx={46} cy={66} r={21} fill={piel[0]} /><circle cx={43} cy={63} r={17} fill={piel[1]} />
+      <path d="M35,57 Q43,53 51,57" fill="none" stroke={piel[0]} strokeWidth={4} strokeLinecap="round" />
+    </g>
+  );
+}
+
 /** Incubadora: cúpula transparente con dos ventanillas, colchón y base con ruedas. Colchón a y = 0; ocupa x ±330. */
 export function Incubadora({ x, y, k = 1, o = 1, children, luz = 0 }: { x: number; y: number; k?: number; o?: number; children?: ReactNode; luz?: number }) {
   if (o <= 0.002) return null;

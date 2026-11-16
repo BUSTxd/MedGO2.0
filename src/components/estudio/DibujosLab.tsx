@@ -11,6 +11,7 @@ import * as CT from '@/app/dashboard/laboratorio/citopenias-autoinmunes/Piezas';
 import * as VS from '@/app/dashboard/laboratorio/vasculitis-anca/Piezas';
 import * as GN from '@/app/dashboard/laboratorio/gramnegativas/Piezas';
 import * as BI from '@/app/dashboard/laboratorio/bilirrubina/Piezas';
+import { BebeRetrato } from '@/app/dashboard/laboratorio/bilirrubina/Escenas';
 import { srcImagen as linfocitos } from '@/lib/data/linfocitos/imagenes';
 import { srcPropia as hipersensibilidad } from '@/lib/data/hipersensibilidad/imagenes';
 import type { DibujoLab } from '@/lib/data/clases/tipos';
@@ -51,7 +52,7 @@ const PIEZAS: Record<DibujoLab, Pieza> = {
   hemo: { pieza: () => <BI.Tetrapirrol abre={0} fe={1} tono={BI.B.hemo} /> },
   bilirrubina: { pieza: () => <BI.Tetrapirrol plegada={1} /> },
   conjugada: { pieza: () => <BI.Tetrapirrol colitas={2} tono={BI.B.conjugada} /> },
-  bebe: { pieza: () => <BI.Rostro quien="bebe" piel={['#D9A21E', '#F2C94C']} /> },
+  bebe: { pieza: () => <BebeRetrato /> },
 };
 
 /** Una pieza del lienzo, encuadrada a su contorno real (con un margen). */
