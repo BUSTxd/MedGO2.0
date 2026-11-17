@@ -86,6 +86,10 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey | Requisi
   // con el mismo requisito que el lab. La arma
   // scripts/poligono-willis/practica/ensamblar.mjs; la fuente no va a git.
   'neurologia/willis-practica': { plan: { tramo: 'medicina', nivel: 'completo' } },
+  // Práctica del lab Tronco encefálico 3D (superficie, pares, núcleos y
+  // clínico), con el mismo requisito que el lab. La arma
+  // scripts/tronco-encefalico/practica.mjs; la fuente no va a git.
+  'neurologia/tronco-practica': { plan: { tramo: 'medicina', nivel: 'completo' } },
   // El mismo banco en tarjetas de memoria (Banqueo de la Evaluación 1), con
   // scripts/examen-ms/tarjetas.mjs. Mismo plan, sin muestra.
   'aparato-locomotor/practico-ms-tarjetas': {},

@@ -27,6 +27,8 @@ export interface SceneProps {
   sindrome: Sindrome | null;
   /** Estructura de la ficha clínica bajo el puntero (se resalta). */
   signo: string | null;
+  /** En la práctica: colores neutros y la corrección en verde (respuesta) y rojo (error). */
+  practica: Marcas | null;
   mostrarNervios: boolean;
   mostrarVias: boolean;
   etiquetas: boolean;
@@ -41,10 +43,14 @@ export interface SceneProps {
 // ── Colores ─────────────────────────────────────────────────────────────────
 
 const TEJIDO = new THREE.Color('#e8d3c3');
+const SUELO = '#ddc4bf';
 const BASE_ETQ: Record<string, string> = {
-  fosa_romboidea: '#dcc1bd', eminencia_medial: '#e0c6c0', coliculo_facial: '#e3c9c0', area_vestibular: '#dbc2be',
-  trigono_hipogloso: '#dec3be', trigono_vago: '#cfb5b6', area_postrema: '#d6aeb2', estrias_medulares: '#f0e4d8',
-  locus_coeruleus: '#a8b2d6', coliculo_superior: '#e2c9b8', coliculo_inferior: '#e2c9b8', pineal: '#d9a69c',
+  // Suelo del IV ventrículo: un solo tono. Sus campos (vago, hipogloso,
+  // vestibular, locus coeruleus…) se distinguen al tocarlos, no por color:
+  // con tonos propios salían bordes rectos y el locus parecía señalado.
+  fosa_romboidea: SUELO, eminencia_medial: SUELO, coliculo_facial: SUELO, area_vestibular: SUELO,
+  trigono_hipogloso: SUELO, trigono_vago: SUELO, area_postrema: SUELO, locus_coeruleus: SUELO,
+  estrias_medulares: '#efe3d6', coliculo_superior: '#e2c9b8', coliculo_inferior: '#e2c9b8', pineal: '#d9a69c',
   mamilar: '#e6cbbb', cintilla_optica: '#efe3d2', oliva: '#e3cab8', corte_pcm: '#f3ebdf', corte_pci: '#f3ebdf',
   corte_pcs: '#f3ebdf', corte_inferior: '#efe6da', talamo: '#dfc7b8', pulvinar: '#dfc7b8',
 };
@@ -56,7 +62,11 @@ function idDe(e: Elegido): string | null {
 }
 
 /** Pinta el tronco: tejido × oclusión, y el tinte de lo elegido y lo señalado. */
-function colorear(geo: THREE.BufferGeometry, elegido: string | null, senalado: string | null, clinico: Set<string>) {
+export interface Marcas { ok: Set<string>; mal: Set<string> }
+const VERDE = '#2f9e44';
+const ROJO = '#e03131';
+
+function colorear(geo: THREE.BufferGeometry, elegido: string | null, senalado: string | null, clinico: Set<string>, marcas: Marcas | null = null) {
   const etq = geo.userData.etq as Uint16Array;
   const etiquetas = geo.userData.etiquetas as string[];
   const ao = geo.getAttribute('ao') as THREE.BufferAttribute;
@@ -67,6 +77,8 @@ function colorear(geo: THREE.BufferGeometry, elegido: string | null, senalado: s
   const tinte = etiquetas.map((e) => {
     const est = estructuraDe(e);
     if (!est) return null;
+    if (marcas?.ok.has(est.id)) return { c: new THREE.Color(VERDE), f: 0.6 };
+    if (marcas?.mal.has(est.id)) return { c: new THREE.Color(ROJO), f: 0.6 };
     if (clinico.has(est.id)) return { c: new THREE.Color('#7c5cd6'), f: 0.5 };
     if (est.id === elegido) return { c: COLOR_GRUPO[est.grupo], f: 0.5 };
     if (est.id === senalado) return { c: COLOR_GRUPO[est.grupo], f: 0.3 };
@@ -274,20 +286,21 @@ const ROTULOS: Array<{ id: string; p: [number, number, number]; n: [number, numb
 
 // ── Piezas de la escena ─────────────────────────────────────────────────────
 
-function Tronco({ geo, fantasma, elegido, senalado, clinico, plano, oscuro, onElegir, onSenalar }: {
+function Tronco({ geo, fantasma, elegido, senalado, clinico, marcas, plano, oscuro, onElegir, onSenalar }: {
   geo: THREE.BufferGeometry;
   /** Funda de cristal (para ver el interior). */
   fantasma: boolean;
   elegido: string | null;
   senalado: string | null;
   clinico: Set<string>;
+  marcas: Marcas | null;
   plano: THREE.Plane | null;
   oscuro: boolean;
   onElegir: (e: Elegido) => void;
   onSenalar: (e: Elegido) => void;
 }) {
   const ultimo = useRef<string | null>(null);
-  useEffect(() => { colorear(geo, elegido, senalado, clinico); }, [geo, elegido, senalado, clinico]);
+  useEffect(() => { colorear(geo, elegido, senalado, clinico, marcas); }, [geo, elegido, senalado, clinico, marcas]);
   const ghost = useFantasma(oscuro ? '#b8c4ff' : '#7d6a8a', oscuro ? 0.75 : 0.85);
   const ghostArriba = useFantasma(oscuro ? '#b8c4ff' : '#7d6a8a', 0.5, plano ? new THREE.Plane(new THREE.Vector3(0, 1, 0), -plano.constant) : undefined);
   const solido = useMemo(() => new THREE.MeshPhysicalMaterial({
@@ -402,7 +415,7 @@ function Cerebelo({ estado, ligero, oscuro, elegido, onElegir, onSenalar }: {
 }
 
 /** Pares craneales (los dos lados). */
-function Nervios({ campo, modo, elegido, senalado, apagado, resaltar, plano, onElegir, onSenalar, etiquetas }: {
+function Nervios({ campo, modo, elegido, senalado, apagado, resaltar, marcas, plano, onElegir, onSenalar, etiquetas }: {
   campo: ReturnType<typeof modeloTronco>['campo'];
   modo: Modo;
   elegido: Elegido;
@@ -410,6 +423,7 @@ function Nervios({ campo, modo, elegido, senalado, apagado, resaltar, plano, onE
   apagado: boolean;
   /** Pares dañados por el síndrome (lado izquierdo): se ven aunque todo esté apagado. */
   resaltar: Set<string>;
+  marcas: Marcas | null;
   plano: THREE.Plane | null;
   onElegir: (e: Elegido) => void;
   onSenalar: (e: Elegido) => void;
@@ -417,14 +431,15 @@ function Nervios({ campo, modo, elegido, senalado, apagado, resaltar, plano, onE
 }) {
   const geos = useMemo(() => NERVIOS.flatMap((n) => (['i', 'd'] as const).map((lado) => ({ n, lado, geo: geometriaNervio(n, lado, campo) }))), [campo]);
   useEffect(() => () => geos.forEach((g) => g.geo.dispose()), [geos]);
-  const colorear = modo !== 'anatomia';
+  // En la práctica van en color neutro: el color no debe delatar qué par es.
+  const colorear = modo !== 'anatomia' && !marcas;
   return (
     <>
       {geos.map(({ n, lado, geo }) => {
         const esElegido = elegido?.kind === 'nervio' && elegido.id === n.id;
         const esSenalado = senalado?.kind === 'nervio' && senalado.id === n.id;
         const hayElegido = elegido?.kind === 'nervio';
-        const base = colorear ? n.color : '#efe2cc';
+        const base = marcas?.ok.has(n.id) ? VERDE : marcas?.mal.has(n.id) ? ROJO : colorear ? n.color : '#efe2cc';
         const danado = lado === 'i' && resaltar.has(n.id);
         const tenue = (apagado && !danado) || (hayElegido && !esElegido && modo === 'nervios');
         return (
@@ -436,7 +451,7 @@ function Nervios({ campo, modo, elegido, senalado, apagado, resaltar, plano, onE
             onClick={(e) => { if (apagado) return; e.stopPropagation(); onElegir({ kind: 'nervio', id: n.id, lado }); }}
           >
             <meshPhysicalMaterial
-              color={esElegido || esSenalado ? (colorear ? n.color : '#f2b631') : base}
+              color={(esElegido || esSenalado) && !marcas?.ok.has(n.id) && !marcas?.mal.has(n.id) ? (colorear ? n.color : '#f2b631') : base}
               emissive={esElegido ? n.color : '#000000'}
               emissiveIntensity={esElegido ? 0.25 : 0}
               roughness={0.5}
@@ -459,12 +474,13 @@ function Nervios({ campo, modo, elegido, senalado, apagado, resaltar, plano, onE
 }
 
 /** Núcleos y vías (o solo los de un par, o los de un síndrome). */
-function Interior({ ids, elegido, senalado, clinico, signo, onElegir, onSenalar, interactivo }: {
+function Interior({ ids, elegido, senalado, clinico, marcas, signo, onElegir, onSenalar, interactivo }: {
   ids: string[];
   elegido: Elegido;
   senalado: Elegido;
   /** En la vista clínica: estructuras dañadas (el resto, apagado). */
   clinico: Map<string, Set<string>> | null;
+  marcas: Marcas | null;
   signo: string | null;
   onElegir: (e: Elegido) => void;
   onSenalar: (e: Elegido) => void;
@@ -490,7 +506,9 @@ function Interior({ ids, elegido, senalado, clinico, signo, onElegir, onSenalar,
         // En la clínica la lesión es del lado izquierdo; lo dañado del derecho no se pinta.
         const danado = clinico ? !!clinico.get(id)?.has(lado) : true;
         const resaltado = signo === id;
-        const color = clinico && !danado ? '#9aa0ab' : x.color;
+        const color = marcas
+          ? (marcas.ok.has(id) ? VERDE : marcas.mal.has(id) ? ROJO : '#a7b4c6')
+          : clinico && !danado ? '#9aa0ab' : x.color;
         const op = x.velo ? 0.22 : clinico && !danado ? 0.16 : !clinico && x.tipo === 'via' && !esEl ? 0.7 : 1;
         return (
           <mesh
@@ -545,11 +563,12 @@ function Lesion({ s }: { s: Sindrome }) {
 }
 
 /** Tapa del corte: la imagen del corte en el plano, que se puede tocar. */
-function TapaCorte({ nivel, oscuro, etiquetas, elegido, onElegir, onSenalar }: {
+function TapaCorte({ nivel, oscuro, etiquetas, elegido, marcas, onElegir, onSenalar }: {
   nivel: string;
   oscuro: boolean;
   etiquetas: boolean;
   elegido: Elegido;
+  marcas: Marcas | null;
   onElegir: (e: Elegido) => void;
   onSenalar: (e: Elegido) => void;
 }) {
@@ -607,13 +626,16 @@ function TapaCorte({ nivel, oscuro, etiquetas, elegido, onElegir, onSenalar }: {
       </mesh>
       {corte.centros.filter((c) => {
         const it = corte.ids[c.k];
+        // En la práctica solo se rotula la corrección (la respuesta y lo tocado por error).
+        if (marcas) return (marcas.ok.has(it.id) || marcas.mal.has(it.id)) && it.lado !== 'd';
         return (etiquetas && c.area > 0.006 && it.lado !== 'd') || it.id === elegidoId;
       }).map((c) => {
         const it = corte.ids[c.k];
         const x = INTERIOR[it.id];
+        const borde = marcas ? (marcas.ok.has(it.id) ? VERDE : ROJO) : x.color;
         return (
           <Html key={c.k} position={[c.x, y + 0.05, c.z]} center zIndexRange={[4, 0]}>
-            <div style={{ ...estiloRotulo, background: oscuro ? 'rgba(13,11,40,0.88)' : 'rgba(26,26,46,0.82)', borderLeft: `3px solid ${x.color}` }}>{x.nombre.replace(/^Núcleo (del |de la |de )?/, 'N. ')}</div>
+            <div style={{ ...estiloRotulo, background: marcas ? borde : oscuro ? 'rgba(13,11,40,0.88)' : 'rgba(26,26,46,0.82)', borderLeft: `3px solid ${borde}` }}>{x.nombre.replace(/^Núcleo (del |de la |de )?/, 'N. ')}</div>
           </Html>
         );
       })}
@@ -696,6 +718,7 @@ function Escena(p: SceneProps) {
         elegido={elegidoEst}
         senalado={senaladoEst}
         clinico={p.modo === 'clinico' ? clinico : vacio}
+        marcas={p.practica}
         plano={plano}
         oscuro={p.oscuro}
         onElegir={p.onElegir}
@@ -721,6 +744,7 @@ function Escena(p: SceneProps) {
           senalado={p.senalado}
           apagado={p.modo === 'clinico' || enCorte}
           resaltar={paresDanados}
+          marcas={p.practica}
           plano={plano}
           onElegir={p.onElegir}
           onSenalar={p.onSenalar}
@@ -734,6 +758,7 @@ function Escena(p: SceneProps) {
           elegido={p.elegido}
           senalado={p.senalado}
           clinico={p.modo === 'clinico' ? copias : null}
+          marcas={p.practica}
           signo={p.signo}
           onElegir={p.onElegir}
           onSenalar={p.onSenalar}
@@ -744,7 +769,7 @@ function Escena(p: SceneProps) {
       {p.modo === 'clinico' && p.sindrome && <Lesion s={p.sindrome} />}
 
       {enCorte && (
-        <TapaCorte nivel={p.nivel} oscuro={p.oscuro} etiquetas={p.etiquetas} elegido={p.elegido} onElegir={p.onElegir} onSenalar={p.onSenalar} />
+        <TapaCorte nivel={p.nivel} oscuro={p.oscuro} etiquetas={p.etiquetas} elegido={p.elegido} marcas={p.practica} onElegir={p.onElegir} onSenalar={p.onSenalar} />
       )}
 
       {p.etiquetas && p.modo === 'anatomia' && ROTULOS.map((r) => {

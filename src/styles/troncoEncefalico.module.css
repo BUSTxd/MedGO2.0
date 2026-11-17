@@ -131,3 +131,33 @@
 :global(.dark-mode) .ladoIpsi { background: rgba(124, 92, 214, 0.25); color: #c8b8ff; }
 :global(.dark-mode) .ladoContra { background: rgba(59, 158, 221, 0.22); color: #9fd2f5; }
 :global(.dark-mode) .ladoBilateral { background: rgba(240, 238, 255, 0.1); color: #d6d3ea; }
+
+/* Botón único del cerebelo: icono, estado y tres puntos (en cuál de los tres está) */
+.cerebeloBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 196px;
+}
+.pasos {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: auto;
+  padding-left: 6px;
+}
+.paso,
+.pasoActivo {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.25;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.pasoActivo { opacity: 1; transform: scale(1.2); }
+@media (prefers-reduced-motion: reduce) {
+  .paso, .pasoActivo { transition: none; }
+}
+@media (max-width: 600px) {
+  .cerebeloBtn { min-width: 0; }
+}

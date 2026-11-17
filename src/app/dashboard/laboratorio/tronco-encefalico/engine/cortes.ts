@@ -20,7 +20,7 @@ export const NIVELES: Nivel[] = [
   { id: 'mes_sup', nombre: 'Mesencéfalo superior', corto: 'Mes. sup.', y: 3.74, claves: 'Colículo superior, núcleo del III y Edinger-Westphal, núcleo rojo, sustancia negra y pie peduncular.' },
   { id: 'mes_inf', nombre: 'Mesencéfalo inferior', corto: 'Mes. inf.', y: 3.12, claves: 'Colículo inferior, núcleo del IV y la decusación de los pedúnculos cerebelosos superiores.' },
   { id: 'pue_sup', nombre: 'Puente medio', corto: 'Puente med.', y: 1.55, claves: 'Núcleos motor y sensitivo principal del V y su raíz; base del puente con los haces corticoespinales.' },
-  { id: 'pue_inf', nombre: 'Puente inferior', corto: 'Puente inf.', y: 0.95, claves: 'Colículo facial: núcleo del VI y rodilla del VII; núcleo del facial; núcleos vestibulares.' },
+  { id: 'pue_inf', nombre: 'Puente inferior', corto: 'Puente inf.', y: 1.0, claves: 'Colículo facial: núcleo del VI y rodilla del VII; núcleo del facial; núcleos vestibulares.' },
   { id: 'bul_sup', nombre: 'Bulbo abierto (olivar)', corto: 'Bulbo olivar', y: -0.85, claves: 'Oliva inferior, núcleos del XII, dorsal del vago, solitario y ambiguo; pirámides y lemnisco medial.' },
   { id: 'bul_med', nombre: 'Bulbo cerrado: decusación sensitiva', corto: 'Dec. sensitiva', y: -1.55, claves: 'Núcleos grácil y cuneiforme; las fibras arcuatas internas cruzan y forman el lemnisco medial.' },
   { id: 'bul_inf', nombre: 'Bulbo bajo: decusación piramidal', corto: 'Dec. motora', y: -2.75, claves: 'Las fibras corticoespinales cruzan la línea media hacia el cordón lateral de la médula.' },

@@ -19,8 +19,13 @@ import { NERVIO } from './engine/nervios';
 import { INTERIOR, COLUMNAS, type ParId } from './engine/interior';
 import { SINDROME } from './engine/clinica';
 import { NIVEL } from './engine/cortes';
+import { usePractica } from './practica/usePractica';
+import TarjetaPractica from './practica/TarjetaPractica';
+import PanelPractica from './practica/PanelPractica';
 import styles from '@/styles/medulaEspinal.module.css';
 import ws from '@/styles/poligonoWillis.module.css';
+import ts from '@/styles/troncoEncefalico.module.css';
+import pstyles from '@/styles/medulaPractica.module.css';
 
 const TroncoScene = dynamic(() => import('./TroncoScene'), {
   ssr: false,
@@ -73,6 +78,9 @@ function hayWebGL(): boolean {
 
 const LADO = { i: 'izquierdo', d: 'derecho' } as const;
 
+/** Vista del lab que corresponde a cada vista de la práctica. */
+const MODO_DE_VISTA = { superficie: 'anatomia', nervios: 'nervios', nucleos: 'nucleos', corte: 'cortes' } as const;
+
 /** Rótulo del lienzo: nombre y una línea de contexto. */
 function rotuloDe(e: Elegido): { color: string; titulo: string; sub: string } | null {
   if (!e) return null;
@@ -97,7 +105,7 @@ function rotuloDe(e: Elegido): { color: string; titulo: string; sub: string } | 
 }
 
 /** Selector de vista flotante arriba a la izquierda (como el atlas 3D). */
-function VistasEscena({ modo, onModo }: { modo: Modo; onModo: (m: Modo) => void }) {
+function VistasEscena({ modo, onModo }: { modo: Modo | null; onModo: (m: Modo) => void }) {
   return (
     <div className={styles.vistas} role="group" aria-label="Vista">
       {MODOS.map(({ key, label, desc }) => (
@@ -117,10 +125,56 @@ function VistasEscena({ modo, onModo }: { modo: Modo; onModo: (m: Modo) => void 
 }
 
 const CEREBELO: Array<{ key: EstadoCerebelo; label: string; desc: string }> = [
-  { key: 'retirado', label: 'Sin cerebelo', desc: 'Pedúnculos cortados: se ve la fosa romboidea (IV ventrículo)' },
-  { key: 'translucido', label: 'Cristal', desc: 'El cerebelo transparente, en su sitio' },
-  { key: 'sitio', label: 'Con cerebelo', desc: 'El cerebelo en su sitio: tapa la cara posterior' },
+  { key: 'retirado', label: 'Sin cerebelo', desc: 'pedúnculos cortados: se ve la fosa romboidea (IV ventrículo)' },
+  { key: 'translucido', label: 'Cerebelo de cristal', desc: 'el cerebelo transparente, en su sitio' },
+  { key: 'sitio', label: 'Con cerebelo', desc: 'el cerebelo en su sitio: tapa la cara posterior' },
 ];
+
+/**
+ * Un solo botón para el cerebelo: cada clic pasa al estado siguiente
+ * (sin cerebelo → cristal → con cerebelo → sin cerebelo). Los tres puntos
+ * dicen en cuál de los tres está.
+ */
+function BotonCerebelo({ estado, onCambio }: { estado: EstadoCerebelo; onCambio: (c: EstadoCerebelo) => void }) {
+  const k = CEREBELO.findIndex((c) => c.key === estado);
+  const actual = CEREBELO[k];
+  const sig = CEREBELO[(k + 1) % CEREBELO.length];
+  return (
+    <div className={`${ws.postura} ${ws.enFila}`}>
+      <button
+        type="button"
+        className={`${ws.posturaActiva} ${ts.cerebeloBtn}`}
+        title={`Clic: ${sig.label.toLowerCase()} (${sig.desc})`}
+        aria-label={`Cerebelo: ${actual.label}. Clic para pasar a: ${sig.label}`}
+        onClick={() => onCambio(sig.key)}
+      >
+        <IconoCerebelo estado={estado} />
+        <span>{actual.label}</span>
+        <span className={ts.pasos} aria-hidden>
+          {CEREBELO.map((c, i) => <span key={c.key} className={i === k ? ts.pasoActivo : ts.paso} />)}
+        </span>
+      </button>
+    </div>
+  );
+}
+
+/** Cerebelo de perfil: lleno (en su sitio), de contorno discontinuo (cristal) o tachado (retirado). */
+function IconoCerebelo({ estado }: { estado: EstadoCerebelo }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden>
+      <path
+        d="M4 13c0-4.4 3.6-7.5 8-7.5s8 3.1 8 7.5c0 2.6-2.4 4.5-8 4.5S4 15.6 4 13Z"
+        fill={estado === 'sitio' ? 'currentColor' : 'none'}
+        fillOpacity={0.25}
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeDasharray={estado === 'translucido' ? '2.5 2' : undefined}
+      />
+      {estado !== 'retirado' && <path d="M7 11.5c2.5-1.6 7.5-1.6 10 0M7.5 14.5c2.3-1.2 6.7-1.2 9 0" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />}
+      {estado === 'retirado' && <path d="M5 19 19 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />}
+    </svg>
+  );
+}
 
 /** Menú ☰: restablecer la vista y etiquetas. */
 function MenuVista({ etiquetas, onEtiquetas, onRestablecer }: { etiquetas: boolean; onEtiquetas: () => void; onRestablecer: () => void }) {
@@ -192,6 +246,9 @@ export default function TroncoSimulator() {
   const [tactil, setTactil] = useState(false);
   const [oscuro, setOscuro] = useState(false);
   const [listo, setListo] = useState(false);
+  const [reducido, setReducido] = useState(false);
+  const [practicando, setPracticando] = useState(false);
+  const pr = usePractica(practicando, reducido);
 
   useEffect(() => {
     const p = leerPrefs();
@@ -202,6 +259,7 @@ export default function TroncoSimulator() {
     }
     setWebgl(hayWebGL());
     setTactil(window.matchMedia?.('(pointer: coarse)').matches ?? false);
+    setReducido(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false);
     // El tema lo pone la app en <body>; se sigue en vivo para los colores del 3D.
     const leer = () => setOscuro(document.body.classList.contains('dark-mode'));
     leer();
@@ -247,11 +305,24 @@ export default function TroncoSimulator() {
     guardarPrefs('nervios', cerebelo);
   }, [cerebelo]);
 
+  const entrarPractica = useCallback(() => {
+    setElegido(null);
+    setSenalado(null);
+    setSigno(null);
+    setPracticando(true);
+  }, []);
+  const salirPractica = useCallback(() => {
+    setPracticando(false);
+    setSenalado(null);
+    setVista((v) => ({ ...v, n: v.n + 1 }));
+  }, []);
+
   const sin = sindrome ? SINDROME[sindrome] : null;
   const onListo = useCallback(() => setListo(true), []);
 
   // Rótulo: lo señalado manda; si no, lo elegido; si no, el contexto de la vista.
   const rotulo = useMemo(() => {
+    if (practicando) return null; // el nombre delataría la respuesta
     const r = rotuloDe(senalado) ?? rotuloDe(elegido);
     if (r) return r;
     if (modo === 'clinico' && sin) {
@@ -262,7 +333,7 @@ export default function TroncoSimulator() {
       return { color: '#3b9edd', titulo: n.nombre, sub: 'Toca una estructura del corte' };
     }
     return null;
-  }, [senalado, elegido, modo, sin, nivel]);
+  }, [practicando, senalado, elegido, modo, sin, nivel]);
 
   const anuncio = useMemo(() => {
     const partes = [`Vista ${MODOS.find((m) => m.key === modo)?.label ?? ''}`];
@@ -277,6 +348,27 @@ export default function TroncoSimulator() {
   const ayuda = tactil ? 'Arrastra para girar · pellizca para acercar' : 'Arrastra para girar · rueda para acercar';
   const conCerebelo = modo === 'anatomia' || modo === 'nervios';
 
+  // En la práctica, la escena la decide la pregunta en curso: su vista, desde
+  // dónde se mira, sin cerebelo, sin etiquetas ni selección y en colores neutros.
+  const esc = practicando ? pr.escena : null;
+  const modoEscena: Modo = esc ? MODO_DE_VISTA[esc.vista] : modo;
+  const vistaPractica = useMemo(
+    () => ({ cual: (esc?.vista === 'corte' ? 'superior' : esc?.mirar ?? 'anterior') as Vista, n: 1000 + pr.i }),
+    [esc?.vista, esc?.mirar, pr.i],
+  );
+  const sinMarcas = useMemo(() => ({ ok: new Set<string>(), mal: new Set<string>() }), []);
+  const responderSenalar = pr.responderSenalar;
+  const tocarEnPractica = useCallback((e: Elegido) => {
+    if (!e || !esc?.interactivo) return;
+    // Solo cuenta lo que la pregunta pide tocar: si piden un nervio, rozar el
+    // tronco no es un error.
+    const pide = esc.vista === 'superficie' ? 'estructura' : esc.vista === 'nervios' ? 'nervio' : 'interior';
+    if (e.kind !== pide) return;
+    // Una cara de corte cuenta como su pedúnculo.
+    const id = e.kind === 'estructura' ? (estructuraDe(e.id)?.id ?? e.id) : e.id;
+    responderSenalar(id);
+  }, [esc, responderSenalar]);
+
   return (
     <div className={styles.lab}>
       <p className={styles.srOnly} aria-live="polite">{anuncio}</p>
@@ -289,22 +381,23 @@ export default function TroncoSimulator() {
         ) : (
           <>
             <TroncoScene
-              modo={modo}
-              cerebelo={cerebelo}
-              vista={vista}
-              elegido={elegido}
+              modo={modoEscena}
+              cerebelo={practicando ? 'retirado' : cerebelo}
+              vista={practicando ? vistaPractica : vista}
+              elegido={practicando ? null : elegido}
               senalado={senalado}
-              nivel={nivel}
-              sindrome={sin}
-              signo={signo}
-              mostrarNervios={mostrarNervios}
+              nivel={esc?.nivel ?? nivel}
+              sindrome={practicando ? null : sin}
+              signo={practicando ? null : signo}
+              practica={practicando ? esc ?? sinMarcas : null}
+              mostrarNervios={practicando ? esc?.vista === 'nervios' : mostrarNervios}
               mostrarVias={mostrarVias}
-              etiquetas={etiquetas}
+              etiquetas={practicando ? false : etiquetas}
               ligero={tactil}
               oscuro={oscuro}
-              onElegir={elegir}
+              onElegir={practicando ? tocarEnPractica : elegir}
               onSenalar={setSenalado}
-              onDeseleccionar={() => setElegido(null)}
+              onDeseleccionar={() => { if (!practicando) setElegido(null); }}
               onListo={onListo}
             />
             {!listo && (
@@ -332,31 +425,47 @@ export default function TroncoSimulator() {
           onRestablecer={() => setVista((v) => ({ cual: modo === 'cortes' ? 'superior' : v.cual, n: v.n + 1 }))}
         />
 
-        <VistasEscena modo={modo} onModo={cambiarModo} />
+        <VistasEscena modo={practicando ? null : modo} onModo={(m) => { if (practicando) salirPractica(); cambiarModo(m); }} />
 
-        {/* Cerebelo: abajo a la izquierda, como la postura de Willis. */}
-        {conCerebelo && (
-          <div className={ws.piso}>
-            <div className={`${ws.postura} ${ws.enFila}`} role="group" aria-label="Cerebelo">
-              {CEREBELO.map((c) => (
-                <button
-                  key={c.key}
-                  type="button"
-                  title={c.desc}
-                  aria-pressed={cerebelo === c.key}
-                  className={cerebelo === c.key ? ws.posturaActiva : ws.posturaBtn}
-                  onClick={() => cambiarCerebelo(c.key)}
-                >
-                  {c.label}
-                </button>
-              ))}
+        {practicando && pr.fase === 'jugando' && <TarjetaPractica pr={pr} />}
+
+        {/* Al entrar: el mismo mazo barajándose que las otras prácticas */}
+        {practicando && pr.fase === 'cargando' && (
+          <div className={pstyles.veloCarga}>
+            <div className={pstyles.cargando} role="status" aria-live="polite">
+              <div className={pstyles.cargandoMazo} aria-hidden>
+                <span /><span /><span />
+              </div>
+              <p>Preparando tu práctica…</p>
             </div>
           </div>
         )}
 
+        {/* Abajo a la izquierda: Practicar (o Salir) y el cerebelo, como en Willis. */}
+        <div className={ws.piso}>
+          <button
+            type="button"
+            className={`${styles.practicarBtn} ${ws.enFila} ${practicando ? styles.practicarSalir : styles.practicarAviso}`}
+            onClick={practicando ? salirPractica : entrarPractica}
+            title={practicando ? 'Volver al modelo' : 'Preguntas: toca en el modelo o elige la alternativa'}
+          >
+            {!practicando && (
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 4h6M10 4v3M14 4v3M6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+                <path d="m9 14 2 2 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
+            {practicando ? 'Salir' : 'Practicar'}
+          </button>
+          {!practicando && conCerebelo && <BotonCerebelo estado={cerebelo} onCambio={cambiarCerebelo} />}
+        </div>
+
         <span className={styles.zoomHint}>{ayuda}</span>
       </div>
 
+      {practicando ? (
+        <PanelPractica pr={pr} onSalir={salirPractica} />
+      ) : (
       <ControlsPanel
         modo={modo}
         vista={vista.cual}
@@ -383,6 +492,7 @@ export default function TroncoSimulator() {
         onVerInterior={verInterior}
         onVerNervio={verNervio}
       />
+      )}
     </div>
   );
 }

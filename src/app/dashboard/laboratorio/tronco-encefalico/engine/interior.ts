@@ -114,7 +114,7 @@ const lista: Interior[] = [
     funcion: 'Motoneuronas del recto lateral e interneuronas que, por el FLM contrario, activan el recto medial del otro ojo: es el centro de la mirada horizontal.',
     lesion: 'Lesión del núcleo: parálisis de la mirada horizontal hacia ese lado (no solo del recto lateral).',
     perla: 'Nervio = no abduce un ojo; núcleo = ningún ojo mira hacia ese lado.',
-    prims: [elip('n_abducens', [0.2, 1.05, -0.42], [0.08, 0.1, 0.07])],
+    prims: [elip('n_abducens', [0.2, 1.05, -0.42], [0.08, 0.12, 0.07])],
   },
   {
     id: 'n_facial', nombre: 'Núcleo motor del facial', tipo: 'nucleo_par', columna: 'eve', pares: ['VII'], color: COLUMNAS.eve.color,
@@ -122,7 +122,7 @@ const lista: Interior[] = [
     funcion: 'Músculos de la mímica, estapedio, estilohioideo y vientre posterior del digástrico.',
     lesion: 'Parálisis facial periférica: toda la hemicara del mismo lado (frente incluida).',
     perla: 'La parte del núcleo que mueve la frente recibe corteza de los dos lados: una lesión central respeta la frente.',
-    prims: [elip('n_facial', [0.5, 0.6, -0.06], [0.1, 0.18, 0.1])],
+    prims: [elip('n_facial', [0.5, 0.78, -0.06], [0.1, 0.26, 0.1])],
   },
   {
     id: 'n_salivatorio_sup', nombre: 'Núcleo salivatorio superior', tipo: 'nucleo_par', columna: 'evg', pares: ['VII'], color: COLUMNAS.evg.color,
@@ -323,7 +323,7 @@ const lista: Interior[] = [
     nivel: 'Del núcleo del facial suben y rodean el núcleo del VI antes de salir.',
     funcion: 'Motricidad facial.',
     lesion: 'Parálisis facial periférica del mismo lado (Millard-Gubler, Foville).',
-    prims: [tubo('f_facial', [[0.5, 0.62, -0.08], [0.32, 0.86, -0.36], [0.2, 1.16, -0.5], [0.3, 1.06, -0.42], [0.62, 0.55, -0.12], [0.9, 0.2, 0.02]], 0.03)],
+    prims: [tubo('f_facial', [[0.5, 0.86, -0.08], [0.32, 0.9, -0.36], [0.2, 1.16, -0.5], [0.3, 1.06, -0.42], [0.62, 0.55, -0.12], [0.9, 0.2, 0.02]], 0.03)],
   },
   {
     id: 'f_hipogloso', nombre: 'Fibras del XII dentro del bulbo', tipo: 'fibras', pares: ['XII'], color: '#1098ad',

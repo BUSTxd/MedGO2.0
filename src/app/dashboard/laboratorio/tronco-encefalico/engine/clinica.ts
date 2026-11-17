@@ -139,7 +139,7 @@ export const SINDROMES: Sindrome[] = [
     id: 'aica', nombre: 'Síndrome pontino lateral inferior (AICA)', corto: 'AICA', nivel: 'Protuberancia', vista: 'lateral',
     arteria: 'Arteria cerebelosa anteroinferior (AICA).',
     resumen: 'Lesión lateral del puente bajo: núcleos del VII y VIII, trigémino espinal, espinotalámico, vía simpática y pedúnculo medio.',
-    lesion: [elip([0.8, 0.32, -0.22], [0.3, 0.42, 0.36])],
+    lesion: [elip([0.78, 0.42, -0.2], [0.32, 0.44, 0.38])],
     signos: [
       { id: 'n_facial', signo: 'Parálisis facial periférica', lado: 'ipsi' },
       { id: 'n_cocleares', signo: 'Hipoacusia y acúfenos', lado: 'ipsi' },

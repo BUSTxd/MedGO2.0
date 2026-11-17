@@ -8,7 +8,7 @@ Lab `tronco-encefalico` (Neurología), rehecho de cero el 2026-11-17 con la arqu
 
 **Cómo lo resuelve el lab.**
 
-1. El cerebelo es una pieza aparte que encaja sobre los cortes. El selector flotante «Sin cerebelo · Cristal · Con cerebelo» (abajo a la izquierda) lo retira (se aparta hacia atrás y se desvanece), lo vuelve transparente o lo deja en su sitio. Por defecto empieza retirado, como en el atlas.
+1. El cerebelo es una pieza aparte que encaja sobre los cortes. Un solo botón flotante (abajo a la izquierda) pasa con cada clic de «Sin cerebelo» a «Cerebelo de cristal» y a «Con cerebelo», y vuelve a empezar; tres puntos dicen en qué estado está. Al retirarlo se aparta hacia atrás y se desvanece. Por defecto empieza retirado, como en el atlas.
 2. Los tres pedúnculos terminan en una **cara plana** de corte, de color de sustancia blanca. Al tocarla, la ficha avisa de que es una superficie de disección y explica el pedúnculo. Lo mismo el corte superior (tálamos y III ventrículo) y el inferior (médula en C1).
 3. Si se mira desde «Posterior» con el cerebelo puesto, la barra lateral lo dice y ofrece retirarlo.
 4. La vista «Cristal» mantiene la relación: se ve el cerebelo transparente sobre el IV ventrículo.
@@ -40,7 +40,13 @@ Lab `tronco-encefalico` (Neurología), rehecho de cero el 2026-11-17 con la arqu
 - **Cerebelo:** forma y folias aproximadas (folias como arcos alrededor de un eje transversal); sirve de contexto, no se estudia aquí.
 - **Velo medular superior, tela coroidea y frenillo** no se modelan.
 
+## Práctica
+
+Como la de Willis: rondas de 10, señalar en el modelo o elegir alternativa, pista y repaso de falladas. Banco de 91 preguntas en `data/tronco-practica/preguntas.mjs` (fuera de git; redacción propia con los datos clásicos del examen): superficie 24, pares craneales 24, núcleos y cortes 22, clínico 21; 46 de señalar y 45 de alternativas; 20 casos. `npm run practica:tronco` comprueba que cada id exista y se pueda tocar en la vista de su pregunta (en un corte, que aparezca de verdad a ese nivel) y que el sesgo de largo cumpla la regla (hoy 4 % y 7 %). En la práctica, nervios y núcleos van en color neutro y solo cuenta el toque del tipo que pide la pregunta.
+
+Para llegar a que el corte «Puente inferior» muestre el núcleo del VI y el del facial, como en el atlas, el corte subió a y = 1,0 y el núcleo del facial se alargó hacia arriba.
+
 ## Pendiente
 
-- Práctica (como la de Médula y Willis: señalar en el modelo y casos clínicos guiados por el MIR).
+- Subir el banco (`npm run practica:tronco -- --subir`): lo lanza BUST.
 - Revisión visual de BUST en `npm run dev` (claro, oscuro y teléfono).
