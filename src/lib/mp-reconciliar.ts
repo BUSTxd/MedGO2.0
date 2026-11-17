@@ -19,6 +19,10 @@ const DIA = 24 * 60 * 60 * 1000;
  * suscripción queda al día y el perfil vencido: le pasó a una alumna el
  * 2026-11-15 con el plan Interno.
  *
+ * Escala: el cron no recorre a todos los suscriptores, solo a los vencidos con
+ * suscripción viva (`suscripciones_mp_por_revisar`), de 4 en 4 y con un tope
+ * de tiempo; quien tiene su periodo pagado por delante no cuesta nada.
+ *
  * Esto relee cada suscripción de MP viva, busca su última cuota cobrada y, si
  * el acceso pagado llega más lejos que `plan_expires_at`, lo alarga. **Nunca
  * acorta un acceso**: quitarlo sigue siendo cosa del webhook (cancelación sin
@@ -35,6 +39,8 @@ export interface CambioReconciliado {
 
 export interface ResultadoReconciliacion {
   revisadas: number;
+  /** (cron) las que no dio tiempo a revisar antes de `hastaMs`. */
+  pendientes: number;
   cambios: CambioReconciliado[];
   errores: { preapprovalId: string; error: string }[];
 }
@@ -68,45 +74,73 @@ async function venceSegunCobros(pre: PreapprovalResponse, durationDays: number):
   return npdCreible ? Math.max(porDuracion, npd) : porDuracion;
 }
 
-export async function reconciliarSuscripcionesMp(
-  opts: { soloVer?: boolean; userId?: string } = {},
-): Promise<ResultadoReconciliacion> {
-  const admin = createAdminClient();
-  const ahora = Date.now();
+/** Cuántas suscripciones se revisan a la vez (MP aguanta de sobra; Supabase también). */
+const CONCURRENCIA = 4;
 
-  let consulta = admin
+/**
+ * Las suscripciones a revisar: las de un alumno, o (cron) solo las que pueden
+ * tener un cobro sin reflejar, según `suscripciones_mp_por_revisar` (0016).
+ * Siempre la más reciente viva de cada alumno: una vieja que siga viva no
+ * puede pisar la clave de una nueva.
+ */
+async function porRevisar(opts: { userId?: string; todas?: boolean }): Promise<FilaSub[]> {
+  const admin = createAdminClient();
+  if (!opts.userId) {
+    const { data, error } = await admin.rpc('suscripciones_mp_por_revisar', { p_todas: !!opts.todas } as never);
+    if (error) throw new Error(`suscripciones_mp_por_revisar: ${error.message}`);
+    return (data ?? []) as FilaSub[];
+  }
+  const { data, error } = await admin
     .from('subscriptions')
     .select('id, user_id, plan_key, status, next_payment_date, mp_preapproval_id, created_at')
     .eq('proveedor', 'mercadopago')
     .not('mp_preapproval_id', 'is', null)
-    .neq('status', 'cancelled');
-  if (opts.userId) consulta = consulta.eq('user_id', opts.userId);
-  const { data: subs, error } = await consulta
+    .neq('status', 'cancelled')
+    .eq('user_id', opts.userId)
     .order('created_at', { ascending: false })
+    .limit(1)
     .returns<FilaSub[]>();
   if (error) throw new Error(`subscriptions: ${error.message}`);
+  return data ?? [];
+}
 
-  // Sólo la suscripción más reciente de cada alumno decide su plan: una vieja
-  // que siga viva no puede pisar la clave de una nueva.
-  const vistas = new Set<string>();
-  const ultimas = (subs ?? []).filter((s) => {
-    if (vistas.has(s.user_id)) return false;
-    vistas.add(s.user_id);
-    return true;
-  });
+/**
+ * @param opts.userId  revisa solo a ese alumno (webhook, botón, al entrar).
+ * @param opts.todas   (cron) todas las vivas, no solo las vencidas: auditoría.
+ * @param opts.hastaMs (cron) no empieza ninguna revisión pasado este instante;
+ *   lo que quede sale en `pendientes` y lo coge el día siguiente o la revisión
+ *   al entrar. Así la función nunca muere a medias por el límite de Vercel.
+ */
+export async function reconciliarSuscripcionesMp(
+  opts: { soloVer?: boolean; userId?: string; todas?: boolean; hastaMs?: number } = {},
+): Promise<ResultadoReconciliacion> {
+  const admin = createAdminClient();
+  const ahora = Date.now();
+  const ultimas = await porRevisar(opts);
 
-  const res: ResultadoReconciliacion = { revisadas: 0, cambios: [], errores: [] };
+  const res: ResultadoReconciliacion = { revisadas: 0, pendientes: 0, cambios: [], errores: [] };
 
-  for (const s of ultimas) {
-    res.revisadas++;
+  let siguiente = 0;
+  const trabajador = async () => {
+    while (siguiente < ultimas.length) {
+      if (opts.hastaMs && Date.now() > opts.hastaMs) return;
+      const s = ultimas[siguiente++];
+      res.revisadas++;
+      await revisarUna(s);
+    }
+  };
+
+  const revisarUna = async (s: FilaSub) => {
     try {
       const plan = PLANS[s.plan_key as PlanKey];
-      if (!plan) continue;
+      if (!plan) return;
       const pre = await getPreapproval(s.mp_preapproval_id);
 
       // La fila refleja lo que dice MP (por si también se perdió ese aviso).
       const npdMp = pre.next_payment_date ? new Date(pre.next_payment_date).toISOString() : null;
-      const filaCambia = pre.status !== s.status || (npdMp && npdMp !== s.next_payment_date);
+      // Se comparan instantes, no textos: la base devuelve «+00:00» y MP «Z».
+      const npdFila = s.next_payment_date ? Date.parse(s.next_payment_date) : NaN;
+      const filaCambia = pre.status !== s.status || (npdMp !== null && Date.parse(npdMp) !== npdFila);
       if (filaCambia && !opts.soloVer) {
         const upd: Record<string, unknown> = { status: pre.status };
         if (npdMp) upd.next_payment_date = npdMp;
@@ -116,7 +150,7 @@ export async function reconciliarSuscripcionesMp(
       }
 
       const vence = await venceSegunCobros(pre, plan.durationDays);
-      if (vence === null || vence <= ahora) continue;
+      if (vence === null || vence <= ahora) return;
 
       const { data: perfil } = await admin
         .from('profiles')
@@ -125,7 +159,7 @@ export async function reconciliarSuscripcionesMp(
         .maybeSingle<{ plan_expires_at: string | null }>();
       const actual = perfil?.plan_expires_at ? Date.parse(perfil.plan_expires_at) : 0;
       // Un minuto de margen: no reescribir por diferencias de redondeo.
-      if (vence <= actual + 60_000) continue;
+      if (vence <= actual + 60_000) return;
 
       const despues = new Date(vence).toISOString();
       if (!opts.soloVer) {
@@ -143,8 +177,10 @@ export async function reconciliarSuscripcionesMp(
     } catch (err) {
       res.errores.push({ preapprovalId: s.mp_preapproval_id, error: err instanceof Error ? err.message : String(err) });
     }
-  }
+  };
 
+  await Promise.all(Array.from({ length: Math.min(CONCURRENCIA, ultimas.length) }, trabajador));
+  res.pendientes = ultimas.length - res.revisadas;
   return res;
 }
 
