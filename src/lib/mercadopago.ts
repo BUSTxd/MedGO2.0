@@ -113,14 +113,17 @@ export function cuotaCobrada(ap: AuthorizedPaymentResponse): boolean {
 
 /** Todas las cuotas de una suscripción (cobradas o no). */
 export async function mpBuscarCuotas(preapprovalId: string): Promise<AuthorizedPaymentResponse[]> {
+  // Sin `limit`: MP rechaza `limit=50` («Invalid value for limit»). Se pagina
+  // con el tamaño de página que devuelva él.
   const out: AuthorizedPaymentResponse[] = [];
-  for (let offset = 0; offset < 500; offset += 50) {
+  for (let vuelta = 0; vuelta < 30; vuelta++) {
+    const qs = `preapproval_id=${encodeURIComponent(preapprovalId)}${out.length ? `&offset=${out.length}` : ''}`;
     const page = await mpFetch<{ results?: AuthorizedPaymentResponse[]; paging?: { total?: number } }>(
-      `/authorized_payments/search?preapproval_id=${encodeURIComponent(preapprovalId)}&limit=50&offset=${offset}`,
+      `/authorized_payments/search?${qs}`,
     );
     const r = page.results ?? [];
     out.push(...r);
-    if (r.length < 50 || out.length >= (page.paging?.total ?? 0)) break;
+    if (!r.length || out.length >= (page.paging?.total ?? 0)) break;
   }
   return out;
 }
