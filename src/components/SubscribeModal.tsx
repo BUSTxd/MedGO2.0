@@ -10,6 +10,7 @@ import { usePlan } from './PlanProvider';
 import { usePasarela } from './planes/usePasarela';
 import { CREEM_COBROS_ACTIVOS } from '@/lib/pasarela';
 import styles from '@/styles/subscribeModal.module.css';
+import AvisoYaPague from './planes/AvisoYaPague';
 
 // ElegirPlan importa este archivo: por `dynamic` el ciclo no se resuelve al cargar el módulo.
 const ElegirPlan = dynamic(() => import('./planes/ElegirPlan'), { ssr: false });
@@ -229,6 +230,7 @@ function PasarelaMP({ open, planKey, onClose, onCambiar }: Props) {
                   ? `Pago mensual. Compromiso mínimo de ${meses} meses.`
                   : 'Pago mensual. Cancela cuando quieras.'}
             </p>
+            <AvisoYaPague onListo={onClose} />
             {onCambiar && (
               <button type="button" className={styles.cambiar} onClick={onCambiar}>
                 ¿No estás en Perú? Paga en dólares con Creem

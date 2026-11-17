@@ -111,6 +111,26 @@ export function cuotaCobrada(ap: AuthorizedPaymentResponse): boolean {
   return ap.status === 'processed';
 }
 
+/**
+ * Un pago suelto. Solo interesa para saber de qué suscripción viene: quién
+ * paga y si cuenta lo decide `mp-reconciliar` releyendo las cuotas, nunca este
+ * objeto.
+ */
+export interface PaymentResponse {
+  id: number;
+  status?: string;
+  payer?: { email?: string | null } | null;
+  metadata?: { preapproval_id?: string | null } | null;
+  point_of_interaction?: {
+    type?: string | null;
+    transaction_data?: { subscription_id?: string | null } | null;
+  } | null;
+}
+
+export function getPayment(id: string): Promise<PaymentResponse> {
+  return mpFetch<PaymentResponse>(`/v1/payments/${encodeURIComponent(id)}`);
+}
+
 /** Todas las cuotas de una suscripción (cobradas o no). */
 export async function mpBuscarCuotas(preapprovalId: string): Promise<AuthorizedPaymentResponse[]> {
   // Sin `limit`: MP rechaza `limit=50` («Invalid value for limit»). Se pagina

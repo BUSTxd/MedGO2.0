@@ -6,6 +6,7 @@ import { PLANS, periodoDe, usdCreem, type PlanKey } from '@/lib/plans';
 import { ofertaDe, soles } from './oferta';
 import { usePasarela } from './usePasarela';
 import styles from '@/styles/subscribeModal.module.css';
+import AvisoYaPague from './AvisoYaPague';
 
 /**
  * Compra con Creem (fuera del Perú): resumen en dólares, el aviso de que Creem
@@ -86,6 +87,7 @@ export default function PagoCreem({
             ? `Pago por adelantado de ${cada} meses. Cancela la renovación cuando quieras.`
             : 'Pago mensual. Cancela cuando quieras.'}
         </p>
+        <AvisoYaPague onListo={onClose} />
         <button type="button" className={styles.cambiar} onClick={onCambiar}>
           ¿Prefieres pagar en soles? Hazlo con Mercado Pago
         </button>

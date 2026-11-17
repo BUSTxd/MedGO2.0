@@ -8,6 +8,7 @@ import { ofertasPara } from './oferta';
 import { usePasarela } from './usePasarela';
 import { CREEM_COBROS_ACTIVOS } from '@/lib/pasarela';
 import styles from './elegirPlan.module.css';
+import AvisoYaPague from './AvisoYaPague';
 
 // El SDK de Mercado Pago sólo baja si alguien elige un plan que ya está a la venta.
 const SubscribeModal = dynamic(() => import('@/components/SubscribeModal'), { ssr: false });
@@ -52,6 +53,7 @@ export default function ElegirPlan({ requisito, onClose }: { requisito?: Requisi
         <button type="button" className={styles.cerrar} aria-label="Cerrar" onClick={onClose}>×</button>
         <h2 id="elegir-plan-titulo" className={styles.titulo}>Elige tu plan</h2>
         <p className={styles.sub}>Todo MedGO se abre con un plan. Cuanto más tiempo te quedas, menos pagas al mes.</p>
+        <AvisoYaPague onListo={onClose} centrado />
         <div className={styles.rejilla}>
           {ofertasPara(pasarela ?? 'mercadopago', zona).map((o) => {
             const p = o.plan;

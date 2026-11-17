@@ -1,0 +1,44 @@
+/* «¿Ya pagaste tu cuota? Revisar mi pago»: una línea de texto con un enlace,
+   sin caja propia, para no competir con el precio del modal. */
+
+.aviso {
+  margin: 10px 0 4px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #475569;
+}
+
+.centrado {
+  text-align: center;
+}
+
+.enlace {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #4f46e5;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.enlace:hover { color: #3730a3; }
+.enlace:disabled { opacity: 0.6; cursor: default; text-decoration: none; }
+
+.estado {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.ok { color: #047857; }
+.mal { color: #b45309; }
+
+:global(body.dark-mode) .aviso { color: #cbd5e1; }
+:global(body.dark-mode) .enlace { color: #a5b4fc; }
+:global(body.dark-mode) .enlace:hover { color: #c7d2fe; }
+:global(body.dark-mode) .ok { color: #6ee7b7; }
+:global(body.dark-mode) .mal { color: #fcd34d; }

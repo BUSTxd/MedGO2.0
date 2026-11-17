@@ -16,6 +16,8 @@ export async function GET() {
     .eq('user_id', user.id)
     .in('status', ['authorized', 'pending'])
     .order('created_at', { ascending: false })
+    // Con dos filas vivas (una vieja sin cancelar), `maybeSingle` sin límite da error.
+    .limit(1)
     .maybeSingle();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

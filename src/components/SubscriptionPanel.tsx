@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { PLANS, mesesDe, periodoDe, unlockDateFor, type PlanKey, type ProfilePlan } from '@/lib/plans';
 import styles from '@/styles/accountPage.module.css';
+import { useRevisarPago, EstadoRevision } from './planes/AvisoYaPague';
 
 interface SubRow {
   id: string;
@@ -82,6 +83,12 @@ export default function SubscriptionPanel({
   const isLocked = unlockDate ? unlockDate.getTime() > Date.now() : false;
   const unlockLabel = unlockDate ? formatDate(unlockDate.toISOString()) : null;
 
+  // Plan vencido con la suscripción de MP viva: puede que haya pagado y el
+  // aviso no llegara. El botón pide al servidor que lo compruebe en MP.
+  const vencido = !isFree && (!expiresAt || new Date(expiresAt).getTime() <= Date.now());
+  const puedeRevisar = vencido && !!subscription && !deCreem && !isCancelled;
+  const { revisando, revision, revisar: handleRevisar } = useRevisarPago();
+
   const handleCancel = async () => {
     setBusy(true);
     setError(null);
@@ -139,12 +146,32 @@ export default function SubscriptionPanel({
           </span>
         </div>
 
-        {!isFree && expiresLabel && (
+        {!isFree && expiresLabel && !puedeRevisar && (
           <p className={styles.dateLine}>
             {isCancelled
               ? <>Tu acceso premium termina el <strong>{expiresLabel}</strong>.</>
               : <>Próximo cobro: <strong>{nextPayment ?? expiresLabel}</strong></>}
           </p>
+        )}
+
+        {puedeRevisar && (
+          <>
+            <p className={styles.dateLine}>
+              Tu acceso venció{expiresLabel ? <> el <strong>{expiresLabel}</strong></> : null}.
+              ¿Ya pagaste la cuota? Lo comprobamos con Mercado Pago.
+            </p>
+            <div className={styles.actionRow}>
+              <button
+                type="button"
+                className={styles.secondaryBtn}
+                onClick={handleRevisar}
+                disabled={revisando}
+              >
+                {revisando ? 'Revisando…' : 'Ya pagué, revisar'}
+              </button>
+            </div>
+            <EstadoRevision revision={revision} />
+          </>
         )}
 
         {isFree && (

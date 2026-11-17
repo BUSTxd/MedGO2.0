@@ -6,10 +6,12 @@ import {
   cuotaCobrada,
   getPreapproval,
   getAuthorizedPaymentConEspera,
+  getPayment,
   verifyWebhookSignature,
   type AuthorizedPaymentResponse,
 } from '@/lib/mercadopago';
 import { PLANS, type PlanKey } from '@/lib/plans';
+import { reconciliarSuscripcionesMp } from '@/lib/mp-reconciliar';
 
 /**
  * Una notificación de un preapproval tan reciente que /create aún no insertó su
@@ -48,11 +50,13 @@ export async function POST(req: Request) {
   }
 
   const type = payload?.type ?? '';
+  if (!dataId) return NextResponse.json({ ok: true, ignored: 'no data.id' });
+
+  if (type === 'payment') return avisoDePago(dataId);
+
   if (!['subscription_preapproval', 'subscription_authorized_payment'].includes(type)) {
     return NextResponse.json({ ok: true, ignored: type });
   }
-
-  if (!dataId) return NextResponse.json({ ok: true, ignored: 'no data.id' });
 
   let preapproval;
   let cuota: AuthorizedPaymentResponse | null = null;
@@ -147,9 +151,22 @@ export async function POST(req: Request) {
    *   - notificación de suscripción → cuenta si MP registra alguna cuota cobrada.
    */
   const cobradas = preapproval.summarized?.charged_quantity ?? 0;
-  const pagado = cuota ? cuotaCobrada(cuota) : cobradas > 0;
+  // Solo un aviso de CUOTA puede dar acceso por sí mismo. Antes un aviso de
+  // suscripción contaba con `charged_quantity > 0`, es decir, con cualquier
+  // cuota cobrada alguna vez: alguien con la tarjeta rechazada este mes que
+  // recibiera un aviso (p. ej. al cambiar la tarjeta) se llevaba el mes gratis.
+  const pagado = cuota ? cuotaCobrada(cuota) : false;
 
-  if (preapproval.status === 'authorized' && pagado) {
+  if (preapproval.status === 'authorized' && !cuota) {
+    // Aviso de suscripción: que decida la revisión, que mira la ÚLTIMA cuota
+    // cobrada y solo alarga lo que de verdad se pagó.
+    const r = await reconciliarSuscripcionesMp({ userId: existing.user_id });
+    if (r.cambios.length) revalidatePath('/dashboard', 'layout');
+    if (r.errores.length) {
+      console.error('[mp webhook] revisión tras aviso de suscripción, errores', JSON.stringify(r.errores));
+      return NextResponse.json({ error: 'reconcile failed' }, { status: 502 });
+    }
+  } else if (preapproval.status === 'authorized' && pagado) {
     const plan = PLANS[existing.plan_key as PlanKey];
     const base = cuota?.debit_date ? Date.parse(cuota.debit_date) : nowMs;
     const vence = mpNpdValid
@@ -186,5 +203,67 @@ export async function POST(req: Request) {
     }
   }
 
+  return NextResponse.json({ ok: true });
+}
+
+/**
+ * Aviso `payment`: un cobro suelto, como el de una cuota fallida que el alumno
+ * paga a mano desde su app. Antes se ignoraba y su acceso esperaba al cron.
+ *
+ * No se fía del pago para dar acceso: solo lo usa para saber de qué alumno es
+ * y le pasa `reconciliarSuscripcionesMp`, que relee sus cuotas en MP y solo
+ * alarga si hay una cobrada. Un aviso falso o reenviado no puede abrir nada.
+ */
+async function avisoDePago(paymentId: string) {
+  let pago;
+  try {
+    pago = await getPayment(paymentId);
+  } catch (err) {
+    if (err instanceof MpError && err.status === 404) {
+      return NextResponse.json({ ok: true, ignored: 'payment 404' });
+    }
+    console.error('[mp webhook] payment fetch failed', err);
+    return NextResponse.json({ error: 'mp fetch failed' }, { status: 502 });
+  }
+  if (pago.status !== 'approved') return NextResponse.json({ ok: true, ignored: `payment ${pago.status}` });
+
+  const admin = createAdminClient();
+  const preId = pago.point_of_interaction?.transaction_data?.subscription_id ?? pago.metadata?.preapproval_id ?? null;
+
+  let userId: string | null = null;
+  if (preId) {
+    const { data } = await admin
+      .from('subscriptions')
+      .select('user_id')
+      .eq('mp_preapproval_id', preId)
+      .maybeSingle<{ user_id: string }>();
+    userId = data?.user_id ?? null;
+  }
+  if (!userId && pago.payer?.email) {
+    // Respaldo por correo, con igualdad exacta (no `ilike`: un correo puede
+    // llevar `*` o `%`, que harían de comodín). Aunque acertara con otro
+    // alumno, solo le revisaría su propia suscripción: nunca le regala nada.
+    const { data } = await admin
+      .from('subscriptions')
+      .select('user_id')
+      .eq('proveedor', 'mercadopago')
+      .eq('payer_email', pago.payer.email.trim().toLowerCase())
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle<{ user_id: string }>();
+    userId = data?.user_id ?? null;
+  }
+  if (!userId) return NextResponse.json({ ok: true, ignored: 'payment sin suscripción' });
+
+  const res = await reconciliarSuscripcionesMp({ userId });
+  if (res.cambios.length) {
+    console.warn('[mp webhook] pago suelto reflejado:', JSON.stringify(res.cambios));
+    revalidatePath('/dashboard', 'layout');
+  }
+  if (res.errores.length) {
+    // Fallo transitorio de MP: que reenvíe el aviso.
+    console.error('[mp webhook] pago suelto, errores', JSON.stringify(res.errores));
+    return NextResponse.json({ error: 'reconcile failed' }, { status: 502 });
+  }
   return NextResponse.json({ ok: true });
 }

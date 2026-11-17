@@ -1,3 +1,4 @@
+import { timingSafeEqual } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { reconciliarSuscripcionesMp } from '@/lib/mp-reconciliar';
@@ -13,7 +14,11 @@ export const dynamic = 'force-dynamic';
 export async function GET(req: Request) {
   const secreto = process.env.CRON_SECRET;
   if (!secreto) return NextResponse.json({ error: 'CRON_SECRET missing' }, { status: 500 });
-  if (req.headers.get('authorization') !== `Bearer ${secreto}`) {
+  // Comparación en tiempo constante: `!==` corta en el primer carácter
+  // distinto y, en teoría, deja adivinar el secreto midiendo tiempos.
+  const dado = Buffer.from(req.headers.get('authorization') ?? '');
+  const esperado = Buffer.from(`Bearer ${secreto}`);
+  if (dado.length !== esperado.length || !timingSafeEqual(dado, esperado)) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }
 

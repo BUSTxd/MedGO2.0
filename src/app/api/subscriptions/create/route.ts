@@ -88,7 +88,8 @@ export async function POST(req: Request) {
     amount: plan.amount,
     currency: plan.currency,
     next_payment_date: expiresAt.toISOString(),
-    payer_email: payerEmail,
+    // Normalizado: el webhook de pagos sueltos busca por igualdad exacta.
+    payer_email: payerEmail.trim().toLowerCase(),
   });
   if (insertErr) {
     console.error('[subs/create] insert error', insertErr);
