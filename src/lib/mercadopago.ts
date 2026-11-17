@@ -111,6 +111,20 @@ export function cuotaCobrada(ap: AuthorizedPaymentResponse): boolean {
   return ap.status === 'processed';
 }
 
+/** Todas las cuotas de una suscripción (cobradas o no). */
+export async function mpBuscarCuotas(preapprovalId: string): Promise<AuthorizedPaymentResponse[]> {
+  const out: AuthorizedPaymentResponse[] = [];
+  for (let offset = 0; offset < 500; offset += 50) {
+    const page = await mpFetch<{ results?: AuthorizedPaymentResponse[]; paging?: { total?: number } }>(
+      `/authorized_payments/search?preapproval_id=${encodeURIComponent(preapprovalId)}&limit=50&offset=${offset}`,
+    );
+    const r = page.results ?? [];
+    out.push(...r);
+    if (r.length < 50 || out.length >= (page.paging?.total ?? 0)) break;
+  }
+  return out;
+}
+
 export function getAuthorizedPayment(paymentId: string): Promise<AuthorizedPaymentResponse> {
   return mpFetch<AuthorizedPaymentResponse>(
     `/authorized_payments/${encodeURIComponent(paymentId)}`,

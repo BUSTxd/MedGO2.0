@@ -5,6 +5,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { isAdminEmail, tieneAccesoTotal } from './admin';
 import type { PlanState, ProfilePlan } from './plans';
 import { checkDevice, getDeviceId } from './sessions';
+import { reconciliarAlEntrar } from './mp-reconciliar';
 
 /**
  * Vive aquí y no en `plans.ts` porque consulta `lib/admin`: `plans.ts` lo
@@ -26,16 +27,25 @@ export async function getUserPlanState(supabase: SupabaseClient): Promise<PlanSt
     return { plan: 'residente', isActive: true, expiresAt: null, allAccess: true };
   }
 
-  const { data } = await supabase
-    .from('profiles')
-    .select('plan, plan_expires_at')
-    .eq('id', user.id)
-    .maybeSingle();
+  const leer = async (): Promise<PlanState> => {
+    const { data } = await supabase
+      .from('profiles')
+      .select('plan, plan_expires_at')
+      .eq('id', user.id)
+      .maybeSingle();
+    const plan: ProfilePlan = (data?.plan as ProfilePlan) ?? 'free';
+    const expiresAt = data?.plan_expires_at ? new Date(data.plan_expires_at) : null;
+    const isActive = plan !== 'free' && (expiresAt ? expiresAt.getTime() > Date.now() : false);
+    return { plan, isActive, expiresAt };
+  };
 
-  const plan: ProfilePlan = (data?.plan as ProfilePlan) ?? 'free';
-  const expiresAt = data?.plan_expires_at ? new Date(data.plan_expires_at) : null;
-  const isActive = plan !== 'free' && (expiresAt ? expiresAt.getTime() > Date.now() : false);
-  return { plan, isActive, expiresAt };
+  const estado = await leer();
+  // Vencido: quizá pagó y el webhook no lo reflejó. Se pregunta a Mercado Pago
+  // (con tope de tiempo y como mucho cada 10 min) y, si alargó, se relee.
+  if (!estado.isActive && estado.plan !== 'free' && (await reconciliarAlEntrar(user.id))) {
+    return leer();
+  }
+  return estado;
 }
 
 /**

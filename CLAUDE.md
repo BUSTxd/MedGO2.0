@@ -129,6 +129,7 @@ Todos abren lo mismo y ninguno tiene permanencia; solo cambia cada cuánto se co
 
 - El país sale de `x-vercel-ip-country` (`lib/pasarela.ts`): PE → Mercado Pago; resto → Creem. `CREEM_COBROS_ACTIVOS = false` manda todo a MP.
 - **MP:** planes creados **por API** con `scripts/mercadopago/crear-planes.mjs` (los del panel web no aparecen en la búsqueda). Un juego de IDs por entorno; solo opera en PEN.
+- **Red de seguridad del webhook de MP** (`src/lib/mp-reconciliar.ts`): el webhook solo alarga `plan_expires_at` si el aviso trae la cuota `approved`. Si llega antes o el reintento no avisa, la suscripción queda al día y el perfil vencido (pasó el 2026-11-15). Lo corrigen dos vías, que **solo alargan, nunca acortan**: el cron diario `/api/cron/suscripciones` (`vercel.json`, 6:00 Lima, `Bearer $CRON_SECRET`, `?ver=1` solo informa) y `getUserPlanState` cuando un alumno entra con el plan vencido (máx. cada 10 min y 4 s).
 - **Creem:** productos con `scripts/creem/crear-productos.mjs`. Alta por `api/webhooks/creem` (HMAC, idempotente, relee la suscripción). Es merchant of record: las páginas legales lo mencionan.
 - Correo de soporte: `CORREO` de `src/lib/contacto.ts`. **El domicilio fiscal nunca va en el repo** (`PROVEEDOR_DOMICILIO`, solo en la hoja ya registrada y su correo).
 - Libro de Reclamaciones: tabla `libro_reclamaciones`, respuesta en 15 días hábiles desde el admin.
