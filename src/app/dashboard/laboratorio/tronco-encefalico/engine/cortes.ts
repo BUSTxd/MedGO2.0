@@ -55,8 +55,10 @@ function volumenes(): Volumen[] {
     out.push({ x, lado: 'i', campo: crearCampo(x.prims, 0.05) });
     out.push({ x, lado: 'd', campo: crearCampo(x.prims.map(reflejar), 0.05) });
   }
-  // Se pintan en orden: núcleos grandes y difusos, luego núcleos, vías y fibras.
-  const orden = (v: Volumen) => (v.x.velo ? 0 : v.x.tipo === 'nucleo' ? 1 : v.x.tipo === 'nucleo_par' ? 2 : v.x.tipo === 'via' ? 3 : 4);
+  // Se pintan en orden: núcleos grandes y difusos, fibras de los pares, vías y,
+  // encima de todo, los núcleos (son lo que más se pregunta; si una fibra los
+  // tapa, quedan casi imposibles de tocar).
+  const orden = (v: Volumen) => (v.x.velo ? 0 : v.x.tipo === 'fibras' ? 1 : v.x.tipo === 'via' ? 2 : v.x.tipo === 'nucleo' ? 3 : 4);
   out.sort((a, b) => orden(a) - orden(b));
   cacheVol = out;
   return out;
@@ -70,7 +72,7 @@ const BLANCA_OSCURA: [number, number, number] = [222, 208, 192];
 const cacheCortes = new Map<string, Corte>();
 
 /** Imagen del corte a la altura y (resolución en píxeles por cm). La escena y la barra lateral comparten el resultado. */
-export function calcularCorte(y: number, ppcm = 90): Corte {
+export function calcularCorte(y: number, ppcm = 150): Corte {
   const clave = `${y}|${ppcm}`;
   const hecho = cacheCortes.get(clave);
   if (hecho) return hecho;
@@ -98,26 +100,38 @@ function calcular(y: number, ppcm: number): Corte {
     const z = VENTANA.z1 - (j + 0.5) / ppcm;
     for (let i = 0; i < ancho; i++) {
       const x = VENTANA.x0 + (i + 0.5) / ppcm;
+      // Cobertura del píxel a partir de la distancia al borde (en píxeles):
+      // 1 dentro, 0 fuera y un degradado de un píxel en el borde. Así los
+      // contornos no salen en escalera.
       const d = tronco.d(x, y, z);
-      if (d > 0) continue;
-      const p = j * ancho + i;
-      // Borde de la pieza un poco más oscuro (piamadre).
-      let c: [number, number, number] = d > -0.025 ? BLANCA_OSCURA : BLANCA;
+      const cubre = Math.min(1, Math.max(0, 0.5 - d * ppcm));
+      if (cubre <= 0) continue;
+      // Borde de la pieza un poco más oscuro (piamadre), con transición suave.
+      const pia = Math.min(1, Math.max(0, (d + 0.03) * ppcm * 0.5));
+      let c: [number, number, number] = [
+        BLANCA[0] + (BLANCA_OSCURA[0] - BLANCA[0]) * pia,
+        BLANCA[1] + (BLANCA_OSCURA[1] - BLANCA[1]) * pia,
+        BLANCA[2] + (BLANCA_OSCURA[2] - BLANCA[2]) * pia,
+      ];
       let k = 0;
       for (const v of aqui) {
-        if (v.campo.d(x, y, z) >= 0) continue;
-        const nombre = `${v.x.id}|${v.lado}`;
-        let n = clave.get(nombre);
-        if (n === undefined) { n = ids.length; ids.push({ id: v.x.id, lado: v.lado }); clave.set(nombre, n); }
-        k = n;
+        const dv = v.campo.d(x, y, z);
+        const w = Math.min(1, Math.max(0, 0.5 - dv * ppcm));
+        if (w <= 0) continue;
+        if (dv < 0) {
+          const nombre = `${v.x.id}|${v.lado}`;
+          let n = clave.get(nombre);
+          if (n === undefined) { n = ids.length; ids.push({ id: v.x.id, lado: v.lado }); clave.set(nombre, n); }
+          k = n;
+        }
         const col = hex(v.x.color);
-        const a = v.x.velo ? 0.35 : 0.92;
+        const a = (v.x.velo ? 0.35 : 0.92) * w;
         c = [c[0] + (col[0] - c[0]) * a, c[1] + (col[1] - c[1]) * a, c[2] + (col[2] - c[2]) * a];
       }
       // Fila 0 de la textura = abajo en UV: se escribe invertida.
       const q = ((alto - 1 - j) * ancho + i) * 4;
-      rgba[q] = c[0]; rgba[q + 1] = c[1]; rgba[q + 2] = c[2]; rgba[q + 3] = 255;
-      mapa[(alto - 1 - j) * ancho + i] = k;
+      rgba[q] = c[0]; rgba[q + 1] = c[1]; rgba[q + 2] = c[2]; rgba[q + 3] = Math.round(255 * cubre);
+      if (d < 0) mapa[(alto - 1 - j) * ancho + i] = k;
       if (k) {
         const s = sumas.get(k) ?? { x: 0, z: 0, n: 0 };
         s.x += x; s.z += z; s.n++;

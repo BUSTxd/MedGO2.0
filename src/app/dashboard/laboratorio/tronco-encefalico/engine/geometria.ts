@@ -147,22 +147,41 @@ function elipsoide(c: Vec, r: Vec, giro?: Vec, seg = 20): THREE.BufferGeometry {
   return g;
 }
 
-/** Geometría de una lista de primitivas (solo elipsoides y tubos). */
+/**
+ * Geometría de una lista de primitivas (solo elipsoides y tubos). Indexada:
+ * cada vértice se guarda una vez y los triángulos lo comparten (sin índice,
+ * cada vértice se repetía en unos 6 triángulos).
+ */
 export function geometriaPrimitivas(prims: Primitiva[], lados = 12): THREE.BufferGeometry {
   const partes: THREE.BufferGeometry[] = [];
   for (const p of prims) {
-    if (p.tipo === 'elipsoide') partes.push(elipsoide(p.c, p.r, p.giro).toNonIndexed());
-    else if (p.tipo === 'tubo') partes.push(tuboVariable(p.pts, p.r, lados, p.aplanar).toNonIndexed());
+    if (p.tipo === 'elipsoide') partes.push(elipsoide(p.c, p.r, p.giro));
+    else if (p.tipo === 'tubo') partes.push(tuboVariable(p.pts, p.r, lados, p.aplanar));
   }
-  partes.forEach((g) => { g.deleteAttribute('uv'); });
+  partes.forEach((g) => { if (g.getAttribute('uv')) g.deleteAttribute('uv'); });
   const unido = partes.length === 1 ? partes[0] : mergeGeometries(partes, false)!;
+  if (partes.length > 1) partes.forEach((g) => g.dispose());
   unido.computeBoundingSphere();
   return unido;
 }
 
+/**
+ * Núcleos, vías y nervios se modelan una sola vez y se reutilizan (como el
+ * tronco): cambiar de vista solo los muestra u oculta. Por eso las piezas de la
+ * escena NO las liberan al desmontarse.
+ */
+const cacheInterior = new Map<string, THREE.BufferGeometry>();
+const cacheNervios = new Map<string, THREE.BufferGeometry>();
+
 /** Núcleo o vía de un lado. */
 export function geometriaInterior(x: Interior, lado: Lado): THREE.BufferGeometry {
-  return geometriaPrimitivas(lado === 'd' ? x.prims.map(reflejar) : x.prims, x.tipo === 'via' || x.tipo === 'fibras' ? 8 : 14);
+  const clave = `${x.id}|${lado}`;
+  let g = cacheInterior.get(clave);
+  if (!g) {
+    g = geometriaPrimitivas(lado === 'd' ? x.prims.map(reflejar) : x.prims, x.tipo === 'via' || x.tipo === 'fibras' ? 8 : 14);
+    cacheInterior.set(clave, g);
+  }
+  return g;
 }
 
 /** Lleva un punto de dentro del tronco a su superficie, avanzando por `dir`. */
@@ -182,15 +201,20 @@ function aSuperficie(campo: Campo, desde: Vec, dir: Vec): Vec {
 
 /** Un par craneal de un lado: raicillas y tronco nervioso en una sola geometría. */
 export function geometriaNervio(n: Nervio, lado: 'i' | 'd', campo: Campo): THREE.BufferGeometry {
+  const clave = `${n.id}|${lado}`;
+  const hecho = cacheNervios.get(clave);
+  if (hecho) return hecho;
   const s = lado === 'd' ? -1 : 1;
   const partes = n.raices.map((r) => {
     const inicio = aSuperficie(campo, r.desde, r.dir);
     const pts: Vec[] = [inicio, ...r.pts].map((p) => [p[0] * s, p[1], p[2]] as Vec);
     const radios = pts.map((_, i) => (i === 0 ? r.r * 0.85 : r.r));
-    return tuboVariable(pts, radios, 8).toNonIndexed();
+    return tuboVariable(pts, radios, 8);
   });
-  const g = mergeGeometries(partes, false)!;
+  const g = partes.length === 1 ? partes[0] : mergeGeometries(partes, false)!;
+  if (partes.length > 1) partes.forEach((p) => p.dispose());
   g.computeBoundingSphere();
+  cacheNervios.set(clave, g);
   return g;
 }
 

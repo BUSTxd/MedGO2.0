@@ -39,6 +39,11 @@ export interface EscenaPractica {
   /** En verde (la respuesta) y en rojo (lo tocado por error). */
   ok: Set<string>;
   mal: Set<string>;
+  /**
+   * Lo que se pide tocar: en el corte, un toque que cae muy cerca se imanta a
+   * ello (las estructuras son de 1-2 mm y van en racimo).
+   */
+  objetivo: Set<string>;
 }
 
 const VOLTEO_MS = 1000;
@@ -173,6 +178,7 @@ export function usePractica(activa: boolean, reducido: boolean) {
       interactivo: paso === 'responder' && actual.forma === 'senalar',
       ok,
       mal,
+      objetivo: new Set(actual.forma === 'senalar' ? actual.objetivo : []),
     };
   }, [actual, paso, respuesta]);
 

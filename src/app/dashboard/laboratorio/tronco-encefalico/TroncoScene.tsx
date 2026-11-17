@@ -62,7 +62,7 @@ function idDe(e: Elegido): string | null {
 }
 
 /** Pinta el tronco: tejido × oclusión, y el tinte de lo elegido y lo señalado. */
-export interface Marcas { ok: Set<string>; mal: Set<string> }
+export interface Marcas { ok: Set<string>; mal: Set<string>; objetivo?: Set<string> }
 const VERDE = '#2f9e44';
 const ROJO = '#e03131';
 
@@ -84,8 +84,11 @@ function colorear(geo: THREE.BufferGeometry, elegido: string | null, senalado: s
     if (est.id === senalado) return { c: COLOR_GRUPO[est.grupo], f: 0.3 };
     return null;
   });
+  const n = etq.length;
+  // 1) Color de cada vértice según su zona (sin la sombra todavía).
+  let rgb = new Float32Array(n * 3);
   const c = new THREE.Color();
-  for (let i = 0; i < etq.length; i++) {
+  for (let i = 0; i < n; i++) {
     const k = etq[i];
     c.copy(base[k]);
     // Superficie de corte del diencéfalo: gris en los tálamos, blanca en los pedúnculos.
@@ -95,11 +98,55 @@ function colorear(geo: THREE.BufferGeometry, elegido: string | null, senalado: s
     }
     const t = tinte[k];
     if (t) c.lerp(t.c, t.f);
+    rgb[i * 3] = c.r; rgb[i * 3 + 1] = c.g; rgb[i * 3 + 2] = c.b;
+  }
+  // 2) Fundido con los vecinos: el borde entre zonas sigue la rejilla del
+  //    mallado y saldría en escalera; tres pasadas lo vuelven un degradado
+  //    de ~1 mm sin emborronar el resto (dentro de una zona todo es igual).
+  const { inicio, vecinos } = vecindad(geo);
+  for (let pasada = 0; pasada < 3; pasada++) {
+    const sig = new Float32Array(n * 3);
+    for (let i = 0; i < n; i++) {
+      let r = rgb[i * 3], g = rgb[i * 3 + 1], b = rgb[i * 3 + 2], m = 1;
+      for (let q = inicio[i]; q < inicio[i + 1]; q++) {
+        const v = vecinos[q];
+        r += rgb[v * 3]; g += rgb[v * 3 + 1]; b += rgb[v * 3 + 2]; m++;
+      }
+      sig[i * 3] = r / m; sig[i * 3 + 1] = g / m; sig[i * 3 + 2] = b / m;
+    }
+    rgb = sig;
+  }
+  // 3) Sombra de los surcos (oclusión), que no se funde: es el relieve.
+  for (let i = 0; i < n; i++) {
     const a = ao.getX(i);
-    c.multiplyScalar(0.3 + 0.7 * a * a);
-    col.setXYZ(i, c.r, c.g, c.b);
+    const s = 0.3 + 0.7 * a * a;
+    col.setXYZ(i, rgb[i * 3] * s, rgb[i * 3 + 1] * s, rgb[i * 3 + 2] * s);
   }
   col.needsUpdate = true;
+}
+
+/** Vecinos de cada vértice (en formato compacto), calculados una vez por malla. */
+function vecindad(geo: THREE.BufferGeometry): { inicio: Uint32Array; vecinos: Uint32Array } {
+  const hecho = geo.userData.vecindad as { inicio: Uint32Array; vecinos: Uint32Array } | undefined;
+  if (hecho) return hecho;
+  const n = (geo.getAttribute('position') as THREE.BufferAttribute).count;
+  const idx = geo.getIndex()!.array as ArrayLike<number>;
+  const grado = new Uint32Array(n + 1);
+  for (let t = 0; t < idx.length; t += 3) {
+    for (let e = 0; e < 3; e++) grado[idx[t + e]] += 2;
+  }
+  const inicio = new Uint32Array(n + 1);
+  for (let i = 0; i < n; i++) inicio[i + 1] = inicio[i] + grado[i];
+  const vecinos = new Uint32Array(inicio[n]);
+  const lleno = inicio.slice(0, n);
+  for (let t = 0; t < idx.length; t += 3) {
+    const a = idx[t], b = idx[t + 1], cc = idx[t + 2];
+    vecinos[lleno[a]++] = b; vecinos[lleno[a]++] = cc;
+    vecinos[lleno[b]++] = a; vecinos[lleno[b]++] = cc;
+    vecinos[lleno[cc]++] = a; vecinos[lleno[cc]++] = b;
+  }
+  geo.userData.vecindad = { inicio, vecinos };
+  return geo.userData.vecindad;
 }
 
 // ── Material fantasma (Fresnel): el tronco como una funda de cristal ────────
@@ -430,7 +477,7 @@ function Nervios({ campo, modo, elegido, senalado, apagado, resaltar, marcas, pl
   etiquetas: boolean;
 }) {
   const geos = useMemo(() => NERVIOS.flatMap((n) => (['i', 'd'] as const).map((lado) => ({ n, lado, geo: geometriaNervio(n, lado, campo) }))), [campo]);
-  useEffect(() => () => geos.forEach((g) => g.geo.dispose()), [geos]);
+  // Las geometrías de los nervios se guardan en geometria.ts: no se liberan aquí.
   // En la práctica van en color neutro: el color no debe delatar qué par es.
   const colorear = modo !== 'anatomia' && !marcas;
   return (
@@ -496,7 +543,7 @@ function Interior({ ids, elegido, senalado, clinico, marcas, signo, onElegir, on
     }
     return out;
   }, [ids]);
-  useEffect(() => () => piezas.forEach((p) => p.geo.dispose()), [piezas]);
+  // Las geometrías de núcleos y vías se guardan en geometria.ts: no se liberan aquí.
   return (
     <>
       {piezas.map(({ id, lado, geo }) => {
@@ -578,7 +625,9 @@ function TapaCorte({ nivel, oscuro, etiquetas, elegido, marcas, onElegir, onSena
     const t = new THREE.DataTexture(corte.rgba, corte.ancho, corte.alto, THREE.RGBAFormat);
     t.colorSpace = THREE.SRGBColorSpace;
     t.magFilter = THREE.LinearFilter;
-    t.minFilter = THREE.LinearFilter;
+    t.minFilter = THREE.LinearMipmapLinearFilter;
+    t.generateMipmaps = true;
+    t.anisotropy = 4;
     t.needsUpdate = true;
     return t;
   }, [corte]);
@@ -611,8 +660,29 @@ function TapaCorte({ nivel, oscuro, etiquetas, elegido, marcas, onElegir, onSena
     }
     document.body.style.cursor = k > 0 ? 'pointer' : 'auto';
   };
+  /**
+   * En la práctica, si el toque cae a menos de ~0,5 mm de lo que se busca, se
+   * cuenta como suyo: en el corte los núcleos miden 1-2 mm y van en racimo.
+   */
+  const iman = (e: ThreeEvent<MouseEvent>): number | null => {
+    const obj = marcas?.objetivo;
+    if (!obj?.size || !e.uv) return null;
+    const ci = Math.floor(e.uv.x * corte.ancho), cj = Math.floor(e.uv.y * corte.alto);
+    // Radio de ~0,5 mm, sea cual sea la resolución del corte.
+    const R = Math.max(3, Math.round(0.055 * corte.ancho / (VENTANA.x1 - VENTANA.x0)));
+    let mejor: number | null = null;
+    let dMejor = Infinity;
+    for (let dj = -R; dj <= R; dj++) for (let di = -R; di <= R; di++) {
+      const i = ci + di, j = cj + dj;
+      if (i < 0 || j < 0 || i >= corte.ancho || j >= corte.alto) continue;
+      const k = corte.mapa[j * corte.ancho + i];
+      const d = di * di + dj * dj;
+      if (k > 0 && d <= R * R && d < dMejor && obj.has(corte.ids[k].id)) { mejor = k; dMejor = d; }
+    }
+    return mejor;
+  };
   const tocar = (e: ThreeEvent<MouseEvent>) => {
-    const k = leer(e);
+    const k = iman(e) ?? leer(e);
     if (k === null || k <= 0) return;
     e.stopPropagation();
     const it = corte.ids[k];
@@ -622,7 +692,7 @@ function TapaCorte({ nivel, oscuro, etiquetas, elegido, marcas, onElegir, onSena
   return (
     <>
       <mesh geometry={geo} onPointerMove={mover} onPointerOut={() => { ultimo.current = -2; onSenalar(null); document.body.style.cursor = 'auto'; }} onClick={tocar} renderOrder={2}>
-        <meshBasicMaterial map={tex} transparent alphaTest={0.5} side={THREE.DoubleSide} toneMapped={false} />
+        <meshBasicMaterial map={tex} transparent alphaTest={0.02} side={THREE.DoubleSide} toneMapped={false} />
       </mesh>
       {corte.centros.filter((c) => {
         const it = corte.ids[c.k];
