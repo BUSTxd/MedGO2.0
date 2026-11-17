@@ -1,36 +1,18 @@
 'use client';
-// Lab «Tronco encefálico»: visor comparativo de pantalla partida (cadáver vs maqueta 3D).
-// Reutiliza el layout estándar del laboratorio; toda la lógica vive en TroncoViewer.
+// Página del lab «Tronco encefálico 3D». Misma arquitectura que Médula Espinal
+// 3D y Polígono de Willis 3D: el modelo ocupa toda la altura, la vista flota
+// arriba a la izquierda y el resto va en la barra lateral. La escena 3D se
+// carga en diferido (solo en cliente) para dejar three.js fuera del bundle.
 
-import Link from 'next/link';
 import TrackLabVisit from '@/components/TrackLabVisit';
-import TroncoViewer from './TroncoViewer';
-import base from '@/styles/laboratorio.module.css';
-import styles from '@/styles/troncoEncefalico.module.css';
+import TroncoSimulator from './TroncoSimulator';
+import styles from '@/styles/medulaEspinal.module.css';
 
 export default function TroncoEncefalicoPage() {
   return (
-    <div className={base.examPage}>
+    <div className={styles.wrapper}>
       <TrackLabVisit labId="tronco-encefalico" />
-
-      <div className={base.topBar}>
-        <Link href="/dashboard/laboratorio" className={base.backLink}>
-          ← Laboratorio virtual
-        </Link>
-        <span className={base.counter}>Neurología · Tronco encefálico</span>
-      </div>
-
-      <div className={styles.intro}>
-        <span className={styles.kicker}>Tronco encefálico</span>
-        <h2 className={styles.h2}>Cadáver vs. maqueta 3D</h2>
-        <p className={styles.sub}>
-          Compara las vistas reales del tronco encefálico en el cadáver (izquierda) con la maqueta 3D
-          rotatoria (derecha). Usa las flechas para cambiar de vista o rotar la maqueta, y colapsa
-          cualquiera de los paneles para estudiar a pantalla completa la imagen que prefieras.
-        </p>
-      </div>
-
-      <TroncoViewer />
+      <TroncoSimulator />
     </div>
   );
 }

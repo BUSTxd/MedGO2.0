@@ -26,6 +26,7 @@
     "verificar:citopenias": "node --experimental-strip-types --no-warnings scripts/citopenias/verificar.mjs",
     "verificar:vasculitis": "node --experimental-strip-types --no-warnings scripts/vasculitis/verificar.mjs",
     "verificar:gramnegativas": "node --experimental-strip-types --no-warnings scripts/gramnegativas/verificar.mjs",
+    "verificar:tronco": "node --experimental-strip-types --no-warnings scripts/tronco-encefalico/verificar.mjs",
     "verificar:bilirrubina": "node --experimental-strip-types --no-warnings scripts/bilirrubina/verificar.mjs",
     "publicar:clase": "node --experimental-strip-types --no-warnings scripts/clases/publicar.mjs",
     "verificar:clases": "node --experimental-strip-types --no-warnings scripts/clases/publicar.mjs --verificar"

@@ -44,6 +44,7 @@ npm run publicar:clase -- <curso>/<clase> [--subir] | verificar:clases
 npm run verificar:ciclo | verificar:vias-nfkb | verificar:linfocitos | verificar:hipersensibilidad | verificar:lupus | verificar:citopenias | verificar:vasculitis | verificar:gramnegativas
 npm run vista:medula          # corte de Médula Espinal 3D contra Gray 666 y la lámina de tractos de Polarlys, sin navegador
 npm run verificar:nefron [-- --perfiles] | vista:nefron   # datos y modelo del filtrado del Nefrón; sus escenas en claro y oscuro, sin navegador
+npm run verificar:tronco      # Tronco encefálico 3D: signos dentro de su lesión, raíces en la superficie, toda zona con ficha
 npm run practica:medula [-- --subir]   # banco de práctica del lab (fuente en data/medula-practica/, fuera de git): valida contra anatomy.ts, mide el sesgo de largo y sube a examenes/neurologia/medula-practica.json
 ```
 
@@ -235,6 +236,8 @@ Solo el admin mientras `IA_ABIERTA` no sea `1`. **La API key nunca va en repo ni
 ### Otros labs (`src/app/dashboard/laboratorio/<slug>`)
 
 **Nefrón interactivo** (`nefron-interactivo`, rehecho de cero el 2026-11-15): el marco de Willis y Médula 3D (`medulaEspinal.module.css`, piezas de ficha compartidas en `components/laboratorio/FichaLab.tsx`), pero **2D con código**: SVG + canvas, zoom continuo nefrón → células sobre la pared → vista de pared de una célula (luz arriba, sangre abajo, iones animados por cada transportador). Estilo plano de las referencias de medicina de BUST (sin bordes, sombra en media luna y brillo; rosa en claro, índigo en oscuro; poco texto en el dibujo): `docs/nefron/ESTILO.md`. Vistas Nefrón · Transporte · Hormonas · Fármacos · Clínico. Contenido reescrito en `src/lib/data/nefron/` (guion y lo supuesto en `docs/nefron/CONTENIDO.md`); el perfil del filtrado (`engine/flujo.ts`) es un balance orientativo, no una simulación, y `verificar:nefron` comprueba que 16 escenarios caigan en rango.
+
+**Tronco encefálico 3D** (`tronco-encefalico`, rehecho de cero el 2026-11-17): marco de Médula 3D y ficha de Willis. La superficie sale de un campo de distancias (`engine/sdf.ts` + `forma.ts`, ~70 primitivas) mallado en el navegador (`malla.ts`, ≈ 1 s) con oclusión ambiental y luces que viajan con la cámara. Cara posterior como en la disección: el cerebelo es otra pieza («Sin cerebelo · Cristal · Con cerebelo») y los pedúnculos terminan en su cara de corte. Vistas Anatomía · Pares craneales · Núcleos y vías · Cortes (7 niveles calculados de los mismos volúmenes) · Clínico (10 síndromes; cada signo apunta a la estructura y la copia que daña). Lo verificado y lo supuesto en `docs/tronco-encefalico/CONTENIDO.md`. Sin Práctica todavía.
 
 `atlas-microbiologia` · `atlas-parasitologia` · `atlas-micologia` · `biomecanica-extraocular` · `cascada-coagulacion` · `electrocardiograma` (9 modos) · `eva-2` · `eva-3` · `frotis-sanguineo` · `hemograma` · `medula-espinal` · `microscopio` · `microscopio-hematologia` · `morfologia-globulos-rojos` · `nefron-interactivo` · `parametro-sangre-orina` · `poligono-willis` · `tronco-encefalico`.
 
