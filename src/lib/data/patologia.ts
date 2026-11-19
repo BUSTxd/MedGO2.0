@@ -1095,6 +1095,7 @@ export const semanas: Semana[] = [
         unidad: 'UNIDAD_4',
         codigo: 'ACP14',
         titulo: 'ACP14 — Infecciones de transmisión sexual y VIH agudo',
+        simulacion: { href: '/dashboard/laboratorio/vih-sifilis', desc: 'El virión y su ciclo, la caída de los CD4, el diagnóstico, las oportunistas y la sífilis de la úlcera a la terciaria, animados y narrados' },
         fecha: '16 – 20 nov',
         hora: '—',
         subtemas: [],

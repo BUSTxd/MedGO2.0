@@ -1592,6 +1592,55 @@ const PORTADAS: Record<string, () => ReactNode> = {
   /* Miembro superior: escápula, clavícula, húmero, radio y cúbito, carpo y los cinco
      radios de la mano; deltoides, bíceps con su tendón, tríceps, músculos del antebrazo,
      arteria braquial y nervio mediano. */
+  /* VIH y sífilis: el virión (esfera verde con sus espigas de glicoproteína y la cápside
+     cónica dentro) y, a su lado, el treponema, un sacacorchos de menta. Un linfocito CD4 y
+     dos gotas de sangre cierran el dibujo: lo que el virus ataca y lo que se ve en la sangre. */
+  'vih-sifilis': () => {
+    // Un sacacorchos visto de lado: una onda a lo largo de la recta (x0, y0) → (x1, y1).
+    const espira = (x0: number, y0: number, x1: number, y1: number, vueltas: number, amp: number) => {
+      const L = Math.hypot(x1 - x0, y1 - y0), ux = (x1 - x0) / L, uy = (y1 - y0) / L;
+      return Array.from({ length: 61 }, (_, i) => {
+        const t = i / 60, o = Math.sin(t * vueltas * Math.PI * 2) * amp;
+        return `${i ? 'L' : 'M'}${(x0 + ux * L * t - uy * o).toFixed(1)} ${(y0 + uy * L * t + ux * o).toFixed(1)}`;
+      }).join(' ');
+    };
+    const espigas = Array.from({ length: 14 }, (_, i) => (i / 14) * 360 + 8);
+    return (
+      <>
+        <Suelo x={110} rx={96} />
+        {/* El virión: espigas, envoltura y la cápside cónica */}
+        <g>
+          {espigas.map((a) => {
+            const [x1, y1] = polar(66, 64, 31, a), [x2, y2] = polar(66, 64, 41, a);
+            return (
+              <g key={a}>
+                <path d={`M${x1.toFixed(1)} ${y1.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}`} stroke={C.verde[0]} strokeWidth={2.4} strokeLinecap="round" />
+                <circle cx={x2} cy={y2} r={3.6} fill={C.amarillo[0]} />
+                <circle cx={x2 - 0.4} cy={y2 - 0.4} r={3} fill={C.amarillo[1]} />
+              </g>
+            );
+          })}
+          <Bola x={66} y={64} r={31} c={C.verde} />
+          <circle cx={66} cy={64} r={22} fill={C.verde[2]} opacity={0.55} />
+          <g transform="rotate(-24 66 64)">
+            <path d="M47 53 Q41 64 47 75 L84 68.5 Q88 64 84 59.5 Z" fill={C.naranja[0]} />
+            <path d="M47 53 Q41 64 47 75 L84 68.5 Q88 64 84 59.5 Z" fill={C.amarillo[1]} transform="translate(-1 -1)" />
+            <path d="M49 57 L72 61" stroke={BLANCO} strokeWidth={1.6} strokeLinecap="round" opacity={0.75} />
+            <circle cx={56} cy={63} r={2} fill={C.naranja[1]} /><circle cx={62} cy={69} r={1.8} fill={C.naranja[1]} /><circle cx={67} cy={62} r={1.6} fill={C.naranja[1]} />
+          </g>
+        </g>
+        {/* El treponema, grande, y otro más pequeño detrás */}
+        <Tubo d={espira(130, 118, 190, 92, 3, 5)} w={5.5} c={C.verde} />
+        <Tubo d={espira(118, 104, 206, 40, 5, 7)} w={8} c={C.cian} />
+        {/* Un linfocito CD4 y la sangre */}
+        <Bola x={118} y={30} r={11} c={C.azul} />
+        <Bola x={118} y={30} r={4.6} c={C.indigo} brillo={false} />
+        <Bola x={196} y={98} r={5} c={C.rojo} />
+        <Bola x={100} y={112} r={3.6} c={C.amarillo} />
+      </>
+    );
+  },
+
   'miembro-superior-derecho': () => {
     const base = Math.atan2(-0.4, 0.91) * (180 / Math.PI);
     const dedos = [-40, -18, -5, 8, 21].map((d, i) => {
