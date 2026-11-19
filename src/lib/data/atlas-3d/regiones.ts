@@ -129,7 +129,10 @@ export const REGIONES: RegionAtlas[] = [
     //     por MedGO: yeyuno e íleon, porciones del duodeno, partes del páncreas,
     //     lóbulo cuadrado (IVb) y cístico/colédoco. Modelados: venas hepáticas,
     //     ramas de la porta, hepático común y ligamentos falciforme y redondo.
-    version: 'v1',
+    // v2: estómago entero (Z-Anatomy lo traía con una ventana en la cara anterior
+    //     y la posterior hundida) y todas las caras hacia fuera (las piezas izquierdas
+    //     venían en espejo y los tubos modelados, del revés).
+    version: 'v2',
     curso: 'Aparato Digestivo',
     vistas: 'tronco',
     zonas: [

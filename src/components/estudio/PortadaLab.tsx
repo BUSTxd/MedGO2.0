@@ -1774,6 +1774,58 @@ const PORTADAS: Record<string, () => ReactNode> = {
     );
   },
 
+  /* Abdomen de frente, como en la mesa del práctico: hígado con su ligamento falciforme y la
+     vesícula, estómago, bazo, páncreas abrazado por la «C» del duodeno, el marco cólico con
+     su tenia, las asas del delgado, la mesentérica superior y la porta, y la chincheta que
+     señala la estructura del examen (la vesícula). */
+  abdomen: () => {
+    const higado: Tono = ['#6A1A22', '#A3382F', '#DB7A66'];
+    const estomago: Tono = ['#A8455A', '#DE7C86', '#F2B3AE'];
+    const colon: Tono = ['#9A5A2E', '#DDA06C', '#F6D3AA'];
+    const lobulo = 'M30 34 C30 20 52 10 82 11 C104 12 126 16 134 24 C130 32 116 36 102 40 C86 46 70 54 54 60 C42 62 32 54 30 44 C29 40 29 37 30 34Z';
+    const estomagoD = 'M128 24 C138 14 160 16 168 30 C175 44 170 62 152 70 C138 76 120 74 108 66 C106 62 110 58 116 58 C128 60 140 56 146 46 C150 38 144 32 136 32 C130 32 126 28 128 24Z';
+    const bazo = 'M172 34 C182 30 194 36 196 48 C197 58 190 66 182 64 C188 56 186 44 176 40 C172 39 170 36 172 34Z';
+    const pancreas = 'M96 84 C96 76 104 72 114 72 C132 71 152 64 170 58 C176 58 178 64 172 68 C154 76 134 82 116 86 C106 90 96 92 96 84Z';
+    const asas = 'M66 102 C70 94 80 94 82 102 C84 110 94 110 96 102 C98 94 108 94 110 102 C112 110 122 110 124 102 C126 94 136 94 138 102 C140 110 150 110 152 102 C154 96 160 96 162 102 M70 114 C76 108 84 110 86 116 C90 120 98 120 102 114 C106 108 114 108 118 114 C122 120 130 120 134 114 C138 108 146 108 150 114';
+    return (
+      <>
+        <Suelo x={112} rx={92} />
+        {/* Marco cólico: ascendente, transverso y descendente, con la tenia libre */}
+        <Tubo d="M44 118 L44 86 C44 78 52 76 60 80 C86 94 140 94 168 80 C176 76 184 78 184 86 L184 118" w={13} c={colon} />
+        <path d="M42 116 L42 86 C42 80 50 77 58 81 C86 96 140 96 168 82 C176 78 182 80 182 88 L182 116" fill="none" stroke={C.hueso[2]} strokeWidth={1.3} strokeDasharray="5 3.2" strokeLinecap="round" opacity={0.9} />
+        {/* Asas del intestino delgado */}
+        <Tubo d={asas} w={7.5} c={C.rosa} />
+        {/* Mesentérica superior (bajando a las asas) y vena porta (subiendo al hilio) */}
+        <path d="M128 74 C128 86 126 96 122 106 M127 86 C120 92 112 96 104 100 M126 94 C134 98 142 100 150 100" fill="none" stroke={C.rojo[0]} strokeWidth={2.2} strokeLinecap="round" />
+        <path d="M128 74 C128 86 126 96 122 106" fill="none" stroke={C.rojo[2]} strokeWidth={0.8} strokeLinecap="round" transform="translate(-0.5 -0.5)" />
+        <Tubo d="M118 74 C114 66 108 56 98 46" w={4.4} c={C.azul} />
+        {/* Duodeno en «C» y páncreas */}
+        <Tubo d="M110 66 C94 64 86 72 86 82 C86 94 98 98 114 96 C122 95 128 90 130 84" w={8} c={C.naranja} />
+        <path d={pancreas} fill={C.amarillo[0]} />
+        <path d={pancreas} fill={C.amarillo[1]} transform="translate(-0.8 -1)" />
+        <path d="M102 80 C120 78 146 70 166 62" fill="none" stroke={C.amarillo[2]} strokeWidth={1.6} strokeLinecap="round" opacity={0.85} />
+        {/* Bazo */}
+        <path d={bazo} fill={C.morado[0]} />
+        <path d={bazo} fill={C.morado[1]} transform="translate(-0.8 -1)" />
+        <path d="M178 40 C186 44 190 52 188 58" fill="none" stroke={C.morado[2]} strokeWidth={1.4} strokeLinecap="round" />
+        {/* Estómago */}
+        <path d={estomagoD} fill={estomago[0]} />
+        <path d={estomagoD} fill={estomago[1]} transform="translate(-0.9 -1.1)" />
+        <path d="M150 24 C162 30 166 46 160 58" fill="none" stroke={estomago[2]} strokeWidth={2} strokeLinecap="round" opacity={0.9} />
+        <Tubo d="M134 12 C132 18 130 22 130 26" w={5} c={estomago} luz={false} />
+        {/* Hígado con el falciforme, y la vesícula asomando bajo su borde */}
+        <path d={lobulo} fill={higado[0]} />
+        <path d={lobulo} fill={higado[1]} transform="translate(-1 -1.2)" />
+        <path d="M40 26 C56 16 80 14 104 16" fill="none" stroke={higado[2]} strokeWidth={2.4} strokeLinecap="round" opacity={0.85} />
+        <path d="M94 13 C92 22 90 32 88 44" fill="none" stroke={C.hueso[1]} strokeWidth={1.6} strokeLinecap="round" />
+        <ellipse cx={60} cy={66} rx={6} ry={9.5} fill={C.verde[0]} transform="rotate(-28 60 66)" />
+        <ellipse cx={59.3} cy={65.2} rx={5} ry={8.2} fill={C.verde[1]} transform="rotate(-28 60 66)" />
+        <circle cx={56.6} cy={62} r={1.5} fill={BLANCO} opacity={0.8} />
+        <Pin x={61} y={63} letra="A" />
+      </>
+    );
+  },
+
   /* Investigación: matraz graduado que burbujea y humea, gradilla con cuatro tubos de
      distinto contenido y una molécula. */
   investigacion: () => {

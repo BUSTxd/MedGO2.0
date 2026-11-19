@@ -88,6 +88,35 @@ const biliar = (c) => c.una('biliar', () => {
   return G.partir(m, (t) => (Math.max(D[m.f[t * 3]], D[m.f[t * 3 + 1]], D[m.f[t * 3 + 2]]) <= dc ? 'cistico' : 'coledoco'));
 });
 
+// ─── Estómago ────────────────────────────────────────────────────────────────
+// Z-Anatomy lo trae con una ventana recortada en la cara anterior (para enseñar la
+// mucosa, que el FBX no incluye) y con las arrugas de la mucosa esculpidas en la
+// misma lámina, que por detrás se ven como pliegues. Se tapa la ventana con la
+// curvatura de la pared que la rodea y se alisa (Taubin), sin mover los bordes que
+// empalman con el esófago y el duodeno.
+const estomago = (c) => c.una('estomago', () => {
+  const m = c.fuente('Stomach');
+  const centro = G.caja(m).centro;
+  const [ventana, ...bocas] = G.lazosDeBorde(m);
+  let e = G.taparAgujero(m, ventana, centro);
+  // La cara posterior viene hundida (medido en la vista posterior: un valle de
+  // x 2-11 cm e y 1,12-1,17 m): se recorta esa elipse y se rehace igual que la ventana.
+  const hundida = ([x, y, z]) => z < centro[2] && ((x - 0.066) / 0.05) ** 2 + ((y - 1.145) / 0.03) ** 2 < 1;
+  const sano = [];
+  for (let t = 0; t < G.nTri(e); t++) if (!hundida(G.centroTri(e, t))) sano.push(t);
+  e = G.submalla(e, sano);
+  const lazos = G.lazosDeBorde(e);
+  const hueco = lazos.find((l) => hundida(G.vert(e, l[0])) || l.some((i) => G.vert(e, i)[2] < centro[2] - 0.005 && Math.abs(G.vert(e, i)[1] - 1.145) < 0.04 && Math.abs(G.vert(e, i)[0] - 0.066) < 0.06));
+  e = G.taparAgujero(e, hueco, centro, 0.065, 8);
+  const fijos = new Set(G.lazosDeBorde(e).flat());
+  // Se funden los parches con la pared: alrededor de la elipse rehecha, un alisado
+  // de membrana (laplaciano, sin la vuelta de Taubin) que se apaga hacia fuera; así
+  // no queda arista entre el parche y la pared. Después, uno general suave.
+  const cerca = ([x, y, z]) => (z < centro[2] + 0.012 ? Math.max(0, Math.min(1, 1.8 - Math.hypot((x - 0.066) / 0.05, (y - 1.145) / 0.03))) : 0);
+  e = G.taubin(e, 300, fijos, 0.5, 0, cerca);
+  return G.taubin(e, 25, fijos);
+});
+
 /** Solo la porción abdominal: se corta en el hiato esofágico del diafragma. */
 const Y_HIATO = 1.235;
 
@@ -106,6 +135,7 @@ export const OPERACIONES = {
   yeyuno: (c) => intestino(c).yeyuno,
   ileon: (c) => intestino(c).ileon,
   esofago: (c) => G.partir(c.fuente('Oesophagus'), (_, p) => (p[1] < Y_HIATO ? 'si' : null)).si,
+  estomago,
   cistico: (c) => biliar(c).cistico,
   coledoco: (c) => biliar(c).coledoco,
   'ureter-derecho': (c) => c.fuente('Ureterr'),

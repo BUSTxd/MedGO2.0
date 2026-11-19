@@ -65,9 +65,12 @@ function soldar(o) {
     if (j === undefined) { j = pos.length / 3; clave.set(c, j); pos.push(+v.x.toFixed(6), +v.y.toFixed(6), +v.z.toFixed(6)); }
     f.push(j);
   }
-  // Fuera los triángulos degenerados que deja la soldadura.
+  // Fuera los triángulos degenerados que deja la soldadura. Las piezas izquierdas
+  // son el espejo de las derechas (escala negativa): sin invertir el orden de sus
+  // vértices quedarían con las caras hacia dentro (el visor pinta solo la frontal).
+  const espejo = o.matrixWorld.determinant() < 0;
   const caras = [];
-  for (let t = 0; t < f.length; t += 3) if (f[t] !== f[t + 1] && f[t + 1] !== f[t + 2] && f[t] !== f[t + 2]) caras.push(f[t], f[t + 1], f[t + 2]);
+  for (let t = 0; t < f.length; t += 3) if (f[t] !== f[t + 1] && f[t + 1] !== f[t + 2] && f[t] !== f[t + 2]) caras.push(...(espejo ? [f[t], f[t + 2], f[t + 1]] : [f[t], f[t + 1], f[t + 2]]));
   return { v: pos, f: caras };
 }
 

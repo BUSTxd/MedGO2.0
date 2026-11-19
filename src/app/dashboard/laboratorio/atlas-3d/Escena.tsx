@@ -43,6 +43,8 @@ interface Props {
   bloqueada?: boolean;
   /** Examen: lo señalado en azul intenso y lo translúcido casi transparente (un nervio fino no se pierde). */
   resaltoFuerte?: boolean;
+  /** Con `resaltoFuerte`: lo señalado guarda su color y late con un brillo suave (abdomen). */
+  latido?: boolean;
   /** Examen, pregunta B: el modelo se desenfoca detrás de la tarjeta. */
   borrosa?: boolean;
   /** Examen: punto que late sobre un accidente óseo (se ve a través del hueso). */
@@ -95,6 +97,8 @@ export default function Escena(props: Props) {
                 : props.transparencia === 'todo' || (props.transparencia === 'musculos' && p.sistema === 'musculo')
             }
             fuerte={!!props.resaltoFuerte}
+            latido={!!props.latido}
+            reducido={props.reducido}
             esToque={esToque}
             onSelect={props.onSelect}
             onAislar={props.onAislar}
@@ -127,6 +131,12 @@ const COLOR_SELECCION = new Color('#3b9edd');
 /** Examen: el color de lo señalado sustituye al del sistema (un nervio amarillo con brillo azul se perdía). */
 const COLOR_SENALADO = new Color('#0a84ff');
 const COLOR_HOVER = new Color('#ffffff');
+/** Brillo cálido del latido: aclara el órgano sin cambiarle el color. */
+const COLOR_LATIDO = new Color('#fff1d6');
+const LATIDO_MIN = 0.06;
+const LATIDO_MAX = 0.34;
+/** Un latido cada 1,6 s. */
+const LATIDO_PERIODO = 1.6;
 const NEGRO = new Color('#000000');
 
 const Pieza = memo(function Pieza({
@@ -134,6 +144,8 @@ const Pieza = memo(function Pieza({
   seleccionada,
   translucida,
   fuerte,
+  latido,
+  reducido,
   esToque,
   onSelect,
   onAislar,
@@ -142,6 +154,8 @@ const Pieza = memo(function Pieza({
   seleccionada: boolean;
   translucida: boolean;
   fuerte: boolean;
+  latido: boolean;
+  reducido: boolean;
   esToque: (e: { clientX: number; clientY: number }) => boolean;
   onSelect: (id: string | null) => void;
   onAislar: (id: string) => void;
@@ -163,9 +177,10 @@ const Pieza = memo(function Pieza({
 
   useEffect(() => {
     const senalado = fuerte && seleccionada;
-    material.color.set(senalado ? COLOR_SENALADO : colorPropio);
-    material.emissive.copy(senalado ? COLOR_SENALADO : seleccionada ? COLOR_SELECCION : hover && !fuerte ? COLOR_HOVER : NEGRO);
-    material.emissiveIntensity = senalado ? 0.85 : seleccionada ? 0.55 : hover && !fuerte ? 0.14 : 0;
+    const late = senalado && latido;
+    material.color.set(senalado && !late ? COLOR_SENALADO : colorPropio);
+    material.emissive.copy(late ? COLOR_LATIDO : senalado ? COLOR_SENALADO : seleccionada ? COLOR_SELECCION : hover && !fuerte ? COLOR_HOVER : NEGRO);
+    material.emissiveIntensity = late ? (LATIDO_MIN + LATIDO_MAX) / 2 : senalado ? 0.85 : seleccionada ? 0.55 : hover && !fuerte ? 0.14 : 0;
     // Lo seleccionado se ve entero aunque los músculos estén translúcidos.
     const vidrio = translucida && !seleccionada;
     material.transparent = vidrio;
@@ -173,9 +188,11 @@ const Pieza = memo(function Pieza({
     material.depthWrite = !vidrio;
     material.needsUpdate = true;
     invalidate();
-  }, [material, seleccionada, hover, translucida, fuerte, colorPropio, invalidate]);
+  }, [material, seleccionada, hover, translucida, fuerte, latido, colorPropio, invalidate]);
 
   return (
+    <>
+    {fuerte && seleccionada && latido && !reducido && <Latido material={material} />}
     <mesh
       geometry={pieza.geometry}
       material={material}
@@ -198,8 +215,20 @@ const Pieza = memo(function Pieza({
         onAislar(pieza.id);
       }}
     />
+    </>
   );
 });
+
+/** El brillo de lo señalado sube y baja (con movimiento reducido se queda fijo a media luz). */
+function Latido({ material }: { material: MeshStandardMaterial }) {
+  const { invalidate } = useThree();
+  useFrame(({ clock }) => {
+    const t = (1 - Math.cos((clock.getElapsedTime() / LATIDO_PERIODO) * Math.PI * 2)) / 2;
+    material.emissiveIntensity = LATIDO_MIN + (LATIDO_MAX - LATIDO_MIN) * t;
+    invalidate();
+  });
+  return null;
+}
 
 /** Nombre clavado en el centro de unas piezas, de tamaño fijo. */
 /** `efimero`: se va solo (corto = lo tocado; largo = los del paso del repaso, que son varios para leer). */

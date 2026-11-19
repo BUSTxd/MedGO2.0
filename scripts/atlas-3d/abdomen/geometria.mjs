@@ -141,11 +141,11 @@ export function tubo(pts, radio, lados = 10) {
   for (let c = 1; c <= capas; c++) { const ang = (c / (capas + 1)) * (Math.PI / 2), rr = r(1) * Math.cos(ang); anillos.push(anillo(suma(pts[ult], por(T[ult], r(1) * Math.sin(ang))), marcos[ult][0], marcos[ult][1], rr)); }
   for (let i = 0; i + 1 < anillos.length; i++) for (let k = 0; k < lados; k++) {
     const a = anillos[i] + k, b = anillos[i] + ((k + 1) % lados), c = anillos[i + 1] + k, d = anillos[i + 1] + ((k + 1) % lados);
-    f.push(a, c, b, b, c, d);
+    f.push(a, b, c, b, d, c); // caras hacia fuera
   }
   // Cierre de las puntas.
-  const p0 = v.length / 3; v.push(...suma(pts[0], por(T[0], -r(0)))); for (let k = 0; k < lados; k++) f.push(p0, anillos[0] + k, anillos[0] + ((k + 1) % lados));
-  const p1 = v.length / 3; v.push(...suma(pts[ult], por(T[ult], r(1)))); const ua = anillos.at(-1); for (let k = 0; k < lados; k++) f.push(p1, ua + ((k + 1) % lados), ua + k);
+  const p0 = v.length / 3; v.push(...suma(pts[0], por(T[0], -r(0)))); for (let k = 0; k < lados; k++) f.push(p0, anillos[0] + ((k + 1) % lados), anillos[0] + k);
+  const p1 = v.length / 3; v.push(...suma(pts[ult], por(T[ult], r(1)))); const ua = anillos.at(-1); for (let k = 0; k < lados; k++) f.push(p1, ua + k, ua + ((k + 1) % lados));
   return { v, f };
 }
 
@@ -183,4 +183,108 @@ export function lamina(bordeA, bordeB, grosor, filas = 6) {
   coser(Array.from({ length: filas + 1 }, (_, j) => [filas - j, 0]));
   coser(Array.from({ length: filas + 1 }, (_, j) => [j, n - 1]));
   return { v, f };
+}
+
+// ─── Reparación de superficies ───────────────────────────────────────────────
+
+/** Lazos de borde (aristas de un solo triángulo), en orden, de mayor a menor. */
+export function lazosDeBorde(m) {
+  const cnt = new Map(), dir = new Map();
+  for (let t = 0; t < m.f.length; t += 3) for (let k = 0; k < 3; k++) {
+    const a = m.f[t + k], b = m.f[t + ((k + 1) % 3)];
+    const key = a < b ? `${a},${b}` : `${b},${a}`;
+    cnt.set(key, (cnt.get(key) ?? 0) + 1);
+    dir.set(key, [a, b]);
+  }
+  const sig = new Map();
+  for (const [k, n] of cnt) if (n === 1) { const [a, b] = dir.get(k); sig.set(a, b); }
+  const visto = new Set(), lazos = [];
+  for (const s of sig.keys()) {
+    if (visto.has(s)) continue;
+    const l = [];
+    for (let a = s; a !== undefined && !visto.has(a); a = sig.get(a)) { visto.add(a); l.push(a); }
+    lazos.push(l);
+  }
+  return lazos.sort((a, b) => b.length - a.length);
+}
+
+/**
+ * Tapa un agujero con la superficie que lo rodea: ajusta una cuádrica h(a, b) a
+ * la pared en un radio `alcance` (en un marco local con la normal hacia fuera) y
+ * cose anillos concéntricos desde el borde hasta el centro sobre ella.
+ * `fuera`: un punto del interior del órgano (la normal apunta lejos de él).
+ */
+export function taparAgujero(m, lazo, fuera, alcance = 0.045, anillos = 6) {
+  const borde = lazo.map((i) => vert(m, i));
+  const c = por(borde.reduce(suma), 1 / borde.length);
+  const n = unit(sub(c, fuera));
+  const u = unit(cruz(n, Math.abs(n[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0]));
+  const w = cruz(n, u);
+  const local = (p) => { const d = sub(p, c); return [punto(d, u), punto(d, w), punto(d, n)]; };
+  // Mínimos cuadrados: h = k0 + k1 a + k2 b + k3 a² + k4 ab + k5 b² (solo la pared de este lado).
+  const filas = [];
+  for (let i = 0; i < m.v.length / 3; i++) {
+    const p = vert(m, i);
+    if (dist(p, c) > alcance) continue;
+    const [a, b, h] = local(p);
+    if (h < -0.015) continue;
+    filas.push([[1, a, b, a * a, a * b, b * b], h]);
+  }
+  const A = Array.from({ length: 6 }, () => new Array(6).fill(0)), y = new Array(6).fill(0);
+  for (const [x, h] of filas) for (let r = 0; r < 6; r++) { y[r] += x[r] * h; for (let s = 0; s < 6; s++) A[r][s] += x[r] * x[s]; }
+  const k = resolver(A, y);
+  const altura = (a, b) => k[0] + k[1] * a + k[2] * b + k[3] * a * a + k[4] * a * b + k[5] * b * b;
+  const v = [...m.v], f = [...m.f];
+  const nb = borde.length;
+  const ids = [lazo];
+  for (let r = 1; r < anillos; r++) {
+    const s = 1 - r / anillos, fila = [];
+    for (const p of borde) {
+      const [a, b] = local(p);
+      const q = [a * s, b * s];
+      fila.push(v.length / 3);
+      v.push(...suma(suma(c, suma(por(u, q[0]), por(w, q[1]))), por(n, altura(q[0], q[1]))));
+    }
+    ids.push(fila);
+  }
+  const centro = v.length / 3;
+  v.push(...suma(c, por(n, altura(0, 0))));
+  // Orientación: la del triángulo vecino de cada arista del borde (el lazo va en el sentido de su cara).
+  for (let r = 0; r + 1 < ids.length; r++) for (let j = 0; j < nb; j++) {
+    const a = ids[r][j], b = ids[r][(j + 1) % nb], c2 = ids[r + 1][j], d = ids[r + 1][(j + 1) % nb];
+    f.push(b, a, c2, b, c2, d);
+  }
+  const ult = ids.at(-1);
+  for (let j = 0; j < nb; j++) f.push(ult[(j + 1) % nb], ult[j], centro);
+  return { v, f };
+}
+
+function resolver(A, y) {
+  const n = y.length, M = A.map((r, i) => [...r, y[i]]);
+  for (let i = 0; i < n; i++) {
+    let p = i; for (let r = i + 1; r < n; r++) if (Math.abs(M[r][i]) > Math.abs(M[p][i])) p = r;
+    [M[i], M[p]] = [M[p], M[i]];
+    for (let r = 0; r < n; r++) if (r !== i) { const k = M[r][i] / M[i][i]; for (let s = i; s <= n; s++) M[r][s] -= k * M[i][s]; }
+  }
+  return M.map((r, i) => r[n] / r[i]);
+}
+
+/** Suavizado de Taubin (λ/μ, no encoge): quita arrugas finas y deja la forma. `fijos`: vértices que no se mueven. */
+export function taubin(m, vueltas = 20, fijos = new Set(), lambda = 0.5, mu = -0.53, peso = () => 1) {
+  const n = m.v.length / 3, ady = Array.from({ length: n }, () => new Set());
+  for (let t = 0; t < m.f.length; t += 3) for (let k = 0; k < 3; k++) { const a = m.f[t + k], b = m.f[t + ((k + 1) % 3)]; ady[a].add(b); ady[b].add(a); }
+  let v = Float64Array.from(m.v);
+  const w = Array.from({ length: n }, (_, i) => peso([m.v[i * 3], m.v[i * 3 + 1], m.v[i * 3 + 2]]));
+  const paso = (f) => {
+    const nv = Float64Array.from(v);
+    for (let i = 0; i < n; i++) {
+      if (fijos.has(i) || !ady[i].size || !w[i]) continue;
+      const s = [0, 0, 0];
+      for (const j of ady[i]) for (let a = 0; a < 3; a++) s[a] += v[j * 3 + a];
+      for (let a = 0; a < 3; a++) nv[i * 3 + a] = v[i * 3 + a] + f * w[i] * (s[a] / ady[i].size - v[i * 3 + a]);
+    }
+    v = nv;
+  };
+  for (let k = 0; k < vueltas; k++) { paso(lambda); paso(mu); }
+  return { v: [...v], f: m.f };
 }

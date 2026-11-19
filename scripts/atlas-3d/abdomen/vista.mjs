@@ -2,7 +2,7 @@
 // z-buffer, proyección ortográfica) para revisar lo partido y lo modelado.
 //
 //   node scripts/atlas-3d/abdomen/vista.mjs --vista anterior [--solo <regex>] [--resaltar <regex>]
-//        [--translucido] [--centro x,y,z --ancho 0.2] [--px 900] [--salida archivo.png]
+//        [--translucido] [--frontal] [--paquete] [--centro x,y,z --ancho 0.2] [--px 900] [--salida archivo.png]
 //
 // Lee scripts/atlas-3d/salida/abdomen/piezas.json (lo deja construir.mjs).
 // `--translucido`: todo lo no resaltado al 25 %, como en el examen.
@@ -33,7 +33,7 @@ const hex = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
  * piezas: [{ v: number[], f: number[], color: '#rrggbb', alfa?: 0-1 }]
  * Devuelve un PNG (Buffer).
  */
-export async function pintar(piezas, { vista = 'anterior', centro, ancho, px = 900 } = {}) {
+export async function pintar(piezas, { vista = 'anterior', centro, ancho, px = 900, frontal = false } = {}) {
   const { dir, up } = VISTAS[vista];
   const d = norm(dir);
   const r = norm(cruz(d, up)); // derecha de la imagen
@@ -67,7 +67,8 @@ export async function pintar(piezas, { vista = 'anterior', centro, ancho, px = 9
       const e1 = [p.v[ib] - p.v[ia], p.v[ib + 1] - p.v[ia + 1], p.v[ib + 2] - p.v[ia + 2]];
       const e2 = [p.v[ic] - p.v[ia], p.v[ic + 1] - p.v[ia + 1], p.v[ic + 2] - p.v[ia + 2]];
       let n = norm(cruz(e1, e2));
-      if (n[0] * d[0] + n[1] * d[1] + n[2] * d[2] > 0) n = n.map((x) => -x);
+      // `frontal`: como el visor (solo la cara frontal), lo que mira hacia atrás no se pinta.
+      if (n[0] * d[0] + n[1] * d[1] + n[2] * d[2] > 0) { if (frontal) continue; n = n.map((x) => -x); }
       const k = 0.35 + 0.65 * Math.max(0, n[0] * luz[0] + n[1] * luz[1] + n[2] * luz[2]);
       const x0 = Math.max(0, Math.floor(Math.min(A[0], B[0], Cc[0]))), x1 = Math.min(W - 1, Math.ceil(Math.max(A[0], B[0], Cc[0])));
       const y0 = Math.max(0, Math.floor(Math.min(A[1], B[1], Cc[1]))), y1 = Math.min(H - 1, Math.ceil(Math.max(A[1], B[1], Cc[1])));
@@ -131,7 +132,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       return { v: p.v, f: p.f, color: res ? '#0a84ff' : p.color ?? COLORES[p.sistema], alfa: translucido && !res && p.sistema !== 'hueso' ? 0.22 : 1 };
     });
   const centro = arg('centro')?.split(',').map(Number);
-  const png = await pintar(piezas, { vista: arg('vista', 'anterior'), centro, ancho: arg('ancho') ? +arg('ancho') : undefined, px: +arg('px', 900) });
+  const png = await pintar(piezas, { vista: arg('vista', 'anterior'), centro, ancho: arg('ancho') ? +arg('ancho') : undefined, px: +arg('px', 900), frontal: process.argv.includes('--frontal') });
   const salida = arg('salida', path.join(AQUI, '../salida/abdomen/vista.png'));
   fs.writeFileSync(salida, png);
   console.log(`✓ ${piezas.length} piezas → ${salida}`);

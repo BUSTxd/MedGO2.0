@@ -89,7 +89,7 @@ export const PIEZAS = [
   P('Horizontal part of duodenum', 'op:duodeno-3', 'Porción horizontal del duodeno (3.ª)', 'organo', 'pancreas', C.duodeno),
   P('Ascending part of duodenum', 'op:duodeno-4', 'Porción ascendente del duodeno (4.ª)', 'organo', 'pancreas', '#d6946f'),
 
-  P('Stomach', 'Stomach', 'Estómago', 'organo', 'estomago', C.estomago),
+  P('Stomach', 'op:estomago', 'Estómago', 'organo', 'estomago', C.estomago),
   P('Abdominal part of oesophagus', 'op:esofago', 'Esófago (porción abdominal)', 'organo', 'estomago', C.esofago),
   P('Spleen', 'Spleen', 'Bazo', 'organo', 'estomago', C.bazo),
   P('Greater omentum', 'Greater_omentum', 'Omento mayor', 'peritoneo', 'estomago', C.peritoneo),

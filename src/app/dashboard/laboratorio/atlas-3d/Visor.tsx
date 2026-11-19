@@ -533,6 +533,7 @@ function Explorador({ atlas, regiones, config, examenInicial, soloExamen, desdeL
           onAislar={aislar}
           bloqueada={examen && control.bloqueada}
           resaltoFuerte={examen}
+          latido={examen && config?.resalto === 'latido'}
           borrosa={examen && control.borrosa}
           marcador={objetivo?.tipo === 'marcador' ? { punto: objetivo.punto, radio: objetivo.radio } : null}
           rotuloFijo={rotuloFijo}

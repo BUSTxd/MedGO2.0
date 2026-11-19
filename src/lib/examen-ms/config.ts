@@ -31,6 +31,12 @@ export interface ConfigExamen3D {
   quitar: { sistema: Sistema; etiqueta: string; activo: string; ayuda: string; claveAyuda: string };
   /** El esqueleto también translúcido (en el abdomen las costillas tapan el hígado). */
   huesosTranslucidos?: boolean;
+  /**
+   * Cómo se señala: `azul` (miembro superior: azul intenso, BUST lo pidió así) o
+   * `latido` (abdomen: su propio color con un brillo suave e intermitente; en azul
+   * un órgano parecía una vena).
+   */
+  resalto?: 'azul' | 'latido';
   /** Vista por defecto de lo señalado; sin ella, se calcula hacia dónde sobresale. */
   vista?: VistaExamen;
   /** Si el banco trae tarjetas de memoria (lo dice el corte premium). */
@@ -81,6 +87,7 @@ export const EXAMENES_3D: ConfigExamen3D[] = [
       claveAyuda: 'medgo:examen-abdomen:ayuda-organos',
     },
     huesosTranslucidos: true,
+    resalto: 'latido',
     vista: 'anterior',
     conTarjetas: false,
     volver: {
