@@ -6,50 +6,25 @@
 // El paso del centro al lado viaja (FLIP): se mide dónde estaba y dónde queda,
 // y la tarjeta se desliza y se encoge hasta su sitio en vez de saltar.
 
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { useViajeTarjeta } from '@/components/laboratorio/viajeTarjeta';
 import { LETRAS, nombre, textoRespuesta } from './texto';
 import { CATEGORIAS_WP } from '@/lib/willis-practica/tipos';
 import type { Practica } from './usePractica';
 import Resaltado from './Resaltado';
 import s from '@/styles/medulaPractica.module.css';
 
-const VIAJE_MS = 620;
-const CURVA = 'cubic-bezier(0.22, 0.9, 0.24, 1)';
 
 
 export default function TarjetaPractica({ pr }: { pr: Practica }) {
   const { actual: p, paso, respuesta, i, ronda } = pr;
   const seguir = useRef<HTMLButtonElement>(null);
   const pos = useRef<HTMLDivElement>(null);
-  /** Dónde estaba la tarjeta en el render anterior (y de qué pregunta y lado). */
-  const antes = useRef<{ rect: DOMRect; id: string; lado: boolean } | null>(null);
+  const cuerpo = useRef<HTMLDivElement>(null);
   const lado = !!p && (paso === 'corregida' || (paso === 'responder' && p.forma === 'senalar'));
 
-  // FLIP: si la misma pregunta cambia de sitio, se anima desde donde estaba.
-  useLayoutEffect(() => {
-    const el = pos.current;
-    if (!el || !p) { antes.current = null; return; }
-    const ahora = el.getBoundingClientRect();
-    const prev = antes.current;
-    antes.current = { rect: ahora, id: p.id, lado };
-    if (!prev || prev.id !== p.id || prev.lado === lado) return;
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
-    const dx = prev.rect.left - ahora.left;
-    const dy = prev.rect.top - ahora.top;
-    const k = prev.rect.width / Math.max(ahora.width, 1);
-    el.style.transformOrigin = 'top left';
-    el.style.transition = 'none';
-    el.style.transform = `translate(${dx}px, ${dy}px) scale(${k})`;
-    void el.offsetWidth; // fija el punto de partida antes de animar
-    el.style.transition = `transform ${VIAJE_MS}ms ${CURVA}`;
-    el.style.transform = '';
-    const fin = window.setTimeout(() => {
-      el.style.transition = '';
-      el.style.transformOrigin = '';
-      antes.current = { rect: el.getBoundingClientRect(), id: p.id, lado };
-    }, VIAJE_MS + 40);
-    return () => window.clearTimeout(fin);
-  }, [p, lado, paso]);
+  // Del centro al lado: la caja viaja y el texto no se deforma (ver viajeTarjeta.ts).
+  useViajeTarjeta(pos, cuerpo, p?.id ?? null, lado, paso);
 
   // Al corregir, el foco va a «Siguiente» sin desplazar la tarjeta.
   useEffect(() => {
@@ -98,6 +73,7 @@ export default function TarjetaPractica({ pr }: { pr: Practica }) {
           aria-live="polite"
           aria-label={`Pregunta ${i + 1} de ${total}`}
         >
+          <div ref={cuerpo} className={s.cuerpo}>
           {/* ── Dónde estoy: pregunta, avance y postura del modelo ── */}
           <header className={s.cabeza}>
             <div className={s.cabezaFila}>
@@ -197,6 +173,7 @@ export default function TarjetaPractica({ pr }: { pr: Practica }) {
               </footer>
             </div>
           )}
+          </div>
         </article>
       </div>
     </div>

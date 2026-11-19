@@ -136,7 +136,12 @@ const lista: Interior[] = [
     nivel: 'Bajo el área vestibular del suelo del IV ventrículo, entre puente y bulbo.',
     funcion: 'Equilibrio: conectan con el cerebelo, la médula (vestibuloespinales) y los núcleos oculomotores por el FLM (reflejo vestíbulo-ocular).',
     lesion: 'Vértigo, nistagmo, náuseas y lateropulsión hacia el lado lesionado.',
-    prims: [elip('n_vestibulares', [0.62, 0.3, -0.42], [0.2, 0.55, 0.08])],
+    // Columna del puente bajo (superior y lateral, a la altura del colículo facial)
+    // al bulbo abierto (medial e inferior, a la altura de la oliva).
+    prims: [
+      elip('n_vestibulares', [0.49, 0.75, -0.35], [0.1, 0.42, 0.06]),
+      elip('n_vestibulares', [0.5, -0.3, -0.39], [0.11, 0.8, 0.06]),
+    ],
   },
   {
     id: 'n_cocleares', nombre: 'Núcleos cocleares', tipo: 'nucleo_par', columna: 'aes', pares: ['VIII'], color: COLUMNAS.aes.color,

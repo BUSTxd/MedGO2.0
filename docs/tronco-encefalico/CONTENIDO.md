@@ -21,6 +21,8 @@ Lab `tronco-encefalico` (Neurología), rehecho de cero el 2026-11-17 con la arqu
 - **Bordes suaves:** el corte sale de una imagen de 150 px/cm con cobertura calculada desde el campo de distancias, y en el 3D el color de cada zona se funde con el de sus vecinos (tres pasadas) antes de aplicar la oclusión.
 - **Tiempo de modelado:** ≈ 1 s el tronco en escritorio (vóxel 0,034 cm), ≈ 0,5 s el cerebelo, que solo se modela si se pone. En pantallas táctiles el vóxel es mayor (0,045 y 0,07).
 - **Interior** (`engine/interior.ts`): núcleos de los pares por columna funcional, otros núcleos y vías largas, como volúmenes en las mismas coordenadas. Con ellos se dibujan en 3D, se pintan los cortes (`engine/cortes.ts`) y se comprueba qué daña cada lesión.
+- **Niveles de corte:** los 7 cortes de referencia de los atlas (Haines, Netter, Snell): mesencéfalo por el colículo superior y por el inferior, puente medio (entrada del V) y puente inferior (colículo facial), bulbo abierto por la oliva, bulbo cerrado por la decusación sensitiva y bulbo bajo por la decusación piramidal. Lo que fija cada nivel es qué estructuras corta; la altura `y` es dónde caen esas estructuras en este modelo, no una medida tomada de una lámina.
+- **Clic en el corte:** el plano de corte solo quita del dibujo lo que queda encima; el rayo del ratón lo seguía tocando. Tronco y nervios usan un raycast que descarta lo recortado (`useRayoRecortado`). Sin él, de lejos el clic se lo quedaba esa parte invisible; de cerca funcionaba porque la cámara quedaba dentro de ella.
 - **Coordenadas:** cm; +Y superior, +Z anterior, +X izquierda del paciente (de frente, la derecha del paciente queda a la izquierda de la pantalla). Lo lateral se escribe del lado izquierdo y se refleja.
 
 ## Fuentes de contraste (solo para comparar; nada entra al repo)
@@ -41,10 +43,14 @@ Lab `tronco-encefalico` (Neurología), rehecho de cero el 2026-11-17 con la arqu
 - **Lesiones:** elipsoides esquemáticos. El verificador avisa de lo que tocan además de lo nombrado (p. ej. Millard-Gubler alcanza el borde del lemnisco medial y de la vía simpática); se dejó así porque las lesiones reales tampoco respetan límites netos.
 - **Cerebelo:** forma y folias aproximadas (folias como arcos alrededor de un eje transversal); sirve de contexto, no se estudia aquí.
 - **Velo medular superior, tela coroidea y frenillo** no se modelan.
+- **Bulbo cerrado:** los núcleos del XII y dorsal del vago terminan algo por encima de la decusación sensitiva; en la pieza real llegan a ese nivel, junto al conducto central. El corte «Dec. sensitiva» no los muestra.
+- **Núcleos vestibulares:** dos volúmenes (puente bajo y bulbo abierto) en lugar de los cuatro núcleos; aparecen en los cortes «Puente inf.» y «Bulbo olivar».
 
 ## Práctica
 
 Como la de Willis: rondas de 10, señalar en el modelo o elegir alternativa, pista y repaso de falladas. Banco de 91 preguntas en `data/tronco-practica/preguntas.mjs` (fuera de git; redacción propia con los datos clásicos del examen): superficie 24, pares craneales 24, núcleos y cortes 22, clínico 21; 46 de señalar y 45 de alternativas; 20 casos. `npm run practica:tronco` comprueba que cada id exista y se pueda tocar en la vista de su pregunta (en un corte, que aparezca de verdad a ese nivel) y que el sesgo de largo cumpla la regla (hoy 4 % y 7 %). En la práctica, nervios y núcleos van en color neutro y solo cuenta el toque del tipo que pide la pregunta.
+
+Revisadas a mano (2026-11-18) las 8 preguntas de corte y las de núcleos que nombran un nivel: núcleo rojo, oliva inferior, vía corticoespinal y lemnisco medial en el bulbo, núcleo del III, núcleo del VI, rodilla interna del facial y decusación de los pedúnculos cerebelosos superiores coinciden con los atlas. Lo que no coincidía era el modelo: el corte «Puente inferior» decía mostrar los núcleos vestibulares y no llegaban a ese nivel; ahora suben hasta el colículo facial.
 
 Para llegar a que el corte «Puente inferior» muestre el núcleo del VI y el del facial, como en el atlas, el corte subió a y = 1,0 y el núcleo del facial se alargó hacia arriba.
 

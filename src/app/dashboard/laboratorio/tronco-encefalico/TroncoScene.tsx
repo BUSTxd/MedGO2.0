@@ -333,6 +333,21 @@ const ROTULOS: Array<{ id: string; p: [number, number, number]; n: [number, numb
 
 // ── Piezas de la escena ─────────────────────────────────────────────────────
 
+/**
+ * Raycast que ignora lo recortado. El plano de corte solo quita lo de arriba
+ * del dibujo: el rayo del ratón seguía chocando con esa parte invisible del
+ * tronco, que se quedaba el clic antes de llegar a la tapa del corte. De cerca
+ * no pasaba porque la cámara quedaba dentro de esa parte (sin cara delante).
+ */
+function useRayoRecortado(plano: THREE.Plane | null) {
+  return useMemo(() => function (this: THREE.Mesh, rc: THREE.Raycaster, hits: THREE.Intersection[]) {
+    const n = hits.length;
+    THREE.Mesh.prototype.raycast.call(this, rc, hits);
+    if (!plano) return;
+    for (let i = hits.length - 1; i >= n; i--) if (plano.distanceToPoint(hits[i].point) < 0) hits.splice(i, 1);
+  }, [plano]);
+}
+
 function Tronco({ geo, fantasma, elegido, senalado, clinico, marcas, plano, oscuro, onElegir, onSenalar }: {
   geo: THREE.BufferGeometry;
   /** Funda de cristal (para ver el interior). */
@@ -347,6 +362,7 @@ function Tronco({ geo, fantasma, elegido, senalado, clinico, marcas, plano, oscu
   onSenalar: (e: Elegido) => void;
 }) {
   const ultimo = useRef<string | null>(null);
+  const rayo = useRayoRecortado(plano);
   useEffect(() => { colorear(geo, elegido, senalado, clinico, marcas); }, [geo, elegido, senalado, clinico, marcas]);
   const ghost = useFantasma(oscuro ? '#b8c4ff' : '#7d6a8a', oscuro ? 0.75 : 0.85);
   const ghostArriba = useFantasma(oscuro ? '#b8c4ff' : '#7d6a8a', 0.5, plano ? new THREE.Plane(new THREE.Vector3(0, 1, 0), -plano.constant) : undefined);
@@ -388,7 +404,7 @@ function Tronco({ geo, fantasma, elegido, senalado, clinico, marcas, plano, oscu
   if (fantasma) return <mesh geometry={geo} material={ghost} renderOrder={5} />;
   return (
     <>
-      <mesh geometry={geo} material={solido} onPointerMove={mover} onPointerOut={salir} onClick={tocar} />
+      <mesh geometry={geo} material={solido} raycast={rayo} onPointerMove={mover} onPointerOut={salir} onClick={tocar} />
       {plano && <mesh geometry={geo} material={ghostArriba} renderOrder={5} />}
     </>
   );
@@ -478,6 +494,7 @@ function Nervios({ campo, modo, elegido, senalado, apagado, resaltar, marcas, pl
 }) {
   const geos = useMemo(() => NERVIOS.flatMap((n) => (['i', 'd'] as const).map((lado) => ({ n, lado, geo: geometriaNervio(n, lado, campo) }))), [campo]);
   // Las geometrías de los nervios se guardan en geometria.ts: no se liberan aquí.
+  const rayo = useRayoRecortado(plano);
   // En la práctica van en color neutro: el color no debe delatar qué par es.
   const colorear = modo !== 'anatomia' && !marcas;
   return (
@@ -493,6 +510,7 @@ function Nervios({ campo, modo, elegido, senalado, apagado, resaltar, marcas, pl
           <mesh
             key={`${n.id}${lado}`}
             geometry={geo}
+            raycast={rayo}
             onPointerMove={(e) => { if (apagado) return; e.stopPropagation(); onSenalar({ kind: 'nervio', id: n.id, lado }); document.body.style.cursor = 'pointer'; }}
             onPointerOut={() => { onSenalar(null); document.body.style.cursor = 'auto'; }}
             onClick={(e) => { if (apagado) return; e.stopPropagation(); onElegir({ kind: 'nervio', id: n.id, lado }); }}
@@ -643,6 +661,7 @@ function TapaCorte({ nivel, oscuro, etiquetas, elegido, marcas, onElegir, onSena
   }, [y]);
   useEffect(() => () => { tex.dispose(); geo.dispose(); }, [tex, geo]);
   const ultimo = useRef<number>(-2);
+  const alto = useThree((st) => st.size.height);
   const leer = (e: ThreeEvent<PointerEvent | MouseEvent>) => {
     if (!e.uv) return null;
     const i = Math.min(corte.ancho - 1, Math.floor(e.uv.x * corte.ancho));
@@ -661,15 +680,20 @@ function TapaCorte({ nivel, oscuro, etiquetas, elegido, marcas, onElegir, onSena
     document.body.style.cursor = k > 0 ? 'pointer' : 'auto';
   };
   /**
-   * En la práctica, si el toque cae a menos de ~0,5 mm de lo que se busca, se
-   * cuenta como suyo: en el corte los núcleos miden 1-2 mm y van en racimo.
+   * En la práctica, si el toque cae cerca de lo que se busca, se cuenta como
+   * suyo: en el corte los núcleos miden 1-2 mm y van en racimo. «Cerca» es
+   * ~0,5 mm o ~9 px de pantalla, lo que sea mayor (de lejos, 0,5 mm son un par
+   * de píxeles), y nunca más de 2 mm.
    */
   const iman = (e: ThreeEvent<MouseEvent>): number | null => {
     const obj = marcas?.objetivo;
     if (!obj?.size || !e.uv) return null;
     const ci = Math.floor(e.uv.x * corte.ancho), cj = Math.floor(e.uv.y * corte.alto);
-    // Radio de ~0,5 mm, sea cual sea la resolución del corte.
-    const R = Math.max(3, Math.round(0.055 * corte.ancho / (VENTANA.x1 - VENTANA.x0)));
+    const ppcm = corte.ancho / (VENTANA.x1 - VENTANA.x0);
+    const cam = e.camera as THREE.PerspectiveCamera;
+    const cmPorPx = cam.isPerspectiveCamera ? (2 * e.distance * Math.tan((cam.fov * Math.PI) / 360)) / Math.max(alto, 1) : 0;
+    const radioCm = Math.min(0.2, Math.max(0.055, 9 * cmPorPx));
+    const R = Math.max(3, Math.round(radioCm * ppcm));
     let mejor: number | null = null;
     let dMejor = Infinity;
     for (let dj = -R; dj <= R; dj++) for (let di = -R; di <= R; di++) {
