@@ -1,0 +1,16 @@
+// Capítulo 17 · Sífilis primaria: el chancro
+// Por paso: [parámetro de la lámina, palabra clave (o segundos), duración en s].
+export default [
+  // 0 · El paciente 2
+  [['n27', '27', 1.0], ['varon', 'varon', 1.2], ['lesion', 'lesion', 1.2], ['glande', 'glande', 1.0], ['duele', 'duele', 1.2], ['n3', '3', 1.0], ['n6', '6', 1.0], ['exposicion', 'exposicion', 1.2], ['ulcera', 'ulcera', 1.2], ['n12', '12', 1.0], ['bordes', 'bordes', 1.0], ['base', 'base', 1.0], ['dura', 'dura', 1.4], ['ganglios', 'ganglios', 1.2], ['moviles', 'moviles', 1.0], ['dolor', 'dolor', 1.2], ['pista', 'pista', 1.0], ['duele2', 'duele#2', 1.2]],
+  // 1 · Del inóculo a la úlcera
+  [['forma', 'forma', 1.2], ['entra', 'entra', 1.4], ['microlesion', 'microlesion', 1.2], ['multiplica', 'multiplica', 1.4], ['dermis', 'dermis', 1.0], ['vasos', 'vasos', 1.0], ['endotelio', 'endotelio', 1.2], ['linfocitos', 'linfocitos', 1.0], ['plasmaticas', 'plasmaticas', 1.0], ['histiositos', 'histiositos', 1.0], ['estrecha', 'estrecha', 2.0], ['endarteritis', 'endarteritis', 1.2], ['flujo', 'flujo', 1.0], ['hipoxia', 'hipoxia', 1.0], ['necrosa', 'necrosa', 1.0], ['erosiona', 'erosiona', 2.0], ['fondo', 'fondo', 1.2]],
+  // 2 · Cada rasgo del chancro
+  [['caracteristica', 'caracteristica', 1.2], ['lesion', 'lesion', 1.2], ['unica', 'unica', 1.0], ['redonda', 'redonda', 1.2], ['regla', '1', 1.2], ['bordes', 'bordes', 1.4], ['fondo', 'fondo', 1.4], ['base', 'base', 1.0], ['dura', 'dura', 1.6], ['celulas', 'celulas', 1.4], ['prolifera', 'prolifera', 1.4], ['duele', 'duele', 1.2], ['atreponema', 'atreponema', 1.0], ['toxinas', 'toxinas', 1.0], ['destruyan', 'destruyan', 1.0], ['moderada', 'moderada', 1.2], ['infiltrado', 'infiltrado', 1.2], ['genital', 'genital', 1.2], ['pensar', 'pensar', 1.0]],
+  // 3 · Muy contagioso, pero se cura solo
+  [['contagiosa', 'contagiosa', 1.2], ['muchisimo', 'muchisimo', 1.4], ['exudado', 'exudado', 1.2], ['lleno', 'lleno', 1.4], ['condilomas', 'condilomas', 1.2], ['placas', 'placas', 1.2], ['infectantes', 'infectantes', 1.2], ['desaparece', 'desaparece', 2.4], ['cicatriz', 'cicatriz', 1.2], ['significa', 'significa', 1.2], ['curado', 'curado', 1.0], ['espiroquetas2', 'espiroquetas#2', 1.6], ['viajaron', 'viajaron', 1.2]],
+  // 4 · Confirmarlo en la lesión
+  [['confirma', 'confirma', 1.2], ['serologia', 'serologia', 1.2], ['tardar', 'tardar', 1.6], ['campo', 'campo', 1.2], ['gota', 'gota', 1.2], ['vivas', 'vivas', 1.4], ['giran', 'giran', 1.6], ['inmuno', 'inmunofluorescencia', 1.4], ['moleculares', 'moleculares', 1.4], ['paciente', 'paciente', 1.2], ['serologia2', 'serologia#2', 1.2], ['rpr', 'rpr', 1.2], ['titulo', 'titulo', 1.4], ['tpp', 'tpp', 1.2], ['juntas', 'juntas', 1.2], ['falso', 'falso', 1.2]],
+  // 5 · Otras úlceras genitales
+  [['ulceras', 'ulceras', 1.2], ['distinguen', 'distinguen', 1.2], ['herpes', 'herpes', 1.2], ['vesiculas', 'vesiculas', 1.4], ['dolorosas', 'dolorosas', 1.0], ['chancroide', 'chancroide', 1.2], ['blanda', 'blanda', 1.2], ['dolorosa2', 'dolorosa#2', 1.0], ['irregulares', 'irregulares', 1.2], ['sifilitico', 'sifilitico', 1.2], ['unico', 'unico', 1.0], ['duro', 'duro', 1.0], ['limpio', 'limpio', 1.0], ['duele', 'duele', 1.2], ['clinica', 'clinica', 1.2], ['pruebas', 'pruebas', 1.2], ['sifilis', 'sifilis#2', 1.2], ['vih', 'vih', 1.2]],
+];

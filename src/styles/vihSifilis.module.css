@@ -1,0 +1,100 @@
+/* Laboratorio «VIH y sífilis» (Patología, ACP14): el estilo de las referencias de BUST
+   (docs/vih-sifilis/ESTILO.md): infografía plana, colores de joya, sin contorno oscuro.
+   El VIH vive en mantequilla y rosa (claro) o índigo (oscuro, como el núcleo y el campo de
+   virus de las referencias). Desde el capítulo 15 (la sífilis) el lienzo lleva `.sifilis`:
+   menta y verde azulado, como «fases de mejora» y «time line». Define también `--vas-*` y
+   `--cit-*` porque las piezas que se importan de Vasculitis y Citopenias las leen. */
+
+.lienzo {
+  --vs-fondo-a: #FDF8C8;
+  --vs-fondo-b: #F7DDF0;
+  --vs-pelo: #1C0B73;
+  --vas-fondo-a: #FDF8C8;
+  --vas-fondo-b: #F7DDF0;
+  --vas-pantalla: #3A1466;
+  --vas-pantalla-2: #4A1C80;
+  --vas-cuerpo: #6B3FC8;
+  --vas-cuerpo-borde: #E040C8;
+  --vas-suave: rgba(120, 60, 150, 0.12);
+  --cit-texto: #2E1A3A;
+  --cit-texto-2: #6A4A5E;
+  --cit-flecha: #6A3F5A;
+  --cit-base: #4A2368;
+  /* Texto de cada entidad (legible en los dos temas). */
+  --vs-virus: #1B7A2E;
+  --vs-cd4: #3B2DC4;
+  --vs-cd8: #0A7A72;
+  --vs-mac: #B4560B;
+  --vs-dc: #A02090;
+  --vs-ab: #0E8A5F;
+  --vs-adn: #0A62E0;
+  --vs-fx: #B8237A;
+  --vs-esp: #0A7F86;
+  --vs-sangre: #C0183A;
+  --vs-tejido: #8A1FB8;
+  --vs-ambar: #B86A00;
+  --vs-violeta: #5B2FB0;
+  --vs-verde: #138A3A;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(165deg, var(--vs-fondo-a), var(--vs-fondo-b));
+}
+:global(.dark-mode) .lienzo {
+  --vs-fondo-a: #140A70;
+  --vs-fondo-b: #2E0F82;
+  --vs-pelo: #5A3FE0;
+  --vas-fondo-a: #140A70;
+  --vas-fondo-b: #2E0F82;
+  --vas-pantalla: #2A0D52;
+  --vas-pantalla-2: #3A1470;
+  --vas-cuerpo: #5A33B8;
+  --vas-cuerpo-borde: #F05BD8;
+  --vas-suave: rgba(200, 190, 255, 0.10);
+  --cit-texto: #F4F0FF;
+  --cit-texto-2: #C8BEEA;
+  --cit-flecha: #C6B4F5;
+  --cit-base: #7A4BE0;
+  --vs-virus: #7BE08F;
+  --vs-cd4: #A9A0FF;
+  --vs-cd8: #5FE8DC;
+  --vs-mac: #FFC24A;
+  --vs-dc: #FF8AE0;
+  --vs-ab: #6FE8B8;
+  --vs-adn: #6FB0FF;
+  --vs-fx: #FF8AC8;
+  --vs-esp: #5FE8E0;
+  --vs-sangre: #FF7A8A;
+  --vs-tejido: #E08AF5;
+  --vs-ambar: #FFC24A;
+  --vs-violeta: #C3AEFF;
+  --vs-verde: #6FE08F;
+}
+
+/* La sífilis: otro fondo para otra historia (la misma paleta de piezas). */
+.lienzo.sifilis {
+  --vs-fondo-a: #DDF8E1;
+  --vs-fondo-b: #CFF3F0;
+  --vas-fondo-a: #DDF8E1;
+  --vas-fondo-b: #CFF3F0;
+}
+:global(.dark-mode) .lienzo.sifilis {
+  --vs-fondo-a: #062F3E;
+  --vs-fondo-b: #1A1058;
+  --vas-fondo-a: #062F3E;
+  --vas-fondo-b: #1A1058;
+}
+
+.svg { width: 100%; height: 100%; display: block; user-select: none; }
+
+/* Partículas: de día claras y cálidas, de noche de color (verde y blanco del campo de virus). */
+.bokehOscuro { display: none; }
+:global(.dark-mode) .bokehOscuro { display: block; }
+:global(.dark-mode) .bokehClaro { display: none; }
+
+/* Portada. */
+.sobretitulo { color: #1B7A2E; }
+:global(.dark-mode) .sobretitulo { color: #7BE08F; }
+
+/* Letra o cifra dentro de un icono ya colocado (ver Letra en Piezas.tsx). */
+.letra { font-weight: 800; font-family: inherit; pointer-events: none; }
