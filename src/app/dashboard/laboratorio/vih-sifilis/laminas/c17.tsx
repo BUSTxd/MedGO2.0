@@ -2,7 +2,7 @@
 // Capítulo 17 · Sífilis primaria: el chancro
 
 import type { Lamina } from '../Lienzo';
-import { Bandera, Cruz, Cuerpo, Epitelioide, Escamoso, Flecha, Helice, Hombre, Linfocito, Medallon, Nodo, P, Plasmatica, Punto, Reloj, Sale, Signo, Trazo, Treponema, TuboEnsayo, Txt, TXV, Visto, easeOut, hash, lerp, tramo } from '../Piezas';
+import { Bandera, Cruz, Cuerpo, Epitelioide, Escamoso, Flecha, FotoCuadro, Helice, Hombre, Linfocito, Medallon, Nodo, P, Plasmatica, Punto, Reloj, Sale, Signo, Trazo, Treponema, TuboEnsayo, Txt, TXV, Visto, easeOut, hash, lerp, tramo } from '../Piezas';
 import { Dolor, Gota, Parche, Ulcera } from './ComunSifilis';
 
 // ─── 0 · El paciente 2 ───────────────────────────────────────────────────────
@@ -100,20 +100,24 @@ const CadaRasgo: Lamina = ({ p, reloj }) => {
     <g>
       <Txt x={800} y={78} txt="cada rasgo del chancro" t={42} p={p('caracteristica')} color={TXV.violeta} />
       {/* la lesión, sobre un parche de piel */}
-      <Parche x={380} y={560} rx={290} ry={265} o={tramo(p('lesion'), 0, 0.4)} />
-      <Ulcera x={380} y={560} k={1.15} dura={dura} o={tramo(p('lesion'), 0, 0.4)} />
-      <circle cx={380} cy={560} r={178} fill="none" stroke="#FFF" strokeWidth={6} strokeDasharray="14 14" strokeDashoffset={-reloj / 80} strokeLinecap="round" opacity={0.85 * tramo(p('redonda'), 0, 0.5)} />
+      {/* la lesión: la foto real de un chancro; si no carga, el parche de piel dibujado */}
+      <FotoCuadro x={380} y={525} w={520} h={390} foto="chancro" o={tramo(p('lesion'), 0, 0.4)} credito="arriba" fallback={<>
+        <Parche x={380} y={560} rx={290} ry={265} o={tramo(p('lesion'), 0, 0.4)} />
+        <Ulcera x={380} y={560} k={1.15} dura={dura} o={tramo(p('lesion'), 0, 0.4)} />
+        <circle cx={380} cy={560} r={178} fill="none" stroke="#FFF" strokeWidth={6} strokeDasharray="14 14" strokeDashoffset={-reloj / 80} strokeLinecap="round" opacity={0.85 * tramo(p('redonda'), 0, 0.5)} />
+      </>} />
+      <circle cx={380} cy={525} r={72} fill="none" stroke="#FFF" strokeWidth={5} strokeDasharray="12 12" strokeDashoffset={-reloj / 80} strokeLinecap="round" opacity={0.9 * tramo(p('redonda'), 0, 0.5)} />
       <Bandera x={380} y={212} txt="una sola úlcera" color={P.esp[0]} p={p('unica')} t={28} punta="abajo" />
       <g opacity={tramo(p('regla'), 0, 0.5)}>
         <rect x={250} y={738} width={260} height={30} rx={7} fill="#FFE9A8" />
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => <path key={i} d={`M${250 + i * 32.5},738 L${250 + i * 32.5},${i % 2 ? 750 : 760}`} stroke="#B07A00" strokeWidth={4} strokeLinecap="round" />)}
       </g>
-      <Txt x={380} y={802} txt="1 a 2 cm" t={28} p={p('regla')} color="#5A2A00" />
-      <Trazo pts={[[700, 470], [526, 512]]} p={easeOut(p('bordes'))} color="#7A5AC8" w={5} />
+      <Txt x={380} y={802} txt="1 a 2 cm" t={28} p={p('regla')} color={TXV.ambar} />
+      <Trazo pts={[[700, 470], [446, 508]]} p={easeOut(p('bordes'))} color="#7A5AC8" w={5} />
       <Bandera x={700} y={470} txt="bordes nítidos" color={P.cd4[0]} p={p('bordes')} t={26} punta="izq" ancla="izq" />
-      <Trazo pts={[[700, 565], [440, 575]]} p={easeOut(p('fondo'))} color="#7A5AC8" w={5} />
+      <Trazo pts={[[700, 565], [396, 530]]} p={easeOut(p('fondo'))} color="#7A5AC8" w={5} />
       <Bandera x={700} y={565} txt="fondo limpio" color={P.menta[0]} p={p('fondo')} t={26} punta="izq" ancla="izq" />
-      <Trazo pts={[[700, 660], [490, 615]]} p={easeOut(p('base'))} color="#7A5AC8" w={5} />
+      <Trazo pts={[[700, 660], [432, 566]]} p={easeOut(p('base'))} color="#7A5AC8" w={5} />
       <Bandera x={700} y={660} txt="base dura" color={P.sangre[0]} p={p('base')} t={26} punta="izq" ancla="izq" />
       <Txt x={380} y={905} txt="úlcera genital que no duele" t={28} p={p('genital')} color={TXV.sangre} />
       <Txt x={380} y={952} txt="pensar en sífilis" t={36} p={p('pensar')} color={TXV.esp} />

@@ -2,7 +2,7 @@
 // Capítulo 18 · Secundaria, latente, terciaria y congénita
 
 import type { Lamina } from '../Lienzo';
-import { Bandera, Bazo, Caracol, Cerebro, Cruz, Cuerpo, Flecha, Granuloma, Higado, Hombre, Jeringa, Nodo, P, Punto, Reloj, Sale, Signo, Trazo, Treponema, Txt, TXV, Visto, easeOut, hash, lerp, tramo } from '../Piezas';
+import { Bandera, Bazo, Caracol, Cerebro, Cruz, Cuerpo, Flecha, FotoCuadro, Granuloma, Higado, Hombre, Jeringa, Nodo, P, Punto, Reloj, Sale, Signo, Trazo, Treponema, Txt, TXV, Visto, easeOut, hash, lerp, tramo, useFotoCargada } from '../Piezas';
 import { Palma, Parche, Sudor, VasoCorte } from './ComunSifilis';
 
 /** Un feto de perfil (cabeza, cuerpo encogido y pierna), en tonos de piel. */
@@ -82,6 +82,7 @@ const TresMeses: Lamina = ({ p }) => (
 
 // ─── 1 · La erupción ─────────────────────────────────────────────────────────
 const LaErupcion: Lamina = ({ p, reloj }) => {
+  const hayFoto = useFotoCargada('palmas');
   const dif = easeOut(p('diseminaron'));
   const luz = 1 - 0.5 * easeOut(p('permeables'));
   const flat = 1 - tramo(p('eleva'), 0, 0.5);
@@ -90,6 +91,8 @@ const LaErupcion: Lamina = ({ p, reloj }) => {
   return (
     <g>
       <Txt x={800} y={62} txt="la erupción" t={44} p={p('erupcion')} color={TXV.violeta} />
+      {/* cuando llega «palmas y plantas», el dibujo se apaga y se ve la foto real */}
+      <g opacity={1 - (hayFoto ? 0.82 : 0) * tramo(p('palmas'), 0, 0.6)}>
       {/* la sangre las lleva */}
       <g opacity={tramo(p('espiroquetas'), 0, 0.4)}>
         <rect x={110} y={130} width={1380} height={124} rx={62} fill="#6A0F2E" />
@@ -145,6 +148,8 @@ const LaErupcion: Lamina = ({ p, reloj }) => {
       <Txt x={1210} y={942} txt="palmas" t={26} p={p('palmas')} />
       <Txt x={1340} y={942} txt="y plantas" t={26} p={p('plantas')} />
       <Txt x={800} y={980} txt="la separa de muchas erupciones virales o alérgicas" t={22} p={p('virales')} color={TXV.ambar} />
+      </g>
+      <FotoCuadro x={800} y={500} w={560} h={420} foto="palmas" o={p('palmas')} credito="dentro" />
     </g>
   );
 };
@@ -194,6 +199,7 @@ const CondilomasLata: Lamina = ({ p, reloj }) => {
       <Txt x={1000} y={945} txt="muchísimas espiroquetas" t={26} p={p('muchisimas')} color={TXV.esp} />
       <Txt x={1330} y={945} txt="muy contagiosos" t={30} p={p('contagiosos')} color={TXV.sangre} />
       </g>
+      <FotoCuadro x={760} y={215} w={260} h={195} foto="condiloma-plano" o={p('condilomas')} credito={[760, 340]} />
     </g>
   );
 };
@@ -261,12 +267,14 @@ const PlacasMucosas: Lamina = ({ p, reloj }) => {
       <Trazo pts={[[1080, 850], [1130, 810], [1190, 880], [1250, 820], [1300, 880], [1340, 850]]} p={easeOut(p('rastro'))} color="#FFF" w={8} />
       <Sale p={p('caracol')} x={1420} y={850}><Caracol k={0.5} reloj={reloj} /></Sale>
       <Txt x={1420} y={950} txt="«huella de caracol»" t={26} p={p('caracol')} color={TXV.violeta} />
+      <FotoCuadro x={1260} y={170} w={240} h={160} foto="placas-mucosas" o={p('placas')} credito="arriba" />
     </g>
   );
 };
 
 // ─── 4 · Alopecia ────────────────────────────────────────────────────────────
 const Alopecia: Lamina = ({ p, reloj }) => {
+  const hayFoto = useFotoCargada('alopecia');
   const R = 130, C = 2 * Math.PI * R;
   const grados = lerp(24, 190, easeOut(p('ciclo'))) + lerp(0, 92, easeOut(p('antes')));
   const bx = 1130 + R * Math.sin((grados * Math.PI) / 180), by = 290 - R * Math.cos((grados * Math.PI) / 180);
@@ -312,12 +320,16 @@ const Alopecia: Lamina = ({ p, reloj }) => {
       <Txt x={920} y={412} txt="catágena" t={22} ancla="end" p={p('fases')} color={TXV.ambar} />
       <Txt x={920} y={170} txt="telógena · reposo" t={22} ancla="end" p={p('reposo')} color={TXV.sangre} />
       {/* los pelos se adelgazan y caen, de forma difusa */}
+      {/* la foto real sustituye al paciente dibujado; si no carga, se queda el dibujo con sus pelos que caen */}
+      <FotoCuadro x={880} y={690} w={210} h={284} foto="alopecia" o={p('adelgazan')} credito={[880, 884]} fallback={<>
       <Sale p={p('adelgazan')} x={880} y={745}><Hombre k={0.42} pelon={pelo} /></Sale>
       {[0, 1, 2, 3, 4, 5].map((i) => {
         const u = easeOut(tramo(p('caen'), i * 0.1, i * 0.1 + 0.7));
         const x = i < 3 ? 735 + i * 30 : 965 + (i - 3) * 30;
         return <path key={i} d="M0,0 q9,14 0,30" fill="none" stroke="var(--vs-pelo)" strokeWidth={4} strokeLinecap="round" transform={`translate(${x},${660 + u * 230}) rotate(${(i % 3 - 1) * 20})`} opacity={tramo(p('caen'), i * 0.1, i * 0.1 + 0.2) * (1 - 0.7 * u)} />;
       })}
+      </>} />
+      <Txt x={880} y={912} txt="a veces en parches: «apolillada»" t={20} p={hayFoto ? p('difusa') : 0} color={TXV.ambar} />
       <Txt x={700} y={945} txt="se adelgazan" t={22} p={p('adelgazan')} />
       <Txt x={830} y={945} txt="y caen" t={22} p={p('caen')} />
       <Txt x={950} y={945} txt="de forma difusa" t={22} p={p('difusa')} />

@@ -3,7 +3,7 @@
  * (CLAUDE.md: «render con react-dom/server, o Edge sin ventana para degradados y máscaras»).
  *
  *   node scripts/vih-sifilis/vista.mjs --caps 0,1 [--pasos 0,3] [--tema claro|oscuro|ambos]
- *        [--p 1] [--cero a,b] [--parcial a=0.5] [--reloj 2000] [--salida <carpeta>] [--por-hoja 4] [--ancho 800|1600]
+ *        [--p 1] [--cero a,b] [--parcial a=0.5] [--reloj 2000] [--salida <carpeta>] [--por-hoja 4] [--ancho 800|1600] [--fotos <carpeta>]
  *
  * Pinta cada lámina con todos sus parámetros en `--p` (1 = estado final) dentro del mismo
  * lienzo de 1600 × 1000 (fondo y variables de color de claro u oscuro, y la variante de la
@@ -59,6 +59,18 @@ const VARS = {
 };
 const variablesDe = (tema, cap) => `${tema === 'oscuro' ? VARS.oscuro : VARS.claro} ${cap >= 15 ? (tema === 'oscuro' ? VARS.oscuroSif : VARS.claroSif) : ''}`;
 
+// Fotos: las láminas piden `<id>_<versión>.avif` al bucket de Supabase; aquí se leen de la carpeta local de fotos
+// (`--fotos <carpeta>`, por defecto Descargasotos-vih-sifilis): primero la optimizada por BUST (`optimizadas/*.avif`) y, si
+// aún no existe, la PNG sin comprimir que deja `preparar-fotos.mjs` en `para-optimizar/`.
+const dirFotos = arg('fotos', 'C:/Users/BUST/Downloads/fotos-vih-sifilis');
+const fotosLocales = (svg) => svg.replace(/href="[^"]*\/vih-sifilis\/fotos\/([a-z0-9-]+_v\d+)\.avif"/g, (m, nombre) => {
+  for (const [sub, ext] of [['optimizadas', 'avif'], ['para-optimizar', 'png']]) {
+    const f = path.join(dirFotos, sub, `${nombre}.${ext}`);
+    if (existsSync(f)) return `href="${pathToFileURL(f).href}"`;
+  }
+  return m;
+});
+
 const celdas = []; // { cap, paso, svg }
 for (const cap of caps) {
   const ruta = path.join(RAIZ, `src/app/dashboard/laboratorio/${lab}/laminas/c${cap}.tsx`);
@@ -67,7 +79,9 @@ for (const cap of caps) {
     if (pasosPedidos && !pasosPedidos.includes(paso)) return;
     let svg;
     try {
-      svg = renderToStaticMarkup(React.createElement(L, { p: valorDe, reloj }));
+      // identifierPrefix: cada lámina tiene sus propios ids (useId), porque en una hoja de contacto comparten documento
+      svg = renderToStaticMarkup(React.createElement(L, { p: valorDe, reloj }), { identifierPrefix: `v${cap}-${paso}-` });
+      svg = fotosLocales(svg);
     } catch (e) {
       svg = `<text x="40" y="120" font-size="36" fill="#c00">ERROR c${cap}.${paso}: ${String(e.message).slice(0, 120).replace(/[<&]/g, '')}</text>`;
       console.error(`  ERROR c${cap}.${paso}: ${e.message}`);

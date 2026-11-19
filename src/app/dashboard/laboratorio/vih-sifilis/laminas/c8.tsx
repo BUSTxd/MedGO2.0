@@ -2,7 +2,7 @@
 // Capítulo 8 · Historia natural
 
 import type { Lamina } from '../Lienzo';
-import { Bandera, Bola, Capas, Cerebro, Cuerpo, Cruz, Escamoso, Flecha, Flota, Ganglio, Helice, HILLS, Hombre, IgG, Letra, Linfocito, Medallon, Nodo, Nube, P, Pulmones, Punto, Sale, Termometro, Trazo, TuboEnsayo, Txt, TXV, Virion, Visto, clamp, easeOut, hash, tramo } from '../Piezas';
+import { Bandera, Bola, Capas, Cerebro, Cuerpo, Cruz, Escamoso, Flecha, Flota, FotoLente, Ganglio, Helice, HILLS, Hombre, IgG, Letra, Linfocito, Medallon, Nodo, Nube, P, Pulmones, Punto, Sale, Termometro, Trazo, TuboEnsayo, Txt, TXV, Virion, Visto, clamp, easeOut, hash, tramo } from '../Piezas';
 
 /** La tira de las tres fases abajo: aguda, crónica y sida (la actual, resaltada). */
 function Fases({ cur, o = 1 }: { cur: 0 | 1 | 2; o?: number }) {
@@ -137,6 +137,8 @@ const Ganglios: Lamina = ({ p, reloj }) => {
         ))}
         {Array.from({ length: 12 }, (_, i) => <line key={i} x1={-120 + i * 22} y1={-130} x2={-60 + i * 22} y2={130} stroke="#8A6A8A" strokeWidth={6} strokeLinecap="round" opacity={0.6 * cic} />)}
       </Medallon>
+      {/* la foto real del ganglio reactivo: mientras los folículos crecen; cuando se agota, vuelve el dibujo (se vacía, cicatriz) */}
+      <FotoLente x={1060} y={500} R={320} foto="adenopatia" o={tramo(p('foliculos'), 0, 0.5) * (1 - tramo(p('agota'), 0, 0.5))} credito={[1060, 856]} />
       <Txt x={640} y={250} txt="la guerra" t={30} p={p('guerra')} color={TXV.sangre} />
       <Txt x={640} y={295} txt="el virus se replica en los ganglios" t={24} p={p('replica')} />
       <Txt x={640} y={335} txt="y activa a los linfocitos T y B" t={24} p={p('activan')} />

@@ -9,9 +9,10 @@
 // Lo que ya existe en Citopenias, Vasculitis, Gramnegativas y Bilirrubina se reexporta tal
 // cual (no se copia); aquí solo lo propio del tema.
 
-import { type ReactNode } from 'react';
+import { type ReactNode, useEffect, useId, useState } from 'react';
 import vs from '@/styles/vihSifilis.module.css';
-import { En, Sale, clamp, easeBack, easeOut, hash, lerp, tramo } from '../citopenias-autoinmunes/Piezas';
+import { En, Sale, Txt, clamp, easeBack, easeOut, hash, lerp, tramo } from '../citopenias-autoinmunes/Piezas';
+import { FOTOS, urlFoto, type FotoId } from '@/lib/data/vih-sifilis/fotos';
 
 export { En, Sale, Flecha, Txt, Rotulo, Esfera, Macrofago, Linfocito, Plasmatica, IgG, Ganglio, Higado, Bazo, Medula, Cerebro, Frasco, TuboOrina, Jeringa, BolsaSangre, Pastilla, Termometro, Corazon, Chorro, Virus, Persona, Mano, Plaqueta, clamp, tramo, lerp, easeOut, easeBack, hash, blob, enBorde } from '../citopenias-autoinmunes/Piezas';
 export { V, Bola, Bandera, Hematie, Vaso, Tarjeta, Cuerpo, Punto, LineaTiempo, Foco, Llamada, Pista, Pantalla, TxtPantalla, Manometro, Pulmones, Alveolos, CelEndo, Neutrofilo, Granuloma, CelGigante, Epitelioide, Paciente, Perfil, Microscopio } from '../vasculitis-anca/Piezas';
@@ -19,6 +20,7 @@ export { Barra, Lente, viaje, FLECHA, Cruz, Visto } from '../citopenias-autoinmu
 export { Enzima, Viaja, Chip, Basal, mezcla, Union } from '../vasculitis-anca/Fisio';
 export { Bacilo, Flota, Piso, Capas, Intestino, Figurita, Enterocito, Caliciforme, Cremallera, Corte, Gel, Retrato } from '../gramnegativas/Piezas';
 export { Cerradura, Estacion, Via, Vagon, TuboEnsayo, Tira, Maquina, Flujo } from '../bilirrubina/Piezas';
+export { Portaobjetos } from '../vasculitis-anca/Piezas';
 
 type Tono = readonly string[];
 type P2 = [number, number];
@@ -788,6 +790,95 @@ export function Recorte({ id, children, x = 0, y = 0, w, h, R, o = 1 }: { id: st
     <g opacity={o}>
       <clipPath id={`rc-${id}`}>{R ? <circle cx={x} cy={y} r={R} /> : <rect x={x} y={y} width={w ?? 100} height={h ?? 100} />}</clipPath>
       <g clipPath={`url(#rc-${id})`}>{children}</g>
+    </g>
+  );
+}
+
+// ─── Fotos reales ────────────────────────────────────────────────────────────
+// Las fotos (Wikimedia Commons, CDC PHIL o artículos de acceso abierto; solo CC0, dominio público,
+// CC BY y CC BY-SA) viven en `src/lib/data/vih-sifilis/fotos.ts` con su autor y su licencia; el crédito
+// sale siempre pegado a la foto. Si una foto no carga (todavía no está subida), no se pinta nada y la
+// lámina se queda con su dibujo.
+
+/** Crédito de una foto: «Foto: autor · licencia · origen». */
+const creditoDe = (foto: FotoId) => { const f = FOTOS[foto]; return `Foto: ${f.autor} · ${f.licencia} · ${f.origen ?? 'Wikimedia Commons'}`; };
+
+/** Dónde va el crédito: debajo o encima de la foto, en un punto del lienzo, o en ninguna parte (si otra foto lo lleva ya). */
+export type PuestoCredito = 'arriba' | 'abajo' | 'ninguno' | [x: number, y: number];
+
+/** Pide la foto al montarse la lámina, para que ya esté en caché cuando le toque aparecer. */
+function usePrecarga(foto: FotoId) {
+  const [fallo, setFallo] = useState(false);
+  useEffect(() => { const i = new window.Image(); i.onerror = () => setFallo(true); i.src = urlFoto(foto); }, [foto]);
+  return [fallo, setFallo] as const;
+}
+
+/** `false` si la foto no carga (todavía no está subida): para que una lámina no cambie por una foto que no va a salir. */
+export function useFotoCargada(foto: FotoId) {
+  const [fallo] = usePrecarga(foto);
+  return !fallo;
+}
+
+const ARO = '#F2A33A'; // el mismo aro de la lente de los dibujos (`Medallon`)
+
+function Credito({ foto, puesto, x, y, alto, o }: { foto: FotoId; puesto: PuestoCredito; x: number; y: number; alto: number; o: number }) {
+  if (puesto === 'ninguno') return null;
+  const [cx, cy] = Array.isArray(puesto) ? puesto : [x, puesto === 'abajo' ? y + alto / 2 + 32 : y - alto / 2 - 26];
+  return <Txt x={cx} y={cy} txt={creditoDe(foto)} t={15} fuerte={false} color="var(--cit-texto-2)" p={o} />;
+}
+
+/**
+ * Foto real dentro de la lente del lab (`Medallon`: sombra en media luna, aro y brillo), con su crédito. Solo para un zoom de
+ * verdad. `aro={null}` la pinta sin aro ni sombra, para ponerla DENTRO de otro marco que ya la rodea (el ocular del microscopio).
+ * `fallback`: lo que se pinta si la foto no carga (cuando la foto SUSTITUYE a un dibujo que no debe faltar).
+ */
+export function FotoLente({ x, y, R, foto, o = 1, aro = ARO, credito = 'abajo', fallback }: { x: number; y: number; R: number; foto: FotoId; o?: number; aro?: string | null; credito?: PuestoCredito; fallback?: ReactNode }) {
+  const id = useId().replace(/:/g, '');
+  const [fallo, setFallo] = usePrecarga(foto);
+  const e = easeOut(clamp(o)); // entra subiendo, no de golpe
+  if (fallo) return <>{fallback}</>;
+  if (o <= 0.002) return null;
+  const imagen = <image href={urlFoto(foto)} x={-R} y={-R} width={R * 2} height={R * 2} preserveAspectRatio="xMidYMid slice" onError={() => setFallo(true)} />;
+  return (
+    <g>
+      {aro === null ? (
+        <En x={x} y={y + (1 - e) * 40} o={e}>
+          <clipPath id={`foto-${id}`}><circle r={R} /></clipPath>
+          <circle r={R} fill="#161616" />
+          <g clipPath={`url(#foto-${id})`}>{imagen}</g>
+        </En>
+      ) : (
+        <Medallon x={x} y={y + (1 - e) * 40} R={R} id={`foto-${id}`} aro={aro} fondo="#161616" o={e}>{imagen}</Medallon>
+      )}
+      <Credito foto={foto} puesto={credito} x={x} y={y} alto={R * 2 + 28} o={o} />
+    </g>
+  );
+}
+
+/** Foto que no es un zoom (una lesión, una pieza entera): marco redondeado con sombra en media luna y el aro de la lente, y su crédito. */
+export function FotoCuadro({ x, y, w, h, foto, o = 1, aro = ARO, credito = 'abajo', fallback }: { x: number; y: number; w: number; h: number; foto: FotoId; o?: number; aro?: string; credito?: PuestoCredito | 'dentro'; fallback?: ReactNode }) {
+  const id = useId().replace(/:/g, '');
+  const [fallo, setFallo] = usePrecarga(foto);
+  const e = easeOut(clamp(o));
+  if (fallo) return <>{fallback}</>;
+  if (o <= 0.002) return null;
+  return (
+    <g>
+      <En x={x} y={y + (1 - e) * 40} o={e}>
+        <rect x={-w / 2 - 7} y={-h / 2 - 5} width={w + 28} height={h + 28} rx={26} fill={P.sombra} />
+        <rect x={-w / 2 - 14} y={-h / 2 - 14} width={w + 28} height={h + 28} rx={26} fill={aro} />
+        <clipPath id={`cuadro-${id}`}><rect x={-w / 2} y={-h / 2} width={w} height={h} rx={14} /></clipPath>
+        <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={14} fill="#161616" />
+        <image href={urlFoto(foto)} x={-w / 2} y={-h / 2} width={w} height={h} preserveAspectRatio="xMidYMid slice" clipPath={`url(#cuadro-${id})`} onError={() => setFallo(true)} />
+        {credito === 'dentro' && (
+          <g clipPath={`url(#cuadro-${id})`}>
+            <rect x={-w / 2} y={h / 2 - 34} width={w} height={34} fill="#000" opacity={0.55} />
+            <text x={0} y={h / 2 - 12} textAnchor="middle" className={vs.letra} style={{ fontSize: 15, fill: '#FFF' }}>{creditoDe(foto)}</text>
+          </g>
+        )}
+        <path d={`M${-w * 0.42},${-h * 0.3} Q${-w * 0.34},${-h * 0.46} ${-w * 0.14},${-h * 0.5}`} fill="none" stroke="#FFF" strokeWidth={8} strokeLinecap="round" opacity={0.2} />
+      </En>
+      {credito !== 'dentro' && <Credito foto={foto} puesto={credito} x={x} y={y} alto={h + 28} o={o} />}
     </g>
   );
 }

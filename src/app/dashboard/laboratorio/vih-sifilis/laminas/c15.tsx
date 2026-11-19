@@ -3,7 +3,7 @@
 
 import type { ReactNode } from 'react';
 import type { Lamina } from '../Lienzo';
-import { Bandera, BolsaSangre, Bola, Cruz, Espiga, Flecha, IgG, Persona, Reloj, Sale, Treponema, Txt, TXV, easeOut, hash, lerp, tramo, P } from '../Piezas';
+import { Bandera, BolsaSangre, Bola, Cruz, Espiga, Flecha, FotoLente, IgG, Persona, Reloj, Sale, Treponema, Txt, TXV, easeOut, hash, lerp, tramo, P } from '../Piezas';
 
 /** Campo de microscopio: centro crema y borde oscuro, como el de la referencia «E. coli bajo microscopio». */
 function Campo({ x, y, R, children, o = 1 }: { x: number; y: number; R: number; children?: ReactNode; o?: number }) {
@@ -44,6 +44,9 @@ const Sacacorchos: Lamina = ({ p, reloj }) => (
     <Campo x={1230} y={440} R={240} o={tramo(p('comun'), 0, 0.5)}>
       {Array.from({ length: 7 }, (_, i) => <g key={i} opacity={easeOut(tramo(p('campo'), i * 0.1, i * 0.1 + 0.5))}><Treponema x={1230 + (hash(i, 1) - 0.5) * 300} y={440 + (hash(i, 2) - 0.5) * 340} w={120} amp={9} vueltas={4} grosor={6} r={hash(i, 3) * 180} reloj={reloj + i * 300} /></g>)}
     </Campo>
+    {/* lo que se ve de verdad por el ocular: campo oscuro y, después, plata (sin aro propio: ya lo rodea el ocular) */}
+    <FotoLente x={1230} y={440} R={240} aro={null} foto="treponema-campo-oscuro" o={p('campo')} credito={p('plata') > 0.02 ? 'ninguno' : [1230, 146]} />
+    <FotoLente x={1230} y={440} R={240} aro={null} foto="treponema-plata" o={p('plata')} credito={[1230, 146]} />
     <Txt x={1230} y={750} txt="no se ve con el microscopio común" t={24} p={p('comun')} color={TXV.sangre} />
     <Txt x={1230} y={795} txt="campo oscuro" t={26} p={p('campo')} color={TXV.violeta} />
     <Txt x={1230} y={840} txt="plata o inmunofluorescencia" t={26} p={p('plata')} />

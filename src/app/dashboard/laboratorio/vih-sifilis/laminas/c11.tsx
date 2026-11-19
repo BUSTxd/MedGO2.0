@@ -2,7 +2,7 @@
 // Capítulo 11 · Infecciones oportunistas y VIH avanzado
 
 import type { Lamina } from '../Lienzo';
-import { Bandera, Bola, Cerebro, Corazon, Cruz, Cuerpo, Flota, Granuloma, Hombre, Letra, Linfocito, Medallon, P, Pastilla, Pulmones, Punto, Reloj, Sale, Trazo, TuboEnsayo, Txt, TXV, Virion, Visto, easeOut, hash, lerp, tramo } from '../Piezas';
+import { Bandera, Bola, Cerebro, Corazon, Cruz, Cuerpo, Flota, FotoLente, Granuloma, Hombre, Letra, Linfocito, Medallon, P, Pastilla, Pulmones, Punto, Reloj, Sale, Trazo, TuboEnsayo, Txt, TXV, Virion, Visto, easeOut, hash, lerp, tramo } from '../Piezas';
 
 /** Una bacteria en bastón (micobacteria). */
 const Bastoncillo = ({ x, y, r = 0, k = 1, c = P.esp as readonly string[] }: { x: number; y: number; r?: number; k?: number; c?: readonly string[] }) => (
@@ -84,7 +84,10 @@ const KaposiLinfoma: Lamina = ({ p, reloj }) => (
       {[[-60, -30], [40, 40], [-110, 70], [100, -60]].map(([x, y], i) => <ellipse key={i} cx={x} cy={y} rx={34 * easeOut(p('hendidura'))} ry={7} fill="#FFF" opacity={0.9} />)}
       {[[-60, -30], [40, 40], [-100, 78], [96, -52], [10, -80]].map(([x, y], i) => <circle key={i} cx={x + 20} cy={y + 18} r={9 * easeOut(p('globulos'))} fill="#E5324C" />)}
     </Medallon>
-    <Txt x={440} y={915} txt="células fusiformes, hendiduras vasculares y glóbulos rojos fuera de los vasos" t={20} ancla="start" p={p('microscopio')} />
+    {/* la lente es un zoom: primero la piel de un paciente (manchas y nódulos) y después el corte, a gran aumento */}
+    <FotoLente x={800} y={640} R={230} foto="kaposi-piel" o={tramo(p('manchas'), 0, 0.5) * (1 - tramo(p('microscopio'), 0, 0.4))} credito={[800, 906]} />
+    <FotoLente x={800} y={640} R={230} foto="kaposi-corte" o={p('microscopio')} credito={[800, 906]} />
+    <Txt x={440} y={955} txt="células fusiformes, hendiduras vasculares y glóbulos rojos fuera de los vasos" t={20} ancla="start" p={p('microscopio')} />
     <Txt x={1300} y={200} txt="linfomas" t={40} p={p('linfomas')} color={TXV.violeta} />
     {Array.from({ length: 6 }, (_, i) => <Sale key={i} p={tramo(p('linfoma'), i * 0.1, i * 0.1 + 0.5)} x={1200 + (i % 3) * 110} y={330 + Math.floor(i / 3) * 110}><Linfocito tono="b" k={0.6} /></Sale>)}
     <Txt x={1300} y={500} txt="de células B: difuso de células grandes y Burkitt" t={22} p={p('linfoma')} />
@@ -113,8 +116,9 @@ const Pneumocystis: Lamina = ({ p, reloj }) => (
     <Medallon x={1250} y={300} R={170} id="gms" fondo="#E6F2C8">
       {[[-60, -40], [30, -70], [70, 20], [-30, 50], [10, -5]].map(([x, y], i) => <g key={i} transform={`translate(${x},${y})`} opacity={easeOut(tramo(p('quistes'), i * 0.12, i * 0.12 + 0.5))}><circle r={34} fill="#3A2A1A" /><path d="M-18,-8 Q0,-34 18,-8" fill="none" stroke="#E8D29A" strokeWidth={5} strokeLinecap="round" /></g>)}
     </Medallon>
-    <Txt x={1250} y={510} txt="tinción de plata: quistes" t={26} p={p('plata')} />
-    <Txt x={1250} y={552} txt="como pelotas de ping-pong aplastadas" t={22} p={p('pingpong')} color={TXV.ambar} />
+    <FotoLente x={1250} y={300} R={170} foto="pneumocystis-gms" o={p('plata')} credito={[1250, 503]} />
+    <Txt x={1250} y={535} txt="tinción de plata: quistes" t={26} p={p('plata')} />
+    <Txt x={1250} y={575} txt="como pelotas de ping-pong aplastadas" t={22} p={p('pingpong')} color={TXV.ambar} />
     <Txt x={1250} y={640} txt="lavado broncoalveolar" t={26} p={p('lavado')} />
     <Txt x={1250} y={684} txt="o esputo inducido" t={26} p={p('esputo')} />
     <Sale p={p('radiografia')} x={1250} y={820}>

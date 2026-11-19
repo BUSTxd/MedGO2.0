@@ -10,10 +10,12 @@
  * Compila cada capítulo con el motor de Lupus buscando NaN. Revisa también las tablas
  * resumen (`tablas.ts`): que cada fila lleve a un paso que existe, que la pestaña gratis solo
  * apunte al vistazo y que las celdas encajen con sus columnas (`--tablas` imprime a qué paso
- * lleva cada fila, para comprobar a ojo que es el que toca). ERRORES → código 1.
+ * lleva cada fila, para comprobar a ojo que es el que toca). Y las fotos reales (`fotos.ts`): autor, licencia libre y
+ * fuente de cada una, que el plan de recortes (`fotos-plan.mjs`) hable de las mismas, y que cada foto se use en alguna
+ * lámina y cada lámina pida una foto que existe. ERRORES → código 1.
  */
 
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { register } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
@@ -28,6 +30,8 @@ const { NARRACION } = await cargar('lib/data/vih-sifilis/narracion.ts');
 const { VISTAZO } = await cargar('lib/data/vih-sifilis/vistazo.ts');
 const { GRUPOS } = await cargar('lib/data/vih-sifilis/tablas-indice.ts');
 const { TABLAS } = await cargar('lib/data/vih-sifilis/tablas.ts');
+const { FOTOS } = await cargar('lib/data/vih-sifilis/fotos.ts');
+const { PLAN: PLAN_FOTOS } = await import(pathToFileURL(path.join(RAIZ, 'scripts/vih-sifilis/fotos-plan.mjs')).href);
 const motor = await cargar('lib/lupus/motor.ts');
 
 // `--caps 0,1,2`: solo esos capítulos (para ir verificando por lotes mientras se anima).
@@ -135,6 +139,38 @@ for (const gr of GRUPOS) {
 for (const id of Object.keys(TABLAS)) if (!idsGrupo.has(id)) err('tablas', `hay tablas de «${id}» y ninguna pestaña con ese id`);
 if (process.argv.includes('--tablas')) console.log(`${mapaTablas.join('\n')}\n`);
 
+// ─── Fotos reales ────────────────────────────────────────────────────────────
+// Solo licencias libres, con autor y fuente; cada foto, en el plan y en alguna lámina; cada lámina, con fotos que existen.
+const LICENCIAS_LIBRES = ['CC0', 'Dominio público', 'CC BY 2.0', 'CC BY 3.0', 'CC BY 4.0', 'CC BY-SA 2.0', 'CC BY-SA 3.0', 'CC BY-SA 4.0'];
+const idsFotos = Object.keys(FOTOS);
+for (const [id, f] of Object.entries(FOTOS)) {
+  const d = `foto «${id}»`;
+  if (!/^v\d+$/.test(f.version)) err(d, `versión «${f.version}» (debe ser v1, v2…)`);
+  if (!f.autor?.trim()) err(d, 'sin autor');
+  if (!LICENCIAS_LIBRES.includes(f.licencia)) err(d, `licencia «${f.licencia}» no es libre (CC0, dominio público, CC BY o CC BY-SA)`);
+  if (!/^https:\/\//.test(f.fuente ?? '')) err(d, 'la fuente no es una URL https');
+}
+const idsPlan = PLAN_FOTOS.map((f) => f.id);
+for (const id of idsFotos) if (!idsPlan.includes(id)) err(`foto «${id}»`, 'está en fotos.ts y falta en fotos-plan.mjs');
+for (const f of PLAN_FOTOS) {
+  if (!FOTOS[f.id]) err(`plan de fotos «${f.id}»`, 'no está en fotos.ts');
+  if (!f.commons && !(f.pmc && f.archivo)) err(`plan de fotos «${f.id}»`, 'sin origen (commons, o pmc + archivo)');
+  if (!['lente', 'cuadro'].includes(f.forma)) err(`plan de fotos «${f.id}»`, 'forma debe ser lente o cuadro');
+}
+const dirLaminas = path.join(RAIZ, 'src/app/dashboard/laboratorio/vih-sifilis/laminas');
+const usadas = new Map();
+for (const archivo of readdirSync(dirLaminas).filter((a) => /^c\d+\.tsx$/.test(a))) {
+  const codigo = readFileSync(path.join(dirLaminas, archivo), 'utf8');
+  for (const m of codigo.matchAll(/<Foto(Lente|Cuadro)\b[^>]*?\bfoto="([^"]+)"/g)) {
+    const [, tipo, id] = m;
+    usadas.set(id, [...(usadas.get(id) ?? []), archivo]);
+    if (!FOTOS[id]) err(archivo, `pide la foto «${id}», que no está en fotos.ts`);
+    const plan = PLAN_FOTOS.find((f) => f.id === id);
+    if (plan && plan.forma !== tipo.toLowerCase()) err(archivo, `«${id}» se pinta con Foto${tipo}, pero el plan dice ${plan.forma}`);
+  }
+}
+for (const id of idsFotos) if (!usadas.has(id)) err(`foto «${id}»`, 'no se usa en ninguna lámina');
+
 let fotogramas = 0;
 for (const [c, esc] of CAPITULOS.entries()) {
   if (!toca(c)) continue;
@@ -153,7 +189,7 @@ for (const [c, esc] of CAPITULOS.entries()) {
 const elegidos = CAPITULOS.filter((_, c) => toca(c));
 const pasos = elegidos.reduce((n, p) => n + p.pasos.length, 0);
 const min = elegidos.reduce((n, p) => n + p.narracion.duracion, 0) / 60;
-console.log(`VIH y sífilis · ${elegidos.length} capítulos · ${pasos} pasos · ${min.toFixed(1)} min de voz · ${fotogramas} fotogramas evaluados · ${GRUPOS.length} pestañas de tablas, ${nTablas} tablas, ${nFilas} filas`);
+console.log(`VIH y sífilis · ${elegidos.length} capítulos · ${pasos} pasos · ${min.toFixed(1)} min de voz · ${fotogramas} fotogramas evaluados · ${GRUPOS.length} pestañas de tablas, ${nTablas} tablas, ${nFilas} filas · ${idsFotos.length} fotos`);
 for (const a of avisos) console.log(`  aviso  ${a}`);
 for (const e of errores) console.log(`  ERROR  ${e}`);
 if (errores.length) { console.log(`\n${errores.length} error(es).`); process.exit(1); }

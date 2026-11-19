@@ -3,7 +3,7 @@
 
 import type { Lamina } from '../Lienzo';
 import { VasoCorte } from './ComunSifilis';
-import { Bandera, Cerebro, CelGigante, Cruz, Cuerpo, Epitelioide, Escamoso, Flecha, Granuloma, IgG, Letra, Linfocito, Macrofago, Medallon, P, Plasmatica, Punto, Sale, Treponema, Txt, TXV, easeOut, hash, lerp, tramo } from '../Piezas';
+import { Bandera, Cerebro, CelGigante, Cruz, Cuerpo, Epitelioide, Escamoso, Flecha, FotoLente, Granuloma, IgG, Letra, Linfocito, Macrofago, Medallon, P, Plasmatica, Punto, Sale, Treponema, Txt, TXV, easeOut, hash, lerp, tramo } from '../Piezas';
 
 // ─── 0 · El sistema inmunitario la ve por dentro ─────────────────────────────
 const VistaPorDentro: Lamina = ({ p, reloj }) => {
@@ -99,6 +99,8 @@ const InfiltradoSifilis: Lamina = ({ p, reloj }) => (
           : <g key={i} transform={`translate(${Math.cos(a) * r},${Math.sin(a) * r}) scale(${q})`}><Plasmatica k={0.42} r={hash(i, 3) * 360} /></g>;
       })}
     </Medallon>
+    {/* «al microscopio»: lo dibujado se vuelve la foto real */}
+    <FotoLente x={560} y={540} R={340} foto="infiltrado-plasmocitos" o={p('microscopio')} credito="arriba" />
     <Txt x={560} y={930} txt="linfocitos, histiocitos y, sobre todo, abundantes células plasmáticas" t={22} p={p('muchas')} />
     <Bandera x={1180} y={230} txt="la firma de la sífilis" color={P.esp[0]} p={p('firma')} t={32} punta="no" />
     <Txt x={1180} y={300} txt="al microscopio" t={24} p={p('microscopio')} />
@@ -167,6 +169,8 @@ const Goma: Lamina = ({ p, reloj }) => (
   <g>
     <Txt x={800} y={90} txt="la goma" t={50} p={p('goma')} color={TXV.violeta} />
     <Granuloma x={520} y={540} k={1.0} p={p('granulomas')} necrosis={easeOut(p('necrotico'))} />
+    {/* la goma de verdad, mientras se nombran el granuloma y su centro necrótico; luego vuelve el dibujo para ir célula por célula */}
+    <FotoLente x={520} y={515} R={290} foto="goma-corte" o={tramo(p('granulomas'), 0, 0.5) * (1 - tramo(p('epitelioides'), 0, 0.4))} credito={[520, 874]} />
     <Txt x={520} y={840} txt="un centro necrótico, de aspecto gomoso" t={24} p={p('gomoso')} color={TXV.ambar} />
     {Array.from({ length: 8 }, (_, i) => { const a = (i / 8) * Math.PI * 2 + 0.2; return <g key={i} transform={`translate(${520 + Math.cos(a) * 300},${540 + Math.sin(a) * 270}) scale(${easeOut(tramo(p('epitelioides'), (i / 8) * 0.6, (i / 8) * 0.6 + 0.4))})`}><Epitelioide k={0.55} /></g>; })}
     <Sale p={p('gigantes')} x={520} y={250}><CelGigante k={0.5} /></Sale>

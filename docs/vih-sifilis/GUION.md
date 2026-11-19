@@ -440,18 +440,31 @@ El paciente 2 tres meses después `[ACP]`: cada lesión y su porqué.
 | 4 | Jarisch-Herxheimer | A las 5 h de la penicilina: fiebre de 39,2 °C, escalofríos, cefalea, mialgias, taquicardia y más eritema; sin disnea, edema facial, urticaria ni sibilancias, así que no es alergia. La destrucción masiva de treponemas libera antígenos y citocinas; se resuelve en unas 24 h con soporte (antipiréticos e hidratación) y no obliga a suspender el tratamiento (§JH; §Caso 2; citocinas `[N]`, Belum 2013). |
 | 5 | Dos pacientes, una puerta | Una úlcera sifilítica rompe la barrera y bajo ella hay CD4 y células dendríticas: facilita la entrada del VIH. El VIH puede cambiar la sífilis (lesiones atípicas, más compromiso neurológico). El tratamiento es el mismo, y toda persona con una de las dos infecciones debe estudiarse para la otra `[N]` (CDC 2021, T). |
 
-## Fotos candidatas (fase 5)
+## Fotos (fase 5, hechas)
 
-De 10 a 15 fotos con licencia libre (CC BY, CC BY-SA o dominio público, este último para las del CDC PHIL), en `FotoLente` o `FotoCuadro` con su `Portaobjetos` (órgano, tinción, caso) y llamadas solo sobre lo que de verdad se ve. Regla «foto» de `scripts/imagenes/tamano.mjs`, después medgo-imgflow (AVIF) y `scripts/vih-sifilis/subir-fotos.mjs` (versión `_v1`, nunca pisar). Hay que añadir `'Dominio público'` a la licencia de `fotos.ts`.
+13 fotos con licencia libre (CC0, dominio público, CC BY o CC BY-SA), cada una con su crédito pegado («Foto: autor · licencia · origen») y recortada por `scripts/vih-sifilis/preparar-fotos.mjs` según `fotos-plan.mjs`. Autor, licencia y fuente: `src/lib/data/vih-sifilis/fotos.ts`. Las láminas **no cambian de parámetros ni de tiempos**: cada foto cuelga de un parámetro que ya existía (por eso no hubo que volver a correr `tiempos.mjs`).
 
-| Capítulo | Foto |
-|---|---|
-| 8 | Adenopatía reactiva (hiperplasia folicular) |
-| 11 | Sarcoma de Kaposi (piel y corte con células fusiformes); *P. jirovecii* con plata (GMS); candidiasis oral |
-| 15 | *T. pallidum* en campo oscuro (CDC PHIL) y con plata o inmunohistoquímica |
-| 16 | Infiltrado perivascular con células plasmáticas; endarteritis obliterante |
-| 17 | Chancro (clínica y corte) |
-| 18 | Exantema en palmas y plantas; condiloma plano; placas mucosas; alopecia en parches; goma; aortitis |
+| Foto | Capítulo · paso | Cómo entra | Fuente | Licencia |
+|---|---|---|---|---|
+| `adenopatia` | 8 · Los ganglios | en la lente de la hiperplasia reactiva, de «folículos» a «agota»; después vuelve el dibujo (se vacía, cicatriz) | Smith y Carroll (Commons) | CC BY 3.0 |
+| `kaposi-piel` | 11 · Kaposi y linfoma | la lente, con «manchas y nódulos violáceos» | NCI (Commons) | Dominio público |
+| `kaposi-corte` | 11 · Kaposi y linfoma | la misma lente, al decir «microscopio»: hendiduras entre el colágeno | SB Lucas (Wellcome) | CC0 |
+| `pneumocystis-gms` | 11 · Pneumocystis | la lente de la plata (GMS) | Yale Rosen (Commons) | CC BY-SA 2.0 |
+| `treponema-campo-oscuro` | 15 · Un sacacorchos | dentro del ocular del microscopio, al decir «campo» | CDC PHIL | Dominio público |
+| `treponema-plata` | 15 · Un sacacorchos | encima de la anterior, al decir «plata» | CDC PHIL | Dominio público |
+| `infiltrado-plasmocitos` | 16 · El infiltrado | la lente pasa del dibujo a la foto al decir «microscopio» | Cruz et al. (PLoS NTD 2012) | CC0 |
+| `goma-corte` | 16 · La goma | la lente, de «granulomas» a «epitelioides»; luego vuelve el dibujo célula por célula | Yale Rosen (Commons) | CC BY-SA 2.0 |
+| `chancro` | 17 · Cada rasgo del chancro | sustituye al parche de piel dibujado; las flechas de «bordes», «fondo» y «base» apuntan a la lesión | Mima et al. (Cureus 2024) | CC BY 4.0 |
+| `palmas` | 18 · La erupción | el dibujo se atenúa y sale la foto al decir «palmas» | Pipitò et al. (Cureus 2023) | CC BY 4.0 |
+| `condiloma-plano` | 18 · Condilomas lata | arriba al centro, desde el título | Maharani et al. (Case Rep Med 2025) | CC BY 4.0 |
+| `placas-mucosas` | 18 · Placas mucosas | arriba a la derecha, desde el título | Rohban et al. (Cureus 2026) | CC BY 4.0 |
+| `alopecia` | 18 · Alopecia | sustituye al paciente dibujado, al decir «adelgazan» | Pipitò et al. (Cureus 2023) | CC BY 4.0 |
+
+**Lo verificado y lo supuesto.** Verificado: licencia, autor y fuente de cada foto (metadatos de Commons y licencia «cc by» de Europe PMC), que el verificador las comprueba y que las láminas se ven en claro y oscuro (`vista.mjs`, sin navegador). **Supuesto:** que cada foto corresponde a lo que dice su leyenda de origen (no la ha revisado un médico) y cómo se ve en pantalla real: el crédito tiene un tamaño muy pequeño (15 px de lienzo). **No lo dice la narración:** «a veces en parches: apolillada» (rótulo bajo la foto de la alopecia: la voz solo dice «difusa»; viene de Pipitò et al. y Pomsoong et al. 2022).
+
+**Sin foto, a propósito:** candidiasis oral (el paso 0 del capítulo 11 no tiene hueco), aortitis (la pieza de museo de Commons es un frasco sin detalle visible), la goma nasal clínica y la inmunohistoquímica de *T. pallidum* (no hay hueco sin romper la lámina). Están a mano en Commons si BUST las quiere: CDC PHIL 1217 (candidiasis), la serie «Aortite syphilitique» de la Universidad Laval, y «Secondary syphilis spirochete epidermis» (Jerad M. Gardner, CC BY-SA 4.0).
+
+**Subidas el 2026-11-19** (13 AVIF `_v1` de BUST, ≈ 223 KB). **Si una foto no carga** (por ejemplo, tras cambiar una versión sin subirla), `FotoLente` y `FotoCuadro` no pintan nada y la lámina se queda con su dibujo (`fallback` en el chancro y la alopecia, que sustituyen a un dibujo; la erupción solo se atenúa si la foto existe).
 
 ## Tablas resumen (fase 5, botón «Tablas»)
 
