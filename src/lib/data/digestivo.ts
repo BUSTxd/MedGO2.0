@@ -691,6 +691,12 @@ export const semanas: Semana[] = [
         hora: '14:00–18:00',
         subtemas: ['Cubre hígado, vías biliares, páncreas, bazo y todo lo disecado en el curso'],
         docentes: ['Profesores de Anatomía'],
+        // El modelo 3D del abdomen abre directo en el examen: los dos exámenes
+        // reales del 21-11-2025, una baraja cada uno (el N.º 1 de prueba gratis).
+        simulacion: {
+          href: '/dashboard/laboratorio/atlas-3d?region=abdomen&examen=1',
+          desc: 'Examen práctico en el modelo 3D del abdomen: los dos exámenes del 21 de noviembre de 2025',
+        },
       },
     ],
   },

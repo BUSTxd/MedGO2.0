@@ -2,16 +2,18 @@ import { LabGate } from '@/components/SeccionGate';
 import { getCachedPlanState } from '@/lib/plans-server';
 import { requisitoDeLab, tieneAccesoA } from '@/lib/acceso';
 import { leerRegiones } from '@/lib/data/atlas-3d/regiones';
+import { examenDeRegiones } from '@/lib/examen-ms/config';
 import Pagina from './Pagina';
 
-/** El examen práctico solo existe para el miembro superior. */
+/** Sin región con examen en la URL, la prueba gratis abre la de miembro superior. */
 const REGION_EXAMEN = 'miembro-superior-derecho';
 
 // Server: decide el acceso ANTES de montar la página de cliente (ver SeccionGate).
 // `?examen=1` abre directo en el examen práctico (enlace desde la Evaluación 1 del sílabo).
 //
 // Sin plan, `?examen=1` abre igual pero SOLO el examen (prueba gratis: barajas 1
-// y 7): región fija y sin salida al atlas libre. Lo que se cobra de verdad —las
+// y 7 de miembro superior, la 1 del abdomen): solo la región del examen pedido y
+// sin salida al atlas libre. Lo que se cobra de verdad —las
 // preguntas de las demás barajas— lo recorta la route del banco; el modelo 3D
 // es de un bucket público, así que aquí no hay nada más que esconder.
 //
@@ -26,7 +28,9 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ r
   const { region, examen, desde } = await searchParams;
   if (examen === '1') {
     const acceso = tieneAccesoA(await getCachedPlanState(), requisitoDeLab('atlas-3d'));
-    return <Pagina regiones={acceso ? leerRegiones(region) : [REGION_EXAMEN]} examen soloExamen={!acceso} desdeLaboratorio={desde === 'laboratorio'} />;
+    const regiones = leerRegiones(region);
+    const delExamen = examenDeRegiones(regiones)?.region ?? REGION_EXAMEN;
+    return <Pagina regiones={acceso ? regiones : [delExamen]} examen soloExamen={!acceso} desdeLaboratorio={desde === 'laboratorio'} />;
   }
   return (
     <LabGate slug="atlas-3d">

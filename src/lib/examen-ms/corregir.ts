@@ -165,15 +165,26 @@ export interface CorreccionB {
   necesarias: number;
 }
 
-/** Separa lo escrito por comas, punto y coma, barras y saltos de línea, sin cortar dentro de paréntesis. */
+/** Abreviaturas con punto que no terminan una respuesta («m. I radial»). */
+const ABREV_PUNTO = new Set(Object.keys(ABREVIATURAS));
+
+/**
+ * Separa lo escrito por comas, punto y coma, barras y saltos de línea, sin cortar
+ * dentro de paréntesis. También por un punto seguido de mayúscula («hilio hepático.
+ * Segmento I»), salvo tras una abreviatura («m. I radial»).
+ */
 function trocear(texto: string): string[] {
   const trozos: string[] = [];
   let actual = '';
   let nivel = 0;
-  for (const ch of texto) {
+  for (let i = 0; i < texto.length; i++) {
+    const ch = texto[i];
     if (ch === '(') nivel++;
     if (ch === ')') nivel = Math.max(0, nivel - 1);
-    if (nivel === 0 && (ch === ',' || ch === ';' || ch === '\n' || ch === '/')) { trozos.push(actual); actual = ''; continue; }
+    // «2/5 del intestino» es una fracción, no dos respuestas: la barra entre dígitos no corta.
+    const fraccion = ch === '/' && /\d$/.test(actual) && /\d/.test(texto[i + 1] ?? '');
+    const punto = ch === '.' && /^\s+[A-ZÁÉÍÓÚÑ]/.test(texto.slice(i + 1, i + 3)) && !ABREV_PUNTO.has((actual.match(/([A-Za-z]+)$/)?.[1] ?? '').toLowerCase());
+    if (nivel === 0 && !fraccion && (punto || ch === ',' || ch === ';' || ch === '\n' || ch === '/')) { trozos.push(actual); actual = ''; continue; }
     actual += ch;
   }
   trozos.push(actual);
@@ -181,6 +192,19 @@ function trocear(texto: string): string[] {
 }
 
 const partesConY = (t: string) => t.split(/\s+(?:y|e)\s+/i).map((x) => x.trim()).filter(Boolean);
+
+/**
+ * Una frase que nombra dos estructuras a la vez: «arteria y vena mesentérica
+ * superior», «vasos mesentéricos superiores» → las dos por separado.
+ */
+function desdoblar(texto: string): string {
+  return texto
+    .replace(/\b(arteria|vena)s?\s+y\s+(arteria|vena)s?\s+([^,;\n()]+)/gi, (_, a: string, b: string, resto: string) => `${a} ${resto.trim()}, ${b} ${resto.trim()}`)
+    .replace(/\bvasos\s+mesent[eé]ricos\s+(superiores|inferiores)\b/gi, (_, lado: string) => {
+      const s = lado.toLowerCase().startsWith('sup') ? 'superior' : 'inferior';
+      return `arteria mesentérica ${s}, vena mesentérica ${s}`;
+    });
+}
 
 /**
  * Corrige la B. Cada elemento escrito se compara por separado contra cada
@@ -228,12 +252,31 @@ export function corregirB(escrito: string, p: PreguntaMS, aCorrecta: boolean, in
 
   // «Raíces C5, C6 y C7» o «cara posterior del húmero, tercio superior»: si unir
   // trozos seguidos responde algo que por separado no, se unen.
-  const trozos = trocear(escrito);
+  const trozos = trocear(desdoblar(escrito));
   for (let i = 0; i < trozos.length; i++) {
     let hecho = false;
     for (let largo = Math.min(4, trozos.length - i); largo >= 2 && !hecho; largo--) {
-      const unido = trozos.slice(i, i + largo).join(', ');
-      if (!trozos.slice(i, i + largo).every((t) => buscar(t)) && buscar(unido)) {
+      const piezas = trozos.slice(i, i + largo);
+      const unido = piezas.join(', ');
+      const h = buscar(unido);
+      // No se unen si uno de los trozos, solo, responde OTRA cosa: una respuesta por
+      // conceptos se tragaba lo que venía detrás («aorta, riñón derecho, vena
+      // esplénica» se leía como una sola respuesta, sin mostrar lo que sobra).
+      // Tampoco si un trozo que sigue es, tal cual, el nombre de otra estructura del
+      // léxico («V, VI, VII, VIII, IV»: el «IV» sobra, no completa el «VIII»). Un
+      // número suelto no cuenta: «arcos de 1.er, 2.º, 3.er y 4.º orden» es una sola.
+      const otra = h && h !== 'repetida' && piezas.some((t, j) => {
+        const x = buscar(t);
+        if (x && x !== 'repetida' && x.i !== h.i) return true;
+        // Solo cuando lo esperado es también una estructura del léxico (una inserción
+        // escrita a trozos, «radio distal, cara lateral», sí se une).
+        const propia = rs[h.i].ref;
+        const k = clave(t);
+        if (!propia || j === 0 || /^\d+$/.test(k)) return false;
+        const duenos = indice.porClave.get(k) ?? indice.porClave.get(sinPrefijo(k));
+        return !!duenos && !duenos.has(propia);
+      });
+      if (!piezas.every((t) => buscar(t)) && h && !otra) {
         hecho = corregirTrozo(unido);
         if (hecho) i += largo - 1;
       }

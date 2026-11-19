@@ -50,7 +50,8 @@ await MeshoptDecoder.ready;
 if (bin.length !== m.bytes) falla(`geometría: ${bin.length} bytes, el manifiesto dice ${m.bytes}`);
 const buf = bin.buffer.slice(bin.byteOffset, bin.byteOffset + bin.byteLength);
 
-const SISTEMAS = new Set(['hueso', 'musculo', 'arteria', 'vena', 'nervio', 'conectivo']);
+// Los mismos de `Sistema` (src/lib/data/atlas-3d/regiones.ts); órgano y peritoneo, del abdomen.
+const SISTEMAS = new Set(['hueso', 'musculo', 'arteria', 'vena', 'nervio', 'conectivo', 'organo', 'peritoneo']);
 const ids = new Set();
 let triangulos = 0;
 for (const p of m.piezas) {

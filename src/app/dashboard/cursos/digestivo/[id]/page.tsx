@@ -7,6 +7,7 @@ import LockedContent from '@/components/LockedContent';
 import TrackRecentClass from '@/components/TrackRecentClass';
 import { getUser } from '@/lib/supabase/get-user';
 import { getCachedPlanState } from '@/lib/plans-server';
+import { tieneAccesoA } from '@/lib/acceso';
 
 const UNIDAD_LABEL: Record<string, string> = {
   DESARROLLO: 'Desarrollo del aparato digestivo',
@@ -18,10 +19,13 @@ const UNIDAD_LABEL: Record<string, string> = {
 
 export default async function ActividadPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ resumen?: string; opcion?: string; seccion?: string }>;
 }) {
   const { id } = await params;
+  const sp = await searchParams;
   const result = findActividad(id);
   if (!result) notFound();
 
@@ -41,6 +45,13 @@ export default async function ActividadPage({
       ? Promise.resolve({ plan: 'free' as const, isActive: true })
       : getCachedPlanState(),
   ]);
+  // El enlace directo al resumen (`?resumen=1&opcion=…&seccion=…`, desde el
+  // examen 3D del abdomen) solo lo abre si la clase es accesible: el visor va por
+  // portal al body, por delante del velo de LockedContent.
+  const accesible = isPractica || tieneAccesoA(planState, 'interno');
+  // La evaluación práctica con examen 3D no lleva velo: su Simulación trae una
+  // baraja de prueba gratis y lo de pago lo cierra la route del banco.
+  const examen3d = act.tipo === 'EXAMEN-P' && !!act.simulacion;
 
   const detail = (
     <div className={styles.microPage}>
@@ -101,14 +112,18 @@ export default async function ActividadPage({
           resumenOpciones={act.resumen?.opciones}
           resumenFormato={act.resumen?.formato}
           resumenTitulo={act.titulo}
-          /* En las prácticas la primera tarjeta es «Simulación». */
-          simulacion={isPractica ? (act.simulacion ?? {}) : undefined}
+          /* En las prácticas y en la evaluación práctica con examen 3D la primera
+             tarjeta es «Simulación». */
+          simulacion={isPractica || examen3d ? (act.simulacion ?? {}) : undefined}
+          abrirResumen={sp?.resumen === '1' && accesible}
+          resumenOpcion={sp?.opcion}
+          resumenSeccion={sp?.seccion}
         />
       </div>
     </div>
   );
 
-  if (isPractica) return detail;
+  if (isPractica || examen3d) return detail;
 
   return (
     <LockedContent requiredPlan="interno" planState={planState} isAuthed={!!user}>

@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import { usePathname, useRouter } from 'next/navigation';
 import { rutaEnEstudio } from '@/lib/estudio/rutas';
 import { Vector3 } from 'three';
-import { CREDITO, FALTA_EN_TODAS, SISTEMA, SISTEMAS, regionPorId, type Sistema } from '@/lib/data/atlas-3d/regiones';
+import { FALTA_EN_TODAS, SISTEMA, SISTEMAS, creditosDe, regionPorId, type Sistema } from '@/lib/data/atlas-3d/regiones';
 import { REPASOS } from '@/lib/data/atlas-3d/repasos';
 import { cargarFichas } from '@/lib/data/atlas-3d/fichas';
 import type { Fichas } from '@/lib/data/atlas-3d/fichas/tipos';
@@ -15,23 +15,26 @@ import FichaDetalle from './FichaDetalle';
 import PanelRepaso, { type EstadoRepaso, type ModoRepaso, type Pregunta } from './PanelRepaso';
 import ExamenMS, { type ControlEscena } from './examen/ExamenMS';
 import type { ObjetivoMS } from '@/lib/examen-ms/tipos';
+import { examenDeRegiones, type ConfigExamen3D } from '@/lib/examen-ms/config';
 import s from '@/styles/atlas3d.module.css';
 
-/** El examen práctico existe solo para el miembro superior. */
-const REGION_EXAMEN = 'miembro-superior-derecho';
-/** Adónde vuelve la prueba gratis: sin plan no hay atlas libre al que volver.
- *  Va de vuelta a donde se abrió: la Evaluación 1 del sílabo o el Laboratorio. */
-const VOLVER_PRUEBA = {
-  evaluacion: { href: '/dashboard/cursos/aparato-locomotor/examen-p1', etiqueta: 'Volver a la Evaluación 1' },
-  laboratorio: { href: '/dashboard/laboratorio', etiqueta: 'Volver al laboratorio' },
-};
-const CONTROL_LIBRE: ControlEscena = { objetivo: null, bloqueada: false, borrosa: false, revelar: null, sinMusculos: false };
+// El examen práctico existe para las regiones con entrada en `EXAMENES_3D`
+// (miembro superior y abdomen): `examenDeRegiones`.
+const CONTROL_LIBRE: ControlEscena = { objetivo: null, bloqueada: false, borrosa: false, revelar: null, quitar: false };
 
-const VISTAS: { id: Vista; nombre: string }[] = [
+const VISTAS_MIEMBRO: { id: Vista; nombre: string }[] = [
   { id: 'anterior', nombre: 'Anterior' },
   { id: 'posterior', nombre: 'Posterior' },
   { id: 'lateral', nombre: 'Lateral' },
   { id: 'medial', nombre: 'Medial' },
+];
+// En el tronco «lateral» (−X) es la derecha del cuerpo y «medial» (+X), la izquierda.
+const VISTAS_TRONCO: { id: Vista; nombre: string }[] = [
+  { id: 'anterior', nombre: 'Anterior' },
+  { id: 'posterior', nombre: 'Posterior' },
+  { id: 'lateral', nombre: 'Derecha' },
+  { id: 'medial', nombre: 'Izquierda' },
+  { id: 'inferior', nombre: 'Inferior' },
 ];
 
 const TRANSPARENCIAS: { id: Transparencia; nombre: string }[] = [
@@ -67,8 +70,9 @@ export default function Visor({ regiones, examen = false, soloExamen = false, de
   const [progreso, setProgreso] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [intento, setIntento] = useState(0);
+  const config = useMemo(() => examenDeRegiones(regiones), [regiones]);
   /** Entrando directo al examen no se pinta el aviso: el examen trae su propio «Antes de empezar». */
-  const examenDirecto = examen && regiones.includes(REGION_EXAMEN);
+  const examenDirecto = examen && !!config;
   const [empezado, setEmpezado] = useState(examenDirecto);
   const empezar = useCallback(() => setEmpezado(true), []);
 
@@ -109,7 +113,7 @@ export default function Visor({ regiones, examen = false, soloExamen = false, de
   }
   return (
     <>
-      <Explorador atlas={atlas} regiones={regiones} examenInicial={examenDirecto} soloExamen={soloExamen} desdeLaboratorio={desdeLaboratorio} />
+      <Explorador atlas={atlas} regiones={regiones} config={config} examenInicial={examenDirecto} soloExamen={soloExamen} desdeLaboratorio={desdeLaboratorio} />
       {!empezado && <Aviso regiones={regiones} onEmpezar={empezar} />}
     </>
   );
@@ -136,7 +140,7 @@ function Aviso({ regiones, onEmpezar }: { regiones: string[]; onEmpezar: () => v
             </ul>
           </div>
         ))}
-        <p className={s.avisoNota}>{FALTA_EN_TODAS}</p>
+        {lista.some((r) => r.soloDerecho) && <p className={s.avisoNota}>{FALTA_EN_TODAS}</p>}
         <button type="button" className={s.avisoBoton} onClick={onEmpezar} autoFocus>
           Empezar
         </button>
@@ -146,9 +150,11 @@ function Aviso({ regiones, onEmpezar }: { regiones: string[]; onEmpezar: () => v
   );
 }
 
-function Explorador({ atlas, regiones, examenInicial, soloExamen, desdeLaboratorio }: { atlas: Atlas; regiones: string[]; examenInicial: boolean; soloExamen: boolean; desdeLaboratorio: boolean }) {
+function Explorador({ atlas, regiones, config, examenInicial, soloExamen, desdeLaboratorio }: { atlas: Atlas; regiones: string[]; config: ConfigExamen3D | null; examenInicial: boolean; soloExamen: boolean; desdeLaboratorio: boolean }) {
   const router = useRouter();
-  const volverPrueba = VOLVER_PRUEBA[desdeLaboratorio ? 'laboratorio' : 'evaluacion'];
+  // Adónde vuelve la prueba gratis: sin plan no hay atlas libre al que volver.
+  // Va de vuelta a donde se abrió: la evaluación del sílabo o el Laboratorio.
+  const volverPrueba = config?.volver[desdeLaboratorio ? 'laboratorio' : 'evaluacion'] ?? { href: '/dashboard/laboratorio', etiqueta: 'Volver al laboratorio' };
   // Abierto desde la interfaz de estudio, vuelve a su misma pieza allí (la clase o su Laboratorio).
   const enEstudio = usePathname().startsWith('/estudio');
   const volverA = enEstudio ? rutaEnEstudio(volverPrueba.href) ?? volverPrueba.href : volverPrueba.href;
@@ -192,6 +198,8 @@ function Explorador({ atlas, regiones, examenInicial, soloExamen, desdeLaborator
     return [...vistas].map(([id, nombre]) => ({ id, nombre }));
   }, [regiones]);
   const titulo = regiones.map((id) => regionPorId(id)?.nombre ?? id).join(' + ');
+  const cursos = [...new Set(regiones.map((id) => regionPorId(id)?.curso).filter(Boolean))].join(' · ');
+  const VISTAS = regiones.every((id) => regionPorId(id)?.vistas === 'tronco') ? VISTAS_TRONCO : VISTAS_MIEMBRO;
 
   // ─── Estado de la exploración ──────────────────────────────────────────────
   const [sistemas, setSistemas] = useState<Set<Sistema>>(
@@ -236,7 +244,7 @@ function Explorador({ atlas, regiones, examenInicial, soloExamen, desdeLaborator
   }, [def, idsDe]);
   const idsPaso = useMemo(() => (paso ? idsDe(paso.piezas.map((x) => x.en)) : null), [paso, idsDe]);
 
-  // ─── Examen práctico (miembro superior) ────────────────────────────────────
+  // ─── Examen práctico (miembro superior, abdomen) ───────────────────────────
   // El examen manda sobre la escena: qué se señala, si se puede girar, si se
   // desenfoca y qué nombre se revela al corregir.
   const [examen, setExamen] = useState(examenInicial);
@@ -246,25 +254,29 @@ function Explorador({ atlas, regiones, examenInicial, soloExamen, desdeLaborator
     if (!objetivo) return null;
     return objetivo.tipo === 'pieza' ? idsDe(objetivo.en) : new Set<string>();
   }, [objetivo, idsDe]);
-  /** En el examen se ve el miembro entero (sin ligamentos ni fascias), como en la mesa de
-   *  disección; con «Quitar músculos», sin músculos (salvo si lo señalado es uno). */
+  /** En el examen se ve la región entera (sin ligamentos, fascias ni peritoneo), como en la
+   *  mesa de disección; con «Quitar músculos» (u «órganos»), sin ese sistema (salvo si lo
+   *  señalado es de él). */
+  const quitado = config?.quitar.sistema ?? 'musculo';
   const visiblesExamen = useMemo(() => {
     if (!examen) return null;
     const v = new Set<string>();
     for (const p of piezas) {
-      if (p.sistema === 'conectivo' || (control.sinMusculos && p.sistema === 'musculo')) continue;
+      if (p.sistema === 'conectivo' || p.sistema === 'peritoneo' || (control.quitar && p.sistema === quitado)) continue;
       v.add(p.id);
     }
     idsObjetivo?.forEach((id) => v.add(id));
     return v;
-  }, [examen, piezas, idsObjetivo, control.sinMusculos]);
-  /** Todo lo que no es hueso ni lo señalado queda translúcido: lo señalado siempre se ve. */
+  }, [examen, piezas, idsObjetivo, control.quitar, quitado]);
+  /** Todo lo que no es hueso ni lo señalado queda translúcido: lo señalado siempre se ve.
+   *  En el abdomen también el esqueleto (las costillas tapan el hígado). */
+  const huesosTranslucidos = !!config?.huesosTranslucidos;
   const translucidasExamen = useMemo(() => {
     if (!visiblesExamen) return null;
     const t = new Set<string>();
-    for (const p of piezas) if (visiblesExamen.has(p.id) && p.sistema !== 'hueso' && !idsObjetivo?.has(p.id)) t.add(p.id);
+    for (const p of piezas) if (visiblesExamen.has(p.id) && (p.sistema !== 'hueso' || huesosTranslucidos) && !idsObjetivo?.has(p.id)) t.add(p.id);
     return t;
-  }, [visiblesExamen, piezas, idsObjetivo]);
+  }, [visiblesExamen, piezas, idsObjetivo, huesosTranslucidos]);
 
   const visibles = useMemo(() => {
     if (visiblesExamen) return visiblesExamen;
@@ -319,7 +331,7 @@ function Explorador({ atlas, regiones, examenInicial, soloExamen, desdeLaborator
   const camara: PeticionCamara = useMemo(() => {
     const min = new Vector3(Infinity, Infinity, Infinity);
     const max = new Vector3(-Infinity, -Infinity, -Infinity);
-    if (objetivo) return encuadreExamen(objetivo, piezas, idsObjetivo!, porEn, pedido);
+    if (objetivo) return encuadreExamen(objetivo, piezas, idsObjetivo!, porEn, pedido, config?.vista);
     // En el repaso se encuadra el paso (o todo el plexo en la prueba), no los huesos de contexto.
     const encuadre = repasoIds ? (repaso?.modo === 'recorrido' && idsPaso ? idsPaso : repasoIds.pool) : visibles;
     for (const p of piezas) {
@@ -525,8 +537,8 @@ function Explorador({ atlas, regiones, examenInicial, soloExamen, desdeLaborator
           marcador={objetivo?.tipo === 'marcador' ? { punto: objetivo.punto, radio: objetivo.radio } : null}
           rotuloFijo={rotuloFijo}
         />
-        {examen && (
-          <ExamenMS reducido={reducido} onControl={setControl} onSalir={salirExamen} etiquetaVolver={soloExamen ? volverPrueba.etiqueta : 'Volver al atlas'} />
+        {examen && config && (
+          <ExamenMS config={config!} reducido={reducido} onControl={setControl} onSalir={salirExamen} etiquetaVolver={soloExamen ? volverPrueba.etiqueta : 'Volver al atlas'} />
         )}
         {!(examen && control.borrosa) && (
         <div className={s.vistas} role="group" aria-label="Vista">
@@ -552,7 +564,7 @@ function Explorador({ atlas, regiones, examenInicial, soloExamen, desdeLaborator
         )}
         {!examen && (
         <div className={s.accionesEscena}>
-          {regiones.includes(REGION_EXAMEN) && !repaso && (
+          {config && !repaso && (
             <button type="button" className={s.iniciarExamen} onClick={empezarExamen}>
               <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M9 4h6M10 4v3M14 4v3M6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
@@ -592,7 +604,7 @@ function Explorador({ atlas, regiones, examenInicial, soloExamen, desdeLaborator
       {!examen && (
       <aside className={s.panel}>
         <header className={s.cabecera}>
-          <span className={s.kicker}>Atlas 3D · Aparato Locomotor</span>
+          <span className={s.kicker}>Atlas 3D · {cursos}</span>
           <h1 className={s.titulo}>{titulo}</h1>
           <p className={s.meta}>{estructuras.size} estructuras</p>
         </header>
@@ -758,7 +770,11 @@ function Explorador({ atlas, regiones, examenInicial, soloExamen, desdeLaborator
         )}
 
         <footer className={s.credito}>
-          Modelo: <a href={CREDITO.url} target="_blank" rel="noopener noreferrer">{CREDITO.texto}</a>. {CREDITO.adaptacion}
+          {creditosDe(regiones).map((c) => (
+            <span key={c.url}>
+              Modelo: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.texto}</a>. {c.adaptacion}{' '}
+            </span>
+          ))}
         </footer>
       </aside>
       )}
@@ -778,6 +794,8 @@ function encuadreExamen(
   ids: Set<string>,
   porEn: Map<string, Estructura>,
   n: number,
+  /** La del examen (el abdomen se mira de frente, como en la mesa); la de la pregunta manda. */
+  vistaFija?: Vista,
 ): PeticionCamara {
   const min = new Vector3(Infinity, Infinity, Infinity);
   const max = new Vector3(-Infinity, -Infinity, -Infinity);
@@ -813,7 +831,8 @@ function encuadreExamen(
   const centro = min.clone().add(max).multiplyScalar(0.5);
   const d = centro.clone().sub(referencia);
   // Miembro derecho: lateral = −X; anterior = +Z.
-  const vista: Vista = Math.abs(d.z) >= Math.abs(d.x) ? (d.z >= 0 ? 'anterior' : 'posterior') : d.x < 0 ? 'lateral' : 'medial';
+  const calculada: Vista = Math.abs(d.z) >= Math.abs(d.x) ? (d.z >= 0 ? 'anterior' : 'posterior') : d.x < 0 ? 'lateral' : 'medial';
+  const vista: Vista = (objetivo.tipo === 'pieza' ? objetivo.vista : undefined) ?? vistaFija ?? calculada;
   // Cerca de lo señalado: un 40 % de holgura alrededor y nunca menos de 7,5 cm,
   // lo justo para reconocer dónde está sin que se pierda (BUST: «mejora el encuadre»).
   const tam = Math.max(max.x - min.x, max.y - min.y, max.z - min.z);

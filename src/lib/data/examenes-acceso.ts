@@ -21,7 +21,7 @@ const ENCIB: Requisito = { tramo: 'medicina', nivel: 'completo' };
  * la muestra no lleva ninguna: el fallo seguro es no regalarlas.
  */
 /**
- * `barajasLibres` (solo el examen 3D de miembro superior) es la misma idea por
+ * `barajasLibres` (los exámenes prácticos 3D) es la misma idea por
  * barajas: el servidor arma las barajas con el banco entero y a quien no tiene el
  * plan le entrega solo las preguntas de esas, más el índice de las demás (número
  * y nivel, sin preguntas) para pintarlas con candado.
@@ -77,6 +77,10 @@ export const EXAMENES: Record<string, { free?: boolean; plan?: PlanKey | Requisi
   // con las barajas 1 y 7 de prueba gratis para cualquier cuenta.
   // Lo arma scripts/examen-ms/ensamblar-banco.mjs; el JSON fuente no va a git.
   'aparato-locomotor/practico-ms': { barajasLibres: [1, 7] },
+  // Examen práctico 3D de abdomen (Evaluación práctica 2 de Digestivo): los dos
+  // exámenes reales del 21-11-2025, una baraja cada uno; el N.º 1 de prueba gratis.
+  // Lo publica scripts/examen-digestivo/publicar.mjs; la fuente no va a git.
+  'digestivo/practico-abdomen': { barajasLibres: [1] },
   // Práctica del lab Médula Espinal 3D (corte, tractos y clínico): el mismo
   // requisito que el lab (`requisitoDeLab('medula-espinal')`, escrito a mano
   // porque los scripts cargan este archivo con Node). La arma

@@ -12,7 +12,8 @@ import s from '@/styles/atlas3d.module.css';
 /** Qué se vuelve translúcido (lo seleccionado siempre queda opaco). */
 export type Transparencia = 'ninguna' | 'musculos' | 'todo';
 
-export type Vista = 'anterior' | 'posterior' | 'lateral' | 'medial';
+/** En un miembro derecho lateral = −X; en el abdomen, lateral = derecha y medial = izquierda. */
+export type Vista = 'anterior' | 'posterior' | 'lateral' | 'medial' | 'inferior' | 'superior';
 
 /** Pedido de cámara: cambia `n` para repetir el mismo encuadre. */
 export interface PeticionCamara {
@@ -147,20 +148,22 @@ const Pieza = memo(function Pieza({
 }) {
   const [hover, setHover] = useState(false);
   const { invalidate } = useThree();
+  // Los órganos del abdomen traen su color; el resto, el de su sistema.
+  const colorPropio = pieza.color ?? SISTEMA[pieza.sistema].color;
   const material = useMemo(
     () =>
       new MeshStandardMaterial({
-        color: SISTEMA[pieza.sistema].color,
+        color: colorPropio,
         roughness: pieza.sistema === 'hueso' ? 0.72 : 0.55,
         metalness: 0.04,
       }),
-    [pieza.sistema],
+    [pieza.sistema, colorPropio],
   );
   useEffect(() => () => material.dispose(), [material]);
 
   useEffect(() => {
     const senalado = fuerte && seleccionada;
-    material.color.set(senalado ? COLOR_SENALADO : SISTEMA[pieza.sistema].color);
+    material.color.set(senalado ? COLOR_SENALADO : colorPropio);
     material.emissive.copy(senalado ? COLOR_SENALADO : seleccionada ? COLOR_SELECCION : hover && !fuerte ? COLOR_HOVER : NEGRO);
     material.emissiveIntensity = senalado ? 0.85 : seleccionada ? 0.55 : hover && !fuerte ? 0.14 : 0;
     // Lo seleccionado se ve entero aunque los músculos estén translúcidos.
@@ -170,7 +173,7 @@ const Pieza = memo(function Pieza({
     material.depthWrite = !vidrio;
     material.needsUpdate = true;
     invalidate();
-  }, [material, seleccionada, hover, translucida, fuerte, pieza.sistema, invalidate]);
+  }, [material, seleccionada, hover, translucida, fuerte, colorPropio, invalidate]);
 
   return (
     <mesh
@@ -258,6 +261,9 @@ const DIRECCION: Record<Vista, [number, number, number]> = {
   // En un miembro derecho lo lateral está hacia −X.
   lateral: [-1, 0.08, 0.18],
   medial: [1, 0.08, 0.18],
+  // Desde abajo y delante: la cara visceral del hígado (caudado, cuadrado, hilio).
+  inferior: [0.1, -1, 0.42],
+  superior: [0.1, 1, 0.3],
 };
 
 /** Órbita y vuelo de cámara hacia el encuadre pedido. */

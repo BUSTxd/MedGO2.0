@@ -134,7 +134,7 @@ const MODO_BANQUEO: Record<string, string> = {
  * la Evaluación continua 1 de Aparato Locomotor.
  */
 const EXAMEN_DE_LAB: Record<string, string> = {
-  'atlas-3d': 'Examen práctico 3D (Evaluación continua 1 · Aparato Locomotor)',
+  'atlas-3d': 'Examen práctico 3D (Evaluación 1 de Locomotor o Evaluación 2 de Digestivo)',
 };
 
 const ORIGEN_PAGO: Record<string, string> = {

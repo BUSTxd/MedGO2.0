@@ -19,6 +19,8 @@
     "verificar:hipersensibilidad": "node --experimental-strip-types --no-warnings scripts/hipersensibilidad/verificar.mjs",
     "verificar:lupus": "node --experimental-strip-types --no-warnings scripts/lupus/verificar.mjs",
     "vista:medula": "node --experimental-strip-types --no-warnings scripts/medula-espinal/vista.mjs",
+    "abdomen:modelo": "node scripts/atlas-3d/abdomen/construir.mjs && node scripts/atlas-3d/abdomen/empaquetar.mjs",
+    "practico:abdomen": "node --no-warnings scripts/examen-digestivo/publicar.mjs",
     "practica:medula": "node --experimental-strip-types --no-warnings scripts/medula-espinal/practica/ensamblar.mjs",
     "verificar:nefron": "node --no-warnings scripts/nefron/verificar.mjs",
     "vista:nefron": "node --no-warnings scripts/nefron/vista.mjs",

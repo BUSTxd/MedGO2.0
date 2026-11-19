@@ -1,11 +1,13 @@
 /**
- * Contrato del banco del examen 3D de miembro superior. Lo escribe
- * `scripts/examen-ms/ensamblar-banco.mjs` y se sirve desde el bucket privado
- * `examenes` (clave `aparato-locomotor/practico-ms`): las respuestas no viajan en
- * el bundle.
+ * Contrato del banco de los exámenes prácticos 3D. El de miembro superior lo
+ * escribe `scripts/examen-ms/ensamblar-banco.mjs` (clave
+ * `aparato-locomotor/practico-ms`); el de abdomen,
+ * `scripts/examen-digestivo/publicar.mjs` (`digestivo/practico-abdomen`). Se
+ * sirven desde el bucket privado `examenes`: las respuestas no viajan en el bundle.
  */
 
-export type CategoriaMS = 'Huesos' | 'Músculos' | 'Arterias' | 'Nervios' | 'Venas';
+/** Miembro superior: Huesos · Músculos · Arterias · Nervios · Venas. Abdomen: las de su banco. */
+export type CategoriaMS = string;
 
 export type ProbabilidadMS = 'salio' | 'muy_probable' | 'posible';
 
@@ -13,7 +15,13 @@ export type TipoB =
   | 'inervacion' | 'funcion' | 'insercion' | 'origen'
   | 'musculos_que_inerva' | 'territorio_sensitivo'
   | 'articulaciones' | 'inserciones_musculares'
-  | 'ramas_colaterales' | 'ramas_terminales' | 'formadores' | 'desemboca';
+  | 'ramas_colaterales' | 'ramas_terminales' | 'formadores' | 'desemboca'
+  // Abdomen
+  | 'caracteristicas' | 'limites_segmento' | 'relaciones' | 'ramas' | 'irrigacion'
+  | 'drenaje' | 'porciones' | 'ligamentos' | 'segmentos' | 'constitucion';
+
+/** Desde dónde se mira lo señalado en el examen (si no, se calcula). */
+export type VistaExamen = 'anterior' | 'posterior' | 'lateral' | 'medial' | 'inferior' | 'superior';
 
 /** Una respuesta esperada de la pregunta B. */
 export interface RespuestaB {
@@ -38,13 +46,13 @@ export interface RespuestaB {
 }
 
 export type ObjetivoMS =
-  | { tipo: 'pieza'; en: string[] }
+  | { tipo: 'pieza'; en: string[]; vista?: VistaExamen }
   | { tipo: 'marcador'; hueso: string; punto: [number, number, number]; radio: number };
 
 export interface PreguntaMS {
   id: string;
   categoria: CategoriaMS;
-  tipoEstructura: 'hueso' | 'accidente' | 'musculo' | 'nervio' | 'arteria' | 'vena';
+  tipoEstructura: 'hueso' | 'accidente' | 'musculo' | 'nervio' | 'arteria' | 'vena' | 'organo' | 'parte' | 'ligamento';
   region: string;
   objetivo: ObjetivoMS;
   preguntaA: { enunciado: string; respuesta: string; aceptadas: string[]; noConfundir: string[] };
@@ -76,4 +84,9 @@ export interface BancoMS {
   preguntas: PreguntaMS[];
   /** Todas las formas aceptadas de cada estructura del léxico (para desambiguar). */
   formas: Record<string, string[]>;
+  /**
+   * Barajas fijas (el abdomen: cada una es un examen real tal cual). Sin ellas,
+   * `armarBarajas` parte el banco por probabilidad (miembro superior).
+   */
+  barajas?: { numero: number; nombre?: string; ids: string[] }[];
 }

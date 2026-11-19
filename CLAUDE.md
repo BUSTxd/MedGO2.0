@@ -46,6 +46,8 @@ npm run vista:medula          # corte de Médula Espinal 3D contra Gray 666 y la
 npm run verificar:nefron [-- --perfiles] | vista:nefron   # datos y modelo del filtrado del Nefrón; sus escenas en claro y oscuro, sin navegador
 npm run verificar:tronco      # Tronco encefálico 3D: signos dentro de su lesión, raíces en la superficie, toda zona con ficha
 npm run practica:tronco [-- --subir]   # banco de práctica del tronco (fuente en data/tronco-practica/, fuera de git): valida cada id contra el modelo y el corte, mide el sesgo de largo y sube a examenes/neurologia/tronco-practica.json
+npm run abdomen:modelo                 # Abdomen 3D (Z-Anatomy): construir (partir y modelar) + empaquetar; antes, una vez, fuente.mjs <carpeta-fbx>; revisar con vista.mjs [--paquete]
+npm run practico:abdomen [-- --subir]  # examen práctico 3D de abdomen (fuente en data/examen-digestivo/, fuera de git): valida contra el modelo y el corrector y sube a examenes/digestivo/practico-abdomen.json
 npm run practica:medula [-- --subir]   # banco de práctica del lab (fuente en data/medula-practica/, fuera de git): valida contra anatomy.ts, mide el sesgo de largo y sube a examenes/neurologia/medula-practica.json
 ```
 
@@ -226,7 +228,8 @@ Ciclo celular, NF-κB, linfocitos, Hipersensibilidad y Lupus comparten el patró
 
 - **Atlas:** paquetes por región en `laboratorio-img/atlas-3d/<region>/<version>/`; `?region=a,b` los combina. Fuente Open3DModel + Z-Anatomy (**CC BY-SA 4.0: crédito obligatorio**). Lo que no trae ninguna fuente se modela (`scripts/atlas-3d/modelar.mjs`) y se avisa al alumno (`faltan` en `regiones.ts`).
 - **Actualizar:** `modelar` → `extraer-o3d` → `subir-region` (versión nueva, nunca pisar: caché de un año) → `verificar-paquete` → `version` en `regiones.ts` → `versiones.mjs --borrar-viejas` tras el deploy. Receta completa en la versión larga. Un músculo nuevo va con su nervio.
-- **Examen 3D:** A señalar y escribir; B solo vale con A bien, **entera o nada**. Corrector en `src/lib/examen-ms/corregir.ts`, 42 barajas fijas de 10 (1 y 7 gratis). Banco de 420 fuera de git; tubería en `scripts/examen-ms/`. Regenerar las tarjetas al cambiar el banco.
+- **Examen 3D:** A señalar y escribir; B solo vale con A bien, **entera o nada**. Corrector en `src/lib/examen-ms/corregir.ts`, 42 barajas fijas de 10 (1 y 7 gratis). Banco de 420 fuera de git; tubería en `scripts/examen-ms/`. Regenerar las tarjetas al cambiar el banco. **Un motor para varias regiones:** cada examen es una entrada de `EXAMENES_3D` (`src/lib/examen-ms/config.ts`: banco, textos, qué quita el botón de 2 usos, vista, avance); si el banco trae `barajas`, son fijas. Al tocar el corrector, correr las dos pruebas (`scripts/examen-ms/probar-corrector.mjs` y `npm run practico:abdomen`).
+- **Abdomen 3D** (`?region=abdomen`, Digestivo): Open3DModel no publica abdomen; sale de los FBX de Z-Anatomy (mismas coordenadas: cm = m del atlas), tubería `scripts/atlas-3d/abdomen/` (`fuente` → `construir` → `empaquetar`, 0,47 MB). Sistemas nuevos `organo` (color por pieza en el manifiesto) y `peritoneo` (apagado). **Partido por MedGO:** yeyuno/íleon (2/5 de la geodésica del tubo), porciones del duodeno, partes del páncreas (respecto de la VMS), lóbulo cuadrado (IVb, plano del hilio) y cístico/colédoco. **Modelado** (`modelados.mjs`): venas hepáticas por las cisuras (contacto entre segmentos), ramas de la porta, hepático común, falciforme y redondo. **Examen práctico** (Evaluación práctica 2): los dos exámenes reales del 21-11-2025, una baraja cada uno (la 1 gratis); en las venas hepáticas manda la clave, no el resumen (lo dice la nota).
 
 ### MedGO IA (Haiku 5.5) — construida, sin lanzar
 

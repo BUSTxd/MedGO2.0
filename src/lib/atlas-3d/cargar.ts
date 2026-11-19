@@ -16,6 +16,8 @@ interface PiezaManifiesto {
   /** Otras zonas en las que también sale (la columna lumbar y el sacro, en la pelvis). */
   tambien?: string[];
   lado: Lado;
+  /** Color propio (los órganos del abdomen); si no, el de su sistema. */
+  color?: string;
   v: number;
   i: number;
   /** Formato 1: offsets de posiciones, normales e índices en bruto. */
@@ -50,6 +52,7 @@ export interface PiezaAtlas {
   zona: string;
   tambien?: string[];
   lado: Lado;
+  color?: string;
   region: string;
   geometry: BufferGeometry;
   /** Centro de la caja, para el rótulo y el encuadre. */
@@ -137,6 +140,7 @@ export async function cargarAtlas(
         zona: p.zona,
         tambien: p.tambien,
         lado: p.lado,
+        color: p.color,
         region: m.region,
         geometry: g,
         centro: new Vector3((a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2),

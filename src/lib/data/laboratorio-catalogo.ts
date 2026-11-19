@@ -5,7 +5,7 @@
  * se añade aquí una sola vez.
  *
  * `prueba`: a dónde lleva la fila a quien NO tiene el plan del panel, cuando el
- * laboratorio tiene una parte gratis (hoy, el examen 3D del miembro superior:
+ * laboratorio tiene una parte gratis (hoy, los exámenes 3D de miembro superior y abdomen:
  * `?examen=1` entra sin LabGate). Sin ella, esa persona caería en la pasarela.
  */
 export type ExperimentoLab = { name: string; desc: string; color: string; href?: string; prueba?: string };
@@ -136,6 +136,8 @@ export const LAB_TOPICS: TemaLab[] = [
     diff: ['medium'],
     experiments: [
       { name: 'Metabolismo de la bilirrubina', desc: 'Doce capítulos narrados: del hemo que se abre a la conjugación, la bilis, las bacterias del colon, el laboratorio, las ictericias, el kernícterus y el mapa final', color: '#D99A00', href: '/dashboard/laboratorio/bilirrubina' },
+      // El mismo visor del atlas 3D, con la región del abdomen y su examen práctico.
+      { name: 'Abdomen 3D', desc: 'Hígado por segmentos, vías biliares, páncreas, bazo, intestino y colon con sus vasos mesentéricos y portales, y el examen práctico de la Evaluación 2', color: '#c9a227', href: '/dashboard/laboratorio/atlas-3d?region=abdomen', prueba: '/dashboard/laboratorio/atlas-3d?region=abdomen&examen=1&desde=laboratorio' },
     ],
   },
   {

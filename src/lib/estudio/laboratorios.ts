@@ -62,6 +62,7 @@ const DESTACADOS = [
   'lupus',
   'atlas-3d?region=miembro-superior-derecho',
   'atlas-3d?region=miembro-inferior-derecho',
+  'atlas-3d?region=abdomen',
   'gramnegativas',
   'bilirrubina',
   'vih-sifilis',

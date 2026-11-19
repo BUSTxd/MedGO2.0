@@ -1,7 +1,8 @@
 'use client';
 
 /**
- * Examen práctico de miembro superior sobre el modelo 3D. Calca el examen real:
+ * Examen práctico sobre el modelo 3D (miembro superior o abdomen, según
+ * `config`: ver `src/lib/examen-ms/config.ts`). Calca el examen real:
  * se señala una estructura (pregunta A, escribir su nombre) y, recién después,
  * se pregunta algo de ella (pregunta B), que solo vale si la A estuvo bien.
  *
@@ -25,7 +26,8 @@ import { PLANS, planUnlocks } from '@/lib/plans';
 import { corregirA, corregirB, indexarFormas, type CorreccionB, type IndiceFormas, type Veredicto } from '@/lib/examen-ms/corregir';
 import { cargarBanco, guardarIntento, leerAvance, type Avance, type Baraja, type PruebaGratis } from '@/lib/examen-ms/sesion';
 import RejillaBarajas from '@/components/examen/RejillaBarajas';
-import type { BancoMS, CategoriaMS, ObjetivoMS, PreguntaMS, TipoB } from '@/lib/examen-ms/tipos';
+import type { BancoMS, ObjetivoMS, PreguntaMS, TipoB } from '@/lib/examen-ms/tipos';
+import type { ConfigExamen3D } from '@/lib/examen-ms/config';
 import r from '@/styles/examRunner.module.css';
 import s from '@/styles/examenMS.module.css';
 
@@ -38,28 +40,24 @@ export interface ControlEscena {
   borrosa: boolean;
   /** Nombre que se muestra sobre lo señalado (al corregir). */
   revelar: string | null;
-  /** «Quitar músculos»: el modelo sin músculos para ver lo que tapan. */
-  sinMusculos: boolean;
+  /** «Quitar músculos» / «Quitar órganos»: el modelo sin ese sistema para ver lo que tapa. */
+  quitar: boolean;
 }
-
-const BIENVENIDA =
-  'Este examen ha sido entrenado con toda la información posible de la anatomía del miembro superior. Si lo completas todo, tendrás un rendimiento destacado en cualquier examen.';
 
 const TIPO_B: Record<TipoB, string> = {
   inervacion: 'Inervación', funcion: 'Función', insercion: 'Inserción', origen: 'Origen',
   musculos_que_inerva: 'Músculos que inerva', territorio_sensitivo: 'Territorio sensitivo',
   articulaciones: 'Articulaciones', inserciones_musculares: 'Inserciones musculares',
   ramas_colaterales: 'Ramas colaterales', ramas_terminales: 'Ramas terminales', formadores: 'Formantes', desemboca: 'Desembocadura',
+  caracteristicas: 'Características', limites_segmento: 'Límites y segmento', relaciones: 'Relaciones', ramas: 'Ramas',
+  irrigacion: 'Irrigación', drenaje: 'Drenaje', porciones: 'Porciones', ligamentos: 'Ligamentos', segmentos: 'Segmentos',
+  constitucion: 'Constitución',
 };
-const CATEGORIAS: CategoriaMS[] = ['Huesos', 'Músculos', 'Arterias', 'Nervios', 'Venas'];
-/** Veces que se puede usar «Quitar músculos» en un examen de 10. */
+/** Veces que se puede usar «Quitar músculos» (u «órganos») en un examen de 10. */
 const USOS_QUITAR = 2;
-const CLAVE_AYUDA = 'medgo:examen-ms:ayuda-musculos';
 /** Mínimo de la animación de carga, para que no parpadee si el banco ya estaba en caché. */
 const CARGA_MIN = 1300;
 
-/** Clave del banco en `EXAMENES`: con ella la ficha del admin sabe qué examen es y su acceso. */
-const EXAM_KEY = 'aparato-locomotor/practico-ms';
 /**
  * Lo que se espera, tras terminar, antes de que baje el corte premium (igual que
  * en ExamRunner): da tiempo a que la nota termine de contar.
@@ -69,7 +67,8 @@ const ESPERA_CORTE = 2400;
 type Paso = 'volteo' | 'esquina' | 'A' | 'B' | 'correccion';
 interface Respuesta { escritoA: string; veredictoA: Veredicto; escritoB: string; b: CorreccionB }
 
-export default function ExamenMS({ reducido, onControl, onSalir, etiquetaVolver = 'Volver al atlas' }: {
+export default function ExamenMS({ config, reducido, onControl, onSalir, etiquetaVolver = 'Volver al atlas' }: {
+  config: ConfigExamen3D;
   reducido: boolean;
   onControl: (c: ControlEscena) => void;
   onSalir: () => void;
@@ -89,6 +88,8 @@ export default function ExamenMS({ reducido, onControl, onSalir, etiquetaVolver 
   const [paso, setPaso] = useState<Paso>('volteo');
   const [respuestas, setRespuestas] = useState<Respuesta[]>([]);
   const [intento, setIntento] = useState(0);
+  // Clave del banco en `EXAMENES`: con ella la ficha del admin sabe qué examen es y su acceso.
+  const EXAM_KEY = config.clave;
   const [usosQuitar, setUsosQuitar] = useState(USOS_QUITAR);
   const [sinMusculos, setSinMusculos] = useState(false);
   const [ayuda, setAyuda] = useState(false);
@@ -120,7 +121,7 @@ export default function ExamenMS({ reducido, onControl, onSalir, etiquetaVolver 
     setFase('cargando');
     setError(null);
     const t0 = performance.now();
-    cargarBanco(abort.signal)
+    cargarBanco(config.clave, abort.signal)
       .then(async (c) => {
         const falta = CARGA_MIN - (performance.now() - t0);
         if (falta > 0 && !reducido) await new Promise((ok) => setTimeout(ok, falta));
@@ -128,7 +129,7 @@ export default function ExamenMS({ reducido, onControl, onSalir, etiquetaVolver 
         setBanco(c.banco);
         setBarajas(c.barajas);
         setPrueba(c.prueba);
-        setAvance(leerAvance());
+        setAvance(leerAvance(config.claveAvance));
         setFase('barajas');
       })
       .catch((e: unknown) => {
@@ -137,38 +138,38 @@ export default function ExamenMS({ reducido, onControl, onSalir, etiquetaVolver 
         setFase('error');
       });
     return () => abort.abort();
-  }, [intento, reducido]);
+  }, [intento, reducido, config.clave, config.claveAvance]);
 
   const actual = fase === 'examen' ? preguntas[i] : null;
 
   // ── La escena sigue al paso ────────────────────────────────────────────────
   useEffect(() => {
     if (!actual) {
-      onControl({ objetivo: null, bloqueada: false, borrosa: false, revelar: null, sinMusculos: false });
+      onControl({ objetivo: null, bloqueada: false, borrosa: false, revelar: null, quitar: false });
       return;
     }
     // Sin rótulo sobre el modelo: el nombre ya está en la tarjeta de corrección
     // (en el modelo tapaba la tarjeta).
-    onControl({ objetivo: actual.objetivo, bloqueada: paso === 'B', borrosa: paso === 'B', revelar: null, sinMusculos });
+    onControl({ objetivo: actual.objetivo, bloqueada: paso === 'B', borrosa: paso === 'B', revelar: null, quitar: sinMusculos });
   }, [actual, paso, sinMusculos, onControl]);
 
   // La primera vez que se ve la tarjeta en la esquina se explica «Quitar músculos».
   useEffect(() => {
     if (paso !== 'esquina' || i !== 0) return;
     let visto = false;
-    try { visto = localStorage.getItem(CLAVE_AYUDA) === '1'; } catch {}
+    try { visto = localStorage.getItem(config.quitar.claveAyuda) === '1'; } catch {}
     if (!visto) setAyuda(true);
-  }, [paso, i]);
+  }, [paso, i, config.quitar.claveAyuda]);
   const cerrarAyuda = () => {
     setAyuda(false);
-    try { localStorage.setItem(CLAVE_AYUDA, '1'); } catch {}
+    try { localStorage.setItem(config.quitar.claveAyuda, '1'); } catch {}
   };
   const quitarMusculos = () => {
     if (sinMusculos || usosQuitar <= 0) return;
     setUsosQuitar((n) => n - 1);
     setSinMusculos(true);
     setAyuda(false);
-    try { localStorage.setItem(CLAVE_AYUDA, '1'); } catch {}
+    try { localStorage.setItem(config.quitar.claveAyuda, '1'); } catch {}
   };
 
   // Volteo con tensión y, al terminar, la tarjeta se va a la esquina.
@@ -223,7 +224,7 @@ export default function ExamenMS({ reducido, onControl, onSalir, etiquetaVolver 
     }
     if (!baraja) return;
     const puntos = respuestas.reduce((n, x) => n + (x.veredictoA !== 'mal' ? 1 : 0) + x.b.puntaje, 0);
-    setAvance(guardarIntento(baraja, puntos, preguntas.length * 2));
+    setAvance(guardarIntento(baraja, puntos, preguntas.length * 2, config.claveAvance));
     trackEvent('examen_completado', { examKey: EXAM_KEY, modo: 'examen3d', baraja: baraja.numero, score: puntos, total: preguntas.length * 2 });
     setFase('resultados');
   };
@@ -250,7 +251,7 @@ export default function ExamenMS({ reducido, onControl, onSalir, etiquetaVolver 
                 aria-describedby={ayuda ? 'ayuda-quitar' : undefined}
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6Z" fill="none" stroke="currentColor" strokeWidth="1.8" /><path d="M4 4l16 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
-                {sinMusculos ? 'Sin músculos' : 'Quitar músculos'}
+                {sinMusculos ? config.quitar.activo : config.quitar.etiqueta}
                 <span className={s.usos} aria-label={`${usosQuitar} usos`}>{usosQuitar}</span>
               </button>
               {ayuda && (
@@ -260,13 +261,13 @@ export default function ExamenMS({ reducido, onControl, onSalir, etiquetaVolver 
                     <span className={s.demoMusculo} />
                     <span className={s.demoNervio} />
                   </div>
-                  <p><b>¿Un músculo tapa lo señalado?</b> Quítalos de la vista para ver lo que hay debajo. Puedes usarlo <b>{USOS_QUITAR} veces</b> en cada examen.</p>
+                  <p>{config.quitar.ayuda} Puedes usarlo <b>{USOS_QUITAR} veces</b> en cada examen.</p>
                   <button type="button" className={s.primario} onClick={cerrarAyuda}>Entendido</button>
                 </div>
               )}
             </div>
           )}
-          {actual && <span className={s.contador}>Baraja {baraja?.numero} · Pregunta {i + 1} de {preguntas.length}</span>}
+          {actual && <span className={s.contador}>{baraja?.nombre ?? `Baraja ${baraja?.numero}`} · Pregunta {i + 1} de {preguntas.length}</span>}
           <button type="button" className={s.salir} onClick={onSalir}>Salir del examen</button>
         </div>
       )}
@@ -298,6 +299,7 @@ export default function ExamenMS({ reducido, onControl, onSalir, etiquetaVolver 
       {fase === 'barajas' && banco && (
         <div className={s.velo}>
           <SelectorBarajas
+            config={config}
             barajas={barajas}
             avance={avance}
             sugerida={pendienteDesde(0, avance)}
@@ -326,6 +328,8 @@ export default function ExamenMS({ reducido, onControl, onSalir, etiquetaVolver 
 
       {fase === 'resultados' && baraja && (
         <Resultados
+          config={config}
+          categorias={banco?.categorias ?? []}
           baraja={baraja}
           preguntas={preguntas}
           respuestas={respuestas}
@@ -361,7 +365,8 @@ function Progreso({ hechas, total }: { hechas: number; total: number }) {
 }
 
 // ── Barajas: las hechas con cheque y nota; cualquiera se puede (re)hacer ─────
-function SelectorBarajas({ barajas, avance, sugerida, prueba, onElegir, onPagar }: {
+function SelectorBarajas({ config, barajas, avance, sugerida, prueba, onElegir, onPagar }: {
+  config: ConfigExamen3D;
   barajas: Baraja[];
   avance: Avance;
   sugerida: Baraja | null;
@@ -373,23 +378,24 @@ function SelectorBarajas({ barajas, avance, sugerida, prueba, onElegir, onPagar 
   const libres = barajas.filter((b) => !b.bloqueada);
   return (
     <section className={`${s.dialogo} ${s.dialogoBarajas}`} role="dialog" aria-modal="true" aria-labelledby="examen-ms-titulo">
-      <span className={s.kicker}>Examen práctico · Miembro superior</span>
+      <span className={s.kicker}>{config.kicker}</span>
       <h2 id="examen-ms-titulo">{hechas ? 'Elige una baraja' : 'Antes de empezar'}</h2>
       {/* Las reglas, solo hasta la primera baraja: después estorban a la lista. */}
       {!hechas && (
         <>
-          <p className={s.bienvenida}>{BIENVENIDA}</p>
+          <p className={s.bienvenida}>{config.bienvenida}</p>
           <ul className={s.reglas}>
             <li><b>A:</b> escribe el nombre de la estructura señalada. Puedes girar y acercar el modelo.</li>
             <li><b>B:</b> se desbloquea al responder la A. Solo cuenta si la A está bien, y vale entera o nada.</li>
-            <li>Cada baraja son 10 preguntas con el mismo reparto que el examen real. Van de lo que ya salió a lo menos probable.</li>
+            <li>{config.reglaBarajas}</li>
           </ul>
         </>
       )}
       {prueba && (
         <p className={s.pruebaAviso}>
-          <b>Prueba gratis:</b> las barajas {libres.map((b) => b.numero).join(' y ')} están abiertas. Las otras{' '}
-          {barajas.length - libres.length} se abren con el plan {PLANS[prueba.plan].label}.
+          <b>Prueba gratis:</b>{' '}
+          {libres.length === 1 ? `la baraja ${libres[0].numero} está abierta.` : `las barajas ${libres.map((b) => b.numero).join(' y ')} están abiertas.`}{' '}
+          {barajas.length - libres.length === 1 ? 'La otra se abre' : `Las otras ${barajas.length - libres.length} se abren`} con el plan {PLANS[prueba.plan].label}.
         </p>
       )}
       <Progreso hechas={hechas} total={barajas.length} />
@@ -579,7 +585,10 @@ function Correccion({ pregunta, r: x, onSiguiente, ultima }: { pregunta: Pregunt
 }
 
 // ── Resultados: mismo diseño que el examen final de Inmunología ─────────────
-function Resultados({ baraja, preguntas, respuestas, hechas, total, siguiente, prueba, libres, reducido, etiquetaVolver, onElegir, onBarajas, onPagar, onSalir }: {
+function Resultados({ config, categorias, baraja, preguntas, respuestas, hechas, total, siguiente, prueba, libres, reducido, etiquetaVolver, onElegir, onBarajas, onPagar, onSalir }: {
+  config: ConfigExamen3D;
+  /** Las del banco, en su orden. */
+  categorias: string[];
   baraja: Baraja;
   preguntas: PreguntaMS[];
   respuestas: Respuesta[];
@@ -612,11 +621,11 @@ function Resultados({ baraja, preguntas, respuestas, hechas, total, siguiente, p
   }, [prueba, reducido]);
   useEffect(() => {
     if (!corteAbierto || !prueba) return;
-    trackEvent('contenido_bloqueado', { origen: 'prueba-examen3d', examKey: EXAM_KEY, plan: prueba.plan });
+    trackEvent('contenido_bloqueado', { origen: 'prueba-examen3d', examKey: config.clave, plan: prueba.plan });
     const behavior = reducido ? 'auto' : 'smooth';
     capaRef.current?.scrollTo({ top: 0, behavior });
     window.scrollTo({ top: 0, behavior });
-  }, [corteAbierto, prueba, reducido]);
+  }, [corteAbierto, prueba, reducido, config.clave]);
 
   const filas = preguntas.map((p, k) => {
     const x = respuestas[k];
@@ -627,7 +636,7 @@ function Resultados({ baraja, preguntas, respuestas, hechas, total, siguiente, p
   const puntos = filas.reduce((n, f) => n + f.puntos, 0);
   const max = filas.length * 2;
   const pct = max ? Math.round((puntos / max) * 100) : 0;
-  const porCategoria = CATEGORIAS.map((c) => {
+  const porCategoria = categorias.map((c) => {
     const l = filas.filter((f) => f.p.categoria === c);
     const ok = l.reduce((n, f) => n + f.puntos, 0);
     return { c, ok, total: l.length * 2, pct: l.length ? Math.round((ok / (l.length * 2)) * 100) : 100, fallos: l.filter((f) => f.puntos < 2) };
@@ -650,15 +659,15 @@ function Resultados({ baraja, preguntas, respuestas, hechas, total, siguiente, p
                 titulo="Completa el examen"
                 acento={`con las ${total} barajas`}
                 cuerpo={<>
-                  Hiciste la <strong>baraja {baraja.numero}</strong>, una de las {libres} de prueba. Con el plan{' '}
-                  {PLANS[prueba.plan].label} se abren <strong>las {total - libres} que faltan</strong>: las{' '}
-                  {prueba.preguntas} preguntas del práctico de miembro superior, de lo que salió en los
-                  exámenes reales a lo menos probable, y el resumen de cada estructura que falles.
+                  Hiciste la <strong>baraja {baraja.numero}</strong>, {libres === 1 ? 'la de prueba' : `una de las ${libres} de prueba`}. Con el plan{' '}
+                  {PLANS[prueba.plan].label} se {total - libres === 1 ? 'abre' : 'abren'} <strong>{total - libres === 1 ? 'la que falta' : `las ${total - libres} que faltan`}</strong>: las{' '}
+                  {prueba.preguntas} preguntas del {config.nombrePractico}
+                  {config.conTarjetas ? ', de lo que salió en los exámenes reales a lo menos probable,' : ''} y el resumen de cada estructura que falles.
                 </>}
                 datos={[
-                  { icono: 'barajas', num: total - libres, label: 'barajas más' },
+                  { icono: 'barajas', num: total - libres, label: total - libres === 1 ? 'baraja más' : 'barajas más' },
                   { icono: 'modelo', num: prueba.estructuras, label: 'estructuras en el modelo 3D' },
-                  { icono: 'explicacion', num: prueba.preguntas, label: 'tarjetas de memoria' },
+                  ...(config.conTarjetas ? [{ icono: 'explicacion' as const, num: prueba.preguntas, label: 'tarjetas de memoria' }] : []),
                   { icono: 'resumen', num: prueba.secciones, label: 'secciones de resumen enlazadas' },
                 ]}
                 isAuthed
@@ -670,7 +679,7 @@ function Resultados({ baraja, preguntas, respuestas, hechas, total, siguiente, p
 
         <NotaFinal score={puntos} total={max} pct={pct} etiqueta="del puntaje" />
         <h2 className={r.resultTitle}>{titulo}</h2>
-        <p className={r.resultSub}>Baraja {baraja.numero}. Cada pregunta vale 2 puntos: 1 la A y 1 la B. Tu intento se guardó en este navegador.</p>
+        <p className={r.resultSub}>{baraja.nombre ?? `Baraja ${baraja.numero}`}. Cada pregunta vale 2 puntos: 1 la A y 1 la B. Tu intento se guardó en este navegador.</p>
 
         {(peorCategoria?.pct < 100 || peorTipoB) && (
           <div className={s.diagnostico}>
@@ -707,7 +716,7 @@ function Resultados({ baraja, preguntas, respuestas, hechas, total, siguiente, p
                     <small>{!a ? 'Fallaste el nombre' : `Fallaste la B · ${TIPO_B[p.preguntaB.tipoB]}`} · {p.categoria}</small>
                   </div>
                   {prueba ? (
-                    // Los resúmenes de Locomotor son de pago (la cerradura es /api/resumen):
+                    // Los resúmenes del curso son de pago (la cerradura es /api/resumen):
                     // sin el plan, el enlace llevaría a un velo. Mejor la pasarela aquí.
                     <button type="button" className={`${s.enlaceResumen} ${s.enlaceResumenBloqueado}`} onClick={() => onPagar('resumen')}>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>

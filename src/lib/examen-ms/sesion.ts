@@ -1,6 +1,6 @@
 /**
- * Examen 3D de miembro superior: carga del banco, barajas fijas de 10 y avance
- * guardado en el navegador.
+ * Exámenes prácticos 3D: carga del banco, barajas fijas de 10 y avance guardado
+ * en el navegador. Cada examen tiene su clave de banco y de avance (`config.ts`).
  */
 
 import type { PlanKey } from '@/lib/plans';
@@ -15,7 +15,7 @@ export const PREGUNTAS_POR_EXAMEN = 10;
  * libres traen sus `ids` (sus preguntas vienen en el mismo banco recortado); las
  * demás, solo número y nivel, para pintarlas con candado.
  */
-export interface IndiceBaraja { numero: number; firma: string; nivel: NivelBaraja; ids?: string[] }
+export interface IndiceBaraja { numero: number; nombre?: string; firma: string; nivel: NivelBaraja; ids?: string[] }
 
 /** Lo que hay detrás del candado, contado en el servidor (el cliente no lo ve). */
 export interface PruebaGratis { plan: PlanKey; preguntas: number; estructuras: number; secciones: number }
@@ -32,8 +32,8 @@ export interface CargaBanco {
  * el plan llega entero (URL firmada) y las barajas se arman aquí; sin él, el
  * servidor manda solo las preguntas de las barajas libres y el índice de todas.
  */
-export async function cargarBanco(signal?: AbortSignal): Promise<CargaBanco> {
-  const r = await fetch(`/api/examen/${CLAVE_BANCO}`, { signal });
+export async function cargarBanco(clave: string = CLAVE_BANCO, signal?: AbortSignal): Promise<CargaBanco> {
+  const r = await fetch(`/api/examen/${clave}`, { signal });
   if (!r.ok) {
     if (r.status === 401) throw new Error('Necesitas iniciar sesión para hacer el examen.');
     if (r.status === 403) throw new Error('El examen es parte del plan Interno.');
@@ -47,6 +47,7 @@ export async function cargarBanco(signal?: AbortSignal): Promise<CargaBanco> {
     const porId = new Map(banco.preguntas.map((p) => [p.id, p]));
     const barajas = res.barajas.map((b): Baraja => ({
       numero: b.numero,
+      ...(b.nombre ? { nombre: b.nombre } : {}),
       firma: b.firma,
       nivel: b.nivel,
       preguntas: (b.ids ?? []).map((id) => porId.get(id)).filter((p): p is PreguntaMS => !!p),
@@ -76,6 +77,7 @@ export function recortarParaPrueba(publicado: BancoPublicado, libres: number[], 
     payload: { ...publicado, preguntas: publicado.preguntas.filter((p) => ids.has(p.id)) },
     barajas: barajas.map((b): IndiceBaraja => ({
       numero: b.numero,
+      ...(b.nombre ? { nombre: b.nombre } : {}),
       firma: b.firma,
       nivel: b.nivel,
       ...(libres.includes(b.numero) ? { ids: b.preguntas.map((p) => p.id) } : {}),
@@ -105,6 +107,7 @@ export function hidratarBanco(b: BancoPublicado): BancoMS {
     region: b.region,
     categorias: b.categorias,
     formas: b.formas,
+    ...(b.barajas ? { barajas: b.barajas } : {}),
     preguntas: b.preguntas.map((p) => ({
       ...p,
       preguntaA: {
@@ -152,6 +155,8 @@ export const nivelDe = (p: Pick<PreguntaMS, 'origen' | 'probabilidad'>): NivelBa
 
 export interface Baraja {
   numero: number;
+  /** Barajas fijas: «Examen práctico N.º 1 (21-11-2025)». */
+  nombre?: string;
   /** Huella de sus preguntas: si el banco cambia, la baraja deja de contar como hecha. */
   firma: string;
   nivel: NivelBaraja;
@@ -170,6 +175,14 @@ export interface Baraja {
  * siempre las mismas barajas, así que se pueden marcar como hechas y repetir.
  */
 export function armarBarajas(banco: BancoMS): Baraja[] {
+  // Barajas fijas del banco (cada una, un examen real): en su orden, tal cual.
+  if (banco.barajas?.length) {
+    const porId = new Map(banco.preguntas.map((p) => [p.id, p]));
+    return banco.barajas.map((b) => {
+      const preguntas = b.ids.map((id) => porId.get(id)).filter((p): p is PreguntaMS => !!p);
+      return { numero: b.numero, ...(b.nombre ? { nombre: b.nombre } : {}), firma: firmaDe(preguntas.map((p) => p.id)), nivel: nivelMayoritario(preguntas.map(nivelDe)), preguntas };
+    });
+  }
   const quedan = [...banco.preguntas].sort(
     (a, b) => RANGO[nivelDe(a)] - RANGO[nivelDe(b)] || huella(a.id) - huella(b.id),
   );
@@ -219,23 +232,23 @@ export interface Intento { fecha: string; puntos: number; total: number }
 export interface ResultadoBaraja { puntos: number; total: number; fecha: string; veces: number }
 export interface Avance { vistas: string[]; intentos: Intento[]; barajas: Record<string, ResultadoBaraja> }
 
-export function leerAvance(): Avance {
+export function leerAvance(clave: string = CLAVE_AVANCE): Avance {
   try {
-    const a = JSON.parse(localStorage.getItem(CLAVE_AVANCE) ?? 'null') as Partial<Avance> | null;
+    const a = JSON.parse(localStorage.getItem(clave) ?? 'null') as Partial<Avance> | null;
     // Los avances de antes de las barajas no traen `barajas`.
     if (a && Array.isArray(a.vistas) && Array.isArray(a.intentos)) return { vistas: a.vistas, intentos: a.intentos, barajas: a.barajas ?? {} };
   } catch {}
   return { vistas: [], intentos: [], barajas: {} };
 }
 
-export function guardarIntento(baraja: Baraja, puntos: number, total: number): Avance {
-  const a = leerAvance();
+export function guardarIntento(baraja: Baraja, puntos: number, total: number, clave: string = CLAVE_AVANCE): Avance {
+  const a = leerAvance(clave);
   const fecha = new Date().toISOString();
   const nuevo: Avance = {
     vistas: [...new Set([...a.vistas, ...baraja.preguntas.map((p) => p.id)])],
     intentos: [{ fecha, puntos, total }, ...a.intentos].slice(0, 20),
     barajas: { ...a.barajas, [baraja.firma]: { puntos, total, fecha, veces: (a.barajas[baraja.firma]?.veces ?? 0) + 1 } },
   };
-  try { localStorage.setItem(CLAVE_AVANCE, JSON.stringify(nuevo)); } catch {}
+  try { localStorage.setItem(clave, JSON.stringify(nuevo)); } catch {}
   return nuevo;
 }

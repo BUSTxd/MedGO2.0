@@ -9,8 +9,12 @@
 //
 // Para publicar una región nueva: definirla en `scripts/atlas-3d/o3d.mjs`,
 // extraer, subir con su versión y añadirla aquí.
+//
+// El abdomen sale de Z-Anatomy (Open3DModel aún no lo publica) con
+// `scripts/atlas-3d/abdomen/` (fuente → construir → empaquetar): mismas
+// coordenadas, así que también encaja con los miembros.
 
-export type Sistema = 'hueso' | 'musculo' | 'arteria' | 'vena' | 'nervio' | 'conectivo';
+export type Sistema = 'hueso' | 'musculo' | 'arteria' | 'vena' | 'nervio' | 'conectivo' | 'organo' | 'peritoneo';
 export type Lado = 'derecho' | 'izquierdo';
 
 export interface RegionAtlas {
@@ -22,6 +26,14 @@ export interface RegionAtlas {
   zonas: { id: string; nombre: string }[];
   /** Lo que el modelo aún no trae: se avisa antes de empezar. */
   faltan: string[];
+  /** Curso al que pertenece (rótulo del panel). */
+  curso: string;
+  /** Solo trae el lado derecho (los miembros): se dice en el aviso. */
+  soloDerecho?: boolean;
+  /** Vistas del panel: las de un miembro derecho (lateral = −X) o las de un tronco. */
+  vistas?: 'miembro' | 'tronco';
+  /** Fuente de la geometría (crédito obligatorio, CC BY-SA 4.0). Sin él, `CREDITO`. */
+  credito?: { texto: string; url: string; adaptacion: string };
 }
 
 export const REGIONES: RegionAtlas[] = [
@@ -58,6 +70,8 @@ export const REGIONES: RegionAtlas[] = [
     //      en ramos anteriores C1-C4, asas, comunicante C4-C5 y troncos al punto de
     //      Erb; supraclaviculares mediales, intermedios y laterales.
     version: 'v17',
+    curso: 'Aparato Locomotor',
+    soloDerecho: true,
     zonas: [
       { id: 'cuello', nombre: 'Cabeza y cuello' },
       { id: 'tronco', nombre: 'Columna y tórax' },
@@ -89,6 +103,8 @@ export const REGIONES: RegionAtlas[] = [
     //     y el sacro también en «Pelvis y región glútea».
     // v6: la punta de la ilíaca común venosa ya no se mete en L5.
     version: 'v6',
+    curso: 'Aparato Locomotor',
+    soloDerecho: true,
     zonas: [
       { id: 'tronco', nombre: 'Columna y tórax' },
       { id: 'pelvis', nombre: 'Pelvis y región glútea' },
@@ -106,9 +122,42 @@ export const REGIONES: RegionAtlas[] = [
       'Ganglios linfáticos inguinales',
     ],
   },
+  {
+    id: 'abdomen',
+    nombre: 'Abdomen',
+    // v1: Z-Anatomy (vísceras, vasos, esqueleto de la pared y diafragma). Partidos
+    //     por MedGO: yeyuno e íleon, porciones del duodeno, partes del páncreas,
+    //     lóbulo cuadrado (IVb) y cístico/colédoco. Modelados: venas hepáticas,
+    //     ramas de la porta, hepático común y ligamentos falciforme y redondo.
+    version: 'v1',
+    curso: 'Aparato Digestivo',
+    vistas: 'tronco',
+    zonas: [
+      { id: 'higado', nombre: 'Hígado y vías biliares' },
+      { id: 'estomago', nombre: 'Estómago y bazo' },
+      { id: 'pancreas', nombre: 'Duodeno y páncreas' },
+      { id: 'intestino', nombre: 'Intestino delgado' },
+      { id: 'colon', nombre: 'Colon' },
+      { id: 'retro', nombre: 'Retroperitoneo y grandes vasos' },
+      { id: 'pared', nombre: 'Esqueleto y diafragma' },
+    ],
+    faltan: [
+      'Venas hepáticas, ramas de la vena porta, conducto hepático común y ligamentos falciforme y redondo son un esquema modelado por MedGO sobre el hígado del modelo: el recorrido es aproximado',
+      'Pared abdominal anterior: el ligamento redondo llega hasta donde estaría el ombligo',
+      'Mesenterio del intestino delgado y ligamentos del bazo (gastroesplénico, esplenorrenal, frenocólico)',
+      'Recto, arteria cística, venas yeyunales e ileales',
+      'Nervios, ganglios linfáticos y músculos de la pared posterior (psoas, cuadrado lumbar)',
+    ],
+    credito: {
+      texto: 'Z-Anatomy · CC BY-SA 4.0',
+      url: 'https://www.z-anatomy.com',
+      adaptacion:
+        'Basado en BodyParts3D © DBCLS. Yeyuno e íleon, porciones del duodeno, partes del páncreas, lóbulo cuadrado y cístico y colédoco partidos por MedGO; venas hepáticas, ramas de la porta, hepático común y ligamentos falciforme y redondo modelados por MedGO sobre el modelo. Geometría simplificada y rotulada en español; se comparte con la misma licencia.',
+    },
+  },
 ];
 
-/** Vale para todas las regiones; va al final del aviso. */
+/** Va al final del aviso de los miembros (`soloDerecho`). */
 export const FALTA_EN_TODAS = 'Solo está el lado derecho, sin piel ni tejido subcutáneo.';
 
 export const REGION_POR_DEFECTO = REGIONES[0].id;
@@ -145,9 +194,23 @@ export const SISTEMAS: InfoSistema[] = [
   { id: 'vena', nombre: 'Venas', singular: 'Vena', color: '#3d6db3' },
   { id: 'nervio', nombre: 'Nervios', singular: 'Nervio', color: '#e2bd45' },
   { id: 'conectivo', nombre: 'Ligamentos y articulaciones', singular: 'Ligamento, cápsula, bolsa o fascia', color: '#a9c6bb', apagado: true },
+  // Abdomen: cada órgano trae su color en el manifiesto; este es el de respaldo.
+  { id: 'organo', nombre: 'Órganos', singular: 'Órgano', color: '#c98a7a' },
+  // Omentos y mesos envuelven las vísceras: apagados al abrir, como las fascias.
+  { id: 'peritoneo', nombre: 'Peritoneo y ligamentos', singular: 'Peritoneo o ligamento peritoneal', color: '#efd8a6', apagado: true },
 ];
 
 export const SISTEMA = Object.fromEntries(SISTEMAS.map((s) => [s.id, s])) as Record<Sistema, InfoSistema>;
+
+/** El crédito de la geometría de las regiones cargadas, sin repetir. */
+export function creditosDe(ids: string[]) {
+  const vistos = new Map<string, { texto: string; url: string; adaptacion: string }>();
+  for (const id of ids) {
+    const c = regionPorId(id)?.credito ?? CREDITO;
+    vistos.set(c.url, c);
+  }
+  return [...vistos.values()];
+}
 
 // CC BY-SA 4.0: el crédito es obligatorio y los paquetes derivados se
 // comparten con la misma licencia (afecta a la geometría, no al código).
