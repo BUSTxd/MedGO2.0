@@ -3,6 +3,28 @@
 import type { RegistroClases } from './tipos.ts';
 
 export const REGISTRO_CLASES: RegistroClases = {
+  "digestivo/examen-t": {
+    "curso": "digestivo",
+    "clase": "examen-t",
+    "casos": {
+      "key": "digestivo/casos/examen-t",
+      "titulo": "Preguntas del examen final",
+      "desc": "El final 2025 y los banqueos anteriores, con la respuesta y el porqué de cada alternativa",
+      "chips": [
+        "Anatomía",
+        "Embriología",
+        "Histología",
+        "Motilidad",
+        "Secreción y hormonas",
+        "Digestión y absorción",
+        "Hígado y metabolismo",
+        "Inmunidad y microbiota",
+        "209 casos"
+      ],
+      "total": 209,
+      "muestra": 42
+    }
+  },
   "digestivo/tbl-2": {
     "curso": "digestivo",
     "clase": "tbl-2",

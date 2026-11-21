@@ -102,7 +102,8 @@ function validarCasos(c, act, err, aviso) {
     if (vistos.has(q.id)) err(`${donde}: id repetido`);
     vistos.add(q.id);
     for (const k of ['tema', 'origen', 'caso', 'pregunta']) if (!texto(q[k])) err(`${donde}: ${k} vacío`);
-    if (texto(q.origen) && q.origen !== 'MedGO' && !/^MIR \d{4}/.test(q.origen)) aviso(`${donde}: origen «${q.origen}» (se espera «MIR <año>, pregunta N» o «MedGO»)`);
+    // Además del MIR, las preguntas de los exámenes y banqueos del propio curso (práctica de un examen).
+    if (texto(q.origen) && q.origen !== 'MedGO' && !/^(MIR \d{4}|Examen |Banqueo)/.test(q.origen)) aviso(`${donde}: origen «${q.origen}» (se espera «MIR <año>, pregunta N», «Examen …», «Banqueo …» o «MedGO»)`);
     for (const id of q.bloque === undefined ? [] : [q.bloque].flat()) {
       if (!texto(id)) err(`${donde}: bloque vacío`);
       else if (bloques.length && !ids.has(id)) err(`${donde}: el bloque «${id}» no está en casos.bloques`);
