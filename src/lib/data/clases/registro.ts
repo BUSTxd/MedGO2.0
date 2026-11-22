@@ -160,6 +160,26 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 2
     }
   },
+  "endocrino-reproductor/clase-1": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-1",
+    "notas": {
+      "titulo": "Histología de las glándulas endocrinas"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-1",
+      "titulo": "Láminas",
+      "desc": "Reconoce la glándula y la célula al microscopio, como en el práctico",
+      "chips": [
+        "Hipófisis",
+        "Tiroides y paratiroides",
+        "Suprarrenal y páncreas",
+        "9 casos"
+      ],
+      "total": 9,
+      "muestra": 2
+    }
+  },
   "endocrino-reproductor/clase-2": {
     "curso": "endocrino-reproductor",
     "clase": "clase-2",
@@ -317,6 +337,25 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 1
     }
   },
+  "endocrino-reproductor/clase-10": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-10",
+    "notas": {
+      "titulo": "Histología del aparato genital masculino"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-10",
+      "titulo": "Láminas",
+      "desc": "Reconoce el túbulo, los conductos y las glándulas al microscopio",
+      "chips": [
+        "Testículo",
+        "Conductos y glándulas",
+        "8 casos"
+      ],
+      "total": 8,
+      "muestra": 2
+    }
+  },
   "endocrino-reproductor/clase-11": {
     "curso": "endocrino-reproductor",
     "clase": "clase-11",
@@ -412,6 +451,25 @@ export const REGISTRO_CLASES: RegistroClases = {
         "8 casos"
       ],
       "total": 8,
+      "muestra": 2
+    }
+  },
+  "endocrino-reproductor/clase-16": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-16",
+    "notas": {
+      "titulo": "Histología del aparato genital femenino"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-16",
+      "titulo": "Láminas",
+      "desc": "Reconoce folículos, cuerpo lúteo, trompa, endometrio, cuello y vagina al microscopio",
+      "chips": [
+        "Ovario",
+        "Trompa, útero y vagina",
+        "11 casos"
+      ],
+      "total": 11,
       "muestra": 2
     }
   },
@@ -512,6 +570,81 @@ export const REGISTRO_CLASES: RegistroClases = {
       ],
       "total": 14,
       "muestra": 3
+    }
+  },
+  "endocrino-reproductor/histo-1": {
+    "curso": "endocrino-reproductor",
+    "clase": "histo-1",
+    "notas": {
+      "titulo": "Histología de las glándulas endocrinas"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/histo-1",
+      "titulo": "Láminas",
+      "desc": "Reconoce la glándula y la célula al microscopio, como en el práctico",
+      "chips": [
+        "Hipófisis",
+        "Tiroides y paratiroides",
+        "Suprarrenal y páncreas",
+        "9 casos"
+      ],
+      "total": 9,
+      "muestra": 2
+    }
+  },
+  "endocrino-reproductor/histo-2": {
+    "curso": "endocrino-reproductor",
+    "clase": "histo-2",
+    "notas": {
+      "titulo": "Histología del aparato genital masculino"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/histo-2",
+      "titulo": "Láminas",
+      "desc": "Reconoce el túbulo, los conductos y las glándulas al microscopio",
+      "chips": [
+        "Testículo",
+        "Conductos y glándulas",
+        "8 casos"
+      ],
+      "total": 8,
+      "muestra": 2
+    }
+  },
+  "endocrino-reproductor/histo-3": {
+    "curso": "endocrino-reproductor",
+    "clase": "histo-3",
+    "notas": {
+      "titulo": "Histología del aparato genital femenino"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/histo-3",
+      "titulo": "Láminas",
+      "desc": "Reconoce folículos, cuerpo lúteo, trompa, endometrio, cuello y vagina al microscopio",
+      "chips": [
+        "Ovario",
+        "Trompa, útero y vagina",
+        "11 casos"
+      ],
+      "total": 11,
+      "muestra": 2
+    }
+  },
+  "endocrino-reproductor/histo-4": {
+    "curso": "endocrino-reproductor",
+    "clase": "histo-4",
+    "notas": {
+      "titulo": "Repaso de histología endocrina y reproductora"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/histo-4",
+      "titulo": "Láminas",
+      "desc": "Repaso mezclado de las láminas de endocrino y reproductor, como en el práctico",
+      "chips": [
+        "10 casos"
+      ],
+      "total": 10,
+      "muestra": 2
     }
   },
   "endocrino-reproductor/taller-antropometria": {

@@ -289,7 +289,7 @@ Solo el admin mientras `IA_ABIERTA` no sea `1`. **La API key nunca va en repo ni
 ### Por implementar
 
 - **Preclínicos:** resúmenes, práctica y plan (solo tiene temario). Es el producto central.
-- **Plantilla de clase, contenido** (2026-11-11): de 372 clases con resumen, solo la AI17 tiene notas y casos; el resto muestra «pronto». Se llena curso por curso con `data/clases/` (casos guiados por el MIR del tema).
+- **Plantilla de clase, contenido** (2026-11-22): Endocrino completo (todas sus clases con resumen, salvo exámenes y SGP; histología con láminas de Commons en `examenes-img/endocrino-reproductor/histologia/`), más parte de Patología y Digestivo; el resto muestra «pronto». Se llena curso por curso con `data/clases/` (casos guiados por el MIR del tema; si no hay MIR verificable, origen «MedGO», nunca una cita inventada). Los resúmenes viven solo en el bucket: una corrección hecha ahí se pierde si se vuelve a subir desde la fuente sin corregir.
 - **USMLE Step 1:** toda la meta.
 - **ENCIB:** enlazar cada tema y pregunta con su resumen; resúmenes y práctica en `/estudio`. Las otras dos tarjetas de exámenes están en «Próximamente».
 - **`/estudio`:** modo oscuro, Histología, imágenes de vista previa de labs, racha en Mi progreso.
