@@ -87,6 +87,46 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 5
     }
   },
+  "endocrino-reproductor/clase-12": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-12",
+    "notas": {
+      "titulo": "Metabolismo basal: la tiroides"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-12",
+      "titulo": "Casos clínicos",
+      "desc": "Del bocio por falta de yodo a la fibrilación del hipertiroideo: dónde se atasca la hormona y cómo se lee",
+      "chips": [
+        "Síntesis y yodo",
+        "Transporte y acción",
+        "Exceso y déficit",
+        "20 casos"
+      ],
+      "total": 20,
+      "muestra": 4
+    }
+  },
+  "endocrino-reproductor/clase-13": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-13",
+    "notas": {
+      "titulo": "Metabolismo energético"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-13",
+      "titulo": "Casos clínicos",
+      "desc": "Del sulfonilurea al ayuno de cuatro días: quién guarda, quién saca y qué combustible manda",
+      "chips": [
+        "Insulina",
+        "Glucagón y ayuno",
+        "Glucosa en la clínica",
+        "20 casos"
+      ],
+      "total": 20,
+      "muestra": 4
+    }
+  },
   "endocrino-reproductor/tbl-1": {
     "curso": "endocrino-reproductor",
     "clase": "tbl-1",
@@ -105,6 +145,26 @@ export const REGISTRO_CLASES: RegistroClases = {
       ],
       "total": 26,
       "muestra": 5
+    }
+  },
+  "endocrino-reproductor/tbl-2": {
+    "curso": "endocrino-reproductor",
+    "clase": "tbl-2",
+    "notas": {
+      "titulo": "Metabolismo del calcio y fósforo"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/tbl-2",
+      "titulo": "Casos clínicos",
+      "desc": "De la tetania tras la tiroidectomía al cálculo renal del hiperparatiroideo: quién movió el calcio",
+      "chips": [
+        "Calcio y fosfato",
+        "Hormonas",
+        "Hipo e hipercalcemia",
+        "20 casos"
+      ],
+      "total": 20,
+      "muestra": 4
     }
   },
   "patologia/pat-acp-1": {
