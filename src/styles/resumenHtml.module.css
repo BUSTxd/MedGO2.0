@@ -474,8 +474,19 @@
 .sheet :global(.block-color-default_background) { background: var(--n-gray-bg); }
 
 /* ─── Imágenes ─── */
+/* Centradas en el eje horizontal (BUST, 2026-11-22): con el `<a>` inline-block
+   y sin alineación, toda figura más angosta que la hoja quedaba pegada a la
+   izquierda. Dentro de una columna se centra en su columna. */
 .sheet :global(figure.image) {
   margin: 1.2em 0;
+  text-align: center;
+}
+
+.sheet :global(figure.image figcaption) {
+  margin-top: 0.5em;
+  font-size: 0.86em;
+  line-height: 1.45;
+  color: var(--tx-soft);
 }
 
 .sheet :global(figure.image a) {

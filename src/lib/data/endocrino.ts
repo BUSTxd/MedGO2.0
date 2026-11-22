@@ -648,6 +648,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'taller-antropometria',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-taller-antropometria', label: 'Resumen', formato: 'html' }] },
         tipo: 'TALLER',
         unidad: 'METABOLISMO',
         titulo: 'Taller de Antropometría',
