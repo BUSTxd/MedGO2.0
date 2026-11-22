@@ -119,6 +119,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-3',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-3', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'ENDOCRINA',
         titulo: 'Introducción a la endocrinología',
