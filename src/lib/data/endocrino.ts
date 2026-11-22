@@ -242,6 +242,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-8',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-8', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'REPRODUCTOR',
         titulo: 'Genética de la diferenciación sexual',
