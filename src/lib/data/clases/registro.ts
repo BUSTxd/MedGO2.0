@@ -87,6 +87,45 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 5
     }
   },
+  "endocrino-reproductor/clase-6": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-6",
+    "notas": {
+      "titulo": "Regulación del apetito"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-6",
+      "titulo": "Casos clínicos",
+      "desc": "De la grelina al MC4R: quién pide comer, quién lo frena y por qué falla en la obesidad",
+      "chips": [
+        "Señales",
+        "Hipotálamo",
+        "En la clínica",
+        "12 casos"
+      ],
+      "total": 12,
+      "muestra": 2
+    }
+  },
+  "endocrino-reproductor/clase-7": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-7",
+    "notas": {
+      "titulo": "Embriología de las glándulas endocrinas"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-7",
+      "titulo": "Casos clínicos",
+      "desc": "Del agujero ciego a la paratiroides en el mediastino: de dónde sale cada glándula y qué deja al fallar",
+      "chips": [
+        "Hipófisis y cuello",
+        "Suprarrenal y gónada",
+        "9 casos"
+      ],
+      "total": 9,
+      "muestra": 2
+    }
+  },
   "endocrino-reproductor/clase-8": {
     "curso": "endocrino-reproductor",
     "clase": "clase-8",
@@ -145,6 +184,26 @@ export const REGISTRO_CLASES: RegistroClases = {
       ],
       "total": 20,
       "muestra": 4
+    }
+  },
+  "endocrino-reproductor/clase-14": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-14",
+    "notas": {
+      "titulo": "Radiología de los órganos endocrinos"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-14",
+      "titulo": "Casos clínicos",
+      "desc": "De la mariposa de la gammagrafía al muñeco de nieve de la silla turca: qué pedir y cómo leerlo",
+      "chips": [
+        "Tiroides y paratiroides",
+        "Suprarrenales",
+        "Hipófisis",
+        "14 casos"
+      ],
+      "total": 14,
+      "muestra": 3
     }
   },
   "endocrino-reproductor/clase-17": {
@@ -225,6 +284,25 @@ export const REGISTRO_CLASES: RegistroClases = {
       ],
       "total": 14,
       "muestra": 3
+    }
+  },
+  "endocrino-reproductor/taller-antropometria": {
+    "curso": "endocrino-reproductor",
+    "clase": "taller-antropometria",
+    "notas": {
+      "titulo": "Taller de Antropometría"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/taller-antropometria",
+      "titulo": "Problemas",
+      "desc": "Del pliegue del tríceps a la masa muscular: calcular e interpretar como en el informe del taller",
+      "chips": [
+        "Técnica",
+        "Cálculos",
+        "10 casos"
+      ],
+      "total": 10,
+      "muestra": 2
     }
   },
   "endocrino-reproductor/tbl-1": {
