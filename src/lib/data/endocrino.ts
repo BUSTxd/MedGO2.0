@@ -402,6 +402,7 @@ export const semanas: Semana[] = [
       },
       {
         id: 'clase-14',
+        resumen: { tipo: 'pdf', formato: 'html', opciones: [{ id: 'endo-clase-14', label: 'Resumen', formato: 'html' }] },
         tipo: 'MAGISTRAL',
         unidad: 'ANATOMIA',
         titulo: 'Radiología normal de órganos endocrinos',
