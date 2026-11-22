@@ -46,6 +46,67 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 8
     }
   },
+  "endocrino-reproductor/clase-3": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-3",
+    "notas": {
+      "titulo": "Introducción a la endocrinología"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-3",
+      "titulo": "Casos clínicos",
+      "desc": "Del frasco de insulina al eje que no frena: qué hormona es, dónde actúa y cómo se lee",
+      "chips": [
+        "Hormonas y señales",
+        "Receptores",
+        "Retroalimentación",
+        "Disruptores",
+        "22 casos"
+      ],
+      "total": 22,
+      "muestra": 4
+    }
+  },
+  "endocrino-reproductor/clase-5": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-5",
+    "notas": {
+      "titulo": "Regulación hipofisaria"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-5",
+      "titulo": "Casos clínicos",
+      "desc": "De la silla turca a la galactorrea: qué célula, qué freno y qué pedir",
+      "chips": [
+        "Hipotálamo e hipófisis",
+        "Prolactina",
+        "Hormona de crecimiento",
+        "23 casos"
+      ],
+      "total": 23,
+      "muestra": 5
+    }
+  },
+  "endocrino-reproductor/tbl-1": {
+    "curso": "endocrino-reproductor",
+    "clase": "tbl-1",
+    "notas": {
+      "titulo": "Hormona antidiurética y neurohipófisis"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/tbl-1",
+      "titulo": "Casos clínicos",
+      "desc": "De la media maratón a la hiponatremia: quién pide ADH, por qué orina tanto y qué prueba lo separa",
+      "chips": [
+        "Agua y ADH",
+        "Poliuria",
+        "Hiponatremia",
+        "26 casos"
+      ],
+      "total": 26,
+      "muestra": 5
+    }
+  },
   "patologia/pat-acp-1": {
     "curso": "patologia",
     "clase": "pat-acp-1",
