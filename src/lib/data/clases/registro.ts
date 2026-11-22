@@ -46,6 +46,139 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 8
     }
   },
+  "endocrino-reproductor/anat-1": {
+    "curso": "endocrino-reproductor",
+    "clase": "anat-1",
+    "notas": {
+      "titulo": "Anatomía del cuello y las glándulas endocrinas"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/anat-1",
+      "titulo": "Casos clínicos",
+      "desc": "De la tiroidectomía a la voz ronca: qué nervio, qué arteria y qué vena",
+      "chips": [
+        "Tiroides y cuello",
+        "Suprarrenales",
+        "10 casos"
+      ],
+      "total": 10,
+      "muestra": 2
+    }
+  },
+  "endocrino-reproductor/anat-2": {
+    "curso": "endocrino-reproductor",
+    "clase": "anat-2",
+    "notas": {
+      "titulo": "Pelvis ósea e irrigación de la pelvis"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/anat-2",
+      "titulo": "Casos clínicos",
+      "desc": "Del tacto vaginal a la ligadura de la hipogástrica: los centímetros del canal del parto y sus arterias",
+      "chips": [
+        "Pelvis ósea",
+        "Irrigación",
+        "8 casos"
+      ],
+      "total": 8,
+      "muestra": 2
+    }
+  },
+  "endocrino-reproductor/anat-3": {
+    "curso": "endocrino-reproductor",
+    "clase": "anat-3",
+    "notas": {
+      "titulo": "Periné masculino y femenino"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/anat-3",
+      "titulo": "Casos clínicos",
+      "desc": "Del bloqueo pudendo a la orina en la pared abdominal: capas, músculos y el nervio del periné",
+      "chips": [
+        "Piso pélvico",
+        "Periné",
+        "7 casos"
+      ],
+      "total": 7,
+      "muestra": 1
+    }
+  },
+  "endocrino-reproductor/anat-4": {
+    "curso": "endocrino-reproductor",
+    "clase": "anat-4",
+    "notas": {
+      "titulo": "Genitales masculinos"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/anat-4",
+      "titulo": "Casos clínicos",
+      "desc": "Del varicocele izquierdo a la uretra rota en la fractura de pelvis: anatomía que se pregunta en la práctica",
+      "chips": [
+        "Testículo y cordón",
+        "Pene, uretra y próstata",
+        "9 casos"
+      ],
+      "total": 9,
+      "muestra": 2
+    }
+  },
+  "endocrino-reproductor/anat-5": {
+    "curso": "endocrino-reproductor",
+    "clase": "anat-5",
+    "notas": {
+      "titulo": "Genitales femeninos"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/anat-5",
+      "titulo": "Casos clínicos",
+      "desc": "De la histerectomía al fondo de saco de Douglas: ligamentos, arteria uterina, uréter y nervios",
+      "chips": [
+        "Útero, trompa y ovario",
+        "Vulva y vagina",
+        "8 casos"
+      ],
+      "total": 8,
+      "muestra": 2
+    }
+  },
+  "endocrino-reproductor/anat-6": {
+    "curso": "endocrino-reproductor",
+    "clase": "anat-6",
+    "notas": {
+      "titulo": "Peritoneo pelviano, recto y canal anal"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/anat-6",
+      "titulo": "Casos clínicos",
+      "desc": "De la hemorroide que duele a la que sangra: la línea pectínea y los vasos y nervios del recto",
+      "chips": [
+        "Recto",
+        "Canal anal",
+        "8 casos"
+      ],
+      "total": 8,
+      "muestra": 2
+    }
+  },
+  "endocrino-reproductor/clase-2": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-2",
+    "notas": {
+      "titulo": "Anatomía del cuello y las glándulas endocrinas"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-2",
+      "titulo": "Casos clínicos",
+      "desc": "De la tiroidectomía a la voz ronca: qué nervio, qué arteria y qué vena",
+      "chips": [
+        "Tiroides y cuello",
+        "Suprarrenales",
+        "10 casos"
+      ],
+      "total": 10,
+      "muestra": 2
+    }
+  },
   "endocrino-reproductor/clase-3": {
     "curso": "endocrino-reproductor",
     "clase": "clase-3",
@@ -65,6 +198,25 @@ export const REGISTRO_CLASES: RegistroClases = {
       ],
       "total": 22,
       "muestra": 4
+    }
+  },
+  "endocrino-reproductor/clase-4": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-4",
+    "notas": {
+      "titulo": "Pelvis ósea e irrigación de la pelvis"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-4",
+      "titulo": "Casos clínicos",
+      "desc": "Del tacto vaginal a la ligadura de la hipogástrica: los centímetros del canal del parto y sus arterias",
+      "chips": [
+        "Pelvis ósea",
+        "Irrigación",
+        "8 casos"
+      ],
+      "total": 8,
+      "muestra": 2
     }
   },
   "endocrino-reproductor/clase-5": {
@@ -146,6 +298,44 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 3
     }
   },
+  "endocrino-reproductor/clase-9": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-9",
+    "notas": {
+      "titulo": "Periné masculino y femenino"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-9",
+      "titulo": "Casos clínicos",
+      "desc": "Del bloqueo pudendo a la orina en la pared abdominal: capas, músculos y el nervio del periné",
+      "chips": [
+        "Piso pélvico",
+        "Periné",
+        "7 casos"
+      ],
+      "total": 7,
+      "muestra": 1
+    }
+  },
+  "endocrino-reproductor/clase-11": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-11",
+    "notas": {
+      "titulo": "Genitales masculinos"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-11",
+      "titulo": "Casos clínicos",
+      "desc": "Del varicocele izquierdo a la uretra rota en la fractura de pelvis: anatomía que se pregunta en la práctica",
+      "chips": [
+        "Testículo y cordón",
+        "Pene, uretra y próstata",
+        "9 casos"
+      ],
+      "total": 9,
+      "muestra": 2
+    }
+  },
   "endocrino-reproductor/clase-12": {
     "curso": "endocrino-reproductor",
     "clase": "clase-12",
@@ -206,6 +396,25 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 3
     }
   },
+  "endocrino-reproductor/clase-15": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-15",
+    "notas": {
+      "titulo": "Genitales femeninos"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-15",
+      "titulo": "Casos clínicos",
+      "desc": "De la histerectomía al fondo de saco de Douglas: ligamentos, arteria uterina, uréter y nervios",
+      "chips": [
+        "Útero, trompa y ovario",
+        "Vulva y vagina",
+        "8 casos"
+      ],
+      "total": 8,
+      "muestra": 2
+    }
+  },
   "endocrino-reproductor/clase-17": {
     "curso": "endocrino-reproductor",
     "clase": "clase-17",
@@ -264,6 +473,25 @@ export const REGISTRO_CLASES: RegistroClases = {
       ],
       "total": 17,
       "muestra": 3
+    }
+  },
+  "endocrino-reproductor/clase-20": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-20",
+    "notas": {
+      "titulo": "Peritoneo pelviano, recto y canal anal"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-20",
+      "titulo": "Casos clínicos",
+      "desc": "De la hemorroide que duele a la que sangra: la línea pectínea y los vasos y nervios del recto",
+      "chips": [
+        "Recto",
+        "Canal anal",
+        "8 casos"
+      ],
+      "total": 8,
+      "muestra": 2
     }
   },
   "endocrino-reproductor/clase-21": {
