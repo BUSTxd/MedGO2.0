@@ -127,6 +127,46 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 4
     }
   },
+  "endocrino-reproductor/clase-18": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-18",
+    "notas": {
+      "titulo": "Médula adrenal"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-18",
+      "titulo": "Casos clínicos",
+      "desc": "De la tirosina a la crisis hipertensiva: qué catecolamina, qué receptor y qué marcador",
+      "chips": [
+        "Síntesis y degradación",
+        "Acciones",
+        "Feocromocitoma",
+        "15 casos"
+      ],
+      "total": 15,
+      "muestra": 3
+    }
+  },
+  "endocrino-reproductor/clase-19": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-19",
+    "notas": {
+      "titulo": "Corteza adrenal"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-19",
+      "titulo": "Casos clínicos",
+      "desc": "De la cara de luna a la crisis perdedora de sal: qué zona, qué enzima y qué prueba",
+      "chips": [
+        "Eje y síntesis",
+        "Déficit",
+        "Exceso",
+        "17 casos"
+      ],
+      "total": 17,
+      "muestra": 3
+    }
+  },
   "endocrino-reproductor/tbl-1": {
     "curso": "endocrino-reproductor",
     "clase": "tbl-1",
