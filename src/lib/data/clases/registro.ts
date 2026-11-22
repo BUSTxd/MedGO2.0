@@ -87,6 +87,26 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 5
     }
   },
+  "endocrino-reproductor/clase-8": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-8",
+    "notas": {
+      "titulo": "Genética de la diferenciación sexual"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-8",
+      "titulo": "Casos clínicos",
+      "desc": "Del cariotipo al útero que sí está: qué hormona faltó y en qué semana",
+      "chips": [
+        "Gónada y SRY",
+        "Trastornos (DSD)",
+        "Embriología glandular",
+        "15 casos"
+      ],
+      "total": 15,
+      "muestra": 3
+    }
+  },
   "endocrino-reproductor/clase-12": {
     "curso": "endocrino-reproductor",
     "clase": "clase-12",
@@ -127,6 +147,26 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 4
     }
   },
+  "endocrino-reproductor/clase-17": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-17",
+    "notas": {
+      "titulo": "Fisiología del aparato reproductor femenino"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-17",
+      "titulo": "Casos clínicos",
+      "desc": "Del folículo dominante al test de embarazo: qué hormona manda y qué ve el endometrio",
+      "chips": [
+        "Ovario",
+        "El ciclo",
+        "En la clínica",
+        "16 casos"
+      ],
+      "total": 16,
+      "muestra": 3
+    }
+  },
   "endocrino-reproductor/clase-18": {
     "curso": "endocrino-reproductor",
     "clase": "clase-18",
@@ -164,6 +204,26 @@ export const REGISTRO_CLASES: RegistroClases = {
         "17 casos"
       ],
       "total": 17,
+      "muestra": 3
+    }
+  },
+  "endocrino-reproductor/clase-21": {
+    "curso": "endocrino-reproductor",
+    "clase": "clase-21",
+    "notas": {
+      "titulo": "Fisiología del aparato reproductor masculino"
+    },
+    "casos": {
+      "key": "endocrino-reproductor/casos/clase-21",
+      "titulo": "Casos clínicos",
+      "desc": "De la célula de Leydig a la pastilla azul: qué hormona falta y dónde se rompe la cadena",
+      "chips": [
+        "Eje y células",
+        "Espermatogénesis",
+        "En la clínica",
+        "14 casos"
+      ],
+      "total": 14,
       "muestra": 3
     }
   },
