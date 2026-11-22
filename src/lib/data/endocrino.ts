@@ -746,4 +746,8 @@ compartirResumenes(semanas, {
   'anat-4': ['clase-11'],
   'anat-5': ['clase-15'],
   'anat-6': ['clase-20'],
+  // Magistrales de histología ↔ la práctica del mismo tema (el resumen vive en la práctica).
+  'clase-1': ['histo-1'],
+  'clase-10': ['histo-2'],
+  'clase-16': ['histo-3'],
 });
