@@ -215,6 +215,15 @@ export function VistaCaso({ caso, bloques, lab, n, ronda, respuestas, orden, onR
             <span>{caso.tema}</span>
           </div>
           <p className={cx('caso-relato')}>{caso.caso}</p>
+          {caso.imagen && (
+            <figure className={cx('caso-imagen')}>
+              <a href={caso.imagen.src} target="_blank" rel="noreferrer" aria-label="Abrir la imagen en grande">
+                {/* eslint-disable-next-line @next/next/no-img-element -- foto del bucket público, sin optimizador */}
+                <img key={caso.imagen.src} src={caso.imagen.src} alt={caso.imagen.alt} loading="lazy" decoding="async" />
+              </a>
+              <figcaption>{caso.imagen.credito}</figcaption>
+            </figure>
+          )}
           {datos.length > 0 && (
             <div className={cx('caso-boleta', marcar && 'boleta-pista')}>
               <div className={cx('caso-boleta-titulo')}>

@@ -102,6 +102,11 @@ function validarCasos(c, act, err, aviso) {
     if (vistos.has(q.id)) err(`${donde}: id repetido`);
     vistos.add(q.id);
     for (const k of ['tema', 'origen', 'caso', 'pregunta']) if (!texto(q[k])) err(`${donde}: ${k} vacío`);
+    if (q.imagen !== undefined) {
+      const im = q.imagen;
+      if (!texto(im?.alt) || !texto(im?.credito)) err(`${donde}: la imagen lleva alt y credito (autor, licencia, fuente)`);
+      if (!texto(im?.src) || !/^https:\/\/[^/]+\/storage\/v1\/object\/public\/examenes-img\//.test(im.src)) err(`${donde}: imagen.src debe ser una URL pública del bucket examenes-img`);
+    }
     // Además del MIR, las preguntas de los exámenes y banqueos del propio curso (práctica de un examen).
     if (texto(q.origen) && q.origen !== 'MedGO' && !/^(MIR \d{4}|Examen |Banqueo)/.test(q.origen)) aviso(`${donde}: origen «${q.origen}» (se espera «MIR <año>, pregunta N», «Examen …», «Banqueo …» o «MedGO»)`);
     for (const id of q.bloque === undefined ? [] : [q.bloque].flat()) {

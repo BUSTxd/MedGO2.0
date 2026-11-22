@@ -86,6 +86,7 @@ Una clase puede traer solo `notas`, solo `casos` o las dos cosas.
 - **La correcta no puede ser la más larga ni la más corta en más de 1 de cada 10 casos.** El script lo mide y no publica si se pasa.
 - `camino`: el razonamiento, de 2 pasos o más. El último sale en negrita.
 - `datos` es la boleta de resultados; `alerta` pinta el valor en rojo.
+- `imagen` (opcional): `{ "src", "alt", "credito" }`, una foto bajo el relato (láminas de histología). `src` es una URL del bucket público `examenes-img` (subir con `scripts/upload-examen-img-dir.mjs`); `credito` lleva autor, licencia y fuente. `publicar:clase` no sube la clase si alguna imagen aún no está en el bucket. Ejemplo: las prácticas de histología de Endocrino (`histo-1` a `histo-4`, láminas de Wikimedia Commons).
 - `bloque`: el bloque del caso, o una lista si es de varios (`["AHAI", "PTI"]`). Sin bloques declarados, el caso solo sale en «Todos».
 - `dibujo` del bloque: por ahora `hematie` o `plaqueta` (están en `CasosClinicos.tsx`). Un bloque sin dibujo va solo con su nombre.
 - `lab`: el paso del laboratorio de la clase que muestra el caso (`parte` y `paso`, desde 0). Solo se ve si la clase enlaza un laboratorio (`simulacion.href` en su sílabo).

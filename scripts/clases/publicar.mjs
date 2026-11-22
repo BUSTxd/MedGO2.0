@@ -127,6 +127,15 @@ async function publicar(claves, subir) {
       console.log(`✗ ${clave}:\n    ${errores.join('\n    ')}`);
       continue;
     }
+    // Cada imagen de los casos tiene que estar ya en el bucket: si no, el alumno vería un hueco.
+    const imagenes = [...new Set((json.casos?.preguntas ?? []).flatMap((q) => (q.imagen ? [q.imagen.src] : [])))];
+    const faltan = [];
+    for (const src of imagenes) if (!(await fetch(src, { method: 'HEAD' }).then((r) => r.ok, () => false))) faltan.push(src);
+    if (faltan.length) {
+      malas++;
+      console.log(`✗ ${clave}: ${faltan.length} imagen(es) aún no están en el bucket:\n    ${faltan.join('\n    ')}`);
+      continue;
+    }
     const { sube, entrada } = prepararClase(json, { curso, clase });
     const que = [entrada.notas && `notas (${json.notas.secciones.length} secciones)`, entrada.casos && `${entrada.casos.total} casos, ${entrada.casos.libre ? 'libres' : `muestra ${entrada.casos.muestra}`}`].filter(Boolean).join(' · ');
     if (!subir) { console.log(`✓ ${clave}: ${que} (sin subir: falta --subir)`); continue; }

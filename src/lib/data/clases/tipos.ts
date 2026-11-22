@@ -66,6 +66,12 @@ export interface BloqueCasos {
 
 export interface OpcionCaso { t: string; porque: string; correcta?: boolean }
 
+/**
+ * La foto que acompaña al caso (una lámina de histología, una imagen). Vive en el
+ * bucket público `examenes-img`; `credito` es obligatorio (autor, licencia y fuente).
+ */
+export interface ImagenCaso { src: string; alt: string; credito: string }
+
 export interface CasoClinico {
   id: string;
   /** El bloque o los bloques a los que pertenece; sin él, solo sale en «Todos». */
@@ -74,6 +80,7 @@ export interface CasoClinico {
   /** «MIR 2016, pregunta 96» (adaptada de esa pregunta) o «MedGO» (escrita para la clase). */
   origen: string;
   caso: string;
+  imagen?: ImagenCaso;
   datos?: { k: string; v: string; alerta?: boolean }[];
   pregunta: string;
   opciones: OpcionCaso[];
