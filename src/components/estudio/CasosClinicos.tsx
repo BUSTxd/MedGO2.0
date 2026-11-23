@@ -14,11 +14,14 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
+import type { Ampliada } from '@/components/examen/FiguraAmpliable';
 import type { BancoCasos, BloqueCasos, CasoClinico, DibujoBloque, DibujoLab } from '@/lib/data/clases/tipos';
 import { cx, Icono } from './Icono';
 import type { Contexto } from './EspacioEstudio';
 
 const ElegirPlan = dynamic(() => import('@/components/planes/ElegirPlan'), { ssr: false });
+/** El visor de los banqueos (portal a `<body>`, zoom y arrastre); se carga al ampliar. */
+const VisorImagen = dynamic(() => import('@/components/examen/FiguraAmpliable').then((m) => m.VisorImagen), { ssr: false });
 
 type Caso = CasoClinico;
 /** `todos` o el id de un bloque. */
@@ -189,6 +192,7 @@ export function VistaCaso({ caso, bloques, lab, n, ronda, respuestas, orden, onR
   // Los valores anormales no se marcan de entrada: el alumno los busca él solo, y la «Pista»
   // los pinta de rojo. Al responder se marcan siempre (es parte de la explicación).
   const [pista, setPista] = useState(false);
+  const [ampliada, setAmpliada] = useState<Ampliada | null>(null);
   const conAlertas = datos.some((d) => d.alerta);
   const marcar = pista || respondido;
   return (
@@ -217,13 +221,17 @@ export function VistaCaso({ caso, bloques, lab, n, ronda, respuestas, orden, onR
           <p className={cx('caso-relato')}>{caso.caso}</p>
           {caso.imagen && (
             <figure className={cx('caso-imagen')}>
-              <a href={caso.imagen.src} target="_blank" rel="noreferrer" aria-label="Abrir la imagen en grande">
+              <button type="button" aria-label="Ampliar la imagen" onClick={(e) => {
+                const img = e.currentTarget.querySelector('img');
+                setAmpliada({ src: caso.imagen!.src, alt: caso.imagen!.alt, w: img?.naturalWidth || 1200, h: img?.naturalHeight || 900 });
+              }}>
                 {/* eslint-disable-next-line @next/next/no-img-element -- foto del bucket público, sin optimizador */}
                 <img key={caso.imagen.src} src={caso.imagen.src} alt={caso.imagen.alt} loading="lazy" decoding="async" />
-              </a>
+              </button>
               <figcaption>{caso.imagen.credito}</figcaption>
             </figure>
           )}
+          {ampliada && <VisorImagen img={ampliada} onClose={() => setAmpliada(null)} />}
           {datos.length > 0 && (
             <div className={cx('caso-boleta', marcar && 'boleta-pista')}>
               <div className={cx('caso-boleta-titulo')}>
@@ -463,6 +471,8 @@ export default function CasosClinicos({ ctx, examKey, oculta }: { ctx: Contexto;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       const t = e.target as HTMLElement | null;
       if (t?.closest?.('input, textarea, select, [contenteditable="true"]')) return;
+      // Con la imagen ampliada (o cualquier modal) encima, las teclas no responden el caso de detrás.
+      if (document.querySelector('[aria-modal="true"]')) return;
       const respondido = g.respuestas[actual.id] !== undefined;
       if (!respondido) {
         const tecla = e.key.toUpperCase();

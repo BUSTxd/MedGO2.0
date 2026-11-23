@@ -1738,7 +1738,8 @@ button.session-badge:hover { border-color: #245b8f; color: #245b8f; }
 .caso-relato { font-size: 16px; line-height: 1.6; margin: 0 0 18px; }
 /* La lámina del caso (histología): la foto entera, sin marco; el crédito debajo, en pequeño. */
 .caso-imagen { margin: 0 0 20px; }
-.caso-imagen a { display: block; border-radius: 10px; overflow: hidden; background: #111; cursor: zoom-in; }
+.caso-imagen button { display: block; width: 100%; padding: 0; border: 0; font: inherit; border-radius: 10px; overflow: hidden; background: #111; cursor: zoom-in; }
+.caso-imagen button:focus-visible { outline: 2px solid var(--purple-light); outline-offset: 2px; }
 .caso-imagen img { display: block; width: 100%; max-height: 380px; object-fit: contain; }
 .caso-imagen figcaption { margin-top: 6px; font-size: 11px; line-height: 1.4; color: var(--secondary); }
 .caso-boleta { position: relative; background: var(--boleta); padding: 13px 16px 12px; border-radius: 8px 8px 0 0; margin-bottom: 20px; }
