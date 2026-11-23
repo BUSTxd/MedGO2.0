@@ -50,4 +50,7 @@ data/citopenias/
 data/clases/
 # logos de terceros que scripts/imagenes/analizar.py borra de las figuras
 data/logos/
+# Fuente de resúmenes escritos con código (generador, recortes): es material de pago.
+# Se publica con scripts/upload-resumen-doc.mjs.
+data/resumenes/
 public/lab-hipersensibilidad/
