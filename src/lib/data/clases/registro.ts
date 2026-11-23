@@ -1210,6 +1210,27 @@ export const REGISTRO_CLASES: RegistroClases = {
       "muestra": 2
     }
   },
+  "patologia/pat-lab-9": {
+    "curso": "patologia",
+    "clase": "pat-lab-9",
+    "notas": {
+      "titulo": "Patología infecciosa al microscopio"
+    },
+    "casos": {
+      "key": "patologia/casos/pat-lab-9",
+      "titulo": "Casos clínicos",
+      "desc": "Reconoce la lámina, interpreta el tamizaje y decide qué pedir en VPH, CMV, aspergilosis e hidatidosis",
+      "chips": [
+        "VPH",
+        "CMV",
+        "Aspergilosis",
+        "Hidatidosis",
+        "32 casos"
+      ],
+      "total": 32,
+      "muestra": 6
+    }
+  },
   "patologia/pat-tbl-2": {
     "curso": "patologia",
     "clase": "pat-tbl-2",
