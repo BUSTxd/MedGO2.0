@@ -33,6 +33,8 @@
     "verificar:bilirrubina": "node --experimental-strip-types --no-warnings scripts/bilirrubina/verificar.mjs",
     "verificar:vih-sifilis": "node --experimental-strip-types --no-warnings scripts/vih-sifilis/verificar.mjs",
     "revisar:claves-vih-sifilis": "node scripts/vih-sifilis/revisar-claves.mjs",
+    "verificar:sepsis": "node --experimental-strip-types --no-warnings scripts/sepsis/verificar.mjs",
+    "revisar:claves-sepsis": "node scripts/sepsis/revisar-claves.mjs",
     "publicar:clase": "node --experimental-strip-types --no-warnings scripts/clases/publicar.mjs",
     "verificar:clases": "node --experimental-strip-types --no-warnings scripts/clases/publicar.mjs --verificar"
   },

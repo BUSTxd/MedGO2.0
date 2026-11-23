@@ -1023,6 +1023,7 @@ export const semanas: Semana[] = [
         unidad: 'UNIDAD_4',
         codigo: 'ACP13',
         titulo: 'ACP13 — Sepsis',
+        simulacion: { href: '/dashboard/laboratorio/sepsis', desc: 'El joven con meningococemia y la abuela con SDRA: del receptor TLR4 a la tormenta de citocinas, el endotelio, la coagulación, el choque, la falla de órganos y la inmunoparálisis, animados y narrados' },
         fecha: '9 – 13 nov',
         hora: '—',
         subtemas: [],

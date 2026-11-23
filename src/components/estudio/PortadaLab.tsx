@@ -1641,6 +1641,35 @@ const PORTADAS: Record<string, () => ReactNode> = {
     );
   },
 
+  /* Sepsis: el escudo de las defensas ardiendo por dentro; a un lado el meningococo (dos granos con sus pili)
+     y, alrededor, las citocinas que se disparan. */
+  sepsis: () => {
+    const pili = Array.from({ length: 12 }, (_, i) => {
+      const a = rad(i * 30 + 8), x = 44 + Math.cos(a) * 22, y = 96 + Math.sin(a) * 15;
+      return `M${x.toFixed(1)},${y.toFixed(1)} l${(Math.cos(a) * 9).toFixed(1)},${(Math.sin(a) * 9).toFixed(1)}`;
+    });
+    const escudo = 'M120,16 C134,22 148,24 160,24 C160,58 150,88 120,108 C90,88 80,58 80,24 C92,24 106,22 120,16 Z';
+    const llama = 'M120,38 C138,58 136,82 120,92 C104,82 102,58 120,38 Z';
+    return (
+      <>
+        <Suelo x={120} y={123} rx={74} />
+        <path d={escudo} fill={C.indigo[0]} transform="translate(4,5)" />
+        <path d={escudo} fill={C.azul[1]} />
+        <path d="M92,30 C104,32 112,30 118,26 C106,48 100,66 100,84 C92,70 88,48 92,30 Z" fill={BLANCO} opacity={0.28} />
+        <path d={llama} fill={C.naranja[0]} transform="translate(2,3)" />
+        <path d={llama} fill={C.naranja[1]} />
+        <path d="M120,58 C130,70 129,82 120,88 C111,82 110,70 120,58 Z" fill={C.amarillo[2]} />
+        <g fill="none" stroke={C.verde[1]} strokeWidth={2.2} strokeLinecap="round">{pili.map((d, i) => <path key={i} d={d} />)}</g>
+        <Bola x={36} y={96} r={15} c={C.rojo} />
+        <Bola x={52} y={96} r={15} c={C.rojo} />
+        <Bola x={186} y={34} r={8} c={C.amarillo} />
+        <Bola x={200} y={62} r={6} c={C.naranja} />
+        <Bola x={184} y={90} r={7} c={C.magenta} />
+        <Bola x={30} y={36} r={6} c={C.morado} />
+      </>
+    );
+  },
+
   'miembro-superior-derecho': () => {
     const base = Math.atan2(-0.4, 0.91) * (180 / Math.PI);
     const dedos = [-40, -18, -5, 8, 21].map((d, i) => {

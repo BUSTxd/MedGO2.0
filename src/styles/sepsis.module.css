@@ -1,0 +1,97 @@
+/* Laboratorio «Sepsis» (Patología, ACP13): el estilo de las referencias de BUST
+   (docs/sepsis/ESTILO.md): infografía plana, colores de joya, sin contorno oscuro.
+   De día, arena y melocotón a rosa pálido; de noche, azul petróleo a índigo con partículas
+   desenfocadas («virus y células»). Define también `--vas-*` y `--cit-*` porque las piezas
+   que se importan de Vasculitis y Citopenias las leen. */
+
+.lienzo {
+  --se-fondo-a: #FFF0DC;
+  --se-fondo-b: #FBDDE6;
+  --se-pelo: #1C0B73;
+  --vas-fondo-a: #FFF0DC;
+  --vas-fondo-b: #FBDDE6;
+  --vas-pantalla: #3A1466;
+  --vas-pantalla-2: #4A1C80;
+  --vas-cuerpo: #6B3FC8;
+  --vas-cuerpo-borde: #E040C8;
+  --vas-suave: rgba(120, 60, 150, 0.12);
+  --cit-texto: #2E1A3A;
+  --cit-texto-2: #6A4A5E;
+  --cit-flecha: #6A3F5A;
+  --cit-base: #4A2368;
+  /* Texto de cada entidad (legible en los dos temas). */
+  --se-menin: #C23A22;
+  --se-pseudo: #0B7A6E;
+  --se-lps: #A06A00;
+  --se-tnf: #C2540A;
+  --se-il1: #C0183A;
+  --se-il6: #6A2FC8;
+  --se-c5a: #0A7F96;
+  --se-nfkb: #7A8C00;
+  --se-endo: #C25A52;
+  --se-gluco: #1E8F5A;
+  --se-plaq: #7A3FB0;
+  --se-fibrina: #8A6A2A;
+  --se-net: #7A2FC0;
+  --se-no: #1E86C0;
+  --se-lactato: #B86A00;
+  --se-linfo: #2E5FD8;
+  --se-sangre: #C0183A;
+  --se-verde: #138A3A;
+  --se-violeta: #5B2FB0;
+  --se-ambar: #B86A00;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(165deg, var(--se-fondo-a), var(--se-fondo-b));
+}
+:global(.dark-mode) .lienzo {
+  --se-fondo-a: #08203B;
+  --se-fondo-b: #15204F;
+  --se-pelo: #5A3FE0;
+  --vas-fondo-a: #08203B;
+  --vas-fondo-b: #15204F;
+  --vas-pantalla: #2A0D52;
+  --vas-pantalla-2: #3A1470;
+  --vas-cuerpo: #5A33B8;
+  --vas-cuerpo-borde: #F05BD8;
+  --vas-suave: rgba(200, 190, 255, 0.10);
+  --cit-texto: #F4F0FF;
+  --cit-texto-2: #C8BEEA;
+  --cit-flecha: #C6B4F5;
+  --cit-base: #7A4BE0;
+  --se-menin: #FF8A70;
+  --se-pseudo: #5FE8D2;
+  --se-lps: #FFD24A;
+  --se-tnf: #FFA84A;
+  --se-il1: #FF7A8A;
+  --se-il6: #C3AEFF;
+  --se-c5a: #5FE0F5;
+  --se-nfkb: #E6F54A;
+  --se-endo: #FFA8A0;
+  --se-gluco: #6FE8B8;
+  --se-plaq: #D2B0FF;
+  --se-fibrina: #F0D9A8;
+  --se-net: #D8A8FF;
+  --se-no: #7FD0F5;
+  --se-lactato: #FFC24A;
+  --se-linfo: #8FB0FF;
+  --se-sangre: #FF7A8A;
+  --se-verde: #6FE08F;
+  --se-violeta: #C3AEFF;
+  --se-ambar: #FFC24A;
+}
+
+.svg { width: 100%; height: 100%; display: block; user-select: none; }
+
+/* Partículas: de día claras y cálidas; de noche de color, como el campo de células de la referencia. */
+.bokehOscuro { display: none; }
+:global(.dark-mode) .bokehOscuro { display: block; }
+:global(.dark-mode) .bokehClaro { display: none; }
+
+/* Portada. */
+.sobretitulo { color: #C23A22; }
+:global(.dark-mode) .sobretitulo { color: #FF8A70; }
+
+/* Letra o cifra dentro de un icono ya colocado. */
+.letra { font-weight: 800; font-family: inherit; pointer-events: none; }
