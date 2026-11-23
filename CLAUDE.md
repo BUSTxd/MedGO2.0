@@ -63,7 +63,7 @@ npm run practica:medula [-- --subir]   # banco de práctica del lab (fuente en d
 - **La forma sigue al contenido:** no todo es una tarjeta. Los **paneles con filete de color a un lado «se ven muy AI»**: en las láminas, globo de texto con sombra oscura o la forma de lo que representa.
 - **Prohibido en las láminas el panel blanco con texto y reborde de otro color** (`caja`, `cajaJusta`). Cada dato es un dibujo representativo y el texto va en segundo plano; o texto suelto con flechas animadas. Si dice «complejo inmune», se dibuja el complejo.
 - **Círculo gris con un dibujo dentro (lente, `Lente`):** solo para lo que de verdad es un zoom. Un icono suelto levita solo, con su sombra (`Flotante`).
-- **Opción múltiple:** la correcta no puede ser la más larga ni la más corta en más de 1 de cada 10; medirlo con un script, sin HTML.
+- **Opción múltiple:** la correcta no puede ser la más larga ni la más corta en más de 1 de cada 10, ni la 2.ª más larga ni la 2.ª más corta en más de la mitad, y ningún distractor se infla con una explicación (la más larga no mide 1,5 veces la siguiente); medirlo con un script (`sesgoDeLargo`, `scripts/clases/validar.mjs`), sin HTML.
 - **Si un bug sobrevive a un arreglo:** parar y montar la prueba discriminante que separe capas; al hallar la causa, retirar los parches anteriores.
 - **Documentación:** separar lo verificado de lo supuesto. Si un caso desmiente una nota, corregirla en el mismo commit.
 - Explicaciones concisas, en español.

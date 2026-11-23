@@ -83,7 +83,10 @@ Una clase puede traer solo `notas`, solo `casos` o las dos cosas.
 - De dónde salen: los cuadernillos oficiales del MIR (Ministerio de Sanidad). casiMedicos los reúne con comentarios de voluntarios: sirven de pista, pero se reescriben y se comprueban con la bibliografía de la clase. Bancos comerciales, Studocu y SlideShare, no (derechos y claves dudosas).
 - Si la respuesta oficial de un MIR quedó desactualizada, se corrige y se dice en el `porque` (p. ej. `"MIR 2013, pregunta 103 (actualizada)"`).
 - De 3 a 5 opciones (lo normal son 4), **una sola** con `"correcta": true`, y cada una con su `porque`.
-- **La correcta no puede ser la más larga ni la más corta en más de 1 de cada 10 casos.** El script lo mide y no publica si se pasa.
+- **Que el largo no delate la correcta.** El script lo mide y no publica si se pasa:
+  - no es la más larga ni la más corta en más de 1 de cada 10 casos;
+  - tampoco la 2.ª más larga ni la 2.ª más corta en más de la mitad (en Endocrino lo fue en el 82 %: bastaba con «descartar la más larga y marcar la que sigue»);
+  - ninguna opción desproporcionada: la más larga no mide 1,5 veces la siguiente con 15 caracteres más. No se infla un distractor con una explicación para esquivar la primera regla; la explicación va en su `porque`.
 - `camino`: el razonamiento, de 2 pasos o más. El último sale en negrita.
 - `datos` es la boleta de resultados; `alerta` pinta el valor en rojo.
 - `imagen` (opcional): `{ "src", "alt", "credito" }`, una foto bajo el relato (láminas de histología). `src` es una URL del bucket público `examenes-img` (subir con `scripts/upload-examen-img-dir.mjs`); `credito` lleva autor, licencia y fuente. `publicar:clase` no sube la clase si alguna imagen aún no está en el bucket. Ejemplo: las prácticas de histología de Endocrino (`histo-1` a `histo-4`, láminas de Wikimedia Commons).

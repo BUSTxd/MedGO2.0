@@ -60,18 +60,43 @@ function validarNotas(n, err, aviso) {
   });
 }
 
-/** La correcta no puede ser la más larga ni la más corta en más de 1 de cada 10 (CLAUDE.md). */
+/**
+ * Que el largo no delate la correcta (CLAUDE.md). Tres reglas:
+ *  1. No es la más larga ni la más corta en más de 1 de cada 10.
+ *  2. Tampoco la 2.ª más larga ni la 2.ª más corta en más de la mitad: si no, basta con
+ *     «descartar la más larga y marcar la que sigue» (pasó en Endocrino: 82 %).
+ *  3. Ninguna opción desproporcionada: la más larga no mide 1,5 veces la siguiente
+ *     (y 15 caracteres más). Un distractor inflado con una explicación se descarta solo.
+ */
 export function sesgoDeLargo(preguntas) {
-  let larga = 0, corta = 0;
-  const casos = [];
+  let larga = 0, corta = 0, segundaLarga = 0, segundaCorta = 0;
+  const casos = [], desproporcion = [];
   for (const q of preguntas) {
     const L = q.opciones.map((o) => o.t.length);
     const c = L[q.opciones.findIndex((o) => o.correcta)];
+    const desdeArriba = L.filter((x) => x > c).length + 1;
+    const desdeAbajo = L.filter((x) => x < c).length + 1;
     if (c === Math.max(...L)) { larga++; casos.push(`${q.id} larga (${L.join(', ')})`); }
     if (c === Math.min(...L)) { corta++; casos.push(`${q.id} corta (${L.join(', ')})`); }
+    if (desdeArriba === 2) segundaLarga++;
+    if (desdeAbajo === 2) segundaCorta++;
+    const [a, b] = [...L].sort((x, y) => y - x);
+    if (a >= 1.5 * b && a - b >= 15) desproporcion.push(`${q.id} (${L.join(', ')})`);
   }
   const permitido = Math.floor(preguntas.length / 10);
-  return { larga, corta, permitido, casos, ok: larga <= permitido && corta <= permitido };
+  const mitad = Math.ceil(preguntas.length / 2);
+  return {
+    larga, corta, segundaLarga, segundaCorta, permitido, mitad, casos, desproporcion,
+    ok: larga <= permitido && corta <= permitido && segundaLarga <= mitad && segundaCorta <= mitad && !desproporcion.length,
+  };
+}
+
+export function textoDelSesgo(s, n) {
+  const m = [];
+  if (s.larga > s.permitido || s.corta > s.permitido) m.push(`la correcta es la más larga en ${s.larga} y la más corta en ${s.corta} de ${n} (máximo ${s.permitido} cada una)\n      ${s.casos.join('\n      ')}`);
+  if (s.segundaLarga > s.mitad || s.segundaCorta > s.mitad) m.push(`la correcta es la 2.ª más larga en ${s.segundaLarga} y la 2.ª más corta en ${s.segundaCorta} de ${n} (máximo ${s.mitad} cada una)`);
+  if (s.desproporcion.length) m.push(`opción desproporcionada (la más larga mide 1,5 veces la siguiente) en ${s.desproporcion.length}:\n      ${s.desproporcion.join('\n      ')}`);
+  return `sesgo de largo: ${m.join('\n    ')}`;
 }
 
 function validarCasos(c, act, err, aviso) {
@@ -126,7 +151,7 @@ function validarCasos(c, act, err, aviso) {
   }
   if (completas) {
     const s = sesgoDeLargo(preguntas);
-    if (!s.ok) err(`sesgo de largo: la correcta es la más larga en ${s.larga} y la más corta en ${s.corta} de ${preguntas.length} (máximo ${s.permitido} cada una)\n      ${s.casos.join('\n      ')}`);
+    if (!s.ok) err(textoDelSesgo(s, preguntas.length));
   }
 }
 
