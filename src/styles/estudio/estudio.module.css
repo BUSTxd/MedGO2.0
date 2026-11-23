@@ -1761,7 +1761,9 @@ button.session-badge:hover { border-color: #245b8f; color: #245b8f; }
 
 .caso-decision h2 { font-size: 19px; line-height: 1.35; font-weight: 620; letter-spacing: -.2px; margin: 0 0 16px; }
 .caso-opciones { display: flex; flex-direction: column; gap: 8px; }
-.caso-op { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px; align-items: start; width: 100%; padding: 11px 14px 11px 12px; text-align: left; font-family: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-radius: 12px; transition: border-color .15s, background .15s; }
+.caso-op { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px; align-items: start; width: 100%; padding: 11px 14px 11px 12px; text-align: left; font-family: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-radius: 12px; transition: border-color .15s, background .15s; cursor: pointer; user-select: none; -webkit-user-select: none; caret-color: transparent; }
+/* Un botón no se edita: sin cursor de texto ni caret (Comet y otros Chromium con navegación por caret lo pintaban al hacer clic). */
+.caso-op:disabled { cursor: default; }
 .caso-op:not(:disabled):hover { border-color: var(--action); background: var(--soft-fill); }
 .caso-letra { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--soft-fill); color: var(--action-ink); font-size: 13px; font-weight: 650; }
 .caso-letra .icon { width: 15px; height: 15px; stroke-width: 2.6; }
