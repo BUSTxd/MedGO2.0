@@ -8,6 +8,17 @@
   --se-fondo-a: #FFF0DC;
   --se-fondo-b: #FBDDE6;
   --se-pelo: #1C0B73;
+  /* El busto de VIH y sífilis (`Hombre`) pinta el pelo con esta variable: sin ella, en el lab sale negro. */
+  --vs-pelo: #1C0B73;
+  /* Sombras (`Sombra` y `Suelo` de Piezas.tsx): un tono más oscuro del fondo, no negro. */
+  --se-sombra: #6E2448;
+  --se-sombra-o: 0.2;
+  --se-suelo-o: 0.34;
+  /* Globo de texto (con sombra oscura, sin reborde) y cono de las lentes de zoom. */
+  --se-globo: #FFFFFF;
+  --se-globo-txt: #2E1A3A;
+  --se-cono: rgba(255, 255, 255, 0.55);
+  --se-aro: #FFFFFF;
   --vas-fondo-a: #FFF0DC;
   --vas-fondo-b: #FBDDE6;
   --vas-pantalla: #3A1466;
@@ -49,6 +60,14 @@
   --se-fondo-a: #08203B;
   --se-fondo-b: #15204F;
   --se-pelo: #5A3FE0;
+  --vs-pelo: #5A3FE0;
+  --se-sombra: #00030F;
+  --se-sombra-o: 0.55;
+  --se-suelo-o: 0.75;
+  --se-globo: #2C2470;
+  --se-globo-txt: #F4F0FF;
+  --se-cono: rgba(190, 200, 255, 0.16);
+  --se-aro: #D8E2FF;
   --vas-fondo-a: #08203B;
   --vas-fondo-b: #15204F;
   --vas-pantalla: #2A0D52;
@@ -95,3 +114,23 @@
 
 /* Letra o cifra dentro de un icono ya colocado. */
 .letra { font-weight: 800; font-family: inherit; pointer-events: none; }
+
+/* Sombra proyectada (referencias «cuatro órganos» y «time line»): la copia del dibujo, corrida abajo a la derecha,
+   pintada entera de un solo color. Lo que no tiene relleno (`fill="none"`) sigue sin él; los trazos toman el color. */
+.silueta { opacity: var(--se-sombra-o); }
+.silueta [fill]:not([fill='none']),
+.silueta [style*='fill'] { fill: var(--se-sombra) !important; }
+.silueta [stroke]:not([stroke='none']) { stroke: var(--se-sombra) !important; }
+/* El texto no proyecta sombra: la copia corrida se lee como letras dobles. */
+.silueta text { display: none; }
+
+/* Sombra de suelo difuminada (degradado radial) y sombra plana de una forma simple (aro de una lente, globo). */
+.suelo { opacity: var(--se-suelo-o); }
+.sombraPlana { fill: var(--se-sombra); opacity: var(--se-sombra-o); }
+.sombraFuerte { fill: var(--se-sombra); opacity: calc(var(--se-sombra-o) * 1.6); }
+
+/* Globo de texto. */
+.globo { fill: var(--se-globo); }
+.globoTxt { fill: var(--se-globo-txt); font-weight: 700; font-family: inherit; }
+.cono { fill: var(--se-cono); }
+.aro { fill: var(--se-aro); }

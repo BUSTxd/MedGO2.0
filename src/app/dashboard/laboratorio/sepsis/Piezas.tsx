@@ -7,10 +7,13 @@
 // Lo que ya existe en Citopenias, Vasculitis, Gramnegativas, Bilirrubina y VIH y sífilis se
 // reexporta tal cual (no se copia); aquí solo lo propio de la sepsis.
 
-import { type ReactNode } from 'react';
-import { En, Txt, clamp, easeBack, easeOut, hash, lerp, tramo } from '../citopenias-autoinmunes/Piezas';
+import { type ReactNode, useContext, useId } from 'react';
+import { En, Txt, TxCtx, clamp, easeBack, easeOut, hash, lerp, tramo } from '../citopenias-autoinmunes/Piezas';
+import { Copo } from '../citopenias-autoinmunes/laminas/Comun';
 import { Bola } from '../vasculitis-anca/Piezas';
+import { mezcla } from '../vasculitis-anca/Fisio';
 import { Letra } from '../vih-sifilis/Piezas';
+import ss from '@/styles/sepsis.module.css';
 
 export { En, Sale, Flecha, Txt, Rotulo, Esfera, Macrofago, Linfocito, Plasmatica, Ganglio, Higado, Bazo, Medula, Cerebro, Frasco, TuboOrina, Jeringa, BolsaSangre, Pastilla, Termometro, Corazon, Chorro, Virus, Persona, Mano, Pierna, Plaqueta, clamp, tramo, lerp, easeOut, easeBack, hash, blob, enBorde, TxCtx } from '../citopenias-autoinmunes/Piezas';
 export { V, Bola, Bandera, Hematie, Neutrofilo, Net, C5a, CelEndo, Vaso, Tarjeta, Cuerpo, Punto, LineaTiempo, Foco, Llamada, Pista, Pantalla, TxtPantalla, Manometro, Pulmones, Alveolos, Rinon, Glomerulo, Paciente, Perfil, PiernaPurpura } from '../vasculitis-anca/Piezas';
@@ -458,6 +461,398 @@ export function Vela({ x = 0, y = 0, k = 1, o = 1, gasto = 0, reloj = 0 }: { x?:
       <g transform={`translate(${inc.toFixed(1)},${-h - 26}) scale(${(1 / f).toFixed(3)},${f.toFixed(3)})`}>
         <path d="M0,-70 C34,-34 30,2 0,12 C-30,2 -34,-34 0,-70 Z" fill="#FF8A1E" />
         <path d="M0,-44 C18,-22 16,-2 0,6 C-16,-2 -18,-22 0,-44 Z" fill="#FFE066" />
+      </g>
+    </En>
+  );
+}
+
+// ─── Sombras (capítulo 0 en adelante) ────────────────────────────────────────
+
+/** Sombra proyectada de las referencias («cuatro órganos», «time line»): la silueta del dibujo, corrida abajo a la derecha, en
+ *  un tono más oscuro del fondo que cambia con el tema (`--se-sombra`). Sin `filter`: el CSS de `.silueta` pinta la copia de un
+ *  solo color. Lo de dentro se pinta dos veces: no envolver halos, conos ni sombras de suelo. */
+export function Sombra({ dx = 11, dy = 13, o = 1, children }: { dx?: number; dy?: number; o?: number; children: ReactNode }) {
+  return (
+    <>
+      <g transform={`translate(${dx},${dy})`} opacity={o < 1 ? clamp(o) : undefined} aria-hidden>
+        <g className={ss.silueta}>{children}</g>
+      </g>
+      {children}
+    </>
+  );
+}
+
+/** Sombra de suelo difuminada (degradado radial, nunca `filter`) bajo lo que flota o se apoya. `w`: ancho. */
+export function Suelo({ x, y, w = 200, o = 1 }: { x: number; y: number; w?: number; o?: number }) {
+  const id = `se-suelo-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
+  if (o <= 0.002) return null;
+  return (
+    <g opacity={o < 1 ? clamp(o) : undefined} aria-hidden>
+      <g className={ss.suelo}>
+        <defs>
+          <radialGradient id={id}>
+            <stop offset="0" style={{ stopColor: 'var(--se-sombra)', stopOpacity: 0.9 }} />
+            <stop offset="0.55" style={{ stopColor: 'var(--se-sombra)', stopOpacity: 0.45 }} />
+            <stop offset="1" style={{ stopColor: 'var(--se-sombra)', stopOpacity: 0 }} />
+          </radialGradient>
+        </defs>
+        <ellipse cx={x} cy={y} rx={w / 2} ry={Math.max(9, w * 0.1)} fill={`url(#${id})`} />
+      </g>
+    </g>
+  );
+}
+
+/** Flota sola, sin aro ni disco detrás: sube y baja con `reloj` y deja su sombra difuminada en el suelo (`suelo`: cuánto más
+ *  abajo cae, en unidades del lienzo). Los hijos se dibujan en su sitio, con la sombra proyectada. */
+export function Levita({ x, y, reloj, k = 1, o = 1, fase = 0, alto = 8, suelo = 90, ancho = 150, p = 1, children }: { x: number; y: number; reloj: number; k?: number; o?: number; fase?: number; alto?: number; suelo?: number; ancho?: number; p?: number; children: ReactNode }) {
+  if (p <= 0.002 || o <= 0.002) return null;
+  const s = Math.sin(reloj / 820 + fase);
+  const q = clamp(p);
+  return (
+    <g opacity={o < 1 ? o : undefined}>
+      <Suelo x={x} y={y + suelo} w={ancho * (1 - 0.1 * s) * (0.6 + 0.4 * easeOut(q))} o={tramo(q, 0, 0.5) * (0.85 - 0.12 * s)} />
+      <Sombra>
+        <En x={x} y={y - alto * s} k={k * (0.55 + 0.45 * easeBack(q))} o={tramo(q, 0, 0.45)}>{children}</En>
+      </Sombra>
+    </g>
+  );
+}
+
+// ─── Instrumentos de la cabecera del paciente ────────────────────────────────
+
+const fmtTemp = (c: number) => c.toFixed(1).replace('.', ',');
+
+/** Termómetro clínico de vidrio: escala de 34 a 42 °C impresa en el vidrio, la franja normal (36,5-37,5 °C) en verde junto al
+ *  37 y una flecha que marca el nivel. `temp` (°C) mueve la columna, que pasa del azul (frío) al naranja (normal) y al rojo
+ *  (fiebre); con fiebre suben ondas de calor y con frío sale escarcha. `lectura` la escribe arriba, con su color. Origen en el
+ *  centro del bulbo; mide unos 140 × 640 con la lectura. */
+export function TermometroClinico({ x = 0, y = 0, k = 1, o = 1, temp = 37, reloj = 0, lectura = false }: { x?: number; y?: number; k?: number; o?: number; temp?: number; reloj?: number; lectura?: boolean }) {
+  const Y = (c: number) => -80 - (c - 34) * 46;
+  const tc = clamp(temp, 33.8, 42.2);
+  const col = tc >= 37 ? mezcla('#FF8A1E', '#E5324C', tramo(tc, 37, 38)) : mezcla('#2F8DE8', '#FF8A1E', tramo(tc, 35.7, 37));
+  const colOsc = tc >= 37 ? mezcla('#C2540A', '#A81830', tramo(tc, 37, 38)) : mezcla('#1E5FB0', '#C2540A', tramo(tc, 35.7, 37));
+  const calor = tramo(tc, 37.8, 38.8), frio = clamp((36.5 - tc) / 0.6);
+  const top = -490, yN = Y(tc);
+  const txtCol = tc >= 37.6 ? 'var(--se-il1)' : tc <= 36.4 ? 'var(--se-no)' : 'var(--cit-texto)';
+  return (
+    <En x={x} y={y} k={k} o={o}>
+      {/* Ondas de calor que suben por la izquierda */}
+      {calor > 0.01 && [0, 1, 2].map((i) => {
+        const u = (reloj / 1700 + i / 3) % 1;
+        const xx = -78 - (i % 2) * 22, yy = -150 - u * 230;
+        return <path key={i} d={`M${xx},${yy} q-13,-16 0,-32 q13,-16 0,-32 q-13,-16 0,-32`} fill="none" stroke="#FF6A2B" strokeWidth={8} strokeLinecap="round" opacity={calor * Math.sin(u * Math.PI) * 0.9} />;
+      })}
+      {/* Vidrio: base oscura (media luna a la derecha), cuerpo y bulbo */}
+      <rect x={-40} y={top} width={80} height={-top + 4} rx={40} fill="#A9C4DC" />
+      <rect x={-40} y={top} width={72} height={-top - 4} rx={36} fill="#E4F1FA" />
+      <circle cx={2} cy={3} r={68} fill="#A9C4DC" />
+      <circle cx={-2} cy={-1} r={64} fill="#E4F1FA" />
+      {/* Escarcha sobre el vidrio */}
+      {frio > 0.01 && <g opacity={frio}>
+        <path d="M-40,-60 q20,-14 40,0 q20,14 36,-2 L36,40 Q0,70 -40,40 Z" fill="#D6EEFF" opacity={0.55} />
+        <Copo x={-70} y={-120} k={0.36} />
+        <Copo x={78} y={-40} k={0.28} />
+        <Copo x={-62} y={70} k={0.22} />
+      </g>}
+      {/* Capilar vacío, columna y bulbo lleno */}
+      <rect x={-12} y={top + 26} width={24} height={-top - 60} rx={12} fill="#FFFFFF" />
+      <rect x={-12} y={yN} width={24} height={-yN + 8} rx={12} fill={col} />
+      <rect x={-4} y={yN + 6} width={6} height={Math.max(0, -yN - 60)} rx={3} fill="#FFFFFF" opacity={0.35} />
+      <circle r={48} fill={colOsc} />
+      <circle cx={-3} cy={-3} r={43} fill={col} />
+      <circle cx={-20} cy={-20} r={11} fill="#FFFFFF" opacity={0.75} />
+      {/* Escala impresa: rayas cada medio grado y franja normal */}
+      {Array.from({ length: 17 }, (_, i) => {
+        const c = 34 + i * 0.5, mayor = i % 2 === 0;
+        return <rect key={i} x={15} y={Y(c) - 2.5} width={mayor ? 17 : 9} height={5} rx={2.5} fill="#6C819A" />;
+      })}
+      <rect x={34} y={Y(37.5)} width={8} height={Y(36.5) - Y(37.5)} rx={4} fill="#22B566" />
+      {[35, 37, 39, 41].map((c) => (
+        <text key={c} x={52} y={Y(c)} dy="0.35em" style={{ fontSize: 26, fontWeight: c === 37 ? 800 : 600, fill: c === 37 ? 'var(--se-verde)' : 'var(--cit-texto-2)' }}>{c}</text>
+      ))}
+      {/* Brillo largo del vidrio */}
+      <rect x={-29} y={top + 30} width={8} height={-top - 150} rx={4} fill="#FFFFFF" opacity={0.85} />
+      {/* Flecha del nivel */}
+      <path d={`M-50,${yN} l-22,-13 l0,26 Z`} fill={col} />
+      {lectura && <text x={0} y={top - 56} textAnchor="middle" style={{ fontSize: 66, fontWeight: 800, fill: txtCol }}>
+        {fmtTemp(tc)}<tspan style={{ fontSize: 34, fontWeight: 700 }} dx={6}>°C</tspan>
+      </text>}
+    </En>
+  );
+}
+
+export type FilaMonitor = {
+  tipo: 'ecg' | 'pleth' | 'resp' | 'pa';
+  nombre: string;
+  valor: string;
+  unidad?: string;
+  /** Ciclos por minuto del trazo (latidos o respiraciones). */
+  frec?: number;
+  /** 0-1: cuándo se conecta la fila (antes, «– –»). */
+  p: number;
+  /** 0-1: la cifra parpadea en rojo (alarma). */
+  alerta?: number;
+};
+
+const COL_MONITOR = { ecg: '#46E27C', pleth: '#43D9F2', resp: '#FFD447', pa: '#FF85A8' } as const;
+
+/** Forma de cada onda en función de la fase del ciclo `u` (0-1): el electrocardiograma (P, QRS y T), la pletismografía del
+ *  oxímetro (subida y muesca dícrota) y la respiración. */
+function onda(tipo: FilaMonitor['tipo'], u: number): number {
+  const g = (c: number, w: number, a: number) => a * Math.exp(-((u - c) ** 2) / (2 * w * w));
+  if (tipo === 'ecg') return g(0.16, 0.025, 0.12) - g(0.3, 0.008, 0.14) + g(0.325, 0.01, 1) - g(0.35, 0.01, 0.28) + g(0.56, 0.045, 0.26);
+  if (tipo === 'pleth') return g(0.2, 0.065, 1) + g(0.44, 0.07, 0.36);
+  return 0.5 - 0.5 * Math.cos(u * Math.PI * 2);
+}
+
+/** Trazo de barrido, como en un monitor de verdad: la pluma escribe de izquierda a derecha y deja un hueco delante. */
+function barrido(tipo: FilaMonitor['tipo'], frec: number, t: number, w: number, h: number): string {
+  const ventana = tipo === 'resp' ? 9 : 3;
+  const periodo = 60 / Math.max(1, frec);
+  const cab = ((t % ventana) / ventana) * w, hueco = 18;
+  const base = tipo === 'ecg' ? h * 0.24 : h * 0.34, amp = tipo === 'ecg' ? h * 0.62 : h * 0.66;
+  let d = '', pluma = false;
+  for (let px = 0; px <= w; px += 4) {
+    let dt: number;
+    if (px <= cab) dt = ((cab - px) / w) * ventana;
+    else if (px > cab + hueco) dt = ((cab - px + w) / w) * ventana;
+    else { pluma = false; continue; }
+    const u = ((((t - dt) / periodo) % 1) + 1) % 1;
+    d += `${pluma ? ' L' : ' M'}${px},${(base - onda(tipo, u) * amp).toFixed(1)}`;
+    pluma = true;
+  }
+  return d;
+}
+
+/** Monitor de signos vitales de cabecera, sobre su pie con ruedas: cada fila es un trazo que corre (electrocardiograma,
+ *  oxímetro, respiración) y su cifra; la presión no lleva trazo. Pantalla oscura en los dos temas. `estable` enciende la luz
+ *  verde de arriba y `alarma` la hace parpadear en rojo. Origen en el centro de la pantalla. */
+export function Monitor({ x = 0, y = 0, k = 1, o = 1, reloj = 0, filas, estable = 0, alarma = 0, pie = 280 }: { x?: number; y?: number; k?: number; o?: number; reloj?: number; filas: FilaMonitor[]; estable?: number; alarma?: number; pie?: number }) {
+  const W = 540, fh = filas.length > 3 ? 92 : 104, Hs = filas.length * fh + 20;
+  const xs = -W / 2 + 18, wt = W * 0.55, xn = xs + wt + 22;
+  const t = reloj / 1000;
+  const parpadeo = Math.sin(reloj / 170) > 0 ? 1 : 0.25;
+  const luz = alarma > 0.01 ? mezcla('#7A2840', '#FF3B5C', alarma * parpadeo) : mezcla('#6B6290', '#3FD467', clamp(estable));
+  const brillaLuz = alarma > 0.01 ? alarma * parpadeo : clamp(estable) * (0.75 + 0.25 * Math.sin(reloj / 400));
+  const abajo = Hs / 2 + 40;
+  return (
+    <En x={x} y={y} k={k} o={o}>
+      {/* Pie con ruedas */}
+      {pie > 0 && <g>
+        <rect x={-10} y={abajo - 6} width={24} height={pie} rx={8} fill="#3A48A8" />
+        <rect x={-12} y={abajo - 6} width={20} height={pie} rx={8} fill="#5868D8" />
+        <rect x={-9} y={abajo} width={5} height={pie - 20} rx={2.5} fill="#9AA6F2" opacity={0.7} />
+        {[-1, 0, 1].map((l) => (
+          <g key={l}>
+            <path d={`M0,${abajo + pie - 14} L${l * 120},${abajo + pie + (l ? 22 : 30)}`} stroke="#3A48A8" strokeWidth={15} strokeLinecap="round" />
+            <path d={`M0,${abajo + pie - 16} L${l * 118},${abajo + pie + (l ? 19 : 27)}`} stroke="#5868D8" strokeWidth={10} strokeLinecap="round" />
+            <circle cx={l * 120} cy={abajo + pie + (l ? 36 : 44)} r={13} fill="#23234A" />
+            <circle cx={l * 120 - 3} cy={abajo + pie + (l ? 33 : 41)} r={4} fill="#8A8FC0" />
+          </g>
+        ))}
+      </g>}
+      {/* Carcasa: base oscura, cuerpo, brillo */}
+      <rect x={-W / 2 - 26} y={-Hs / 2 - 30} width={W + 56} height={Hs + 74} rx={30} fill="#2E2470" />
+      <rect x={-W / 2 - 26} y={-Hs / 2 - 30} width={W + 50} height={Hs + 64} rx={28} fill="#5546B8" />
+      <path d={`M${-W / 2 - 6},${-Hs / 2 - 18} L${W / 2 - 40},${-Hs / 2 - 18}`} stroke="#9488F0" strokeWidth={6} strokeLinecap="round" opacity={0.8} />
+      {/* Botones y marca, en la franja de abajo */}
+      {[0, 1, 2].map((i) => <circle key={i} cx={W / 2 - 30 - i * 30} cy={Hs / 2 + 18} r={8} fill={i === 0 ? '#3FD467' : '#8C80E6'} opacity={i === 0 ? 0.9 : 0.8} />)}
+      <rect x={-W / 2 - 4} y={Hs / 2 + 13} width={90} height={10} rx={5} fill="#8C80E6" opacity={0.6} />
+      {/* Luz de alarma */}
+      {brillaLuz > 0.05 && <circle cx={0} cy={-Hs / 2 - 42} r={34} fill={luz} opacity={0.28 * brillaLuz} />}
+      <path d={`M-22,${-Hs / 2 - 28} A22,22 0 0 1 22,${-Hs / 2 - 28} Z`} fill={luz} />
+      <rect x={-30} y={-Hs / 2 - 32} width={60} height={8} rx={4} fill="#2E2470" />
+      <ellipse cx={-8} cy={-Hs / 2 - 42} rx={6} ry={4} fill="#FFFFFF" opacity={0.55} />
+      {/* Pantalla */}
+      <rect x={-W / 2} y={-Hs / 2} width={W} height={Hs} rx={12} fill="#090C24" />
+      {filas.map((f, i) => {
+        const cy = -Hs / 2 + 10 + fh * (i + 0.5);
+        const color = COL_MONITOR[f.tipo];
+        const q = clamp(f.p), conectado = q > 0.12;
+        const al = clamp(f.alerta ?? 0) * (Math.sin(reloj / 200) > 0 ? 1 : 0.15);
+        const colorCifra = al > 0 ? mezcla(color, '#FF3B5C', al) : color;
+        const pop = conectado ? 1 + 0.35 * (1 - easeOut(tramo(q, 0.12, 0.6))) : 1;
+        const tCifra = f.tipo === 'pa' ? 50 : f.valor.length > 3 ? 46 : 58;
+        return (
+          <g key={i}>
+            {i > 0 && <rect x={-W / 2 + 12} y={cy - fh / 2} width={W - 24} height={2} fill="#FFFFFF" opacity={0.07} />}
+            {/* Trazo, o el manómetro de la presión */}
+            {f.tipo !== 'pa'
+              ? <g transform={`translate(${xs},${cy - fh / 2 + 4})`} opacity={tramo(q, 0, 0.5)}>
+                  <path d={barrido(f.tipo, f.frec ?? 60, t, wt, fh - 8)} fill="none" stroke={color} strokeWidth={3.4} strokeLinejoin="round" strokeLinecap="round" />
+                </g>
+              : <g transform={`translate(${xs + 40},${cy})`} opacity={0.35 + 0.65 * tramo(q, 0, 0.5)}>
+                  <circle r={30} fill={color} opacity={0.18} /><circle r={22} fill="none" stroke={color} strokeWidth={4} />
+                  <path d={`M0,0 L${(Math.cos(-0.9) * 16).toFixed(1)},${(Math.sin(-0.9) * 16).toFixed(1)}`} stroke={color} strokeWidth={4} strokeLinecap="round" />
+                  <circle r={4} fill={color} />
+                  <path d="M26,10 Q60,26 96,8" fill="none" stroke={color} strokeWidth={4} strokeLinecap="round" opacity={0.7} />
+                </g>}
+            {/* Nombre, latido y unidad */}
+            <text x={f.tipo === 'pa' ? xs + 150 : xn} y={cy - fh / 2 + 24} style={{ fontSize: 21, fontWeight: 700, fill: color }} opacity={0.9}>{f.nombre}</text>
+            {f.tipo === 'ecg' && conectado && <g transform={`translate(${xn + 46},${cy - fh / 2 + 17}) scale(${(0.8 + 0.35 * latido(reloj, f.frec ?? 60)).toFixed(3)})`}>
+              <path d="M0,6 C-12,-4 -8,-14 0,-8 C8,-14 12,-4 0,6 Z" fill={color} />
+            </g>}
+            {f.unidad && <text x={f.tipo === 'pa' ? xs + 150 : xn} y={cy + fh / 2 - 12} style={{ fontSize: 16, fontWeight: 600, fill: color }} opacity={0.65}>{f.unidad}</text>}
+            {/* Cifra */}
+            {al > 0 && <rect x={W / 2 - 168} y={cy - fh / 2 + 8} width={156} height={fh - 16} rx={10} fill="#FF3B5C" opacity={0.22 * al} />}
+            <g transform={`translate(${W / 2 - 20},${cy + 6}) scale(${pop.toFixed(3)})`}>
+              <text textAnchor="end" dy="0.35em" style={{ fontSize: tCifra, fontWeight: 800, fill: conectado ? colorCifra : color }} opacity={conectado ? 1 : 0.3}>{conectado ? f.valor : '– –'}</text>
+            </g>
+          </g>
+        );
+      })}
+      {/* Reflejo del cristal */}
+      <path d={`M${-W / 2 + 16},${-Hs / 2 + 60} L${-W / 2 + 70},${-Hs / 2 + 6} L${-W / 2 + 110},${-Hs / 2 + 6} L${-W / 2 + 16},${-Hs / 2 + 100} Z`} fill="#FFFFFF" opacity={0.06} />
+    </En>
+  );
+}
+
+/** Vaso de vidrio transparente (la prueba del vaso: se aprieta contra la piel y se mira a través). Origen en el centro. */
+export function VasoVidrio({ x = 0, y = 0, k = 1, o = 1, r = 0 }: { x?: number; y?: number; k?: number; o?: number; r?: number }) {
+  return (
+    <En x={x} y={y} k={k} o={o} r={r}>
+      <path d="M-80,-110 L80,-110 L64,106 Q0,122 -64,106 Z" fill="#CDEBFA" opacity={0.3} />
+      <path d="M64,106 Q0,122 -64,106 L-62,84 Q0,98 62,84 Z" fill="#B4DDF3" opacity={0.75} />
+      <path d="M80,-110 L64,106 Q58,108 52,109 L68,-110 Z" fill="#9CCFEA" opacity={0.6} />
+      <ellipse cx={0} cy={-110} rx={80} ry={17} fill="#E8F7FF" opacity={0.5} />
+      <ellipse cx={0} cy={-110} rx={72} ry={12} fill="none" stroke="#FFFFFF" strokeWidth={4} opacity={0.9} />
+      <path d="M-58,-90 L-47,78" stroke="#FFFFFF" strokeWidth={10} strokeLinecap="round" opacity={0.8} />
+      <path d="M-35,-88 L-29,30" stroke="#FFFFFF" strokeWidth={4} strokeLinecap="round" opacity={0.65} />
+    </En>
+  );
+}
+
+/** Estetoscopio apoyado: la campana en el origen y el tubo que sube hasta las olivas, en (`hx`, `hy`). */
+export function Estetoscopio({ x = 0, y = 0, k = 1, o = 1, hx = 150, hy = -250 }: { x?: number; y?: number; k?: number; o?: number; hx?: number; hy?: number }) {
+  const tubo = `M0,-30 C0,${hy * 0.45} ${hx * 0.35},${hy * 0.75} ${hx},${hy + 80}`;
+  const ramas = `M${hx},${hy + 80} C${hx - 30},${hy + 50} ${hx - 44},${hy + 20} ${hx - 40},${hy} M${hx},${hy + 80} C${hx + 30},${hy + 50} ${hx + 44},${hy + 20} ${hx + 40},${hy}`;
+  return (
+    <En x={x} y={y} k={k} o={o}>
+      <path d={tubo} fill="none" stroke="#33388C" strokeWidth={15} strokeLinecap="round" />
+      <path d={tubo} fill="none" stroke="#6A72D8" strokeWidth={9} strokeLinecap="round" />
+      <path d={ramas} fill="none" stroke="#8C98B6" strokeWidth={9} strokeLinecap="round" />
+      <path d={ramas} fill="none" stroke="#C9D3E6" strokeWidth={4} strokeLinecap="round" />
+      <circle cx={hx - 40} cy={hy} r={9} fill="#24264A" /><circle cx={hx + 40} cy={hy} r={9} fill="#24264A" />
+      <rect x={-8} y={-44} width={16} height={22} rx={6} fill="#8C98B6" />
+      <circle r={40} fill="#7E8AA8" />
+      <circle cx={-3} cy={-3} r={36} fill="#D2DBEA" />
+      <circle cx={-2} cy={-2} r={25} fill="#56607E" />
+      <circle cx={-2} cy={-2} r={19} fill="#6E7898" />
+      <path d="M-24,-16 Q-18,-28 -4,-31" fill="none" stroke="#FFFFFF" strokeWidth={5} strokeLinecap="round" opacity={0.8} />
+    </En>
+  );
+}
+
+// ─── Texto sin caja ──────────────────────────────────────────────────────────
+
+/** Globo de texto (lo que pide CLAUDE.md en vez de los paneles): blanco en claro e índigo en oscuro, sin reborde, con su
+ *  sombra oscura corrida. Varias líneas con `\n`; `cola` apunta abajo (desplazada `colaX`) o no lleva. */
+export function Globo({ x, y, txt, t = 32, p = 1, cola = 'abajo', colaX = 0 }: { x: number; y: number; txt: string; t?: number; p?: number; cola?: 'abajo' | 'no'; colaX?: number }) {
+  const tx = useContext(TxCtx);
+  if (p <= 0.002) return null;
+  const lineas = txt.split('\n');
+  const W = (Math.max(...lineas.map((l) => l.length)) * t * 0.54 + t * 1.7) / 2;
+  const H = (lineas.length * t * 1.25 + t * 1.05) / 2, r = Math.min(36, H);
+  let d = `M${-W + r},${-H} L${W - r},${-H} Q${W},${-H} ${W},${-H + r} L${W},${H - r} Q${W},${H} ${W - r},${H}`;
+  if (cola === 'abajo') d += ` L${colaX + 30},${H} L${colaX + 4},${H + 40} L${colaX - 24},${H}`;
+  d += ` L${-W + r},${H} Q${-W},${H} ${-W},${H - r} L${-W},${-H + r} Q${-W},${-H} ${-W + r},${-H} Z`;
+  const media = W * tx + 10;
+  const xx = Math.min(1600 - media, Math.max(media, x));
+  return (
+    <En x={xx} y={y} k={tx * (0.85 + 0.15 * easeBack(clamp(p)))} o={tramo(p, 0, 0.4)}>
+      <path d={d} transform="translate(10,12)" className={ss.sombraFuerte} />
+      <path d={d} className={ss.globo} />
+      {lineas.map((l, i) => (
+        <text key={i} y={(i - (lineas.length - 1) / 2) * t * 1.25} dy="0.35em" textAnchor="middle" className={ss.globoTxt} style={{ fontSize: t }}>{l}</text>
+      ))}
+    </En>
+  );
+}
+
+/** Nota suelta (sin caja), en el color de texto secundario y en segundo plano. Si lleva `a`, una línea fina que se dibuja con
+ *  `p` va de la nota a lo que nombra y acaba en un punto. */
+export function Nota({ x, y, txt, p = 1, t = 26, a, ancla = 'middle', color = 'var(--cit-texto-2)', de }: { x: number; y: number; txt: string; p?: number; t?: number; a?: P2; ancla?: 'start' | 'middle' | 'end'; color?: string; de?: P2 }) {
+  if (p <= 0.002) return null;
+  const q = easeOut(tramo(p, 0.15, 0.9));
+  const o: P2 = de ?? [x, y + (a && a[1] < y ? -t * 0.75 : t * 0.75)];
+  return (
+    <g>
+      {a && q > 0.01 && <g opacity={tramo(p, 0, 0.4)}>
+        <path d={`M${o[0]},${o[1]} L${lerp(o[0], a[0], q).toFixed(1)},${lerp(o[1], a[1], q).toFixed(1)}`} fill="none" stroke="var(--cit-flecha)" strokeWidth={3} strokeLinecap="round" opacity={0.75} />
+        <circle cx={a[0]} cy={a[1]} r={6.5 * tramo(q, 0.8, 1)} fill="var(--cit-flecha)" />
+      </g>}
+      <Txt x={x} y={y} txt={txt} t={t} p={p} color={color} ancla={ancla} />
+    </g>
+  );
+}
+
+// ─── Zoom de verdad ──────────────────────────────────────────────────────────
+
+/** Lente de zoom (lo que se amplía desde el punto `de`): cono translúcido desde el punto, aro claro con sombra proyectada y el
+ *  dibujo recortado dentro (`fondo` es su color). `p` 0-1 la abre. */
+export function Zoom({ x, y, R, de, p = 1, fondo = '#FFE9F2', children }: { x: number; y: number; R: number; de: P2; p?: number; fondo?: string; children?: ReactNode }) {
+  const id = `se-zoom-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
+  if (p <= 0.002) return null;
+  const q = easeOut(clamp(p));
+  const RR = R * (0.35 + 0.65 * q);
+  const fi = Math.atan2(de[1] - y, de[0] - x), D = Math.hypot(de[0] - x, de[1] - y);
+  const al = Math.acos(Math.min(0.999, (RR + 12) / Math.max(D, RR + 13)));
+  const t1: P2 = [x + Math.cos(fi + al) * (RR + 12), y + Math.sin(fi + al) * (RR + 12)];
+  const t2: P2 = [x + Math.cos(fi - al) * (RR + 12), y + Math.sin(fi - al) * (RR + 12)];
+  return (
+    <g opacity={tramo(p, 0, 0.35)}>
+      <path d={`M${de[0]},${de[1]} L${t1[0].toFixed(1)},${t1[1].toFixed(1)} L${t2[0].toFixed(1)},${t2[1].toFixed(1)} Z`} className={ss.cono} />
+      <circle cx={x + 12} cy={y + 14} r={RR + 13} className={ss.sombraPlana} />
+      <circle cx={x} cy={y} r={RR + 13} className={ss.aro} />
+      <defs><clipPath id={id}><circle cx={x} cy={y} r={RR} /></clipPath></defs>
+      <circle cx={x} cy={y} r={RR} fill={fondo} />
+      <g clipPath={`url(#${id})`}>
+        <g transform={`translate(${x},${y}) scale(${(RR / R).toFixed(3)}) translate(${-x},${-y})`}>{children}</g>
+      </g>
+      <path d={`M${x - RR * 0.72},${y - RR * 0.42} A${RR * 0.84},${RR * 0.84} 0 0 1 ${x - RR * 0.2},${y - RR * 0.8}`} fill="none" stroke="#FFFFFF" strokeWidth={10} strokeLinecap="round" opacity={0.4} />
+    </g>
+  );
+}
+
+// ─── El mapa del recorrido ───────────────────────────────────────────────────
+
+/** Tranvía del mapa, con los dos pacientes asomados a sus ventanas (el joven y la abuela). Origen en el centro del vagón;
+ *  `dir` −1 lo voltea para que avance hacia la izquierda (las caras no se voltean). */
+export function Tranvia({ x, y, k = 1, o = 1, r = 0, reloj = 0, dir = 1 }: { x: number; y: number; k?: number; o?: number; r?: number; reloj?: number; dir?: 1 | -1 }) {
+  const rueda = (reloj / 4) % 360;
+  const cuerpo = 'M-104,-74 L74,-74 Q104,-74 114,-44 L124,4 Q127,22 108,22 L-104,22 Q-118,22 -118,8 L-118,-60 Q-118,-74 -104,-74 Z';
+  const ventanas = [-70, 4];
+  return (
+    <En x={x} y={y} k={k} o={o} r={r}>
+      {/* Las ruedas apoyan en el origen: el vagón va encima de la vía */}
+      <g transform="translate(0,-44)">
+      <g transform={`scale(${dir},1)`}>
+        <path d="M-40,-74 L-30,-96 L20,-96 L30,-74" fill="none" stroke="#7A1F6E" strokeWidth={6} strokeLinejoin="round" />
+        <path d={cuerpo} fill="#8E1F80" />
+        <path d={cuerpo} fill="#D94BBE" transform="translate(-4,-4) scale(0.97)" />
+        <rect x={-118} y={-8} width={238} height={9} fill="#FFB0F0" opacity={0.75} />
+        {ventanas.map((vx) => <rect key={vx} x={vx - 32} y={-62} width={64} height={48} rx={13} fill="#FFE6F7" />)}
+        <path d="M62,-62 L84,-62 Q102,-60 106,-40 L110,-14 L62,-14 Z" fill="#FFE6F7" />
+        <path d="M-96,-66 L60,-66" stroke="#FFFFFF" strokeWidth={5} strokeLinecap="round" opacity={0.5} />
+        {[-70, 70].map((cx) => (
+          <g key={cx} transform={`translate(${cx},26) rotate(${rueda})`}>
+            <circle r={19} fill="#2A1250" /><circle r={7} fill="#B79BFF" /><rect x={-2} y={-17} width={4} height={34} fill="#B79BFF" />
+          </g>
+        ))}
+      </g>
+      {/* Caras: el joven (pelo índigo) y la abuela (pelo gris con moño) */}
+      {ventanas.map((vx, i) => {
+        const cx = vx * dir, joven = i === (dir === 1 ? 1 : 0);
+        return (
+          <g key={vx} transform={`translate(${cx},${-34 + Math.sin(reloj / 300 + i) * 1.5})`}>
+            {!joven && <circle cx={0} cy={-20} r={8} fill="#8E8590" />}
+            <circle r={17} fill={joven ? '#E07A9E' : '#EDB592'} />
+            <path d={joven ? 'M-17,-2 C-19,-22 18,-24 17,-2 C10,-12 -10,-12 -17,-2 Z' : 'M-17,0 C-20,-22 20,-22 17,0 C12,-10 -12,-10 -17,0 Z'} fill={joven ? 'var(--se-pelo)' : '#9C93A0'} />
+            <circle cx={-6} cy={2} r={2.6} fill="#2A1250" /><circle cx={6} cy={2} r={2.6} fill="#2A1250" />
+            <path d="M-5,9 Q0,12 5,9" fill="none" stroke="#2A1250" strokeWidth={2} strokeLinecap="round" />
+          </g>
+        );
+      })}
       </g>
     </En>
   );

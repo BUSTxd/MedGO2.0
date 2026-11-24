@@ -461,9 +461,10 @@ const mezcla = (a: string, b: string, t: number) => {
   return `#${q(1)}${q(3)}${q(5)}`;
 };
 
-/** Busto. `palidez`: de sano a pálido, también en los labios. */
-export function Persona({ x = 0, y = 0, k = 1, o = 1, quien, palidez = 0 }: { x?: number; y?: number; k?: number; o?: number; quien: 'mujer' | 'hombre'; palidez?: number }) {
+/** Busto. `palidez`: de sano a pálido, también en los labios. `sueno` 0-1 baja los párpados (somnolencia). */
+export function Persona({ x = 0, y = 0, k = 1, o = 1, quien, palidez = 0, sueno = 0 }: { x?: number; y?: number; k?: number; o?: number; quien: 'mujer' | 'hombre'; palidez?: number; sueno?: number }) {
   const p = clamp(palidez);
+  const zz = clamp(sueno);
   const piel = mezcla('#EDB592', '#EFE0CF', p), sombra = mezcla('#D18F6D', '#D7C3AE', p), luz = mezcla('#F8D2B5', '#F8EFE3', p), labio = mezcla('#C4574F', '#C9A9A0', p);
   const mujer = quien === 'mujer';
   const pelo = mujer ? ['#6E6470', '#8E8590', '#B7B0B8'] : ['#B9BCC4', '#D7D9DE', '#F1F2F4'];
@@ -485,7 +486,9 @@ export function Persona({ x = 0, y = 0, k = 1, o = 1, quien, palidez = 0 }: { x?
         <g key={cx}>
           <ellipse cx={cx} cy={-52} rx={17} ry={10.5} fill="#FFF" />
           <circle cx={cx + 1} cy={-51} r={8.5} fill="#44352E" /><circle cx={cx + 3.5} cy={-54} r={2.8} fill="#FFF" />
-          <path d={`M${cx - 18},-54 Q${cx},-68 ${cx + 18},-54`} fill="none" stroke={sombra} strokeWidth={6} strokeLinecap="round" />
+          {zz > 0.01 && <path d={`M${cx - 20},-66 L${cx + 20},-66 L${cx + 20},${-60 + 17 * zz} Q${cx},${-55 + 19 * zz} ${cx - 20},${-60 + 17 * zz} Z`} fill={piel} />}
+          {zz > 0.01 && <path d={`M${cx - 19},${-60 + 17 * zz} Q${cx},${-55 + 19 * zz} ${cx + 19},${-60 + 17 * zz}`} fill="none" stroke={sombra} strokeWidth={5} strokeLinecap="round" />}
+          <path d={`M${cx - 18},-54 Q${cx},-68 ${cx + 18},-54`} fill="none" stroke={sombra} strokeWidth={6} strokeLinecap="round" opacity={1 - zz} />
           <path d={`M${cx - 22},-80 Q${cx},-92 ${cx + 22},-80`} fill="none" stroke={pelo[0]} strokeWidth={8} strokeLinecap="round" />
           <path d={`M${cx - 14},-38 Q${cx},-32 ${cx + 14},-38`} fill="none" stroke={sombra} strokeWidth={3.5} strokeLinecap="round" opacity={0.7} />
         </g>
@@ -509,13 +512,15 @@ export function Persona({ x = 0, y = 0, k = 1, o = 1, quien, palidez = 0 }: { x?
   );
 }
 
-/** Pierna con petequias: `n` puntos rojos que van saliendo (`p`). */
-export function Pierna({ x = 0, y = 0, k = 1, o = 1, p = 0 }: { x?: number; y?: number; k?: number; o?: number; p?: number }) {
+/** Pierna con petequias: `n` puntos rojos que van saliendo (`p`). `blanquea` (opcional): la piel palidece dentro de esa
+ *  elipse (lo que aprieta un vaso), y las petequias, que se pintan encima, siguen viéndose. */
+export function Pierna({ x = 0, y = 0, k = 1, o = 1, p = 0, blanquea }: { x?: number; y?: number; k?: number; o?: number; p?: number; blanquea?: { cx: number; cy: number; rx: number; ry: number; q: number } }) {
   return (
     <En x={x} y={y} k={k} o={o}>
       <path d="M-74,-280 C-92,-120 -82,10 -62,120 C-60,150 -66,186 -74,212 C-92,240 -130,250 -150,268 C-164,286 -146,298 -118,298 L50,298 C66,298 72,282 68,262 C60,216 58,170 62,120 C92,10 98,-120 84,-280 Z" fill={C.piel[1]} />
       <path d="M84,-280 C98,-120 92,10 62,120 C58,170 60,216 68,262 C72,282 66,298 50,298 L18,298 C34,250 26,180 34,120 C60,10 60,-120 50,-280 Z" fill={C.piel[0]} />
       <path d="M-46,-250 C-58,-120 -52,-30 -36,60" fill="none" stroke={C.piel[2]} strokeWidth={15} strokeLinecap="round" />
+      {blanquea && blanquea.q > 0.01 && <ellipse cx={blanquea.cx} cy={blanquea.cy} rx={blanquea.rx} ry={blanquea.ry} fill="#FFF3EA" opacity={0.78 * clamp(blanquea.q)} />}
       {Array.from({ length: 62 }, (_, i) => {
         const yy = -250 + hash(i, 21) * 460, ancho = yy < 120 ? 66 : 42;
         const q = tramo(p, i / 75, i / 75 + 0.1);

@@ -31,7 +31,7 @@ Meningococo = coral · *Pseudomonas* = verde azulado (piocianina) · LPS/LOS = d
 
 ## 0 · Dos pacientes, una pregunta · **vistazo gratis**
 
-**En pantalla:** dos camillas que entran (ref. «presentación de varios pacientes»): el joven con el termómetro que sube y petequias que aparecen en las piernas; la abuela con la tos que sale en nubecitas y un signo de interrogación que flota sobre su cabeza; dos microbios en dos puertas (sangre y pulmón); el mapa del recorrido como una vía con estaciones que se encienden.
+**En pantalla** (rehecho el 2026-11-24, sin rótulos de caja: cada dato es un dibujo y lo escrito va suelto): cada paciente con su edad en grande. El joven con rubor, sudor y los rayos de la cefalea; el termómetro clínico que sube a 39,2 °C; el monitor de cabecera que enciende FC, FR y PA cuando se nombran; la pierna con petequias que no se borran bajo un vaso de vidrio (vitropresión); al final, la luz verde del monitor («parece estable…») y una alerta junto a la pierna. La abuela con los párpados caídos, la tos con flema, el «?» de la desorientación, el termómetro que baja a 35,8 °C con escarcha, el monitor con la SpO₂ en alarma y el estetoscopio sobre los pulmones con crepitantes. Dos lentes de zoom que salen de cada paciente (la sangre con diplococos; los alvéolos con bacilos en gris neutro, porque el resumen no nombra el germen de la neumonía inicial y el verde azulado es el de *Pseudomonas*, capítulos 15 y 16), un «≠» entre ellas y dos flechas a la misma diana. El cuerpo con la llama de la respuesta que se desborda y llega a la piel, el riñón y el cerebro, marcados «sin microbio». El mapa del recorrido como una línea de metro de nueve estaciones, con un tranvía que lleva a los dos pacientes.
 
 | # | Paso | Contenido |
 |---|---|---|
