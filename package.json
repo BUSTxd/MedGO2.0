@@ -35,6 +35,8 @@
     "revisar:claves-vih-sifilis": "node scripts/vih-sifilis/revisar-claves.mjs",
     "verificar:sepsis": "node --experimental-strip-types --no-warnings scripts/sepsis/verificar.mjs",
     "revisar:claves-sepsis": "node scripts/sepsis/revisar-claves.mjs",
+    "verificar:hepatitis-virales": "node --experimental-strip-types --no-warnings scripts/hepatitis-virales/verificar.mjs",
+    "revisar:claves-hepatitis-virales": "node scripts/hepatitis-virales/revisar-claves.mjs",
     "publicar:clase": "node --experimental-strip-types --no-warnings scripts/clases/publicar.mjs",
     "verificar:clases": "node --experimental-strip-types --no-warnings scripts/clases/publicar.mjs --verificar"
   },

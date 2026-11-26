@@ -1128,6 +1128,7 @@ export const semanas: Semana[] = [
         unidad: 'UNIDAD_4',
         codigo: 'ACP15',
         titulo: 'ACP15 — Hepatitis',
+        simulacion: { href: '/dashboard/laboratorio/hepatitis-virales', desc: 'El hígado que trabaja y cómo se enferma, las cinco hepatitis, el virus B del virión al cccDNA y al cáncer, el Delta y el virus C del ciclo a la cura, con dos pacientes, animados y narrados' },
         fecha: '27 nov',
         hora: '—',
         subtemas: [],

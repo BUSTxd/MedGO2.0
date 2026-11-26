@@ -67,6 +67,7 @@ const DESTACADOS = [
   'bilirrubina',
   'vih-sifilis',
   'sepsis',
+  'hepatitis-virales',
   'biomecanica-extraocular',
   'cascada-coagulacion',
 ].map((s) => LAB + s);

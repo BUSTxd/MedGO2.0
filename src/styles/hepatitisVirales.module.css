@@ -1,0 +1,129 @@
+/* Laboratorio «Hepatitis virales» (Patología, ACP15): el estilo de las referencias de BUST
+   (docs/hepatitis-virales/ESTILO.md): infografía plana, colores de joya, sin contorno oscuro.
+   De día, arena y melocotón a rosa pálido; de noche, azul petróleo a índigo con partículas
+   desenfocadas («virus y células»). Define también las variables `--se-*`, `--vas-*`, `--cit-*` y
+   `--vs-pelo` porque las piezas que se importan de Sepsis, Vasculitis, Citopenias y VIH y sífilis
+   (Sombra, Globo, Nota, Levita, Persona, Hombre…) las leen. */
+
+.lienzo {
+  --hv-fondo-a: #FFF0DC;
+  --hv-fondo-b: #FBDDE6;
+  /* Variables de las piezas reutilizadas de Sepsis (mismo reparto de sombras y globos). */
+  --se-fondo-a: #FFF0DC;
+  --se-fondo-b: #FBDDE6;
+  --se-pelo: #1C0B73;
+  --vs-pelo: #1C0B73;
+  --se-sombra: #6E2448;
+  --se-sombra-o: 0.2;
+  --se-suelo-o: 0.34;
+  --se-globo: #FFFFFF;
+  --se-globo-txt: #2E1A3A;
+  --se-cono: rgba(255, 255, 255, 0.55);
+  --se-aro: #FFFFFF;
+  --vas-fondo-a: #FFF0DC;
+  --vas-fondo-b: #FBDDE6;
+  --vas-pantalla: #3A1466;
+  --vas-pantalla-2: #4A1C80;
+  --vas-cuerpo: #6B3FC8;
+  --vas-cuerpo-borde: #E040C8;
+  --vas-suave: rgba(120, 60, 150, 0.12);
+  --cit-texto: #2E1A3A;
+  --cit-texto-2: #6A4A5E;
+  --cit-flecha: #6A3F5A;
+  --cit-base: #4A2368;
+  /* Colores de texto de las entidades del sepsis (las piezas de Sepsis los leen). */
+  --se-menin: #C23A22; --se-pseudo: #0B7A6E; --se-lps: #A06A00; --se-tnf: #C2540A; --se-il1: #C0183A;
+  --se-il6: #6A2FC8; --se-c5a: #0A7F96; --se-nfkb: #7A8C00; --se-endo: #C25A52; --se-gluco: #1E8F5A;
+  --se-plaq: #7A3FB0; --se-fibrina: #8A6A2A; --se-net: #7A2FC0; --se-no: #1E86C0; --se-lactato: #B86A00;
+  --se-linfo: #2E5FD8; --se-sangre: #C0183A; --se-verde: #138A3A; --se-violeta: #5B2FB0; --se-ambar: #B86A00;
+  /* Texto de cada entidad de las hepatitis (legible en los dos temas). */
+  --hv-a: #C25A00;
+  --hv-b: #1B36A8;
+  --hv-c: #0B7A4A;
+  --hv-d: #5A22A8;
+  --hv-e: #8A6A12;
+  --hv-hep: #B0404E;
+  --hv-sangre: #C0183A;
+  --hv-endo: #C25A52;
+  --hv-kupffer: #A06000;
+  --hv-estrellada: #8A7000;
+  --hv-colageno: #1F6FB0;
+  --hv-bilis: #5A6A12;
+  --hv-bili-i: #A07800;
+  --hv-bili-d: #B05000;
+  --hv-cd8: #0A7F78;
+  --hv-ac: #5A8A00;
+  --hv-gris: #5A5068;
+  /* El cuerpo de las células grandes dibujadas como fondo de texto: salmón de día, ciruela de noche. */
+  --hv-cel-0: #D8707A;
+  --hv-cel-1: #F5A0A6;
+  --hv-cel-2: #FFD8D8;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(165deg, var(--hv-fondo-a), var(--hv-fondo-b));
+}
+:global(.dark-mode) .lienzo {
+  --hv-fondo-a: #0A1F3C;
+  --hv-fondo-b: #1A1650;
+  --se-fondo-a: #0A1F3C;
+  --se-fondo-b: #1A1650;
+  --se-pelo: #5A3FE0;
+  --vs-pelo: #5A3FE0;
+  --se-sombra: #00030F;
+  --se-sombra-o: 0.55;
+  --se-suelo-o: 0.75;
+  --se-globo: #2C2470;
+  --se-globo-txt: #F4F0FF;
+  --se-cono: rgba(190, 200, 255, 0.16);
+  --se-aro: #D8E2FF;
+  --vas-fondo-a: #0A1F3C;
+  --vas-fondo-b: #1A1650;
+  --vas-pantalla: #2A0D52;
+  --vas-pantalla-2: #3A1470;
+  --vas-cuerpo: #5A33B8;
+  --vas-cuerpo-borde: #F05BD8;
+  --vas-suave: rgba(200, 190, 255, 0.10);
+  --cit-texto: #F4F0FF;
+  --cit-texto-2: #C8BEEA;
+  --cit-flecha: #C6B4F5;
+  --cit-base: #7A4BE0;
+  --se-menin: #FF8A70; --se-pseudo: #5FE8D2; --se-lps: #FFD24A; --se-tnf: #FFA84A; --se-il1: #FF7A8A;
+  --se-il6: #C3AEFF; --se-c5a: #5FE0F5; --se-nfkb: #E6F54A; --se-endo: #FFA8A0; --se-gluco: #6FE8B8;
+  --se-plaq: #D2B0FF; --se-fibrina: #F0D9A8; --se-net: #D8A8FF; --se-no: #7FD0F5; --se-lactato: #FFC24A;
+  --se-linfo: #8FB0FF; --se-sangre: #FF7A8A; --se-verde: #6FE08F; --se-violeta: #C3AEFF; --se-ambar: #FFC24A;
+  --hv-a: #FFB066;
+  --hv-b: #8FB0FF;
+  --hv-c: #5FE8A8;
+  --hv-d: #C3AEFF;
+  --hv-e: #F0D070;
+  --hv-hep: #FFA0A8;
+  --hv-sangre: #FF7A8A;
+  --hv-endo: #FFA8A0;
+  --hv-kupffer: #FFC24A;
+  --hv-estrellada: #F6E060;
+  --hv-colageno: #7FC8F5;
+  --hv-bilis: #C8DA6A;
+  --hv-bili-i: #FFD23F;
+  --hv-bili-d: #FFB05A;
+  --hv-cd8: #5FE8DC;
+  --hv-ac: #C4F040;
+  --hv-gris: #C8BEEA;
+  --hv-cel-0: #3A2250;
+  --hv-cel-1: #5A3668;
+  --hv-cel-2: #7A4C86;
+}
+
+.svg { width: 100%; height: 100%; display: block; user-select: none; }
+
+/* Partículas: de día claras y cálidas; de noche de color, como el campo de células de la referencia. */
+.bokehOscuro { display: none; }
+:global(.dark-mode) .bokehOscuro { display: block; }
+:global(.dark-mode) .bokehClaro { display: none; }
+
+/* Portada. */
+.sobretitulo { color: #C23A22; }
+:global(.dark-mode) .sobretitulo { color: #FF8A70; }
+
+/* Letra o cifra dentro de un icono ya colocado. */
+.letra { font-weight: 800; font-family: inherit; pointer-events: none; }

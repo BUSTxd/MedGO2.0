@@ -128,6 +128,7 @@ export const LAB_TOPICS: TemaLab[] = [
       { name: 'Infecciones bacterianas por gramnegativas', desc: 'Diez capítulos narrados: la barrera intestinal y cómo se rompe, el cruce, la endotoxina y las exotoxinas, la sepsis, las cuatro especies y la resistencia, con los fármacos de cada tema', color: '#16A085', href: '/dashboard/laboratorio/gramnegativas' },
       { name: 'VIH y sífilis', desc: 'Veintiún capítulos narrados: el virión y su ciclo, cómo el VIH vacía de CD4 al sistema inmunitario, el diagnóstico, las oportunistas y el tratamiento, y la sífilis del treponema al chancro, la secundaria, la latente y la terciaria, con tablas y fotos reales', color: '#2E9E57', href: '/dashboard/laboratorio/vih-sifilis' },
       { name: 'Sepsis', desc: 'Diecisiete capítulos narrados: el joven con meningococemia y la abuela con SDRA, el receptor TLR4 y el LPS, la tormenta de citocinas, el endotelio, la coagulación y la CID, el choque y el lactato, el riñón, el cerebro y el pulmón, hasta la inmunoparálisis y la infección que viene después', color: '#D8344F', href: '/dashboard/laboratorio/sepsis' },
+      { name: 'Hepatitis virales', desc: 'Veintitrés capítulos narrados: el hígado y cómo se enferma, las cinco hepatitis, el virus B del virión al cccDNA, sus fases, el cáncer y el tratamiento, el Delta, y el virus C de su ciclo a la cura, con los dos pacientes', color: '#B8237A', href: '/dashboard/laboratorio/hepatitis-virales' },
     ],
   },
   {

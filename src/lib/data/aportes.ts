@@ -201,5 +201,6 @@ export const LABORATORIOS: LaboratorioMeta[] = [
   { slug: 'bilirrubina',             nombre: 'Metabolismo de la bilirrubina', track: 'medicina', autor: 'bust', pesado: true, vistazo: true },
   { slug: 'vih-sifilis',             nombre: 'VIH y sífilis',                track: 'medicina', autor: 'bust', pesado: true, vistazo: true },
   { slug: 'sepsis',                 nombre: 'Sepsis',                       track: 'medicina', autor: 'bust', pesado: true, vistazo: true },
+  { slug: 'hepatitis-virales',      nombre: 'Hepatitis virales',            track: 'medicina', autor: 'bust', pesado: true, vistazo: true },
   { slug: 'atlas-3d',                nombre: 'Atlas 3D (miembros)', track: 'medicina', autor: 'bust', pesado: true },
 ];

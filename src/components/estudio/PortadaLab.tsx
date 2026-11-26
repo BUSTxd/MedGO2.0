@@ -1670,6 +1670,30 @@ const PORTADAS: Record<string, () => ReactNode> = {
     );
   },
 
+  /* Hepatitis virales: el hígado y, sobre él, los cinco virus, cada uno con su color (A naranja, B azul, C verde, D violeta, E ocre). */
+  'hepatitis-virales': () => {
+    const higado = 'M36,92 C34,62 78,44 124,48 C168,52 202,64 206,90 C208,108 182,118 152,114 C130,112 114,104 98,106 C70,110 38,112 36,92 Z';
+    const luz = 'M62,70 C80,60 108,56 128,58 C108,64 84,74 70,88 C60,84 58,76 62,70 Z';
+    const virus = [[56, 30, C.naranja], [92, 18, C.azul], [128, 14, C.verde], [164, 18, C.morado], [200, 30, C.amarillo]] as const;
+    return (
+      <>
+        <Suelo x={120} y={126} rx={92} />
+        <path d={higado} fill="#7A2A1E" transform="translate(4,6)" />
+        <path d={higado} fill="#B8503A" />
+        <path d={luz} fill={BLANCO} opacity={0.3} />
+        {virus.map(([x, y, c], i) => (
+          <g key={i}>
+            {Array.from({ length: 10 }, (_, j) => {
+              const [x1, y1] = polar(x, y, 10, j * 36), [x2, y2] = polar(x, y, 14.5, j * 36);
+              return <path key={j} d={`M${x1.toFixed(1)} ${y1.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}`} stroke={c[0]} strokeWidth={2.2} strokeLinecap="round" />;
+            })}
+            <Bola x={x} y={y} r={10} c={c} />
+          </g>
+        ))}
+      </>
+    );
+  },
+
   'miembro-superior-derecho': () => {
     const base = Math.atan2(-0.4, 0.91) * (180 / Math.PI);
     const dedos = [-40, -18, -5, 8, 21].map((d, i) => {
