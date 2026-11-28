@@ -212,6 +212,7 @@ Fragmento en bucket privado `resumenes`, figuras en público `resumenes-img/<cur
 
 Ciclo celular, NF-κB, linfocitos, Hipersensibilidad y Lupus comparten el patrón; cada uno tiene **motor propio** en `src/lib/<lab>/motor.ts` y datos tipados en `src/lib/data/<lab>/`.
 
+- **Guion de un lab nuevo:** seguir `docs/labs/ESTRUCTURA-GUION.md`. **Primero se lee y se corrige el resumen** (`scripts/resumenes/corregir.mjs bajar|subir`, con respaldo y lista de cambios fuera del repo) y recién después se escribe el guion desde el resumen corregido; el guion no menciona los errores. Después: decisiones de BUST, tamaño según la densidad, módulos A-J, reglas del paso, fuentes y flujo.
 - `evaluar(paso, t)` parte del final del paso anterior y aplica cada acción con su progreso: retroceder, saltar, velocidad y movimiento reducido salen gratis.
 - **Primero el guion** (`docs/<lab>/GUION.md`); un cambio de contenido va en los dos. El verificador caza actor usado antes de aparecer, fichas o imágenes que faltan, y posiciones fuera del lienzo.
 - `Vistazo`: el servidor (`contenidoDelLab`) manda solo los capítulos abiertos; **ningún componente de cliente importa datos de un capítulo**.

@@ -1,342 +1,627 @@
-# Vasculitis por IgA y de grandes vasos (sesión 2) — narración para ElevenLabs v4
+# Vasculitis por IgA, arteritis de células gigantes y Takayasu (Patología, ACP12) — narración para Voz Lab (Fish Audio, Drama 3)
 
-Segunda sesión del tema. La primera (ANCA y vasos pequeños) está en `docs/vasculitis/NARRACION-ELEVENLABS.md`.
-Texto para pegar **tal cual** en ElevenLabs (modelo **Eleven v4**, voz **Cristian Cornejo**). El guion visual irá en `docs/vasculitis-ic/GUION.md` cuando BUST elija el estilo.
+Texto para generar en **Voz Lab** (`C:\Users\BUST\herramientas\voz-lab`, web local), con el modelo **Drama 3**, la voz **«cristian cornejo»** y «Mejorar emociones» activado. El guion visual está en `docs/vasculitis-ic/GUION.md`. Reemplaza la narración del 2026-11-09 (pacientes inventados).
 
-Tono: **curioso y directo**, sin `[grave]` ni `[tense]`. Una idea por paso, centrado en fisiología y fisiopatología.
+Tono: **vivo y cambiante**. Cada paso abre con una pregunta, un contraste o un giro y cierra con un remate; al menos tres etiquetas distintas, ninguna repetida dentro del mismo paso, alternando energía alta y baja. Incluye los dos pacientes del ACP12 (paciente 1, el chico de catorce años con vasculitis por i-ge-a; paciente 2, la mujer de setenta y un años con arteritis de células gigantes), con las cifras del resumen corregido. Takayasu (capítulos 15 y 16) va sin paciente, comparado con la paciente 2. **Dosis:** solo como las dicen las guías, nombrándolas; no son indicaciones para tratar a un paciente.
 
 ## Cómo generarlo
 
-1. **Un audio por bloque.** Si un capítulo tiene bloques A y B, genera los dos por separado: yo los uno.
-2. **No borres los `[long pause]`.** Marcan dónde termina un paso y empieza el siguiente.
-3. **Etiquetas:** si alguna se lee en voz alta, regenera ese bloque o quítala y avísame.
-4. **Siglas escritas como se dicen:** `i-ge-a` = IgA, `i-ge-a-uno` = IgA1, `i-ge-ge` = IgG, `ce-tres` = C3, `ce-uno-cu` = C1q, `ce-cinco-a` = C5a, `efe-ce alfa` = FcαRI, `ce-de ochenta y nueve` = CD89, `ce-de cuatro`/`ce-de ocho` = CD4/CD8, `pe-de-ele-uno` = PD-L1, `te-ache uno`/`te-ache diecisiete` = Th1/Th17, `ache-ele-a be cincuenta y dos` = HLA-B*52, `ene-acetil-galactosamina` = GalNAc, `Énoc Shónlain` = Henoch-Schönlein.
-5. **Descarga en MP3** con el nombre de cada bloque (`vasculitis2-0.mp3`, `vasculitis2-1.mp3`, `vasculitis2-2A.mp3`…).
+1. Abrir Voz Lab (`Abrir Voz Lab.cmd`), elegir el guion `vasculitis-ic`, el modelo Drama 3 y la voz «cristian cornejo», y activar **«Mejorar emociones»**.
+2. **Un MP3 por paso:** Voz Lab parte cada bloque por `[long pause]` y genera `vasculitis-ic-<bloque>-p<n>.mp3`. **No borres ni añadas `[long pause]`:** el lab espera 123 pasos (6, 6, 6, 7, 8, 7, 8, 6, 7, 8, 7, 7, 7, 6, 8, 8, 7 y 4 por capítulo, del 0 al 17).
+3. Solo se usan etiquetas de `emociones-drama.json`: `[direct]`, `[curious]`, `[calm, explanatory]`, `[informative]`, `[narrative, steady]`, `[intrigued]`, `[emphatic]`, `[confident]`, `[warm, confident]`, `[conspiratorial]`, `[serious]`, `[urgent]`, `[energetic]`, `[amazed]`, `[playful]`, `[suspenseful]`, `[excited]`, `[relieved]` y `[concerned]`. Nunca `[grave]` ni `[tense]`.
+4. **Siglas y nombres escritos como se dicen** (tabla abajo) y números en letras. Lo que suene mal se corrige en la web con «Escuchar en vivo» y «Usar esta toma».
+5. Lote por API (con Node, no con curl, por los acentos): `POST /api/lote {guion:"vasculitis-ic", desde:"0", hasta:"17", concurrencia:3}`.
+6. **La promoción de Drama 3 (US$ 10 por millón de bytes) termina el 30-11-2026** (1-12, 3:00 a. m. en Lima); después cuesta US$ 50.
+
+## Pronunciación
+
+| Escrito | Se dice |
+|---|---|
+| `i-ge-a`, `i-ge-a uno`, `i-ge-a dos`, `i-ge-ge`, `i-ge-eme` | IgA, IgA1, IgA2, IgG, IgM |
+| `ese-ce-de ochenta y nueve`, `ce-de setenta y uno`, `ce-de cuatro` | sCD89, CD71, CD4 |
+| `ce tres`, `ce cinco a`, `ce uno cu` | C3, C5a, C1q |
+| `ce-uno-gal-te-uno`, `cósmic` | C1GalT1, Cosmc |
+| `interleucina seis`, `interleucina uno beta`, `te-ene-efe alfa`, `interferón gamma` | IL-6, IL-1β, TNF-α, IFN-γ |
+| `te-ache uno`, `te-ache diecisiete` | Th1, Th17 |
+| `pe-de-ele uno`, `ache-ele-a de-erre-be uno cero cuatro` | PD-L1, HLA-DRB1*04 |
+| `pe-de-ge-efe`, `ve-e-ge-efe`, `a-pe uno`, `yak uno` | PDGF, VEGF, AP-1, JAK1 |
+| `pe-ce-erre`, `ve-ese-ge`, `anca` | PCR, VSG, ANCA |
+| `iúlar`, `a-ce-erre`, `ka-digo`, `chér`, `efe-de-a` | EULAR, ACR, KDIGO, SHARE, FDA |
+| `yiácta`, `silect ge-ce-a` | GiACTA, SELECT-GCA |
+| `Énoc Shónlain`, `Chápel Jil`, `Tsin Háler`, `Páier`, `vasa vasórum` | Henoch-Schönlein, Chapel Hill, Zinn-Haller, Peyer, vasa vasorum |
+| `ache-ele-a be cincuenta y dos`, `i-ele doce be`, `te gamma delta`, `ene-ka`, `te-ene-efe` | HLA-B*52, IL12B, T γδ, NK, TNF |
+| `pánlar`, `takt`, `silect tak` | PANLAR, TAKT, SELECT-TAK |
 
 ## Resumen
 
-| Bloque | Pasos | Palabras | Caracteres | ≈ min |
-|---|---|---|---|---|
-| 0 | 3 | 141 | 855 | 0,8 |
-| 1 | 5 | 230 | 1559 | 1,3 |
-| 2A | 4 | 174 | 1260 | 1,0 |
-| 2B | 3 | 138 | 912 | 0,8 |
-| 3 | 4 | 168 | 1181 | 1,0 |
-| 4A | 3 | 130 | 860 | 0,8 |
-| 4B | 3 | 164 | 1094 | 1,0 |
-| 5A | 4 | 194 | 1373 | 1,1 |
-| 5B | 3 | 149 | 991 | 0,9 |
-| 6 | 4 | 161 | 1123 | 0,9 |
-| 7 | 4 | 206 | 1409 | 1,2 |
-| 8 | 4 | 197 | 1267 | 1,2 |
-| 9 | 5 | 233 | 1615 | 1,4 |
-| 10A | 4 | 183 | 1248 | 1,1 |
-| 10B | 4 | 216 | 1488 | 1,3 |
-| 11 | 3 | 131 | 879 | 0,8 |
-| **Total** | **60** | **2815** | | **16,5** |
+| Bloque | Pasos | Palabras | Caracteres | Bytes | ≈ min |
+|---|---|---|---|---|---|
+| 0 | 6 | 351 | 2064 | 3442 | 2.2 |
+| 1 | 6 | 354 | 2096 | 3522 | 2.2 |
+| 2 | 6 | 315 | 1822 | 3470 | 1.9 |
+| 3 | 7 | 352 | 2124 | 4018 | 2.2 |
+| 4 | 8 | 384 | 2253 | 4267 | 2.4 |
+| 5 | 7 | 355 | 2105 | 3870 | 2.2 |
+| 6 | 8 | 390 | 2257 | 4277 | 2.4 |
+| 7 | 6 | 303 | 1856 | 3353 | 2.0 |
+| 8 | 7 | 382 | 2235 | 3994 | 2.4 |
+| 9 | 8 | 394 | 2494 | 4761 | 2.6 |
+| 10 | 7 | 362 | 2118 | 3876 | 2.2 |
+| 11 | 7 | 345 | 2101 | 4031 | 2.2 |
+| 12 | 7 | 356 | 2005 | 3909 | 2.1 |
+| 13 | 6 | 280 | 1654 | 3215 | 1.8 |
+| 14 | 8 | 486 | 2915 | 5008 | 3.1 |
+| 15 | 8 | 479 | 2845 | 4997 | 3.0 |
+| 16 | 7 | 423 | 2559 | 4366 | 2.7 |
+| 17 | 4 | 206 | 1200 | 2091 | 1.3 |
+| **Total** | **123** | **6517** | **38703** | **70467** | **40.9** |
 
-Estimación a 171 palabras por minuto, el ritmo real de Citopenias. La duración real la dará el audio.
+Duración: **≈ 40.9 min**, estimada a 16,6 caracteres por segundo de voz más 1 s de pausa entre pasos. La real la dará el audio.
+
+Coste con Drama 3: **US$ 0.70** con la promoción (US$ 10 por millón de bytes, hasta el 30-11-2026) y US$ 3.52 después (US$ 50). «Bytes» es lo que Voz Lab manda a Fish con «Mejorar emociones».
 
 ---
 
-### Capítulo 0 · Tres pacientes
+### Capítulo 0 · Dos pacientes, dos calibres
 
-**Bloque 0 — pasos 0–2 · `vasculitis2-0.mp3`**
-
-```text
-[curious] Un niño de seis años tuvo gripe hace dos semanas. Ahora tiene manchas moradas en las nalgas y en las piernas, le duelen las rodillas, y llora por un dolor de barriga que va y viene. [intrigued] Sus plaquetas están normales. Entonces, ¿de dónde sale esa púrpura?
-
-[long pause]
-
-[direct] Una mujer de setenta y dos años tiene un dolor de cabeza nuevo, en la sien. Le duele el cuero cabelludo al peinarse, y al masticar se le cansa la mandíbula. [urgent] Ayer, por unos minutos, dejó de ver con un ojo... y luego volvió.
-
-[long pause]
-
-[curious] Y una mujer de veinticinco años se cansa al levantar el brazo izquierdo. En ese brazo casi no se le siente el pulso, y su presión es distinta en cada lado. [confident] Tres pacientes, tres vasculitis: por i-ge-a, de células gigantes, y de Takayasu. Para entenderlas, empecemos por la pared que atacan.
-```
-
-### Capítulo 1 · La pared según el calibre
-
-**Bloque 1 — pasos 0–4 · `vasculitis2-1.mp3`**
+**Bloque 0 — pasos 0–5 · `vasculitis-ic-0.mp3`**
 
 ```text
-[calm, explanatory] Todas las arterias tienen tres capas: la íntima, con su endotelio; la media, de músculo liso; y la adventicia, de tejido conectivo. [informative] Lo que cambia con el calibre es cómo se reparte cada una. Y eso decide qué vasculitis puede atacar a cada vaso.
+[curious] ¿Qué le pasa a un chico de catorce años, sano, al que le salen manchas moradas en los tobillos? [narrative, steady] En cinco días suben por las piernas, le duelen las rodillas, y desde ayer tiene un dolor de barriga que va y viene, náuseas y dos deposiciones con sangre. [intrigued] Hace dos semanas tuvo una faringitis con fiebre, que se curó sola. ¿Casualidad?
 
 [long pause]
 
-[narrative, steady] La aorta y sus grandes ramas son arterias elásticas. Su media tiene decenas de láminas de elastina, que se estiran en cada latido y devuelven la energía en la diástole. [intrigued] Es tan gruesa que no se nutre solo desde dentro: necesita sus propios vasos, los vasa vasorum, que entran por la adventicia.
+[informative] Al examen: treinta y siete coma ocho grados, púrpura palpable en las dos piernas y los glúteos, rodillas que duelen al moverlas y un abdomen blando, doloroso alrededor del ombligo. [calm, explanatory] Leucocitos en trece mil doscientos, plaquetas en trescientos sesenta mil, pe-ce-erre de seis y ve-ese-ge de cuarenta y seis. [concerned] Y en la orina, sangre y un poco de proteína.
 
 [long pause]
 
-[informative] Las arterias medianas, como la temporal o las renales, son musculares. Su media es casi todo músculo liso, y está entre dos láminas: la elástica interna y la elástica externa. [curious] La lámina elástica interna, ondulada bajo el endotelio, será el blanco de la arteritis de células gigantes.
+[suspenseful] Ahora, otra escena. Una mujer de setenta y un años siente que una cortina oscura le tapa el ojo derecho... cinco minutos, sin dolor, y se va sola. [narrative, steady] Hace tres semanas que le duele la sien derecha, le duele peinarse y se le cansa la mandíbula al masticar. [concerned] Desde hace meses amanece con los hombros rígidos, cansada y más delgada.
 
 [long pause]
 
-[calm, explanatory] Luego vienen las arteriolas, con una o dos capas de músculo, que regulan la resistencia. Después los capilares, solo endotelio y membrana basal. Y las vénulas poscapilares, de pared fina y uniones laxas. [direct] Ahí, donde el flujo es más lento, se depositan los inmunocomplejos de la vasculitis por i-ge-a.
+[informative] Su arteria temporal duele al tocarla. Hemoglobina de diez coma nueve, plaquetas en cuatrocientos noventa y cinco mil, pe-ce-erre de quince y ve-ese-ge... de ciento cinco. [intrigued] En la ecografía, un anillo oscuro rodea su arteria temporal. [relieved] La biopsia confirma arteritis de células gigantes, empiezan los corticoides de inmediato, y el dolor de cabeza desaparece.
 
 [long pause]
 
-[conspiratorial] Quédate con dos ideas. En los vasos grandes, la inflamación entra desde afuera, por la adventicia, siguiendo a los vasa vasorum. [confident] En los pequeños, llega desde adentro, con la sangre. Esa diferencia explica casi todo lo que sigue.
+[curious] Entonces, ¿cómo puede el mismo sistema inmunitario romper los vasos más finos de la piel de un adolescente... [suspenseful] y, en una mujer mayor, cerrar una arteria hasta casi dejarla sin un ojo? [confident] La respuesta está en dos cosas: el calibre del vaso, y el tipo de ataque.
+
+[long pause]
+
+[energetic] Este es el mapa. Primero, ordenamos las vasculitis por calibre. [informative] Luego, la vasculitis por i-ge-a: la molécula, los cuatro golpes, la piel, las articulaciones, el intestino, el riñón, el diagnóstico y el tratamiento. [narrative, steady] Después, la arteritis de células gigantes: el mecanismo, la biopsia, el halo, la cabeza, el ojo, la aorta y su tratamiento. [intrigued] Luego, su hermana joven: la arteritis de Takayasu. [warm, confident] Y al final, nuestros dos pacientes, otra vez.
 ```
 
-### Capítulo 2 · Una i-ge-a mal terminada
+### Capítulo 1 · Ordenar por calibre
 
-**Bloque 2A — pasos 0–3 · `vasculitis2-2A.mp3`**
+**Bloque 1 — pasos 0–5 · `vasculitis-ic-1.mp3`**
 
 ```text
-[curious] La vasculitis por i-ge-a, antes llamada Énoc Shónlain, es la vasculitis más frecuente de la infancia. Suele aparecer entre los tres y los quince años, más en otoño e invierno. [intrigued] Y la mitad de las veces llega después de una infección respiratoria. Esa pista, la mucosa, es importante.
+[direct] ¿Cómo se ordenan tantas vasculitis? [calm, explanatory] Por el vaso que atacan. La nomenclatura de Chápel Jil, de dos mil doce, separa los vasos grandes, como la aorta y sus ramas; los medianos, como las arterias de las vísceras; y los pequeños: arteriolas, capilares y vénulas. [confident] La vasculitis por i-ge-a es de vasos pequeños. La arteritis de células gigantes y la de Takayasu, de vasos grandes.
 
 [long pause]
 
-[calm, explanatory] La i-ge-a es el anticuerpo de las mucosas. Tiene dos subclases, y la i-ge-a-uno tiene algo especial: una bisagra larga, decorada con cadenas de azúcares. [informative] Normalmente, cada cadena termina en galactosa. La pone una enzima del linfocito B, que necesita una chaperona para funcionar.
+[playful] ¿Te suena «púrpura de Énoc Shónlain»? [informative] Así se llamaba hasta dos mil doce. [emphatic] El nombre nuevo dice el mecanismo: complejos que contienen i-ge-a uno y se depositan en los vasos pequeños de la piel, el intestino, las articulaciones y el riñón. [warm, confident] Cambiar el nombre fue, en realidad, explicar la enfermedad.
 
 [long pause]
 
-[intrigued] En estos pacientes, esa enzima rinde menos, y parte de la i-ge-a-uno sale sin galactosa. Su bisagra queda desnuda, con la ene-acetil-galactosamina expuesta. [direct] Es la i-ge-a-uno deficiente en galactosa. Y una infección de la mucosa hace que se fabrique mucha más.
+[intrigued] Mira qué fina es la pared de un capilar: una sola capa de endotelio sobre su membrana basal, con algunos pericitos. [calm, explanatory] En la vénula poscapilar, justo después, es donde los leucocitos salen de la sangre. [concerned] Una pared así se rompe con facilidad y deja escapar eritrocitos. [confident] Esa es la púrpura.
 
 [long pause]
 
-[narrative, steady] Para el sistema inmune, esa bisagra desnuda parece extraña. Aparecen anticuerpos, sobre todo i-ge-ge, que la reconocen. [emphatic] Se forman inmunocomplejos grandes, de i-ge-a-uno con su anticuerpo. Es el modelo de los cuatro golpes: i-ge-a anómala, anticuerpo contra ella, complejo, y depósito.
+[curious] ¿Y una arteria grande? Es otro mundo. [informative] Tiene íntima, una lámina elástica interna, una media de músculo liso y fibras elásticas, y una adventicia por fuera. [amazed] Es tan gruesa que se alimenta desde afuera, con sus propios vasitos: los vasa vasórum. [conspiratorial] Y por ahí, desde afuera, entra la inflamación en la arteritis de células gigantes.
+
+[long pause]
+
+[narrative, steady] Dos enfermedades, dos poblaciones. [informative] La vasculitis por i-ge-a es la vasculitis sistémica más frecuente en la infancia: de tres a veintisiete casos por cada cien mil niños al año, casi siempre antes de los diez años. [calm, explanatory] La arteritis de células gigantes, en cambio, es la más frecuente después de los cincuenta, con un pico entre los setenta y los ochenta, y más en mujeres. Y la de Takayasu, de mujeres jóvenes. [direct] El niño, la joven y la abuela.
+
+[long pause]
+
+[emphatic] Y dos tipos de ataque. [informative] En la vasculitis por i-ge-a manda la inmunidad humoral: complejos inmunes que se depositan, llaman al complemento y a los neutrófilos. Una hipersensibilidad de tipo tres. [serious] En la arteritis de células gigantes manda la inmunidad celular: linfocitos T y macrófagos que forman granulomas. Tipo cuatro. [confident] Recuerda esa diferencia: lo explica casi todo.
 ```
 
-**Bloque 2B — pasos 4–6 · `vasculitis2-2B.mp3`**
+### Capítulo 2 · La IgA1 y el complemento: lo normal
+
+**Bloque 2 — pasos 0–5 · `vasculitis-ic-2.mp3`**
 
 ```text
-[calm, explanatory] El hígado debería retirar la i-ge-a de la sangre, pero estos complejos son demasiado grandes, y siguen circulando. [direct] Se depositan en las paredes de las vénulas de la piel, del intestino, de las articulaciones, y en el mesangio del glomérulo.
+[curious] ¿Sabías cuál es el anticuerpo que más fabrica tu cuerpo? [confident] La i-ge-a. [calm, explanatory] En las mucosas sale en parejas, unida por su cadena jota, y cruza el epitelio hacia la luz del intestino o de los bronquios. [informative] En la sangre, en cambio, circula sola, como monómero, y casi toda es de una subclase: la i-ge-a uno.
 
 [long pause]
 
-[intrigued] Ya depositados, activan el complemento, pero no por la vía clásica: la i-ge-a enciende la vía alternativa y la de las lectinas. [informative] Por eso en la biopsia hay ce-tres, pero no ce-uno-cu. Y en la sangre, el complemento suele estar normal, porque se consume poco, y solo en el sitio.
+[intrigued] Ahora, acércate a la i-ge-a uno. Entre sus brazos tiene una bisagra larga... y de esa bisagra cuelgan azúcares. [informative] De tres a seis cadenas cortas, unidas a oxígeno: ene-acetil-galactosamina, galactosa y, a veces, ácido siálico. [playful] Su hermana, la i-ge-a dos, tiene una bisagra corta y sin esos adornos. [conspiratorial] Guarda este detalle: ahí empieza todo.
 
 [long pause]
 
-[narrative, steady] Se forma ce-cinco-a, que llama a los neutrófilos. Estos reconocen la i-ge-a con su receptor, el efe-ce alfa, o ce-de ochenta y nueve, y se activan: liberan oxidantes, proteasas y leucotrienos. [direct] La pared de la vénula se necrosa, y los glóbulos rojos se escapan. Así nace la púrpura.
+[curious] ¿Quién pone la galactosa? [calm, explanatory] Una enzima de la célula plasmática, la ce-uno-gal-te-uno, que necesita a su chaperona, la cósmic. [concerned] Si la enzima trabaja poco, o si otra enzima cuelga el ácido siálico antes de tiempo... [emphatic] la bisagra queda sin galactosa. Y una bisagra pelada es una bisagra distinta.
+
+[long pause]
+
+[narrative, steady] En condiciones normales, la i-ge-a uno se recambia en pocos días, y el hígado la retira de la sangre. [informative] Los complejos inmunes pequeños, los que se forman todos los días, también se eliminan sin dejar huella. [suspenseful] El problema empieza cuando los complejos son grandes. [direct] Muy grandes.
+
+[long pause]
+
+[energetic] Hablemos del complemento: tiene tres puertas. [informative] La clásica se abre cuando ce uno cu reconoce anticuerpos i-ge-ge o i-ge-eme. La de las lectinas, cuando una lectina reconoce azúcares. Y la alternativa se amplifica sola sobre ce tres. [calm, explanatory] Las tres llegan al mismo sitio: ce tres, y ce cinco a, que atrae a los neutrófilos. [confident] Tres caminos, un mismo destino.
+
+[long pause]
+
+[intrigued] Pero aquí hay un detalle fino. [emphatic] La i-ge-a casi no abre la puerta clásica. [informative] La i-ge-a uno sin galactosa enciende la vía de las lectinas y la alternativa. [conspiratorial] Por eso, en la biopsia del riñón, veremos ce tres... y el ce uno cu saldrá negativo o muy débil. [warm, confident] Una pista que vale oro.
 ```
 
-### Capítulo 3 · Lo que muestra la biopsia
+### Capítulo 3 · Los cuatro golpes
 
-**Bloque 3 — pasos 0–3 · `vasculitis2-3.mp3`**
+**Bloque 3 — pasos 0–6 · `vasculitis-ic-3.mp3`**
 
 ```text
-[calm, explanatory] En la piel, la biopsia muestra una vasculitis leucocitoclástica de las vénulas de la dermis superficial. [informative] Neutrófilos dentro y alrededor de la pared, que se rompen y dejan polvo nuclear. Necrosis fibrinoide. Y glóbulos rojos fuera del vaso. [curious] Hasta aquí, se parece a cualquier vasculitis de vaso pequeño.
+[direct] Una sola falla no basta. [calm, explanatory] La vasculitis por i-ge-a se explica con la misma teoría de los cuatro golpes que se propuso para la nefropatía por i-ge-a. [informative] Primero, la i-ge-a uno sin galactosa. Segundo, los autoanticuerpos contra ella. Tercero, los complejos inmunes. Y cuarto, su depósito en los tejidos. [energetic] Vamos golpe por golpe.
 
 [long pause]
 
-[emphatic] Lo que la distingue es la inmunofluorescencia: depósitos granulares de i-ge-a, con ce-tres, alrededor de los vasos. [direct] Eso confirma el diagnóstico. Y conviene tomar la biopsia de una lesión reciente, de uno o dos días, porque los depósitos se degradan rápido.
+[intrigued] Golpe uno: sube en la sangre la i-ge-a uno pobre en galactosa. [calm, explanatory] Al faltar la galactosa, la bisagra deja al descubierto la ene-acetil-galactosamina... [amazed] y aparecen formas nuevas, neoepítopos, que el sistema inmunitario ve como extrañas. [serious] Tu propio anticuerpo empieza a parecer un intruso.
 
 [long pause]
 
-[informative] En el riñón, la lesión es la misma que en la nefropatía por i-ge-a: depósitos de i-ge-a en el mesangio, y proliferación de las células mesangiales. [curious] En los casos graves, la inflamación rompe los capilares, y aparecen semilunas, como en las vasculitis por anca.
+[curious] ¿Y por qué después de una infección? [narrative, steady] Una infección respiratoria precede a los síntomas por una a tres semanas, como la faringitis de nuestro paciente. [informative] Los antígenos de la mucosa estimulan a los linfocitos be del tejido linfoide de las mucosas, con señales de los receptores Tol, y sube la producción de i-ge-a uno... [emphatic] también la que viene sin galactosa.
 
 [long pause]
 
-[narrative, steady] En el intestino, las vénulas de la submucosa se inflaman; la pared se llena de edema y de sangre, y se engrosa. [direct] Ese engrosamiento explica el dolor y el sangrado. Veámoslo ahora, síntoma por síntoma.
+[suspenseful] Golpe dos: el cuerpo responde. [informative] Fabrica autoanticuerpos, sobre todo i-ge-ge, y también i-ge-a uno, dirigidos contra la i-ge-a uno sin galactosa. [calm, explanatory] Y un dato curioso: cuanto más alta está esa i-ge-a uno en la sangre, más riesgo de daño renal... [direct] aunque no de una enfermedad más grave en general.
+
+[long pause]
+
+[energetic] Golpe tres: los complejos crecen. [informative] La i-ge-a uno sin galactosa se une a sus autoanticuerpos, o se agrega consigo misma, y forma complejos inmunes grandes que circulan. [amazed] Y encima se suma una pieza más: el ese-ce-de ochenta y nueve, la forma soluble del receptor de i-ge-a de los monocitos. [concerned] Los complejos se hacen todavía más grandes.
+
+[long pause]
+
+[curious] ¿Por qué no se eliminan? [emphatic] Por su tamaño. [calm, explanatory] Son tan grandes que escapan de la limpieza del hígado: circulan más tiempo y terminan depositándose en los tejidos. [confident] Esa es la diferencia con una respuesta normal, cuyos complejos pequeños se retiran sin hacer daño.
+
+[long pause]
+
+[serious] Golpe cuatro: el depósito. [informative] Los complejos se pegan a la pared de capilares y vénulas de la piel, el intestino y las articulaciones, y al mesangio del riñón. [urgent] Ahí encienden el complemento y llaman a los neutrófilos. [direct] Y empieza la inflamación de la pared del vaso: la vasculitis.
 ```
 
-### Capítulo 4 · Por qué duele donde duele
+### Capítulo 4 · La piel: púrpura que se palpa
 
-**Bloque 4A — pasos 0–2 · `vasculitis2-4A.mp3`**
+**Bloque 4 — pasos 0–7 · `vasculitis-ic-4.mp3`**
 
 ```text
-[curious] Empecemos por la púrpura. ¿Por qué aparece en las nalgas y en las piernas, y casi nunca en la cara? [calm, explanatory] Por la gravedad. En las zonas declives la presión hidrostática es más alta y la sangre va más lenta, así que los complejos tienen más tiempo, y más fuerza, para atravesar la pared y depositarse.
+[confident] Si hay un órgano que nunca falta, es la piel. [informative] Se afecta en prácticamente todos los pacientes: primero pápulas rojas o lesiones parecidas a ronchas, simétricas, que se juntan y forman púrpura palpable. [calm, explanatory] En los adultos, además, son más frecuentes las ampollas, las pústulas y la púrpura necrótica. [curious] Pero, ¿qué está pasando debajo?
 
 [long pause]
 
-[emphatic] Es una púrpura palpable, porque la pared está inflamada y edematosa. No se blanquea, porque la sangre ya salió del vaso. [intrigued] Y las plaquetas están normales. Por eso es una púrpura no trombocitopénica: el problema no es la coagulación, es el vaso roto.
+[narrative, steady] Bajemos a la dermis superficial. [informative] Los complejos de i-ge-a uno se depositan en las paredes de capilares y vénulas poscapilares. [energetic] El complemento se activa, se libera ce cinco a... [urgent] y los neutrófilos llegan corriendo.
 
 [long pause]
 
-[narrative, steady] Las articulaciones: sobre todo rodillas y tobillos. La vasculitis de los vasos que rodean la articulación produce edema y dolor. [informative] Es pasajero, y no deja deformidad, porque el cartílago no se destruye.
+[serious] Los neutrófilos descargan enzimas y especies reactivas de oxígeno sobre la pared, que se daña y se llena de fibrina. [intrigued] Y al morir, sus núcleos se rompen en pedacitos: polvo nuclear. [informative] En griego, leucocitoclasia. [confident] Por eso se llama vasculitis leucocitoclástica.
+
+[long pause]
+
+[curious] ¿Por qué se puede palpar? [calm, explanatory] La pared rota deja salir eritrocitos hacia la dermis, y eso le da el color rojo o violáceo. [informative] Pero además hay edema e infiltrado inflamatorio, que levantan la lesión. [playful] Por eso, al pasar el dedo, la sientes como una pequeña elevación.
+
+[long pause]
+
+[conspiratorial] Haz la prueba: aprieta un eritema. [informative] La sangre se va de los vasos dilatados y la piel se pone pálida. [emphatic] En la púrpura, no. [calm, explanatory] Los eritrocitos ya están fuera de los vasos, en la dermis, y la presión no los mueve. [confident] Por eso la mancha no se blanquea.
+
+[long pause]
+
+[intrigued] ¿Y si el vaso es más profundo? [informative] Capilares y vénulas de la dermis superficial dan petequias y púrpura palpable. Los vasos más profundos y más grandes, en la dermis profunda, dan nódulos, úlceras, necrosis y livedo racemosa. [direct] La forma de la lesión orienta... [serious] pero no basta, por sí sola, para saber el calibre exacto.
+
+[long pause]
+
+[curious] ¿Por qué empieza en los tobillos? [playful] Culpa de la gravedad. [calm, explanatory] De pie, la presión hidrostática en las piernas sube y la sangre se estanca. Con el flujo lento, los complejos y los mediadores se quedan en la pared, y sale más sangre. [informative] Por eso la púrpura empieza abajo, en las piernas, los glúteos y donde aprieta la ropa.
+
+[long pause]
+
+[narrative, steady] La biopsia de piel de nuestro paciente muestra vasculitis leucocitoclástica en los vasos de la dermis superficial. [informative] Y la inmunofluorescencia directa, mejor en una lesión de menos de cuarenta y ocho horas, muestra i-ge-a en la pared de los vasos. [confident] Ese brillo es la firma: la distingue de otras vasculitis leucocitoclásticas.
 ```
 
-**Bloque 4B — pasos 3–5 · `vasculitis2-4B.mp3`**
+### Capítulo 5 · Articulaciones e intestino
+
+**Bloque 5 — pasos 0–6 · `vasculitis-ic-5.mp3`**
 
 ```text
-[direct] El dolor abdominal es cólico, y puede llegar incluso antes que la púrpura. El edema y la hemorragia de la submucosa engrosan la pared del intestino, que se distiende y se mueve mal. [curious] Puede haber sangre en las heces. Y ese segmento engrosado puede meterse dentro del siguiente, como un telescopio: es la invaginación intestinal.
+[direct] Rodillas y tobillos. [informative] Las articulaciones se afectan en unos tres de cada cuatro pacientes, sobre todo las grandes articulaciones que cargan peso. [calm, explanatory] Los complejos se depositan en los vasos pequeños de la sinovial y de los tejidos de alrededor, y ahí activan el complemento y llaman a los neutrófilos. [curious] El mismo guion, en otro escenario.
 
 [long pause]
 
-[serious] El riñón es el que define el pronóstico. Puede haber solo hematuria microscópica, un síndrome nefrítico, o proteinuria en rango nefrótico. [informative] En los niños casi siempre se resuelve; en los adultos, el daño renal es más frecuente y más grave. Por eso se vigila la orina durante meses, aunque la púrpura ya se haya ido.
+[intrigued] Y aquí viene lo bueno. [calm, explanatory] La inflamación de esos vasos aumenta la permeabilidad, produce edema y sensibiliza las terminaciones nerviosas. [informative] El resultado es artralgia, o una artritis pasajera. [relieved] No deforma la articulación ni la destruye: cuando la inflamación se va, la rodilla queda como nueva.
 
 [long pause]
 
-[confident] El diagnóstico es clínico: púrpura palpable, de predominio en las piernas, con al menos uno de cuatro hallazgos más: dolor abdominal, artritis o artralgia, compromiso renal, o una biopsia con i-ge-a. [warm, confident] Casi siempre basta con reposo y analgesia. Los corticoides se reservan para el dolor abdominal intenso, y el riñón grave necesita tratamiento propio.
+[serious] Ahora, el intestino. [informative] Se afecta en cerca del sesenta por ciento de los casos. [calm, explanatory] Los complejos se depositan en capilares y vénulas de la mucosa, la submucosa y la serosa, y producen la misma vasculitis leucocitoclástica, pero en la pared del intestino. [concerned] Y el intestino no se queda callado.
+
+[long pause]
+
+[curious] ¿Por qué el dolor es cólico, que va y viene? [calm, explanatory] La pared se llena de edema, congestión y hemorragia, se pone rígida y se mueve mal. [informative] El intestino se contrae a ratos alrededor del segmento inflamado. [direct] De ahí el dolor difuso, alrededor del ombligo o en la boca del estómago, que aprieta y suelta.
+
+[long pause]
+
+[intrigued] ¿Y por qué empeora después de comer? [calm, explanatory] Al digerir, el intestino le pide más sangre a las arterias mesentéricas, pero la microcirculación inflamada ya no tiene reserva. [informative] Y las náuseas y la diarrea salen de una mucosa inflamada y edematosa, que absorbe, secreta y se mueve mal. [confident] Más demanda, menos oferta: dolor.
+
+[long pause]
+
+[concerned] Cuando la barrera de la mucosa se rompe, la sangre pasa a la luz. [informative] Como se afecta sobre todo el intestino delgado, el duodeno, el yeyuno y el íleon, puede salir como heces negras, como sangre roja o solo como sangre oculta. [narrative, steady] Nuestro paciente tuvo dos deposiciones con sangre.
+
+[long pause]
+
+[suspenseful] Hay una complicación que se vigila. [calm, explanatory] La pared engrosada puede actuar como la punta de un telescopio: un asa se mete dentro de la siguiente. Es la invaginación, casi siempre del intestino delgado. [relieved] En nuestro paciente no hay perforación, ni necrosis, ni peritonitis: su abdomen está blando. [direct] Por ahora, solo vigilancia.
 ```
 
-### Capítulo 5 · Arteritis de células gigantes: la inflamación entra por fuera
+### Capítulo 6 · El riñón
 
-**Bloque 5A — pasos 0–3 · `vasculitis2-5A.mp3`**
+**Bloque 6 — pasos 0–7 · `vasculitis-ic-6.mp3`**
 
 ```text
-[curious] La arteritis de células gigantes es la vasculitis sistémica más frecuente en los adultos mayores. Casi nunca aparece antes de los cincuenta años, y es más común en mujeres. [intrigued] Ataca la aorta y las ramas de la carótida, sobre todo las arterias temporales. ¿Por qué importa tanto la edad? Porque la pared envejece, y el sistema inmune también.
+[serious] Y ahora, el órgano que decide el pronóstico: el riñón. [informative] Se afecta en el veinte a cincuenta por ciento de los niños y en el cincuenta a ochenta por ciento de los adultos. [calm, explanatory] Es una glomerulonefritis proliferativa mesangial, causada por complejos que contienen i-ge-a uno sin galactosa. [direct] La piel avisa; el riñón decide.
 
 [long pause]
 
-[narrative, steady] Todo empieza en la adventicia. Ahí viven células dendríticas, vigilantes. Un estímulo que aún no conocemos las activa a través de sus receptores tipo toll. [calm, explanatory] Producen quimiocinas, y por los vasa vasorum llaman a linfocitos ce-de cuatro. Una arteria que debería estar en calma, ahora tiene un foco inflamatorio en su capa externa.
+[curious] ¿Por qué el mesangio? [informative] Los complejos llegan al glomérulo y se depositan sobre todo en el mesangio, y a veces en la pared de los capilares. [conspiratorial] Y la célula mesangial tiene dos enchufes que los atrapan: el receptor de transferrina, ce-de setenta y uno, que une y capta la i-ge-a uno, [calm, explanatory] y la transglutaminasa dos.
 
 [long pause]
 
-[informative] Además, esas dendríticas fallan en un freno: expresan poco pe-de-ele-uno, la señal que apaga a las células T. [direct] Sin freno, los linfocitos se activan sin parar, y toman dos caminos: te-ache uno y te-ache diecisiete.
+[energetic] La célula mesangial se activa. [informative] Se divide, fabrica más matriz extracelular y llama a neutrófilos y a linfocitos T. [intrigued] Y la interleucina seis ayuda a que los neutrófilos se activen y lancen sus redes, las nets. [concerned] El glomérulo se vuelve un campo de batalla.
 
 [long pause]
 
-[narrative, steady] Los te-ache diecisiete, empujados por las interleucinas seis, uno y veintitrés, producen interleucina diecisiete: inflamación aguda y sistémica. [curious] Responden muy bien a los corticoides. Los te-ache uno producen interferón gamma, que activa a los macrófagos y los fusiona en células gigantes. Esos resisten más, y explican las recaídas.
+[emphatic] El complemento entra por dos puertas: la alternativa y la de las lectinas. [direct] No por la clásica. [serious] El ataque daña la pared de los capilares, los podocitos y la membrana basal. [concerned] En los casos graves, las células crecen dentro de los capilares y se forman semilunas, que ahogan al glomérulo.
+
+[long pause]
+
+[intrigued] ¿Qué ve la inmunofluorescencia en la biopsia renal? [informative] I-ge-a, sobre todo i-ge-a uno, en depósitos granulares por todo el mesangio y la pared capilar: cuatro cruces. Ce tres, en dos cruces. Y cadenas ligeras lambda iguales o mayores que kappa. [conspiratorial] ¿Y el ce uno cu? Negativo o muy débil. [confident] La vía clásica casi no participa, como te anticipé.
+
+[long pause]
+
+[curious] ¿Por qué hay sangre en la orina? [calm, explanatory] Los eritrocitos tienen que atravesar una barrera dañada, y al pasar se deforman. [informative] En el sedimento aparecen acantocitos, eritrocitos con orejitas. [confident] Esa forma es la pista de que la sangre viene del glomérulo, y no de la vía urinaria.
+
+[long pause]
+
+[direct] ¿Y la proteína? [calm, explanatory] La barrera deja pasar proteínas cuando se dañan o se activan los podocitos y se altera la membrana basal. [informative] En nuestro paciente la proteinuria es de una cruz: afectación glomerular inicial... [relieved] todavía no un síndrome nefrótico.
+
+[long pause]
+
+[intrigued] ¿Y la creatinina de cero coma ocho? [calm, explanatory] Dice que la filtración se conserva: hay daño de la barrera, pero sin pérdida importante de nefronas. [serious] Si el daño avanza, aparecen hipertensión y caída de la función renal. [confident] Por eso, en esta enfermedad, la orina se vigila.
 ```
 
-**Bloque 5B — pasos 4–6 · `vasculitis2-5B.mp3`**
+### Capítulo 7 · Diagnóstico de la vasculitis por IgA
+
+**Bloque 7 — pasos 0–5 · `vasculitis-ic-7.mp3`**
 
 ```text
-[emphatic] Ahora, mira a los macrófagos capa por capa. En la adventicia, liberan interleucina uno y seis. [direct] La seis viaja al hígado y a todo el cuerpo: fiebre, cansancio, pérdida de peso, anemia, y una velocidad de sedimentación y una proteína C reactiva muy altas.
+[direct] ¿Cómo se clasifica? Púrpura, más uno. [informative] Los criterios iúlar, printo y pres, de dos mil ocho, piden púrpura o petequias de predominio en las piernas, que es obligatoria, más al menos uno de cuatro: dolor abdominal, i-ge-a en la biopsia, artritis o artralgia, y afectación renal. [calm, explanatory] En niños, su sensibilidad es del cien por ciento y su especificidad, del ochenta y siete. [confident] Simple y potente.
 
 [long pause]
 
-[narrative, steady] En la media, los macrófagos y las células gigantes liberan metaloproteinasas y especies reactivas de oxígeno. [curious] Digieren el músculo liso, y rompen la lámina elástica interna. Las células gigantes se acumulan justo ahí, en la unión de la íntima con la media, engullendo fragmentos de elastina.
+[playful] ¿Y nuestro paciente? Los cumple todos. [informative] Tiene la púrpura, y los cuatro: dolor abdominal, i-ge-a en la biopsia de piel, artralgias en rodillas y tobillos, y sangre con proteína en la orina. [warm, confident] Es la tétrada clásica: púrpura, dolor abdominal, artritis y hematuria.
 
 [long pause]
 
-[intrigued] Y en la íntima pasa lo contrario a destruir: crecer. Los macrófagos liberan factores de crecimiento, como el derivado de plaquetas y el endotelial vascular. [direct] Las células musculares migran hacia adentro y proliferan. La íntima se engrosa, la luz se cierra, y el tejido que esa arteria nutre se queda sin sangre. Esa es la isquemia de la arteritis.
+[intrigued] Mira sus plaquetas: trescientos sesenta mil. Normales. [emphatic] Eso descarta una púrpura por falta de plaquetas, como la púrpura trombocitopénica inmune. [calm, explanatory] Aquí la sangre sale porque el vaso se rompe, no porque falten plaquetas para taparlo. [informative] Los leucocitos, la pe-ce-erre y la ve-ese-ge altos reflejan la inflamación.
+
+[long pause]
+
+[serious] Una regla de oro: buscar el riñón siempre. [informative] Las recomendaciones europeas chér, de dos mil diecinueve, piden buscar la afectación renal en todos los pacientes, al inicio y durante el seguimiento, con examen de orina y presión arterial. [suspenseful] ¿Por qué? [direct] Porque la nefritis puede aparecer semanas después de la púrpura.
+
+[long pause]
+
+[curious] ¿Hace falta una biopsia? [calm, explanatory] En un niño con un cuadro típico, el diagnóstico es clínico. [informative] La biopsia de piel con inmunofluorescencia se reserva para los casos dudosos. Y la renal, para la proteinuria importante o persistente, o si cae la función renal. [confident] Se biopsia cuando el resultado cambia el tratamiento.
+
+[long pause]
+
+[concerned] En el adulto, hay que tener más cuidado. [informative] La enfermedad es más rara, el riñón se afecta más y la púrpura puede ser necrótica. [calm, explanatory] Además, hay que descartar otras vasculitis de vasos pequeños que se le parecen, por ejemplo con anca o con crioglobulinas. [direct] No toda púrpura palpable es i-ge-a.
 ```
 
-### Capítulo 6 · La biopsia de la arteria temporal
+### Capítulo 8 · Tratamiento de la vasculitis por IgA: antes y ahora
 
-**Bloque 6 — pasos 0–3 · `vasculitis2-6.mp3`**
+**Bloque 8 — pasos 0–6 · `vasculitis-ic-8.mp3`**
 
 ```text
-[calm, explanatory] En la biopsia de la arteria temporal se ve una panarteritis: inflamación en las tres capas. Linfocitos y macrófagos atraviesan la pared, desde la adventicia hasta la íntima. [informative] Y con frecuencia, granulomas en la media.
+[relieved] La buena noticia primero: casi siempre se cura sola. [informative] En la mayoría de los niños la enfermedad dura unas semanas y no deja daño. [calm, explanatory] El tratamiento es de soporte: reposo, líquidos y un analgésico como el paracetamol. [serious] El riesgo a largo plazo, como ya sabes, está en el riñón.
 
 [long pause]
 
-[emphatic] El sello son las células gigantes multinucleadas, pegadas a una lámina elástica interna rota y fragmentada. [curious] Pero no siempre aparecen: una parte de las biopsias positivas no las tiene. Basta la inflamación de toda la pared, con la lámina rota.
+[curious] ¿Y los corticoides? [informative] Se reservan para órganos concretos: el dolor abdominal intenso, la inflamación del testículo, la vasculitis del cerebro o la hemorragia del pulmón. [calm, explanatory] Apagan la inflamación de la pared. [narrative, steady] Así le pasó a nuestro paciente: su dolor de barriga cedió con soporte y corticoides.
 
 [long pause]
 
-[direct] La íntima está engrosada, y la luz, reducida. [intrigued] Y la lesión salta: hay segmentos enfermos junto a segmentos sanos. Por eso la biopsia debe medir al menos un centímetro, y aun así puede salir negativa en una paciente que sí tiene la enfermedad.
+[intrigued] ¿Y si damos corticoides a todos, para proteger el riñón? [emphatic] No funciona. [informative] Las guías ka-digo de dos mil veinticinco recomiendan no usarlos para prevenir la nefritis cuando la enfermedad afecta solo fuera del riñón. [confident] Un corticoide no es un escudo.
 
 [long pause]
 
-[narrative, steady] Con el tiempo y el tratamiento, la inflamación cede, pero deja fibrosis. La pared queda engrosada, y la lámina, con huecos. [calm, explanatory] Y como la biopsia sigue mostrando la lesión días después de empezar los corticoides, nunca hay que retrasar el tratamiento para tomarla.
+[serious] Si el riñón se afecta, se trata según la gravedad. [informative] Con proteinuria persistente se bloquea el sistema renina-angiotensina, con un inhibidor de la enzima convertidora o un antagonista de su receptor, que baja la presión dentro del glomérulo y la proteína en la orina. [calm, explanatory] En la nefritis moderada o grave se usan corticoides, por boca o en pulsos... [direct] y en la más grave se suman inmunosupresores.
+
+[long pause]
+
+[suspenseful] Y aquí está la trampa: la nefritis puede llegar tarde. [informative] Por eso se controlan la orina y la presión arterial por lo menos durante seis meses, y más si hay alteraciones. [calm, explanatory] Los adultos con nefritis siguen, en gran parte, la pauta de la nefropatía por i-ge-a. [warm, confident] Un frasco de orina al mes puede salvar un riñón.
+
+[long pause]
+
+[curious] ¿Por qué tanto cuidado? [serious] Porque la nefritis es la principal causa de enfermedad a largo plazo. [informative] Una parte de los pacientes con nefritis queda con proteinuria, hipertensión o enfermedad renal crónica, sobre todo los adultos y los que tuvieron síndrome nefrótico o semilunas. [direct] La púrpura se va; el riñón hay que seguirlo.
+
+[long pause]
+
+[excited] Y lo nuevo: atacar los golpes. [informative] En la nefropatía por i-ge-a, la enfermedad hermana, ya hay fármacos que lo hacen: una budesonida que se libera en el intestino y baja la producción de i-ge-a uno sin galactosa en las placas de Páier, el golpe uno, e inhibidores de la vía alternativa del complemento, que frenan el golpe cuatro. [calm, explanatory] En la vasculitis por i-ge-a todavía se están estudiando. [confident] Pero el camino ya está trazado.
 ```
 
-### Capítulo 7 · Por qué duele la cabeza, y por qué la mandíbula
+### Capítulo 9 · Arteritis de células gigantes: la inflamación entra por fuera
 
-**Bloque 7 — pasos 0–3 · `vasculitis2-7.mp3`**
+**Bloque 9 — pasos 0–7 · `vasculitis-ic-9.mp3`**
 
 ```text
-[curious] El dolor de cabeza es nuevo, distinto a cualquier otro que haya tenido la paciente, y suele estar en la sien. [calm, explanatory] Viene de la inflamación de la adventicia, rica en terminaciones nerviosas. Por eso también duele el cuero cabelludo al peinarse. [informative] Al tocarla, la arteria temporal está engrosada, dolorosa, con nódulos, y con el pulso disminuido.
+[energetic] Cambiamos de escala: de un capilar a una arteria. [informative] La arteritis de células gigantes es una vasculitis granulomatosa de arterias grandes y medianas. [calm, explanatory] Ataca sobre todo las ramas de la carótida externa, como la temporal, las arterias oftálmica y ciliares posteriores, y la aorta con sus ramas. [suspenseful] Y su enemigo no son los anticuerpos.
 
 [long pause]
 
-[emphatic] La claudicación mandibular es el síntoma más específico. [narrative, steady] Al masticar, el masetero pide más sangre, pero la arteria maxilar y sus ramas están estrechas. La demanda supera al aporte, y aparece dolor o cansancio de la mandíbula, que se alivia al dejar de masticar. [direct] Es la misma lógica de la angina, pero en la cara.
+[curious] ¿Quién la sufre? [informative] Casi solo aparece después de los cincuenta años, más en mujeres y en el norte de Europa, y se asocia con variantes del ache-ele-a de-erre-be uno cero cuatro. [calm, explanatory] El envejecimiento del sistema inmunitario, y de la propia pared arterial, prepara el terreno. [intrigued] Lo que la enciende... todavía no se conoce.
 
 [long pause]
 
-[informative] La interleucina seis explica lo sistémico: fiebre, cansancio, pérdida de peso, y una anemia de inflamación, porque la hepcidina secuestra el hierro. [curious] Y cerca de la mitad tiene polimialgia reumática: dolor y rigidez de hombros y caderas por la mañana, por inflamación de bursas y sinovial.
+[narrative, steady] Todo empieza en la adventicia, la capa de afuera. [informative] Ahí viven unas células dendríticas que reconocen un estímulo, quizá infeccioso, con sus receptores Tol. [energetic] Se activan, liberan quimiocinas y citocinas: interleucina doce, veintitrés, seis y uno beta. [calm, explanatory] Y presentan antígenos a los linfocitos.
 
 [long pause]
 
-[direct] Si se afectan la aorta y sus ramas, aparece la forma de grandes vasos: claudicación de los brazos, pulsos asimétricos, soplos. [curious] Y años después, la pared debilitada de la aorta puede dilatarse en un aneurisma, o disecarse. Por eso estas pacientes necesitan imágenes de la aorta durante el seguimiento.
+[conspiratorial] Aquí hay un detalle fascinante. [informative] En esta enfermedad, las células dendríticas de la pared tienen muy poco pe-de-ele uno, el freno que normalmente calma a los linfocitos T. [serious] Sin freno, la inflamación no se apaga. [amazed] Por eso, algunos fármacos contra el cáncer que quitan este freno pueden desencadenarla.
+
+[long pause]
+
+[direct] Llamados por las quimiocinas, entran los linfocitos T ce-de cuatro y los monocitos. [curious] ¿Por dónde? [emphatic] Por los vasa vasórum, desde afuera. [confident] Por eso se dice que esta inflamación va de la adventicia hacia la luz: de afuera hacia adentro.
+
+[long pause]
+
+[energetic] Dos ejércitos se forman. [informative] La interleucina doce empuja a los linfocitos hacia te-ache uno, que fabrican interferón gamma y activan a los macrófagos. La seis, la uno beta y la veintitrés empujan hacia te-ache diecisiete, que fabrican interleucina diecisiete y atraen más inflamación. [serious] Y la interleucina seis, además, reduce a los linfocitos reguladores. [concerned] El ataque se perpetúa.
+
+[long pause]
+
+[intrigued] Los monocitos se vuelven macrófagos... [amazed] y varios se fusionan en células gigantes, con muchos núcleos. [informative] Liberan interleucina uno beta, seis, te-ene-efe alfa, especies reactivas de oxígeno y metaloproteinasas. [serious] Las metaloproteinasas cortan la lámina elástica interna y la media, y se pierden células musculares lisas.
+
+[long pause]
+
+[suspenseful] Y entonces, la luz se cierra. [informative] Macrófagos y células gigantes liberan pe-de-ge-efe, que hace migrar y proliferar al músculo liso. Se vuelve miofibroblasto, deposita matriz, y la íntima crece en anillo hacia adentro. [calm, explanatory] El ve-e-ge-efe forma vasos nuevos y suma inflamación. [concerned] La luz se estrecha, a veces con un trombo, y el tejido queda sin sangre.
 ```
 
-### Capítulo 8 · El ojo en peligro
+### Capítulo 10 · La biopsia y el halo
 
-**Bloque 8 — pasos 0–3 · `vasculitis2-8.mp3`**
+**Bloque 10 — pasos 0–6 · `vasculitis-ic-10.mp3`**
 
 ```text
-[calm, explanatory] La arteria oftálmica, rama de la carótida interna, da las arterias ciliares posteriores cortas. [informative] Ellas nutren la cabeza del nervio óptico, el punto donde el nervio sale del ojo. Es un territorio con muy poca circulación de reserva: si esas arterias se cierran, nadie las reemplaza.
+[curious] ¿Qué ve el patólogo? [informative] Una panarteritis: linfocitos T y macrófagos en toda la pared, células gigantes junto a la lámina elástica interna rota, y una íntima gruesa que estrecha la luz. [conspiratorial] Pero ojo: las células gigantes no siempre aparecen. [emphatic] Que no estén no descarta el diagnóstico.
 
 [long pause]
 
-[urgent] La amaurosis fugaz es la advertencia. Por unos minutos, la visión de un ojo se apaga, como si bajara una cortina, y luego vuelve. [direct] Es isquemia transitoria: la luz se estrecha, el flujo cae, y se recupera. Es justo lo que le pasó ayer a nuestra paciente. Y es una urgencia.
+[intrigued] Hay otra trampa: las lesiones salteadas. [calm, explanatory] La inflamación no es continua: hay tramos sanos entre tramos enfermos. [informative] Por eso se toma un segmento largo de la arteria temporal, de más de un centímetro. [serious] Y aun así, una biopsia negativa no descarta la enfermedad.
 
 [long pause]
 
-[narrative, steady] Si el flujo no vuelve, se infarta la cabeza del nervio óptico: es la neuropatía óptica isquémica anterior arterítica. [curious] La pérdida de visión es súbita, sin dolor, y casi siempre permanente. En el fondo de ojo, el disco óptico está hinchado y muy pálido, blanco como la tiza.
+[urgent] Y lo más importante: el tratamiento no espera a la biopsia. [emphatic] Si se sospecha, los corticoides se empiezan de inmediato, porque el ojo se puede perder en días. [relieved] La buena noticia es que la biopsia sigue siendo útil durante las primeras semanas del tratamiento. [confident] Primero el ojo, después la confirmación.
 
 [long pause]
 
-[emphatic] Y lo más importante: el otro ojo puede caer en días, si no se trata. [direct] También puede ocluirse la arteria central de la retina, o aparecer visión doble por isquemia de los músculos o los nervios del ojo. Ante cualquier síntoma visual en una arteritis, el tratamiento empieza en ese mismo momento.
+[curious] ¿Recuerdas el anillo oscuro de la ecografía? [informative] Es el halo hipoecoico. [calm, explanatory] La pared inflamada está llena de edema e infiltrado, que reflejan menos ultrasonido: por eso se ve oscura. [amazed] Y rodea toda la luz, como un anillo perfecto.
+
+[long pause]
+
+[direct] Pero no cualquier anillo es un halo. [informative] El halo verdadero es homogéneo, rodea toda la luz, se ve en dos planos, a lo largo y de través, y no desaparece al presionar con el transductor: el signo de compresión es positivo. [playful] Una arteria sana se aplasta y su pared desaparece. [confident] La inflamada, no.
+
+[long pause]
+
+[curious] ¿Cuánto vale el halo? [informative] En un metaanálisis, tuvo una sensibilidad del sesenta y siete por ciento y una especificidad del noventa y cinco. [serious] No es patognomónico: la aterosclerosis y otras vasculitis también engruesan la pared. [calm, explanatory] Por eso iúlar recomienda la ecografía de las arterias temporales y axilares como la primera prueba de imagen, junto con la clínica y el laboratorio.
+
+[long pause]
+
+[energetic] Hagamos la cuenta con los criterios a-ce-erre e iúlar de dos mil veintidós. [informative] Exigen cincuenta años o más y sumar seis puntos. La biopsia positiva o el halo valen cinco; una ve-ese-ge de cincuenta o más, o la pe-ce-erre alta, tres; la pérdida súbita de la visión, tres; y la cefalea temporal nueva, la mandíbula que se cansa y la rigidez de hombros, dos cada una. [amazed] Nuestra paciente los supera de lejos.
 ```
 
-### Capítulo 9 · Diagnóstico y tratamiento
+### Capítulo 11 · Cabeza, mandíbula y sangre
 
-**Bloque 9 — pasos 0–4 · `vasculitis2-9.mp3`**
+**Bloque 11 — pasos 0–6 · `vasculitis-ic-11.mp3`**
 
 ```text
-[confident] El diagnóstico une varias piezas. Tener cincuenta años o más, como requisito. Síntomas craneales o polimialgia. Velocidad de sedimentación o proteína C reactiva elevadas. [informative] Y una prueba que muestre la arteria inflamada: una imagen, o la biopsia.
+[direct] Todos los síntomas de la cabeza salen de lo mismo. [calm, explanatory] La inflamación engruesa la íntima, estrecha la luz y baja el flujo. [informative] Los tejidos que dependen de esas arterias se quedan sin la sangre que necesitan. [confident] Entiende eso, y entenderás cada síntoma.
 
 [long pause]
 
-[intrigued] La ecografía de la arteria temporal muestra el signo del halo: un anillo oscuro alrededor de la luz. Es el edema de la pared inflamada. [calm, explanatory] Si al comprimir la arteria con el transductor la pared no desaparece, es el signo de compresión. Hoy la ecografía es la primera prueba en muchos centros, y la biopsia confirma.
+[curious] ¿Por qué le duele la sien? [informative] La pared de la temporal se llena de linfocitos, macrófagos y células gigantes, se hincha y se distiende. [calm, explanatory] Libera interleucina uno beta, seis, te-ene-efe alfa y prostaglandinas, que sensibilizan los nervios de alrededor del vaso. [concerned] Es una cefalea nueva, intensa, en la sien, y empeora al tocarla.
 
 [long pause]
 
-[narrative, steady] Para la aorta y sus ramas se usan la tomografía, la resonancia, o la tomografía por emisión de positrones, que muestra la pared captando glucosa, porque está llena de células inflamatorias. [direct] Así se descubre la forma de grandes vasos, aunque la temporal sea normal.
+[intrigued] ¿Y por qué le duele peinarse? [informative] El cuero cabelludo depende de ramas de las arterias temporal, frontal, retroauricular y occipital. [calm, explanatory] Su inflamación produce edema y mediadores como bradicinina y prostaglandinas, que sensibilizan los nociceptores de la piel y del hueso. [serious] La arteria se palpa gruesa, nodular, dura y dolorosa... y casi sin pulso.
 
 [long pause]
 
-[emphatic] El tratamiento son corticoides en dosis altas, desde el primer día, sin esperar ninguna prueba. [direct] Si ya hay pérdida visual, se dan por vía intravenosa, en pulsos. [calm, explanatory] Después se reducen poco a poco durante meses, porque la enfermedad tiende a recaer.
+[playful] Ahora, a masticar. [informative] Los músculos masticadores reciben sangre de ramas de la arteria maxilar, de la carótida externa. [calm, explanatory] Al masticar, piden más oxígeno; la arteria estrecha no se lo da, y el lactato, el potasio y la adenosina encienden los nociceptores. [relieved] Al dejar de masticar, el dolor cede. [direct] Es una claudicación, pero en la mandíbula.
 
 [long pause]
 
-[confident] Para usar menos corticoide existe el tocilizumab, que bloquea el receptor de la interleucina seis. [curious] Fíjate: es la misma citocina que explicaba la fiebre, la anemia y la proteína C reactiva. Al bloquearla, esos marcadores bajan aunque la enfermedad siga activa. Por eso, con tocilizumab, la actividad se vigila por la clínica y las imágenes.
+[emphatic] Esta pista vale mucho. [informative] La claudicación mandibular es muy específica de la arteritis de células gigantes, [concerned] y se asocia con más riesgo de complicaciones en el ojo. [narrative, steady] En nuestra paciente iba de la mano con la cortina en el ojo.
+
+[long pause]
+
+[curious] ¿Y qué dice su sangre? [informative] La interleucina seis manda al hígado a fabricar pe-ce-erre, quince, y fibrinógeno, que acelera la ve-ese-ge: ciento cinco. [calm, explanatory] También sube la hepcidina, que encierra el hierro y da una anemia de la inflamación: hemoglobina de diez coma nueve. [amazed] Y estimula la producción de plaquetas: cuatrocientos noventa y cinco mil. [confident] Una sola citocina, cuatro cifras.
+
+[long pause]
+
+[intrigued] ¿Por qué estaba tan cansada? [calm, explanatory] Las mismas citocinas viajan por la sangre y dan fiebre baja, fatiga, pérdida de peso y sudoración nocturna. [informative] Como en nuestra paciente, que llevaba meses cansada y más delgada. [direct] Los síntomas generales también son parte de la enfermedad.
 ```
 
-### Capítulo 10 · Arteritis de Takayasu
+### Capítulo 12 · El ojo en peligro
 
-**Bloque 10A — pasos 0–3 · `vasculitis2-10A.mp3`**
+**Bloque 12 — pasos 0–6 · `vasculitis-ic-12.mp3`**
 
 ```text
-[curious] La arteritis de Takayasu es la otra vasculitis de grandes vasos, pero en el extremo opuesto de la vida: mujeres jóvenes, casi siempre antes de los cuarenta. [informative] Es más frecuente en Asia y en Latinoamérica. Y se asocia a un gen, el ache-ele-a be cincuenta y dos.
+[serious] Llegamos a la complicación más temida: la pérdida de la visión. [calm, explanatory] La inflamación engruesa la íntima, estrecha la luz y puede formar un trombo. [concerned] Si la isquemia sigue, se infarta el nervio óptico o la retina... [emphatic] y ese daño no tiene vuelta atrás.
 
 [long pause]
 
-[narrative, steady] Ataca la aorta y sus ramas principales. La más afectada es la subclavia izquierda; le siguen las carótidas, las renales, la aorta abdominal, e incluso las arterias pulmonares. [direct] Afecta varios segmentos a la vez, con tramos sanos entre ellos.
+[curious] Pero, ¿cómo llega una enfermedad de la temporal hasta el ojo? [informative] La temporal superficial es rama de la carótida externa, pero la enfermedad puede atacar a la vez ramas de la carótida interna. [calm, explanatory] La oftálmica; las ciliares posteriores cortas, que rodean la cabeza del nervio óptico formando el círculo de Tsin Háler; y la central de la retina. [direct] El mismo ataque, en otro territorio.
 
 [long pause]
 
-[calm, explanatory] Su inmunopatología se parece a la de células gigantes: dendríticas en la adventicia, entrada por los vasa vasorum, te-ache uno y te-ache diecisiete. [intrigued] Pero aquí pesan más las células citotóxicas: linfocitos ce-de ocho, células gamma delta y asesinas naturales, que liberan perforina y matan a las células de la media.
+[suspenseful] ¿Recuerdas la cortina oscura? [informative] Es la amaurosis fugaz: una pérdida de visión pasajera, sin dolor y de un solo ojo, que dura segundos o minutos. [calm, explanatory] La sangre del ojo cae por un rato, sin llegar al infarto, y la visión vuelve sola. [urgent] No es un alivio: es una advertencia.
 
 [long pause]
 
-[narrative, steady] El resultado es una panarteritis granulomatosa, con células gigantes. [emphatic] Pero lo que la define es la fibrosis: la adventicia y la íntima se engrosan tanto que la pared queda dura y blanca, y la íntima, arrugada como corteza de árbol. [direct] La luz se estrecha, o se cierra.
+[serious] Si las ciliares posteriores cortas se cierran, la cabeza del nervio óptico se infarta. [informative] Es la neuropatía óptica isquémica anterior arterítica. [intrigued] En el fondo de ojo, la papila se ve hinchada y pálida, blanco tiza. [concerned] Y la visión perdida, ya no vuelve.
+
+[long pause]
+
+[urgent] Y el peligro no termina en un ojo. [informative] Sin tratamiento, entre el quince y el treinta y cinco por ciento de los pacientes pierde la visión para siempre. [concerned] Tras perderla en un ojo, el otro puede afectarse en días o en pocas semanas. [emphatic] Por eso esta enfermedad es una urgencia.
+
+[long pause]
+
+[curious] ¿Y si ve doble? [informative] La diplopía aparece por falta de sangre en los nervios craneales tres, cuatro o seis, o en los músculos que mueven el ojo. [calm, explanatory] Es menos frecuente que la pérdida de visión, [direct] pero en una persona mayor de cincuenta años, con cefalea o con la mandíbula que se cansa, obliga a pensar en esta enfermedad.
+
+[long pause]
+
+[serious] Una verdad dura: los corticoides actúan rápido y evitan que el daño avance... [concerned] pero no reviven un nervio que ya se infartó. [informative] Tras una pérdida completa, la recuperación suele ser escasa. [calm, explanatory] Si ya hay pérdida de visión, las guías indican pulsos de metilprednisolona por la vena. [confident] El tiempo es visión.
 ```
 
-**Bloque 10B — pasos 4–7 · `vasculitis2-10B.mp3`**
+### Capítulo 13 · Más allá del cráneo: aorta y polimialgia
+
+**Bloque 13 — pasos 0–5 · `vasculitis-ic-13.mp3`**
 
 ```text
-[informative] Clínicamente pasa por dos fases. La primera es inflamatoria: fiebre, sudor nocturno, pérdida de peso, dolores articulares, y a veces dolor sobre la carótida. [curious] Es tan inespecífica que casi nunca se diagnostica ahí. La segunda es la oclusiva: la de las estenosis.
+[intrigued] Esta enfermedad no se queda en la cabeza. [informative] También puede atacar la aorta y sus ramas grandes: las subclavias, las axilares y las vertebrales. [calm, explanatory] A veces es la forma principal, sin síntomas en la cabeza, [curious] y se descubre por una fiebre o una inflamación que nadie sabe explicar.
 
 [long pause]
 
-[narrative, steady] En la fase oclusiva, el brazo con la subclavia estrecha recibe menos sangre. Al usarlo, el músculo pide más, y no llega: claudicación del brazo. [direct] El pulso se debilita o desaparece, la presión difiere más de diez milímetros entre los dos brazos, y sobre las arterias estrechas se oyen soplos. Es la enfermedad sin pulso de nuestra tercera paciente.
+[playful] ¿Te acuerdas de la mandíbula que se cansa? [informative] Lo mismo puede pasarle a un brazo. [calm, explanatory] Si se estrechan las subclavias o las axilares, el brazo se cansa al usarlo, los pulsos y la presión cambian de un brazo al otro, y se oyen soplos sobre las arterias. [direct] Mide la presión en los dos brazos.
 
 [long pause]
 
-[intrigued] Si se estrecha una arteria renal, el riñón percibe menos presión y libera renina: hipertensión renovascular. [calm, explanatory] Si la raíz de la aorta se dilata, la válvula no cierra bien, y aparece insuficiencia aórtica. Y si se estrechan las carótidas o las vertebrales, mareo, síncope, o un infarto cerebral.
+[suspenseful] Y hay un riesgo que llega años después. [serious] La inflamación destruye la media y su tejido elástico, y la aorta torácica puede dilatarse, formar un aneurisma o disecarse. [informative] También puede afectarse la válvula aórtica, con un soplo de insuficiencia. [concerned] Un daño silencioso, a largo plazo.
 
 [long pause]
 
-[confident] El diagnóstico se hace con imágenes, porque la biopsia de la aorta casi nunca es posible: angiotomografía o angiorresonancia, que muestran la pared engrosada y las estenosis. [direct] Se trata con corticoides y un ahorrador, como el metotrexato, o con biológicos contra el factor de necrosis tumoral o la interleucina seis. [calm, explanatory] Y las estenosis que quedan se reparan con cirugía o angioplastia, cuando la inflamación ya se apagó.
+[curious] ¿Cómo se busca? [informative] Con imagen: ecografía, tomografía, resonancia o tomografía por emisión de positrones, donde la pared inflamada brilla. [calm, explanatory] Iúlar recomienda vigilar la aorta con imagen durante el seguimiento, por el riesgo de aneurisma. [confident] Lo que no duele también se busca.
+
+[long pause]
+
+[narrative, steady] ¿Y los hombros rígidos de nuestra paciente? [informative] Es la polimialgia reumática: inflamación de las bolsas serosas y la sinovial de hombros y caderas, con dolor y rigidez que duran más de cuarenta y cinco minutos por la mañana. [amazed] Acompaña a cerca de la mitad de los pacientes con arteritis de células gigantes.
+
+[long pause]
+
+[intrigued] La polimialgia también puede aparecer sola... [concerned] y una parte de esos pacientes desarrolla después la arteritis. [informative] Por eso las guías iúlar de dos mil veinticinco tratan las dos enfermedades juntas, como un mismo espectro. [warm, confident] Dos caras de la misma inflamación.
 ```
 
-### Capítulo 11 · Desde adentro y desde afuera
+### Capítulo 14 · Tratamiento de la arteritis de células gigantes: antes y ahora
 
-**Bloque 11 — pasos 0–2 · `vasculitis2-11.mp3`**
+**Bloque 14 — pasos 0–7 · `vasculitis-ic-14.mp3`**
 
 ```text
-[warm, confident] Vuelve a los tres pacientes. El niño: una i-ge-a-uno sin galactosa, inmunocomplejos en las vénulas, púrpura en las zonas declives, dolor articular y abdominal. Plaquetas normales, y una orina que habrá que vigilar.
+[urgent] Regla número uno: empezar ya. [informative] Ante la sospecha, corticoides en dosis altas, sin esperar la biopsia. Las guías iúlar indican de cuarenta a sesenta miligramos diarios de prednisona, y pulsos de metilprednisolona por la vena si ya hay pérdida de visión. [relieved] La mejoría suele llegar entre uno y siete días, como la cefalea de nuestra paciente, que desapareció.
 
 [long pause]
 
-[confident] Las dos mujeres comparten una misma historia en la pared: dendríticas en la adventicia, células T, granulomas, y una íntima que crece. [curious] Lo que las separa es, sobre todo, la edad: setenta y dos años, células gigantes; veinticinco, Takayasu. Y el territorio: la temporal y el ojo en una, la subclavia en la otra.
+[curious] ¿Cómo actúan por dentro? [calm, explanatory] El corticoide se une a su receptor y apaga el factor nuclear kappa be y el a-pe uno, los interruptores de los genes inflamatorios. [informative] Bajan la interleucina uno beta, la seis, el te-ene-efe alfa, la dos, el interferón gamma y las quimiocinas; se calman los macrófagos y las células gigantes, y caen las metaloproteinasas. [confident] Se apaga el incendio desde el núcleo.
 
 [long pause]
 
-[emphatic] Ante una vasculitis, pregunta siempre lo mismo: qué calibre de vaso, por dónde entra la inflamación, y qué la produce. [warm, confident] Desde adentro, con los complejos que trae la sangre. Desde afuera, con las células que llegan por los vasa vasorum. Ahí está casi todo.
+[amazed] Y también actúan por fuera, en minutos. [informative] Tienen acciones rápidas que no pasan por los genes: bajan el edema y el infiltrado de la pared y mejoran el flujo. [calm, explanatory] Así reducen el riesgo de que una arteria estrecha se cierre por inflamación o trombosis. [serious] Lo que no pueden es revertir un infarto que ya ocurrió.
+
+[long pause]
+
+[conspiratorial] Pero hay algo que los corticoides no apagan. [informative] Suprimen sobre todo la vía te-ache diecisiete, al bajar la interleucina uno beta, la seis y la veintitrés. [intrigued] La vía te-ache uno, con el interferón gamma, resiste y sostiene la inflamación crónica. [concerned] Por eso, al bajar la dosis, la enfermedad recae en cerca de la mitad de los pacientes.
+
+[long pause]
+
+[serious] Y los corticoides tienen su precio, sobre todo en personas mayores. [informative] Hiperglucemia, infecciones, osteoporosis, hipertensión, insomnio y debilidad muscular. [calm, explanatory] Por eso las guías piden bajar a quince o veinte miligramos en dos o tres meses, y a cinco o menos al cabo de un año. [direct] Controlar la enfermedad, sin dañar a la paciente.
+
+[long pause]
+
+[energetic] Entra el tocilizumab. [informative] Es un anticuerpo humanizado contra el receptor de la interleucina seis, tanto el de membrana como el soluble. [excited] En el ensayo yiácta logró remisión sostenida al año en el cincuenta y seis por ciento de los pacientes, frente al catorce por ciento con corticoides solos, y con menos corticoide. [confident] La efe-de-a lo aprobó en dos mil diecisiete.
+
+[long pause]
+
+[conspiratorial] Un secreto del tocilizumab: como la pe-ce-erre depende de la interleucina seis, con este fármaco la pe-ce-erre y la ve-ese-ge bajan aunque haya una recaída o una infección. [emphatic] Dejan de servir como alarma. [informative] Sus riesgos: infecciones, reactivación de la hepatitis be, neutropenia, transaminasas altas y perforación intestinal. [calm, explanatory] El metotrexato es la alternativa más antigua para ahorrar corticoides.
+
+[long pause]
+
+[excited] Y lo nuevo: el upadacitinib. [informative] Bloquea yak uno, la enzima que transmite la señal de la interleucina seis... [amazed] y también la del interferón gamma, la vía que resistía. [calm, explanatory] En el ensayo silect ge-ce-a logró remisión sostenida en el cuarenta y seis por ciento, frente al veintinueve con placebo, y la efe-de-a lo aprobó en abril de dos mil veinticinco. [confident] Las guías iúlar de dos mil veinticinco lo ponen junto al tocilizumab, sobre todo en recaídas o con riesgo por los corticoides.
 ```
 
----
+### Capítulo 15 · Takayasu: la arteria que se queda sin pulso
 
-## [C] Para revisión de BUST
+**Bloque 15 — pasos 0–7 · `vasculitis-ic-15.mp3`**
 
-Esta sesión no tiene resumen fuente: todo sale de lo que sé (Robbins, Chapel Hill 2012, criterios EULAR/PRINTO/PRES 2010 de la vasculitis IgA, ACR/EULAR 2022 de la arteritis de células gigantes, el modelo de Weyand de las capas y GiACTA para tocilizumab), sin búsqueda web. Lo más fino para revisar: el modelo de los cuatro golpes y la vía alternativa y de lectinas (cap. 2), la biopsia de una lesión de uno o dos días (cap. 3), PD-L1 bajo en las dendríticas y Th1 frente a Th17 en las recaídas (cap. 5), «una parte» de las biopsias sin células gigantes (cap. 6), y HLA-B*52 y las células citotóxicas en Takayasu (cap. 10).
+```text
+[curious] ¿Y si la misma arteria enfermara en una mujer de veinticinco años? [informative] Es la arteritis de Takayasu, la otra vasculitis granulomatosa de vasos grandes. Ataca la aorta y sus ramas principales: las subclavias, las carótidas comunes, las vertebrales, las renales y las mesentéricas, y con frecuencia la arteria pulmonar. [confident] Y casi siempre empieza antes de los cuarenta años.
+
+[long pause]
+
+[direct] Es rara: unos dos casos por millón de habitantes al año. [intrigued] Pero no es lejana. [informative] Es más frecuente en Asia y también en Latinoamérica: en Río de Janeiro, la prevalencia fue de dieciséis coma nueve por millón en dos mil veinte, y en México sigue el patrón asiático, de mujeres jóvenes. [warm, confident] Es una enfermedad de nuestra región.
+
+[long pause]
+
+[conspiratorial] Al microscopio, se parece mucho a la arteritis de células gigantes: granulomas con células gigantes en la pared. [curious] Entonces, ¿qué cambia? [informative] La edad, el territorio, el cayado y sus ramas en lugar de las arterias de la cabeza, y los genes: aquí, el ache-ele-a be cincuenta y dos, y el gen i-ele doce be, que fabrica la pieza común de la interleucina doce y la veintitrés. [confident] El mismo granuloma, en otro cuerpo.
+
+[long pause]
+
+[suspenseful] Aquí la inflamación también entra por afuera, por los vasa vasórum, entre la media y la adventicia. [informative] Llegan linfocitos te ce-de cuatro y ce-de ocho, linfocitos te gamma delta y células ene-ka. [serious] Los citotóxicos liberan perforina y granzima be... [concerned] y matan a las células musculares lisas de la media.
+
+[long pause]
+
+[energetic] Y vuelven los dos ejércitos que ya conoces. [informative] El interferón gamma de los te-ache uno activa a los macrófagos y forma los granulomas; la interleucina diecisiete de los te-ache diecisiete amplifica la inflamación. [intrigued] Y la interleucina seis en la sangre sube y baja con la actividad de la enfermedad. [calm, explanatory] Una pista para el tratamiento.
+
+[long pause]
+
+[curious] ¿Cómo termina una arteria así? [calm, explanatory] Las lesiones activas acaban en fibrosis de la media y la adventicia, con una íntima gruesa: la luz se estrecha o se cierra. [amazed] Pero donde la media se destruye sin cicatriz suficiente, la pared se abomba en un aneurisma. [informative] Y estenosis y aneurismas alternan con tramos sanos, como cuentas de un collar.
+
+[long pause]
+
+[narrative, steady] Clásicamente tiene dos fases. [informative] Primero, una fase de todo el cuerpo: fiebre, malestar, pérdida de peso, dolor de articulaciones y ve-ese-ge y pe-ce-erre altas. [concerned] Es tan inespecífica que retrasa el diagnóstico. [emphatic] Después, la fase vascular, sin pulso: brazos que se cansan, pulsos débiles o ausentes, presión distinta entre los brazos, soplos y dolor sobre la carótida.
+
+[long pause]
+
+[intrigued] Cada territorio da su síntoma. [informative] Si se estrechan las renales, el riñón enciende la renina y aparece hipertensión renovascular... [conspiratorial] que puede pasar inadvertida si la presión se mide en un brazo con la subclavia estrecha. [calm, explanatory] La raíz aórtica se dilata y la válvula gotea; las coronarias dan angina; las carótidas y vertebrales, mareo, desmayos e ictus; y la pulmonar se afecta hasta en la mitad. [direct] Mide la presión en los dos brazos, y en las piernas.
+```
+
+### Capítulo 16 · Takayasu: diagnóstico y tratamiento
+
+**Bloque 16 — pasos 0–6 · `vasculitis-ic-16.mp3`**
+
+```text
+[curious] ¿Cómo se biopsia una aorta? [direct] Casi nunca se puede. [informative] Por eso el diagnóstico se apoya en la imagen: la angiotomografía, la angiorresonancia, la ecografía de las carótidas y la tomografía por emisión de positrones muestran pared engrosada, estenosis, oclusiones y aneurismas. [calm, explanatory] La angiografía clásica se reserva para cuando se va a intervenir. [confident] Aquí, la imagen es la biopsia.
+
+[long pause]
+
+[energetic] Hagamos la cuenta con los criterios a-ce-erre e iúlar de dos mil veintidós. [informative] Exigen sesenta años o menos y una imagen de vasculitis de vasos grandes, y sumar cinco puntos. Ser mujer, uno. Angina, claudicación, soplo, pulso reducido en un brazo o una carótida anormal, dos cada uno. Diferencia de presión de veinte milímetros o más, uno. [calm, explanatory] Y en la imagen: de uno a tres por los territorios, uno por arterias pares, y tres si se afecta la aorta abdominal con las renales o mesentéricas.
+
+[long pause]
+
+[amazed] ¿Cuánto aciertan? [informative] En la validación, una sensibilidad del noventa y tres coma ocho por ciento y una especificidad del noventa y nueve coma dos. [serious] Pero ojo: son criterios de clasificación, pensados para investigación. [direct] El diagnóstico de cada paciente lo hace el médico, con la clínica y la imagen.
+
+[long pause]
+
+[curious] ¿Y el tratamiento? [informative] Corticoides en dosis altas para la enfermedad activa, y desde el inicio un inmunosupresor no biológico: metotrexato, leflunomida, azatioprina o micofenolato. [emphatic] Esa es la gran diferencia con la arteritis de células gigantes: aquí se combinan desde el principio. [confident] Dos fármacos desde el primer día.
+
+[long pause]
+
+[serious] ¿Y si la enfermedad es grave? [informative] Si amenaza un órgano o la vida, o recae, la guía latinoamericana pánlar, de dos mil veintitrés, prefiere un inhibidor del te-ene-efe, como infliximab o adalimumab, o el tocilizumab. [calm, explanatory] Y si los biológicos no están al alcance, ciclos cortos de ciclofosfamida. [warm, confident] Una guía pensada para nuestra realidad.
+
+[long pause]
+
+[intrigued] ¿Funciona el tocilizumab en Takayasu? [informative] En el ensayo japonés takt redujo las recaídas, pero en el análisis principal no alcanzó la significación: un riesgo de cero coma cuarenta y uno, con una pe de cero coma cero seis. [calm, explanatory] Por eso la guía del a-ce-erre, de dos mil veintiuno, prefiere empezar con un inmunosupresor no biológico. [direct] Prometedor, pero no definitivo.
+
+[long pause]
+
+[informative] Tres cosas más. Aspirina en dosis bajas si se afectan las arterias de la cabeza o del corazón. [emphatic] Y la angioplastia o la cirugía, cuando se pueda, en remisión: en la fase activa la arteria se vuelve a cerrar más. [suspenseful] ¿Y lo nuevo? Los inhibidores de yak se estudian, [serious] pero un ensayo de fase tres con upadacitinib en la forma refractaria, publicado en noviembre de dos mil veintiséis, no alcanzó su objetivo principal.
+```
+
+### Capítulo 17 · Cierre: los dos pacientes, lado a lado
+
+**Bloque 17 — pasos 0–3 · `vasculitis-ic-17.mp3`**
+
+```text
+[narrative, steady] Volvamos con nuestro paciente de catorce años. [informative] Una i-ge-a uno sin galactosa, autoanticuerpos, complejos que crecen y se pegan a los vasos más finos de su piel, su intestino, sus articulaciones y su riñón. [relieved] Se curó en semanas. [direct] Lo que queda es vigilar su orina durante meses.
+
+[long pause]
+
+[narrative, steady] Y nuestra paciente de setenta y un años. [informative] Una célula dendrítica sin freno en la adventicia, linfocitos te-ache uno y te-ache diecisiete, macrófagos y células gigantes, y una íntima que crece hasta cerrar la arteria. [relieved] Los corticoides salvaron su ojo. [serious] El reto ahora es que no recaiga, sin dañarla con ellos.
+
+[long pause]
+
+[curious] ¿Y la respuesta a nuestra pregunta? [emphatic] Las dos son vasculitis, pero el calibre y el arma lo cambian todo. [informative] Complejos inmunes y neutrófilos en el vaso fino: hipersensibilidad de tipo tres. Linfocitos T y granulomas en la arteria grande: tipo cuatro, en la mujer mayor y también en la joven con Takayasu. [warm, confident] Mismo sistema inmunitario, dos maneras de romper un vaso.
+
+[long pause]
+
+[confident] Llévate esto. [informative] Una púrpura que se palpa y no se blanquea, con plaquetas normales, habla de un vaso roto. [urgent] Una cefalea nueva con una mandíbula que se cansa, en alguien mayor de cincuenta, es una urgencia para el ojo. [warm, confident] Y detrás de cada signo... hay un mecanismo.
+```
